@@ -9,6 +9,18 @@ public class PLWindow {
 	
 	private long window;
 	
+	public PLWindow(int width, int height, String title) {
+		this(width, height, title, false);
+	}
+	
+	public PLWindow(int width, int height, String title, boolean resizeable) {
+		this(-1, -1, width, height, title, resizeable);
+	}
+	
+	public PLWindow(int x, int y, int width, int height, String title) {
+		this(x, y, width, height, title, false);
+	}
+	
 	public PLWindow(int x, int y, int width, int height, String title, boolean resizeable) {
 		GLFWErrorCallback.createPrint(System.err).set();
 		
