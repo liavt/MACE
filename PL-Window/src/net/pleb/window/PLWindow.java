@@ -24,6 +24,9 @@ public class PLWindow {
 	}
 	
 	public PLWindow(int x, int y, int width, int height, String title, boolean resizeable) {
+		this.width = width;
+		this.height = height;
+		
 		GLFWErrorCallback.createPrint(System.err).set();
 		
 		glfwDefaultWindowHints();
@@ -59,6 +62,14 @@ public class PLWindow {
 		glfwSetWindowPos(window, XP, YP);
 		
 		glfwShowWindow(window);
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 	
 	public boolean isOpen() {

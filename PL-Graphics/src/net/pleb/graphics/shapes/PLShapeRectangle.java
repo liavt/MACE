@@ -12,7 +12,7 @@ public class PLShapeRectangle extends PLShape{
 				new PLVector2f(-0.5f,  0.5f)
 			};
 	
-	public PLShapeRectangle(PLVector2f pos, PLVector2f rot, PLVector2f size) {
+	public PLShapeRectangle(PLVector2f pos, float rot, PLVector2f size) {
 		super(pos, rot, size, VERTICIES);
 	}
 }
