@@ -127,11 +127,16 @@ public class PLInput {
 	public static final int KEY_MENU = GLFW.GLFW_KEY_MENU;
 	public static final int KEY_LAST = GLFW.GLFW_KEY_LAST;
 
+	private static boolean[] last_keys = new boolean[KEY_LAST];
 	private static boolean[] keys = new boolean[KEY_LAST];
 	
 	static {
 		for(int i = 0;i < keys.length;i++) {
 			keys[i] = false;
+		}
+		
+		for(int i = 0;i < last_keys.length;i++) {
+			last_keys[i] = false;
 		}
 	}
 	
@@ -141,6 +146,12 @@ public class PLInput {
 		} else if (action == GLFW.GLFW_RELEASE) {
 			keys[key] = false;
 		}
+	}
+	
+	public static boolean isKeyPressed(int key) {
+		boolean result = keys[key] && !last_keys[key];
+		last_keys[key] = keys[key];
+		return result;
 	}
 	
 	public static boolean isKeyDown(int key) {

@@ -17,4 +17,9 @@ public class PLEngine {
 	public static void terminate() {
 		glfwTerminate();
 	}
+	
+	public static void exit(int status) {
+		terminate();
+		System.exit(status);
+	}
 }

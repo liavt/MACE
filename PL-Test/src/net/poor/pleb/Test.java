@@ -1,5 +1,7 @@
 package net.poor.pleb;
 
+import net.pleb.audio.PLAudioManager;
+import net.pleb.audio.PLSound;
 import net.pleb.graphics.context.PLGraphicsContext;
 import net.pleb.graphics.context.PLGraphicsContextGL;
 import net.pleb.graphics.renderer.PLRenderer;
@@ -10,6 +12,7 @@ import net.pleb.network.tcp.PLTcpServer;
 import net.pleb.network.tcp.PLTcpServerCallback;
 import net.pleb.system.PLColor;
 import net.pleb.system.PLEngine;
+import net.pleb.window.PLInput;
 import net.pleb.window.PLWindow;
 
 public class Test implements PLTcpClientCallback, PLTcpServerCallback{
@@ -22,12 +25,26 @@ public class Test implements PLTcpClientCallback, PLTcpServerCallback{
 	
 	public Test() {
 		PLEngine.init();//Initialize the engine
+		PLAudioManager.init();//Initialize audio manager
+		PLSound sound = new PLSound("/audio/Sound.wav");//Open Sound.wav file and load it into OpenAL
 		
 		server = new PLTcpServer(5000, this);//Create a tcp server on port 5000 with the 'this' object as a callback
 		client = new PLTcpClient("localhost", 5000, this);//Create a tcp client that connects to a server at "localhost" on port 5000 with the 'this' object as a callback
 		
 		server.start();//Start the server (SERVER MUST BE STARTED FIRST!)
 		client.start();//Start the client
+		
+		new Thread(() -> {
+			boolean run = true;
+			while(run) {
+				try {
+					Thread.sleep(1000);//Wait on second (1000 milliseconds)
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				client.sendData("PING");//Send "PING" to server
+			}
+		}).start();//Create a thread that sends "PING" to the server from the client
 		
 		PLWindow window = new PLWindow(-1, -1, 800, 600, "Test", true);//Create a window with xOff:-1(centered), yOff:-1(centered), width:800 , height:800, title:"Test", and resizeable:true
 		PLGraphicsContext context = new PLGraphicsContextGL(true).create(window);//Create a an OpenGL Graphics interface
@@ -38,16 +55,13 @@ public class Test implements PLTcpClientCallback, PLTcpServerCallback{
 			PLEngine.pollEvents();//Poll all events
 			context.swapBuffers(window);//Swap the graphics buffers
 			
-			client.sendData("PING");//Send the message "PING" to the server
-			
-			try {
-				Thread.sleep(100);//wait 100 milliseconds, so that the loop only runs about 10 times a second
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(PLInput.isKeyPressed(PLInput.KEY_SPACE)) {
+				sound.play();
 			}
 		}
 		
-		PLEngine.terminate();//Terminate everything
+		PLAudioManager.stopAll();//Stop all sounds
+		PLEngine.exit(0);//Terminate engine
 	}
 	
 	public void receivedData(int id, String data) {//Server received data from client with ID 'id'
