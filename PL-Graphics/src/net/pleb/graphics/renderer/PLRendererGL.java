@@ -27,7 +27,7 @@ public class PLRendererGL extends PLRenderer {
 		
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho();
+		glOrtho(0, r, b, t, n, f);
 	}
 
 	@Override
