@@ -1,23 +1,23 @@
 package net.pleb.system.util;
 
-public class PLPositionF implements java.lang.Cloneable, java.io.Serializable {
-
+public class PLVector3f implements java.lang.Cloneable, java.io.Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public PLVector3f(float x2, float y2, float z2) {
+		x = x2;
+		y = y2;
+		z = z2;
+	}
+
 	@Override
 	public Object clone() {
-		return new PLPositionF(x, y);
+		return new PLVector3f(x, y, z);
 	}
 
-	public float x = 0, y = 0;
-
-	public PLPositionF(float x, float y) {
-		this.x = x;
-		this.y = y;
-	}
+	public float x = 0, y = 0, z = 0;
 
 	/*
 	 * (non-Javadoc)
@@ -30,6 +30,7 @@ public class PLPositionF implements java.lang.Cloneable, java.io.Serializable {
 		int result = 1;
 		result = prime * result + Float.floatToIntBits(x);
 		result = prime * result + Float.floatToIntBits(y);
+		result = prime * result + Float.floatToIntBits(z);
 		return result;
 	}
 
@@ -49,9 +50,17 @@ public class PLPositionF implements java.lang.Cloneable, java.io.Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		PLPositionF other = (PLPositionF) obj;
-		return !(Float.floatToIntBits(y) != Float.floatToIntBits(other.y)
-				|| Float.floatToIntBits(x) != Float.floatToIntBits(other.x));
+		PLVector3f other = (PLVector3f) obj;
+		if (Float.floatToIntBits(x) != Float.floatToIntBits(other.x)) {
+			return false;
+		}
+		if (Float.floatToIntBits(y) != Float.floatToIntBits(other.y)) {
+			return false;
+		}
+		if (Float.floatToIntBits(z) != Float.floatToIntBits(other.z)) {
+			return false;
+		}
+		return true;
 	}
 
 	/*
@@ -61,7 +70,7 @@ public class PLPositionF implements java.lang.Cloneable, java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "FloatPosition [x=" + x + ", y=" + y + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "Vector3f[" + x + ", " + y + ", " + z + "]";
 	}
 
 	/**
@@ -92,5 +101,20 @@ public class PLPositionF implements java.lang.Cloneable, java.io.Serializable {
 	 */
 	public void setY(float y) {
 		this.y = y;
+	}
+
+	/**
+	 * @return the z
+	 */
+	public float getZ() {
+		return z;
+	}
+
+	/**
+	 * @param z
+	 *            the z to set
+	 */
+	public void setZ(float z) {
+		this.z = z;
 	}
 }

@@ -1,11 +1,11 @@
 package net.pleb.system.util;
 
-public class PLQuad extends PLPosition {
+public class PLQuad implements java.lang.Cloneable, java.io.Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public int width = 0, height = 0;
+	public int x = 0, y = 0, width = 0, height = 0;
 
 	public PLQuad() {
 	}

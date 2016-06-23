@@ -1,6 +1,6 @@
 package net.pleb.system.util;
 
-public class PLPosition implements java.io.Serializable, Cloneable {
+public class PLVector2i implements java.io.Serializable, Cloneable {
 	/**
 	 * 
 	 */
@@ -8,7 +8,7 @@ public class PLPosition implements java.io.Serializable, Cloneable {
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new PLPosition(x, y);
+		return new PLVector2i(x, y);
 	}
 
 	public int x = 0, y = 0;
@@ -37,7 +37,7 @@ public class PLPosition implements java.io.Serializable, Cloneable {
 
 	@Override
 	public String toString() {
-		return "Position[ x: " + x + ", y: " + y + " ]";
+		return "Vector2i[" + x + ", " + y + "]";
 	}
 
 	/*
@@ -56,7 +56,7 @@ public class PLPosition implements java.io.Serializable, Cloneable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		PLPosition other = (PLPosition) obj;
+		PLVector2i other = (PLVector2i) obj;
 		if (x != other.x) {
 			return false;
 		}
@@ -74,11 +74,12 @@ public class PLPosition implements java.io.Serializable, Cloneable {
 		this.y = y;
 	}
 
-	public PLPosition(int x, int y) {
+	public PLVector2i(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public PLPosition() {
+	public PLVector2i() {
+		
 	}
 }

@@ -1,23 +1,23 @@
 package net.pleb.system.util;
 
-public class PLPosition3F implements java.lang.Cloneable, java.io.Serializable {
+public class PLVector2f implements java.lang.Cloneable, java.io.Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public PLPosition3F(float x2, float y2, float z2) {
-		x = x2;
-		y = y2;
-		z = z2;
-	}
-
 	@Override
 	public Object clone() {
-		return new PLPosition3F(x, y, z);
+		return new PLVector2f(x, y);
 	}
 
-	public float x = 0, y = 0, z = 0;
+	public float x = 0, y = 0;
+
+	public PLVector2f(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -30,7 +30,6 @@ public class PLPosition3F implements java.lang.Cloneable, java.io.Serializable {
 		int result = 1;
 		result = prime * result + Float.floatToIntBits(x);
 		result = prime * result + Float.floatToIntBits(y);
-		result = prime * result + Float.floatToIntBits(z);
 		return result;
 	}
 
@@ -50,17 +49,9 @@ public class PLPosition3F implements java.lang.Cloneable, java.io.Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		PLPosition3F other = (PLPosition3F) obj;
-		if (Float.floatToIntBits(x) != Float.floatToIntBits(other.x)) {
-			return false;
-		}
-		if (Float.floatToIntBits(y) != Float.floatToIntBits(other.y)) {
-			return false;
-		}
-		if (Float.floatToIntBits(z) != Float.floatToIntBits(other.z)) {
-			return false;
-		}
-		return true;
+		PLVector2f other = (PLVector2f) obj;
+		return !(Float.floatToIntBits(y) != Float.floatToIntBits(other.y)
+				|| Float.floatToIntBits(x) != Float.floatToIntBits(other.x));
 	}
 
 	/*
@@ -70,7 +61,7 @@ public class PLPosition3F implements java.lang.Cloneable, java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Float3DPosition [x=" + x + ", y=" + y + ", z=" + z + "]";
+		return "Vector2f [" + x + ", " + y + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**
@@ -101,20 +92,5 @@ public class PLPosition3F implements java.lang.Cloneable, java.io.Serializable {
 	 */
 	public void setY(float y) {
 		this.y = y;
-	}
-
-	/**
-	 * @return the z
-	 */
-	public float getZ() {
-		return z;
-	}
-
-	/**
-	 * @param z
-	 *            the z to set
-	 */
-	public void setZ(float z) {
-		this.z = z;
 	}
 }

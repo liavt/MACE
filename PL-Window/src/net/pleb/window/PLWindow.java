@@ -8,6 +8,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class PLWindow {
 	
 	private long window;
+	private int width;
+	private int height;
 	
 	public PLWindow(int width, int height, String title) {
 		this(width, height, title, false);

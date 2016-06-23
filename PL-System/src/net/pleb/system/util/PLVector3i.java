@@ -1,13 +1,13 @@
 package net.pleb.system.util;
 
-public class PLPosition3 extends PLPosition {
+public class PLVector3i implements java.lang.Cloneable, java.io.Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public int z = 0;
+	public int x = 0, y = 0, z = 0;
 
-	public PLPosition3(int x, int y, int z) {
+	public PLVector3i(int x, int y, int z) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -21,7 +21,7 @@ public class PLPosition3 extends PLPosition {
 	 */
 	@Override
 	public Object clone() {
-		return new PLPosition3(x, y, z);
+		return new PLVector3i(x, y, z);
 	}
 
 	/*
@@ -55,7 +55,7 @@ public class PLPosition3 extends PLPosition {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		PLPosition3 other = (PLPosition3) obj;
+		PLVector3i other = (PLVector3i) obj;
 		if (x != other.x) {
 			return false;
 		}
@@ -75,7 +75,7 @@ public class PLPosition3 extends PLPosition {
 	 */
 	@Override
 	public String toString() {
-		return "Position3D [x=" + x + ", y=" + y + ", z=" + z + "]";
+		return "Vector3i[" + x + ", " + y + ", " + z + "]";
 	}
 
 }
