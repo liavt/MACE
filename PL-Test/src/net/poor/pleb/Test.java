@@ -56,7 +56,7 @@ public class Test implements PLTcpClientCallback, PLTcpServerCallback{
 			context.swapBuffers(window);//Swap the graphics buffers
 			
 			if(PLInput.isKeyPressed(PLInput.KEY_SPACE)) {
-				sound.play();
+				sound.play();  
 			}
 		}
 		
