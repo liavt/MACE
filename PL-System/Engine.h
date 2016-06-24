@@ -9,4 +9,9 @@ namespace pl {
 		void init();
 		void terminate();
 	};
+
 }
+
+#include <PL-System/Definitions.h>
+#include <PL-System/Color.h>
+

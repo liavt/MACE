@@ -1,4 +1,8 @@
+
+
 #include "Engine.h"
+
+typedef unsigned char byte;
 
 namespace pl {
 	void Engine::init() {
