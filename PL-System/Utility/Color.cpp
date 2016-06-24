@@ -1,41 +1,41 @@
 #include "Color.h"
 #include <exception>
 
-byte_t mc::Color::getRed() const
+mc::Byte mc::Color::getRed() const
 {
 	return mc::convertFloatToRGBA(this->r);
 }
 
-byte_t mc::Color::getGreen() const
+mc::Byte mc::Color::getGreen() const
 {
 	return mc::convertFloatToRGBA(this->g);
 }
 
-byte_t mc::Color::getBlue() const
+mc::Byte mc::Color::getBlue() const
 {
 	return mc::convertFloatToRGBA(this->b);
 }
 
-byte_t mc::Color::getAlpha() const
+mc::Byte mc::Color::getAlpha() const
 {
 	return mc::convertFloatToRGBA(this->a);
 }
 
-void mc::Color::setRed(byte_t red) {
+void mc::Color::setRed(mc::Byte red) {
 	this->r = mc::convertRGBAToFloat(red);
 }
 
-void mc::Color::setGreen(byte_t green) {
+void mc::Color::setGreen(mc::Byte green) {
 	this->g = mc::convertRGBAToFloat(green);
 
 }
 
-void mc::Color::setBlue(byte_t blue) {
+void mc::Color::setBlue(mc::Byte blue) {
 	this->b = mc::convertRGBAToFloat(blue);
 
 }
 
-void mc::Color::setAlpha(byte_t alpha) {
+void mc::Color::setAlpha(mc::Byte alpha) {
 	this->a = mc::convertRGBAToFloat(alpha);
 }
 
@@ -48,7 +48,7 @@ mc::Color::Color(float red, float green, float blue, float alpha)
 	this->a = alpha;
 }
 
-mc::Color::Color(byte_t red, byte_t green, byte_t blue, byte_t alpha)
+mc::Color::Color(mc::Byte red, mc::Byte green, mc::Byte blue, mc::Byte alpha)
 {
 	this->r = convertRGBAToFloat(red);
 	this->g = convertRGBAToFloat(green);
@@ -57,7 +57,7 @@ mc::Color::Color(byte_t red, byte_t green, byte_t blue, byte_t alpha)
 
 }
 
-mc::Color::Color(std::vector<byte_t> rgba)
+mc::Color::Color(std::vector<mc::Byte> rgba)
 {
 	if (rgba.size() == 3) {
 		setRGB(rgba);
@@ -94,12 +94,12 @@ float & mc::Color::operator[](int i)
 	throw "Invalid range!";
 }
 
-byte_t mc::convertFloatToRGBA(float color)
+mc::Byte mc::convertFloatToRGBA(float color)
 {
-	return (byte_t)(trimFloat(color)*255.0f);
+	return (mc::Byte)(trimFloat(color)*255.0f);
 }
 
-float mc::convertRGBAToFloat(byte_t color)
+float mc::convertRGBAToFloat(mc::Byte color)
 {
 	return trimRGBA(color) / 255.0f;
 }
@@ -109,22 +109,22 @@ float mc::trimFloat(float color)
 	return color < 0 ? 0 : (color>1 ? 1 : color);
 }
 
-byte_t mc::trimRGBA(byte_t color)
+mc::Byte mc::trimRGBA(mc::Byte color)
 {
 	return color < 0 ? 0 : (color>254 ? 254 : color);
 }
 
-std::vector<byte_t> mc::Color::getRGBA() const
+std::vector<mc::Byte> mc::Color::getRGBA() const
 {
 	return{ getRed(),getGreen(),getBlue(), getAlpha() };
 }
 
-std::vector<byte_t> mc::Color::getRGB() const
+std::vector<mc::Byte> mc::Color::getRGB() const
 {
 	return{ getRed(),getGreen(),getBlue() };
 }
 
-void mc::Color::setRGBA(std::vector<byte_t> rgba)
+void mc::Color::setRGBA(std::vector<mc::Byte> rgba)
 {
 	if (rgba.size() != 4) {
 		throw "Input must be a vector of R, G, B, and A!";
@@ -135,7 +135,7 @@ void mc::Color::setRGBA(std::vector<byte_t> rgba)
 	setAlpha(rgba[3]);
 }
 
-void mc::Color::setRGB(std::vector<byte_t> rgb)
+void mc::Color::setRGB(std::vector<mc::Byte> rgb)
 {
 	if (rgb.size() != 3) {
 		throw "Input must be a vector of R, G, and B";

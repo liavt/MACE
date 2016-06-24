@@ -1,3 +1,5 @@
 #pragma once
 
-typedef unsigned char byte_t;
+namespace mc {
+	typedef unsigned char Byte;
+}
