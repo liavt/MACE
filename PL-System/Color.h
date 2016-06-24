@@ -2,7 +2,15 @@
 
 #include <PL-System\Definitions.h>
 
-namespace pl {
+namespace mc {
+
+	byte_t convertFloatToRGBA(float color);
+	float convertRGBAToFloat(byte_t color);
+
+	/**
+	*/
+	byte_t trimRGBA(byte_t byte);
+
 	
 	class Color {
 	public:
@@ -20,5 +28,6 @@ namespace pl {
 		float r, g, b, a;
 
 		Color(float red = 0,float green=0, float blue =0, float alpha=1);
+		Color(byte_t red = 0, byte_t green = 0, byte_t blue = 0, byte_t alpha = 255);
 	};
 }
