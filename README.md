@@ -1,5 +1,5 @@
 # The-Poor-Plebs-Engine
-A C++ game engine so easy a pleb could use it
+MACE stands for MACE is A C++ Engine
 
 #Planned features:
 * Modular
