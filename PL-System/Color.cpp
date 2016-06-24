@@ -46,7 +46,6 @@ mc::Color::Color(float red, float green, float blue, float alpha)
 	a = alpha;
 }
 
-byte_t mc::convertFloatToRGB(float color)
-{
+byte_t mc::convertFloatToRGBA(float color) {
 	return color*255.0;
 }
