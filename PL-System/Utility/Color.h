@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <PL-System\Definitions.h>
 
 namespace mc {
@@ -40,25 +41,22 @@ namespace mc {
 		void setBlue(byte_t b);
 		void setAlpha(byte_t a);
 
-		/**
-		Gets the values as an array of RGBA
+		std::vector<byte_t> getRGBA() const;
+		std::vector<byte_t> getRGB() const;
 
-		@returns {@code byte_t[4],} where the first index is r, the second is g, ...
-		*/
-		byte_t* getRGBA() const;
-		/**
-		Gets the values as an array of RGB
+		void setRGBA(std::vector<byte_t> rgba);
+		void setRGB(std::vector<byte_t> rgb);
 
-		@returns {@code byte_t[3],} where the first index is r, the second is g, ...
-		*/
-		byte_t* getRGB() const;
-
-		void setRGBA(byte_t rgba[]);
-		void setRGB(byte_t rgb[]);
+		void setValues(std::vector<float> rgba);
+		std::vector<float> getValues() const;
 
 		float r, g, b, a;
 
 		Color(float red = 0,float green=0, float blue =0, float alpha=1);
 		Color(byte_t red = 0, byte_t green = 0, byte_t blue = 0, byte_t alpha = 255);
+		Color(std::vector<byte_t> rgba);
+		Color(std::vector<float> values);
+
+		float& operator[](int i);
 	};
 }
