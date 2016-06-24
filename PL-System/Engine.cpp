@@ -4,7 +4,7 @@
 
 typedef unsigned char byte;
 
-namespace pl {
+namespace mc {
 	void Engine::init() {
 		if (glfwInit()) {
 			std::cout << "GLFW Inited!\n";

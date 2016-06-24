@@ -8,8 +8,24 @@ namespace mc {
 	float convertRGBAToFloat(byte_t color);
 
 	/**
+	If the inputted {@code float} is more than 1, {@code trimFloat} returns 1.
+	<p>
+	If the inputted {@code float} is less than 0, {@code trimFloat} returns 0.
+
+	@param {@code float} to trim
+	@returns A {@code float} guaranteed to be between 0 and 1.
 	*/
-	byte_t trimRGBA(byte_t byte);
+	float trimFloat(float color);
+
+	/**
+	If the inputted {@code byte_t} is more than 254, {@code trimRGBA} returns 254.
+	<p>
+	If the inputted {@code byte_t} is less than 0, {@code trimRGBA} returns 0.
+
+	@param {@code byte_t} to trim
+	@returns A {@code byte_t} guaranteed to be between 0 and 255.
+	*/
+	byte_t trimRGBA(byte_t color);
 
 	
 	class Color {
@@ -24,6 +40,21 @@ namespace mc {
 		void setBlue(byte_t b);
 		void setAlpha(byte_t a);
 
+		/**
+		Gets the values as an array of RGBA
+
+		@returns {@code byte_t[4],} where the first index is r, the second is g, ...
+		*/
+		byte_t* getRGBA() const;
+		/**
+		Gets the values as an array of RGB
+
+		@returns {@code byte_t[3],} where the first index is r, the second is g, ...
+		*/
+		byte_t* getRGB() const;
+
+		void setRGBA(byte_t rgba[]);
+		void setRGB(byte_t rgb[]);
 
 		float r, g, b, a;
 
