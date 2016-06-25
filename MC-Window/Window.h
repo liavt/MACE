@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <MC-System/System.h>
+#include <MC-Window/input/Keyboard.h>
 
 namespace mc {
 	class Window {

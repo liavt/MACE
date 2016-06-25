@@ -13,6 +13,8 @@ namespace mc {
 
 		m_window = glfwCreateWindow(width, height, title, NULL, NULL);
 
+		glfwSetKeyCallback(m_window, Keyboard::keyCallback);
+
 		glfwShowWindow(m_window);
 	}
 
