@@ -16,19 +16,13 @@ int main() {
 
 	Sound sound("Sound.ogg");
 
-	sound.play();
-
 	glClearColor(1, 0, 1, 1);
 
 	while (!window.isCloseRequested()) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		if (Keyboard::isKeyPressed(GLFW_KEY_SPACE)) {
-			std::cout << "Space pressed!\n";
-		}
-
-		if (Keyboard::isKeyDown(GLFW_KEY_SPACE)) {
-			std::cout << "Space down!\n";
+			sound.play();
 		}
 
 		renderer->swapBuffers();

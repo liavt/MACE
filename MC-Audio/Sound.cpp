@@ -48,6 +48,12 @@ namespace mc {
 		ov_open(f, &oggFile, NULL, 0);
 		pInfo = ov_info(&oggFile, -1);
 
+		if (pInfo == 0) {
+			std::cout << "Did not load " << fileName << "!\n";
+			system("PAUSE");
+			exit(-1);
+		}
+
 		if (pInfo->channels == 1) {
 			m_format = AL_FORMAT_MONO16;
 		} else {
