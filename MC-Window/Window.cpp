@@ -1,18 +1,30 @@
 #include <MC-Window/Window.h>
 
 namespace mc {
-	void Window::test() {
-		Engine engine;
-		engine.init();
-
-		GLFWwindow* window = glfwCreateWindow(600, 800, "Window!", NULL, NULL);
-		if (window != NULL) {
-			std::cout << "Created window!\n";
+	Window::Window(int width, int height, const char* title, bool resizeable) {
+		glfwDefaultWindowHints();
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+		if (resizeable) {
+			glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		}
 		else {
-			std::cout << "Couldn't create window!\n";
+			glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 		}
-		glfwDestroyWindow(window);
-		engine.terminate();
+
+		m_window = glfwCreateWindow(width, height, title, NULL, NULL);
+
+		glfwShowWindow(m_window);
+	}
+
+	bool Window::isCloseRequested() {
+		return glfwWindowShouldClose(m_window);
+	}
+	
+	GLFWwindow* Window::getGLFWWindow() {
+		return m_window;
+	}
+
+	void Window::destroy() {
+		glfwDestroyWindow(m_window);
 	}
 }

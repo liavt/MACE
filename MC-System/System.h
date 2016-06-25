@@ -4,10 +4,11 @@
 #include <iostream>
 
 namespace mc {
-	class Engine {
+	class System {
 	public:
-		void init();
-		void terminate();
+		static void init();
+		static void terminate();
+		static void pollevents();
 	};
 
 }
