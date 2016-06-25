@@ -1,4 +1,4 @@
-#include <PL-Window/Window.h>
+#include <MC-Window/Window.h>
 
 int main() {
 	mc::Window window;
