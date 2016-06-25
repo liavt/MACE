@@ -1,7 +1,7 @@
 #include <PL-Window/Window.h>
 
 int main() {
-	pl::Window window;
+	mc::Window window;
 	window.test();
 
 	system("PAUSE");

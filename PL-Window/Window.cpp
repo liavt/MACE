@@ -1,8 +1,8 @@
 #include <PL-Window/Window.h>
 
-namespace pl {
+namespace mc {
 	void Window::test() {
-		pl::Engine engine;
+		Engine engine;
 		engine.init();
 
 		GLFWwindow* window = glfwCreateWindow(600, 800, "Window!", NULL, NULL);
