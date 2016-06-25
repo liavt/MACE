@@ -1,5 +1,7 @@
 #include <MC-Graphics/RendererGL.h>
 #include <MC-Window/Window.h>
+#include <MC-Audio/SoundManager.h>
+#include <MC-Audio/Sound.h>
 
 using namespace mc;
 
@@ -9,6 +11,12 @@ int main() {
 	Window window(800, 600, "MACE Window test!", false);
 	Renderer* renderer = new RendererGL(&window);
 	renderer->init();
+
+	SoundManager::init();
+
+	Sound sound("Sound.ogg");
+
+	sound.play();
 
 	glClearColor(1, 0, 1, 1);
 
@@ -29,6 +37,8 @@ int main() {
 	}
 
 	window.destroy();
+
+	SoundManager::destroy();
 
 	System::terminate();
 
