@@ -13,7 +13,7 @@ void mc::Vector<T>::setContents(std::vector<T> contents)
 }
 
 template<class T>
-std::vector<T>& mc::Vector<T>::operator[](int i)
+T& mc::Vector<T>::operator[](int i)
 {
 	return content[i];
 }

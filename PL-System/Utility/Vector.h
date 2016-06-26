@@ -9,7 +9,7 @@ namespace mc {
 		std::vector < T> getContents() const;
 		void setContents(std::vector<T> contents);
 
-		std::vector<T>& operator[](int i);
+		T& operator[](int i);
 		Vector& operator*(Vector* m);
 		Vector& operator*=(Vector* m);
 		Vector& operator/(Vector* m);
@@ -24,8 +24,11 @@ namespace mc {
 
 	typedef mc::Vector<int> IntVector;
 	typedef mc::Vector<float> FloatVector;
-	/*
+	
 	template <class T>
-	using mc::Vector= Matrix<T>;
-	*/
+	using Matrix= mc::Vector<mc::Vector<T>>;
+
+	typedef mc::Matrix<int> IntMatrix;
+	typedef mc::Matrix<float> FloatMatrix;
+	
 }
