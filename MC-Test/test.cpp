@@ -1,40 +1,26 @@
-#include <MC-Graphics/RendererGL.h>
-#include <MC-Window/Window.h>
-#include <MC-Audio/SoundManager.h>
-#include <MC-Audio/Sound.h>
+#include <SDL/SDL.h>
+#include <iostream>
 
-using namespace mc;
+int main(int argc, char** argv) {
+	SDL_Init(SDL_INIT_VIDEO);
 
-int main() {
-	System::init();
+	SDL_Window* window = SDL_CreateWindow("Title!", 
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+		800, 600, SDL_WINDOW_SHOWN);
 
-	Window window(800, 600, "MACE Window test!", false);
-	Renderer* renderer = new RendererGL(&window);
-	renderer->init();
+	
 
-	SoundManager::init();
-
-	Sound sound("Sound.ogg");
-
-	glClearColor(1, 0, 1, 1);
-
-	while (!window.isCloseRequested()) {
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		if (Keyboard::isKeyPressed(GLFW_KEY_SPACE)) {
-			sound.play();
+	SDL_Event e;
+	bool quit = false;
+	while (!quit) {
+		while (SDL_PollEvent(&e)) {
+			if (e.type == SDL_QUIT) {
+				quit = true;
+			}
 		}
-
-		renderer->swapBuffers();
-
-		System::pollevents();
 	}
 
-	window.destroy();
-
-	SoundManager::destroy();
-
-	System::terminate();
+	SDL_Quit();
 
 	return 0;
 }
