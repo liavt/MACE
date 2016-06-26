@@ -14,7 +14,7 @@ namespace mc {
 	void System::pollevents() {
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
-			if (e.window.event == SDL_WINDOWEVENT_CLOSE) {
+			if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE) {
 				SDL_SetWindowData(SDL_GetWindowFromID(e.window.windowID), "open", 0);
 			}
 		}
