@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SDL/SDL.h>
-#include <iostream>
 
 namespace mc {
 	class System {
@@ -9,10 +8,10 @@ namespace mc {
 		static void init();
 		static void terminate();
 		static void pollevents();
+	private: 
+		
 	};
 
 }
 
-#include <MC-System/Definitions.h>
-#include <MC-System/Utility/Utils.h>
 

@@ -1,13 +1,13 @@
 #pragma once
-#include <vector>
+#include <array>
 
 namespace mc {
-	template <class T>
+	template <class T,int N>
 	class Vector {
 	public:
 
-		std::vector < T>* getContents() const;
-		void setContents(std::vector<T> contents);
+		std::array < T,N>* getContents() const;
+		void setContents(std::array<T,N> contents);
 
 		int * size();
 
@@ -29,19 +29,40 @@ namespace mc {
 
 
 		Vector();
-		Vector(std::vector < T>* contents);
+		Vector(std::array<T,N>& contents);
 
 	protected:
-		std::vector < T> content;
+		std::array<T,N> content;
 	};
-
-	typedef mc::Vector<int> IntVector;
-	typedef mc::Vector<float> FloatVector;
 	
-	template <class T>
-	using Matrix= mc::Vector<mc::Vector<T>>;
+	using Vector1f = mc::Vector<float,1>  ;
+	using Vector2f = mc::Vector<float, 2>;
+	using Vector3f = mc::Vector<float, 3>;
+	using Vector4f = mc::Vector<float, 4>;
+	using Vector5f = mc::Vector<float, 5>;
 
-	typedef mc::Matrix<int> IntMatrix;
-	typedef mc::Matrix<float> FloatMatrix;
+	using Vector1i = mc::Vector<int, 1>;
+	using Vector2i = mc::Vector<int, 2>;
+	using Vector3i = mc::Vector<int, 3>;
+	using Vector4i = mc::Vector<int, 4>;
+	using Vector5i = mc::Vector<int, 5>;
+
+
+	template <class T, int W, int H>
+	using Matrix = mc::Vector<mc::Vector<T, H>, W>;
+
+	using Matrix1f = mc::Matrix<float, 1,1>;
+	using Matrix2f = mc::Matrix<float, 2,2>;
+	using Matrix3f = mc::Matrix<float, 3,3>;
+	using Matrix4f = mc::Matrix<float, 4,4>;
+	using Matrix5f = mc::Matrix<float, 5,5>;
+
+	using Matrix1i = mc::Matrix<int, 1,1>;
+	using Matrix2i = mc::Matrix<int, 2,2>;
+	using Matrix3i = mc::Matrix<int, 3,3>;
+	using Matrix4i = mc::Matrix<int, 4,4>;
+	using Matrix5i = mc::Matrix<int, 5,5>;
+
+
 
 }

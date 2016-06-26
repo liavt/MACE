@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <MC-System\Definitions.h>
+#include <vector>
 
 namespace mc {
 
