@@ -1,17 +1,25 @@
 #include <MC-System/System.h>
 #include <MC-Window/Window.h>
+#include <MC-Graphics/GL/RendererGL11.h>
 #include <iostream>
 
-int main(int argc, char** argv) {
-	mc::System::init();
+using namespace mc;
 
-	mc::Window window(800, 600, "MACE SDL Window!");
-	
+int main(int argc, char** argv) {
+	System::init();
+
+	Window window(800, 600, "MACE SDL Window!");
+	Renderer* renderer = new RendererGL11(&window);
+	renderer->init();
+
 	while (window.isOpen()) {
-		mc::System::pollevents();
+		System::pollevents();
+		renderer->render();
+		renderer->swapBuffers();
 	}
 
-	mc::System::terminate();
+	renderer->destroy();
+	System::terminate();
 
 	return 0;
 }
