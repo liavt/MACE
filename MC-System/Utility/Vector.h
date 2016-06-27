@@ -49,12 +49,12 @@ namespace mc {
 	using Vector5i = mc::Vector<int, 5>;
 
 	template <class T, int N>
-	using MatrixColumn = mc::Vector<T, N>;//this is for clartiy
+	using MatrixColumn = mc::Vector<T, N>;//this is for clarity
 
 	template <class T, int W, int H>
 	using Matrix = mc::Vector<mc::MatrixColumn<T, H>, W>;
 
-	using Matrix1f = mc::Matrix<float, 1,1>;
+	using Matrix1f = mc::Matrix<float, 1,1>;//what a thin matrix!
 	using Matrix2f = mc::Matrix<float, 2,2>;
 	using Matrix3f = mc::Matrix<float, 3,3>;
 	using Matrix4f = mc::Matrix<float, 4,4>;
