@@ -18,19 +18,25 @@ namespace mc {
 
 		template<typename TOther, int NOther>
 		Vector operator*(const Vector<TOther,NOther>& m) const;
-		Vector operator*=(const Vector& m);
+		template<typename TOther, int NOther>
+		Vector operator*=(const Vector<TOther, NOther>& m);
 		template<typename TOther, int NOther>
 		Vector operator/(const Vector<TOther,NOther>& m) const;
-		Vector operator/=(const Vector& m);
+		template<typename TOther, int NOther>
+		Vector operator/=(const Vector<TOther, NOther>& m);
 		template<typename TOther, int NOther>
 		Vector operator+(const Vector<TOther,NOther>& m) const;
-		Vector operator+=(const Vector& m);
+		template<typename TOther, int NOther>
+		Vector operator+=(const Vector<TOther, NOther>& m);
 		template<typename TOther, int NOther>
 		Vector operator-(const Vector<TOther,NOther>& m) const;
-		Vector operator-=(const Vector& m);
+		template<typename TOther, int NOther>
+		Vector operator-=(const Vector<TOther, NOther>& m);
 
-		bool operator==(const Vector& other);
-		bool operator!=(const Vector& other);
+		template<typename TOther, int NOther>
+		bool operator==(const Vector<TOther, NOther>& other);
+		template<typename TOther, int NOther>
+		bool operator!=(const Vector<TOther, NOther>& other);
 
 
 		Vector();

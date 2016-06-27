@@ -53,7 +53,8 @@ mc::Vector<T,N> mc::Vector<T, N>::operator*(const Vector<TOther,NOther> & m) con
 
 
 template<typename T, int N>
-mc::Vector<T,N> mc::Vector<T,N>::operator*=(const mc::Vector<T,N> & m)
+template<typename TOther, int NOther>
+mc::Vector<T,N> mc::Vector<T,N>::operator*=(const mc::Vector<TOther, NOther> & m)
 {
 	return this*m;
 }
@@ -73,7 +74,8 @@ mc::Vector<T, N> mc::Vector<T, N>::operator/(const Vector<TOther, NOther> & m) c
 
 
 template<typename T, int N>
-mc::Vector<T,N> mc::Vector<T,N>::operator/=(const mc::Vector<T,N> & m)
+template<typename TOther, int NOther>
+mc::Vector<T,N> mc::Vector<T,N>::operator/=(const mc::Vector<TOther, NOther> & m)
 {
 	return this/m;
 }
@@ -93,7 +95,8 @@ mc::Vector<T, N> mc::Vector<T, N>::operator+(const Vector<TOther, NOther> & m) c
 
 
 template<typename T, int N>
-mc::Vector<T,N> mc::Vector<T,N>::operator+=(const mc::Vector<T,N> & m)
+template<typename TOther, int NOther>
+mc::Vector<T,N> mc::Vector<T,N>::operator+=(const mc::Vector<TOther, NOther> & m)
 {
 	return this+m;
 }
@@ -113,17 +116,19 @@ mc::Vector<T, N> mc::Vector<T, N>::operator-(const Vector<TOther, NOther> & m) c
 
 
 template<typename T, int N>
-mc::Vector<T,N> mc::Vector<T,N>::operator-=(const mc::Vector<T,N> & m)
+template<typename TOther, int NOther>
+mc::Vector<T,N> mc::Vector<T,N>::operator-=(const mc::Vector<TOther, NOther> & m)
 {
 	return this-m;
 }
 
 template<typename T, int N>
-bool mc::Vector<T,N>::operator==(const mc::Vector<T,N> & other)
+template<typename TOther, int NOther>
+bool mc::Vector<T,N>::operator==(const mc::Vector<TOther, NOther> & other)
 {
-	const int* size = this->size();
-	if (size != other.size())return false;
-	for (int i = 0; i < size(); i++) {
+	if (N != NOther)return false;
+	if (T != TOther)return false;
+	for (int i = 0; i < N; i++) {
 		if (this[i] != other[i]) {
 			return false;
 		}
@@ -132,7 +137,8 @@ bool mc::Vector<T,N>::operator==(const mc::Vector<T,N> & other)
 }
 
 template<typename T, int N>
-bool mc::Vector<T,N>::operator!=(const mc::Vector<T,N> & other)
+template<typename TOther, int NOther>
+bool mc::Vector<T,N>::operator!=(const mc::Vector<TOther, NOther> & other)
 {
 	return !(this==other);
 }
