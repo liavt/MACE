@@ -30,6 +30,7 @@ namespace mc {
 
 		Vector();
 		Vector(std::array<T,N>& contents);
+		Vector(const Vector &obj);
 
 	protected:
 		std::array<T,N> content;
@@ -47,9 +48,11 @@ namespace mc {
 	using Vector4i = mc::Vector<int, 4>;
 	using Vector5i = mc::Vector<int, 5>;
 
+	template <class T, int N>
+	using MatrixColumn = mc::Vector<T, N>;//this is for clartiy
 
 	template <class T, int W, int H>
-	using Matrix = mc::Vector<mc::Vector<T, H>, W>;
+	using Matrix = mc::Vector<mc::MatrixColumn<T, H>, W>;
 
 	using Matrix1f = mc::Matrix<float, 1,1>;
 	using Matrix2f = mc::Matrix<float, 2,2>;

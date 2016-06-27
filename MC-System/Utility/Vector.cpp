@@ -40,15 +40,9 @@ T& mc::Vector<T,N>::operator[](int i)
 template<class T, int N>
 mc::Vector<T,N> mc::Vector<T,N>::operator*(const mc::Vector<T,N> & m) const
 {
-	int outSize;
-	if (m.size() >= this->size()) {
-		outSize = this->size()
-	}
-	else if (m.size() < this->size()) {
-		outSize = m.size()
-	}
+	int outSize = m.size()>=this->size() ? this->size() : m.size();
 
-	std::array<T,N> out = std::array<T,N>();
+	std::Vector<T,N> out = std::Vector<T,N>(this);
 	for (int i = 0; i < outSize; i++) {
 		out[i]=(this[i] * m[i]);
 	}
@@ -64,16 +58,13 @@ mc::Vector<T,N> mc::Vector<T,N>::operator*=(const mc::Vector<T,N> & m)
 template<class T, int N>
 mc::Vector<T,N> mc::Vector<T,N>::operator/(const mc::Vector<T,N> & m)  const
 {
-	int outSize;
-	if (m.size() >= this->size()) {
-		outSize = this->size()
-	}
-	else if (m.size() < this->size()) {
-		outSize = m.size()
-	}
+	int outSize = m.size() >= this->size() ? this->size() : m.size();
 
-
-	return mc::Vector<T,N>(out);
+	std::Vector<T, N> out = std::Vector<T, N>(this);
+	for (int i = 0; i < outSize; i++) {
+		out[i] = (this[i] / m[i]);
+	}
+	return mc::Vector<T, N>(out);
 }
 
 template<class T, int N>
@@ -85,15 +76,13 @@ mc::Vector<T,N> mc::Vector<T,N>::operator/=(const mc::Vector<T,N> & m)
 template<class T, int N>
 mc::Vector<T,N> mc::Vector<T,N>::operator+(const mc::Vector<T,N> & m) const
 {
-	int outSize;
-	if (m.size() >= this->size()) {
-		outSize = this->size()
-	}else if (m.size() < this->size()) {
-		outSize = m.size()
+	int outSize = m.size() >= this->size() ? this->size() : m.size();
+
+	std::Vector<T, N> out = std::Vector<T, N>(this);
+	for (int i = 0; i < outSize; i++) {
+		out[i] = (this[i] + m[i]);
 	}
-
-
-	return mc::Vector<T,N>(out);
+	return mc::Vector<T, N>(out);
 }
 
 template<class T, int N>
@@ -105,16 +94,13 @@ mc::Vector<T,N> mc::Vector<T,N>::operator+=(const mc::Vector<T,N> & m)
 template<class T, int N>
 mc::Vector<T,N> mc::Vector<T,N>::operator-(const mc::Vector<T,N> & m) const
 {
-	int outSize;
-	if (m.size() >= this->size()) {
-		outSize = this->size()
-	}
-	else if (m.size() < this->size()) {
-		outSize = m.size()
-	}
+	int outSize = m.size() >= this->size() ? this->size() : m.size();
 
-
-	return mc::Vector<T,N>(out);
+	std::Vector<T, N> out = std::Vector<T, N>(this);
+	for (int i = 0; i < outSize; i++) {
+		out[i] = (this[i] - m[i]);
+	}
+	return mc::Vector<T, N>(out);
 }
 
 template<class T, int N>
@@ -145,10 +131,17 @@ bool mc::Vector<T,N>::operator!=(const mc::Vector<T,N> & other)
 template<class T, int N>
 mc::Vector<T,N>::Vector()
 {
+	this->setContents(std::array<T,N>());
 }
 
 template<class T, int N>
 mc::Vector<T, N>::Vector(std::array<T, N>& contents)
 {
 	this->setContents(contents);
+}
+
+template<class T, int N>
+mc::Vector<T, N>::Vector(const Vector & obj)
+{
+	this->setContents(obj->getContents());
 }
