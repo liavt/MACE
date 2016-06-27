@@ -1,23 +1,27 @@
 #include <MC-Graphics/Renderer.h>
 
 namespace mc {
-	Renderer::Renderer(Window* window) {
-		m_window = window;
-	}
-
-	void Renderer::init() {
+	Renderer::Renderer() {
 
 	}
 
-	void Renderer::swapBuffers() {
+	void Renderer::initFlags() {
+		
+	}
+
+	void Renderer::init(Window* window) {
+
+	}
+
+	void Renderer::swapBuffers(Window* window) {
 
 	}
 
 	void Renderer::destroy() {
-		
+
 	}
 
 	void Renderer::render() {
-		
+
 	}
 }

@@ -5,7 +5,7 @@
 namespace mc {
 	class RendererGL11 : public RendererGL{
 	public:
-		RendererGL11(Window* window);
+		RendererGL11();
 		void render();
 	};
 }

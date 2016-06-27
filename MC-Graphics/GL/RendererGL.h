@@ -8,10 +8,11 @@ namespace mc {
 	private:
 		SDL_GLContext m_context;
 	public:
-		RendererGL(Window* window);
-		void init();
-		void swapBuffers();
+		RendererGL();
+		void init(Window* window);
+		void swapBuffers(Window* window);
 		void destroy();
+		void initFlags();
 		virtual void render();
 	};
 }

@@ -1,18 +1,22 @@
 #include <MC-Graphics/GL/RendererGL.h>
 
 namespace mc {
-	RendererGL::RendererGL(Window* window) : Renderer(window) {
+	RendererGL::RendererGL() {
 
 	}
 
-	void RendererGL::init() {
-		SDL_Window* win = m_window->getSDLWindow();
+	void RendererGL::initFlags() {
+		flags = SDL_WINDOW_OPENGL;
+	}
+
+	void RendererGL::init(Window* window) {
+		SDL_Window* win = window->getSDLWindow();
 
 		m_context = SDL_GL_CreateContext(win);
 	}
 
-	void RendererGL::swapBuffers() {
-		SDL_GL_SwapWindow(m_window->getSDLWindow());
+	void RendererGL::swapBuffers(Window* window) {
+		SDL_GL_SwapWindow(window->getSDLWindow());
 	}
 
 	void RendererGL::destroy() {
@@ -20,6 +24,6 @@ namespace mc {
 	}
 
 	void RendererGL::render() {
-		
+
 	}
 }

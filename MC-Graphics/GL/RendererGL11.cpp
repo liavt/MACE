@@ -1,7 +1,7 @@
 #include <MC-Graphics/GL/RendererGL11.h>
 
 namespace mc {
-	RendererGL11::RendererGL11(Window* window) : RendererGL(window) {
+	RendererGL11::RendererGL11() {
 		
 	}
 
