@@ -52,7 +52,8 @@ namespace mc {
 	using MatrixColumn = mc::Vector<T, N>;//this is for clarity
 
 	template <class T, int W, int H>
-	class Matrix : Vector {
+	//class Matrix : Vector { || the code gives an error!
+	class Matrix {
 	public:
 
 		int size();
