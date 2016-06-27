@@ -10,13 +10,13 @@ std::array<T,N>* mc::Vector<T,N>::getContents() const
 template<class T, int N>
 void mc::Vector<T,N>::setContents(std::array<T,N> contents)
 {
-	this->getContents = contents;
+	this->content = contents;
 }
 
 template<class T, int N>
-int * mc::Vector<T,N>::size()
+int mc::Vector<T,N>::size()
 {
-	return sizeof(this)/sizeof(T);
+	return N;
 }
 
 template<class T, int N>
@@ -144,4 +144,22 @@ template<class T, int N>
 mc::Vector<T, N>::Vector(const Vector & obj)
 {
 	this->setContents(obj->getContents());
+}
+
+template<class T, int W, int H>
+int mc::Matrix<T, W, H>::size()
+{
+	return W*H;
+}
+
+template<class T, int W, int H>
+int mc::Matrix<T, W, H>::width()
+{
+	return W;
+}
+
+template<class T, int W, int H>
+int mc::Matrix<T, W, H>::height()
+{
+	return H;
 }

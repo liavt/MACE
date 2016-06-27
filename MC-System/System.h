@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL/SDL.h>
 
 namespace mc {
 	class System {

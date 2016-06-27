@@ -9,7 +9,7 @@ namespace mc {
 		std::array < T,N>* getContents() const;
 		void setContents(std::array<T,N> contents);
 
-		int * size();
+		virtual int size();
 
 		T * begin();
 		T * end();
@@ -52,7 +52,17 @@ namespace mc {
 	using MatrixColumn = mc::Vector<T, N>;//this is for clarity
 
 	template <class T, int W, int H>
-	using Matrix = mc::Vector<mc::MatrixColumn<T, H>, W>;
+	class Matrix : Vector {
+	public:
+
+		int size();
+
+		int height();
+		int width();
+
+	};
+
+
 
 	using Matrix1f = mc::Matrix<float, 1,1>;//what a thin matrix!
 	using Matrix2f = mc::Matrix<float, 2,2>;
@@ -65,7 +75,6 @@ namespace mc {
 	using Matrix3i = mc::Matrix<int, 3,3>;
 	using Matrix4i = mc::Matrix<int, 4,4>;
 	using Matrix5i = mc::Matrix<int, 5,5>;
-
 
 
 }
