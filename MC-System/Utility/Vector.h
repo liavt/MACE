@@ -2,26 +2,31 @@
 #include <array>
 
 namespace mc {
-	template <class T,int N>
+	template <typename T,int N>
 	class Vector {
 	public:
 
 		std::array < T,N>* getContents() const;
 		void setContents(std::array<T,N> contents);
 
-		virtual int size();
+		int size();
 
 		T * begin();
 		T * end();
 
 		T& operator[](int i);
-		Vector operator*(const Vector& m) const;
+
+		template<typename TOther, int NOther>
+		Vector operator*(const Vector<TOther,NOther>& m) const;
 		Vector operator*=(const Vector& m);
-		Vector operator/(const Vector& m) const;
+		template<typename TOther, int NOther>
+		Vector operator/(const Vector<TOther,NOther>& m) const;
 		Vector operator/=(const Vector& m);
-		Vector operator+(const Vector& m) const;
+		template<typename TOther, int NOther>
+		Vector operator+(const Vector<TOther,NOther>& m) const;
 		Vector operator+=(const Vector& m);
-		Vector operator-(const Vector& m) const;
+		template<typename TOther, int NOther>
+		Vector operator-(const Vector<TOther,NOther>& m) const;
 		Vector operator-=(const Vector& m);
 
 		bool operator==(const Vector& other);
@@ -48,22 +53,11 @@ namespace mc {
 	using Vector4i = mc::Vector<int, 4>;
 	using Vector5i = mc::Vector<int, 5>;
 
-	template <class T, int N>
+	template <typename T, int N>
 	using MatrixColumn = mc::Vector<T, N>;//this is for clarity
 
-	template <class T, int W, int H>
-	//class Matrix : Vector { || the code gives an error!
-	class Matrix {
-	public:
-
-		int size();
-
-		int height();
-		int width();
-
-	};
-
-
+	template <typename T, int W, int H>
+	using Matrix = mc::Vector<mc::MatrixColumn<T,W>,H>;
 
 	using Matrix1f = mc::Matrix<float, 1,1>;//what a thin matrix!
 	using Matrix2f = mc::Matrix<float, 2,2>;
