@@ -1,4 +1,5 @@
 #include <MC-System/System.h>
+#include <SDL/SDL.h>
 
 typedef unsigned char byte;
 
