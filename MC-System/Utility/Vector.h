@@ -47,7 +47,7 @@ namespace mc {
 		std::array<T,N> content;
 	};
 	
-	using Vector1f = mc::Vector<float,1>  ;
+	using Vector1f = mc::Vector<float, 1>;
 	using Vector2f = mc::Vector<float, 2>;
 	using Vector3f = mc::Vector<float, 3>;
 	using Vector4f = mc::Vector<float, 4>;
