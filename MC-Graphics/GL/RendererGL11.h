@@ -6,6 +6,6 @@ namespace mc {
 	class RendererGL11 : public RendererGL{
 	public:
 		RendererGL11();
-		void render();
+		void render(GraphicsObject* object);
 	};
 }

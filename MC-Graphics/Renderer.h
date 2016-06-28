@@ -1,6 +1,8 @@
 #pragma once
 
 #include <MC-Window/Window.h>
+#include <MC-Graphics/GraphicsObject.h>
+#include <MC-System/Utility/Color.h>
 #include <iostream>
 
 namespace mc {
@@ -11,7 +13,8 @@ namespace mc {
 		virtual void initFlags();
 		virtual void swapBuffers(Window* window);
 		virtual void destroy();
-		virtual void render();
+		virtual void clear(Color* color);
+		virtual void render(GraphicsObject* object);
 
 		SDL_WindowFlags flags;
 	};

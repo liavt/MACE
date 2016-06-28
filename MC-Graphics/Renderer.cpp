@@ -21,7 +21,11 @@ namespace mc {
 
 	}
 
-	void Renderer::render() {
+	void Renderer::clear(Color* color) {
+		
+	}
+
+	void Renderer::render(GraphicsObject* object) {
 
 	}
 }

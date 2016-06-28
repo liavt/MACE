@@ -13,6 +13,7 @@ namespace mc {
 		void swapBuffers(Window* window);
 		void destroy();
 		void initFlags();
-		virtual void render();
+		void clear(Color* color);
+		virtual void render(GraphicsObject* object);
 	};
 }

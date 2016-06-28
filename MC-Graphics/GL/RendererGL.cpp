@@ -23,7 +23,12 @@ namespace mc {
 		SDL_GL_DeleteContext(m_context);
 	}
 
-	void RendererGL::render() {
+	void RendererGL::render(GraphicsObject* object) {
 
+	}
+
+	void RendererGL::clear(Color* color) {
+		glClearColor(color->r, color->g, color->b, color->a);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 }

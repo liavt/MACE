@@ -5,8 +5,7 @@ namespace mc {
 		
 	}
 
-	void RendererGL11::render() {
-		glClearColor(1, 0, 1, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+	void RendererGL11::render(GraphicsObject* object) {
+
 	}
 }
