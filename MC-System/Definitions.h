@@ -1,5 +1,5 @@
 #pragma once
 
 namespace mc {
-	typedef unsigned char Byte;
+	using Byte = unsigned char;
 }
