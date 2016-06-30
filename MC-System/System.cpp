@@ -13,7 +13,7 @@ namespace mc {
 	}
 	void System::removeModule(std::string module)
 	{
-		for (int i = 0; i < modules.size(); i++) {
+		for (unsigned int i = 0; i < modules.size(); i++) {
 			if (modules[i].getName() == module) {
 				removeModule(i);
 				return;
@@ -26,7 +26,7 @@ namespace mc {
 	}
 	Module * System::getModule(std::string keyword)
 	{
-		for (int i = 0; i < modules.size();i++) {
+		for (unsigned int i = 0; i < modules.size();i++) {
 			if (modules[i].getName() == keyword) {
 				return &modules[i];
 			}

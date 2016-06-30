@@ -3,7 +3,7 @@
 
 namespace mc {
 	/**
-	@brief Class that llows for vector math
+	@brief Class that allows for vector math
 	
 	@tparam T what the {@code Vector} is made of and calculates with.
 	@tparam N width of the {@code Vector}
@@ -12,42 +12,91 @@ namespace mc {
 	class Vector {
 	public:
 
-		std::array < T,N>* getContents() const;
-		void setContents(std::array<T,N> contents);
+		std::array < T,N>* getContents() const
+		{
+			return this->content;
+		};
+		void setContents(std::array<T,N> contents)
+		{
+			this->content = contents;
+		};
 
-		int size();
-
-		T * begin();
-		T * end();
-
-		T& operator[](int i);
-
-		template<typename TOther, int NOther>
-		Vector operator*(const Vector<TOther,NOther>& m) const;
-		template<typename TOther, int NOther>
-		Vector operator*=(const Vector<TOther, NOther>& m);
-		template<typename TOther, int NOther>
-		Vector operator/(const Vector<TOther,NOther>& m) const;
-		template<typename TOther, int NOther>
-		Vector operator/=(const Vector<TOther, NOther>& m);
-		template<typename TOther, int NOther>
-		Vector operator+(const Vector<TOther,NOther>& m) const;
-		template<typename TOther, int NOther>
-		Vector operator+=(const Vector<TOther, NOther>& m);
-		template<typename TOther, int NOther>
-		Vector operator-(const Vector<TOther,NOther>& m) const;
-		template<typename TOther, int NOther>
-		Vector operator-=(const Vector<TOther, NOther>& m);
-
-		template<typename TOther, int NOther>
-		bool operator==(const Vector<TOther, NOther>& other);
-		template<typename TOther, int NOther>
-		bool operator!=(const Vector<TOther, NOther>& other);
+		unsigned int size() const
+		{
+			return N;
+		};
 
 
-		Vector();
-		Vector(std::array<T,N>& contents);
-		Vector(const Vector &obj);
+		T& get(int i){
+			return const_cast<T&>(static_cast<const std::array<T, N>>(content)->get(i));;
+		}
+
+		const T& get(int i) const{
+			return content.at(i);
+		}
+
+		T * begin()
+		{
+			return content.begin();
+		};
+		T * end()
+		{
+			return content.end();
+		};
+
+		T& operator[](int i)
+		{
+			return const_cast<T&>(static_cast<const std::array<T,N>>(content)[i]);;
+		};
+
+		const T& operator[](int i) const
+		{
+			return content[i];
+		};
+
+		Vector operator+(const Vector<T, N>& right) const {
+			std::array<T, N> out = std::array<T, N>();
+			for (unsigned int i = 0; i < N; i++) {
+				out[i]=((T)(&this[i] + right[i]));
+			}
+			return mc::Vector<T, N>(out);
+		};
+
+
+	
+
+		template<typename TOther, int NOther>
+		bool operator==(const Vector<TOther, NOther>& other)
+		{
+			if (N != NOther)return false;
+			if (T != TOther)return false;
+			for (int i = 0; i < N; i++) {
+				if (this[i] != other[i]) {
+					return false;
+				}
+			}
+			return true;
+		};
+
+		template<typename TOther, int NOther>
+		bool operator!=(const Vector<TOther, NOther>& other)
+		{
+			return !(this == other);
+		};
+
+
+		Vector()
+		{
+			this->setContents(std::array<T, N>());
+		};
+		Vector(std::array<T,N>& contents)
+		{
+			this->setContents(contents);
+		};
+		Vector(const Vector &obj)
+		{
+			this->setContents(obj->getContents());
+		};
 
 	protected:
 		std::array<T,N> content;
