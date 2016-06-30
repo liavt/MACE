@@ -12,11 +12,16 @@ namespace mc {
 	class Vector {
 	public:
 
-		std::array < T,N>* getContents() const
+		std::array < T, N>* getContents()
 		{
-			return this->content;
+			return &this->content;
 		};
-		void setContents(std::array<T,N> contents)
+
+		const std::array < T,N>* getContents() const
+		{
+			return &this->content;
+		};
+		void setContents(const std::array<T,N> contents)
 		{
 			this->content = contents;
 		};
@@ -28,7 +33,7 @@ namespace mc {
 
 
 		T& get(int i){
-			return const_cast<T&>(static_cast<const std::array<T, N>>(content)->get(i));;
+			return content->get(i);
 		}
 
 		const T& get(int i) const{
@@ -46,7 +51,7 @@ namespace mc {
 
 		T& operator[](int i)
 		{
-			return const_cast<T&>(static_cast<const std::array<T,N>>(content)[i]);;
+			return content[i];
 		};
 
 		const T& operator[](int i) const
@@ -57,13 +62,34 @@ namespace mc {
 		Vector operator+(const Vector<T, N>& right) const {
 			std::array<T, N> out = std::array<T, N>();
 			for (unsigned int i = 0; i < N; i++) {
-				out[i]=((T)(&this[i] + right[i]));
+				out[i]=((T)(this->get(i) + right.get(i)));
 			}
 			return mc::Vector<T, N>(out);
 		};
 
+		Vector operator-(const Vector<T, N>& right) const {
+			std::array<T, N> out = std::array<T, N>();
+			for (unsigned int i = 0; i < N; i++) {
+				out[i] = ((T)(this->get(i) - right.get(i)));
+			}
+			return mc::Vector<T, N>(out);
+		};
 
-	
+		Vector operator/(const Vector<T, N>& right) const {
+			std::array<T, N> out = std::array<T, N>();
+			for (unsigned int i = 0; i < N; i++) {
+				out[i] = ((T)(this->get(i) / right.get(i)));
+			}
+			return mc::Vector<T, N>(out);
+		};
+
+		Vector operator*(const Vector<T, N>& right) const {
+			std::array<T, N> out = std::array<T, N>();
+			for (unsigned int i = 0; i < N; i++) {
+				out[i] = ((T)(this->get(i) * right.get(i)));
+			}
+			return mc::Vector<T, N>(out);
+		};
 
 		template<typename TOther, int NOther>
 		bool operator==(const Vector<TOther, NOther>& other)
@@ -95,7 +121,7 @@ namespace mc {
 		};
 		Vector(const Vector &obj)
 		{
-			this->setContents(obj->getContents());
+			this->setContents(*obj.getContents());
 		};
 
 	protected:
