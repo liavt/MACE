@@ -3,7 +3,7 @@
 #include <MC-System/System.h>
 
 namespace mc {
-	class GraphicsModule {
+	class GraphicsModule : public Module{
 	public:
 		GraphicsModule();
 		void init();

@@ -122,6 +122,7 @@ namespace mc {
 		Vector(const Vector &obj)
 		{
 			this->setContents(*obj.getContents());
+
 		};
 
 	protected:
