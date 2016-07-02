@@ -22,7 +22,7 @@ namespace mc {
 		static void removeModule(Module* m);
 		static void removeModule(std::string module);
 		static void removeModule(int i );
-		static Module* getModule(std::string keyword);
+		static Module* getModule(std::string keyword) ;
 		static Module* getModule(int i);
 
 
@@ -30,6 +30,7 @@ namespace mc {
 		static void terminate();
 		static void update();
 	private: 
+		System();
 
 		static std::vector<Module> modules;
 	};
