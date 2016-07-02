@@ -4,7 +4,7 @@ namespace mc {
 	Window::Window(int width, int height, const char* title) {
 		m_originalWidth = width;
 		m_originalHeight = height;
-		m_title = (char*) title;
+		m_title = (char*)title;
 	}
 
 	void Window::create() {
@@ -16,7 +16,7 @@ namespace mc {
 	}
 
 	bool Window::isOpen() {
-		return ((int) SDL_GetWindowData(m_window, "open")) != 0;
+		return ((int)SDL_GetWindowData(m_window, "open")) != 0;
 	}
 
 	SDL_Window* Window::getSDLWindow() {
@@ -25,6 +25,26 @@ namespace mc {
 
 	void Window::destroy() {
 		SDL_DestroyWindow(m_window);
+	}
+
+	WindowModule::WindowModule(Window * w)
+	{
+		this->window = w;
+	}
+	void mc::WindowModule::init() {
+		this->window->create();
+	}
+
+	void mc::WindowModule::update() {
+		this->window->destroy();
+	}
+
+	void mc::WindowModule::destroy() {
+		this->window->destroy();
+	}
+
+	std::string mc::WindowModule::getName() const {
+		return "MC-Window";
 	}
 
 }

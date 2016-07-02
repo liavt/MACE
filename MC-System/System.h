@@ -2,13 +2,16 @@
 #include <vector>
 
 namespace mc {
+	class System;
+
 	class Module {
-	public: 
+		friend class System;
+	protected: 
 		virtual void init()=0;
 		virtual void update()=0;
 		virtual void destroy()=0;
 	
-		virtual char* getName()=0;
+		virtual std::string getName() const =0;
 	};
 
 	class System final {
@@ -19,7 +22,11 @@ namespace mc {
 		static void removeModule(int i );
 		static Module* getModule(std::string keyword) ;
 		static Module* getModule(int i);
+		static bool moduleExists(std::string module);
+		static bool moduleExists(Module* module);
 
+		static void assertModule(std::string module,std::string errorMessage);
+		static void assertModule(std::string module);
 
 		static void init();
 		static void terminate();

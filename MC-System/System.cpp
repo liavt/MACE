@@ -1,5 +1,7 @@
 #include <MC-System/System.h>
 #include <SDL/SDL.h>
+#include <iostream>
+#include <MC-System/Exceptions.h>
 
 namespace mc {
 	std::vector<Module*> System::modules;
@@ -16,7 +18,7 @@ namespace mc {
 	void System::removeModule(std::string module)
 	{
 		for (unsigned int i = 0; i < modules.size(); i++) {
-			if (modules[i]->getName() == module) {
+			if (modules[i]->getName()==module) {
 				removeModule(i);
 				return;
 			}
@@ -38,6 +40,29 @@ namespace mc {
 	Module * System::getModule(int i)
 	{
 		return modules[i];
+	}
+	bool System::moduleExists(std::string module)
+	{
+		for (Module * m : modules) {
+			if (m->getName() == module) {
+				return true;
+			}
+		}
+		return false;
+	}
+	bool System::moduleExists(Module * module)
+	{
+		return moduleExists(module->getName());
+	}
+	void System::assertModule(std::string module, std::string errorMessage)
+	{
+		if (!moduleExists(module)) {
+			throw DependencyNotFound(errorMessage);
+		}
+	}
+	void System::assertModule(std::string module)
+	{
+		assertModule(module, "\'"+module+"\' module has not been registered!");
 	}
 	void System::init() {
 		SDL_Init(SDL_INIT_EVERYTHING);

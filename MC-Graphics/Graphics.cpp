@@ -1,18 +1,21 @@
 #include <MC-Graphics/Graphics.h>
 #include <iostream>
 
-void mc::GraphicsModule::init() {
-	std::cout << "Inited!" << std::endl;
-}
+namespace mc {
+	void GraphicsModule::init() {
+		std::cout << "Inited!" << std::endl;
+		mc::System::assertModule("MC-Window");
+	}
 
-void mc::GraphicsModule::update() {
-	std::cout << "Updated!" << std::endl;
-}
+	void GraphicsModule::update() {
+		std::cout << "Updated!" << std::endl;
+	}
 
-void mc::GraphicsModule::destroy() {
-	std::cout << "Destroyed!" << std::endl;
-}
+	void GraphicsModule::destroy() {
+		std::cout << "Destroyed!" << std::endl;
+	}
 
-char* mc::GraphicsModule::getName() {
-	return "Graphics";
+	std::string GraphicsModule::getName() const{
+		return "MC-Graphics";
+	}
 }
