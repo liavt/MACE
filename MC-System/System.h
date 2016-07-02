@@ -1,24 +1,19 @@
 #pragma once
 #include <vector>
-#include <string>
-
 
 namespace mc {
 	class Module {
 	public: 
-		virtual void init();
-		virtual void update();
-		virtual void destroy();
+		virtual void init()=0;
+		virtual void update()=0;
+		virtual void destroy()=0;
 	
-		std::string getName();
-
-	protected:
-		std::string name;
+		virtual char* getName()=0;
 	};
 
 	class System final {
 	public:
-		static int addModule(const Module m);
+		static int addModule(Module* m);
 		static void removeModule(Module* m);
 		static void removeModule(std::string module);
 		static void removeModule(int i );
@@ -32,7 +27,7 @@ namespace mc {
 	private: 
 		System();
 
-		static std::vector<Module> modules;
+		static std::vector<Module*> modules;
 	};
 
 }

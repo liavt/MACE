@@ -13,6 +13,6 @@ void mc::GraphicsModule::destroy() {
 	std::cout << "Destroyed!" << std::endl;
 }
 
- mc::GraphicsModule::GraphicsModule() {
-	 this->name = "Graphics";
+char* mc::GraphicsModule::getName() {
+	return "Graphics";
 }
