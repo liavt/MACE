@@ -12,12 +12,12 @@ namespace mc {
 	class Vector {
 	public:
 
-		std::array < T, N>* getContents()
+		std::array < T, N>& getContents()
 		{
 			return &this->content;
 		};
 
-		const std::array < T,N>* getContents() const
+		const std::array < T,N>& getContents() const
 		{
 			return &this->content;
 		};
@@ -90,6 +90,7 @@ namespace mc {
 			}
 			return mc::Vector<T, N>(out);
 		};
+
 
 		template<typename TOther, int NOther>
 		bool operator==(const Vector<TOther, NOther>& other)
