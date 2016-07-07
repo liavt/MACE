@@ -1,38 +1,30 @@
 #pragma once
 #define _MACE true //this will be true if MACE is included
 
-#define _MACE_toString(c) #c
-
-//used for bit masking
-#define _MACE_TRUE 0b10000000
-#define _MACE_FALSE 0b00000000
-
 #ifndef __cplusplus
 	#error A C++ compiler is required!
 #endif 
 
-//for entities:
-#ifndef _MACE_ENTITY_DEFAULT_CONTAINER_SIZE
-	#define _MACE_ENTITY_DEFAULT_CONTAINER_SIZE 0
-#endif
-#ifndef _MACE_ENTITY_DEFAULT_PROPERTIES
-	#define _MACE_ENTITY_DEFAULT_PROPERTIES 0b01110101
-#endif
-
-//values defining which bit in a byte every propety is, or how much to bit shift it
-#define _MACE_ENTITY_DEAD 0
-#define _MACE_ENTITY_ENABLED 1
-#define _MACE_ENTITY_DIRTY 2
-#define _MACE_PASS_DOWN_PROPERTIES 3
-#define _MACE_ENTITY_STRECH_X 4
-#define _MACE_ENTITY_INHERIT_STRETCH_X 5
-#define _MACE_ENTITY_STRETCH_Y 6
-#define _MACE_ENTITY_IHERIT_STRETCH_Y 7
 
 namespace mc {
-	using Bit8 = unsigned char;
+	using Byte = unsigned char;
 
-	using Byte = Bit8;
+	//values defining which bit in a byte every propety is, or how much to bit shift it
+	/**
+	*Marks an entity for death, where any {@link Container} holding it will remove it
+	*/
+	const Byte ENTITY_PROPERTY_DEAD = 0;
+	const Byte ENTITY_PROPERTY_ENABLED = 1;
+	const Byte ENTITY_PROPERTY_DIRTY = 2;
+	const Byte ENTITY_PROPERTY_INIT = 3;
+	const Byte ENTITY_PROPERTY_STRECTH_X = 4;
+	const Byte ENTITY_PROPERTY_INHERIT_STRETCH_X = 5;
+	const Byte ENTITY_PROPERTY_STRETCH_Y = 6;
+	const Byte ENTITY_PROPERTY_INHERIT_STRETCH_Y = 7;
 
-
+	#ifdef _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES
+		const Byte ENTITY_DEFAULT_PROPERTIES = _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES;
+	#else
+		const Byte ENTITY_DEFAULT_PROPERTIES = 0b10101110;
+	#endif
 }

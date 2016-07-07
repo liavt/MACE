@@ -25,16 +25,31 @@ public:
 
 TEST_CASE("Adding and removing modules", "[module][system]") {
 	TestModule m=TestModule();
+	TestModule m2 = TestModule();
+
 
 	mc::System::addModule(&m);
 
 	REQUIRE(mc::System::moduleExists(m.getName()));
 	REQUIRE(mc::System::moduleExists(&m));
 
+	mc::System::addModule(&m2);
+
+	REQUIRE(mc::System::moduleExists(m2.getName()));
+	REQUIRE(mc::System::moduleExists(&m2));
+	REQUIRE(mc::System::numberOfModules()==2);
+
 	mc::System::removeModule(&m);
 
 	REQUIRE_FALSE(mc::System::moduleExists(m.getName()));
 	REQUIRE_FALSE(mc::System::moduleExists(&m));
+	REQUIRE(mc::System::moduleExists(m2.getName()));
+	REQUIRE(mc::System::moduleExists(&m2));
+
+	mc::System::removeModule(&m2);
+
+	REQUIRE_FALSE(mc::System::moduleExists(m2.getName()));
+	REQUIRE_FALSE(mc::System::moduleExists(&m2));
 }
 
 TEST_CASE("Modules getting updated","[module][system]") {

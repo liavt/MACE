@@ -43,8 +43,8 @@ namespace mc {
 	}
 	bool System::moduleExists(std::string module)
 	{
-		for (Module * m : modules) {
-			if (m->getName() == module) {
+		for (unsigned int i = 0; i < modules.size();i++) {
+			if (modules[i]->getName() == module) {
 				return true;
 			}
 		}
@@ -53,6 +53,10 @@ namespace mc {
 	bool System::moduleExists(Module * module)
 	{
 		return moduleExists(module->getName());
+	}
+	std::size_t System::numberOfModules()
+	{
+		return modules.size();
 	}
 	void System::assertModule(std::string module, std::string errorMessage)
 	{

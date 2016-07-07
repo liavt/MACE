@@ -4,55 +4,55 @@
 
 namespace mc {
 
-	Container::Container()
+	EntityContainer::EntityContainer()
 	{
-		children=  std::vector<Entity*>(_MACE_ENTITY_DEFAULT_CONTAINER_SIZE);
+		children=  std::vector<Entity*>();
 	}
 
-	Container::Container(int size)
+
+	EntityContainer::~EntityContainer()
 	{
-		children= std::vector<Entity*>(size);
+		children.clear();
 	}
 
-	Container::~Container()
-	{
-		for (auto &it : children) delete it; children.clear();
-	}
-
-	Container::Container(const Container & other)
-	{
-		children = other.children;
-	}
-
-	void Container::updateChildren()
+	void EntityContainer::updateChildren()
 	{
 		for (std::size_t i = 0; i < children.size();i++) {
 			children[i]->update();
 		}
 	}
+
+	void EntityContainer::initChildren()
+	{
+		for (std::size_t i = 0; i < children.size(); i++) {
+			children[i]->init();
+		}
+	}
 	
+	void EntityContainer::destroyChildren()
+	{
+		for (std::size_t i = 0; i < children.size(); i++) {
+			children[i]->destroy();
+		}
+	}
 	
-	std::vector<Entity*>& Container::getChildren()
+	std::vector<Entity*>& EntityContainer::getChildren()
 	{
 		return this->children;
 	}
 
-	const std::vector<Entity*>& Container::getChildren() const
+	const std::vector<Entity*>& EntityContainer::getChildren() const
 	{
 		return this->children;
 	}
 
-	Container Container::operator=(const Container & other)
-	{
-		return Container(other);
-	}
 
-	void Container::addChild(Entity* e)
+	void EntityContainer::addChild(Entity* e)
 	{
 		children.push_back(e);
 	}
 
-	void Container::removeChild(const Entity* e)
+	void EntityContainer::removeChild(const Entity* e)
 	{
 		for (unsigned int i = 0; i < children.size();i++) {
 			if (e == children[i]) {
@@ -63,41 +63,67 @@ namespace mc {
 	}
 
 
-	Entity & Container::operator[](int i)
+	Entity & EntityContainer::operator[](int i)
 	{
 		return getChild(i);
 	}
 
-	Entity &Container::getChild(int i)
+	Entity &EntityContainer::getChild(int i)
 	{
 		return *children.at(i);
 	}
 
-	std::vector<Entity*>::iterator Container::begin()
+	std::vector<Entity*>::iterator EntityContainer::begin()
 	{
 		return children.begin();
 	}
 
-	std::vector<Entity*>::iterator Container::end()
+	std::vector<Entity*>::iterator EntityContainer::end()
 	{
 		return children.end();
 	}
 
-	std::size_t Container::size() const
+	std::size_t EntityContainer::size() const
 	{
 		return children.size();
 	}
 
-	void Entity::update()
+	void EntityContainer::update()
 	{
-		customUpdate();
 		updateChildren();
 	}
-	Entity::Entity() :Container()
+
+	void EntityContainer::init()
+	{
+		initChildren();
+	}
+
+	void EntityContainer::destroy() {
+		destroyChildren();
+	}
+
+	void Entity::update() {
+		customUpdate();
+		EntityContainer::update();
+	}
+
+	void Entity::init()
+	{
+		customInit();
+		EntityContainer::init();
+	}
+
+	void Entity::destroy()
+	{
+		customDestroy();
+		EntityContainer::destroy();
+	}
+
+	Entity::Entity() :EntityContainer()
 	{
 
 	}
-	Entity::Entity(const Entity & obj) : Container(obj)
+	Entity::Entity(const Entity & obj) : EntityContainer(obj)
 	{
 		properties = obj.properties;
 	}
@@ -111,13 +137,39 @@ namespace mc {
 	}
 	bool Entity::getProperty(unsigned int position)
 	{
-		//basically a ternary statement. bit shifts to a certain position, and if the first bit is 1, returns true, other false
-		//the !! is to tell the comiler to explicitely return true or false. otherwise, it would return !true and true, whcih obviously is unintended.
-		Byte shifted = (position >> properties) & 1;;
-		return (shifted==1);
+		return (((properties >> position) & 1)==1);
 	}
 	void Entity::setProperty(unsigned int position, bool value)
 	{
-		properties ^= ((value ? 1 :0) ^ properties) & (1 << position);
+		if (value) {
+			properties |= (1 << position);
+		}
+		else {
+			properties &= ~(1 << position);
+		}
+
+	}
+
+	EntityModule::EntityModule()
+	{
+	}
+
+	std::string EntityModule::getName() const {
+		return "MC-Entity";
+	}
+
+	void EntityModule::init()
+	{
+		EntityContainer::init();
+	}
+
+	void EntityModule::update()
+	{
+		EntityContainer::update();
+	}
+
+	void EntityModule::destroy()
+	{
+		EntityContainer::destroy();
 	}
 }

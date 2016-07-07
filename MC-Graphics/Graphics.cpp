@@ -5,6 +5,7 @@ namespace mc {
 	void GraphicsModule::init() {
 		std::cout << "Inited!" << std::endl;
 		mc::System::assertModule("MC-Window");
+		mc::System::assertModule("MC-Entity");
 	}
 
 	void GraphicsModule::update() {

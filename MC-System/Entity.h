@@ -1,25 +1,32 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include <MC-System/Definitions.h>
+#include <MC-System/System.h>
 
 
 namespace mc {
 	class Entity;
+	class EntityModule;
 
-	class Container {
-	public:
-		Container();
-		Container(int i);
-		~Container();
-		Container(const Container& other);
-
+	class EntityContainer {
 		void updateChildren();
+		void initChildren();
+		void destroyChildren();//think of the children!
+
+		friend class EntityModule;
+		friend class Entity;
+		
+		EntityContainer();
+
+	public:
+		~EntityContainer();
+
+		virtual void update();
+		virtual void init();
+		virtual void destroy();
 
 		std::vector<Entity*>& getChildren();
 		const std::vector<Entity*>& getChildren() const;
-
-		Container operator=(const Container& other);
 
 		void addChild(Entity* e);
 		void removeChild(const Entity* e);
@@ -34,10 +41,10 @@ namespace mc {
 		std::vector<Entity*> children;
 	};
 
+	using Container = EntityContainer;
 
 	class Entity : public Container{
-		friend class Container;
-		void update();
+		friend class EntityContainer;
 
 	public:
 		Entity();
@@ -49,14 +56,27 @@ namespace mc {
 		bool getProperty(unsigned int position);
 		void setProperty(unsigned int position, bool value);
 
+		void update();
+		void init();
+		void destroy();
 	protected:
 		virtual void customUpdate() = 0;
+		virtual void customInit() = 0;
+		virtual void customDestroy() = 0;
 
-		Byte properties = _MACE_ENTITY_DEFAULT_PROPERTIES;
+		Byte properties = ENTITY_DEFAULT_PROPERTIES;
 
-	private:
 	};
 
-	using EntityPtr = std::unique_ptr<Entity>;
+	class EntityModule : public Module,public EntityContainer {
+	public:
+		EntityModule();
+
+
+		void init();
+		void update();
+		void destroy();
+		std::string getName() const;
+	};
 	
 }
