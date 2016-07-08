@@ -36,28 +36,30 @@ TEST_CASE("Testing entity properties","[entity][system]") {
 }
 
 TEST_CASE("Testing entity module and updating", "[entity][system]") {
-	EntityModule c =EntityModule();
+	REQUIRE(mc::System::numberOfModules()==0);
+
+	EntityModule* c =new EntityModule();
 	
-	System::addModule(&c);
+	System::addModule(*c);
 
 	DummyEntity e = DummyEntity();
 
-	REQUIRE(c.size() == 0);
+	REQUIRE(c->size() == 0);
 	REQUIRE(e.isUpdated == false);
 
-	c.addChild(&e);
+	c->addChild(&e);
 
 
-	REQUIRE(c.size() == 1);
+	REQUIRE(c->size() == 1);
 
-	c.update();
+	c->update();
 
 	REQUIRE(e.isUpdated);
 
 	DummyEntity child = DummyEntity();
 	e.addChild(&child);
 
-	c.update();
+	c->update();
 
 	REQUIRE(child.isUpdated);
 }

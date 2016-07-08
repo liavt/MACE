@@ -16,8 +16,8 @@ namespace mc {
 
 	class System final {
 	public:
-		static int addModule(Module* m);
-		static void removeModule(Module* m);
+		static int addModule(Module& m);
+		static void removeModule(Module& m);
 		static void removeModule(std::string module);
 		static void removeModule(int i );
 		static Module* getModule(std::string keyword) ;

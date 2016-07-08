@@ -24,38 +24,37 @@ public:
 };
 
 TEST_CASE("Adding and removing modules", "[module][system]") {
-	TestModule m=TestModule();
+	TestModule* m= new TestModule();//tests adding modules with dynamic memory and on the stack
 	TestModule m2 = TestModule();
 
 
-	mc::System::addModule(&m);
+	mc::System::addModule(*m);
 
-	REQUIRE(mc::System::moduleExists(m.getName()));
-	REQUIRE(mc::System::moduleExists(&m));
+	REQUIRE(mc::System::moduleExists(m->getName()));
+	REQUIRE(mc::System::moduleExists(m));
 
-	mc::System::addModule(&m2);
+	mc::System::addModule(m2);
 
 	REQUIRE(mc::System::moduleExists(m2.getName()));
 	REQUIRE(mc::System::moduleExists(&m2));
 	REQUIRE(mc::System::numberOfModules()==2);
+	mc::System::update();
 
-	mc::System::removeModule(&m);
+	mc::System::removeModule(*m);
 
-	REQUIRE_FALSE(mc::System::moduleExists(m.getName()));
-	REQUIRE_FALSE(mc::System::moduleExists(&m));
-	REQUIRE(mc::System::moduleExists(m2.getName()));
 	REQUIRE(mc::System::moduleExists(&m2));
 
-	mc::System::removeModule(&m2);
+	mc::System::removeModule(m2);
 
-	REQUIRE_FALSE(mc::System::moduleExists(m2.getName()));
-	REQUIRE_FALSE(mc::System::moduleExists(&m2));
+	REQUIRE(!mc::System::moduleExists(&m2));
+
+	delete m;
 }
 
 TEST_CASE("Modules getting updated","[module][system]") {
 	TestModule m = TestModule();
 
-	mc::System::addModule(&m);
+	mc::System::addModule(m);
 
 	REQUIRE_FALSE(m.isInit);
 	REQUIRE(m.x == 0);
@@ -75,7 +74,7 @@ TEST_CASE("Modules getting updated","[module][system]") {
 	REQUIRE(m.x == 10);
 	REQUIRE_FALSE(m.isInit);
 
-	mc::System::removeModule(&m);
+	mc::System::removeModule(m);
 
 	mc::System::init();
 

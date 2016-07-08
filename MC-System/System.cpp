@@ -6,14 +6,14 @@
 namespace mc {
 	std::vector<Module*> System::modules;
 
-	int System::addModule(Module* m)
+	int System::addModule(Module& m)
 	{
-		modules.push_back(m);
+		modules.push_back(&m);
 		return (int)(modules.size() - 1);
 	}
-	void System::removeModule(Module * m)
+	void System::removeModule(Module& m)
 	{
-		removeModule(m->getName());
+		removeModule(m.getName());
 	}
 	void System::removeModule(std::string module)
 	{
@@ -70,14 +70,14 @@ namespace mc {
 	}
 	void System::init() {
 		SDL_Init(SDL_INIT_EVERYTHING);
-		for (Module* m : modules) {
-			m->init();
+		for (unsigned int i = 0; i < modules.size(); i++) {
+			modules[i]->init();
 		}
 	}
 
 	void System::terminate() {
-		for (Module* m : modules) {
-			m->destroy();
+		for (unsigned int i = 0; i < modules.size(); i++) {
+			modules[i]->destroy();
 		}
 		SDL_Quit();
 	}
@@ -89,8 +89,8 @@ namespace mc {
 				SDL_SetWindowData(SDL_GetWindowFromID(e.window.windowID), "open", 0);
 			}
 		}
-		for (Module* m : modules) {
-			m->update();
+		for (unsigned int i = 0; i < modules.size(); i++) {
+			modules[i]->update();
 		}
 	}
 }
