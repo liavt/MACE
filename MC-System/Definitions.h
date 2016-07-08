@@ -1,6 +1,8 @@
 #pragma once
 #define _MACE true //this will be true if MACE is included
 
+#define _MACE_TO_STRING(s) #s
+
 #ifndef __cplusplus
 	#error A C++ compiler is required!
 #endif 

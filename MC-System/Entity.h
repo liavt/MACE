@@ -28,8 +28,8 @@ namespace mc {
 		std::vector<Entity*>& getChildren();
 		const std::vector<Entity*>& getChildren() const;
 
-		void addChild(Entity* e);
-		void removeChild(const Entity* e);
+		void addChild(Entity& e);
+		void removeChild(const Entity& e);
 
 		Entity& operator[](int i);//get children via [i]
 		Entity& getChild(int i);
@@ -38,13 +38,16 @@ namespace mc {
 		std::vector<Entity*>::iterator end();
 		std::size_t size() const;
 	protected:
-		std::vector<Entity*> children;
+		std::vector<Entity*> children = std::vector<Entity*>();
 	};
 
 	using Container = EntityContainer;
 
 	class Entity : public Container{
 		friend class EntityContainer;
+		void update();
+		void init();
+		void destroy();
 
 	public:
 		Entity();
@@ -56,9 +59,6 @@ namespace mc {
 		bool getProperty(unsigned int position);
 		void setProperty(unsigned int position, bool value);
 
-		void update();
-		void init();
-		void destroy();
 	protected:
 		virtual void customUpdate() = 0;
 		virtual void customInit() = 0;

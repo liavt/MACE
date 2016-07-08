@@ -47,15 +47,15 @@ namespace mc {
 	}
 
 
-	void EntityContainer::addChild(Entity* e)
+	void EntityContainer::addChild(Entity& e)
 	{
-		children.push_back(e);
+		children.push_back(&e);
 	}
 
-	void EntityContainer::removeChild(const Entity* e)
+	void EntityContainer::removeChild(const Entity& e)
 	{
 		for (unsigned int i = 0; i < children.size();i++) {
-			if (e == children[i]) {
+			if (&e == children[i]) {
 				children.erase(children.begin()+i);
 			}
 		}
