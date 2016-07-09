@@ -1,17 +1,20 @@
 #include "Entity.h"
 #include <MC-System/Exceptions.h>
-#include <MC-System/Definitions.h>
+#include <MC-System/Constants.h>
 
 namespace mc {
 
 	EntityContainer::EntityContainer()
 	{
-		children=  std::vector<Entity*>();
 	}
 
 
 	EntityContainer::~EntityContainer()
 	{
+		while (!children.empty()) {
+			delete children.front();
+			children.pop_back();
+		}
 		children.clear();
 	}
 
@@ -35,11 +38,6 @@ namespace mc {
 			children[i]->destroy();
 		}
 	}
-	
-	std::vector<Entity*>& EntityContainer::getChildren()
-	{
-		return this->children;
-	}
 
 	const std::vector<Entity*>& EntityContainer::getChildren() const
 	{
@@ -62,13 +60,20 @@ namespace mc {
 		throw mc::ObjectNotFoundInArray("Specified argument is not a valid object in the array!");
 	}
 
-
-	Entity & EntityContainer::operator[](int i)
-	{
-		return getChild(i);
+	Entity& EntityContainer::operator[](int i) {
+		return *children[i];
 	}
 
-	Entity &EntityContainer::getChild(int i)
+	const Entity& EntityContainer::operator[](int i) const
+	{
+		return *children[i];
+	}
+
+	Entity& EntityContainer::getChild(int i) {
+		return *children.at(i);
+	}
+
+	const Entity& EntityContainer::getChild(int i) const
 	{
 		return *children.at(i);
 	}

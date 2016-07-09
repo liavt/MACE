@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <MC-System/Definitions.h>
+#include <MC-System/Constants.h>
 #include <MC-System/System.h>
 
 
@@ -25,14 +25,17 @@ namespace mc {
 		virtual void init();
 		virtual void destroy();
 
-		std::vector<Entity*>& getChildren();
+		const std::vector<Entity*>& getChildren();
 		const std::vector<Entity*>& getChildren() const;
 
 		void addChild(Entity& e);
 		void removeChild(const Entity& e);
 
 		Entity& operator[](int i);//get children via [i]
+		const Entity& operator[](int i) const;//get children via [i]
+
 		Entity& getChild(int i);
+		const Entity& getChild(int i) const;
 
 		std::vector<Entity*>::iterator begin();
 		std::vector<Entity*>::iterator end();

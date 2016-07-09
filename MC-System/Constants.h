@@ -7,9 +7,11 @@
 	#error A C++ compiler is required!
 #endif 
 
+#include <cstdint>
+
 
 namespace mc {
-	using Byte = unsigned char;
+	using Byte = uint8_t;
 
 	//values defining which bit in a byte every propety is, or how much to bit shift it
 	/**

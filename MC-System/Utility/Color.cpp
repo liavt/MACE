@@ -67,15 +67,20 @@ mc::Color::Color(std::array<float,4> rgba)
 	this->setValues(rgba);
 }
 
+mc::Color::Color()
+{
+	Color(0.0f,0.0f,0.0f,1.0f);
+}
+
 float & mc::Color::operator[](int i)
 {
 	if (i == 0) {
 		return this->r;
-	}else if (i == 0) {
+	}else if (i == 1) {
 		return this->g;
-	}else if (i == 0) {
+	}else if (i == 2) {
 		return this->b;
-	}else if (i == 0) {
+	}else if (i == 3) {
 		return this->a;
 	}
 	throw "Invalid range!";
@@ -83,22 +88,17 @@ float & mc::Color::operator[](int i)
 
 mc::Byte mc::Color::convertFloatToRGBA(float color)
 {
-	return (mc::Byte)(trimFloat(color)*255.0f);
+	return (mc::Byte)(trimFloat(color)*254.0f);
 }
 
 float mc::Color::convertRGBAToFloat(mc::Byte color)
 {
-	return trimRGBA(color) / 255.0f;
+	return color / 254.0f;
 }
 
 float mc::Color::trimFloat(float color)
 {
-	return color < 0 ? 0 : (color>1 ? 1 : color);
-}
-
-mc::Byte mc::Color::trimRGBA(mc::Byte color)
-{
-	return color < 0 ? 0 : (color>254 ? 254 : color);
+	return color < 0.0f ? 0.0f : (color>1.0f ? 1.0f : color);
 }
 
 std::array<mc::Byte, 4> mc::Color::getRGBA() const

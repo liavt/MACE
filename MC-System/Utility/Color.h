@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MC-System\Definitions.h>
+#include <MC-System\Constants.h>
 #include <array>
 
 namespace mc {	
@@ -19,17 +19,6 @@ namespace mc {
 		@returns A {@code float} guaranteed to be between 0 and 1.
 		*/
 		static float trimFloat(float color);
-
-		/**
-		If the inputted {@code Byte} is more than 254, {@code trimRGBA} returns 254.
-		<p>
-		If the inputted {@code Byte} is less than 0, {@code trimRGBA} returns 0.
-
-		@param {@code Byte} to trim
-		@returns A {@code Byte} guaranteed to be between 0 and 255.
-		*/
-		static Byte trimRGBA(Byte color);
-
 
 		Byte getRed() const;
 		Byte getGreen() const;
@@ -53,10 +42,11 @@ namespace mc {
 
 		float r, g, b, a;
 
-		Color(float red = 0,float green=0, float blue =0, float alpha=1);
-		Color(Byte red = 0, Byte green = 0, Byte blue = 0, Byte alpha = 255);
+		Color(float red,float green, float blue, float alpha=1.0f);
+		Color(Byte red, Byte green, Byte blue , Byte alpha = 254);
 		Color(std::array<Byte,4> rgba);
 		Color(std::array<float,4> values);
+		Color();
 
 		float& operator[](int i);
 	};
