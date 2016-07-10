@@ -226,55 +226,75 @@ namespace mc {
 		}
 
 		bool operator!=(const BitField& other) {
-			return !(this == other)
+			return (value != other.value);
 		}
 
-		BitField operator+(const T other) {
+		BitField operator+(const T other) const{
 			return BitField<T>(value + other );
 		}
 
-		BitField operator+(BitField& other) {
+		BitField operator+(const BitField& other) const {
 			return BitField<T>(value + other.value );
 		}
 
-		void operator+=(BitField& other) {
+		void operator+=(const BitField& other) {
 			value += other.value;
 		}
 
-		BitField operator-(const T other) {
+		void operator+=(const T other) {
+			value += other;
+		}
+
+		BitField operator-(const T other) const{
 			return BitField<T>(value - other );
 		}
 
-		BitField operator-(BitField other) {
+		BitField operator-(const BitField& other) const {
 			return BitField<T>(value - other.value );
 		}
 
-		void operator-=(BitField other) {
+		void operator-=(const BitField& other) {
 			value -= other.value;
+		}
+
+		void operator-=(const T other) {
+			value -= other;
 		}
 
 		BitField operator*(const T other) {
 			return BitField<T>(value * other );
 		}
 
-		BitField operator*(BitField other) {
+		BitField operator*(const BitField& other) const {
 			return BitField<T>(value * other.value );
 		}
 
-		void operator*=(BitField other) {
+		void operator*=(const BitField& other) {
 			value *= other.value;
 		}
 
-		BitField operator/(const T other) {
+		void operator*=(const T other) {
+			value *= other;
+		}
+
+		BitField operator/(const T other) const {
 			return BitField<T>(value / other );
 		}
 
-		BitField operator/(BitField& other) {
+		BitField operator/(const BitField& other) const {
 			return BitField<T>(value / other.value );
 		}
 
-		void operator/=(BitField& other) {
+		void operator/=(const BitField& other) {
 			value /= other.value;
+		}
+
+		void operator/=(const T other) {
+			value /= other;
+		}
+
+		T operator%(const T other) {
+			return value % other;
 		}
 
 		bool operator[](int position) {

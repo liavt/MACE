@@ -2,6 +2,7 @@
 #include <vector>
 #include <MC-System/Constants.h>
 #include <MC-System/System.h>
+#include <MC-System/Utility/BitField.h>
 
 
 namespace mc {
@@ -68,8 +69,8 @@ namespace mc {
 
 		~Entity();
 
-		Byte getProperties();
-		void setProperties(Byte b);
+		ByteField getProperties();
+		void setProperties(ByteField b);
 
 		bool getProperty(unsigned int position);
 		void setProperty(unsigned int position, bool value);
@@ -89,7 +90,7 @@ namespace mc {
 		virtual void customInit() = 0;
 		virtual void customDestroy() = 0;
 
-		Byte properties = ENTITY_DEFAULT_PROPERTIES;
+		ByteField properties = ENTITY_DEFAULT_PROPERTIES;
 
 	};
 

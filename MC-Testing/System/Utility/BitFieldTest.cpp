@@ -3,6 +3,29 @@
 #include <iostream>
 
 namespace mc{
+	TEST_CASE("Testing BitField as a number","[system][utility][bitfield]") {
+		ByteField b = 10;
+		REQUIRE(b==10);
+		b += (5);
+		REQUIRE(b==15);
+		b -= 10;
+		REQUIRE(b==5);
+		b *= 5;
+		REQUIRE(b==25);
+		b /= 5;
+		REQUIRE(b==5);
+		REQUIRE(b+5==10);
+		REQUIRE(b-3==2);
+		REQUIRE(b*25==125);
+		REQUIRE(b/5==1);
+		REQUIRE(b%3==2);
+
+		b++;
+		REQUIRE((b==6));
+		b--;
+		REQUIRE(b==5);
+	}
+
 	TEST_CASE("Testing size()","[system][utility][bitfield]"){
 		BitField<Byte> b = 0b0000000;
 		REQUIRE(b.size()==8);

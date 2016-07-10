@@ -192,27 +192,22 @@ namespace mc {
 		}
 	}
 
-	Byte Entity::getProperties()
+	ByteField Entity::getProperties()
 	{
 		return properties;
 	}
 
-	void Entity::setProperties(Byte b)
+	void Entity::setProperties(ByteField b)
 	{
 		properties = b;
 	}
 	bool Entity::getProperty(unsigned int position)
 	{
-		return (((properties >> position) & 1)==1);
+		return properties.getBit(position);
 	}
 	void Entity::setProperty(unsigned int position, bool value)
 	{
-		if (value) {
-			properties |= (1 << position);
-		}
-		else {
-			properties &= ~(1 << position);
-		}
+		properties.setBit(position, value);
 
 	}
 
