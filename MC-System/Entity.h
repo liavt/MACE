@@ -8,7 +8,7 @@ namespace mc {
 	class Entity;
 	class EntityModule;
 
-	class EntityContainer {
+	class Container {
 		void updateChildren();
 		void initChildren();
 		void destroyChildren();//think of the children!
@@ -16,51 +16,73 @@ namespace mc {
 		friend class EntityModule;
 		friend class Entity;
 		
-		EntityContainer();
+		Container();
 
 	public:
-		~EntityContainer();
+		~Container();
 
 		virtual void update();
 		virtual void init();
 		virtual void destroy();
 
-		const std::vector<Entity*>& getChildren();
 		const std::vector<Entity*>& getChildren() const;
 
 		void addChild(Entity& e);
 		void removeChild(const Entity& e);
+		void removeChild(unsigned int index);
 
-		Entity& operator[](int i);//get children via [i]
-		const Entity& operator[](int i) const;//get children via [i]
+		bool hasChild(Entity& e);
 
-		Entity& getChild(int i);
-		const Entity& getChild(int i) const;
+		Entity& operator[](unsigned int i);//get children via [i]
+		const Entity& operator[](unsigned int i) const;//get children via [i]
+
+		Entity& getChild(unsigned int i);
+		const Entity& getChild(unsigned int i) const;
+
+		unsigned int indexOf(Entity& e);
 
 		std::vector<Entity*>::iterator begin();
 		std::vector<Entity*>::iterator end();
 		std::size_t size() const;
+
+		bool operator==(Container& other);
+		bool operator!=(Container& other);
 	protected:
 		std::vector<Entity*> children = std::vector<Entity*>();
 	};
 
-	using Container = EntityContainer;
-
 	class Entity : public Container{
-		friend class EntityContainer;
+		friend class Container;
 		void update();
 		void init();
 		void destroy();
 
+		Container* parent;
+
+		void setParent(Container* parent);
 	public:
+		static void cleanEntity(Entity* e);
+
 		Entity();
 		Entity(const Entity &obj);
+
+		~Entity();
 
 		Byte getProperties();
 		void setProperties(Byte b);
 
 		bool getProperty(unsigned int position);
 		void setProperty(unsigned int position, bool value);
+
+		Container& getParent();
+
+		bool operator==(Entity& other);
+		bool operator!=(Entity& other);
+
+		/**
+		Automatically called when {@code ENTITY_PROPERTY_DEAD} is true. Removes this entity from it's parent, and calls it's {@code destroy()} method.
+		*/
+		void kill();
 
 	protected:
 		virtual void customUpdate() = 0;
@@ -71,7 +93,7 @@ namespace mc {
 
 	};
 
-	class EntityModule : public Module,public EntityContainer {
+	class EntityModule : public Module,public Container {
 	public:
 		EntityModule();
 

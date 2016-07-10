@@ -37,7 +37,6 @@ TEST_CASE("Adding and removing modules", "[module][system]") {
 
 	REQUIRE(mc::System::moduleExists(m2->getName()));
 	REQUIRE(mc::System::moduleExists(m2));
-	REQUIRE(mc::System::numberOfModules()==2);
 	mc::System::update();
 
 	mc::System::removeModule(*m);
@@ -50,7 +49,6 @@ TEST_CASE("Adding and removing modules", "[module][system]") {
 
 	delete m;
 
-	REQUIRE(mc::System::numberOfModules()==0);
 }
 
 TEST_CASE("Modules getting updated","[module][system]") {

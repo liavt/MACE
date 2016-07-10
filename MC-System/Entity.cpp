@@ -4,138 +4,199 @@
 
 namespace mc {
 
-	EntityContainer::EntityContainer()
+	Container::Container()
 	{
 	}
 
 
-	EntityContainer::~EntityContainer()
+	Container::~Container()
 	{
-		while (!children.empty()) {
-			delete children.front();
-			children.pop_back();
-		}
 		children.clear();
+		destroy();
 	}
 
-	void EntityContainer::updateChildren()
+	void Container::updateChildren()
 	{
 		for (std::size_t i = 0; i < children.size();i++) {
+			if (children[i]->getProperty(ENTITY_PROPERTY_DEAD)) {
+				children[i]->kill();
+				removeChild(i);
+				i--;//update the index after the removal of an element
+				return;
+			}
 			children[i]->update();
 		}
 	}
 
-	void EntityContainer::initChildren()
+	void Container::initChildren()
 	{
 		for (std::size_t i = 0; i < children.size(); i++) {
 			children[i]->init();
 		}
 	}
 	
-	void EntityContainer::destroyChildren()
+	bool Container::hasChild(Entity & e)
+	{
+		for (std::size_t i = 0; i < children.size(); i++) {
+			if (children[i] == &e) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void Container::destroyChildren()
 	{
 		for (std::size_t i = 0; i < children.size(); i++) {
 			children[i]->destroy();
 		}
 	}
 
-	const std::vector<Entity*>& EntityContainer::getChildren() const
+	const std::vector<Entity*>& Container::getChildren() const
 	{
 		return this->children;
 	}
 
 
-	void EntityContainer::addChild(Entity& e)
+	void Container::addChild(Entity& e)
 	{
 		children.push_back(&e);
+		e.setParent(this);
 	}
 
-	void EntityContainer::removeChild(const Entity& e)
+	void Container::removeChild(const Entity& e)
 	{
-		for (unsigned int i = 0; i < children.size();i++) {
-			if (&e == children[i]) {
-				children.erase(children.begin()+i);
+		for (std::size_t i = 0; i < children.size();i++) {
+			if (&e == children.at(i)) {
+				removeChild(i);
+				return;
 			}
 		}
 		throw mc::ObjectNotFoundInArray("Specified argument is not a valid object in the array!");
 	}
 
-	Entity& EntityContainer::operator[](int i) {
+	void Container::removeChild(unsigned int index) {
+		if (index > children.size()) {
+			throw mc::IndexOutOfBounds(index+" is larger than the amount of children!");
+		}
+		else if (children.size() == 1) {
+			children.clear();
+		}else{
+			children.erase(children.begin()+index);
+		}
+	}
+
+	void Entity::setParent(Container * parent)
+	{
+		this->parent = parent;
+		setProperty(ENTITY_PROPERTY_INIT, false);
+	}
+
+	Container& Entity::getParent() {
+		return *parent;
+	}
+
+	Entity& Container::operator[](unsigned int i) {
 		return *children[i];
 	}
 
-	const Entity& EntityContainer::operator[](int i) const
+	const Entity& Container::operator[](unsigned int i) const
 	{
 		return *children[i];
 	}
 
-	Entity& EntityContainer::getChild(int i) {
+	Entity& Container::getChild(unsigned int i) {
 		return *children.at(i);
 	}
 
-	const Entity& EntityContainer::getChild(int i) const
+	const Entity& Container::getChild(unsigned int i) const
 	{
 		return *children.at(i);
 	}
 
-	std::vector<Entity*>::iterator EntityContainer::begin()
+	std::vector<Entity*>::iterator Container::begin()
 	{
 		return children.begin();
 	}
 
-	std::vector<Entity*>::iterator EntityContainer::end()
+	std::vector<Entity*>::iterator Container::end()
 	{
 		return children.end();
 	}
 
-	std::size_t EntityContainer::size() const
+	std::size_t Container::size() const
 	{
 		return children.size();
 	}
 
-	void EntityContainer::update()
+	void Container::update()
 	{
 		updateChildren();
 	}
 
-	void EntityContainer::init()
+	void Container::init()
 	{
 		initChildren();
 	}
 
-	void EntityContainer::destroy() {
+	void Container::destroy() {
 		destroyChildren();
+	}
+	
+	void Entity::kill()
+	{
+		destroy();
 	}
 
 	void Entity::update() {
-		customUpdate();
-		EntityContainer::update();
+		if(getProperty(ENTITY_PROPERTY_ENABLED)){
+			if (getProperty(ENTITY_PROPERTY_DIRTY)) {
+				cleanEntity(this);
+			}
+			customUpdate();
+			Container::update();
+		}
 	}
 
 	void Entity::init()
 	{
 		customInit();
-		EntityContainer::init();
+		Container::init();
+		setProperty(ENTITY_PROPERTY_INIT,true);
 	}
 
 	void Entity::destroy()
 	{
 		customDestroy();
-		EntityContainer::destroy();
+		Container::destroy();
 	}
 
-	Entity::Entity() :EntityContainer()
+	void Entity::cleanEntity(Entity * e)
+	{
+		e->setProperty(ENTITY_PROPERTY_DIRTY,false);
+	}
+
+	Entity::Entity() :Container()
 	{
 
 	}
-	Entity::Entity(const Entity & obj) : EntityContainer(obj)
+	Entity::Entity(const Entity & obj) : Container(obj)
 	{
 		properties = obj.properties;
 	}
+
+	Entity::~Entity()
+	{
+		if (getProperty(ENTITY_PROPERTY_DELETE_SELF)) {
+			delete this;
+		}
+	}
+
 	Byte Entity::getProperties()
 	{
 		return properties;
 	}
+
 	void Entity::setProperties(Byte b)
 	{
 		properties = b;
@@ -155,7 +216,7 @@ namespace mc {
 
 	}
 
-	EntityModule::EntityModule():EntityContainer()
+	EntityModule::EntityModule():Container()
 	{
 	}
 
@@ -165,16 +226,41 @@ namespace mc {
 
 	void EntityModule::init()
 	{
-		EntityContainer::init();
+		Container::init();
 	}
 
 	void EntityModule::update()
 	{
-		EntityContainer::update();
+		Container::update();
 	}
 
 	void EntityModule::destroy()
 	{
-		EntityContainer::destroy();
+		Container::destroy();
+	}
+
+	bool Entity::operator==(Entity& other){
+		if (other.getProperties() != getProperties()) {
+			return false;
+		}
+		if (other.getParent() != getParent()) {
+			return false;
+		}
+		return Container::operator==(other);
+	}
+
+	bool Entity::operator!=(Entity & other)
+	{
+		return !(this==&other);
+	}
+
+	bool Container::operator==(Container & other)
+	{
+		return getChildren()==other.getChildren();
+	}
+
+	bool Container::operator!=(Container & other)
+	{
+		return !(this==&other);
 	}
 }
