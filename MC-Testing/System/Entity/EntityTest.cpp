@@ -1,5 +1,5 @@
 #include <MC-Testing/Catch.h>
-#include <MC-System/Entity.h>
+#include <MC-System/Entities/Entity.h>
 #include <iostream>
 
 class DummyEntity : public mc::Entity {
@@ -24,6 +24,22 @@ protected:
 };
 
 namespace mc{
+
+TEST_CASE("Testing the getParent() function","[entity][system]") {
+	EntityModule c = EntityModule();
+
+	DummyEntity* e = new DummyEntity();
+
+	System::addModule(c);
+
+	c.addChild(*e);
+
+	REQUIRE(e->getParent()==c);
+
+	c.removeChild(*e);
+
+	System::removeModule(c);
+}
 	
 TEST_CASE("Testing the ENABLE property of an entity","[entity][system]") {
 	EntityModule c = EntityModule();

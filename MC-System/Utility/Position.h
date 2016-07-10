@@ -2,7 +2,12 @@
 #include <MC-System/Utility/Vector.h>
 
 namespace mc {
-	class Position : public Vector4f {
-	private:
+	//why 4 values? well, for a 3D positionm you need ot have 4 values. (x,y,z,w) The w is for multiplying it by a projection matrix.
+	class Position : Vector4f{
+		using Vector4f::Vector4f;
+	};
+
+	class PositionData {
+		
 	};
 }

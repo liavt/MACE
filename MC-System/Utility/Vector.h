@@ -111,6 +111,13 @@ namespace mc {
 			return !(this == other);
 		};
 
+		Vector operator=(T arr[N]) {//arr me mateys
+			return Vector(arr);
+		}
+
+		Vector(T arr[N]) {
+			this->setContents(std::array<T,N>(arr));
+		}
 
 		Vector()
 		{

@@ -1,5 +1,7 @@
 #pragma once
 
 #include <MC-System/System.h>
-#include <MC-System/Definitions.h>
-#include <MC-System/Utility/Utils.h>
+#include <MC-System/Constants.h>
+#include <MC-System/Utils.h>
+#include <MC-System/Exceptions.h>
+#include <MC-System/Entities/Entity.h>
