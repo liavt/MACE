@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <MC-System/Exceptions.h>
 
 namespace mc {
 	/**
@@ -14,30 +15,40 @@ namespace mc {
 
 		std::array < T, N>& getContents()
 		{
-			return &this->content;
+			return this->content;
 		};
 
 		const std::array < T,N>& getContents() const
 		{
-			return &this->content;
+			return this->content;
 		};
 		void setContents(const std::array<T,N> contents)
 		{
 			this->content = contents;
 		};
 
-		unsigned int size() const
+		virtual unsigned int size() const
 		{
 			return N;
 		};
 
 
-		T& get(int i){
-			return content->get(i);
+		T& get(unsigned i){
+			if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if (i < 0)throw IndexOutOfBounds(std::to_string(i) + " is less than 0!");
+			return content[i];
 		}
 
-		const T& get(int i) const{
+		const T& get(unsigned int i) const{
+			if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if (i <0)throw IndexOutOfBounds(std::to_string(i) + " is less than 0!");
 			return content.at(i);
+		}
+
+		void set(unsigned int position, T value) {
+			if (position >= N)throw IndexOutOfBounds(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if (position <0)throw IndexOutOfBounds(std::to_string(position) + " is less than 0!");
+			content[position] = value;
 		}
 
 		T * begin()
@@ -129,8 +140,7 @@ namespace mc {
 		};
 		Vector(const Vector &obj)
 		{
-			this->setContents(*obj.getContents());
-
+			this->setContents(obj.getContents());
 		};
 
 	protected:
@@ -152,10 +162,112 @@ namespace mc {
 	using Vector5i = mc::Vector<int, 5>;
 
 	template <typename T, int N>
-	using MatrixColumn = mc::Vector<T, N>;//this is for clarity
+	using MatrixRow = mc::Vector<T, N>;//this is for clarity
 
-	template <typename T, int W, int H>
-	using Matrix = mc::Vector<mc::MatrixColumn<T, W>, H>;
+	/*
+	So why are there also presets for MatrixRows when there are presets for Vectors? Here's the reason:
+
+	Lets say I am iterating over a Matrix via the enchanced for loop. With these presets, I could do this:
+
+	Matrix5f matrix = Matrix5f();
+
+	for(MatrixRow5f row : matrix){
+		for(float value : row){
+			--do stuff
+		}
+	}
+
+	Without these presets, the above would have to be done like this:
+
+	for(MatrixRow<float, 5> row : matrix){
+		for(float value : row){
+			--do stuff
+		}
+	}
+
+	or
+
+	for(Vector<float, 5> row : matrix){
+		for(float value : row){
+			--do stuff
+		}
+	}
+
+	So whats the point of a Matrix typedef if the client has to use templates? The entire point of these giant lists of typedefs is for the user to NOT use templates.
+	The templates are there for more advanced user, but for a beginner, MatrixRow5f looks a lot better and easier than MatrixRow<float,5>
+	*/
+	using MatrixRow1f = mc::MatrixRow<float, 1>;
+	using MatrixRow2f = mc::MatrixRow<float, 2>;
+	using MatrixRow3f = mc::MatrixRow<float, 3>;
+	using MatrixRow4f = mc::MatrixRow<float, 4>;
+	using MatrixRow5f = mc::MatrixRow<float, 5>;
+
+	using MatrixRow1i = mc::MatrixRow<int, 1>;
+	using MatrixRow2i = mc::MatrixRow<int, 2>;
+	using MatrixRow3i = mc::MatrixRow<int, 3>;
+	using MatrixRow4i = mc::MatrixRow<int, 4>;
+	using MatrixRow5i = mc::MatrixRow<int, 5>;
+
+	template<typename T, int W, int H>
+	struct Matrix : Vector<MatrixRow<T, H>, W> {
+		using Vector::Vector;
+
+		Matrix()
+		{
+			this->setContents(std::array<MatrixRow<T, H>, W>());
+			for (unsigned int i = 0; i < content.size(); i++) {
+				content[i] = MatrixRow<T, H>();
+			}
+		};
+
+		Matrix(T arr[W][H]) {
+			Matrix();
+			for (int x = 0; x < sizeof(arr) / sizeof(T); x++) {
+				for (int y = 0; y < sizeof(arr[x]) / sizeof(T); y++) {
+					content[x][y] = arr[x][y];
+				}
+			}
+		}
+
+		Matrix(const Matrix& copy) {
+			this->setContents(copy.getContents());
+		}
+
+		std::size_t size() {
+			return W*H;
+		}
+
+		std::size_t width() {
+			return W;
+		}
+		std::size_t height() {
+			return H;
+		}
+
+		T& get(unsigned int x, unsigned int y) {
+			if (x >= W) throw IndexOutOfBounds(std::to_string(x)+ " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			if (x <0)throw IndexOutOfBounds("The X value, "+std::to_string(x) + " is less than 0!");
+			if (y <0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
+			return content[x][y];
+		}
+
+		const T& get(unsigned int x, unsigned int y) const {
+			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			if (x <0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
+			if (y <0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
+			return content[x][y];
+		}
+
+		void set(unsigned int x, unsigned int y, T value) {
+			if (x >= W) throw IndexOutOfBounds(std::to_string(x)+" is greater than this Matrix's width, "+ std::to_string(W)+"!");
+			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			if (x <0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
+			if (y <0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
+			content[x][y] = value;
+		}
+	};
 
 	using Matrix1f = mc::Matrix<float, 1, 1>;//what a thin matrix!
 	using Matrix2f = mc::Matrix<float, 2, 2>;
