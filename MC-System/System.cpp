@@ -1,7 +1,7 @@
 #include <MC-System/System.h>
 #include <SDL/SDL.h>
-#include <iostream>
 #include <MC-System/Exceptions.h>
+#include <MC-System/Constants.h>
 
 namespace mc {
 	std::vector<Module*> System::modules;
@@ -54,7 +54,7 @@ namespace mc {
 	{
 		return moduleExists(module->getName());
 	}
-	std::size_t System::numberOfModules()
+	Size System::numberOfModules()
 	{
 		return modules.size();
 	}

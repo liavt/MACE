@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <MC-System/Constants.h>
 
 namespace mc {
 	class System;
@@ -24,7 +25,7 @@ namespace mc {
 		static Module* getModule(int i);
 		static bool moduleExists(std::string module);
 		static bool moduleExists(Module* module);
-		static std::size_t numberOfModules();
+		static Size numberOfModules();
 
 		static void assertModule(std::string module,std::string errorMessage);
 		static void assertModule(std::string module);

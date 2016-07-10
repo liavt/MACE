@@ -17,7 +17,7 @@ namespace mc {
 
 	void Container::updateChildren()
 	{
-		for (std::size_t i = 0; i < children.size();i++) {
+		for (Size i = 0; i < children.size();i++) {
 			if (children[i]->getProperty(ENTITY_PROPERTY_DEAD)) {
 				children[i]->kill();
 				removeChild(i);
@@ -30,14 +30,14 @@ namespace mc {
 
 	void Container::initChildren()
 	{
-		for (std::size_t i = 0; i < children.size(); i++) {
+		for (Size i = 0; i < children.size(); i++) {
 			children[i]->init();
 		}
 	}
 	
 	bool Container::hasChild(Entity & e)
 	{
-		for (std::size_t i = 0; i < children.size(); i++) {
+		for (Size i = 0; i < children.size(); i++) {
 			if (children[i] == &e) {
 				return true;
 			}
@@ -47,7 +47,7 @@ namespace mc {
 
 	void Container::destroyChildren()
 	{
-		for (std::size_t i = 0; i < children.size(); i++) {
+		for (Size i = 0; i < children.size(); i++) {
 			children[i]->destroy();
 		}
 	}
@@ -66,7 +66,7 @@ namespace mc {
 
 	void Container::removeChild(const Entity& e)
 	{
-		for (std::size_t i = 0; i < children.size();i++) {
+		for (Size i = 0; i < children.size();i++) {
 			if (&e == children.at(i)) {
 				removeChild(i);
 				return;
@@ -124,7 +124,7 @@ namespace mc {
 		return children.end();
 	}
 
-	std::size_t Container::size() const
+	Size Container::size() const
 	{
 		return children.size();
 	}

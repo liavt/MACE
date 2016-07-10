@@ -127,7 +127,7 @@ namespace mc {
 		Gets how many bits this {@code BitField} is holding
 		@return Number of bits
 		*/
-		std::size_t size() {
+		Size size() {
 			return sizeof(value) * 8;
 		}
 

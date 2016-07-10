@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <MC-System/Exceptions.h>
+#include <MC-System/Constants.h>
 
 namespace mc {
 	/**
@@ -233,14 +234,14 @@ namespace mc {
 			this->setContents(copy.getContents());
 		}
 
-		std::size_t size() {
+		Size size() {
 			return W*H;
 		}
 
-		std::size_t width() {
+		Size width() {
 			return W;
 		}
-		std::size_t height() {
+		Size height() {
 			return H;
 		}
 

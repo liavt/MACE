@@ -1,5 +1,5 @@
 #pragma once
-#define _MACE true //this will be true if MACE is included
+#define __MACE true //this will be true if MACE is included
 
 #define _MACE_TO_STRING(s) #s
 
@@ -31,6 +31,7 @@ namespace mc {
 	const Byte POSITION_PROPERTY_INHERIT_STRETCH_X = 3;////
 	const Byte POSITION_PROPERTY_INHERIT_STRETCH_Y = 4;////
 
+	using Size = unsigned int;
 
 	#ifdef _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES
 		const Byte ENTITY_DEFAULT_PROPERTIES = _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES;

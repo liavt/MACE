@@ -20,7 +20,7 @@ namespace mc{
 		return true;
 	}
 
-	int Math::nextDoubleOf2(int n)
+	int Math::nextDigitOf2(int n)
 	{
 		int v = n;
 		v--;

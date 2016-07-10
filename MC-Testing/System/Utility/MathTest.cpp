@@ -15,9 +15,9 @@ TEST_CASE("Testing isPrime()","[system][utility][math]") {
 	REQUIRE(!Math::isPrime(360));
 }
 
-TEST_CASE("Testing nextDoubleOf2()","[system][utility][math]") {
-	REQUIRE(Math::nextDoubleOf2(10)==16);
-	REQUIRE(Math::nextDoubleOf2(3) == 4);
-	REQUIRE(Math::nextDoubleOf2(17)==32);
+TEST_CASE("Testing nextDigitOf2()","[system][utility][math]") {
+	REQUIRE(Math::nextDigitOf2(10)==16);
+	REQUIRE(Math::nextDigitOf2(3) == 4);
+	REQUIRE(Math::nextDigitOf2(17)==32);
 }
 }

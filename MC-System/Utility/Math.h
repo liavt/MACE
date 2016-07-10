@@ -14,7 +14,7 @@ namespace mc {
 
 		static double toRadians(double degrees);
 
-		static int nextDoubleOf2(int n);
+		static int nextDigitOf2(int n);
 
 		static Matrix4f getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio);
 	};

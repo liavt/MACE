@@ -43,7 +43,7 @@ namespace mc {
 
 		std::vector<Entity*>::iterator begin();
 		std::vector<Entity*>::iterator end();
-		std::size_t size() const;
+		Size size() const;
 
 		bool operator==(Container& other);
 		bool operator!=(Container& other);
