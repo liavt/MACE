@@ -7,11 +7,16 @@ public:
 	DummyEntity(): Entity(){};
 
 
-	bool isUpdated = false,isInit=false,isDestroyed=false;
+	bool isUpdated = false, isTicked = false, isInit = false, isDestroyed = false;
 protected:
 
 	void customUpdate() {
-		isUpdated = true;
+		std::cout << "updated"<<std::endl;
+		isUpdated = false;
+	}
+
+	void customTick() {
+		isTicked = true;
 	}
 
 	void customInit() {
@@ -30,7 +35,6 @@ TEST_CASE("Testing the getParent() function","[entity][system]") {
 
 	DummyEntity* e = new DummyEntity();
 
-	System::addModule(c);
 
 	c.addChild(*e);
 
@@ -38,7 +42,6 @@ TEST_CASE("Testing the getParent() function","[entity][system]") {
 
 	c.removeChild(*e);
 
-	System::removeModule(c);
 }
 	
 TEST_CASE("Testing the ENABLE property of an entity","[entity][system]") {
@@ -46,17 +49,28 @@ TEST_CASE("Testing the ENABLE property of an entity","[entity][system]") {
 
 	DummyEntity* e = new DummyEntity();
 
-	System::addModule(c);
 
 	c.addChild(*e);
 
-	REQUIRE(!e->isUpdated);
+	REQUIRE(!e->isTicked);
+
+	c.tick();
+
+	REQUIRE(e->isTicked);
 
 	c.update();
 
 	REQUIRE(e->isUpdated);
+
+	e->isTicked = false;
+	e->setProperty(ENTITY_PROPERTY_TICK_ENABLED,false);
+
+	c.tick();
+
+	REQUIRE(!e->isTicked);
+
 	e->isUpdated = false;
-	e->setProperty(ENTITY_PROPERTY_ENABLED,false);
+	e->setProperty(ENTITY_PROPERTY_UPDATE_ENABLED,false);
 
 	c.update();
 
@@ -64,7 +78,6 @@ TEST_CASE("Testing the ENABLE property of an entity","[entity][system]") {
 
 	c.removeChild(*e);
 
-	System::removeModule(c);
 }
 
 TEST_CASE("Testing death","[entity][system]") {//the sweet embrace of death
@@ -72,30 +85,27 @@ TEST_CASE("Testing death","[entity][system]") {//the sweet embrace of death
 	EntityModule c = EntityModule();
 
 	DummyEntity* e = new DummyEntity();
-
-	System::addModule(c);//c++ or c? that is the question.
 	
 	c.addChild(*e);
 
 	REQUIRE(c.hasChild(*e));
 	REQUIRE(!e->getProperty(ENTITY_PROPERTY_DEAD));
 
-	c.update();
+	c.tick();
 
 	REQUIRE(!e->getProperty(ENTITY_PROPERTY_DEAD));
-	REQUIRE(e->isUpdated);
+	REQUIRE(e->isTicked);
 
 	
-	e->isUpdated = false;
+	e->isTicked = false;
 	e->setProperty(ENTITY_PROPERTY_DEAD,true);
 
-	c.update();
+	c.tick();
 
-	REQUIRE(!e->isUpdated);
+	REQUIRE(!e->isTicked);
 	REQUIRE(e->isDestroyed);
 	REQUIRE(!c.hasChild(*e));	
 	
-	System::removeModule(c);
 }
 
 TEST_CASE("Testing init()","[entity][system") {
@@ -103,7 +113,6 @@ TEST_CASE("Testing init()","[entity][system") {
 
 	DummyEntity* e = new DummyEntity();
 
-	System::addModule(c);
 
 	REQUIRE(!e->getProperty(ENTITY_PROPERTY_INIT));
 
@@ -116,7 +125,6 @@ TEST_CASE("Testing init()","[entity][system") {
 
 	c.removeChild(*e);
 
-	System::removeModule(c);
 }
 
 TEST_CASE("Testing entity dirtiness","[entity][system]") {
@@ -124,17 +132,15 @@ TEST_CASE("Testing entity dirtiness","[entity][system]") {
 	
 	DummyEntity* e = new DummyEntity();
 
-	System::addModule(c);
 
 	c.addChild(*e);
 
 	REQUIRE(e->getProperty(ENTITY_PROPERTY_DIRTY));
 
-	c.update();
+	c.tick();
 
 	REQUIRE(!e->getProperty(ENTITY_PROPERTY_DIRTY));
 
-	System::removeModule(c);
 }
 
 TEST_CASE("Testing entity properties","[entity][system]") {
@@ -145,9 +151,9 @@ TEST_CASE("Testing entity properties","[entity][system]") {
 
 	REQUIRE(e.getProperty(ENTITY_PROPERTY_DEAD));
 
-	REQUIRE(e.getProperty(ENTITY_PROPERTY_ENABLED));
-	e.setProperty(ENTITY_PROPERTY_ENABLED, false);
-	REQUIRE_FALSE(e.getProperty(ENTITY_PROPERTY_ENABLED));
+	REQUIRE(e.getProperty(ENTITY_PROPERTY_UPDATE_ENABLED));
+	e.setProperty(ENTITY_PROPERTY_UPDATE_ENABLED, false);
+	REQUIRE_FALSE(e.getProperty(ENTITY_PROPERTY_UPDATE_ENABLED));
 	REQUIRE(e.getProperty(ENTITY_PROPERTY_DEAD));
 }
 
@@ -156,12 +162,10 @@ TEST_CASE("Testing entity module and updating", "[entity][system]") {
 
 	EntityModule *c = new EntityModule();
 
-	System::addModule(*c);
-
 	DummyEntity *e = new DummyEntity();
 
 	REQUIRE(c->size() == 0);
-	REQUIRE(e->isUpdated == false);
+	REQUIRE(e->isTicked == false);
 
 	c->addChild(*e);
 
@@ -171,6 +175,10 @@ TEST_CASE("Testing entity module and updating", "[entity][system]") {
 	c->init();
 
 	REQUIRE(e->isInit);
+
+	c->tick();
+
+	REQUIRE(e->isTicked);
 
 	c->update();
 
@@ -187,6 +195,10 @@ TEST_CASE("Testing entity module and updating", "[entity][system]") {
 
 	REQUIRE(child.isInit);
 
+	c->tick();
+
+	REQUIRE(child.isTicked);
+
 	c->update();
 
 	REQUIRE(child.isUpdated);
@@ -196,8 +208,6 @@ TEST_CASE("Testing entity module and updating", "[entity][system]") {
 	REQUIRE(child.isDestroyed);
 
 	c->removeChild(*e);
-
-	System::removeModule(*c);
 
 	delete c;
 }

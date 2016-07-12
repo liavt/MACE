@@ -10,6 +10,7 @@ namespace mc {
 	class EntityModule;
 
 	class Container {
+		void tickChildren();
 		void updateChildren();
 		void initChildren();
 		void destroyChildren();//think of the children!
@@ -23,6 +24,7 @@ namespace mc {
 		~Container();
 
 		virtual void update();
+		virtual void tick();
 		virtual void init();
 		virtual void destroy();
 
@@ -54,6 +56,7 @@ namespace mc {
 
 	class Entity : public Container{
 		friend class Container;
+		void tick();
 		void update();
 		void init();
 		void destroy();
@@ -87,6 +90,7 @@ namespace mc {
 
 	protected:
 		virtual void customUpdate() = 0;
+		virtual void customTick() = 0;
 		virtual void customInit() = 0;
 		virtual void customDestroy() = 0;
 
@@ -98,11 +102,12 @@ namespace mc {
 	public:
 		EntityModule();
 
-
 		void init();
+		void tick();
 		void update();
 		void destroy();
 		std::string getName() const;
 	};
+
 	
 }

@@ -9,7 +9,8 @@ namespace mc {
 		friend class System;
 	protected: 
 		virtual void init()=0;
-		virtual void update()=0;
+		virtual void tick()=0;
+		virtual void update() = 0;
 		virtual void destroy()=0;
 	
 		virtual std::string getName() const =0;
@@ -32,6 +33,7 @@ namespace mc {
 
 		static void init();
 		static void terminate();
+		static void tick();
 		static void update();
 	private: 
 		System();

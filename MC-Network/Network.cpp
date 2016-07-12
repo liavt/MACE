@@ -5,7 +5,7 @@ namespace mc {
 		SDLNet_Init();
 	}
 
-	void NetworkModule::update() {
+	void NetworkModule::tick() {
 
 	}
 

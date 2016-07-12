@@ -6,7 +6,7 @@ namespace mc {
 	class GraphicsModule : public Module{
 	public:
 		void init();
-		void update();
+		void tick();
 		void destroy();
 		std::string getName() const;
 	};

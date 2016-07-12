@@ -18,10 +18,10 @@ namespace mc {
 	*Marks an entity for death, where any {@link Container} holding it will remove it
 	*/
 	const Byte ENTITY_PROPERTY_DEAD = 0;
-	const Byte ENTITY_PROPERTY_ENABLED = 1;
-	const Byte ENTITY_PROPERTY_DIRTY = 2;
-	const Byte ENTITY_PROPERTY_INIT = 3;
-	const Byte ENTITY_PROPERTY_INHERIT_ALL = 4;////
+	const Byte ENTITY_PROPERTY_UPDATE_ENABLED = 1;
+	const Byte ENTITY_PROPERTY_TICK_ENABLED = 2;
+	const Byte ENTITY_PROPERTY_DIRTY = 3;
+	const Byte ENTITY_PROPERTY_INIT = 4;
 	const Byte ENTITY_PROPERTY_PASS_DOWN = 5;////
 	const Byte ENTITY_PROPERTY_DELETE_SELF = 6;//when suicide is an answer
 
@@ -36,7 +36,7 @@ namespace mc {
 	#ifdef _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES
 		const Byte ENTITY_DEFAULT_PROPERTIES = _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES;
 	#else
-		const Byte ENTITY_DEFAULT_PROPERTIES = 0b00100110;
+		const Byte ENTITY_DEFAULT_PROPERTIES = 0b11001110;
 	#endif
 
 	#ifdef _MACE_POSITION_CUSTOM_DEFAULT_PROPERTIES

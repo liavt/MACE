@@ -1,6 +1,5 @@
 #include <MC-Testing/Catch.h>
 #include <MC-System/Utility/BitField.h>
-#include <iostream>
 
 namespace mc{
 	TEST_CASE("Testing BitField as a number","[system][utility][bitfield]") {

@@ -15,7 +15,7 @@ namespace mc {
 		destroy();
 	}
 
-	void Container::updateChildren()
+	void Container::tickChildren()
 	{
 		for (Size i = 0; i < children.size();i++) {
 			if (children[i]->getProperty(ENTITY_PROPERTY_DEAD)) {
@@ -24,6 +24,13 @@ namespace mc {
 				i--;//update the index after the removal of an element
 				return;
 			}
+			children[i]->tick();
+		}
+	}
+
+	void Container::updateChildren()
+	{
+		for (Size i = 0; i < children.size(); i++) {
 			children[i]->update();
 		}
 	}
@@ -114,6 +121,16 @@ namespace mc {
 		return *children.at(i);
 	}
 
+	unsigned int Container::indexOf(Entity & e)
+	{
+		for (unsigned int i = 0; i < children.size();i++) {
+			if (children[i] == &e) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	std::vector<Entity*>::iterator Container::begin()
 	{
 		return children.begin();
@@ -129,13 +146,15 @@ namespace mc {
 		return children.size();
 	}
 
-	void Container::update()
-	{
+	void Container::tick(){
+		tickChildren();
+	}
+
+	void Container::update() {
 		updateChildren();
 	}
 
-	void Container::init()
-	{
+	void Container::init(){
 		initChildren();
 	}
 
@@ -143,16 +162,22 @@ namespace mc {
 		destroyChildren();
 	}
 	
-	void Entity::kill()
-	{
+	void Entity::kill(){
 		destroy();
 	}
 
-	void Entity::update() {
-		if(getProperty(ENTITY_PROPERTY_ENABLED)){
+	void Entity::tick() {
+		if(getProperty(ENTITY_PROPERTY_TICK_ENABLED)){
 			if (getProperty(ENTITY_PROPERTY_DIRTY)) {
 				cleanEntity(this);
 			}
+			customTick();
+			Container::tick();
+		}
+	}
+
+	void Entity::update() {
+		if(getProperty(ENTITY_PROPERTY_UPDATE_ENABLED)){
 			customUpdate();
 			Container::update();
 		}
@@ -224,8 +249,12 @@ namespace mc {
 		Container::init();
 	}
 
-	void EntityModule::update()
+	void EntityModule::tick()
 	{
+		Container::tick();
+	}
+
+	void EntityModule::update() {
 		Container::update();
 	}
 

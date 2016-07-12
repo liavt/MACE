@@ -83,6 +83,12 @@ namespace mc {
 	}
 
 	void System::update() {
+		for (unsigned int i = 0; i < modules.size(); i++) {
+			modules[i]->update();
+		}
+	}
+
+	void System::tick() {
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE) {
@@ -90,7 +96,7 @@ namespace mc {
 			}
 		}
 		for (unsigned int i = 0; i < modules.size(); i++) {
-			modules[i]->update();
+			modules[i]->tick();
 		}
 	}
 }

@@ -19,6 +19,15 @@ namespace mc {
 		T value;
 
 		/**
+		Default constructor.
+		<p>
+		Equal to calling {@code BitField(0)}
+		*/
+		BitField() {
+			this->value = 0;
+		}
+
+		/**
 		Constructs a {@code BitField} with the specified value.
 		<p>
 		Equal to calling {@code BitField<T> = value}

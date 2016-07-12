@@ -8,8 +8,8 @@ namespace mc {
 		mc::System::assertModule("MC-Entity");
 	}
 
-	void GraphicsModule::update() {
-		std::cout << "Updated!" << std::endl;
+	void GraphicsModule::tick() {
+		std::cout << "Tickd!" << std::endl;
 	}
 
 	void GraphicsModule::destroy() {

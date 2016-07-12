@@ -8,7 +8,7 @@ namespace mc {
 		
 	}
 
-	void mc::WindowModule::update() {
+	void mc::WindowModule::tick() {
 		
 	}
 
