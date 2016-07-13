@@ -53,7 +53,7 @@ namespace mc {
 		*/
 		virtual void init();
 		/**
-		Should be called every time {@link System#destroy()} is called. Calls {@code destroy()} on all of this {@code Container's} children.
+		Should be called every time {@link System#terminate()} is called. Calls {@code destroy()} on all of this {@code Container's} children.
 		*/
 		virtual void destroy();
 

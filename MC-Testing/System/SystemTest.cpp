@@ -1,4 +1,4 @@
-#include <MC-Testing/Catch.h>
+#include <Catch.h>
 #include <MC-System/System.h>
 
 class TestModule :public mc::Module {

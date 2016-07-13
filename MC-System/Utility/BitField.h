@@ -154,49 +154,49 @@ namespace mc {
 
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator|(const T value) {
 			return BitField<T>(this->value | value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator|=(const T value) {
 			this->value |= value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator&(const T value) {
 			return BitField<T>(this->value & value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator&=(const T value) {
 			this->value &= value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator^(const T value) {
 			return BitField<T>( this->value ^ value);
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator^=(const T value) {
 			this->value ^= value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField& operator=(const T value) {
 			this->value = value;
@@ -204,42 +204,42 @@ namespace mc {
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator|(BitField& other) {
 			return BitField<T>(this->value | other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator|=(BitField& other) {
 			this->value |= other.value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator&(BitField& other) {
 			return BitField<T>(this->value & other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator&=(BitField& other) {
 			this->value &= other.value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator^(BitField& other) {
 			return BitField<T>(this->value ^ other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator^=(BitField& other) {
 			this->value ^= other.value;
@@ -248,35 +248,35 @@ namespace mc {
 		Operator which acts upon the internal value.
 		<p>
 		Same as calling {@link inverse()}
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator~() {
 			return BitField<T>((const T)~value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator>>(unsigned int places) {
 			return BitField<T>(value >> places );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator<<(unsigned int places) {
 			return BitField<T>(value << places);
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator>>=(unsigned int places) {
 			value >>= places;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator<<=(unsigned int places) {
 			value <<= places;
@@ -307,119 +307,119 @@ namespace mc {
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator+(const T other) const{
 			return BitField<T>(value + other );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator+(const BitField& other) const {
 			return BitField<T>(value + other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator+=(const BitField& other) {
 			value += other.value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator+=(const T other) {
 			value += other;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator-(const T other) const{
 			return BitField<T>(value - other );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator-(const BitField& other) const {
 			return BitField<T>(value - other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator-=(const BitField& other) {
 			value -= other.value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator-=(const T other) {
 			value -= other;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator*(const T other) {
 			return BitField<T>(value * other );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator*(const BitField& other) const {
 			return BitField<T>(value * other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator*=(const BitField& other) {
 			value *= other.value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator*=(const T other) {
 			value *= other;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator/(const T other) const {
 			return BitField<T>(value / other );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		BitField operator/(const BitField& other) const {
 			return BitField<T>(value / other.value );
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator/=(const BitField& other) {
 			value /= other.value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator/=(const T other) {
 			value /= other;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		T operator%(const T other) {
 			return value % other;
@@ -435,28 +435,28 @@ namespace mc {
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator++() {
 			value++;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator++(int dummy) {
 			++value;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator--() {
 			value--;
 		}
 		/**
 		Operator which acts upon the internal value
-		@see get()
+		@see get() @see value
 		*/
 		void operator--(int dummy) {
 			--value;

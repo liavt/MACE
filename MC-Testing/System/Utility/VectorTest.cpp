@@ -1,4 +1,4 @@
-#include <MC-Testing/Catch.h>
+#include <Catch.h>
 #include <MC-System/Utility/Vector.h>
 
 namespace mc{

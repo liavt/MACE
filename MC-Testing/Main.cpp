@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_RUNNER
-#include <MC-Testing/Catch.h>
+#include <Catch.h>
 
 int main(int argc, char* const argv[])
 {

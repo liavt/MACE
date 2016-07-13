@@ -31,8 +31,7 @@ namespace mc {
 	void Container::initChildren()
 	{
 		for (Size i = 0; i < children.size(); i++) {
-		
-			children[i]->init();
+			if(!children[i]->getProperty(ENTITY_PROPERTY_INIT))children[i]->init();
 			
 		}
 	}
