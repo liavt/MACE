@@ -2,13 +2,16 @@
 #include <iostream>
 
 namespace mc {
+	GraphicsModule::GraphicsModule()
+	{
+		EntityModule();
+	}
 	void GraphicsModule::init() {
 		std::cout << "Inited!" << std::endl;
 		mc::System::assertModule("MC-Window");
-		mc::System::assertModule("MC-Entity");
 	}
 
-	void GraphicsModule::tick() {
+	void GraphicsModule::update() {
 		std::cout << "Tickd!" << std::endl;
 	}
 

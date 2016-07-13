@@ -1,12 +1,15 @@
 #pragma once
 
 #include <MC-System/System.h>
+#include <MC-Graphics/Entity.h>
 
 namespace mc {
-	class GraphicsModule : public Module{
+	class GraphicsModule : public EntityModule {
 	public:
+		using EntityModule::EntityModule;
+
 		void init();
-		void tick();
+		void update();
 		void destroy();
 		std::string getName() const;
 	};

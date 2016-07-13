@@ -171,15 +171,13 @@ namespace mc {
 
 	};
 
-	class EntityModule : public Module,public Container {
+	class EntityModule : public Module, public Container {
 	public:
 		EntityModule();
 
-		void init();
-		void update();
-		void destroy();
-		std::string getName() const;
+		virtual void init();
+		virtual void update();
+		virtual void destroy();
+		virtual std::string getName() const;
 	};
-
-	
 }
