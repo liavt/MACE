@@ -6,8 +6,4 @@ namespace mc {
 	class Position : Vector4f{
 		using Vector4f::Vector4f;
 	};
-
-	class PositionData {
-		
-	};
 }

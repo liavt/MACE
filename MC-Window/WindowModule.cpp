@@ -1,23 +1,26 @@
 #include <MC-Window/WindowModule.h>
 
 namespace mc {
-	WindowModule::WindowModule() {
-		
-	}
-	void mc::WindowModule::init() {
-		
-	}
+	namespace win
+	{
+		WindowModule::WindowModule() {
 
-	void mc::WindowModule::tick() {
-		
-	}
+		}
+		void WindowModule::init() {
 
-	void mc::WindowModule::destroy() {
-		
-	}
+		}
 
-	std::string mc::WindowModule::getName() const {
-		return "MC-Window";
-	}
+		void WindowModule::tick() {
 
+		}
+
+		void WindowModule::destroy() {
+
+		}
+
+		std::string WindowModule::getName() const {
+			return "MC-Window";
+		}
+
+	}
 }

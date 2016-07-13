@@ -3,11 +3,17 @@
 #include <SDL/SDL_net.h>
 
 namespace mc{
-	class NetworkModule : public Module {
-	public:
-		void init();
-		void tick();
-		void destroy();
-		std::string getName() const;
-	};
+	/**
+	Namespace with classes relating to networking
+	*/
+	namespace net
+	{
+		class NetworkModule : public Module {
+		public:
+			void init();
+			void tick();
+			void destroy();
+			std::string getName() const;
+		};
+	}
 }

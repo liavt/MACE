@@ -2,23 +2,24 @@
 #include <iostream>
 
 namespace mc {
-	GraphicsModule::GraphicsModule() :EntityModule()
-	{
-	}
-	void GraphicsModule::init() {
-		std::cout << "Inited!" << std::endl;
-		mc::System::assertModule("MC-Window");
-	}
+	namespace gfx{
+		GraphicsModule::GraphicsModule() :EntityModule(), WindowModule()
+		{
+		}
+		void GraphicsModule::init() {
+			std::cout << "Inited!" << std::endl;
+		}
 
-	void GraphicsModule::update() {
-		std::cout << "Tickd!" << std::endl;
-	}
+		void GraphicsModule::update() {
+			std::cout << "Tickd!" << std::endl;
+		}
 
-	void GraphicsModule::destroy() {
-		std::cout << "Destroyed!" << std::endl;
-	}
+		void GraphicsModule::destroy() {
+			std::cout << "Destroyed!" << std::endl;
+		}
 
-	std::string GraphicsModule::getName() const{
-		return "MC-Graphics";
+		std::string GraphicsModule::getName() const{
+			return "MC-Graphics";
+		}
 	}
 }

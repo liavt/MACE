@@ -5,13 +5,16 @@
 #include <MC-Window/Window.h>
 
 namespace mc {
-	class WindowModule : public Module {
-	public:
-		WindowModule();
+	namespace win
+	{
+		class WindowModule : public Module {
+		public:
+			WindowModule();
 
-		void init();
-		void tick();
-		void destroy();
-		std::string getName() const;
-	};
+			void init();
+			void tick();
+			void destroy();
+			std::string getName() const;
+		};
+	}
 }
