@@ -1,0 +1,106 @@
+\hypertarget{_s_d_l__touch_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+touch.h File Reference}
+\label{_s_d_l__touch_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+touch.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+touch.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+error.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+video.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_l___finger}{S\+D\+L\+\_\+\+Finger}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__touch_8h_ac24e2ec23c2ac1675fec8f327ef45efe}{S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID}~((\hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32})-\/1)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_a2c1a61d5c466bb74680be0a8cc1b455d}{Sint64} \hyperlink{_s_d_l__touch_8h_a10f5f86abe4ea8308a8706bd5d3b337a}{S\+D\+L\+\_\+\+Touch\+ID}
+\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_a2c1a61d5c466bb74680be0a8cc1b455d}{Sint64} \hyperlink{_s_d_l__touch_8h_a5fa58141f78415ca09645af359ad2250}{S\+D\+L\+\_\+\+Finger\+ID}
+\item 
+typedef struct \hyperlink{struct_s_d_l___finger}{S\+D\+L\+\_\+\+Finger} \hyperlink{_s_d_l__touch_8h_aebfbaf6a1c2acd4e2595fcdeb911d4ac}{S\+D\+L\+\_\+\+Finger}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__touch_8h_a14a41a2964ddf868a180e42ccfd441d1}{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\begin{DoxyCompactList}\small\item\em Get the number of registered touch devices. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__touch_8h_a10f5f86abe4ea8308a8706bd5d3b337a}{S\+D\+L\+\_\+\+Touch\+ID} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__touch_8h_af23f09dc79eace93cdc8dd770eed0d0a}{S\+D\+L\+\_\+\+Get\+Touch\+Device} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index})
+\begin{DoxyCompactList}\small\item\em Get the touch ID with the given index, or 0 if the index is invalid. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__touch_8h_a7dcd1494c8dd433b7ef7b24c2926e721}{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers} (\hyperlink{_s_d_l__touch_8h_a10f5f86abe4ea8308a8706bd5d3b337a}{S\+D\+L\+\_\+\+Touch\+ID} touch\+ID)
+\begin{DoxyCompactList}\small\item\em Get the number of active fingers for a given touch device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_s_d_l___finger}{S\+D\+L\+\_\+\+Finger} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__touch_8h_a50902a3c1e4dba0b82cb73cb786dae41}{S\+D\+L\+\_\+\+Get\+Touch\+Finger} (\hyperlink{_s_d_l__touch_8h_a10f5f86abe4ea8308a8706bd5d3b337a}{S\+D\+L\+\_\+\+Touch\+ID} touch\+ID, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index})
+\begin{DoxyCompactList}\small\item\em Get the finger object of the given touch, with the given index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Include file for S\+DL touch event handling. 
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID@{S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID}}
+\index{S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID@{S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID}{SDL_TOUCH_MOUSEID}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+T\+O\+U\+C\+H\+\_\+\+M\+O\+U\+S\+E\+ID~(({\bf Uint32})-\/1)}\hypertarget{_s_d_l__touch_8h_ac24e2ec23c2ac1675fec8f327ef45efe}{}\label{_s_d_l__touch_8h_ac24e2ec23c2ac1675fec8f327ef45efe}
+
+
+\subsection{Typedef Documentation}
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Finger@{S\+D\+L\+\_\+\+Finger}}
+\index{S\+D\+L\+\_\+\+Finger@{S\+D\+L\+\_\+\+Finger}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Finger}{SDL_Finger}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Finger}  {\bf S\+D\+L\+\_\+\+Finger}}\hypertarget{_s_d_l__touch_8h_aebfbaf6a1c2acd4e2595fcdeb911d4ac}{}\label{_s_d_l__touch_8h_aebfbaf6a1c2acd4e2595fcdeb911d4ac}
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Finger\+ID@{S\+D\+L\+\_\+\+Finger\+ID}}
+\index{S\+D\+L\+\_\+\+Finger\+ID@{S\+D\+L\+\_\+\+Finger\+ID}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Finger\+ID}{SDL_FingerID}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Sint64} {\bf S\+D\+L\+\_\+\+Finger\+ID}}\hypertarget{_s_d_l__touch_8h_a5fa58141f78415ca09645af359ad2250}{}\label{_s_d_l__touch_8h_a5fa58141f78415ca09645af359ad2250}
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Touch\+ID@{S\+D\+L\+\_\+\+Touch\+ID}}
+\index{S\+D\+L\+\_\+\+Touch\+ID@{S\+D\+L\+\_\+\+Touch\+ID}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Touch\+ID}{SDL_TouchID}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Sint64} {\bf S\+D\+L\+\_\+\+Touch\+ID}}\hypertarget{_s_d_l__touch_8h_a10f5f86abe4ea8308a8706bd5d3b337a}{}\label{_s_d_l__touch_8h_a10f5f86abe4ea8308a8706bd5d3b337a}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices@{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices}}
+\index{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices@{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices(void)}{SDL_GetNumTouchDevices(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Num\+Touch\+Devices (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__touch_8h_a14a41a2964ddf868a180e42ccfd441d1}{}\label{_s_d_l__touch_8h_a14a41a2964ddf868a180e42ccfd441d1}
+
+
+Get the number of registered touch devices. 
+
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers@{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers}}
+\index{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers@{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers(\+S\+D\+L\+\_\+\+Touch\+I\+D touch\+I\+D)}{SDL_GetNumTouchFingers(SDL_TouchID touchID)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Num\+Touch\+Fingers (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Touch\+ID}}]{touch\+ID}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__touch_8h_a7dcd1494c8dd433b7ef7b24c2926e721}{}\label{_s_d_l__touch_8h_a7dcd1494c8dd433b7ef7b24c2926e721}
+
+
+Get the number of active fingers for a given touch device. 
+
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Get\+Touch\+Device@{S\+D\+L\+\_\+\+Get\+Touch\+Device}}
+\index{S\+D\+L\+\_\+\+Get\+Touch\+Device@{S\+D\+L\+\_\+\+Get\+Touch\+Device}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Touch\+Device(int index)}{SDL_GetTouchDevice(int index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Touch\+ID} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Touch\+Device (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__touch_8h_af23f09dc79eace93cdc8dd770eed0d0a}{}\label{_s_d_l__touch_8h_af23f09dc79eace93cdc8dd770eed0d0a}
+
+
+Get the touch ID with the given index, or 0 if the index is invalid. 
+
+\index{S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}!S\+D\+L\+\_\+\+Get\+Touch\+Finger@{S\+D\+L\+\_\+\+Get\+Touch\+Finger}}
+\index{S\+D\+L\+\_\+\+Get\+Touch\+Finger@{S\+D\+L\+\_\+\+Get\+Touch\+Finger}!S\+D\+L\+\_\+touch.\+h@{S\+D\+L\+\_\+touch.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Touch\+Finger(\+S\+D\+L\+\_\+\+Touch\+I\+D touch\+I\+D, int index)}{SDL_GetTouchFinger(SDL_TouchID touchID, int index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Finger}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Touch\+Finger (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Touch\+ID}}]{touch\+ID, }
+\item[{{\bf int}}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__touch_8h_a50902a3c1e4dba0b82cb73cb786dae41}{}\label{_s_d_l__touch_8h_a50902a3c1e4dba0b82cb73cb786dae41}
+
+
+Get the finger object of the given touch, with the given index. 
+

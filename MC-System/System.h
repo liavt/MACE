@@ -2,6 +2,9 @@
 #include <vector>
 #include <MC-System/Constants.h>
 
+/**
+All classes in MACE will be in this namespace.
+*/
 namespace mc {
 	class System;
 

@@ -1,0 +1,31 @@
+\hypertarget{_s_d_l__quit_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+quit.h File Reference}
+\label{_s_d_l__quit_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+quit.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+quit.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+error.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__quit_8h_a28f0e45d1be91312001526ec45d9dc83}{S\+D\+L\+\_\+\+Quit\+Requested}()~(\hyperlink{_s_d_l__events_8h_aa15403d1c8fc341cd9cf750e27a66d19}{S\+D\+L\+\_\+\+Pump\+Events}(), (\hyperlink{_s_d_l__events_8h_a83618a672f963892ddd0eef74a402e75}{S\+D\+L\+\_\+\+Peep\+Events}(\hyperlink{begin__code_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{N\+U\+LL},0,\hyperlink{_s_d_l__events_8h_a8fdf1485b0419bb77b89e745267dc179a75469beff07bfd6aa7fa4f54674ce34d}{S\+D\+L\+\_\+\+P\+E\+E\+K\+E\+V\+E\+NT},\hyperlink{_s_d_l__events_8h_a3b589e89be6b35c02e0dd34a55f3fccaa31acc5fdafc86ebe2c1f5c3cae48d603}{S\+D\+L\+\_\+\+Q\+U\+IT},\hyperlink{_s_d_l__events_8h_a3b589e89be6b35c02e0dd34a55f3fccaa31acc5fdafc86ebe2c1f5c3cae48d603}{S\+D\+L\+\_\+\+Q\+U\+IT}) $>$ 0))
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Include file for S\+DL quit event handling.
+
+An \hyperlink{_s_d_l__events_8h_a3b589e89be6b35c02e0dd34a55f3fccaa31acc5fdafc86ebe2c1f5c3cae48d603}{S\+D\+L\+\_\+\+Q\+U\+IT} event is generated when the user tries to close the application window. If it is ignored or filtered out, the window will remain open. If it is not ignored or filtered, it is queued normally and the window is allowed to close. When the window is closed, screen updates will complete, but have no effect.
+
+\hyperlink{_s_d_l_8h_a8fc8d35348d7c74bad8392d776c937b8}{S\+D\+L\+\_\+\+Init()} installs signal handlers for S\+I\+G\+I\+NT (keyboard interrupt) and S\+I\+G\+T\+E\+RM (system termination request), if handlers do not already exist, that generate \hyperlink{_s_d_l__events_8h_a3b589e89be6b35c02e0dd34a55f3fccaa31acc5fdafc86ebe2c1f5c3cae48d603}{S\+D\+L\+\_\+\+Q\+U\+IT} events as well. There is no way to determine the cause of an \hyperlink{_s_d_l__events_8h_a3b589e89be6b35c02e0dd34a55f3fccaa31acc5fdafc86ebe2c1f5c3cae48d603}{S\+D\+L\+\_\+\+Q\+U\+IT} event, but setting a signal handler in your application will override the default generation of quit events for that signal.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l_8h_afdabaf714781099083592051f2d9ac11}{S\+D\+L\+\_\+\+Quit()} 
+\end{DoxySeeAlso}
+
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+quit.\+h@{S\+D\+L\+\_\+quit.\+h}!S\+D\+L\+\_\+\+Quit\+Requested@{S\+D\+L\+\_\+\+Quit\+Requested}}
+\index{S\+D\+L\+\_\+\+Quit\+Requested@{S\+D\+L\+\_\+\+Quit\+Requested}!S\+D\+L\+\_\+quit.\+h@{S\+D\+L\+\_\+quit.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Quit\+Requested}{SDL_QuitRequested}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Quit\+Requested(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~({\bf S\+D\+L\+\_\+\+Pump\+Events}(), ({\bf S\+D\+L\+\_\+\+Peep\+Events}({\bf N\+U\+LL},0,{\bf S\+D\+L\+\_\+\+P\+E\+E\+K\+E\+V\+E\+NT},{\bf S\+D\+L\+\_\+\+Q\+U\+IT},{\bf S\+D\+L\+\_\+\+Q\+U\+IT}) $>$ 0))}\hypertarget{_s_d_l__quit_8h_a28f0e45d1be91312001526ec45d9dc83}{}\label{_s_d_l__quit_8h_a28f0e45d1be91312001526ec45d9dc83}

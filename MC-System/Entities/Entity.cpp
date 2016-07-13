@@ -37,7 +37,7 @@ namespace mc {
 		}
 	}
 	
-	bool Container::hasChild(Entity & e)
+	bool Container::hasChild(Entity & e) const
 	{
 		for (Size i = 0; i < children.size(); i++) {
 			if (children[i] == &e) {
@@ -103,6 +103,10 @@ namespace mc {
 		return *parent;
 	}
 
+	const Container& Entity::getParent() const {
+		return *parent;
+	}
+
 	Entity& Container::operator[](unsigned int i) {
 		return *children[i];
 	}
@@ -121,7 +125,7 @@ namespace mc {
 		return *children.at(i);
 	}
 
-	unsigned int Container::indexOf(Entity & e)
+	unsigned int Container::indexOf(Entity & e) const
 	{
 		for (unsigned int i = 0; i < children.size();i++) {
 			if (children[i] == &e) {
@@ -203,7 +207,11 @@ namespace mc {
 	{
 	}
 
-	ByteField& Entity::getProperties()
+	ByteField& Entity::getProperties() {
+		return properties;
+	}
+
+	const ByteField& Entity::getProperties() const
 	{
 		return properties;
 	}
@@ -212,7 +220,7 @@ namespace mc {
 	{
 		properties = b;
 	}
-	bool Entity::getProperty(unsigned int position)
+	bool Entity::getProperty(unsigned int position) const
 	{
 		return properties.getBit(position);
 	}
@@ -244,27 +252,27 @@ namespace mc {
 		Container::destroy();
 	}
 
-	bool Entity::operator==(Entity& other){
+	bool Entity::operator==(Entity& other) const{
 		if (other.getProperties() != getProperties()) {
 			return false;
 		}
-		if (other.getParent() != getParent()) {
+		if (&other.getParent() != &getParent()) {
 			return false;
 		}
 		return Container::operator==(other);
 	}
 
-	bool Entity::operator!=(Entity & other)
+	bool Entity::operator!=(Entity & other) const
 	{
 		return !(this==&other);
 	}
 
-	bool Container::operator==(Container & other)
+	bool Container::operator==(Container & other) const
 	{
 		return getChildren()==other.getChildren();
 	}
 
-	bool Container::operator!=(Container & other)
+	bool Container::operator!=(Container & other) const
 	{
 		return !(this==&other);
 	}

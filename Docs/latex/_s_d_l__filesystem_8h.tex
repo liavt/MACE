@@ -1,0 +1,107 @@
+\hypertarget{_s_d_l__filesystem_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+filesystem.h File Reference}
+\label{_s_d_l__filesystem_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+filesystem.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+filesystem.\+h}}
+
+
+Include file for filesystem S\+DL A\+PI functions.  
+
+
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__filesystem_8h_a752d42a2e7fbff1292b7e54593be37bc}{S\+D\+L\+\_\+\+Get\+Base\+Path} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\begin{DoxyCompactList}\small\item\em Get the path where the application resides. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__filesystem_8h_ab11eaf74d913eefb472475f0c8e312ce}{S\+D\+L\+\_\+\+Get\+Pref\+Path} (const char $\ast$org, const char $\ast$app)
+\begin{DoxyCompactList}\small\item\em Get the user-\/and-\/app-\/specific path where files can be written. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Include file for filesystem S\+DL A\+PI functions. 
+
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+filesystem.\+h@{S\+D\+L\+\_\+filesystem.\+h}!S\+D\+L\+\_\+\+Get\+Base\+Path@{S\+D\+L\+\_\+\+Get\+Base\+Path}}
+\index{S\+D\+L\+\_\+\+Get\+Base\+Path@{S\+D\+L\+\_\+\+Get\+Base\+Path}!S\+D\+L\+\_\+filesystem.\+h@{S\+D\+L\+\_\+filesystem.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Base\+Path(void)}{SDL_GetBasePath(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Base\+Path (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__filesystem_8h_a752d42a2e7fbff1292b7e54593be37bc}{}\label{_s_d_l__filesystem_8h_a752d42a2e7fbff1292b7e54593be37bc}
+
+
+Get the path where the application resides. 
+
+Get the \char`\"{}base path\char`\"{}. This is the directory where the application was run from, which is probably the installation directory, and may or may not be the process\textquotesingle{}s current working directory.
+
+This returns an absolute path in U\+T\+F-\/8 encoding, and is guaranteed to end with a path separator (\textquotesingle{}\textbackslash{}\textquotesingle{} on Windows, \textquotesingle{}/\textquotesingle{} most other places).
+
+The pointer returned by this function is owned by you. Please call \hyperlink{_s_d_l__stdinc_8h_a0e4ade894d550ada1fa19dc2d46e88b8}{S\+D\+L\+\_\+free()} on the pointer when you are done with it, or it will be a memory leak. This is not necessarily a fast call, though, so you should call this once near startup and save the string if you need it.
+
+Some platforms can\textquotesingle{}t determine the application\textquotesingle{}s path, and on other platforms, this might be meaningless. In such cases, this function will return N\+U\+LL.
+
+\begin{DoxyReturn}{Returns}
+String of base dir in U\+T\+F-\/8 encoding, or N\+U\+LL on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__filesystem_8h_ab11eaf74d913eefb472475f0c8e312ce}{S\+D\+L\+\_\+\+Get\+Pref\+Path} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+filesystem.\+h@{S\+D\+L\+\_\+filesystem.\+h}!S\+D\+L\+\_\+\+Get\+Pref\+Path@{S\+D\+L\+\_\+\+Get\+Pref\+Path}}
+\index{S\+D\+L\+\_\+\+Get\+Pref\+Path@{S\+D\+L\+\_\+\+Get\+Pref\+Path}!S\+D\+L\+\_\+filesystem.\+h@{S\+D\+L\+\_\+filesystem.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Pref\+Path(const char $\ast$org, const char $\ast$app)}{SDL_GetPrefPath(const char *org, const char *app)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Pref\+Path (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{org, }
+\item[{const char $\ast$}]{app}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__filesystem_8h_ab11eaf74d913eefb472475f0c8e312ce}{}\label{_s_d_l__filesystem_8h_ab11eaf74d913eefb472475f0c8e312ce}
+
+
+Get the user-\/and-\/app-\/specific path where files can be written. 
+
+Get the \char`\"{}pref dir\char`\"{}. This is meant to be where users can write personal files (preferences and save games, etc) that are specific to your application. This directory is unique per user, per application.
+
+This function will decide the appropriate location in the native filesystem, create the directory if necessary, and return a string of the absolute path to the directory in U\+T\+F-\/8 encoding.
+
+On Windows, the string might look like\+: \char`\"{}\+C\+:\textbackslash{}\textbackslash{}\+Users\textbackslash{}\textbackslash{}bob\textbackslash{}\textbackslash{}\+App\+Data\textbackslash{}\textbackslash{}\+Roaming\textbackslash{}\textbackslash{}\+My Company\textbackslash{}\textbackslash{}\+My Program Name\textbackslash{}\textbackslash{}\char`\"{}
+
+On Linux, the string might look like\+: \char`\"{}/home/bob/.\+local/share/\+My Program Name/\char`\"{}
+
+On Mac OS X, the string might look like\+: \char`\"{}/\+Users/bob/\+Library/\+Application Support/\+My Program Name/\char`\"{}
+
+(etc.)
+
+You specify the name of your organization (if it\textquotesingle{}s not a real organization, your name or an Internet domain you own might do) and the name of your application. These should be untranslated proper names.
+
+Both the org and app strings may become part of a directory name, so please follow these rules\+:
+
+
+\begin{DoxyItemize}
+\item Try to use the same org string (including case-\/sensitivity) for all your applications that use this function.
+\item Always use a unique app string for each one, and make sure it never changes for an app once you\textquotesingle{}ve decided on it.
+\item Unicode characters are legal, as long as it\textquotesingle{}s U\+T\+F-\/8 encoded, but...
+\item ...only use letters, numbers, and spaces. Avoid punctuation like \char`\"{}\+Game Name 2\+: Bad Guy\textquotesingle{}s Revenge!\char`\"{} ... \char`\"{}\+Game Name 2\char`\"{} is sufficient.
+\end{DoxyItemize}
+
+This returns an absolute path in U\+T\+F-\/8 encoding, and is guaranteed to end with a path separator (\textquotesingle{}\textbackslash{}\textquotesingle{} on Windows, \textquotesingle{}/\textquotesingle{} most other places).
+
+The pointer returned by this function is owned by you. Please call \hyperlink{_s_d_l__stdinc_8h_a0e4ade894d550ada1fa19dc2d46e88b8}{S\+D\+L\+\_\+free()} on the pointer when you are done with it, or it will be a memory leak. This is not necessarily a fast call, though, so you should call this once near startup and save the string if you need it.
+
+You should assume the path returned by this function is the only safe place to write files (and that \hyperlink{_s_d_l__filesystem_8h_a752d42a2e7fbff1292b7e54593be37bc}{S\+D\+L\+\_\+\+Get\+Base\+Path()}, while it might be writable, or even the parent of the returned path, aren\textquotesingle{}t where you should be writing things).
+
+Some platforms can\textquotesingle{}t determine the pref path, and on other platforms, this might be meaningless. In such cases, this function will return N\+U\+LL.
+
+
+\begin{DoxyParams}{Parameters}
+{\em org} & The name of your organization. \\
+\hline
+{\em app} & The name of your application. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+U\+T\+F-\/8 string of user dir in platform-\/dependent notation. N\+U\+LL if there\textquotesingle{}s a problem (creating directory failed, etc).
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__filesystem_8h_a752d42a2e7fbff1292b7e54593be37bc}{S\+D\+L\+\_\+\+Get\+Base\+Path} 
+\end{DoxySeeAlso}

@@ -1,0 +1,58 @@
+\hypertarget{_s_d_l__main_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+main.h File Reference}
+\label{_s_d_l__main_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+main.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+main.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__main_8h_aff46224d961128004c2b4223648f3d40}{C\+\_\+\+L\+I\+N\+K\+A\+GE}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_d_l__main_8h_aff46224d961128004c2b4223648f3d40}{C\+\_\+\+L\+I\+N\+K\+A\+GE} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__main_8h_abebe82923d88787c3718e201b3e62295}{S\+D\+L\+\_\+main} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__main_8h_a6a4bb5ffb489bf0956bc1b813397306d}{S\+D\+L\+\_\+\+Set\+Main\+Ready} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Redefine \hyperlink{_main_8cpp_af3ed9c200de85b53c94cd18764b246a2}{main()} on some platforms so that it is called by S\+DL.
+
+The application\textquotesingle{}s \hyperlink{_main_8cpp_af3ed9c200de85b53c94cd18764b246a2}{main()} function must be called with C linkage, and should be declared like this\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#ifdef \_\_cplusplus}
+\textcolor{keyword}{extern} \textcolor{stringliteral}{"C"}
+\textcolor{preprocessor}{#endif}
+\textcolor{keywordtype}{int} \hyperlink{_main_8cpp_af3ed9c200de85b53c94cd18764b246a2}{main}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *argv[])
+\{
+\}
+\end{DoxyCode}
+ 
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+main.\+h@{S\+D\+L\+\_\+main.\+h}!C\+\_\+\+L\+I\+N\+K\+A\+GE@{C\+\_\+\+L\+I\+N\+K\+A\+GE}}
+\index{C\+\_\+\+L\+I\+N\+K\+A\+GE@{C\+\_\+\+L\+I\+N\+K\+A\+GE}!S\+D\+L\+\_\+main.\+h@{S\+D\+L\+\_\+main.\+h}}
+\subsubsection[{\texorpdfstring{C\+\_\+\+L\+I\+N\+K\+A\+GE}{C_LINKAGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+\_\+\+L\+I\+N\+K\+A\+GE}\hypertarget{_s_d_l__main_8h_aff46224d961128004c2b4223648f3d40}{}\label{_s_d_l__main_8h_aff46224d961128004c2b4223648f3d40}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+main.\+h@{S\+D\+L\+\_\+main.\+h}!S\+D\+L\+\_\+main@{S\+D\+L\+\_\+main}}
+\index{S\+D\+L\+\_\+main@{S\+D\+L\+\_\+main}!S\+D\+L\+\_\+main.\+h@{S\+D\+L\+\_\+main.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+main(int argc, char $\ast$argv[])}{SDL_main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+\_\+\+L\+I\+N\+K\+A\+GE} {\bf int} S\+D\+L\+\_\+main (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__main_8h_abebe82923d88787c3718e201b3e62295}{}\label{_s_d_l__main_8h_abebe82923d88787c3718e201b3e62295}
+The prototype for the application\textquotesingle{}s \hyperlink{_main_8cpp_af3ed9c200de85b53c94cd18764b246a2}{main()} function \index{S\+D\+L\+\_\+main.\+h@{S\+D\+L\+\_\+main.\+h}!S\+D\+L\+\_\+\+Set\+Main\+Ready@{S\+D\+L\+\_\+\+Set\+Main\+Ready}}
+\index{S\+D\+L\+\_\+\+Set\+Main\+Ready@{S\+D\+L\+\_\+\+Set\+Main\+Ready}!S\+D\+L\+\_\+main.\+h@{S\+D\+L\+\_\+main.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Set\+Main\+Ready(void)}{SDL_SetMainReady(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Set\+Main\+Ready (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__main_8h_a6a4bb5ffb489bf0956bc1b813397306d}{}\label{_s_d_l__main_8h_a6a4bb5ffb489bf0956bc1b813397306d}
+This is called by the real S\+DL main function to let the rest of the library know that initialization was done properly.
+
+Calling this yourself without knowing what you\textquotesingle{}re doing can cause crashes and hard to diagnose problems with your application. 

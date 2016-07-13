@@ -1,0 +1,984 @@
+\hypertarget{_s_d_l__mixer_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+mixer.h File Reference}
+\label{_s_d_l__mixer_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+mixer.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+mixer.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+rwops.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+audio.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+endian.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+version.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a62af8116474da839221137996edf6a0e}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}~2
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_afea96d57d92108eb55ced2900adef6a5}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}~0
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_ac00d5ae84eedcd8c85e5128625af3ddb}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}~1
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_aff47adf3457f84e805f85d6e4e880c0a}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON}(X)                                            
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a8a6a91becf98340310a774d66f18a775}{M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}~\hyperlink{_s_d_l__mixer_8h_a62af8116474da839221137996edf6a0e}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a429f2a252000359a6538de6abd719c5f}{M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}~\hyperlink{_s_d_l__mixer_8h_afea96d57d92108eb55ced2900adef6a5}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a1975c52524c62a7b2b2ee3bb00a362af}{M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}~\hyperlink{_s_d_l__mixer_8h_ac00d5ae84eedcd8c85e5128625af3ddb}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_ac4f5fb0084f19cc059033fa7ca637660}{M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON}(X)        ~\hyperlink{_s_d_l__mixer_8h_aff47adf3457f84e805f85d6e4e880c0a}{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON}(X)
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a8b4a8b188543964be1ab99d33685d921}{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS}~8
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a960c830f43ad3bd2b802f9fa35ff394f}{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY}~22050
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a9e0213e86be75a3b5bd28158a03cdb73}{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT}~\hyperlink{_s_d_l__audio_8h_a23838d612e88ce72d82c3e51460f831b}{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a31f2fc8f7be9e34899f044a5beada806}{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS}~2
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_ac3ee7ce3c29e7fb4314edba1035c12b6}{M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME}~128 /$\ast$ Volume of \hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a} chunk $\ast$/
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a37dd6c3b2c02d9166bd27aa57c42fadf}{Mix\+\_\+\+Load\+W\+AV}(file)  ~\hyperlink{_s_d_l__mixer_8h_ade68686625490fae426a8f711a105501}{Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}(\hyperlink{_s_d_l__rwops_8h_aef7e843c3486bd1770667a594aa0b439}{S\+D\+L\+\_\+\+R\+W\+From\+File}(file, \char`\"{}rb\char`\"{}), 1)
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a7de550fb0c03378ab55cdf42c6e2fec9}{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST}~-\/2
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_aabb013a480a63af25255d0fa90ea9ab8}{M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED}~\char`\"{}M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED\char`\"{}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a997d7e0f834445c28d6bce9321486ad5}{Mix\+\_\+\+Play\+Channel}(channel,  chunk,  loops)~\hyperlink{_s_d_l__mixer_8h_a9e7e5bb8d3dbd3539eb3d032589fc624}{Mix\+\_\+\+Play\+Channel\+Timed}(channel,chunk,loops,-\/1)
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_a73801b49db6f7ff55473e11b4651df61}{Mix\+\_\+\+Fade\+In\+Channel}(channel,  chunk,  loops,  ms)~\hyperlink{_s_d_l__mixer_8h_a1fb54ff92263b255ec013cdd1ee21d9e}{Mix\+\_\+\+Fade\+In\+Channel\+Timed}(channel,chunk,loops,ms,-\/1)
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_afd4c97802c19ab195d806459b7b520f7}{Mix\+\_\+\+Set\+Error}~\hyperlink{_s_d_l__error_8h_a26775853eaf43390bbceb27eb21a2240}{S\+D\+L\+\_\+\+Set\+Error}
+\item 
+\#define \hyperlink{_s_d_l__mixer_8h_ab29aa52963e2c1dd92888629c810c74f}{Mix\+\_\+\+Get\+Error}~\hyperlink{_s_d_l__error_8h_ac88e1aa404a8f94aaee4ad6b94547647}{S\+D\+L\+\_\+\+Get\+Error}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} \hyperlink{_s_d_l__mixer_8h_a934e0b5f1f21a3fee6c711b703ca6183}{Mix\+\_\+\+Chunk}
+\item 
+typedef struct \+\_\+\+Mix\+\_\+\+Music \hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music}
+\item 
+typedef \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}($\ast$ \hyperlink{_s_d_l__mixer_8h_a55033a79adff2e046b5368921e4895ad}{Mix\+\_\+\+Effect\+Func\+\_\+t}) (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} chan, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{_s_d_l__audio_8h_a10d3bc96cdfc1d478f52c13d5ffd9316}{stream}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len}, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$udata)
+\item 
+typedef \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}($\ast$ \hyperlink{_s_d_l__mixer_8h_a4ae73790fe75aa2879f250581f675cbf}{Mix\+\_\+\+Effect\+Done\+\_\+t}) (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} chan, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$udata)
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36d}{M\+I\+X\+\_\+\+Init\+Flags} \{ \\*
+\hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36dad2c4a750250632be803a8c4520d4c486}{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+AC} = 0x00000001, 
+\hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36dae3af2cbd16a150ae341f4286c0a5e394}{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+OD} = 0x00000002, 
+\hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daa566a179d71193988205670d45c99879}{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+O\+D\+P\+L\+UG} = 0x00000004, 
+\hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daf439578078fa1f57ec9a09efe38ef24f}{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+P3} = 0x00000008, 
+\\*
+\hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36da2256680914b5648ffc8e54ab0bf4e00c}{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+O\+GG} = 0x00000010, 
+\hyperlink{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daac6cc48f3e7ebc98250c18526a3e8aec}{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+U\+I\+D\+S\+Y\+N\+TH} = 0x00000020
+ \}
+\item 
+enum \hyperlink{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456c}{Mix\+\_\+\+Fading} \{ \hyperlink{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456ca81b8ccddd079a5f13aba7b21d1e475a4}{M\+I\+X\+\_\+\+N\+O\+\_\+\+F\+A\+D\+I\+NG}, 
+\hyperlink{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456caa2d71aa2141ab0f2ff514f2c5d49a70c}{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+O\+UT}, 
+\hyperlink{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456cacac9dbc0a92b5116934dd4036e9e25ef}{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+IN}
+ \}
+\item 
+enum \hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46}{Mix\+\_\+\+Music\+Type} \{ \\*
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ad6c456444e9634514a07c31947bf51a7}{M\+U\+S\+\_\+\+N\+O\+NE}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a218a2952d564324cfc6fe78e4c598c39}{M\+U\+S\+\_\+\+C\+MD}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ad2905fd8e5ac57321dea83f0afc8d7b6}{M\+U\+S\+\_\+\+W\+AV}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46aa1cd53bdbec42e838e5da8863741eae1}{M\+U\+S\+\_\+\+M\+OD}, 
+\\*
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ac69784a48a28e2dafec3ef307ed0bf2b}{M\+U\+S\+\_\+\+M\+ID}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a9a80ce658507a45c33dd78c3a63deec2}{M\+U\+S\+\_\+\+O\+GG}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a7edd0d75c1734063c604df8a11ef8a7a}{M\+U\+S\+\_\+\+M\+P3}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46aa2634410ddad84c79785a3dd1e2a8b5c}{M\+U\+S\+\_\+\+M\+P3\+\_\+\+M\+AD}, 
+\\*
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ac264a114cab6e312b12d8a88e14b8293}{M\+U\+S\+\_\+\+F\+L\+AC}, 
+\hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a084e9d125c47d88d22c37d9acdc96831}{M\+U\+S\+\_\+\+M\+O\+D\+P\+L\+UG}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const \hyperlink{struct_s_d_l__version}{S\+D\+L\+\_\+version} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a832753fd5fb10f66ff8545155c18c061}{Mix\+\_\+\+Linked\+\_\+\+Version} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a71a389ff8fb5e4af34d0951e73d05995}{Mix\+\_\+\+Init} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_ac7ba7d3cce3d19ca020e056b37231289}{flags})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a136e5586b53fe0e3e752e2174bd7bb70}{Mix\+\_\+\+Quit} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a874d68326b7e6f6319052537ccbe5d8e}{Mix\+\_\+\+Open\+Audio} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} frequency, \hyperlink{_s_d_l__stdinc_8h_a31fcc0a076c9068668173ee26d33e42b}{Uint16} \hyperlink{_s_d_l__audio_8h_a71a65ffd977afe9c3fef116a5bc9ee27}{format}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channels, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} chunksize)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a3bb24eade448b0c5515f9d402d935924}{Mix\+\_\+\+Allocate\+Channels} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} numchans)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab9f5c519bd9cbe0226b42a617b793cb8}{Mix\+\_\+\+Query\+Spec} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} $\ast$frequency, \hyperlink{_s_d_l__stdinc_8h_a31fcc0a076c9068668173ee26d33e42b}{Uint16} $\ast$\hyperlink{_s_d_l__audio_8h_a71a65ffd977afe9c3fef116a5bc9ee27}{format}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} $\ast$channels)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ade68686625490fae426a8f711a105501}{Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW} (\hyperlink{struct_s_d_l___r_wops}{S\+D\+L\+\_\+\+R\+Wops} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a72e0fdf0f845ded60b1fada9e9195cd7}{src}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} freesrc)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a29e887541a3b3aaa34788a80ecd068bb}{Mix\+\_\+\+Load\+M\+US} (const char $\ast$file)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a57e1289e3cc2793a14d1b817c706ef8d}{Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+RW} (\hyperlink{struct_s_d_l___r_wops}{S\+D\+L\+\_\+\+R\+Wops} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a72e0fdf0f845ded60b1fada9e9195cd7}{src}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} freesrc)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a86cd0a57f1e9a7c3238e9ef3088b9430}{Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+RW} (\hyperlink{struct_s_d_l___r_wops}{S\+D\+L\+\_\+\+R\+Wops} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a72e0fdf0f845ded60b1fada9e9195cd7}{src}, \hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46}{Mix\+\_\+\+Music\+Type} \hyperlink{_s_d_l__opengl_8h_ad5ddf6fca7b585646515660e810e0188}{type}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} freesrc)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ad8959410cb0ec39ce8a7b6fa392f78c2}{Mix\+\_\+\+Quick\+Load\+\_\+\+W\+AV} (\hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$mem)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab10255f1ad6adbc9734ca1214308d38d}{Mix\+\_\+\+Quick\+Load\+\_\+\+R\+AW} (\hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$mem, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_abf7ae3433476bb4f66acedc6098e5b2d}{Mix\+\_\+\+Free\+Chunk} (\hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$chunk)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ac2e103808706941aab379d601a46327b}{Mix\+\_\+\+Free\+Music} (\hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$music)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a96a0798b1d506b9231fc8bf249cc205a}{Mix\+\_\+\+Get\+Num\+Chunk\+Decoders} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a19d9a8e502929c33d7aa347b1a059603}{Mix\+\_\+\+Get\+Chunk\+Decoder} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_acd9256e344e9916e15764a4e39d428de}{Mix\+\_\+\+Get\+Num\+Music\+Decoders} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a73c18ad6371c1010d7c32d32db5db047}{Mix\+\_\+\+Get\+Music\+Decoder} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46}{Mix\+\_\+\+Music\+Type} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a067102de8c25361537caa4165ce5eeae}{Mix\+\_\+\+Get\+Music\+Type} (const \hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$music)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a710f0c657fc8b5fe55ca3ae3e12ab4a0}{Mix\+\_\+\+Set\+Post\+Mix} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}($\ast$mix\+\_\+func)(\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$udata, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$\hyperlink{_s_d_l__audio_8h_a10d3bc96cdfc1d478f52c13d5ffd9316}{stream}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len}), \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$arg)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a4c5435cc00d6f85ad065ceb0e4def1b1}{Mix\+\_\+\+Hook\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}($\ast$mix\+\_\+func)(\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$udata, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$\hyperlink{_s_d_l__audio_8h_a10d3bc96cdfc1d478f52c13d5ffd9316}{stream}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len}), \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$arg)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aef5043d512c98474d8a5ff455be2a31a}{Mix\+\_\+\+Hook\+Music\+Finished} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}($\ast$music\+\_\+finished)(\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}))
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_af2c4ee6656cfbda52d175f8e154995a0}{Mix\+\_\+\+Get\+Music\+Hook\+Data} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa55646e3f5c8cf4ab7d3d639e21d7487}{Mix\+\_\+\+Channel\+Finished} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void}($\ast$channel\+\_\+finished)(\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel))
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa3843504b9dfb94b22d4f74721adebf8}{Mix\+\_\+\+Register\+Effect} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} chan, \hyperlink{_s_d_l__mixer_8h_a55033a79adff2e046b5368921e4895ad}{Mix\+\_\+\+Effect\+Func\+\_\+t} \hyperlink{_s_d_l__opengl__glext_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}, \hyperlink{_s_d_l__mixer_8h_a4ae73790fe75aa2879f250581f675cbf}{Mix\+\_\+\+Effect\+Done\+\_\+t} d, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$arg)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a3c460b5c391b7037156adcc47d5ba2c5}{Mix\+\_\+\+Unregister\+Effect} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__mixer_8h_a55033a79adff2e046b5368921e4895ad}{Mix\+\_\+\+Effect\+Func\+\_\+t} \hyperlink{_s_d_l__opengl__glext_8h_a691492ec0bd6383f91200e49f6ae40ed}{f})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a3591d82e9975a21317865850644e1bf8}{Mix\+\_\+\+Unregister\+All\+Effects} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a896c0ac1043249dfbf1bc758297f54f2}{Mix\+\_\+\+Set\+Panning} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{_s_d_l__opengl__glext_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{_s_d_l__opengl__glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a3708de5fc6fc191bb691e972f257a63d}{Mix\+\_\+\+Set\+Position} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__stdinc_8h_a9d0257032c0e146ab6121bf0122712f5}{Sint16} \hyperlink{_s_d_l__opengl__glext_8h_a9e06c1f76a20fed54ca742cd25cb02c4}{angle}, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{_s_d_l__opengl__glext_8h_a744fbed01658cb96bb8ba7e85a86d1dc}{distance})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a36a244386902034964e4c5f5bcfef808}{Mix\+\_\+\+Set\+Distance} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{_s_d_l__opengl__glext_8h_a744fbed01658cb96bb8ba7e85a86d1dc}{distance})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ae26962e9d1fe6c9bdf249237433bf109}{Mix\+\_\+\+Set\+Reverse\+Stereo} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} flip)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_af5d97b94207796ae479f7599a0b3a89e}{Mix\+\_\+\+Reserve\+Channels} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab0ce85d3ea72e1d14e1fbd15bbf8cfd1}{Mix\+\_\+\+Group\+Channel} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} which, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aee8ff77b8e446e449701371a0c8cc522}{Mix\+\_\+\+Group\+Channels} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} from, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} to, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ae4b751351d0554c264a0d1abc02d832c}{Mix\+\_\+\+Group\+Available} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a43ca84ed285330500b98b7731710e26f}{Mix\+\_\+\+Group\+Count} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a97e7c63dab34fa0a964442e90fd4d416}{Mix\+\_\+\+Group\+Oldest} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a598ff819d5c839f199183ed997855d83}{Mix\+\_\+\+Group\+Newer} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a9e7e5bb8d3dbd3539eb3d032589fc624}{Mix\+\_\+\+Play\+Channel\+Timed} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$chunk, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} loops, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ticks)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a215ea5402d7da6d73a53b408d33b06b3}{Mix\+\_\+\+Play\+Music} (\hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$music, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} loops)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a2400bb4d58a5bce5e1c734f2b09bface}{Mix\+\_\+\+Fade\+In\+Music} (\hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$music, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} loops, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ms)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a636e248dd7cd411c3edcebd2c74db71e}{Mix\+\_\+\+Fade\+In\+Music\+Pos} (\hyperlink{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{Mix\+\_\+\+Music} $\ast$music, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} loops, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ms, double position)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a1fb54ff92263b255ec013cdd1ee21d9e}{Mix\+\_\+\+Fade\+In\+Channel\+Timed} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$chunk, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} loops, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ms, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ticks)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a41d2418a357057d2aabad338476e1b9a}{Mix\+\_\+\+Volume} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} volume)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a4d54b34877f1187d4789884cbaff8be2}{Mix\+\_\+\+Volume\+Chunk} (\hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$chunk, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} volume)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab926fc25eab93de464ac7029e2125003}{Mix\+\_\+\+Volume\+Music} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} volume)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a369f1cc25e69d0dc2a6f652109de9683}{Mix\+\_\+\+Halt\+Channel} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab3f97cb41be6a1b4c3d638cc9aaa7043}{Mix\+\_\+\+Halt\+Group} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a2b2bc73786ee25eddb63208751baba76}{Mix\+\_\+\+Halt\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a5ca9a903a8f102404d9f588b83fec7fe}{Mix\+\_\+\+Expire\+Channel} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ticks)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ace4743866ba2f907858de7fa2ef6108f}{Mix\+\_\+\+Fade\+Out\+Channel} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} which, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ms)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab62361006702546e9d66021c0c9f5a5b}{Mix\+\_\+\+Fade\+Out\+Group} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} tag, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ms)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aff8cc2e99284bf7268b1ee62b86b5367}{Mix\+\_\+\+Fade\+Out\+Music} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ms)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456c}{Mix\+\_\+\+Fading} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_afcb499a0686c714ede299e81e85c817c}{Mix\+\_\+\+Fading\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456c}{Mix\+\_\+\+Fading} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aeffa4c64b29f638f549defecdf7d9ddd}{Mix\+\_\+\+Fading\+Channel} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} which)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a8327a4a060ebc4dc1771db7a3e9d3038}{Mix\+\_\+\+Pause} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa5f6a115fe2ffb8488929d96e8575d70}{Mix\+\_\+\+Resume} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a90c6066d45d6376b1c570fdc83622cc2}{Mix\+\_\+\+Paused} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_abe25a71474eae91d3ad725eb4ad8ed39}{Mix\+\_\+\+Pause\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa45edeb5e03075593c4567e197565979}{Mix\+\_\+\+Resume\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a24f8498924c913883808b0a3ac7f4ebc}{Mix\+\_\+\+Rewind\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a6366b72369e1217ed7f45d2c0d5acb1d}{Mix\+\_\+\+Paused\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_adfa5bcba7e8d583f576180af0ff5a732}{Mix\+\_\+\+Set\+Music\+Position} (double position)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a2762f72d43ec5332250311a9887a8998}{Mix\+\_\+\+Playing} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa325c04b56dc4fb7909b5636a12a9f67}{Mix\+\_\+\+Playing\+Music} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a06ae6e530b2bda61f772c74e374e70af}{Mix\+\_\+\+Set\+Music\+C\+MD} (const char $\ast$command)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_af78d8fcc7feb777a2d3b1e94cb178fd1}{Mix\+\_\+\+Set\+Synchro\+Value} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a8ad81492d410ff2ac11f754f4042150f}{value})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa614da725f8c139b50af9d79c62d79e0}{Mix\+\_\+\+Get\+Synchro\+Value} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa503e9b83c9fbf14496d93947568de8f}{Mix\+\_\+\+Set\+Sound\+Fonts} (const char $\ast$\hyperlink{_s_d_l__opengl__glext_8h_adcb3345bcd367edfa374dd2e0452a033}{paths})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a20b6e7f11d24fe9e55fbc95c5b8e8d3a}{Mix\+\_\+\+Get\+Sound\+Fonts} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_ab129dbc74c9cb6ef264f711e18c73818}{Mix\+\_\+\+Each\+Sound\+Font} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int}($\ast$function)(const char $\ast$, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$), \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{_s_d_l__opengl_8h_a2e335d56e2846b0fea47eed068b2d34a}{data})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_mix___chunk}{Mix\+\_\+\+Chunk} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_aa49b1fe548c1fcc30f5e3008a9f4e9f1}{Mix\+\_\+\+Get\+Chunk} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} channel)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__mixer_8h_a2cb071e94923956f4c3ca4d3998669e7}{Mix\+\_\+\+Close\+Audio} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST@{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST}}
+\index{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST@{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST}{MIX_CHANNEL_POST}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+O\+ST~-\/2}\hypertarget{_s_d_l__mixer_8h_a7de550fb0c03378ab55cdf42c6e2fec9}{}\label{_s_d_l__mixer_8h_a7de550fb0c03378ab55cdf42c6e2fec9}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS@{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS}}
+\index{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS@{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS}{MIX_CHANNELS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+C\+H\+A\+N\+N\+E\+LS~8}\hypertarget{_s_d_l__mixer_8h_a8b4a8b188543964be1ab99d33685d921}{}\label{_s_d_l__mixer_8h_a8b4a8b188543964be1ab99d33685d921}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS@{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS}}
+\index{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS@{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS}{MIX_DEFAULT_CHANNELS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+C\+H\+A\+N\+N\+E\+LS~2}\hypertarget{_s_d_l__mixer_8h_a31f2fc8f7be9e34899f044a5beada806}{}\label{_s_d_l__mixer_8h_a31f2fc8f7be9e34899f044a5beada806}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT@{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT}}
+\index{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT@{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT}{MIX_DEFAULT_FORMAT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+O\+R\+M\+AT~{\bf A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}}\hypertarget{_s_d_l__mixer_8h_a9e0213e86be75a3b5bd28158a03cdb73}{}\label{_s_d_l__mixer_8h_a9e0213e86be75a3b5bd28158a03cdb73}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY@{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY}}
+\index{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY@{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY}{MIX_DEFAULT_FREQUENCY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+D\+E\+F\+A\+U\+L\+T\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+CY~22050}\hypertarget{_s_d_l__mixer_8h_a960c830f43ad3bd2b802f9fa35ff394f}{}\label{_s_d_l__mixer_8h_a960c830f43ad3bd2b802f9fa35ff394f}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED@{M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED}}
+\index{M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED@{M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED}{MIX_EFFECTSMAXSPEED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED~\char`\"{}M\+I\+X\+\_\+\+E\+F\+F\+E\+C\+T\+S\+M\+A\+X\+S\+P\+E\+ED\char`\"{}}\hypertarget{_s_d_l__mixer_8h_aabb013a480a63af25255d0fa90ea9ab8}{}\label{_s_d_l__mixer_8h_aabb013a480a63af25255d0fa90ea9ab8}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+In\+Channel@{Mix\+\_\+\+Fade\+In\+Channel}}
+\index{Mix\+\_\+\+Fade\+In\+Channel@{Mix\+\_\+\+Fade\+In\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+In\+Channel}{Mix_FadeInChannel}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Mix\+\_\+\+Fade\+In\+Channel(
+\begin{DoxyParamCaption}
+\item[{}]{channel, }
+\item[{}]{chunk, }
+\item[{}]{loops, }
+\item[{}]{ms}
+\end{DoxyParamCaption}
+)~{\bf Mix\+\_\+\+Fade\+In\+Channel\+Timed}(channel,chunk,loops,ms,-\/1)}\hypertarget{_s_d_l__mixer_8h_a73801b49db6f7ff55473e11b4651df61}{}\label{_s_d_l__mixer_8h_a73801b49db6f7ff55473e11b4651df61}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Error@{Mix\+\_\+\+Get\+Error}}
+\index{Mix\+\_\+\+Get\+Error@{Mix\+\_\+\+Get\+Error}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Error}{Mix_GetError}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Mix\+\_\+\+Get\+Error~{\bf S\+D\+L\+\_\+\+Get\+Error}}\hypertarget{_s_d_l__mixer_8h_ab29aa52963e2c1dd92888629c810c74f}{}\label{_s_d_l__mixer_8h_ab29aa52963e2c1dd92888629c810c74f}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Load\+W\+AV@{Mix\+\_\+\+Load\+W\+AV}}
+\index{Mix\+\_\+\+Load\+W\+AV@{Mix\+\_\+\+Load\+W\+AV}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Load\+W\+AV}{Mix_LoadWAV}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Mix\+\_\+\+Load\+W\+AV(
+\begin{DoxyParamCaption}
+\item[{}]{file}
+\end{DoxyParamCaption}
+)~{\bf Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}({\bf S\+D\+L\+\_\+\+R\+W\+From\+File}(file, \char`\"{}rb\char`\"{}), 1)}\hypertarget{_s_d_l__mixer_8h_a37dd6c3b2c02d9166bd27aa57c42fadf}{}\label{_s_d_l__mixer_8h_a37dd6c3b2c02d9166bd27aa57c42fadf}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}{MIX_MAJOR_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON~{\bf S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}\hypertarget{_s_d_l__mixer_8h_a8a6a91becf98340310a774d66f18a775}{}\label{_s_d_l__mixer_8h_a8a6a91becf98340310a774d66f18a775}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME@{M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME}}
+\index{M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME@{M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME}{MIX_MAX_VOLUME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+M\+A\+X\+\_\+\+V\+O\+L\+U\+ME~128 /$\ast$ Volume of {\bf a} chunk $\ast$/}\hypertarget{_s_d_l__mixer_8h_ac3ee7ce3c29e7fb4314edba1035c12b6}{}\label{_s_d_l__mixer_8h_ac3ee7ce3c29e7fb4314edba1035c12b6}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}{MIX_MINOR_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON~{\bf S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}\hypertarget{_s_d_l__mixer_8h_a429f2a252000359a6538de6abd719c5f}{}\label{_s_d_l__mixer_8h_a429f2a252000359a6538de6abd719c5f}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL@{M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}}
+\index{M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL@{M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}{MIX_PATCHLEVEL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL~{\bf S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}}\hypertarget{_s_d_l__mixer_8h_a1975c52524c62a7b2b2ee3bb00a362af}{}\label{_s_d_l__mixer_8h_a1975c52524c62a7b2b2ee3bb00a362af}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Play\+Channel@{Mix\+\_\+\+Play\+Channel}}
+\index{Mix\+\_\+\+Play\+Channel@{Mix\+\_\+\+Play\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Play\+Channel}{Mix_PlayChannel}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Mix\+\_\+\+Play\+Channel(
+\begin{DoxyParamCaption}
+\item[{}]{channel, }
+\item[{}]{chunk, }
+\item[{}]{loops}
+\end{DoxyParamCaption}
+)~{\bf Mix\+\_\+\+Play\+Channel\+Timed}(channel,chunk,loops,-\/1)}\hypertarget{_s_d_l__mixer_8h_a997d7e0f834445c28d6bce9321486ad5}{}\label{_s_d_l__mixer_8h_a997d7e0f834445c28d6bce9321486ad5}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Error@{Mix\+\_\+\+Set\+Error}}
+\index{Mix\+\_\+\+Set\+Error@{Mix\+\_\+\+Set\+Error}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Error}{Mix_SetError}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Mix\+\_\+\+Set\+Error~{\bf S\+D\+L\+\_\+\+Set\+Error}}\hypertarget{_s_d_l__mixer_8h_afd4c97802c19ab195d806459b7b520f7}{}\label{_s_d_l__mixer_8h_afd4c97802c19ab195d806459b7b520f7}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON@{M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON@{M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON}{MIX_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+X\+\_\+\+V\+E\+R\+S\+I\+ON(
+\begin{DoxyParamCaption}
+\item[{}]{X}
+\end{DoxyParamCaption}
+)~{\bf S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON}(X)}\hypertarget{_s_d_l__mixer_8h_ac4f5fb0084f19cc059033fa7ca637660}{}\label{_s_d_l__mixer_8h_ac4f5fb0084f19cc059033fa7ca637660}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}{SDL_MIXER_MAJOR_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+A\+J\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON~2}\hypertarget{_s_d_l__mixer_8h_a62af8116474da839221137996edf6a0e}{}\label{_s_d_l__mixer_8h_a62af8116474da839221137996edf6a0e}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON}{SDL_MIXER_MINOR_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+M\+I\+N\+O\+R\+\_\+\+V\+E\+R\+S\+I\+ON~0}\hypertarget{_s_d_l__mixer_8h_afea96d57d92108eb55ced2900adef6a5}{}\label{_s_d_l__mixer_8h_afea96d57d92108eb55ced2900adef6a5}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}}
+\index{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL}{SDL_MIXER_PATCHLEVEL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+P\+A\+T\+C\+H\+L\+E\+V\+EL~1}\hypertarget{_s_d_l__mixer_8h_ac00d5ae84eedcd8c85e5128625af3ddb}{}\label{_s_d_l__mixer_8h_ac00d5ae84eedcd8c85e5128625af3ddb}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON}{SDL_MIXER_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+M\+I\+X\+E\+R\+\_\+\+V\+E\+R\+S\+I\+ON(
+\begin{DoxyParamCaption}
+\item[{}]{X}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aff47adf3457f84e805f85d6e4e880c0a}{}\label{_s_d_l__mixer_8h_aff47adf3457f84e805f85d6e4e880c0a}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{                                                   \(\backslash\)
+    (X)->major = \hyperlink{_s_d_l__mixer_8h_a62af8116474da839221137996edf6a0e}{SDL\_MIXER\_MAJOR\_VERSION};           \(\backslash\)
+    (X)->minor = \hyperlink{_s_d_l__mixer_8h_afea96d57d92108eb55ced2900adef6a5}{SDL\_MIXER\_MINOR\_VERSION};           \(\backslash\)
+    (X)->patch = \hyperlink{_s_d_l__mixer_8h_ac00d5ae84eedcd8c85e5128625af3ddb}{SDL\_MIXER\_PATCHLEVEL};              \(\backslash\)
+\}
+\end{DoxyCode}
+
+
+\subsection{Typedef Documentation}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Chunk@{Mix\+\_\+\+Chunk}}
+\index{Mix\+\_\+\+Chunk@{Mix\+\_\+\+Chunk}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Chunk}{Mix_Chunk}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Mix\+\_\+\+Chunk}  {\bf Mix\+\_\+\+Chunk}}\hypertarget{_s_d_l__mixer_8h_a934e0b5f1f21a3fee6c711b703ca6183}{}\label{_s_d_l__mixer_8h_a934e0b5f1f21a3fee6c711b703ca6183}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Effect\+Done\+\_\+t@{Mix\+\_\+\+Effect\+Done\+\_\+t}}
+\index{Mix\+\_\+\+Effect\+Done\+\_\+t@{Mix\+\_\+\+Effect\+Done\+\_\+t}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Effect\+Done\+\_\+t}{Mix_EffectDone_t}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf void}($\ast$ Mix\+\_\+\+Effect\+Done\+\_\+t) ({\bf int} chan, {\bf void} $\ast$udata)}\hypertarget{_s_d_l__mixer_8h_a4ae73790fe75aa2879f250581f675cbf}{}\label{_s_d_l__mixer_8h_a4ae73790fe75aa2879f250581f675cbf}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Effect\+Func\+\_\+t@{Mix\+\_\+\+Effect\+Func\+\_\+t}}
+\index{Mix\+\_\+\+Effect\+Func\+\_\+t@{Mix\+\_\+\+Effect\+Func\+\_\+t}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Effect\+Func\+\_\+t}{Mix_EffectFunc_t}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf void}($\ast$ Mix\+\_\+\+Effect\+Func\+\_\+t) ({\bf int} chan, {\bf void} $\ast${\bf stream}, {\bf int} {\bf len}, {\bf void} $\ast$udata)}\hypertarget{_s_d_l__mixer_8h_a55033a79adff2e046b5368921e4895ad}{}\label{_s_d_l__mixer_8h_a55033a79adff2e046b5368921e4895ad}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Music@{Mix\+\_\+\+Music}}
+\index{Mix\+\_\+\+Music@{Mix\+\_\+\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Music}{Mix_Music}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct \+\_\+\+Mix\+\_\+\+Music {\bf Mix\+\_\+\+Music}}\hypertarget{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}{}\label{_s_d_l__mixer_8h_a1d58ae8fa29e1c03df23baeffb32b14c}
+
+
+\subsection{Enumeration Type Documentation}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fading@{Mix\+\_\+\+Fading}}
+\index{Mix\+\_\+\+Fading@{Mix\+\_\+\+Fading}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fading}{Mix_Fading}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Mix\+\_\+\+Fading}}\hypertarget{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456c}{}\label{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456c}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\+I\+X\+\_\+\+N\+O\+\_\+\+F\+A\+D\+I\+NG@{M\+I\+X\+\_\+\+N\+O\+\_\+\+F\+A\+D\+I\+NG}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+N\+O\+\_\+\+F\+A\+D\+I\+NG@{M\+I\+X\+\_\+\+N\+O\+\_\+\+F\+A\+D\+I\+NG}}\item[{\em 
+M\+I\+X\+\_\+\+N\+O\+\_\+\+F\+A\+D\+I\+NG\hypertarget{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456ca81b8ccddd079a5f13aba7b21d1e475a4}{}\label{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456ca81b8ccddd079a5f13aba7b21d1e475a4}
+}]\index{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+O\+UT@{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+O\+UT}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+O\+UT@{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+O\+UT}}\item[{\em 
+M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+O\+UT\hypertarget{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456caa2d71aa2141ab0f2ff514f2c5d49a70c}{}\label{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456caa2d71aa2141ab0f2ff514f2c5d49a70c}
+}]\index{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+IN@{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+IN}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+IN@{M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+IN}}\item[{\em 
+M\+I\+X\+\_\+\+F\+A\+D\+I\+N\+G\+\_\+\+IN\hypertarget{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456cacac9dbc0a92b5116934dd4036e9e25ef}{}\label{_s_d_l__mixer_8h_a362f2bccb8d01c337b0c6a934edd456cacac9dbc0a92b5116934dd4036e9e25ef}
+}]\end{description}
+\end{Desc}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+Init\+Flags@{M\+I\+X\+\_\+\+Init\+Flags}}
+\index{M\+I\+X\+\_\+\+Init\+Flags@{M\+I\+X\+\_\+\+Init\+Flags}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+X\+\_\+\+Init\+Flags}{MIX_InitFlags}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf M\+I\+X\+\_\+\+Init\+Flags}}\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36d}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36d}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+AC@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+AC}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+AC@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+AC}}\item[{\em 
+M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+AC\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36dad2c4a750250632be803a8c4520d4c486}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36dad2c4a750250632be803a8c4520d4c486}
+}]\index{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+OD@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+OD}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+OD@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+OD}}\item[{\em 
+M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+OD\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36dae3af2cbd16a150ae341f4286c0a5e394}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36dae3af2cbd16a150ae341f4286c0a5e394}
+}]\index{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+O\+D\+P\+L\+UG@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+O\+D\+P\+L\+UG}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+O\+D\+P\+L\+UG@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+O\+D\+P\+L\+UG}}\item[{\em 
+M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+O\+D\+P\+L\+UG\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daa566a179d71193988205670d45c99879}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daa566a179d71193988205670d45c99879}
+}]\index{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+P3@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+P3}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+P3@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+P3}}\item[{\em 
+M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+M\+P3\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daf439578078fa1f57ec9a09efe38ef24f}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daf439578078fa1f57ec9a09efe38ef24f}
+}]\index{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+O\+GG@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+O\+GG}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+O\+GG@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+O\+GG}}\item[{\em 
+M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+O\+GG\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36da2256680914b5648ffc8e54ab0bf4e00c}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36da2256680914b5648ffc8e54ab0bf4e00c}
+}]\index{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+U\+I\+D\+S\+Y\+N\+TH@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+U\+I\+D\+S\+Y\+N\+TH}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+U\+I\+D\+S\+Y\+N\+TH@{M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+U\+I\+D\+S\+Y\+N\+TH}}\item[{\em 
+M\+I\+X\+\_\+\+I\+N\+I\+T\+\_\+\+F\+L\+U\+I\+D\+S\+Y\+N\+TH\hypertarget{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daac6cc48f3e7ebc98250c18526a3e8aec}{}\label{_s_d_l__mixer_8h_a3de2cd65e9533014d1bba145f6f2d36daac6cc48f3e7ebc98250c18526a3e8aec}
+}]\end{description}
+\end{Desc}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Music\+Type@{Mix\+\_\+\+Music\+Type}}
+\index{Mix\+\_\+\+Music\+Type@{Mix\+\_\+\+Music\+Type}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Music\+Type}{Mix_MusicType}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Mix\+\_\+\+Music\+Type}}\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\+U\+S\+\_\+\+N\+O\+NE@{M\+U\+S\+\_\+\+N\+O\+NE}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+N\+O\+NE@{M\+U\+S\+\_\+\+N\+O\+NE}}\item[{\em 
+M\+U\+S\+\_\+\+N\+O\+NE\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ad6c456444e9634514a07c31947bf51a7}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ad6c456444e9634514a07c31947bf51a7}
+}]\index{M\+U\+S\+\_\+\+C\+MD@{M\+U\+S\+\_\+\+C\+MD}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+C\+MD@{M\+U\+S\+\_\+\+C\+MD}}\item[{\em 
+M\+U\+S\+\_\+\+C\+MD\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a218a2952d564324cfc6fe78e4c598c39}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a218a2952d564324cfc6fe78e4c598c39}
+}]\index{M\+U\+S\+\_\+\+W\+AV@{M\+U\+S\+\_\+\+W\+AV}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+W\+AV@{M\+U\+S\+\_\+\+W\+AV}}\item[{\em 
+M\+U\+S\+\_\+\+W\+AV\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ad2905fd8e5ac57321dea83f0afc8d7b6}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ad2905fd8e5ac57321dea83f0afc8d7b6}
+}]\index{M\+U\+S\+\_\+\+M\+OD@{M\+U\+S\+\_\+\+M\+OD}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+M\+OD@{M\+U\+S\+\_\+\+M\+OD}}\item[{\em 
+M\+U\+S\+\_\+\+M\+OD\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46aa1cd53bdbec42e838e5da8863741eae1}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46aa1cd53bdbec42e838e5da8863741eae1}
+}]\index{M\+U\+S\+\_\+\+M\+ID@{M\+U\+S\+\_\+\+M\+ID}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+M\+ID@{M\+U\+S\+\_\+\+M\+ID}}\item[{\em 
+M\+U\+S\+\_\+\+M\+ID\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ac69784a48a28e2dafec3ef307ed0bf2b}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ac69784a48a28e2dafec3ef307ed0bf2b}
+}]\index{M\+U\+S\+\_\+\+O\+GG@{M\+U\+S\+\_\+\+O\+GG}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+O\+GG@{M\+U\+S\+\_\+\+O\+GG}}\item[{\em 
+M\+U\+S\+\_\+\+O\+GG\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a9a80ce658507a45c33dd78c3a63deec2}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a9a80ce658507a45c33dd78c3a63deec2}
+}]\index{M\+U\+S\+\_\+\+M\+P3@{M\+U\+S\+\_\+\+M\+P3}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+M\+P3@{M\+U\+S\+\_\+\+M\+P3}}\item[{\em 
+M\+U\+S\+\_\+\+M\+P3\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a7edd0d75c1734063c604df8a11ef8a7a}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a7edd0d75c1734063c604df8a11ef8a7a}
+}]\index{M\+U\+S\+\_\+\+M\+P3\+\_\+\+M\+AD@{M\+U\+S\+\_\+\+M\+P3\+\_\+\+M\+AD}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+M\+P3\+\_\+\+M\+AD@{M\+U\+S\+\_\+\+M\+P3\+\_\+\+M\+AD}}\item[{\em 
+M\+U\+S\+\_\+\+M\+P3\+\_\+\+M\+AD\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46aa2634410ddad84c79785a3dd1e2a8b5c}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46aa2634410ddad84c79785a3dd1e2a8b5c}
+}]\index{M\+U\+S\+\_\+\+F\+L\+AC@{M\+U\+S\+\_\+\+F\+L\+AC}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+F\+L\+AC@{M\+U\+S\+\_\+\+F\+L\+AC}}\item[{\em 
+M\+U\+S\+\_\+\+F\+L\+AC\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ac264a114cab6e312b12d8a88e14b8293}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46ac264a114cab6e312b12d8a88e14b8293}
+}]\index{M\+U\+S\+\_\+\+M\+O\+D\+P\+L\+UG@{M\+U\+S\+\_\+\+M\+O\+D\+P\+L\+UG}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!M\+U\+S\+\_\+\+M\+O\+D\+P\+L\+UG@{M\+U\+S\+\_\+\+M\+O\+D\+P\+L\+UG}}\item[{\em 
+M\+U\+S\+\_\+\+M\+O\+D\+P\+L\+UG\hypertarget{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a084e9d125c47d88d22c37d9acdc96831}{}\label{_s_d_l__mixer_8h_a3deb8c84c2e0a1bb970cd496d9e46f46a084e9d125c47d88d22c37d9acdc96831}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Allocate\+Channels@{Mix\+\_\+\+Allocate\+Channels}}
+\index{Mix\+\_\+\+Allocate\+Channels@{Mix\+\_\+\+Allocate\+Channels}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Allocate\+Channels(int numchans)}{Mix_AllocateChannels(int numchans)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Allocate\+Channels (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{numchans}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a3bb24eade448b0c5515f9d402d935924}{}\label{_s_d_l__mixer_8h_a3bb24eade448b0c5515f9d402d935924}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Channel\+Finished@{Mix\+\_\+\+Channel\+Finished}}
+\index{Mix\+\_\+\+Channel\+Finished@{Mix\+\_\+\+Channel\+Finished}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Channel\+Finished(void($\ast$channel\+\_\+finished)(int channel))}{Mix_ChannelFinished(void(*channel_finished)(int channel))}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Channel\+Finished (
+\begin{DoxyParamCaption}
+\item[{{\bf void}($\ast$)({\bf int} channel)}]{channel\+\_\+finished}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa55646e3f5c8cf4ab7d3d639e21d7487}{}\label{_s_d_l__mixer_8h_aa55646e3f5c8cf4ab7d3d639e21d7487}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Close\+Audio@{Mix\+\_\+\+Close\+Audio}}
+\index{Mix\+\_\+\+Close\+Audio@{Mix\+\_\+\+Close\+Audio}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Close\+Audio(void)}{Mix_CloseAudio(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Close\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a2cb071e94923956f4c3ca4d3998669e7}{}\label{_s_d_l__mixer_8h_a2cb071e94923956f4c3ca4d3998669e7}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Each\+Sound\+Font@{Mix\+\_\+\+Each\+Sound\+Font}}
+\index{Mix\+\_\+\+Each\+Sound\+Font@{Mix\+\_\+\+Each\+Sound\+Font}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Each\+Sound\+Font(int($\ast$function)(const char $\ast$, void $\ast$), void $\ast$data)}{Mix_EachSoundFont(int(*function)(const char *, void *), void *data)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Each\+Sound\+Font (
+\begin{DoxyParamCaption}
+\item[{{\bf int}($\ast$)(const char $\ast$, {\bf void} $\ast$)}]{function, }
+\item[{{\bf void} $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab129dbc74c9cb6ef264f711e18c73818}{}\label{_s_d_l__mixer_8h_ab129dbc74c9cb6ef264f711e18c73818}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Expire\+Channel@{Mix\+\_\+\+Expire\+Channel}}
+\index{Mix\+\_\+\+Expire\+Channel@{Mix\+\_\+\+Expire\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Expire\+Channel(int channel, int ticks)}{Mix_ExpireChannel(int channel, int ticks)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Expire\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf int}}]{ticks}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a5ca9a903a8f102404d9f588b83fec7fe}{}\label{_s_d_l__mixer_8h_a5ca9a903a8f102404d9f588b83fec7fe}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+In\+Channel\+Timed@{Mix\+\_\+\+Fade\+In\+Channel\+Timed}}
+\index{Mix\+\_\+\+Fade\+In\+Channel\+Timed@{Mix\+\_\+\+Fade\+In\+Channel\+Timed}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+In\+Channel\+Timed(int channel, Mix\+\_\+\+Chunk $\ast$chunk, int loops, int ms, int ticks)}{Mix_FadeInChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ms, int ticks)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fade\+In\+Channel\+Timed (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf Mix\+\_\+\+Chunk} $\ast$}]{chunk, }
+\item[{{\bf int}}]{loops, }
+\item[{{\bf int}}]{ms, }
+\item[{{\bf int}}]{ticks}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a1fb54ff92263b255ec013cdd1ee21d9e}{}\label{_s_d_l__mixer_8h_a1fb54ff92263b255ec013cdd1ee21d9e}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+In\+Music@{Mix\+\_\+\+Fade\+In\+Music}}
+\index{Mix\+\_\+\+Fade\+In\+Music@{Mix\+\_\+\+Fade\+In\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+In\+Music(\+Mix\+\_\+\+Music $\ast$music, int loops, int ms)}{Mix_FadeInMusic(Mix_Music *music, int loops, int ms)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fade\+In\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf Mix\+\_\+\+Music} $\ast$}]{music, }
+\item[{{\bf int}}]{loops, }
+\item[{{\bf int}}]{ms}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a2400bb4d58a5bce5e1c734f2b09bface}{}\label{_s_d_l__mixer_8h_a2400bb4d58a5bce5e1c734f2b09bface}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+In\+Music\+Pos@{Mix\+\_\+\+Fade\+In\+Music\+Pos}}
+\index{Mix\+\_\+\+Fade\+In\+Music\+Pos@{Mix\+\_\+\+Fade\+In\+Music\+Pos}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+In\+Music\+Pos(\+Mix\+\_\+\+Music $\ast$music, int loops, int ms, double position)}{Mix_FadeInMusicPos(Mix_Music *music, int loops, int ms, double position)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fade\+In\+Music\+Pos (
+\begin{DoxyParamCaption}
+\item[{{\bf Mix\+\_\+\+Music} $\ast$}]{music, }
+\item[{{\bf int}}]{loops, }
+\item[{{\bf int}}]{ms, }
+\item[{double}]{position}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a636e248dd7cd411c3edcebd2c74db71e}{}\label{_s_d_l__mixer_8h_a636e248dd7cd411c3edcebd2c74db71e}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+Out\+Channel@{Mix\+\_\+\+Fade\+Out\+Channel}}
+\index{Mix\+\_\+\+Fade\+Out\+Channel@{Mix\+\_\+\+Fade\+Out\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+Out\+Channel(int which, int ms)}{Mix_FadeOutChannel(int which, int ms)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fade\+Out\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{which, }
+\item[{{\bf int}}]{ms}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ace4743866ba2f907858de7fa2ef6108f}{}\label{_s_d_l__mixer_8h_ace4743866ba2f907858de7fa2ef6108f}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+Out\+Group@{Mix\+\_\+\+Fade\+Out\+Group}}
+\index{Mix\+\_\+\+Fade\+Out\+Group@{Mix\+\_\+\+Fade\+Out\+Group}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+Out\+Group(int tag, int ms)}{Mix_FadeOutGroup(int tag, int ms)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fade\+Out\+Group (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{tag, }
+\item[{{\bf int}}]{ms}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab62361006702546e9d66021c0c9f5a5b}{}\label{_s_d_l__mixer_8h_ab62361006702546e9d66021c0c9f5a5b}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fade\+Out\+Music@{Mix\+\_\+\+Fade\+Out\+Music}}
+\index{Mix\+\_\+\+Fade\+Out\+Music@{Mix\+\_\+\+Fade\+Out\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fade\+Out\+Music(int ms)}{Mix_FadeOutMusic(int ms)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fade\+Out\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{ms}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aff8cc2e99284bf7268b1ee62b86b5367}{}\label{_s_d_l__mixer_8h_aff8cc2e99284bf7268b1ee62b86b5367}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fading\+Channel@{Mix\+\_\+\+Fading\+Channel}}
+\index{Mix\+\_\+\+Fading\+Channel@{Mix\+\_\+\+Fading\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fading\+Channel(int which)}{Mix_FadingChannel(int which)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Fading} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fading\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{which}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aeffa4c64b29f638f549defecdf7d9ddd}{}\label{_s_d_l__mixer_8h_aeffa4c64b29f638f549defecdf7d9ddd}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Fading\+Music@{Mix\+\_\+\+Fading\+Music}}
+\index{Mix\+\_\+\+Fading\+Music@{Mix\+\_\+\+Fading\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Fading\+Music(void)}{Mix_FadingMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Fading} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Fading\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_afcb499a0686c714ede299e81e85c817c}{}\label{_s_d_l__mixer_8h_afcb499a0686c714ede299e81e85c817c}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Free\+Chunk@{Mix\+\_\+\+Free\+Chunk}}
+\index{Mix\+\_\+\+Free\+Chunk@{Mix\+\_\+\+Free\+Chunk}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Free\+Chunk(\+Mix\+\_\+\+Chunk $\ast$chunk)}{Mix_FreeChunk(Mix_Chunk *chunk)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Free\+Chunk (
+\begin{DoxyParamCaption}
+\item[{{\bf Mix\+\_\+\+Chunk} $\ast$}]{chunk}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_abf7ae3433476bb4f66acedc6098e5b2d}{}\label{_s_d_l__mixer_8h_abf7ae3433476bb4f66acedc6098e5b2d}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Free\+Music@{Mix\+\_\+\+Free\+Music}}
+\index{Mix\+\_\+\+Free\+Music@{Mix\+\_\+\+Free\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Free\+Music(\+Mix\+\_\+\+Music $\ast$music)}{Mix_FreeMusic(Mix_Music *music)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Free\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf Mix\+\_\+\+Music} $\ast$}]{music}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ac2e103808706941aab379d601a46327b}{}\label{_s_d_l__mixer_8h_ac2e103808706941aab379d601a46327b}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Chunk@{Mix\+\_\+\+Get\+Chunk}}
+\index{Mix\+\_\+\+Get\+Chunk@{Mix\+\_\+\+Get\+Chunk}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Chunk(int channel)}{Mix_GetChunk(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Chunk}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Chunk (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa49b1fe548c1fcc30f5e3008a9f4e9f1}{}\label{_s_d_l__mixer_8h_aa49b1fe548c1fcc30f5e3008a9f4e9f1}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Chunk\+Decoder@{Mix\+\_\+\+Get\+Chunk\+Decoder}}
+\index{Mix\+\_\+\+Get\+Chunk\+Decoder@{Mix\+\_\+\+Get\+Chunk\+Decoder}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Chunk\+Decoder(int index)}{Mix_GetChunkDecoder(int index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Chunk\+Decoder (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a19d9a8e502929c33d7aa347b1a059603}{}\label{_s_d_l__mixer_8h_a19d9a8e502929c33d7aa347b1a059603}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Music\+Decoder@{Mix\+\_\+\+Get\+Music\+Decoder}}
+\index{Mix\+\_\+\+Get\+Music\+Decoder@{Mix\+\_\+\+Get\+Music\+Decoder}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Music\+Decoder(int index)}{Mix_GetMusicDecoder(int index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Music\+Decoder (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a73c18ad6371c1010d7c32d32db5db047}{}\label{_s_d_l__mixer_8h_a73c18ad6371c1010d7c32d32db5db047}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Music\+Hook\+Data@{Mix\+\_\+\+Get\+Music\+Hook\+Data}}
+\index{Mix\+\_\+\+Get\+Music\+Hook\+Data@{Mix\+\_\+\+Get\+Music\+Hook\+Data}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Music\+Hook\+Data(void)}{Mix_GetMusicHookData(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Music\+Hook\+Data (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_af2c4ee6656cfbda52d175f8e154995a0}{}\label{_s_d_l__mixer_8h_af2c4ee6656cfbda52d175f8e154995a0}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Music\+Type@{Mix\+\_\+\+Get\+Music\+Type}}
+\index{Mix\+\_\+\+Get\+Music\+Type@{Mix\+\_\+\+Get\+Music\+Type}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Music\+Type(const Mix\+\_\+\+Music $\ast$music)}{Mix_GetMusicType(const Mix_Music *music)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Music\+Type} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Music\+Type (
+\begin{DoxyParamCaption}
+\item[{const {\bf Mix\+\_\+\+Music} $\ast$}]{music}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a067102de8c25361537caa4165ce5eeae}{}\label{_s_d_l__mixer_8h_a067102de8c25361537caa4165ce5eeae}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Num\+Chunk\+Decoders@{Mix\+\_\+\+Get\+Num\+Chunk\+Decoders}}
+\index{Mix\+\_\+\+Get\+Num\+Chunk\+Decoders@{Mix\+\_\+\+Get\+Num\+Chunk\+Decoders}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Num\+Chunk\+Decoders(void)}{Mix_GetNumChunkDecoders(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Num\+Chunk\+Decoders (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a96a0798b1d506b9231fc8bf249cc205a}{}\label{_s_d_l__mixer_8h_a96a0798b1d506b9231fc8bf249cc205a}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Num\+Music\+Decoders@{Mix\+\_\+\+Get\+Num\+Music\+Decoders}}
+\index{Mix\+\_\+\+Get\+Num\+Music\+Decoders@{Mix\+\_\+\+Get\+Num\+Music\+Decoders}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Num\+Music\+Decoders(void)}{Mix_GetNumMusicDecoders(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Num\+Music\+Decoders (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_acd9256e344e9916e15764a4e39d428de}{}\label{_s_d_l__mixer_8h_acd9256e344e9916e15764a4e39d428de}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Sound\+Fonts@{Mix\+\_\+\+Get\+Sound\+Fonts}}
+\index{Mix\+\_\+\+Get\+Sound\+Fonts@{Mix\+\_\+\+Get\+Sound\+Fonts}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Sound\+Fonts(void)}{Mix_GetSoundFonts(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Sound\+Fonts (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a20b6e7f11d24fe9e55fbc95c5b8e8d3a}{}\label{_s_d_l__mixer_8h_a20b6e7f11d24fe9e55fbc95c5b8e8d3a}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Get\+Synchro\+Value@{Mix\+\_\+\+Get\+Synchro\+Value}}
+\index{Mix\+\_\+\+Get\+Synchro\+Value@{Mix\+\_\+\+Get\+Synchro\+Value}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Get\+Synchro\+Value(void)}{Mix_GetSynchroValue(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Get\+Synchro\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa614da725f8c139b50af9d79c62d79e0}{}\label{_s_d_l__mixer_8h_aa614da725f8c139b50af9d79c62d79e0}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Group\+Available@{Mix\+\_\+\+Group\+Available}}
+\index{Mix\+\_\+\+Group\+Available@{Mix\+\_\+\+Group\+Available}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Group\+Available(int tag)}{Mix_GroupAvailable(int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Group\+Available (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ae4b751351d0554c264a0d1abc02d832c}{}\label{_s_d_l__mixer_8h_ae4b751351d0554c264a0d1abc02d832c}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Group\+Channel@{Mix\+\_\+\+Group\+Channel}}
+\index{Mix\+\_\+\+Group\+Channel@{Mix\+\_\+\+Group\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Group\+Channel(int which, int tag)}{Mix_GroupChannel(int which, int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Group\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{which, }
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab0ce85d3ea72e1d14e1fbd15bbf8cfd1}{}\label{_s_d_l__mixer_8h_ab0ce85d3ea72e1d14e1fbd15bbf8cfd1}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Group\+Channels@{Mix\+\_\+\+Group\+Channels}}
+\index{Mix\+\_\+\+Group\+Channels@{Mix\+\_\+\+Group\+Channels}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Group\+Channels(int from, int to, int tag)}{Mix_GroupChannels(int from, int to, int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Group\+Channels (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{from, }
+\item[{{\bf int}}]{to, }
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aee8ff77b8e446e449701371a0c8cc522}{}\label{_s_d_l__mixer_8h_aee8ff77b8e446e449701371a0c8cc522}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Group\+Count@{Mix\+\_\+\+Group\+Count}}
+\index{Mix\+\_\+\+Group\+Count@{Mix\+\_\+\+Group\+Count}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Group\+Count(int tag)}{Mix_GroupCount(int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Group\+Count (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a43ca84ed285330500b98b7731710e26f}{}\label{_s_d_l__mixer_8h_a43ca84ed285330500b98b7731710e26f}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Group\+Newer@{Mix\+\_\+\+Group\+Newer}}
+\index{Mix\+\_\+\+Group\+Newer@{Mix\+\_\+\+Group\+Newer}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Group\+Newer(int tag)}{Mix_GroupNewer(int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Group\+Newer (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a598ff819d5c839f199183ed997855d83}{}\label{_s_d_l__mixer_8h_a598ff819d5c839f199183ed997855d83}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Group\+Oldest@{Mix\+\_\+\+Group\+Oldest}}
+\index{Mix\+\_\+\+Group\+Oldest@{Mix\+\_\+\+Group\+Oldest}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Group\+Oldest(int tag)}{Mix_GroupOldest(int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Group\+Oldest (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a97e7c63dab34fa0a964442e90fd4d416}{}\label{_s_d_l__mixer_8h_a97e7c63dab34fa0a964442e90fd4d416}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Halt\+Channel@{Mix\+\_\+\+Halt\+Channel}}
+\index{Mix\+\_\+\+Halt\+Channel@{Mix\+\_\+\+Halt\+Channel}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Halt\+Channel(int channel)}{Mix_HaltChannel(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Halt\+Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a369f1cc25e69d0dc2a6f652109de9683}{}\label{_s_d_l__mixer_8h_a369f1cc25e69d0dc2a6f652109de9683}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Halt\+Group@{Mix\+\_\+\+Halt\+Group}}
+\index{Mix\+\_\+\+Halt\+Group@{Mix\+\_\+\+Halt\+Group}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Halt\+Group(int tag)}{Mix_HaltGroup(int tag)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Halt\+Group (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{tag}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab3f97cb41be6a1b4c3d638cc9aaa7043}{}\label{_s_d_l__mixer_8h_ab3f97cb41be6a1b4c3d638cc9aaa7043}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Halt\+Music@{Mix\+\_\+\+Halt\+Music}}
+\index{Mix\+\_\+\+Halt\+Music@{Mix\+\_\+\+Halt\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Halt\+Music(void)}{Mix_HaltMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Halt\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a2b2bc73786ee25eddb63208751baba76}{}\label{_s_d_l__mixer_8h_a2b2bc73786ee25eddb63208751baba76}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Hook\+Music@{Mix\+\_\+\+Hook\+Music}}
+\index{Mix\+\_\+\+Hook\+Music@{Mix\+\_\+\+Hook\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Hook\+Music(void($\ast$mix\+\_\+func)(void $\ast$udata, Uint8 $\ast$stream, int len), void $\ast$arg)}{Mix_HookMusic(void(*mix_func)(void *udata, Uint8 *stream, int len), void *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Hook\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}($\ast$)({\bf void} $\ast$udata, {\bf Uint8} $\ast${\bf stream}, {\bf int} {\bf len})}]{mix\+\_\+func, }
+\item[{{\bf void} $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a4c5435cc00d6f85ad065ceb0e4def1b1}{}\label{_s_d_l__mixer_8h_a4c5435cc00d6f85ad065ceb0e4def1b1}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Hook\+Music\+Finished@{Mix\+\_\+\+Hook\+Music\+Finished}}
+\index{Mix\+\_\+\+Hook\+Music\+Finished@{Mix\+\_\+\+Hook\+Music\+Finished}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Hook\+Music\+Finished(void($\ast$music\+\_\+finished)(void))}{Mix_HookMusicFinished(void(*music_finished)(void))}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Hook\+Music\+Finished (
+\begin{DoxyParamCaption}
+\item[{{\bf void}($\ast$)({\bf void})}]{music\+\_\+finished}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aef5043d512c98474d8a5ff455be2a31a}{}\label{_s_d_l__mixer_8h_aef5043d512c98474d8a5ff455be2a31a}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Init@{Mix\+\_\+\+Init}}
+\index{Mix\+\_\+\+Init@{Mix\+\_\+\+Init}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Init(int flags)}{Mix_Init(int flags)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Init (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{flags}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a71a389ff8fb5e4af34d0951e73d05995}{}\label{_s_d_l__mixer_8h_a71a389ff8fb5e4af34d0951e73d05995}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Linked\+\_\+\+Version@{Mix\+\_\+\+Linked\+\_\+\+Version}}
+\index{Mix\+\_\+\+Linked\+\_\+\+Version@{Mix\+\_\+\+Linked\+\_\+\+Version}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Linked\+\_\+\+Version(void)}{Mix_Linked_Version(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const {\bf S\+D\+L\+\_\+version}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Linked\+\_\+\+Version (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a832753fd5fb10f66ff8545155c18c061}{}\label{_s_d_l__mixer_8h_a832753fd5fb10f66ff8545155c18c061}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Load\+M\+US@{Mix\+\_\+\+Load\+M\+US}}
+\index{Mix\+\_\+\+Load\+M\+US@{Mix\+\_\+\+Load\+M\+US}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Load\+M\+U\+S(const char $\ast$file)}{Mix_LoadMUS(const char *file)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Music}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Load\+M\+US (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{file}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a29e887541a3b3aaa34788a80ecd068bb}{}\label{_s_d_l__mixer_8h_a29e887541a3b3aaa34788a80ecd068bb}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+RW@{Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+RW}}
+\index{Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+RW@{Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+RW}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+R\+W(\+S\+D\+L\+\_\+\+R\+Wops $\ast$src, int freesrc)}{Mix_LoadMUS_RW(SDL_RWops *src, int freesrc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Music}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Load\+M\+U\+S\+\_\+\+RW (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+R\+Wops} $\ast$}]{src, }
+\item[{{\bf int}}]{freesrc}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a57e1289e3cc2793a14d1b817c706ef8d}{}\label{_s_d_l__mixer_8h_a57e1289e3cc2793a14d1b817c706ef8d}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+RW@{Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+RW}}
+\index{Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+RW@{Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+RW}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+R\+W(\+S\+D\+L\+\_\+\+R\+Wops $\ast$src, Mix\+\_\+\+Music\+Type type, int freesrc)}{Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Music}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Load\+M\+U\+S\+Type\+\_\+\+RW (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+R\+Wops} $\ast$}]{src, }
+\item[{{\bf Mix\+\_\+\+Music\+Type}}]{type, }
+\item[{{\bf int}}]{freesrc}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a86cd0a57f1e9a7c3238e9ef3088b9430}{}\label{_s_d_l__mixer_8h_a86cd0a57f1e9a7c3238e9ef3088b9430}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW@{Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}}
+\index{Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW@{Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+R\+W(\+S\+D\+L\+\_\+\+R\+Wops $\ast$src, int freesrc)}{Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Chunk}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Load\+W\+A\+V\+\_\+\+RW (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+R\+Wops} $\ast$}]{src, }
+\item[{{\bf int}}]{freesrc}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ade68686625490fae426a8f711a105501}{}\label{_s_d_l__mixer_8h_ade68686625490fae426a8f711a105501}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Open\+Audio@{Mix\+\_\+\+Open\+Audio}}
+\index{Mix\+\_\+\+Open\+Audio@{Mix\+\_\+\+Open\+Audio}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Open\+Audio(int frequency, Uint16 format, int channels, int chunksize)}{Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Open\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{frequency, }
+\item[{{\bf Uint16}}]{format, }
+\item[{{\bf int}}]{channels, }
+\item[{{\bf int}}]{chunksize}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a874d68326b7e6f6319052537ccbe5d8e}{}\label{_s_d_l__mixer_8h_a874d68326b7e6f6319052537ccbe5d8e}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Pause@{Mix\+\_\+\+Pause}}
+\index{Mix\+\_\+\+Pause@{Mix\+\_\+\+Pause}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Pause(int channel)}{Mix_Pause(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Pause (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a8327a4a060ebc4dc1771db7a3e9d3038}{}\label{_s_d_l__mixer_8h_a8327a4a060ebc4dc1771db7a3e9d3038}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Paused@{Mix\+\_\+\+Paused}}
+\index{Mix\+\_\+\+Paused@{Mix\+\_\+\+Paused}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Paused(int channel)}{Mix_Paused(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Paused (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a90c6066d45d6376b1c570fdc83622cc2}{}\label{_s_d_l__mixer_8h_a90c6066d45d6376b1c570fdc83622cc2}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Paused\+Music@{Mix\+\_\+\+Paused\+Music}}
+\index{Mix\+\_\+\+Paused\+Music@{Mix\+\_\+\+Paused\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Paused\+Music(void)}{Mix_PausedMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Paused\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a6366b72369e1217ed7f45d2c0d5acb1d}{}\label{_s_d_l__mixer_8h_a6366b72369e1217ed7f45d2c0d5acb1d}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Pause\+Music@{Mix\+\_\+\+Pause\+Music}}
+\index{Mix\+\_\+\+Pause\+Music@{Mix\+\_\+\+Pause\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Pause\+Music(void)}{Mix_PauseMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Pause\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_abe25a71474eae91d3ad725eb4ad8ed39}{}\label{_s_d_l__mixer_8h_abe25a71474eae91d3ad725eb4ad8ed39}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Play\+Channel\+Timed@{Mix\+\_\+\+Play\+Channel\+Timed}}
+\index{Mix\+\_\+\+Play\+Channel\+Timed@{Mix\+\_\+\+Play\+Channel\+Timed}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Play\+Channel\+Timed(int channel, Mix\+\_\+\+Chunk $\ast$chunk, int loops, int ticks)}{Mix_PlayChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ticks)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Play\+Channel\+Timed (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf Mix\+\_\+\+Chunk} $\ast$}]{chunk, }
+\item[{{\bf int}}]{loops, }
+\item[{{\bf int}}]{ticks}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a9e7e5bb8d3dbd3539eb3d032589fc624}{}\label{_s_d_l__mixer_8h_a9e7e5bb8d3dbd3539eb3d032589fc624}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Playing@{Mix\+\_\+\+Playing}}
+\index{Mix\+\_\+\+Playing@{Mix\+\_\+\+Playing}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Playing(int channel)}{Mix_Playing(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Playing (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a2762f72d43ec5332250311a9887a8998}{}\label{_s_d_l__mixer_8h_a2762f72d43ec5332250311a9887a8998}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Playing\+Music@{Mix\+\_\+\+Playing\+Music}}
+\index{Mix\+\_\+\+Playing\+Music@{Mix\+\_\+\+Playing\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Playing\+Music(void)}{Mix_PlayingMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Playing\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa325c04b56dc4fb7909b5636a12a9f67}{}\label{_s_d_l__mixer_8h_aa325c04b56dc4fb7909b5636a12a9f67}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Play\+Music@{Mix\+\_\+\+Play\+Music}}
+\index{Mix\+\_\+\+Play\+Music@{Mix\+\_\+\+Play\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Play\+Music(\+Mix\+\_\+\+Music $\ast$music, int loops)}{Mix_PlayMusic(Mix_Music *music, int loops)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Play\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf Mix\+\_\+\+Music} $\ast$}]{music, }
+\item[{{\bf int}}]{loops}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a215ea5402d7da6d73a53b408d33b06b3}{}\label{_s_d_l__mixer_8h_a215ea5402d7da6d73a53b408d33b06b3}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Query\+Spec@{Mix\+\_\+\+Query\+Spec}}
+\index{Mix\+\_\+\+Query\+Spec@{Mix\+\_\+\+Query\+Spec}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Query\+Spec(int $\ast$frequency, Uint16 $\ast$format, int $\ast$channels)}{Mix_QuerySpec(int *frequency, Uint16 *format, int *channels)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Query\+Spec (
+\begin{DoxyParamCaption}
+\item[{{\bf int} $\ast$}]{frequency, }
+\item[{{\bf Uint16} $\ast$}]{format, }
+\item[{{\bf int} $\ast$}]{channels}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab9f5c519bd9cbe0226b42a617b793cb8}{}\label{_s_d_l__mixer_8h_ab9f5c519bd9cbe0226b42a617b793cb8}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Quick\+Load\+\_\+\+R\+AW@{Mix\+\_\+\+Quick\+Load\+\_\+\+R\+AW}}
+\index{Mix\+\_\+\+Quick\+Load\+\_\+\+R\+AW@{Mix\+\_\+\+Quick\+Load\+\_\+\+R\+AW}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Quick\+Load\+\_\+\+R\+A\+W(\+Uint8 $\ast$mem, Uint32 len)}{Mix_QuickLoad_RAW(Uint8 *mem, Uint32 len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Chunk}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Quick\+Load\+\_\+\+R\+AW (
+\begin{DoxyParamCaption}
+\item[{{\bf Uint8} $\ast$}]{mem, }
+\item[{{\bf Uint32}}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab10255f1ad6adbc9734ca1214308d38d}{}\label{_s_d_l__mixer_8h_ab10255f1ad6adbc9734ca1214308d38d}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Quick\+Load\+\_\+\+W\+AV@{Mix\+\_\+\+Quick\+Load\+\_\+\+W\+AV}}
+\index{Mix\+\_\+\+Quick\+Load\+\_\+\+W\+AV@{Mix\+\_\+\+Quick\+Load\+\_\+\+W\+AV}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Quick\+Load\+\_\+\+W\+A\+V(\+Uint8 $\ast$mem)}{Mix_QuickLoad_WAV(Uint8 *mem)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Mix\+\_\+\+Chunk}$\ast$ {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Quick\+Load\+\_\+\+W\+AV (
+\begin{DoxyParamCaption}
+\item[{{\bf Uint8} $\ast$}]{mem}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ad8959410cb0ec39ce8a7b6fa392f78c2}{}\label{_s_d_l__mixer_8h_ad8959410cb0ec39ce8a7b6fa392f78c2}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Quit@{Mix\+\_\+\+Quit}}
+\index{Mix\+\_\+\+Quit@{Mix\+\_\+\+Quit}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Quit(void)}{Mix_Quit(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Quit (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a136e5586b53fe0e3e752e2174bd7bb70}{}\label{_s_d_l__mixer_8h_a136e5586b53fe0e3e752e2174bd7bb70}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Register\+Effect@{Mix\+\_\+\+Register\+Effect}}
+\index{Mix\+\_\+\+Register\+Effect@{Mix\+\_\+\+Register\+Effect}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Register\+Effect(int chan, Mix\+\_\+\+Effect\+Func\+\_\+t f, Mix\+\_\+\+Effect\+Done\+\_\+t d, void $\ast$arg)}{Mix_RegisterEffect(int chan, Mix_EffectFunc_t f, Mix_EffectDone_t d, void *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Register\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{chan, }
+\item[{{\bf Mix\+\_\+\+Effect\+Func\+\_\+t}}]{f, }
+\item[{{\bf Mix\+\_\+\+Effect\+Done\+\_\+t}}]{d, }
+\item[{{\bf void} $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa3843504b9dfb94b22d4f74721adebf8}{}\label{_s_d_l__mixer_8h_aa3843504b9dfb94b22d4f74721adebf8}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Reserve\+Channels@{Mix\+\_\+\+Reserve\+Channels}}
+\index{Mix\+\_\+\+Reserve\+Channels@{Mix\+\_\+\+Reserve\+Channels}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Reserve\+Channels(int num)}{Mix_ReserveChannels(int num)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Reserve\+Channels (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_af5d97b94207796ae479f7599a0b3a89e}{}\label{_s_d_l__mixer_8h_af5d97b94207796ae479f7599a0b3a89e}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Resume@{Mix\+\_\+\+Resume}}
+\index{Mix\+\_\+\+Resume@{Mix\+\_\+\+Resume}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Resume(int channel)}{Mix_Resume(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Resume (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa5f6a115fe2ffb8488929d96e8575d70}{}\label{_s_d_l__mixer_8h_aa5f6a115fe2ffb8488929d96e8575d70}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Resume\+Music@{Mix\+\_\+\+Resume\+Music}}
+\index{Mix\+\_\+\+Resume\+Music@{Mix\+\_\+\+Resume\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Resume\+Music(void)}{Mix_ResumeMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Resume\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa45edeb5e03075593c4567e197565979}{}\label{_s_d_l__mixer_8h_aa45edeb5e03075593c4567e197565979}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Rewind\+Music@{Mix\+\_\+\+Rewind\+Music}}
+\index{Mix\+\_\+\+Rewind\+Music@{Mix\+\_\+\+Rewind\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Rewind\+Music(void)}{Mix_RewindMusic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Rewind\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a24f8498924c913883808b0a3ac7f4ebc}{}\label{_s_d_l__mixer_8h_a24f8498924c913883808b0a3ac7f4ebc}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Distance@{Mix\+\_\+\+Set\+Distance}}
+\index{Mix\+\_\+\+Set\+Distance@{Mix\+\_\+\+Set\+Distance}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Distance(int channel, Uint8 distance)}{Mix_SetDistance(int channel, Uint8 distance)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Distance (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf Uint8}}]{distance}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a36a244386902034964e4c5f5bcfef808}{}\label{_s_d_l__mixer_8h_a36a244386902034964e4c5f5bcfef808}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Music\+C\+MD@{Mix\+\_\+\+Set\+Music\+C\+MD}}
+\index{Mix\+\_\+\+Set\+Music\+C\+MD@{Mix\+\_\+\+Set\+Music\+C\+MD}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Music\+C\+M\+D(const char $\ast$command)}{Mix_SetMusicCMD(const char *command)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Music\+C\+MD (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{command}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a06ae6e530b2bda61f772c74e374e70af}{}\label{_s_d_l__mixer_8h_a06ae6e530b2bda61f772c74e374e70af}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Music\+Position@{Mix\+\_\+\+Set\+Music\+Position}}
+\index{Mix\+\_\+\+Set\+Music\+Position@{Mix\+\_\+\+Set\+Music\+Position}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Music\+Position(double position)}{Mix_SetMusicPosition(double position)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Music\+Position (
+\begin{DoxyParamCaption}
+\item[{double}]{position}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_adfa5bcba7e8d583f576180af0ff5a732}{}\label{_s_d_l__mixer_8h_adfa5bcba7e8d583f576180af0ff5a732}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Panning@{Mix\+\_\+\+Set\+Panning}}
+\index{Mix\+\_\+\+Set\+Panning@{Mix\+\_\+\+Set\+Panning}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Panning(int channel, Uint8 left, Uint8 right)}{Mix_SetPanning(int channel, Uint8 left, Uint8 right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Panning (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf Uint8}}]{left, }
+\item[{{\bf Uint8}}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a896c0ac1043249dfbf1bc758297f54f2}{}\label{_s_d_l__mixer_8h_a896c0ac1043249dfbf1bc758297f54f2}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Position@{Mix\+\_\+\+Set\+Position}}
+\index{Mix\+\_\+\+Set\+Position@{Mix\+\_\+\+Set\+Position}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Position(int channel, Sint16 angle, Uint8 distance)}{Mix_SetPosition(int channel, Sint16 angle, Uint8 distance)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Position (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf Sint16}}]{angle, }
+\item[{{\bf Uint8}}]{distance}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a3708de5fc6fc191bb691e972f257a63d}{}\label{_s_d_l__mixer_8h_a3708de5fc6fc191bb691e972f257a63d}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Post\+Mix@{Mix\+\_\+\+Set\+Post\+Mix}}
+\index{Mix\+\_\+\+Set\+Post\+Mix@{Mix\+\_\+\+Set\+Post\+Mix}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Post\+Mix(void($\ast$mix\+\_\+func)(void $\ast$udata, Uint8 $\ast$stream, int len), void $\ast$arg)}{Mix_SetPostMix(void(*mix_func)(void *udata, Uint8 *stream, int len), void *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Post\+Mix (
+\begin{DoxyParamCaption}
+\item[{{\bf void}($\ast$)({\bf void} $\ast$udata, {\bf Uint8} $\ast${\bf stream}, {\bf int} {\bf len})}]{mix\+\_\+func, }
+\item[{{\bf void} $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a710f0c657fc8b5fe55ca3ae3e12ab4a0}{}\label{_s_d_l__mixer_8h_a710f0c657fc8b5fe55ca3ae3e12ab4a0}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Reverse\+Stereo@{Mix\+\_\+\+Set\+Reverse\+Stereo}}
+\index{Mix\+\_\+\+Set\+Reverse\+Stereo@{Mix\+\_\+\+Set\+Reverse\+Stereo}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Reverse\+Stereo(int channel, int flip)}{Mix_SetReverseStereo(int channel, int flip)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Reverse\+Stereo (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf int}}]{flip}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ae26962e9d1fe6c9bdf249237433bf109}{}\label{_s_d_l__mixer_8h_ae26962e9d1fe6c9bdf249237433bf109}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Sound\+Fonts@{Mix\+\_\+\+Set\+Sound\+Fonts}}
+\index{Mix\+\_\+\+Set\+Sound\+Fonts@{Mix\+\_\+\+Set\+Sound\+Fonts}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Sound\+Fonts(const char $\ast$paths)}{Mix_SetSoundFonts(const char *paths)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Sound\+Fonts (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{paths}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_aa503e9b83c9fbf14496d93947568de8f}{}\label{_s_d_l__mixer_8h_aa503e9b83c9fbf14496d93947568de8f}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Set\+Synchro\+Value@{Mix\+\_\+\+Set\+Synchro\+Value}}
+\index{Mix\+\_\+\+Set\+Synchro\+Value@{Mix\+\_\+\+Set\+Synchro\+Value}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Set\+Synchro\+Value(int value)}{Mix_SetSynchroValue(int value)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Set\+Synchro\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_af78d8fcc7feb777a2d3b1e94cb178fd1}{}\label{_s_d_l__mixer_8h_af78d8fcc7feb777a2d3b1e94cb178fd1}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Unregister\+All\+Effects@{Mix\+\_\+\+Unregister\+All\+Effects}}
+\index{Mix\+\_\+\+Unregister\+All\+Effects@{Mix\+\_\+\+Unregister\+All\+Effects}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Unregister\+All\+Effects(int channel)}{Mix_UnregisterAllEffects(int channel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Unregister\+All\+Effects (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a3591d82e9975a21317865850644e1bf8}{}\label{_s_d_l__mixer_8h_a3591d82e9975a21317865850644e1bf8}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Unregister\+Effect@{Mix\+\_\+\+Unregister\+Effect}}
+\index{Mix\+\_\+\+Unregister\+Effect@{Mix\+\_\+\+Unregister\+Effect}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Unregister\+Effect(int channel, Mix\+\_\+\+Effect\+Func\+\_\+t f)}{Mix_UnregisterEffect(int channel, Mix_EffectFunc_t f)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Unregister\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf Mix\+\_\+\+Effect\+Func\+\_\+t}}]{f}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a3c460b5c391b7037156adcc47d5ba2c5}{}\label{_s_d_l__mixer_8h_a3c460b5c391b7037156adcc47d5ba2c5}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Volume@{Mix\+\_\+\+Volume}}
+\index{Mix\+\_\+\+Volume@{Mix\+\_\+\+Volume}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Volume(int channel, int volume)}{Mix_Volume(int channel, int volume)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Volume (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{channel, }
+\item[{{\bf int}}]{volume}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a41d2418a357057d2aabad338476e1b9a}{}\label{_s_d_l__mixer_8h_a41d2418a357057d2aabad338476e1b9a}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Volume\+Chunk@{Mix\+\_\+\+Volume\+Chunk}}
+\index{Mix\+\_\+\+Volume\+Chunk@{Mix\+\_\+\+Volume\+Chunk}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Volume\+Chunk(\+Mix\+\_\+\+Chunk $\ast$chunk, int volume)}{Mix_VolumeChunk(Mix_Chunk *chunk, int volume)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Volume\+Chunk (
+\begin{DoxyParamCaption}
+\item[{{\bf Mix\+\_\+\+Chunk} $\ast$}]{chunk, }
+\item[{{\bf int}}]{volume}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_a4d54b34877f1187d4789884cbaff8be2}{}\label{_s_d_l__mixer_8h_a4d54b34877f1187d4789884cbaff8be2}
+\index{S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}!Mix\+\_\+\+Volume\+Music@{Mix\+\_\+\+Volume\+Music}}
+\index{Mix\+\_\+\+Volume\+Music@{Mix\+\_\+\+Volume\+Music}!S\+D\+L\+\_\+mixer.\+h@{S\+D\+L\+\_\+mixer.\+h}}
+\subsubsection[{\texorpdfstring{Mix\+\_\+\+Volume\+Music(int volume)}{Mix_VolumeMusic(int volume)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} Mix\+\_\+\+Volume\+Music (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{volume}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__mixer_8h_ab926fc25eab93de464ac7029e2125003}{}\label{_s_d_l__mixer_8h_ab926fc25eab93de464ac7029e2125003}

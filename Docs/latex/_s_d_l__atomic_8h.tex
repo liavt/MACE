@@ -1,0 +1,297 @@
+\hypertarget{_s_d_l__atomic_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+atomic.h File Reference}
+\label{_s_d_l__atomic_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+atomic.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+atomic.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+platform.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_l__atomic__t}{S\+D\+L\+\_\+atomic\+\_\+t}
+\begin{DoxyCompactList}\small\item\em A type representing an atomic integer value. It is a struct so people don\textquotesingle{}t accidentally use numeric operations on it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__atomic_8h_a8309455d9dfa65473d10989448c5b897}{S\+D\+L\+\_\+\+Compiler\+Barrier}()  ~\{ \hyperlink{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}{S\+D\+L\+\_\+\+Spin\+Lock} \+\_\+tmp = 0; \hyperlink{_s_d_l__atomic_8h_a95ecd72190ba8e5ed6ed78d5d1b36509}{S\+D\+L\+\_\+\+Atomic\+Lock}(\&\+\_\+tmp); \hyperlink{_s_d_l__atomic_8h_a3fb14c56b17347349ac2fb5300205bac}{S\+D\+L\+\_\+\+Atomic\+Unlock}(\&\+\_\+tmp); \}
+\item 
+\#define \hyperlink{_s_d_l__atomic_8h_a041cb5705236fe51b35cb3d59c1fbba7}{S\+D\+L\+\_\+\+Memory\+Barrier\+Release}()~\hyperlink{_s_d_l__atomic_8h_a8309455d9dfa65473d10989448c5b897}{S\+D\+L\+\_\+\+Compiler\+Barrier}()
+\item 
+\#define \hyperlink{_s_d_l__atomic_8h_aa33019d94c637a106218dde56b46a20a}{S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire}()~\hyperlink{_s_d_l__atomic_8h_a8309455d9dfa65473d10989448c5b897}{S\+D\+L\+\_\+\+Compiler\+Barrier}()
+\item 
+\#define \hyperlink{_s_d_l__atomic_8h_abdd97261d7a59b9a84e6ff894d6e9c87}{S\+D\+L\+\_\+\+Atomic\+Inc\+Ref}(\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a})    ~\hyperlink{_s_d_l__atomic_8h_a36cadfcf8e2bda1974fbce6afdc6d529}{S\+D\+L\+\_\+\+Atomic\+Add}(\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, 1)
+\begin{DoxyCompactList}\small\item\em Increment an atomic variable used as a reference count. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__atomic_8h_a9a062ae367634ba0d83ef4bb88f1fed0}{S\+D\+L\+\_\+\+Atomic\+Dec\+Ref}(\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a})    ~(\hyperlink{_s_d_l__atomic_8h_a36cadfcf8e2bda1974fbce6afdc6d529}{S\+D\+L\+\_\+\+Atomic\+Add}(\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, -\/1) == 1)
+\begin{DoxyCompactList}\small\item\em Decrement an atomic variable used as a reference count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a8fca68df0f976765230fe589a7c7733b}{S\+D\+L\+\_\+bool} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_ad6b90be91abb896260930d3908c0437b}{S\+D\+L\+\_\+\+Atomic\+C\+AS} (\hyperlink{struct_s_d_l__atomic__t}{S\+D\+L\+\_\+atomic\+\_\+t} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} oldval, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} newval)
+\begin{DoxyCompactList}\small\item\em Set an atomic variable to a new value if it is currently an old value. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a95b659308ebb16226d5c0cbf2188e51d}{S\+D\+L\+\_\+\+Atomic\+Set} (\hyperlink{struct_s_d_l__atomic__t}{S\+D\+L\+\_\+atomic\+\_\+t} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl_8h_a10a82eabcb59d2fcd74acee063775f90}{v})
+\begin{DoxyCompactList}\small\item\em Set an atomic variable to a value. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a633c2661709f59c98f128f99aea36d96}{S\+D\+L\+\_\+\+Atomic\+Get} (\hyperlink{struct_s_d_l__atomic__t}{S\+D\+L\+\_\+atomic\+\_\+t} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a})
+\begin{DoxyCompactList}\small\item\em Get the value of an atomic variable. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a36cadfcf8e2bda1974fbce6afdc6d529}{S\+D\+L\+\_\+\+Atomic\+Add} (\hyperlink{struct_s_d_l__atomic__t}{S\+D\+L\+\_\+atomic\+\_\+t} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl_8h_a10a82eabcb59d2fcd74acee063775f90}{v})
+\begin{DoxyCompactList}\small\item\em Add to an atomic variable. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a8fca68df0f976765230fe589a7c7733b}{S\+D\+L\+\_\+bool} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_aa3070cf7f391b522e08595822c2f0eba}{S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$$\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$oldval, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$newval)
+\begin{DoxyCompactList}\small\item\em Set a pointer to a new value if it is currently an old value. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a8cd69c02c71a64c2e509dc11a560d075}{S\+D\+L\+\_\+\+Atomic\+Set\+Ptr} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$$\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a}, \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{_s_d_l__opengl_8h_a10a82eabcb59d2fcd74acee063775f90}{v})
+\begin{DoxyCompactList}\small\item\em Set a pointer to a value atomically. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a46e899ee0013f3fae67eedaa6bce8947}{S\+D\+L\+\_\+\+Atomic\+Get\+Ptr} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$$\ast$\hyperlink{_s_d_l__opengl__glext_8h_a3309789fc188587d666cda5ece79cf82}{a})
+\begin{DoxyCompactList}\small\item\em Get the value of a pointer atomically. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{S\+DL Atomic\+Lock}
+\label{_amgrpd7e348d61fe61536e787424b5d2866ed}%
+The atomic locks are efficient spinlocks using C\+PU instructions, but are vulnerable to starvation and can spin forever if a thread holding a lock has been terminated. For this reason you should minimize the code executed inside an atomic lock and never do expensive things like A\+PI or system calls while holding them.
+
+The atomic locks are not safe to lock recursively.
+
+Porting Note\+: The spin lock functions and type are required and can not be emulated because they are used in the atomic emulation code. \begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}{S\+D\+L\+\_\+\+Spin\+Lock}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a8fca68df0f976765230fe589a7c7733b}{S\+D\+L\+\_\+bool} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a5410c5f832f0d862282cd65fc432fc0b}{S\+D\+L\+\_\+\+Atomic\+Try\+Lock} (\hyperlink{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}{S\+D\+L\+\_\+\+Spin\+Lock} $\ast$lock)
+\begin{DoxyCompactList}\small\item\em Try to lock a spin lock by setting it to a non-\/zero value. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a95ecd72190ba8e5ed6ed78d5d1b36509}{S\+D\+L\+\_\+\+Atomic\+Lock} (\hyperlink{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}{S\+D\+L\+\_\+\+Spin\+Lock} $\ast$lock)
+\begin{DoxyCompactList}\small\item\em Lock a spin lock by setting it to a non-\/zero value. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__atomic_8h_a3fb14c56b17347349ac2fb5300205bac}{S\+D\+L\+\_\+\+Atomic\+Unlock} (\hyperlink{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}{S\+D\+L\+\_\+\+Spin\+Lock} $\ast$lock)
+\begin{DoxyCompactList}\small\item\em Unlock a spin lock by setting it to 0. Always returns immediately. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Atomic operations.
+
+I\+M\+P\+O\+R\+T\+A\+NT\+: If you are not an expert in concurrent lockless programming, you should only be using the atomic lock and reference counting functions in this file. In all other cases you should be protecting your data structures with full mutexes.
+
+The list of \char`\"{}safe\char`\"{} functions to use are\+: \hyperlink{_s_d_l__atomic_8h_a95ecd72190ba8e5ed6ed78d5d1b36509}{S\+D\+L\+\_\+\+Atomic\+Lock()} \hyperlink{_s_d_l__atomic_8h_a3fb14c56b17347349ac2fb5300205bac}{S\+D\+L\+\_\+\+Atomic\+Unlock()} \hyperlink{_s_d_l__atomic_8h_abdd97261d7a59b9a84e6ff894d6e9c87}{S\+D\+L\+\_\+\+Atomic\+Inc\+Ref()} \hyperlink{_s_d_l__atomic_8h_a9a062ae367634ba0d83ef4bb88f1fed0}{S\+D\+L\+\_\+\+Atomic\+Dec\+Ref()}
+
+Seriously, here be dragons! $^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$$^\wedge$
+
+You can find out a little more about lockless programming and the subtle issues that can arise here\+: \href{http://msdn.microsoft.com/en-us/library/ee418650%28v=vs.85%29.aspx}{\tt http\+://msdn.\+microsoft.\+com/en-\/us/library/ee418650\%28v=vs.\+85\%29.\+aspx}
+
+There\textquotesingle{}s also lots of good information here\+: \href{http://www.1024cores.net/home/lock-free-algorithms}{\tt http\+://www.\+1024cores.\+net/home/lock-\/free-\/algorithms} \href{http://preshing.com/}{\tt http\+://preshing.\+com/}
+
+These operations may or may not actually be implemented using processor specific atomic operations. When possible they are implemented as true processor specific atomic operations. When that is not possible the are implemented using locks that {\itshape do} use the available atomic operations.
+
+All of the atomic operations that modify memory are full memory barriers. 
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Dec\+Ref@{S\+D\+L\+\_\+\+Atomic\+Dec\+Ref}}
+\index{S\+D\+L\+\_\+\+Atomic\+Dec\+Ref@{S\+D\+L\+\_\+\+Atomic\+Dec\+Ref}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Dec\+Ref}{SDL_AtomicDecRef}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Atomic\+Dec\+Ref(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}}
+\end{DoxyParamCaption}
+)~({\bf S\+D\+L\+\_\+\+Atomic\+Add}({\bf a}, -\/1) == 1)}\hypertarget{_s_d_l__atomic_8h_a9a062ae367634ba0d83ef4bb88f1fed0}{}\label{_s_d_l__atomic_8h_a9a062ae367634ba0d83ef4bb88f1fed0}
+
+
+Decrement an atomic variable used as a reference count. 
+
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if the variable reached zero after decrementing, S\+D\+L\+\_\+\+F\+A\+L\+SE otherwise 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Inc\+Ref@{S\+D\+L\+\_\+\+Atomic\+Inc\+Ref}}
+\index{S\+D\+L\+\_\+\+Atomic\+Inc\+Ref@{S\+D\+L\+\_\+\+Atomic\+Inc\+Ref}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Inc\+Ref}{SDL_AtomicIncRef}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Atomic\+Inc\+Ref(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}}
+\end{DoxyParamCaption}
+)~{\bf S\+D\+L\+\_\+\+Atomic\+Add}({\bf a}, 1)}\hypertarget{_s_d_l__atomic_8h_abdd97261d7a59b9a84e6ff894d6e9c87}{}\label{_s_d_l__atomic_8h_abdd97261d7a59b9a84e6ff894d6e9c87}
+
+
+Increment an atomic variable used as a reference count. 
+
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Compiler\+Barrier@{S\+D\+L\+\_\+\+Compiler\+Barrier}}
+\index{S\+D\+L\+\_\+\+Compiler\+Barrier@{S\+D\+L\+\_\+\+Compiler\+Barrier}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Compiler\+Barrier}{SDL_CompilerBarrier}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Compiler\+Barrier(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~\{ {\bf S\+D\+L\+\_\+\+Spin\+Lock} \+\_\+tmp = 0; {\bf S\+D\+L\+\_\+\+Atomic\+Lock}(\&\+\_\+tmp); {\bf S\+D\+L\+\_\+\+Atomic\+Unlock}(\&\+\_\+tmp); \}}\hypertarget{_s_d_l__atomic_8h_a8309455d9dfa65473d10989448c5b897}{}\label{_s_d_l__atomic_8h_a8309455d9dfa65473d10989448c5b897}
+The compiler barrier prevents the compiler from reordering reads and writes to globally visible variables across the call. \index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire@{S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire}}
+\index{S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire@{S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire}{SDL_MemoryBarrierAcquire}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Memory\+Barrier\+Acquire(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf S\+D\+L\+\_\+\+Compiler\+Barrier}()}\hypertarget{_s_d_l__atomic_8h_aa33019d94c637a106218dde56b46a20a}{}\label{_s_d_l__atomic_8h_aa33019d94c637a106218dde56b46a20a}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Memory\+Barrier\+Release@{S\+D\+L\+\_\+\+Memory\+Barrier\+Release}}
+\index{S\+D\+L\+\_\+\+Memory\+Barrier\+Release@{S\+D\+L\+\_\+\+Memory\+Barrier\+Release}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Memory\+Barrier\+Release}{SDL_MemoryBarrierRelease}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Memory\+Barrier\+Release(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf S\+D\+L\+\_\+\+Compiler\+Barrier}()}\hypertarget{_s_d_l__atomic_8h_a041cb5705236fe51b35cb3d59c1fbba7}{}\label{_s_d_l__atomic_8h_a041cb5705236fe51b35cb3d59c1fbba7}
+Memory barriers are designed to prevent reads and writes from being reordered by the compiler and being seen out of order on multi-\/core C\+P\+Us.
+
+A typical pattern would be for thread A to write some data and a flag, and for thread B to read the flag and get the data. In this case you would insert a release barrier between writing the data and the flag, guaranteeing that the data write completes no later than the flag is written, and you would insert an acquire barrier between reading the flag and reading the data, to ensure that all the reads associated with the flag have completed.
+
+In this pattern you should always see a release barrier paired with an acquire barrier and you should gate the data reads/writes with a single flag variable.
+
+For more information on these semantics, take a look at the blog post\+: \href{http://preshing.com/20120913/acquire-and-release-semantics}{\tt http\+://preshing.\+com/20120913/acquire-\/and-\/release-\/semantics} 
+
+\subsection{Typedef Documentation}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Spin\+Lock@{S\+D\+L\+\_\+\+Spin\+Lock}}
+\index{S\+D\+L\+\_\+\+Spin\+Lock@{S\+D\+L\+\_\+\+Spin\+Lock}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Spin\+Lock}{SDL_SpinLock}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf int} {\bf S\+D\+L\+\_\+\+Spin\+Lock}}\hypertarget{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}{}\label{_s_d_l__atomic_8h_a59179ff8d21c65b9d9a544f3c2088e81}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Add@{S\+D\+L\+\_\+\+Atomic\+Add}}
+\index{S\+D\+L\+\_\+\+Atomic\+Add@{S\+D\+L\+\_\+\+Atomic\+Add}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Add(\+S\+D\+L\+\_\+atomic\+\_\+t $\ast$a, int v)}{SDL_AtomicAdd(SDL_atomic_t *a, int v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+atomic\+\_\+t} $\ast$}]{a, }
+\item[{{\bf int}}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a36cadfcf8e2bda1974fbce6afdc6d529}{}\label{_s_d_l__atomic_8h_a36cadfcf8e2bda1974fbce6afdc6d529}
+
+
+Add to an atomic variable. 
+
+\begin{DoxyReturn}{Returns}
+The previous value of the atomic variable.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This same style can be used for any number operation 
+\end{DoxyNote}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+C\+AS@{S\+D\+L\+\_\+\+Atomic\+C\+AS}}
+\index{S\+D\+L\+\_\+\+Atomic\+C\+AS@{S\+D\+L\+\_\+\+Atomic\+C\+AS}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+C\+A\+S(\+S\+D\+L\+\_\+atomic\+\_\+t $\ast$a, int oldval, int newval)}{SDL_AtomicCAS(SDL_atomic_t *a, int oldval, int newval)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+bool} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+C\+AS (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+atomic\+\_\+t} $\ast$}]{a, }
+\item[{{\bf int}}]{oldval, }
+\item[{{\bf int}}]{newval}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_ad6b90be91abb896260930d3908c0437b}{}\label{_s_d_l__atomic_8h_ad6b90be91abb896260930d3908c0437b}
+
+
+Set an atomic variable to a new value if it is currently an old value. 
+
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if the atomic variable was set, S\+D\+L\+\_\+\+F\+A\+L\+SE otherwise.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If you don\textquotesingle{}t know what this function is for, you shouldn\textquotesingle{}t use it! 
+\end{DoxyNote}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr@{S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr}}
+\index{S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr@{S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr(void $\ast$$\ast$a, void $\ast$oldval, void $\ast$newval)}{SDL_AtomicCASPtr(void **a, void *oldval, void *newval)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+bool} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+C\+A\+S\+Ptr (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$$\ast$}]{a, }
+\item[{{\bf void} $\ast$}]{oldval, }
+\item[{{\bf void} $\ast$}]{newval}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_aa3070cf7f391b522e08595822c2f0eba}{}\label{_s_d_l__atomic_8h_aa3070cf7f391b522e08595822c2f0eba}
+
+
+Set a pointer to a new value if it is currently an old value. 
+
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if the pointer was set, S\+D\+L\+\_\+\+F\+A\+L\+SE otherwise.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If you don\textquotesingle{}t know what this function is for, you shouldn\textquotesingle{}t use it! 
+\end{DoxyNote}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Get@{S\+D\+L\+\_\+\+Atomic\+Get}}
+\index{S\+D\+L\+\_\+\+Atomic\+Get@{S\+D\+L\+\_\+\+Atomic\+Get}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Get(\+S\+D\+L\+\_\+atomic\+\_\+t $\ast$a)}{SDL_AtomicGet(SDL_atomic_t *a)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Get (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+atomic\+\_\+t} $\ast$}]{a}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a633c2661709f59c98f128f99aea36d96}{}\label{_s_d_l__atomic_8h_a633c2661709f59c98f128f99aea36d96}
+
+
+Get the value of an atomic variable. 
+
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Get\+Ptr@{S\+D\+L\+\_\+\+Atomic\+Get\+Ptr}}
+\index{S\+D\+L\+\_\+\+Atomic\+Get\+Ptr@{S\+D\+L\+\_\+\+Atomic\+Get\+Ptr}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Get\+Ptr(void $\ast$$\ast$a)}{SDL_AtomicGetPtr(void **a)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Get\+Ptr (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$$\ast$}]{a}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a46e899ee0013f3fae67eedaa6bce8947}{}\label{_s_d_l__atomic_8h_a46e899ee0013f3fae67eedaa6bce8947}
+
+
+Get the value of a pointer atomically. 
+
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Lock@{S\+D\+L\+\_\+\+Atomic\+Lock}}
+\index{S\+D\+L\+\_\+\+Atomic\+Lock@{S\+D\+L\+\_\+\+Atomic\+Lock}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Lock(\+S\+D\+L\+\_\+\+Spin\+Lock $\ast$lock)}{SDL_AtomicLock(SDL_SpinLock *lock)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Lock (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Spin\+Lock} $\ast$}]{lock}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a95ecd72190ba8e5ed6ed78d5d1b36509}{}\label{_s_d_l__atomic_8h_a95ecd72190ba8e5ed6ed78d5d1b36509}
+
+
+Lock a spin lock by setting it to a non-\/zero value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lock} & Points to the lock. \\
+\hline
+\end{DoxyParams}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Set@{S\+D\+L\+\_\+\+Atomic\+Set}}
+\index{S\+D\+L\+\_\+\+Atomic\+Set@{S\+D\+L\+\_\+\+Atomic\+Set}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Set(\+S\+D\+L\+\_\+atomic\+\_\+t $\ast$a, int v)}{SDL_AtomicSet(SDL_atomic_t *a, int v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Set (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+atomic\+\_\+t} $\ast$}]{a, }
+\item[{{\bf int}}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a95b659308ebb16226d5c0cbf2188e51d}{}\label{_s_d_l__atomic_8h_a95b659308ebb16226d5c0cbf2188e51d}
+
+
+Set an atomic variable to a value. 
+
+\begin{DoxyReturn}{Returns}
+The previous value of the atomic variable. 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Set\+Ptr@{S\+D\+L\+\_\+\+Atomic\+Set\+Ptr}}
+\index{S\+D\+L\+\_\+\+Atomic\+Set\+Ptr@{S\+D\+L\+\_\+\+Atomic\+Set\+Ptr}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Set\+Ptr(void $\ast$$\ast$a, void $\ast$v)}{SDL_AtomicSetPtr(void **a, void *v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Set\+Ptr (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$$\ast$}]{a, }
+\item[{{\bf void} $\ast$}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a8cd69c02c71a64c2e509dc11a560d075}{}\label{_s_d_l__atomic_8h_a8cd69c02c71a64c2e509dc11a560d075}
+
+
+Set a pointer to a value atomically. 
+
+\begin{DoxyReturn}{Returns}
+The previous value of the pointer. 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Try\+Lock@{S\+D\+L\+\_\+\+Atomic\+Try\+Lock}}
+\index{S\+D\+L\+\_\+\+Atomic\+Try\+Lock@{S\+D\+L\+\_\+\+Atomic\+Try\+Lock}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Try\+Lock(\+S\+D\+L\+\_\+\+Spin\+Lock $\ast$lock)}{SDL_AtomicTryLock(SDL_SpinLock *lock)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+bool} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Try\+Lock (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Spin\+Lock} $\ast$}]{lock}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a5410c5f832f0d862282cd65fc432fc0b}{}\label{_s_d_l__atomic_8h_a5410c5f832f0d862282cd65fc432fc0b}
+
+
+Try to lock a spin lock by setting it to a non-\/zero value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lock} & Points to the lock.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if the lock succeeded, S\+D\+L\+\_\+\+F\+A\+L\+SE if the lock is already held. 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}!S\+D\+L\+\_\+\+Atomic\+Unlock@{S\+D\+L\+\_\+\+Atomic\+Unlock}}
+\index{S\+D\+L\+\_\+\+Atomic\+Unlock@{S\+D\+L\+\_\+\+Atomic\+Unlock}!S\+D\+L\+\_\+atomic.\+h@{S\+D\+L\+\_\+atomic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Atomic\+Unlock(\+S\+D\+L\+\_\+\+Spin\+Lock $\ast$lock)}{SDL_AtomicUnlock(SDL_SpinLock *lock)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Atomic\+Unlock (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Spin\+Lock} $\ast$}]{lock}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__atomic_8h_a3fb14c56b17347349ac2fb5300205bac}{}\label{_s_d_l__atomic_8h_a3fb14c56b17347349ac2fb5300205bac}
+
+
+Unlock a spin lock by setting it to 0. Always returns immediately. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lock} & Points to the lock. \\
+\hline
+\end{DoxyParams}

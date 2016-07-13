@@ -1,0 +1,792 @@
+\hypertarget{_s_d_l__audio_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+audio.h File Reference}
+\label{_s_d_l__audio_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+audio.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+audio.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+error.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+endian.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+mutex.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+thread.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+rwops.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec}
+\item 
+struct \hyperlink{struct_s_d_l___audio_c_v_t}{S\+D\+L\+\_\+\+Audio\+C\+VT}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_ac34fc6df953e2bae89919edaaa740ff3}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a611f76dc30ba9891239bcce3f9b472b5}{S\+D\+L\+\_\+\+Load\+W\+AV}(file,  spec,  audio\+\_\+buf,  audio\+\_\+len)~\hyperlink{_s_d_l__audio_8h_a7e5d38e8c1f8951704a76330c3b1ac81}{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}(\hyperlink{_s_d_l__rwops_8h_aef7e843c3486bd1770667a594aa0b439}{S\+D\+L\+\_\+\+R\+W\+From\+File}(file, \char`\"{}rb\char`\"{}),1, spec,audio\+\_\+buf,audio\+\_\+len)
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_afa8e5e92d4424b0c599e7c813c91f720}{S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME}~128
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf Audio flags}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_ade51417b52dbd9511d56066caae0038b}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE}~(0x\+F\+F)
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a50b4779246a7fbf4a39205a396ec7ea6}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE}~(1$<$$<$8)
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_ab070cdd4d92ee3824cafefe24c620326}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN}~(1$<$$<$12)
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a06fc66d3c421c6c9b733854b73d104ce}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED}~(1$<$$<$15)
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a90271509f6b5b93bd1b056da4ec6ef91}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})              ~(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x} \& \hyperlink{_s_d_l__audio_8h_ade51417b52dbd9511d56066caae0038b}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE})
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_aaf36ebbe4f87fc3638cde452f62440ef}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})              ~(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x} \& \hyperlink{_s_d_l__audio_8h_a50b4779246a7fbf4a39205a396ec7ea6}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE})
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_ae5b87da441ddbb4a83222e47bb0e95bd}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})      ~(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x} \& \hyperlink{_s_d_l__audio_8h_ab070cdd4d92ee3824cafefe24c620326}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN})
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a134738529920bcc1195a397ff59cc086}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})            ~(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x} \& \hyperlink{_s_d_l__audio_8h_a06fc66d3c421c6c9b733854b73d104ce}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED})
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_ab7992cbb5d3ac5913aa3350a793ffb8c}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})                  ~(!\hyperlink{_s_d_l__audio_8h_aaf36ebbe4f87fc3638cde452f62440ef}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x}))
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a2026be07a23986f2b7681a3500c8c341}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})~(!\hyperlink{_s_d_l__audio_8h_ae5b87da441ddbb4a83222e47bb0e95bd}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x}))
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a4733ae502750fe5060ebec4c5bbfb71f}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x})        ~(!\hyperlink{_s_d_l__audio_8h_a134738529920bcc1195a397ff59cc086}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED}(\hyperlink{_s_d_l__opengl_8h_ad0e63d0edcdbd3d79554076bf309fd47}{x}))
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Audio format flags}\par
+{\em Defaults to L\+SB byte order. }\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a6468b4b3fc53ada655eca866e491d75f}{A\+U\+D\+I\+O\+\_\+\+U8}~0x0008
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a883b3d4539451e49bf014dde0f9cca29}{A\+U\+D\+I\+O\+\_\+\+S8}~0x8008
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a06808f806896c4d211314990c354b7fc}{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}~0x0010
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a23838d612e88ce72d82c3e51460f831b}{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}~0x8010
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a3b8052d0c49d14a2e3edf08eade52d3a}{A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB}~0x1010
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a3109dfb1d7aab29dff2b62d630e690ca}{A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB}~0x9010
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_adee2cdf7dbda44620da17cd58ca819ea}{A\+U\+D\+I\+O\+\_\+\+U16}~\hyperlink{_s_d_l__audio_8h_a06808f806896c4d211314990c354b7fc}{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a4f4950d8eee757ebed84e50fb9316b12}{A\+U\+D\+I\+O\+\_\+\+S16}~\hyperlink{_s_d_l__audio_8h_a23838d612e88ce72d82c3e51460f831b}{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf int32 support}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_ac81f9cc5739cea67436daf2689d29559}{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}~0x8020
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a30641d7487680630c231b3415ecd47b6}{A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB}~0x9020
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_aaffc0931336d0d79717a144039670223}{A\+U\+D\+I\+O\+\_\+\+S32}~\hyperlink{_s_d_l__audio_8h_ac81f9cc5739cea67436daf2689d29559}{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf float32 support}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_afaef57ecb718053b572c539e27e72d61}{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}~0x8120
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a2d57382c01fdcd78cbbbb480605d91ef}{A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB}~0x9120
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a4633772ee12935960a25ff8334c29990}{A\+U\+D\+I\+O\+\_\+\+F32}~\hyperlink{_s_d_l__audio_8h_afaef57ecb718053b572c539e27e72d61}{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Native audio byte ordering}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_afafc9f93ee2c583130c4152e243ba5b8}{A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS}~\hyperlink{_s_d_l__audio_8h_a06808f806896c4d211314990c354b7fc}{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a4722de7e16982dd078f2b8cc64b9bae7}{A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS}~\hyperlink{_s_d_l__audio_8h_a23838d612e88ce72d82c3e51460f831b}{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_aafcbadd8f6fa14a878178bf18b883675}{A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS}~\hyperlink{_s_d_l__audio_8h_ac81f9cc5739cea67436daf2689d29559}{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_af001a94efb4bea024c233cae0cf98e6b}{A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS}~\hyperlink{_s_d_l__audio_8h_afaef57ecb718053b572c539e27e72d61}{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Allow change flags}\par
+{\em Which audio format changes are allowed when opening a device. }\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a4b05381c3f0871e9a88b46959365f796}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE}~0x00000001
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_a32dbc13d28bdc43d7e07e080e24fb573}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE}~0x00000002
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_aad9eab304c2cee512410508811268575}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE}~0x00000004
+\item 
+\#define \hyperlink{_s_d_l__audio_8h_acbee9b7a641274139377898c21df92e8}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE}~(\hyperlink{_s_d_l__audio_8h_a4b05381c3f0871e9a88b46959365f796}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE}$\vert$\hyperlink{_s_d_l__audio_8h_a32dbc13d28bdc43d7e07e080e24fb573}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE}$\vert$\hyperlink{_s_d_l__audio_8h_aad9eab304c2cee512410508811268575}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE})
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_a31fcc0a076c9068668173ee26d33e42b}{Uint16} \hyperlink{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}{S\+D\+L\+\_\+\+Audio\+Format}
+\begin{DoxyCompactList}\small\item\em Audio format flags. \end{DoxyCompactList}\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$ \hyperlink{_s_d_l__audio_8h_a10d3bc96cdfc1d478f52c13d5ffd9316}{stream}
+\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len}
+\item 
+typedef struct \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} \hyperlink{_s_d_l__audio_8h_a77faa7fe3d22c03ee61466a901c22a25}{S\+D\+L\+\_\+\+Audio\+Spec}
+\item 
+typedef \hyperlink{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}{S\+D\+L\+\_\+\+Audio\+Format} \hyperlink{_s_d_l__audio_8h_a71a65ffd977afe9c3fef116a5bc9ee27}{format}
+\item 
+typedef struct \hyperlink{struct_s_d_l___audio_c_v_t}{S\+D\+L\+\_\+\+Audio\+C\+VT} \hyperlink{_s_d_l__audio_8h_afc284f22978d12646dbffa692fe0c0ae}{S\+D\+L\+\_\+\+Audio\+C\+VT}
+\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{_s_d_l__audio_8h_a52835ae37c4bb905b903cbaf5d04b05f}{void} (\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} $\ast$S\+D\+L\+\_\+\+Audio\+Callback)(void $\ast$userdata
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a15b19f26c314e3640ea396251a1ff010}{S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio} (\hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} $\ast$desired, \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} $\ast$obtained)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_ae165f64b3f0fecfebe1c97731600ca59}{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} iscapture)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a846bae7fa1183b644c96cbb49e2c8cf5}{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} iscapture)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_af54523e415de7c7fdd0d48a76ab58bb3}{S\+D\+L\+\_\+\+Open\+Audio\+Device} (const char $\ast$device, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} iscapture, const \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} $\ast$desired, \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} $\ast$obtained, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} allowed\+\_\+changes)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a7e5d38e8c1f8951704a76330c3b1ac81}{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW} (\hyperlink{struct_s_d_l___r_wops}{S\+D\+L\+\_\+\+R\+Wops} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a72e0fdf0f845ded60b1fada9e9195cd7}{src}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} freesrc, \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} $\ast$spec, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$$\ast$audio\+\_\+buf, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} $\ast$audio\+\_\+len)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a631aa8624575603df2c5ab9257feee59}{S\+D\+L\+\_\+\+Free\+W\+AV} (\hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$audio\+\_\+buf)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a41e1602bc7cd4edb87ca779cf01d40bb}{S\+D\+L\+\_\+\+Build\+Audio\+C\+VT} (\hyperlink{struct_s_d_l___audio_c_v_t}{S\+D\+L\+\_\+\+Audio\+C\+VT} $\ast$cvt, \hyperlink{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}{S\+D\+L\+\_\+\+Audio\+Format} src\+\_\+format, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} src\+\_\+channels, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} src\+\_\+rate, \hyperlink{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}{S\+D\+L\+\_\+\+Audio\+Format} dst\+\_\+format, \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} dst\+\_\+channels, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} dst\+\_\+rate)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a8e8660222356e07002dde4928118b7df}{S\+D\+L\+\_\+\+Convert\+Audio} (\hyperlink{struct_s_d_l___audio_c_v_t}{S\+D\+L\+\_\+\+Audio\+C\+VT} $\ast$cvt)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_ab9ad945b4b15d816802f5a79da06c9f9}{S\+D\+L\+\_\+\+Mix\+Audio} (\hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a92034251bfd455d524a9b5610cddba00}{dst}, const \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a72e0fdf0f845ded60b1fada9e9195cd7}{src}, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} volume)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a27a0ad33d17f87a2d7574be78d2f39b7}{S\+D\+L\+\_\+\+Mix\+Audio\+Format} (\hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a92034251bfd455d524a9b5610cddba00}{dst}, const \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} $\ast$\hyperlink{_s_d_l__opengl__glext_8h_a72e0fdf0f845ded60b1fada9e9195cd7}{src}, \hyperlink{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}{S\+D\+L\+\_\+\+Audio\+Format} \hyperlink{_s_d_l__audio_8h_a71a65ffd977afe9c3fef116a5bc9ee27}{format}, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len}, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} volume)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev, const \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} $\ast$\hyperlink{_s_d_l__opengl_8h_a2e335d56e2846b0fea47eed068b2d34a}{data}, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{len})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a11a1d59fd68f8a416fa72bf14f5c9ec3}{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a073ed5d40cce01e839b34570c1c7ed50}{S\+D\+L\+\_\+\+Clear\+Queued\+Audio} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_aa176acc650e66e1d38814cbed3ca258e}{S\+D\+L\+\_\+\+Close\+Audio} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_abd910f31079d53b6c0ea8bf32dac0ce6}{S\+D\+L\+\_\+\+Close\+Audio\+Device} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev)
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf Driver discovery functions}\par
+{\em These functions return the list of built in audio drivers, in the order that they are normally initialized by default. }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_ae3cb6a3321d9ee32f3c05ea0794c5fb8}{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_aabc8b6439ff8d1195b9f49e9c00b15c1}{S\+D\+L\+\_\+\+Get\+Audio\+Driver} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{_s_d_l__opengl__glext_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index})
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Initialization and cleanup}\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_ae3667d6ba706a3ca7affd8611632fa2c}{S\+D\+L\+\_\+\+Audio\+Init} (const char $\ast$driver\+\_\+name)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a478c602cbfaab8663cb4f58a62600323}{S\+D\+L\+\_\+\+Audio\+Quit} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Pause audio functions}\par
+{\em These functions pause and unpause the audio callback processing. They should be called with a parameter of 0 after opening the audio device to start playing sound. This is so you can safely initialize data for your callback function after opening the audio device. Silence will be written to the audio device during the pause. }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_aa68e60a33666ff4f2d36f3827b1d6061}{S\+D\+L\+\_\+\+Pause\+Audio} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} pause\+\_\+on)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_ab4c8e2a896ccf86599435af81fca928c}{S\+D\+L\+\_\+\+Pause\+Audio\+Device} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} pause\+\_\+on)
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Audio lock functions}\par
+{\em The lock manipulated by these functions protects the callback function. During a \hyperlink{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{S\+D\+L\+\_\+\+Lock\+Audio()}/\+S\+D\+L\+\_\+\+Unlock\+Audio() pair, you can be guaranteed that the callback function is not running. Do not call these from the callback function or you will cause deadlock. }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{S\+D\+L\+\_\+\+Lock\+Audio} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a9769845303f88f084f051b99e55b62a1}{S\+D\+L\+\_\+\+Lock\+Audio\+Device} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a76d8179bee14dad268e65378058d897d}{S\+D\+L\+\_\+\+Unlock\+Audio} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a37427a5d47e10103f2fff8165d5f9000}{S\+D\+L\+\_\+\+Unlock\+Audio\+Device} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev)
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Audio state}
+\label{_amgrpcef14621c5df51e9b3ed9d0b005e108e}%
+Get the current audio state. \begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2}{S\+D\+L\+\_\+\+Audio\+Status} \{ \hyperlink{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2a3a26bd0e1ac5d46eda5053d0526b5fba}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+S\+T\+O\+P\+P\+ED} = 0, 
+\hyperlink{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2ab7e7b45db79e783703b43677a15c29a4}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+L\+A\+Y\+I\+NG}, 
+\hyperlink{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2acd874cd272a7b1990d9db8699ae0c4f6}{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+A\+U\+S\+ED}
+ \}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2}{S\+D\+L\+\_\+\+Audio\+Status} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_a568e10207e6ff53f8e238a0d562ef594}{S\+D\+L\+\_\+\+Get\+Audio\+Status} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2}{S\+D\+L\+\_\+\+Audio\+Status} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__audio_8h_ac86fde79b1afda3f0fb8e9a027434a69}{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status} (\hyperlink{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{S\+D\+L\+\_\+\+Audio\+Device\+ID} dev)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Access to the raw audio mixing buffer for the S\+DL library. 
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+F32@{A\+U\+D\+I\+O\+\_\+\+F32}}
+\index{A\+U\+D\+I\+O\+\_\+\+F32@{A\+U\+D\+I\+O\+\_\+\+F32}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+F32}{AUDIO_F32}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+F32~{\bf A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}}\hypertarget{_s_d_l__audio_8h_a4633772ee12935960a25ff8334c29990}{}\label{_s_d_l__audio_8h_a4633772ee12935960a25ff8334c29990}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}{AUDIO_F32LSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB~0x8120}\hypertarget{_s_d_l__audio_8h_afaef57ecb718053b572c539e27e72d61}{}\label{_s_d_l__audio_8h_afaef57ecb718053b572c539e27e72d61}
+32-\/bit floating point samples \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB}{AUDIO_F32MSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+F32\+M\+SB~0x9120}\hypertarget{_s_d_l__audio_8h_a2d57382c01fdcd78cbbbb480605d91ef}{}\label{_s_d_l__audio_8h_a2d57382c01fdcd78cbbbb480605d91ef}
+As above, but big-\/endian byte order \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS}}
+\index{A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS}{AUDIO_F32SYS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+F32\+S\+YS~{\bf A\+U\+D\+I\+O\+\_\+\+F32\+L\+SB}}\hypertarget{_s_d_l__audio_8h_af001a94efb4bea024c233cae0cf98e6b}{}\label{_s_d_l__audio_8h_af001a94efb4bea024c233cae0cf98e6b}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S16@{A\+U\+D\+I\+O\+\_\+\+S16}}
+\index{A\+U\+D\+I\+O\+\_\+\+S16@{A\+U\+D\+I\+O\+\_\+\+S16}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S16}{AUDIO_S16}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S16~{\bf A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}}\hypertarget{_s_d_l__audio_8h_a4f4950d8eee757ebed84e50fb9316b12}{}\label{_s_d_l__audio_8h_a4f4950d8eee757ebed84e50fb9316b12}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}{AUDIO_S16LSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB~0x8010}\hypertarget{_s_d_l__audio_8h_a23838d612e88ce72d82c3e51460f831b}{}\label{_s_d_l__audio_8h_a23838d612e88ce72d82c3e51460f831b}
+Signed 16-\/bit samples \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB}{AUDIO_S16MSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S16\+M\+SB~0x9010}\hypertarget{_s_d_l__audio_8h_a3109dfb1d7aab29dff2b62d630e690ca}{}\label{_s_d_l__audio_8h_a3109dfb1d7aab29dff2b62d630e690ca}
+As above, but big-\/endian byte order \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS}}
+\index{A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS}{AUDIO_S16SYS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S16\+S\+YS~{\bf A\+U\+D\+I\+O\+\_\+\+S16\+L\+SB}}\hypertarget{_s_d_l__audio_8h_a4722de7e16982dd078f2b8cc64b9bae7}{}\label{_s_d_l__audio_8h_a4722de7e16982dd078f2b8cc64b9bae7}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S32@{A\+U\+D\+I\+O\+\_\+\+S32}}
+\index{A\+U\+D\+I\+O\+\_\+\+S32@{A\+U\+D\+I\+O\+\_\+\+S32}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S32}{AUDIO_S32}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S32~{\bf A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}}\hypertarget{_s_d_l__audio_8h_aaffc0931336d0d79717a144039670223}{}\label{_s_d_l__audio_8h_aaffc0931336d0d79717a144039670223}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}{AUDIO_S32LSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB~0x8020}\hypertarget{_s_d_l__audio_8h_ac81f9cc5739cea67436daf2689d29559}{}\label{_s_d_l__audio_8h_ac81f9cc5739cea67436daf2689d29559}
+32-\/bit integer samples \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB}{AUDIO_S32MSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S32\+M\+SB~0x9020}\hypertarget{_s_d_l__audio_8h_a30641d7487680630c231b3415ecd47b6}{}\label{_s_d_l__audio_8h_a30641d7487680630c231b3415ecd47b6}
+As above, but big-\/endian byte order \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS}}
+\index{A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS}{AUDIO_S32SYS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S32\+S\+YS~{\bf A\+U\+D\+I\+O\+\_\+\+S32\+L\+SB}}\hypertarget{_s_d_l__audio_8h_aafcbadd8f6fa14a878178bf18b883675}{}\label{_s_d_l__audio_8h_aafcbadd8f6fa14a878178bf18b883675}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+S8@{A\+U\+D\+I\+O\+\_\+\+S8}}
+\index{A\+U\+D\+I\+O\+\_\+\+S8@{A\+U\+D\+I\+O\+\_\+\+S8}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+S8}{AUDIO_S8}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+S8~0x8008}\hypertarget{_s_d_l__audio_8h_a883b3d4539451e49bf014dde0f9cca29}{}\label{_s_d_l__audio_8h_a883b3d4539451e49bf014dde0f9cca29}
+Signed 8-\/bit samples \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+U16@{A\+U\+D\+I\+O\+\_\+\+U16}}
+\index{A\+U\+D\+I\+O\+\_\+\+U16@{A\+U\+D\+I\+O\+\_\+\+U16}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+U16}{AUDIO_U16}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+U16~{\bf A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}}\hypertarget{_s_d_l__audio_8h_adee2cdf7dbda44620da17cd58ca819ea}{}\label{_s_d_l__audio_8h_adee2cdf7dbda44620da17cd58ca819ea}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB@{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}{AUDIO_U16LSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB~0x0010}\hypertarget{_s_d_l__audio_8h_a06808f806896c4d211314990c354b7fc}{}\label{_s_d_l__audio_8h_a06808f806896c4d211314990c354b7fc}
+Unsigned 16-\/bit samples \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB}}
+\index{A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB@{A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB}{AUDIO_U16MSB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+U16\+M\+SB~0x1010}\hypertarget{_s_d_l__audio_8h_a3b8052d0c49d14a2e3edf08eade52d3a}{}\label{_s_d_l__audio_8h_a3b8052d0c49d14a2e3edf08eade52d3a}
+As above, but big-\/endian byte order \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS}}
+\index{A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS@{A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS}{AUDIO_U16SYS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+U16\+S\+YS~{\bf A\+U\+D\+I\+O\+\_\+\+U16\+L\+SB}}\hypertarget{_s_d_l__audio_8h_afafc9f93ee2c583130c4152e243ba5b8}{}\label{_s_d_l__audio_8h_afafc9f93ee2c583130c4152e243ba5b8}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!A\+U\+D\+I\+O\+\_\+\+U8@{A\+U\+D\+I\+O\+\_\+\+U8}}
+\index{A\+U\+D\+I\+O\+\_\+\+U8@{A\+U\+D\+I\+O\+\_\+\+U8}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{A\+U\+D\+I\+O\+\_\+\+U8}{AUDIO_U8}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+U\+D\+I\+O\+\_\+\+U8~0x0008}\hypertarget{_s_d_l__audio_8h_a6468b4b3fc53ada655eca866e491d75f}{}\label{_s_d_l__audio_8h_a6468b4b3fc53ada655eca866e491d75f}
+Unsigned 8-\/bit samples \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE}{SDL_AUDIO_ALLOW_ANY_CHANGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+A\+N\+Y\+\_\+\+C\+H\+A\+N\+GE~({\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE}$\vert${\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE}$\vert${\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE})}\hypertarget{_s_d_l__audio_8h_acbee9b7a641274139377898c21df92e8}{}\label{_s_d_l__audio_8h_acbee9b7a641274139377898c21df92e8}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE}{SDL_AUDIO_ALLOW_CHANNELS_CHANGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+C\+H\+A\+N\+N\+E\+L\+S\+\_\+\+C\+H\+A\+N\+GE~0x00000004}\hypertarget{_s_d_l__audio_8h_aad9eab304c2cee512410508811268575}{}\label{_s_d_l__audio_8h_aad9eab304c2cee512410508811268575}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE}{SDL_AUDIO_ALLOW_FORMAT_CHANGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+C\+H\+A\+N\+GE~0x00000002}\hypertarget{_s_d_l__audio_8h_a32dbc13d28bdc43d7e07e080e24fb573}{}\label{_s_d_l__audio_8h_a32dbc13d28bdc43d7e07e080e24fb573}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE}{SDL_AUDIO_ALLOW_FREQUENCY_CHANGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+A\+L\+L\+O\+W\+\_\+\+F\+R\+E\+Q\+U\+E\+N\+C\+Y\+\_\+\+C\+H\+A\+N\+GE~0x00000001}\hypertarget{_s_d_l__audio_8h_a4b05381c3f0871e9a88b46959365f796}{}\label{_s_d_l__audio_8h_a4b05381c3f0871e9a88b46959365f796}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE}{SDL_AUDIO_BITSIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+B\+I\+T\+S\+I\+ZE(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~({\bf x} \& {\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE})}\hypertarget{_s_d_l__audio_8h_a90271509f6b5b93bd1b056da4ec6ef91}{}\label{_s_d_l__audio_8h_a90271509f6b5b93bd1b056da4ec6ef91}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN}{SDL_AUDIO_ISBIGENDIAN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~({\bf x} \& {\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN})}\hypertarget{_s_d_l__audio_8h_ae5b87da441ddbb4a83222e47bb0e95bd}{}\label{_s_d_l__audio_8h_ae5b87da441ddbb4a83222e47bb0e95bd}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT}{SDL_AUDIO_ISFLOAT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~({\bf x} \& {\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE})}\hypertarget{_s_d_l__audio_8h_aaf36ebbe4f87fc3638cde452f62440ef}{}\label{_s_d_l__audio_8h_aaf36ebbe4f87fc3638cde452f62440ef}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT}{SDL_AUDIO_ISINT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+I\+NT(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~(!{\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+F\+L\+O\+AT}({\bf x}))}\hypertarget{_s_d_l__audio_8h_ab7992cbb5d3ac5913aa3350a793ffb8c}{}\label{_s_d_l__audio_8h_ab7992cbb5d3ac5913aa3350a793ffb8c}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN}{SDL_AUDIO_ISLITTLEENDIAN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+L\+I\+T\+T\+L\+E\+E\+N\+D\+I\+AN(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~(!{\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+B\+I\+G\+E\+N\+D\+I\+AN}({\bf x}))}\hypertarget{_s_d_l__audio_8h_a2026be07a23986f2b7681a3500c8c341}{}\label{_s_d_l__audio_8h_a2026be07a23986f2b7681a3500c8c341}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED}{SDL_AUDIO_ISSIGNED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~({\bf x} \& {\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED})}\hypertarget{_s_d_l__audio_8h_a134738529920bcc1195a397ff59cc086}{}\label{_s_d_l__audio_8h_a134738529920bcc1195a397ff59cc086}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED}{SDL_AUDIO_ISUNSIGNED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+U\+N\+S\+I\+G\+N\+ED(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~(!{\bf S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+I\+S\+S\+I\+G\+N\+ED}({\bf x}))}\hypertarget{_s_d_l__audio_8h_a4733ae502750fe5060ebec4c5bbfb71f}{}\label{_s_d_l__audio_8h_a4733ae502750fe5060ebec4c5bbfb71f}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE}{SDL_AUDIO_MASK_BITSIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+B\+I\+T\+S\+I\+ZE~(0x\+F\+F)}\hypertarget{_s_d_l__audio_8h_ade51417b52dbd9511d56066caae0038b}{}\label{_s_d_l__audio_8h_ade51417b52dbd9511d56066caae0038b}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE}{SDL_AUDIO_MASK_DATATYPE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+D\+A\+T\+A\+T\+Y\+PE~(1$<$$<$8)}\hypertarget{_s_d_l__audio_8h_a50b4779246a7fbf4a39205a396ec7ea6}{}\label{_s_d_l__audio_8h_a50b4779246a7fbf4a39205a396ec7ea6}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN}{SDL_AUDIO_MASK_ENDIAN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+E\+N\+D\+I\+AN~(1$<$$<$12)}\hypertarget{_s_d_l__audio_8h_ab070cdd4d92ee3824cafefe24c620326}{}\label{_s_d_l__audio_8h_ab070cdd4d92ee3824cafefe24c620326}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED}{SDL_AUDIO_MASK_SIGNED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+M\+A\+S\+K\+\_\+\+S\+I\+G\+N\+ED~(1$<$$<$15)}\hypertarget{_s_d_l__audio_8h_a06fc66d3c421c6c9b733854b73d104ce}{}\label{_s_d_l__audio_8h_a06fc66d3c421c6c9b733854b73d104ce}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED}}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED}{SDL_AUDIOCVT_PACKED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+C\+V\+T\+\_\+\+P\+A\+C\+K\+ED}\hypertarget{_s_d_l__audio_8h_ac34fc6df953e2bae89919edaaa740ff3}{}\label{_s_d_l__audio_8h_ac34fc6df953e2bae89919edaaa740ff3}
+A structure to hold a set of audio conversion filters and buffers. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Load\+W\+AV@{S\+D\+L\+\_\+\+Load\+W\+AV}}
+\index{S\+D\+L\+\_\+\+Load\+W\+AV@{S\+D\+L\+\_\+\+Load\+W\+AV}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Load\+W\+AV}{SDL_LoadWAV}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+Load\+W\+AV(
+\begin{DoxyParamCaption}
+\item[{}]{file, }
+\item[{}]{spec, }
+\item[{}]{audio\+\_\+buf, }
+\item[{}]{audio\+\_\+len}
+\end{DoxyParamCaption}
+)~{\bf S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}({\bf S\+D\+L\+\_\+\+R\+W\+From\+File}(file, \char`\"{}rb\char`\"{}),1, spec,audio\+\_\+buf,audio\+\_\+len)}\hypertarget{_s_d_l__audio_8h_a611f76dc30ba9891239bcce3f9b472b5}{}\label{_s_d_l__audio_8h_a611f76dc30ba9891239bcce3f9b472b5}
+Loads a W\+AV from a file. Compatibility convenience function. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME@{S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME}}
+\index{S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME@{S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME}{SDL_MIX_MAXVOLUME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME~128}\hypertarget{_s_d_l__audio_8h_afa8e5e92d4424b0c599e7c813c91f720}{}\label{_s_d_l__audio_8h_afa8e5e92d4424b0c599e7c813c91f720}
+
+
+\subsection{Typedef Documentation}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!format@{format}}
+\index{format@{format}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{format}{format}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf G\+Lint} {\bf G\+Lint} {\bf G\+Lint} {\bf G\+Lint} {\bf G\+Lsizei} {\bf G\+Lsizei} {\bf G\+Lsizei} {\bf G\+Lenum} {\bf format}}\hypertarget{_s_d_l__audio_8h_a71a65ffd977afe9c3fef116a5bc9ee27}{}\label{_s_d_l__audio_8h_a71a65ffd977afe9c3fef116a5bc9ee27}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!len@{len}}
+\index{len@{len}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{len}{len}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf G\+Luint} {\bf G\+Lsizei} {\bf len}}\hypertarget{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}{}\label{_s_d_l__audio_8h_a652168017ea9a8bbcead03d5c16269fb}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+C\+VT@{S\+D\+L\+\_\+\+Audio\+C\+VT}}
+\index{S\+D\+L\+\_\+\+Audio\+C\+VT@{S\+D\+L\+\_\+\+Audio\+C\+VT}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+C\+VT}{SDL_AudioCVT}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Audio\+C\+VT} {\bf S\+D\+L\+\_\+\+Audio\+C\+VT}}\hypertarget{_s_d_l__audio_8h_afc284f22978d12646dbffa692fe0c0ae}{}\label{_s_d_l__audio_8h_afc284f22978d12646dbffa692fe0c0ae}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+Device\+ID@{S\+D\+L\+\_\+\+Audio\+Device\+ID}}
+\index{S\+D\+L\+\_\+\+Audio\+Device\+ID@{S\+D\+L\+\_\+\+Audio\+Device\+ID}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+Device\+ID}{SDL_AudioDeviceID}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Uint32} {\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}\hypertarget{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}{}\label{_s_d_l__audio_8h_a677d9d2a6f77a7502a0dc8b45ad211bb}
+S\+DL Audio Device I\+Ds.
+
+A successful call to \hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio()} is always device id 1, and legacy S\+DL audio A\+P\+Is assume you want this device ID. \hyperlink{_s_d_l__audio_8h_af54523e415de7c7fdd0d48a76ab58bb3}{S\+D\+L\+\_\+\+Open\+Audio\+Device()} calls always returns devices $>$= 2 on success. The legacy calls are good both for backwards compatibility and when you don\textquotesingle{}t care about multiple, specific, or capture devices. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+Format@{S\+D\+L\+\_\+\+Audio\+Format}}
+\index{S\+D\+L\+\_\+\+Audio\+Format@{S\+D\+L\+\_\+\+Audio\+Format}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+Format}{SDL_AudioFormat}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Uint16} {\bf S\+D\+L\+\_\+\+Audio\+Format}}\hypertarget{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}{}\label{_s_d_l__audio_8h_a491ed103fd25d920c4e6b7495217ce66}
+
+
+Audio format flags. 
+
+These are what the 16 bits in S\+D\+L\+\_\+\+Audio\+Format currently mean... (Unspecified bits are always zero).
+
+\begin{DoxyVerb}++-----------------------sample is signed if set
+||
+||       ++-----------sample is bigendian if set
+||       ||
+||       ||          ++---sample is float if set
+||       ||          ||
+||       ||          || +---sample bit size---+
+||       ||          || |                     |
+15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00
+\end{DoxyVerb}
+
+
+There are macros in S\+DL 2.\+0 and later to query these bits. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+Spec@{S\+D\+L\+\_\+\+Audio\+Spec}}
+\index{S\+D\+L\+\_\+\+Audio\+Spec@{S\+D\+L\+\_\+\+Audio\+Spec}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+Spec}{SDL_AudioSpec}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Audio\+Spec}  {\bf S\+D\+L\+\_\+\+Audio\+Spec}}\hypertarget{_s_d_l__audio_8h_a77faa7fe3d22c03ee61466a901c22a25}{}\label{_s_d_l__audio_8h_a77faa7fe3d22c03ee61466a901c22a25}
+The calculated values in this structure are calculated by \hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio()}. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!stream@{stream}}
+\index{stream@{stream}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{stream}{stream}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf G\+Luint} {\bf stream}}\hypertarget{_s_d_l__audio_8h_a10d3bc96cdfc1d478f52c13d5ffd9316}{}\label{_s_d_l__audio_8h_a10d3bc96cdfc1d478f52c13d5ffd9316}
+
+
+\subsection{Enumeration Type Documentation}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+Status@{S\+D\+L\+\_\+\+Audio\+Status}}
+\index{S\+D\+L\+\_\+\+Audio\+Status@{S\+D\+L\+\_\+\+Audio\+Status}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+Status}{SDL_AudioStatus}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+D\+L\+\_\+\+Audio\+Status}}\hypertarget{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2}{}\label{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+S\+T\+O\+P\+P\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+S\+T\+O\+P\+P\+ED}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+S\+T\+O\+P\+P\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+S\+T\+O\+P\+P\+ED}}\item[{\em 
+S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+S\+T\+O\+P\+P\+ED\hypertarget{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2a3a26bd0e1ac5d46eda5053d0526b5fba}{}\label{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2a3a26bd0e1ac5d46eda5053d0526b5fba}
+}]\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+L\+A\+Y\+I\+NG@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+L\+A\+Y\+I\+NG}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+L\+A\+Y\+I\+NG@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+L\+A\+Y\+I\+NG}}\item[{\em 
+S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+L\+A\+Y\+I\+NG\hypertarget{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2ab7e7b45db79e783703b43677a15c29a4}{}\label{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2ab7e7b45db79e783703b43677a15c29a4}
+}]\index{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+A\+U\+S\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+A\+U\+S\+ED}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+A\+U\+S\+ED@{S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+A\+U\+S\+ED}}\item[{\em 
+S\+D\+L\+\_\+\+A\+U\+D\+I\+O\+\_\+\+P\+A\+U\+S\+ED\hypertarget{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2acd874cd272a7b1990d9db8699ae0c4f6}{}\label{_s_d_l__audio_8h_a24a02745f01041dd2825d7e26502eef2acd874cd272a7b1990d9db8699ae0c4f6}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+Init@{S\+D\+L\+\_\+\+Audio\+Init}}
+\index{S\+D\+L\+\_\+\+Audio\+Init@{S\+D\+L\+\_\+\+Audio\+Init}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+Init(const char $\ast$driver\+\_\+name)}{SDL_AudioInit(const char *driver_name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Audio\+Init (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{driver\+\_\+name}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_ae3667d6ba706a3ca7affd8611632fa2c}{}\label{_s_d_l__audio_8h_ae3667d6ba706a3ca7affd8611632fa2c}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Audio\+Quit@{S\+D\+L\+\_\+\+Audio\+Quit}}
+\index{S\+D\+L\+\_\+\+Audio\+Quit@{S\+D\+L\+\_\+\+Audio\+Quit}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Audio\+Quit(void)}{SDL_AudioQuit(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Audio\+Quit (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a478c602cbfaab8663cb4f58a62600323}{}\label{_s_d_l__audio_8h_a478c602cbfaab8663cb4f58a62600323}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Build\+Audio\+C\+VT@{S\+D\+L\+\_\+\+Build\+Audio\+C\+VT}}
+\index{S\+D\+L\+\_\+\+Build\+Audio\+C\+VT@{S\+D\+L\+\_\+\+Build\+Audio\+C\+VT}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Build\+Audio\+C\+V\+T(\+S\+D\+L\+\_\+\+Audio\+C\+V\+T $\ast$cvt, S\+D\+L\+\_\+\+Audio\+Format src\+\_\+format, Uint8 src\+\_\+channels, int src\+\_\+rate, S\+D\+L\+\_\+\+Audio\+Format dst\+\_\+format, Uint8 dst\+\_\+channels, int dst\+\_\+rate)}{SDL_BuildAudioCVT(SDL_AudioCVT *cvt, SDL_AudioFormat src_format, Uint8 src_channels, int src_rate, SDL_AudioFormat dst_format, Uint8 dst_channels, int dst_rate)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Build\+Audio\+C\+VT (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+C\+VT} $\ast$}]{cvt, }
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Format}}]{src\+\_\+format, }
+\item[{{\bf Uint8}}]{src\+\_\+channels, }
+\item[{{\bf int}}]{src\+\_\+rate, }
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Format}}]{dst\+\_\+format, }
+\item[{{\bf Uint8}}]{dst\+\_\+channels, }
+\item[{{\bf int}}]{dst\+\_\+rate}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a41e1602bc7cd4edb87ca779cf01d40bb}{}\label{_s_d_l__audio_8h_a41e1602bc7cd4edb87ca779cf01d40bb}
+This function takes a source format and rate and a destination format and rate, and initializes the {\ttfamily cvt} structure with information needed by \hyperlink{_s_d_l__audio_8h_a8e8660222356e07002dde4928118b7df}{S\+D\+L\+\_\+\+Convert\+Audio()} to convert a buffer of audio data from one format to the other.
+
+\begin{DoxyReturn}{Returns}
+-\/1 if the format conversion is not supported, 0 if there\textquotesingle{}s no conversion needed, or 1 if the audio filter is set up. 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Clear\+Queued\+Audio@{S\+D\+L\+\_\+\+Clear\+Queued\+Audio}}
+\index{S\+D\+L\+\_\+\+Clear\+Queued\+Audio@{S\+D\+L\+\_\+\+Clear\+Queued\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Clear\+Queued\+Audio(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev)}{SDL_ClearQueuedAudio(SDL_AudioDeviceID dev)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Clear\+Queued\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a073ed5d40cce01e839b34570c1c7ed50}{}\label{_s_d_l__audio_8h_a073ed5d40cce01e839b34570c1c7ed50}
+Drop any queued audio data waiting to be sent to the hardware.
+
+Immediately after this call, \hyperlink{_s_d_l__audio_8h_a11a1d59fd68f8a416fa72bf14f5c9ec3}{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size()} will return 0 and the hardware will start playing silence if more audio isn\textquotesingle{}t queued.
+
+This will not prevent playback of queued audio that\textquotesingle{}s already been sent to the hardware, as we can not undo that, so expect there to be some fraction of a second of audio that might still be heard. This can be useful if you want to, say, drop any pending music during a level change in your game.
+
+You may not queue audio on a device that is using an application-\/supplied callback; calling this function on such a device is always a no-\/op. You have to use the audio callback or queue audio with \hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio()}, but not both.
+
+You should not call \hyperlink{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{S\+D\+L\+\_\+\+Lock\+Audio()} on the device before clearing the queue; S\+DL handles locking internally for this function.
+
+This function always succeeds and thus returns void.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & The device ID of which to clear the audio queue.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio} 
+
+\hyperlink{_s_d_l__audio_8h_a11a1d59fd68f8a416fa72bf14f5c9ec3}{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Close\+Audio@{S\+D\+L\+\_\+\+Close\+Audio}}
+\index{S\+D\+L\+\_\+\+Close\+Audio@{S\+D\+L\+\_\+\+Close\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Close\+Audio(void)}{SDL_CloseAudio(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Close\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_aa176acc650e66e1d38814cbed3ca258e}{}\label{_s_d_l__audio_8h_aa176acc650e66e1d38814cbed3ca258e}
+This function shuts down audio processing and closes the audio device. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Close\+Audio\+Device@{S\+D\+L\+\_\+\+Close\+Audio\+Device}}
+\index{S\+D\+L\+\_\+\+Close\+Audio\+Device@{S\+D\+L\+\_\+\+Close\+Audio\+Device}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Close\+Audio\+Device(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev)}{SDL_CloseAudioDevice(SDL_AudioDeviceID dev)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Close\+Audio\+Device (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_abd910f31079d53b6c0ea8bf32dac0ce6}{}\label{_s_d_l__audio_8h_abd910f31079d53b6c0ea8bf32dac0ce6}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Convert\+Audio@{S\+D\+L\+\_\+\+Convert\+Audio}}
+\index{S\+D\+L\+\_\+\+Convert\+Audio@{S\+D\+L\+\_\+\+Convert\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Convert\+Audio(\+S\+D\+L\+\_\+\+Audio\+C\+V\+T $\ast$cvt)}{SDL_ConvertAudio(SDL_AudioCVT *cvt)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Convert\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+C\+VT} $\ast$}]{cvt}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a8e8660222356e07002dde4928118b7df}{}\label{_s_d_l__audio_8h_a8e8660222356e07002dde4928118b7df}
+Once you have initialized the {\ttfamily cvt} structure using \hyperlink{_s_d_l__audio_8h_a41e1602bc7cd4edb87ca779cf01d40bb}{S\+D\+L\+\_\+\+Build\+Audio\+C\+V\+T()}, created an audio buffer {\ttfamily cvt-\/$>$buf}, and filled it with {\ttfamily cvt-\/$>$len} bytes of audio data in the source format, this function will convert it in-\/place to the desired format.
+
+The data conversion may expand the size of the audio data, so the buffer {\ttfamily cvt-\/$>$buf} should be allocated after the {\ttfamily cvt} structure is initialized by \hyperlink{_s_d_l__audio_8h_a41e1602bc7cd4edb87ca779cf01d40bb}{S\+D\+L\+\_\+\+Build\+Audio\+C\+V\+T()}, and should be {\ttfamily cvt-\/$>$len$\ast$cvt-\/$>$len\+\_\+mult} bytes long. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Free\+W\+AV@{S\+D\+L\+\_\+\+Free\+W\+AV}}
+\index{S\+D\+L\+\_\+\+Free\+W\+AV@{S\+D\+L\+\_\+\+Free\+W\+AV}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Free\+W\+A\+V(\+Uint8 $\ast$audio\+\_\+buf)}{SDL_FreeWAV(Uint8 *audio_buf)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Free\+W\+AV (
+\begin{DoxyParamCaption}
+\item[{{\bf Uint8} $\ast$}]{audio\+\_\+buf}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a631aa8624575603df2c5ab9257feee59}{}\label{_s_d_l__audio_8h_a631aa8624575603df2c5ab9257feee59}
+This function frees data previously allocated with \hyperlink{_s_d_l__audio_8h_a7e5d38e8c1f8951704a76330c3b1ac81}{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+R\+W()} \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name@{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name}}
+\index{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name@{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name(int index, int iscapture)}{SDL_GetAudioDeviceName(int index, int iscapture)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{index, }
+\item[{{\bf int}}]{iscapture}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a846bae7fa1183b644c96cbb49e2c8cf5}{}\label{_s_d_l__audio_8h_a846bae7fa1183b644c96cbb49e2c8cf5}
+Get the human-\/readable name of a specific audio device. Must be a value between 0 and (number of audio devices-\/1). Only valid after a successfully initializing the audio subsystem. The values returned by this function reflect the latest call to \hyperlink{_s_d_l__audio_8h_ae165f64b3f0fecfebe1c97731600ca59}{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices()}; recall that function to redetect available hardware.
+
+The string returned by this function is U\+T\+F-\/8 encoded, read-\/only, and managed internally. You are not to free it. If you need to keep the string for any length of time, you should make your own copy of it, as it will be invalid next time any of several other S\+DL functions is called. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status@{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status}}
+\index{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status@{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev)}{SDL_GetAudioDeviceStatus(SDL_AudioDeviceID dev)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Audio\+Status} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Audio\+Device\+Status (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_ac86fde79b1afda3f0fb8e9a027434a69}{}\label{_s_d_l__audio_8h_ac86fde79b1afda3f0fb8e9a027434a69}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Audio\+Driver@{S\+D\+L\+\_\+\+Get\+Audio\+Driver}}
+\index{S\+D\+L\+\_\+\+Get\+Audio\+Driver@{S\+D\+L\+\_\+\+Get\+Audio\+Driver}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Audio\+Driver(int index)}{SDL_GetAudioDriver(int index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Audio\+Driver (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_aabc8b6439ff8d1195b9f49e9c00b15c1}{}\label{_s_d_l__audio_8h_aabc8b6439ff8d1195b9f49e9c00b15c1}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Audio\+Status@{S\+D\+L\+\_\+\+Get\+Audio\+Status}}
+\index{S\+D\+L\+\_\+\+Get\+Audio\+Status@{S\+D\+L\+\_\+\+Get\+Audio\+Status}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Audio\+Status(void)}{SDL_GetAudioStatus(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Audio\+Status} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Audio\+Status (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a568e10207e6ff53f8e238a0d562ef594}{}\label{_s_d_l__audio_8h_a568e10207e6ff53f8e238a0d562ef594}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver@{S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver}}
+\index{S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver@{S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver(void)}{SDL_GetCurrentAudioDriver(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Current\+Audio\+Driver (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a15b19f26c314e3640ea396251a1ff010}{}\label{_s_d_l__audio_8h_a15b19f26c314e3640ea396251a1ff010}
+This function returns the name of the current audio driver, or N\+U\+LL if no driver has been initialized. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices@{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices}}
+\index{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices@{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices(int iscapture)}{SDL_GetNumAudioDevices(int iscapture)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Num\+Audio\+Devices (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{iscapture}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_ae165f64b3f0fecfebe1c97731600ca59}{}\label{_s_d_l__audio_8h_ae165f64b3f0fecfebe1c97731600ca59}
+Get the number of available devices exposed by the current driver. Only valid after a successfully initializing the audio subsystem. Returns -\/1 if an explicit list of devices can\textquotesingle{}t be determined; this is not an error. For example, if S\+DL is set up to talk to a remote audio server, it can\textquotesingle{}t list every one available on the Internet, but it will still allow a specific host to be specified to \hyperlink{_s_d_l__audio_8h_af54523e415de7c7fdd0d48a76ab58bb3}{S\+D\+L\+\_\+\+Open\+Audio\+Device()}.
+
+In many common cases, when this function returns a value $<$= 0, it can still successfully open the default device (N\+U\+LL for first argument of \hyperlink{_s_d_l__audio_8h_af54523e415de7c7fdd0d48a76ab58bb3}{S\+D\+L\+\_\+\+Open\+Audio\+Device()}). \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers@{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers}}
+\index{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers@{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers(void)}{SDL_GetNumAudioDrivers(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Num\+Audio\+Drivers (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_ae3cb6a3321d9ee32f3c05ea0794c5fb8}{}\label{_s_d_l__audio_8h_ae3cb6a3321d9ee32f3c05ea0794c5fb8}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size@{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size}}
+\index{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size@{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev)}{SDL_GetQueuedAudioSize(SDL_AudioDeviceID dev)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Uint32} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a11a1d59fd68f8a416fa72bf14f5c9ec3}{}\label{_s_d_l__audio_8h_a11a1d59fd68f8a416fa72bf14f5c9ec3}
+Get the number of bytes of still-\/queued audio.
+
+This is the number of bytes that have been queued for playback with \hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio()}, but have not yet been sent to the hardware.
+
+Once we\textquotesingle{}ve sent it to the hardware, this function can not decide the exact byte boundary of what has been played. It\textquotesingle{}s possible that we just gave the hardware several kilobytes right before you called this function, but it hasn\textquotesingle{}t played any of it yet, or maybe half of it, etc.
+
+You may not queue audio on a device that is using an application-\/supplied callback; calling this function on such a device always returns 0. You have to use the audio callback or queue audio with \hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio()}, but not both.
+
+You should not call \hyperlink{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{S\+D\+L\+\_\+\+Lock\+Audio()} on the device before querying; S\+DL handles locking internally for this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & The device ID of which we will query queued audio size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of bytes (not samples!) of queued audio.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio} 
+
+\hyperlink{_s_d_l__audio_8h_a073ed5d40cce01e839b34570c1c7ed50}{S\+D\+L\+\_\+\+Clear\+Queued\+Audio} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW@{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}}
+\index{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW@{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+R\+W(\+S\+D\+L\+\_\+\+R\+Wops $\ast$src, int freesrc, S\+D\+L\+\_\+\+Audio\+Spec $\ast$spec, Uint8 $\ast$$\ast$audio\+\_\+buf, Uint32 $\ast$audio\+\_\+len)}{SDL_LoadWAV_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, Uint8 **audio_buf, Uint32 *audio_len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Audio\+Spec}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Load\+W\+A\+V\+\_\+\+RW (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+R\+Wops} $\ast$}]{src, }
+\item[{{\bf int}}]{freesrc, }
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Spec} $\ast$}]{spec, }
+\item[{{\bf Uint8} $\ast$$\ast$}]{audio\+\_\+buf, }
+\item[{{\bf Uint32} $\ast$}]{audio\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a7e5d38e8c1f8951704a76330c3b1ac81}{}\label{_s_d_l__audio_8h_a7e5d38e8c1f8951704a76330c3b1ac81}
+This function loads a W\+A\+VE from the data source, automatically freeing that source if {\ttfamily freesrc} is non-\/zero. For example, to load a W\+A\+VE file, you could do\+: 
+\begin{DoxyCode}
+1 SDL\_LoadWAV\_RW(SDL\_RWFromFile("sample.wav", "rb"), 1, ...);
+\end{DoxyCode}
+
+
+If this function succeeds, it returns the given \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec}, filled with the audio data format of the wave data, and sets {\ttfamily $\ast$audio\+\_\+buf} to a malloc()\textquotesingle{}d buffer containing the audio data, and sets {\ttfamily $\ast$audio\+\_\+len} to the length of that audio buffer, in bytes. You need to free the audio buffer with \hyperlink{_s_d_l__audio_8h_a631aa8624575603df2c5ab9257feee59}{S\+D\+L\+\_\+\+Free\+W\+A\+V()} when you are done with it.
+
+This function returns N\+U\+LL and sets the S\+DL error message if the wave file cannot be opened, uses an unknown data format, or is corrupt. Currently raw and M\+S-\/\+A\+D\+P\+CM W\+A\+VE files are supported. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Lock\+Audio@{S\+D\+L\+\_\+\+Lock\+Audio}}
+\index{S\+D\+L\+\_\+\+Lock\+Audio@{S\+D\+L\+\_\+\+Lock\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Lock\+Audio(void)}{SDL_LockAudio(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Lock\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{}\label{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Lock\+Audio\+Device@{S\+D\+L\+\_\+\+Lock\+Audio\+Device}}
+\index{S\+D\+L\+\_\+\+Lock\+Audio\+Device@{S\+D\+L\+\_\+\+Lock\+Audio\+Device}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Lock\+Audio\+Device(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev)}{SDL_LockAudioDevice(SDL_AudioDeviceID dev)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Lock\+Audio\+Device (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a9769845303f88f084f051b99e55b62a1}{}\label{_s_d_l__audio_8h_a9769845303f88f084f051b99e55b62a1}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Mix\+Audio@{S\+D\+L\+\_\+\+Mix\+Audio}}
+\index{S\+D\+L\+\_\+\+Mix\+Audio@{S\+D\+L\+\_\+\+Mix\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Mix\+Audio(\+Uint8 $\ast$dst, const Uint8 $\ast$src, Uint32 len, int volume)}{SDL_MixAudio(Uint8 *dst, const Uint8 *src, Uint32 len, int volume)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Mix\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf Uint8} $\ast$}]{dst, }
+\item[{const {\bf Uint8} $\ast$}]{src, }
+\item[{{\bf Uint32}}]{len, }
+\item[{{\bf int}}]{volume}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_ab9ad945b4b15d816802f5a79da06c9f9}{}\label{_s_d_l__audio_8h_ab9ad945b4b15d816802f5a79da06c9f9}
+This takes two audio buffers of the playing audio format and mixes them, performing addition, volume adjustment, and overflow clipping. The volume ranges from 0 -\/ 128, and should be set to \hyperlink{_s_d_l__audio_8h_afa8e5e92d4424b0c599e7c813c91f720}{S\+D\+L\+\_\+\+M\+I\+X\+\_\+\+M\+A\+X\+V\+O\+L\+U\+ME} for full audio volume. Note this does not change hardware volume. This is provided for convenience -- you can mix your own audio data. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Mix\+Audio\+Format@{S\+D\+L\+\_\+\+Mix\+Audio\+Format}}
+\index{S\+D\+L\+\_\+\+Mix\+Audio\+Format@{S\+D\+L\+\_\+\+Mix\+Audio\+Format}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Mix\+Audio\+Format(\+Uint8 $\ast$dst, const Uint8 $\ast$src, S\+D\+L\+\_\+\+Audio\+Format format, Uint32 len, int volume)}{SDL_MixAudioFormat(Uint8 *dst, const Uint8 *src, SDL_AudioFormat format, Uint32 len, int volume)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Mix\+Audio\+Format (
+\begin{DoxyParamCaption}
+\item[{{\bf Uint8} $\ast$}]{dst, }
+\item[{const {\bf Uint8} $\ast$}]{src, }
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Format}}]{format, }
+\item[{{\bf Uint32}}]{len, }
+\item[{{\bf int}}]{volume}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a27a0ad33d17f87a2d7574be78d2f39b7}{}\label{_s_d_l__audio_8h_a27a0ad33d17f87a2d7574be78d2f39b7}
+This works like \hyperlink{_s_d_l__audio_8h_ab9ad945b4b15d816802f5a79da06c9f9}{S\+D\+L\+\_\+\+Mix\+Audio()}, but you specify the audio format instead of using the format of audio device 1. Thus it can be used when no audio device is open at all. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Open\+Audio@{S\+D\+L\+\_\+\+Open\+Audio}}
+\index{S\+D\+L\+\_\+\+Open\+Audio@{S\+D\+L\+\_\+\+Open\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Open\+Audio(\+S\+D\+L\+\_\+\+Audio\+Spec $\ast$desired, S\+D\+L\+\_\+\+Audio\+Spec $\ast$obtained)}{SDL_OpenAudio(SDL_AudioSpec *desired, SDL_AudioSpec *obtained)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Open\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Spec} $\ast$}]{desired, }
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Spec} $\ast$}]{obtained}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{}\label{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}
+This function opens the audio device with the desired parameters, and returns 0 if successful, placing the actual hardware parameters in the structure pointed to by {\ttfamily obtained}. If {\ttfamily obtained} is N\+U\+LL, the audio data passed to the callback function will be guaranteed to be in the requested format, and will be automatically converted to the hardware audio format if necessary. This function returns -\/1 if it failed to open the audio device, or couldn\textquotesingle{}t set up the audio thread.
+
+When filling in the desired audio spec structure,
+\begin{DoxyItemize}
+\item {\ttfamily desired-\/$>$freq} should be the desired audio frequency in samples-\/per-\/ second.
+\item {\ttfamily desired-\/$>$format} should be the desired audio format.
+\item {\ttfamily desired-\/$>$samples} is the desired size of the audio buffer, in samples. This number should be a power of two, and may be adjusted by the audio driver to a value more suitable for the hardware. Good values seem to range between 512 and 8096 inclusive, depending on the application and C\+PU speed. Smaller values yield faster response time, but can lead to underflow if the application is doing heavy processing and cannot fill the audio buffer in time. A stereo sample consists of both right and left channels in LR ordering. Note that the number of samples is directly related to time by the following formula\+:
+\begin{DoxyCode}
+1 ms = (samples*1000)/freq 
+\end{DoxyCode}
+
+\item {\ttfamily desired-\/$>$size} is the size in bytes of the audio buffer, and is calculated by \hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio()}.
+\item {\ttfamily desired-\/$>$silence} is the value used to set the buffer to silence, and is calculated by \hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio()}.
+\item {\ttfamily desired-\/$>$callback} should be set to a function that will be called when the audio device is ready for more data. It is passed a pointer to the audio buffer, and the length in bytes of the audio buffer. This function usually runs in a separate thread, and so you should protect data structures that it accesses by calling \hyperlink{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{S\+D\+L\+\_\+\+Lock\+Audio()} and \hyperlink{_s_d_l__audio_8h_a76d8179bee14dad268e65378058d897d}{S\+D\+L\+\_\+\+Unlock\+Audio()} in your code. Alternately, you may pass a N\+U\+LL pointer here, and call \hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio()} with some frequency, to queue more audio samples to be played.
+\item {\ttfamily desired-\/$>$userdata} is passed as the first parameter to your callback function. If you passed a N\+U\+LL callback, this value is ignored.
+\end{DoxyItemize}
+
+The audio device starts out playing silence when it\textquotesingle{}s opened, and should be enabled for playing by calling {\ttfamily S\+D\+L\+\_\+\+Pause\+Audio(0)} when you are ready for your audio callback function to be called. Since the audio driver may modify the requested size of the audio buffer, you should allocate any local mixing buffers after you open the audio device. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Open\+Audio\+Device@{S\+D\+L\+\_\+\+Open\+Audio\+Device}}
+\index{S\+D\+L\+\_\+\+Open\+Audio\+Device@{S\+D\+L\+\_\+\+Open\+Audio\+Device}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Open\+Audio\+Device(const char $\ast$device, int iscapture, const S\+D\+L\+\_\+\+Audio\+Spec $\ast$desired, S\+D\+L\+\_\+\+Audio\+Spec $\ast$obtained, int allowed\+\_\+changes)}{SDL_OpenAudioDevice(const char *device, int iscapture, const SDL_AudioSpec *desired, SDL_AudioSpec *obtained, int allowed_changes)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Audio\+Device\+ID} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Open\+Audio\+Device (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{device, }
+\item[{{\bf int}}]{iscapture, }
+\item[{const {\bf S\+D\+L\+\_\+\+Audio\+Spec} $\ast$}]{desired, }
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Spec} $\ast$}]{obtained, }
+\item[{{\bf int}}]{allowed\+\_\+changes}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_af54523e415de7c7fdd0d48a76ab58bb3}{}\label{_s_d_l__audio_8h_af54523e415de7c7fdd0d48a76ab58bb3}
+Open a specific audio device. Passing in a device name of N\+U\+LL requests the most reasonable default (and is equivalent to calling \hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio()}).
+
+The device name is a U\+T\+F-\/8 string reported by \hyperlink{_s_d_l__audio_8h_a846bae7fa1183b644c96cbb49e2c8cf5}{S\+D\+L\+\_\+\+Get\+Audio\+Device\+Name()}, but some drivers allow arbitrary and driver-\/specific strings, such as a hostname/\+IP address for a remote audio server, or a filename in the diskaudio driver.
+
+\begin{DoxyReturn}{Returns}
+0 on error, a valid device ID that is $>$= 2 on success.
+\end{DoxyReturn}
+\hyperlink{_s_d_l__audio_8h_a2edf30e7747584e28041b4986f89f440}{S\+D\+L\+\_\+\+Open\+Audio()}, unlike this function, always acts on device ID 1. \index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Pause\+Audio@{S\+D\+L\+\_\+\+Pause\+Audio}}
+\index{S\+D\+L\+\_\+\+Pause\+Audio@{S\+D\+L\+\_\+\+Pause\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Pause\+Audio(int pause\+\_\+on)}{SDL_PauseAudio(int pause_on)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Pause\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{pause\+\_\+on}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_aa68e60a33666ff4f2d36f3827b1d6061}{}\label{_s_d_l__audio_8h_aa68e60a33666ff4f2d36f3827b1d6061}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Pause\+Audio\+Device@{S\+D\+L\+\_\+\+Pause\+Audio\+Device}}
+\index{S\+D\+L\+\_\+\+Pause\+Audio\+Device@{S\+D\+L\+\_\+\+Pause\+Audio\+Device}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Pause\+Audio\+Device(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev, int pause\+\_\+on)}{SDL_PauseAudioDevice(SDL_AudioDeviceID dev, int pause_on)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Pause\+Audio\+Device (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev, }
+\item[{{\bf int}}]{pause\+\_\+on}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_ab4c8e2a896ccf86599435af81fca928c}{}\label{_s_d_l__audio_8h_ab4c8e2a896ccf86599435af81fca928c}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Queue\+Audio@{S\+D\+L\+\_\+\+Queue\+Audio}}
+\index{S\+D\+L\+\_\+\+Queue\+Audio@{S\+D\+L\+\_\+\+Queue\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Queue\+Audio(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev, const void $\ast$data, Uint32 len)}{SDL_QueueAudio(SDL_AudioDeviceID dev, const void *data, Uint32 len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Queue\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev, }
+\item[{const {\bf void} $\ast$}]{data, }
+\item[{{\bf Uint32}}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{}\label{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}
+Queue more audio on non-\/callback devices.
+
+S\+DL offers two ways to feed audio to the device\+: you can either supply a callback that S\+DL triggers with some frequency to obtain more audio (pull method), or you can supply no callback, and then S\+DL will expect you to supply data at regular intervals (push method) with this function.
+
+There are no limits on the amount of data you can queue, short of exhaustion of address space. Queued data will drain to the device as necessary without further intervention from you. If the device needs audio but there is not enough queued, it will play silence to make up the difference. This means you will have skips in your audio playback if you aren\textquotesingle{}t routinely queueing sufficient data.
+
+This function copies the supplied data, so you are safe to free it when the function returns. This function is thread-\/safe, but queueing to the same device from two threads at once does not promise which buffer will be queued first.
+
+You may not queue audio on a device that is using an application-\/supplied callback; doing so returns an error. You have to use the audio callback or queue audio with this function, but not both.
+
+You should not call \hyperlink{_s_d_l__audio_8h_a7ffa484f230f6085e271a4f43e678f06}{S\+D\+L\+\_\+\+Lock\+Audio()} on the device before queueing; S\+DL handles locking internally for this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev} & The device ID to which we will queue audio. \\
+\hline
+{\em data} & The data to queue to the device for later playback. \\
+\hline
+{\em len} & The number of bytes (not samples!) to which (data) points. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zero on success, -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__audio_8h_a11a1d59fd68f8a416fa72bf14f5c9ec3}{S\+D\+L\+\_\+\+Get\+Queued\+Audio\+Size} 
+
+\hyperlink{_s_d_l__audio_8h_a073ed5d40cce01e839b34570c1c7ed50}{S\+D\+L\+\_\+\+Clear\+Queued\+Audio} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Unlock\+Audio@{S\+D\+L\+\_\+\+Unlock\+Audio}}
+\index{S\+D\+L\+\_\+\+Unlock\+Audio@{S\+D\+L\+\_\+\+Unlock\+Audio}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Unlock\+Audio(void)}{SDL_UnlockAudio(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Unlock\+Audio (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a76d8179bee14dad268e65378058d897d}{}\label{_s_d_l__audio_8h_a76d8179bee14dad268e65378058d897d}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!S\+D\+L\+\_\+\+Unlock\+Audio\+Device@{S\+D\+L\+\_\+\+Unlock\+Audio\+Device}}
+\index{S\+D\+L\+\_\+\+Unlock\+Audio\+Device@{S\+D\+L\+\_\+\+Unlock\+Audio\+Device}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Unlock\+Audio\+Device(\+S\+D\+L\+\_\+\+Audio\+Device\+I\+D dev)}{SDL_UnlockAudioDevice(SDL_AudioDeviceID dev)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Unlock\+Audio\+Device (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Audio\+Device\+ID}}]{dev}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a37427a5d47e10103f2fff8165d5f9000}{}\label{_s_d_l__audio_8h_a37427a5d47e10103f2fff8165d5f9000}
+\index{S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}!void@{void}}
+\index{void@{void}!S\+D\+L\+\_\+audio.\+h@{S\+D\+L\+\_\+audio.\+h}}
+\subsubsection[{\texorpdfstring{void(\+S\+D\+L\+C\+A\+L\+L $\ast$\+S\+D\+L\+\_\+\+Audio\+Callback)(void $\ast$userdata}{void(SDLCALL *SDL_AudioCallback)(void *userdata}}]{\setlength{\rightskip}{0pt plus 5cm}typedef void (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+C\+A\+LL} $\ast$}]{S\+D\+L\+\_\+\+Audio\+Callback}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__audio_8h_a52835ae37c4bb905b903cbaf5d04b05f}{}\label{_s_d_l__audio_8h_a52835ae37c4bb905b903cbaf5d04b05f}
+This function is called when the audio device needs more data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em userdata} & An application-\/specific parameter saved in the \hyperlink{struct_s_d_l___audio_spec}{S\+D\+L\+\_\+\+Audio\+Spec} structure \\
+\hline
+{\em stream} & A pointer to the audio data buffer. \\
+\hline
+{\em len} & The length of that buffer in bytes.\\
+\hline
+\end{DoxyParams}
+Once the callback returns, the buffer will no longer be valid. Stereo samples are stored in a L\+R\+L\+R\+LR ordering.
+
+You can choose to avoid callbacks and use \hyperlink{_s_d_l__audio_8h_a19ef6fa2396f581aaf4d9a9512972268}{S\+D\+L\+\_\+\+Queue\+Audio()} instead, if you like. Just open your audio device with a N\+U\+LL callback. 

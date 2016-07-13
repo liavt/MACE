@@ -1,0 +1,1610 @@
+\hypertarget{_s_d_l__haptic_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+haptic.h File Reference}
+\label{_s_d_l__haptic_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+haptic.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+haptic.\+h}}
+
+
+The S\+DL Haptic subsystem allows you to control haptic (force feedback) devices.  
+
+
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+error.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+joystick.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction}
+\begin{DoxyCompactList}\small\item\em Structure that represents a haptic direction. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_l___haptic_constant}{S\+D\+L\+\_\+\+Haptic\+Constant}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Constant effect. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Periodic effect. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Condition effect. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_l___haptic_ramp}{S\+D\+L\+\_\+\+Haptic\+Ramp}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Ramp effect. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_l___haptic_left_right}{S\+D\+L\+\_\+\+Haptic\+Left\+Right}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Left/\+Right effect. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_l___haptic_custom}{S\+D\+L\+\_\+\+Haptic\+Custom}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for the \hyperlink{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM} effect. \end{DoxyCompactList}\item 
+union \hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect}
+\begin{DoxyCompactList}\small\item\em The generic template for any haptic effect. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a3afe54582bd5c184109f3f61b6c84c6c}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN}~(1$<$$<$12)
+\begin{DoxyCompactList}\small\item\em Device can set global gain. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a28aa71e231fbf5b88bce7906bf2f4e70}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER}~(1$<$$<$13)
+\begin{DoxyCompactList}\small\item\em Device can set autocenter. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_abfbc9fa0d65f4b5632788945080cc71b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US}~(1$<$$<$14)
+\begin{DoxyCompactList}\small\item\em Device can be queried for effect status. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a6baee8978ccc97add8457388801d7782}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE}~(1$<$$<$15)
+\begin{DoxyCompactList}\small\item\em Device can be paused. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}~4294967295U
+\begin{DoxyCompactList}\small\item\em Used to play a device an infinite number of times. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf Haptic effects}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a955fb9f680dcf9cc72a3d5263e85b80a}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT}~(1$<$$<$0)
+\begin{DoxyCompactList}\small\item\em Constant effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_aa6d75adbfcdda5075078e7a2849da5c0}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE}~(1$<$$<$1)
+\begin{DoxyCompactList}\small\item\em Sine wave effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT}~(1$<$$<$2)
+\begin{DoxyCompactList}\small\item\em Left/\+Right effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_ae8123eaa51511507375ba6ef9220fa46}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE}~(1$<$$<$3)
+\begin{DoxyCompactList}\small\item\em Triangle wave effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_ab8e3f40f3c2bcee8905d13b634363c3f}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP}~(1$<$$<$4)
+\begin{DoxyCompactList}\small\item\em Sawtoothup wave effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_afd64aa747034a7ccf4b55f6246525701}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN}~(1$<$$<$5)
+\begin{DoxyCompactList}\small\item\em Sawtoothdown wave effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_af10eb937a64a8f602e9c46682ac0d868}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP}~(1$<$$<$6)
+\begin{DoxyCompactList}\small\item\em Ramp effect supported. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a3b52d4700380085e2b5d87bb20320fb1}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG}~(1$<$$<$7)
+\begin{DoxyCompactList}\small\item\em Spring effect supported -\/ uses axes position. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a69522f261973e3ea4273486141320a87}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER}~(1$<$$<$8)
+\begin{DoxyCompactList}\small\item\em Damper effect supported -\/ uses axes velocity. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a14b807471589120395aec28293cf6642}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA}~(1$<$$<$9)
+\begin{DoxyCompactList}\small\item\em Inertia effect supported -\/ uses axes acceleration. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a98a5011311168d63921aaac21403a4d8}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON}~(1$<$$<$10)
+\begin{DoxyCompactList}\small\item\em Friction effect supported -\/ uses axes movement. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM}~(1$<$$<$11)
+\begin{DoxyCompactList}\small\item\em Custom effect is supported. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Direction encodings}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR}~0
+\begin{DoxyCompactList}\small\item\em Uses polar coordinates for the direction. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN}~1
+\begin{DoxyCompactList}\small\item\em Uses cartesian coordinates for the direction. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_l__haptic_8h_a1fcf7cb0eaf3c39b16ba266054e25aff}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL}~2
+\begin{DoxyCompactList}\small\item\em Uses spherical coordinates for the direction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \+\_\+\+S\+D\+L\+\_\+\+Haptic \hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic}
+\begin{DoxyCompactList}\small\item\em The haptic structure used to identify an S\+DL haptic. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} \hyperlink{_s_d_l__haptic_8h_a4395df8f6028b3d4c72dc4a4101cf1fa}{S\+D\+L\+\_\+\+Haptic\+Direction}
+\begin{DoxyCompactList}\small\item\em Structure that represents a haptic direction. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_constant}{S\+D\+L\+\_\+\+Haptic\+Constant} \hyperlink{_s_d_l__haptic_8h_a6b80688fe63b575df4a694a935a2c64b}{S\+D\+L\+\_\+\+Haptic\+Constant}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Constant effect. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic} \hyperlink{_s_d_l__haptic_8h_af865c02eaf3f49a0e0d79d2ac922a6b1}{S\+D\+L\+\_\+\+Haptic\+Periodic}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Periodic effect. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} \hyperlink{_s_d_l__haptic_8h_a8432ee45df16281a91b04cfd06ec5235}{S\+D\+L\+\_\+\+Haptic\+Condition}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Condition effect. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_ramp}{S\+D\+L\+\_\+\+Haptic\+Ramp} \hyperlink{_s_d_l__haptic_8h_ae17963b20b75e2557e50f273350cf4ad}{S\+D\+L\+\_\+\+Haptic\+Ramp}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Ramp effect. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_left_right}{S\+D\+L\+\_\+\+Haptic\+Left\+Right} \hyperlink{_s_d_l__haptic_8h_af064ca15edd5c1575892ce378a09d250}{S\+D\+L\+\_\+\+Haptic\+Left\+Right}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for a Left/\+Right effect. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_l___haptic_custom}{S\+D\+L\+\_\+\+Haptic\+Custom} \hyperlink{_s_d_l__haptic_8h_a202703bcce0c73569b8fb11395a5dbb4}{S\+D\+L\+\_\+\+Haptic\+Custom}
+\begin{DoxyCompactList}\small\item\em A structure containing a template for the \hyperlink{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM} effect. \end{DoxyCompactList}\item 
+typedef union \hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} \hyperlink{_s_d_l__haptic_8h_aa65c457445c1fdfe1b81dd8fe9d0945e}{S\+D\+L\+\_\+\+Haptic\+Effect}
+\begin{DoxyCompactList}\small\item\em The generic template for any haptic effect. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a6f538063a9f1d790882c0d3a81c302cd}{S\+D\+L\+\_\+\+Num\+Haptics} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\begin{DoxyCompactList}\small\item\em Count the number of haptic devices attached to the system. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a88cd1f2fc53714cbd1056c0e6dcbaf1f}{S\+D\+L\+\_\+\+Haptic\+Name} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} device\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Get the implementation dependent name of a Haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} device\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Opens a Haptic device for usage. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a24d8f221d4b2eae5c3c663752fc0d66a}{S\+D\+L\+\_\+\+Haptic\+Opened} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} device\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Checks if the haptic device at index has been opened. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_aacee621c474cda53e56f4a2233c65407}{S\+D\+L\+\_\+\+Haptic\+Index} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Gets the index of a haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a8fcc0fb333baed629004bd8c0c66bd76}{S\+D\+L\+\_\+\+Mouse\+Is\+Haptic} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\begin{DoxyCompactList}\small\item\em Gets whether or not the current mouse has haptic capabilities. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_aacc5469f46707fbd48166603b3b1bd8b}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\begin{DoxyCompactList}\small\item\em Tries to open a haptic device from the current mouse. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a8a2966d363cba55ffdfeff42e4204ef1}{S\+D\+L\+\_\+\+Joystick\+Is\+Haptic} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\begin{DoxyCompactList}\small\item\em Checks to see if a joystick has haptic features. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\begin{DoxyCompactList}\small\item\em Opens a Haptic device for usage from a Joystick device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{S\+D\+L\+\_\+\+Haptic\+Close} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Closes a Haptic device previously opened with \hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open()}. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_afc6e5a5701fe80004d529d762132ad6b}{S\+D\+L\+\_\+\+Haptic\+Num\+Effects} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Returns the number of effects a haptic device can store. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a255e1e6fc27489080bcbbd3c7fadc6db}{S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Returns the number of effects a haptic device can play at the same time. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} unsigned \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{S\+D\+L\+\_\+\+Haptic\+Query} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Gets the haptic device\textquotesingle{}s supported features in bitwise manner. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_ad6705645197f6df4eeeea32392462483}{S\+D\+L\+\_\+\+Haptic\+Num\+Axes} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Gets the number of haptic axes the device has. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_ae333ef77753ba700875fa20858b9021d}{S\+D\+L\+\_\+\+Haptic\+Effect\+Supported} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} $\ast$effect)
+\begin{DoxyCompactList}\small\item\em Checks to see if effect is supported by haptic. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{S\+D\+L\+\_\+\+Haptic\+New\+Effect} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} $\ast$effect)
+\begin{DoxyCompactList}\small\item\em Creates a new haptic effect on the device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a4c212cbdb3487dd8d72882d355a19472}{S\+D\+L\+\_\+\+Haptic\+Update\+Effect} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} effect, \hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} $\ast$\hyperlink{_s_d_l__opengl_8h_a2e335d56e2846b0fea47eed068b2d34a}{data})
+\begin{DoxyCompactList}\small\item\em Updates the properties of an effect. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} effect, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} iterations)
+\begin{DoxyCompactList}\small\item\em Runs the haptic effect on its associated haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a27b35e361aaafa830561e98328c98c8e}{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} effect)
+\begin{DoxyCompactList}\small\item\em Stops the haptic effect on its associated haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} effect)
+\begin{DoxyCompactList}\small\item\em Destroys a haptic effect on the device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_ae2185c0814f107dd5851dd743e9ea71c}{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} effect)
+\begin{DoxyCompactList}\small\item\em Gets the status of the current effect on the haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}{S\+D\+L\+\_\+\+Haptic\+Set\+Gain} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} gain)
+\begin{DoxyCompactList}\small\item\em Sets the global gain of the device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a0b0d63aa4513fc1b12939500cb3f8a76}{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} autocenter)
+\begin{DoxyCompactList}\small\item\em Sets the global autocenter of the device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}{S\+D\+L\+\_\+\+Haptic\+Pause} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Pauses a haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a3593eed87aee3b9caa1c25927002c5ae}{S\+D\+L\+\_\+\+Haptic\+Unpause} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Unpauses a haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_aad427170295d6b88a5a94cd6a491797a}{S\+D\+L\+\_\+\+Haptic\+Stop\+All} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Stops all the currently playing effects on a haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_aa0754b11e2aed38bc955750c7a6a6c73}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Checks to see if rumble is supported on a haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Initializes the haptic device for simple rumble playback. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic, float strength, \hyperlink{_s_d_l__stdinc_8h_add440eff171ea5f55cb00c4a9ab8672d}{Uint32} \hyperlink{_s_d_l__opengl__glext_8h_ab9c919755bde3b34349e23a32b4e0fa7}{length})
+\begin{DoxyCompactList}\small\item\em Runs simple rumble on a haptic device. \end{DoxyCompactList}\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__haptic_8h_a9e11ff3ae40f59c04be3bae98d8d05ba}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop} (\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{S\+D\+L\+\_\+\+Haptic} $\ast$haptic)
+\begin{DoxyCompactList}\small\item\em Stops the simple rumble on a haptic device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The S\+DL Haptic subsystem allows you to control haptic (force feedback) devices. 
+
+The basic usage is as follows\+:
+\begin{DoxyItemize}
+\item Initialize the Subsystem (\hyperlink{_s_d_l_8h_adfd88189fec07574cae461b9dea75a85}{S\+D\+L\+\_\+\+I\+N\+I\+T\+\_\+\+H\+A\+P\+T\+IC}).
+\item Open a Haptic Device.
+\begin{DoxyItemize}
+\item \hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open()} to open from index.
+\item \hyperlink{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick()} to open from an existing joystick.
+\end{DoxyItemize}
+\item Create an effect (\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect}).
+\item Upload the effect with \hyperlink{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{S\+D\+L\+\_\+\+Haptic\+New\+Effect()}.
+\item Run the effect with \hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect()}.
+\item (optional) Free the effect with \hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect()}.
+\item Close the haptic device with \hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{S\+D\+L\+\_\+\+Haptic\+Close()}.
+\end{DoxyItemize}
+
+\begin{DoxyParagraph}{Simple rumble example\+:}
+
+\begin{DoxyCode}
+\hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{SDL\_Haptic} *haptic;
+
+\textcolor{comment}{// Open the device}
+haptic = \hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{SDL\_HapticOpen}( 0 );
+\textcolor{keywordflow}{if} (haptic == \hyperlink{begin__code_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL})
+   \textcolor{keywordflow}{return} -1;
+
+\textcolor{comment}{// Initialize simple rumble}
+\textcolor{keywordflow}{if} (\hyperlink{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}{SDL\_HapticRumbleInit}( haptic ) != 0)
+   \textcolor{keywordflow}{return} -1;
+
+\textcolor{comment}{// Play effect at 50% strength for 2 seconds}
+\textcolor{keywordflow}{if} (\hyperlink{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}{SDL\_HapticRumblePlay}( haptic, 0.5, 2000 ) != 0)
+   \textcolor{keywordflow}{return} -1;
+\hyperlink{_s_d_l__timer_8h_ae8050b95373b95249064467592ab4e21}{SDL\_Delay}( 2000 );
+
+\textcolor{comment}{// Clean up}
+\hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{SDL\_HapticClose}( haptic );
+\end{DoxyCode}
+
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Complete example\+:}
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} test\_haptic( \hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{SDL\_Joystick} * joystick ) \{
+   \hyperlink{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{SDL\_Haptic} *haptic;
+   \hyperlink{union_s_d_l___haptic_effect}{SDL\_HapticEffect} effect;
+   \textcolor{keywordtype}{int} effect\_id;
+
+   \textcolor{comment}{// Open the device}
+   haptic = \hyperlink{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{SDL\_HapticOpenFromJoystick}( joystick );
+   \textcolor{keywordflow}{if} (haptic == \hyperlink{begin__code_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}) \textcolor{keywordflow}{return} -1; \textcolor{comment}{// Most likely joystick isn't haptic}
+
+   \textcolor{comment}{// See if it can do sine waves}
+   \textcolor{keywordflow}{if} ((\hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{SDL\_HapticQuery}(haptic) & SDL\_HAPTIC\_SINE)==0) \{
+      \hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{SDL\_HapticClose}(haptic); \textcolor{comment}{// No sine effect}
+      \textcolor{keywordflow}{return} -1;
+   \}
+
+   \textcolor{comment}{// Create the effect}
+   memset( &effect, 0, \textcolor{keyword}{sizeof}(\hyperlink{union_s_d_l___haptic_effect}{SDL\_HapticEffect}) ); \textcolor{comment}{// 0 is safe default}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a5ff6cfd8da91537091e9a6c2108cb179}{type} = \hyperlink{_s_d_l__haptic_8h_aa6d75adbfcdda5075078e7a2849da5c0}{SDL\_HAPTIC\_SINE};
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_a2c4f27d4583187a7a994e79ad49083d3}{direction}.\hyperlink{struct_s_d_l___haptic_direction_acd6830ad68c4ba2af16057fa418087cc}{type} = \hyperlink{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{SDL\_HAPTIC\_POLAR}; \textcolor{comment}{// Polar
+       coordinates}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_a2c4f27d4583187a7a994e79ad49083d3}{direction}.\hyperlink{struct_s_d_l___haptic_direction_a6cebd8118a3e61e36bd0c503ae020362}{dir}[0] = 18000; \textcolor{comment}{// Force comes from south}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_a0e7e105b96308129b248d52b56a2a839}{period} = 1000; \textcolor{comment}{// 1000 ms}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_aad0ad2b00c7e6959da627663d91f7b94}{magnitude} = 20000; \textcolor{comment}{// 20000/32767 strength}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_a0ef0b17c54aaa5c99886c2a618444026}{length} = 5000; \textcolor{comment}{// 5 seconds long}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_ab35eedce7107edc75640586159fe75bb}{attack\_length} = 1000; \textcolor{comment}{// Takes 1 second to get max strength}
+   effect.\hyperlink{union_s_d_l___haptic_effect_a8320ec4db6ec1dc1d30feb62ee2a2f04}{periodic}.\hyperlink{struct_s_d_l___haptic_periodic_ae1c186d02304eae142a62dca72f50fa8}{fade\_length} = 1000; \textcolor{comment}{// Takes 1 second to fade away}
+
+   \textcolor{comment}{// Upload the effect}
+   effect\_id = \hyperlink{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{SDL\_HapticNewEffect}( haptic, &effect );
+
+   \textcolor{comment}{// Test the effect}
+   \hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{SDL\_HapticRunEffect}( haptic, effect\_id, 1 );
+   \hyperlink{_s_d_l__timer_8h_ae8050b95373b95249064467592ab4e21}{SDL\_Delay}( 5000); \textcolor{comment}{// Wait for the effect to finish}
+
+   \textcolor{comment}{// We destroy the effect, although closing the device also does this}
+   \hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{SDL\_HapticDestroyEffect}( haptic, effect\_id );
+
+   \textcolor{comment}{// Close the device}
+   \hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{SDL\_HapticClose}(haptic);
+
+   \textcolor{keywordflow}{return} 0; \textcolor{comment}{// Success}
+\}
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER}{SDL_HAPTIC_AUTOCENTER}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER~(1$<$$<$13)}\hypertarget{_s_d_l__haptic_8h_a28aa71e231fbf5b88bce7906bf2f4e70}{}\label{_s_d_l__haptic_8h_a28aa71e231fbf5b88bce7906bf2f4e70}
+
+
+Device can set autocenter. 
+
+Device supports setting autocenter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a0b0d63aa4513fc1b12939500cb3f8a76}{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN}{SDL_HAPTIC_CARTESIAN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN~1}\hypertarget{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}{}\label{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}
+
+
+Uses cartesian coordinates for the direction. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT}{SDL_HAPTIC_CONSTANT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT~(1$<$$<$0)}\hypertarget{_s_d_l__haptic_8h_a955fb9f680dcf9cc72a3d5263e85b80a}{}\label{_s_d_l__haptic_8h_a955fb9f680dcf9cc72a3d5263e85b80a}
+
+
+Constant effect supported. 
+
+Constant haptic effect.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM}{SDL_HAPTIC_CUSTOM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM~(1$<$$<$11)}\hypertarget{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}{}\label{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}
+
+
+Custom effect is supported. 
+
+User defined custom haptic effect. \index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER}{SDL_HAPTIC_DAMPER}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER~(1$<$$<$8)}\hypertarget{_s_d_l__haptic_8h_a69522f261973e3ea4273486141320a87}{}\label{_s_d_l__haptic_8h_a69522f261973e3ea4273486141320a87}
+
+
+Damper effect supported -\/ uses axes velocity. 
+
+Condition haptic effect that simulates dampening. Effect is based on the axes velocity.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON}{SDL_HAPTIC_FRICTION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON~(1$<$$<$10)}\hypertarget{_s_d_l__haptic_8h_a98a5011311168d63921aaac21403a4d8}{}\label{_s_d_l__haptic_8h_a98a5011311168d63921aaac21403a4d8}
+
+
+Friction effect supported -\/ uses axes movement. 
+
+Condition haptic effect that simulates friction. Effect is based on the axes movement.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN}{SDL_HAPTIC_GAIN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN~(1$<$$<$12)}\hypertarget{_s_d_l__haptic_8h_a3afe54582bd5c184109f3f61b6c84c6c}{}\label{_s_d_l__haptic_8h_a3afe54582bd5c184109f3f61b6c84c6c}
+
+
+Device can set global gain. 
+
+Device supports setting the global gain.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}{S\+D\+L\+\_\+\+Haptic\+Set\+Gain} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA}{SDL_HAPTIC_INERTIA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA~(1$<$$<$9)}\hypertarget{_s_d_l__haptic_8h_a14b807471589120395aec28293cf6642}{}\label{_s_d_l__haptic_8h_a14b807471589120395aec28293cf6642}
+
+
+Inertia effect supported -\/ uses axes acceleration. 
+
+Condition haptic effect that simulates inertia. Effect is based on the axes acceleration.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}{SDL_HAPTIC_INFINITY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY~4294967295U}\hypertarget{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{}\label{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}
+
+
+Used to play a device an infinite number of times. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT}{SDL_HAPTIC_LEFTRIGHT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT~(1$<$$<$2)}\hypertarget{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}{}\label{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}
+
+
+Left/\+Right effect supported. 
+
+Haptic effect for direct control over high/low frequency motors.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_left_right}{S\+D\+L\+\_\+\+Haptic\+Left\+Right} 
+\end{DoxySeeAlso}
+\begin{DoxyWarning}{Warning}
+this value was S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+Q\+U\+A\+RE right before 2.\+0.\+0 shipped. Sorry, we ran out of bits, and this is important for X\+Input devices. 
+\end{DoxyWarning}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE}{SDL_HAPTIC_PAUSE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE~(1$<$$<$15)}\hypertarget{_s_d_l__haptic_8h_a6baee8978ccc97add8457388801d7782}{}\label{_s_d_l__haptic_8h_a6baee8978ccc97add8457388801d7782}
+
+
+Device can be paused. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}{S\+D\+L\+\_\+\+Haptic\+Pause} 
+
+\hyperlink{_s_d_l__haptic_8h_a3593eed87aee3b9caa1c25927002c5ae}{S\+D\+L\+\_\+\+Haptic\+Unpause} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR}{SDL_HAPTIC_POLAR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR~0}\hypertarget{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{}\label{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}
+
+
+Uses polar coordinates for the direction. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP}{SDL_HAPTIC_RAMP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP~(1$<$$<$6)}\hypertarget{_s_d_l__haptic_8h_af10eb937a64a8f602e9c46682ac0d868}{}\label{_s_d_l__haptic_8h_af10eb937a64a8f602e9c46682ac0d868}
+
+
+Ramp effect supported. 
+
+Ramp haptic effect.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_ramp}{S\+D\+L\+\_\+\+Haptic\+Ramp} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN}{SDL_HAPTIC_SAWTOOTHDOWN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN~(1$<$$<$5)}\hypertarget{_s_d_l__haptic_8h_afd64aa747034a7ccf4b55f6246525701}{}\label{_s_d_l__haptic_8h_afd64aa747034a7ccf4b55f6246525701}
+
+
+Sawtoothdown wave effect supported. 
+
+Periodic haptic effect that simulates saw tooth down waves.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP}{SDL_HAPTIC_SAWTOOTHUP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP~(1$<$$<$4)}\hypertarget{_s_d_l__haptic_8h_ab8e3f40f3c2bcee8905d13b634363c3f}{}\label{_s_d_l__haptic_8h_ab8e3f40f3c2bcee8905d13b634363c3f}
+
+
+Sawtoothup wave effect supported. 
+
+Periodic haptic effect that simulates saw tooth up waves.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE}{SDL_HAPTIC_SINE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE~(1$<$$<$1)}\hypertarget{_s_d_l__haptic_8h_aa6d75adbfcdda5075078e7a2849da5c0}{}\label{_s_d_l__haptic_8h_aa6d75adbfcdda5075078e7a2849da5c0}
+
+
+Sine wave effect supported. 
+
+Periodic haptic effect that simulates sine waves.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL}{SDL_HAPTIC_SPHERICAL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL~2}\hypertarget{_s_d_l__haptic_8h_a1fcf7cb0eaf3c39b16ba266054e25aff}{}\label{_s_d_l__haptic_8h_a1fcf7cb0eaf3c39b16ba266054e25aff}
+
+
+Uses spherical coordinates for the direction. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG}{SDL_HAPTIC_SPRING}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG~(1$<$$<$7)}\hypertarget{_s_d_l__haptic_8h_a3b52d4700380085e2b5d87bb20320fb1}{}\label{_s_d_l__haptic_8h_a3b52d4700380085e2b5d87bb20320fb1}
+
+
+Spring effect supported -\/ uses axes position. 
+
+Condition haptic effect that simulates a spring. Effect is based on the axes position.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US}{SDL_HAPTIC_STATUS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US~(1$<$$<$14)}\hypertarget{_s_d_l__haptic_8h_abfbc9fa0d65f4b5632788945080cc71b}{}\label{_s_d_l__haptic_8h_abfbc9fa0d65f4b5632788945080cc71b}
+
+
+Device can be queried for effect status. 
+
+Device can be queried for effect status.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_ae2185c0814f107dd5851dd743e9ea71c}{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE}}
+\index{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE@{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE}{SDL_HAPTIC_TRIANGLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE~(1$<$$<$3)}\hypertarget{_s_d_l__haptic_8h_ae8123eaa51511507375ba6ef9220fa46}{}\label{_s_d_l__haptic_8h_ae8123eaa51511507375ba6ef9220fa46}
+
+
+Triangle wave effect supported. 
+
+Periodic haptic effect that simulates triangular waves.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic} 
+\end{DoxySeeAlso}
+
+
+\subsection{Typedef Documentation}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic@{S\+D\+L\+\_\+\+Haptic}}
+\index{S\+D\+L\+\_\+\+Haptic@{S\+D\+L\+\_\+\+Haptic}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic}{SDL_Haptic}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+L\+\_\+\+Haptic}}\hypertarget{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}{}\label{_s_d_l__haptic_8h_a79db098a0e8cb102db6c2339a2422e29}
+
+
+The haptic structure used to identify an S\+DL haptic. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} 
+
+\hyperlink{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick} 
+
+\hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{S\+D\+L\+\_\+\+Haptic\+Close} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Condition@{S\+D\+L\+\_\+\+Haptic\+Condition}}
+\index{S\+D\+L\+\_\+\+Haptic\+Condition@{S\+D\+L\+\_\+\+Haptic\+Condition}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Condition}{SDL_HapticCondition}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Condition}  {\bf S\+D\+L\+\_\+\+Haptic\+Condition}}\hypertarget{_s_d_l__haptic_8h_a8432ee45df16281a91b04cfd06ec5235}{}\label{_s_d_l__haptic_8h_a8432ee45df16281a91b04cfd06ec5235}
+
+
+A structure containing a template for a Condition effect. 
+
+The struct handles the following effects\+:
+\begin{DoxyItemize}
+\item \hyperlink{_s_d_l__haptic_8h_a3b52d4700380085e2b5d87bb20320fb1}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG}\+: Effect based on axes position.
+\item \hyperlink{_s_d_l__haptic_8h_a69522f261973e3ea4273486141320a87}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER}\+: Effect based on axes velocity.
+\item \hyperlink{_s_d_l__haptic_8h_a14b807471589120395aec28293cf6642}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA}\+: Effect based on axes acceleration.
+\item \hyperlink{_s_d_l__haptic_8h_a98a5011311168d63921aaac21403a4d8}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON}\+: Effect based on axes movement.
+\end{DoxyItemize}
+
+Direction is handled by condition internals instead of a direction member. The condition effect specific members have three parameters. The first refers to the X axis, the second refers to the Y axis and the third refers to the Z axis. The right terms refer to the positive side of the axis and the left terms refer to the negative side of the axis. Please refer to the \hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} diagram for which side is positive and which is negative.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} 
+
+\hyperlink{_s_d_l__haptic_8h_a3b52d4700380085e2b5d87bb20320fb1}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+R\+I\+NG} 
+
+\hyperlink{_s_d_l__haptic_8h_a69522f261973e3ea4273486141320a87}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+D\+A\+M\+P\+ER} 
+
+\hyperlink{_s_d_l__haptic_8h_a14b807471589120395aec28293cf6642}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+E\+R\+T\+IA} 
+
+\hyperlink{_s_d_l__haptic_8h_a98a5011311168d63921aaac21403a4d8}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+F\+R\+I\+C\+T\+I\+ON} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Constant@{S\+D\+L\+\_\+\+Haptic\+Constant}}
+\index{S\+D\+L\+\_\+\+Haptic\+Constant@{S\+D\+L\+\_\+\+Haptic\+Constant}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Constant}{SDL_HapticConstant}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Constant}  {\bf S\+D\+L\+\_\+\+Haptic\+Constant}}\hypertarget{_s_d_l__haptic_8h_a6b80688fe63b575df4a694a935a2c64b}{}\label{_s_d_l__haptic_8h_a6b80688fe63b575df4a694a935a2c64b}
+
+
+A structure containing a template for a Constant effect. 
+
+The struct is exclusive to the \hyperlink{_s_d_l__haptic_8h_a955fb9f680dcf9cc72a3d5263e85b80a}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT} effect.
+
+A constant effect applies a constant force in the specified direction to the joystick.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a955fb9f680dcf9cc72a3d5263e85b80a}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+O\+N\+S\+T\+A\+NT} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Custom@{S\+D\+L\+\_\+\+Haptic\+Custom}}
+\index{S\+D\+L\+\_\+\+Haptic\+Custom@{S\+D\+L\+\_\+\+Haptic\+Custom}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Custom}{SDL_HapticCustom}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Custom}  {\bf S\+D\+L\+\_\+\+Haptic\+Custom}}\hypertarget{_s_d_l__haptic_8h_a202703bcce0c73569b8fb11395a5dbb4}{}\label{_s_d_l__haptic_8h_a202703bcce0c73569b8fb11395a5dbb4}
+
+
+A structure containing a template for the \hyperlink{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM} effect. 
+
+A custom force feedback effect is much like a periodic effect, where the application can define its exact shape. You will have to allocate the data yourself. Data should consist of channels $\ast$ samples Uint16 samples.
+
+If channels is one, the effect is rotated using the defined direction. Otherwise it uses the samples in data for the different axes.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a8a18c4de1076ac9bebd718329d16db29}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+U\+S\+T\+OM} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Direction@{S\+D\+L\+\_\+\+Haptic\+Direction}}
+\index{S\+D\+L\+\_\+\+Haptic\+Direction@{S\+D\+L\+\_\+\+Haptic\+Direction}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Direction}{SDL_HapticDirection}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Direction}  {\bf S\+D\+L\+\_\+\+Haptic\+Direction}}\hypertarget{_s_d_l__haptic_8h_a4395df8f6028b3d4c72dc4a4101cf1fa}{}\label{_s_d_l__haptic_8h_a4395df8f6028b3d4c72dc4a4101cf1fa}
+
+
+Structure that represents a haptic direction. 
+
+This is the direction where the force comes from, instead of the direction in which the force is exerted.
+
+Directions can be specified by\+:
+\begin{DoxyItemize}
+\item \hyperlink{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR} \+: Specified by polar coordinates.
+\item \hyperlink{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN} \+: Specified by cartesian coordinates.
+\item \hyperlink{_s_d_l__haptic_8h_a1fcf7cb0eaf3c39b16ba266054e25aff}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL} \+: Specified by spherical coordinates.
+\end{DoxyItemize}
+
+Cardinal directions of the haptic device are relative to the positioning of the device. North is considered to be away from the user.
+
+The following diagram represents the cardinal directions\+: \begin{DoxyVerb}              .--.
+              |__| .-------.
+              |=.| |.-----.|
+              |--| ||     ||
+              |  | |'-----'|
+              |__|~')_____('
+                [ COMPUTER ]
+
+
+                  North (0,-1)
+                      ^
+                      |
+                      |
+(-1,0)  West <----[ HAPTIC ]----> East (1,0)
+                      |
+                      |
+                      v
+                   South (0,1)
+
+
+                   [ USER ]
+                     \|||/
+                     (o o)
+               ---ooO-(_)-Ooo---\end{DoxyVerb}
+
+
+If type is \hyperlink{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR}, direction is encoded by hundredths of a degree starting north and turning clockwise. \hyperlink{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR} only uses the first {\ttfamily dir} parameter. The cardinal directions would be\+:
+\begin{DoxyItemize}
+\item North\+: 0 (0 degrees)
+\item East\+: 9000 (90 degrees)
+\item South\+: 18000 (180 degrees)
+\item West\+: 27000 (270 degrees)
+\end{DoxyItemize}
+
+If type is \hyperlink{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN}, direction is encoded by three positions (X axis, Y axis and Z axis (with 3 axes)). \hyperlink{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN} uses the first three {\ttfamily dir} parameters. The cardinal directions would be\+:
+\begin{DoxyItemize}
+\item North\+: 0,-\/1, 0
+\item East\+: 1, 0, 0
+\item South\+: 0, 1, 0
+\item West\+: -\/1, 0, 0
+\end{DoxyItemize}
+
+The Z axis represents the height of the effect if supported, otherwise it\textquotesingle{}s unused. In cartesian encoding (1, 2) would be the same as (2, 4), you can use any multiple you want, only the direction matters.
+
+If type is \hyperlink{_s_d_l__haptic_8h_a1fcf7cb0eaf3c39b16ba266054e25aff}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL}, direction is encoded by two rotations. The first two {\ttfamily dir} parameters are used. The {\ttfamily dir} parameters are as follows (all values are in hundredths of degrees)\+:
+\begin{DoxyItemize}
+\item Degrees from (1, 0) rotated towards (0, 1).
+\item Degrees towards (0, 0, 1) (device needs at least 3 axes).
+\end{DoxyItemize}
+
+Example of force coming from the south with all encodings (force coming from the south means the user will have to pull the stick to counteract)\+: 
+\begin{DoxyCode}
+1 SDL\_HapticDirection direction;
+2 
+3 // Cartesian directions
+4 direction.type = SDL\_HAPTIC\_CARTESIAN; // Using cartesian direction encoding.
+5 direction.dir[0] = 0; // X position
+6 direction.dir[1] = 1; // Y position
+7 // Assuming the device has 2 axes, we don't need to specify third parameter.
+8 
+9 // Polar directions
+10 direction.type = SDL\_HAPTIC\_POLAR; // We'll be using polar direction encoding.
+11 direction.dir[0] = 18000; // Polar only uses first parameter
+12 
+13 // Spherical coordinates
+14 direction.type = SDL\_HAPTIC\_SPHERICAL; // Spherical encoding
+15 direction.dir[0] = 9000; // Since we only have two axes we don't need more parameters.
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_acdc35e97e5525472054a67b76e518f3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+O\+L\+AR} 
+
+\hyperlink{_s_d_l__haptic_8h_af8b2430a363a968de2a5b64c8f663d3b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+C\+A\+R\+T\+E\+S\+I\+AN} 
+
+\hyperlink{_s_d_l__haptic_8h_a1fcf7cb0eaf3c39b16ba266054e25aff}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+P\+H\+E\+R\+I\+C\+AL} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_ad6705645197f6df4eeeea32392462483}{S\+D\+L\+\_\+\+Haptic\+Num\+Axes} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Effect@{S\+D\+L\+\_\+\+Haptic\+Effect}}
+\index{S\+D\+L\+\_\+\+Haptic\+Effect@{S\+D\+L\+\_\+\+Haptic\+Effect}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Effect}{SDL_HapticEffect}}]{\setlength{\rightskip}{0pt plus 5cm}typedef union {\bf S\+D\+L\+\_\+\+Haptic\+Effect}  {\bf S\+D\+L\+\_\+\+Haptic\+Effect}}\hypertarget{_s_d_l__haptic_8h_aa65c457445c1fdfe1b81dd8fe9d0945e}{}\label{_s_d_l__haptic_8h_aa65c457445c1fdfe1b81dd8fe9d0945e}
+
+
+The generic template for any haptic effect. 
+
+All values max at 32767 (0x7\+F\+FF). Signed values also can be negative. Time values unless specified otherwise are in milliseconds.
+
+You can also pass \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY} to length instead of a 0-\/32767 value. Neither delay, interval, attack\+\_\+length nor fade\+\_\+length support \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}. Fade will also not be used since effect never ends.
+
+Additionally, the \hyperlink{_s_d_l__haptic_8h_af10eb937a64a8f602e9c46682ac0d868}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP} effect does not support a duration of \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}.
+
+Button triggers may not be supported on all devices, it is advised to not use them if possible. Buttons start at index 1 instead of index 0 like the joystick.
+
+If both attack\+\_\+length and fade\+\_\+level are 0, the envelope is not used, otherwise both values are used.
+
+Common parts\+: 
+\begin{DoxyCode}
+1 // Replay - All effects have this
+2 Uint32 length;        // Duration of effect (ms).
+3 Uint16 delay;         // Delay before starting effect.
+4 
+5 // Trigger - All effects have this
+6 Uint16 button;        // Button that triggers effect.
+7 Uint16 interval;      // How soon before effect can be triggered again.
+8 
+9 // Envelope - All effects except condition effects have this
+10 Uint16 attack\_length; // Duration of the attack (ms).
+11 Uint16 attack\_level;  // Level at the start of the attack.
+12 Uint16 fade\_length;   // Duration of the fade out (ms).
+13 Uint16 fade\_level;    // Level at the end of the fade.
+\end{DoxyCode}
+
+
+Here we have an example of a constant effect evolution in time\+: \begin{DoxyVerb}Strength
+^
+|
+|    effect level -->  _________________
+|                     /                 \
+|                    /                   \
+|                   /                     \
+|                  /                       \
+| attack_level --> |                        \
+|                  |                        |  <---  fade_level
+|
++--------------------------------------------------> Time
+                   [--]                 [---]
+                   attack_length        fade_length
+
+[------------------][-----------------------]
+delay               length
+\end{DoxyVerb}
+
+
+Note either the attack\+\_\+level or the fade\+\_\+level may be above the actual effect level.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_constant}{S\+D\+L\+\_\+\+Haptic\+Constant} 
+
+\hyperlink{struct_s_d_l___haptic_periodic}{S\+D\+L\+\_\+\+Haptic\+Periodic} 
+
+\hyperlink{struct_s_d_l___haptic_condition}{S\+D\+L\+\_\+\+Haptic\+Condition} 
+
+\hyperlink{struct_s_d_l___haptic_ramp}{S\+D\+L\+\_\+\+Haptic\+Ramp} 
+
+\hyperlink{struct_s_d_l___haptic_left_right}{S\+D\+L\+\_\+\+Haptic\+Left\+Right} 
+
+\hyperlink{struct_s_d_l___haptic_custom}{S\+D\+L\+\_\+\+Haptic\+Custom} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Left\+Right@{S\+D\+L\+\_\+\+Haptic\+Left\+Right}}
+\index{S\+D\+L\+\_\+\+Haptic\+Left\+Right@{S\+D\+L\+\_\+\+Haptic\+Left\+Right}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Left\+Right}{SDL_HapticLeftRight}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Left\+Right}  {\bf S\+D\+L\+\_\+\+Haptic\+Left\+Right}}\hypertarget{_s_d_l__haptic_8h_af064ca15edd5c1575892ce378a09d250}{}\label{_s_d_l__haptic_8h_af064ca15edd5c1575892ce378a09d250}
+
+
+A structure containing a template for a Left/\+Right effect. 
+
+This struct is exclusively for the \hyperlink{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT} effect.
+
+The Left/\+Right effect is used to explicitly control the large and small motors, commonly found in modern game controllers. One motor is high frequency, the other is low frequency.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Periodic@{S\+D\+L\+\_\+\+Haptic\+Periodic}}
+\index{S\+D\+L\+\_\+\+Haptic\+Periodic@{S\+D\+L\+\_\+\+Haptic\+Periodic}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Periodic}{SDL_HapticPeriodic}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Periodic}  {\bf S\+D\+L\+\_\+\+Haptic\+Periodic}}\hypertarget{_s_d_l__haptic_8h_af865c02eaf3f49a0e0d79d2ac922a6b1}{}\label{_s_d_l__haptic_8h_af865c02eaf3f49a0e0d79d2ac922a6b1}
+
+
+A structure containing a template for a Periodic effect. 
+
+The struct handles the following effects\+:
+\begin{DoxyItemize}
+\item \hyperlink{_s_d_l__haptic_8h_aa6d75adbfcdda5075078e7a2849da5c0}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE}
+\item \hyperlink{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT}
+\item \hyperlink{_s_d_l__haptic_8h_ae8123eaa51511507375ba6ef9220fa46}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE}
+\item \hyperlink{_s_d_l__haptic_8h_ab8e3f40f3c2bcee8905d13b634363c3f}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP}
+\item \hyperlink{_s_d_l__haptic_8h_afd64aa747034a7ccf4b55f6246525701}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN}
+\end{DoxyItemize}
+
+A periodic effect consists in a wave-\/shaped effect that repeats itself over time. The type determines the shape of the wave and the parameters determine the dimensions of the wave.
+
+Phase is given by hundredth of a degree meaning that giving the phase a value of 9000 will displace it 25\% of its period. Here are sample values\+:
+\begin{DoxyItemize}
+\item 0\+: No phase displacement.
+\item 9000\+: Displaced 25\% of its period.
+\item 18000\+: Displaced 50\% of its period.
+\item 27000\+: Displaced 75\% of its period.
+\item 36000\+: Displaced 100\% of its period, same as 0, but 0 is preferred.
+\end{DoxyItemize}
+
+Examples\+: \begin{DoxyVerb}SDL_HAPTIC_SINE
+  __      __      __      __
+ /  \    /  \    /  \    /
+/    \__/    \__/    \__/
+
+SDL_HAPTIC_SQUARE
+ __    __    __    __    __
+|  |  |  |  |  |  |  |  |  |
+|  |__|  |__|  |__|  |__|  |
+
+SDL_HAPTIC_TRIANGLE
+  /\    /\    /\    /\    /\
+ /  \  /  \  /  \  /  \  /
+/    \/    \/    \/    \/
+
+SDL_HAPTIC_SAWTOOTHUP
+  /|  /|  /|  /|  /|  /|  /|
+ / | / | / | / | / | / | / |
+/  |/  |/  |/  |/  |/  |/  |
+
+SDL_HAPTIC_SAWTOOTHDOWN
+\  |\  |\  |\  |\  |\  |\  |
+ \ | \ | \ | \ | \ | \ | \ |
+  \|  \|  \|  \|  \|  \|  \|
+\end{DoxyVerb}
+
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_aa6d75adbfcdda5075078e7a2849da5c0}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+I\+NE} 
+
+\hyperlink{_s_d_l__haptic_8h_ae047624d8458ff6400887c37a36f86d3}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+L\+E\+F\+T\+R\+I\+G\+HT} 
+
+\hyperlink{_s_d_l__haptic_8h_ae8123eaa51511507375ba6ef9220fa46}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+T\+R\+I\+A\+N\+G\+LE} 
+
+\hyperlink{_s_d_l__haptic_8h_ab8e3f40f3c2bcee8905d13b634363c3f}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+UP} 
+
+\hyperlink{_s_d_l__haptic_8h_afd64aa747034a7ccf4b55f6246525701}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+A\+W\+T\+O\+O\+T\+H\+D\+O\+WN} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Ramp@{S\+D\+L\+\_\+\+Haptic\+Ramp}}
+\index{S\+D\+L\+\_\+\+Haptic\+Ramp@{S\+D\+L\+\_\+\+Haptic\+Ramp}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Ramp}{SDL_HapticRamp}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+L\+\_\+\+Haptic\+Ramp}  {\bf S\+D\+L\+\_\+\+Haptic\+Ramp}}\hypertarget{_s_d_l__haptic_8h_ae17963b20b75e2557e50f273350cf4ad}{}\label{_s_d_l__haptic_8h_ae17963b20b75e2557e50f273350cf4ad}
+
+
+A structure containing a template for a Ramp effect. 
+
+This struct is exclusively for the \hyperlink{_s_d_l__haptic_8h_af10eb937a64a8f602e9c46682ac0d868}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP} effect.
+
+The ramp effect starts at start strength and ends at end strength. It augments in linear fashion. If you use attack and fade with a ramp the effects get added to the ramp effect making the effect become quadratic instead of linear.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_af10eb937a64a8f602e9c46682ac0d868}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+R\+A\+MP} 
+
+\hyperlink{union_s_d_l___haptic_effect}{S\+D\+L\+\_\+\+Haptic\+Effect} 
+\end{DoxySeeAlso}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Close@{S\+D\+L\+\_\+\+Haptic\+Close}}
+\index{S\+D\+L\+\_\+\+Haptic\+Close@{S\+D\+L\+\_\+\+Haptic\+Close}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Close(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticClose(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Close (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{}\label{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}
+
+
+Closes a Haptic device previously opened with \hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open()}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to close. \\
+\hline
+\end{DoxyParams}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect@{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect}}
+\index{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect@{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int effect)}{SDL_HapticDestroyEffect(SDL_Haptic *haptic, int effect)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{effect}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{}\label{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}
+
+
+Destroys a haptic effect on the device. 
+
+This will stop the effect if it\textquotesingle{}s running. Effects are automatically destroyed when the device is closed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Device to destroy the effect on. \\
+\hline
+{\em effect} & Identifier of the effect to destroy.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{S\+D\+L\+\_\+\+Haptic\+New\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Effect\+Supported@{S\+D\+L\+\_\+\+Haptic\+Effect\+Supported}}
+\index{S\+D\+L\+\_\+\+Haptic\+Effect\+Supported@{S\+D\+L\+\_\+\+Haptic\+Effect\+Supported}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Effect\+Supported(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, S\+D\+L\+\_\+\+Haptic\+Effect $\ast$effect)}{SDL_HapticEffectSupported(SDL_Haptic *haptic, SDL_HapticEffect *effect)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Effect\+Supported (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf S\+D\+L\+\_\+\+Haptic\+Effect} $\ast$}]{effect}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_ae333ef77753ba700875fa20858b9021d}{}\label{_s_d_l__haptic_8h_ae333ef77753ba700875fa20858b9021d}
+
+
+Checks to see if effect is supported by haptic. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to check on. \\
+\hline
+{\em effect} & Effect to check to see if it is supported. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if effect is supported, S\+D\+L\+\_\+\+F\+A\+L\+SE if it isn\textquotesingle{}t or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{S\+D\+L\+\_\+\+Haptic\+Query} 
+
+\hyperlink{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{S\+D\+L\+\_\+\+Haptic\+New\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status@{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status}}
+\index{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status@{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int effect)}{SDL_HapticGetEffectStatus(SDL_Haptic *haptic, int effect)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{effect}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_ae2185c0814f107dd5851dd743e9ea71c}{}\label{_s_d_l__haptic_8h_ae2185c0814f107dd5851dd743e9ea71c}
+
+
+Gets the status of the current effect on the haptic device. 
+
+Device must support the \hyperlink{_s_d_l__haptic_8h_abfbc9fa0d65f4b5632788945080cc71b}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+S\+T\+A\+T\+US} feature.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to query the effect status on. \\
+\hline
+{\em effect} & Identifier of the effect to query its status. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if it isn\textquotesingle{}t playing, 1 if it is playing or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a27b35e361aaafa830561e98328c98c8e}{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Index@{S\+D\+L\+\_\+\+Haptic\+Index}}
+\index{S\+D\+L\+\_\+\+Haptic\+Index@{S\+D\+L\+\_\+\+Haptic\+Index}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Index(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticIndex(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_aacee621c474cda53e56f4a2233c65407}{}\label{_s_d_l__haptic_8h_aacee621c474cda53e56f4a2233c65407}
+
+
+Gets the index of a haptic device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to get the index of. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The index of the haptic device or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} 
+
+\hyperlink{_s_d_l__haptic_8h_a24d8f221d4b2eae5c3c663752fc0d66a}{S\+D\+L\+\_\+\+Haptic\+Opened} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Name@{S\+D\+L\+\_\+\+Haptic\+Name}}
+\index{S\+D\+L\+\_\+\+Haptic\+Name@{S\+D\+L\+\_\+\+Haptic\+Name}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Name(int device\+\_\+index)}{SDL_HapticName(int device_index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Name (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{device\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a88cd1f2fc53714cbd1056c0e6dcbaf1f}{}\label{_s_d_l__haptic_8h_a88cd1f2fc53714cbd1056c0e6dcbaf1f}
+
+
+Get the implementation dependent name of a Haptic device. 
+
+This can be called before any joysticks are opened. If no name can be found, this function returns N\+U\+LL.
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+\_\+index} & Index of the device to get its name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Name of the device or N\+U\+LL on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a6f538063a9f1d790882c0d3a81c302cd}{S\+D\+L\+\_\+\+Num\+Haptics} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+New\+Effect@{S\+D\+L\+\_\+\+Haptic\+New\+Effect}}
+\index{S\+D\+L\+\_\+\+Haptic\+New\+Effect@{S\+D\+L\+\_\+\+Haptic\+New\+Effect}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+New\+Effect(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, S\+D\+L\+\_\+\+Haptic\+Effect $\ast$effect)}{SDL_HapticNewEffect(SDL_Haptic *haptic, SDL_HapticEffect *effect)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+New\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf S\+D\+L\+\_\+\+Haptic\+Effect} $\ast$}]{effect}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{}\label{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}
+
+
+Creates a new haptic effect on the device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to create the effect on. \\
+\hline
+{\em effect} & Properties of the effect to create. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The id of the effect on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a4c212cbdb3487dd8d72882d355a19472}{S\+D\+L\+\_\+\+Haptic\+Update\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Num\+Axes@{S\+D\+L\+\_\+\+Haptic\+Num\+Axes}}
+\index{S\+D\+L\+\_\+\+Haptic\+Num\+Axes@{S\+D\+L\+\_\+\+Haptic\+Num\+Axes}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Num\+Axes(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticNumAxes(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Num\+Axes (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_ad6705645197f6df4eeeea32392462483}{}\label{_s_d_l__haptic_8h_ad6705645197f6df4eeeea32392462483}
+
+
+Gets the number of haptic axes the device has. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{struct_s_d_l___haptic_direction}{S\+D\+L\+\_\+\+Haptic\+Direction} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Num\+Effects@{S\+D\+L\+\_\+\+Haptic\+Num\+Effects}}
+\index{S\+D\+L\+\_\+\+Haptic\+Num\+Effects@{S\+D\+L\+\_\+\+Haptic\+Num\+Effects}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Num\+Effects(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticNumEffects(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Num\+Effects (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_afc6e5a5701fe80004d529d762132ad6b}{}\label{_s_d_l__haptic_8h_afc6e5a5701fe80004d529d762132ad6b}
+
+
+Returns the number of effects a haptic device can store. 
+
+On some platforms this isn\textquotesingle{}t fully supported, and therefore is an approximation. Always check to see if your created effect was actually created and do not rely solely on \hyperlink{_s_d_l__haptic_8h_afc6e5a5701fe80004d529d762132ad6b}{S\+D\+L\+\_\+\+Haptic\+Num\+Effects()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & The haptic device to query effect max. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of effects the haptic device can store or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a255e1e6fc27489080bcbbd3c7fadc6db}{S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing} 
+
+\hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{S\+D\+L\+\_\+\+Haptic\+Query} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing@{S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing}}
+\index{S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing@{S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticNumEffectsPlaying(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Num\+Effects\+Playing (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a255e1e6fc27489080bcbbd3c7fadc6db}{}\label{_s_d_l__haptic_8h_a255e1e6fc27489080bcbbd3c7fadc6db}
+
+
+Returns the number of effects a haptic device can play at the same time. 
+
+This is not supported on all platforms, but will always return a value. Added here for the sake of completeness.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & The haptic device to query maximum playing effects. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of effects the haptic device can play at the same time or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_afc6e5a5701fe80004d529d762132ad6b}{S\+D\+L\+\_\+\+Haptic\+Num\+Effects} 
+
+\hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{S\+D\+L\+\_\+\+Haptic\+Query} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Open@{S\+D\+L\+\_\+\+Haptic\+Open}}
+\index{S\+D\+L\+\_\+\+Haptic\+Open@{S\+D\+L\+\_\+\+Haptic\+Open}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Open(int device\+\_\+index)}{SDL_HapticOpen(int device_index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Haptic}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Open (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{device\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{}\label{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}
+
+
+Opens a Haptic device for usage. 
+
+The index passed as an argument refers to the N\textquotesingle{}th Haptic device on this system.
+
+When opening a haptic device, its gain will be set to maximum and autocenter will be disabled. To modify these values use \hyperlink{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}{S\+D\+L\+\_\+\+Haptic\+Set\+Gain()} and \hyperlink{_s_d_l__haptic_8h_a0b0d63aa4513fc1b12939500cb3f8a76}{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+\_\+index} & Index of the device to open. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Device identifier or N\+U\+LL on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_aacee621c474cda53e56f4a2233c65407}{S\+D\+L\+\_\+\+Haptic\+Index} 
+
+\hyperlink{_s_d_l__haptic_8h_aacc5469f46707fbd48166603b3b1bd8b}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse} 
+
+\hyperlink{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick} 
+
+\hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{S\+D\+L\+\_\+\+Haptic\+Close} 
+
+\hyperlink{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}{S\+D\+L\+\_\+\+Haptic\+Set\+Gain} 
+
+\hyperlink{_s_d_l__haptic_8h_a0b0d63aa4513fc1b12939500cb3f8a76}{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter} 
+
+\hyperlink{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}{S\+D\+L\+\_\+\+Haptic\+Pause} 
+
+\hyperlink{_s_d_l__haptic_8h_aad427170295d6b88a5a94cd6a491797a}{S\+D\+L\+\_\+\+Haptic\+Stop\+All} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Opened@{S\+D\+L\+\_\+\+Haptic\+Opened}}
+\index{S\+D\+L\+\_\+\+Haptic\+Opened@{S\+D\+L\+\_\+\+Haptic\+Opened}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Opened(int device\+\_\+index)}{SDL_HapticOpened(int device_index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Opened (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{device\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a24d8f221d4b2eae5c3c663752fc0d66a}{}\label{_s_d_l__haptic_8h_a24d8f221d4b2eae5c3c663752fc0d66a}
+
+
+Checks if the haptic device at index has been opened. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+\_\+index} & Index to check to see if it has been opened. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if it has been opened or 0 if it hasn\textquotesingle{}t.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} 
+
+\hyperlink{_s_d_l__haptic_8h_aacee621c474cda53e56f4a2233c65407}{S\+D\+L\+\_\+\+Haptic\+Index} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick@{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick}}
+\index{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick@{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_HapticOpenFromJoystick(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Haptic}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{}\label{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}
+
+
+Opens a Haptic device for usage from a Joystick device. 
+
+You must still close the haptic device separately. It will not be closed with the joystick.
+
+When opening from a joystick you should first close the haptic device before closing the joystick device. If not, on some implementations the haptic device will also get unallocated and you\textquotesingle{}ll be unable to use force feedback on that device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & Joystick to create a haptic device from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A valid haptic device identifier on success or N\+U\+LL on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} 
+
+\hyperlink{_s_d_l__haptic_8h_a671599fd69f5a08cdd2ba7e3f1ae456a}{S\+D\+L\+\_\+\+Haptic\+Close} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse@{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse}}
+\index{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse@{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse(void)}{SDL_HapticOpenFromMouse(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Haptic}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_aacc5469f46707fbd48166603b3b1bd8b}{}\label{_s_d_l__haptic_8h_aacc5469f46707fbd48166603b3b1bd8b}
+
+
+Tries to open a haptic device from the current mouse. 
+
+\begin{DoxyReturn}{Returns}
+The haptic device identifier or N\+U\+LL on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a8fcc0fb333baed629004bd8c0c66bd76}{S\+D\+L\+\_\+\+Mouse\+Is\+Haptic} 
+
+\hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Pause@{S\+D\+L\+\_\+\+Haptic\+Pause}}
+\index{S\+D\+L\+\_\+\+Haptic\+Pause@{S\+D\+L\+\_\+\+Haptic\+Pause}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Pause(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticPause(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Pause (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}{}\label{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}
+
+
+Pauses a haptic device. 
+
+Device must support the \hyperlink{_s_d_l__haptic_8h_a6baee8978ccc97add8457388801d7782}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+P\+A\+U\+SE} feature. Call \hyperlink{_s_d_l__haptic_8h_a3593eed87aee3b9caa1c25927002c5ae}{S\+D\+L\+\_\+\+Haptic\+Unpause()} to resume playback.
+
+Do not modify the effects nor add new ones while the device is paused. That can cause all sorts of weird errors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to pause. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a3593eed87aee3b9caa1c25927002c5ae}{S\+D\+L\+\_\+\+Haptic\+Unpause} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Query@{S\+D\+L\+\_\+\+Haptic\+Query}}
+\index{S\+D\+L\+\_\+\+Haptic\+Query@{S\+D\+L\+\_\+\+Haptic\+Query}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Query(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticQuery(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} unsigned {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Query (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{}\label{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}
+
+
+Gets the haptic device\textquotesingle{}s supported features in bitwise manner. 
+
+Example\+: 
+\begin{DoxyCode}
+1 if (SDL\_HapticQuery(haptic) & SDL\_HAPTIC\_CONSTANT) \{
+2     printf("We have constant haptic effect!");
+3 \}
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & The haptic device to query. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Haptic features in bitwise manner (OR\textquotesingle{}d).
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_afc6e5a5701fe80004d529d762132ad6b}{S\+D\+L\+\_\+\+Haptic\+Num\+Effects} 
+
+\hyperlink{_s_d_l__haptic_8h_ae333ef77753ba700875fa20858b9021d}{S\+D\+L\+\_\+\+Haptic\+Effect\+Supported} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Rumble\+Init@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init}}
+\index{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticRumbleInit(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Rumble\+Init (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}{}\label{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}
+
+
+Initializes the haptic device for simple rumble playback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to initialize for simple rumble playback. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_adf7e0c6027c1e72c93ba9720e2180d70}{S\+D\+L\+\_\+\+Haptic\+Open} 
+
+\hyperlink{_s_d_l__haptic_8h_aa0754b11e2aed38bc955750c7a6a6c73}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported} 
+
+\hyperlink{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play} 
+
+\hyperlink{_s_d_l__haptic_8h_a9e11ff3ae40f59c04be3bae98d8d05ba}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Rumble\+Play@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play}}
+\index{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, float strength, Uint32 length)}{SDL_HapticRumblePlay(SDL_Haptic *haptic, float strength, Uint32 length)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Rumble\+Play (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{float}]{strength, }
+\item[{{\bf Uint32}}]{length}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}{}\label{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}
+
+
+Runs simple rumble on a haptic device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to play rumble effect on. \\
+\hline
+{\em strength} & Strength of the rumble to play as a 0-\/1 float value. \\
+\hline
+{\em length} & Length of the rumble to play in milliseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_aa0754b11e2aed38bc955750c7a6a6c73}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported} 
+
+\hyperlink{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init} 
+
+\hyperlink{_s_d_l__haptic_8h_a9e11ff3ae40f59c04be3bae98d8d05ba}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop}}
+\index{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticRumbleStop(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a9e11ff3ae40f59c04be3bae98d8d05ba}{}\label{_s_d_l__haptic_8h_a9e11ff3ae40f59c04be3bae98d8d05ba}
+
+
+Stops the simple rumble on a haptic device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic to stop the rumble on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_aa0754b11e2aed38bc955750c7a6a6c73}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported} 
+
+\hyperlink{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init} 
+
+\hyperlink{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported}}
+\index{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported@{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticRumbleSupported(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Rumble\+Supported (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_aa0754b11e2aed38bc955750c7a6a6c73}{}\label{_s_d_l__haptic_8h_aa0754b11e2aed38bc955750c7a6a6c73}
+
+
+Checks to see if rumble is supported on a haptic device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to check to see if it supports rumble. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if effect is supported, S\+D\+L\+\_\+\+F\+A\+L\+SE if it isn\textquotesingle{}t or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_af44cbecefe14da5a7476013ce06f38b9}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Init} 
+
+\hyperlink{_s_d_l__haptic_8h_a971b5651414202f89a8c6eed640e990d}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Play} 
+
+\hyperlink{_s_d_l__haptic_8h_a9e11ff3ae40f59c04be3bae98d8d05ba}{S\+D\+L\+\_\+\+Haptic\+Rumble\+Stop} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Run\+Effect@{S\+D\+L\+\_\+\+Haptic\+Run\+Effect}}
+\index{S\+D\+L\+\_\+\+Haptic\+Run\+Effect@{S\+D\+L\+\_\+\+Haptic\+Run\+Effect}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Run\+Effect(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int effect, Uint32 iterations)}{SDL_HapticRunEffect(SDL_Haptic *haptic, int effect, Uint32 iterations)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Run\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{effect, }
+\item[{{\bf Uint32}}]{iterations}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{}\label{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}
+
+
+Runs the haptic effect on its associated haptic device. 
+
+If iterations are \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY}, it\textquotesingle{}ll run the effect over and over repeating the envelope (attack and fade) every time. If you only want the effect to last forever, set \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY} in the effect\textquotesingle{}s length parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to run the effect on. \\
+\hline
+{\em effect} & Identifier of the haptic effect to run. \\
+\hline
+{\em iterations} & Number of iterations to run the effect. Use \hyperlink{_s_d_l__haptic_8h_a648896e9e14cb27fa8a4b6632d3f3882}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+I\+N\+F\+I\+N\+I\+TY} for infinity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a27b35e361aaafa830561e98328c98c8e}{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_ae2185c0814f107dd5851dd743e9ea71c}{S\+D\+L\+\_\+\+Haptic\+Get\+Effect\+Status} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter@{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter}}
+\index{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter@{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int autocenter)}{SDL_HapticSetAutocenter(SDL_Haptic *haptic, int autocenter)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Set\+Autocenter (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{autocenter}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a0b0d63aa4513fc1b12939500cb3f8a76}{}\label{_s_d_l__haptic_8h_a0b0d63aa4513fc1b12939500cb3f8a76}
+
+
+Sets the global autocenter of the device. 
+
+Autocenter should be between 0 and 100. Setting it to 0 will disable autocentering.
+
+Device must support the \hyperlink{_s_d_l__haptic_8h_a28aa71e231fbf5b88bce7906bf2f4e70}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+A\+U\+T\+O\+C\+E\+N\+T\+ER} feature.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to set autocentering on. \\
+\hline
+{\em autocenter} & Value to set autocenter to, 0 disables autocentering. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{S\+D\+L\+\_\+\+Haptic\+Query} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Set\+Gain@{S\+D\+L\+\_\+\+Haptic\+Set\+Gain}}
+\index{S\+D\+L\+\_\+\+Haptic\+Set\+Gain@{S\+D\+L\+\_\+\+Haptic\+Set\+Gain}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Set\+Gain(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int gain)}{SDL_HapticSetGain(SDL_Haptic *haptic, int gain)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Set\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{gain}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}{}\label{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}
+
+
+Sets the global gain of the device. 
+
+Device must support the \hyperlink{_s_d_l__haptic_8h_a3afe54582bd5c184109f3f61b6c84c6c}{S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+IN} feature.
+
+The user may specify the maximum gain by setting the environment variable S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+I\+N\+\_\+\+M\+AX which should be between 0 and 100. All calls to \hyperlink{_s_d_l__haptic_8h_a2a90e7cefab3fdecf37e2f1b956a9e73}{S\+D\+L\+\_\+\+Haptic\+Set\+Gain()} will scale linearly using S\+D\+L\+\_\+\+H\+A\+P\+T\+I\+C\+\_\+\+G\+A\+I\+N\+\_\+\+M\+AX as the maximum.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to set the gain on. \\
+\hline
+{\em gain} & Value to set the gain to, should be between 0 and 100. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a8192e1220a834e708959539fa1c3f490}{S\+D\+L\+\_\+\+Haptic\+Query} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Stop\+All@{S\+D\+L\+\_\+\+Haptic\+Stop\+All}}
+\index{S\+D\+L\+\_\+\+Haptic\+Stop\+All@{S\+D\+L\+\_\+\+Haptic\+Stop\+All}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Stop\+All(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticStopAll(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Stop\+All (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_aad427170295d6b88a5a94cd6a491797a}{}\label{_s_d_l__haptic_8h_aad427170295d6b88a5a94cd6a491797a}
+
+
+Stops all the currently playing effects on a haptic device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to stop. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error. 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Stop\+Effect@{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect}}
+\index{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect@{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Stop\+Effect(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int effect)}{SDL_HapticStopEffect(SDL_Haptic *haptic, int effect)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Stop\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{effect}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a27b35e361aaafa830561e98328c98c8e}{}\label{_s_d_l__haptic_8h_a27b35e361aaafa830561e98328c98c8e}
+
+
+Stops the haptic effect on its associated haptic device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to stop the effect on. \\
+\hline
+{\em effect} & Identifier of the effect to stop. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Unpause@{S\+D\+L\+\_\+\+Haptic\+Unpause}}
+\index{S\+D\+L\+\_\+\+Haptic\+Unpause@{S\+D\+L\+\_\+\+Haptic\+Unpause}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Unpause(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic)}{SDL_HapticUnpause(SDL_Haptic *haptic)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Unpause (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a3593eed87aee3b9caa1c25927002c5ae}{}\label{_s_d_l__haptic_8h_a3593eed87aee3b9caa1c25927002c5ae}
+
+
+Unpauses a haptic device. 
+
+Call to unpause after \hyperlink{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}{S\+D\+L\+\_\+\+Haptic\+Pause()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device to unpause. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_af0181e59ecd14c6aecd1fd3c5099330a}{S\+D\+L\+\_\+\+Haptic\+Pause} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Haptic\+Update\+Effect@{S\+D\+L\+\_\+\+Haptic\+Update\+Effect}}
+\index{S\+D\+L\+\_\+\+Haptic\+Update\+Effect@{S\+D\+L\+\_\+\+Haptic\+Update\+Effect}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Haptic\+Update\+Effect(\+S\+D\+L\+\_\+\+Haptic $\ast$haptic, int effect, S\+D\+L\+\_\+\+Haptic\+Effect $\ast$data)}{SDL_HapticUpdateEffect(SDL_Haptic *haptic, int effect, SDL_HapticEffect *data)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Haptic\+Update\+Effect (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Haptic} $\ast$}]{haptic, }
+\item[{{\bf int}}]{effect, }
+\item[{{\bf S\+D\+L\+\_\+\+Haptic\+Effect} $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a4c212cbdb3487dd8d72882d355a19472}{}\label{_s_d_l__haptic_8h_a4c212cbdb3487dd8d72882d355a19472}
+
+
+Updates the properties of an effect. 
+
+Can be used dynamically, although behaviour when dynamically changing direction may be strange. Specifically the effect may reupload itself and start playing from the start. You cannot change the type either when running \hyperlink{_s_d_l__haptic_8h_a4c212cbdb3487dd8d72882d355a19472}{S\+D\+L\+\_\+\+Haptic\+Update\+Effect()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em haptic} & Haptic device that has the effect. \\
+\hline
+{\em effect} & Effect to update. \\
+\hline
+{\em data} & New effect properties to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or -\/1 on error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a176c52ff4b77b63cb94ea83f8f4183ad}{S\+D\+L\+\_\+\+Haptic\+New\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a1cd1294768bb00f35b77f67031a8a9cb}{S\+D\+L\+\_\+\+Haptic\+Run\+Effect} 
+
+\hyperlink{_s_d_l__haptic_8h_a0bb35fea7c4c08c9bcb80e0bcfa1799f}{S\+D\+L\+\_\+\+Haptic\+Destroy\+Effect} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Joystick\+Is\+Haptic@{S\+D\+L\+\_\+\+Joystick\+Is\+Haptic}}
+\index{S\+D\+L\+\_\+\+Joystick\+Is\+Haptic@{S\+D\+L\+\_\+\+Joystick\+Is\+Haptic}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Is\+Haptic(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickIsHaptic(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Is\+Haptic (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a8a2966d363cba55ffdfeff42e4204ef1}{}\label{_s_d_l__haptic_8h_a8a2966d363cba55ffdfeff42e4204ef1}
+
+
+Checks to see if a joystick has haptic features. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & Joystick to test for haptic capabilities. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the joystick is haptic, 0 if it isn\textquotesingle{}t or -\/1 if an error ocurred.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_a8303134205b4ab63b1a2fb5281c26702}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Joystick} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Mouse\+Is\+Haptic@{S\+D\+L\+\_\+\+Mouse\+Is\+Haptic}}
+\index{S\+D\+L\+\_\+\+Mouse\+Is\+Haptic@{S\+D\+L\+\_\+\+Mouse\+Is\+Haptic}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Mouse\+Is\+Haptic(void)}{SDL_MouseIsHaptic(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Mouse\+Is\+Haptic (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a8fcc0fb333baed629004bd8c0c66bd76}{}\label{_s_d_l__haptic_8h_a8fcc0fb333baed629004bd8c0c66bd76}
+
+
+Gets whether or not the current mouse has haptic capabilities. 
+
+\begin{DoxyReturn}{Returns}
+S\+D\+L\+\_\+\+T\+R\+UE if the mouse is haptic, S\+D\+L\+\_\+\+F\+A\+L\+SE if it isn\textquotesingle{}t.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_l__haptic_8h_aacc5469f46707fbd48166603b3b1bd8b}{S\+D\+L\+\_\+\+Haptic\+Open\+From\+Mouse} 
+\end{DoxySeeAlso}
+\index{S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}!S\+D\+L\+\_\+\+Num\+Haptics@{S\+D\+L\+\_\+\+Num\+Haptics}}
+\index{S\+D\+L\+\_\+\+Num\+Haptics@{S\+D\+L\+\_\+\+Num\+Haptics}!S\+D\+L\+\_\+haptic.\+h@{S\+D\+L\+\_\+haptic.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Num\+Haptics(void)}{SDL_NumHaptics(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Num\+Haptics (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__haptic_8h_a6f538063a9f1d790882c0d3a81c302cd}{}\label{_s_d_l__haptic_8h_a6f538063a9f1d790882c0d3a81c302cd}
+
+
+Count the number of haptic devices attached to the system. 
+
+\begin{DoxyReturn}{Returns}
+Number of haptic devices detected on the system. 
+\end{DoxyReturn}

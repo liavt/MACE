@@ -1,0 +1,26 @@
+var struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s =
+[
+    [ "flAirAbsorptionGainHF", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a80c8ad56521d0918975aaba19edcd1be", null ],
+    [ "flDecayHFRatio", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a2d5a884d6b4e526e72a398796f9ca7f2", null ],
+    [ "flDecayLFRatio", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a5dc249af8c345b5a0b64fc932af2956c", null ],
+    [ "flDecayTime", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a3b46ec0674d758f0cafc704f31188991", null ],
+    [ "flDensity", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#ab5a3b61cca9851f8821eecf6c36d34e3", null ],
+    [ "flDiffusion", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a29c5efee127b72105f541e45faa7b9c9", null ],
+    [ "flEchoDepth", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#ae1b2a5691ad36203427b70856158f50f", null ],
+    [ "flEchoTime", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#aa1ad488819884fe0ca9a6ac3cb4ab581", null ],
+    [ "flGain", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a33180186f82371646a6474fb399e12ed", null ],
+    [ "flGainHF", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a74bfbe2a9a1eb17a424516981bdb97c2", null ],
+    [ "flGainLF", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a4f1d65608063341a491f257f7ae9168f", null ],
+    [ "flHFReference", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#af42ea95461db17e0b73b0a4decf720c3", null ],
+    [ "flLateReverbDelay", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a45c5f6a516e4ffd08ccd6bd35a15b3c2", null ],
+    [ "flLateReverbGain", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#ac32101bd6ea23d41a39100d1036a4acf", null ],
+    [ "flLateReverbPan", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#ae8a3cba02be4a6e4af41c551b1856c84", null ],
+    [ "flLFReference", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a9d7409aeb14b972f77fd83643d7ecfaa", null ],
+    [ "flModulationDepth", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#ab3d44b53ddcc1e6d295b89e8fa28a8af", null ],
+    [ "flModulationTime", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a607ea8692513389b603e9851fb9f14dc", null ],
+    [ "flReflectionsDelay", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a6ead5cd0e89a41eb425cf519b05d4fb2", null ],
+    [ "flReflectionsGain", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a317cf554c3b9089073abf901b692cc9e", null ],
+    [ "flReflectionsPan", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a1e98ae2dcbd5cb25c6784b5f1181dbb1", null ],
+    [ "flRoomRolloffFactor", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#addd42aea886c8930594cf15f91fb8bec", null ],
+    [ "iDecayHFLimit", "struct_e_f_x_e_a_x_r_e_v_e_r_b_p_r_o_p_e_r_t_i_e_s.html#a454d6bbeaeaf108414712439d36679ff", null ]
+];

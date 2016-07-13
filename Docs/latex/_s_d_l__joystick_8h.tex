@@ -1,0 +1,396 @@
+\hypertarget{_s_d_l__joystick_8h}{}\section{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+joystick.h File Reference}
+\label{_s_d_l__joystick_8h}\index{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+joystick.\+h@{D\+:/\+Workspace/\+M\+A\+C\+E/\+Libs/\+S\+D\+L2/include/\+S\+D\+L/\+S\+D\+L\+\_\+joystick.\+h}}
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+stdinc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+D\+L\+\_\+error.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}begin\+\_\+code.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}close\+\_\+code.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_l___joystick_g_u_i_d}{S\+D\+L\+\_\+\+Joystick\+G\+U\+ID}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{Indent}{\bf Hat positions}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_adbfd6f0bad25cd1bb79f8c0a065f3833}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED}~0x00
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_ac916fe96c0740790e5496e12c67d8889}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP}~0x01
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_a5d1844afaf2ceaf58c689a8bd480a543}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}~0x02
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_aa87f7a91d6bae8b420b133559d983338}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN}~0x04
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_a4666c12cae25d8bab053d8569396cd77}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}~0x08
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_a65fde978b4ab9c269c215d1922ae7755}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP}~(\hyperlink{_s_d_l__joystick_8h_a5d1844afaf2ceaf58c689a8bd480a543}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}$\vert$\hyperlink{_s_d_l__joystick_8h_ac916fe96c0740790e5496e12c67d8889}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP})
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_abf50339da11ca12699ee2199607d275f}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN}~(\hyperlink{_s_d_l__joystick_8h_a5d1844afaf2ceaf58c689a8bd480a543}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}$\vert$\hyperlink{_s_d_l__joystick_8h_aa87f7a91d6bae8b420b133559d983338}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN})
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_a6d7988b43c09ced08ec318a2556f1858}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP}~(\hyperlink{_s_d_l__joystick_8h_a4666c12cae25d8bab053d8569396cd77}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}$\vert$\hyperlink{_s_d_l__joystick_8h_ac916fe96c0740790e5496e12c67d8889}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP})
+\item 
+\#define \hyperlink{_s_d_l__joystick_8h_a3fa8609d382a0f74507890491033c784}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN}~(\hyperlink{_s_d_l__joystick_8h_a4666c12cae25d8bab053d8569396cd77}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}$\vert$\hyperlink{_s_d_l__joystick_8h_aa87f7a91d6bae8b420b133559d983338}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN})
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \+\_\+\+S\+D\+L\+\_\+\+Joystick \hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick}
+\item 
+typedef \hyperlink{_s_d_l__stdinc_8h_a7a90b941db9d4582e9ad7abb9940ff7e}{Sint32} \hyperlink{_s_d_l__joystick_8h_a3c3d32500cb08f76ee8077983912c0bd}{S\+D\+L\+\_\+\+Joystick\+ID}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065}{S\+D\+L\+\_\+\+Joystick\+Power\+Level} \{ \\*
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abdec428b76e198adbaf36d0f2d6a3807}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+N\+K\+N\+O\+WN} = -\/1, 
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abbb610fd44dc06d7452b6c479eb58cb8}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+E\+M\+P\+TY}, 
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065ae9c916910a524e577d1e4df6197773f7}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+L\+OW}, 
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a7405e87795b790ef10faf47e40f8b908}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+E\+D\+I\+UM}, 
+\\*
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a225ba474db36e95f79000543df2f3634}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+F\+U\+LL}, 
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abe065a7a24f1fb49826cdaeea765f2d9}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+W\+I\+R\+ED}, 
+\hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a0f6495dc8ac09096b13d9c546a88bfa4}{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+AX}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a2ab130eaa28f8e3bd544a5432041a311}{S\+D\+L\+\_\+\+Num\+Joysticks} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_ad36c04c086f834fe09a97e4cf86a5a59}{S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} device\+\_\+index)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a5b6f6554bca2659e149b5bc0fa538899}{S\+D\+L\+\_\+\+Joystick\+Open} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} device\+\_\+index)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_abdca7bdd08c34dc7c292c296c440698a}{S\+D\+L\+\_\+\+Joystick\+From\+Instance\+ID} (\hyperlink{_s_d_l__joystick_8h_a3c3d32500cb08f76ee8077983912c0bd}{S\+D\+L\+\_\+\+Joystick\+ID} joyid)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} const char $\ast$\hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_ad3ab02961bc45606e8f5f937c934160c}{S\+D\+L\+\_\+\+Joystick\+Name} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_s_d_l___joystick_g_u_i_d}{S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_afdbf5289ff5452afb1bd869ffcf250b5}{S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+ID} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} device\+\_\+index)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_s_d_l___joystick_g_u_i_d}{S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_acc85c770af41eae76948e11c678f92ca}{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+ID} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a7f615ef8040e7e9de3af6482d8d9908c}{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String} (\hyperlink{struct_s_d_l___joystick_g_u_i_d}{S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} guid, char $\ast$psz\+G\+U\+ID, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} cb\+G\+U\+ID)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{struct_s_d_l___joystick_g_u_i_d}{S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_aef9d131a6a6838847731cf8094944b46}{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String} (const char $\ast$pch\+G\+U\+ID)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a8fca68df0f976765230fe589a7c7733b}{S\+D\+L\+\_\+bool} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a222cd2d664acbea2dad78b891df4b89a}{S\+D\+L\+\_\+\+Joystick\+Get\+Attached} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__joystick_8h_a3c3d32500cb08f76ee8077983912c0bd}{S\+D\+L\+\_\+\+Joystick\+ID} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_ab38dfc6428e15c2476478418075d4c83}{S\+D\+L\+\_\+\+Joystick\+Instance\+ID} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a865c2e087fe69a3a30c87243729ecdea}{S\+D\+L\+\_\+\+Joystick\+Num\+Axes} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a755d087bb16270087bfced7501656a6d}{S\+D\+L\+\_\+\+Joystick\+Num\+Balls} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_aa62ea91c7c4ca2d12804a9fb3760e448}{S\+D\+L\+\_\+\+Joystick\+Num\+Hats} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_adfc662e571011ae7ec303101ab34e53a}{S\+D\+L\+\_\+\+Joystick\+Num\+Buttons} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a3ea23a9504ea56f2778147dbf39a029f}{S\+D\+L\+\_\+\+Joystick\+Update} (\hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void})
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a51ba353843fd4477f6a485ac4ef35d00}{S\+D\+L\+\_\+\+Joystick\+Event\+State} (\hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} state)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a9d0257032c0e146ab6121bf0122712f5}{Sint16} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_ac6fbda13b93679bedfc34733d4b2e748}{S\+D\+L\+\_\+\+Joystick\+Get\+Axis} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} axis)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a2215030cf283295569fee41fd0251e01}{S\+D\+L\+\_\+\+Joystick\+Get\+Hat} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} hat)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_ac7a5a4c17f6a5a4ef9f5bc78e50913df}{S\+D\+L\+\_\+\+Joystick\+Get\+Ball} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} ball, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} $\ast$dx, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} $\ast$dy)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__stdinc_8h_a2944638813a090aa23e62f4da842c3e2}{Uint8} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_aaf7789eb03bc42525691e075e2a36131}{S\+D\+L\+\_\+\+Joystick\+Get\+Button} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick, \hyperlink{_s_d_l__thread_8h_a6a64f9be4433e4de6e2f2f548cf3c08e}{int} button)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__opengles2__gl2ext_8h_ae5d8fa23ad07c48bb609509eae494c95}{void} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_aafa0951b40ec2e200c098495c3dd4943}{S\+D\+L\+\_\+\+Joystick\+Close} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\item 
+\hyperlink{begin__code_8h_aa4c7a931f4a968f818b2a1b10a432185}{D\+E\+C\+L\+S\+P\+EC} \hyperlink{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065}{S\+D\+L\+\_\+\+Joystick\+Power\+Level} \hyperlink{begin__code_8h_a81faf4ba0455dc75f2e0507eddb79401}{S\+D\+L\+C\+A\+LL} \hyperlink{_s_d_l__joystick_8h_a192bbea3553394a6e9c80f77e431fd76}{S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level} (\hyperlink{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{S\+D\+L\+\_\+\+Joystick} $\ast$joystick)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Include file for S\+DL joystick event handling
+
+The term \char`\"{}device\+\_\+index\char`\"{} identifies currently plugged in joystick devices between 0 and S\+D\+L\+\_\+\+Num\+Joysticks, with the exact joystick behind a device\+\_\+index changing as joysticks are plugged and unplugged.
+
+The term \char`\"{}instance\+\_\+id\char`\"{} is the current instantiation of a joystick device in the system, if the joystick is removed and then re-\/inserted then it will get a new instance\+\_\+id, instance\+\_\+id\textquotesingle{}s are monotonically increasing identifiers of a joystick plugged in.
+
+The term Joystick\+G\+U\+ID is a stable 128-\/bit identifier for a joystick device that does not change over time, it identifies class of the device (a X360 wired controller for example). This identifier is platform dependent.
+
+In order to use these functions, \hyperlink{_s_d_l_8h_a8fc8d35348d7c74bad8392d776c937b8}{S\+D\+L\+\_\+\+Init()} must have been called with the \hyperlink{_s_d_l_8h_ad6b47d785eaa00d9c48e6c1cff4aef4b}{S\+D\+L\+\_\+\+I\+N\+I\+T\+\_\+\+J\+O\+Y\+S\+T\+I\+CK} flag. This causes S\+DL to scan the system for joysticks, and load appropriate drivers.
+
+If you would like to receive joystick updates while the application is in the background, you should set the following hint before calling \hyperlink{_s_d_l_8h_a8fc8d35348d7c74bad8392d776c937b8}{S\+D\+L\+\_\+\+Init()}\+: S\+D\+L\+\_\+\+H\+I\+N\+T\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+A\+L\+L\+O\+W\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D\+\_\+\+E\+V\+E\+N\+TS 
+
+\subsection{Macro Definition Documentation}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED}{SDL_HAT_CENTERED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED~0x00}\hypertarget{_s_d_l__joystick_8h_adbfd6f0bad25cd1bb79f8c0a065f3833}{}\label{_s_d_l__joystick_8h_adbfd6f0bad25cd1bb79f8c0a065f3833}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN}{SDL_HAT_DOWN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN~0x04}\hypertarget{_s_d_l__joystick_8h_aa87f7a91d6bae8b420b133559d983338}{}\label{_s_d_l__joystick_8h_aa87f7a91d6bae8b420b133559d983338}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}{SDL_HAT_LEFT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT~0x08}\hypertarget{_s_d_l__joystick_8h_a4666c12cae25d8bab053d8569396cd77}{}\label{_s_d_l__joystick_8h_a4666c12cae25d8bab053d8569396cd77}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN}{SDL_HAT_LEFTDOWN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN~({\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}$\vert${\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN})}\hypertarget{_s_d_l__joystick_8h_a3fa8609d382a0f74507890491033c784}{}\label{_s_d_l__joystick_8h_a3fa8609d382a0f74507890491033c784}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP}{SDL_HAT_LEFTUP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP~({\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}$\vert${\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP})}\hypertarget{_s_d_l__joystick_8h_a6d7988b43c09ced08ec318a2556f1858}{}\label{_s_d_l__joystick_8h_a6d7988b43c09ced08ec318a2556f1858}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}{SDL_HAT_RIGHT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT~0x02}\hypertarget{_s_d_l__joystick_8h_a5d1844afaf2ceaf58c689a8bd480a543}{}\label{_s_d_l__joystick_8h_a5d1844afaf2ceaf58c689a8bd480a543}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN}{SDL_HAT_RIGHTDOWN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN~({\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}$\vert${\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN})}\hypertarget{_s_d_l__joystick_8h_abf50339da11ca12699ee2199607d275f}{}\label{_s_d_l__joystick_8h_abf50339da11ca12699ee2199607d275f}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP}{SDL_HAT_RIGHTUP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP~({\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}$\vert${\bf S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP})}\hypertarget{_s_d_l__joystick_8h_a65fde978b4ab9c269c215d1922ae7755}{}\label{_s_d_l__joystick_8h_a65fde978b4ab9c269c215d1922ae7755}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP}}
+\index{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP@{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP}{SDL_HAT_UP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP~0x01}\hypertarget{_s_d_l__joystick_8h_ac916fe96c0740790e5496e12c67d8889}{}\label{_s_d_l__joystick_8h_ac916fe96c0740790e5496e12c67d8889}
+
+
+\subsection{Typedef Documentation}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick@{S\+D\+L\+\_\+\+Joystick}}
+\index{S\+D\+L\+\_\+\+Joystick@{S\+D\+L\+\_\+\+Joystick}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick}{SDL_Joystick}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct \+\_\+\+S\+D\+L\+\_\+\+Joystick {\bf S\+D\+L\+\_\+\+Joystick}}\hypertarget{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}{}\label{_s_d_l__joystick_8h_a1246a982e91df301042a77e65c694987}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+ID@{S\+D\+L\+\_\+\+Joystick\+ID}}
+\index{S\+D\+L\+\_\+\+Joystick\+ID@{S\+D\+L\+\_\+\+Joystick\+ID}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+ID}{SDL_JoystickID}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Sint32} {\bf S\+D\+L\+\_\+\+Joystick\+ID}}\hypertarget{_s_d_l__joystick_8h_a3c3d32500cb08f76ee8077983912c0bd}{}\label{_s_d_l__joystick_8h_a3c3d32500cb08f76ee8077983912c0bd}
+
+
+\subsection{Enumeration Type Documentation}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Power\+Level@{S\+D\+L\+\_\+\+Joystick\+Power\+Level}}
+\index{S\+D\+L\+\_\+\+Joystick\+Power\+Level@{S\+D\+L\+\_\+\+Joystick\+Power\+Level}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Power\+Level}{SDL_JoystickPowerLevel}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+D\+L\+\_\+\+Joystick\+Power\+Level}}\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+N\+K\+N\+O\+WN@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+N\+K\+N\+O\+WN}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+N\+K\+N\+O\+WN@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+N\+K\+N\+O\+WN}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+U\+N\+K\+N\+O\+WN\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abdec428b76e198adbaf36d0f2d6a3807}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abdec428b76e198adbaf36d0f2d6a3807}
+}]\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+E\+M\+P\+TY@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+E\+M\+P\+TY}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+E\+M\+P\+TY@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+E\+M\+P\+TY}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+E\+M\+P\+TY\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abbb610fd44dc06d7452b6c479eb58cb8}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abbb610fd44dc06d7452b6c479eb58cb8}
+}]\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+L\+OW@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+L\+OW}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+L\+OW@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+L\+OW}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+L\+OW\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065ae9c916910a524e577d1e4df6197773f7}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065ae9c916910a524e577d1e4df6197773f7}
+}]\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+E\+D\+I\+UM@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+E\+D\+I\+UM}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+E\+D\+I\+UM@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+E\+D\+I\+UM}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+E\+D\+I\+UM\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a7405e87795b790ef10faf47e40f8b908}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a7405e87795b790ef10faf47e40f8b908}
+}]\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+F\+U\+LL@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+F\+U\+LL}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+F\+U\+LL@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+F\+U\+LL}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+F\+U\+LL\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a225ba474db36e95f79000543df2f3634}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a225ba474db36e95f79000543df2f3634}
+}]\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+W\+I\+R\+ED@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+W\+I\+R\+ED}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+W\+I\+R\+ED@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+W\+I\+R\+ED}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+W\+I\+R\+ED\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abe065a7a24f1fb49826cdaeea765f2d9}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065abe065a7a24f1fb49826cdaeea765f2d9}
+}]\index{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+AX@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+AX}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+AX@{S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+AX}}\item[{\em 
+S\+D\+L\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+O\+W\+E\+R\+\_\+\+M\+AX\hypertarget{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a0f6495dc8ac09096b13d9c546a88bfa4}{}\label{_s_d_l__joystick_8h_a293471a907265fb92ea12caf5bcc8065a0f6495dc8ac09096b13d9c546a88bfa4}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Close@{S\+D\+L\+\_\+\+Joystick\+Close}}
+\index{S\+D\+L\+\_\+\+Joystick\+Close@{S\+D\+L\+\_\+\+Joystick\+Close}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Close(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickClose(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Close (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_aafa0951b40ec2e200c098495c3dd4943}{}\label{_s_d_l__joystick_8h_aafa0951b40ec2e200c098495c3dd4943}
+Close a joystick previously opened with \hyperlink{_s_d_l__joystick_8h_a5b6f6554bca2659e149b5bc0fa538899}{S\+D\+L\+\_\+\+Joystick\+Open()}. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level@{S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level}}
+\index{S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level@{S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickCurrentPowerLevel(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick\+Power\+Level} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Current\+Power\+Level (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a192bbea3553394a6e9c80f77e431fd76}{}\label{_s_d_l__joystick_8h_a192bbea3553394a6e9c80f77e431fd76}
+Return the battery level of this joystick \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Event\+State@{S\+D\+L\+\_\+\+Joystick\+Event\+State}}
+\index{S\+D\+L\+\_\+\+Joystick\+Event\+State@{S\+D\+L\+\_\+\+Joystick\+Event\+State}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Event\+State(int state)}{SDL_JoystickEventState(int state)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Event\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{state}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a51ba353843fd4477f6a485ac4ef35d00}{}\label{_s_d_l__joystick_8h_a51ba353843fd4477f6a485ac4ef35d00}
+Enable/disable joystick event polling.
+
+If joystick events are disabled, you must call \hyperlink{_s_d_l__joystick_8h_a3ea23a9504ea56f2778147dbf39a029f}{S\+D\+L\+\_\+\+Joystick\+Update()} yourself and check the state of the joystick when you want joystick information.
+
+The state can be one of \hyperlink{_s_d_l__events_8h_a56cee6a1344dd6d33598af982fa9607f}{S\+D\+L\+\_\+\+Q\+U\+E\+RY}, \hyperlink{_s_d_l__events_8h_ae8ffaa5d3d65f4dd75dcf1563e1cc8a9}{S\+D\+L\+\_\+\+E\+N\+A\+B\+LE} or \hyperlink{_s_d_l__events_8h_af1ff071ae5e1576d6de5663d68391ac5}{S\+D\+L\+\_\+\+I\+G\+N\+O\+RE}. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+From\+Instance\+ID@{S\+D\+L\+\_\+\+Joystick\+From\+Instance\+ID}}
+\index{S\+D\+L\+\_\+\+Joystick\+From\+Instance\+ID@{S\+D\+L\+\_\+\+Joystick\+From\+Instance\+ID}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+From\+Instance\+I\+D(\+S\+D\+L\+\_\+\+Joystick\+I\+D joyid)}{SDL_JoystickFromInstanceID(SDL_JoystickID joyid)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+From\+Instance\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick\+ID}}]{joyid}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_abdca7bdd08c34dc7c292c296c440698a}{}\label{_s_d_l__joystick_8h_abdca7bdd08c34dc7c292c296c440698a}
+Return the S\+D\+L\+\_\+\+Joystick associated with an instance id. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+Attached@{S\+D\+L\+\_\+\+Joystick\+Get\+Attached}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+Attached@{S\+D\+L\+\_\+\+Joystick\+Get\+Attached}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+Attached(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickGetAttached(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+bool} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+Attached (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a222cd2d664acbea2dad78b891df4b89a}{}\label{_s_d_l__joystick_8h_a222cd2d664acbea2dad78b891df4b89a}
+Returns S\+D\+L\+\_\+\+T\+R\+UE if the joystick has been opened and currently connected, or S\+D\+L\+\_\+\+F\+A\+L\+SE if it has not. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+Axis@{S\+D\+L\+\_\+\+Joystick\+Get\+Axis}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+Axis@{S\+D\+L\+\_\+\+Joystick\+Get\+Axis}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+Axis(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick, int axis)}{SDL_JoystickGetAxis(SDL_Joystick *joystick, int axis)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Sint16} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+Axis (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick, }
+\item[{{\bf int}}]{axis}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_ac6fbda13b93679bedfc34733d4b2e748}{}\label{_s_d_l__joystick_8h_ac6fbda13b93679bedfc34733d4b2e748}
+Get the current state of an axis control on a joystick.
+
+The state is a value ranging from -\/32768 to 32767.
+
+The axis indices start at index 0. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+Ball@{S\+D\+L\+\_\+\+Joystick\+Get\+Ball}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+Ball@{S\+D\+L\+\_\+\+Joystick\+Get\+Ball}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+Ball(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick, int ball, int $\ast$dx, int $\ast$dy)}{SDL_JoystickGetBall(SDL_Joystick *joystick, int ball, int *dx, int *dy)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+Ball (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick, }
+\item[{{\bf int}}]{ball, }
+\item[{{\bf int} $\ast$}]{dx, }
+\item[{{\bf int} $\ast$}]{dy}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_ac7a5a4c17f6a5a4ef9f5bc78e50913df}{}\label{_s_d_l__joystick_8h_ac7a5a4c17f6a5a4ef9f5bc78e50913df}
+Get the ball axis change since the last poll.
+
+\begin{DoxyReturn}{Returns}
+0, or -\/1 if you passed it invalid parameters.
+\end{DoxyReturn}
+The ball indices start at index 0. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+Button@{S\+D\+L\+\_\+\+Joystick\+Get\+Button}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+Button@{S\+D\+L\+\_\+\+Joystick\+Get\+Button}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+Button(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick, int button)}{SDL_JoystickGetButton(SDL_Joystick *joystick, int button)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Uint8} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+Button (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick, }
+\item[{{\bf int}}]{button}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_aaf7789eb03bc42525691e075e2a36131}{}\label{_s_d_l__joystick_8h_aaf7789eb03bc42525691e075e2a36131}
+Get the current state of a button on a joystick.
+
+The button indices start at index 0. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+ID@{S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+ID}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+ID@{S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+ID}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+I\+D(int device\+\_\+index)}{SDL_JoystickGetDeviceGUID(int device_index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+Device\+G\+U\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{device\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_afdbf5289ff5452afb1bd869ffcf250b5}{}\label{_s_d_l__joystick_8h_afdbf5289ff5452afb1bd869ffcf250b5}
+Return the G\+U\+ID for the joystick at this index \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+ID@{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+ID}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+ID@{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+ID}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickGetGUID(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_acc85c770af41eae76948e11c678f92ca}{}\label{_s_d_l__joystick_8h_acc85c770af41eae76948e11c678f92ca}
+Return the G\+U\+ID for this opened joystick \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String@{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String@{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String(const char $\ast$pch\+G\+U\+I\+D)}{SDL_JoystickGetGUIDFromString(const char *pchGUID)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick\+G\+U\+ID} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+From\+String (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{pch\+G\+U\+ID}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_aef9d131a6a6838847731cf8094944b46}{}\label{_s_d_l__joystick_8h_aef9d131a6a6838847731cf8094944b46}
+convert a string into a joystick formatted guid \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String@{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String@{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String(\+S\+D\+L\+\_\+\+Joystick\+G\+U\+I\+D guid, char $\ast$psz\+G\+U\+I\+D, int cb\+G\+U\+I\+D)}{SDL_JoystickGetGUIDString(SDL_JoystickGUID guid, char *pszGUID, int cbGUID)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+G\+U\+I\+D\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick\+G\+U\+ID}}]{guid, }
+\item[{char $\ast$}]{psz\+G\+U\+ID, }
+\item[{{\bf int}}]{cb\+G\+U\+ID}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a7f615ef8040e7e9de3af6482d8d9908c}{}\label{_s_d_l__joystick_8h_a7f615ef8040e7e9de3af6482d8d9908c}
+Return a string representation for this guid. psz\+G\+U\+ID must point to at least 33 bytes (32 for the string plus a N\+U\+LL terminator). \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Get\+Hat@{S\+D\+L\+\_\+\+Joystick\+Get\+Hat}}
+\index{S\+D\+L\+\_\+\+Joystick\+Get\+Hat@{S\+D\+L\+\_\+\+Joystick\+Get\+Hat}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Get\+Hat(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick, int hat)}{SDL_JoystickGetHat(SDL_Joystick *joystick, int hat)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf Uint8} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Get\+Hat (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick, }
+\item[{{\bf int}}]{hat}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a2215030cf283295569fee41fd0251e01}{}\label{_s_d_l__joystick_8h_a2215030cf283295569fee41fd0251e01}
+Get the current state of a P\+OV hat on a joystick.
+
+The hat indices start at index 0.
+
+\begin{DoxyReturn}{Returns}
+The return value is one of the following positions\+:
+\begin{DoxyItemize}
+\item \hyperlink{_s_d_l__joystick_8h_adbfd6f0bad25cd1bb79f8c0a065f3833}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+C\+E\+N\+T\+E\+R\+ED}
+\item \hyperlink{_s_d_l__joystick_8h_ac916fe96c0740790e5496e12c67d8889}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+UP}
+\item \hyperlink{_s_d_l__joystick_8h_a5d1844afaf2ceaf58c689a8bd480a543}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+HT}
+\item \hyperlink{_s_d_l__joystick_8h_aa87f7a91d6bae8b420b133559d983338}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+D\+O\+WN}
+\item \hyperlink{_s_d_l__joystick_8h_a4666c12cae25d8bab053d8569396cd77}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+FT}
+\item \hyperlink{_s_d_l__joystick_8h_a65fde978b4ab9c269c215d1922ae7755}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+UP}
+\item \hyperlink{_s_d_l__joystick_8h_abf50339da11ca12699ee2199607d275f}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+R\+I\+G\+H\+T\+D\+O\+WN}
+\item \hyperlink{_s_d_l__joystick_8h_a6d7988b43c09ced08ec318a2556f1858}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+UP}
+\item \hyperlink{_s_d_l__joystick_8h_a3fa8609d382a0f74507890491033c784}{S\+D\+L\+\_\+\+H\+A\+T\+\_\+\+L\+E\+F\+T\+D\+O\+WN} 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Instance\+ID@{S\+D\+L\+\_\+\+Joystick\+Instance\+ID}}
+\index{S\+D\+L\+\_\+\+Joystick\+Instance\+ID@{S\+D\+L\+\_\+\+Joystick\+Instance\+ID}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Instance\+I\+D(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickInstanceID(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick\+ID} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Instance\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_ab38dfc6428e15c2476478418075d4c83}{}\label{_s_d_l__joystick_8h_ab38dfc6428e15c2476478418075d4c83}
+Get the instance ID of an opened joystick or -\/1 if the joystick is invalid. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Name@{S\+D\+L\+\_\+\+Joystick\+Name}}
+\index{S\+D\+L\+\_\+\+Joystick\+Name@{S\+D\+L\+\_\+\+Joystick\+Name}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Name(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickName(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Name (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_ad3ab02961bc45606e8f5f937c934160c}{}\label{_s_d_l__joystick_8h_ad3ab02961bc45606e8f5f937c934160c}
+Return the name for this currently opened joystick. If no name can be found, this function returns N\+U\+LL. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index@{S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index}}
+\index{S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index@{S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index(int device\+\_\+index)}{SDL_JoystickNameForIndex(int device_index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} const char$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Name\+For\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{device\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_ad36c04c086f834fe09a97e4cf86a5a59}{}\label{_s_d_l__joystick_8h_ad36c04c086f834fe09a97e4cf86a5a59}
+Get the implementation dependent name of a joystick. This can be called before any joysticks are opened. If no name can be found, this function returns N\+U\+LL. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Num\+Axes@{S\+D\+L\+\_\+\+Joystick\+Num\+Axes}}
+\index{S\+D\+L\+\_\+\+Joystick\+Num\+Axes@{S\+D\+L\+\_\+\+Joystick\+Num\+Axes}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Num\+Axes(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickNumAxes(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Num\+Axes (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a865c2e087fe69a3a30c87243729ecdea}{}\label{_s_d_l__joystick_8h_a865c2e087fe69a3a30c87243729ecdea}
+Get the number of general axis controls on a joystick. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Num\+Balls@{S\+D\+L\+\_\+\+Joystick\+Num\+Balls}}
+\index{S\+D\+L\+\_\+\+Joystick\+Num\+Balls@{S\+D\+L\+\_\+\+Joystick\+Num\+Balls}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Num\+Balls(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickNumBalls(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Num\+Balls (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a755d087bb16270087bfced7501656a6d}{}\label{_s_d_l__joystick_8h_a755d087bb16270087bfced7501656a6d}
+Get the number of trackballs on a joystick.
+
+Joystick trackballs have only relative motion events associated with them and their state cannot be polled. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Num\+Buttons@{S\+D\+L\+\_\+\+Joystick\+Num\+Buttons}}
+\index{S\+D\+L\+\_\+\+Joystick\+Num\+Buttons@{S\+D\+L\+\_\+\+Joystick\+Num\+Buttons}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Num\+Buttons(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickNumButtons(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Num\+Buttons (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_adfc662e571011ae7ec303101ab34e53a}{}\label{_s_d_l__joystick_8h_adfc662e571011ae7ec303101ab34e53a}
+Get the number of buttons on a joystick. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Num\+Hats@{S\+D\+L\+\_\+\+Joystick\+Num\+Hats}}
+\index{S\+D\+L\+\_\+\+Joystick\+Num\+Hats@{S\+D\+L\+\_\+\+Joystick\+Num\+Hats}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Num\+Hats(\+S\+D\+L\+\_\+\+Joystick $\ast$joystick)}{SDL_JoystickNumHats(SDL_Joystick *joystick)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Num\+Hats (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+L\+\_\+\+Joystick} $\ast$}]{joystick}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_aa62ea91c7c4ca2d12804a9fb3760e448}{}\label{_s_d_l__joystick_8h_aa62ea91c7c4ca2d12804a9fb3760e448}
+Get the number of P\+OV hats on a joystick. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Open@{S\+D\+L\+\_\+\+Joystick\+Open}}
+\index{S\+D\+L\+\_\+\+Joystick\+Open@{S\+D\+L\+\_\+\+Joystick\+Open}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Open(int device\+\_\+index)}{SDL_JoystickOpen(int device_index)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf S\+D\+L\+\_\+\+Joystick}$\ast$ {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Open (
+\begin{DoxyParamCaption}
+\item[{{\bf int}}]{device\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a5b6f6554bca2659e149b5bc0fa538899}{}\label{_s_d_l__joystick_8h_a5b6f6554bca2659e149b5bc0fa538899}
+Open a joystick for use. The index passed as an argument refers to the N\textquotesingle{}th joystick on the system. This index is not the value which will identify this joystick in future joystick events. The joystick\textquotesingle{}s instance id (\hyperlink{_s_d_l__joystick_8h_a3c3d32500cb08f76ee8077983912c0bd}{S\+D\+L\+\_\+\+Joystick\+ID}) will be used there instead.
+
+\begin{DoxyReturn}{Returns}
+A joystick identifier, or N\+U\+LL if an error occurred. 
+\end{DoxyReturn}
+\index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Joystick\+Update@{S\+D\+L\+\_\+\+Joystick\+Update}}
+\index{S\+D\+L\+\_\+\+Joystick\+Update@{S\+D\+L\+\_\+\+Joystick\+Update}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Joystick\+Update(void)}{SDL_JoystickUpdate(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf void} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Joystick\+Update (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a3ea23a9504ea56f2778147dbf39a029f}{}\label{_s_d_l__joystick_8h_a3ea23a9504ea56f2778147dbf39a029f}
+Update the current state of the open joysticks.
+
+This is called automatically by the event loop if any joystick events are enabled. \index{S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}!S\+D\+L\+\_\+\+Num\+Joysticks@{S\+D\+L\+\_\+\+Num\+Joysticks}}
+\index{S\+D\+L\+\_\+\+Num\+Joysticks@{S\+D\+L\+\_\+\+Num\+Joysticks}!S\+D\+L\+\_\+joystick.\+h@{S\+D\+L\+\_\+joystick.\+h}}
+\subsubsection[{\texorpdfstring{S\+D\+L\+\_\+\+Num\+Joysticks(void)}{SDL_NumJoysticks(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+E\+C\+L\+S\+P\+EC} {\bf int} {\bf S\+D\+L\+C\+A\+LL} S\+D\+L\+\_\+\+Num\+Joysticks (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_d_l__joystick_8h_a2ab130eaa28f8e3bd544a5432041a311}{}\label{_s_d_l__joystick_8h_a2ab130eaa28f8e3bd544a5432041a311}
+Count the number of joysticks attached to the system right now 

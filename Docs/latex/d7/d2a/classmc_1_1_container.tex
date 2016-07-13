@@ -1,0 +1,419 @@
+\hypertarget{classmc_1_1_container}{}\section{mc\+:\+:Container Class Reference}
+\label{classmc_1_1_container}\index{mc\+::\+Container@{mc\+::\+Container}}
+
+
+A class which holds an internal buffer of \hyperlink{classmc_1_1_entity}{entities,} known as \char`\"{}children.\char`\"{}.  
+
+
+
+
+{\ttfamily \#include $<$Entity.\+h$>$}
+
+Inheritance diagram for mc\+:\+:Container\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d7/d2a/classmc_1_1_container}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classmc_1_1_container_ae9a0af1e1ea151ba9f5654b4f3a5494b}{$\sim$\+Container} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmc_1_1_container_a306bb7d15cee23ff8bef4b9342ed85cf}{update} ()
+\begin{DoxyCompactList}\small\item\em Should be called every time \hyperlink{classmc_1_1_system_a90e14e44eb5a6019c913a6a197deb4a0}{System\#update()} is called. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmc_1_1_container_a087d26907d06163aa731d9a313163b7f}{init} ()
+\begin{DoxyCompactList}\small\item\em Should be called every time \hyperlink{classmc_1_1_system_a86b7559895967af432c5c3db728bd0bc}{System\#init()} is called. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmc_1_1_container_a80bd71e4e12ec218e4de88f4e48cc771}{destroy} ()
+\begin{DoxyCompactList}\small\item\em Should be called every time \hyperlink{}{System\#destroy()} is called. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \hyperlink{classmc_1_1_entity}{Entity} $\ast$ $>$ \& \hyperlink{classmc_1_1_container_a2455ff127249ab0b128fe54eeeaf72e3}{get\+Children} () const 
+\begin{DoxyCompactList}\small\item\em Gets all of this. \end{DoxyCompactList}\item 
+void \hyperlink{classmc_1_1_container_a7de8a7bfe45c8a869149de774019e42c}{add\+Child} (\hyperlink{classmc_1_1_entity}{Entity} \&e)
+\begin{DoxyCompactList}\small\item\em Add an \hyperlink{classmc_1_1_entity}{Entity} to this \hyperlink{classmc_1_1_container}{Container}. \end{DoxyCompactList}\item 
+void \hyperlink{classmc_1_1_container_ab11d68dc07cd15d6a8a30f63fb8aaa62}{remove\+Child} (const \hyperlink{classmc_1_1_entity}{Entity} \&e)
+\begin{DoxyCompactList}\small\item\em Removes a child by reference. \end{DoxyCompactList}\item 
+void \hyperlink{classmc_1_1_container_a2a20247458c80d432a9c7d80f11a15ff}{remove\+Child} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Removes a child via location. \end{DoxyCompactList}\item 
+bool \hyperlink{classmc_1_1_container_a0f947d9066f457d37defd9382da99128}{has\+Child} (\hyperlink{classmc_1_1_entity}{Entity} \&e) const 
+\begin{DoxyCompactList}\small\item\em Checks to see if this. \end{DoxyCompactList}\item 
+void \hyperlink{classmc_1_1_container_aee8b37e3cb3ef52d2b3aee2310007f39}{clear\+Children} ()
+\begin{DoxyCompactList}\small\item\em Removes E\+V\+E\+RY \{code \hyperlink{classmc_1_1_entity}{Entity}\} from this. \end{DoxyCompactList}\item 
+\hyperlink{classmc_1_1_entity}{Entity} \& \hyperlink{classmc_1_1_container_a4d9c9836fca7685c9e3fd314cb2ef3e4}{operator\mbox{[}$\,$\mbox{]}} (unsigned int i)
+\begin{DoxyCompactList}\small\item\em Access an. \end{DoxyCompactList}\item 
+const \hyperlink{classmc_1_1_entity}{Entity} \& \hyperlink{classmc_1_1_container_a9a7c43110b0b08ac5edbbfd0a668abe0}{operator\mbox{[}$\,$\mbox{]}} (unsigned int i) const 
+\item 
+\hyperlink{classmc_1_1_entity}{Entity} \& \hyperlink{classmc_1_1_container_a0f7ec1b14def81f1fbc4e534b7cff8be}{get\+Child} (unsigned int i)
+\item 
+const \hyperlink{classmc_1_1_entity}{Entity} \& \hyperlink{classmc_1_1_container_af5953e37ee8a9c24a4541e81502e9639}{get\+Child} (unsigned int i) const 
+\item 
+unsigned int \hyperlink{classmc_1_1_container_ac3b24eb59ccbca4290d032c07eb3e5f6}{index\+Of} (\hyperlink{classmc_1_1_entity}{Entity} \&e) const 
+\item 
+std\+::vector$<$ \hyperlink{classmc_1_1_entity}{Entity} $\ast$ $>$\+::iterator \hyperlink{classmc_1_1_container_a2838fe4f6068eba635df99b8180a63a1}{begin} ()
+\item 
+std\+::vector$<$ \hyperlink{classmc_1_1_entity}{Entity} $\ast$ $>$\+::iterator \hyperlink{classmc_1_1_container_af8ce53fdca38afc0c38fd8dc5c7de93d}{end} ()
+\item 
+\hyperlink{namespacemc_ad1c06461067735b3b17e0df612532c4e}{Size} \hyperlink{classmc_1_1_container_afcba0b879415347bffedde8b43fbce8a}{size} () const 
+\item 
+bool \hyperlink{classmc_1_1_container_a0c35995b63b9e4a0dc05208a744b326b}{operator==} (\hyperlink{classmc_1_1_container}{Container} \&other) const 
+\item 
+bool \hyperlink{classmc_1_1_container_af1787e3b31159afec58ee4fffbcec013}{operator!=} (\hyperlink{classmc_1_1_container}{Container} \&other) const 
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \hyperlink{classmc_1_1_entity}{Entity} $\ast$ $>$ \hyperlink{classmc_1_1_container_a61ab3823bf33ae5f8f1bfdb79501b242}{children} = std\+::vector$<$\hyperlink{classmc_1_1_entity}{Entity}$\ast$$>$()
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmc_1_1_container_a8dbbff2e42cb66216ff15cfa5272a1c9}{Entity\+Module}
+\item 
+class \hyperlink{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{Entity}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class which holds an internal buffer of \hyperlink{classmc_1_1_entity}{entities,} known as \char`\"{}children.\char`\"{}. 
+
+Calling \hyperlink{classmc_1_1_container_a306bb7d15cee23ff8bef4b9342ed85cf}{update()} will call \hyperlink{}{Entity\#update()} on all of it\textquotesingle{}s children. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{mc\+::\+Container@{mc\+::\+Container}!````~Container@{$\sim$\+Container}}
+\index{````~Container@{$\sim$\+Container}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{$\sim$\+Container()}{~Container()}}]{\setlength{\rightskip}{0pt plus 5cm}mc\+::\+Container\+::$\sim$\+Container (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classmc_1_1_container_ae9a0af1e1ea151ba9f5654b4f3a5494b}{}\label{classmc_1_1_container_ae9a0af1e1ea151ba9f5654b4f3a5494b}
+
+
+Destructor. 
+
+Clears all of the children. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmc_1_1_container_aee8b37e3cb3ef52d2b3aee2310007f39}{clear\+Children} 
+\end{DoxySeeAlso}
+
+
+\subsection{Member Function Documentation}
+\index{mc\+::\+Container@{mc\+::\+Container}!add\+Child@{add\+Child}}
+\index{add\+Child@{add\+Child}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{add\+Child(\+Entity \&e)}{addChild(Entity &e)}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::add\+Child (
+\begin{DoxyParamCaption}
+\item[{{\bf Entity} \&}]{e}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_a7de8a7bfe45c8a869149de774019e42c}{}\label{classmc_1_1_container_a7de8a7bfe45c8a869149de774019e42c}
+
+
+Add an \hyperlink{classmc_1_1_entity}{Entity} to this \hyperlink{classmc_1_1_container}{Container}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Reference to an
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{Entity} 
+\end{DoxyCode}
+ to become a child \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmc_1_1_container_a306bb7d15cee23ff8bef4b9342ed85cf}{update()} 
+
+\hyperlink{classmc_1_1_container_a2455ff127249ab0b128fe54eeeaf72e3}{get\+Children()} 
+\end{DoxySeeAlso}
+\index{mc\+::\+Container@{mc\+::\+Container}!begin@{begin}}
+\index{begin@{begin}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{begin()}{begin()}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::vector$<$ {\bf Entity} $\ast$ $>$\+::iterator mc\+::\+Container\+::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_a2838fe4f6068eba635df99b8180a63a1}{}\label{classmc_1_1_container_a2838fe4f6068eba635df99b8180a63a1}
+\index{mc\+::\+Container@{mc\+::\+Container}!clear\+Children@{clear\+Children}}
+\index{clear\+Children@{clear\+Children}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{clear\+Children()}{clearChildren()}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::clear\+Children (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_aee8b37e3cb3ef52d2b3aee2310007f39}{}\label{classmc_1_1_container_aee8b37e3cb3ef52d2b3aee2310007f39}
+
+
+Removes E\+V\+E\+RY \{code \hyperlink{classmc_1_1_entity}{Entity}\} from this. 
+
+
+\begin{DoxyCode}
+Container. 
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See also}
+\hyperlink{classmc_1_1_container_afcba0b879415347bffedde8b43fbce8a}{size()} 
+
+\hyperlink{classmc_1_1_container_a2a20247458c80d432a9c7d80f11a15ff}{remove\+Child(unsigned int)} 
+
+\hyperlink{classmc_1_1_container_ab11d68dc07cd15d6a8a30f63fb8aaa62}{remove\+Child(const Entity\&)} 
+\end{DoxySeeAlso}
+\index{mc\+::\+Container@{mc\+::\+Container}!destroy@{destroy}}
+\index{destroy@{destroy}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{destroy()}{destroy()}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classmc_1_1_container_a80bd71e4e12ec218e4de88f4e48cc771}{}\label{classmc_1_1_container_a80bd71e4e12ec218e4de88f4e48cc771}
+
+
+Should be called every time \hyperlink{}{System\#destroy()} is called. 
+
+Calls
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a80bd71e4e12ec218e4de88f4e48cc771}{destroy}() 
+\end{DoxyCode}
+ on all of this
+\begin{DoxyCode}
+Container\textcolor{stringliteral}{'s }
+\end{DoxyCode}
+ children. 
+
+Reimplemented in \hyperlink{classmc_1_1_entity_module_a6c0fe0216850bb703df6721940f78b5f}{mc\+::\+Entity\+Module}.
+
+\index{mc\+::\+Container@{mc\+::\+Container}!end@{end}}
+\index{end@{end}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{end()}{end()}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::vector$<$ {\bf Entity} $\ast$ $>$\+::iterator mc\+::\+Container\+::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_af8ce53fdca38afc0c38fd8dc5c7de93d}{}\label{classmc_1_1_container_af8ce53fdca38afc0c38fd8dc5c7de93d}
+\index{mc\+::\+Container@{mc\+::\+Container}!get\+Child@{get\+Child}}
+\index{get\+Child@{get\+Child}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{get\+Child(unsigned int i)}{getChild(unsigned int i)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} \& mc\+::\+Container\+::get\+Child (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_a0f7ec1b14def81f1fbc4e534b7cff8be}{}\label{classmc_1_1_container_a0f7ec1b14def81f1fbc4e534b7cff8be}
+\index{mc\+::\+Container@{mc\+::\+Container}!get\+Child@{get\+Child}}
+\index{get\+Child@{get\+Child}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{get\+Child(unsigned int i) const }{getChild(unsigned int i) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Entity} \& mc\+::\+Container\+::get\+Child (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_af5953e37ee8a9c24a4541e81502e9639}{}\label{classmc_1_1_container_af5953e37ee8a9c24a4541e81502e9639}
+\index{mc\+::\+Container@{mc\+::\+Container}!get\+Children@{get\+Children}}
+\index{get\+Children@{get\+Children}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{get\+Children() const }{getChildren() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Entity} $\ast$ $>$ \& mc\+::\+Container\+::get\+Children (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_a2455ff127249ab0b128fe54eeeaf72e3}{}\label{classmc_1_1_container_a2455ff127249ab0b128fe54eeeaf72e3}
+
+
+Gets all of this. 
+
+
+\begin{DoxyCode}
+Container\textcolor{stringliteral}{'s }
+\end{DoxyCode}
+ children. \begin{DoxyReturn}{Returns}
+an
+\begin{DoxyCode}
+std::vector 
+\end{DoxyCode}
+ with all children of this
+\begin{DoxyCode}
+Container 
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\index{mc\+::\+Container@{mc\+::\+Container}!has\+Child@{has\+Child}}
+\index{has\+Child@{has\+Child}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{has\+Child(\+Entity \&e) const }{hasChild(Entity &e) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool mc\+::\+Container\+::has\+Child (
+\begin{DoxyParamCaption}
+\item[{{\bf Entity} \&}]{e}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_a0f947d9066f457d37defd9382da99128}{}\label{classmc_1_1_container_a0f947d9066f457d37defd9382da99128}
+
+
+Checks to see if this. 
+
+
+\begin{DoxyCode}
+Container 
+\end{DoxyCode}
+ contains an
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{Entity} 
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em e} & Reference to an
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{Entity} 
+\end{DoxyCode}
+ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+\textcolor{keyword}{false} 
+\end{DoxyCode}
+ if this
+\begin{DoxyCode}
+Container 
+\end{DoxyCode}
+ doesn\textquotesingle{}t contain the referenced
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{Entity}, \textcolor{keyword}{true} 
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\#index\+Of(\+Entity\& ) 
+\end{DoxySeeAlso}
+\index{mc\+::\+Container@{mc\+::\+Container}!index\+Of@{index\+Of}}
+\index{index\+Of@{index\+Of}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{index\+Of(\+Entity \&e) const }{indexOf(Entity &e) const }}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int mc\+::\+Container\+::index\+Of (
+\begin{DoxyParamCaption}
+\item[{{\bf Entity} \&}]{e}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_ac3b24eb59ccbca4290d032c07eb3e5f6}{}\label{classmc_1_1_container_ac3b24eb59ccbca4290d032c07eb3e5f6}
+\index{mc\+::\+Container@{mc\+::\+Container}!init@{init}}
+\index{init@{init}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{init()}{init()}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classmc_1_1_container_a087d26907d06163aa731d9a313163b7f}{}\label{classmc_1_1_container_a087d26907d06163aa731d9a313163b7f}
+
+
+Should be called every time \hyperlink{classmc_1_1_system_a86b7559895967af432c5c3db728bd0bc}{System\#init()} is called. 
+
+Calls
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a087d26907d06163aa731d9a313163b7f}{init}() 
+\end{DoxyCode}
+ on all of this
+\begin{DoxyCode}
+Container\textcolor{stringliteral}{'s }
+\end{DoxyCode}
+ children. 
+
+Reimplemented in \hyperlink{classmc_1_1_entity_module_a5e1f25e0d12c50f6e8d8fbdf31028b8e}{mc\+::\+Entity\+Module}.
+
+\index{mc\+::\+Container@{mc\+::\+Container}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{operator"!=(\+Container \&other) const }{operator!=(Container &other) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool mc\+::\+Container\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{{\bf Container} \&}]{other}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_af1787e3b31159afec58ee4fffbcec013}{}\label{classmc_1_1_container_af1787e3b31159afec58ee4fffbcec013}
+\index{mc\+::\+Container@{mc\+::\+Container}!operator==@{operator==}}
+\index{operator==@{operator==}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{operator==(\+Container \&other) const }{operator==(Container &other) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool mc\+::\+Container\+::operator== (
+\begin{DoxyParamCaption}
+\item[{{\bf Container} \&}]{other}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_a0c35995b63b9e4a0dc05208a744b326b}{}\label{classmc_1_1_container_a0c35995b63b9e4a0dc05208a744b326b}
+\index{mc\+::\+Container@{mc\+::\+Container}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{operator[](unsigned int i)}{operator[](unsigned int i)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} \& mc\+::\+Container\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_a4d9c9836fca7685c9e3fd314cb2ef3e4}{}\label{classmc_1_1_container_a4d9c9836fca7685c9e3fd314cb2ef3e4}
+
+
+Access an. 
+
+
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{Entity} 
+\end{DoxyCode}
+ . \begin{DoxySeeAlso}{See also}
+\hyperlink{classmc_1_1_container_a0f7ec1b14def81f1fbc4e534b7cff8be}{get\+Child(unsigned int)} 
+\end{DoxySeeAlso}
+\index{mc\+::\+Container@{mc\+::\+Container}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{operator[](unsigned int i) const }{operator[](unsigned int i) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Entity} \& mc\+::\+Container\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_a9a7c43110b0b08ac5edbbfd0a668abe0}{}\label{classmc_1_1_container_a9a7c43110b0b08ac5edbbfd0a668abe0}
+\index{mc\+::\+Container@{mc\+::\+Container}!remove\+Child@{remove\+Child}}
+\index{remove\+Child@{remove\+Child}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{remove\+Child(const Entity \&e)}{removeChild(const Entity &e)}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::remove\+Child (
+\begin{DoxyParamCaption}
+\item[{const {\bf Entity} \&}]{e}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_ab11d68dc07cd15d6a8a30f63fb8aaa62}{}\label{classmc_1_1_container_ab11d68dc07cd15d6a8a30f63fb8aaa62}
+
+
+Removes a child by reference. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em } & \\
+\hline
+\end{DoxyExceptions}
+\index{mc\+::\+Container@{mc\+::\+Container}!remove\+Child@{remove\+Child}}
+\index{remove\+Child@{remove\+Child}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{remove\+Child(unsigned int index)}{removeChild(unsigned int index)}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::remove\+Child (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{classmc_1_1_container_a2a20247458c80d432a9c7d80f11a15ff}{}\label{classmc_1_1_container_a2a20247458c80d432a9c7d80f11a15ff}
+
+
+Removes a child via location. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em } & \\
+\hline
+\end{DoxyExceptions}
+\index{mc\+::\+Container@{mc\+::\+Container}!size@{size}}
+\index{size@{size}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{size() const }{size() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Size} mc\+::\+Container\+::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmc_1_1_container_afcba0b879415347bffedde8b43fbce8a}{}\label{classmc_1_1_container_afcba0b879415347bffedde8b43fbce8a}
+\index{mc\+::\+Container@{mc\+::\+Container}!update@{update}}
+\index{update@{update}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{update()}{update()}}]{\setlength{\rightskip}{0pt plus 5cm}void mc\+::\+Container\+::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classmc_1_1_container_a306bb7d15cee23ff8bef4b9342ed85cf}{}\label{classmc_1_1_container_a306bb7d15cee23ff8bef4b9342ed85cf}
+
+
+Should be called every time \hyperlink{classmc_1_1_system_a90e14e44eb5a6019c913a6a197deb4a0}{System\#update()} is called. 
+
+Calls
+\begin{DoxyCode}
+\hyperlink{classmc_1_1_container_a306bb7d15cee23ff8bef4b9342ed85cf}{update}() 
+\end{DoxyCode}
+ on all of this
+\begin{DoxyCode}
+Container\textcolor{stringliteral}{'s }
+\end{DoxyCode}
+ children. 
+
+Reimplemented in \hyperlink{classmc_1_1_entity_module_a3307eb2ce5af81b6a6e26fdaa12e3063}{mc\+::\+Entity\+Module}.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\index{mc\+::\+Container@{mc\+::\+Container}!Entity@{Entity}}
+\index{Entity@{Entity}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{Entity}{Entity}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Entity}\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}{}\label{classmc_1_1_container_a614439ccac0344926adc4c0165d64060}
+\index{mc\+::\+Container@{mc\+::\+Container}!Entity\+Module@{Entity\+Module}}
+\index{Entity\+Module@{Entity\+Module}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{Entity\+Module}{EntityModule}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Entity\+Module}\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{classmc_1_1_container_a8dbbff2e42cb66216ff15cfa5272a1c9}{}\label{classmc_1_1_container_a8dbbff2e42cb66216ff15cfa5272a1c9}
+
+
+\subsection{Member Data Documentation}
+\index{mc\+::\+Container@{mc\+::\+Container}!children@{children}}
+\index{children@{children}!mc\+::\+Container@{mc\+::\+Container}}
+\subsubsection[{\texorpdfstring{children}{children}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::vector$<${\bf Entity}$\ast$$>$ mc\+::\+Container\+::children = std\+::vector$<${\bf Entity}$\ast$$>$()\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmc_1_1_container_a61ab3823bf33ae5f8f1bfdb79501b242}{}\label{classmc_1_1_container_a61ab3823bf33ae5f8f1bfdb79501b242}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/\+Workspace/\+M\+A\+C\+E/\+M\+C-\/\+System/\+Entities/\hyperlink{_entity_8h}{Entity.\+h}\item 
+D\+:/\+Workspace/\+M\+A\+C\+E/\+M\+C-\/\+System/\+Entities/\hyperlink{_entity_8cpp}{Entity.\+cpp}\end{DoxyCompactItemize}
