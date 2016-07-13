@@ -10,8 +10,7 @@ var dir_83209f3a080bc68b950e7a82b7b9c927 =
       [ "Math", "dd/d0b/classmc_1_1_math.html", "dd/d0b/classmc_1_1_math" ]
     ] ],
     [ "Position.h", "d4/d51/_position_8h.html", [
-      [ "Position", "d1/dbc/classmc_1_1_position.html", null ],
-      [ "PositionData", "da/d58/classmc_1_1_position_data.html", null ]
+      [ "Position", "d1/dbc/classmc_1_1_position.html", null ]
     ] ],
     [ "Vector.h", "d4/d7f/_vector_8h.html", "d4/d7f/_vector_8h" ]
 ];

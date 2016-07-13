@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['m_5foriginalheight',['m_originalHeight',['../d4/d40/classmc_1_1_window.html#aef96e2ff220e319a9a87cf4ced39ddaf',1,'mc::Window']]],
-  ['m_5foriginalwidth',['m_originalWidth',['../d4/d40/classmc_1_1_window.html#a1f4c4744822006d438a532282d2b36c5',1,'mc::Window']]],
-  ['m_5ftitle',['m_title',['../d4/d40/classmc_1_1_window.html#a27f0a568dfe2d21915debc0672dd072e',1,'mc::Window']]],
-  ['m_5fwindow',['m_window',['../d4/d40/classmc_1_1_window.html#a8df84ee7c278f016ef13ac0ede008f7c',1,'mc::Window']]]
+  ['position_5fdefault_5fproperties',['POSITION_DEFAULT_PROPERTIES',['../df/dda/namespacemc.html#a47f82d173aac0c2dab851dfd482fb9d7',1,'mc']]],
+  ['position_5fproperty_5fignore_5fparent',['POSITION_PROPERTY_IGNORE_PARENT',['../df/dda/namespacemc.html#a9085688ce1dec515cd75c6fef11a1ec5',1,'mc']]],
+  ['position_5fproperty_5finherit_5fstretch_5fx',['POSITION_PROPERTY_INHERIT_STRETCH_X',['../df/dda/namespacemc.html#a1ddeace50be9bf89c37a08de87213e85',1,'mc']]],
+  ['position_5fproperty_5finherit_5fstretch_5fy',['POSITION_PROPERTY_INHERIT_STRETCH_Y',['../df/dda/namespacemc.html#a29d2f6b06f29e315be17e977d9a7eabb',1,'mc']]],
+  ['position_5fproperty_5fstrecth_5fy',['POSITION_PROPERTY_STRECTH_Y',['../df/dda/namespacemc.html#a93b89015c5feaff1a86607a1bbe5b7b6',1,'mc']]],
+  ['position_5fproperty_5fstretch_5fx',['POSITION_PROPERTY_STRETCH_X',['../df/dda/namespacemc.html#a3f402a582017395627a94f19c99ae875',1,'mc']]],
+  ['properties',['properties',['../d5/d86/classmc_1_1gfx_1_1_entity.html#afdb6c6c1d36122e51a16ac8ca85db1e4',1,'mc::gfx::Entity']]]
 ];

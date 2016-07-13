@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kill',['kill',['../d3/d0b/classmc_1_1_entity.html#ac627ec2fd2977dee614b96cee332775f',1,'mc::Entity']]]
+  ['kill',['kill',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a00d40394078cb8f1abc7461bad968fb3',1,'mc::gfx::Entity']]]
 ];
