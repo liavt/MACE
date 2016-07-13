@@ -2,9 +2,8 @@
 #include <iostream>
 
 namespace mc {
-	GraphicsModule::GraphicsModule()
+	GraphicsModule::GraphicsModule() :EntityModule()
 	{
-		EntityModule();
 	}
 	void GraphicsModule::init() {
 		std::cout << "Inited!" << std::endl;

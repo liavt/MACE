@@ -6,6 +6,8 @@
 namespace mc {
 	class GraphicsModule : public EntityModule {
 	public:
+		GraphicsModule();
+
 		using EntityModule::EntityModule;
 
 		void init();
