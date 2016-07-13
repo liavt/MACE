@@ -15,22 +15,15 @@ namespace mc {
 		destroy();
 	}
 
-	void Container::tickChildren()
+	void Container::updateChildren()
 	{
-		for (Size i = 0; i < children.size();i++) {
+		for (Size i = 0; i < children.size(); i++) {
 			if (children[i]->getProperty(ENTITY_PROPERTY_DEAD)) {
 				children[i]->kill();
 				removeChild(i);
 				i--;//update the index after the removal of an element
 				return;
 			}
-			children[i]->tick();
-		}
-	}
-
-	void Container::updateChildren()
-	{
-		for (Size i = 0; i < children.size(); i++) {
 			children[i]->update();
 		}
 	}
@@ -38,7 +31,9 @@ namespace mc {
 	void Container::initChildren()
 	{
 		for (Size i = 0; i < children.size(); i++) {
+		
 			children[i]->init();
+			
 		}
 	}
 	
@@ -50,6 +45,11 @@ namespace mc {
 			}
 		}
 		return false;
+	}
+
+	void Container::clearChildren()
+	{
+		children.clear();
 	}
 
 	void Container::destroyChildren()
@@ -146,10 +146,6 @@ namespace mc {
 		return children.size();
 	}
 
-	void Container::tick(){
-		tickChildren();
-	}
-
 	void Container::update() {
 		updateChildren();
 	}
@@ -166,20 +162,13 @@ namespace mc {
 		destroy();
 	}
 
-	void Entity::tick() {
-		if(getProperty(ENTITY_PROPERTY_TICK_ENABLED)){
-			if (getProperty(ENTITY_PROPERTY_DIRTY)) {
-				cleanEntity(this);
-			}
-			customTick();
-			Container::tick();
-		}
-	}
-
 	void Entity::update() {
 		if(getProperty(ENTITY_PROPERTY_UPDATE_ENABLED)){
 			customUpdate();
 			Container::update();
+		}
+		if (getProperty(ENTITY_PROPERTY_DIRTY)) {
+			cleanEntity(this);
 		}
 	}
 
@@ -212,17 +201,14 @@ namespace mc {
 
 	Entity::~Entity()
 	{
-		if (getProperty(ENTITY_PROPERTY_DELETE_SELF)) {
-			delete this;
-		}
 	}
 
-	ByteField Entity::getProperties()
+	ByteField& Entity::getProperties()
 	{
 		return properties;
 	}
 
-	void Entity::setProperties(ByteField b)
+	void Entity::setProperties(ByteField& b)
 	{
 		properties = b;
 	}
@@ -247,11 +233,6 @@ namespace mc {
 	void EntityModule::init()
 	{
 		Container::init();
-	}
-
-	void EntityModule::tick()
-	{
-		Container::tick();
 	}
 
 	void EntityModule::update() {

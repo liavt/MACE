@@ -10,7 +10,6 @@ namespace mc {
 	class EntityModule;
 
 	class Container {
-		void tickChildren();
 		void updateChildren();
 		void initChildren();
 		void destroyChildren();//think of the children!
@@ -21,10 +20,9 @@ namespace mc {
 		Container();
 
 	public:
-		~Container();
+		virtual ~Container();
 
 		virtual void update();
-		virtual void tick();
 		virtual void init();
 		virtual void destroy();
 
@@ -35,6 +33,8 @@ namespace mc {
 		void removeChild(unsigned int index);
 
 		bool hasChild(Entity& e);
+
+		void clearChildren();
 
 		Entity& operator[](unsigned int i);//get children via [i]
 		const Entity& operator[](unsigned int i) const;//get children via [i]
@@ -56,7 +56,6 @@ namespace mc {
 
 	class Entity : public Container{
 		friend class Container;
-		void tick();
 		void update();
 		void init();
 		void destroy();
@@ -70,10 +69,10 @@ namespace mc {
 		Entity();
 		Entity(const Entity &obj);
 
-		~Entity();
+		virtual ~Entity();
 
-		ByteField getProperties();
-		void setProperties(ByteField b);
+		ByteField& getProperties();
+		void setProperties(ByteField& b);
 
 		bool getProperty(unsigned int position);
 		void setProperty(unsigned int position, bool value);
@@ -90,7 +89,6 @@ namespace mc {
 
 	protected:
 		virtual void customUpdate() = 0;
-		virtual void customTick() = 0;
 		virtual void customInit() = 0;
 		virtual void customDestroy() = 0;
 
@@ -103,7 +101,6 @@ namespace mc {
 		EntityModule();
 
 		void init();
-		void tick();
 		void update();
 		void destroy();
 		std::string getName() const;

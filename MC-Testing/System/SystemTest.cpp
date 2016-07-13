@@ -5,18 +5,16 @@ class TestModule :public mc::Module {
 public:
 	TestModule() : mc::Module() {};
 
-	int ticks=0;
+	int updates = 0;
 	bool isInit = false;
 	
 
 	void init() {
 		isInit = true;
 	};
-	void tick() {
-		ticks++;
-	};
+
 	void update() {
-	
+		updates++;
 	}
 	void destroy() {
 		isInit = false;
@@ -60,21 +58,21 @@ TEST_CASE("Modules getting updated","[module][system]") {
 	mc::System::addModule(m);
 
 	REQUIRE_FALSE(m.isInit);
-	REQUIRE(m.ticks == 0);
+	REQUIRE(m.updates == 0);
 
 	mc::System::init();
 
 	REQUIRE(m.isInit);
-	REQUIRE(m.ticks == 0);
+	REQUIRE(m.updates == 0);
 
 	for (unsigned int i = 0; i < 10; i++) {
-		REQUIRE(m.ticks == i);
-		mc::System::tick();
+		REQUIRE(m.updates == i);
+		mc::System::update();
 	}
 
 	mc::System::terminate();
 
-	REQUIRE(m.ticks == 10);
+	REQUIRE(m.updates == 10);
 	REQUIRE_FALSE(m.isInit);
 
 	mc::System::removeModule(m);
@@ -82,11 +80,11 @@ TEST_CASE("Modules getting updated","[module][system]") {
 	mc::System::init();
 
 	REQUIRE_FALSE(m.isInit);
-	REQUIRE(m.ticks == 10);
+	REQUIRE(m.updates == 10);
 
 	for (unsigned int i = 0; i < 10; i++) {
-		REQUIRE(m.ticks == 10);
-		mc::System::tick();
+		REQUIRE(m.updates == 10);
+		mc::System::update();
 	}
 
 	mc::System::terminate();

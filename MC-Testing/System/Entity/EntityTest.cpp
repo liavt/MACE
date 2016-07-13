@@ -7,16 +7,12 @@ public:
 	DummyEntity(): Entity(){};
 
 
-	bool isUpdated = false, isTicked = false, isInit = false, isDestroyed = false;
+	bool isUpdated = false,  isInit = false, isDestroyed = false;
 protected:
 
 	void customUpdate() {
 		std::cout << "updated"<<std::endl;
-		isUpdated = false;
-	}
-
-	void customTick() {
-		isTicked = true;
+		isUpdated = true;
 	}
 
 	void customInit() {
@@ -30,116 +26,126 @@ protected:
 
 namespace mc{
 
-TEST_CASE("Testing the getParent() function","[entity][system]") {
 	EntityModule c = EntityModule();
+
+
+TEST_CASE("Testing the getParent() function","[entity][system]") {
 
 	DummyEntity* e = new DummyEntity();
 
 
 	c.addChild(*e);
 
-	REQUIRE(e->getParent()==c);
+	SECTION("Checking whether it recognizes the parent"){
 
-	c.removeChild(*e);
+		REQUIRE(e->getParent()==c);
+	}
+
+	c.clearChildren();
+
+	delete e;
 
 }
 	
-TEST_CASE("Testing the ENABLE property of an entity","[entity][system]") {
-	EntityModule c = EntityModule();
+TEST_CASE("Testing the ENABLE property of an entity", "[entity][system]") {
 
 	DummyEntity* e = new DummyEntity();
 
 
 	c.addChild(*e);
 
-	REQUIRE(!e->isTicked);
+	SECTION("Updating an entity"){
+		e->isUpdated = false;
+		e->setProperty(ENTITY_PROPERTY_UPDATE_ENABLED, false);
 
-	c.tick();
+		c.update();
 
-	REQUIRE(e->isTicked);
+		REQUIRE(!e->isUpdated);
+	}
 
-	c.update();
+	c.clearChildren();
 
-	REQUIRE(e->isUpdated);
+	delete e;
 
-	e->isTicked = false;
-	e->setProperty(ENTITY_PROPERTY_TICK_ENABLED,false);
-
-	c.tick();
-
-	REQUIRE(!e->isTicked);
-
-	e->isUpdated = false;
-	e->setProperty(ENTITY_PROPERTY_UPDATE_ENABLED,false);
-
-	c.update();
-
-	REQUIRE(!e->isUpdated);
-
-	c.removeChild(*e);
 
 }
 
 TEST_CASE("Testing death","[entity][system]") {//the sweet embrace of death
 	
-	EntityModule c = EntityModule();
 
 	DummyEntity* e = new DummyEntity();
 	
 	c.addChild(*e);
 
-	REQUIRE(c.hasChild(*e));
-	REQUIRE(!e->getProperty(ENTITY_PROPERTY_DEAD));
+	SECTION("Killing some entities"){
+		REQUIRE(c.hasChild(*e));
+		REQUIRE(!e->getProperty(ENTITY_PROPERTY_DEAD));
 
-	c.tick();
+		c.update();
 
-	REQUIRE(!e->getProperty(ENTITY_PROPERTY_DEAD));
-	REQUIRE(e->isTicked);
+		REQUIRE(!e->getProperty(ENTITY_PROPERTY_DEAD));
+		REQUIRE(e->isUpdated);
 
 	
-	e->isTicked = false;
-	e->setProperty(ENTITY_PROPERTY_DEAD,true);
+		e->isUpdated = false;
+		e->setProperty(ENTITY_PROPERTY_DEAD,true);
 
-	c.tick();
+		c.update();
 
-	REQUIRE(!e->isTicked);
-	REQUIRE(e->isDestroyed);
-	REQUIRE(!c.hasChild(*e));	
+		REQUIRE(!e->isUpdated);
+		REQUIRE(e->isDestroyed);
+		REQUIRE(!c.hasChild(*e));	
+	}
+
+	c.clearChildren();
+	delete e;
 	
 }
 
 TEST_CASE("Testing init()","[entity][system") {
-	EntityModule c = EntityModule();
 
 	DummyEntity* e = new DummyEntity();
-
-
-	REQUIRE(!e->getProperty(ENTITY_PROPERTY_INIT));
-
 	c.addChild(*e);
 
-	c.init();
 
-	REQUIRE(e->isInit);
-	REQUIRE(e->getProperty(ENTITY_PROPERTY_INIT));
 
-	c.removeChild(*e);
+	SECTION("Calling init() on entities"){
+
+
+		REQUIRE(!e->getProperty(ENTITY_PROPERTY_INIT));
+
+
+		c.init();
+
+		REQUIRE(e->isInit);
+		REQUIRE(e->getProperty(ENTITY_PROPERTY_INIT));
+
+
+	}
+	c.clearChildren();
+
+	delete e;
 
 }
 
 TEST_CASE("Testing entity dirtiness","[entity][system]") {
-	EntityModule c = EntityModule();
 	
 	DummyEntity* e = new DummyEntity();
 
-
 	c.addChild(*e);
 
-	REQUIRE(e->getProperty(ENTITY_PROPERTY_DIRTY));
+	SECTION("Seeing if dirty gets updated"){
+		
+		REQUIRE(e->getProperty(ENTITY_PROPERTY_DIRTY));
+		
+		c.update();
+		
+		REQUIRE(!e->getProperty(ENTITY_PROPERTY_DIRTY));
+	}
+	
+	c.clearChildren();
 
-	c.tick();
-
-	REQUIRE(!e->getProperty(ENTITY_PROPERTY_DIRTY));
+	delete e;
 
 }
 
@@ -159,56 +165,55 @@ TEST_CASE("Testing entity properties","[entity][system]") {
 
 
 TEST_CASE("Testing entity module and updating", "[entity][system]") {
-
-	EntityModule *c = new EntityModule();
-
 	DummyEntity *e = new DummyEntity();
 
-	REQUIRE(c->size() == 0);
-	REQUIRE(e->isTicked == false);
 
-	c->addChild(*e);
+	c.addChild(*e);
 
+	SECTION("Testing init(), destroy(), and destroy()") {
 
-	REQUIRE(c->size() == 1);
+		REQUIRE(e->isUpdated == false);
 
-	c->init();
+		c.init();
 
-	REQUIRE(e->isInit);
+		REQUIRE(e->isInit);
 
-	c->tick();
+		c.update();
 
-	REQUIRE(e->isTicked);
+		REQUIRE(e->isUpdated);
 
-	c->update();
+		c.destroy();
 
-	REQUIRE(e->isUpdated);
+		REQUIRE(e->isDestroyed);
 
-	c->destroy();
+	}
 
-	REQUIRE(e->isDestroyed);
+	c.clearChildren();
+
+	delete e;
+
 
 	DummyEntity child = DummyEntity();
-	e->addChild(child);
 
-	c->init();
+	SECTION("Testing init() destroy() and update() with children"){
 
-	REQUIRE(child.isInit);
+		e->addChild(child);
 
-	c->tick();
+		c.init();
 
-	REQUIRE(child.isTicked);
+		REQUIRE(child.isInit);
 
-	c->update();
+		c.update();
 
-	REQUIRE(child.isUpdated);
+		REQUIRE(child.isUpdated);
 
-	c->destroy();
+		c.destroy();
 
-	REQUIRE(child.isDestroyed);
+		REQUIRE(child.isDestroyed);
 
-	c->removeChild(*e);
+	}
 
-	delete c;
+	c.clearChildren();
+
 }
 }
