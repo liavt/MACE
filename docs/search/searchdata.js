@@ -1,15 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "_abcdefghiklmnoprstuvw~",
+  0: "abcdefghiklmnoprstuvw~",
   1: "bcdegimnopstvw",
   2: "m",
-  3: "bceglmnprstuvw",
-  4: "abcdefghikmnoprstuvw~",
-  5: "abcegmprv",
-  6: "bmsv",
-  7: "cesw",
-  8: "_",
-  9: "lr"
+  3: "abcdefghikmnoprstuvw~",
+  4: "abcegmprv",
+  5: "bmsv",
+  6: "cesw",
+  7: "lr"
 };
 
 var indexSectionNames =
@@ -17,13 +15,11 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "namespaces",
-  3: "files",
-  4: "functions",
-  5: "variables",
-  6: "typedefs",
-  7: "related",
-  8: "defines",
-  9: "pages"
+  3: "functions",
+  4: "variables",
+  5: "typedefs",
+  6: "related",
+  7: "pages"
 };
 
 var indexSectionLabels =
@@ -31,12 +27,10 @@ var indexSectionLabels =
   0: "All",
   1: "Classes",
   2: "Namespaces",
-  3: "Files",
-  4: "Functions",
-  5: "Variables",
-  6: "Typedefs",
-  7: "Friends",
-  8: "Macros",
-  9: "Pages"
+  3: "Functions",
+  4: "Variables",
+  5: "Typedefs",
+  6: "Friends",
+  7: "Pages"
 };
 

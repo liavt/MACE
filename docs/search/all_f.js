@@ -1,14 +1,9 @@
 var searchData=
 [
-  ['pause',['pause',['../da/d46/classmc_1_1aud_1_1_sound.html#a4ef79ae2d381cb5f4a04c26d4b4ee865',1,'mc::aud::Sound']]],
-  ['play',['play',['../da/d46/classmc_1_1aud_1_1_sound.html#a2e9c8bd4b519c3819109ba93687d413d',1,'mc::aud::Sound']]],
-  ['position',['Position',['../d1/dbc/classmc_1_1_position.html',1,'mc']]],
-  ['position_2eh',['Position.h',['../d4/d51/_position_8h.html',1,'']]],
-  ['position_5fdefault_5fproperties',['POSITION_DEFAULT_PROPERTIES',['../df/dda/namespacemc.html#a47f82d173aac0c2dab851dfd482fb9d7',1,'mc']]],
-  ['position_5fproperty_5fignore_5fparent',['POSITION_PROPERTY_IGNORE_PARENT',['../df/dda/namespacemc.html#a9085688ce1dec515cd75c6fef11a1ec5',1,'mc']]],
-  ['position_5fproperty_5finherit_5fstretch_5fx',['POSITION_PROPERTY_INHERIT_STRETCH_X',['../df/dda/namespacemc.html#a1ddeace50be9bf89c37a08de87213e85',1,'mc']]],
-  ['position_5fproperty_5finherit_5fstretch_5fy',['POSITION_PROPERTY_INHERIT_STRETCH_Y',['../df/dda/namespacemc.html#a29d2f6b06f29e315be17e977d9a7eabb',1,'mc']]],
-  ['position_5fproperty_5fstrecth_5fy',['POSITION_PROPERTY_STRECTH_Y',['../df/dda/namespacemc.html#a93b89015c5feaff1a86607a1bbe5b7b6',1,'mc']]],
-  ['position_5fproperty_5fstretch_5fx',['POSITION_PROPERTY_STRETCH_X',['../df/dda/namespacemc.html#a3f402a582017395627a94f19c99ae875',1,'mc']]],
-  ['properties',['properties',['../d5/d86/classmc_1_1gfx_1_1_entity.html#afdb6c6c1d36122e51a16ac8ca85db1e4',1,'mc::gfx::Entity']]]
+  ['readme',['README',['../md_Docs_README.html',1,'']]],
+  ['readme',['README',['../md_README.html',1,'']]],
+  ['r',['r',['../d0/d0b/classmc_1_1_color.html#a21e476d9238f36f210f5cd35868b3d08',1,'mc::Color']]],
+  ['removechild',['removeChild',['../d9/d73/classmc_1_1gfx_1_1_container.html#a5a1957f6abd3bfbf46a437a6a2602346',1,'mc::gfx::Container::removeChild(const Entity &amp;e)'],['../d9/d73/classmc_1_1gfx_1_1_container.html#a5f6e139a5598d5e3725524f732fe43c8',1,'mc::gfx::Container::removeChild(unsigned int index)']]],
+  ['removemodule',['removeModule',['../dc/dc0/classmc_1_1_system.html#ab37f8cd571040772e73a07584f8b0dba',1,'mc::System::removeModule(Module &amp;m)'],['../dc/dc0/classmc_1_1_system.html#a08969e2d1572536469827e7b44e904f9',1,'mc::System::removeModule(std::string module)'],['../dc/dc0/classmc_1_1_system.html#a5077bedad91cc43d88bbe078bf976c3e',1,'mc::System::removeModule(unsigned int i)']]],
+  ['rewind',['rewind',['../da/d46/classmc_1_1aud_1_1_sound.html#ae3cc987275bd970f957f917c39d69184',1,'mc::aud::Sound']]]
 ];

@@ -1,11 +1,17 @@
 var searchData=
 [
-  ['b',['b',['../d0/d0b/classmc_1_1_color.html#afd537e7822ea1674f3f66db22b343ec0',1,'mc::Color']]],
-  ['begin',['begin',['../d9/d73/classmc_1_1gfx_1_1_container.html#aaff230d9cb2da6133b0e0762e76e5787',1,'mc::gfx::Container::begin()'],['../d0/d81/classmc_1_1_vector.html#a1cb61e23c56abeb0b1d4c1a8b569e831',1,'mc::Vector::begin()']]],
-  ['bitfield',['BitField',['../de/d9b/structmc_1_1_bit_field.html',1,'mc']]],
-  ['bitfield',['BitField',['../de/d9b/structmc_1_1_bit_field.html#a7b4b827b8d03ce159039515f181e7897',1,'mc::BitField::BitField()'],['../de/d9b/structmc_1_1_bit_field.html#a02999c42a220b488e77e390e10ba1804',1,'mc::BitField::BitField(T value)'],['../de/d9b/structmc_1_1_bit_field.html#a47e7d0ee9dcf58724327d8746e0cfa99',1,'mc::BitField::BitField(BitField &amp;clone)']]],
-  ['bitfield_2eh',['BitField.h',['../d2/da1/_bit_field_8h.html',1,'']]],
-  ['bitfield_3c_20byte_20_3e',['BitField&lt; Byte &gt;',['../de/d9b/structmc_1_1_bit_field.html',1,'mc']]],
-  ['byte',['Byte',['../df/dda/namespacemc.html#a64bc4fa1f43bc4da5c7ac98c04c863e8',1,'mc']]],
-  ['bytefield',['ByteField',['../df/dda/namespacemc.html#a4ed352b00f84d2c3e9843cf5ea375ca0',1,'mc']]]
+  ['children',['children',['../d9/d73/classmc_1_1gfx_1_1_container.html#ad1bfe6203e007af52b3faadc126d7c2e',1,'mc::gfx::Container']]],
+  ['cleanentity',['cleanEntity',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a51ce9f7c7931d9c298b25d5d2aed1ec0',1,'mc::gfx::Entity']]],
+  ['clearchildren',['clearChildren',['../d9/d73/classmc_1_1gfx_1_1_container.html#a83a0541bd99b6c4d12fe3a13e42dfb52',1,'mc::gfx::Container']]],
+  ['color',['Color',['../d0/d0b/classmc_1_1_color.html',1,'mc']]],
+  ['color',['Color',['../d0/d0b/classmc_1_1_color.html#a80052b11d19f84f421a3fcb93826af6e',1,'mc::Color::Color(float red, float green, float blue, float alpha=1.0f)'],['../d0/d0b/classmc_1_1_color.html#a49da9f32b70d62c34a2ea380d5dc3eae',1,'mc::Color::Color(Byte red, Byte green, Byte blue, Byte alpha=254)'],['../d0/d0b/classmc_1_1_color.html#a436ad96689f1ca1da36291c632bf60f6',1,'mc::Color::Color(std::array&lt; Byte, 4 &gt; rgba)'],['../d0/d0b/classmc_1_1_color.html#a8517c04d0d219ba58d38dd78275a768c',1,'mc::Color::Color(std::array&lt; float, 4 &gt; values)'],['../d0/d0b/classmc_1_1_color.html#ac4d3de0b00fb4965ff453bea21bd5f97',1,'mc::Color::Color()']]],
+  ['container',['Container',['../d9/d73/classmc_1_1gfx_1_1_container.html',1,'mc::gfx']]],
+  ['container',['Container',['../d5/d86/classmc_1_1gfx_1_1_entity.html#aee29d97f7e87f0263024133085c28e3d',1,'mc::gfx::Entity']]],
+  ['content',['content',['../d0/d81/classmc_1_1_vector.html#a2f84e2ba450c97ace26007263a1a4313',1,'mc::Vector']]],
+  ['convertfloattorgba',['convertFloatToRGBA',['../d0/d0b/classmc_1_1_color.html#a6e8a03a26fe7d0580ba2230244b07c82',1,'mc::Color']]],
+  ['convertrgbatofloat',['convertRGBAToFloat',['../d0/d0b/classmc_1_1_color.html#a016b46c09baf8ed385dbd0c1712b0bb3',1,'mc::Color']]],
+  ['create',['create',['../d9/dc9/classmc_1_1win_1_1_window.html#a76e6a4d1dce1501ca52766ac319ddff6',1,'mc::win::Window']]],
+  ['customdestroy',['customDestroy',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a2d109385d78a2e806ae82d7258559d22',1,'mc::gfx::Entity']]],
+  ['custominit',['customInit',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a11e2c30e2290cf406a864f8d66c129e4',1,'mc::gfx::Entity']]],
+  ['customupdate',['customUpdate',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a1d304c47e4677490b134b74e641a3747',1,'mc::gfx::Entity']]]
 ];
