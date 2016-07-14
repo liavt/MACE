@@ -147,7 +147,7 @@ namespace mc {
 		If your `Module` depends on another `Module,` use this function to require your dependencies.
 		@param module Name to assert
 		@param errorMessage What to print if the assertion fails
-		@throw DependencyNotFound if there isn't a `Module` with the requested name.
+		@throw AssertionError if there isn't a `Module` with the requested name.
 		*/
 		static void assertModule(std::string module,std::string errorMessage);
 		/**

@@ -3,6 +3,7 @@
 #include <MC-System/Constants.h>
 #include <MC-System/System.h>
 #include <MC-System/Utility/BitField.h>
+#include <MC-Graphics/GraphicsConstants.h>
 
 
 namespace mc {
@@ -178,8 +179,7 @@ namespace mc {
 			virtual void customUpdate() = 0;
 			virtual void customInit() = 0;
 			virtual void customDestroy() = 0;
-
-			ByteField properties = ENTITY_DEFAULT_PROPERTIES;
+			ByteField properties = mc::gfx::ENTITY_DEFAULT_PROPERTIES;
 
 		};
 

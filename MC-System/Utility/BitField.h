@@ -9,7 +9,7 @@ namespace mc {
 	to operate on it's wrapped value, to allow for you to manually manipulate it.
 	<p>
 	To construct it, you can simply call {@code BitField<Byte> field = 0b0000000.} There are constructors for those who want to use them.
-
+	@tparam T What primitive the`BitField` should use to store the bits
 	*/
 	template<typename T>
 	struct BitField {

@@ -1,15 +1,16 @@
 #pragma once
 
 #include <MC-System/System.h>
-#include <MC-Graphics/Entity.h>
 #include <MC-Window/WindowModule.h>
+#include <MC-Graphics/Entity.h>
 
 namespace mc {
 	/**
 	Namespace containing classes used for Graphics in MACE.
 	*/
 	namespace gfx{
-		class GraphicsModule : public EntityModule, public win::WindowModule {
+
+		class GraphicsModule : public mc::gfx::EntityModule, public win::WindowModule {
 		public:
 			GraphicsModule();
 
@@ -23,3 +24,4 @@ namespace mc {
 		};
 	}
 }
+

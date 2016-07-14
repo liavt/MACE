@@ -1,13 +1,21 @@
 #include "Math.h"
+#include <cmath>
 
 namespace mc{
-
-	int mc::Math::floor(double value)
+	double math::abs(const double value)
+	{
+		return value < 0 ? -value : value;
+	}
+	int math::ceil(const double value)
+	{
+		return floor(value)+1;//so cheap, but it works
+	}
+	int mc::math::floor(const double value)
 	{
 		return static_cast<int>(value);
 	}
 
-	bool mc::Math::isPrime(int n)
+	bool mc::math::isPrime(const int n)
 	{
 		if (n % 2 == 0) {
 			return false;
@@ -20,7 +28,26 @@ namespace mc{
 		return true;
 	}
 
-	int Math::nextDigitOf2(int n)
+	double math::ln(const double value) {
+		return ln(value);
+	}
+
+	//pow pow is having fun tonight
+	double math::pow(const double value, const double power)
+	{
+		double out = value;
+		//boom! pow!
+	
+		return pow((pow(math::EULERS_CONSTANT,ln(out))),power);
+	}
+
+	double math::tan(const double x)
+	{
+		//whew lad polynomial approximations are quite crazy
+		return x+((pow(x,3))/3)+((2*(pow(x,5)))/15)+((17*pow(x,7))/315);
+	}
+
+	int math::nextDigitOf2(const int n)
 	{
 		int v = n;
 		v--;
@@ -34,7 +61,7 @@ namespace mc{
 	}
 
 	/*	
-	Matrix4f mc::Math::getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio)
+	Matrix4f mc::math::getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio)
 	{
 		float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;

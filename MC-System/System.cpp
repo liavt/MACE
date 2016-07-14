@@ -64,7 +64,7 @@ namespace mc {
 	void System::assertModule(std::string module, std::string errorMessage)
 	{
 		if (!moduleExists(module)) {
-			throw DependencyNotFound(errorMessage);
+			throw AssertionError(errorMessage);
 		}
 	}
 	void System::assertModule(std::string module)

@@ -5,10 +5,10 @@
 
 namespace mc {
 	/**
-	@brief Class that allows for vector math
+	1-dimensional vector class that supports mathmatical operations.
 	
-	@tparam T what the {@code Vector} is made of and calculates with.
-	@tparam N width of the {@code Vector}
+	@tparam T what the `Vector` is made of and calculates with.
+	@tparam N width of the `Vector`
 	*/
 	template <typename T,int N>
 	class Vector {
@@ -162,6 +162,11 @@ namespace mc {
 	using Vector4i = mc::Vector<int, 4>;
 	using Vector5i = mc::Vector<int, 5>;
 
+	/**
+	Used in the `Matrix` class.
+	@tparam T What data type the row is made of
+	@tparam N The width of the row
+	*/
 	template <typename T, int N>
 	using MatrixRow = mc::Vector<T, N>;//this is for clarity
 
@@ -209,6 +214,12 @@ namespace mc {
 	using MatrixRow4i = mc::MatrixRow<int, 4>;
 	using MatrixRow5i = mc::MatrixRow<int, 5>;
 
+	/**
+	A class representing a 2-dimensional matrix, and allows for math involving matrices.
+	@tparam T What the `Matrix should consist of
+	@tparam W The width of the `Matrix`
+	@tparam H The height of the `Matrix`
+	*/
 	template<typename T, int W, int H>
 	struct Matrix : Vector<MatrixRow<T, H>, W> {
 		using Vector::Vector;

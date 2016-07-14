@@ -1,6 +1,7 @@
 #include <Catch.h>
 #include <iostream>
 #include <MC-Graphics/Entity.h>
+#include <MC-Graphics/Graphics.h>
 
 class DummyEntity : public mc::gfx::Entity {
 public:
