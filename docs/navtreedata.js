@@ -1,7 +1,6 @@
 var NAVTREE =
 [
   [ "MACE", "index.html", [
-    [ "README", "md_Docs_README.html", null ],
     [ "LICENSE", "md_LICENSE.html", null ],
     [ "README", "md_README.html", null ],
     [ "Namespaces", null, [
@@ -30,7 +29,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"de/d9b/structmc_1_1_bit_field.html#ac7bcdb2a7ffde03bde2269948038a5a5"
+"de/d9b/structmc_1_1_bit_field.html#acb4ec204eda22806184cd29fe680fafa"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

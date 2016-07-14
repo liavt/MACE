@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['set',['set',['../de/d9b/structmc_1_1_bit_field.html#a8be3506d419dd9e5d7bae405ede836c3',1,'mc::BitField::set()'],['../d0/d81/classmc_1_1_vector.html#a11e1f8cfd518752bb19b35437c66ee9d',1,'mc::Vector::set()'],['../dd/db1/structmc_1_1_matrix.html#a7a4970e6c6d4c277cd7d15cffb3e470f',1,'mc::Matrix::set()']]],
+  ['set',['set',['../de/d9b/structmc_1_1_bit_field.html#a8be3506d419dd9e5d7bae405ede836c3',1,'mc::BitField::set()'],['../d0/d81/classmc_1_1_vector.html#a11e1f8cfd518752bb19b35437c66ee9d',1,'mc::Vector::set()'],['../d4/d3d/classmc_1_1_matrix.html#a7a4970e6c6d4c277cd7d15cffb3e470f',1,'mc::Matrix::set()']]],
   ['setalpha',['setAlpha',['../d0/d0b/classmc_1_1_color.html#a9c82e480305368648a769b212508ae44',1,'mc::Color']]],
   ['setbit',['setBit',['../de/d9b/structmc_1_1_bit_field.html#a4b93021726063ace31599f9e8a2df222',1,'mc::BitField']]],
   ['setblue',['setBlue',['../d0/d0b/classmc_1_1_color.html#ad8ba9328b871cc8d08785b6ad03d4d2c',1,'mc::Color']]],
@@ -15,11 +15,12 @@ var searchData=
   ['setrgb',['setRGB',['../d0/d0b/classmc_1_1_color.html#aedc41be210068d6f866946c4d7d879a6',1,'mc::Color']]],
   ['setrgba',['setRGBA',['../d0/d0b/classmc_1_1_color.html#ac23627f6b91a7ce949adebcd27c1df5c',1,'mc::Color']]],
   ['setvalues',['setValues',['../d0/d0b/classmc_1_1_color.html#ae5b6e1cb3b203ced2ccff4ed944c356f',1,'mc::Color::setValues(std::array&lt; float, 4 &gt; rgba)'],['../d0/d0b/classmc_1_1_color.html#af499d9082bc56e0adc56d119b7239645',1,'mc::Color::setValues(std::array&lt; float, 3 &gt; rgb)']]],
-  ['size',['size',['../d9/d73/classmc_1_1gfx_1_1_container.html#ab4f7bb80db4538a4a5328eb168ad7e23',1,'mc::gfx::Container::size()'],['../de/d9b/structmc_1_1_bit_field.html#a6c48d4dec674ff73a1a06239e9b6175d',1,'mc::BitField::size()'],['../d0/d81/classmc_1_1_vector.html#a85c37dc7b6c2ad12f5cab67d6db54b49',1,'mc::Vector::size()'],['../dd/db1/structmc_1_1_matrix.html#ac7b493824ba976376aeac2de193f41f2',1,'mc::Matrix::size()'],['../df/dda/namespacemc.html#ad1c06461067735b3b17e0df612532c4e',1,'mc::Size()']]],
-  ['sound',['Sound',['../da/d46/classmc_1_1aud_1_1_sound.html',1,'mc::aud']]],
+  ['size',['size',['../d9/d73/classmc_1_1gfx_1_1_container.html#ab4f7bb80db4538a4a5328eb168ad7e23',1,'mc::gfx::Container::size()'],['../de/d9b/structmc_1_1_bit_field.html#a1b60ef9279ae0c046b7a7c5998e5f803',1,'mc::BitField::size()'],['../d0/d81/classmc_1_1_vector.html#a85c37dc7b6c2ad12f5cab67d6db54b49',1,'mc::Vector::size()'],['../d4/d3d/classmc_1_1_matrix.html#ac7b493824ba976376aeac2de193f41f2',1,'mc::Matrix::size()'],['../df/dda/namespacemc.html#ad1c06461067735b3b17e0df612532c4e',1,'mc::Size()']]],
   ['sound',['Sound',['../da/d46/classmc_1_1aud_1_1_sound.html#aa4a89a3227329247a1fad56cf75cd5e6',1,'mc::aud::Sound']]],
+  ['sound',['Sound',['../da/d46/classmc_1_1aud_1_1_sound.html',1,'mc::aud']]],
   ['soundmanager',['SoundManager',['../d6/dd6/classmc_1_1aud_1_1_sound_manager.html',1,'mc::aud']]],
+  ['sqr',['sqr',['../dc/d51/namespacemc_1_1math.html#ab0bb1980b03f7b6994e80b0b8e732579',1,'mc::math']]],
   ['stop',['stop',['../da/d46/classmc_1_1aud_1_1_sound.html#a989f93ac208ba84b67051aeef0fe2669',1,'mc::aud::Sound']]],
-  ['system',['System',['../dc/dc0/classmc_1_1_system.html',1,'mc']]],
-  ['system',['System',['../d8/dc9/classmc_1_1_module.html#af18a9ee98e70982bfe2975391d7221a5',1,'mc::Module']]]
+  ['system',['System',['../d8/dc9/classmc_1_1_module.html#af18a9ee98e70982bfe2975391d7221a5',1,'mc::Module']]],
+  ['system',['System',['../dc/dc0/classmc_1_1_system.html',1,'mc']]]
 ];

@@ -8,6 +8,5 @@ var searchData=
   ['position_5fproperty_5finherit_5fstretch_5fy',['POSITION_PROPERTY_INHERIT_STRETCH_Y',['../de/d6d/namespacemc_1_1gfx.html#a547f48ad75e68e38458f5fdb6c12eac1',1,'mc::gfx']]],
   ['position_5fproperty_5fstrecth_5fy',['POSITION_PROPERTY_STRECTH_Y',['../de/d6d/namespacemc_1_1gfx.html#ac5668a2af1f0d8c0dc7427f5f2a87ae8',1,'mc::gfx']]],
   ['position_5fproperty_5fstretch_5fx',['POSITION_PROPERTY_STRETCH_X',['../de/d6d/namespacemc_1_1gfx.html#a452d532967752c8d7f21ad13412f6b3f',1,'mc::gfx']]],
-  ['pow',['pow',['../dc/d51/namespacemc_1_1math.html#a3df58fbaa81e1a924353b546d410f305',1,'mc::math']]],
-  ['properties',['properties',['../d5/d86/classmc_1_1gfx_1_1_entity.html#afdb6c6c1d36122e51a16ac8ca85db1e4',1,'mc::gfx::Entity']]]
+  ['pow',['pow',['../dc/d51/namespacemc_1_1math.html#a3df58fbaa81e1a924353b546d410f305',1,'mc::math']]]
 ];

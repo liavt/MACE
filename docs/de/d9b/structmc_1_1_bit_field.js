@@ -55,7 +55,7 @@ var structmc_1_1_bit_field =
     [ "operator~", "de/d9b/structmc_1_1_bit_field.html#ad56413893e6d94f38e44eff687d7d148", null ],
     [ "set", "de/d9b/structmc_1_1_bit_field.html#a8be3506d419dd9e5d7bae405ede836c3", null ],
     [ "setBit", "de/d9b/structmc_1_1_bit_field.html#a4b93021726063ace31599f9e8a2df222", null ],
-    [ "size", "de/d9b/structmc_1_1_bit_field.html#a6c48d4dec674ff73a1a06239e9b6175d", null ],
+    [ "size", "de/d9b/structmc_1_1_bit_field.html#a1b60ef9279ae0c046b7a7c5998e5f803", null ],
     [ "toggleBit", "de/d9b/structmc_1_1_bit_field.html#a715d75dd973a6fec9ed016b8a8d888db", null ],
     [ "untoggleBit", "de/d9b/structmc_1_1_bit_field.html#a795cb413594e5d6e0210e4017a9242d5", null ],
     [ "value", "de/d9b/structmc_1_1_bit_field.html#ac4a96f98afd87fe71a7ad7c288e9e7d6", null ]

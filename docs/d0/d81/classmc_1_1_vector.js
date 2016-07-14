@@ -1,7 +1,7 @@
 var classmc_1_1_vector =
 [
-    [ "Vector", "d0/d81/classmc_1_1_vector.html#a05aed259e7ff40b4e6639f7dda5886cd", null ],
     [ "Vector", "d0/d81/classmc_1_1_vector.html#a7c2fa3ae75ebb6d155aa3e3aa140ce09", null ],
+    [ "Vector", "d0/d81/classmc_1_1_vector.html#a05aed259e7ff40b4e6639f7dda5886cd", null ],
     [ "Vector", "d0/d81/classmc_1_1_vector.html#a18dc923904b1d0511a9b9eefa72e8cb6", null ],
     [ "Vector", "d0/d81/classmc_1_1_vector.html#a9cd50db0b1a697ff4368a1072e99182d", null ],
     [ "begin", "d0/d81/classmc_1_1_vector.html#a1cb61e23c56abeb0b1d4c1a8b569e831", null ],
@@ -22,5 +22,5 @@ var classmc_1_1_vector =
     [ "set", "d0/d81/classmc_1_1_vector.html#a11e1f8cfd518752bb19b35437c66ee9d", null ],
     [ "setContents", "d0/d81/classmc_1_1_vector.html#a2e674c851be8cf10808c86895e9ca86f", null ],
     [ "size", "d0/d81/classmc_1_1_vector.html#a85c37dc7b6c2ad12f5cab67d6db54b49", null ],
-    [ "content", "d0/d81/classmc_1_1_vector.html#a2f84e2ba450c97ace26007263a1a4313", null ]
+    [ "Matrix", "d0/d81/classmc_1_1_vector.html#a34913a9261681f734171a6da06bd56fe", null ]
 ];

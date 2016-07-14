@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['readme',['README',['../md_Docs_README.html',1,'']]],
   ['readme',['README',['../md_README.html',1,'']]],
   ['r',['r',['../d0/d0b/classmc_1_1_color.html#a21e476d9238f36f210f5cd35868b3d08',1,'mc::Color']]],
   ['removechild',['removeChild',['../d9/d73/classmc_1_1gfx_1_1_container.html#a5a1957f6abd3bfbf46a437a6a2602346',1,'mc::gfx::Container::removeChild(const Entity &amp;e)'],['../d9/d73/classmc_1_1gfx_1_1_container.html#a5f6e139a5598d5e3725524f732fe43c8',1,'mc::gfx::Container::removeChild(unsigned int index)']]],

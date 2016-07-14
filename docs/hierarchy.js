@@ -30,6 +30,6 @@ var hierarchy =
       ] ]
     ] ],
     [ "mc::Vector< MatrixRow< T, H >, W >", "d0/d81/classmc_1_1_vector.html", [
-      [ "mc::Matrix< T, W, H >", "dd/db1/structmc_1_1_matrix.html", null ]
+      [ "mc::Matrix< T, W, H >", "d4/d3d/classmc_1_1_matrix.html", null ]
     ] ]
 ];
