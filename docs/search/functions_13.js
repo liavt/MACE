@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['width',['width',['../dd/db1/structmc_1_1_matrix.html#af50d7f0d342318246a98fb7e01ae4989',1,'mc::Matrix']]],
-  ['window',['Window',['../d9/dc9/classmc_1_1win_1_1_window.html#acd8af0f24c43abc1e217d87909a8eccf',1,'mc::win::Window']]],
-  ['windowmodule',['WindowModule',['../d2/d86/classmc_1_1win_1_1_window_module.html#ad939328806529af40803ab0127781518',1,'mc::win::WindowModule']]]
+  ['vector',['Vector',['../d0/d81/classmc_1_1_vector.html#a05aed259e7ff40b4e6639f7dda5886cd',1,'mc::Vector::Vector(T arr[N])'],['../d0/d81/classmc_1_1_vector.html#a7c2fa3ae75ebb6d155aa3e3aa140ce09',1,'mc::Vector::Vector()'],['../d0/d81/classmc_1_1_vector.html#a18dc923904b1d0511a9b9eefa72e8cb6',1,'mc::Vector::Vector(std::array&lt; T, N &gt; &amp;contents)'],['../d0/d81/classmc_1_1_vector.html#a9cd50db0b1a697ff4368a1072e99182d',1,'mc::Vector::Vector(const Vector &amp;obj)']]]
 ];

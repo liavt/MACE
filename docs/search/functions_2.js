@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['ceil',['ceil',['../dc/d51/namespacemc_1_1math.html#a0062e47b504ec817027bd87b8fa1ece8',1,'mc::math']]],
   ['cleanentity',['cleanEntity',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a51ce9f7c7931d9c298b25d5d2aed1ec0',1,'mc::gfx::Entity']]],
   ['clearchildren',['clearChildren',['../d9/d73/classmc_1_1gfx_1_1_container.html#a83a0541bd99b6c4d12fe3a13e42dfb52',1,'mc::gfx::Container']]],
   ['color',['Color',['../d0/d0b/classmc_1_1_color.html#a80052b11d19f84f421a3fcb93826af6e',1,'mc::Color::Color(float red, float green, float blue, float alpha=1.0f)'],['../d0/d0b/classmc_1_1_color.html#a49da9f32b70d62c34a2ea380d5dc3eae',1,'mc::Color::Color(Byte red, Byte green, Byte blue, Byte alpha=254)'],['../d0/d0b/classmc_1_1_color.html#a436ad96689f1ca1da36291c632bf60f6',1,'mc::Color::Color(std::array&lt; Byte, 4 &gt; rgba)'],['../d0/d0b/classmc_1_1_color.html#a8517c04d0d219ba58d38dd78275a768c',1,'mc::Color::Color(std::array&lt; float, 4 &gt; values)'],['../d0/d0b/classmc_1_1_color.html#ac4d3de0b00fb4965ff453bea21bd5f97',1,'mc::Color::Color()']]],

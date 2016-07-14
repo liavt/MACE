@@ -1,5 +1,5 @@
 var searchData=
 [
   ['flipbit',['flipBit',['../de/d9b/structmc_1_1_bit_field.html#a24b751df3cc0d33a5891141d2a53e985',1,'mc::BitField']]],
-  ['floor',['floor',['../dd/d0b/classmc_1_1_math.html#a761878b5c3df8f3c0a8fdd24fa76b371',1,'mc::Math']]]
+  ['floor',['floor',['../dc/d51/namespacemc_1_1math.html#a40c6692bfb64bfae9701b02b6e493339',1,'mc::math']]]
 ];

@@ -6,7 +6,7 @@ var searchData=
   ['m_5foriginalwidth',['m_originalWidth',['../d9/dc9/classmc_1_1win_1_1_window.html#a6c8a77574b9a4e23be8f3d2323a02c12',1,'mc::win::Window']]],
   ['m_5ftitle',['m_title',['../d9/dc9/classmc_1_1win_1_1_window.html#a4f0722f431256e75504622d316e63c99',1,'mc::win::Window']]],
   ['m_5fwindow',['m_window',['../d9/dc9/classmc_1_1win_1_1_window.html#a7394d363e4fc1c108c85a36090cc03aa',1,'mc::win::Window']]],
-  ['math',['Math',['../dd/d0b/classmc_1_1_math.html',1,'mc']]],
+  ['math',['math',['../dc/d51/namespacemc_1_1math.html',1,'mc']]],
   ['matrix',['Matrix',['../dd/db1/structmc_1_1_matrix.html',1,'mc']]],
   ['matrix',['Matrix',['../dd/db1/structmc_1_1_matrix.html#a1c0107dd6bf262a240653fcc2650fb2b',1,'mc::Matrix::Matrix()'],['../dd/db1/structmc_1_1_matrix.html#a4bceda87f2c87294d4a631b2229dff8f',1,'mc::Matrix::Matrix(T arr[W][H])'],['../dd/db1/structmc_1_1_matrix.html#a16a62a958729f121805a76d43554bc69',1,'mc::Matrix::Matrix(const Matrix &amp;copy)']]],
   ['matrix1f',['Matrix1f',['../df/dda/namespacemc.html#a6b3e43f58be598160b2a72a45f8da74a',1,'mc']]],

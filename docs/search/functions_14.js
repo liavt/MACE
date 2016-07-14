@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['_7ebitfield',['~BitField',['../de/d9b/structmc_1_1_bit_field.html#a839d6de6ad86a47af3e6a06a5cb96fc7',1,'mc::BitField']]],
-  ['_7econtainer',['~Container',['../d9/d73/classmc_1_1gfx_1_1_container.html#ae99f48b8ad17ff9a2fb54cf0ff1c9e12',1,'mc::gfx::Container']]],
-  ['_7eentity',['~Entity',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a480972fb50bed16c60e9cc20bedcf855',1,'mc::gfx::Entity']]]
+  ['width',['width',['../dd/db1/structmc_1_1_matrix.html#af50d7f0d342318246a98fb7e01ae4989',1,'mc::Matrix']]],
+  ['window',['Window',['../d9/dc9/classmc_1_1win_1_1_window.html#acd8af0f24c43abc1e217d87909a8eccf',1,'mc::win::Window']]],
+  ['windowmodule',['WindowModule',['../d2/d86/classmc_1_1win_1_1_window_module.html#ad939328806529af40803ab0127781518',1,'mc::win::WindowModule']]]
 ];
