@@ -40,7 +40,7 @@ namespace mc {
 		virtual void destroy()=0;
 	
 		/**
-		Override this function and return a UNIQUE name for this `Module.`
+		Override this function and return a UNIQUE name for this `Module`
 		<p>
 		The name for your `Module` is used in comparison, so make sure it is as unique as possible.
 		<p>
@@ -50,7 +50,7 @@ namespace mc {
 	};
 
 	/**
-	Core class of MACE, managing {@link Module Module's.}
+	Core class of MACE, managing `Modules.`
 	*/
 	class System final {
 	public:
@@ -74,12 +74,12 @@ namespace mc {
 		Remove a `Module` by name. 
 		<p>
 		It will find the `Module` based on their {@link Module#getName() getName()} function, so if there are multiple `Modules` with the same name, this function may produce unexpected behavior.
-		@param m Name of a `Module`
+		@param module Name of a `Module`
 		@throws ObjectNotFoundInArray if a `Module` with the given name doesn't exist.
 		*/
 		static void removeModule(std::string module);
 		/**
-		Remove a `Module` by it's index. The index is provided from {@link #addModule(Module&)} or {@link #indexOf(Module&)}
+		Remove a `Module` by it's index. The index is provided from {@link #addModule(Module&)} or {@link #indexOf(const Module&)}
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		@param i Index of a `Module` to delete
 		*/
@@ -114,7 +114,7 @@ namespace mc {
 		Equivalent to {@code 
 			moduleExists(module->getName());
 		}
-		@param `Module` to search for
+		@param module `Module` to search for
 		@return `true` if there is a `Module` with the same name as the parameter, `false` otherwise.
 		*/
 		static bool moduleExists(const Module* module);

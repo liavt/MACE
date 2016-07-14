@@ -11,12 +11,12 @@ namespace mc {
 		static float convertRGBAToFloat(Byte color);
 
 		/**
-		If the inputted {@code float} is more than 1, {@code trimFloat} returns 1.
+		If the inputted `float` is more than 1, `trimFloat()` returns 1.
 		<p>
-		If the inputted {@code float} is less than 0, {@code trimFloat} returns 0.
+		If the inputted `float` is less than 0, `trimFloat()` returns 0.
 
-		@param {@code float} to trim
-		@returns A {@code float} guaranteed to be between 0 and 1.
+		@param color `float` to trim
+		@return A `float` guaranteed to be between 0 and 1.
 		*/
 		static float trimFloat(float color);
 

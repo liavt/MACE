@@ -14,7 +14,7 @@ namespace mc {
 	template<typename T>
 	struct BitField {
 		/**
-		The value this {@code BitField} will be acting upon
+		The value this `BitField` will be acting upon
 		*/
 		T value;
 
@@ -28,7 +28,7 @@ namespace mc {
 		}
 
 		/**
-		Constructs a {@code BitField} with the specified value.
+		Constructs a `BitField` with the specified value.
 		<p>
 		Equal to calling {@code BitField<T> = value}
 		@param value Inital value
@@ -39,7 +39,7 @@ namespace mc {
 
 		/**
 		Cloning constructor
-		@param clone Another {@code BitField} to clone the values of
+		@param clone Another `BitField` to clone the values of
 		*/
 		BitField(BitField& clone) {
 			BitField(clone.value);
@@ -53,8 +53,8 @@ namespace mc {
 		}
 
 		/**
-		Retrieve the value inside of this {@code BitField}
-		@return The value represented by this {@code BitField}
+		Retrieve the value inside of this `BitField`
+		@return The value represented by this `BitField`
 		*/
 		T get() {
 			return value;
@@ -62,7 +62,7 @@ namespace mc {
 
 		/**
 		Change the internal value.
-		@param newValue New value for this {@code BitField} to operate on
+		@param newValue New value for this `BitField` to operate on
 		*/
 		void set(T newValue) {
 			value = newValue;
@@ -71,8 +71,8 @@ namespace mc {
 		/**
 		Make the bit at a certain position toggled or untoggled
 		@param position 0-indexed integer reprsenting which bit to set
-		@param state {@code true} to make the specified bit 1, and {@code false} to make it 0
-		@returns {@code this} for chaining
+		@param state `true` to make the specified bit 1, and `false` to make it 0
+		@return `this` for chaining
 		*/
 		BitField& setBit(unsigned int position, bool state) {
 			if (state) {
@@ -83,9 +83,9 @@ namespace mc {
 		}
 
 		/**
-		Turn bit at {@code position} to be {@code true} or {@code 1}
+		Turn bit at `position` to be `true` or `1`
 		@param position 0-indexed integer representing which bit to toggle
-		@returns {@code this} for chaining
+		@return `this` for chaining
 		*/
 		BitField& toggleBit(unsigned int position) {
 			value |= (1 << position);
@@ -93,9 +93,9 @@ namespace mc {
 		}
 
 		/**
-		Turn bit at {@code position} to be {@code false} or {@code 0}
+		Turn bit at `position` to be `false` or `0`
 		@param position 0-indexed integer representing which bit to untoggle
-		@returns {@code this} for chaining
+		@return `this` for chaining
 		*/
 		BitField& untoggleBit(unsigned int position) {
 			value &= ~(1 << position);
@@ -105,7 +105,7 @@ namespace mc {
 		/**
 		Retrieve the value of a specified bit
 		@param position which bit to check
-		@returns {@code true} if the bit is 1, {@code false} otherwise
+		@return `true` if the bit is 1, `false` otherwise
 		*/
 		bool getBit(unsigned int position) const{
 			return (((value >> position) & 1) == 1);
@@ -114,7 +114,7 @@ namespace mc {
 		/**
 		Inverts a certain bit
 		@param position Which bit to "flip," or invert
-		@returns {@code this} for chaining
+		@return `this` for chaining
 		*/
 		BitField& flipBit(unsigned int position) {
 			value ^= 1 << position;
@@ -125,7 +125,7 @@ namespace mc {
 		Inverses every bit, making every 0 a 1 and every 1 a 0.
 		<p>
 		Equivelant to calling the ~ operator.
-		@returns {@code this} for chainign
+		@return `this` for chainign
 		*/
 		BitField& inverse() {
 			value = ~value;
@@ -133,10 +133,10 @@ namespace mc {
 		}
 
 		/**
-		Gets how many bits this {@code BitField} is holding
+		Gets how many bits this `BitField` is holding
 		@return Number of bits
 		*/
-		Size size() {
+		Size size() const {
 			return sizeof(value) * 8;
 		}
 
@@ -145,7 +145,7 @@ namespace mc {
 
 		//for std::cout
 		/**
-		Operator for {@link std::cout} to correctly print this class
+		Operator for `std::cout` to correctly print this class
 		*/
 		std::ostream &operator<<(std::ostream &os) {
 			for (unsigned int i = size() - 1; i >= 0; i--) os << this[i];
@@ -282,7 +282,7 @@ namespace mc {
 			value <<= places;
 		}
 		/**
-		Compares this {@code BitField} to another value. Will return {@code true} if the bits represented are both equal.
+		Compares this `BitField` to another value. Will return `true` if the bits represented are both equal.
 		*/
 		bool operator==(const T other) {
 			return value == other;
@@ -294,7 +294,7 @@ namespace mc {
 			return !(value == other);
 		}
 		/**
-		Compares this {@code BitField} to another. Will return {@code true} if the bits represented are both equal.
+		Compares this `BitField` to another. Will return `true` if the bits represented are both equal.
 		*/
 		bool operator==(const BitField& other) {
 			return value == other.value;
@@ -427,7 +427,7 @@ namespace mc {
 		/**
 		Gets a bit at a certain position
 		@param position Which bit to retrieve. Zero-indexed
-		@return {@code true} if the bit is 1, {@code false} otherwise.
+		@return `true` if the bit is 1, `false` otherwise.
 		@see getBit(unsigned int)
 		*/
 		bool operator[](unsigned int position) {

@@ -4,6 +4,8 @@
 #include <MC-System/Constants.h>
 
 namespace mc {
+	template<typename T, int W, int H>
+	struct Matrix;//forward-defined here for the friend declaration
 	/**
 	1-dimensional vector class that supports mathmatical operations.
 	
@@ -12,7 +14,29 @@ namespace mc {
 	*/
 	template <typename T,int N>
 	class Vector {
+		/**
+		`Matrix` is friends with `Vector` so `Matrix` can create efficient implementations of `get()` and `set()`
+		*/
+		template<typename T, int W, int H>
+		friend struct Matrix;
 	public:
+		Vector()
+		{
+			this->setContents(std::array<T, N>());
+		};
+
+		Vector(T arr[N]) {
+			this->setContents(std::array<T, N>(arr));
+		}
+
+		Vector(std::array<T, N>& contents)
+		{
+			this->setContents(contents);
+		};
+		Vector(const Vector &obj)
+		{
+			this->setContents(obj.getContents());
+		};
 
 		std::array < T, N>& getContents()
 		{
@@ -127,39 +151,51 @@ namespace mc {
 			return Vector(arr);
 		}
 
-		Vector(T arr[N]) {
-			this->setContents(std::array<T,N>(arr));
-		}
-
-		Vector()
-		{
-			this->setContents(std::array<T, N>());
-		};
-		Vector(std::array<T,N>& contents)
-		{
-			this->setContents(contents);
-		};
-		Vector(const Vector &obj)
-		{
-			this->setContents(obj.getContents());
-		};
-
-	protected:
+	private:
 		std::array<T,N> content;
 	};
 
 
-
+	/**
+	A `Vector` consisting of 1 `float`
+	*/
 	using Vector1f = mc::Vector<float, 1>;
+	/**
+	A `Vector` consisting of 2 `floats`
+	*/
 	using Vector2f = mc::Vector<float, 2>;
+	/**
+	A `Vector` consisting of 3 `floats`
+	*/
 	using Vector3f = mc::Vector<float, 3>;
+	/**
+	A `Vector` consisting of 4 `floats`
+	*/
 	using Vector4f = mc::Vector<float, 4>;
+	/**
+	A `Vector` consisting of 5 `floats`
+	*/
 	using Vector5f = mc::Vector<float, 5>;
 
+	/**
+	A `Vector` consisting of 1 `int`
+	*/
 	using Vector1i = mc::Vector<int, 1>;
+	/**
+	A `Vector` consisting of 2 `ints`
+	*/
 	using Vector2i = mc::Vector<int, 2>;
+	/**
+	A `Vector` consisting of 3 `ints`
+	*/
 	using Vector3i = mc::Vector<int, 3>;
+	/**
+	A `Vector` consisting of 4 `ints`
+	*/
 	using Vector4i = mc::Vector<int, 4>;
+	/**
+	A `Vector` consisting of 5 `ints`
+	*/
 	using Vector5i = mc::Vector<int, 5>;
 
 	/**
@@ -169,50 +205,6 @@ namespace mc {
 	*/
 	template <typename T, int N>
 	using MatrixRow = mc::Vector<T, N>;//this is for clarity
-
-	/*
-	So why are there also presets for MatrixRows when there are presets for Vectors? Here's the reason:
-
-	Lets say I am iterating over a Matrix via the enchanced for loop. With these presets, I could do this:
-
-	Matrix5f matrix = Matrix5f();
-
-	for(MatrixRow5f row : matrix){
-		for(float value : row){
-			--do stuff
-		}
-	}
-
-	Without these presets, the above would have to be done like this:
-
-	for(MatrixRow<float, 5> row : matrix){
-		for(float value : row){
-			--do stuff
-		}
-	}
-
-	or
-
-	for(Vector<float, 5> row : matrix){
-		for(float value : row){
-			--do stuff
-		}
-	}
-
-	So whats the point of a Matrix typedef if the client has to use templates? The entire point of these giant lists of typedefs is for the user to NOT use templates.
-	The templates are there for more advanced user, but for a beginner, MatrixRow5f looks a lot better and easier than MatrixRow<float,5>
-	*/
-	using MatrixRow1f = mc::MatrixRow<float, 1>;
-	using MatrixRow2f = mc::MatrixRow<float, 2>;
-	using MatrixRow3f = mc::MatrixRow<float, 3>;
-	using MatrixRow4f = mc::MatrixRow<float, 4>;
-	using MatrixRow5f = mc::MatrixRow<float, 5>;
-
-	using MatrixRow1i = mc::MatrixRow<int, 1>;
-	using MatrixRow2i = mc::MatrixRow<int, 2>;
-	using MatrixRow3i = mc::MatrixRow<int, 3>;
-	using MatrixRow4i = mc::MatrixRow<int, 4>;
-	using MatrixRow5i = mc::MatrixRow<int, 5>;
 
 	/**
 	A class representing a 2-dimensional matrix, and allows for math involving matrices.
@@ -224,6 +216,9 @@ namespace mc {
 	struct Matrix : Vector<MatrixRow<T, H>, W> {
 		using Vector::Vector;
 
+		/**
+		Default constructor. Creates a `Matrix` of the specified size where every spot is empty.
+		*/
 		Matrix()
 		{
 			this->setContents(std::array<MatrixRow<T, H>, W>());
@@ -232,6 +227,10 @@ namespace mc {
 			}
 		};
 
+		/**
+		Creates a `Matrix` based on a 2-dimensional array. The array's contents will be copied into this `Matrix`
+		@param arr An array of contents
+		*/
 		Matrix(T arr[W][H]) {
 			Matrix();
 			for (int x = 0; x < sizeof(arr) / sizeof(T); x++) {
@@ -241,55 +240,158 @@ namespace mc {
 			}
 		}
 
+		/**
+		Copy constructor. Clones the contents of another `Matrix` into a new `Matrix`
+		@param copy What the clone
+		*/
 		Matrix(const Matrix& copy) {
 			this->setContents(copy.getContents());
 		}
 
+		/**
+		Calculates how many elements are in this `Matrix`
+		@return `width()` times `height()`
+		@see #height()
+		@see #width()
+		*/
 		Size size() {
 			return W*H;
 		}
 
+		/**
+		Calculates the width of this `Matrix`.
+		@return The width specified by the template.
+		@see #height()
+		@see #size()
+		*/
 		Size width() {
 			return W;
 		}
+		/**
+		Calculates the height of this `Matrix`.
+		@return The height specified by the template.
+		@see #width()
+		@see #size()
+		*/
 		Size height() {
 			return H;
 		}
 
+		/**
+		Retrieves the content at a certain position
+		@param x X-coordinate of the requested data
+		@param y Y-coordinate of the requested data
+		@return A reference to the data at `X,Y`
+		@throw IndexOutOfBounds if `x<0`
+		@throw IndexOutOfBounds if `y<0`
+		@throw IndexOutOfBounds if `x>width()`
+		@throw IndexOutOfBounds if `y>height()`
+		@see #set(unsigned int, unsigned int)
+		@see #operator[]
+		*/
 		T& get(unsigned int x, unsigned int y) {
-			if (x >= W) throw IndexOutOfBounds(std::to_string(x)+ " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
-			if (x <0)throw IndexOutOfBounds("The X value, "+std::to_string(x) + " is less than 0!");
-			if (y <0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
+			if (x < 0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
+			if (y < 0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
 			return content[x][y];
 		}
 
+		/**
+		`const` version of {@link #get(unsigned int, unsigned int)}
+		@param x X-coordinate of the requested data
+		@param y Y-coordinate of the requested data
+		@return A reference to the `const` data at `X,Y`
+		@throw IndexOutOfBounds if `x<0`
+		@throw IndexOutOfBounds if `y<0`
+		@throw IndexOutOfBounds if `x>width()`
+		@throw IndexOutOfBounds if `y>height()`
+		@see #set(unsigned int, unsigned int)
+		@see #operator[] const
+		*/
 		const T& get(unsigned int x, unsigned int y) const {
 			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
-			if (x <0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
-			if (y <0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
+			if (x < 0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
+			if (y < 0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
 			return content[x][y];
 		}
 
+
+		/**
+		Writes data at certain coordinates to a new value.
+		@param x X-coordinate of the new data
+		@param y Y-coordinate of the new data
+		@param value New datat to write to `X,Y`
+		@throw IndexOutOfBounds if `x<0`
+		@throw IndexOutOfBounds if `y<0`
+		@throw IndexOutOfBounds if `x>width()`
+		@throw IndexOutOfBounds if `y>height()`
+		@see #operator[]
+		@see #get(unsigned int, unsigned int)
+		*/
 		void set(unsigned int x, unsigned int y, T value) {
-			if (x >= W) throw IndexOutOfBounds(std::to_string(x)+" is greater than this Matrix's width, "+ std::to_string(W)+"!");
+			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
-			if (x <0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
-			if (y <0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
+			if (x < 0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
+			if (y < 0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
 			content[x][y] = value;
+		}
+
+		/**
+		Assignment operator that allows for aggregate-like initialization.
+		<p>
+		Equal to calling: 
+		{@code
+			Matrix(arr)
+		}
+		@param arr 2-dimensional array of data
+		@return A `Matrix` containing the contents of the array.
+		*/
+		Matrix operator=(T arr[W][H]) {//arr me mateys
+			return Matrix(arr);
 		}
 	};
 
-	using Matrix1f = mc::Matrix<float, 1, 1>;//what a thin matrix!
+	/**
+	A `1x1` `Matrix` of `floats`.
+	*/
+	using Matrix1f = mc::Matrix<float, 1, 1>;//what a thin matrix
+	/**
+	A `2x2` `Matrix` of `floats`.
+	*/
 	using Matrix2f = mc::Matrix<float, 2, 2>;
+	/**
+	A `3x3` `Matrix` of `floats`.
+	*/
 	using Matrix3f = mc::Matrix<float, 3, 3>;
+	/**
+	A `4x4` `Matrix` of `floats`.
+	*/
 	using Matrix4f = mc::Matrix<float, 4, 4>;
+	/**
+	A `5x5` `Matrix` of `floats`.
+	*/
 	using Matrix5f = mc::Matrix<float, 5, 5>;
 
+	/**
+	A `1x1` `Matrix` of `ints`.
+	*/
 	using Matrix1i = mc::Matrix<int, 1, 1>;
+	/**
+	A `2x2` `Matrix` of `ints`.
+	*/
 	using Matrix2i = mc::Matrix<int, 2, 2>;
+	/**
+	A `3x3` `Matrix` of `ints`.
+	*/
 	using Matrix3i = mc::Matrix<int, 3, 3>;
+	/**
+	A `4x4` `Matrix` of `ints`.
+	*/
 	using Matrix4i = mc::Matrix<int, 4, 4>;
+	/**
+	A `5x5` `Matrix` of `ints`.
+	*/
 	using Matrix5i = mc::Matrix<int, 5, 5>;
 }

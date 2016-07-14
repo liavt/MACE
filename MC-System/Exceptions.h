@@ -3,7 +3,8 @@
 
 namespace mc {
 	/**
-	Thrown when an assertion fails
+	Thrown when an assertion fails.
+	@see System#assertModule(std::string)
 	*/
 	struct AssertionError : public std::runtime_error {
 		/**

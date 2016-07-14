@@ -3,12 +3,26 @@
 
 
 namespace mc{
+	TEST_CASE("Testing isEven() and isOdd()", "[system][utility][math]") {
+		SECTION("isEven()") {
+			REQUIRE(math::isEven(4));
+			REQUIRE(math::isEven(0));
+		}
+
+		SECTION("isOdd()") {
+			REQUIRE(!math::isOdd(6));
+			REQUIRE(math::isOdd(3));
+			REQUIRE(!math::isOdd(0));
+			REQUIRE(math::isOdd(-1));
+		}
+	}
 	TEST_CASE("Testing pow()","[system][utility][math]") {
 		REQUIRE(math::pow(2,8)==256);
 		REQUIRE(math::pow(5,2)==25);
 		REQUIRE(math::pow(4,3)==64);
-		REQUIRE(math::pow(10,0)==0);
-		REQUIRE(math::pow(-6,3)==216);
+		REQUIRE(math::pow(10,0)==1);
+		REQUIRE(math::pow(-6,3)==-216);
+		REQUIRE(math::pow(5,-2)==0.04);
 	}
 
 	TEST_CASE("Testing ceil()","[system][utility][math]") {
@@ -37,9 +51,15 @@ namespace mc{
 		REQUIRE(!math::isPrime(360));
 	}
 
-	TEST_CASE("Testing nextDigitOf2()","[system][utility][math]") {
-		REQUIRE(math::nextDigitOf2(10)==16);
-		REQUIRE(math::nextDigitOf2(3) == 4);
-		REQUIRE(math::nextDigitOf2(17)==32);
+	TEST_CASE("Testing log2()","[system][utility][math]") {
+		REQUIRE(math::log2(10)==16);
+		REQUIRE(math::log2(3) == 4);
+		REQUIRE(math::log2(17)==32);
+	}
+
+	TEST_CASE("Testing trigonometry functions","[system][utility][math]") {
+		/*SECTION("Testing tan()") {
+			REQUIRE(math::tan(0)==0);
+		}*/
 	}
 }
