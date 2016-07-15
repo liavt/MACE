@@ -22,5 +22,5 @@ var classmc_1_1_vector =
     [ "set", "d0/d81/classmc_1_1_vector.html#a11e1f8cfd518752bb19b35437c66ee9d", null ],
     [ "setContents", "d0/d81/classmc_1_1_vector.html#a2e674c851be8cf10808c86895e9ca86f", null ],
     [ "size", "d0/d81/classmc_1_1_vector.html#a85c37dc7b6c2ad12f5cab67d6db54b49", null ],
-    [ "Matrix", "d0/d81/classmc_1_1_vector.html#a34913a9261681f734171a6da06bd56fe", null ]
+    [ "Matrix", "d0/d81/classmc_1_1_vector.html#a5880bba4fcab857fa2957db287e97442", null ]
 ];

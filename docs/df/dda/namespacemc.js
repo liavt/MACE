@@ -8,7 +8,7 @@ var namespacemc =
     [ "BitField", "de/d9b/structmc_1_1_bit_field.html", "de/d9b/structmc_1_1_bit_field" ],
     [ "Color", "d0/d0b/classmc_1_1_color.html", "d0/d0b/classmc_1_1_color" ],
     [ "IndexOutOfBounds", "d4/d7a/structmc_1_1_index_out_of_bounds.html", "d4/d7a/structmc_1_1_index_out_of_bounds" ],
-    [ "Matrix", "d4/d3d/classmc_1_1_matrix.html", "d4/d3d/classmc_1_1_matrix" ],
+    [ "Matrix", "dd/db1/structmc_1_1_matrix.html", "dd/db1/structmc_1_1_matrix" ],
     [ "Module", "d8/dc9/classmc_1_1_module.html", "d8/dc9/classmc_1_1_module" ],
     [ "ObjectNotFoundInArray", "de/d0d/structmc_1_1_object_not_found_in_array.html", "de/d0d/structmc_1_1_object_not_found_in_array" ],
     [ "System", "dc/dc0/classmc_1_1_system.html", "dc/dc0/classmc_1_1_system" ],

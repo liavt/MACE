@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['get',['get',['../de/d9b/structmc_1_1_bit_field.html#aaac2bdffaa2cf5fcdaa93d783e53c174',1,'mc::BitField::get()'],['../d0/d81/classmc_1_1_vector.html#a3335869546b80addf0aafe5e009ffbde',1,'mc::Vector::get(unsigned i)'],['../d0/d81/classmc_1_1_vector.html#a58776300ccb5cac12fc04a24c9848053',1,'mc::Vector::get(unsigned int i) const '],['../d4/d3d/classmc_1_1_matrix.html#ad4c47d5e7ef5c88264b06554a64f7ae7',1,'mc::Matrix::get(unsigned int x, unsigned int y)'],['../d4/d3d/classmc_1_1_matrix.html#aa8cca780babd0f83797e05400538ad69',1,'mc::Matrix::get(unsigned int x, unsigned int y) const ']]],
+  ['gamma',['gamma',['../dc/d51/namespacemc_1_1math.html#a4ed92aa582855134db34180b30b4626b',1,'mc::math']]],
+  ['get',['get',['../de/d9b/structmc_1_1_bit_field.html#aaac2bdffaa2cf5fcdaa93d783e53c174',1,'mc::BitField::get()'],['../d0/d81/classmc_1_1_vector.html#a3335869546b80addf0aafe5e009ffbde',1,'mc::Vector::get(unsigned i)'],['../d0/d81/classmc_1_1_vector.html#a58776300ccb5cac12fc04a24c9848053',1,'mc::Vector::get(unsigned int i) const '],['../dd/db1/structmc_1_1_matrix.html#ad4c47d5e7ef5c88264b06554a64f7ae7',1,'mc::Matrix::get(unsigned int x, unsigned int y)'],['../dd/db1/structmc_1_1_matrix.html#aa8cca780babd0f83797e05400538ad69',1,'mc::Matrix::get(unsigned int x, unsigned int y) const ']]],
   ['getalpha',['getAlpha',['../d0/d0b/classmc_1_1_color.html#a424a22022102a0fac492623319df49ff',1,'mc::Color']]],
   ['getbit',['getBit',['../de/d9b/structmc_1_1_bit_field.html#a4c3809c2559bebab2a22f983b92d88f4',1,'mc::BitField']]],
   ['getblue',['getBlue',['../d0/d0b/classmc_1_1_color.html#af1a18db8e721f537d8aa3d61b6a38fae',1,'mc::Color']]],

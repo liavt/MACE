@@ -9,6 +9,7 @@ var searchData=
   ['container',['Container',['../d5/d86/classmc_1_1gfx_1_1_entity.html#aee29d97f7e87f0263024133085c28e3d',1,'mc::gfx::Entity']]],
   ['convertfloattorgba',['convertFloatToRGBA',['../d0/d0b/classmc_1_1_color.html#a6e8a03a26fe7d0580ba2230244b07c82',1,'mc::Color']]],
   ['convertrgbatofloat',['convertRGBAToFloat',['../d0/d0b/classmc_1_1_color.html#a016b46c09baf8ed385dbd0c1712b0bb3',1,'mc::Color']]],
+  ['cos',['cos',['../dc/d51/namespacemc_1_1math.html#aa56b03d6d05ba27e92654b294279d6f0',1,'mc::math']]],
   ['create',['create',['../d9/dc9/classmc_1_1win_1_1_window.html#a76e6a4d1dce1501ca52766ac319ddff6',1,'mc::win::Window']]],
   ['cube',['cube',['../dc/d51/namespacemc_1_1math.html#aa21da7c0ee40c62553ba292dde1bfffa',1,'mc::math']]],
   ['customdestroy',['customDestroy',['../d5/d86/classmc_1_1gfx_1_1_entity.html#a2d109385d78a2e806ae82d7258559d22',1,'mc::gfx::Entity']]],
