@@ -286,7 +286,7 @@ namespace mc {
 		@throw IndexOutOfBounds if `y<0`
 		@throw IndexOutOfBounds if `x>width()`
 		@throw IndexOutOfBounds if `y>height()`
-		@see #set(unsigned int, unsigned int)
+		@see #set(unsigned int, unsigned int, T)
 		@see #operator[]
 		*/
 		T& get(unsigned int x, unsigned int y) {
@@ -306,8 +306,8 @@ namespace mc {
 		@throw IndexOutOfBounds if `y<0`
 		@throw IndexOutOfBounds if `x>width()`
 		@throw IndexOutOfBounds if `y>height()`
-		@see #set(unsigned int, unsigned int)
-		@see #operator[] const
+		@see #set(unsigned int, unsigned int, T)
+		@see #operator[]
 		*/
 		const T& get(unsigned int x, unsigned int y) const {
 			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
@@ -316,7 +316,6 @@ namespace mc {
 			if (y < 0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
 			return content[x][y];
 		}
-
 
 		/**
 		Writes data at certain coordinates to a new value.
