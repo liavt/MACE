@@ -1,4 +1,4 @@
-#include "Entity.h"
+#include <MC-Graphics/Entity.h>
 #include <MC-System/Exceptions.h>
 #include <MC-System/Constants.h>
 
@@ -125,7 +125,7 @@ namespace mc {
 			return *children.at(i);
 		}
 
-		unsigned int Container::indexOf(const Entity & e) const
+		unsigned int Container::indexOf(Entity & e) const
 		{
 			for (unsigned int i = 0; i < children.size(); i++) {
 				if (children[i] == &e) {
@@ -168,11 +168,11 @@ namespace mc {
 
 		void Entity::update() {
 			if (getProperty(ENTITY_PROPERTY_UPDATE_ENABLED)) {
-				if (getProperty(ENTITY_PROPERTY_DIRTY)) {
-					clean();
-				}
 				customUpdate();
 				Container::update();
+			}
+			if (getProperty(ENTITY_PROPERTY_DIRTY)) {
+				cleanEntity(this);
 			}
 		}
 
@@ -189,6 +189,11 @@ namespace mc {
 			Container::destroy();
 		}
 
+		void Entity::cleanEntity(Entity * e)
+		{
+			e->setProperty(ENTITY_PROPERTY_DIRTY, false);
+		}
+
 		Entity::Entity() :Container()
 		{
 
@@ -200,11 +205,6 @@ namespace mc {
 
 		Entity::~Entity()
 		{
-		}
-
-		void Entity::clean()
-		{
-			setProperty(ENTITY_PROPERTY_DIRTY, false);
 		}
 
 		ByteField& Entity::getProperties() {
@@ -222,15 +222,12 @@ namespace mc {
 		}
 		bool Entity::getProperty(unsigned int position) const
 		{
-			if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-			else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
 			return properties.getBit(position);
 		}
 		void Entity::setProperty(unsigned int position, bool value)
 		{
-			if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-			else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
 			properties.setBit(position, value);
+
 		}
 
 		EntityModule::EntityModule() :Container()

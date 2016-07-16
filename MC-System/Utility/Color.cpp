@@ -1,4 +1,4 @@
-#include "Color.h"
+#include <MC-System/Utility/Color.h>
 #include <exception>
 
 mc::Byte mc::Color::getRed() const

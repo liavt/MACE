@@ -29,7 +29,7 @@ TEST_CASE("Testing color storage","[system][color][utility][slow]") {
 	REQUIRE(c.b== 0);
 	REQUIRE(c.a == 1.0f);
 
-	for (unsigned int i = 0; i < 254; i+=50) {
+	for (unsigned int i = 0; i < 254; i++) {
 		c.setRed(i);
 		REQUIRE(c.getRed()==i);
 		REQUIRE(c.r==Approx((float)i/254.0f));
