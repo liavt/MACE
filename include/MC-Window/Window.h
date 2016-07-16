@@ -11,7 +11,6 @@ namespace mc {
 	{
 		class Window {
 			friend class WindowModule;
-
 		protected:
 			SDL_Window* m_window;
 			int m_originalWidth;
