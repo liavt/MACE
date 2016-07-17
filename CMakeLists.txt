@@ -11,7 +11,4 @@ add_subdirectory(MC-Window)
 add_subdirectory(MC-Graphics)
 add_subdirectory(MC-Network)
 add_subdirectory(MC-Audio)
-add_subdirectory(MC-Test)
-#add_subdirectory(MC-Testing)
-
-#Catch.h is missing in MC-Testing
+add_subdirectory(MC-Testing)
