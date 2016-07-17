@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDES})
 
 file(GLOB_RECURSE SDL_NET_SRC *.c)
 
