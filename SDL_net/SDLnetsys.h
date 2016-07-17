@@ -90,4 +90,3 @@ typedef Uint32 socklen_t;
 int SDLNet_GetLastError(void);
 void SDLNet_SetLastError(int err);
 #endif
-

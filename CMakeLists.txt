@@ -14,7 +14,9 @@ message(STATUS "Finding dependencies. If they are not found, CMake will download
 #Catch is for unit testing.
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
-set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/MC-Testing/Catch.hpp")
+set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
+
+find_package(OpenGL REQUIRED)
 
 if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
 	#Catch is one header file, so its easy to fix. Just download it!
@@ -72,23 +74,34 @@ if(NOT EXISTS ${SDL2_INCLUDES})
 	message(STATUS "SDL2 includes not found. Fixing...")
 	
 	#Simply move the headers from the source into our directory
-	file(COPY "${SDL2_SOURCE_NAME}/include" DESTINATION "${SDL2_INCLUDES}")
+	file(COPY "${SDL2_SOURCE_NAME}/include/" DESTINATION "${SDL2_INCLUDES}")
 	
 	message(STATUS "SDL2 Includes added!")
 else()
 	message(STATUS "Found SDL2 includes.")
 endif()
 
+if(NOT EXISTS "${SDL2_INCLUDES}/SDL_net.h")
+	message(STATUS "Moving SDL_net headers to include/SDL directory... ")
+	file(COPY "${CMAKE_SOURCE_DIR}/SDL_net/SDLnetsys.h" DESTINATION "${SDL2_INCLUDES}")
+	file(COPY "${CMAKE_SOURCE_DIR}/SDL_net/SDL_net.h" DESTINATION "${SDL2_INCLUDES}")
+
+	message(STATUS "SDL_net Includes added!")
+else()
+	message(STATUS "Found SDL_net includes.")
+endif()
+
 message(STATUS "Dependencies ready. Completing installation...")
 
 message(STATUS "Building ${SDL2_SOURCE_NAME}...")
 add_subdirectory("${SDL2_SOURCE_NAME}")
-#add_subdirectory(SDL_net)
+add_subdirectory(SDL_net)
 add_subdirectory(MC-System)
 add_subdirectory(MC-Window)
 add_subdirectory(MC-Graphics)
 add_subdirectory(MC-Network)
 add_subdirectory(MC-Audio)
 add_subdirectory(MC-Testing)
+add_subdirectory(MC-Example)
 
 message("Done! Thank you for using MACE.")
