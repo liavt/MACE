@@ -16,6 +16,8 @@ set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single
 #This is where Catch should be located in
 set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
 
+find_package(OpenGL REQUIRED)
+
 if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
 	#Catch is one header file, so its easy to fix. Just download it!
 	message(STATUS "Downloading Catch..")
@@ -100,5 +102,6 @@ add_subdirectory(MC-Graphics)
 add_subdirectory(MC-Network)
 add_subdirectory(MC-Audio)
 add_subdirectory(MC-Testing)
+add_subdirectory(MC-Example)
 
 message("Done! Thank you for using MACE.")
