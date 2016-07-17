@@ -4,7 +4,8 @@ message(STATUS "Building MC-Window")
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-file(GLOB_RECURSE MCW_SRC *.cpp)
+file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Window/*.h")
+file(GLOB_RECURSE MCT_SRC *.cpp)
 
-add_library(MC-Window ${MCW_SRC})
+add_executable(MC-Window ${HEADERS} ${MCT_SRC})
 target_include_directories (MC-Window PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

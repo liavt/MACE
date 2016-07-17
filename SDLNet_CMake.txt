@@ -1,0 +1,10 @@
+#Because SDL_net doesn't have a CMake, we made our own. This does not mean we made SDL_net.
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+include_directories(${SDL2_INCLUDES})
+
+file(GLOB_RECURSE HEADERS "${SDL2_INCLUDES}/*.h")
+file(GLOB_RECURSE MCT_SRC *.cpp)
+
+add_executable(SDLNet ${HEADERS} ${MCT_SRC})
+target_include_directories (SDLNet PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
