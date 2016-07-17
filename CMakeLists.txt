@@ -9,23 +9,10 @@ set(MACE_INCLUDES "${CMAKE_SOURCE_DIR}/include")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-message(STATUS "Finding dependencies. If they are not found, CMake will download them. An internet connection will be required.")
-
-#Catch is for unit testing.
-set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
-#This is where Catch should be located in
-set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
-
-find_package(OpenGL REQUIRED)
-
-if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
-	#Catch is one header file, so its easy to fix. Just download it!
-	message(STATUS "Downloading Catch..")
-    file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}")
-	message(STATUS "Done downloading Catch.")
-else()
-	message(STATUS "Catch found.")
-endif()
+set(SDL_NET_SOURCE_NAME "SDL2_net-2.0.1")
+set(SDL_NET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}")
+set(SDL_NET_URL "https://www.libsdl.org/projects/SDL_net/release/${SDL_NET_SOURCE_NAME}.tar.gz")
+set(SDL_NET_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}.tar.gz")
 
 #Source name is the version to use
 set(SDL2_SOURCE_NAME "SDL2-2.0.4")
@@ -36,6 +23,22 @@ set(SDL2_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${SDL2_SOURCE_NAME}.tar.gz")
 set(SDL2_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${SDL2_SOURCE_NAME}")
 #This is where the headers for SDL2 will be located in
 set(SDL2_INCLUDES "${MACE_INCLUDES}/SDL")
+set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
+#This is where Catch should be located in
+set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
+
+message(STATUS "Finding dependencies. If they are not found, CMake will download them. An internet connection will be required.")
+
+#Catch is for unit testing.
+
+if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
+	#Catch is one header file, so its easy to fix. Just download it!
+	message(STATUS "Downloading Catch..")
+    file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}")
+	message(STATUS "Done downloading Catch.")
+else()
+	message(STATUS "Catch found.")
+endif()
 
 if(NOT EXISTS ${SDL2_SOURCE_DIR})
 	message(STATUS "SDL2 source not found. Fixing..")
@@ -74,7 +77,7 @@ if(NOT EXISTS ${SDL2_INCLUDES})
 	message(STATUS "SDL2 includes not found. Fixing...")
 	
 	#Simply move the headers from the source into our directory
-	file(COPY "${SDL2_SOURCE_NAME}/include/" DESTINATION "${SDL2_INCLUDES}")
+	file(COPY "${SDL2_SOURCE_NAME}/include/" DESTINATION "${MACE_INCLUDES}/SDL")
 	
 	message(STATUS "SDL2 Includes added!")
 else()
@@ -82,26 +85,57 @@ else()
 endif()
 
 if(NOT EXISTS "${SDL2_INCLUDES}/SDL_net.h")
+	if(NOT EXISTS "${SDL_NET_SOURCE_DIR}")
+		if(NOT EXISTS "${SDL_NET_DOWNLOAD_PATH}")
+			message(STATUS "Download SDL_net...")
+
+			file(DOWNLOAD "${SDL_NET_URL}" "${SDL_NET_DOWNLOAD_PATH}")
+		else()
+			message(STATUS "Found SDL_net source!")
+		endif()
+		
+		message(STATUS "Extracting SDL_net source...")
+		#Next we extract the .tar.gz. This works on Windows as well
+		execute_process(
+			COMMAND ${CMAKE_COMMAND} -E tar xvf ${SDL_NET_DOWNLOAD_PATH}
+			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		)
+		
+		#If the extraction fails, go to here.
+		if(NOT EXISTS ${SDL_NET_SOURCE_DIR})
+			message(FATAL_ERROR "Failed to extract SDL_net source! Please retry or file a bug report.")
+		else()
+			message(STATUS "SDL_net extracted.")
+		endif()
+		
+		#Remove the extracted tar. We dont need the original anymore
+		file(REMOVE ${SDL_NET_DOWNLOAD_PATH})
+	else()
+		message(STATUS "Found SDL_net source")
+	endif()
+	
 	message(STATUS "Moving SDL_net headers to include/SDL directory... ")
-	file(COPY "${CMAKE_SOURCE_DIR}/SDL_net/SDLnetsys.h" DESTINATION "${SDL2_INCLUDES}")
-	file(COPY "${CMAKE_SOURCE_DIR}/SDL_net/SDL_net.h" DESTINATION "${SDL2_INCLUDES}")
+	file(COPY "${SDL_NET_SOURCE_DIR}/SDLnetsys.h" DESTINATION "${SDL2_INCLUDES}")
+	file(COPY "${SDL_NET_SOURCE_DIR}/SDL_net.h" DESTINATION "${SDL2_INCLUDES}")
 
 	message(STATUS "SDL_net Includes added!")
 else()
 	message(STATUS "Found SDL_net includes.")
 endif()
 
+message(STATUS "Finding OpenGL...")
+find_package(OpenGL REQUIRED)
+
 message(STATUS "Dependencies ready. Completing installation...")
 
 message(STATUS "Building ${SDL2_SOURCE_NAME}...")
 add_subdirectory("${SDL2_SOURCE_NAME}")
-add_subdirectory(SDL_net)
+
 add_subdirectory(MC-System)
 add_subdirectory(MC-Window)
 add_subdirectory(MC-Graphics)
 add_subdirectory(MC-Network)
 add_subdirectory(MC-Audio)
 add_subdirectory(MC-Testing)
-add_subdirectory(MC-Example)
 
 message("Done! Thank you for using MACE.")

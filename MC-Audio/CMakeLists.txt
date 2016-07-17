@@ -1,5 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
+message(STATUS "Building MC-Audio...")
+
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE MCA_SRC *.cpp)
