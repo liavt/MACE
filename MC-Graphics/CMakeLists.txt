@@ -2,9 +2,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 message(STATUS "Building MC-Graphics")
 
-message(STATUS "Finding OpenGL...")
-find_package(OpenGL REQUIRED)
-
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Graphics/*.h")
