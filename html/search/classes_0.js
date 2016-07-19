@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['assertionerror',['AssertionError',['../dd/dad/a00005.html',1,'mc']]]
+  ['_5fsdlnet_5fgenericsocket',['_SDLNet_GenericSocket',['../dd/dad/a00005.html',1,'']]]
 ];

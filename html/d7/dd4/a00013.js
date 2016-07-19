@@ -1,30 +1,5 @@
 var a00013 =
 [
-    [ "Matrix", "d7/dd4/a00013_a1c0107dd6bf262a240653fcc2650fb2b.html#a1c0107dd6bf262a240653fcc2650fb2b", null ],
-    [ "Matrix", "d7/dd4/a00013_a4bceda87f2c87294d4a631b2229dff8f.html#a4bceda87f2c87294d4a631b2229dff8f", null ],
-    [ "Matrix", "d7/dd4/a00013_a16a62a958729f121805a76d43554bc69.html#a16a62a958729f121805a76d43554bc69", null ],
-    [ "begin", "d7/dd4/a00013.html#a1cb61e23c56abeb0b1d4c1a8b569e831", null ],
-    [ "end", "d7/dd4/a00013.html#a728eef3a0e46669e5c7be8792a8b7b26", null ],
-    [ "get", "d7/dd4/a00013.html#a3335869546b80addf0aafe5e009ffbde", null ],
-    [ "get", "d7/dd4/a00013.html#a58776300ccb5cac12fc04a24c9848053", null ],
-    [ "get", "d7/dd4/a00013_ad4c47d5e7ef5c88264b06554a64f7ae7.html#ad4c47d5e7ef5c88264b06554a64f7ae7", null ],
-    [ "get", "d7/dd4/a00013_aa8cca780babd0f83797e05400538ad69.html#aa8cca780babd0f83797e05400538ad69", null ],
-    [ "getContents", "d7/dd4/a00013.html#ad8649fb50d1cebdc4f7e2886f445560a", null ],
-    [ "getContents", "d7/dd4/a00013.html#ac312084ca4f2fe312eec6799df7e3f22", null ],
-    [ "height", "d7/dd4/a00013_ad9eaa721ec2db5bb588ae12e6c2a78b3.html#ad9eaa721ec2db5bb588ae12e6c2a78b3", null ],
-    [ "operator!=", "d7/dd4/a00013.html#aa45600b2bcd72732feb2f24d6c3e9ef6", null ],
-    [ "operator*", "d7/dd4/a00013.html#a64037e6603bb0f6997d1c2d22de2a4c9", null ],
-    [ "operator+", "d7/dd4/a00013.html#a41f3ca26b2d43a91797df7499afcc5c5", null ],
-    [ "operator-", "d7/dd4/a00013.html#ac486a0798fd812967cb543c23bf60e3b", null ],
-    [ "operator/", "d7/dd4/a00013.html#a5760307dcf1bbc6ecbf4e576dc5c4838", null ],
-    [ "operator=", "d7/dd4/a00013_a5c0e46712118d46ac17142dab38abf37.html#a5c0e46712118d46ac17142dab38abf37", null ],
-    [ "operator==", "d7/dd4/a00013.html#a2f324924de53bc758f94df7b7b4e339b", null ],
-    [ "operator[]", "d7/dd4/a00013.html#a1113b584d428e6943e7ea23df89ef006", null ],
-    [ "operator[]", "d7/dd4/a00013.html#a1bbd519ec7b6f6902ce81983478e3c92", null ],
-    [ "set", "d7/dd4/a00013.html#a11e1f8cfd518752bb19b35437c66ee9d", null ],
-    [ "set", "d7/dd4/a00013_a7a4970e6c6d4c277cd7d15cffb3e470f.html#a7a4970e6c6d4c277cd7d15cffb3e470f", null ],
-    [ "setContents", "d7/dd4/a00013.html#a2e674c851be8cf10808c86895e9ca86f", null ],
-    [ "size", "d7/dd4/a00013.html#a85c37dc7b6c2ad12f5cab67d6db54b49", null ],
-    [ "size", "d7/dd4/a00013_ac7b493824ba976376aeac2de193f41f2.html#ac7b493824ba976376aeac2de193f41f2", null ],
-    [ "width", "d7/dd4/a00013_af50d7f0d342318246a98fb7e01ae4989.html#af50d7f0d342318246a98fb7e01ae4989", null ]
+    [ "IndexOutOfBounds", "d7/dd4/a00013_aa4f02ccacfffa4f3470b4b4c7faf7ebd.html#aa4f02ccacfffa4f3470b4b4c7faf7ebd", null ],
+    [ "IndexOutOfBounds", "d7/dd4/a00013_a52360d4332f55b0757bcf25668970eff.html#a52360d4332f55b0757bcf25668970eff", null ]
 ];
