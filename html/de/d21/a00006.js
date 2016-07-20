@@ -1,5 +1,28 @@
 var a00006 =
 [
-    [ "AssertionError", "de/d21/a00006_a1bd10d47acbe4ded5fd73ba42a56463d.html#a1bd10d47acbe4ded5fd73ba42a56463d", null ],
-    [ "AssertionError", "de/d21/a00006_ad0470b2c9c79dec4049ef6757e4b5f89.html#ad0470b2c9c79dec4049ef6757e4b5f89", null ]
+    [ "Color", "de/d21/a00006_a80052b11d19f84f421a3fcb93826af6e.html#a80052b11d19f84f421a3fcb93826af6e", null ],
+    [ "Color", "de/d21/a00006_a49da9f32b70d62c34a2ea380d5dc3eae.html#a49da9f32b70d62c34a2ea380d5dc3eae", null ],
+    [ "Color", "de/d21/a00006_a436ad96689f1ca1da36291c632bf60f6.html#a436ad96689f1ca1da36291c632bf60f6", null ],
+    [ "Color", "de/d21/a00006_a8517c04d0d219ba58d38dd78275a768c.html#a8517c04d0d219ba58d38dd78275a768c", null ],
+    [ "Color", "de/d21/a00006_ac4d3de0b00fb4965ff453bea21bd5f97.html#ac4d3de0b00fb4965ff453bea21bd5f97", null ],
+    [ "getAlpha", "de/d21/a00006_a424a22022102a0fac492623319df49ff.html#a424a22022102a0fac492623319df49ff", null ],
+    [ "getBlue", "de/d21/a00006_af1a18db8e721f537d8aa3d61b6a38fae.html#af1a18db8e721f537d8aa3d61b6a38fae", null ],
+    [ "getGreen", "de/d21/a00006_acd7f870b8763b4bf4e9004363615ebd4.html#acd7f870b8763b4bf4e9004363615ebd4", null ],
+    [ "getRed", "de/d21/a00006_a45fc6165528af4e8c4c878fbb43434eb.html#a45fc6165528af4e8c4c878fbb43434eb", null ],
+    [ "getRGB", "de/d21/a00006_ae39cadb4578c3bb69b19448d66dd5407.html#ae39cadb4578c3bb69b19448d66dd5407", null ],
+    [ "getRGBA", "de/d21/a00006_a5120535bf90fa4cc016b16a927288d22.html#a5120535bf90fa4cc016b16a927288d22", null ],
+    [ "getValues", "de/d21/a00006_a8c8658aae5411b6a1003f6021b97c2da.html#a8c8658aae5411b6a1003f6021b97c2da", null ],
+    [ "operator[]", "de/d21/a00006_a1e551268a536019e2f5d46d39a00cc73.html#a1e551268a536019e2f5d46d39a00cc73", null ],
+    [ "setAlpha", "de/d21/a00006_a9c82e480305368648a769b212508ae44.html#a9c82e480305368648a769b212508ae44", null ],
+    [ "setBlue", "de/d21/a00006_ad8ba9328b871cc8d08785b6ad03d4d2c.html#ad8ba9328b871cc8d08785b6ad03d4d2c", null ],
+    [ "setGreen", "de/d21/a00006_ae34ebd62353042648e84efd705163d96.html#ae34ebd62353042648e84efd705163d96", null ],
+    [ "setRed", "de/d21/a00006_a2c402622da696c33778dd1116383de6d.html#a2c402622da696c33778dd1116383de6d", null ],
+    [ "setRGB", "de/d21/a00006_aedc41be210068d6f866946c4d7d879a6.html#aedc41be210068d6f866946c4d7d879a6", null ],
+    [ "setRGBA", "de/d21/a00006_ac23627f6b91a7ce949adebcd27c1df5c.html#ac23627f6b91a7ce949adebcd27c1df5c", null ],
+    [ "setValues", "de/d21/a00006_ae5b6e1cb3b203ced2ccff4ed944c356f.html#ae5b6e1cb3b203ced2ccff4ed944c356f", null ],
+    [ "setValues", "de/d21/a00006_af499d9082bc56e0adc56d119b7239645.html#af499d9082bc56e0adc56d119b7239645", null ],
+    [ "a", "de/d21/a00006_a6d83e513538a31ebb79a310bb3249548.html#a6d83e513538a31ebb79a310bb3249548", null ],
+    [ "b", "de/d21/a00006_afd537e7822ea1674f3f66db22b343ec0.html#afd537e7822ea1674f3f66db22b343ec0", null ],
+    [ "g", "de/d21/a00006_a16c106a491d5ab2deef17a0a5f4c0a95.html#a16c106a491d5ab2deef17a0a5f4c0a95", null ],
+    [ "r", "de/d21/a00006_a21e476d9238f36f210f5cd35868b3d08.html#a21e476d9238f36f210f5cd35868b3d08", null ]
 ];

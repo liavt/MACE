@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['matrix',['Matrix',['../dd/d1b/a00015.html',1,'mc']]],
-  ['module',['Module',['../d7/d7a/a00016.html',1,'mc']]]
+  ['networkmodule',['NetworkModule',['../d2/de7/a00014.html',1,'mc::net']]]
 ];

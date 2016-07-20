@@ -1,6 +1,26 @@
 var a00020 =
 [
-    [ "TcpServer", "db/db2/a00020_af01ae639fd0e2eba917c900fba68829e.html#af01ae639fd0e2eba917c900fba68829e", null ],
-    [ "accept", "db/db2/a00020_a1b4db4d0050a31c02cb5378f48152737.html#a1b4db4d0050a31c02cb5378f48152737", null ],
-    [ "destroy", "db/db2/a00020_ad2f3a45581ce1f13415a0f5ebba6d150.html#ad2f3a45581ce1f13415a0f5ebba6d150", null ]
+    [ "Vector", "db/db2/a00020_a7c2fa3ae75ebb6d155aa3e3aa140ce09.html#a7c2fa3ae75ebb6d155aa3e3aa140ce09", null ],
+    [ "Vector", "db/db2/a00020_a05aed259e7ff40b4e6639f7dda5886cd.html#a05aed259e7ff40b4e6639f7dda5886cd", null ],
+    [ "Vector", "db/db2/a00020_a18dc923904b1d0511a9b9eefa72e8cb6.html#a18dc923904b1d0511a9b9eefa72e8cb6", null ],
+    [ "Vector", "db/db2/a00020_a9cd50db0b1a697ff4368a1072e99182d.html#a9cd50db0b1a697ff4368a1072e99182d", null ],
+    [ "begin", "db/db2/a00020_a1cb61e23c56abeb0b1d4c1a8b569e831.html#a1cb61e23c56abeb0b1d4c1a8b569e831", null ],
+    [ "end", "db/db2/a00020_a728eef3a0e46669e5c7be8792a8b7b26.html#a728eef3a0e46669e5c7be8792a8b7b26", null ],
+    [ "get", "db/db2/a00020_a699b2e331ade356257fb185280019b87.html#a699b2e331ade356257fb185280019b87", null ],
+    [ "get", "db/db2/a00020_a7595892f896b87fbb58d2c36be3389a8.html#a7595892f896b87fbb58d2c36be3389a8", null ],
+    [ "getContents", "db/db2/a00020_ad8649fb50d1cebdc4f7e2886f445560a.html#ad8649fb50d1cebdc4f7e2886f445560a", null ],
+    [ "getContents", "db/db2/a00020_ac312084ca4f2fe312eec6799df7e3f22.html#ac312084ca4f2fe312eec6799df7e3f22", null ],
+    [ "operator!=", "db/db2/a00020_aa45600b2bcd72732feb2f24d6c3e9ef6.html#aa45600b2bcd72732feb2f24d6c3e9ef6", null ],
+    [ "operator*", "db/db2/a00020_a64037e6603bb0f6997d1c2d22de2a4c9.html#a64037e6603bb0f6997d1c2d22de2a4c9", null ],
+    [ "operator+", "db/db2/a00020_a41f3ca26b2d43a91797df7499afcc5c5.html#a41f3ca26b2d43a91797df7499afcc5c5", null ],
+    [ "operator-", "db/db2/a00020_ac486a0798fd812967cb543c23bf60e3b.html#ac486a0798fd812967cb543c23bf60e3b", null ],
+    [ "operator/", "db/db2/a00020_a5760307dcf1bbc6ecbf4e576dc5c4838.html#a5760307dcf1bbc6ecbf4e576dc5c4838", null ],
+    [ "operator=", "db/db2/a00020_af8000128edbd58d1790f23697501cd9d.html#af8000128edbd58d1790f23697501cd9d", null ],
+    [ "operator==", "db/db2/a00020_a2f324924de53bc758f94df7b7b4e339b.html#a2f324924de53bc758f94df7b7b4e339b", null ],
+    [ "operator[]", "db/db2/a00020_a8955aa9951f184610444f10051699211.html#a8955aa9951f184610444f10051699211", null ],
+    [ "operator[]", "db/db2/a00020_af56e7800e947754a7c7e508301ee3f9a.html#af56e7800e947754a7c7e508301ee3f9a", null ],
+    [ "set", "db/db2/a00020_a4e214d776fd7b7e4b163c0ebb23ec3c4.html#a4e214d776fd7b7e4b163c0ebb23ec3c4", null ],
+    [ "setContents", "db/db2/a00020_a2e674c851be8cf10808c86895e9ca86f.html#a2e674c851be8cf10808c86895e9ca86f", null ],
+    [ "size", "db/db2/a00020_ad31d4fe9211c8a2f72a9c1a34486f3be.html#ad31d4fe9211c8a2f72a9c1a34486f3be", null ],
+    [ "Matrix", "db/db2/a00020_a5880bba4fcab857fa2957db287e97442.html#a5880bba4fcab857fa2957db287e97442", null ]
 ];

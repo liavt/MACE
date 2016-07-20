@@ -1,9 +1,8 @@
 var NAVTREE =
 [
   [ "MACE", "index.html", [
-    [ "INSTALLATION", "d7/d46/a00002.html", null ],
-    [ "LICENSE", "d1/d7c/a00003.html", null ],
-    [ "Bug List", "d8/d84/a00001.html", null ],
+    [ "Installation", "d8/d84/a00001.html", null ],
+    [ "LICENSE", "d7/d46/a00002.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -30,7 +29,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"de/d5e/a00007_a1b60ef9279ae0c046b7a7c5998e5f803.html#a1b60ef9279ae0c046b7a7c5998e5f803"
+"de/d21/a00006_acd7f870b8763b4bf4e9004363615ebd4.html#acd7f870b8763b4bf4e9004363615ebd4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

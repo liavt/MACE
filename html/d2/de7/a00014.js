@@ -1,5 +1,8 @@
 var a00014 =
 [
-    [ "host", "d2/de7/a00014_ad3cb0c0b0865e70e775bca4b495cd830.html#ad3cb0c0b0865e70e775bca4b495cd830", null ],
-    [ "port", "d2/de7/a00014_a259fca12fc0a16b3e5172b2fc4674331.html#a259fca12fc0a16b3e5172b2fc4674331", null ]
+    [ "destroy", "d2/de7/a00014_ad65ab6d7848c02573eb137c2f86894cd.html#ad65ab6d7848c02573eb137c2f86894cd", null ],
+    [ "getName", "d2/de7/a00014_acd8758c4d27df8ca08241a56b7af0727.html#acd8758c4d27df8ca08241a56b7af0727", null ],
+    [ "init", "d2/de7/a00014_a7257a5cc09f47b997f48311db3108d48.html#a7257a5cc09f47b997f48311db3108d48", null ],
+    [ "tick", "d2/de7/a00014_a8daac18d17d57d3a53d702eb47a01a02.html#a8daac18d17d57d3a53d702eb47a01a02", null ],
+    [ "update", "d2/de7/a00014.html#a6417f3db90ae235fb1be01ed6a3d612c", null ]
 ];
