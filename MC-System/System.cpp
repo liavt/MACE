@@ -6,10 +6,10 @@
 namespace mc {
 	std::vector<Module*> System::modules;
 
-	unsigned int System::addModule(Module& m)
+	Index System::addModule(Module& m)
 	{
 		modules.push_back(&m);
-		return (unsigned int)(modules.size() - 1);
+		return (Index)(modules.size() - 1);
 	}
 	void System::removeModule(Module& m)
 	{
@@ -17,7 +17,7 @@ namespace mc {
 	}
 	void System::removeModule(std::string module)
 	{
-		for (unsigned int i = 0; i < modules.size(); i++) {
+		for (Index i = 0; i < modules.size(); i++) {
 			if (modules[i]->getName()==module) {
 				removeModule(i);
 				return;
@@ -25,28 +25,28 @@ namespace mc {
 		}
 		throw ObjectNotFoundInArray("No module by the name of "+module+" found!");
 	}
-	void System::removeModule(unsigned int i)
+	void System::removeModule(Index i)
 	{
 		if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
 		modules.erase(modules.begin()+i);
 	}
 	Module * System::getModule(std::string keyword)
 	{
-		for (unsigned int i = 0; i < modules.size();i++) {
+		for (Index i = 0; i < modules.size();i++) {
 			if (modules[i]->getName() == keyword) {
 				return modules[i];
 			}
 		}
 		throw ObjectNotFoundInArray("No module by the name of " + keyword + " found!");
 	}
-	Module * System::getModule(unsigned int i)
+	Module * System::getModule(Index i)
 	{
 		if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
 		return modules[i];
 	}
 	bool System::moduleExists(std::string module)
 	{
-		for (unsigned int i = 0; i < modules.size();i++) {
+		for (Index i = 0; i < modules.size();i++) {
 			if (modules[i]->getName() == module) {
 				return true;
 			}
@@ -77,7 +77,7 @@ namespace mc {
 	}
 
 	unsigned int System::indexOf(std::string name) {
-		for (unsigned int i = 0; i < modules.size(); i++) {
+		for (Index i = 0; i < modules.size(); i++) {
 			if (modules[i]->getName() ==name) {
 				return i;
 			}
@@ -87,13 +87,13 @@ namespace mc {
 
 	void System::init() {
 		SDL_Init(SDL_INIT_EVERYTHING);
-		for (unsigned int i = 0; i < modules.size(); i++) {
+		for (Index i = 0; i < modules.size(); i++) {
 			modules[i]->init();
 		}
 	}
 
 	void System::terminate() {
-		for (unsigned int i = 0; i < modules.size(); i++) {
+		for (Index i = 0; i < modules.size(); i++) {
 			modules[i]->destroy();
 		}
 		SDL_Quit();
@@ -106,7 +106,7 @@ namespace mc {
 				SDL_SetWindowData(SDL_GetWindowFromID(e.window.windowID), "open", 0);
 			}
 		}
-		for (unsigned int i = 0; i < modules.size(); i++) {
+		for (Index i = 0; i < modules.size(); i++) {
 			modules[i]->update();
 		}
 	}

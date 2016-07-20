@@ -3,7 +3,7 @@
 
 namespace mc {
 	namespace gfx{
-		GraphicsModule::GraphicsModule() :EntityModule(), WindowModule()
+		GraphicsModule::GraphicsModule() :EntityModule()
 		{
 		}
 		void GraphicsModule::init() {

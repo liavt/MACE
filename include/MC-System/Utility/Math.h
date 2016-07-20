@@ -106,12 +106,6 @@ namespace mc {
 		bool isOdd(const int value);
 		
 		/**
-		Calculate the natural logarithim of a number
-		@see log2(const int)
-		*/
-		double logn(double value);
-		
-		/**
 		Calculates a number to an exponenet, or `value^power`
 		@param value Base number
 		@param power The exponent
@@ -140,34 +134,6 @@ namespace mc {
 		double cube(const double value);
 
 		/**
-		Calculates the tangent of an angle.
-		@param radians Angle in radians
-		@return The tangent of the input
-		@see toRadians(cosnt double)
-		@bug Doesn't work
-		*/
-		double tan(const double radians);
-
-		/**
-		@bug Doesn't work
-		*/
-		double sin(const double radians);
-		
-		/**
-		@bug Doesn't work
-		*/
-		double cos(const double radians);
-
-		/**
-		@bug Doesn't work
-		*/
-		double sqrt(const double x,const unsigned int accuracy);
-		/**
-		@bug Doesn't work
-		*/
-		double sqrt(const double x);
-
-		/**
 		Conversion of degreees to radians.
 		@param degrees An angle in degrees
 		@return The same number represented as radians
@@ -182,8 +148,6 @@ namespace mc {
 		@see #pi()
 		*/
 		double toDegrees(const double radians);
-		
-		int log2(const int n);
 
 		Matrix4f getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio);
 	};

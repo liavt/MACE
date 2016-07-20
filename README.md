@@ -1,11 +1,11 @@
-#MACE
+# MACE
 MACE stands for MACE is A C++ Engine
 
-##Installation
+## Installation
 
 For install instructions, consult INSTALLATION.md in the root folder.
 
-##Documentation
+## Documentation
 
 Documentation is located [here.](https://liavt.github.io/MACE/html/index.html)
 

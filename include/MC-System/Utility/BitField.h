@@ -74,7 +74,7 @@ namespace mc {
 		@param state `true` to make the specified bit 1, and `false` to make it 0
 		@return `this` for chaining
 		*/
-		BitField& setBit(unsigned int position, bool state) {
+		BitField& setBit(Index position, bool state) {
 			if (state) {
 				return toggleBit(position);
 			}else {
@@ -87,7 +87,7 @@ namespace mc {
 		@param position 0-indexed integer representing which bit to toggle
 		@return `this` for chaining
 		*/
-		BitField& toggleBit(unsigned int position) {
+		BitField& toggleBit(Index position) {
 			value |= (1 << position);
 			return *this;
 		}
@@ -97,7 +97,7 @@ namespace mc {
 		@param position 0-indexed integer representing which bit to untoggle
 		@return `this` for chaining
 		*/
-		BitField& untoggleBit(unsigned int position) {
+		BitField& untoggleBit(Index position) {
 			value &= ~(1 << position);
 			return *this;
 		}
@@ -107,7 +107,7 @@ namespace mc {
 		@param position which bit to check
 		@return `true` if the bit is 1, `false` otherwise
 		*/
-		bool getBit(unsigned int position) const{
+		bool getBit(Index position) const{
 			return (((value >> position) & 1) == 1);
 		}
 		
@@ -116,7 +116,7 @@ namespace mc {
 		@param position Which bit to "flip," or invert
 		@return `this` for chaining
 		*/
-		BitField& flipBit(unsigned int position) {
+		BitField& flipBit(Index position) {
 			value ^= 1 << position;
 			return *this;
 		}
@@ -148,7 +148,7 @@ namespace mc {
 		Operator for `std::cout` to correctly print this class
 		*/
 		std::ostream &operator<<(std::ostream &os) {
-			for (unsigned int i = size() - 1; i >= 0; i--) os << this[i];
+			for (Index i = size() - 1; i >= 0; i--) os << this[i];
 			return os;
 		}
 
@@ -257,28 +257,28 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator>>(unsigned int places) {
+		BitField operator>>(Index places) {
 			return BitField<T>(value >> places );
 		}
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator<<(unsigned int places) {
+		BitField operator<<(Index places) {
 			return BitField<T>(value << places);
 		}
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator>>=(unsigned int places) {
+		void operator>>=(Index places) {
 			value >>= places;
 		}
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator<<=(unsigned int places) {
+		void operator<<=(Index places) {
 			value <<= places;
 		}
 		/**
@@ -428,9 +428,9 @@ namespace mc {
 		Gets a bit at a certain position
 		@param position Which bit to retrieve. Zero-indexed
 		@return `true` if the bit is 1, `false` otherwise.
-		@see getBit(unsigned int)
+		@see getBit(Index)
 		*/
-		bool operator[](unsigned int position) {
+		bool operator[](Index position) {
 			return getBit(position);
 		}
 		/**

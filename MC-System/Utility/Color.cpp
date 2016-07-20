@@ -72,7 +72,7 @@ mc::Color::Color()
 	Color(0.0f,0.0f,0.0f,1.0f);
 }
 
-float & mc::Color::operator[](int i)
+float & mc::Color::operator[](Index i)
 {
 	if (i == 0) {
 		return this->r;

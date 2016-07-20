@@ -104,34 +104,6 @@ namespace mc{
 			return value*value*value;
 		}
 
-		double tan(const double x)
-		{
-			return sin(x) / cos(x);
-		}
-
-		double sin(const double radians)
-		{
-			return 0;
-		}
-
-		double cos(const double radians) {
-			return 0;
-		}
-
-		double sqrt(const double x, const unsigned int accuracy)
-		{
-			int val_int = *(int*)&x;
-
-			val_int = (1 << 29) + (val_int >> 1) - (1 << 22);
-
-			return *(double*)&val_int; 
-		}
-
-		double sqrt(const double x)
-		{
-			return sqrt(x, 1);
-		}
-
 		double toRadians(const double degrees)
 		{
 			return degrees*(pi() / 180.0);
@@ -142,21 +114,8 @@ namespace mc{
 			return radians*(180.0 / pi());
 		}
 
-		int log2(const int n)
-		{
-			int v = n;
-			v--;
-			v |= v >> 1;
-			v |= v >> 2;
-			v |= v >> 4;
-			v |= v >> 8;
-			v |= v >> 16;
-			v++;
-			return v;
-		}
 
-		/*
-		Matrix4f mc::getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio)
+		Matrix4f getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio)
 		{
 			float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
 			float x_scale = y_scale / aspectRatio;
@@ -171,6 +130,6 @@ namespace mc{
 			projectionMatrix[3][3] = 0;
 
 			return projectionMatrix;
-		}*/
+		}
 	}
 }

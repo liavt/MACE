@@ -83,7 +83,7 @@ namespace mc {
 			Removes a child by reference.
 			@throws ObjectNotFoundInArray if {@link #hasChild(Entity&) const} returns `false`
 			@param e Reference to a child
-			@see #removeChild(unsigned int)
+			@see #removeChild(Index)
 			*/
 			void removeChild(const Entity& e);
 
@@ -94,7 +94,7 @@ namespace mc {
 			@see #indexOf(const Entity&) const
 			@see #removeChild(const Entity&)
 			*/
-			void removeChild(unsigned int index);
+			void removeChild(Index index);
 
 			/**
 			Checks to see if this `Container` contains an `Entity`
@@ -107,7 +107,7 @@ namespace mc {
 			/**
 			Removes EVERY `Entity` from this `Container`
 			@see #size()
-			@see #removeChild(unsigned int)
+			@see #removeChild(Index)
 			@see #removeChild(const Entity&)
 			*/
 			void clearChildren();
@@ -118,46 +118,47 @@ namespace mc {
 			This is different than `getChild()` because `operator[]` doesn't do bounds checking. Accessing an invalid location will result in a memory error.
 			@param i Location of an `Entity`
 			@return Reference to the `Entity` located at `i`
-			@see #getChild(unsigned int)
+			@see #getChild(Index)
 			@see #indexOf(const Entity&) const
 			*/
-			Entity& operator[](unsigned int i);//get children via [i]
-											   /**
-											   `const` version of {@link #operator[](unsigned int i)}
-											   @param i Location of an `Entity`
-											   @return Reference to the `Entity` located at `i`
-											   @see #getChild(unsigned int) const
-											   @see #indexOf(const Entity&) const
-											   */
-			const Entity& operator[](unsigned int i) const;//get children via [i]
+			Entity& operator[](Index i);//get children via [i]
 
-														   /**
-														   Retrieves a child at a certain index.
-														   @param i Index of the `Entity`
-														   @return Reference to the `Entity` located at `i`
-														   @throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
-														   @see #operator[]
-														   @see #indexOf(const Entity&) const
-														   */
-			Entity& getChild(unsigned int i);
 			/**
-			`const` version of {@link #getChild(unsigned int)}
+			`const` version of {@link #operator[](Index i)}
+			@param i Location of an `Entity`
+			@return Reference to the `Entity` located at `i`
+			@see #getChild(Index) const
+			@see #indexOf(const Entity&) const
+			*/
+			const Entity& operator[](Index i) const;//get children via [i]
+
+			/**
+			Retrieves a child at a certain index.
 			@param i Index of the `Entity`
 			@return Reference to the `Entity` located at `i`
 			@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
 			@see #operator[]
 			@see #indexOf(const Entity&) const
 			*/
-			const Entity& getChild(unsigned int i) const;
+			Entity& getChild(Index i);
+			/**
+			`const` version of {@link #getChild(Index)}
+			@param i Index of the `Entity`
+			@return Reference to the `Entity` located at `i`
+			@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
+			@see #operator[]
+			@see #indexOf(const Entity&) const
+			*/
+			const Entity& getChild(Index i) const;
 
 			/**
 			Finds the location of an `Entity` in this `Container`
 			@param e Reference to an `Entity`
 			@return Location of `e,` or -1 if `e` is not a child of this `Container`
 			@see #operator[]
-			@see #getChild(unsigned int)
+			@see #getChild(Index)
 			*/
-			unsigned int indexOf(const Entity& e) const;
+			Index indexOf(const Entity& e) const;
 
 			/**
 			Gets an iterator over this `Container` for enchanced for loops.
@@ -253,16 +254,16 @@ namespace mc {
 			@return The current properties belonging to this `Entity`
 			@see getProperties() const
 			@see setProperties(ByteField&)
-			@see getProperty(unsigned int) const
-			@see setProperty(unsigned int, bool)
+			@see getProperty(Index) const
+			@see setProperty(Index, bool)
 			*/
 			ByteField& getProperties();
 			/**
 			`const` version of `getProperties()`
 			@return The current properties belonging to this `Entity`
 			@see setProperties(ByteField&)
-			@see getProperty(unsigned int) const
-			@see setProperty(unsigned int, bool)
+			@see getProperty(Index) const
+			@see setProperty(Index, bool)
 			*/
 			const ByteField& getProperties() const;
 			/**
@@ -271,8 +272,8 @@ namespace mc {
 			@throw IndexOutOfBounds if `position<0`
 			@throw IndexOutOfBounds if `position>properties.size()`
 			@see getProperties()
-			@see getProperty(unsigned int) const
-			@see setProperty(unsigned int, bool)
+			@see getProperty(Index) const
+			@see setProperty(Index, bool)
 			*/
 			void setProperties(ByteField& b);
 
@@ -282,20 +283,20 @@ namespace mc {
 			@return `true` or `false` based on the postition
 			@throw IndexOutOfBounds if `position<0`
 			@throw IndexOutOfBounds if `position>properties.size()`
-			@see setProperty(unsigned int, bool)
+			@see setProperty(Index, bool)
 			@see getProperties()
 			@see setProperties(ByteField&)
 			*/
-			bool getProperty(unsigned int position) const;
+			bool getProperty(Index position) const;
 			/**
 			Set a property to be `true` or `false`.Property consants start with `ENTITY_PROPERTY_`
 			@param position Location of the property based on a constant
 			@param value Whether it is `true` or `false`
-			@see getProperty(unsigned int) const
+			@see getProperty(Index) const
 			@see getProperties()
 			@see setProperties(ByteField&)
 			*/
-			void setProperty(unsigned int position, bool value);
+			void setProperty(Index position, bool value);
 
 			/**
 			Retrieve this `Entitys` parent `Container.`

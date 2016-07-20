@@ -1,4 +1,4 @@
-#Installation
+# Installation
 
 * Download the MACE source. 
 	* This can be done via Git: Type `git clone https://github.com/liavt/mace.git` in terminal. On Windows, you will need MingW or a similar Unix emulator

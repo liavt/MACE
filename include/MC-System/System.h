@@ -61,7 +61,7 @@ namespace mc {
 		@param m Reference to a `Module.` If the `Module` referenced leaves scope or gets deallocated, a `read access violation will occur.`
 		@return Location of the `Module` in the buffer. This index can be used in various other methods.
 		*/
-		static unsigned int addModule(Module& m);
+		static Index addModule(Module& m);
 		/**
 		Remove a `Module` by reference. 
 		<p>
@@ -83,7 +83,7 @@ namespace mc {
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		@param i Index of a `Module` to delete
 		*/
-		static void removeModule(unsigned int i );
+		static void removeModule(Index i );
 		/**
 		Retrieve a pointer to a `Module` with the specified name.
 		<p>
@@ -91,7 +91,7 @@ namespace mc {
 		@throw ObjectNotFoundInArray if there is no `Module` with the specified name
 		@return A `Module` whose `getName()` function returns the specified keyword
 		@param keyword Name to look for
-		@see #getModule(unsigned int)
+		@see #getModule(Index)
 		*/
 		static Module* getModule(std::string keyword);
 		/**
@@ -100,7 +100,7 @@ namespace mc {
 		@param i Valid index to a `Module`
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		*/
-		static Module* getModule(unsigned int i);
+		static Module* getModule(Index i);
 		/**
 		Checks whether a `Module` exists via it's `getName()` function.
 		@param module Name to search for
@@ -133,13 +133,13 @@ namespace mc {
 		@return Location of the `Module,` or `-1` if it doesnt exist.
 		@see indexOf(Module&)
 		*/
-		static unsigned int indexOf(const Module& m);
+		static Index indexOf(const Module& m);
 		/**
 		Find a `Module` with the specified name.
 		@param name Name to search for
 		@return Location of a `Module` whose `getName()` function returns `name,` or `-1` if wasn't found
 		*/
-		static unsigned int indexOf(std::string name);
+		static Index indexOf(std::string name);
 
 		/**
 		Require that a `Module` with the specified name exists, or throw an exception.

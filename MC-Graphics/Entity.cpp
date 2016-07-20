@@ -81,7 +81,7 @@ namespace mc {
 			throw mc::ObjectNotFoundInArray("Specified argument is not a valid object in the array!");
 		}
 
-		void Container::removeChild(unsigned int index) {
+		void Container::removeChild(Index index) {
 			if (index > children.size()) {
 				throw mc::IndexOutOfBounds(index + " is larger than the amount of children!");
 			}
@@ -107,27 +107,27 @@ namespace mc {
 			return *parent;
 		}
 
-		Entity& Container::operator[](unsigned int i) {
+		Entity& Container::operator[](Index i) {
 			return *children[i];
 		}
 
-		const Entity& Container::operator[](unsigned int i) const
+		const Entity& Container::operator[](Index i) const
 		{
 			return *children[i];
 		}
 
-		Entity& Container::getChild(unsigned int i) {
+		Entity& Container::getChild(Index i) {
 			return *children.at(i);
 		}
 
-		const Entity& Container::getChild(unsigned int i) const
+		const Entity& Container::getChild(Index i) const
 		{
 			return *children.at(i);
 		}
 
-		unsigned int Container::indexOf(const Entity & e) const
+		Index Container::indexOf(const Entity & e) const
 		{
-			for (unsigned int i = 0; i < children.size(); i++) {
+			for (Index i = 0; i < children.size(); i++) {
 				if (children[i] == &e) {
 					return i;
 				}
@@ -220,13 +220,13 @@ namespace mc {
 		{
 			properties = b;
 		}
-		bool Entity::getProperty(unsigned int position) const
+		bool Entity::getProperty(Index position) const
 		{
 			if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
 			else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
 			return properties.getBit(position);
 		}
-		void Entity::setProperty(unsigned int position, bool value)
+		void Entity::setProperty(Index position, bool value)
 		{
 			if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
 			else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");

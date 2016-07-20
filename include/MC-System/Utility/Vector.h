@@ -4,7 +4,7 @@
 #include <MC-System/Constants.h>
 
 namespace mc {
-	template<typename T, int W, int H>
+	template<typename T, Size W, Size H>
 	struct Matrix;//forward-defined here for the friend declaration
 	/**
 	1-dimensional vector class that supports mathmatical operations.
@@ -12,12 +12,12 @@ namespace mc {
 	@tparam T what the `Vector` is made of and calculates with.
 	@tparam N width of the `Vector`
 	*/
-	template <typename T,int N>
+	template <typename T,Size N>
 	class Vector {
 		/**
 		`Matrix` is friends with `Vector` so `Matrix` can create efficient implementations of `get()` and `set()`
 		*/
-		template<typename T, int W, int H>
+		template<typename T, Size W, Size H>
 		friend struct Matrix;
 	public:
 		Vector()
@@ -52,25 +52,25 @@ namespace mc {
 			this->content = contents;
 		};
 
-		virtual unsigned int size() const
+		virtual Size size() const
 		{
 			return N;
 		};
 
 
-		T& get(unsigned i){
+		T& get(Index i){
 			if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			if (i < 0)throw IndexOutOfBounds(std::to_string(i) + " is less than 0!");
 			return content[i];
 		}
 
-		const T& get(unsigned int i) const{
+		const T& get(Index i) const{
 			if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			if (i <0)throw IndexOutOfBounds(std::to_string(i) + " is less than 0!");
 			return content.at(i);
 		}
 
-		void set(unsigned int position, T value) {
+		void set(Index position, T value) {
 			if (position >= N)throw IndexOutOfBounds(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			if (position <0)throw IndexOutOfBounds(std::to_string(position) + " is less than 0!");
 			content[position] = value;
@@ -85,12 +85,12 @@ namespace mc {
 			return content.end();
 		};
 
-		T& operator[](int i)
+		T& operator[](Index i)
 		{
 			return content[i];
 		};
 
-		const T& operator[](int i) const
+		const T& operator[](Index i) const
 		{
 			return content[i];
 		};
@@ -128,12 +128,12 @@ namespace mc {
 		};
 
 
-		template<typename TOther, int NOther>
+		template<typename TOther, Size NOther>
 		bool operator==(const Vector<TOther, NOther>& other)
 		{
 			if (N != NOther)return false;
 			if (T != TOther)return false;
-			for (int i = 0; i < N; i++) {
+			for (Index i = 0; i < N; i++) {
 				if (this[i] != other[i]) {
 					return false;
 				}
@@ -141,7 +141,7 @@ namespace mc {
 			return true;
 		};
 
-		template<typename TOther, int NOther>
+		template<typename TOther, Size NOther>
 		bool operator!=(const Vector<TOther, NOther>& other)
 		{
 			return !(this == other);
@@ -199,22 +199,21 @@ namespace mc {
 	using Vector5i = mc::Vector<int, 5>;
 
 	/**
-	Used in the `Matrix` class.
+	Used in the `Matrix` class. Defined for clarity for when you iterate over a `Matrix.`
 	@tparam T What data type the row is made of
 	@tparam N The width of the row
 	*/
-	template <typename T, int N>
+	template <typename T, Size N>
 	using MatrixRow = mc::Vector<T, N>;//this is for clarity
 
 	/**
 	A class representing a 2-dimensional matrix, and allows for math involving matrices.
-	@tparam T What the `Matrix should consist of
+	@tparam T What the Matrix should consist of
 	@tparam W The width of the `Matrix`
 	@tparam H The height of the `Matrix`
 	*/
-	template<typename T, int W, int H>
+	template<typename T,Size W, Size H>
 	struct Matrix : Vector<MatrixRow<T, H>, W> {
-		using Vector::Vector;
 
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is empty.
@@ -222,7 +221,7 @@ namespace mc {
 		Matrix()
 		{
 			this->setContents(std::array<MatrixRow<T, H>, W>());
-			for (unsigned int i = 0; i < content.size(); i++) {
+			for (Index i = 0; i < content.size(); i++) {
 				content[i] = MatrixRow<T, H>();
 			}
 		};
@@ -233,7 +232,7 @@ namespace mc {
 		*/
 		Matrix(T arr[W][H]) {
 			Matrix();
-			for (int x = 0; x < sizeof(arr) / sizeof(T); x++) {
+			for (Index x = 0; x < sizeof(arr) / sizeof(T); x++) {
 				for (int y = 0; y < sizeof(arr[x]) / sizeof(T); y++) {
 					content[x][y] = arr[x][y];
 				}
@@ -286,10 +285,10 @@ namespace mc {
 		@throw IndexOutOfBounds if `y<0`
 		@throw IndexOutOfBounds if `x>width()`
 		@throw IndexOutOfBounds if `y>height()`
-		@see #set(unsigned int, unsigned int, T)
+		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		T& get(unsigned int x, unsigned int y) {
+		T& get(Index x, Index y) {
 			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			if (x < 0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
@@ -298,7 +297,7 @@ namespace mc {
 		}
 
 		/**
-		`const` version of {@link #get(unsigned int, unsigned int)}
+		`const` version of {@link #get(Index,Index)}
 		@param x X-coordinate of the requested data
 		@param y Y-coordinate of the requested data
 		@return A reference to the `const` data at `X,Y`
@@ -306,10 +305,10 @@ namespace mc {
 		@throw IndexOutOfBounds if `y<0`
 		@throw IndexOutOfBounds if `x>width()`
 		@throw IndexOutOfBounds if `y>height()`
-		@see #set(unsigned int, unsigned int, T)
+		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		const T& get(unsigned int x, unsigned int y) const {
+		const T& get(Index x, Index y) const {
 			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			if (x < 0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");
@@ -327,9 +326,9 @@ namespace mc {
 		@throw IndexOutOfBounds if `x>width()`
 		@throw IndexOutOfBounds if `y>height()`
 		@see #operator[]
-		@see #get(unsigned int, unsigned int)
+		@see #get(Index, Index)
 		*/
-		void set(unsigned int x, unsigned int y, T value) {
+		void set(Index x, Index y, T value) {
 			if (x >= W) throw IndexOutOfBounds(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			if (y >= H) throw IndexOutOfBounds(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			if (x < 0)throw IndexOutOfBounds("The X value, " + std::to_string(x) + " is less than 0!");

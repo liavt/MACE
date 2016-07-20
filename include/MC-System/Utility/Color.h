@@ -48,6 +48,6 @@ namespace mc {
 		Color(std::array<float,4> values);
 		Color();
 
-		float& operator[](int i);
+		float& operator[](Index i);
 	};
 }

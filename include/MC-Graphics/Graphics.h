@@ -10,12 +10,11 @@ namespace mc {
 	*/
 	namespace gfx{
 
-		class GraphicsModule : public mc::gfx::EntityModule, public win::WindowModule {
+		class GraphicsModule : public mc::gfx::EntityModule {
 		public:
 			GraphicsModule();
 
 			using EntityModule::EntityModule;
-			using WindowModule::WindowModule;
 
 			void init();
 			void update();
