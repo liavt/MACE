@@ -3,7 +3,7 @@
 
 #define _MACE_TO_STRING(s) #s
 
-#ifndef __cplusplus
+#ifndef __cplusplus 
 	#error A C++ compiler is required!
 #endif 
 

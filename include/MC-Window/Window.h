@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL/SDL.h>
 #include <iostream>
+#include <SDL/SDL.h>
 
 namespace mc {
 	/**
