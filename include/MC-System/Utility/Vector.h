@@ -134,12 +134,8 @@ namespace mc {
 			return mc::Vector<T, N>(out);
 		};
 
-
-		template<typename TOther, Size NOther>
-		bool operator==(const Vector<TOther, NOther>& other)
+		bool operator==(const Vector<T,N>& other)
 		{
-			if (N != NOther)return false;
-			if (T != TOther)return false;
 			for (Index i = 0; i < N; i++) {
 				if (this[i] != other[i]) {
 					return false;
@@ -148,8 +144,7 @@ namespace mc {
 			return true;
 		};
 
-		template<typename TOther, Size NOther>
-		bool operator!=(const Vector<TOther, NOther>& other)
+		bool operator!=(const Vector<T,N>& other)
 		{
 			return !(this == other);
 		};
