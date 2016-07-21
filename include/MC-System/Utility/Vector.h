@@ -13,7 +13,7 @@ namespace mc {
 	@tparam N width of the `Vector`
 	*/
 	template <typename T,Size N>
-	class Vector {
+	struct Vector {
 		/**
 		`Matrix` is friends with `Vector` so `Matrix` can create efficient implementations of `get()` and `set()`
 		*/
@@ -26,7 +26,8 @@ namespace mc {
 		};
 
 		Vector(T arr[N]) {
-			this->setContents(std::array<T, N>(arr));
+			this->setContents(std::array<T,N>());//we need to initialize the array first, or else we will try to access an empty memory location
+			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
 
 		Vector(std::array<T, N>& contents)
@@ -43,13 +44,19 @@ namespace mc {
 			return this->content;
 		};
 
-		const std::array < T,N>& getContents() const
+		const std::array < T, N>& getContents() const
 		{
 			return this->content;
 		};
-		void setContents(const std::array<T,N> contents)
+		void setContents(const std::array<T, N> contents)
 		{
 			this->content = contents;
+		};
+
+		void setContents(const T arr[N]) {
+			for (Index i = 0; i < N; i++) {
+				set(i, arr[i]);
+			}
 		};
 
 		virtual Size size() const
@@ -208,7 +215,7 @@ namespace mc {
 
 	/**
 	A class representing a 2-dimensional matrix, and allows for math involving matrices.
-	@tparam T What the Matrix should consist of
+	@tparam T What the `Matrix` should consist of
 	@tparam W The width of the `Matrix`
 	@tparam H The height of the `Matrix`
 	*/
@@ -349,6 +356,7 @@ namespace mc {
 		Matrix operator=(T arr[W][H]) {//arr me mateys
 			return Matrix(arr);
 		}
+
 	};
 
 	/**

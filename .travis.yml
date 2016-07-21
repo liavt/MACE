@@ -1,0 +1,30 @@
+sudo: false
+language: cpp
+
+os:
+  - osx
+  - linux
+  
+compiler:
+  - gcc
+  - clang
+   
+addons:
+  apt:
+    sources: ['kalakris-cmake','ubuntu-toolchain-r-test']
+    packages: ['cmake','clang','g++4.8','gcc4.8','libc++-dev']
+
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+
+
+script:
+  - mkdir build/
+  - cd build/
+  - cmake ..
+  - make
+  - cd bin/
+  - ./MC-Testing
+  
+notifications:
+  email: false

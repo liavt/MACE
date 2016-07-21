@@ -1,6 +1,6 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
-message(STATUS "Building MC-Audio...")
+message(STATUS "Adding MC-Audio...")
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 

@@ -4,7 +4,10 @@
 #include <array>
 
 namespace mc {	
-	class Color {
+	/**
+	
+	*/
+	struct Color {
 	public:
 
 		static Byte convertFloatToRGBA(float color);

@@ -143,7 +143,8 @@ namespace mc {
 			Entity& getChild(Index i);
 			/**
 			`const` version of {@link #getChild(Index)}
-			@param i Index of the `Entity`
+
+			@param i `Index` of the `Entity`
 			@return Reference to the `Entity` located at `i`
 			@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
 			@see #operator[]

@@ -17,9 +17,16 @@ TEST_CASE("Testing color conversion methods","[system][color][utility]") {
 	REQUIRE(mc::Color::convertRGBAToFloat(127) == Approx(0.5f).epsilon(0.01));
 }
 
+TEST_CASE("Testing color initialization","[system][color][utility]") {
+	Color c = {0.0f,0.64f,0.12f,1.0f};
+	REQUIRE(c.r==0.0f);
+	REQUIRE(c.g == 0.64f);
+	REQUIRE(c.b==0.12f);
+	REQUIRE(c.a==1.0f);
+}
+
 TEST_CASE("Testing color storage","[system][color][utility][slow]") {
 	Color c = Color(0.0f,0.0f,0.0f,1.0f);
-
 	REQUIRE(c.getRed()==0);
 	REQUIRE(c.getGreen() == 0);
 	REQUIRE(c.getBlue() == 0);
@@ -29,7 +36,7 @@ TEST_CASE("Testing color storage","[system][color][utility][slow]") {
 	REQUIRE(c.b== 0);
 	REQUIRE(c.a == 1.0f);
 
-	for (unsigned int i = 0; i < 254; i++) {
+	for (unsigned int i = 0; i < 254; i+=2) {
 		c.setRed(i);
 		REQUIRE(c.getRed()==i);
 		REQUIRE(c.r==Approx((float)i/254.0f));

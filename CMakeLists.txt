@@ -1,8 +1,8 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
 PROJECT(MACE)
 
-message("Welcome to the MACE build!")
+message("MACE project added")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -141,10 +141,23 @@ endif()
 message(STATUS "Finding OpenGL...")
 find_package(OpenGL REQUIRED)
 
-message(STATUS "Building ${SDL2_SOURCE_NAME}...")
+#verify that we are using C++ 11
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+	message(STATUS "Found CXX11 support in ${CMAKE_CXX_COMPILER}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+	message(STATUS "Found CXX0X support in ${CMAKE_CXX_COMPILER}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
+
+message(STATUS "Adding ${SDL2_SOURCE_NAME}...")
 add_subdirectory("${SDL2_SOURCE_NAME}")
 
-message(STATUS "Building ${SDL_NET_SOURCE_NAME}...")
 add_subdirectory("${SDL_NET_SOURCE_DIR}" )
 
 add_subdirectory(MC-System)

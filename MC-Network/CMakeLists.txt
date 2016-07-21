@@ -1,6 +1,6 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
-message(STATUS "Building MC-Network...")
+message(STATUS "Adding MC-Network...")
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
