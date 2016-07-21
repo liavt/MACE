@@ -24,7 +24,6 @@ TEST_CASE("Testing matrix width and height","[system][utility][vector]") {
 
 TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]") {
 	SECTION("Vector intialization") {
-		Vector3f v;
 		SECTION("Testing assigning vector to an array"){
 			float arr[] = { 1.0f,42.0f,100.0f };
 			Vector3f v = arr;
@@ -33,27 +32,27 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 			REQUIRE(v[2]==100.0f);
 		}
 		SECTION("Testing default constructor"){
-			v = Vector3f();
+			Vector3f v = Vector3f();
 			REQUIRE(v[0]==0);
 			REQUIRE(v[1]==0);
 			REQUIRE(v[2]==0);
 		}
 		SECTION("Testing contructor with array"){
 			float arr[] = {45.512f,6.9f,4.20f};
-			v = Vector3f(arr);
+			Vector3f v = Vector3f(arr);
 			REQUIRE(v.get(0)==45.512f);
 			REQUIRE(v.get(1)==6.9f);
 			REQUIRE(v.get(2)==4.20f);
 		}
 		SECTION("Testing contructor with std::array") {
 			std::array<float,3> arr = {-41.7f,100.9f,1.1f};
-			v = Vector3f(arr);
+			Vector3f v = Vector3f(arr);
 			REQUIRE(v.get(0)==(-41.7f));
 			REQUIRE(v.get(1)==100.9f);
 			REQUIRE(v.get(2)==1.1f);
 		}
 		SECTION("Testing copy constructors") {
-			v = Vector3f();
+			Vector3f v = Vector3f();
 			v.set(0, 67.9f);
 			v.set(1, 56.0f);
 			v.set(2, 42.4f);
