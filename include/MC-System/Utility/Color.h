@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MC-System\Constants.h>
+#include <MC-System/Constants.h>
 #include <array>
 
 namespace mc {	
