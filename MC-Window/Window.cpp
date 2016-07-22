@@ -18,7 +18,7 @@ namespace mc {
 		}
 
 		bool Window::isOpen() {
-			return ((int)SDL_GetWindowData(m_window, "open")) != 0;
+			return ((long)SDL_GetWindowData(m_window, "open")) != 0;
 		}
 
 		SDL_Window* Window::getSDLWindow() {

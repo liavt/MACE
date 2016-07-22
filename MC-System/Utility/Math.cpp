@@ -1,4 +1,5 @@
 #include <MC-System/Utility/Math.h>
+#include <cmath>
 
 namespace mc{
 

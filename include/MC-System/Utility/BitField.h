@@ -8,7 +8,14 @@ namespace mc {
 	Wrapper class for a primitive type that allows for easy bit manipulation. Can set individual bits. Additionally, it overrides almost every operator
 	to operate on it's wrapped value, to allow for you to manually manipulate it.
 	<p>
-	To construct it, you can simply call {@code BitField<Byte> field = 0b0000000.} There are constructors for those who want to use them.
+	Examples:
+	{@code
+		BitField<int> field = 15;//Creation
+		
+		field.setBit(i,state)//Set bit in position i to state
+
+		field.getBit(i) //Get whether bit in position i is true or false
+	}
 	@tparam T What primitive the`BitField` should use to store the bits
 	*/
 	template<typename T>
@@ -33,7 +40,7 @@ namespace mc {
 		Equal to calling {@code BitField<T> = value}
 		@param value Inital value
 		*/
-		BitField(T value) {
+		BitField(const T value) {
 			this->value = value;
 		}
 
@@ -51,10 +58,18 @@ namespace mc {
 		~BitField() {
 			//nothing to delete, just here to complete the constructors
 		}
-
+		/**
+		Retrieve the `const` value inside of this `BitField`
+		@return The value represented by this `BitField`
+		@see get()
+		*/
+		const T get() const {
+			return value;
+		}
 		/**
 		Retrieve the value inside of this `BitField`
 		@return The value represented by this `BitField`
+		@see get() const
 		*/
 		T get() {
 			return value;
@@ -147,8 +162,8 @@ namespace mc {
 		/**
 		Operator for `std::cout` to correctly print this class
 		*/
-		std::ostream &operator<<(std::ostream &os) {
-			for (Index i = size() - 1; i >= 0; i--) os << this[i];
+		std::ostream &operator<<(BitField<T> b) {
+			for (Index i = size() - 1; i >= 0; i--) os << b[i];
 			return os;
 		}
 
@@ -193,14 +208,6 @@ namespace mc {
 		*/
 		void operator^=(const T value) {
 			this->value ^= value;
-		}
-		/**
-		Operator which acts upon the internal value
-		@see get() @see value
-		*/
-		BitField& operator=(const T value) {
-			this->value = value;
-			return *this;
 		}
 		/**
 		Operator which acts upon the internal value

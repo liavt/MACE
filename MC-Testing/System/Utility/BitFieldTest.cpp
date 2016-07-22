@@ -57,6 +57,8 @@ namespace mc{
 
 		b = 0b00000000;
 
+		REQUIRE(b == 0b00000000);
+
 		b = b | (0b01010101);
 
 		REQUIRE(b == 0b01010101);
@@ -74,6 +76,19 @@ namespace mc{
 		b = b<< 1;
 
 		REQUIRE(b == 0b10010000);
+	}
+
+	TEST_CASE("Testing Bitfield creation", "[system][utility][bitfield]") {
+		ByteField b = ByteField(static_cast<Byte>(3));
+		REQUIRE(b== static_cast<Byte>(3));
+	 	b = static_cast<Byte>(32);
+		REQUIRE(b== static_cast<Byte>(32));
+		b = BitField<Byte>((0b10101010));
+		REQUIRE(b== (0b10101010));
+		b = ByteField(BitField<Byte>(static_cast<Byte>(56)));//copy constructor.
+		REQUIRE(b== static_cast<Byte>(56));
+		b = ByteField();
+		REQUIRE(b== static_cast<Byte>(0));
 	}
 
 	TEST_CASE("Testing BitField functions", "[system][utility][bitfield]") {

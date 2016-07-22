@@ -1,25 +1,23 @@
-sudo: required
+sudo: false
 language: cpp
 
 notifications:
   email: false
 
 os:
-  - osx
   - linux
   
 compiler:
   - gcc
-  - clang
-   
+
 addons:
   apt:
     sources:
-      -sourceline: 'ppa:ubuntu-toolchain-r-test'
+      - ubuntu-toolchain-r-test
+      - kalakris-cmake #for newer cmake
     packages:
-      - gcc4.8
-      - g++4.8
-      - clang
+      - gcc-4.8
+      - g++-4.8
       - cmake
 
 install:

@@ -3,29 +3,33 @@
 #include <MC-Graphics/Entity.h>
 #include <MC-Graphics/Graphics.h>
 
-class DummyEntity : public mc::gfx::Entity {
-public:
-	DummyEntity(): Entity(){};
-
-
-	bool isUpdated = false,  isInit = false, isDestroyed = false;
-protected:
-
-	void customUpdate() {
-		isUpdated = true;
-	}
-
-	void customInit() {
-		isInit = true;
-	}
-
-	void customDestroy() {
-		isDestroyed = true;
-	}
-};
-
 namespace mc{
 	namespace gfx{
+
+		class DummyEntity : public mc::gfx::Entity {
+		public:
+			DummyEntity() : Entity() {};
+
+
+			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false;
+		protected:
+
+			void customUpdate() {
+				isUpdated = true;
+			}
+
+			void customInit() {
+				isInit = true;
+			}
+
+			void customDestroy() {
+				isDestroyed = true;
+			}
+
+			void customRender() {
+				isRendered = true;
+			}
+		};
 
 		EntityModule c = EntityModule();
 
@@ -66,8 +70,6 @@ namespace mc{
 
 			c.clearChildren();
 
-			;
-
 
 		}
 
@@ -78,7 +80,7 @@ namespace mc{
 	
 			c.addChild(e);
 
-			SECTION("Killing some entities"){
+			SECTION("Killing some entities"){//RIP
 				REQUIRE(c.hasChild(e));
 				REQUIRE(!e.getProperty(ENTITY_PROPERTY_DEAD));
 
@@ -125,8 +127,6 @@ namespace mc{
 			}
 			c.clearChildren();
 
-			;
-
 		}
 
 		TEST_CASE("Testing entity dirtiness","[entity][system]") {
@@ -145,8 +145,6 @@ namespace mc{
 			}
 	
 			c.clearChildren();
-
-			;
 
 		}
 
@@ -171,7 +169,7 @@ namespace mc{
 
 			c.addChild(e);
 
-			SECTION("Testing init(), destroy(), and destroy()") {
+			SECTION("Testing init(), destroy(), render() and destroy()") {
 
 				REQUIRE(e.isUpdated == false);
 
@@ -183,6 +181,10 @@ namespace mc{
 
 				REQUIRE(e.isUpdated);
 
+				c.render();
+
+				REQUIRE(e.isRendered);
+
 				c.destroy();
 
 				REQUIRE(e.isDestroyed);
@@ -191,7 +193,7 @@ namespace mc{
 
 			DummyEntity child = DummyEntity();
 
-			SECTION("Testing init() destroy() and update() with children"){
+			SECTION("Testing init() destroy() render() and update() with children"){
 
 				e.addChild(child);
 
@@ -202,6 +204,10 @@ namespace mc{
 				c.update();
 
 				REQUIRE(child.isUpdated);
+
+				c.render();
+
+				REQUIRE(child.isRendered);
 
 				c.destroy();
 

@@ -152,7 +152,7 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 	message(STATUS "Found CXX0X support in ${CMAKE_CXX_COMPILER}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+        message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
 message(STATUS "Adding ${SDL2_SOURCE_NAME}...")

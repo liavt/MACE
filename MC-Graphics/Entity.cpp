@@ -17,7 +17,7 @@ namespace mc {
 
 		void Container::updateChildren()
 		{
-			for (Size i = 0; i < children.size(); i++) {
+			for (Index i = 0; i < children.size(); i++) {
 				if (children[i]->getProperty(ENTITY_PROPERTY_DEAD)) {
 					children[i]->kill();
 					removeChild(i);
@@ -30,7 +30,7 @@ namespace mc {
 
 		void Container::initChildren()
 		{
-			for (Size i = 0; i < children.size(); i++) {
+			for (Index i = 0; i < children.size(); i++) {
 				if (!children[i]->getProperty(ENTITY_PROPERTY_INIT))children[i]->init();
 
 			}
@@ -53,8 +53,15 @@ namespace mc {
 
 		void Container::destroyChildren()
 		{
-			for (Size i = 0; i < children.size(); i++) {
+			for (Index i = 0; i < children.size(); i++) {
 				children[i]->destroy();
+			}
+		}
+
+		void Container::renderChildren()
+		{
+			for (Index i = 0; i < children.size(); i++) {
+				children[i]->render();
 			}
 		}
 
@@ -91,6 +98,12 @@ namespace mc {
 			else {
 				children.erase(children.begin() + index);
 			}
+		}
+
+		void Entity::render()
+		{
+			customRender();
+			Container::render();
 		}
 
 		void Entity::setParent(Container * parent)
@@ -160,6 +173,11 @@ namespace mc {
 
 		void Container::destroy() {
 			destroyChildren();
+		}
+
+		void Container::render()
+		{
+			renderChildren();
 		}
 
 		void Entity::kill() {
@@ -253,6 +271,11 @@ namespace mc {
 		void EntityModule::destroy()
 		{
 			Container::destroy();
+		}
+
+		void EntityModule::render()
+		{
+			Container::render();
 		}
 
 		bool Entity::operator==(Entity& other) const {

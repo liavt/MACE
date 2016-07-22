@@ -3,8 +3,8 @@
 
 int main(int argc, char* const argv[])
 {
-
-	int result = Catch::Session().run(argc, argv);
+	//constant? get it?
+	const int result = Catch::Session().run(argc, argv);
 
 	system("PAUSE");
 

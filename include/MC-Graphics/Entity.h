@@ -16,6 +16,8 @@ namespace mc {
 		A class which holds an internal buffer of {@link Entity entities,} known as "children."
 		<p>
 		Calling {@link #update()} will call `update()` on all of it's children.
+		<p>
+		Examples:
 		*/
 		class Container {
 			/**
@@ -30,10 +32,14 @@ namespace mc {
 			Calls {@link #destroy()} on all of it's children.
 			*/
 			void destroyChildren();//think of the children!
+			/**
+			Calls {@link #render()} on all of it's children.
+			*/
+			void renderChildren();
 
-								   /**
-								   `EntityModule` needs to be able to see privates in order to properly interact with `Entities`
-								   */
+			/**
+			`EntityModule` needs to be able to see privates in order to properly interact with `Entities`
+			*/
 			friend class EntityModule;
 			/**
 			`Entity` needs to do some additional work with the private members
@@ -65,6 +71,10 @@ namespace mc {
 			Should be called every time {@link System#terminate()} is called. Calls `destroy()` on all of this `Container\'s` children.
 			*/
 			virtual void destroy();
+			/**
+			Should be called every time the `Window`'s buffers are swapped.
+			*/
+			virtual void render();
 
 			/**
 			Gets all of this `Container's` children.
@@ -133,6 +143,7 @@ namespace mc {
 			const Entity& operator[](Index i) const;//get children via [i]
 
 			/**
+
 			Retrieves a child at a certain index.
 			@param i Index of the `Entity`
 			@return Reference to the `Entity` located at `i`
@@ -208,27 +219,68 @@ namespace mc {
 		*/
 		class Entity : public Container {
 			/**
-			A `Container` needs to access `update()`, `init()`,  and `destroy()`
+			A `Container` needs to access `update()`, `render()`, `init()`,  and `destroy()`
 			*/
 			friend class Container;
 			/**
 			Should be called a by `Container` when `System.update()` is called. Calls `customUpdate()`
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
+			class Derived : public Entity{
+			void update(){
+			Entity::update()//must call
+			...
+			}
+			}
+			}
 			*/
 			void update();
 			/**
 			Should be called a by `Container` when `System.init()` is called. Calls `customInit()`
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `init()` funtion. For example:{@code
+				class Derived : public Entity{
+					void init(){
+						Entity::init()//must call
+						...
+					}
+				}	
+			}
 			*/
 			void init();
 			/**
 			Should be called a by `Container` when `System.terminate()` is called. Calls `customDestroy()`
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `destroy()` funtion. For example:{@code
+				class Derived : public Entity{
+					void destroy(){
+						Entity::destroy()//must call
+						...
+					}
+				}	
+			}
 			*/
 			void destroy();
+
+			/**
+			Should be called by a `Container` when the graphical `Window` clears the frame.
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `render()` funtion. For example:{@code
+				class Derived : public Entity{
+					void render(){
+						Entity::render()//must call
+						...
+					}
+				}	
+			}
+			*/
+			void render();
 
 			Container* parent;
 
 			void setParent(Container* parent);
 
-			ByteField properties = mc::gfx::ENTITY_DEFAULT_PROPERTIES;
+   			ByteField properties = ENTITY_DEFAULT_PROPERTIES;
 		public:
 
 			/**
@@ -355,6 +407,11 @@ namespace mc {
 			@see System#terminate()
 			*/
 			virtual void customDestroy() = 0;
+
+			/**
+			When `Container.render()` is called, `customRender()` is called on all of it's children.
+			*/
+			virtual void customRender() = 0;
 		};
 
 		/**
@@ -378,6 +435,10 @@ namespace mc {
 			Calls `destroy()` on all of this `EntityModules` children.
 			*/
 			virtual void destroy();
+			/**
+			Calls `render()` on all of this `EntityModules` children.
+			*/
+			virtual void render();
 			/**
 			Get this `EntityModules` unique name.
 			@return `MC-Entity`

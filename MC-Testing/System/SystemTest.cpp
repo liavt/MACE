@@ -1,6 +1,7 @@
 #include <Catch.h>
 #include <MC-System/System.h>
 
+namespace mc{
 class TestModule :public mc::Module {
 public:
 	TestModule() : mc::Module() {};
@@ -89,4 +90,5 @@ TEST_CASE("Modules getting updated","[module][system]") {
 
 	mc::System::terminate();
 
+}
 }

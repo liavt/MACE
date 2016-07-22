@@ -1,5 +1,6 @@
 #include <Catch.h>
 #include <MC-System/Utility/Vector.h>
+#include <iostream>
 
 namespace mc{
 TEST_CASE("Testing matrix width and height","[system][utility][vector]") {
@@ -51,6 +52,15 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 			REQUIRE(v.get(1)==100.9f);
 			REQUIRE(v.get(2)==1.1f);
 		}
+		SECTION("Testing aggregate constructor") {
+			SECTION("Constructor-stlye"){
+				/*Vector4i v = Vector4i(4,1,32,5);
+				REQUIRE(v[0]==4);
+				REQUIRE(v[1]==1);
+				REQUIRE(v[2]==32);
+				REQUIRE(v[3]==5);*/
+			}
+		}
 		SECTION("Testing copy constructors") {
 			Vector3f v = Vector3f();
 			v.set(0, 67.9f);
@@ -67,6 +77,62 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 				REQUIRE(v[0]==67.9f);
 				REQUIRE(v[1]==56.0f);
 				REQUIRE(v[2]==42.4f);
+			}
+		}
+	}
+
+	SECTION("Matrix initialization") {
+		SECTION("Testing creating Matrix from array") {
+			int arr[3][3] = { {1,2,3},{4,5,6},{7,8,9} };
+			Matrix3i m = arr;
+			Index counter = 0;
+			for (Index x = 0; x < m.width(); x++) {
+				for (Index y = 0; y < m.height(); y++) {
+					counter++;
+					REQUIRE(m[x][y]==counter);
+				}
+			}
+		}
+		SECTION("Testing default constructor") {
+			Matrix2f m = Matrix2f();
+			REQUIRE(m[0][0]==0);
+			REQUIRE(m[0][1]==0);
+			REQUIRE(m[1][0]==0);
+			REQUIRE(m[1][1]==0);
+		}
+		SECTION("Testing constructor with array") {
+			int arr[3][3] = { { 1,2,3 },{ 4,5,6 },{ 7,8,9 } };
+			Matrix3i m = Matrix3i(arr);
+			Index counter = 0;
+			for (Index x = 0; x < m.width(); x++) {
+				for (Index y = 0; y < m.height(); y++) {
+					counter++;
+					REQUIRE(m[x][y] == counter);
+				}
+			}
+		}
+		SECTION("Testing copy constructors") {
+			Matrix4i m = Matrix4i();
+			for (Index x = 0; x < m.width(); x++) {
+				for (Index y = 0; y < m.height(); y++) {
+					m[x][y] = x*y;
+				}
+			}
+			SECTION("Testing via explicit constructor") {
+				Matrix4i other = Matrix4i(m);
+				for (Index x = 0; x < other.width(); x++) {
+					for (Index y = 0; y < other.height(); y++) {
+						REQUIRE(other[x][y]==x*y);
+					}
+				}
+			}
+			SECTION("Testing via assignment") {
+				Matrix4i other = m;
+				for (Index x = 0; x < other.width(); x++) {
+					for (Index y = 0; y < other.height(); y++) {
+						REQUIRE(other[x][y] == x*y);
+					}
+				}
 			}
 		}
 	}
