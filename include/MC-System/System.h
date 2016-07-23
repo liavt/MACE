@@ -1,7 +1,17 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia and Shahar Sandhaus
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #pragma once
 #include <vector>
 #include <string>
 #include <MC-System/Constants.h>
+#include <MC-System/Utility/BitField.h>
 
 /**
 Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.
@@ -51,7 +61,23 @@ namespace mc {
 	};
 
 	/**
-	Core class of MACE, managing `Modules.`
+	Core class of MACE, managing `Modules.` `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `terminate()` should be called at the end of your program.
+	<p>
+	If `isRunning()` returns `false`, you should end your program and call `terminate()`
+	<p>
+	Your main loop should look like this:{@code
+	
+	//add modules that you need
+
+	mc::System::init();
+
+	while(mc::System::isRunning()){
+		mc::System::update();
+	}
+	
+	mc::System::terminate();
+
+	}
 	*/
 	class System final {
 	public:
@@ -64,9 +90,7 @@ namespace mc {
 		*/
 		static Index addModule(Module& m);
 		/**
-		Remove a `Module` by reference. 
-		<p>
-		It will find the `Module` based on their {@link Module#getName() getName()} function, so if there are multiple `Modules` with the same name, this function may produce unexpected behavior.
+		Remove a `Module` by reference. This is generally more safe than `removeModule(std::string)` as this checks by reference, not by name.
 		@param m Reference to Module in the buffer.
 		@throws ObjectNotFoundInArray if the referenced `Module` doesn't exist.
 		*/
@@ -111,14 +135,10 @@ namespace mc {
 		
 		/**
 		Checks whether a `Module` exists via a pointer.
-		<p>
-		Equivalent to {@code 
-			moduleExists(module->getName());
-		}
 		@param module `Module` to search for
-		@return `true` if there is a `Module` with the same name as the parameter, `false` otherwise.
+		@return `true` if the `Module` exists, `false` otherwise.
 		*/
-		static bool moduleExists(const Module* module);
+		static bool moduleExists(Module* module);
 		/**
 		Retrieves the amount of `Module` currently being updated by `System`
 		@return `Size` of the internal `Module` buffer
@@ -134,7 +154,8 @@ namespace mc {
 		@return Location of the `Module,` or `-1` if it doesnt exist.
 		@see indexOf(Module&)
 		*/
-		static Index indexOf(const Module& m);
+		//the parameter not being const is not a mistake; it gets derefenced to check for equality
+		static Index indexOf(Module& m);
 		/**
 		Find a `Module` with the specified name.
 		@param name Name to search for
@@ -163,22 +184,58 @@ namespace mc {
 		<p>
 		Should be called at the start of the program.
 		@see #addModule(Module&)
+		@see System for an optimal main loop
 		*/
 		static void init();
 		/**
 		Destroys MACE and calls {@link Module#destroy() destroy()} on all registered `Modules.`
 		<p>
-		Should be called at the end of the program.
+		Should be called at the end of the program after `System.isRunning()` is `false`
+		@throw InitializationError if `init()` has not been called yet
 		@see #addModule(Module&)
+		@see System for an optimal main loop
 		*/
 		static void terminate();
 		/**
-		Update MACE and all `Modules` registered
+		Update MACE and all `Modules` registered, and checks if a close has been requested.
 		<p>
 		Should be called in your main loop.
+		@return `true` if it updated succesfully. `false` if an error occurred, or a close has been requested from a `Module`. When this returns `false`, you should end the main loop and call `terminate()`
+		@throw InitializationError if `init()` has not been called yet or `terminate()` has been called.
 		@see #addModule(Module&)
+		@see System for an optimal main loop
 		*/
 		static void update();
+
+		/**
+		Checks whether the `System` is ready to be updated. `init()` must have been called and `terminate()` must not have been called. Additionally, if `shouldStop()` is `true`, this function also returns `false`.
+		@return If `update()` should be called. If this returns `false`, you should exit the main loop and call `terminate()`
+		@see requestStop()
+		@see System for an optimal main loop
+		*/
+		static bool isRunning();
+
+		/**
+		Tell the `System` to terminate. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
+		@see System for an optimal main loop
+		*/
+		static void requestStop();
+
+		/**
+		Retrieve an internal flag about the current state of the `System`.
+		<p>
+		Example usage:{@code
+			mc::System::getFlag(SYSTEM_FLAG_INIT);//get whether init() has been called
+		}
+		@param Index Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
+		@return Whether the specified flag is `true`
+		*/
+		static bool getFlag(Index flag);
+
+		/**
+		"Resets" the `System` to its default state. `Modules` are cleared, and all flags are set to 0.
+		*/
+		static void reset();
 	private: 
 		/**
 		Private constructor to prevent initialization.
@@ -189,6 +246,11 @@ namespace mc {
 		All of the `Modules` registered
 		*/
 		static std::vector<Module*> modules;
+
+		/**
+		Stores various flags for the System, like whether it is running, or a close is requested.
+		*/
+		static ByteField flags;
 	};
 
 }

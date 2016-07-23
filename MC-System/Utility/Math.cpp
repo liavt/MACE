@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia and Shahar Sandhaus
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #include <MC-System/Utility/Math.h>
 #include <cmath>
 
@@ -35,7 +44,7 @@ namespace mc{
 		{
 			return 1.61803398874989484820458683436563811772030917980576l;
 		}
-		double abs(const double value)
+		constexpr double abs(const double value)
 		{
 			return value < 0 ? -value : value;
 		}
@@ -66,13 +75,12 @@ namespace mc{
 			return true;
 		}
 
-		bool isEven(const int value)
+		constexpr bool isEven(const int value)
 		{
-			int out = value;
-			return out % 2 == 0;
+			return value % 2 == 0;
 		}
 
-		bool isOdd(const int value)
+		constexpr bool isOdd(const int value)
 		{
 			return !isEven(value);
 		}
@@ -95,12 +103,12 @@ namespace mc{
 			return out;
 		}
 
-		double sqr(const double value)
+		constexpr double sqr(const double value)
 		{
 			return value*value;
 		}
 
-		double cube(const double value)
+		constexpr double cube(const double value)
 		{
 			return value*value*value;
 		}
@@ -118,9 +126,9 @@ namespace mc{
 
 		Matrix4f getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio)
 		{
-			float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
-			float x_scale = y_scale / aspectRatio;
-			float frustum_length = FAR_PLANE - NEAR_PLANE;
+			const float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
+			const float x_scale = y_scale / aspectRatio;
+			const float frustum_length = FAR_PLANE - NEAR_PLANE;
 
 			Matrix4f projectionMatrix = Matrix4f();
 			projectionMatrix[0][0] = x_scale;

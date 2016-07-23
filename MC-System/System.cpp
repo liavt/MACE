@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia and Shahar Sandhaus
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #include <MC-System/System.h>
 #include <SDL/SDL.h>
 #include <MC-System/Exceptions.h>
@@ -5,6 +14,7 @@
 
 namespace mc {
 	std::vector<Module*> System::modules;
+	ByteField System::flags = 0;
 
 	Index System::addModule(Module& m)
 	{
@@ -13,7 +23,13 @@ namespace mc {
 	}
 	void System::removeModule(Module& m)
 	{
-		removeModule(m.getName());
+		for (Index i = 0; i < modules.size(); i++) {
+			if (modules[i]==&m) {
+				removeModule(i);
+				return;
+			}
+		}
+		throw ObjectNotFoundInArray("No module by the name of " + m.getName() + " found!");
 	}
 	void System::removeModule(std::string module)
 	{
@@ -53,9 +69,14 @@ namespace mc {
 		}
 		return false;
 	}
-	bool System::moduleExists(const Module * module)
+	bool System::moduleExists(Module * module)
 	{
-		return moduleExists(module->getName());
+		for (Index i = 0; i < modules.size(); i++) {
+			if (modules[i]==module) {
+				return true;
+			}
+		}
+		return false;
 	}
 	Size System::numberOfModules()
 	{
@@ -72,8 +93,13 @@ namespace mc {
 		assertModule(module, "\'"+module+"\' module has not been registered!");
 	}
 
-	unsigned int System::indexOf(const Module& m) {
-		return indexOf(m.getName());
+	unsigned int System::indexOf(Module& m) {
+		for (Index i = 0; i < modules.size(); i++) {
+			if (modules[i]==&m) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	unsigned int System::indexOf(std::string name) {
@@ -86,13 +112,21 @@ namespace mc {
 	}
 
 	void System::init() {
-		SDL_Init(SDL_INIT_EVERYTHING);
+		if (modules.size()==0)throw InitializationError("Must add a Module via System::addModule!");
+		flags.untoggleBit(SYSTEM_FLAG_DESTROYED);
+		flags.toggleBit(SYSTEM_FLAG_INIT);
 		for (Index i = 0; i < modules.size(); i++) {
 			modules[i]->init();
 		}
 	}
 
 	void System::terminate() {
+		if (!flags.getBit(SYSTEM_FLAG_INIT)) {
+			throw InitializationError("Can't terminate System without calling init() first!");
+		}
+		flags.toggleBit(SYSTEM_FLAG_DESTROYED);
+		flags.untoggleBit(SYSTEM_FLAG_INIT);
+		flags.untoggleBit(SYSTEM_FLAG_STOP_REQUESTED);
 		for (Index i = 0; i < modules.size(); i++) {
 			modules[i]->destroy();
 		}
@@ -100,14 +134,26 @@ namespace mc {
 	}
 
 	void System::update() {
-		SDL_Event e;
-		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE) {
-				SDL_SetWindowData(SDL_GetWindowFromID(e.window.windowID), "open", 0);
-			}
-		}
+		if (!flags.getBit(SYSTEM_FLAG_INIT))throw InitializationError("init() must be called!");
 		for (Index i = 0; i < modules.size(); i++) {
 			modules[i]->update();
 		}
+	}
+	bool System::isRunning()
+	{
+		return !flags.getBit(SYSTEM_FLAG_STOP_REQUESTED)&&flags.getBit(SYSTEM_FLAG_INIT)&&!flags.getBit(SYSTEM_FLAG_DESTROYED);
+	}
+	void System::requestStop()
+	{
+		flags.toggleBit(SYSTEM_FLAG_STOP_REQUESTED);
+	}
+	bool System::getFlag(Index flag)
+	{
+		return flags.getBit(flag);
+	}
+	void System::reset()
+	{
+		modules.clear();
+		flags = 0;
 	}
 }

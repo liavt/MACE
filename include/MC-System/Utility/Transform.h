@@ -8,8 +8,12 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-
-#include <MC-System/System.h>
 #include <MC-System/Constants.h>
-#include <MC-System/Utils.h>
-#include <MC-System/Exceptions.h>
+#include <MC-System/Utility/Vector.h>
+
+namespace mc {
+	struct Translation : public Vector4f {
+
+
+	};
+}
