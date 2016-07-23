@@ -61,7 +61,7 @@ namespace mc {
 	};
 
 	/**
-	Core class of MACE, managing `Modules.` `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `terminate()` should be called at the end of your program.
+	Core class of MACE, managing `Modules`. `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `terminate()` should be called at the end of your program.
 	<p>
 	If `isRunning()` returns `false`, you should end your program and call `terminate()`
 	<p>

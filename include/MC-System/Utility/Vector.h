@@ -11,6 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <array>
 #include <MC-System/Exceptions.h>
 #include <MC-System/Constants.h>
+#include <iosfwd>
 
 namespace mc {
 	//forward defining Matrix here for friend declaration in Vector
@@ -271,6 +272,22 @@ namespace mc {
 			return mc::Vector<T, N>(out);
 		};
 
+		void += (const Vector<T, N> right) {
+			this = this + right;
+		}
+
+		void -= (const Vector<T, N> right) {
+			this = this - right;
+		}
+
+		void *= (const Vector<T, N> right) {
+			this = this * right;
+		}
+
+		void /= (const Vector<T, N> right) {
+			this = this / right;
+		}
+
 		/**
 		Compares whether 2 `Vectors` have the same values
 		@param other A `Vector` to compare `this` against
@@ -297,6 +314,22 @@ namespace mc {
 		{
 			return !(this == other);
 		};
+
+		/**
+		Operator used to output to `std::cout`.
+		@param output `std::ostream` the `Matrix` was inserted into
+		@param m `Matrix` which will be printed
+		@return `output` for chaining
+		*/
+		friend std::ostream &operator<<(std::ostream &output,
+			const Vector<T, N> &v) {
+			output << "[ ";
+			for (Index x = 0; x < N; x++) {
+				output << v[x]<<", ";
+			}
+			output << " ]";
+			return output;
+		}
 
 	private:
 		std::array<T,N> content;
@@ -355,9 +388,36 @@ namespace mc {
 	using MatrixRow = mc::Vector<T, N>;//this is for clarity
 
 	/**
-	A class representing a 2-dimensional matrix, and allows for math involving matrices.
+	A class representing a 2-dimensional matrix, and allows for math involving matrices. A `Matrix` can be known as a `Vector` of `Vectors`. 
 	<p>
 	`Matrices` can be added, subtracted, multiplied, and divided by eachother, and by `Vectors` of equal width.
+	<p>
+	`Matrix` math is similar to `Vector` math. Lets say we have this:
+	{@code
+	Matrix a = [
+		a1, b1, c1
+		a2, b2, c2
+		a3, b3, c3
+	]
+	}
+	and
+	{@code
+	Matrix b = [
+		d1,e1,f1
+		d2,e2,f2
+		d3,e3,f3
+	]
+	}
+	The output `Matrix`, when multiplied, will look like this:
+	{@code
+	a * b = [
+		a1+*1, b1*e1, c1*f1
+		a2*d2, b2*e2, c2*f2
+		a3*d3, b3*e3, c3*f3
+	]
+	}
+	<p>
+	A `Matrix` can also be multiplied by a `Vector` who has the same height.
 	<p>
 	Examples:
 	{@code
@@ -510,6 +570,198 @@ namespace mc {
 			if (y < 0)throw IndexOutOfBounds("The Y value, " + std::to_string(x) + " is less than 0!");
 			content[x][y] = value;
 		}
+
+
+		/**
+		Adds a `Vector` and a `Matrix` together
+
+		@param right A `Vector` of equal width
+		@return A `Vector` that was created by adding a `Vector` and a `Matrix` together
+		@throw ArithmeticError If `width()` is greater than `height()`
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Vector` and `Matrix` math
+		*/
+		Vector<T, H> operator+(const Vector<T, h>& right) const {
+			if (W > H)throw ArithmeticError("When adding a matrix by a vector, the width of the matrix (" + std::to_string(W) + ") cannot be larger than the height (" + std::to_string(H) + "!)");
+			T arr[H];
+			for (Index x = 0; x < W; x++) {
+				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				for (Index y = 0; y < H; y++) {
+					arr[y] += static_cast<T>(content[x][y]) + static_cast<T>(right[x]);
+				}
+			}
+			return arr;
+		};
+
+		/**
+		Subtracts a `Vector` and a `Matrix` together
+
+		@param right A `Vector` of equal width
+		@return A `Vector` that was created by subtracting a `Vector` and a `Matrix` together
+		@throw ArithmeticError If `width()` is greater than `height()`
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Vector` and `Matrix` math
+		*/
+		Vector<T, H> operator-(const Vector<T, H>& right) const {
+			if (W > H)throw ArithmeticError("When subtracting a matrix by a vector, the width of the matrix (" + std::to_string(W) + ") cannot be larger than the height (" + std::to_string(H) + "!)");
+			T arr[H];
+			for (Index x = 0; x < W; x++) {
+				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				for (Index y = 0; y < H; y++) {
+					arr[y] += static_cast<T>(content[x][y]) - static_cast<T>(right[x]);
+				}
+			}
+			return arr;
+		};
+
+		/**
+		Multiplies a `Vector` and a `Matrix` together
+
+		@param right A `Vector` of equal width
+		@return A `Vector` that was created by multiplying a `Vector` and a `Matrix` together
+		@throw ArithmeticError If `width()` is greater than `height()`
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Vector` and `Matrix` math
+		*/
+		Vector<T, H> operator*(const Vector<T, H>& right) const {
+			if (W > H)throw ArithmeticError("When multiplying a matrix by a vector, the width of the matrix ("+std::to_string(W)+") cannot be larger than the height ("+std::to_string(H)+"!)");
+			T arr[H];
+			for (Index x = 0; x < W; x++) {
+				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				for (Index y = 0; y < H; y++) {
+					arr[y] += static_cast<T>(content[x][y]) * static_cast<T>(right[x]);
+				}
+			}
+			return arr;
+		};
+
+		/**
+		Divides a `Vector` and a `Matrix` together
+
+		@param right A `Vector` of equal width
+		@return A `Vector` that was created by dividing a `Vector` and a `Matrix` together
+		@throw ArithmeticError If `width()` is greater than `height()`
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Vector` and `Matrix` math
+		*/
+		Vector<T,H> operator/(const Vector<T, H>& right) const {
+			if (W > H)throw ArithmeticError("When dividing a matrix by a vector, the width of the matrix (" + std::to_string(W) + ") cannot be larger than the height (" + std::to_string(H) + "!)");
+			T arr[H];
+			for (Index x = 0; x < W; x++) {
+				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				for (Index y = 0; y < H; y++) {
+					arr[y] += static_cast<T>(content[x][y]) / static_cast<T>(right[x]);
+				}
+			}
+			return arr;
+		};
+
+		/**
+		Adds 2 `Matrix` together.
+		@param right A `Matrix` to add
+		@return A `Matrix` whose contents is 2 `Matrix` added together
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
+		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
+			T arr[W][H];
+			for (Index x = 0; x < W; x++) {
+				for (Index y = 0; y < H; y++) {
+					arr[x][y] = content[x][y] + right[x][y];
+				}
+			}
+			return arr;
+		}
+
+		/**
+		Subtracts 2 `Matrix` together.
+		@param right A `Matrix` to subtracts
+		@return A `Matrix` whose contents is 2 `Matrix` subtracted together
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
+		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
+			T arr[W][H];
+			for (Index x = 0; x < W; x++) {
+				for (Index y = 0; y < H; y++) {
+					arr[x][y] = content[x][y] - right[x][y];
+				}
+			}
+			return arr;
+		}
+
+		/**
+		Multiplies 2 `Matrix` together.
+		@param right A `Matrix` to multiply
+		@return A `Matrix` whose contents is 2 `Matrix` multiplied together
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
+		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
+			T arr[W][H];
+			for (Index x = 0; x < W; x++) {
+				for (Index y = 0; y < H; y++) {
+					arr[x][y] = content[x][y] * right[x][y];
+				}
+			}
+			return arr;
+		}
+
+		/**
+		Divides 2 `Matrix` together.
+		@param right A `Matrix` to divide
+		@return A `Matrix` whose contents is 2 `Matrix` divide together
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
+		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
+			T arr[W][H];
+			for (Index x = 0; x < W; x++) {
+				for (Index y = 0; y < H; y++) {
+					arr[x][y] = content[x][y] / right[x][y];
+				}
+			}
+			return arr;
+		}
+
+		void operator+=(const Matrix<T, W, H>& right) {
+			this = this + right;
+		}
+
+		void operator-=(const Matrix<T, W, H>& right) {
+			this = this - right;
+		}
+
+		void operator*=(const Matrix<T, W, H>& right) {
+			this = this * right;
+		}
+
+		void operator/=(const Matrix<T, W, H>& right) {
+			this = this / right;
+		}
+
+		/**
+		Operator used to output to `std::cout`.
+		<p>
+		The output will take up multiple lines and will show all of the `Matrix` contents
+		@param output `std::ostream` the `Matrix` was inserted into
+		@param m `Matrix` which will be printed
+		@return `output` for chaining
+		*/
+		friend std::ostream &operator<<(std::ostream &output,
+			const Matrix<T,W,H> &m) {
+			output << W <<" x " <<H<<" Matrix: [";
+			for (Index x = 0; x < W; x++) {
+				output << std::endl<<"  ";
+				for (Index y = 0; y < H; y++) {
+					output << m[y][x]<<", ";
+				}
+			}
+			output << " ]";
+			return output;
+		}
+
+
 
 	};
 

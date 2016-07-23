@@ -123,22 +123,5 @@ namespace mc{
 			return radians*(180.0 / pi());
 		}
 
-
-		Matrix4f getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio)
-		{
-			const float y_scale = (float)((1.0f / tan(toRadians(FOV / 2.0f))) * aspectRatio);
-			const float x_scale = y_scale / aspectRatio;
-			const float frustum_length = FAR_PLANE - NEAR_PLANE;
-
-			Matrix4f projectionMatrix = Matrix4f();
-			projectionMatrix[0][0] = x_scale;
-			projectionMatrix[1][1] = y_scale;
-			projectionMatrix[2][2] = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-			projectionMatrix[2][3] = -1;
-			projectionMatrix[3][2] = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-			projectionMatrix[3][3] = 0;
-
-			return projectionMatrix;
-		}
 	}
 }

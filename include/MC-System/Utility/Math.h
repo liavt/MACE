@@ -157,7 +157,5 @@ namespace mc {
 		@see #pi()
 		*/
 		double toDegrees(const double radians);
-
-		Matrix4f getProjectionMatrix(float FOV, float NEAR_PLANE, float FAR_PLANE, float aspectRatio);
 	};
 }

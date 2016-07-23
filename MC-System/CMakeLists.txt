@@ -9,3 +9,5 @@ file(GLOB_RECURSE MCS_SRC *.cpp)
 
 add_library(MC-System ${HEADERS} ${MCS_SRC})
 target_include_directories (MC-System PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(MC-System LINK_PUBLIC SDL2)
+target_link_libraries(MC-System LINK_PUBLIC SDL2main)

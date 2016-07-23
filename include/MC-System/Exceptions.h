@@ -72,4 +72,19 @@ namespace mc {
 		*/
 		explicit IndexOutOfBounds(const std::string c = "No message was given") : runtime_error(c) {};
 	};
+	/**
+	Thrown when something goes wrong while doing math, like dividing by zero
+	*/
+	struct ArithmeticError : public std::runtime_error {
+		/**
+		Constructs the error with the specified message.
+		@param c Message in the form of `char[]`
+		*/
+		explicit ArithmeticError(const char* c = "No message was given") : runtime_error(c) {};
+		/**
+		Constructs the error with the specified message.
+		@param c Message in the form of `std::string`
+		*/
+		explicit ArithmeticError(const std::string c = "No message was given") : runtime_error(c) {};
+	};
 }

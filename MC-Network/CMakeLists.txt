@@ -9,3 +9,4 @@ file(GLOB_RECURSE MCT_SRC *.cpp)
 
 add_library(MC-Network ${HEADERS} ${MCT_SRC})
 target_include_directories (MC-Network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(MC-Network LINK_PUBLIC SDLNet)

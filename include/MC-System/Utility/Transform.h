@@ -12,8 +12,34 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/Utility/Vector.h>
 
 namespace mc {
-	struct Translation : public Vector4f {
+	namespace math {
+		Matrix4f identity();
 
+		Matrix4f rotate(const float x, const float y, const float z);
+		Matrix4f rotate(const Matrix4f m, const float x, const float y, const float z);
 
+		Matrix4f rotateX(const float x);
+		Matrix4f rotateX(const Matrix4f m, const float x);
+
+		Matrix4f rotateY(const float y);
+		Matrix4f rotateY(const Matrix4f m, const float y);
+
+		Matrix4f rotateZ(const float z);
+		Matrix4f rotateZ(const Matrix4f m, const float z);
+
+		Matrix4f scale(const float x, const float y, const float z);
+		Matrix4f scale(const Matrix4f m, const float x, const float y, const float z);
+
+		Matrix4f translate(const float x, const float y, const float z);
+		Matrix4f translate(const Matrix4f m, const float x, const float y, const float z);
+
+		Matrix4f projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
+	}
+	struct Transformation : public Matrix4f{
+		using Matrix4f::Matrix4f;
+
+		Matrix4f& translate(const float x, const float y, const float z);
+		Matrix4f& rotate(const float x, const float y, const float z);
+		Matrix4f& scale(const float x, const float y, const float z);
 	};
 }
