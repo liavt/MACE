@@ -35,11 +35,25 @@ namespace mc {
 
 		Matrix4f projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
 	}
-	struct Transformation : public Matrix4f{
-		using Matrix4f::Matrix4f;
+	struct Transformation{
+		Transformation();
 
-		Matrix4f& translate(const float x, const float y, const float z);
-		Matrix4f& rotate(const float x, const float y, const float z);
-		Matrix4f& scale(const float x, const float y, const float z);
+		Transformation& translate(const float x, const float y, const float z);
+		Transformation& rotate(const float x, const float y, const float z);
+		Transformation& scale(const float x, const float y, const float z);
+
+		Matrix4f get();
+
+		Vector3f& getRotation();
+		Vector3f& getTranslation();
+		Vector3f& getScale();
+
+		void setRotation(Vector3f& newVector);
+		void setTranslation(Vector3f& newVector);
+		void setScale(Vector3f& newVector);
+	private:
+		Vector3f translation;
+		Vector3f rotation;
+		Vector3f scaler;
 	};
 }

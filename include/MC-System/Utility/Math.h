@@ -71,7 +71,7 @@ namespace mc {
 		@param value Number that is either negative or positive
 		@return `|value|`
 		*/
-		constexpr double abs(const double value);
+		double abs(const double value);
 
 		/**
 		"Ceils" a number, or rounds it up.
@@ -105,14 +105,14 @@ namespace mc {
 		@return `true` if the `value` is divisable by 2, `false` otherwise
 		@see isOdd(const int)
 		*/
-		constexpr bool isEven(const int value);
+		bool isEven(const int value);
 		/**
 		Checks if a number is odd. An odd number is one that is not divisable by 2.
 		@param value Number to check if odd
 		@return `true` if the `value` is not divisable by 2, `false` otherwise
 		@see isEven(const int)
 		*/
-		constexpr bool isOdd(const int value);
+		bool isOdd(const int value);
 		
 		/**
 		Calculates a number to an exponenet, or `value^power`
@@ -131,7 +131,7 @@ namespace mc {
 		@see pow(const double, const double)
 		@see cube(const double)
 		*/
-		constexpr double sqr(const double value);
+		double sqr(const double value);
 
 		/**
 		Cubes a number. Cubing a number is equal to itself to the power of 3.
@@ -140,7 +140,7 @@ namespace mc {
 		@see pow(const double, const double)
 		@see sqr(const double)
 		*/
-		constexpr double cube(const double value);
+		double cube(const double value);
 
 		/**
 		Conversion of degreees to radians.

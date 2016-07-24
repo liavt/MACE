@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <iostream>
 
 namespace mc{
+
 TEST_CASE("Testing matrix width and height","[system][utility][vector]") {
 	Matrix<int, 5, 1> m = Matrix<int, 5, 1>();
 
@@ -63,11 +64,18 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 		}
 		SECTION("Testing aggregate constructor") {
 			SECTION("Constructor-stlye"){
-				/*Vector4i v = Vector4i(4,1,32,5);
+				Vector4i v = Vector4i({4,1,32,5 });
 				REQUIRE(v[0]==4);
 				REQUIRE(v[1]==1);
 				REQUIRE(v[2]==32);
-				REQUIRE(v[3]==5);*/
+				REQUIRE(v[3]==5);
+			}
+			SECTION("Aggregate-style") {
+				Vector4i v = {4,1,32,5};
+				REQUIRE(v[0] == 4);
+				REQUIRE(v[1] == 1);
+				REQUIRE(v[2] == 32);
+				REQUIRE(v[3] == 5);
 			}
 		}
 		SECTION("Testing copy constructors") {
@@ -118,6 +126,32 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 					counter++;
 					REQUIRE(m[x][y] == counter);
 				}
+			}
+		}
+		SECTION("Testing aggregate style constructor") {
+			SECTION("Constructor style") {
+				const Matrix3i m = Matrix3i({ { 1,2,3 },{ 1,2,3 },{ 1,2,3 } });
+				REQUIRE(m[0][0] == 1);
+				REQUIRE(m[0][1] == 2);
+				REQUIRE(m[0][2] == 3);
+				REQUIRE(m[1][0] == 1);
+				REQUIRE(m[1][1] == 2);
+				REQUIRE(m[1][2] == 3);
+				REQUIRE(m[2][0] == 1);
+				REQUIRE(m[2][1] == 2);
+				REQUIRE(m[2][2] == 3);
+			}
+			SECTION("Assignment style") {
+				const Matrix3i m = { {1,2,3}, {1,2,3}, {1,2,3} };
+				REQUIRE(m[0][0] == 1);
+				REQUIRE(m[0][1] == 2);
+				REQUIRE(m[0][2] == 3);
+				REQUIRE(m[1][0] == 1);
+				REQUIRE(m[1][1] == 2);
+				REQUIRE(m[1][2] == 3);
+				REQUIRE(m[2][0] == 1);
+				REQUIRE(m[2][1] == 2);
+				REQUIRE(m[2][2] == 3);
 			}
 		}
 		SECTION("Testing copy constructors") {
@@ -177,6 +211,73 @@ TEST_CASE("Testing getting and setting","[system][utility][vector]") {
 			}
 		}
 	}
+}
+
+TEST_CASE("Testing math") {//eww math
+	SECTION("Vector math") { 
+		SECTION("Adding") {
+			Vector3i v1 = {1,0,3};
+			Vector3i v2 = {-1,4,2};
+			Vector3i result = {0,4,5};
+			REQUIRE(v1+v2 == result);
+		}
+		SECTION("Subtracting") {
+			Vector3i v1 = { 1,0,3 };
+			Vector3i v2 = { -1,4,2 };
+			Vector3i result = { 2,-4,1 };
+			REQUIRE(v1-v2 == result);
+		}
+		SECTION("Multiplying") {
+			Vector3i v1 = { 1,0,3 };
+			Vector3i v2 = { -1,4,2 };
+			Vector3i result = { -12,-5,4 };
+			REQUIRE(v1*v2 == result);
+			REQUIRE(math::cross(v1,v2)==result);
+		}
+		SECTION("Dot product") {
+			Vector3i v1 = { 1,0,3 };
+			Vector3i v2 = { -1,4,2 };
+			REQUIRE(math::dot(v1,v2) == 5);
+		}
+		SECTION("Magnitudes") {
+			Vector3f v1 = { 1,0,3 };
+			Vector3f v2 = { -1,4,2 };
+			REQUIRE(math::magnitude(v1)==Approx(3.162277));
+			REQUIRE(math::magnitude(v2)==Approx(4.582575));
+		}
+	}
+
+	SECTION("Matrix math") {
+		SECTION("Matrix by Matrix"){
+			SECTION("Adding") {
+
+			}
+			SECTION("Subtracting") {
+
+			}
+			SECTION("Multiplying") {
+
+			}
+			SECTION("Dividing") {
+
+			}
+		}
+		SECTION("Matrix by Vector") {
+			SECTION("Adding") {
+
+			}
+			SECTION("Subtracting") {
+
+			}
+			SECTION("Multiplying") {
+
+			}
+			SECTION("Dividing") {
+
+			}
+		}
+	}
+
 }
 
 TEST_CASE("Testing vector sizes and presets","[system][utility][vector]") {

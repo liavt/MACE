@@ -107,9 +107,37 @@ Matrix4f math::projection(const float FOV, const float NEAR_PLANE, const float F
 
 	return projectionMatrix;
 }
-Matrix4f & Transformation::translate(const float x, const float y, const float z)
+Transformation::Transformation()
 {
-	*this *= translate(x,y,z);
+	translation = {0,0,0};
+	rotation = { 0,0,0 };
+	scaler = { 1,1,1 };
+
+
+}
+Transformation & Transformation::translate(const float x, const float y, const float z)
+{
+	translation[0] += x;
+	translation[1] += y;
+	translation[2] += z;
 	return *this;
+}
+Transformation & Transformation::rotate(const float x, const float y, const float z)
+{
+	rotation[0] += x;
+	rotation[1] += y;
+	rotation[2] += z;
+	return *this;
+}
+Transformation & Transformation::scale(const float x, const float y, const float z)
+{
+	scaler[0] += x;
+	scaler[1] += y;
+	scaler[2] += z;
+	return *this;
+}
+Matrix4f Transformation::get()
+{
+	return math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
 }
 }

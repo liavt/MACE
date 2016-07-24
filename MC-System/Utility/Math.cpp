@@ -44,7 +44,7 @@ namespace mc{
 		{
 			return 1.61803398874989484820458683436563811772030917980576l;
 		}
-		constexpr double abs(const double value)
+		double abs(const double value)
 		{
 			return value < 0 ? -value : value;
 		}
@@ -75,19 +75,19 @@ namespace mc{
 			return true;
 		}
 
-		constexpr bool isEven(const int value)
+		bool isEven(const int value)
 		{
 			return value % 2 == 0;
 		}
 
-		constexpr bool isOdd(const int value)
+		bool isOdd(const int value)
 		{
 			return !isEven(value);
 		}
 
-		//pow pow is having fun tonight
 		double pow(const double value, const int power)
 		{
+			//pow pow is having fun tonight
 			if (power == 0)return 1.0;//any number to the power of 0 is 1. even 0. 0^0=1. axioms are hilarious.
 
 			double out = value;
@@ -103,12 +103,14 @@ namespace mc{
 			return out;
 		}
 
-		constexpr double sqr(const double value)
+		double sqr(const double value)
 		{
 			return value*value;
+
 		}
 
-		constexpr double cube(const double value)
+
+		double cube(const double value)
 		{
 			return value*value*value;
 		}

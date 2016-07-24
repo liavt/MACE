@@ -221,6 +221,8 @@ namespace mc {
 			`std::vector` of this `Container\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			*/
 			std::vector<Entity*> children = std::vector<Entity*>();
+
+
 		};
 
 		/**

@@ -12,6 +12,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/Exceptions.h>
 #include <MC-System/Constants.h>
 #include <iosfwd>
+#include <initializer_list>
+#include <MC-System/Utility/Math.h>
 
 namespace mc {
 	//forward defining Matrix here for friend declaration in Vector
@@ -21,7 +23,8 @@ namespace mc {
 	/**
 	1-dimensional vector class that supports mathmatical operations.
 	<p>
-	`Vectors` can be added, subtracted, multiplied, and divided by other `Vectors` of equal width. Additionally, they can also be operated by a `Matrix` of equal width.
+	`Vectors` can be added, subtracted, and multiplied. by other `Vectors` of equal width. Additionally, they can also be operated by a `Matrix` of equal width.
+	`Vectors` CANNOT be divided.
 	<p>
 	`Vector` math is done by adding the adjacent values of both vectors together.
 	For example, we want to add these 2 `Vectors` together:
@@ -40,7 +43,7 @@ namespace mc {
 	{@code
 	result = [58,49,-7,32]
 	}
-	Multiplication, division, and subtraction are the same concept. To do math with MACE, all you need to do is to use the mathmatical operators.
+	Multiplication, and subtraction are the same concept. To do math with MACE, all you need to do is to use the mathmatical operators.
 	<p>
 	Examples:
 	{@code
@@ -86,7 +89,7 @@ namespace mc {
 		Consructs a `Vector` from the contents of an array.
 		@param arr An equally-sized array whose contents will be filled into a `Vector`
 		*/
-		Vector(T arr[N]) {
+		Vector(const T arr[N]) {
 			this->setContents(std::array<T,N>());//we need to initialize the array first, or else we will try to access an empty memory location
 			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
@@ -95,10 +98,20 @@ namespace mc {
 		Consructs a `Vector` from the contents of an `std::array`.
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
-		Vector(std::array<T, N>& contents)
+		Vector(const std::array<T, N>& contents)
 		{
 			this->setContents(contents);
 		};
+
+		Vector(const std::initializer_list<T> args) {//this is for aggregate initializaition
+			if (args.size() != N)throw IndexOutOfBounds("The number of arguments MUST be equal to the size of the array.");
+			this->setContents(std::array<T, N>());
+			Index counter = 0;
+			for (auto elem : args) {
+				content[counter] = elem;
+				counter++;
+			}
+		}
 		
 		/**
 		Copies the contents of a `Vector` into a new `Vector`
@@ -244,48 +257,71 @@ namespace mc {
 			return mc::Vector<T, N>(out);
 		};
 		/**
-		Divides 2 `Vectors` together.
+		Retrieves the cross product of 2 `Vectors`
 
 		@param right Another `Vector`
-		@return A `Vector` that was created by dividing 2 `Vectors` together
+		@return The cross product
 		@see Vector for an explanation of `Vector` math
+		@see cross(const Vector, const Vector)
+		@see operator*(const T)
 		*/
-		Vector operator/(const Vector<T, N>& right) const {
-			std::array<T, N> out = std::array<T, N>();
-			for (unsigned int i = 0; i < N; i++) {
-				out[i] = ((T)(this->get(i) / right.get(i)));
-			}
-			return mc::Vector<T, N>(out);
+		Vector operator*(const Vector<T, 3>& right) const {
+			return math::cross(*this,right);
 		};
+
 		/**
-		Multiplies 2 `Vectors` together.
-
-		@param right Another `Vector`
-		@return A `Vector` that was created by multiplying 2 `Vectors` together
-		@see Vector for an explanation of `Vector` math
+		Multiplies a `Vector` by a scalar.
+		@param scalar What to multiply this `Vector` by
+		@return A `Vector` scaled.
+		@see operator*(const Vector&) const
 		*/
-		Vector operator*(const Vector<T, N>& right) const {
-			std::array<T, N> out = std::array<T, N>();
-			for (unsigned int i = 0; i < N; i++) {
-				out[i] = ((T)(this->get(i) * right.get(i)));
+		Vector operator*(const T scalar) const {
+			Vector<T, N> out = this;
+			for (Index i = 0; i < N;i++) {
+				out[i] *= scalar;
 			}
-			return mc::Vector<T, N>(out);
-		};
-
-		void += (const Vector<T, N> right) {
-			this = this + right;
+			return out;
 		}
 
-		void -= (const Vector<T, N> right) {
-			this = this - right;
+		/**
+		Divides a `Vector` by a scalar.
+		@param scalar What to divided this `Vector` by
+		@return A `Vector` scaled.
+		@see operator*(const T&) const
+		*/
+		Vector operator/(const T scalar) const {
+			Vector<T, N> out = this;
+			for (Index i = 0; i < N; i++) {
+				out[i] /= scalar;
+			}
+			return out;
 		}
 
-		void *= (const Vector<T, N> right) {
-			this = this * right;
+		/**
+		Adds a `Vector` to this one.
+		@param right A `Vector` to add
+		@see operator+(const Vector<T,N>&) const
+		*/
+		void operator+= (const Vector<T, N>& right) {
+			setContents((*this - right).getContents());
 		}
 
-		void /= (const Vector<T, N> right) {
-			this = this / right;
+		/**
+		Subtracts a `Vector` from this one.
+		@param right A `Vector` to subtract
+		@see operator-(const Vector<T,N>&) const
+		*/
+		void operator-= (const Vector<T, N>& right) {
+			setContents((*this - right).getContents());
+		}
+		/**
+		Scales this `Vector`
+		@param scalar How much to scale
+		@see operator*(const Vector<T,3>&) const
+		@see operator*(const T) const
+		*/
+		void operator*= (const T& scalar) {
+			setContents((*this * scalar).getContents());
 		}
 
 		/**
@@ -297,7 +333,7 @@ namespace mc {
 		bool operator==(const Vector<T,N>& other) const
 		{
 			for (Index i = 0; i < N; i++) {
-				if (this[i] != other[i]) {
+				if (this->operator[](i) != other[i]) {
 					return false;
 				}
 			}
@@ -335,49 +371,6 @@ namespace mc {
 		std::array<T,N> content;
 	};
 
-
-	/**
-	A `Vector` consisting of 1 `float`
-	*/
-	using Vector1f = mc::Vector<float, 1>;
-	/**
-	A `Vector` consisting of 2 `floats`
-	*/
-	using Vector2f = mc::Vector<float, 2>;
-	/**
-	A `Vector` consisting of 3 `floats`
-	*/
-	using Vector3f = mc::Vector<float, 3>;
-	/**
-	A `Vector` consisting of 4 `floats`
-	*/
-	using Vector4f = mc::Vector<float, 4>;
-	/**
-	A `Vector` consisting of 5 `floats`
-	*/
-	using Vector5f = mc::Vector<float, 5>;
-
-	/**
-	A `Vector` consisting of 1 `int`
-	*/
-	using Vector1i = mc::Vector<int, 1>;
-	/**
-	A `Vector` consisting of 2 `ints`
-	*/
-	using Vector2i = mc::Vector<int, 2>;
-	/**
-	A `Vector` consisting of 3 `ints`
-	*/
-	using Vector3i = mc::Vector<int, 3>;
-	/**
-	A `Vector` consisting of 4 `ints`
-	*/
-	using Vector4i = mc::Vector<int, 4>;
-	/**
-	A `Vector` consisting of 5 `ints`
-	*/
-	using Vector5i = mc::Vector<int, 5>;
-
 	/**
 	Used in the `Matrix` class. Defined for clarity for when you iterate over a `Matrix.`
 	@see Matrix
@@ -390,34 +383,7 @@ namespace mc {
 	/**
 	A class representing a 2-dimensional matrix, and allows for math involving matrices. A `Matrix` can be known as a `Vector` of `Vectors`. 
 	<p>
-	`Matrices` can be added, subtracted, multiplied, and divided by eachother, and by `Vectors` of equal width.
-	<p>
-	`Matrix` math is similar to `Vector` math. Lets say we have this:
-	{@code
-	Matrix a = [
-		a1, b1, c1
-		a2, b2, c2
-		a3, b3, c3
-	]
-	}
-	and
-	{@code
-	Matrix b = [
-		d1,e1,f1
-		d2,e2,f2
-		d3,e3,f3
-	]
-	}
-	The output `Matrix`, when multiplied, will look like this:
-	{@code
-	a * b = [
-		a1+*1, b1*e1, c1*f1
-		a2*d2, b2*e2, c2*f2
-		a3*d3, b3*e3, c3*f3
-	]
-	}
-	<p>
-	A `Matrix` can also be multiplied by a `Vector` who has the same height.
+	`Matrices` can be added, subtracted, and multiplyed by eachother, and by `Vectors` of equal width.
 	<p>
 	Examples:
 	{@code
@@ -471,6 +437,23 @@ namespace mc {
 				for (Index y = 0; y < H; y++) {
 					content[x][y] = arr[x][y];
 				}
+			}
+		}
+
+
+		Matrix(const std::initializer_list<const std::initializer_list<T>> args) {//this is for aggregate initializaition
+			if (args.size() != W)throw IndexOutOfBounds("The width of the argument must be equal to to the height of the Matrix!");
+			Matrix::Matrix();
+			Index counterX = 0, counterY = 0;
+			for (std::initializer_list<T> elemX : args) {
+				if (elemX.size() != H)throw IndexOutOfBounds("The height of the argument must be equal to to the height of the Matrix!");
+				counterY = 0;
+				for(T elemY: elemX){
+					content[counterX][counterY] = elemY;
+					counterY ++;
+				}
+
+				counterX++;
 			}
 		}
 
@@ -580,9 +563,10 @@ namespace mc {
 		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
+		@bug If the vector is of non-numerical value, breaks
 		*/
-		Vector<T, H> operator+(const Vector<T, h>& right) const {
-			if (W > H)throw ArithmeticError("When adding a matrix by a vector, the width of the matrix (" + std::to_string(W) + ") cannot be larger than the height (" + std::to_string(H) + "!)");
+		Vector<T, H> operator+(const Vector<T, H>& right) const {
+			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; x++) {
 				arr[x] = 0;//we must initialize the value first, or else it will be undefined
@@ -594,16 +578,16 @@ namespace mc {
 		};
 
 		/**
-		Subtracts a `Vector` and a `Matrix` together
+		Subtracts a `Vector` and a `Matrix` together. The Matrix's `width()` must not be larger than `height()`
 
 		@param right A `Vector` of equal width
 		@return A `Vector` that was created by subtracting a `Vector` and a `Matrix` together
-		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
+		@bug If the vector is of non-numerical values, breaks
 		*/
 		Vector<T, H> operator-(const Vector<T, H>& right) const {
-			if (W > H)throw ArithmeticError("When subtracting a matrix by a vector, the width of the matrix (" + std::to_string(W) + ") cannot be larger than the height (" + std::to_string(H) + "!)");
+			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; x++) {
 				arr[x] = 0;//we must initialize the value first, or else it will be undefined
@@ -622,9 +606,10 @@ namespace mc {
 		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
+		@bug If the vector is of non-numerical values, breaks
 		*/
 		Vector<T, H> operator*(const Vector<T, H>& right) const {
-			if (W > H)throw ArithmeticError("When multiplying a matrix by a vector, the width of the matrix ("+std::to_string(W)+") cannot be larger than the height ("+std::to_string(H)+"!)");
+			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; x++) {
 				arr[x] = 0;//we must initialize the value first, or else it will be undefined
@@ -636,34 +621,14 @@ namespace mc {
 		};
 
 		/**
-		Divides a `Vector` and a `Matrix` together
-
-		@param right A `Vector` of equal width
-		@return A `Vector` that was created by dividing a `Vector` and a `Matrix` together
-		@throw ArithmeticError If `width()` is greater than `height()`
-		@see Vector for an explanation of `Vector` math
-		@see Matrix for an explanation of `Vector` and `Matrix` math
-		*/
-		Vector<T,H> operator/(const Vector<T, H>& right) const {
-			if (W > H)throw ArithmeticError("When dividing a matrix by a vector, the width of the matrix (" + std::to_string(W) + ") cannot be larger than the height (" + std::to_string(H) + "!)");
-			T arr[H];
-			for (Index x = 0; x < W; x++) {
-				arr[x] = 0;//we must initialize the value first, or else it will be undefined
-				for (Index y = 0; y < H; y++) {
-					arr[y] += static_cast<T>(content[x][y]) / static_cast<T>(right[x]);
-				}
-			}
-			return arr;
-		};
-
-		/**
-		Adds 2 `Matrix` together.
+		Adds 2 `Matrix` together. `width()` MUST be equal to `height()` in order to do `Matrix` math.
 		@param right A `Matrix` to add
 		@return A `Matrix` whose contents is 2 `Matrix` added together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
+			static_assert(W==H,"In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
 			for (Index x = 0; x < W; x++) {
 				for (Index y = 0; y < H; y++) {
@@ -681,6 +646,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
+			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
 			for (Index x = 0; x < W; x++) {
 				for (Index y = 0; y < H; y++) {
@@ -691,53 +657,112 @@ namespace mc {
 		}
 
 		/**
-		Multiplies 2 `Matrix` together.
+		Multiplies 2 `Matrix` together. `width()` must equal `height()`, or else this will error.
 		@param right A `Matrix` to multiply
 		@return A `Matrix` whose contents is 2 `Matrix` multiplied together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
+		@see operator*(const T&) const
+		@bug If the matrix is of non-numerical values, breaks
 		*/
 		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
+			static_assert(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
 			for (Index x = 0; x < W; x++) {
 				for (Index y = 0; y < H; y++) {
-					arr[x][y] = content[x][y] * right[x][y];
+					arr[x][y] = 0;
+					for (Index x1 = 0; x1 < W; x1++) {
+						arr[x][y] += content[x][x1] * right[x1][y];
+					}
 				}
 			}
 			return arr;
 		}
 
 		/**
-		Divides 2 `Matrix` together.
-		@param right A `Matrix` to divide
-		@return A `Matrix` whose contents is 2 `Matrix` divide together
+		Scales a `Matrix` from a scalar value.
+		@param scalar What to multiply each value of this `Matrix` by.
+		@return A `Matrix` multiplied by the scalar
+		@see operator*(const Matrix&) const
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
+		Matrix<T, W, H> operator*(const T& scalar) const {
 			T arr[W][H];
 			for (Index x = 0; x < W; x++) {
 				for (Index y = 0; y < H; y++) {
-					arr[x][y] = content[x][y] / right[x][y];
+					arr[x][y] = content[x][y] * scalar;
 				}
 			}
 			return arr;
 		}
 
+		/**
+		Divides 2 `Matrix` together. `width()` must equal `height()`, or else this will error.
+		@param right A `Matrix` to divide
+		@return A `Matrix` whose contents is 2 `Matrix` divide together
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		@bug Not finished
+		*/
+		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
+			static_assert(W == H, "In order to divide matrices, the width must equal to the height.");
+			return this*math::inverse(right);
+		}
+
+		/**
+		Adds a `Matrix` to this one.
+		@param right A `Matrix` to add
+		@see operator+(const Matrix<T,W,H>&) const
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
 		void operator+=(const Matrix<T, W, H>& right) {
-			this = this + right;
+			setContents((*this+right).getContents());
 		}
 
+		/**
+		Subtracts a `Matrix` from this one.
+		@param right A `Matrix` to subtracts
+		@see operator-(const Matrix<T,W,H>&) const
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
 		void operator-=(const Matrix<T, W, H>& right) {
-			this = this - right;
+			setContents((*this-right).getContents());
 		}
 
-		void operator*=(const Matrix<T, W, H>& right) {
-			this = this * right;
+		/**
+		Multiplies `this` by a `Matrix`
+		@param right A `Matrix` to multiply
+		@see operator*(const Matrix<T,W,H>&) const
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
+		void operator*=(Matrix<T, W, H>& right) {
+			setContents((*this*right).getContents());
 		}
 
+		/**
+		Multiplies `this` by a scalar
+		@param scalar What to multiply each value of this `Matrix` by
+		@see operator*(const T&) const
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
+		void operator*=(const T& scalar) {
+			setContents((*this*scalar).getContents());
+		}
+
+		/**
+		Divides a `Matrix` from this one.
+		@param right A `Matrix` to divide
+		@see operator/(const Matrix<T,W,H>&) const
+		@see Vector for an explanation of `Vector` math
+		@see Matrix for an explanation of `Matrix` math
+		*/
 		void operator/=(const Matrix<T, W, H>& right) {
-			this = this / right;
+			setContents((*this/right).getContents());
 		}
 
 		/**
@@ -747,14 +772,16 @@ namespace mc {
 		@param output `std::ostream` the `Matrix` was inserted into
 		@param m `Matrix` which will be printed
 		@return `output` for chaining
+		@bug the order is not retained exactly
 		*/
 		friend std::ostream &operator<<(std::ostream &output,
 			const Matrix<T,W,H> &m) {
-			output << W <<" x " <<H<<" Matrix: [";
 			for (Index x = 0; x < W; x++) {
-				output << std::endl<<"  ";
+				if (x == 0)output << "[ ";
+				else output <<std::endl<< "  ";
 				for (Index y = 0; y < H; y++) {
-					output << m[y][x]<<", ";
+					output << m[x][y];
+					if (y < H - 1)output << ", ";
 				}
 			}
 			output << " ]";
@@ -764,6 +791,205 @@ namespace mc {
 
 
 	};
+
+	namespace math {
+		//math calculations
+
+		/**
+		Calculates the cross product of 2 `Vectors`. The `Vector` must be 3-dimensional.
+		@param a First `Vector`
+		@param b Second `Vector`
+		@return A vector calculated from the cross product of `a` and `b`
+		@see dot(const Vector&, const Vector&)
+		@see magnitude(const Vector&)
+		@tparam T Type of the `Vectors` being calculated. This does not need to be explicitely set.
+		*/
+		template<typename T>
+		Vector<T,3> cross(const Vector<T, 3>& a, const  Vector<T, 3>& b) {
+			//i though of more than one pun for this one, so here is a list:
+
+			//the cross of jesus or the cross of cris? these are important questions
+			//i wont double cross you!
+			//the bible is a cross product
+			//so is a swiss army knife
+			//railroad crossing; the train is carying important product
+			//i should just cross this off the list of unproductive things i have done
+
+			Vector<T, 3> out = Vector<T, 3>();
+			//whew math
+			out[0] = (a[1] * b[2]) - (a[2] * b[1]);
+			out[1] = (a[2] * b[0]) - (a[0] * b[2]);
+			out[2] = (a[0] * b[1]) - (a[1] * b[0]);
+
+			return out;
+		};
+
+		/**
+		Calculates the dot product of 2 `Vectors`
+		@param a First `Vector` to use
+		@param b Second `Vector` to use
+		@return A scalar calculated from the dot product of `a` and `b`
+		@see cross(const Vector&, const Vector&)
+		@see magnitude(const Vector&)
+		@bug If the vector is of non-numerical value, breaks
+		@tparam T Type of the `Vectors` being calculated. This does not need to be explicitely set.
+		@tparam N Size of the `Vectors` being calculated. This does not need to be explicitely set.
+		*/
+		template<typename T, Size N>
+		T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
+			T out = 0;
+			for (Index i = 0; i < N; i++) {
+				out += static_cast<T>(a[i] * b[i]);
+			}
+			return out;
+		}
+
+		/**
+		Calculates the magnitude of a `Vector`, or how long it is.
+		@param a The `Vector` to calculate from
+		@return The magnitude of `Vector a`
+		@bug If the vector is of non-numerical value, breaks
+		@see cross(const Vector&, const Vector&)
+		@see dot(const Vector&, const Vector&)
+		@tparam T Type of the `Vectors` being calculated. This does not need to be explicitely set.
+		@tparam N Size of the `Vectors` being calculated. This does not need to be explicitely set.
+		*/
+		template<typename T,Size N>
+		T magnitude(const Vector<T,N>& a) {
+			T out = 0;//assuming its numerical
+			//basically the pythagereon theorum
+			for (Index i = 0; i < N;i++) {
+				out += static_cast<T>(sqr(a[i]));
+			}
+			return sqrt(out);
+		}
+
+		template<typename T, Size N>
+		Vector<T, N> normalize(Vector<T, N>& vector) {
+			return vector / magnitude(vector);
+		}
+
+		//start of matrix functions
+
+		template<typename T, Size W, Size H>
+		Matrix<T, H, W> transpose(const Matrix<T, W, H>& matrix) {
+			Matrix<T, H, W> out = Matrix<T, H, W>();
+			for (Index x = 0; x < W; x++) {
+				for (Index y = 0; y < H; y++) {
+					out[y][x] = matrix[x][y];
+				}
+			}
+			return out;
+		}
+
+		/**
+		Calculates the determinate of a `Matrix`.
+		@param matrix A square `Matrix` to find the determinate of
+		@return The determinate of `matrix`
+		@bug The recursiveness doesn't work for some reason
+		*/
+		template<typename T, Size N>
+		T det(const Matrix<T, N, N>& matrix) {
+			static_assert(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
+			if (N == 2) {
+				return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+			}else{
+				T sum=0;
+				Index counter=0;
+				for (Index i = 0; i < N; i++) {
+					Matrix<T, N - 1, N - 1> m = Matrix<T, N - 1, N - 1>();
+					Index counterX = 0;
+					Index counterY = 0;
+					for (Index x = 0; x < N; x++) {
+						for (Index y = 1; y < N; y++) {
+							if (x != i) {
+								m[counterX][counterY] = matrix[x][y];
+								counterX++;
+							}
+							counterY++;
+
+						}
+						counterY = 0;
+					}
+
+					//sum += (isEven(counter) ? -1 : 1) * det(m);//this line causes an error for some reason
+					counter++;
+				}
+				return sum;
+			}
+		}
+
+		/**
+		Inverses a 2 by 2 `Matrix`. An inversed `Matrix` times a normal `Matrix` equals the identity `Matrix`
+		<p>
+		If `T` is not a floating point type, the output may not work, as it will round.
+		@param matrix The `Matrix` to invert
+		@return The inverse of `matrix`
+		@tparam T Type of the `Matrix`
+		@bug Matrices bigger then 2x2 dont work
+		*/
+		template<typename T,Size N>
+		Matrix<T, N,N> inverse(const Matrix<T,N,N>& matrix) {
+			static_assert(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
+			Matrix<T, N,N> out = matrix;
+			//co factor it
+			bool negative = false;
+			for (Index x = 0; x < N; x++) {
+				for (Index y = 0; y < N; y++) {
+					out[x][y] = (negative ? -1 : 1) * matrix[x][y];
+					negative = !negative;
+				}
+			}
+			return	transpose(out) * (1 / det(matrix));
+		}
+	}
+
+
+	//here be typedefs
+
+	/**
+	A `Vector` consisting of 1 `float`
+	*/
+	using Vector1f = mc::Vector<float, 1>;
+	/**
+	A `Vector` consisting of 2 `floats`
+	*/
+	using Vector2f = mc::Vector<float, 2>;
+	/**
+	A `Vector` consisting of 3 `floats`
+	*/
+	using Vector3f = mc::Vector<float, 3>;
+	/**
+	A `Vector` consisting of 4 `floats`
+	*/
+	using Vector4f = mc::Vector<float, 4>;
+	/**
+	A `Vector` consisting of 5 `floats`
+	*/
+	using Vector5f = mc::Vector<float, 5>;
+
+	/**
+	A `Vector` consisting of 1 `int`
+	*/
+	using Vector1i = mc::Vector<int, 1>;
+	/**
+	A `Vector` consisting of 2 `ints`
+	*/
+	using Vector2i = mc::Vector<int, 2>;
+	/**
+	A `Vector` consisting of 3 `ints`
+	*/
+	using Vector3i = mc::Vector<int, 3>;
+	/**
+	A `Vector` consisting of 4 `ints`
+	*/
+	using Vector4i = mc::Vector<int, 4>;
+	/**
+	A `Vector` consisting of 5 `ints`
+	*/
+	using Vector5i = mc::Vector<int, 5>;
+
+	//for matrix now
 
 	/**
 	A `1x1` `Matrix` of `floats`.
