@@ -239,41 +239,60 @@ TEST_CASE("Testing math") {//eww math
 			Vector3i v2 = { -1,4,2 };
 			REQUIRE(math::dot(v1,v2) == 5);
 		}
+		SECTION("Cross product") {
+			Vector3i v1 = { 1,0,3 };
+			Vector3i v2 = { -1,4,2 };
+			REQUIRE(math::cross(v1, v2) == Vector3i({-12,-5,4}));
+		}
 		SECTION("Magnitudes") {
 			Vector3f v1 = { 1,0,3 };
 			Vector3f v2 = { -1,4,2 };
 			REQUIRE(math::magnitude(v1)==Approx(3.162277));
 			REQUIRE(math::magnitude(v2)==Approx(4.582575));
 		}
+		SECTION("Normalizing") {
+			//this isnt normal
+			REQUIRE(math::normalize(Vector3f({ 3,-4,0 })) == Vector3f({(3.0f/5.0f),-(4.0f/5.0f),0}));
+		}
+		SECTION("Scalar multiplication") {
+			REQUIRE(Vector3f({ 5,-9,11 }) * 1 == Vector3f({5,-9,11}));
+			REQUIRE(Vector3f({ 5,-9,11 }) * 2 == Vector3f({ 10,-18,22 }));
+			REQUIRE(Vector3f({ 5,-9,11 }) * -2 == Vector3f({ -10,18,-22 }));
+
+		}
 	}
 
 	SECTION("Matrix math") {
 		SECTION("Matrix by Matrix"){
 			SECTION("Adding") {
-
+				REQUIRE(Matrix3i({ {1,2,3},{4,5,6},{7,8,9} }) + Matrix3i({ {3,3,12},{4,5,6},{3,7,8} }) == Matrix3i({ {4,5,15},{8,10,12},{10,15,17} }));
 			}
 			SECTION("Subtracting") {
+				REQUIRE(Matrix3i({ { 1,2,3 },{ 4,5,6 },{ 7,8,9 } }) - Matrix3i({ { 3,3,12 },{ 4,5,6 },{ 3,7,8 } }) == Matrix3i({ { -2,-1,-9 },{ 0,0,0 },{ 4,1,1 } }));
 
 			}
 			SECTION("Multiplying") {
-
-			}
-			SECTION("Dividing") {
-
+				REQUIRE(Matrix3i({ { 1,2,3 },{ 4,5,6 },{ 7,8,9 } }) * Matrix3i({ { 3,3,12 },{ 4,5,6 },{ 3,7,8 } }) == Matrix3i({ { 20,34,48 },{ 50,79,126 },{ 80,124,204 } }));
 			}
 		}
 		SECTION("Matrix by Vector") {
-			SECTION("Adding") {
-
-			}
-			SECTION("Subtracting") {
-
-			}
 			SECTION("Multiplying") {
-
+				REQUIRE(Matrix3i({ { 1,3,2 },{ 4,-1,5 },{ 0,6,7 } }) * Vector3i({ 3,-2,0 }) == Vector3i({-5,2,0}));
 			}
-			SECTION("Dividing") {
-
+		}
+		SECTION("Additional Matrix math") {
+			SECTION("Transpose") {
+				Matrix<float, 3, 2> result = math::transpose(Matrix<float, 2, 3>({ { 3,4,0 },{ -1,3,2 } }));
+				Matrix<float, 3, 2> actual = Matrix<float, 3, 2>({ { 3,-1 },{ 4,3 },{ 0,2 } });
+				REQUIRE(result== actual);
+			}
+			SECTION("Determinate") {
+				//how determinated am i to determine the determinate of a matrix?
+				REQUIRE(math::det(Matrix2f({ {1,3},{5,4} })) == -11);
+				REQUIRE(math::det(Matrix3f({ { 4,-1,0 },{ 1,3,2 },{5,3,4} })) == 18);
+			}
+			SECTION("Inverse") {
+				REQUIRE(math::inverse(Matrix2f({ {-1,0},{3,2} })) == Matrix2f({ {-1,0},{1.5f,0.5f} }));
 			}
 		}
 	}

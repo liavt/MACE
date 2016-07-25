@@ -13,8 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace math {
-		Matrix4f identity();
-
 		Matrix4f rotate(const float x, const float y, const float z);
 		Matrix4f rotate(const Matrix4f m, const float x, const float y, const float z);
 

@@ -7,12 +7,20 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Graphics/*.h")
 file(GLOB_RECURSE MCT_SRC *.cpp)
 
+if(${MACE_STATIC_LIBRARY})
+	add_library(MC-Graphics STATIC ${HEADERS} ${MCT_SRC})
+	target_link_libraries(MC-Graphics LINK_PUBLIC SDL2-static)
+else()
+	add_library(MC-Graphics SHARED ${HEADERS} ${MCT_SRC})
+	target_link_libraries(MC-Graphics LINK_PUBLIC SDL2)
+endif()
 
-
-add_library(MC-Graphics ${HEADERS} ${MCT_SRC})
-target_include_directories (MC-Graphics PUBLIC ${GLEW_INCLUDE_DIR})
 if(GLEW_FOUND)
 	target_link_libraries(MC-Graphics LINK_PUBLIC "${GLEW_LIBRARIES}")
 else()
 	target_link_libraries(MC-Graphics LINK_PUBLIC glew)
 endif()
+
+target_link_libraries(MC-Graphics LINK_PUBLIC MC-System)
+target_link_libraries(MC-Graphics LINK_PUBLIC MC-Window)
+target_include_directories (MC-Graphics PUBLIC ${GLEW_INCLUDE_DIR})

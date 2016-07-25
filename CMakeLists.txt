@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.11)
 
-project(MACE)
+project(MACE CXX)
 
 message("MACE project added")
 
@@ -23,6 +23,7 @@ set(MACE_AUDIO ON CACHE BOOL "Whether to build the audio library MC-Audio.")
 set(MACE_NETWORK ON CACHE BOOL "Whether to build the networking library under MC-Network.")
 set(MACE_UNIT_TESTING OFF CACHE BOOL "Whether to build the unit tests under MC-Testing.")
 set(MACE_DOWNLOAD_DEPENDENCIES ON CACHE BOOL "Whether to download and extract dependencies that are not found. If turnd off, will instead error.")
+set(MACE_STATIC_LIBRARY ON CACHE BOOL "Whether to build static library files")
 
 set(SDL_NET_SOURCE_NAME "SDL2_net-2.0.1")
 set(SDL_NET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}")
@@ -189,29 +190,35 @@ if(${MACE_GRAPHICS})
 		#	ExternalProject_Add(${GLEW_NAME} URL ${GLEW_URL} TIMEOUT 10 BINARY_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" SOURCE_DIR ${GLEW_SOURCE}/build/cmake/)
 			#set(GLEW_LIBRARY "${GLEW_SOURCE}")
 			#message(STATUS "Downloaded GLEW to ${GLEW_PROJECT_DIR}")
-			if(NOT EXISTS ${GLEW_DOWNLOAD_PATH})
-				message(STATUS "GLEW not found! Downloading...")
-				file(DOWNLOAD "${GLEW_URL}" "${GLEW_DOWNLOAD_PATH}")
-				
-				if(NOT EXISTS ${GLEW_DOWNLOAD_PATH})
-					message(FATAL_ERROR "Error downloading GLEW! Check your internet connection!")
-				endif()
-			else()
-				message(STATUS "GLEW source found.")
-			endif()
-			
 			if(NOT EXISTS ${GLEW_DOWNLOAD_SOURCE_DIR})
-				message(STATUS "Extracting GLEW..")
-				execute_process(
-					COMMAND ${CMAKE_COMMAND} -E tar xvf ${GLEW_DOWNLOAD_PATH}
-					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-				)
+				if(NOT EXISTS ${GLEW_DOWNLOAD_PATH})
+					message(STATUS "GLEW not found! Downloading...")
+					file(DOWNLOAD "${GLEW_URL}" "${GLEW_DOWNLOAD_PATH}")
+					
+					if(NOT EXISTS ${GLEW_DOWNLOAD_PATH})
+						message(FATAL_ERROR "Error downloading GLEW! Check your internet connection!")
+					endif()
+				else()
+					message(STATUS "GLEW source found.")
+				endif()
 				
 				if(NOT EXISTS ${GLEW_DOWNLOAD_SOURCE_DIR})
-					message(FATAL_ERROR "Error occurred during extraction of GLEW!")
+					message(STATUS "Extracting GLEW..")
+					execute_process(
+						COMMAND ${CMAKE_COMMAND} -E tar xvf ${GLEW_DOWNLOAD_PATH}
+						WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+					)
+					
+					if(NOT EXISTS ${GLEW_DOWNLOAD_SOURCE_DIR})
+						message(FATAL_ERROR "Error occurred during extraction of GLEW!")
+					endif()
+				else()
+					message(STATUS "GLEW source directory found.")
 				endif()
+				
+				file(REMOVE ${GLEW_DOWNLOAD_PATH})
 			else()
-				message(STATUS "GLEW source directory found.")
+				message(STATUS "Found GLEW source directory")
 			endif()
 				
 			message(STATUS "Adding GLEW")

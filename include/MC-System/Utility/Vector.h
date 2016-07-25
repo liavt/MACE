@@ -82,6 +82,7 @@ namespace mc {
 		*/
 		Vector()
 		{
+			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			this->setContents(std::array<T, N>());
 		};
 
@@ -90,6 +91,7 @@ namespace mc {
 		@param arr An equally-sized array whose contents will be filled into a `Vector`
 		*/
 		Vector(const T arr[N]) {
+			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			this->setContents(std::array<T,N>());//we need to initialize the array first, or else we will try to access an empty memory location
 			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
@@ -100,10 +102,12 @@ namespace mc {
 		*/
 		Vector(const std::array<T, N>& contents)
 		{
+			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			this->setContents(contents);
 		};
 
 		Vector(const std::initializer_list<T> args) {//this is for aggregate initializaition
+			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			if (args.size() != N)throw IndexOutOfBounds("The number of arguments MUST be equal to the size of the array.");
 			this->setContents(std::array<T, N>());
 			Index counter = 0;
@@ -276,7 +280,7 @@ namespace mc {
 		@see operator*(const Vector&) const
 		*/
 		Vector operator*(const T scalar) const {
-			Vector<T, N> out = this;
+			Vector<T, N> out = *this;
 			for (Index i = 0; i < N;i++) {
 				out[i] *= scalar;
 			}
@@ -290,7 +294,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		Vector operator/(const T scalar) const {
-			Vector<T, N> out = this;
+			Vector<T, N> out = *this;
 			for (Index i = 0; i < N; i++) {
 				out[i] /= scalar;
 			}
@@ -348,7 +352,7 @@ namespace mc {
 		*/
 		bool operator!=(const Vector<T,N>& other) const
 		{
-			return !(this == other);
+			return !(*this == other);
 		};
 
 		/**
@@ -417,10 +421,12 @@ namespace mc {
 		using Vector<MatrixRow<T, H>, W>::content;
 
 		/**
-		Default constructor. Creates a `Matrix` of the specified size where every spot is empty.
+		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
 		Matrix()
-		{
+		{	
+			static_assert(W != 0, "A Matrix's width must be greater than 0!");
+			static_assert(H != 0, "A Matrix's height must be greater than 0!");
 			this->setContents(std::array<MatrixRow<T, H>, W>());
 			for (Index i = 0; i < content.size(); i++) {
 				content[i] = MatrixRow<T, H>();
@@ -443,7 +449,7 @@ namespace mc {
 
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) {//this is for aggregate initializaition
 			if (args.size() != W)throw IndexOutOfBounds("The width of the argument must be equal to to the height of the Matrix!");
-			Matrix::Matrix();
+			Matrix();
 			Index counterX = 0, counterY = 0;
 			for (std::initializer_list<T> elemX : args) {
 				if (elemX.size() != H)throw IndexOutOfBounds("The height of the argument must be equal to to the height of the Matrix!");
@@ -882,47 +888,61 @@ namespace mc {
 			return out;
 		}
 
+		template<typename T>
+		T det(const Matrix<T, 2, 2>& matrix) {
+			return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+		}
+
 		/**
 		Calculates the determinate of a `Matrix`.
 		@param matrix A square `Matrix` to find the determinate of
 		@return The determinate of `matrix`
-		@bug The recursiveness doesn't work for some reason
+		@bug Array subscript out of range with matrices bigger than 2x2
+		@tparam T Type of the `Matrix`
+		@tparam N Size of the `Matrix`
 		*/
 		template<typename T, Size N>
 		T det(const Matrix<T, N, N>& matrix) {
 			static_assert(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
-			if (N == 2) {
-				return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
-			}else{
-				T sum=0;
-				Index counter=0;
-				for (Index i = 0; i < N; i++) {
-					Matrix<T, N - 1, N - 1> m = Matrix<T, N - 1, N - 1>();
-					Index counterX = 0;
-					Index counterY = 0;
-					for (Index x = 0; x < N; x++) {
-						for (Index y = 1; y < N; y++) {
-							if (x != i) {
-								m[counterX][counterY] = matrix[x][y];
-								counterX++;
-							}
-							counterY++;
-
+			T sum=0;
+			Index counter=0;
+			for (Index i = 0; i < N; i++) {
+				const Size newMatrixSize = N - 1;
+				Matrix<T, newMatrixSize, newMatrixSize> m = Matrix<T, newMatrixSize, newMatrixSize>();
+				Index counterX = 0;
+				Index counterY = 0;
+				for (Index x = 0; x < N; x++) {
+					for (Index y = 1; y < N; y++) {
+						if (x != i) {
+							m[counterX][counterY] = matrix[x][y];
+							counterX++;
 						}
-						counterY = 0;
-					}
+						counterY++;
 
-					//sum += (isEven(counter) ? -1 : 1) * det(m);//this line causes an error for some reason
-					counter++;
+					}
+					counterY = 0;
 				}
-				return sum;
+				T tempSum = ((isEven(counter) ? -1 : 1) * matrix[i][0]);
+				if (N-1 == 2) {
+					tempSum *= det<T>(matrix);
+				}
+				else {
+					tempSum *= det<T, N>(matrix);
+				}
+				sum += tempSum;
+				counter++;
 			}
+			return sum;
 		}
 
 		/**
-		Inverses a 2 by 2 `Matrix`. An inversed `Matrix` times a normal `Matrix` equals the identity `Matrix`
+		Inverses a `N` by `N` `Matrix`. An inversed `Matrix` times a normal `Matrix` equals the identity `Matrix`
+		<p>
+		Not to be confused with `tr()`
 		<p>
 		If `T` is not a floating point type, the output may not work, as it will round.
+		<p>
+		The output is calculated via the Caley-Hamilton theorum (https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem)
 		@param matrix The `Matrix` to invert
 		@return The inverse of `matrix`
 		@tparam T Type of the `Matrix`
@@ -931,16 +951,47 @@ namespace mc {
 		template<typename T,Size N>
 		Matrix<T, N,N> inverse(const Matrix<T,N,N>& matrix) {
 			static_assert(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
-			Matrix<T, N,N> out = matrix;
-			//co factor it
-			bool negative = false;
+			//honestly, this next line really seems magical to me. matrices really seem magical in general. But
+			//this especialy. matrices are really something, aren't they?
+			return	(((identity<T,N>()*tr(matrix))-matrix) * (1 / det(matrix)));//calculate via the caley-hamilton method
+		}
+
+		/**
+		Calculates the trace of a Matrix. The trace is the sum of all of the diagonal elements of a `Matrix`.
+		<p>
+		The trace is related to the derivative of a {@link #det() determinate.}
+		<p>
+		Not to be confused with `transpose(const Matrix&))`
+		@param m `Matrix` to calculate the trace of
+		@return The sum of the diagonal elements of `m`
+		@tparam T Type of the `Matrix`
+		@tparam N Size of the `Matrix`
+		@see #inverse(const Matrix&)
+		*/
+		template<typename T, Size N>
+		T tr(const Matrix<T, N,N>& m) {
+			T out = 0;
+			//done without a trace!
+			for (Index x = 0; x < N; x++) {
+				out += m[x][x];
+			}
+			return out;
+		}
+
+		template<typename T, Size N>
+		Matrix<T, N, N> identity() {
+			Matrix<T, N, N> out = Matrix<T, N, N>();
 			for (Index x = 0; x < N; x++) {
 				for (Index y = 0; y < N; y++) {
-					out[x][y] = (negative ? -1 : 1) * matrix[x][y];
-					negative = !negative;
+					if (x == y) {
+						out[x][y] = 1;
+					}
+					else {
+						out[x][y] = 0;
+					}
 				}
 			}
-			return	transpose(out) * (1 / det(matrix));
+			return out;
 		}
 	}
 

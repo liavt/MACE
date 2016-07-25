@@ -11,18 +11,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 namespace mc {
-Matrix4f math::identity()
-{
-	Matrix4f m = Matrix4f();
-	m[0][0] = 1;
-	m[1][1] = 1;
-	m[2][2] = 1;
-	m[3][3] = 1;
-	return m;
-}
 Matrix4f math::rotate(const float x, const float y, const float z)
 {
-	return rotate(identity(),x,y,z);
+	return rotate(identity<float, 4>(),x,y,z);
 }
 Matrix4f math::rotate(const Matrix4f m, const float x, const float y, const float z)
 {
@@ -30,7 +21,7 @@ Matrix4f math::rotate(const Matrix4f m, const float x, const float y, const floa
 }
 Matrix4f math::rotateX(const float x)
 {
-	return rotateX(identity(), x);
+	return rotateX(identity<float,4>(), x);
 }
 Matrix4f math::rotateX(const Matrix4f m, const float x)
 {
@@ -43,7 +34,7 @@ Matrix4f math::rotateX(const Matrix4f m, const float x)
 }
 Matrix4f math::rotateY(const float y)
 {
-	return rotateY(identity(),y);
+	return rotateY(identity<float, 4>(),y);
 }
 Matrix4f math::rotateY(const Matrix4f m, const float y)
 {
@@ -56,7 +47,7 @@ Matrix4f math::rotateY(const Matrix4f m, const float y)
 }
 Matrix4f math::rotateZ(const float z)
 {
-	return rotateZ(identity(), z);
+	return rotateZ(identity<float, 4>(), z);
 }
 Matrix4f math::rotateZ(const Matrix4f m, const float z)
 {
@@ -68,7 +59,7 @@ Matrix4f math::rotateZ(const Matrix4f m, const float z)
 	return out;
 }
 Matrix4f math::scale(const float x, const float y, const float z) {
-	return scale(identity(), x, y, z);
+	return scale(identity<float, 4>(), x, y, z);
 }
 
 Matrix4f math::scale(const Matrix4f m, const float x, const float y, const float z)
@@ -81,7 +72,7 @@ Matrix4f math::scale(const Matrix4f m, const float x, const float y, const float
 }
 Matrix4f math::translate( const float x, const float y, const float z)
 {
-	return translate(identity(), x, y, z);
+	return translate(identity<float, 4>(), x, y, z);
 }
 Matrix4f math::translate(const Matrix4f in,const float x, const float y, const float z)
 {
