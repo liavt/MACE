@@ -24,11 +24,80 @@ TEST_CASE("Testing matrix width and height","[system][utility][vector]") {
 		REQUIRE_THROWS(m.get(4,-1));
 	}
 	
+	SECTION("Testing () operator") {
+		for (Index x = 1; x <= 5; x++) {
+			REQUIRE_NOTHROW(m(x,1));
+			m(x,1) = x;
+			REQUIRE(m(x,1) == x);
+		}
+	}
+
 	SECTION("Testing if the [] operator works"){
-		for (int x = 0; x < 5; x++) {
+		for (Index x = 0; x < 5; x++) {
 			REQUIRE_NOTHROW(m[x][0]);
 			m[x][0] = x;
 			REQUIRE(m[x][0]==x);
+		}
+	}
+}
+
+TEST_CASE("Testing operators","[system][utility][vector]") {
+	SECTION("Vector operators") {
+		SECTION("Equality and inequality") {
+			Vector4i v1 = {1,4,3,5};
+			Vector4i v2 = {3,4,6,3};
+			REQUIRE_FALSE(v1==v2);
+			REQUIRE(v1 != v2);
+			v1 = v2;
+			REQUIRE(v1==v2);
+			REQUIRE_FALSE(v1!=v2);
+		}
+		SECTION("Greater than and less than") {
+			Vector4i v1 = { 1,4,3,5 };
+			Vector4i v2 = { 3,5,6,6 };
+			REQUIRE_FALSE(v1>v2);
+			REQUIRE_FALSE(v1>=v2);
+			REQUIRE(v1<v2);
+			REQUIRE(v1<=v2);
+			v2 = v1;
+			REQUIRE_FALSE(v1>v2);
+			REQUIRE(v1>=v2);
+			REQUIRE_FALSE(v1<v2);
+			REQUIRE(v1<=v2);
+			v2 = {0,3,2,4};
+			REQUIRE(v1>v2);
+			REQUIRE(v1>=v2);
+			REQUIRE_FALSE(v1<v2);
+			REQUIRE_FALSE(v1<=v2);
+		}
+	}
+	SECTION("Matrix operator") {
+		SECTION("Equality and inequality") {
+			Matrix3i m1 = { {1,3,4},{5,4,6},{4,3,4} };
+			Matrix3i m2 = { { 4,5,3},{ 2,1,6 },{ 3,1,-1 } };
+			REQUIRE_FALSE(m1 == m2);
+			REQUIRE(m1 != m2);
+			m1 = m2;
+			REQUIRE(m1 == m2);
+			REQUIRE_FALSE(m1 != m2);
+		}
+		SECTION("Greater than and less than") {
+			Matrix3i m1 = { { 1,3,4 },{ 5,4,6 },{ 4,3,4 } };
+			Matrix3i m2 = { { 4,5,6 },{ 6,5,8 },{ 7,5,6 } };
+			REQUIRE_FALSE(m1>m2);
+			REQUIRE_FALSE(m1 >= m2);
+			REQUIRE(m1<m2);
+			REQUIRE(m1 <= m2);
+			m2 = m1;
+			REQUIRE_FALSE(m1>m2);
+			REQUIRE(m1 >= m2);
+			REQUIRE_FALSE(m1<m2);
+			REQUIRE(m1 <= m2);
+			m2 = { {-1,0,2},{3,1,4},{2,1,2} };
+			REQUIRE(m1>m2);
+			REQUIRE(m1 >= m2);
+			REQUIRE_FALSE(m1<m2);
+			REQUIRE_FALSE(m1 <= m2);
 		}
 	}
 }
@@ -184,20 +253,26 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 TEST_CASE("Testing getting and setting","[system][utility][vector]") {
 	SECTION("Testing getting and setting of a vector") {
 		Vector5i v = Vector5i();
-
+		
 		for (Index i = 0; i < v.size(); i++) {
 			v[i] = i;
 			REQUIRE(v[i] == i);
 			REQUIRE(v.get(i) == i);
+			REQUIRE(v(i+1)==i);
 			v.set(i, i + 1);
 			REQUIRE(v[i] == i + 1);
 			REQUIRE(v.get(i) == i + 1);
+			REQUIRE(v(i + 1)==i+1);
+			v(i + 1) = i + 2;
+			REQUIRE(v[i]==i+2);
+			REQUIRE(v.get(i)==i+2);
+			REQUIRE(v(i + 1)==i+2);
 		}
 	}
 
 	SECTION("Testing getting and setting of matrices") {
 		Matrix5i m = Matrix5i();
-
+		
 		int i = 0;
 		for (Index x = 0; x < m.width(); x++) {
 			for (Index y = 0; y < m.height(); y++) {
@@ -205,9 +280,15 @@ TEST_CASE("Testing getting and setting","[system][utility][vector]") {
 				m[x][y] = i;
 				REQUIRE(m[x][y] == i);
 				REQUIRE(m.get(x, y) == i);
+				REQUIRE(m(x + 1,y + 1)==i);
 				m.set(x, y, i + 1);
 				REQUIRE(m[x][y] == i + 1);
 				REQUIRE(m.get(x, y) == i + 1);
+				REQUIRE(m(x + 1,y + 1)==i+1);
+				m(x+1, y+1) = i + 2;
+				REQUIRE(m[x][y]==i+2);
+				REQUIRE(m.get(x,y)==i+2);
+				REQUIRE(m(x + 1,y + 1)==i+2);
 			}
 		}
 	}
@@ -293,6 +374,7 @@ TEST_CASE("Testing math") {//eww math
 			}
 			SECTION("Inverse") {
 				REQUIRE(math::inverse(Matrix2f({ {-1,0},{3,2} })) == Matrix2f({ {-1,0},{1.5f,0.5f} }));
+
 			}
 		}
 	}

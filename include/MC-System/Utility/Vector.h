@@ -174,8 +174,8 @@ namespace mc {
 
 
 		/**
-		Get the value at a position
-		@param i `Index` of the requested data
+		Get the value at a position. Slower than `operator[]` because it does bounds checking.
+		@param i `Index` of the requested data, zero-indexed
 		@return The value located at `i`
 		@throw IndexOutOfBounds If `i` is greater than `size()`
 		@throw IndexOutOfBounds If `i` is less than 0
@@ -188,7 +188,7 @@ namespace mc {
 		}
 		/**
 		`const` version of `get(Index),` in case a `Vector` is declared `const`
-		@param i `Index` of the requested data
+		@param i `Index` of the requested data, zero-indexed
 		@return The `const` value located at `i`
 		@throw IndexOutOfBounds If `i` is greater than `size()`
 		@throw IndexOutOfBounds If `i` is less than 0
@@ -200,8 +200,8 @@ namespace mc {
 			return content.at(i);
 		}
 		/**
-		Set data at a certain position to equal a new value
-		@param position Where to put the new value
+		Set data at a certain position to equal a new value. Slower than `operator[]` because it does bounds checking.
+		@param position Where to put the new value, zero indexed.
 		@param value What to put in `position`
 		@throw IndexOutOfBounds If `i` is greater than `size()`
 		@throw IndexOutOfBounds If `i` is less than 0
@@ -213,7 +213,7 @@ namespace mc {
 			content[position] = value;
 		}
 		/**
-		Retrieves the content at a certain `Index.` This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will cause a memory exception.
+		Retrieves the content at a certain `Index`, zero indexed. This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will be undefined.
 		@param i Where to retrieve the data
 		@return The data at `i`
 		@see operator[](Index) const
@@ -223,7 +223,7 @@ namespace mc {
 			return content[i];
 		};
 		/**
-		`const` version of `operator[](Index)` used if a `Vector` is declared `const`
+		`const` version of `operator[](Index)` used if a `Vector` is declared `const`.
 		@param i Where to retrieve the data
 		@return The data at `i`
 		@see operator[](Index)
@@ -232,6 +232,30 @@ namespace mc {
 		{
 			return content[i];
 		};
+
+		/**
+		Retrieves content at a certain `Index`, not zero indexed. 
+		<p>
+		Equal to {@code
+			vector[i-1]
+		}
+		@param i Not zero indexed `Index`
+		@return Value at `i-1`
+		@see operator[](Index)
+		*/
+		virtual T& operator()(Index i) {
+			return content[i - 1];
+		}
+
+		/**
+		`const` version of `operator()(Index)`.
+		@param i Not zero indexed `Index`
+		@return Value at `i-1`
+		*/
+		const T& operator()(Index i) const {
+			return content[i - 1];
+		}
+
 		/**
 		Adds 2 `Vectors` together.
 		
@@ -261,17 +285,32 @@ namespace mc {
 			return mc::Vector<T, N>(out);
 		};
 		/**
-		Retrieves the cross product of 2 `Vectors`
+		Calculates the cross product of 2 `Vectors`
 
 		@param right Another `Vector`
 		@return The cross product
 		@see Vector for an explanation of `Vector` math
-		@see cross(const Vector, const Vector)
+		@see cross(const Vector&, const Vector&)
 		@see operator*(const T)
+		@see operator%(const Vector&)
 		*/
 		Vector operator*(const Vector<T, 3>& right) const {
 			return math::cross(*this,right);
 		};
+
+		/**
+		Calculates the dot product of 2 `Vectors`
+
+		@param right Another `Vector`
+		@return The dot product
+		@see Vector for an explanation of `Vector` math
+		@see cross(const Vector&, const Vector&)
+		@see operator*(const T)
+		@see operator*(const Vector&)
+		*/
+		Vector operator%(const Vector<T, 3>& right) const {
+			return math::dot(*this, right);
+		}
 
 		/**
 		Multiplies a `Vector` by a scalar.
@@ -333,6 +372,10 @@ namespace mc {
 		@param other A `Vector` to compare `this` against
 		@return `true` if the 2 are equal, `false` otherwise
 		@see operator!=(const Vector<T,N>) const
+		@see operator<(const Vector&) const
+		@see operator>=(const Vector&) const
+		@see operator<=(const Vector&) const
+		@see operator>(const Vector&) const
 		*/
 		bool operator==(const Vector<T,N>& other) const
 		{
@@ -349,6 +392,10 @@ namespace mc {
 		@param other A `Vector` to compare `this` against
 		@return `true` if the 2 are not equal, `false` otherwise
 		@see operator==(const Vector<T,N>) const
+		@see operator<(const Vector&) const
+		@see operator>=(const Vector&) const
+		@see operator<=(const Vector&) const
+		@see operator>(const Vector&) const
 		*/
 		bool operator!=(const Vector<T,N>& other) const
 		{
@@ -356,9 +403,70 @@ namespace mc {
 		};
 
 		/**
+		Compares the `>` operator on 2 `Vectors` elements.
+		@param other A `Vector` to compare against
+		@return The result of the `>` operator on each element
+		@see operator<(const Vector&) const
+		@see operator>=(const Vector&) const
+		@see operator<=(const Vector&) const
+		@see operator==(const Vector&) const
+		@see operator!=(const Vector&) const
+		*/
+		bool operator>(const Vector<T, N>& other) const {
+			for (Index i = 0; i < N; i++) {
+				if (this->operator[](i)<=other[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/**
+		Compares the `>=` operator on 2 `Vectors` elements.
+		@param other A `Vector` to compare against
+		@return The result of the `>=` operator on each element
+		@see operator<(const Vector&) const
+		@see operator>(const Vector&) const
+		@see operator<=(const Vector&) const
+		@see operator==(const Vector&) const
+		@see operator!=(const Vector&) const
+		*/
+		bool operator>=(const Vector<T, N>& other) const {
+			return *this > other || *this == other;
+		}
+
+		/**
+		Compares the `<` operator on 2 `Vectors` elements.
+		@param other A `Vector` to compare against
+		@return The result of the `<` operator on each element
+		@see operator<=(const Vector&) const
+		@see operator>=(const Vector&) const
+		@see operator>(const Vector&) const
+		@see operator==(const Vector&) const
+		@see operator!=(const Vector&) const
+		*/
+		bool operator<(const Vector<T, N>& other) const {
+			return !(*this >= other);
+		}
+
+		/**
+		Compares the `<=` operator on 2 `Vectors` elements.
+		@param other A `Vector` to compare against
+		@return The result of the `<=` operator on each element
+		@see operator<(const Vector&) const
+		@see operator>=(const Vector&) const
+		@see operator>(const Vector&) const
+		@see operator==(const Vector&) const
+		@see operator!=(const Vector&) const
+		*/
+		bool operator<=(const Vector<T, N>& other) const {
+			return !(*this>other);
+		}
+
+		/**
 		Operator used to output to `std::cout`.
 		@param output `std::ostream` the `Matrix` was inserted into
-		@param m `Matrix` which will be printed
+		@param v `Matrix` which will be printed
 		@return `output` for chaining
 		*/
 		friend std::ostream &operator<<(std::ostream &output,
@@ -560,6 +668,34 @@ namespace mc {
 			content[x][y] = value;
 		}
 
+		/**
+		Retrieves content at a certain `Index`, not zero indexed.
+		<p>
+		Equal to {@code
+		matrix[x-1][y-1]
+		}
+		@param x Not zero-indexed X-coordinate
+		@param y Not zero-indexed y-coordinate
+		@return Value at `x-1` and `y-1`
+		@see operator[](Index)
+		@see set(Index, Index,T)
+		@see get(Index,Index)
+		*/
+		virtual T& operator()(Index x,Index y) {
+			return content[x - 1][y-1];
+		}
+
+		/**
+		`const` version of `operator()(Index,Index)`.
+		@param x Not zero-indexed X-coordinate
+		@param y Not zero-indexed y-coordinate
+		@return Value at `x-1` and `y-1`
+		@see set(Index, Index,T)
+		@see get(Index,Index)
+		*/
+		const T& operator()(Index x,Index y) const {
+			return content[x - 1][y - 1];
+		}
 
 		/**
 		Adds a `Vector` and a `Matrix` together
@@ -870,6 +1006,16 @@ namespace mc {
 			return sqrt(out);
 		}
 
+		/**
+		Normalize a `Vector`. A normalized `Vector` has a length of 1, and is also known as a unit vector.
+		@param vector `Vector` to normalize
+		@return A unit `Vector` with a norm of `
+		@see magnitude(const Vector&)
+		@see dot(const Vector&, const Vector&)
+		@see cross(const Vector&, const Vector&)
+		@tparam T Type of `Vector`
+		@tparam N Size of the `Vector`
+		*/
 		template<typename T, Size N>
 		Vector<T, N> normalize(Vector<T, N>& vector) {
 			return vector / magnitude(vector);
@@ -877,6 +1023,14 @@ namespace mc {
 
 		//start of matrix functions
 
+		/**
+		Transposes a `Matrix`. Transposing a `Matrix` creates a reflection of it, where every row is a column.
+		@param matrix What to transpose
+		@return A reflected `matrix`
+		@tparam T Type of the `Matrix`
+		@tparam W Width of the `Matrix`
+		@tparam H Height of the `Matrix`
+		*/
 		template<typename T, Size W, Size H>
 		Matrix<T, H, W> transpose(const Matrix<T, W, H>& matrix) {
 			Matrix<T, H, W> out = Matrix<T, H, W>();
@@ -888,13 +1042,19 @@ namespace mc {
 			return out;
 		}
 
+		/**
+		Calculates the determinate of a 2x2 `Matrix`.
+		@param matrix A square 2x2 `Matrix` to find the determinate of
+		@return The determinate of `matrix`
+		@tparam T Type of the `Matrix`
+		*/
 		template<typename T>
 		T det(const Matrix<T, 2, 2>& matrix) {
 			return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
 		}
 
 		/**
-		Calculates the determinate of a `Matrix`.
+		Calculates the determinate of a any sized `Matrix`.
 		@param matrix A square `Matrix` to find the determinate of
 		@return The determinate of `matrix`
 		@bug Array subscript out of range with matrices bigger than 2x2
@@ -946,6 +1106,7 @@ namespace mc {
 		@param matrix The `Matrix` to invert
 		@return The inverse of `matrix`
 		@tparam T Type of the `Matrix`
+		@tparam N Order of the `Matrix`
 		@bug Matrices bigger then 2x2 dont work
 		*/
 		template<typename T,Size N>
@@ -966,7 +1127,7 @@ namespace mc {
 		@return The sum of the diagonal elements of `m`
 		@tparam T Type of the `Matrix`
 		@tparam N Size of the `Matrix`
-		@see #inverse(const Matrix&)
+		@see #inverse(const Matrix<T,N,N>&)
 		*/
 		template<typename T, Size N>
 		T tr(const Matrix<T, N,N>& m) {
@@ -978,6 +1139,12 @@ namespace mc {
 			return out;
 		}
 
+		/**
+		Creates an indentity `Matrix` of a certain size. An identity `Matrix` times another `Matrix` equals the same `Matrix`
+		@return An indentity `Matrix` whose diagonal elements are `1`
+		@tparam T Type of the identity `Matrix`
+		@tparam N Size of the identity `Matrix`
+		*/
 		template<typename T, Size N>
 		Matrix<T, N, N> identity() {
 			Matrix<T, N, N> out = Matrix<T, N, N>();

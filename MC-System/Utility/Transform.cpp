@@ -131,4 +131,28 @@ Matrix4f Transformation::get()
 {
 	return math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
 }
+Vector3f & Transformation::getRotation()
+{
+	return rotation;
+}
+Vector3f & Transformation::getTranslation()
+{
+	return translation;
+}
+Vector3f & Transformation::getScale()
+{
+	return scaler;
+}
+void Transformation::setRotation(Vector3f & newVector)
+{
+	rotation = newVector;
+}
+void Transformation::setTranslation(Vector3f & newVector)
+{
+	translation = newVector;
+}
+void Transformation::setScale(Vector3f & newVector)
+{
+	scaler = newVector;
+}
 }

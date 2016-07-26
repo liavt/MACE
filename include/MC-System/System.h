@@ -104,7 +104,7 @@ namespace mc {
 		*/
 		static void removeModule(std::string module);
 		/**
-		Remove a `Module` by it's index. The index is provided from {@link #addModule(Module&)} or {@link #indexOf(const Module&)}
+		Remove a `Module` by it's index. The index is provided from {@link #addModule(Module&)} or {@link #indexOf(Module&)}
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		@param i Index of a `Module` to delete
 		*/
@@ -227,7 +227,7 @@ namespace mc {
 		Example usage:{@code
 			mc::System::getFlag(SYSTEM_FLAG_INIT);//get whether init() has been called
 		}
-		@param Index Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
+		@param flag Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
 		@return Whether the specified flag is `true`
 		*/
 		static bool getFlag(Index flag);

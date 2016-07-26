@@ -30,22 +30,22 @@ mc::Byte mc::Color::getAlpha() const
 	return mc::Color::convertFloatToRGBA(this->a);
 }
 
-void mc::Color::setRed(mc::Byte red) {
-	this->r = mc::Color::convertRGBAToFloat(red);
+void mc::Color::setRed(mc::Byte r) {
+	this->r = mc::Color::convertRGBAToFloat(r);
 }
 
-void mc::Color::setGreen(mc::Byte green) {
-	this->g = mc::Color::convertRGBAToFloat(green);
-
-}
-
-void mc::Color::setBlue(mc::Byte blue) {
-	this->b = mc::Color::Color::convertRGBAToFloat(blue);
+void mc::Color::setGreen(mc::Byte g) {
+	this->g = mc::Color::convertRGBAToFloat(g);
 
 }
 
-void mc::Color::setAlpha(mc::Byte alpha) {
-	this->a = mc::Color::convertRGBAToFloat(alpha);
+void mc::Color::setBlue(mc::Byte b) {
+	this->b = mc::Color::Color::convertRGBAToFloat(b);
+
+}
+
+void mc::Color::setAlpha(mc::Byte a) {
+	this->a = mc::Color::convertRGBAToFloat(a);
 }
 
 

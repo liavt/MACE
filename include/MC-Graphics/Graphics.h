@@ -12,8 +12,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/System.h>
 #include <MC-Window/WindowModule.h>
 #include <MC-Graphics/Entity.h>
+#include <thread>
+#include <mutex>
 
 namespace mc {
+
 	/**
 	Namespace containing classes used for Graphics in MACE.
 	*/
@@ -21,7 +24,14 @@ namespace mc {
 
 		class GraphicsModule : public mc::gfx::EntityModule {
 			win::Window* window;
-			SDL_GLContext context;
+			
+			bool destroyed = false;
+
+			//threading
+			std::thread graphicsThread;
+			std::mutex mutex;
+			//this is called by the thread
+			void graphicsThreadCallback();
 		public:
 			GraphicsModule(win::Window* window);
 
