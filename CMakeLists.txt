@@ -30,7 +30,7 @@ set(SDL_NET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}")
 set(SDL_NET_URL "https://www.libsdl.org/projects/SDL_net/release/${SDL_NET_SOURCE_NAME}.tar.gz")
 set(SDL_NET_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}.tar.gz")
 #SDL_Net doesnt have a Cmake. So we made our own.
-set(SDL_NET_CMAKE "SDLNet_CMake.cmake")
+set(SDL_NET_CMAKE "CMake_SDLNet.cmake")
 
 #Source name is the version to use
 set(SDL2_SOURCE_NAME "SDL2-2.0.4")
