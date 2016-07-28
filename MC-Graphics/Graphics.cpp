@@ -11,57 +11,46 @@ The above copyright notice and this permission notice shall be included in all c
 #include <thread>
 #include <iostream>
 #include <mutex>
+#include <GL/glew.h>
 
 namespace mc {
 	namespace gfx{
-		void GraphicsModule::graphicsThreadCallback()
+		OpenGLContext::OpenGLContext() : Container(),GraphicsContext()
 		{
-			std::lock_guard<std::mutex> guard(mutex);
 
-			try {
-
-				SDL_Window* sdlwin = window->getSDLWindow();
-				SDL_GLContext context = SDL_GL_CreateContext(sdlwin);
-				SDL_GL_MakeCurrent(sdlwin, context);
-
-				while (!destroyed) {
-					//	std::cout << "hello!"<<std::endl;
-					SDL_Delay(10);
-					SDL_GL_SwapWindow(window->getSDLWindow());
-				}
-
-				SDL_GL_DeleteContext(context);
-			}
-			catch (std::exception e) {
-				std::cout << e.what();
-				destroyed = true;
-			}
 		}
-		GraphicsModule::GraphicsModule(win::Window * window)
+		void OpenGLContext::update() {
+		//	SDL_GL_MakeCurrent(window->getSDLWindow(), context);
+
+			std::mutex mutex;
+			std::unique_lock<std::mutex> lock(mutex);
+
+			updateChildren();
+
+			lock.unlock();
+
+			SDL_Delay(10);
+		}
+
+
+		void OpenGLContext::init(win::Window * win)
 		{
-			this->window = window;
-		}
-		void GraphicsModule::init() {
-			System::assertModule("MC-Window");
-			win::Window* win = this->window;
-			graphicsThread = std::thread(&GraphicsModule::graphicsThreadCallback, this);
+			context = SDL_GL_CreateContext(win->getSDLWindow());
+			SDL_GL_MakeCurrent(win->getSDLWindow(),context);
+			initChildren();
 		}
 
-		void GraphicsModule::update() {
-			std::unique_lock<std::mutex> guard(mutex);
-			EntityModule::update();
-			guard.unlock();//if update() is called in a different function, the unique_lock wont be released. here its explicetely unloacked
+		void OpenGLContext::render(win::Window* win) {
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			renderChildren();
+
+			SDL_GL_SwapWindow(win->getSDLWindow());
 		}
 
-		void GraphicsModule::destroy() {
-			mutex.lock();
-			destroyed = true;
-			mutex.unlock();
-			graphicsThread.join();
-		}
-
-		std::string GraphicsModule::getName() const{
-			return "MC-Graphics";
+		void OpenGLContext::destroy(win::Window* win) {
+			destroyChildren();
+			SDL_GL_DeleteContext(context);
 		}
 	}
 }

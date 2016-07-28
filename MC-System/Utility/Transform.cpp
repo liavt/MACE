@@ -127,9 +127,13 @@ Transformation & Transformation::scale(const float x, const float y, const float
 	scaler[2] += z;
 	return *this;
 }
-Matrix4f Transformation::get()
+Matrix4f Transformation::get() const
 {
-	return math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
+	Matrix4f out = math::identity<float,4>();
+	out *= math::translate(translation[0], translation[1], translation[2]);
+	out *= math::rotate(rotation[0], rotation[1], rotation[2]);
+	out *= math::scale(scaler[0], scaler[1], scaler[2]);
+	return out;
 }
 Vector3f & Transformation::getRotation()
 {
@@ -140,6 +144,18 @@ Vector3f & Transformation::getTranslation()
 	return translation;
 }
 Vector3f & Transformation::getScale()
+{
+	return scaler;
+}
+const Vector3f & Transformation::getRotation() const
+{
+	return rotation;
+}
+const Vector3f & Transformation::getTranslation() const
+{
+	return translation;
+}
+const Vector3f & Transformation::getScale() const
 {
 	return scaler;
 }

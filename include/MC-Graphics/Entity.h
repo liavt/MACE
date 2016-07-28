@@ -9,17 +9,18 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <vector>
-#include <MC-System/Constants.h>
 #include <MC-System/System.h>
 #include <MC-System/Utility/BitField.h>
+#include <MC-System/Utility/Transform.h>
 #include <MC-Graphics/GraphicsConstants.h>
-
 
 namespace mc {
 	namespace gfx {
-		//forward-defining classes
+
+
+
+		//forward-defining class for friend declaration
 		class Entity;
-		class EntityModule;
 
 		/**
 		A class which holds an internal buffer of {@link Entity entities,} known as "children."
@@ -29,6 +30,12 @@ namespace mc {
 		Examples:
 		*/
 		class Container {
+			/**
+			`Entity` needs to do some additional work with the private members
+			*/
+			friend class Entity;
+
+		public:
 			/**
 			Calls {@link #update()} on all of it's children.
 			*/
@@ -47,43 +54,15 @@ namespace mc {
 			void renderChildren();
 
 			/**
-			`EntityModule` needs to be able to see privates in order to properly interact with `Entities`
-			*/
-			friend class EntityModule;
-			/**
-			`Entity` needs to do some additional work with the private members
-			*/
-			friend class Entity;
-
-			/**
 			Default constructor. Creates an empty list of children.
 			*/
 			Container();
-
-		public:
 
 			/**
 			Destructor. Clears all of the children.
 			@see #clearChildren
 			*/
 			virtual ~Container();
-
-			/**
-			Should be called every time {@link System#update()} is called. Calls `update()` on all of this `Container\'s` children.
-			*/
-			virtual void update();
-			/**
-			Should be called every time {@link System#init()} is called. Calls `init()` on all of this `Container\'s` children.
-			*/
-			virtual void init();
-			/**
-			Should be called every time {@link System#terminate()} is called. Calls `destroy()` on all of this `Container\'s` children.
-			*/
-			virtual void destroy();
-			/**
-			Should be called every time the `Window`'s buffers are swapped.
-			*/
-			virtual void render();
 
 			/**
 			Gets all of this `Container's` children.
@@ -97,7 +76,7 @@ namespace mc {
 			@see #update()
 			@see #getChildren()
 			*/
-			void addChild(Entity& e);
+			virtual void addChild(Entity& e);
 			/**
 			Removes a child by reference.
 			@throws ObjectNotFoundInArray if {@link #hasChild(Entity&) const} returns `false`
@@ -237,15 +216,15 @@ namespace mc {
 			Should be called a by `Container` when `System.update()` is called. Calls `customUpdate()`
 			<p>
 			When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
-			class Derived : public Entity{
-			void update(){
-			Entity::update()//must call
-			...
-			}
-			}
+				class Derived : public Entity{
+					void update(){
+						Entity::update()//must call
+						...
+					}
+				}
 			}
 			*/
-			void update();
+			virtual void update();
 			/**
 			Should be called a by `Container` when `System.init()` is called. Calls `customInit()`
 			<p>
@@ -258,7 +237,7 @@ namespace mc {
 				}	
 			}
 			*/
-			void init();
+			virtual void init();
 			/**
 			Should be called a by `Container` when `System.terminate()` is called. Calls `customDestroy()`
 			<p>
@@ -271,7 +250,7 @@ namespace mc {
 				}	
 			}
 			*/
-			void destroy();
+			virtual void destroy();
 
 			/**
 			Should be called by a `Container` when the graphical `Window` clears the frame.
@@ -285,13 +264,16 @@ namespace mc {
 				}	
 			}
 			*/
-			void render();
+			virtual void render();
 
-			Container* parent;
+			Entity* parent=0;
 
-			void setParent(Container* parent);
+			void setParent(Entity* parent);
 
    			ByteField properties = ENTITY_DEFAULT_PROPERTIES;
+
+			Transformation primaryTransformation=Transformation();
+			Transformation secondaryTransformation = Transformation();
 		public:
 
 			/**
@@ -362,18 +344,33 @@ namespace mc {
 			*/
 			void setProperty(Index position, bool value);
 
+			Transformation& getPrimaryTransformation();
+			const Transformation& getPrimaryTransformation() const;
+			void setPrimaryTransformation(Transformation& trans);
+
+			Transformation& getSecondaryTransformation();
+			const Transformation& getSecondaryTransformation() const;
+			void setSecondaryTransformation();
+
+			Matrix4f getFinalTransformation() const;
+			
+
 			/**
 			Retrieve this `Entitys` parent `Container.`
 			@return A `Container` which contains `this`
 			@see Container#hasChild(const Entity&) const;
 			*/
-			Container& getParent();
+			Entity& getParent();
 			/**
 			`const` version of `getParent()`
 			@return A `Container` which contains `this`
 			@see Container#hasChild(const Entity&) const;
 			*/
-			const Container& getParent() const;
+			const Entity& getParent() const;
+
+			bool hasParent() const;
+
+			void addChild(Entity& e);
 
 			/**
 			Compares if 2 `Entities` have the same children, parent, and properties.
@@ -423,38 +420,6 @@ namespace mc {
 			When `Container.render()` is called, `customRender()` is called on all of it's children.
 			*/
 			virtual void customRender() = 0;
-		};
-
-		/**
-		`Module` that handles `Entities`. Required by `GraphicsModule`
-		*/
-		class EntityModule : public Module, public Container {
-		public:
-			/**
-			Default constructor.
-			*/
-			EntityModule();
-			/**
-			Calls `init()` on all of this `EntityModules` children.
-			*/
-			virtual void init();
-			/**
-			Calls `update()` on all of this `EntityModules` children.
-			*/
-			virtual void update();
-			/**
-			Calls `destroy()` on all of this `EntityModules` children.
-			*/
-			virtual void destroy();
-			/**
-			Calls `render()` on all of this `EntityModules` children.
-			*/
-			virtual void render();
-			/**
-			Get this `EntityModules` unique name.
-			@return `MC-Entity`
-			*/
-			virtual std::string getName() const;
 		};
 	}
 }

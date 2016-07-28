@@ -5,7 +5,7 @@ namespace mc{
 namespace math{
 TEST_CASE("Testing transformation matrixes") {
 	float arr[] = {1,2,3,1};
-	Vector4f v = arr;//tihis is the vector we are going to transform
+	Vector4f v = arr;//this is the vector we are going to transform
 	SECTION("Translating") {
 		Vector4f result = translate(1, 1, 1)*v;
 		REQUIRE(result[0]==2);

@@ -10,21 +10,40 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 
 #include <MC-System/System.h>
-#include <SDL/SDL.h>
-#include <memory>
 #include <MC-Window/Window.h>
+#include <thread>
 
 namespace mc {
 	namespace win
 	{
+		class GraphicsContext {
+		public:
+			virtual void init(Window* win);
+			virtual void render(Window* win);
+			virtual void destroy(Window* win);
+			virtual void update();
+		};
+
 		class WindowModule : public Module {
 			Window* window;
+
+			bool destroyed = false;
+
+			std::thread windowThread;
+
+			void threadCallback();
+
+			GraphicsContext* context =	0;//initailize an empty context
 		public:
 			WindowModule(Window* window);
 
 			void init();
 			void update();
 			void destroy();
+
+			void setContext(GraphicsContext* con);
+			GraphicsContext* getContext();
+			const GraphicsContext* getContext() const;
 
 			std::string getName() const;
 		};

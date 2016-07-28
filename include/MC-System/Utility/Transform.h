@@ -40,11 +40,15 @@ namespace mc {
 		Transformation& rotate(const float x, const float y, const float z);
 		Transformation& scale(const float x, const float y, const float z);
 
-		Matrix4f get();
+		Matrix4f get() const;
 
 		Vector3f& getRotation();
 		Vector3f& getTranslation();
 		Vector3f& getScale();
+
+		const Vector3f& getRotation() const;
+		const Vector3f& getTranslation() const;
+		const Vector3f& getScale() const;
 
 		void setRotation(Vector3f& newVector);
 		void setTranslation(Vector3f& newVector);

@@ -21,7 +21,6 @@ namespace mc {
 		Container::~Container()
 		{
 			children.clear();
-			destroy();
 		}
 
 		void Container::updateChildren()
@@ -83,7 +82,6 @@ namespace mc {
 		void Container::addChild(Entity& e)
 		{
 			children.push_back(&e);
-			e.setParent(this);
 		}
 
 		void Container::removeChild(const Entity& e)
@@ -112,21 +110,32 @@ namespace mc {
 		void Entity::render()
 		{
 			customRender();
-			Container::render();
+			renderChildren();
 		}
 
-		void Entity::setParent(Container * parent)
+		void Entity::setParent(Entity * parent)
 		{
 			this->parent = parent;
 			setProperty(ENTITY_PROPERTY_INIT, false);
 		}
 
-		Container& Entity::getParent() {
+		Entity& Entity::getParent() {
 			return *parent;
 		}
 
-		const Container& Entity::getParent() const {
+		const Entity& Entity::getParent() const {
 			return *parent;
+		}
+
+		bool Entity::hasParent() const
+		{
+			return parent == 0||parent==nullptr;
+		}
+
+		void Entity::addChild(Entity & e)
+		{
+			Container::addChild(e);
+			e.setParent(this);
 		}
 
 		Entity& Container::operator[](Index i) {
@@ -172,23 +181,6 @@ namespace mc {
 			return children.size();
 		}
 
-		void Container::update() {
-			updateChildren();
-		}
-
-		void Container::init() {
-			initChildren();
-		}
-
-		void Container::destroy() {
-			destroyChildren();
-		}
-
-		void Container::render()
-		{
-			renderChildren();
-		}
-
 		void Entity::kill() {
 			destroy();
 		}
@@ -199,21 +191,21 @@ namespace mc {
 					clean();
 				}
 				customUpdate();
-				Container::update();
+				updateChildren();
 			}
 		}
 
 		void Entity::init()
 		{
 			customInit();
-			Container::init();
+			initChildren();
 			setProperty(ENTITY_PROPERTY_INIT, true);
 		}
 
 		void Entity::destroy()
 		{
+			destroyChildren();
 			customDestroy();
-			Container::destroy();
 		}
 
 		Entity::Entity() :Container()
@@ -260,31 +252,28 @@ namespace mc {
 			properties.setBit(position, value);
 		}
 
-		EntityModule::EntityModule() :Container()
+		Transformation & Entity::getPrimaryTransformation()
 		{
+			return primaryTransformation;
 		}
 
-		std::string EntityModule::getName() const {
-			return "MC-Entity";
-		}
-
-		void EntityModule::init()
+		const Transformation & Entity::getPrimaryTransformation() const
 		{
-			Container::init();
+			return primaryTransformation;
 		}
 
-		void EntityModule::update() {
-			Container::update();
-		}
-
-		void EntityModule::destroy()
+		void Entity::setPrimaryTransformation(Transformation & trans)
 		{
-			Container::destroy();
+			primaryTransformation = trans;
+			setProperty(ENTITY_PROPERTY_DIRTY,true);
 		}
 
-		void EntityModule::render()
+		Matrix4f Entity::getFinalTransformation() const
 		{
-			Container::render();
+			//this isn't even my final form!
+			Matrix4f out = (primaryTransformation.get()*secondaryTransformation.get());
+			if (hasParent())out *= parent->getFinalTransformation();
+			return out;
 		}
 
 		bool Entity::operator==(Entity& other) const {

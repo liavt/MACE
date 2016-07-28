@@ -12,8 +12,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/System.h>
 #include <MC-Window/WindowModule.h>
 #include <MC-Graphics/Entity.h>
-#include <thread>
-#include <mutex>
 
 namespace mc {
 
@@ -22,25 +20,16 @@ namespace mc {
 	*/
 	namespace gfx{
 
-		class GraphicsModule : public mc::gfx::EntityModule {
-			win::Window* window;
-			
-			bool destroyed = false;
-
-			//threading
-			std::thread graphicsThread;
-			std::mutex mutex;
-			//this is called by the thread
-			void graphicsThreadCallback();
+		class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
+			SDL_GLContext context;
 		public:
-			GraphicsModule(win::Window* window);
+			OpenGLContext();
 
-			using EntityModule::EntityModule;
-
-			void init();
 			void update();
-			void destroy();
-			std::string getName() const;
+
+			void init(win::Window* win);
+			void render(win::Window* win);
+			void destroy(win::Window* win);
 		};
 	}
 }
