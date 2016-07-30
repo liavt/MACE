@@ -17,10 +17,15 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
-
-
 		//forward-defining class for friend declaration
 		class Entity;
+
+		class Action {
+		public:
+			virtual void init(Entity& e) = 0;
+			virtual bool update(Entity& e) = 0;
+			virtual void destroy(Entity& e) = 0;
+		};
 
 		/**
 		A class which holds an internal buffer of {@link Entity entities,} known as "children."
@@ -272,8 +277,9 @@ namespace mc {
 
    			ByteField properties = ENTITY_DEFAULT_PROPERTIES;
 
-			Transformation primaryTransformation=Transformation();
-			Transformation secondaryTransformation = Transformation();
+			TransformMatrix baseTransformation = TransformMatrix();
+
+			std::vector<Action*> actions = std::vector<Action*>();
 		public:
 
 			/**
@@ -344,13 +350,13 @@ namespace mc {
 			*/
 			void setProperty(Index position, bool value);
 
-			Transformation& getPrimaryTransformation();
-			const Transformation& getPrimaryTransformation() const;
-			void setPrimaryTransformation(Transformation& trans);
+			TransformMatrix& getBaseTransformation();
+			const TransformMatrix& getBaseTransformation() const;
+			void setBaseTransformation(TransformMatrix& trans);
 
-			Transformation& getSecondaryTransformation();
-			const Transformation& getSecondaryTransformation() const;
-			void setSecondaryTransformation();
+			Entity& translate(float x, float y, float z);
+			Entity& rotate(float x, float y, float z);
+			Entity& scale(float x, float y, float z);
 
 			Matrix4f getFinalTransformation() const;
 			
@@ -399,6 +405,8 @@ namespace mc {
 			*/
 			void kill();
 
+			void addAction(Action& action);
+			std::vector<Action*> getActions();
 		protected:
 			/**
 			When `Container.update()` is called, `customUpdate()` is called on all of it's children.

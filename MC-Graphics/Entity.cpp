@@ -29,7 +29,7 @@ namespace mc {
 				if (children[i]->getProperty(ENTITY_PROPERTY_DEAD)) {
 					children[i]->kill();
 					removeChild(i);
-					i--;//update the index after the removal of an element
+					i--;//update the index after the removal of an element, dont want an error
 					return;
 				}
 				children[i]->update();
@@ -129,7 +129,7 @@ namespace mc {
 
 		bool Entity::hasParent() const
 		{
-			return parent == 0||parent==nullptr;
+			return parent != 0||parent!=nullptr;
 		}
 
 		void Entity::addChild(Entity & e)
@@ -185,11 +185,32 @@ namespace mc {
 			destroy();
 		}
 
+		void Entity::addAction(Action & action)
+		{
+			actions.push_back(&action);
+			action.init(*this);
+		}
+
+		std::vector<Action*> Entity::getActions()
+		{
+			return actions;
+		}
+
 		void Entity::update() {
 			if (getProperty(ENTITY_PROPERTY_UPDATE_ENABLED)) {
 				if (getProperty(ENTITY_PROPERTY_DIRTY)) {
 					clean();
 				}
+
+				for (Index i = 0; i < actions.size();i++) {
+					Action* a = actions.at(i);
+					if (a->update(*this)) {
+						a->destroy(*this);
+						actions.erase(actions.begin() + i);
+						i--;//update the index after a removal
+					}
+				}
+
 				customUpdate();
 				updateChildren();
 			}
@@ -204,6 +225,10 @@ namespace mc {
 
 		void Entity::destroy()
 		{
+			for (Index i = 0; i < actions.size();i++) {
+				actions[i]->destroy(*this);
+			}
+			actions.clear();
 			destroyChildren();
 			customDestroy();
 		}
@@ -252,26 +277,44 @@ namespace mc {
 			properties.setBit(position, value);
 		}
 
-		Transformation & Entity::getPrimaryTransformation()
+		TransformMatrix & Entity::getBaseTransformation()
 		{
-			return primaryTransformation;
+			return baseTransformation;
 		}
 
-		const Transformation & Entity::getPrimaryTransformation() const
+		const TransformMatrix & Entity::getBaseTransformation() const
 		{
-			return primaryTransformation;
+			return baseTransformation;
 		}
 
-		void Entity::setPrimaryTransformation(Transformation & trans)
+		void Entity::setBaseTransformation(TransformMatrix & trans)
 		{
-			primaryTransformation = trans;
+			baseTransformation = trans;
 			setProperty(ENTITY_PROPERTY_DIRTY,true);
+		}
+
+		Entity & Entity::translate(float x, float y, float z)
+		{
+			baseTransformation.translate(x,y,z);
+			return *this;
+		}
+
+		Entity & Entity::rotate(float x, float y, float z)
+		{
+			baseTransformation.rotate(x, y, z);
+			return *this;
+		}
+
+		Entity & Entity::scale(float x, float y, float z)
+		{
+			baseTransformation.scale(x, y, z);
+			return *this;
 		}
 
 		Matrix4f Entity::getFinalTransformation() const
 		{
 			//this isn't even my final form!
-			Matrix4f out = (primaryTransformation.get()*secondaryTransformation.get());
+			Matrix4f out = baseTransformation.get();
 			if (hasParent())out *= parent->getFinalTransformation();
 			return out;
 		}
@@ -281,6 +324,12 @@ namespace mc {
 				return false;
 			}
 			if (&other.getParent() != &getParent()) {
+				return false;
+			}
+			if (other.getBaseTransformation() != getBaseTransformation()) {
+				return false;
+			}
+			if (other.actions!=actions) {
 				return false;
 			}
 			return Container::operator==(other);

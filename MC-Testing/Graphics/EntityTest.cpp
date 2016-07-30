@@ -40,6 +40,28 @@ namespace mc{
 			}
 		};
 
+		class DummyAction : public mc::gfx::Action {
+		public:
+			int updates;
+			bool destroySelf = false;
+			bool isInit = false;
+			bool destroyed = false;
+			
+			void init(Entity& e) {
+				isInit = true;
+			}
+
+			bool update(Entity& e) {
+				updates++;
+				if (destroySelf)return true;
+				else return false;
+			}
+
+			void destroy(Entity& e) {
+				destroyed = true;
+			}
+		};
+
 		Container c = Container();
 
 		TEST_CASE("Testing the transformations","[entity][system]") {
@@ -50,12 +72,22 @@ namespace mc{
 
 			e.addChild(e2);
 
-			SECTION("Base Transformation") {
-				Transformation t = e.getPrimaryTransformation();
-				t.translate(1, 1, 1);
+			SECTION("Base TransformMatrix") {
+				e.translate(1, 1, 1);
 
 				Vector4f v = {1,1,2,1};
 				REQUIRE(e.getFinalTransformation()*v == Vector4f({2,2,3,1}));
+			}
+
+			e.getBaseTransformation().reset();
+
+			SECTION("Inherited transformation") {
+				e.translate(2,3,1);
+				REQUIRE(e2.getFinalTransformation()*Vector4f({ 1,2,3,1 }) == Vector4f({3,5,4,1}));
+				
+				e2.translate(1, 2, 3);
+				REQUIRE(e2.getFinalTransformation()*Vector4f({ 1,2,3,1 }) == Vector4f({ 4,7,7,1 }));
+
 			}
 
 			c.clearChildren();
@@ -66,16 +98,28 @@ namespace mc{
 			DummyEntity e = DummyEntity();
 			DummyEntity e2 = DummyEntity();
 
+			REQUIRE_FALSE(e.hasParent());
+			REQUIRE_FALSE(e2.hasParent());
+
 			c.addChild(e);
+
+			SECTION("hasParent()") {
+				REQUIRE_FALSE(e.hasParent());
+				REQUIRE_FALSE(e2.hasParent());
+			}
 
 			e.addChild(e2);
 
 			SECTION("Checking whether it recognizes the parent"){
-
+				REQUIRE_FALSE(e.hasParent());
+				REQUIRE_FALSE(e.hasParent());
 				REQUIRE(e2.getParent()==e);
 			}
 
 			c.clearChildren();
+
+			REQUIRE_FALSE(e.hasParent());
+			REQUIRE(e2.hasParent());
 
 		}
 	
@@ -132,7 +176,45 @@ namespace mc{
 	
 		}
 
-		TEST_CASE("Testing init()","[entity][system") {
+		TEST_CASE("Testing actions","[entity][system]") {
+			DummyAction a = DummyAction();
+			DummyEntity e = DummyEntity();
+			Container c = Container();
+
+			SECTION("Testing default values") {
+				REQUIRE_FALSE(a.isInit);
+				REQUIRE_FALSE(a.destroyed);
+				REQUIRE(a.updates==0);
+				REQUIRE_FALSE(a.destroySelf);
+			}
+
+			e.addAction(a);
+			c.addChild(e);
+
+			SECTION("Testing if it gets init") {
+				REQUIRE(a.isInit);
+			}
+
+			SECTION("Testing update") {
+				for (Index i = 0; i < 10; i++) {
+					REQUIRE(a.updates==i);
+					c.updateChildren();
+				}
+			}
+
+			SECTION("Testing destruction") {
+				a.destroySelf = true;
+				c.updateChildren();
+				REQUIRE(a.destroyed);
+			}
+
+			c.clearChildren();
+
+
+
+		}
+
+		TEST_CASE("Testing init()","[entity][system]") {
 
 			DummyEntity e = DummyEntity();
 			c.addChild(e);
