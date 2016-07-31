@@ -35,6 +35,9 @@ namespace mc {
 
 		void WindowModule::setContext(GraphicsContext * con)
 		{
+			if(System::getFlag(SYSTEM_FLAG_INIT)){
+				throw InitializationError("Cannot set a GraphicsContext after init() has been called!");
+			}
 			context = con;
 		}
 

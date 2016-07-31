@@ -12,9 +12,14 @@ The above copyright notice and this permission notice shall be included in all c
 #include <iostream>
 #include <mutex>
 #include <GL/glew.h>
+#include <MC-System/Exceptions.h>
+#include <MC-Graphics/Renderer.h>
 
 namespace mc {
 	namespace gfx{
+		std::vector<Index> Loader::vaos = std::vector<Index>();
+		std::vector<Index> Loader::vbos = std::vector<Index>();
+
 		OpenGLContext::OpenGLContext() : Container(),GraphicsContext()
 		{
 
@@ -37,7 +42,44 @@ namespace mc {
 		{
 			context = SDL_GL_CreateContext(win->getSDLWindow());
 			SDL_GL_MakeCurrent(win->getSDLWindow(),context);
+
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+			SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
+
+			const GLenum result = glewInit();
+			if (result != GLEW_OK)
+			{
+				throw mc::InitializationError("GLEW failed to initialize with result "+std::to_string(result));
+			}
+
+			if (GLEW_VERSION_1_1)
+			{
+				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+				std::cout << "OpenGL has been created succesfully!" << std::endl;
+				std::cout << "Version: "<<std::endl<<"	"<<glGetString(GL_VERSION) << std::endl;
+				std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
+				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
+				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+			}
+			else
+			{
+				throw InitializationError("Error retrieving GLEW version!");
+			}
+
+			if (!GLEW_VERSION_3_1)
+			{
+				throw InitializationError("OpenGL 3 is not available!");
+			}
+
+			Renderer::init();
+
 			initChildren();
+
 		}
 
 		void OpenGLContext::render(win::Window* win) {
@@ -50,7 +92,41 @@ namespace mc {
 
 		void OpenGLContext::destroy(win::Window* win) {
 			destroyChildren();
+			Renderer::destroy();
+			Loader::destroy();
 			SDL_GL_DeleteContext(context);
 		}
-	}
+		Index Loader::createVAO()
+		{
+			Index id;
+			glGenVertexArrays(1,&id);
+			vaos.push_back(id);
+			return id;
+		}
+		void Loader::bindVAO(const Index id)
+		{
+			glBindVertexArray(id);
+		}
+		void Loader::unbindVAO()
+		{
+			glBindVertexArray(0);
+		}
+		void Loader::destroy()
+		{
+			/*
+			for (Index i : vbos) {
+				glDeleteBuffers(i);
+			}
+			for (Index i : vaos) {
+				glDeleteVertexArrays(i);
+			}*/
+
+		}
+		void Renderer::init()
+		{
+		}
+		void Renderer::destroy()
+		{
+		}
+}
 }
