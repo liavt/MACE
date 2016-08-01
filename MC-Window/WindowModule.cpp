@@ -52,42 +52,47 @@ namespace mc {
 		}
 
 		void WindowModule::threadCallback() {
-			std::mutex mutex;
-			std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-		//	guard.lock();
-			window->create();
+			try {
+				std::mutex mutex;
+				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+			//	guard.lock();
+				window->create();
 
-			if(context!=0)context->init(window);
-			guard.unlock();
+				if (context != 0)context->init(window);
+				guard.unlock();
 
-			bool isRunning = true;
+				bool isRunning = true;
 
-			//this is the main rendering loop.
-			while (isRunning) {
+				//this is the main rendering loop.
+				while (isRunning) {
 
-				//thread doesn't own window, so we have to lock the mutex
+					//thread doesn't own window, so we have to lock the mutex
+					guard.lock();
+					if (window->poll()) {
+						System::requestStop();
+					}
+
+					if (context != 0) {
+						context->render(window);
+					}
+
+					if (destroyed) {
+						isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
+					}
+					guard.unlock();//unlock it so other threads can use it
+
+					SDL_Delay(10);
+				}
+
 				guard.lock();
-				if (window->poll()){
-					System::requestStop();
-				}
+				if (context != 0)context->destroy(window);
 
-				if(context!=0){
-					context->render(window);
-				}
-
-				if (destroyed) {
-					isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
-				}
-				guard.unlock();//unlock it so other threads can use it
-
-				SDL_Delay(10);
+				window->destroy();
+				guard.unlock();//just in case this function becomes inline for some reason
 			}
-
-			guard.lock();
-			if(context!=0)context->destroy(window);
-
-			window->destroy();
-			guard.unlock();//just in case this function becomes inline for some reason
+			catch (const std::exception& e) {
+				Exception::handleException(e);
+			}
 		}
 
 		WindowModule::WindowModule(Window* win) {

@@ -22,6 +22,9 @@ namespace mc {
 	*/
 	namespace gfx{
 
+		void checkGLError();
+		void throwShaderError(const Index& shaderId,const GLenum& type);
+
 		struct RawModel {
 			Index vaoID;
 			Size vertexNumber;
@@ -29,37 +32,39 @@ namespace mc {
 			//RawModel(Index vaoID);
 		};
 
+		class ShaderProgram {
+			Index id;
+			Index fragId, vertId;
+
+			Index createShader( const std::string& code, const GLenum& type);
+
+		public:
+			ShaderProgram();
+			~ShaderProgram();
+
+			void init();
+			void bind();
+			void unbind();
+
+			void createFragment(const std::string& shader);
+			void createVertex(const std::string& shader);
+
+		};
+
 		class Loader {
 			//prevent initialization
 			Loader();
 
-			static std::vector<Index> vaos, vbos;
-
 			static Index createVAO();
 
-			static void storeDataInAttributeList(const Index attributeNumber,const Size verticeSize,const GLfloat data[]) {
-				Index vboID;
-				glGenBuffers(1,&vboID);
-				vbos.push_back(vboID);
-				glBindBuffer(GL_ARRAY_BUFFER,vboID);
-				glVertexAttribPointer(attributeNumber,verticeSize,GL_FLOAT,GL_FALSE ,0,0);
-				glBufferData(GL_ARRAY_BUFFER,verticeSize,data,GL_STATIC_DRAW);
-			}
+			static void storeDataInAttributeList(const Index& attributeNumber, const Size& verticeSize, const GLfloat data[]);
 
 		public:
 
-			static void bindVAO(const Index id);
+			static void bindVAO(const Index& id);
 			static void unbindVAO();
 
-			static RawModel load(const Size verticeSize, const GLfloat vertices[]) {
-				RawModel out = RawModel();
-				out.vaoID = createVAO();
-				out.vertexNumber = verticeSize;
-				bindVAO(out.vaoID);
-				storeDataInAttributeList(0,out.vertexNumber,vertices);
-				unbindVAO();
-				return	out;
-			}
+			static RawModel load(const Size& verticeSize, const GLfloat vertices[]);
 
 			static void destroy();
 		};

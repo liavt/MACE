@@ -13,6 +13,14 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
+		struct GLError : public Exception {
+			using Exception::Exception;
+		};
+
+		struct GLSLError : public Exception {
+			using Exception::Exception;
+		};
+
 		//values defining which bit in a byte every propety is, or how much to bit shift it
 		/**
 		Bit location representing whether an `Entity` is dead.

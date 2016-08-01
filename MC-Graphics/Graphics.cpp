@@ -11,14 +11,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <thread>
 #include <iostream>
 #include <mutex>
-#include <GL/glew.h>
+#include <GL/GLEW.h>
 #include <MC-System/Exceptions.h>
-#include <MC-Graphics/Renderer.h>
 
 namespace mc {
 	namespace gfx{
-		std::vector<Index> Loader::vaos = std::vector<Index>();
-		std::vector<Index> Loader::vbos = std::vector<Index>();
 
 		OpenGLContext::OpenGLContext() : Container(),GraphicsContext()
 		{
@@ -76,6 +73,8 @@ namespace mc {
 				throw InitializationError("OpenGL 3 is not available!");
 			}
 
+			checkGLError();
+
 			Renderer::init();
 
 			initChildren();
@@ -96,16 +95,56 @@ namespace mc {
 			Loader::destroy();
 			SDL_GL_DeleteContext(context);
 		}
+		void Loader::storeDataInAttributeList(const Index& attributeNumber, const Size& componentSize, const GLfloat data[])
+		{
+			
+			Index vboID;
+			glGenBuffers(1, &vboID);
+
+			glBindBuffer(GL_ARRAY_BUFFER, vboID);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+
+			checkGLError();
+		}
 		Index Loader::createVAO()
 		{
 			Index id;
-			glGenVertexArrays(1,&id);
-			vaos.push_back(id);
+			glGenVertexArrays(1, &id);
+			checkGLError();
 			return id;
 		}
-		void Loader::bindVAO(const Index id)
+		void Loader::bindVAO(const Index& id)
 		{
 			glBindVertexArray(id);
+
+		}
+		RawModel Loader::load(const Size& verticeSize, const GLfloat vertices[])
+		{
+
+			Index VertexArrayID, vertexbuffer;
+
+			glGenVertexArrays(1, &VertexArrayID);//
+			glBindVertexArray(VertexArrayID);//
+
+											 // Generate 1 buffer, put the resulting identifier in vertexbuffer
+			glGenBuffers(1, &vertexbuffer);//
+										   // The following commands will talk about our 'vertexbuffer' buffer
+			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);//
+														// Give our vertices to OpenGL.
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);//
+			gfx::checkGLError();//
+
+			glBindVertexArray(0);
+
+			return	{VertexArrayID,3};
+			/*
+			RawModel out = RawModel();
+			out.vaoID = createVAO();
+			out.vertexNumber = verticeSize;
+			bindVAO(out.vaoID);
+			storeDataInAttributeList(0, out.vertexNumber, vertices);
+			unbindVAO();
+			return	out;*/
 		}
 		void Loader::unbindVAO()
 		{
@@ -127,6 +166,125 @@ namespace mc {
 		}
 		void Renderer::destroy()
 		{
+		}
+		Index ShaderProgram::createShader( const std::string& code, const  GLenum& type)
+		{
+			const Index shaderId = glCreateShader(type);
+
+			checkGLError();
+
+			if (shaderId == 0) {
+				throwShaderError(shaderId,type);
+			}
+
+			glShaderSource(shaderId, 1,(const GLchar**)&code,0);
+			glCompileShader(shaderId);
+
+			GLint result = -1;
+			glGetShaderiv(shaderId, GL_COMPILE_STATUS, &result);
+			if (result == 0) {
+				throwShaderError(shaderId,type);
+			}
+
+			glAttachShader(id, shaderId);
+
+			return shaderId;
+		}
+		ShaderProgram::ShaderProgram()
+		{
+			id = glCreateProgram();
+			checkGLError();
+			if (id == 0) {
+				throwShaderError(id, GL_PROGRAM);
+			}
+		}
+		ShaderProgram::~ShaderProgram()
+		{
+			unbind();
+			if (id != 0) {
+				if (vertId != 0) {
+					glDetachShader(id, vertId);
+				}
+				if (fragId != 0) {
+					glDetachShader(id, fragId);
+				}
+				glDeleteProgram(id);
+			}
+		}
+		void ShaderProgram::init()
+		{
+			glLinkProgram(id);
+
+			GLint result = -1;
+			glGetProgramiv(id, GL_LINK_STATUS, &result);
+			if (result == 0) {
+				throwShaderError(id,GL_PROGRAM);
+			}
+
+			checkGLError();
+
+			glValidateProgram(id);
+
+			glGetProgramiv(id, GL_VALIDATE_STATUS, &result);
+			if (result == 0) {
+				throwShaderError(id, GL_PROGRAM);
+			}
+		}
+		void ShaderProgram::bind()
+		{
+			glUseProgram(id);
+		}
+		void ShaderProgram::unbind()
+		{
+			glUseProgram(0);
+		}
+		void ShaderProgram::createFragment(const std::string & shader)
+		{
+			fragId = createShader(shader,GL_FRAGMENT_SHADER);
+		}
+		void ShaderProgram::createVertex(const std::string & shader)
+		{
+			vertId = createShader(shader, GL_VERTEX_SHADER);
+		}
+		void checkGLError()
+		{
+			GLenum result = GL_NO_ERROR;
+			while ((result = glGetError()) != GL_NO_ERROR) {
+				switch (result) {
+				case GL_INVALID_ENUM:
+					throw GLError("GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
+					break;
+				case GL_INVALID_VALUE:
+					throw GLError("GL_INVALID_VALUE! A numeric argument is out of range!");
+					break;
+				case GL_INVALID_OPERATION:
+					throw GLError("GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
+					break;
+				case GL_INVALID_FRAMEBUFFER_OPERATION:
+					throw GLError("GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
+					break;
+				case GL_STACK_OVERFLOW:
+					throw GLError("GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
+					break;
+				case GL_STACK_UNDERFLOW:
+					throw GLError("GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
+					break;
+				case GL_OUT_OF_MEMORY:
+					throw GLError("GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
+					break;
+				default:
+					throw GLError("OpenGL has errored with an error code of " + std::to_string(result));
+					break;
+				}
+			}
+		}
+		void throwShaderError(const Index& shaderId,const GLenum& type)
+		{
+			GLchar* log_string = new char[126];
+			glGetShaderInfoLog(shaderId, 126, 0, log_string);
+			const std::string outMessage = "Error generating shader of type " + std::to_string(type) + " with code " + log_string;
+			delete log_string;
+			throw GLError(outMessage);
 		}
 }
 }
