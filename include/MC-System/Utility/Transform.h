@@ -13,6 +13,13 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace math {
+		/**
+		Creates a rotation matrix, which when multiplied by a `Vector4f`, rotates it.
+		@param x Rotation in radians around the X axis
+		@param y Rotation in radians around the Y axis
+		@param z Rotation in radians around the Z axis
+		@return A rotation `Matrix4f`
+		*/
 		Matrix4f rotate(const float x, const float y, const float z);
 		Matrix4f rotate(const Matrix4f m, const float x, const float y, const float z);
 
@@ -33,12 +40,13 @@ namespace mc {
 
 		Matrix4f projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
 	}
-	struct Transformation{
-		Transformation();
+	struct TransformMatrix{
+		TransformMatrix();
 
-		Transformation& translate(const float x, const float y, const float z);
-		Transformation& rotate(const float x, const float y, const float z);
-		Transformation& scale(const float x, const float y, const float z);
+		TransformMatrix& translate(const float x, const float y, const float z);
+		TransformMatrix& rotate(const float x, const float y, const float z);
+		TransformMatrix& scale(const float x, const float y, const float z);
+		TransformMatrix& reset();
 
 		Matrix4f get() const;
 
@@ -53,6 +61,9 @@ namespace mc {
 		void setRotation(Vector3f& newVector);
 		void setTranslation(Vector3f& newVector);
 		void setScale(Vector3f& newVector);
+
+		bool operator==(const TransformMatrix& other);
+		bool operator!=(const TransformMatrix& other);
 	private:
 		Vector3f translation;
 		Vector3f rotation;

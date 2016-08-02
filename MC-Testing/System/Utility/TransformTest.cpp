@@ -14,5 +14,23 @@ TEST_CASE("Testing transformation matrixes") {
 		REQUIRE(result[3]==1);
 	}
 }
+
+TEST_CASE("Testing transformation class") {
+	TransformMatrix t = TransformMatrix();
+	SECTION("Testing default values") {
+		Vector4f v = {5,-1,0,1};
+		REQUIRE(t.get()*v==v);
+	}
+	SECTION("Testing translation") {
+		Vector4f v = {5,-1,0,1};
+		t.translate(1, 2, 3);
+		REQUIRE(t.get()*v == Vector4f({6,1,3,1}));
+	}
+	SECTION("Testing reset") {
+		t.reset();
+		Vector4f v = { 5,-1,0,1 };
+		REQUIRE(t.get()*v == v);
+	}
+}
 }
 }

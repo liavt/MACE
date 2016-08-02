@@ -98,7 +98,7 @@ Matrix4f math::projection(const float FOV, const float NEAR_PLANE, const float F
 
 	return projectionMatrix;
 }
-Transformation::Transformation()
+TransformMatrix::TransformMatrix()
 {
 	translation = {0,0,0};
 	rotation = { 0,0,0 };
@@ -106,28 +106,33 @@ Transformation::Transformation()
 
 
 }
-Transformation & Transformation::translate(const float x, const float y, const float z)
+TransformMatrix & TransformMatrix::translate(const float x, const float y, const float z)
 {
 	translation[0] += x;
 	translation[1] += y;
 	translation[2] += z;
 	return *this;
 }
-Transformation & Transformation::rotate(const float x, const float y, const float z)
+TransformMatrix & TransformMatrix::rotate(const float x, const float y, const float z)
 {
 	rotation[0] += x;
 	rotation[1] += y;
 	rotation[2] += z;
 	return *this;
 }
-Transformation & Transformation::scale(const float x, const float y, const float z)
+TransformMatrix & TransformMatrix::scale(const float x, const float y, const float z)
 {
 	scaler[0] += x;
 	scaler[1] += y;
 	scaler[2] += z;
 	return *this;
 }
-Matrix4f Transformation::get() const
+TransformMatrix & TransformMatrix::reset()
+{
+	TransformMatrix();
+	return *this;
+}
+Matrix4f TransformMatrix::get() const
 {
 	Matrix4f out = math::identity<float,4>();
 	out *= math::translate(translation[0], translation[1], translation[2]);
@@ -135,40 +140,48 @@ Matrix4f Transformation::get() const
 	out *= math::scale(scaler[0], scaler[1], scaler[2]);
 	return out;
 }
-Vector3f & Transformation::getRotation()
+Vector3f & TransformMatrix::getRotation()
 {
 	return rotation;
 }
-Vector3f & Transformation::getTranslation()
+Vector3f & TransformMatrix::getTranslation()
 {
 	return translation;
 }
-Vector3f & Transformation::getScale()
+Vector3f & TransformMatrix::getScale()
 {
 	return scaler;
 }
-const Vector3f & Transformation::getRotation() const
+const Vector3f & TransformMatrix::getRotation() const
 {
 	return rotation;
 }
-const Vector3f & Transformation::getTranslation() const
+const Vector3f & TransformMatrix::getTranslation() const
 {
 	return translation;
 }
-const Vector3f & Transformation::getScale() const
+const Vector3f & TransformMatrix::getScale() const
 {
 	return scaler;
 }
-void Transformation::setRotation(Vector3f & newVector)
+void TransformMatrix::setRotation(Vector3f & newVector)
 {
 	rotation = newVector;
 }
-void Transformation::setTranslation(Vector3f & newVector)
+void TransformMatrix::setTranslation(Vector3f & newVector)
 {
 	translation = newVector;
 }
-void Transformation::setScale(Vector3f & newVector)
+void TransformMatrix::setScale(Vector3f & newVector)
 {
 	scaler = newVector;
+}
+bool TransformMatrix::operator==(const TransformMatrix & other)
+{
+	return other.translation==translation&&other.rotation==rotation&&other.scaler==scaler;
+}
+bool TransformMatrix::operator!=(const TransformMatrix & other)
+{
+	return !(*this==other);
 }
 }
