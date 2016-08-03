@@ -19,7 +19,7 @@ namespace mc {
 
 		//forward-defining class for friend declaration
 		class Entity;
-
+		
 		class Action {
 		public:
 			virtual void init(Entity& e) = 0;

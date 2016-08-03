@@ -23,21 +23,35 @@ namespace mc {
 	namespace gfx{
 
 		void checkGLError();
-		void throwShaderError(const Index& shaderId,const GLenum& type);
+		void throwShaderError(const Index& shaderId,const GLenum& type,const std::string& message);
+		void throwShaderError(const Index& shaderId, const GLenum& type);
 
-		struct RawModel {
+		class RawModel {
+		public:
 			Index vaoID;
 			Size vertexNumber;
 
+			void bind();
+			void unbind();
+
+			void destroy();
+
+			void load(const Size& verticeSize, const GLfloat vertices[]);
+
+
 			//RawModel(Index vaoID);
+		private:
+			Index createVAO();
+			void storeDataInAttributeList(const Index& attributeNumber, const Size& verticeSize, const GLfloat data[]);
 		};
 
 		class ShaderProgram {
-			Index id;
-			Index fragId, vertId;
+			Index id=-1;
+			Index fragId=-1, vertId=-1;
 
 			Index createShader( const std::string& code, const GLenum& type);
 
+			void createProgram();
 		public:
 			ShaderProgram();
 			~ShaderProgram();
@@ -49,24 +63,6 @@ namespace mc {
 			void createFragment(const std::string& shader);
 			void createVertex(const std::string& shader);
 
-		};
-
-		class Loader {
-			//prevent initialization
-			Loader();
-
-			static Index createVAO();
-
-			static void storeDataInAttributeList(const Index& attributeNumber, const Size& verticeSize, const GLfloat data[]);
-
-		public:
-
-			static void bindVAO(const Index& id);
-			static void unbindVAO();
-
-			static RawModel load(const Size& verticeSize, const GLfloat vertices[]);
-
-			static void destroy();
 		};
 
 		class Renderer {
@@ -82,6 +78,7 @@ namespace mc {
 
 		class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
 			SDL_GLContext context;
+
 		public:
 			OpenGLContext();
 
@@ -90,6 +87,7 @@ namespace mc {
 			void init(win::Window* win);
 			void render(win::Window* win);
 			void destroy(win::Window* win);
+
 		};
 	}
 }

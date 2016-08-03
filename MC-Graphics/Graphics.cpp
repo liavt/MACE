@@ -92,74 +92,7 @@ namespace mc {
 		void OpenGLContext::destroy(win::Window* win) {
 			destroyChildren();
 			Renderer::destroy();
-			Loader::destroy();
 			SDL_GL_DeleteContext(context);
-		}
-		void Loader::storeDataInAttributeList(const Index& attributeNumber, const Size& componentSize, const GLfloat data[])
-		{
-			
-			Index vboID;
-			glGenBuffers(1, &vboID);
-
-			glBindBuffer(GL_ARRAY_BUFFER, vboID);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
-
-			checkGLError();
-		}
-		Index Loader::createVAO()
-		{
-			Index id;
-			glGenVertexArrays(1, &id);
-			checkGLError();
-			return id;
-		}
-		void Loader::bindVAO(const Index& id)
-		{
-			glBindVertexArray(id);
-
-		}
-		RawModel Loader::load(const Size& verticeSize, const GLfloat vertices[])
-		{
-
-			Index VertexArrayID, vertexbuffer;
-
-			glGenVertexArrays(1, &VertexArrayID);//
-			glBindVertexArray(VertexArrayID);//
-
-											 // Generate 1 buffer, put the resulting identifier in vertexbuffer
-			glGenBuffers(1, &vertexbuffer);//
-										   // The following commands will talk about our 'vertexbuffer' buffer
-			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);//
-														// Give our vertices to OpenGL.
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);//
-			gfx::checkGLError();//
-
-			glBindVertexArray(0);
-
-			return	{VertexArrayID,3};
-			/*
-			RawModel out = RawModel();
-			out.vaoID = createVAO();
-			out.vertexNumber = verticeSize;
-			bindVAO(out.vaoID);
-			storeDataInAttributeList(0, out.vertexNumber, vertices);
-			unbindVAO();
-			return	out;*/
-		}
-		void Loader::unbindVAO()
-		{
-			glBindVertexArray(0);
-		}
-		void Loader::destroy()
-		{
-			/*
-			for (Index i : vbos) {
-				glDeleteBuffers(i);
-			}
-			for (Index i : vaos) {
-				glDeleteVertexArrays(i);
-			}*/
-
 		}
 		void Renderer::init()
 		{
@@ -169,12 +102,13 @@ namespace mc {
 		}
 		Index ShaderProgram::createShader( const std::string& code, const  GLenum& type)
 		{
+			if (id == -1)createProgram();
 			const Index shaderId = glCreateShader(type);
 
 			checkGLError();
 
 			if (shaderId == 0) {
-				throwShaderError(shaderId,type);
+				throwShaderError(shaderId,type,"Failed to retrieve shader ID");
 			}
 
 			glShaderSource(shaderId, 1,(const GLchar**)&code,0);
@@ -183,20 +117,23 @@ namespace mc {
 			GLint result = -1;
 			glGetShaderiv(shaderId, GL_COMPILE_STATUS, &result);
 			if (result == 0) {
-				throwShaderError(shaderId,type);
+				throwShaderError(shaderId,type,"Shader failed to compile");
 			}
 
 			glAttachShader(id, shaderId);
 
 			return shaderId;
 		}
-		ShaderProgram::ShaderProgram()
+		void ShaderProgram::createProgram()
 		{
 			id = glCreateProgram();
 			checkGLError();
 			if (id == 0) {
-				throwShaderError(id, GL_PROGRAM);
+				throwShaderError(id, GL_PROGRAM,"Failed to retrieve program ID");
 			}
+		}
+		ShaderProgram::ShaderProgram()
+		{
 		}
 		ShaderProgram::~ShaderProgram()
 		{
@@ -210,15 +147,18 @@ namespace mc {
 				}
 				glDeleteProgram(id);
 			}
+			checkGLError();
 		}
 		void ShaderProgram::init()
 		{
+			if (id == -1)createProgram();
+
 			glLinkProgram(id);
 
 			GLint result = -1;
 			glGetProgramiv(id, GL_LINK_STATUS, &result);
 			if (result == 0) {
-				throwShaderError(id,GL_PROGRAM);
+				throwShaderError(id,GL_PROGRAM,"The shader program was unable to link with result "+std::to_string(result));
 			}
 
 			checkGLError();
@@ -227,7 +167,7 @@ namespace mc {
 
 			glGetProgramiv(id, GL_VALIDATE_STATUS, &result);
 			if (result == 0) {
-				throwShaderError(id, GL_PROGRAM);
+				throwShaderError(id, GL_PROGRAM,"The shader program failed validation." + std::to_string(result));
 			}
 		}
 		void ShaderProgram::bind()
@@ -278,13 +218,77 @@ namespace mc {
 				}
 			}
 		}
-		void throwShaderError(const Index& shaderId,const GLenum& type)
+		void throwShaderError(const Index& shaderId,const GLenum& type, const std::string& message)
 		{
-			GLchar* log_string = new char[126];
-			glGetShaderInfoLog(shaderId, 126, 0, log_string);
-			const std::string outMessage = "Error generating shader of type " + std::to_string(type) + " with code " + log_string;
-			delete log_string;
-			throw GLError(outMessage);
+			if(type==0||type==GL_PROGRAM){
+				throw ShaderError("Error generating shader program with message \""+message+"\"");
+			}
+			else {
+				std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
+				glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
+				std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
+				if (type == GL_VERTEX_SHADER) {
+					friendlyType = "VERTEX";
+				}else if (type == GL_FRAGMENT_SHADER) {
+					friendlyType = "FRAGMENT";
+				}else if (type == GL_COMPUTE_SHADER) {
+					friendlyType = "COMPUTE";
+				}else if (type == GL_GEOMETRY_SHADER) {
+					friendlyType = "GEOMETERY";
+				}
+				throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
+			}
+		}
+		void throwShaderError(const Index & shaderId, const GLenum & type)
+		{
+			throwShaderError(shaderId, type, "No message was specified");
+		}
+		void RawModel::bind()
+		{
+			glBindVertexArray(vaoID);
+		}
+		void RawModel::unbind()
+		{
+			glBindVertexArray(0);
+		}
+		void RawModel::destroy()
+		{
+		}
+		void RawModel::load(const Size & verticeSize, const GLfloat vertices[])
+		{
+			vaoID = createVAO();
+			vertexNumber = verticeSize;
+
+			
+			bind();
+			storeDataInAttributeList(0,vertexNumber,vertices);
+			unbind();
+		}
+		Index RawModel::createVAO()
+		{
+			Index id;
+			glGenVertexArrays(1, &id);
+			checkGLError();
+			return id;
+		}
+		void RawModel::storeDataInAttributeList(const Index & attributeNumber, const Size & verticeSize, const GLfloat data[])
+		{
+			Index vboID;
+			// Generate 1 buffer, put the resulting identifier in vertexbuffer
+			glGenBuffers(1, &vboID);//
+										   // The following commands will talk about our 'vertexbuffer' buffer
+			glBindBuffer(GL_ARRAY_BUFFER, vboID);//
+														// Give our vertices to OpenGL.
+			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(3 * verticeSize), data, GL_STATIC_DRAW);//
+			gfx::checkGLError();//
+
+			glVertexAttribPointer(attributeNumber, verticeSize, GL_FLOAT, false, 0, 0);
+
+			glEnableVertexAttribArray(0);
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, vboID);//
+			checkGLError();
 		}
 }
 }

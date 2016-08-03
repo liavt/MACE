@@ -17,7 +17,7 @@ namespace mc {
 			using Exception::Exception;
 		};
 
-		struct GLSLError : public Exception {
+		struct ShaderError : public Exception {
 			using Exception::Exception;
 		};
 
