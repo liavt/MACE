@@ -22,49 +22,6 @@ namespace mc {
 	*/
 	namespace gfx{
 
-		void checkGLError();
-		void throwShaderError(const Index& shaderId,const GLenum& type,const std::string& message);
-		void throwShaderError(const Index& shaderId, const GLenum& type);
-
-		class RawModel {
-		public:
-			Index vaoID;
-			Size vertexNumber;
-
-			void bind();
-			void unbind();
-
-			void destroy();
-
-			void load(const Size& verticeSize, const GLfloat vertices[]);
-
-
-			//RawModel(Index vaoID);
-		private:
-			Index createVAO();
-			void storeDataInAttributeList(const Index& attributeNumber, const Size& verticeSize, const GLfloat data[]);
-		};
-
-		class ShaderProgram {
-			Index id=-1;
-			Index fragId=-1, vertId=-1;
-
-			Index createShader( const std::string& code, const GLenum& type);
-
-			void createProgram();
-		public:
-			ShaderProgram();
-			~ShaderProgram();
-
-			void init();
-			void bind();
-			void unbind();
-
-			void createFragment(const std::string& shader);
-			void createVertex(const std::string& shader);
-
-		};
-
 		class Renderer {
 			//prevent intializations
 			Renderer();

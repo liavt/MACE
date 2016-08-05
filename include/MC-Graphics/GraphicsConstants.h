@@ -9,6 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <MC-System/Constants.h>
+#include <MC-System/Exceptions.h>
 
 namespace mc {
 	namespace gfx {
