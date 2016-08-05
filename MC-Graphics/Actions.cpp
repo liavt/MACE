@@ -1,5 +1,4 @@
 #include "MC-Graphics/Actions.h"
-#pragma once
 
 namespace mc {
 	namespace gfx {

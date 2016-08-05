@@ -387,6 +387,15 @@ namespace mc {
 		void operator-= (const Vector<T, N>& right) {
 			setContents((*this - right).getContents());
 		}
+
+		/**
+		Multiplies a `Vector` by this one
+		@param right A `Vector` to multiply
+		@see operator+(const Vector<T,N>&) const
+		*/
+		void operator*= (const Vector<T, N>& right) {
+			setContents((*this * right).getContents());
+		}
 		/**
 		Scales this `Vector`
 		@param scalar How much to scale
