@@ -396,6 +396,15 @@ namespace mc {
 		void operator*= (const Vector<T, N>& right) {
 			setContents((*this * right).getContents());
 		}
+
+		/**
+		Divides a `Vector` by this one
+		@param right A `Vector` to divide
+		@see operator+(const Vector<T,N>&) const
+		*/
+		void operator/= (const Vector<T, N>& right) {
+			setContents((*this / right).getContents());
+		}
 		/**
 		Scales this `Vector`
 		@param scalar How much to scale

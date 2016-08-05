@@ -315,7 +315,7 @@ namespace mc {
 		{
 			//this isn't even my final form!
 			Matrix4f out = baseTransformation.get();
-			if (hasParent())out *= parent->getFinalTransformation();
+			if (hasParent())out = out* parent->getFinalTransformation();
 			return out;
 		}
 
