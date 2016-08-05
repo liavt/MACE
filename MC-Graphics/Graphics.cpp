@@ -284,7 +284,7 @@ namespace mc {
 
 			glVertexAttribPointer(attributeNumber, verticeSize, GL_FLOAT, false, 0, 0);
 
-			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(attributeNumber);
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, vboID);//
