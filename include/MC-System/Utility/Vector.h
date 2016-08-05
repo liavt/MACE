@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <array>
 #include <MC-System/Exceptions.h>
 #include <MC-System/Constants.h>
-#include <iosfwd>
+#include <ostream>
 #include <initializer_list>
 #include <MC-System/Utility/Math.h>
 
@@ -496,11 +496,11 @@ namespace mc {
 		*/
 		friend std::ostream &operator<<(std::ostream &output,
 			const Vector<T, N> &v) {
-			output << "[ ";
+			output << '['<<' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
 			for (Index x = 0; x < N; x++) {
-				output << v[x]<<", ";
+				output << v[x]<<','<<' ';
 			}
-			output << " ]";
+			output << ' '<<']';
 			return output;
 		}
 
@@ -944,14 +944,14 @@ namespace mc {
 		friend std::ostream &operator<<(std::ostream &output,
 			const Matrix<T,W,H> &m) {
 			for (Index x = 0; x < W; x++) {
-				if (x == 0)output << "[ ";
-				else output <<std::endl<< "  ";
+				if (x == 0)output << '[' << ' ';
+				else output <<std::endl<< ' '<<' ';
 				for (Index y = 0; y < H; y++) {
 					output << m[x][y];
-					if (y < H - 1)output << ", ";
+					if (y < H - 1)output << ','<<' ';
 				}
 			}
-			output << " ]";
+			output << ' ' << ']';
 			return output;
 		}
 
