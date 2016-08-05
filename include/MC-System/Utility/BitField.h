@@ -53,6 +53,8 @@ namespace mc {
 			this->value = value;
 		}
 
+		//dont need a copy constructor, the above constructor acts like one. adding a copy constructor creates too many options when you do ByteField var = 0;
+
 		/**
 		Default destructor.
 		*/

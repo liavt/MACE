@@ -22,7 +22,7 @@ namespace mc {
 	
 	namespace math{
 		template<typename T, Size N>
-		Matrix<T,N,N> math::inverse(const Matrix<T,N,N>&);
+		Matrix<T,N,N> inverse(const Matrix<T,N,N>&);
 	}
 
 	/**
