@@ -15,6 +15,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <initializer_list>
 #include <MC-System/Utility/Math.h>
 
+/*
+the fact that vectors are templated manes that this cant have a cpp file correspondign to it. because of that, this file has HORRIBLE compile times.
+maybe i will fix it later
+*/
+
 namespace mc {
 	//forward defining Matrix here for friend declaration in Vector
 	template<typename T, Size W, Size H>
@@ -944,7 +949,7 @@ namespace mc {
 		friend std::ostream &operator<<(std::ostream &output,
 			const Matrix<T,W,H> &m) {
 			for (Index x = 0; x < W; x++) {
-				if (x == 0)output << '[' << ' ';
+				if (x == 0)output << '[' << ' ';//why this and not "[ "? that requires #include <string> and thats more compilition time. this way doesnt have any difference in output and doesnt need to incldue that
 				else output <<std::endl<< ' '<<' ';
 				for (Index y = 0; y < H; y++) {
 					output << m[x][y];

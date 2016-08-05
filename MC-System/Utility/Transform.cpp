@@ -134,11 +134,7 @@ TransformMatrix & TransformMatrix::reset()
 }
 Matrix4f TransformMatrix::get() const
 {
-	Matrix4f out = math::identity<float,4>();
-	out *= math::translate(translation[0], translation[1], translation[2]);
-	out *= math::rotate(rotation[0], rotation[1], rotation[2]);
-	out *= math::scale(scaler[0], scaler[1], scaler[2]);
-	return out;
+	return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
 }
 Vector3f & TransformMatrix::getRotation()
 {
