@@ -19,6 +19,11 @@ namespace mc {
 	//forward defining Matrix here for friend declaration in Vector
 	template<typename T, Size W, Size H>
 	struct Matrix;
+	
+	namespace math{
+		template<typename T, Size N>
+		Matrix<T,N,N> math::inverse(const Matrix<T,N,N>&);
+	}
 
 	/**
 	1-dimensional vector class that supports mathmatical operations.
@@ -295,7 +300,22 @@ namespace mc {
 		@see operator%(const Vector&)
 		*/
 		Vector operator*(const Vector<T, 3>& right) const {
-			return math::cross(*this,right);
+			//i though of more than one pun for this one, so here is a list:
+
+			//the cross of jesus or the cross of cris? these are important questions
+			//i wont double cross you!
+			//the bible is a cross product
+			//so is a swiss army knife
+			//railroad crossing; the train is carying important product
+			//i should just cross this off the list of unproductive things i have done
+
+			Vector<T, 3> out = Vector<T, 3>();
+			//whew math
+			out[0] = (this->operator[](1) * right[2]) - (this->operator[](2) * right[1]);
+			out[1] = (this->operator[](2) * right[0]) - (this->operator[](0) * right[2]);
+			out[2] = (this->operator[](0) * right[1]) - (this->operator[](1) * right[0]);
+
+			return out;
 		};
 
 		/**
@@ -308,8 +328,13 @@ namespace mc {
 		@see operator*(const T)
 		@see operator*(const Vector&)
 		*/
-		Vector operator%(const Vector<T, 3>& right) const {
-			return math::dot(*this, right);
+		T operator%(const Vector<T, 3>& right) const {
+
+			T out = 0;
+			for (Index i = 0; i < N; i++) {
+				out += static_cast<T>(this->operator[](i) * right[i]);
+			}
+			return out;
 		}
 
 		/**
@@ -948,22 +973,8 @@ namespace mc {
 		*/
 		template<typename T>
 		Vector<T,3> cross(const Vector<T, 3>& a, const  Vector<T, 3>& b) {
-			//i though of more than one pun for this one, so here is a list:
 
-			//the cross of jesus or the cross of cris? these are important questions
-			//i wont double cross you!
-			//the bible is a cross product
-			//so is a swiss army knife
-			//railroad crossing; the train is carying important product
-			//i should just cross this off the list of unproductive things i have done
-
-			Vector<T, 3> out = Vector<T, 3>();
-			//whew math
-			out[0] = (a[1] * b[2]) - (a[2] * b[1]);
-			out[1] = (a[2] * b[0]) - (a[0] * b[2]);
-			out[2] = (a[0] * b[1]) - (a[1] * b[0]);
-
-			return out;
+			return a* b;
 		};
 
 		/**
@@ -979,11 +990,7 @@ namespace mc {
 		*/
 		template<typename T, Size N>
 		T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
-			T out = 0;
-			for (Index i = 0; i < N; i++) {
-				out += static_cast<T>(a[i] * b[i]);
-			}
-			return out;
+			return a % b;
 		}
 
 		/**
@@ -1082,7 +1089,7 @@ namespace mc {
 					}
 					counterY = 0;
 				}
-				T tempSum = ((isEven(counter) ? -1 : 1) * matrix[i][0]);
+				T tempSum = ((counter%2==0 ? -1 : 1) * matrix[i][0]);
 				if (N-1 == 2) {
 					tempSum *= det<T>(matrix);
 				}
@@ -1093,28 +1100,6 @@ namespace mc {
 				counter++;
 			}
 			return sum;
-		}
-
-		/**
-		Inverses a `N` by `N` `Matrix`. An inversed `Matrix` times a normal `Matrix` equals the identity `Matrix`
-		<p>
-		Not to be confused with `tr()`
-		<p>
-		If `T` is not a floating point type, the output may not work, as it will round.
-		<p>
-		The output is calculated via the Caley-Hamilton theorum (https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem)
-		@param matrix The `Matrix` to invert
-		@return The inverse of `matrix`
-		@tparam T Type of the `Matrix`
-		@tparam N Order of the `Matrix`
-		@bug Matrices bigger then 2x2 dont work
-		*/
-		template<typename T,Size N>
-		Matrix<T, N,N> inverse(const Matrix<T,N,N>& matrix) {
-			static_assert(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
-			//honestly, this next line really seems magical to me. matrices really seem magical in general. But
-			//this especialy. matrices are really something, aren't they?
-			return	(((identity<T,N>()*tr(matrix))-matrix) * (1 / det(matrix)));//calculate via the caley-hamilton method
 		}
 
 		/**
@@ -1130,7 +1115,7 @@ namespace mc {
 		@see #inverse(const Matrix<T,N,N>&)
 		*/
 		template<typename T, Size N>
-		T tr(const Matrix<T, N,N>& m) {
+		T tr(const Matrix<T, N, N>& m) {
 			T out = 0;
 			//done without a trace!
 			for (Index x = 0; x < N; x++) {
@@ -1159,6 +1144,28 @@ namespace mc {
 				}
 			}
 			return out;
+		}
+
+		/**
+		Inverses a `N` by `N` `Matrix`. An inversed `Matrix` times a normal `Matrix` equals the identity `Matrix`
+		<p>
+		Not to be confused with `tr()`
+		<p>
+		If `T` is not a floating point type, the output may not work, as it will round.
+		<p>
+		The output is calculated via the Caley-Hamilton theorum (https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem)
+		@param matrix The `Matrix` to invert
+		@return The inverse of `matrix`
+		@tparam T Type of the `Matrix`
+		@tparam N Order of the `Matrix`
+		@bug Matrices bigger then 2x2 dont work
+		*/
+		template<typename T,Size N>
+		Matrix<T, N,N> inverse(const Matrix<T,N,N>& matrix) {
+			static_assert(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
+			//honestly, this next line really seems magical to me. matrices really seem magical in general. But
+			//this especialy. matrices are really something, aren't they?
+			return	(((identity<T,N>()*tr(matrix))-matrix) * (1 / det(matrix)));//calculate via the caley-hamilton method
 		}
 	}
 

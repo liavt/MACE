@@ -235,6 +235,10 @@ namespace mc {
 					friendlyType = "COMPUTE";
 				}else if (type == GL_GEOMETRY_SHADER) {
 					friendlyType = "GEOMETERY";
+				}else if (type == GL_TESS_CONTROL_SHADER) {
+					friendlyType = "TESSELATION CONTROL";
+				}else if (type == GL_TESS_EVALUATION_SHADER) {
+					friendlyType = "TESSELATION EVALUATION";
 				}
 				throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
 			}

@@ -54,14 +54,6 @@ namespace mc {
 		}
 
 		/**
-		Cloning constructor
-		@param clone Another `BitField` to clone the values of
-		*/
-		BitField(BitField& clone) {
-			BitField(clone.value);
-		}
-
-		/**
 		Default destructor.
 		*/
 		~BitField() {
@@ -171,8 +163,8 @@ namespace mc {
 		/**
 		Operator for `std::cout` to correctly print this class
 		*/
-		std::ostream &operator<<(BitField<T> b) {
-			for (Index i = size() - 1; i >= 0; i--) os << b[i];
+		friend std::ostream &operator<<(std::ostream &os, const BitField<T>& b) {
+			for (Index i = 0; i < b.size(); i++)os << b.getBit((b.size() -1)- i);
 			return os;
 		}
 
