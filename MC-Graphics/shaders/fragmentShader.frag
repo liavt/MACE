@@ -1,7 +1,16 @@
 #version 330 core
 
-out vec3 color;
+
+in vec2 textureCoord;
+
+out vec4 color;
+
+uniform vec4 augmentColor;
+uniform float augmentColorStrength;
+
+uniform sampler2D tex;
+
 void main (void)  
 {     
-   gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);  
-}        
+   color= mix(augmentColor,texture(tex,textureCoord),augmentColorStrength);
+}       

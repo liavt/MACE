@@ -53,6 +53,10 @@ set(GLEW_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${GLEW_NAME}.tar.gz")
 #where the downloading tarbell will be extracted to
 set(GLEW_DOWNLOAD_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${GLEW_NAME}")
 
+#stb_image is a single header only image loading library.
+set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
+set(STB_IMAGE_DOWNLOAD_PATH "${MACE_INCLUDES}/stb_image.h")
+
 if(${MACE_GRAPHICS} AND NOT ${MACE_WINDOW})
 	message(FATAL_ERROR "MC-Graphics requires MC-Window! Please enable MC-Window and retry.")
 endif()
@@ -178,6 +182,19 @@ if(${MACE_UNIT_TESTING})
 endif()
 
 if(${MACE_GRAPHICS})		
+	if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
+		if(${MACE_DOWNLOAD_DEPENDENCIES})
+			#Catch is one header file, so its easy to fix. Just download it!
+			message(STATUS "Downloading STB_IMAGE..")
+			file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}")
+			message(STATUS "Done downloading STB_IMAGE.")
+		else()
+			message(FATAL_ERROR "STB_IMAGE is not  found!")
+		endif()
+	else()
+		message(STATUS "STB_IMAGE found.")
+	endif()
+
 	message(STATUS "Finding GLEW...")
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
 		find_package(GLEW)

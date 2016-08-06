@@ -10,7 +10,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <Catch.h>
 #include <iostream>
 #include <MC-Graphics/Entity.h>
-#include <MC-Graphics/Graphics.h>
 
 namespace mc{
 	namespace gfx{

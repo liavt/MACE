@@ -177,7 +177,7 @@ namespace mc {
 		Retrieves how many elements this `Vector` holds
 		@return How large this `Vector` is
 		*/
-		virtual Size size() const
+		constexpr virtual Size size() const
 		{
 			return N;
 		};
@@ -511,6 +511,14 @@ namespace mc {
 			return !(*this>other);
 		}
 
+		std::array<T,N> toArray() const {
+			std::array<T, N> arr = std::array<T, N>();
+			for (Index i = 0; i < N; i++) {
+				arr[i] = content[i];
+			}
+			return arr;
+		}
+
 		/**
 		Operator used to output to `std::cout`.
 		@param output `std::ostream` the `Matrix` was inserted into
@@ -633,7 +641,7 @@ namespace mc {
 		@see #height()
 		@see #width()
 		*/
-		Size size() {
+		constexpr Size size() const{
 			return W*H;
 		}
 
@@ -643,7 +651,7 @@ namespace mc {
 		@see #height()
 		@see #size()
 		*/
-		Size width() {
+		constexpr Size width() const{
 			return W;
 		}
 		/**
@@ -652,7 +660,7 @@ namespace mc {
 		@see #width()
 		@see #size()
 		*/
-		Size height() {
+		constexpr Size height() const{
 			return H;
 		}
 
@@ -978,7 +986,15 @@ namespace mc {
 			return output;
 		}
 
-
+		std::array<T,W*H> toArray() const{
+			std::array<T, W*H> arr = std::array<T, W*H>();
+			for (Index x = 0; x < W; x++) {
+				for (Index y = 0; y < H; y++) {
+					arr[y+(x*H)] = content[x][y];
+				}
+			}
+			return arr;
+		}
 
 	};
 

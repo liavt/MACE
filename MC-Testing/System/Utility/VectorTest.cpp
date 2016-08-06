@@ -381,6 +381,49 @@ TEST_CASE("Testing math") {//eww math
 
 }
 
+TEST_CASE("Testing toArray()") {
+	SECTION("Vector toArray()") {
+		float * arr = Vector4f({3.0f,4.0f,1.0f,-1.0f}).toArray().data();
+		float result[] = {3.0f,4.0f,1.0f,-1.0f};
+		for (Index i = 0; i < 4; i++) {
+			REQUIRE(arr[i]==result[i]);
+		}
+
+	}
+	SECTION("Matrix toArray()") {
+		SECTION("With square array") {
+			float content[4][4] = { { 1,2,3,4 },{ 5,4,3,2 },{ 1,3,2,4 },{ 0,-1,3,10 } };
+			const Matrix4f m = Matrix4f(content);
+			float * arr = m.toArray().data();
+			Index x = 0,y=0;
+			for (Index i = 0; i < 16;i++){
+				if (y==4) {
+					y = 0;
+					x++;
+				}
+				REQUIRE(m[x][y]==arr[i]);
+				y++;
+			}
+
+		}
+		SECTION("With non-square array") {
+			float content[4][3] = { { 1,2,3 },{ 5,4,3 },{ 1,3,2 },{ 0,-1,3 } };
+			const Matrix<float,4,3> m = Matrix<float,4,3>(content);
+			float *  arr = m.toArray().data();
+			Index x = 0, y = 0;
+			for (Index i = 0; i <12; i++) {
+				if (y == 3) {
+					y = 0;
+					x++;
+				}
+				REQUIRE(m[x][y] == arr[i]);
+				y++;
+			}
+
+		}
+	}
+}
+
 TEST_CASE("Testing vector sizes and presets","[system][utility][vector]") {
 	SECTION("Testing Vector size()"){
 		Vector<int, 10> v = Vector<int, 10>();
