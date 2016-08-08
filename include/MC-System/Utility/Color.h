@@ -44,14 +44,14 @@ namespace mc {
 		@return  An equal `Byte` from 0 to 255
 		@see convertRGBAToFloat(Byte)
 		*/
-		static Byte convertFloatToRGBA(float color);
+		static Byte convertFloatToRGBA(const float& color);
 		/**
 		Converts a `Color` component represented as a `Byte` to a `float`
 		@return An equal `float` from 0.0 to 1.0
 		@param color A`Byte` from 0 to 255
 		@see convertRGBAToFloat(Byte)
 		*/
-		static float convertRGBAToFloat(Byte color);
+		static float convertRGBAToFloat(const Byte& color);
 
 		/**
 		Checks the bounds of a `float` making sure that it is not greater than 1,0 or less than 0.0
@@ -63,7 +63,7 @@ namespace mc {
 		@param color `float` to trim
 		@return A `float` guaranteed to be between 0 and 1.
 		*/
-		static float trimFloat(float color);
+		static float trimFloat(const float& color);
 
 		/**
 		Retrieves the red component of this `Color`
@@ -105,7 +105,7 @@ namespace mc {
 		@see getRed()
 		@see r
 		*/
-		void setRed(Byte r);
+		void setRed(const Byte& r);
 		/**
 		Set the green value of this `Color` from a `Byte`. It will automatically be converted to `float` internally.
 		@param g A `Byte` from 0 to 255, where 255 is the brightest
@@ -113,7 +113,7 @@ namespace mc {
 		@see getGreen()
 		@see g
 		*/
-		void setGreen(Byte g);
+		void setGreen(const Byte& g);
 		/**
 		Set the blue value of this `Color` from a `Byte`. It will automatically be converted to `float` internally.
 		@param b A `Byte` from 0 to 255, where 255 is the brightest
@@ -121,7 +121,7 @@ namespace mc {
 		@see getBlue()
 		@see b
 		*/
-		void setBlue(Byte b);
+		void setBlue(const Byte& b);
 		/**
 		Set the alpha value of this `Color` from a `Byte`. It will automatically be converted to `float` internally.
 		@param a A `Byte` from 0 to 255, where 255 is opaque
@@ -129,7 +129,7 @@ namespace mc {
 		@see getAlpha()
 		@see a
 		*/
-		void setAlpha(Byte a);
+		void setAlpha(const Byte& a);
 		/**
 		Sets the RGB values of this `Color` from an array of `floats`. The alpha is unchanged
 		@param rgba An array where the first element is red, the second is green, etc
@@ -138,7 +138,7 @@ namespace mc {
 		@see Color(float,float,float,float)
 		@see setValues(std::array<float,4>)
 		*/
-		void setValues(std::array<float,4> rgba);
+		void setValues(const std::array<float,4>& rgba);
 		/**
 		Sets the values of this `Color` from an array of `floats`.
 		@param rgb An array where the first element is red, the second is green, etc
@@ -147,7 +147,7 @@ namespace mc {
 		@see Color(float,float,float,float)
 		@see setValues(std::array<float,3>)
 		*/
-		void setValues(std::array<float, 3> rgb);
+		void setValues(const std::array<float, 3>& rgb);
 		/**
 		Retrieves the RGBA values in `std::array`
 		@return An array where the first element is red, the second value is green, etc
@@ -167,7 +167,7 @@ namespace mc {
 		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
 		@see Color(std::array<float,4>)
 		*/
-		Color(float red,float green, float blue, float alpha=1.0f);
+		Color(const float& red, const float& green, const float& blue, const float& alpha=1.0f);
 		/**
 		Creates a `Color` from an array of `floats`.
 		@param values An array where the first element is red, the second is green, etc
@@ -175,12 +175,12 @@ namespace mc {
 		@see Color(float,float,float,float)
 		@see setValues(std::array<float,4>
 		*/
-		Color(std::array<float,4> values);
+		Color(const std::array<float,4>& values);
 		/**
 		Clones a `Color`, coying it's color values into a new one.
 		@param copy A `Color` to copy
 		*/
-		Color(Color& copy);
+		Color(const Color& copy);
 		/**
 		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
 		*/
@@ -192,13 +192,13 @@ namespace mc {
 		@return Whether the 2 `Colors` have the same RGBA
 		@see operator!=(Color&) const
 		*/
-		bool operator==(Color& other) const;
+		bool operator==(const Color& other) const;
 		/**
 		Compares the color values of 2 `Colors`
 		@param other Another `Color` object
 		@return Whether the 2 `Colors` don't have the same RGBA
 		@see operator==(Color&) const
 		*/
-		bool operator!=(Color& other) const;
+		bool operator!=(const Color& other) const;
 	};
 }

@@ -13,19 +13,23 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/Utility/BitField.h>
 #include <MC-System/Utility/Transform.h>
 #include <MC-Graphics/GraphicsConstants.h>
+#include <MC-Graphics/Model.h>
 
 namespace mc {
 	namespace gfx {
 
 		//forward-defining class for friend declaration
 		class Entity;
-		
+
 		class Action {
 		public:
 			virtual void init(Entity& e) = 0;
 			virtual bool update(Entity& e) = 0;
 			virtual void destroy(Entity& e) = 0;
 		};
+
+		template<typename T>
+		struct Renderer;
 
 		/**
 		A class which holds an internal buffer of {@link Entity entities,} known as "children."
@@ -35,22 +39,17 @@ namespace mc {
 		Examples:
 		*/
 		class Container {
-			/**
-			`Entity` needs to do some additional work with the private members
-			*/
-			friend class Entity;
-
 		public:
 			/**
-			Calls {@link #update()} on all of it's children.
+			Calls {@link #update()} on all of it's children and actions. Also calls {@link Entity#inherit()} if `ENTITY_PASS_DOWN` is true.
 			*/
-			void updateChildren();
+			virtual void updateChildren();
 			/**
 			Calls {@link #init()} on all of it's children.
 			*/
 			void initChildren();
 			/**
-			Calls {@link #destroy()} on all of it's children.
+			Calls {@link #destroy()} on all of it's children and actions.
 			*/
 			void destroyChildren();//think of the children!
 			/**
@@ -213,73 +212,6 @@ namespace mc {
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
 		*/
 		class Entity : public Container {
-			/**
-			A `Container` needs to access `update()`, `render()`, `init()`,  and `destroy()`
-			*/
-			friend class Container;
-			/**
-			Should be called a by `Container` when `System.update()` is called. Calls `customUpdate()`
-			<p>
-			When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
-				class Derived : public Entity{
-					void update(){
-						Entity::update()//must call
-						...
-					}
-				}
-			}
-			*/
-			virtual void update();
-			/**
-			Should be called a by `Container` when `System.init()` is called. Calls `customInit()`
-			<p>
-			When this function is inherited or overwritten, you must call the base class's `init()` funtion. For example:{@code
-				class Derived : public Entity{
-					void init(){
-						Entity::init()//must call
-						...
-					}
-				}	
-			}
-			*/
-			virtual void init();
-			/**
-			Should be called a by `Container` when `System.terminate()` is called. Calls `customDestroy()`
-			<p>
-			When this function is inherited or overwritten, you must call the base class's `destroy()` funtion. For example:{@code
-				class Derived : public Entity{
-					void destroy(){
-						Entity::destroy()//must call
-						...
-					}
-				}	
-			}
-			*/
-			virtual void destroy();
-
-			/**
-			Should be called by a `Container` when the graphical `Window` clears the frame.
-			<p>
-			When this function is inherited or overwritten, you must call the base class's `render()` funtion. For example:{@code
-				class Derived : public Entity{
-					void render(){
-						Entity::render()//must call
-						...
-					}
-				}	
-			}
-			*/
-			virtual void render();
-
-			Entity* parent=0;
-
-			void setParent(Entity* parent);
-
-   			ByteField properties = ENTITY_DEFAULT_PROPERTIES;
-
-			TransformMatrix baseTransformation = TransformMatrix();
-
-			std::vector<Action*> actions = std::vector<Action*>();
 		public:
 
 			/**
@@ -297,11 +229,6 @@ namespace mc {
 			virtual ~Entity();
 
 			/**
-			Calculates position and various properties. Automatically called when `ENTITY_PROPERTY_DIRTY` is true.
-			*/
-			virtual void clean();
-
-			/**
 			Retrieves the `Entity's` properties as a `ByteField`
 			@return The current properties belonging to this `Entity`
 			@see getProperties() const
@@ -309,7 +236,7 @@ namespace mc {
 			@see getProperty(Index) const
 			@see setProperty(Index, bool)
 			*/
-			ByteField& getProperties();
+			BitField<uint16_t>& getProperties();
 			/**
 			`const` version of `getProperties()`
 			@return The current properties belonging to this `Entity`
@@ -317,7 +244,7 @@ namespace mc {
 			@see getProperty(Index) const
 			@see setProperty(Index, bool)
 			*/
-			const ByteField& getProperties() const;
+			const BitField<uint16_t>& getProperties() const;
 			/**
 			Set the properties for this `Entity`
 			@param b New `Entity` properties
@@ -327,7 +254,7 @@ namespace mc {
 			@see getProperty(Index) const
 			@see setProperty(Index, bool)
 			*/
-			void setProperties(ByteField& b);
+			void setProperties(BitField<uint16_t>& b);
 
 			/**
 			Retrieve the value of a property. Property consants start with `ENTITY_PROPERTY_`
@@ -402,12 +329,15 @@ namespace mc {
 			/**
 			Automatically called when `ENTITY_PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
 			@see getParent()
+			@todo Verify if getParent().remove(this) needs to be called
 			*/
 			void kill();
 
 			void addAction(Action& action);
 			std::vector<Action*> getActions();
 		protected:
+			TransformMatrix baseTransformation = TransformMatrix();
+
 			/**
 			When `Container.update()` is called, `customUpdate()` is called on all of it's children.
 			@see System#update()
@@ -428,6 +358,99 @@ namespace mc {
 			When `Container.render()` is called, `customRender()` is called on all of it's children.
 			*/
 			virtual void customRender() = 0;
+
+			/**
+			Inherits settings from another `Entity`. Should not be called by extending classes.
+			<p>
+			Override this function to create custom inheritence rules for custom entities.
+			<p>
+			If this Entity's `ENTITY_IGNORE_PARENT` property is true, this is not called. Additionally, if this Entity's `ENTITY_PASS_DOWN` property is true, inherit() will be called on all of it's children.
+			*/
+			virtual void inherit(const Entity& e);
+		private:
+			Entity* parent = 0;
+
+			BitField<uint16_t> properties = ENTITY_DEFAULT_PROPERTIES;
+
+			std::vector<Action*> actions = std::vector<Action*>();
+
+			/**
+			A `Container` needs to access `update()`, `render()`, `init()`,  and `destroy()`
+			*/
+			friend class Container;
+			/**
+			Should be called a by `Container` when `System.update()` is called. Calls `customUpdate()`.
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
+			class Derived : public Entity{
+			void update(){
+			Entity::update()//must call
+			...
+			}
+			}
+			}
+			@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
+			*/
+			virtual void update();
+			/**
+			Should be called a by `Container` when `System.init()` is called. Calls `customInit()`
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `init()` funtion. For example:{@code
+			class Derived : public Entity{
+			void init(){
+			Entity::init()//must call
+			...
+			}
+			}
+			}
+			@throws InitializationError If the property `ENTITY_INIT` is true, meaning `init()` has already been called.
+			*/
+			virtual void init();
+			/**
+			Should be called a by `Container` when `System.terminate()` is called. Calls `customDestroy()`. Sets `ENTITY_INIT` to be false
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `destroy()` funtion. For example:{@code
+			class Derived : public Entity{
+			void destroy(){
+			Entity::destroy()//must call
+			...
+			}
+			}
+			}
+			@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
+			*/
+			virtual void destroy();
+
+			/**
+			Should be called by a `Container` when the graphical `Window` clears the frame.
+			<p>
+			When this function is inherited or overwritten, you must call the base class's `render()` funtion. For example:{@code
+			class Derived : public Entity{
+			void render(){
+			Entity::render()//must call
+			...
+			}
+			}
+			}
+			*/
+			virtual void render();
+
+			void setParent(Entity* parent);
 		};
-	}
+
+		class GraphicsEntity : public Entity{
+		public:
+
+			GraphicsEntity();
+
+			GraphicsEntity(mc::gfx::Texture& t);
+			virtual ~GraphicsEntity();
+
+			void setTexture(mc::gfx::Texture& tex);
+			mc::gfx::Texture& getTexture();
+			const mc::gfx::Texture& getTexture() const;
+		protected:
+			mc::gfx::Texture texture = mc::gfx::Texture();
+		};
+}
 }

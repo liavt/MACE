@@ -109,62 +109,6 @@ else()
 	message(STATUS "Found SDL2 includes.")
 endif()
 
-if(${MACE_NETWORK})
-	if(NOT EXISTS "${SDL_NET_SOURCE_DIR}")
-		if(${MACE_DOWNLOAD_DEPENDENCIES})
-		
-			if(NOT EXISTS "${SDL_NET_DOWNLOAD_PATH}")
-				message(STATUS "Downloading SDL_net...")
-
-				file(DOWNLOAD "${SDL_NET_URL}" "${SDL_NET_DOWNLOAD_PATH}")
-			else()
-				message(STATUS "Found SDL_net source!")
-			endif()
-			
-			message(STATUS "Extracting SDL_net source...")
-			#Next we extract the .tar.gz. This works on Windows as well
-			execute_process(
-				COMMAND ${CMAKE_COMMAND} -E tar xvf ${SDL_NET_DOWNLOAD_PATH}
-				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-			)
-				
-			#If the extraction fails, go to here.
-			if(NOT EXISTS ${SDL_NET_SOURCE_DIR})
-				message(FATAL_ERROR "Failed to extract SDL_net source!")
-			else()
-				message(STATUS "SDL_net extracted.")
-			endif()
-				
-			#Remove the extracted tar. We dont need the original anymore
-			file(REMOVE ${SDL_NET_DOWNLOAD_PATH})
-		else()
-			message(FATAL_ERROR "SDL_net source not found!")
-		endif()
-	else()
-		message(STATUS "Found SDL_net source")
-	endif()
-
-	if(NOT EXISTS "${SDL2_INCLUDES}/SDL_net.h")
-		message(STATUS "Moving SDL_net headers to include/SDL directory... ")
-		file(COPY "${SDL_NET_SOURCE_DIR}/SDLnetsys.h" DESTINATION "${SDL2_INCLUDES}")
-		file(COPY "${SDL_NET_SOURCE_DIR}/SDL_net.h" DESTINATION "${SDL2_INCLUDES}")
-
-		message(STATUS "SDL_net Includes added!")
-	else()
-		message(STATUS "Found SDL_net includes.")
-	endif()
-	
-	if(NOT EXISTS "${SDL_NET_SOURCE_DIR}/CMakeLists.txt")
-		message(STATUS "SDL_net doesn't have a CMakeLists! Adding one...")
-		
-		file(COPY "${CMAKE_SOURCE_DIR}/${SDL_NET_CMAKE}" DESTINATION "${SDL_NET_SOURCE_DIR}")
-		
-		file(RENAME "${SDL_NET_SOURCE_DIR}/${SDL_NET_CMAKE}" "${SDL_NET_SOURCE_DIR}/CMakeLists.txt")
-	else()
-		message(STATUS "SDL_net has a CMakeLists")
-	endif()
-endif()
-
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
 	if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
@@ -277,7 +221,6 @@ if(${MACE_GRAPHICS})
 	add_subdirectory(MC-Graphics)
 endif()
 if(${MACE_NETWORK})
-	add_subdirectory("${SDL_NET_SOURCE_DIR}" )
 	add_subdirectory(MC-Network)
 endif()
 if(${MACE_AUDIO})
@@ -286,5 +229,7 @@ endif()
 if(${MACE_UNIT_TESTING})
 	add_subdirectory(MC-Testing)
 endif()
+
+add_subdirectory(MC-Test)
 
 message(STATUS "Done! Thank you for using MACE.")

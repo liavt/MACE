@@ -9,10 +9,9 @@ file(GLOB_RECURSE MCT_SRC *.cpp)
 
 if(${MACE_STATIC_LIBRARY})
 	add_library(MC-System STATIC ${HEADERS} ${MCT_SRC})
-	target_link_libraries(MC-System LINK_PUBLIC SDL2-static)
 else()
 	add_library(MC-System SHARED ${HEADERS} ${MCT_SRC})
-	target_link_libraries(MC-System LINK_PUBLIC SDL2)
 endif()
+
+target_link_libraries(MC-System LINK_PUBLIC SDL2)
 target_include_directories (MC-System PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(MC-System LINK_PUBLIC SDL2main)

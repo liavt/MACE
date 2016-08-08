@@ -52,22 +52,33 @@ namespace mc {
 		}
 
 		void WindowModule::threadCallback() {
-			try {
-				std::mutex mutex;
-				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-			//	guard.lock();
-				window->create();
+			std::mutex mutex;
 
-				if (context != 0)context->init(window);
-				guard.unlock();
+			//a block with no identifider (just curly brackets) creates a new scope. the guard in it will be destructed at the end of the next bracket.
+			{
+				try {
+					std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+					window->create();
 
-				bool isRunning = true;
+					if (context != 0)context->init(window);
+				}
+				catch (const std::exception& e) {
+					Exception::handleException(e);
+				}
+				catch (...) {
+					std::cerr << "An error has occured";
+					System::requestStop();
+				}
+			}//so at this bracket, the guard will have it's destructor called, because it goes out of scope.
 
-				//this is the main rendering loop.
-				while (isRunning) {
+			bool isRunning = true;
+
+			//this is the main rendering loop.
+			while (isRunning) {
+				try {
+					std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
 					//thread doesn't own window, so we have to lock the mutex
-					guard.lock();
 					if (window->poll()) {
 						System::requestStop();
 					}
@@ -79,19 +90,31 @@ namespace mc {
 					if (destroyed) {
 						isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
 					}
-					guard.unlock();//unlock it so other threads can use it
-
 					SDL_Delay(10);
 				}
-
-				guard.lock();
-				if (context != 0)context->destroy(window);
-
-				window->destroy();
-				guard.unlock();//just in case this function becomes inline for some reason
+				catch (const std::exception& e) {
+					Exception::handleException(e);
+				}
+				catch (...) {
+					std::cerr << "An error has occured";
+					System::requestStop();
+				}
 			}
-			catch (const std::exception& e) {
-				Exception::handleException(e);
+
+			{
+				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+				try {
+					if (context != 0)context->destroy(window);
+
+					window->destroy();
+				}
+				catch (const std::exception& e) {
+					Exception::handleException(e);
+				}
+				catch (...) {
+					std::cerr << "An error has occured";
+					System::requestStop();
+				}
 			}
 		}
 

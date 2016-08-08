@@ -12,40 +12,29 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/System.h>
 #include <MC-Window/WindowModule.h>
 #include <MC-Graphics/Entity.h>
-#include <array>
 #include <GL/glew.h>
 
 namespace mc {
 
-	/**
-	Namespace containing classes used for Graphics in MACE.
-	*/
-	namespace gfx{
+/**
+Namespace containing classes used for Graphics in MACE.
+*/
+namespace gfx{
 
-		class Renderer {
-			//prevent intializations
-			Renderer();
-		public:
-			static void init();
+class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
+	SDL_GLContext context;
 
-			static void render(const Entity& entity);
+public:
+	OpenGLContext();
 
-			static void destroy();
-		};
+	void update();
 
-		class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
-			SDL_GLContext context;
+	void init(win::Window* win);
+	void render(win::Window* win);
+	void destroy(win::Window* win);
 
-		public:
-			OpenGLContext();
+};
 
-			void update();
-
-			void init(win::Window* win);
-			void render(win::Window* win);
-			void destroy(win::Window* win);
-
-		};
-	}
+}
 }
 

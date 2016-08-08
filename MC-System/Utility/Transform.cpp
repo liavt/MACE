@@ -172,11 +172,11 @@ void TransformMatrix::setScale(Vector3f & newVector)
 {
 	scaler = newVector;
 }
-bool TransformMatrix::operator==(const TransformMatrix & other)
+bool TransformMatrix::operator==(const TransformMatrix & other) const
 {
 	return other.translation==translation&&other.rotation==rotation&&other.scaler==scaler;
 }
-bool TransformMatrix::operator!=(const TransformMatrix & other)
+bool TransformMatrix::operator!=(const TransformMatrix & other) const
 {
 	return !(*this==other);
 }

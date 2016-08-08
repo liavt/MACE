@@ -12,20 +12,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace net
 	{
-		void NetworkModule::init() {
-			SDLNet_Init();
-		}
 
-		void NetworkModule::tick() {
-
-		}
-
-		void NetworkModule::destroy() {
-			SDLNet_Quit();
-		}
-
-		std::string NetworkModule::getName() const {
-			return "MC-Network";
-		}
 	}
 }

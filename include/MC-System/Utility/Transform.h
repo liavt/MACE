@@ -62,8 +62,8 @@ namespace mc {
 		void setTranslation(Vector3f& newVector);
 		void setScale(Vector3f& newVector);
 
-		bool operator==(const TransformMatrix& other);
-		bool operator!=(const TransformMatrix& other);
+		bool operator==(const TransformMatrix& other) const;
+		bool operator!=(const TransformMatrix& other) const;
 	private:
 		Vector3f translation;
 		Vector3f rotation;

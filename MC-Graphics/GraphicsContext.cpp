@@ -30,23 +30,22 @@ namespace mc {
 
 			updateChildren();
 
-			lock.unlock();
-
 			SDL_Delay(10);
 		}
 
-
 		void OpenGLContext::init(win::Window * win)
 		{
+
+			std::mutex mutex;
+			std::unique_lock<std::mutex> lock(mutex);
+
 			context = SDL_GL_CreateContext(win->getSDLWindow());
 			SDL_GL_MakeCurrent(win->getSDLWindow(),context);
 
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-			SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
 
 			const GLenum result = glewInit();
 			if (result != GLEW_OK)
@@ -76,14 +75,15 @@ namespace mc {
 
 			checkGLError();
 
-			Renderer::init();
-
 			initChildren();
 
 		}
 
 		void OpenGLContext::render(win::Window* win) {
-			glClear(GL_COLOR_BUFFER_BIT);
+			std::mutex mutex;
+			std::unique_lock<std::mutex> lock(mutex);
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 			renderChildren();
 
@@ -91,15 +91,11 @@ namespace mc {
 		}
 
 		void OpenGLContext::destroy(win::Window* win) {
+			std::mutex mutex;
+			std::unique_lock<std::mutex> lock(mutex);
 			destroyChildren();
-			Renderer::destroy();
 			SDL_GL_DeleteContext(context);
 		}
-		void Renderer::init()
-		{
-		}
-		void Renderer::destroy()
-		{
-		}
+
 	}
 }

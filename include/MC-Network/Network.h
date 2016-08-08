@@ -8,8 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#include <MC-System/System.h>
-#include <SDL/SDL_net.h>
+
 
 namespace mc{
 	/**
@@ -17,12 +16,6 @@ namespace mc{
 	*/
 	namespace net
 	{
-		class NetworkModule : public Module {
-		public:
-			void init();
-			void tick();
-			void destroy();
-			std::string getName() const;
-		};
+
 	}
 }

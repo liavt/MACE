@@ -30,26 +30,26 @@ mc::Byte mc::Color::getAlpha() const
 	return mc::Color::convertFloatToRGBA(this->a);
 }
 
-void mc::Color::setRed(mc::Byte r) {
+void mc::Color::setRed(const mc::Byte& r) {
 	this->r = mc::Color::convertRGBAToFloat(r);
 }
 
-void mc::Color::setGreen(mc::Byte g) {
+void mc::Color::setGreen(const mc::Byte& g) {
 	this->g = mc::Color::convertRGBAToFloat(g);
 
 }
 
-void mc::Color::setBlue(mc::Byte b) {
+void mc::Color::setBlue(const mc::Byte& b) {
 	this->b = mc::Color::Color::convertRGBAToFloat(b);
 
 }
 
-void mc::Color::setAlpha(mc::Byte a) {
+void mc::Color::setAlpha(const mc::Byte& a) {
 	this->a = mc::Color::convertRGBAToFloat(a);
 }
 
 
-mc::Color::Color(float red, float green, float blue, float alpha)
+mc::Color::Color(const float& red, const float& green, const float& blue, const float& alpha)
 {
 	this->r = red;
 	this->g = green;
@@ -57,12 +57,12 @@ mc::Color::Color(float red, float green, float blue, float alpha)
 	this->a = alpha;
 }
 
-mc::Color::Color(std::array<float,4> rgba)
+mc::Color::Color(const std::array<float,4>& rgba)
 {
 	this->setValues(rgba);
 }
 
-mc::Color::Color(Color & copy)
+mc::Color::Color(const Color & copy)
 {
 	Color(copy.r,copy.g,copy.b,copy.a);
 }
@@ -72,39 +72,39 @@ mc::Color::Color()
 	Color(0.0f,0.0f,0.0f,1.0f);
 }
 
-bool mc::Color::operator==(Color & other) const
+bool mc::Color::operator==(const Color & other) const
 {
 	return r==other.r&&g==other.g&&b==other.b&&a==other.a;
 }
 
-bool mc::Color::operator!=(Color & other) const
+bool mc::Color::operator!=(const Color & other) const
 {
 	return !(*this == other);
 }
 
-mc::Byte mc::Color::convertFloatToRGBA(float color)
+mc::Byte mc::Color::convertFloatToRGBA(const float& color)
 {
 	return (mc::Byte)(trimFloat(color)*254.0f);
 }
 
-float mc::Color::convertRGBAToFloat(mc::Byte color)
+float mc::Color::convertRGBAToFloat(const mc::Byte& color)
 {
 	return color / 254.0f;
 }
 
-float mc::Color::trimFloat(float color)
+float mc::Color::trimFloat(const float& color)
 {
 	return color < 0.0f ? 0.0f : (color>1.0f ? 1.0f : color);
 }
 
-void mc::Color::setValues(std::array<float, 3> rgb)
+void mc::Color::setValues(const std::array<float, 3>& rgb)
 {
 	this->r = rgb[0];
 	this->g = rgb[1];
 	this->b = rgb[2];
 }
 
-void mc::Color::setValues(std::array<float, 4> rgba)
+void mc::Color::setValues(const std::array<float, 4>& rgba)
 {
 	this->r = rgba[0];
 	this->g = rgba[1];

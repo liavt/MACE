@@ -29,28 +29,57 @@ namespace mc {
 		If `true,` any {@link Container} holding it will remove it and call `kill()`
 		@see Entity#getProperty(unsigned int)
 		*/
-		const Byte ENTITY_PROPERTY_DEAD = 0;
-		const Byte ENTITY_PROPERTY_UPDATE_ENABLED = 1;
-		const Byte ENTITY_PROPERTY_DIRTY = 2;
-		const Byte ENTITY_PROPERTY_INIT = 3;
-		const Byte ENTITY_PROPERTY_PASS_DOWN = 4;////
+		const Byte ENTITY_DEAD = 0;
+		/**
+		Property defining if an `Entity` can be updated. If this is `true`, `update()` will be called by it's parent.
+		@see Entity#getProperty(unsigned int)
+		*/
+		const Byte ENTITY_UPDATE_ENABLED = 1;
+		/**
+		Property defining if an `Entity` can be rendered. If this is `true`, `render()` will be called by it's parent.
+		@see Entity#getProperty(unsigned int)
+		*/
+		const Byte ENTITY_RENDER_ENABLED = 2;
 
-		const Byte POSITION_PROPERTY_STRETCH_X = 0;////
-		const Byte POSITION_PROPERTY_STRECTH_Y = 1;////
-		const Byte POSITION_PROPERTY_IGNORE_PARENT = 2;////
-		const Byte POSITION_PROPERTY_INHERIT_STRETCH_X = 3;////
-		const Byte POSITION_PROPERTY_INHERIT_STRETCH_Y = 4;////
+		//why are there slashes after everything? its to remember what needs to be worked on!
+		/*
+		// double slashes means that inheritence works, but its actual function has not been tested
+		/// triple slashes means that is has been implemented, but nothing about it has been tested
+		//// quadriple slashes means that it has not been implemented
+		*/
+
+		/**
+		Flag representing whether an Entity's init() function has been called.
+		<p>
+		If destroy() or update() is called and this is `false`, an `InitializationError` is thrown.
+		<p>
+		If init() is called and this is `true`, an `InitializationError` is thrown.
+		@see Entity#getProperty(unsigned int)
+		*/
+		const Byte ENTITY_INIT = 4;
+		/**
+		Flag representing whether the children of an Entity should inherit from it.
+		<p>
+		If this is `true`, inherit() will be called on all children that belongs to this `Entity`
+		@see Entity#getProperty(unsigned int)
+		*/
+		const Byte ENTITY_PASS_DOWN = 5;
+		/**
+		Flag representing whether an Entity should inherit from it's parent.
+		<p>
+		If this is `true`, inherit() will NOT be called, regardless of the parent's `ENTITY_PASS_DOWN` setting.
+		@see Entity#getProperty(unsigned int)
+		*/
+		const Byte ENTITY_IGNORE_PARENT = 6;
+		const Byte ENTITY_STRETCH_X = 7;//
+		const Byte ENTITY_STRETCH_Y = 8;//
+		const Byte ENTITY_INHERIT_STRETCH_X = 9;//
+		const Byte ENTITY_INHERIT_STRETCH_Y = 10;//
 
 #ifdef _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES
-		const Byte ENTITY_DEFAULT_PROPERTIES = _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES;
+		const uint16_t ENTITY_DEFAULT_PROPERTIES = _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES;
 #else
-		const Byte ENTITY_DEFAULT_PROPERTIES = 0b00110110;
-#endif
-
-#ifdef _MACE_POSITION_CUSTOM_DEFAULT_PROPERTIES
-		const Byte POSITION_DEFAULT_PROPERTIES = _MACE_ENTITY_CUSTOM_DEFAULT_PROPERTIES;
-#else
-		const Byte POSITION_DEFAULT_PROPERTIES = 0b00000011;
+		const uint16_t ENTITY_DEFAULT_PROPERTIES = 0b0110011000100110;
 #endif
 	}
 }

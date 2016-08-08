@@ -9,10 +9,8 @@ file(GLOB_RECURSE MCT_SRC *.cpp)
 
 if(${MACE_STATIC_LIBRARY})
 	add_library(MC-Graphics STATIC ${HEADERS} ${MCT_SRC})
-	target_link_libraries(MC-Graphics LINK_PUBLIC SDL2-static)
 else()
 	add_library(MC-Graphics SHARED ${HEADERS} ${MCT_SRC})
-	target_link_libraries(MC-Graphics LINK_PUBLIC SDL2)
 endif()
 
 if(GLEW_FOUND)
@@ -21,6 +19,7 @@ else()
 	target_link_libraries(MC-Graphics LINK_PUBLIC glew)
 endif()
 
+target_link_libraries(MC-Graphics LINK_PUBLIC SDL2)
 target_link_libraries(MC-Graphics LINK_PUBLIC MC-System)
 target_link_libraries(MC-Graphics LINK_PUBLIC MC-Window)
 target_include_directories (MC-Graphics PUBLIC ${GLEW_INCLUDE_DIR})
