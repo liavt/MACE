@@ -47,7 +47,7 @@ namespace mc {
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-			const GLenum result = glewInit();
+			GLenum result = glewInit();
 			if (result != GLEW_OK)
 			{
 				throw mc::InitializationError("GLEW failed to initialize with result "+std::to_string(result));
@@ -75,7 +75,11 @@ namespace mc {
 
 			checkGLError();
 
+			result = SDL_GL_SetSwapInterval(vsync);
+			if (result == -1)std::cerr << SDL_GetError();
+
 			initChildren();
+
 
 		}
 
@@ -95,6 +99,11 @@ namespace mc {
 			std::unique_lock<std::mutex> lock(mutex);
 			destroyChildren();
 			SDL_GL_DeleteContext(context);
+		}
+
+		void OpenGLContext::setVSync(const bool & sync)
+		{
+			vsync = sync;
 		}
 
 	}

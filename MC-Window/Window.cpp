@@ -52,6 +52,16 @@ namespace mc {
 			return m_window;
 		}
 
+		const unsigned int & Window::getFPS() const
+		{
+			return fps;
+		}
+
+		void Window::setFPS(const unsigned int & FPS)
+		{
+			fps = FPS;
+		}
+
 		void Window::destroy() {
 			SDL_DestroyWindow(m_window);
 		}

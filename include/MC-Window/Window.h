@@ -24,10 +24,15 @@ namespace mc {
 			int m_originalWidth;
 			int m_originalHeight;
 			char* m_title;
+
+			unsigned int fps=0;
 		public:
 			Window(int width, int height, const char* title);
 			virtual bool isOpen();
 			virtual SDL_Window* getSDLWindow();
+
+			const unsigned int& getFPS() const;
+			void setFPS(const unsigned int& FPS);
 
 			virtual void create();
 			virtual bool poll();

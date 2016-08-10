@@ -15,7 +15,15 @@ Matrix4f math::rotate(const float x, const float y, const float z)
 {
 	return rotate(identity<float, 4>(),x,y,z);
 }
-Matrix4f math::rotate(const Matrix4f m, const float x, const float y, const float z)
+Matrix4f math::rotate(const Vector3f & v)
+{
+	return rotate(v[0],v[1],v[2]);
+}
+Matrix4f math::rotate(const Matrix4f & m, const Vector3f & v)
+{
+	return rotate(m,v[0],v[1],v[2]);
+}
+Matrix4f math::rotate(const Matrix4f& m, const float x, const float y, const float z)
 {
 	return rotateX(m,x)*rotateY(m,y)*rotateZ(m,z);
 }
@@ -23,7 +31,7 @@ Matrix4f math::rotateX(const float x)
 {
 	return rotateX(identity<float,4>(), x);
 }
-Matrix4f math::rotateX(const Matrix4f m, const float x)
+Matrix4f math::rotateX(const Matrix4f& m, const float x)
 {
 	Matrix4f out = m;
 	out[1][1] = cos(x);
@@ -36,7 +44,7 @@ Matrix4f math::rotateY(const float y)
 {
 	return rotateY(identity<float, 4>(),y);
 }
-Matrix4f math::rotateY(const Matrix4f m, const float y)
+Matrix4f math::rotateY(const Matrix4f& m, const float y)
 {
 	Matrix4f out = m;
 	out[0][0] = cos(y);
@@ -49,7 +57,7 @@ Matrix4f math::rotateZ(const float z)
 {
 	return rotateZ(identity<float, 4>(), z);
 }
-Matrix4f math::rotateZ(const Matrix4f m, const float z)
+Matrix4f math::rotateZ(const Matrix4f& m, const float z)
 {
 	Matrix4f out = m;
 	out[0][0] = cos(z);
@@ -62,7 +70,7 @@ Matrix4f math::scale(const float x, const float y, const float z) {
 	return scale(identity<float, 4>(), x, y, z);
 }
 
-Matrix4f math::scale(const Matrix4f m, const float x, const float y, const float z)
+Matrix4f math::scale(const Matrix4f& m, const float x, const float y, const float z)
 {
 	Matrix4f out = m;
 	out[0][0] = x;
@@ -74,7 +82,7 @@ Matrix4f math::translate( const float x, const float y, const float z)
 {
 	return translate(identity<float, 4>(), x, y, z);
 }
-Matrix4f math::translate(const Matrix4f in,const float x, const float y, const float z)
+Matrix4f math::translate(const Matrix4f& in,const float x, const float y, const float z)
 {
 	Matrix4f m = in;
 	m[3][0] = x;

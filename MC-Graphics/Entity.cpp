@@ -161,7 +161,7 @@ const Entity& Container::getChild(Index i) const
 	return *children.at(i);
 }
 
-Index Container::indexOf(const Entity & e) const
+int Container::indexOf(const Entity & e) const
 {
 	for (Index i = 0; i < children.size(); i++) {
 		if (children[i] == &e) {
@@ -394,6 +394,71 @@ Texture & GraphicsEntity::getTexture()
 const mc::gfx::Texture & GraphicsEntity::getTexture() const
 {
 	return texture;
+}
+
+void Group::customInit()
+{
+}
+
+void Group::customUpdate()
+{
+}
+
+void Group::customRender()
+{
+}
+
+void Group::customDestroy()
+{
+}
+
+float & Entity::getWidth()
+{
+	return baseTransformation.scaler[0];
+}
+const float & Entity::getWidth() const
+{
+	return baseTransformation.scaler[0];
+}
+void Entity::setWidth(const float & s)
+{
+	baseTransformation.scaler[0] = s;
+}
+float & Entity::getHeight()
+{
+	return baseTransformation.scaler[1];
+}
+const float & Entity::getHeight() const
+{
+	return baseTransformation.scaler[1];
+}
+void Entity::setHeight(const float & s)
+{
+	baseTransformation.scaler[1] = s;
+}
+float & Entity::getX()
+{
+	return baseTransformation.translation[0];
+}
+const float & Entity::getX() const
+{
+	return baseTransformation.translation[0];
+}
+void Entity::setX(const float & newX)
+{
+	baseTransformation.translation[0] = newX;
+}
+float & Entity::getY()
+{
+	return baseTransformation.translation[1];
+}
+const float & Entity::getY() const
+{
+	return baseTransformation.translation[1];
+}
+void Entity::setY(const float & newY)
+{
+	baseTransformation.translation[1] = newY;
 }
 
 }//gfx

@@ -18,7 +18,7 @@ public:
 	void bind();
 	void unbind();
 
-	void draw(GLenum type=GL_TRIANGLES, Index offset=0);
+	void draw(GLenum type=GL_TRIANGLES);
 
 	void destroy();
 
@@ -31,14 +31,6 @@ public:
 };
 
 class Texture {
-	Index id = 0;
-	GLenum target = GL_TEXTURE_2D;
-
-	Color paint = Color(1.0f,1.0f,1.0f,1.0f);
-
-	float paintStrength=0.5f;
-
-	void generateTexture();
 public:
 
 	Texture();
@@ -62,9 +54,18 @@ public:
 	const Color& getPaint() const;
 	void setPaint(Color& c);
 
-	float& getPaintStrength();
-	const float& getPaintStrength() const;
-	void setPaintStrength(float& f);
+	float getOpacity();
+	const float getOpacity() const;
+	void setOpacity(float f);
+private:
+	Index id = 0;
+	GLenum target = GL_TEXTURE_2D;
+
+	Color paint = Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+	float opacity = 1.0f;
+
+	void generateTexture();
 };
 }//gfx
 }//mc

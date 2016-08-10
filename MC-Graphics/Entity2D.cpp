@@ -1,3 +1,4 @@
+#define _MACE_ENTITY2D_EXPOSE_X_MACRO
 #include <MC-Graphics/Entity2D.h>
 #include <MC-Graphics/GLUtil.h>
 
@@ -11,19 +12,15 @@ namespace gfx {
 			layout(location = 0) in vec3 vertexPosition;
 			layout(location = 1) in vec2 texCoord;
 
-			uniform mat4 transform;
-			uniform float width;
-			uniform float height;
+			uniform mediump mat4 rotation;
+			uniform mediump vec3 translation;
+			uniform mediump vec3 scale;
 
 			out lowp vec2 textureCoord;
 
-
 			void main(){
-				gl_Position.xyz = vertexPosition;
-				gl_Position.xy*=vec2(width,height);
-				gl_Position*=transform;
+				gl_Position = vec4(translation,1.0)+(rotation * vec4(scale * vertexPosition,0.0));//MAD operations right here!
 
-															
 				textureCoord=texCoord;
 			}
 		)";
@@ -38,13 +35,14 @@ namespace gfx {
 			out lowp vec4 color;
 
 			uniform lowp vec4 paint;
-			uniform lowp float paintStrength;
+			uniform lowp float opacity;
 
 			uniform lowp sampler2D tex;
 
 			void main (void)  
 			{     
-			   color= mix(paint,texture(tex,textureCoord),paintStrength);
+				color= mix(vec4(paint.rgb,1.0),texture(tex,textureCoord),paint.a);
+				color.w=opacity;
 			}       
 		)";
 
@@ -87,16 +85,14 @@ namespace gfx {
 
 		shaders2D.init();
 
-		shaders2D.createUniform("paint");
-		shaders2D.createUniform("paintStrength");
-		shaders2D.createUniform("transform");
-		shaders2D.createUniform("width");
-		shaders2D.createUniform("height");
+#define _MACE_ENTITY2D_UNIFORM_ENTRY(a, type) \
+		shaders2D.createUniform(#a);
 
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
+		_MACE_ENTITY2D_UNIFORM_VALUES
+#undef	_MACE_ENTITY2D_UNIFORM_ENTRY
 
-
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		checkGLError();
 	}
@@ -116,30 +112,23 @@ namespace gfx {
 			shaders2D.bind();
 		}
 
-		//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
-		const float& paintStrength = tex.getPaintStrength(), width = e->getWidth(), height = e->getHeight();
 		const TransformMatrix& transform = e->getBaseTransformation();
+
+		//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
+		const float opacity = tex.getOpacity();
+		const Vector3f& translation = transform.translation, scale = transform.scaler;
+		const Matrix4f& rotation = (math::rotate(transform.rotation));
 		const Color& paint = tex.getPaint();
-		if (paint != boundPaint) { 
-			shaders2D.setUniform("paint", paint); 
-			boundPaint = paint;
+
+#define _MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
+		if(a != a##CurrentlyBound){ \
+			shaders2D.setUniform(#a,a); \
+			a##CurrentlyBound = a; \
 		}
-		if(paintStrength!=boundPaintStrength){
-			shaders2D.setUniform("paintStrength", paintStrength);
-			boundPaintStrength = paintStrength;
-		}
-		if(transform!=boundTransformation){
-			shaders2D.setUniform("transform", transform);
-			boundTransformation = transform;
-		}
-		if (width != boundWidth) {
-			shaders2D.setUniform("width", width);
-			boundWidth = width;
-		}
-		if (height!=boundHeight) {
-			shaders2D.setUniform("height", height);
-			boundHeight = height;
-		}
+
+		_MACE_ENTITY2D_UNIFORM_VALUES
+#undef	_MACE_ENTITY2D_UNIFORM_ENTRY
+
 		square.draw();
 
 		checkGLError();
@@ -151,35 +140,6 @@ namespace gfx {
 	}
 	Entity2D::Entity2D() : GraphicsEntity()
 	{
-	}
-	Entity2D::Entity2D(const float & width, const float & height)
-	{
-		this->width = width;
-		this->height = height;
-	}
-	float & Entity2D::getWidth()
-	{
-		return width;
-	}
-	const float & Entity2D::getWidth() const
-	{
-		return width;
-	}
-	void Entity2D::setWidth(const float & s)
-	{
-		width = s;
-	}
-	float & Entity2D::getHeight()
-	{
-		return height;
-	}
-	const float & Entity2D::getHeight() const
-	{
-		return height;
-	}
-	void Entity2D::setHeight(const float & s)
-	{
-		height = s;
 	}
 }
 }

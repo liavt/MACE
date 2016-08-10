@@ -162,7 +162,7 @@ namespace mc {
 			@see #operator[]
 			@see #getChild(Index)
 			*/
-			Index indexOf(const Entity& e) const;
+			int indexOf(const Entity& e) const;
 
 			/**
 			Gets an iterator over this `Container` for enchanced for loops.
@@ -335,6 +335,22 @@ namespace mc {
 
 			void addAction(Action& action);
 			std::vector<Action*> getActions();
+
+			float& getWidth();
+			const float& getWidth() const;
+			void setWidth(const float& s);
+
+			float& getHeight();
+			const float& getHeight() const;
+			void setHeight(const float& s);
+
+			float& getX();
+			const float& getX() const;
+			void setX(const float& newX);
+
+			float& getY();
+			const float& getY() const;
+			void setY(const float& newY);
 		protected:
 			TransformMatrix baseTransformation = TransformMatrix();
 
@@ -436,6 +452,15 @@ namespace mc {
 			virtual void render();
 
 			void setParent(Entity* parent);
+		};
+
+		class Group : public Entity {
+		protected:
+			void customInit();
+			void customUpdate();
+			void customRender();
+			void customDestroy();
+
 		};
 
 		class GraphicsEntity : public Entity{

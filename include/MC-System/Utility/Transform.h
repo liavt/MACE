@@ -21,22 +21,24 @@ namespace mc {
 		@return A rotation `Matrix4f`
 		*/
 		Matrix4f rotate(const float x, const float y, const float z);
-		Matrix4f rotate(const Matrix4f m, const float x, const float y, const float z);
+		Matrix4f rotate(const Vector3f& v);
+		Matrix4f rotate(const Matrix4f& m,const Vector3f& v);
+		Matrix4f rotate(const Matrix4f& m, const float x, const float y, const float z);
 
 		Matrix4f rotateX(const float x);
-		Matrix4f rotateX(const Matrix4f m, const float x);
+		Matrix4f rotateX(const Matrix4f& m, const float x);
 
 		Matrix4f rotateY(const float y);
-		Matrix4f rotateY(const Matrix4f m, const float y);
+		Matrix4f rotateY(const Matrix4f& m, const float y);
 
 		Matrix4f rotateZ(const float z);
-		Matrix4f rotateZ(const Matrix4f m, const float z);
+		Matrix4f rotateZ(const Matrix4f& m, const float z);
 
 		Matrix4f scale(const float x, const float y, const float z);
-		Matrix4f scale(const Matrix4f m, const float x, const float y, const float z);
+		Matrix4f scale(const Matrix4f& m, const float x, const float y, const float z);
 
 		Matrix4f translate(const float x, const float y, const float z);
-		Matrix4f translate(const Matrix4f m, const float x, const float y, const float z);
+		Matrix4f translate(const Matrix4f& m, const float x, const float y, const float z);
 
 		Matrix4f projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
 	}
@@ -64,7 +66,7 @@ namespace mc {
 
 		bool operator==(const TransformMatrix& other) const;
 		bool operator!=(const TransformMatrix& other) const;
-	private:
+
 		Vector3f translation;
 		Vector3f rotation;
 		Vector3f scaler;

@@ -90,7 +90,8 @@ namespace mc {
 					if (destroyed) {
 						isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
 					}
-					SDL_Delay(10);
+
+					if(window->fps!=0)SDL_Delay(1000.0f/(float)window->fps);
 				}
 				catch (const std::exception& e) {
 					Exception::handleException(e);

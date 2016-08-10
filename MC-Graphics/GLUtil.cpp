@@ -1,11 +1,14 @@
 #include <MC-Graphics/GLUtil.h>
 #include <memory>
 #include <MC-Graphics/GraphicsConstants.h>
+#include <MC-System/Constants.h>
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
 		void checkGLError()
 		{
+#ifdef _MACE_DEBUG
 			GLenum result = GL_NO_ERROR;
 			while ((result = glGetError()) != GL_NO_ERROR) {
 				switch (result) {
@@ -35,6 +38,7 @@ namespace mc {
 					break;
 				}
 			}
+#endif
 		}
 		void throwShaderError(const Index& shaderId, const GLenum& type, const std::string& message)
 		{

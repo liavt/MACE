@@ -21,9 +21,9 @@ namespace mc {
 		{
 			glBindVertexArray(0);
 		}
-		void RawModel::draw(GLenum type, Index offset)
+		void RawModel::draw(GLenum type)
 		{
-			glDrawElements(type, indiceNumber, GL_UNSIGNED_INT, 0);
+			glDrawElements(type, indiceNumber, GL_UNSIGNED_INT,0);
 		}
 		void RawModel::destroy()
 		{
@@ -190,19 +190,19 @@ namespace mc {
 			paint = c;
 		}
 
-		float & Texture::getPaintStrength()
+		float Texture::getOpacity()
 		{
-			return paintStrength;
+			return opacity;
 		}
 
-		const float & Texture::getPaintStrength() const
+		const float Texture::getOpacity() const
 		{
-			return paintStrength;
+			return opacity;
 		}
 
-		void Texture::setPaintStrength(float & f)
+		void Texture::setOpacity(float f)
 		{
-			paintStrength = f;
+			opacity = f;
 		}
 
 }

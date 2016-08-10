@@ -24,6 +24,8 @@ namespace gfx{
 class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
 	SDL_GLContext context;
 
+	bool vsync;
+
 public:
 	OpenGLContext();
 
@@ -32,6 +34,8 @@ public:
 	void init(win::Window* win);
 	void render(win::Window* win);
 	void destroy(win::Window* win);
+
+	void setVSync(const bool& sync);
 
 };
 

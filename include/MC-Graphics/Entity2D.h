@@ -5,23 +5,21 @@
 #include <MC-Graphics/Shaders.h>
 #include <MC-Graphics/GLUtil.h>
 
+#define _MACE_ENTITY2D_UNIFORM_VALUES \
+	_MACE_ENTITY2D_UNIFORM_ENTRY(opacity,float) \
+	_MACE_ENTITY2D_UNIFORM_ENTRY(paint,Color) \
+	_MACE_ENTITY2D_UNIFORM_ENTRY(scale,Vector3f) \
+	_MACE_ENTITY2D_UNIFORM_ENTRY(rotation, Matrix4f) \
+	_MACE_ENTITY2D_UNIFORM_ENTRY(translation, Vector3f)
+
+
 namespace mc {
 namespace gfx {
 
 	class Entity2D : public GraphicsEntity {
 	public:
 		Entity2D();
-		Entity2D(const float& width, const float& height);
-
-		float& getWidth();
-		const float& getWidth() const;
-		void setWidth(const float& s);
-
-		float& getHeight();
-		const float& getHeight() const;
-		void setHeight(const float& s);
 	protected:
-		float width = 0, height = 0;
 	};
 
 	class Renderer2D {
@@ -43,13 +41,15 @@ namespace gfx {
 
 		const static GLuint squareIndices[6];
 
-		Index boundTexture=-1, boundModel=-1, boundProgram=-1;
+		Index boundModel = 0;
 
-		float boundPaintStrength = -1.0f, boundWidth = -1.0f, boundHeight = -1.0f;
+		int boundTexture = -1, boundProgram = -1;
 
-		Color& boundPaint = Color(-1.0f,-1.0f,-1.0f,-1.0f);
+#define _MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
+		type a##CurrentlyBound = type##();
 
-		TransformMatrix& boundTransformation = TransformMatrix();
+		_MACE_ENTITY2D_UNIFORM_VALUES
+#undef	_MACE_ENTITY2D_UNIFORM_ENTRY
 
 		ShaderProgram shaders2D=ShaderProgram();
 		RawModel square=RawModel();
@@ -87,3 +87,7 @@ namespace gfx {
 
 }
 }
+
+#ifndef _MACE_ENTITY2D_EXPOSE_X_MACRO
+#undef _UNIFORM_VALUES
+#endif

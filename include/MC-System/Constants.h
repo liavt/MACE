@@ -10,11 +10,13 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #define __MACE true //this will be true if MACE is included
 
-#define _MACE_TO_STRING(s) #s
-
 #ifndef __cplusplus 
 	#error A C++ compiler is required!
 #endif 
+
+#if DEBUG==true || _DEBUG==true
+#define _MACE_DEBUG
+#endif
 
 #include <cstdint>
 
