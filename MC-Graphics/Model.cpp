@@ -8,29 +8,25 @@ namespace mc {
 	namespace gfx {
 
 
-		RawModel::~RawModel()
+		VAO::~VAO()
 		{
-			destroy();
 		}
 
-		void RawModel::bind()
+		void VAO::bind()
 		{
 			glBindVertexArray(vaoID);
 		}
-		void RawModel::unbind()
+		void VAO::unbind()
 		{
 			glBindVertexArray(0);
 		}
-		void RawModel::draw(GLenum type)
+		void VAO::draw(GLenum type)
 		{
 			glDrawElements(type, indiceNumber, GL_UNSIGNED_INT,0);
 		}
-		void RawModel::destroy()
+		void VAO::loadVertices(const Size & verticeSize, const GLfloat vertices[])
 		{
-		}
-		void RawModel::loadVertices(const Size & verticeSize, const GLfloat vertices[])
-		{
-			vaoID = createVAO();
+			vaoID = createID();
 			vertexNumber = verticeSize;
 
 
@@ -39,14 +35,14 @@ namespace mc {
 			unbind();
 		}
 
-		void RawModel::loadTextureCoordinates(const Size & verticeSize, const GLfloat vertices[])
+		void VAO::loadTextureCoordinates(const Size & verticeSize, const GLfloat vertices[])
 		{
 			bind();
 			storeDataInAttributeList(vertices, 1, 2, vertexNumber);
 			unbind();
 		}
 
-		void RawModel::loadIndices(const Size & indiceNum, const GLuint indices[])
+		void VAO::loadIndices(const Size & indiceNum, const GLuint indices[])
 		{
 			bind();
 			Index indicesID;
@@ -65,14 +61,14 @@ namespace mc {
 
 			unbind();
 		}
-		Index RawModel::createVAO()
+		Index VAO::createID()
 		{
 			Index id;
 			glGenVertexArrays(1, &id);
 			checkGLError();
 			return id;
 		}
-		void RawModel::storeDataInAttributeList(const GLfloat data[], const Index & attributeNumber, const Size& attributeSize, const Size & verticeSize)
+		void VAO::storeDataInAttributeList(const GLfloat data[], const Index & attributeNumber, const Size& attributeSize, const Size & verticeSize)
 		{
 			Index vboID;
 			// Generate 1 buffer, put the resulting identifier in vertexbuffer
@@ -203,6 +199,51 @@ namespace mc {
 		void Texture::setOpacity(float f)
 		{
 			opacity = f;
+		}
+
+		VBO::VBO()
+		{
+			glGenBuffers(1,&bufferID);
+			checkGLError();
+		}
+
+		VBO::~VBO()
+		{
+		}
+
+		void VBO::setAttributeLayout(const Index attributeNumber, const GLenum dataType, const bool normalized, const unsigned int stride, const GLvoid * pointer)
+		{
+			attributeID = attributeNumber;
+			glVertexAttribPointer(attributeNumber, componentSize, dataType, normalized, stride, pointer);
+
+			glEnableVertexAttribArray(attributeNumber);
+
+			checkGLError();
+		}
+
+		bool VBO::isAttributeBuffer() const
+		{
+			return attributeID<=0;
+		}
+
+		int VBO::getAttributeID() const
+		{
+			return attributeID;
+		}
+
+		Size VBO::getComponentSize() const
+		{
+			return componentSize;
+		}
+
+		Size VBO::getDataSize() const
+		{
+			return dataSize;
+		}
+
+		Index VBO::getBufferID() const
+		{
+			return bufferID;
 		}
 
 }

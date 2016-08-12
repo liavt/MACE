@@ -41,9 +41,6 @@ namespace gfx {
 
 		const static GLuint squareIndices[6];
 
-		Index boundModel = 0;
-
-		int boundTexture = -1, boundProgram = -1;
 
 #define _MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
 		type a##CurrentlyBound = type##();
@@ -52,7 +49,7 @@ namespace gfx {
 #undef	_MACE_ENTITY2D_UNIFORM_ENTRY
 
 		ShaderProgram shaders2D=ShaderProgram();
-		RawModel square=RawModel();
+		VAO square=VAO();
 
 		std::unordered_map<std::string, bool> lastUniforms = std::unordered_map<std::string, bool>();
 

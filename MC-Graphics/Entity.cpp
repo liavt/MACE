@@ -39,7 +39,7 @@ void Container::updateChildren()
 
 void Container::initChildren()
 {
-	for (Index i = 0; i < children.size(); i++) {
+	for (Index i = 0; i < children.size(); ++i) {
 		if (!children[i]->getProperty(ENTITY_INIT))children[i]->init();
 
 	}
@@ -47,7 +47,7 @@ void Container::initChildren()
 
 bool Container::hasChild(Entity & e) const
 {
-	for (Size i = 0; i < children.size(); i++) {
+	for (Size i = 0; i < children.size(); ++i) {
 		if (children[i] == &e) {
 			return true;
 		}
@@ -62,14 +62,14 @@ void Container::clearChildren()
 
 void Container::destroyChildren()
 {
-	for (Index i = 0; i < children.size(); i++) {
+	for (Index i = 0; i < children.size(); ++i) {
 		children[i]->destroy();
 	}
 }
 
 void Container::renderChildren()
 {
-	for (Index i = 0; i < children.size(); i++) {
+	for (Index i = 0; i < children.size();++i) {
 		children[i]->render();
 	}
 }
@@ -289,19 +289,6 @@ void Entity::setProperties(BitField<uint16_t>& b)
 {
 	properties = b;
 }
-bool Entity::getProperty(Index position) const
-{
-	if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-	else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
-	return properties.getBit(position);
-}
-void Entity::setProperty(Index position, bool value)
-{
-	if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-	else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
-	properties.setBit(position, value);
-}
-
 TransformMatrix & Entity::getBaseTransformation()
 {
 	return baseTransformation;
@@ -333,14 +320,6 @@ Entity & Entity::scale(float x, float y, float z)
 {
 	baseTransformation.scale(x, y, z);
 	return *this;
-}
-
-Matrix4f Entity::getFinalTransformation() const
-{
-	//this isn't even my final form!
-	Matrix4f out = baseTransformation.get();
-	if (hasParent())out = out* parent->getFinalTransformation();
-	return out;
 }
 
 bool Entity::operator==(Entity& other) const {

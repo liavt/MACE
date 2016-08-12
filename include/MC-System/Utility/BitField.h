@@ -39,8 +39,7 @@ namespace mc {
 		<p>
 		Equal to calling {@code BitField(0)}
 		*/
-		BitField() {
-			this->value = 0;
+		BitField() : value(){//default initilize value, incase it is not integral
 		}
 
 		/**
@@ -49,8 +48,8 @@ namespace mc {
 		Equal to calling {@code BitField<T> = value}
 		@param value Inital value
 		*/
-		BitField(const T value) {
-			this->value = value;
+		BitField(const T val){
+			this->value = val;
 		}
 
 		//dont need a copy constructor, the above constructor acts like one. adding a copy constructor creates too many options when you do ByteField var = 0;
@@ -82,7 +81,7 @@ namespace mc {
 		Change the internal value.
 		@param newValue New value for this `BitField` to operate on
 		*/
-		void set(T newValue) {
+		inline void set(T newValue) {
 			value = newValue;
 		}
 
@@ -92,7 +91,7 @@ namespace mc {
 		@param state `true` to make the specified bit 1, and `false` to make it 0
 		@return `this` for chaining
 		*/
-		BitField& setBit(Index position, bool state) {
+		inline BitField& setBit(Index position, bool state) {
 			if (state) {
 				return toggleBit(position);
 			}else {
@@ -105,7 +104,7 @@ namespace mc {
 		@param position 0-indexed integer representing which bit to toggle
 		@return `this` for chaining
 		*/
-		BitField& toggleBit(Index position) {
+		inline BitField& toggleBit(Index position) {
 			value |= (1 << position);
 			return *this;
 		}
@@ -115,7 +114,7 @@ namespace mc {
 		@param position 0-indexed integer representing which bit to untoggle
 		@return `this` for chaining
 		*/
-		BitField& untoggleBit(Index position) {
+		inline BitField& untoggleBit(Index position) {
 			value &= ~(1 << position);
 			return *this;
 		}
@@ -125,7 +124,7 @@ namespace mc {
 		@param position which bit to check
 		@return `true` if the bit is 1, `false` otherwise
 		*/
-		bool getBit(Index position) const{
+		inline bool getBit(Index position) const{
 			return (((value >> position) & 1) == 1);
 		}
 		
@@ -134,7 +133,7 @@ namespace mc {
 		@param position Which bit to "flip," or invert
 		@return `this` for chaining
 		*/
-		BitField& flipBit(Index position) {
+		inline BitField& flipBit(Index position) {
 			value ^= 1 << position;
 			return *this;
 		}
@@ -145,7 +144,7 @@ namespace mc {
 		Equivelant to calling the ~ operator.
 		@return `this` for chainign
 		*/
-		BitField& inverse() {
+		inline BitField& inverse() {
 			value = ~value;
 			return *this;
 		}

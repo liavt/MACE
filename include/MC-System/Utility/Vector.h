@@ -90,19 +90,18 @@ namespace mc {
 		/**
 		Default constructor. Constructs an empty `Vector`
 		*/
-		Vector()
+		Vector() : content()
 		{
 			static_assert(N != 0, "A Vector's size must be greater than 0!");
-			this->setContents(std::array<T, N>());
 		};
 
 		/**
 		Consructs a `Vector` from the contents of an array.
 		@param arr An equally-sized array whose contents will be filled into a `Vector`
 		*/
-		Vector(const T arr[N]) {
+		Vector(const T arr[N]) : content ()//we need to initialize the array first, or else we will try to access an empty memory location
+		{
 			static_assert(N != 0, "A Vector's size must be greater than 0!");
-			this->setContents(std::array<T,N>());//we need to initialize the array first, or else we will try to access an empty memory location
 			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
 
@@ -110,20 +109,18 @@ namespace mc {
 		Consructs a `Vector` from the contents of an `std::array`.
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
-		Vector(const std::array<T, N>& contents)
+		Vector(const std::array<T, N>& contents) : content(contents)
 		{
 			static_assert(N != 0, "A Vector's size must be greater than 0!");
-			this->setContents(contents);
 		};
 
-		Vector(const std::initializer_list<T> args) {//this is for aggregate initializaition
+		Vector(const std::initializer_list<T> args) : content() {//this is for aggregate initializaition
 			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			if (args.size() != N)throw IndexOutOfBounds("The number of arguments MUST be equal to the size of the array.");
-			this->setContents(std::array<T, N>());
 			Index counter = 0;
 			for (auto elem : args) {
 				content[counter] = elem;
-				counter++;
+				++counter;
 			}
 		}
 		
@@ -131,9 +128,8 @@ namespace mc {
 		Copies the contents of a `Vector` into a new `Vector`
 		@param obj A `Vector` to clone
 		*/
-		Vector(const Vector &obj)
+		Vector(const Vector &obj) : content(obj.content)
 		{
-			this->setContents(obj.getContents());
 		};
 
 		/**
@@ -168,7 +164,7 @@ namespace mc {
 		@param arr An equally sized array whose contents will cloned in this `Vector`
 		*/
 		void setContents(const T arr[N]) {
-			for (Index i = 0; i < N; i++) {
+			for (Index i = 0; i < N; ++i) {
 				set(i, arr[i]);
 			}
 		};
@@ -587,11 +583,10 @@ namespace mc {
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
-		Matrix()
+		Matrix() : Vector()//extending defautl construtor so it initializes the array
 		{	
 			static_assert(W != 0, "A Matrix's width must be greater than 0!");
 			static_assert(H != 0, "A Matrix's height must be greater than 0!");
-			this->setContents(std::array<MatrixRow<T, H>, W>());
 			for (Index i = 0; i < content.size(); i++) {
 				content[i] = MatrixRow<T, H>();
 			}
@@ -601,8 +596,8 @@ namespace mc {
 		Creates a `Matrix` based on a 2-dimensional array. The array's contents will be copied into this `Matrix`
 		@param arr An array of contents
 		*/
-		Matrix(T arr[W][H]) {
-			Matrix();
+		Matrix(T arr[W][H]) : Matrix()
+		{
 			for (Index x = 0; x < W; x++) {
 				for (Index y = 0; y < H; y++) {
 					content[x][y] = arr[x][y];
@@ -611,9 +606,9 @@ namespace mc {
 		}
 
 
-		Matrix(const std::initializer_list<const std::initializer_list<T>> args) {//this is for aggregate initializaition
+		Matrix(const std::initializer_list<const std::initializer_list<T>> args) :Matrix()//this is for aggregate initializaition
+		{
 			if (args.size() != W)throw IndexOutOfBounds("The width of the argument must be equal to to the height of the Matrix!");
-			Matrix();
 			Index counterX = 0, counterY = 0;
 			for (std::initializer_list<T> elemX : args) {
 				if (elemX.size() != H)throw IndexOutOfBounds("The height of the argument must be equal to to the height of the Matrix!");
@@ -631,8 +626,7 @@ namespace mc {
 		Copy constructor. Clones the contents of another `Matrix` into a new `Matrix`
 		@param copy What the clone
 		*/
-		Matrix(const Matrix& copy) {
-			this->setContents(copy.getContents());
+		Matrix(const Matrix& copy) : Vector(copy.content){
 		}
 
 		/**

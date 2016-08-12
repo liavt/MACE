@@ -7,27 +7,56 @@
 namespace mc {
 namespace gfx {
 
-class RawModel {
-	Index createVAO();
+class VBO {
+public:
+	VBO();
+	~VBO();
+
+	template<typename DataType,Size DataSize>
+	void setData(const std::array<DataType,DataSize>& data, const Size componentSize = 1, const GLenum bufferType = GL_ARRAY_BUFFER, const GLenum readType = GL_STATIC_DRAW) {
+		this->componentSize = componentSize;
+		this->dataSize = DataSize;
+
+		glBindBuffer(bufferType, bufferID);
+		glBufferData(bufferType, sizeof(DataType)*(componentSize * DataSize), data.data(), readType);
+
+		checkGLError();//
+	}
+
+	void setAttributeLayout(const Index attributeNumber,const GLenum dataType= GL_FLOAT,const bool normalized = GL_FALSE, const unsigned int stride=0,const GLvoid* pointer=0);
+
+	bool isAttributeBuffer() const;
+
+	int getAttributeID() const;
+	Size getComponentSize() const;
+	Size getDataSize() const;
+	Index getBufferID() const;
+private:
+	int attributeID=-1;
+	Index bufferID;
+	Size componentSize;
+	Size dataSize;
+};
+
+class VAO {
 public:
 	Index vaoID;
 	Size vertexNumber, indiceNumber;
 
-	~RawModel();
+	~VAO();
 
 	void bind();
 	void unbind();
 
 	void draw(GLenum type=GL_TRIANGLES);
 
-	void destroy();
-
 	void loadVertices(const Size& verticeSize, const GLfloat vertices[]);
 	void loadTextureCoordinates(const Size& verticeSize, const GLfloat vertices[]);
 	void loadIndices(const Size& indiceNum, const GLuint indices[]);
 
 	void storeDataInAttributeList(const GLfloat data[], const Index& attributeNumber, const Size& attributeSize, const Size& verticeSize);
-
+private:
+	Index createID();
 };
 
 class Texture {

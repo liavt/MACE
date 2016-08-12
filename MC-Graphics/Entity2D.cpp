@@ -99,23 +99,15 @@ namespace gfx {
 	void Renderer2D::draw(Entity2D * e)
 	{
 		const Texture& tex = e->getTexture();
-		if (boundTexture != tex.getID()) {
-			boundTexture = tex.getID();
-			tex.bind();
-		}
-		if (boundModel != square.vaoID) {
-			boundModel = square.vaoID;
-			square.bind();
-		}
-		if (boundProgram != shaders2D.getProgramID()) {
-			boundProgram = shaders2D.getProgramID();
-			shaders2D.bind();
-		}
+	
+		tex.bind();
+		square.bind();
+		shaders2D.bind();
 
 		const TransformMatrix& transform = e->getBaseTransformation();
 
 		//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
-		const float opacity = tex.getOpacity();
+		const float& opacity = tex.getOpacity();
 		const Vector3f& translation = transform.translation, scale = transform.scaler;
 		const Matrix4f& rotation = (math::rotate(transform.rotation));
 		const Color& paint = tex.getPaint();
@@ -135,7 +127,6 @@ namespace gfx {
 	}
 	void Renderer2D::destroy()
 	{
-		square.destroy();
 		shaders2D.destroy();
 	}
 	Entity2D::Entity2D() : GraphicsEntity()

@@ -15,7 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif 
 
 #if DEBUG==true || _DEBUG==true
-#define _MACE_DEBUG
+#define _MACE_ERROR_CHECK
 #endif
 
 #include <cstdint>

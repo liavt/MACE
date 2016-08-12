@@ -248,8 +248,6 @@ namespace mc {
 			/**
 			Set the properties for this `Entity`
 			@param b New `Entity` properties
-			@throw IndexOutOfBounds if `position<0`
-			@throw IndexOutOfBounds if `position>properties.size()`
 			@see getProperties()
 			@see getProperty(Index) const
 			@see setProperty(Index, bool)
@@ -260,13 +258,19 @@ namespace mc {
 			Retrieve the value of a property. Property consants start with `ENTITY_PROPERTY_`
 			@param position Location of the property based on a constant
 			@return `true` or `false` based on the postition
-			@throw IndexOutOfBounds if `position<0`
-			@throw IndexOutOfBounds if `position>properties.size()`
 			@see setProperty(Index, bool)
 			@see getProperties()
 			@see setProperties(ByteField&)
 			*/
-			bool getProperty(Index position) const;
+			inline bool getProperty(Index position) const {
+				
+#ifdef _MACE_ERROR_CHECK
+				if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
+				else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
+#endif
+				return properties.getBit(position);
+				
+			}
 			/**
 			Set a property to be `true` or `false`.Property consants start with `ENTITY_PROPERTY_`
 			@param position Location of the property based on a constant
@@ -275,7 +279,13 @@ namespace mc {
 			@see getProperties()
 			@see setProperties(ByteField&)
 			*/
-			void setProperty(Index position, bool value);
+			inline void setProperty(Index position, bool value) {
+#ifdef _MACE_ERROR_CHECK
+				if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
+				else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
+#endif
+				properties.setBit(position, value);
+			}
 
 			TransformMatrix& getBaseTransformation();
 			const TransformMatrix& getBaseTransformation() const;
@@ -284,8 +294,6 @@ namespace mc {
 			Entity& translate(float x, float y, float z);
 			Entity& rotate(float x, float y, float z);
 			Entity& scale(float x, float y, float z);
-
-			Matrix4f getFinalTransformation() const;
 			
 
 			/**

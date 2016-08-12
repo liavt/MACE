@@ -97,35 +97,6 @@ namespace mc{
 
 		Container c = Container();
 
-		TEST_CASE("Testing the transformations","[entity][graphics]") {
-			DummyEntity e = DummyEntity();
-			DummyEntity e2 = DummyEntity();
-
-			c.addChild(e);
-
-			e.addChild(e2);
-
-			SECTION("Base TransformMatrix") {
-				e.translate(1, 1, 1);
-
-				Vector4f v = {1,1,2,1};
-				REQUIRE(e.getFinalTransformation()*v == Vector4f({2,2,3,1}));
-			}
-
-			e.getBaseTransformation().reset();
-
-			SECTION("Inherited transformation") {
-				e.translate(2,3,1);
-				REQUIRE(e2.getFinalTransformation()*Vector4f({ 1,2,3,1 }) == Vector4f({3,5,4,1}));
-				
-				e2.translate(1, 2, 3);
-				REQUIRE(e2.getFinalTransformation()*Vector4f({ 1,2,3,1 }) == Vector4f({ 4,7,7,1 }));
-
-			}
-
-			c.clearChildren();
-		}
-
 		TEST_CASE("Testing the getParent() function","[entity][graphics]") {
 
 			DummyEntity e = DummyEntity();

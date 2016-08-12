@@ -49,12 +49,8 @@ void mc::Color::setAlpha(const mc::Byte& a) {
 }
 
 
-mc::Color::Color(const float& red, const float& green, const float& blue, const float& alpha)
+mc::Color::Color(const float& red, const float& green, const float& blue, const float& alpha) : r(red),g(green),b(blue),a(alpha)
 {
-	this->r = red;
-	this->g = green;
-	this->b = blue;
-	this->a = alpha;
 }
 
 mc::Color::Color(const std::array<float,4>& rgba)
@@ -62,14 +58,12 @@ mc::Color::Color(const std::array<float,4>& rgba)
 	this->setValues(rgba);
 }
 
-mc::Color::Color(const Color & copy)
+mc::Color::Color(const Color & copy) : r(copy.r),g(copy.g),b(copy.b),a(copy.a)
 {
-	Color(copy.r,copy.g,copy.b,copy.a);
 }
 
-mc::Color::Color()
+mc::Color::Color() : r(0.0f),g(0.0f),b(0.0f),a(1.0f)
 {
-	Color(0.0f,0.0f,0.0f,1.0f);
 }
 
 bool mc::Color::operator==(const Color & other) const
