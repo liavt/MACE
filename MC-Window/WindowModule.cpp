@@ -9,6 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MC-Window/WindowModule.h>
 #include <mutex>
+#include <ctime>
+#include <chrono>
 
 namespace mc {
 	namespace win
@@ -33,6 +35,10 @@ namespace mc {
 			//do nothing if no context is defined
 		}
 
+		void GraphicsContext::resize(Window * win)
+		{
+		}
+
 		void WindowModule::setContext(GraphicsContext * con)
 		{
 			if(System::getFlag(SYSTEM_FLAG_INIT)){
@@ -54,44 +60,65 @@ namespace mc {
 		void WindowModule::threadCallback() {
 			std::mutex mutex;
 
-			//a block with no identifider (just curly brackets) creates a new scope. the guard in it will be destructed at the end of the next bracket.
-			{
-				try {
-					std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-					window->create();
-
-					if (context != 0)context->init(window);
-				}
-				catch (const std::exception& e) {
-					Exception::handleException(e);
-				}
-				catch (...) {
-					std::cerr << "An error has occured";
-					System::requestStop();
-				}
-			}//so at this bracket, the guard will have it's destructor called, because it goes out of scope.
-
 			bool isRunning = true;
+
+			time_t now = time(0);
+			time_t lastFrame = time(0);
+
+			float windowDelay=0;
+
+			try {
+				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+
+				window->create();
+
+				if (context != 0) {
+					context->init(window);
+
+					context->resize(window);
+				}
+
+				if (window->fps != 0) {
+					windowDelay = 1000.0f / (float)window->fps;
+				}
+			}
+			catch (const std::exception& e) {
+				Exception::handleException(e);
+			}
+			catch (...) {
+				std::cerr << "An error has occured";
+				System::requestStop();
+			}
 
 			//this is the main rendering loop.
 			while (isRunning) {
 				try {
-					std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+					now = time(0);
 
-					//thread doesn't own window, so we have to lock the mutex
-					if (window->poll()) {
-						System::requestStop();
+					{
+						std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+
+						//thread doesn't own window, so we have to lock the mutex
+						if (window->poll()) {
+							System::requestStop();
+						}
+
+						if (context != 0) {
+							context->render(window);
+						}
+
+						if (destroyed) {
+							isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
+						}
 					}
 
-					if (context != 0) {
-						context->render(window);
-					}
+					const time_t delta = now - lastFrame;
 
-					if (destroyed) {
-						isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
-					}
+					if (delta < windowDelay) {
+						lastFrame = now;
 
-					if(window->fps!=0)SDL_Delay(1000.0f/(float)window->fps);
+						std::this_thread::sleep_for(std::chrono::milliseconds((unsigned int)windowDelay));
+					}
 				}
 				catch (const std::exception& e) {
 					Exception::handleException(e);

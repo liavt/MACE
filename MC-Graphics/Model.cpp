@@ -181,7 +181,7 @@ namespace mc {
 			return paint;
 		}
 
-		void Texture::setPaint(Color & c)
+		void Texture::setPaint(const Color & c)
 		{
 			paint = c;
 		}
@@ -196,55 +196,65 @@ namespace mc {
 			return opacity;
 		}
 
-		void Texture::setOpacity(float f)
+		void Texture::setOpacity(const float f)
 		{
 			opacity = f;
 		}
 
-		VBO::VBO()
-		{
-			glGenBuffers(1,&bufferID);
-			checkGLError();
-		}
-
-		VBO::~VBO()
+		UBO::~UBO()
 		{
 		}
 
-		void VBO::setAttributeLayout(const Index attributeNumber, const GLenum dataType, const bool normalized, const unsigned int stride, const GLvoid * pointer)
+		void UBO::bind() const
 		{
-			attributeID = attributeNumber;
-			glVertexAttribPointer(attributeNumber, componentSize, dataType, normalized, stride, pointer);
-
-			glEnableVertexAttribArray(attributeNumber);
-
-			checkGLError();
+			glBindBuffer(GL_UNIFORM_BUFFER,id);
 		}
 
-		bool VBO::isAttributeBuffer() const
+		void UBO::unbind() const
 		{
-			return attributeID<=0;
+			glBindBuffer(GL_UNIFORM_BUFFER,0);
 		}
 
-		int VBO::getAttributeID() const
+		void UBO::setData(const GLsizeiptr dataSize, const GLvoid * data, const GLenum drawType) const
 		{
-			return attributeID;
+			glBufferData(GL_UNIFORM_BUFFER,dataSize, data, drawType);
 		}
 
-		Size VBO::getComponentSize() const
+		Index UBO::getID() const
 		{
-			return componentSize;
+			return id;
 		}
 
-		Size VBO::getDataSize() const
+		GLvoid * UBO::map() const
 		{
-			return dataSize;
+			bind();
+			GLvoid* ptr = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+			unbind();
+			return ptr;
 		}
 
-		Index VBO::getBufferID() const
+		void UBO::unmap() const
 		{
-			return bufferID;
+			bind();
+			glUnmapBuffer(GL_UNIFORM_BUFFER);
+			unbind();
 		}
 
-}
-}
+		void UBO::init()
+		{
+			glGenBuffers(1,&id);
+		}
+
+		void UBO::bindBufferBase(const Index location)
+		{
+			this->location = location;
+			glBindBufferBase(GL_UNIFORM_BUFFER,this->location,id);
+		}
+
+		void UBO::bindUniform(const Index programID, const Index uniformID) const
+		{
+			glUniformBlockBinding(programID,uniformID,location);
+		}
+
+}//gfx
+}//mc

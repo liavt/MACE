@@ -13,147 +13,149 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MC-System/Constants.h>
 
 namespace mc {
-	std::vector<Module*> System::modules;
-	ByteField System::flags = 0;
 
-	Index System::addModule(Module& m)
-	{
-		modules.push_back(&m);
-		return (Index)(modules.size() - 1);
-	}
-	void System::removeModule(Module& m)
-	{
-		for (Index i = 0; i < modules.size(); i++) {
-			if (modules[i]==&m) {
-				removeModule(i);
-				return;
-			}
-		}
-		throw ObjectNotFoundInArray("No module by the name of " + m.getName() + " found!");
-	}
-	void System::removeModule(std::string module)
-	{
-		for (Index i = 0; i < modules.size(); i++) {
-			if (modules[i]->getName()==module) {
-				removeModule(i);
-				return;
-			}
-		}
-		throw ObjectNotFoundInArray("No module by the name of "+module+" found!");
-	}
-	void System::removeModule(Index i)
-	{
-		if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
-		modules.erase(modules.begin()+i);
-	}
-	Module * System::getModule(std::string keyword)
-	{
-		for (Index i = 0; i < modules.size();i++) {
-			if (modules[i]->getName() == keyword) {
-				return modules[i];
-			}
-		}
-		throw ObjectNotFoundInArray("No module by the name of " + keyword + " found!");
-	}
-	Module * System::getModule(Index i)
-	{
-		if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
-		return modules[i];
-	}
-	bool System::moduleExists(std::string module)
-	{
-		for (Index i = 0; i < modules.size();i++) {
-			if (modules[i]->getName() == module) {
-				return true;
-			}
-		}
-		return false;
-	}
-	bool System::moduleExists(Module * module)
-	{
-		for (Index i = 0; i < modules.size(); i++) {
-			if (modules[i]==module) {
-				return true;
-			}
-		}
-		return false;
-	}
-	Size System::numberOfModules()
-	{
-		return modules.size();
-	}
-	void System::assertModule(std::string module, std::string errorMessage)
-	{
-		if (!moduleExists(module)) {
-			throw AssertionError(errorMessage);
-		}
-	}
-	void System::assertModule(std::string module)
-	{
-		assertModule(module, "\'"+module+"\' module has not been registered!");
-	}
+std::vector<Module*> System::modules;
+ByteField System::flags = 0;
 
-	unsigned int System::indexOf(Module& m) {
-		for (Index i = 0; i < modules.size(); i++) {
-			if (modules[i]==&m) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	unsigned int System::indexOf(std::string name) {
-		for (Index i = 0; i < modules.size(); i++) {
-			if (modules[i]->getName() ==name) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	void System::init() {
-		if (modules.size()==0)throw InitializationError("Must add a Module via System::addModule!");
-		flags.untoggleBit(SYSTEM_FLAG_DESTROYED);
-		flags.toggleBit(SYSTEM_FLAG_INIT);
-		for (Index i = 0; i < modules.size(); i++) {
-			modules[i]->init();
+Index System::addModule(Module& m)
+{
+	modules.push_back(&m);
+	return (Index)(modules.size() - 1);
+}
+void System::removeModule(Module& m)
+{
+	for (Index i = 0; i < modules.size(); i++) {
+		if (modules[i]==&m) {
+			removeModule(i);
+			return;
 		}
 	}
-
-	void System::terminate() {
-		if (!flags.getBit(SYSTEM_FLAG_INIT)) {
-			throw InitializationError("Can't terminate System without calling init() first!");
-		}
-		flags.toggleBit(SYSTEM_FLAG_DESTROYED);
-		flags.untoggleBit(SYSTEM_FLAG_INIT);
-		flags.untoggleBit(SYSTEM_FLAG_STOP_REQUESTED);
-		for (Index i = 0; i < modules.size(); i++) {
-			modules[i]->destroy();
-		}
-		SDL_Quit();
-	}
-
-	void System::update() {
-		if (!flags.getBit(SYSTEM_FLAG_INIT))throw InitializationError("init() must be called!");
-		for (Index i = 0; i < modules.size(); i++) {
-			modules[i]->update();
+	throw ObjectNotFoundInArray("No module by the name of " + m.getName() + " found!");
+}
+void System::removeModule(std::string module)
+{
+	for (Index i = 0; i < modules.size(); i++) {
+		if (modules[i]->getName()==module) {
+			removeModule(i);
+			return;
 		}
 	}
-	bool System::isRunning()
-	{
-		return !flags.getBit(SYSTEM_FLAG_STOP_REQUESTED)&&flags.getBit(SYSTEM_FLAG_INIT)&&!flags.getBit(SYSTEM_FLAG_DESTROYED);
+	throw ObjectNotFoundInArray("No module by the name of "+module+" found!");
+}
+void System::removeModule(Index i)
+{
+	if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
+	modules.erase(modules.begin()+i);
+}
+Module * System::getModule(std::string keyword)
+{
+	for (Index i = 0; i < modules.size();i++) {
+		if (modules[i]->getName() == keyword) {
+			return modules[i];
+		}
 	}
-	void System::requestStop()
-	{
-		flags.toggleBit(SYSTEM_FLAG_STOP_REQUESTED);
+	throw ObjectNotFoundInArray("No module by the name of " + keyword + " found!");
+}
+Module * System::getModule(Index i)
+{
+	if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
+	return modules[i];
+}
+bool System::moduleExists(std::string module)
+{
+	for (Index i = 0; i < modules.size();i++) {
+		if (modules[i]->getName() == module) {
+			return true;
+		}
 	}
-	bool System::getFlag(Index flag)
-	{
-		return flags.getBit(flag);
+	return false;
+}
+bool System::moduleExists(Module * module)
+{
+	for (Index i = 0; i < modules.size(); i++) {
+		if (modules[i]==module) {
+			return true;
+		}
 	}
-	void System::reset()
-	{
-		modules.clear();
-		flags = 0;
+	return false;
+}
+Size System::numberOfModules()
+{
+	return modules.size();
+}
+void System::assertModule(std::string module, std::string errorMessage)
+{
+	if (!moduleExists(module)) {
+		throw AssertionError(errorMessage);
 	}
 }
+void System::assertModule(std::string module)
+{
+	assertModule(module, "\'"+module+"\' module has not been registered!");
+}
+
+unsigned int System::indexOf(Module& m) {
+	for (Index i = 0; i < modules.size(); i++) {
+		if (modules[i]==&m) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+unsigned int System::indexOf(std::string name) {
+	for (Index i = 0; i < modules.size(); i++) {
+		if (modules[i]->getName() ==name) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void System::init() {
+	if (modules.size()==0)throw InitializationError("Must add a Module via System::addModule!");
+	flags.untoggleBit(SYSTEM_FLAG_DESTROYED);
+	flags.toggleBit(SYSTEM_FLAG_INIT);
+	for (Index i = 0; i < modules.size(); i++) {
+		modules[i]->init();
+	}
+}
+
+void System::terminate() {
+	if (!flags.getBit(SYSTEM_FLAG_INIT)) {
+		throw InitializationError("Can't terminate System without calling init() first!");
+	}
+	flags.toggleBit(SYSTEM_FLAG_DESTROYED);
+	flags.untoggleBit(SYSTEM_FLAG_INIT);
+	flags.untoggleBit(SYSTEM_FLAG_STOP_REQUESTED);
+	for (Index i = 0; i < modules.size(); i++) {
+		modules[i]->destroy();
+	}
+	SDL_Quit();
+}
+
+void System::update() {
+	if (!flags.getBit(SYSTEM_FLAG_INIT))throw InitializationError("init() must be called!");
+	for (Index i = 0; i < modules.size(); i++) {
+		modules[i]->update();
+	}
+}
+bool System::isRunning()
+{
+	return !flags.getBit(SYSTEM_FLAG_STOP_REQUESTED)&&flags.getBit(SYSTEM_FLAG_INIT)&&!flags.getBit(SYSTEM_FLAG_DESTROYED);
+}
+void System::requestStop()
+{
+	flags.toggleBit(SYSTEM_FLAG_STOP_REQUESTED);
+}
+bool System::getFlag(Index flag)
+{
+	return flags.getBit(flag);
+}
+void System::reset()
+{
+	modules.clear();
+	flags = 0;
+}
+
+}//mc

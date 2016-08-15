@@ -7,4 +7,5 @@
 #include <MC-Graphics/GraphicsConstants.h>
 #include <MC-Graphics/Entity.h>
 #include <MC-Graphics/Actions.h>
-#include <MC-Graphics/Entity2D.h>
+#include <MC-Graphics/GraphicsEntity.h>
+#include <MC-Graphics/Renderer.h>

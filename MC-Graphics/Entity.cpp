@@ -352,28 +352,6 @@ bool Container::operator!=(Container & other) const
 {
 	return !(this == &other);
 }
-GraphicsEntity::GraphicsEntity() : Entity()
-{
-}
-GraphicsEntity::GraphicsEntity(Texture & t) : Entity()
-{
-	texture = t;
-}
-GraphicsEntity::~GraphicsEntity()
-{
-}
-void GraphicsEntity::setTexture(Texture & tex)
-{
-	texture = tex;
-}
-Texture & GraphicsEntity::getTexture()
-{
-	return texture;
-}
-const mc::gfx::Texture & GraphicsEntity::getTexture() const
-{
-	return texture;
-}
 
 void Group::customInit()
 {

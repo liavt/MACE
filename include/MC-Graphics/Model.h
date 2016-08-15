@@ -7,37 +7,6 @@
 namespace mc {
 namespace gfx {
 
-class VBO {
-public:
-	VBO();
-	~VBO();
-
-	template<typename DataType,Size DataSize>
-	void setData(const std::array<DataType,DataSize>& data, const Size componentSize = 1, const GLenum bufferType = GL_ARRAY_BUFFER, const GLenum readType = GL_STATIC_DRAW) {
-		this->componentSize = componentSize;
-		this->dataSize = DataSize;
-
-		glBindBuffer(bufferType, bufferID);
-		glBufferData(bufferType, sizeof(DataType)*(componentSize * DataSize), data.data(), readType);
-
-		checkGLError();//
-	}
-
-	void setAttributeLayout(const Index attributeNumber,const GLenum dataType= GL_FLOAT,const bool normalized = GL_FALSE, const unsigned int stride=0,const GLvoid* pointer=0);
-
-	bool isAttributeBuffer() const;
-
-	int getAttributeID() const;
-	Size getComponentSize() const;
-	Size getDataSize() const;
-	Index getBufferID() const;
-private:
-	int attributeID=-1;
-	Index bufferID;
-	Size componentSize;
-	Size dataSize;
-};
-
 class VAO {
 public:
 	Index vaoID;
@@ -48,7 +17,7 @@ public:
 	void bind();
 	void unbind();
 
-	void draw(GLenum type=GL_TRIANGLES);
+	void draw(const GLenum type=GL_TRIANGLES);
 
 	void loadVertices(const Size& verticeSize, const GLfloat vertices[]);
 	void loadTextureCoordinates(const Size& verticeSize, const GLfloat vertices[]);
@@ -57,7 +26,7 @@ public:
 	void storeDataInAttributeList(const GLfloat data[], const Index& attributeNumber, const Size& attributeSize, const Size& verticeSize);
 private:
 	Index createID();
-};
+};//VBO
 
 class Texture {
 public:
@@ -71,7 +40,7 @@ public:
 
 	void loadFile(const char* file);
 
-	void setTarget(GLenum target);
+	void setTarget(const GLenum target);
 	GLenum getTarget();
 
 	int getID() const;
@@ -81,11 +50,11 @@ public:
 
 	Color& getPaint();
 	const Color& getPaint() const;
-	void setPaint(Color& c);
+	void setPaint(const Color& c);
 
 	float getOpacity();
 	const float getOpacity() const;
-	void setOpacity(float f);
+	void setOpacity(const float f);
 private:
 	Index id = 0;
 	GLenum target = GL_TEXTURE_2D;
@@ -95,6 +64,32 @@ private:
 	float opacity = 1.0f;
 
 	void generateTexture();
-};
+};//Texture
+
+class UBO {
+public:
+	~UBO();
+
+	void bind() const;
+	void unbind() const;
+
+	void setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType = GL_DYNAMIC_DRAW) const;
+
+	Index getID() const;
+
+	GLvoid* map() const;
+	void unmap() const;
+
+	void init();
+
+	void bindBufferBase(const Index location);
+
+	void bindUniform(const Index programID, const Index uniformID) const;
+
+private:
+	Index id;
+	Index location;
+};//UBO
+
 }//gfx
 }//mc
