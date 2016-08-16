@@ -3,12 +3,15 @@
 #include <MC-Graphics/GraphicsEntity.h>
 #include <MC-Graphics/Shaders.h>
 
-#define _MACE_ENTITY2D_UNIFORM_VALUES \
-	_MACE_ENTITY2D_UNIFORM_ENTRY(opacity,float) \
-	_MACE_ENTITY2D_UNIFORM_ENTRY(paint,Color) \
-	_MACE_ENTITY2D_UNIFORM_ENTRY(scale,Vector3f) \
-	_MACE_ENTITY2D_UNIFORM_ENTRY(rotation, Matrix4f) \
-	_MACE_ENTITY2D_UNIFORM_ENTRY(translation, Vector3f)
+#define MACE_ENTITY2D_UNIFORM_VALUES \
+	MACE_ENTITY2D_UNIFORM_ENTRY(opacity,float) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(paint,Color) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(scale,Vector3f) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(rotation, Matrix4f) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(translation, Vector3f) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(inheritedScale,Vector3f) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(inheritedRotation,Matrix4f) \
+	MACE_ENTITY2D_UNIFORM_ENTRY(inheritedTranslation,Vector3f) \
 
 
 namespace mc {
@@ -35,11 +38,11 @@ private:
 
 	const static GLuint squareIndices[6];
 
-#define _MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
+#define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
 	static type a##CurrentlyBound;
 
-	_MACE_ENTITY2D_UNIFORM_VALUES
-#undef	_MACE_ENTITY2D_UNIFORM_ENTRY
+	MACE_ENTITY2D_UNIFORM_VALUES
+#undef	MACE_ENTITY2D_UNIFORM_ENTRY
 
 	static ShaderProgram shaders2D;
 	static VAO square;
@@ -48,6 +51,6 @@ private:
 }//gfx
 }//mc
 
-#ifndef _MACE_ENTITY2D_EXPOSE_X_MACRO
-#undef _MACE_ENTITY2D_UNIFORM_VALUES
+#ifndef MACE_ENTITY2D_EXPOSE_X_MACRO
+#undef MACE_ENTITY2D_UNIFORM_VALUES
 #endif

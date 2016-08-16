@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <iostream>
 #include <MC-Graphics/Entity.h>
 #include <type_traits>
-#include <MC-Graphics/Entity2D.h>
+#include <MC-Graphics/GraphicsEntity.h>
 
 namespace mc{
 	namespace gfx{
@@ -117,7 +117,7 @@ namespace mc{
 			SECTION("Checking whether it recognizes the parent"){
 				REQUIRE_FALSE(e.hasParent());
 				REQUIRE_FALSE(e.hasParent());
-				REQUIRE(e2.getParent()==e);
+				REQUIRE(*e2.getParent()==e);
 			}
 
 			c.clearChildren();

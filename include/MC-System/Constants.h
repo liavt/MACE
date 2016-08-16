@@ -8,14 +8,14 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#define __MACE true //this will be true if MACE is included
+#define MACE_INCLUDED true //this will be true if MACE is included
 
 #ifndef __cplusplus 
 	#error A C++ compiler is required!
 #endif 
 
 #if DEBUG==true || _DEBUG==true
-#define _MACE_ERROR_CHECK
+#define MACE_ERROR_CHECK
 #endif
 
 #include <cstdint>

@@ -8,7 +8,7 @@ namespace mc {
 	namespace gfx {
 		void checkGLError()
 		{
-#ifdef _MACE_ERROR_CHECK
+#ifdef MACE_ERROR_CHECK
 			GLenum result = GL_NO_ERROR;
 			while ((result = glGetError()) != GL_NO_ERROR) {
 				switch (result) {

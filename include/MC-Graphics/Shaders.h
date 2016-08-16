@@ -105,6 +105,9 @@ namespace gfx {
 		*/
 
 		//you cant send matrices of int to a shader, so we only generate matrices of float and double
+		/**
+		Set a uniform in this `ShaderProgram` to a value.
+		*/
 		_UNIFORM_MATRIX(float, fv);
 		_UNIFORM_MATRIX(double, dv);
 

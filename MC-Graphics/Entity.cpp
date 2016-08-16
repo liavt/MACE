@@ -124,12 +124,12 @@ void Entity::setParent(Entity * parent)
 	setProperty(ENTITY_INIT, false);
 }
 
-Entity& Entity::getParent() {
-	return *parent;
+Entity* const Entity::getParent() {
+	return parent;
 }
 
-const Entity& Entity::getParent() const {
-	return *parent;
+const Entity* const Entity::getParent() const {
+	return parent;
 }
 
 bool Entity::hasParent() const
@@ -209,7 +209,7 @@ void Entity::update() {
 		//inherit properties from the parent
 		//first,check if we can inherit, and then check if we have a parent()
 		if (!getProperty(ENTITY_IGNORE_PARENT)&&hasParent()) {
-			const Entity& parent = getParent();//we will be doing multiple calls on the parent, so we assign the refernce to a variable. this is faster than calling getParent() multiple times.
+			const Entity& parent = *getParent();//we will be doing multiple calls on the parent, so we assign the refernce to a variable. this is faster than calling getParent() multiple times.
 			//check if the parent can pass it's properties down from the parent
 			if (parent.getProperty(ENTITY_PASS_DOWN)) {//check if the parent is allowed to pass it's properties down
 				inherit(parent);//actually inherit properties
@@ -326,7 +326,7 @@ bool Entity::operator==(Entity& other) const {
 	if (other.getProperties() != getProperties()) {
 		return false;
 	}
-	if (&other.getParent() != &getParent()) {
+	if (*other.getParent() != const_cast<Entity&>(*getParent())) {
 		return false;
 	}
 	if (other.getBaseTransformation() != getBaseTransformation()) {

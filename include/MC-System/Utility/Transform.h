@@ -41,6 +41,7 @@ namespace mc {
 		Matrix4f translate(const Matrix4f& m, const float x, const float y, const float z);
 
 		Matrix4f projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
+		Matrix4f ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
 	}
 	struct TransformMatrix{
 		TransformMatrix();

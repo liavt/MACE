@@ -1,56 +1,24 @@
-#define _MACE_ENTITY2D_EXPOSE_X_MACRO
+#define MACE_ENTITY2D_EXPOSE_X_MACRO
 #include <MC-Graphics/Renderer.h>
 
 namespace mc {
 namespace gfx {
 
-const char* Renderer::vertexShader2D = R"(
-		#version 330 core
+//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
+//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
+const char* Renderer::vertexShader2D ={
+#include "shaders/entity2D.vert"
+};
 
-		precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
-
-		layout(location = 0) in vec3 vertexPosition;
-		layout(location = 1) in vec2 texCoord;
-
-		uniform mediump mat4 rotation;
-		uniform mediump vec3 translation;
-		uniform mediump vec3 scale;
-
-		out lowp vec2 textureCoord;
-
-		void main(){
-			gl_Position = vec4(translation,1.0)+(rotation * vec4(scale * vertexPosition,0.0));//MAD operations right here!
-
-			textureCoord=texCoord;
-		}
-	)";
-
-const char* Renderer::fragmentShader2D = R"(
-		#version 330 core
-
-		precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
-
-		in lowp vec2 textureCoord;
-
-		out lowp vec4 color;
-
-		uniform lowp vec4 paint;
-		uniform lowp float opacity;
-
-		uniform lowp sampler2D tex;
-
-		void main (void)  
-		{     
-			color= mix(vec4(paint.rgb,1.0),texture(tex,textureCoord),paint.a);
-			color.w=opacity;
-		}       
-	)";
+const char* Renderer::fragmentShader2D ={
+#include "shaders/entity2D.frag"
+};
 
 const GLfloat Renderer::squareVertices[] = {
-	-1.0f,-1.0f,0.0f,
-	-1.0f,1.0f,0.0f,
-	1.0f,1.0f,0.0f,
-	1.0f,-1.0f,0.0f
+	0.0f,0.0f,0.5f,
+	0.0f,1.0f,0.5f,
+	1.0f,1.0f,0.5f,
+	1.0f,0.0f,0.5f
 };
 
 const GLfloat Renderer::squareTextureCoordinates[] = {
@@ -70,11 +38,11 @@ VAO Renderer::square = VAO();
 ShaderProgram Renderer::shaders2D = ShaderProgram();
 
 
-#define _MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
+#define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
 type Renderer::a##CurrentlyBound = type##();	
 
-_MACE_ENTITY2D_UNIFORM_VALUES
-#undef _MACE_ENTITY2D_UNIFORM_ENTRY
+MACE_ENTITY2D_UNIFORM_VALUES
+#undef MACE_ENTITY2D_UNIFORM_ENTRY
 
 void Renderer::init()
 {
@@ -90,25 +58,32 @@ void Renderer::init()
 
 	shaders2D.init();
 
-#define _MACE_ENTITY2D_UNIFORM_ENTRY(a, type)	\
-	shaders2D.createUniform(#a);				\
+#define MACE_ENTITY2D_UNIFORM_ENTRY(a, type)	\
+	shaders2D.createUniform(#a);				
 
-	_MACE_ENTITY2D_UNIFORM_VALUES
-#undef	_MACE_ENTITY2D_UNIFORM_ENTRY
+	MACE_ENTITY2D_UNIFORM_VALUES
+#undef	MACE_ENTITY2D_UNIFORM_ENTRY
+
+	shaders2D.createUniform("ortho");
+
+	shaders2D.bind();
+	//these are uniforms that dont change
+	shaders2D.setUniform("ortho", math::ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f));
+	shaders2D.unbind();
 
 	//gl states
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	checkGLError();
-}
+}//init
 void Renderer::prepare()
 {
-}
+}//prepare
 void Renderer::resize(const Size width, const Size height)
 {
 	glViewport(0,0,width,height);
-}
+}//resize
 void Renderer::draw(Entity2D * e)
 {
 	const Texture& tex = e->getTexture();
@@ -125,23 +100,35 @@ void Renderer::draw(Entity2D * e)
 	const Matrix4f& rotation = (math::rotate(transform.rotation));
 	const Color& paint = tex.getPaint();
 
-#define _MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
+	Vector3f inheritedTranslation = {0,0,0};
+	Vector3f inheritedScale = { 1,1,1 };
+	Matrix4f inheritedRotation = math::identity<float, 4>();
+	if (e->hasParent()) {
+		const Entity* const parent = e->getParent();
+		const TransformMatrix& parentTransform = parent->getBaseTransformation();
+
+		inheritedTranslation = parentTransform.translation;
+		inheritedScale = parentTransform.scaler;
+		inheritedRotation = math::rotate(parentTransform.rotation);
+	}
+
+#define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
 	if(a != a##CurrentlyBound){ \
 		shaders2D.setUniform(#a,a); \
 		a##CurrentlyBound = a; \
 	}
 
-	_MACE_ENTITY2D_UNIFORM_VALUES
-#undef	_MACE_ENTITY2D_UNIFORM_ENTRY
+	MACE_ENTITY2D_UNIFORM_VALUES
+#undef	MACE_ENTITY2D_UNIFORM_ENTRY
 
-		square.draw();
+	square.draw();
 
 	checkGLError();
-}
+}//draw
 void Renderer::destroy()
 {
 	shaders2D.destroy();
-}
+}//destroy
 
-}
-}
+}//gfx
+}//mc

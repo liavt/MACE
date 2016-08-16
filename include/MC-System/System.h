@@ -16,7 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 /**
 Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.
 <p>
-Preproccessor definitions will start with `_MACE.` The defintion `__MACE` will be defined to equal `true` if MACE is included.
+Preproccessor definitions will start with `MACE_` and `MACE_INCLUDED` will be defined to equal `true` if MACE is included.
 */
 namespace mc {
 	class System;

@@ -261,7 +261,7 @@ public:
 	*/
 	inline bool getProperty(Index position) const {
 
-#ifdef _MACE_ERROR_CHECK
+#ifdef MACE_ERROR_CHECK
 		if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
 		else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
 #endif
@@ -277,7 +277,7 @@ public:
 	@see setProperties(ByteField&)
 	*/
 	inline void setProperty(Index position, bool value) {
-#ifdef _MACE_ERROR_CHECK
+#ifdef MACE_ERROR_CHECK
 		if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
 		else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
 #endif
@@ -298,13 +298,13 @@ public:
 	@return A `Container` which contains `this`
 	@see Container#hasChild(const Entity&) const;
 	*/
-	Entity& getParent();
+	Entity* const getParent();
 	/**
 	`const` version of `getParent()`
 	@return A `Container` which contains `this`
 	@see Container#hasChild(const Entity&) const;
 	*/
-	const Entity& getParent() const;
+	const Entity* const getParent() const;
 
 	bool hasParent() const;
 
