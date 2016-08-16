@@ -20,6 +20,10 @@ namespace mc {
 		
 	};
 
+	struct NullPointer : public Exception {
+		using Exception::Exception;
+	};
+
 	/**
 	Thrown when an assertion fails.
 	@see System#assertModule(std::string)

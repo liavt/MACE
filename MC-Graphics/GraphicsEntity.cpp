@@ -1,5 +1,6 @@
 #include <MC-Graphics/GraphicsEntity.h>
 #include <MC-Graphics/GLUtil.h>
+#include <MC-Graphics/Renderer.h>
 
 namespace mc {
 namespace gfx {
@@ -32,6 +33,23 @@ const mc::gfx::Texture & GraphicsEntity::getTexture() const
 }
 
 Entity2D::Entity2D() : GraphicsEntity()
+{
+}
+
+void Image::customInit()
+{
+}
+
+void Image::customUpdate()
+{
+}
+
+void Image::customRender()
+{
+	Renderer::draw(this);
+}
+
+void Image::customDestroy()
 {
 }
 

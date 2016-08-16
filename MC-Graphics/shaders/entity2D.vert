@@ -3,30 +3,40 @@ R"(
 
 #version 330 core
 
-precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
+precision mediump float; // Defines precision for float and float-derived (vector/matrix) types.
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 texCoord;
 
-uniform mediump mat4 rotation;
-uniform mediump vec3 translation;
-uniform mediump vec3 scale;
+uniform mat4 rotation;
+uniform vec3 translation;
+uniform vec3 scale; 
 
-uniform mediump mat4 inheritedRotation;
-uniform mediump vec3 inheritedTranslation;
-uniform mediump vec3 inheritedScale;
-
-uniform mediump mat4 ortho;
+uniform mat4 inheritedRotation;
+uniform vec3 inheritedTranslation;
+uniform vec3 inheritedScale;
 
 out lowp vec2 textureCoord;
 
 void main(){
 	//we do scale first, then rotate, then translate.
-	gl_Position = ortho*(vec4(translation,1.0)+(rotation * vec4(scale * vertexPosition,0.0)));//MAD operations right here!
-	//applying the parent properties now
-	gl_Position = vec4(inheritedTranslation,1.0)+((inheritedRotation * (gl_Position * vec4(inheritedScale,0.0))));//what a MAD man!
+	gl_Position = (vec4(translation,1.0)+(rotation * (vec4(scale*vertexPosition,0.0))));//MAD operations right here!
 	
-	gl_Position.xy -= 1.0f;//set origin to bottom left
+	gl_Position.xy -= 0.5f;//because we moved the origin to be the bottom left, we need to move it back to the center for rotation
+	
+	//applying the parent properties now
+	gl_Position = (vec4(inheritedTranslation,1.0)+((inheritedRotation * (gl_Position * vec4(inheritedScale,0.0)))));//what a MAD man!
+	
+//	gl_Position.xy += 0.5f;
+	
+	gl_Position = ((gl_Position)*vec4(2.0f,2.0f,1.0f,1.0f))+vec4(-0.5f,-0.5f,0,0);//we need to convert it to be 0.0 to 1.0 coordinates and the origin to be the bottom left.
+	
+	gl_Position += vec4(scale/2.0f,0.0f);
+
+	
+	//gl_Position += vec4(scale/2.0f,0.0f);
+	
+	//gl_Position = ortho*gl_Position;
 	
 	/*
 	For those who didn't get the MAD joke:

@@ -606,7 +606,7 @@ namespace mc {
 		}
 
 
-		Matrix(const std::initializer_list<const std::initializer_list<T>> args) :Matrix()//this is for aggregate initializaition
+		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix()//this is for aggregate initializaition
 		{
 			if (args.size() != W)throw IndexOutOfBounds("The width of the argument must be equal to to the height of the Matrix!");
 			Index counterX = 0, counterY = 0;
@@ -755,13 +755,12 @@ namespace mc {
 		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
-		@bug If the vector is of non-numerical value, breaks
 		*/
 		Vector<T, H> operator+(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; x++) {
-				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				arr[x] = T();//we must initialize the value first, or else it will be undefined
 				for (Index y = 0; y < H; y++) {
 					arr[y] += static_cast<T>(content[x][y]) + static_cast<T>(right[x]);
 				}
@@ -776,13 +775,12 @@ namespace mc {
 		@return A `Vector` that was created by subtracting a `Vector` and a `Matrix` together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
-		@bug If the vector is of non-numerical values, breaks
 		*/
 		Vector<T, H> operator-(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; x++) {
-				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				arr[x] = T();//we must initialize the value first, or else it will be undefined
 				for (Index y = 0; y < H; y++) {
 					arr[y] += static_cast<T>(content[x][y]) - static_cast<T>(right[x]);
 				}
@@ -798,13 +796,12 @@ namespace mc {
 		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
-		@bug If the vector is of non-numerical values, breaks
 		*/
 		Vector<T, H> operator*(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; x++) {
-				arr[x] = 0;//we must initialize the value first, or else it will be undefined
+				arr[x] = T();//we must initialize the value first, or else it will be undefined
 				for (Index y = 0; y < H; y++) {
 					arr[y] += static_cast<T>(content[x][y]) * static_cast<T>(right[x]);
 				}
@@ -855,14 +852,13 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		@see operator*(const T&) const
-		@bug If the matrix is of non-numerical values, breaks
 		*/
 		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
 			for (Index x = 0; x < W; x++) {
 				for (Index y = 0; y < H; y++) {
-					arr[x][y] = 0;
+					arr[x][y] = T();
 					for (Index x1 = 0; x1 < W; x1++) {
 						arr[x][y] += content[x][x1] * right[x1][y];
 					}
@@ -1017,7 +1013,6 @@ namespace mc {
 		@return A scalar calculated from the dot product of `a` and `b`
 		@see cross(const Vector&, const Vector&)
 		@see magnitude(const Vector&)
-		@bug If the vector is of non-numerical value, breaks
 		@tparam T Type of the `Vectors` being calculated. This does not need to be explicitely set.
 		@tparam N Size of the `Vectors` being calculated. This does not need to be explicitely set.
 		*/
@@ -1030,7 +1025,6 @@ namespace mc {
 		Calculates the magnitude of a `Vector`, or how long it is.
 		@param a The `Vector` to calculate from
 		@return The magnitude of `Vector a`
-		@bug If the vector is of non-numerical value, breaks
 		@see cross(const Vector&, const Vector&)
 		@see dot(const Vector&, const Vector&)
 		@tparam T Type of the `Vectors` being calculated. This does not need to be explicitely set.
@@ -1038,7 +1032,7 @@ namespace mc {
 		*/
 		template<typename T,Size N>
 		T magnitude(const Vector<T,N>& a) {
-			T out = 0;//assuming its numerical
+			T out = T();//assuming its numerical
 			//basically the pythagereon theorum
 			for (Index i = 0; i < N;i++) {
 				out += static_cast<T>(sqr(a[i]));
@@ -1104,7 +1098,7 @@ namespace mc {
 		template<typename T, Size N>
 		T det(const Matrix<T, N, N>& matrix) {
 			static_assert(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
-			T sum=0;
+			T sum= T();
 			Index counter=0;
 			for (Index i = 0; i < N; i++) {
 				const Size newMatrixSize = N - 1;
@@ -1149,7 +1143,7 @@ namespace mc {
 		*/
 		template<typename T, Size N>
 		T tr(const Matrix<T, N, N>& m) {
-			T out = 0;
+			T out = T();
 			//done without a trace!
 			for (Index x = 0; x < N; x++) {
 				out += m[x][x];

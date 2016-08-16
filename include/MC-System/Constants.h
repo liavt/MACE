@@ -65,6 +65,8 @@ namespace mc {
 	*/
 	using Index = unsigned int;
 
+	typedef void(*VoidFunctionPtr)();
+
 	/**
 	Parameter for `System.getFlag(Index)`. Is `true` if `System.init()` has been called.
 	*/

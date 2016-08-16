@@ -27,5 +27,13 @@ namespace gfx {
 	protected:
 	};//Entity2D
 
+	class Image : public Entity2D {
+	protected:
+		void customInit();
+		void customUpdate();
+		void customRender();
+		void customDestroy();
+
+	};
 }//gfx
 }//mc

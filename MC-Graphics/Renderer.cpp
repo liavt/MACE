@@ -15,10 +15,10 @@ const char* Renderer::fragmentShader2D ={
 };
 
 const GLfloat Renderer::squareVertices[] = {
-	0.0f,0.0f,0.5f,
-	0.0f,1.0f,0.5f,
-	1.0f,1.0f,0.5f,
-	1.0f,0.0f,0.5f
+	-0.5f,-0.5f,0.0f,
+	-0.5f,0.5f,0.0f,
+	0.5f,0.5f,0.0f,
+	0.5f,-0.5f,0.0f
 };
 
 const GLfloat Renderer::squareTextureCoordinates[] = {
@@ -64,11 +64,11 @@ void Renderer::init()
 	MACE_ENTITY2D_UNIFORM_VALUES
 #undef	MACE_ENTITY2D_UNIFORM_ENTRY
 
-	shaders2D.createUniform("ortho");
+//	shaders2D.createUniform("ortho");
 
 	shaders2D.bind();
 	//these are uniforms that dont change
-	shaders2D.setUniform("ortho", math::ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f));
+//	shaders2D.setUniform("ortho", math::ortho(0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
 	shaders2D.unbind();
 
 	//gl states

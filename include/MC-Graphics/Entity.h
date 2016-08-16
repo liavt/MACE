@@ -468,5 +468,31 @@ protected:
 
 };//Group
 
+class CallbackEntity : public Entity {
+public:
+	void setInitCallback(const VoidFunctionPtr func);
+	VoidFunctionPtr getInitCallback();
+	const VoidFunctionPtr getInitCallback() const;
+
+	void setUpdateCallback(const VoidFunctionPtr func);
+	VoidFunctionPtr getUpdateCallback();
+	const VoidFunctionPtr getUpdateCallback() const;
+
+	void setRenderCallback(const VoidFunctionPtr func);
+	VoidFunctionPtr getRenderCallback();
+	const VoidFunctionPtr getRenderCallback() const;
+
+	void setDestroyCallback(const VoidFunctionPtr func);
+	VoidFunctionPtr getDestroyCallback();
+	const VoidFunctionPtr getDestroyCallback() const;
+protected:
+	void customInit();
+	void customUpdate();
+	void customRender();
+	void customDestroy();
+private:
+	VoidFunctionPtr destroyCallback = [] {}, updateCallback= [] {}, renderCallback= [] {}, initCallback= [] {};
+};//CallbackEntity
+
 }//gfx
 }//mc

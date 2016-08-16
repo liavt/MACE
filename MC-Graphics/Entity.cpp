@@ -418,5 +418,89 @@ void Entity::setY(const float & newY)
 	baseTransformation.translation[1] = newY;
 }
 
+void CallbackEntity::customInit()
+{
+	initCallback();
+}
+
+void CallbackEntity::customUpdate()
+{
+	updateCallback();
+}
+
+void CallbackEntity::customRender()
+{
+	renderCallback();
+}
+
+void CallbackEntity::customDestroy()
+{
+	destroyCallback();
+}
+
+void CallbackEntity::setInitCallback(const VoidFunctionPtr func)
+{
+	if (func == 0 || func == nullptr)throw NullPointer("Init callback must be a valid pointer, and not null!");
+	initCallback = func;
+}
+
+VoidFunctionPtr CallbackEntity::getInitCallback()
+{
+	return initCallback;
+}
+
+const VoidFunctionPtr CallbackEntity::getInitCallback() const
+{
+	return initCallback;
+}
+
+void CallbackEntity::setUpdateCallback(const VoidFunctionPtr func)
+{
+	if (func == 0 || func == nullptr)throw NullPointer("Update callback must be a valid pointer, and not null!");
+	updateCallback = func;
+}
+
+VoidFunctionPtr CallbackEntity::getUpdateCallback()
+{
+	return updateCallback;
+}
+
+const VoidFunctionPtr CallbackEntity::getUpdateCallback() const
+{
+	return updateCallback;
+}
+
+void CallbackEntity::setRenderCallback(const VoidFunctionPtr func)
+{
+	if (func == 0 || func == nullptr)throw NullPointer("Render callback must be a valid pointer, and not null!");
+	renderCallback = func;
+}
+
+VoidFunctionPtr CallbackEntity::getRenderCallback()
+{
+	return renderCallback;
+}
+
+const VoidFunctionPtr CallbackEntity::getRenderCallback() const
+{
+	return renderCallback;
+}
+
+void CallbackEntity::setDestroyCallback(const VoidFunctionPtr func)
+{
+	if (func == 0 || func == nullptr)throw NullPointer("Destroy callback must be a valid pointer, and not null!");
+	destroyCallback = func;
+}
+
+VoidFunctionPtr CallbackEntity::getDestroyCallback()
+{
+	return destroyCallback;
+}
+
+const VoidFunctionPtr CallbackEntity::getDestroyCallback() const
+{
+	return destroyCallback;
+}
+
 }//gfx
 }//mc
