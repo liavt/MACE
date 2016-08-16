@@ -51,7 +51,7 @@ namespace mc {
 										// The following commands will talk about our 'vertexbuffer' buffer
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
 															 // Give our vertices to OpenGL.
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, GL_STATIC_DRAW);//
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, GL_DYNAMIC_DRAW);//
 
 																									   //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
 
@@ -76,7 +76,7 @@ namespace mc {
 									// The following commands will talk about our 'vertexbuffer' buffer
 			glBindBuffer(GL_ARRAY_BUFFER, vboID);//
 												 // Give our data to opengl
-			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * verticeSize), data, GL_STATIC_DRAW);//
+			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * verticeSize), data, GL_DYNAMIC_DRAW);//
 			gfx::checkGLError();//
 
 			glVertexAttribPointer(attributeNumber, attributeSize, GL_FLOAT, GL_FALSE, 0, 0);

@@ -141,6 +141,8 @@ void Entity::addChild(Entity & e)
 {
 	Container::addChild(e);
 	e.setParent(this);
+	//if the entity is getting added after init() has been called, we call init() ourselves
+	if (!e.getProperty(ENTITY_INIT) && getProperty(ENTITY_INIT))e.init();
 }
 
 Entity& Container::operator[](Index i) {
