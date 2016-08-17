@@ -128,7 +128,16 @@ void Renderer::draw(Entity2D * e)
 void Renderer::destroy()
 {
 	shaders2D.destroy();
-}//destroy
+}
+void Renderer::setRefreshColor(const float r, const float g, const float b, const float a)
+{
+	glClearColor(r,g,b,a);
+}
+void Renderer::setRefreshColor(const Color & c)
+{
+	setRefreshColor(c.r,c.g,c.b,c.a);
+}
+//destroy
 
 }//gfx
 }//mc

@@ -2,8 +2,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
 message(STATUS "Adding MC-Window")
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Window/*.h")
 file(GLOB_RECURSE MCT_SRC *.cpp)
 
@@ -13,12 +11,15 @@ else()
 	add_library(MC-Window SHARED ${HEADERS} ${MCT_SRC})
 endif()
 
+target_include_directories(MC-Window PUBLIC ${MACE_INCLUDES})
+target_include_directories (MC-Window PUBLIC ${GLEW_INCLUDE_DIR})
 if(GLEW_FOUND)
 	target_link_libraries(MC-Window LINK_PUBLIC "${GLEW_LIBRARIES}")
 else()
-	target_link_libraries(MC-Window LINK_PUBLIC glew)
+	if(${MACE_STATIC_LIBRARY}})
+		target_link_libraries(MC-Window LINK_PUBLIC glew_s)
+	else()
+		target_link_libraries(MC-Window LINK_PUBLIC glew)
+	endif()
 endif()
-
 target_link_libraries(MC-Window LINK_PUBLIC MC-System)
-target_include_directories (MC-Window PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories (MC-Window PUBLIC ${GLEW_INCLUDE_DIR})

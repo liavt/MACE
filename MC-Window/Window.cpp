@@ -24,11 +24,8 @@ namespace mc {
 
 		bool Window::poll()
 		{
+			glfwPollEvents();
 			return glfwWindowShouldClose(m_window);
-		}
-
-		void poll() {
-			
 		}
 
 		GLFWwindow* Window::getGLFWWindow() {

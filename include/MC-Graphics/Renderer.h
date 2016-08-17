@@ -28,6 +28,10 @@ public:
 	static void draw(Entity2D* e);
 
 	static void destroy();
+
+	static void setRefreshColor(const float r, const float g, const float b, const float a=1.0f);
+	static void setRefreshColor(const Color& c);
+
 private:
 	const static char* vertexShader2D;
 	const static char* fragmentShader2D;

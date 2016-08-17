@@ -2,13 +2,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
 message(STATUS "Adding MC-Testing...")
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Testing/*.h")
 file(GLOB_RECURSE MCT_SRC *.cpp)
 
 add_executable(MC-Testing ${HEADERS} ${MCT_SRC})
 
+target_include_directories(MC-Testing PUBLIC ${MACE_INCLUDES})
 target_include_directories (MC-Testing PUBLIC ${GLEW_INCLUDE_DIR})
 if(GLEW_FOUND)
 	target_link_libraries(MC-Testing LINK_PUBLIC "${GLEW_LIBRARIES}")

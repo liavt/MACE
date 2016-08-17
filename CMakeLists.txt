@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
 
 project(MACE CXX)
 
@@ -6,18 +6,11 @@ message("MACE project added")
 
 #For the installation of other projects
 include(ExternalProject)
-
-
-#all the variables are now being set here
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 #for glfw
 set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-
 #This defines where all of our includes are located
-set(MACE_INCLUDES "${CMAKE_SOURCE_DIR}/include")
+set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
 set(MACE_WINDOW ON CACHE BOOL "Whether to build the windowing library under MC-Window.")
 set(MACE_GRAPHICS ON CACHE BOOL "Whether to build the graphics library under MC-Graphics. MACE_WINDOW is required for this.")
@@ -31,12 +24,12 @@ set(MACE_STATIC_LIBRARY ON CACHE BOOL "Whether to build static library files")
 set(GLFW_SOURCE_NAME "glfw-3.2")
 
 set(GLFW_URL "http://downloads.sourceforge.net/project/glfw/glfw/3.2/${GLFW_SOURCE_NAME}.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fglfw%2Ffiles%2Fglfw%2F3.2%2F&ts=1470492725&use_mirror=heanet")
-set(GLFW_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${GLFW_SOURCE_NAME}.tar.gz")
+set(GLFW_DOWNLOAD_PATH "${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME}.tar.gz")
 #This is where the source will be located in
-set(GLFW_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${GLFW_SOURCE_NAME}")
+set(GLFW_SOURCE_DIR "${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME}")
 #This is where the headers for GLFW will be located in
 set(GLFW_INCLUDES "${MACE_INCLUDES}/GLFW")
-set(GLFW_LIBRARY_NAME "glfw3")
+set(GLFW_LIBRARY_NAME "glfw")
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
 set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
@@ -45,9 +38,9 @@ SET(GLEW_NAME "glew-1.13.0")
 #this is the url to download GLEW from
 set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/1.13.0/${GLEW_NAME}.tgz/download")
 #if glew needs downloading, this is where it willbe downloaded to
-set(GLEW_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${GLEW_NAME}.tar.gz")
+set(GLEW_DOWNLOAD_PATH "${PROJECT_SOURCE_DIR}/${GLEW_NAME}.tar.gz")
 #where the downloading tarbell will be extracted to
-set(GLEW_DOWNLOAD_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${GLEW_NAME}")
+set(GLEW_DOWNLOAD_SOURCE_DIR "${PROJECT_SOURCE_DIR}/${GLEW_NAME}")
 
 #stb_image is a single header only image loading library.
 set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
@@ -73,7 +66,7 @@ if(NOT EXISTS ${GLFW_SOURCE_DIR})
 		#Next we extract the .tar.gz. This works on Windows as well
 		execute_process(
 			COMMAND ${CMAKE_COMMAND} -E tar xvf ${GLFW_DOWNLOAD_PATH}
-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+			WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 		)
 		
 		#If the extraction fails, go to here.
@@ -153,7 +146,7 @@ if(${MACE_WINDOW})
 					message(STATUS "Extracting GLEW..")
 					execute_process(
 						COMMAND ${CMAKE_COMMAND} -E tar xvf ${GLEW_DOWNLOAD_PATH}
-						WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+						WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 					)
 					
 					if(NOT EXISTS ${GLEW_DOWNLOAD_SOURCE_DIR})
@@ -169,10 +162,10 @@ if(${MACE_WINDOW})
 			endif()
 				
 			message(STATUS "Adding GLEW")
-			set(GLEW_LIBRARY "${GLEW_DOWNLOAD_SOURCE_DIR}/lib")
-			set(GLEW_INCLUDE_DIR "${GLEW_DOWNLOAD_SOURCE_DIR}/include")
-		
-			add_subdirectory("${GLEW_DOWNLOAD_SOURCE_DIR}/build/cmake")
+			add_subdirectory("${GLEW_DOWNLOAD_SOURCE_DIR}/build/cmake" "${GLEW_DOWNLOAD_SOURCE_DIR}/build/cmake")
+						
+			set(GLEW_LIBRARY ${GLEW_DOWNLOAD_SOURCE_DIR}/lib )
+			set(GLEW_INCLUDE_DIR ${GLEW_DOWNLOAD_SOURCE_DIR}/include)
 		else()
 			message(FATAL_ERROR "GLEW not found! Please install and retry")
 		endif()
@@ -210,17 +203,6 @@ else()
 	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-#[[
-ExternalProject_Add(
-    ${GLFW_LIBRARY_NAME}
-    URL "https://github.com/glfw/glfw/archive/3.1.tar.gz"
-    URL_HASH SHA1=fe17a0610a239311a726ecabcd2dbd669fb24ca8
-    CMAKE_ARGS -DGLFW_BUILD_DOCS=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} -DCMAKE_BINARY_OUTPUT_DIRECTORY=${CMAKE_BINARY_OUTPUT_DIRECTORY}
-	BINARY_DIR ${CMAKE_BINARY_OUTPUT_DIRECTORY}
-)]]
-
-#find_package(GLFW REQUIRED)
-
 set(GLFW_BUILD_DOCS OFF)
 set(GLFW_BUILD_TESTS OFF)
 set(GLFW_BUILD_EXAMPLES OFF)
@@ -245,6 +227,6 @@ if(${MACE_UNIT_TESTING})
 	add_subdirectory(MC-Testing)
 endif()
 
-add_subdirectory(MC-Test)
+include_directories(${GLEW_INCLUDE_DIR})
 
 message(STATUS "Done! Thank you for using MACE.")
