@@ -9,7 +9,9 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <SDL/SDL.h>
+//so we can use glew
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 
 namespace mc {
 	/**
@@ -20,7 +22,7 @@ namespace mc {
 		class Window {
 			friend class WindowModule;
 		protected:
-			SDL_Window* m_window;
+			GLFWwindow* m_window;
 			int m_originalWidth;
 			int m_originalHeight;
 			char* m_title;
@@ -28,8 +30,7 @@ namespace mc {
 			unsigned int fps=0;
 		public:
 			Window(int width, int height, const char* title);
-			virtual bool isOpen();
-			virtual SDL_Window* getSDLWindow();
+			virtual GLFWwindow* getGLFWWindow();
 
 			const unsigned int& getFPS() const;
 			void setFPS(const unsigned int& FPS);

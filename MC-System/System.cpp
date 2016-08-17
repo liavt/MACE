@@ -8,7 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MC-System/System.h>
-#include <SDL/SDL.h>
+#include <GLFW/glfw3.h>
 #include <MC-System/Exceptions.h>
 #include <MC-System/Constants.h>
 
@@ -116,6 +116,11 @@ void System::init() {
 	if (modules.size()==0)throw InitializationError("Must add a Module via System::addModule!");
 	flags.untoggleBit(SYSTEM_FLAG_DESTROYED);
 	flags.toggleBit(SYSTEM_FLAG_INIT);
+
+	if (!glfwInit()) {
+		throw InitializationError("GLFW failed to initialize!");
+	}
+
 	for (Index i = 0; i < modules.size(); i++) {
 		modules[i]->init();
 	}
@@ -131,7 +136,7 @@ void System::terminate() {
 	for (Index i = 0; i < modules.size(); i++) {
 		modules[i]->destroy();
 	}
-	SDL_Quit();
+	glfwTerminate();
 }
 
 void System::update() {

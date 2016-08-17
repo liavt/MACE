@@ -19,36 +19,19 @@ namespace mc {
 		}
 
 		void Window::create() {
-			SDL_Init(SDL_INIT_VIDEO);
-
-			m_window = SDL_CreateWindow(m_title,
-				SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-				m_originalWidth, m_originalHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
-
-			SDL_SetWindowData(m_window, "open", (void*)(1));
+			m_window = glfwCreateWindow(m_originalWidth,m_originalHeight,m_title,NULL,NULL);
 		}
 
 		bool Window::poll()
 		{
-			SDL_Event e;
-			while (SDL_PollEvent(&e)) {
-				if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE) {
-					SDL_SetWindowData(SDL_GetWindowFromID(e.window.windowID), "open", 0);
-					return true;
-				}
-			}
-			return false;
-		}
-
-		bool Window::isOpen() {
-			return ((long)SDL_GetWindowData(m_window, "open")) != 0;
+			return glfwWindowShouldClose(m_window);
 		}
 
 		void poll() {
 			
 		}
 
-		SDL_Window* Window::getSDLWindow() {
+		GLFWwindow* Window::getGLFWWindow() {
 			return m_window;
 		}
 
@@ -63,7 +46,7 @@ namespace mc {
 		}
 
 		void Window::destroy() {
-			SDL_DestroyWindow(m_window);
+			glfwDestroyWindow(m_window);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <MC-System/Constants.h>
 #include <MC-System/Utility/Color.h>
-#include <GL/glew.h>
+#include <GL/GLEW.h>
 
 
 namespace mc {

@@ -22,8 +22,6 @@ Namespace containing classes used for Graphics in MACE.
 namespace gfx{
 
 class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
-	SDL_GLContext context;
-
 	bool vsync;
 
 public:

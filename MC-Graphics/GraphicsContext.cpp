@@ -11,10 +11,10 @@ The above copyright notice and this permission notice shall be included in all c
 #include <thread>
 #include <iostream>
 #include <mutex>
-#include <GL/GLEW.h>
 #include <MC-System/Exceptions.h>
 #include <MC-Graphics/GLUtil.h>
 #include <MC-Graphics/Renderer.h>
+#include <GL/glew.h>
 
 namespace mc {
 namespace gfx{
@@ -30,8 +30,6 @@ void OpenGLContext::update() {
 	std::unique_lock<std::mutex> lock(mutex);
 
 	updateChildren();
-
-	SDL_Delay(10);
 }
 
 void OpenGLContext::init(win::Window * win)
@@ -40,25 +38,24 @@ void OpenGLContext::init(win::Window * win)
 	std::mutex mutex;
 	std::unique_lock<std::mutex> lock(mutex);
 
-	context = SDL_GL_CreateContext(win->getSDLWindow());
-	SDL_GL_MakeCurrent(win->getSDLWindow(),context);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	glfwMakeContextCurrent(win->getGLFWWindow());
 
 	GLenum result = glewInit();
 	if (result != GLEW_OK)
 	{
-		throw mc::InitializationError("GLEW failed to initialize with result "+std::to_string(result));
+		throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
 	}
 
 	if (GLEW_VERSION_1_1)
 	{
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 		std::cout << "OpenGL has been created succesfully!" << std::endl;
-		std::cout << "Version: "<<std::endl<<"	"<<glGetString(GL_VERSION) << std::endl;
+		std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
 		std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
 		std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 		std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
@@ -76,8 +73,8 @@ void OpenGLContext::init(win::Window * win)
 
 	checkGLError();
 
-	result = SDL_GL_SetSwapInterval(vsync);
-	if (result == -1)std::cerr << SDL_GetError();
+	if (vsync)glfwSwapInterval(1);
+	else glfwSwapInterval(0);
 
 	Renderer::init();
 
@@ -96,7 +93,7 @@ void OpenGLContext::render(win::Window* win) {
 
 	renderChildren();
 
-	SDL_GL_SwapWindow(win->getSDLWindow());
+	glfwSwapBuffers(win->getGLFWWindow());
 }
 
 void OpenGLContext::destroy(win::Window* win) {
@@ -107,7 +104,6 @@ void OpenGLContext::destroy(win::Window* win) {
 
 	Renderer::destroy();
 
-	SDL_GL_DeleteContext(context);
 }
 
 void OpenGLContext::resize(win::Window * win)
@@ -117,7 +113,7 @@ void OpenGLContext::resize(win::Window * win)
 
 	int width, height;
 
-	SDL_GetWindowSize(win->getSDLWindow(), &width, &height);
+	glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
 	Renderer::resize(width,height);
 }

@@ -9,10 +9,12 @@ include(ExternalProject)
 
 
 #all the variables are now being set here
-
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+#for glfw
+set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
 
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${CMAKE_SOURCE_DIR}/include")
@@ -25,22 +27,16 @@ set(MACE_UNIT_TESTING OFF CACHE BOOL "Whether to build the unit tests under MC-T
 set(MACE_DOWNLOAD_DEPENDENCIES ON CACHE BOOL "Whether to download and extract dependencies that are not found. If turnd off, will instead error.")
 set(MACE_STATIC_LIBRARY ON CACHE BOOL "Whether to build static library files")
 
-set(SDL_NET_SOURCE_NAME "SDL2_net-2.0.1")
-set(SDL_NET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}")
-set(SDL_NET_URL "https://www.libsdl.org/projects/SDL_net/release/${SDL_NET_SOURCE_NAME}.tar.gz")
-set(SDL_NET_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${SDL_NET_SOURCE_NAME}.tar.gz")
-#SDL_Net doesnt have a Cmake. So we made our own.
-set(SDL_NET_CMAKE "CMake_SDLNet.cmake")
-
 #Source name is the version to use
-set(SDL2_SOURCE_NAME "SDL2-2.0.4")
+set(GLFW_SOURCE_NAME "glfw-3.2")
 
-set(SDL2_URL "https://www.libsdl.org/release/${SDL2_SOURCE_NAME}.tar.gz")
-set(SDL2_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${SDL2_SOURCE_NAME}.tar.gz")
+set(GLFW_URL "http://downloads.sourceforge.net/project/glfw/glfw/3.2/${GLFW_SOURCE_NAME}.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fglfw%2Ffiles%2Fglfw%2F3.2%2F&ts=1470492725&use_mirror=heanet")
+set(GLFW_DOWNLOAD_PATH "${CMAKE_SOURCE_DIR}/${GLFW_SOURCE_NAME}.tar.gz")
 #This is where the source will be located in
-set(SDL2_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${SDL2_SOURCE_NAME}")
-#This is where the headers for SDL2 will be located in
-set(SDL2_INCLUDES "${MACE_INCLUDES}/SDL")
+set(GLFW_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${GLFW_SOURCE_NAME}")
+#This is where the headers for GLFW will be located in
+set(GLFW_INCLUDES "${MACE_INCLUDES}/GLFW")
+set(GLFW_LIBRARY_NAME "glfw3")
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
 set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
@@ -61,53 +57,56 @@ if(${MACE_GRAPHICS} AND NOT ${MACE_WINDOW})
 	message(FATAL_ERROR "MC-Graphics requires MC-Window! Please enable MC-Window and retry.")
 endif()
 
-if(NOT EXISTS ${SDL2_SOURCE_DIR})
+
+if(NOT EXISTS ${GLFW_SOURCE_DIR})
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
-		message(STATUS "SDL2 source not found. Fixing..")
+		message(STATUS "GLFW source not found. Fixing..")
 		#First we check if the .tar.gz is downloaded. There may be chance it is already downloaded and not extracted
-		if (NOT EXISTS "${SDL2_DOWNLOAD_PATH}")
-			message(STATUS "Downloading SDL2 source...")
-			file(DOWNLOAD "${SDL2_URL}" "${SDL2_DOWNLOAD_PATH}")
+		if (NOT EXISTS "${GLFW_DOWNLOAD_PATH}")
+			message(STATUS "Downloading GLFW source...")
+			file(DOWNLOAD "${GLFW_URL}" "${GLFW_DOWNLOAD_PATH}")
 		else()
-			message(STATUS "SDL2 source found in tar.gz")
+			message(STATUS "GLFW source found in tar.gz")
 		endif()
 
-		message(STATUS "Extracting SDL2 source...")
+		message(STATUS "Extracting GLFW source...")
 		#Next we extract the .tar.gz. This works on Windows as well
 		execute_process(
-			COMMAND ${CMAKE_COMMAND} -E tar xvf ${SDL2_DOWNLOAD_PATH}
+			COMMAND ${CMAKE_COMMAND} -E tar xvf ${GLFW_DOWNLOAD_PATH}
 			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		)
 		
 		#If the extraction fails, go to here.
-		if(NOT EXISTS ${SDL2_SOURCE_DIR})
-			message(FATAL_ERROR "Failed to extract SDL2 source! Please retry or file a bug report.")
+		if(NOT EXISTS ${GLFW_SOURCE_DIR})
+			message(FATAL_ERROR "Failed to extract GLFW source! Please retry or file a bug report.")
 		else()
-			message(STATUS "SDL2 extracted.")
+			message(STATUS "GLFW extracted.")
 		endif()
 		
 		#Remove the extracted tar. We dont need the original anymore
-		file(REMOVE ${SDL2_DOWNLOAD_PATH})
+		file(REMOVE ${GLFW_DOWNLOAD_PATH})
 		message(STATUS "Deleted temporary tar")
-		message(STATUS "Done adding ${SDL2_SOURCE_NAME}")
+		message(STATUS "Done adding ${GLFW_SOURCE_NAME}")
 	else()
-		message(FATAL_ERROR "SDL2 source not found!")
+		message(FATAL_ERROR "GLFW source not found!")
 	endif()
 else()
-	message(STATUS "SDL2 found.")
+	message(STATUS "GLFW found.")
 endif()
 
+
 #Just because we download the source doesnt mean we can just use the headers! We have to move them to our include directory.
-if(NOT EXISTS ${SDL2_INCLUDES})
-	message(STATUS "SDL2 includes not found. Fixing...")
+if(NOT EXISTS ${GLFW_INCLUDES})
+	message(STATUS "GLFW includes not found. Fixing...")
 	
 	#Simply move the headers from the source into our directory
-	file(COPY "${SDL2_SOURCE_NAME}/include/" DESTINATION "${MACE_INCLUDES}/SDL")
+	file(COPY "${GLFW_SOURCE_NAME}/include/" DESTINATION "${MACE_INCLUDES}")
 	
-	message(STATUS "SDL2 Includes added!")
+	message(STATUS "GLFW Includes added!")
 else()
-	message(STATUS "Found SDL2 includes.")
+	message(STATUS "Found GLFW includes.")
 endif()
+
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
@@ -125,20 +124,7 @@ if(${MACE_UNIT_TESTING})
 	endif()
 endif()
 
-if(${MACE_GRAPHICS})		
-	if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
-		if(${MACE_DOWNLOAD_DEPENDENCIES})
-			#Catch is one header file, so its easy to fix. Just download it!
-			message(STATUS "Downloading STB_IMAGE..")
-			file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}")
-			message(STATUS "Done downloading STB_IMAGE.")
-		else()
-			message(FATAL_ERROR "STB_IMAGE is not  found!")
-		endif()
-	else()
-		message(STATUS "STB_IMAGE found.")
-	endif()
-
+if(${MACE_WINDOW})
 	message(STATUS "Finding GLEW...")
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
 		find_package(GLEW)
@@ -195,6 +181,21 @@ if(${MACE_GRAPHICS})
 	endif()
 endif()
 
+if(${MACE_GRAPHICS})		
+	if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
+		if(${MACE_DOWNLOAD_DEPENDENCIES})
+			#Catch is one header file, so its easy to fix. Just download it!
+			message(STATUS "Downloading STB_IMAGE..")
+			file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}")
+			message(STATUS "Done downloading STB_IMAGE.")
+		else()
+			message(FATAL_ERROR "STB_IMAGE is not  found!")
+		endif()
+	else()
+		message(STATUS "STB_IMAGE found.")
+	endif()
+endif()
+
 #verify that we are using C++ 11
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -209,9 +210,23 @@ else()
 	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-message(STATUS "Adding ${SDL2_SOURCE_NAME}...")
-add_subdirectory("${SDL2_SOURCE_NAME}")
+#[[
+ExternalProject_Add(
+    ${GLFW_LIBRARY_NAME}
+    URL "https://github.com/glfw/glfw/archive/3.1.tar.gz"
+    URL_HASH SHA1=fe17a0610a239311a726ecabcd2dbd669fb24ca8
+    CMAKE_ARGS -DGLFW_BUILD_DOCS=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} -DCMAKE_BINARY_OUTPUT_DIRECTORY=${CMAKE_BINARY_OUTPUT_DIRECTORY}
+	BINARY_DIR ${CMAKE_BINARY_OUTPUT_DIRECTORY}
+)]]
 
+#find_package(GLFW REQUIRED)
+
+set(GLFW_BUILD_DOCS OFF)
+set(GLFW_BUILD_TESTS OFF)
+set(GLFW_BUILD_EXAMPLES OFF)
+
+message(STATUS "Adding ${GLFW_SOURCE_NAME}...")
+add_subdirectory(${GLFW_SOURCE_NAME})
 
 add_subdirectory(MC-System)
 if(${MACE_WINDOW})

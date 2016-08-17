@@ -12,6 +12,5 @@ if(${MACE_STATIC_LIBRARY})
 else()
 	add_library(MC-System SHARED ${HEADERS} ${MCT_SRC})
 endif()
-
-target_link_libraries(MC-System LINK_PUBLIC SDL2)
 target_include_directories (MC-System PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(MC-System LINK_PUBLIC ${GLFW_LIBRARY_NAME})
