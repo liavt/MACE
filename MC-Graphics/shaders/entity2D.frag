@@ -17,7 +17,7 @@ uniform lowp sampler2D tex;
 void main (void)  
 {     
 	color= mix(vec4(paint.rgb,1.0),texture(tex,textureCoord),paint.a);
-	color.w=opacity;
+	color.a=opacity;
 }       
 
 )"

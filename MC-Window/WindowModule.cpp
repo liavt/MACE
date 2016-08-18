@@ -35,10 +35,6 @@ namespace mc {
 			//do nothing if no context is defined
 		}
 
-		void GraphicsContext::resize(Window * win)
-		{
-		}
-
 		void WindowModule::setContext(GraphicsContext * con)
 		{
 			if(System::getFlag(SYSTEM_FLAG_INIT)){
@@ -74,8 +70,6 @@ namespace mc {
 
 				if (context != 0) {
 					context->init(window);
-
-					context->resize(window);
 				}
 
 				if (window->fps != 0) {
@@ -99,17 +93,14 @@ namespace mc {
 						std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
 						//thread doesn't own window, so we have to lock the mutex
-						if (window->poll()) {
-							System::requestStop();
-						}
+						window->poll();
 
 						if (context != 0) {
 							context->render(window);
 						}
-
-						if (destroyed) {
-							isRunning = false;//while(!destroyed) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
-						}
+							
+						isRunning = System::isRunning();//while(!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
+	
 					}
 
 					const time_t delta = now - lastFrame;

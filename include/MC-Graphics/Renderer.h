@@ -2,6 +2,7 @@
 
 #include <MC-Graphics/GraphicsEntity.h>
 #include <MC-Graphics/Shaders.h>
+#include <queue>
 
 #define MACE_ENTITY2D_UNIFORM_VALUES \
 	MACE_ENTITY2D_UNIFORM_ENTRY(opacity,float) \
@@ -25,7 +26,9 @@ public:
 
 	static void resize(const Size width, const Size height);
 
-	static void draw(Entity2D* e);
+	static void queue(Entity* e);
+
+	static void renderFrame();
 
 	static void destroy();
 
@@ -50,6 +53,11 @@ private:
 
 	static ShaderProgram shaders2D;
 	static VAO square;
+
+	static std::queue<Entity*> renderQueue;
+
+	static void draw(Entity* e);
+	static void draw(Entity2D* e);
 };//Renderer
 
 }//gfx

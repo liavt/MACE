@@ -76,6 +76,9 @@ void OpenGLContext::init(win::Window * win)
 	if (vsync)glfwSwapInterval(1);
 	else glfwSwapInterval(0);
 
+	auto framebufferResize = [](GLFWwindow* win, int width, int height) {Renderer::resize(width,height); };
+	glfwSetFramebufferSizeCallback(win->getGLFWWindow(), framebufferResize);
+
 	Renderer::init();
 
 	initChildren();
@@ -87,11 +90,13 @@ void OpenGLContext::render(win::Window* win) {
 	std::mutex mutex;
 	std::unique_lock<std::mutex> lock(mutex);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Renderer::prepare();
 
 	renderChildren();
+
+	Renderer::renderFrame();
 
 	glfwSwapBuffers(win->getGLFWWindow());
 }
@@ -104,18 +109,6 @@ void OpenGLContext::destroy(win::Window* win) {
 
 	Renderer::destroy();
 
-}
-
-void OpenGLContext::resize(win::Window * win)
-{
-	std::mutex mutex;
-	std::unique_lock<std::mutex> lock(mutex);
-
-	int width, height;
-
-	glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
-
-	Renderer::resize(width,height);
 }
 
 void OpenGLContext::setVSync(const bool & sync)

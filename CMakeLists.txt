@@ -164,7 +164,7 @@ if(${MACE_WINDOW})
 			message(STATUS "Adding GLEW")
 			add_subdirectory("${GLEW_DOWNLOAD_SOURCE_DIR}/build/cmake" "${GLEW_DOWNLOAD_SOURCE_DIR}/build/cmake")
 						
-			set(GLEW_LIBRARY ${GLEW_DOWNLOAD_SOURCE_DIR}/lib )
+			set(GLEW_LIBRARY ${GLEW_DOWNLOAD_SOURCE_DIR}/lib)
 			set(GLEW_INCLUDE_DIR ${GLEW_DOWNLOAD_SOURCE_DIR}/include)
 		else()
 			message(FATAL_ERROR "GLEW not found! Please install and retry")

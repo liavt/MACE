@@ -46,7 +46,7 @@ void Image::customUpdate()
 
 void Image::customRender()
 {
-	Renderer::draw(this);
+	Renderer::queue(this);
 }
 
 void Image::customDestroy()

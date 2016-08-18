@@ -31,7 +31,7 @@ void main(){
 	
 	gl_Position = ((gl_Position)*vec4(2.0f,2.0f,1.0f,1.0f))+vec4(-0.5f,-0.5f,0,0);//we need to convert it to be 0.0 to 1.0 coordinates and the origin to be the bottom left.
 	
-	gl_Position += vec4(scale/2.0f,0.0f);
+	gl_Position += vec4(scale/2,0.0f);
 
 	
 	//gl_Position += vec4(scale/2.0f,0.0f);

@@ -37,12 +37,13 @@ VAO Renderer::square = VAO();
 
 ShaderProgram Renderer::shaders2D = ShaderProgram();
 
-
 #define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
 type Renderer::a##CurrentlyBound = type##();	
 
 MACE_ENTITY2D_UNIFORM_VALUES
 #undef MACE_ENTITY2D_UNIFORM_ENTRY
+
+std::queue<Entity*> Renderer::renderQueue = std::queue<Entity*>();
 
 void Renderer::init()
 {
@@ -83,7 +84,23 @@ void Renderer::prepare()
 void Renderer::resize(const Size width, const Size height)
 {
 	glViewport(0,0,width,height);
+
+	std::cout << "herllo";
 }//resize
+void Renderer::queue(Entity * e)
+{
+	renderQueue.push(e);
+}
+void Renderer::renderFrame()
+{
+	while (!renderQueue.empty()) {
+		draw(renderQueue.front());
+		renderQueue.pop();
+	}
+}//renderFrame
+void Renderer::draw(Entity* e) {
+	std::cout << "hello";
+}
 void Renderer::draw(Entity2D * e)
 {
 	const Texture& tex = e->getTexture();

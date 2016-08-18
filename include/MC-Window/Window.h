@@ -36,7 +36,7 @@ namespace mc {
 			void setFPS(const unsigned int& FPS);
 
 			virtual void create();
-			virtual bool poll();
+			virtual void poll();
 			virtual void destroy();
 		};
 	}

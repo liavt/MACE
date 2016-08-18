@@ -8,6 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MC-Window/Window.h>
+#include <MC-System/System.h>
 
 namespace mc {
 	namespace win
@@ -20,12 +21,14 @@ namespace mc {
 
 		void Window::create() {
 			m_window = glfwCreateWindow(m_originalWidth,m_originalHeight,m_title,NULL,NULL);
+
+			auto closeCallback = [](GLFWwindow* win) {mc::System::requestStop();};
+			glfwSetWindowCloseCallback(m_window, closeCallback);
 		}
 
-		bool Window::poll()
+		void Window::poll()
 		{
 			glfwPollEvents();
-			return glfwWindowShouldClose(m_window);
 		}
 
 		GLFWwindow* Window::getGLFWWindow() {

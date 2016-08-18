@@ -22,7 +22,6 @@ namespace mc {
 			virtual void render(Window* win);
 			virtual void destroy(Window* win);
 			virtual void update();
-			virtual void resize(Window* win);
 		};
 
 		class WindowModule : public Module {
