@@ -6,7 +6,8 @@
 namespace mc {
 	void Exception::handleException(const std::exception & e)
 	{
-		std::cerr << e.what()<<std::endl;
 		System::requestStop();
+		std::cerr << "Error occured: "<<e.what()<<std::endl;
+		throw e;
 	}
 }

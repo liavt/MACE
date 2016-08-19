@@ -4,6 +4,8 @@
 namespace mc {
 namespace gfx {
 
+int RenderImpl::index = -1;
+
 //including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 //the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
 const char* Renderer::vertexShader2D ={
@@ -43,11 +45,11 @@ type Renderer::a##CurrentlyBound = type##();
 MACE_ENTITY2D_UNIFORM_VALUES
 #undef MACE_ENTITY2D_UNIFORM_ENTRY
 
-std::queue<Entity*> Renderer::renderQueue = std::queue<Entity*>();
+std::queue<std::pair<Index,Entity*>> Renderer::renderQueue = std::queue<std::pair<Index, Entity*>>();
+std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
 
 void Renderer::init()
 {
-
 	//vao loading
 	square.loadVertices(4, squareVertices);
 	square.loadTextureCoordinates(4, squareTextureCoordinates);
@@ -84,20 +86,17 @@ void Renderer::prepare()
 void Renderer::resize(const Size width, const Size height)
 {
 	glViewport(0,0,width,height);
-
-	std::cout << "herllo";
-}//resize
-void Renderer::queue(Entity * e)
-{
-	renderQueue.push(e);
 }
+//resize
 void Renderer::renderFrame()
 {
 	while (!renderQueue.empty()) {
-		draw(renderQueue.front());
+		const std::pair<Index, Entity*> pair = renderQueue.front();
+		protocols.at(pair.first)->render(pair.second);
 		renderQueue.pop();
 	}
 }//renderFrame
+/*
 void Renderer::draw(Entity* e) {
 	std::cout << "hello";
 }
@@ -141,10 +140,17 @@ void Renderer::draw(Entity2D * e)
 	square.draw();
 
 	checkGLError();
-}//draw
+}//draw*/
 void Renderer::destroy()
 {
 	shaders2D.destroy();
+
+	while(!protocols.empty()){
+		RenderImpl* protocol = protocols.back();
+		protocol->destroy();
+		delete protocol;
+		protocols.pop_back();
+	}
 }
 void Renderer::setRefreshColor(const float r, const float g, const float b, const float a)
 {
@@ -155,6 +161,10 @@ void Renderer::setRefreshColor(const Color & c)
 	setRefreshColor(c.r,c.g,c.b,c.a);
 }
 //destroy
+
+RenderImpl::RenderImpl()
+{
+}
 
 }//gfx
 }//mc

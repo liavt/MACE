@@ -18,15 +18,61 @@
 namespace mc {
 namespace gfx {
 
+
+class RenderImpl {
+public:
+	static int index;
+
+	RenderImpl();
+
+	virtual void init() = 0;
+	virtual void render(void* entity)=0;
+	virtual void destroy() = 0;
+};
+
+template<typename T>
+class RenderProtocol : public RenderImpl{
+public:
+	using RenderImpl::RenderImpl;
+
+	void init() { }
+	void render(T* entity) { std::cout << "hello"; }
+	void destroy() {}
+};
+
+template<>
+class RenderProtocol<Entity> : public RenderImpl {
+public:
+	using RenderImpl::RenderImpl;
+
+	void init() {};
+	void render(Entity* entity) { std::cout << "aw"; };
+	void destroy() {};
+};
+
+template<>
+class RenderProtocol<Entity2D> : public RenderImpl {
+public:
+
+	void init() { std::cout << "init"; };
+	void render(void* entity) { std::cout << "yay!"; };
+	void destroy() {};
+};
+
 class Renderer {
 public:
+
 	static void init();
 
 	static void prepare();
 
 	static void resize(const Size width, const Size height);
 
-	static void queue(Entity* e);
+	template<typename T>
+	static void queue(T* e) {
+		if (RenderProtocol<T>::index == -1)registerProtocol<T>();
+		renderQueue.push(std::pair<Index, Entity*>(RenderProtocol<T>::index, e));
+	};
 
 	static void renderFrame();
 
@@ -36,6 +82,7 @@ public:
 	static void setRefreshColor(const Color& c);
 
 private:
+
 	const static char* vertexShader2D;
 	const static char* fragmentShader2D;
 
@@ -54,10 +101,17 @@ private:
 	static ShaderProgram shaders2D;
 	static VAO square;
 
-	static std::queue<Entity*> renderQueue;
+	static std::queue<std::pair<Index,Entity*>> renderQueue;
+	static std::vector<RenderImpl*> protocols;
 
-	static void draw(Entity* e);
-	static void draw(Entity2D* e);
+	template<typename T>
+	static void registerProtocol() {
+		//in destroy(), this memory is deleted
+		RenderImpl* protocol = new RenderProtocol<T>();
+		protocol->init();
+		protocols.push_back(protocol);
+		RenderProtocol<T>::index = protocols.size() - 1;
+	}
 };//Renderer
 
 }//gfx

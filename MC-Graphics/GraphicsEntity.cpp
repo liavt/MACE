@@ -46,7 +46,7 @@ void Image::customUpdate()
 
 void Image::customRender()
 {
-	Renderer::queue(this);
+	Renderer::queue<Entity2D>(this);
 }
 
 void Image::customDestroy()
