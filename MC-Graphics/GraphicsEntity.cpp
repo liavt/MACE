@@ -3,36 +3,23 @@
 #include <MC-Graphics/GLUtil.h>
 #include <MC-Graphics/Renderer.h>
 
+//constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
+
+//how many bytes in the paintData uniform buffer
+#define MACE_PAINT_DATA_BUFFER_SIZE 8
+//which binding location the paintdata uniform buffer should be bound to
+#define MACE_PAINT_DATA_LOCATION 1
+
+//how many bytes in the entityData uniform buffer
+#define MACE_ENTITY_DATA_BUFFER_SIZE 48
+//which binding location the paintdata uniform buffer should be bound to
+#define MACE_ENTITY_DATA_LOCATION 2
+
+//how many values a rotation matrix contains
+#define MACE_ROTATION_MATRIX_SIZE 16
+
 namespace mc {
 namespace gfx {
-GraphicsEntity::GraphicsEntity() : Entity()
-{
-}
-
-GraphicsEntity::GraphicsEntity(Texture & t) : Entity()
-{
-	texture = t;
-}
-
-GraphicsEntity::~GraphicsEntity()
-{
-}
-
-void GraphicsEntity::setTexture(Texture & tex)
-{
-	texture = tex;
-}
-
-Texture & GraphicsEntity::getTexture()
-{
-	return texture;
-}
-
-const mc::gfx::Texture & GraphicsEntity::getTexture() const
-{
-	return texture;
-}
-
 Entity2D::Entity2D() : GraphicsEntity()
 {
 }
@@ -68,20 +55,21 @@ void RenderProtocol<Entity2D>::init() {
 
 	shaders2D.init();
 
-	paintData.init(1);
-	entityData.init(2);
+	paintData.init();
+	entityData.init();
 
+	paintData.setLocation(MACE_PAINT_DATA_LOCATION);
 	paintData.bind();
 	paintData.bindToUniformBlock(shaders2D.getProgramID(), "paint_data");
-	const float defaultTextureData[5] = { 1.0f,1.0f,1.0f,0.0f,1.0f };//set it to something, we dont want to access uncreated memeory
-	paintData.setData(sizeof(defaultTextureData), defaultTextureData);
+	//we set it to null, because during the actual rendering we set the data
+	paintData.setData(sizeof(float)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr);
 	paintData.unbind();
 
-
+	entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 	entityData.bind();
 	entityData.bindToUniformBlock(shaders2D.getProgramID(), "entity_data");
-	const float defaultEntityData[48] = { 0.0f,0.0f,0.0f,0,1,1,1,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0.0f,0.0f,0.0f,0,1,1,1,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
-	entityData.setData(sizeof(defaultEntityData),defaultEntityData);
+	//we set it to null, because during the actual rendering we set the data
+	entityData.setData(sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE,nullptr);
 	entityData.unbind();
 
 #define MACE_ENTITY2D_UNIFORM_ENTRY(a, type)	\
@@ -106,14 +94,12 @@ void RenderProtocol<Entity2D>::render(void* e) {
 	paintData.bind();
 	const Color& paint = tex.getPaint();
 	const float data[5] = { paint.r,paint.g,paint.b,paint.a,tex.getOpacity() };
-	paintData.setData(sizeof(data), data);
+	paintData.setData(sizeof(data), data,GL_STATIC_DRAW);
 	paintData.bindForRender();
 
 	const TransformMatrix& transform = entity->getBaseTransformation();
 
 	//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
-	const Vector3f& translation = transform.translation, scale = transform.scaler;
-	const Matrix4f& rotation = (math::rotate(transform.rotation));
 
 	Vector3f inheritedTranslation = { 0,0,0 };
 	Vector3f inheritedScale = { 1,1,1 };
@@ -127,19 +113,23 @@ void RenderProtocol<Entity2D>::render(void* e) {
 		inheritedRotation = math::rotate(parentTransform.rotation);
 	}
 
+	//now we set the uniform buffer defining the transformations of the entity
 	entityData.bind();
+	//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
+	Byte* mappedEntityData = static_cast<Byte*>(entityData.mapRange(0,MACE_ENTITY_DATA_BUFFER_SIZE,GL_MAP_WRITE_BIT|GL_MAP_UNSYNCHRONIZED_BIT|GL_MAP_INVALIDATE_RANGE_BIT|GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
 	Index offset = 0;
-	entityData.setDataRange(offset, sizeof(float) * 3, translation.getContents().data());
+	memcpy((mappedEntityData), transform.translation.getContents().data(), sizeof(float) * 3);
 	offset += sizeof(float) * 3;
-	entityData.setDataRange(offset, sizeof(float) * 3, &scale);
+	memcpy(mappedEntityData+offset,&transform.scaler,sizeof(float)*3);
 	offset += sizeof(float) * 5;
-	entityData.setDataRange(offset, (sizeof(float)*rotation.size()), math::transpose(rotation).toArray().data());
-	offset += sizeof(float)*16;
-	entityData.setDataRange(offset, sizeof(float) * 3, inheritedTranslation.getContents().data());
+	memcpy(mappedEntityData+offset, math::transpose(math::rotate(transform.rotation)).toArray().data(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
+	offset += sizeof(float)*MACE_ROTATION_MATRIX_SIZE;
+	memcpy(mappedEntityData+offset, inheritedTranslation.getContents().data(),sizeof(float)*3);
 	offset += sizeof(float) * 3;
-	entityData.setDataRange(offset, sizeof(float) * 3, &inheritedScale);
+	memcpy(mappedEntityData+offset,&inheritedScale,sizeof(float)*3);
 	offset += sizeof(float) * 5;
-	entityData.setDataRange(offset, (sizeof(float)*inheritedRotation.size()), math::transpose(inheritedRotation).toArray().data());
+	memcpy(mappedEntityData+offset, math::transpose(inheritedRotation).toArray().data(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
+	entityData.unmap();
 	entityData.bindForRender();
 
 
@@ -171,3 +161,9 @@ void RenderProtocol<Entity2D>::destroy() {
 
 }//gfx
 }//mc
+
+#undef MACE_PAINT_DATA_BUFFER_SIZE
+#undef MACE_PAINT_DATA_LOCATION
+#undef MACE_ENTITY_DATA_BUFFER_SIZE
+#undef MACE_ENTITY_DATA_LOCATION
+#undef MACE_ROTATION_MATRIX_SIZE

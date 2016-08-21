@@ -9,20 +9,6 @@
 
 namespace mc {
 namespace gfx {
-	class GraphicsEntity : public Entity {
-	public:
-
-		GraphicsEntity();
-
-		GraphicsEntity(Texture& t);
-		virtual ~GraphicsEntity();
-
-		void setTexture(Texture& tex);
-		Texture& getTexture();
-		const Texture& getTexture() const;
-	protected:
-		Texture texture = Texture();
-	};//GraphicsEntity
 
 	class Entity2D : public GraphicsEntity {
 	public:

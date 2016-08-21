@@ -1,8 +1,7 @@
 #pragma once
 #include <MC-System/Constants.h>
 #include <MC-System/Utility/Color.h>
-#include <GL/GLEW.h>
-
+#include <MC-Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {
@@ -65,29 +64,6 @@ private:
 
 	void generateTexture();
 };//Texture
-
-class UBO {
-public:
-	~UBO();
-
-	void bind() const;
-	void unbind() const;
-
-	void setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType = GL_DYNAMIC_DRAW) const;
-	void setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid* data) const;
-
-	Index getID() const;
-
-	void init(const Index bufferSlot=0);
-
-	void bindForRender() const;
-
-	void bindToUniformBlock(const Index programID, const char* blockName) const;
-
-private:
-	Index id;
-	Index location;
-};//UBO
 
 }//gfx
 }//mc

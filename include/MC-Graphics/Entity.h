@@ -494,5 +494,20 @@ private:
 	VoidFunctionPtr destroyCallback = [] {}, updateCallback= [] {}, renderCallback= [] {}, initCallback= [] {};
 };//CallbackEntity
 
+class GraphicsEntity : public Entity {
+public:
+
+	GraphicsEntity();
+
+	GraphicsEntity(Texture& t);
+	virtual ~GraphicsEntity();
+
+	void setTexture(Texture& tex);
+	Texture& getTexture();
+	const Texture& getTexture() const;
+protected:
+	Texture texture = Texture();
+};//GraphicsEntity
+
 }//gfx
 }//mc

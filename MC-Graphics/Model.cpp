@@ -5,246 +5,201 @@
 #include <stb_image.h>
 
 namespace mc {
-	namespace gfx {
+namespace gfx {
 
 
-		VAO::~VAO()
-		{
-		}
+VAO::~VAO()
+{
+}
 
-		void VAO::bind()
-		{
-			glBindVertexArray(vaoID);
-		}
-		void VAO::unbind()
-		{
-			glBindVertexArray(0);
-		}
-		void VAO::draw(GLenum type)
-		{
-			glDrawElements(type, indiceNumber, GL_UNSIGNED_INT,0);
-		}
-		void VAO::loadVertices(const Size & verticeSize, const GLfloat vertices[])
-		{
-			vaoID = createID();
-			vertexNumber = verticeSize;
-
-
-			bind();
-			storeDataInAttributeList(vertices, 0, 3, vertexNumber);
-			unbind();
-		}
-
-		void VAO::loadTextureCoordinates(const Size & verticeSize, const GLfloat vertices[])
-		{
-			bind();
-			storeDataInAttributeList(vertices, 1, 2, vertexNumber);
-			unbind();
-		}
-
-		void VAO::loadIndices(const Size & indiceNum, const GLuint indices[])
-		{
-			bind();
-			Index indicesID;
-			// Generate 1 buffer, put the resulting identifier in vertexbuffer
-			glGenBuffers(1, &indicesID);//
-										// The following commands will talk about our 'vertexbuffer' buffer
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
-															 // Give our vertices to OpenGL.
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, GL_DYNAMIC_DRAW);//
-
-																									   //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
-
-			gfx::checkGLError();//
-
-			this->indiceNumber = indiceNum;
-
-			unbind();
-		}
-		Index VAO::createID()
-		{
-			Index id;
-			glGenVertexArrays(1, &id);
-			checkGLError();
-			return id;
-		}
-		void VAO::storeDataInAttributeList(const GLfloat data[], const Index & attributeNumber, const Size& attributeSize, const Size & verticeSize)
-		{
-			Index vboID;
-			// Generate 1 buffer, put the resulting identifier in vertexbuffer
-			glGenBuffers(1, &vboID);//
-									// The following commands will talk about our 'vertexbuffer' buffer
-			glBindBuffer(GL_ARRAY_BUFFER, vboID);//
-												 // Give our data to opengl
-			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * verticeSize), data, GL_DYNAMIC_DRAW);//
-			gfx::checkGLError();//
-
-			glVertexAttribPointer(attributeNumber, attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
-
-			glEnableVertexAttribArray(attributeNumber);
+void VAO::bind()
+{
+	glBindVertexArray(vaoID);
+}
+void VAO::unbind()
+{
+	glBindVertexArray(0);
+}
+void VAO::draw(GLenum type)
+{
+	glDrawElements(type, indiceNumber, GL_UNSIGNED_INT,0);
+}
+void VAO::loadVertices(const Size & verticeSize, const GLfloat vertices[])
+{
+	vaoID = createID();
+	vertexNumber = verticeSize;
 
 
-			//	glBindBuffer(GL_ARRAY_BUFFER, vboID);//
-			checkGLError();
-		}
+	bind();
+	storeDataInAttributeList(vertices, 0, 3, vertexNumber);
+	unbind();
+}
 
-		void Texture::generateTexture()
-		{
-			glGenTextures(1, &id);
+void VAO::loadTextureCoordinates(const Size & verticeSize, const GLfloat vertices[])
+{
+	bind();
+	storeDataInAttributeList(vertices, 1, 2, vertexNumber);
+	unbind();
+}
 
-			bind();
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-			unbind();
+void VAO::loadIndices(const Size & indiceNum, const GLuint indices[])
+{
+	bind();
+	Index indicesID;
+	// Generate 1 buffer, put the resulting identifier in vertexbuffer
+	glGenBuffers(1, &indicesID);//
+								// The following commands will talk about our 'vertexbuffer' buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
+														// Give our vertices to OpenGL.
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, GL_DYNAMIC_DRAW);//
 
-			checkGLError();
-		}
+																								//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
 
-		Texture::Texture()
-		{
-			id = 0;
-		}
+	gfx::checkGLError();//
 
-		Texture::Texture(Index id)
-		{
-			this->id = id;
-		}
+	this->indiceNumber = indiceNum;
 
-		Texture::Texture(const char * file)
-		{
-			generateTexture();
-			bind();
-			loadFile(file);
-			unbind();
-		}
+	unbind();
+}
+Index VAO::createID()
+{
+	Index id;
+	glGenVertexArrays(1, &id);
+	checkGLError();
+	return id;
+}
+void VAO::storeDataInAttributeList(const GLfloat data[], const Index & attributeNumber, const Size& attributeSize, const Size & verticeSize)
+{
+	Index vboID;
+	// Generate 1 buffer, put the resulting identifier in vertexbuffer
+	glGenBuffers(1, &vboID);//
+							// The following commands will talk about our 'vertexbuffer' buffer
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);//
+											// Give our data to opengl
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * verticeSize), data, GL_DYNAMIC_DRAW);//
+	gfx::checkGLError();//
 
-		Texture::Texture(const GLvoid * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel)
-		{
-			generateTexture();
-			bind();
-			setData(data, width, height, type, format, internalFormat, mipmapLevel);
-			unbind();
-		}
+	glVertexAttribPointer(attributeNumber, attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
 
-		void Texture::setData(const GLvoid * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel)
-		{
-			glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
+	glEnableVertexAttribArray(attributeNumber);
 
-			checkGLError();
-		}
 
-		void Texture::loadFile(const char * file)
-		{
-			int width, height, componentSize;
+	//	glBindBuffer(GL_ARRAY_BUFFER, vboID);//
+	checkGLError();
+}
 
-			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
+void Texture::generateTexture()
+{
+	glGenTextures(1, &id);
 
-			setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+	bind();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	unbind();
 
-			stbi_image_free(image);
-		}
+	checkGLError();
+}
 
-		void Texture::setTarget(GLenum target)
-		{
-			this->target = target;
-		}
+Texture::Texture()
+{
+	id = 0;
+}
 
-		GLenum Texture::getTarget()
-		{
-			return target;
-		}
+Texture::Texture(Index id)
+{
+	this->id = id;
+}
 
-		int Texture::getID() const
-		{
-			return id;
-		}
+Texture::Texture(const char * file)
+{
+	generateTexture();
+	bind();
+	loadFile(file);
+	unbind();
+}
 
-		void Texture::bind() const
-		{
-			glBindTexture(target, id);
-		}
+Texture::Texture(const GLvoid * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel)
+{
+	generateTexture();
+	bind();
+	setData(data, width, height, type, format, internalFormat, mipmapLevel);
+	unbind();
+}
 
-		void Texture::unbind() const
-		{
-			glBindTexture(target, 0);
-		}
+void Texture::setData(const GLvoid * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel)
+{
+	glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 
-		Color & Texture::getPaint()
-		{
-			return paint;
-		}
+	checkGLError();
+}
 
-		const Color & Texture::getPaint() const
-		{
-			return paint;
-		}
+void Texture::loadFile(const char * file)
+{
+	int width, height, componentSize;
 
-		void Texture::setPaint(const Color & c)
-		{
-			paint = c;
-		}
+	Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
 
-		float Texture::getOpacity()
-		{
-			return opacity;
-		}
+	setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 
-		const float Texture::getOpacity() const
-		{
-			return opacity;
-		}
+	stbi_image_free(image);
+}
 
-		void Texture::setOpacity(const float f)
-		{
-			opacity = f;
-		}
+void Texture::setTarget(GLenum target)
+{
+	this->target = target;
+}
 
-		UBO::~UBO()
-		{
-		}
+GLenum Texture::getTarget()
+{
+	return target;
+}
 
-		void UBO::bind() const
-		{
-			glBindBuffer(GL_UNIFORM_BUFFER,id);
-		}
+int Texture::getID() const
+{
+	return id;
+}
 
-		void UBO::unbind() const
-		{
-			glBindBuffer(GL_UNIFORM_BUFFER,0);
-		}
+void Texture::bind() const
+{
+	glBindTexture(target, id);
+}
 
-		void UBO::setData(const GLsizeiptr dataSize, const GLvoid * data, const GLenum drawType) const
-		{
-			glBufferData(GL_UNIFORM_BUFFER,dataSize, data, drawType);
-		}
+void Texture::unbind() const
+{
+	glBindTexture(target, 0);
+}
 
-		void UBO::setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid * data) const
-		{
-			glBufferSubData(GL_UNIFORM_BUFFER,offset,dataSize,data);
-		}
+Color & Texture::getPaint()
+{
+	return paint;
+}
 
-		Index UBO::getID() const
-		{
-			return id;
-		}
+const Color & Texture::getPaint() const
+{
+	return paint;
+}
 
-		void UBO::init(const Index location)
-		{
-			glGenBuffers(1,&id);
-			this->location = location;
-		}
+void Texture::setPaint(const Color & c)
+{
+	paint = c;
+}
 
-		void UBO::bindForRender() const
-		{
-			glBindBufferBase(GL_UNIFORM_BUFFER,this->location,id);
-		}
+float Texture::getOpacity()
+{
+	return opacity;
+}
 
-		void UBO::bindToUniformBlock(const Index programID, const char* blockName) const
-		{
-			glUniformBlockBinding(programID,glGetUniformBlockIndex(programID,blockName),location);
-		}
+const float Texture::getOpacity() const
+{
+	return opacity;
+}
+
+void Texture::setOpacity(const float f)
+{
+	opacity = f;
+}
 
 }//gfx
 }//mc
