@@ -5,8 +5,6 @@
 #include <MC-Graphics/GLUtil.h>
 #include <MC-Graphics/Renderer.h>
 
-#define MACE_ENTITY2D_UNIFORM_VALUES \
-
 namespace mc {
 namespace gfx {
 
@@ -72,19 +70,9 @@ namespace gfx {
 		UBO paintData = UBO();
 		UBO entityData = UBO();
 
-#define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
-		type a##CurrentlyBound = type##();
-
-		MACE_ENTITY2D_UNIFORM_VALUES
-#undef	MACE_ENTITY2D_UNIFORM_ENTRY
-
 		ShaderProgram shaders2D = ShaderProgram();
 		VAO square = VAO();
 	};
 
 }//gfx
 }//mc
-
-#ifndef MACE_ENTITY2D_EXPOSE_X_MACRO
-#undef MACE_ENTITY2D_UNIFORM_VALUES
-#endif

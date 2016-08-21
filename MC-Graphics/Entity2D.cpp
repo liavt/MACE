@@ -1,5 +1,4 @@
-#define MACE_ENTITY2D_EXPOSE_X_MACRO
-#include <MC-Graphics/GraphicsEntity.h>
+#include <MC-Graphics/Entity2D.h>
 #include <MC-Graphics/GLUtil.h>
 #include <MC-Graphics/Renderer.h>
 
@@ -72,12 +71,6 @@ void RenderProtocol<Entity2D>::init() {
 	entityData.setData(sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE,nullptr);
 	entityData.unbind();
 
-#define MACE_ENTITY2D_UNIFORM_ENTRY(a, type)	\
-			shaders2D.createUniform(#a);				
-
-	MACE_ENTITY2D_UNIFORM_VALUES
-#undef	MACE_ENTITY2D_UNIFORM_ENTRY
-
 	//gl states
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -136,17 +129,6 @@ void RenderProtocol<Entity2D>::render(void* e) {
 	tex.bind();
 	square.bind();
 	shaders2D.bind();
-
-#define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
-			if(a != a##CurrentlyBound){ \
-				shaders2D.setUniform(#a,a); \
-				a##CurrentlyBound = a; \
-			}
-
-	MACE_ENTITY2D_UNIFORM_VALUES
-#undef	MACE_ENTITY2D_UNIFORM_ENTRY
-
-
 
 	square.draw();
 

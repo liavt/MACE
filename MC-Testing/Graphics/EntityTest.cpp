@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <iostream>
 #include <MC-Graphics/Entity.h>
 #include <type_traits>
-#include <MC-Graphics/GraphicsEntity.h>
+#include <MC-Graphics/Entity2D.h>
 
 namespace mc{
 	namespace gfx{
