@@ -8,13 +8,14 @@ precision mediump float; // Defines precision for float and float-derived (vecto
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 texCoord;
 
-uniform mat4 rotation;
-uniform vec3 translation;
-uniform vec3 scale; 
-
-uniform mat4 inheritedRotation;
-uniform vec3 inheritedTranslation;
-uniform vec3 inheritedScale;
+layout(std140) uniform entity_data{
+	vec3 translation;
+	vec3 scale;
+	mat4 rotation;
+	vec3 inheritedTranslation;
+	vec3 inheritedScale;
+	mat4 inheritedRotation;
+};
 
 out lowp vec2 textureCoord;
 

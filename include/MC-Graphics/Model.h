@@ -74,17 +74,15 @@ public:
 	void unbind() const;
 
 	void setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType = GL_DYNAMIC_DRAW) const;
+	void setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid* data) const;
 
 	Index getID() const;
 
-	GLvoid* map() const;
-	void unmap() const;
+	void init(const Index bufferSlot=0);
 
-	void init();
+	void bindForRender() const;
 
-	void bindBufferBase(const Index location);
-
-	void bindUniform(const Index programID, const Index uniformID) const;
+	void bindToUniformBlock(const Index programID, const char* blockName) const;
 
 private:
 	Index id;

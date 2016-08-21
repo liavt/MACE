@@ -7,10 +7,12 @@ precision highp float; // Defines precision for float and float-derived (vector/
 
 in lowp vec2 textureCoord;
 
-out lowp vec4 color;
+layout(std140) uniform paint_data{
+	vec4 paint;
+	float opacity;
+};
 
-uniform lowp vec4 paint;
-uniform lowp float opacity;
+out lowp vec4 color;
 
 uniform lowp sampler2D tex;
 

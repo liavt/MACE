@@ -220,40 +220,30 @@ namespace mc {
 			glBufferData(GL_UNIFORM_BUFFER,dataSize, data, drawType);
 		}
 
+		void UBO::setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid * data) const
+		{
+			glBufferSubData(GL_UNIFORM_BUFFER,offset,dataSize,data);
+		}
+
 		Index UBO::getID() const
 		{
 			return id;
 		}
 
-		GLvoid * UBO::map() const
-		{
-			bind();
-			GLvoid* ptr = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
-			unbind();
-			return ptr;
-		}
-
-		void UBO::unmap() const
-		{
-			bind();
-			glUnmapBuffer(GL_UNIFORM_BUFFER);
-			unbind();
-		}
-
-		void UBO::init()
+		void UBO::init(const Index location)
 		{
 			glGenBuffers(1,&id);
+			this->location = location;
 		}
 
-		void UBO::bindBufferBase(const Index location)
+		void UBO::bindForRender() const
 		{
-			this->location = location;
 			glBindBufferBase(GL_UNIFORM_BUFFER,this->location,id);
 		}
 
-		void UBO::bindUniform(const Index programID, const Index uniformID) const
+		void UBO::bindToUniformBlock(const Index programID, const char* blockName) const
 		{
-			glUniformBlockBinding(programID,uniformID,location);
+			glUniformBlockBinding(programID,glGetUniformBlockIndex(programID,blockName),location);
 		}
 
 }//gfx

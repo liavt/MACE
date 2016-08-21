@@ -1,18 +1,8 @@
 #pragma once
 
-#include <MC-Graphics/GraphicsEntity.h>
+#include <MC-Graphics/Entity.h>
 #include <MC-Graphics/Shaders.h>
 #include <queue>
-
-#define MACE_ENTITY2D_UNIFORM_VALUES \
-	MACE_ENTITY2D_UNIFORM_ENTRY(opacity,float) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(paint,Color) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(scale,Vector3f) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(rotation, Matrix4f) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(translation, Vector3f) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(inheritedScale,Vector3f) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(inheritedRotation,Matrix4f) \
-	MACE_ENTITY2D_UNIFORM_ENTRY(inheritedTranslation,Vector3f) \
 
 
 namespace mc {
@@ -25,8 +15,12 @@ public:
 
 	RenderImpl();
 
+	virtual void resize(const Size width, const Size height) = 0;
+
 	virtual void init() = 0;
+	virtual void setUp() = 0;
 	virtual void render(void* entity)=0;
+	virtual void tearDown() = 0;
 	virtual void destroy() = 0;
 };
 
@@ -35,44 +29,34 @@ class RenderProtocol : public RenderImpl{
 public:
 	using RenderImpl::RenderImpl;
 
-	void init() { }
-	void render(T* entity) { std::cout << "hello"; }
-	void destroy() {}
-};
+	void resize(const Size width, const Size height) {};
 
-template<>
-class RenderProtocol<Entity> : public RenderImpl {
-public:
-	using RenderImpl::RenderImpl;
-
-	void init() {};
-	void render(Entity* entity) { std::cout << "aw"; };
-	void destroy() {};
-};
-
-template<>
-class RenderProtocol<Entity2D> : public RenderImpl {
-public:
-
-	void init() { std::cout << "init"; };
-	void render(void* entity) { std::cout << "yay!"; };
+	void init() {}
+	void setUp() {};
+	void render(void* entity) { std::cout << "hello"; };
+	void tearDown() {};
 	void destroy() {};
 };
 
 class Renderer {
 public:
 
+	static void resize(const Size width, const Size height);
+
 	static void init();
 
-	static void prepare();
-
-	static void resize(const Size width, const Size height);
+	static void setUp();
 
 	template<typename T>
 	static void queue(T* e) {
+#ifdef MACE_ERROR_CHECK
+		if (e == nullptr || e == NULL)throw NullPointer("Input pointer to an entity must not be null in queue()");
+#endif
 		if (RenderProtocol<T>::index == -1)registerProtocol<T>();
 		renderQueue.push(std::pair<Index, Entity*>(RenderProtocol<T>::index, e));
 	};
+
+	static void tearDown();
 
 	static void renderFrame();
 
@@ -82,24 +66,6 @@ public:
 	static void setRefreshColor(const Color& c);
 
 private:
-
-	const static char* vertexShader2D;
-	const static char* fragmentShader2D;
-
-	const static GLfloat squareVertices[12];
-
-	const static GLfloat squareTextureCoordinates[8];
-
-	const static GLuint squareIndices[6];
-
-#define MACE_ENTITY2D_UNIFORM_ENTRY(a,type) \
-	static type a##CurrentlyBound;
-
-	MACE_ENTITY2D_UNIFORM_VALUES
-#undef	MACE_ENTITY2D_UNIFORM_ENTRY
-
-	static ShaderProgram shaders2D;
-	static VAO square;
 
 	static std::queue<std::pair<Index,Entity*>> renderQueue;
 	static std::vector<RenderImpl*> protocols;
@@ -116,7 +82,3 @@ private:
 
 }//gfx
 }//mc
-
-#ifndef MACE_ENTITY2D_EXPOSE_X_MACRO
-#undef MACE_ENTITY2D_UNIFORM_VALUES
-#endif

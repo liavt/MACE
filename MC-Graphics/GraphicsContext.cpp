@@ -92,8 +92,6 @@ void OpenGLContext::render(win::Window* win) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Renderer::prepare();
-
 	renderChildren();
 
 	Renderer::renderFrame();
