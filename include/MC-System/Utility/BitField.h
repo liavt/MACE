@@ -125,8 +125,6 @@ struct BitField {
 	*/
 	Size size() const;
 
-
-
 	//i heard you like operators so i added some operators to your operators
 	//dont worry i know how to operate
 
@@ -136,231 +134,50 @@ struct BitField {
 	template<typename T>
 	friend std::ostream &operator<<(std::ostream &os, const BitField<T>& b);
 
+	/**
+	Operator which acts upon the internal value
+	@see get() @see value
+	*/
+	BitField operator>>(Index places) const;
+	/**
+	Operator which acts upon the internal value
+	@see get() @see value
+	*/
+	BitField operator<<(Index places) const;
+	/**
+	Operator which acts upon the internal value
+	@see get() @see value
+	*/
+	void operator>>=(Index places);
+	/**
+	Operator which acts upon the internal value
+	@see get() @see value
+	*/
+	void operator<<=(Index places);
 
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator|(const T value) {
-		return BitField<T>(this->value | value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator|=(const T value) {
-		this->value |= value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator&(const T value) {
-		return BitField<T>(this->value & value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator&=(const T value) {
-		this->value &= value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator^(const T value) {
-		return BitField<T>(this->value ^ value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator^=(const T value) {
-		this->value ^= value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator|(BitField& other) {
-		return BitField<T>(this->value | other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator|=(BitField& other) {
-		this->value |= other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator&(BitField& other) {
-		return BitField<T>(this->value & other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator&=(BitField& other) {
-		this->value &= other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator^(BitField& other) {
-		return BitField<T>(this->value ^ other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator^=(BitField& other) {
-		this->value ^= other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator>>(Index places) {
-		return BitField<T>(value >> places);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator<<(Index places) {
-		return BitField<T>(value << places);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator>>=(Index places) {
-		value >>= places;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator<<=(Index places) {
-		value <<= places;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator+(const T other) const {
-		return BitField<T>(value + other);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator+(const BitField& other) const {
-		return BitField<T>(value + other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator+=(const BitField& other) {
-		value += other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator+=(const T other) {
-		value += other;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator-(const T other) const {
-		return BitField<T>(value - other);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator-(const BitField& other) const {
-		return BitField<T>(value - other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator-=(const BitField& other) {
-		value -= other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator-=(const T other) {
-		value -= other;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator*(const T other) {
-		return BitField<T>(value * other);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator*(const BitField& other) const {
-		return BitField<T>(value * other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator*=(const BitField& other) {
-		value *= other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator*=(const T other) {
-		value *= other;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator/(const T other) const {
-		return BitField<T>(value / other);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	BitField operator/(const BitField& other) const {
-		return BitField<T>(value / other.value);
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator/=(const BitField& other) {
-		value /= other.value;
-	}
-	/**
-	Operator which acts upon the internal value
-	@see get() @see value
-	*/
-	void operator/=(const T other) {
-		value /= other;
-	}
+#define MACE_BITFIELD_X_MACRO \
+	MACE_BITFIELD_ENTRY(&) \
+	MACE_BITFIELD_ENTRY(|) \
+	MACE_BITFIELD_ENTRY(^) \
+	MACE_BITFIELD_ENTRY(+) \
+	MACE_BITFIELD_ENTRY(-) \
+	MACE_BITFIELD_ENTRY(*) \
+	MACE_BITFIELD_ENTRY(/) 
+
+#define MACE_BITFIELD_ENTRY(op) \
+	/**Overloaded operator.@param other What to operate with @return A `BitField` that is a result of an operation @see #get() @see #value*/ \
+	BitField operator##op##(const T other) const; \
+	/**Overloaded operator.@param other What to operate with @return A `BitField` that is a result of an operation @see #get() @see #value*/ \
+	BitField operator##op##(const BitField<T> other) const; \
+	/**Overloaded operator. @param other What to use in the operation @see #get() @see #value*/ \
+	void operator##op##=(const T other); \
+	/**Overloaded operator.  @param other What to use in the operation @see #get() @see #value*/ \
+	void operator##op##=(const BitField<T> other); \
+
+	MACE_BITFIELD_X_MACRO
+
+#undef MACE_BITFIELD_ENTRY
+
 
 	/**
 	Operator which acts upon the internal value
@@ -378,30 +195,22 @@ struct BitField {
 	Operator which acts upon the internal value
 	@see get() @see value
 	*/
-	void operator++() {
-		value++;
-	}
+	void operator++();
 	/**
 	Operator which acts upon the internal value
 	@see get() @see value
 	*/
-	void operator++(int dummy) {
-		++value;
-	}
+	void operator++(int dummy);
 	/**
 	Operator which acts upon the internal value
 	@see get() @see value
 	*/
-	void operator--() {
-		value--;
-	}
+	void operator--();
 	/**
 	Operator which acts upon the internal value
 	@see get() @see value
 	*/
-	void operator--(int dummy) {
-		--value;
-	}
+	void operator--(int dummy);
 	/**
 	Gets a bit at a certain position
 	@param position Which bit to retrieve. Zero-indexed
@@ -412,31 +221,20 @@ struct BitField {
 	/**
 	Compares this `BitField` to another value. Will return `true` if the bits represented are both equal.
 	*/
-	bool operator==(const T other) {
-		return value == other;
-	}
+	bool operator==(const T other);
 	/**
 	Inverse for {@link operator==}
 	*/
-	bool operator!=(const T other) {
-		return !(value == other);
-	}
+	bool operator!=(const T other);
 	/**
 	Compares this `BitField` to another. Will return `true` if the bits represented are both equal.
 	*/
-	bool operator==(const BitField& other) {
-		return value == other.value;
-	}
+	bool operator==(const BitField& other);
 	/**
 	Inverse for {@link operator==}
 	*/
-	bool operator!=(const BitField& other) {
-		return (value != other.value);
-	}
+	bool operator!=(const BitField& other);
 };//BitField<T>
-
-//for std::cout
-
 
 /**
 {@link BitField} which wraps around a {@link Byte byte,} meaning that it will have 8 bits.
@@ -447,3 +245,5 @@ using ByteField = BitField<Byte>;
 #include <MC-System/Utility/BitField.inl>
 
 }//mc
+#undef MACE_BITFIELD_X_MACRO
+#undef MACE_BITFIELD_ENTRY

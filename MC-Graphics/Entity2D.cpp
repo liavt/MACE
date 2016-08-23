@@ -1,6 +1,7 @@
 #include <MC-Graphics/Entity2D.h>
 #include <MC-Graphics/GLUtil.h>
 #include <MC-Graphics/Renderer.h>
+#include <MC-System/Utility/Matrix.h>
 
 //constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 

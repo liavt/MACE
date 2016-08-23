@@ -871,7 +871,8 @@ RECURSIVE              = YES
 # run.
 
 EXCLUDE                = Catch.hpp \
-                         Catch.h
+                         Catch.h \
+                         stb_image.h
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -891,7 +892,9 @@ EXCLUDE_PATTERNS       = */test/* \
                          */SDL2/* \
                          */SDL/* \
                          */Catch.hpp \
-                         */Catch.h
+                         */Catch.h \
+                         */GLFW/* \
+                         */stb_image.h
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
@@ -2052,7 +2055,7 @@ PERLMOD_MAKEVAR_PREFIX =
 # C-preprocessor directives found in the sources and include files.
 # The default value is: YES.
 
-ENABLE_PREPROCESSING   = YES
+ENABLE_PREPROCESSING   = NO
 
 # If the MACRO_EXPANSION tag is set to YES, doxygen will expand all macro names
 # in the source code. If set to NO, only conditional compilation will be
@@ -2110,7 +2113,9 @@ PREDEFINED             =
 # definition found in the source code.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-EXPAND_AS_DEFINED      = 
+EXPAND_AS_DEFINED      = MACE_VECTOR_X_MACRO \
+                         MACE_VECTOR_ENTRY \
+                         MACE_VECTOR_CREATE_VECTOR_TYPEDEF
 
 # If the SKIP_FUNCTION_MACROS tag is set to YES then doxygen's preprocessor will
 # remove all references to function-like macros that are alone on a line, have
@@ -2120,7 +2125,7 @@ EXPAND_AS_DEFINED      =
 # The default value is: YES.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-SKIP_FUNCTION_MACROS   = YES
+SKIP_FUNCTION_MACROS   = NO
 
 #---------------------------------------------------------------------------
 # Configuration options related to external references

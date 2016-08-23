@@ -31,26 +31,26 @@ public:
 /**
 A class which holds an internal buffer of {@link Entity entities,} known as "children."
 <p>
-Calling {@link #update()} will call `update()` on all of it's children.
+Calling `updateChildren()` will call `update()` on all of it's children.
 <p>
 Examples:
 */
 class Container {
 public:
 	/**
-	Calls {@link #update()} on all of it's children and actions. Also calls {@link Entity#inherit()} if `ENTITY_PASS_DOWN` is true.
+	Calls `update()` on all of it's children and actions. Also calls {@link Entity#inherit()} if `ENTITY_PASS_DOWN` is true.
 	*/
 	virtual void updateChildren();
 	/**
-	Calls {@link #init()} on all of it's children.
+	Calls `init()` on all of it's children.
 	*/
 	void initChildren();
 	/**
-	Calls {@link #destroy()} on all of it's children and actions.
+	Calls `destroy()` on all of it's children and actions.
 	*/
 	void destroyChildren();//think of the children!
 	/**
-	Calls {@link #render()} on all of it's children.
+	Calls `render()` on all of it's children.
 	*/
 	void renderChildren();
 
@@ -74,7 +74,6 @@ public:
 	/**
 	Add an {@link Entity} to this {@link Container}
 	@param e Reference to an `Entity` to become a child
-	@see #update()
 	@see #getChildren()
 	*/
 	virtual void addChild(Entity& e);

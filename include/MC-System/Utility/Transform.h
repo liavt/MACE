@@ -9,7 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <MC-System/Constants.h>
-#include <MC-System/Utility/Vector.h>
+#include <MC-System/Utility/Matrix.h>
 
 namespace mc {
 	namespace math {

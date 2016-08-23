@@ -50,7 +50,7 @@ inline BitField<T>& BitField<T>::untoggleBit(const Index position) {
 }
 
 template<typename T>
-inline bool BitField<T>::getBit(const Index position) const {
+inline bool BitField<T>::getBit(const Index position) const{
 	return (((value >> position) & 1) == 1);
 }
 
@@ -72,6 +72,36 @@ inline Size BitField<T>::size() const {
 }
 
 template<typename T>
+inline BitField<T> BitField<T>::operator>>(const Index places) const {
+	return BitField<T>(value >> places);
+}
+
+template<typename T>
+inline BitField<T> BitField<T>::operator<<(const Index places) const {
+	return BitField<T>(value << places);
+}
+
+
+template<typename T>
+inline void BitField<T>::operator>>=(const Index places) {
+	value >>= places;
+}
+
+template<typename T>
+inline void BitField<T>::operator<<=(const Index places) {
+	value <<= places;
+}
+
+#define MACE_BITFIELD_ENTRY(op) \
+template <typename T> inline BitField<T> BitField<T>::operator##op##(const T other) const{return BitField<T>(value op other);}; \
+template <typename T> inline BitField<T> BitField<T>::operator##op##(const BitField<T> other) const { return BitField<T>(value op other.value); }; \
+template <typename T> inline void BitField<T>::operator##op##=(const T other) { value op##= other; }; \
+template <typename T> inline void BitField<T>::operator##op##=(const BitField<T> other) { value op##= other.value; }; \
+
+
+MACE_BITFIELD_X_MACRO
+
+template<typename T>
 inline T BitField<T>::operator%(const T other) {
 	return value % other;
 }
@@ -79,6 +109,26 @@ inline T BitField<T>::operator%(const T other) {
 template<typename T>
 inline BitField<T> BitField<T>::operator~() {
 	return BitField<T>((const T)~value);
+}
+
+template<typename T>
+inline void BitField<T>::operator++() {
+	value++;
+}
+
+template<typename T>
+inline void BitField<T>::operator++(int dummy) {
+	++value;
+}
+
+template<typename T>
+inline void BitField<T>::operator--() {
+	value--;
+}
+
+template<typename T>
+inline void BitField<T>::operator--(int dummy) {
+	--value;
 }
 
 template<typename T>
@@ -91,4 +141,24 @@ std::ostream & mc::operator<<(std::ostream & os, const BitField<T>& b)
 template<typename T>
 inline bool BitField<T>::operator[](const Index position) {
 	return getBit(position);
+}
+
+template<typename T>
+inline bool BitField<T>::operator==(const T other) {
+	return value == other;
+}
+
+template<typename T>
+inline bool BitField<T>::operator!=(const T other) {
+	return value != other;
+}
+
+template<typename T>
+inline bool BitField<T>::operator==(const BitField<T>& other) {
+	return value == other.value;
+}
+
+template<typename T>
+inline bool BitField<T>::operator!=(const BitField<T>& other) {
+	return value != other.value;
 }
