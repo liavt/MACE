@@ -618,13 +618,13 @@ MACE_MATRIX_CREATE_MATRIX_TYPEDEF(suffix,type,4,5)  \
 
 #define MACE_MATRIX_CREATE_SQUARE_TYPEDEF(suffix,type,size) \
 /**Matrix typedef*/ \
-using Matrix##size##suffix = Matrix<##type##,##size##,##size##>;
+using Matrix##size##suffix = Matrix< type , size , size >;
 
 #define MACE_MATRIX_CREATE_MATRIX_TYPEDEF(suffix,type,width, height) \
 /**Matrix typedef*/ \
-using Matrix##width##x##height##suffix = Matrix<##type##,##width##,##height##>; \
+using Matrix##width##x##height##suffix = Matrix< type , width , height >; \
 /**Matrix typedef*/ \
-using Matrix##height##x##width##suffix = Matrix<##type##, ##height##, ##width##>;
+using Matrix##height##x##width##suffix = Matrix< type , height , width >;
 
 
 #define MACE_MATRIX_X_MACRO \

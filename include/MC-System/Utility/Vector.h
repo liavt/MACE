@@ -160,7 +160,7 @@ public:
 	Retrieves how many elements this `Vector` holds
 	@return How large this `Vector` is
 	*/
-	constexpr virtual Size size() const
+	constexpr Size size() const
 	{
 		return N;
 	};
@@ -176,7 +176,6 @@ public:
 	*/
 	T& get(Index i){
 		if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
-		if (i < 0)throw IndexOutOfBounds(std::to_string(i) + " is less than 0!");
 		return content[i];
 	}
 	/**
@@ -189,7 +188,6 @@ public:
 	*/
 	const T& get(Index i) const{
 		if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
-		if (i <0)throw IndexOutOfBounds(std::to_string(i) + " is less than 0!");
 		return content.at(i);
 	}
 	/**
@@ -202,7 +200,6 @@ public:
 	*/
 	void set(Index position, T value) {
 		if (position >= N)throw IndexOutOfBounds(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
-		if (position <0)throw IndexOutOfBounds(std::to_string(position) + " is less than 0!");
 		content[position] = value;
 	}
 	/**
@@ -601,7 +598,7 @@ MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,5)  \
 
 #define MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,size) \
 /**Vector typedef*/ \
-using Vector##size##suffix = Vector<##type##,##size##>;
+using Vector##size##suffix = Vector< type , size >;
 
 
 #define MACE_VECTOR_X_MACRO \
