@@ -54,10 +54,12 @@ matrix.size();//Get how many values the Matrix is holding
 */
 template<typename T, Size W, Size H>
 struct Matrix : public Vector<MatrixRow<T, H>, W> {
+	using Vector<MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected
+
 	/**
 	Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 	*/
-	Matrix() : Vector()//extending defautl construtor so it initializes the array
+	Matrix() : Vector<MatrixRow<T, H>, W>()//extending defautl construtor so it initializes the array
 	{
 		static_assert(W != 0, "A Matrix's width must be greater than 0!");
 		static_assert(H != 0, "A Matrix's height must be greater than 0!");
@@ -100,7 +102,7 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 	Copy constructor. Clones the contents of another `Matrix` into a new `Matrix`
 	@param copy What the clone
 	*/
-	Matrix(const Matrix& copy) : Vector(copy.content) {
+	Matrix(const Matrix& copy) : Vector<MatrixRow<T, H>, W>(copy.content) {
 	}
 
 	/**
@@ -653,7 +655,5 @@ MACE_MATRIX_X_MACRO
 #undef MACE_MATRIX_ENTRY
 #undef MACE_MATRIX_CREATE_SQUARE_TYPEDEF
 #undef MACE_MATRIX_CREATE_MATRIX_TYPEDEF
-
-#include <MC-System/Utility/Matrix.inl>
 
 }//mc

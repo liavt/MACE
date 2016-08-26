@@ -619,7 +619,7 @@ MACE_VECTOR_ENTRY(ull, unsigned long long int) \
 MACE_VECTOR_ENTRY(sll, signed long long int) \
 MACE_VECTOR_ENTRY(c, char) \
 MACE_VECTOR_ENTRY(uc, unsigned char) \
-MACE_VECTOR_ENTRY(sc, signed char)
+MACE_VECTOR_ENTRY(sc, signed char) \
 
 MACE_VECTOR_X_MACRO
 

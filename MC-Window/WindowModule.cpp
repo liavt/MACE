@@ -11,6 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <mutex>
 #include <ctime>
 #include <chrono>
+#include <iostream>
 
 namespace mc {
 	namespace win
