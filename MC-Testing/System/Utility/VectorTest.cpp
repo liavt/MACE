@@ -23,7 +23,7 @@ TEST_CASE("Testing matrix width and height","[system][utility][vector]") {
 		REQUIRE_THROWS(m.get(5, 0));
 		REQUIRE_THROWS(m.get(4,-1));
 	}
-	
+
 	SECTION("Testing () operator") {
 		for (Index x = 1; x <= 5; x++) {
 			REQUIRE_NOTHROW(m(x,1));
@@ -253,7 +253,7 @@ TEST_CASE("Testing vector and matrix initialiation", "[system][utility][vector]"
 TEST_CASE("Testing getting and setting","[system][utility][vector]") {
 	SECTION("Testing getting and setting of a vector") {
 		Vector5i v = Vector5i();
-		
+
 		for (Index i = 0; i < v.size(); i++) {
 			v[i] = i;
 			REQUIRE(v[i] == i);
@@ -272,7 +272,7 @@ TEST_CASE("Testing getting and setting","[system][utility][vector]") {
 
 	SECTION("Testing getting and setting of matrices") {
 		Matrix5i m = Matrix5i();
-		
+
 		int i = 0;
 		for (Index x = 0; x < m.width(); x++) {
 			for (Index y = 0; y < m.height(); y++) {
@@ -295,7 +295,7 @@ TEST_CASE("Testing getting and setting","[system][utility][vector]") {
 }
 
 TEST_CASE("Testing math") {//eww math
-	SECTION("Vector math") { 
+	SECTION("Vector math") {
 		SECTION("Adding") {
 			Vector3i v1 = {1,0,3};
 			Vector3i v2 = {-1,4,2};
@@ -332,8 +332,9 @@ TEST_CASE("Testing math") {//eww math
 			REQUIRE(math::magnitude(v2)==Approx(4.582575));
 		}
 		SECTION("Normalizing") {
-			//this isnt normal
-			REQUIRE(math::normalize(Vector3f({ 3,-4,0 })) == Vector3f({(3.0f/5.0f),-(4.0f/5.0f),0}));
+			Vector3f input = {3,-4,0};
+			Vector3f output = {(3.0f/5.0f),-(4.0f/5.0f),0};
+			REQUIRE(math::normalize(input)==output);
 		}
 		SECTION("Scalar multiplication") {
 			REQUIRE(Vector3f({ 5,-9,11 }) * 1 == Vector3f({5,-9,11}));
