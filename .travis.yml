@@ -85,9 +85,13 @@ matrix:
       env: COMPILER=clang++-3.7
 
 
-before_install:
-  - sudo apt-get install xorg-dev libglu1-mesa-dev
-  - sudo apt-get install libglew-dev
+addons:
+  apt:
+    sources:
+      libglu1-mesa-dev
+      libglew-dev
+    packages:
+      xorg-dev
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
