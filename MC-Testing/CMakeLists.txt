@@ -24,3 +24,4 @@ target_link_libraries(MC-Testing LINK_PUBLIC MC-Graphics)
 target_link_libraries(MC-Testing LINK_PUBLIC MC-Network)
 target_link_libraries(MC-Testing LINK_PUBLIC MC-Audio)
 target_link_libraries(MC-Testing LINK_PUBLIC ${GLFW_LIBRARY_NAME})
+target_link_libraries(MC-Testing LINK_PUBLIC ${OPENGL_LIBRARY}
