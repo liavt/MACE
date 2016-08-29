@@ -4,6 +4,9 @@ language: cpp
 
 notifications:
   email: false
+os:
+  - osx
+  - linux
 
 matrix:
   include:
@@ -55,4 +58,5 @@ script:
   - cd build/
   - cmake -DMACE_STATIC_LIBRARY=ON -DMACE_UNIT_TESTING=ON ..
   - make
-  - ./MC-Testing
+  - cd MC-Testing
+  - .
