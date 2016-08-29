@@ -207,6 +207,8 @@ set(GLFW_BUILD_DOCS OFF)
 set(GLFW_BUILD_TESTS OFF)
 set(GLFW_BUILD_EXAMPLES OFF)
 
+find_package(OpenGL REQUIRED)
+
 message(STATUS "Adding ${GLFW_SOURCE_NAME}...")
 add_subdirectory(${GLFW_SOURCE_NAME})
 
