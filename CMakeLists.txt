@@ -134,6 +134,7 @@ if(NOT ${GLFW_FOUND})
 endif()
 
 find_package(GLEW REQUIRED)
+find_package(OpenGL REQUIRED)
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
@@ -196,5 +197,8 @@ endif()
 if(${MACE_UNIT_TESTING})
 	add_subdirectory(MC-Testing)
 endif()
+
+
+include_directories(${GLEW_INCLUDE_DIR})
 
 message(STATUS "Done! Thank you for using MACE.")

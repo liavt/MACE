@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/liavt/MACE.svg?branch=master)](https://travis-ci.org/liavt/MACE)
 # MACE
 MACE stands for MACE is A C++ Engine
 

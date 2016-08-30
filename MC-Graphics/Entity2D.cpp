@@ -2,6 +2,7 @@
 #include <MC-Graphics/GLUtil.h>
 #include <MC-Graphics/Renderer.h>
 #include <MC-System/Utility/Matrix.h>
+#include <cstring>
 
 //constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
@@ -112,17 +113,17 @@ void RenderProtocol<Entity2D>::render(void* e) {
 	//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
 	Byte* mappedEntityData = static_cast<Byte*>(entityData.mapRange(0,MACE_ENTITY_DATA_BUFFER_SIZE,GL_MAP_WRITE_BIT|GL_MAP_UNSYNCHRONIZED_BIT|GL_MAP_INVALIDATE_RANGE_BIT|GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
 	Index offset = 0;
-	memcpy((mappedEntityData), transform.translation.getContents().data(), sizeof(float) * 3);
+	std::memcpy((mappedEntityData), transform.translation.getContents().data(), sizeof(float) * 3);
 	offset += sizeof(float) * 3;
-	memcpy(mappedEntityData+offset,&transform.scaler,sizeof(float)*3);
+	std::memcpy(mappedEntityData+offset,&transform.scaler,sizeof(float)*3);
 	offset += sizeof(float) * 5;
-	memcpy(mappedEntityData+offset, math::transpose(math::rotate(transform.rotation)).toArray().data(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
+	std::memcpy(mappedEntityData+offset, math::transpose(math::rotate(transform.rotation)).toArray().data(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
 	offset += sizeof(float)*MACE_ROTATION_MATRIX_SIZE;
-	memcpy(mappedEntityData+offset, inheritedTranslation.getContents().data(),sizeof(float)*3);
+	std::memcpy(mappedEntityData+offset, inheritedTranslation.getContents().data(),sizeof(float)*3);
 	offset += sizeof(float) * 3;
-	memcpy(mappedEntityData+offset,&inheritedScale,sizeof(float)*3);
+	std::memcpy(mappedEntityData+offset,&inheritedScale,sizeof(float)*3);
 	offset += sizeof(float) * 5;
-	memcpy(mappedEntityData+offset, math::transpose(inheritedRotation).toArray().data(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
+	std::memcpy(mappedEntityData+offset, math::transpose(inheritedRotation).toArray().data(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
 	entityData.unmap();
 	entityData.bindForRender();
 

@@ -50,7 +50,7 @@ namespace gfx {
 		void setUniform(char * name, const T a){glUniform1##suffix(uniforms[name],a);}											\
 		void setUniform(char * name, const T a, const T b){glUniform2##suffix(uniforms[name],a,b);}							\
 		void setUniform(char * name, const T a, const T b, const T c){glUniform3##suffix(uniforms[name],a,b,c);}				\
-		void setUniform(char * name, const T a, const T b, const T c, const T d){glUniform4##suffix(uniforms[name],a,b,c,d);}		
+		void setUniform(char * name, const T a, const T b, const T c, const T d){glUniform4##suffix(uniforms[name],a,b,c,d);}
 
 		//this macro generates setUniform for use with arrays
 #define _UNIFORM_ARRAY(T,suffix)																							\
@@ -85,8 +85,8 @@ namespace gfx {
 		//this macro combines all of the above macros
 #define _GENERATE_UNIFORM_SETTERS(T,suffix)																				\
 		_UNIFORM_RAW(T, suffix);																								\
-		_UNIFORM_ARRAY(T,##suffix ## v);																						\
-		_UNIFORM_VECTOR(T,suffix);																								
+		_UNIFORM_ARRAY(T, suffix ## v);																						\
+		_UNIFORM_VECTOR(T,suffix);
 
 		/*
 		So what is going on here? I am using something called an X-Macro, a technique to generate large amounts of code without copying andpasting.

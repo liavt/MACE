@@ -16,9 +16,5 @@ int main(int argc, char* const argv[])
 {
 	//constant? get it?
 	const int result = Catch::Session().run(argc, argv);
-	do
-	{
-		std::cout << '\n' << "Press enter to continue...";
-	} while (std::cin.get() != '\n');
 	return result;
 }

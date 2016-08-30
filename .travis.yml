@@ -8,6 +8,7 @@ notifications:
 matrix:
   include:
     - compiler: gcc
+      os: linux
       addons:
         apt:
           sources:
@@ -16,6 +17,7 @@ matrix:
             - g++-4.9
       env: COMPILER=g++-4.9
     - compiler: gcc
+      os: linux
       addons:
         apt:
           sources:
@@ -24,6 +26,7 @@ matrix:
             - g++-5
       env: COMPILER=g++-5
     - compiler: clang
+      os: linux
       addons:
         apt:
           sources:
@@ -33,6 +36,45 @@ matrix:
             - clang-3.6
       env: COMPILER=clang++-3.6
     - compiler: clang
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
+    - compiler: gcc
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env: COMPILER=g++-4.9
+    - compiler: gcc
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+    - compiler: clang
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+          packages:
+            - clang-3.6
+      env: COMPILER=clang++-3.6
+    - compiler: clang
+      os: osx
       addons:
         apt:
           sources:
@@ -42,10 +84,10 @@ matrix:
             - clang-3.7
       env: COMPILER=clang++-3.7
 
-
 before_install:
-  - sudo apt-get install xorg-dev libglu1-mesa-dev
-  - sudo apt-get install libglew-dev
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                                                             ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glew glfw3                                                 ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install xorg-dev libglu1-mesa-dev libglew-dev libglfw-dev; fi
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
@@ -53,7 +95,5 @@ install:
 script:
   - mkdir build/
   - cd build/
-  - cmake -DMACE_STATIC_LIBRARY=ON ..
+  - cmake -DMACE_STATIC_LIBRARY=ON -DMACE_UNIT_TESTING=ON ..
   - make
-  - cd bin/
-  - ./MC-Testing
