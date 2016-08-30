@@ -45,8 +45,8 @@ matrix:
           packages:
             - clang-3.7
       env: COMPILER=clang++-3.7
-   - compiler: gcc
-      os: linux
+    - compiler: gcc
+      os: osx
       addons:
         apt:
           sources:
@@ -84,10 +84,10 @@ matrix:
             - clang-3.7
       env: COMPILER=clang++-3.7
 
-
 before_install:
-  - sudo apt-get install xorg-dev libglu1-mesa-dev
-  - sudo apt-get install libglew-dev
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                                                             ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glew glfw3                                                 ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install xorg-dev libglu1-mesa-dev libglew-dev libglfw-dev; fi
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
