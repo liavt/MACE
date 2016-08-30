@@ -8,7 +8,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MC-System/System.h>
-#include <GLFW/glfw3.h>
 #include <MC-System/Exceptions.h>
 #include <MC-System/Constants.h>
 
@@ -117,10 +116,6 @@ void System::init() {
 	flags.untoggleBit(SYSTEM_FLAG_DESTROYED);
 	flags.toggleBit(SYSTEM_FLAG_INIT);
 
-	if (!glfwInit()) {
-		throw InitializationError("GLFW failed to initialize!");
-	}
-
 	for (Index i = 0; i < modules.size(); i++) {
 		modules[i]->init();
 	}
@@ -136,7 +131,6 @@ void System::terminate() {
 	for (Index i = 0; i < modules.size(); i++) {
 		modules[i]->destroy();
 	}
-	glfwTerminate();
 }
 
 void System::update() {

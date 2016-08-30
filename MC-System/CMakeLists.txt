@@ -12,4 +12,3 @@ else()
 endif()
 
 target_include_directories(MC-System PUBLIC ${MACE_INCLUDES})
-target_link_libraries(MC-System LINK_PUBLIC ${GLFW_LIBRARY_NAME})

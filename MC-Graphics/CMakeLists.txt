@@ -13,16 +13,13 @@ else()
 endif()
 
 target_include_directories(MC-Graphics PUBLIC ${MACE_INCLUDES})
+
 target_include_directories (MC-Graphics PUBLIC ${GLEW_INCLUDE_DIR})
-if(GLEW_FOUND)
-	target_link_libraries(MC-Graphics LINK_PUBLIC "${GLEW_LIBRARIES}")
-else()
-	if(${MACE_STATIC_LIBRARY}})
-		target_link_libraries(MC-Graphics LINK_PUBLIC glew_s)
-	else()
-		target_link_libraries(MC-Graphics LINK_PUBLIC glew)
-	endif()
-endif()
+target_link_libraries(MC-Graphics LINK_PUBLIC "${GLEW_LIBRARIES}")
+
+target_include_directories(MC-Graphics PUBLIC ${GLFW_INCLUDE_DIR})
+target_link_libraries(MC-Graphics LINK_PUBLIC "${GLFW_LIBRARIES}")
+
 
 target_link_libraries(MC-Graphics LINK_PUBLIC MC-System)
 target_link_libraries(MC-Graphics LINK_PUBLIC MC-Window)

@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <ctime>
 #include <chrono>
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 namespace mc {
 	namespace win
@@ -86,7 +87,8 @@ namespace mc {
 			}
 
 			//this is the main rendering loop.
-			while (isRunning) {
+			//we loop infinitely until break is called. break is called when an exception is thrown or System::isRunning is false
+			for(;;) {//;_;
 				try {
 					now = time(0);
 
@@ -100,7 +102,7 @@ namespace mc {
 							context->render(window);
 						}
 							
-						isRunning = System::isRunning();//while(!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false. that way, we only read it, and we dont need to always lock it
+						if (!System::isRunning())break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 	
 					}
 
@@ -114,10 +116,12 @@ namespace mc {
 				}
 				catch (const std::exception& e) {
 					Exception::handleException(e);
+					break;
 				}
 				catch (...) {
 					std::cerr << "An error has occured";
 					System::requestStop();
+					break;
 				}
 			}
 
@@ -143,6 +147,10 @@ namespace mc {
 
 		}
 		void WindowModule::init() {
+			if (!glfwInit()) {
+				throw InitializationError("GLFW failed to initialize!");
+			}
+
 			windowThread = std::thread(&WindowModule::threadCallback,this);
 		}
 
@@ -156,6 +164,8 @@ namespace mc {
 		void WindowModule::destroy() {
 			destroyed = true;
 			windowThread.join();
+
+			glfwTerminate();
 		}
 
 		std::string WindowModule::getName() const {
