@@ -200,5 +200,12 @@ endif()
 
 
 include_directories(${GLEW_INCLUDE_DIR})
+include_directories(${GLFW_INCLUDE_DIR})
+include_directories(${MACE_INCLUDES})
+
+link_libraries(${GLFW_LIBRARY})
+link_libraries(${GLEW_LIBRARY})
+link_libraries(${OPENGL_LIBRARY})
+
 
 message(STATUS "Done! Thank you for using MACE.")

@@ -12,11 +12,6 @@ else()
 endif()
 
 target_include_directories(MC-Window PUBLIC ${MACE_INCLUDES})
-
-target_include_directories (MC-Window PUBLIC ${GLEW_INCLUDE_DIR})
-target_link_libraries(MC-Window LINK_PUBLIC "${GLEW_LIBRARIES}")
-
 target_include_directories(MC-Window PUBLIC ${GLFW_INCLUDE_DIR})
-target_link_libraries(MC-Window LINK_PUBLIC "${GLFW_LIBRARIES}")
 
 target_link_libraries(MC-Window LINK_PUBLIC MC-System)
