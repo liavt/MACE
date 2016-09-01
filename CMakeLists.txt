@@ -13,10 +13,6 @@ set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-set(MACE_WINDOW ON CACHE BOOL "Whether to build the windowing library under MC-Window.")
-set(MACE_GRAPHICS ON CACHE BOOL "Whether to build the graphics library under MC-Graphics. MACE_WINDOW is required for this.")
-set(MACE_AUDIO ON CACHE BOOL "Whether to build the audio library MC-Audio.")
-set(MACE_NETWORK ON CACHE BOOL "Whether to build the networking library under MC-Network.")
 set(MACE_UNIT_TESTING OFF CACHE BOOL "Whether to build the unit tests under MC-Testing.")
 set(MACE_DOWNLOAD_DEPENDENCIES ON CACHE BOOL "Whether to download and extract dependencies that are not found. If turnd off, will instead error.")
 set(MACE_STATIC_LIBRARY ON CACHE BOOL "Whether to build static library files")
@@ -44,10 +40,6 @@ set(GLEW_DOWNLOAD_SOURCE_DIR "${PROJECT_SOURCE_DIR}/${GLEW_NAME}")
 #stb_image is a single header only image loading library.
 set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
 set(STB_IMAGE_DOWNLOAD_PATH "${MACE_INCLUDES}/stb_image.h")
-
-if(${MACE_GRAPHICS} AND NOT ${MACE_WINDOW})
-	message(FATAL_ERROR "MC-Graphics requires MC-Window! Please enable MC-Window and retry.")
-endif()
 
 # Try to find GLFW library and include path.
 # Once done this will define
@@ -152,19 +144,18 @@ if(${MACE_UNIT_TESTING})
 	endif()
 endif()
 
-if(${MACE_GRAPHICS})		
-	if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
-		if(${MACE_DOWNLOAD_DEPENDENCIES})
-			#Catch is one header file, so its easy to fix. Just download it!
-			message(STATUS "Downloading STB_IMAGE..")
-			file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}")
-			message(STATUS "Done downloading STB_IMAGE.")
-		else()
-			message(FATAL_ERROR "STB_IMAGE is not  found!")
-		endif()
+
+if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
+	if(${MACE_DOWNLOAD_DEPENDENCIES})
+		#Catch is one header file, so its easy to fix. Just download it!
+		message(STATUS "Downloading STB_IMAGE..")
+		file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}")
+		message(STATUS "Done downloading STB_IMAGE.")
 	else()
-		message(STATUS "STB_IMAGE found.")
+		message(FATAL_ERROR "STB_IMAGE is not  found!")
 	endif()
+else()
+	message(STATUS "STB_IMAGE found.")
 endif()
 
 #verify that we are using C++ 11
@@ -181,31 +172,30 @@ else()
 	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-add_subdirectory(MC-System)
-if(${MACE_WINDOW})
-	add_subdirectory(MC-Window)
+file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Window/*.h" "${MACE_INCLUDES}/MC-Graphics/*.h" "${MACE_INCLUDES}/MC-Audio/*.h" "${MACE_INCLUDES}/MC-Network/*.h" "${MACE_INCLUDES}/MC-System/*.h")
+file(GLOB_RECURSE SRC "src/*.cpp")
+
+if(${MACE_STATIC_LIBRARY})
+	add_library(MACE STATIC ${HEADERS} ${SRC})
+else()
+	add_library(MACE SHARED ${HEADERS} ${SRC})
 endif()
-if(${MACE_GRAPHICS})
-	add_subdirectory(MC-Graphics)
-endif()
-if(${MACE_NETWORK})
-	add_subdirectory(MC-Network)
-endif()
-if(${MACE_AUDIO})
-	add_subdirectory(MC-Audio)
-endif()
+
 if(${MACE_UNIT_TESTING})
-	add_subdirectory(MC-Testing)
+	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
+	add_executable(MACE-Testing ${TESTS_SRC})
+	
+	target_link_libraries(MACE-Testing LINK_PUBLIC mace)
 endif()
 
 
-include_directories(${GLEW_INCLUDE_DIR})
-include_directories(${GLFW_INCLUDE_DIR})
-include_directories(${MACE_INCLUDES})
+target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})
+target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
+target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
-link_libraries(${GLFW_LIBRARY})
-link_libraries(${GLEW_LIBRARY})
-link_libraries(${OPENGL_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 
 
 message(STATUS "Done! Thank you for using MACE.")
