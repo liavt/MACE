@@ -1,7 +1,7 @@
 #pragma once
-#include <MC-System/Constants.h>
-#include <MC-System/Utility/Color.h>
-#include <MC-Graphics/Buffer.h>
+#include <MACE/System/Constants.h>
+#include <MACE/System/Utility/Color.h>
+#include <MACE/Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {

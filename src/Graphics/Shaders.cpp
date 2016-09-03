@@ -1,6 +1,6 @@
-#include <MC-Graphics/Shaders.h>
-#include <MC-Graphics/GLUtil.h>
-#include <MC-Graphics/GraphicsConstants.h>
+#include <MACE/Graphics/Shaders.h>
+#include <MACE/Graphics/GLUtil.h>
+#include <MACE/Graphics/GraphicsConstants.h>
 
 namespace mc {
 namespace gfx {

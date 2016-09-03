@@ -1,7 +1,7 @@
 #pragma once
 
-#include <MC-Graphics/Entity.h>
-#include <MC-Graphics/Shaders.h>
+#include <MACE/Graphics/Entity.h>
+#include <MACE/Graphics/Shaders.h>
 #include <queue>
 
 

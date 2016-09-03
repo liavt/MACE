@@ -7,7 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MC-Window/WindowModule.h>
+#include <MACE/Window/WindowModule.h>
 #include <mutex>
 #include <ctime>
 #include <chrono>
@@ -169,7 +169,7 @@ namespace mc {
 		}
 
 		std::string WindowModule::getName() const {
-			return "MC-Window";
+			return "MACE/Window";
 		}
 
 	}

@@ -9,8 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <MC-System/System.h>
-#include <MC-Window/Window.h>
+#include <MACE/System/System.h>
+#include <MACE/Window/Window.h>
 #include <thread>
 
 namespace mc {

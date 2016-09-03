@@ -1,6 +1,6 @@
 #pragma once
 #include <GL/glew.h>
-#include <MC-System/Constants.h>
+#include <MACE/System/Constants.h>
 #include <iostream>
 
 namespace mc {

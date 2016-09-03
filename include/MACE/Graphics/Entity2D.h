@@ -1,9 +1,9 @@
 #pragma once
 
-#include <MC-Graphics/Model.h>
-#include <MC-Graphics/Entity.h>
-#include <MC-Graphics/GLUtil.h>
-#include <MC-Graphics/Renderer.h>
+#include <MACE/Graphics/Model.h>
+#include <MACE/Graphics/Entity.h>
+#include <MACE/Graphics/GLUtil.h>
+#include <MACE/Graphics/Renderer.h>
 
 namespace mc {
 namespace gfx {

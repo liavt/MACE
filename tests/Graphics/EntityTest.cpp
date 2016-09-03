@@ -9,9 +9,9 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <Catch.h>
 #include <iostream>
-#include <MC-Graphics/Entity.h>
+#include <MACE/Graphics/Entity.h>
 #include <type_traits>
-#include <MC-Graphics/Entity2D.h>
+#include <MACE/Graphics/Entity2D.h>
 
 namespace mc{
 	namespace gfx{

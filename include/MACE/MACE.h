@@ -9,34 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <MC-System/System.h>
-#include <MC-Window/WindowModule.h>
-#include <MC-Graphics/Entity.h>
-#include <GL/glew.h>
-
-namespace mc {
-
-/**
-Namespace containing classes used for Graphics in MACE.
-*/
-namespace gfx{
-
-class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
-	bool vsync;
-
-public:
-	OpenGLContext();
-
-	void update();
-
-	void init(win::Window* win);
-	void render(win::Window* win);
-	void destroy(win::Window* win);
-
-	void setVSync(const bool& sync);
-
-};
-
-}
-}
-
+#include <MACE/System/System.h>
+#include <MACE/System/Constants.h>
+#include <MACE/System/Utils.h>
+#include <MACE/System/Exceptions.h>

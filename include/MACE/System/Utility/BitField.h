@@ -8,9 +8,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#include <MC-System/Constants.h>
+#include <MACE/System/Constants.h>
 #include <iosfwd>
-#include <MC-System/Utility/Math.h>
+#include <MACE/System/Utility/Math.h>
 
 namespace mc {
 	/**

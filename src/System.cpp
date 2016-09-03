@@ -7,9 +7,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MC-System/System.h>
-#include <MC-System/Exceptions.h>
-#include <MC-System/Constants.h>
+#include <MACE/System/System.h>
+#include <MACE/System/Exceptions.h>
+#include <MACE/System/Constants.h>
 
 namespace mc {
 

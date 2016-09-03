@@ -9,11 +9,11 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <vector>
-#include <MC-System/System.h>
-#include <MC-System/Utility/BitField.h>
-#include <MC-System/Utility/Transform.h>
-#include <MC-Graphics/GraphicsConstants.h>
-#include <MC-Graphics/Model.h>
+#include <MACE/System/System.h>
+#include <MACE/System/Utility/BitField.h>
+#include <MACE/System/Utility/Transform.h>
+#include <MACE/Graphics/GraphicsConstants.h>
+#include <MACE/Graphics/Model.h>
 
 namespace mc {
 namespace gfx {

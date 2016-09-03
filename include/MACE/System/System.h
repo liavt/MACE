@@ -10,8 +10,8 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #include <vector>
 #include <string>
-#include <MC-System/Constants.h>
-#include <MC-System/Utility/BitField.h>
+#include <MACE/System/Constants.h>
+#include <MACE/System/Utility/BitField.h>
 
 /**
 Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.

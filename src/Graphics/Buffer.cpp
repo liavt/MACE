@@ -1,4 +1,4 @@
-#include <MC-Graphics/Buffer.h>
+#include <MACE/Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {

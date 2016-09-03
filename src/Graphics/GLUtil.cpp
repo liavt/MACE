@@ -1,7 +1,7 @@
-#include <MC-Graphics/GLUtil.h>
+#include <MACE/Graphics/GLUtil.h>
 #include <memory>
-#include <MC-Graphics/GraphicsConstants.h>
-#include <MC-System/Constants.h>
+#include <MACE/Graphics/GraphicsConstants.h>
+#include <MACE/System/Constants.h>
 #include <iostream>
 
 namespace mc {

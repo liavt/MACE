@@ -9,7 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <MC-System/System.h>
-#include <MC-System/Constants.h>
-#include <MC-System/Utils.h>
-#include <MC-System/Exceptions.h>
+#include <MACE/System/Utility/Color.h>
+#include <MACE/System/Utility/Vector.h>
+#include <MACE/System/Utility/BitField.h>
+#include <MACE/System/Utility/Math.h>
+#include <MACE/System/Utility/Transform.h>

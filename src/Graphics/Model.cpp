@@ -1,6 +1,6 @@
-#include <MC-Graphics/Model.h>
-#include <MC-Graphics/GLUtil.h>
-#include <MC-Graphics/GraphicsConstants.h>
+#include <MACE/Graphics/Model.h>
+#include <MACE/Graphics/GLUtil.h>
+#include <MACE/Graphics/GraphicsConstants.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 

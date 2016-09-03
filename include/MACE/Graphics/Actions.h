@@ -1,5 +1,5 @@
 #pragma once
-#include <MC-Graphics/Entity.h>
+#include <MACE/Graphics/Entity.h>
 
 namespace mc {
 	namespace gfx {

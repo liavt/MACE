@@ -13,7 +13,7 @@ set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-set(MACE_UNIT_TESTING OFF CACHE BOOL "Whether to build the unit tests under MC-Testing.")
+set(MACE_UNIT_TESTING OFF CACHE BOOL "Whether to build the unit tests under MACE/Testing.")
 set(MACE_DOWNLOAD_DEPENDENCIES ON CACHE BOOL "Whether to download and extract dependencies that are not found. If turnd off, will instead error.")
 set(MACE_STATIC_LIBRARY ON CACHE BOOL "Whether to build static library files")
 
@@ -40,6 +40,8 @@ set(GLEW_DOWNLOAD_SOURCE_DIR "${PROJECT_SOURCE_DIR}/${GLEW_NAME}")
 #stb_image is a single header only image loading library.
 set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
 set(STB_IMAGE_DOWNLOAD_PATH "${MACE_INCLUDES}/stb_image.h")
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Try to find GLFW library and include path.
 # Once done this will define
@@ -172,8 +174,48 @@ else()
 	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MC-Window/*.h" "${MACE_INCLUDES}/MC-Graphics/*.h" "${MACE_INCLUDES}/MC-Audio/*.h" "${MACE_INCLUDES}/MC-Network/*.h" "${MACE_INCLUDES}/MC-System/*.h")
+file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/Window/*.h" "${MACE_INCLUDES}/MACE/Graphics/*.h" "${MACE_INCLUDES}/MACE/Audio/*.h" "${MACE_INCLUDES}/MACE/Network/*.h" "${MACE_INCLUDES}/MACE/System/*.h")
 file(GLOB_RECURSE SRC "src/*.cpp")
+
+foreach(FILE ${HEADERS}) 
+    # Get the directory of the source file
+    get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
+
+    # Remove common directory prefix to make the group
+    string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
+
+    # Make sure we are using windows slashes
+    string(REPLACE "/" "\\" GROUP "${GROUP}")
+
+    # Group into "Source Files" and "Header Files"
+    if ("${FILE}" MATCHES ".*\\.cpp")
+       set(GROUP "Source Files${GROUP}")
+    elseif("${FILE}" MATCHES ".*\\.h")
+       set(GROUP "Header Files${GROUP}")
+    endif()
+
+    source_group("${GROUP}" FILES "${FILE}")
+endforeach()
+
+foreach(FILE ${SRC}) 
+    # Get the directory of the source file
+    get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
+
+    # Remove common directory prefix to make the group
+    string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
+
+    # Make sure we are using windows slashes
+    string(REPLACE "/" "\\" GROUP "${GROUP}")
+
+    # Group into "Source Files" and "Header Files"
+    if ("${FILE}" MATCHES ".*\\.cpp")
+       set(GROUP "Source Files${GROUP}")
+    elseif("${FILE}" MATCHES ".*\\.h")
+       set(GROUP "Header Files${GROUP}")
+    endif()
+
+    source_group("${GROUP}" FILES "${FILE}")
+endforeach()
 
 if(${MACE_STATIC_LIBRARY})
 	add_library(MACE STATIC ${HEADERS} ${SRC})
@@ -185,7 +227,7 @@ if(${MACE_UNIT_TESTING})
 	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
 	add_executable(MACE-Testing ${TESTS_SRC})
 	
-	target_link_libraries(MACE-Testing LINK_PUBLIC mace)
+	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
 endif()
 
 

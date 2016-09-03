@@ -1,6 +1,6 @@
 #define MACE_ENTITY2D_EXPOSE_X_MACRO
-#include <MC-Graphics/Renderer.h>
-#include <MC-Graphics/GLUtil.h>
+#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/GLUtil.h>
 
 namespace mc {
 namespace gfx {

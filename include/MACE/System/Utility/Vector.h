@@ -9,11 +9,11 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <array>
-#include <MC-System/Exceptions.h>
-#include <MC-System/Constants.h>
+#include <MACE/System/Exceptions.h>
+#include <MACE/System/Constants.h>
 #include <ostream>
 #include <initializer_list>
-#include <MC-System/Utility/Math.h>
+#include <MACE/System/Utility/Math.h>
 
 /*
 the fact that vectors are templated manes that this cant have a cpp file correspondign to it. because of that, this file has HORRIBLE compile times.

@@ -7,13 +7,13 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MC-Graphics/GraphicsContext.h>
+#include <MACE/Graphics/GraphicsContext.h>
 #include <thread>
 #include <iostream>
 #include <mutex>
-#include <MC-System/Exceptions.h>
-#include <MC-Graphics/GLUtil.h>
-#include <MC-Graphics/Renderer.h>
+#include <MACE/System/Exceptions.h>
+#include <MACE/Graphics/GLUtil.h>
+#include <MACE/Graphics/Renderer.h>
 #include <GL/glew.h>
 
 namespace mc {
