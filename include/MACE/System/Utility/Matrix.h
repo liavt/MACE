@@ -194,6 +194,14 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 		content[x][y] = value;
 	}
 
+	const T* flatten() const {
+		return toArray().data();
+	}
+
+	T* flatten() {
+		return toArray().data();
+	}
+
 	/**
 	Retrieves content at a certain `Index`, not zero indexed.
 	<p>

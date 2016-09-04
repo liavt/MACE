@@ -16,7 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/System/Utility/Math.h>
 
 /*
-the fact that vectors are templated manes that this cant have a cpp file correspondign to it. because of that, this file has HORRIBLE compile times.
+the fact that vectors are templated maeans that this cant have a cpp file correspondign to it. because of that, this file has HORRIBLE compile times.
 maybe i will fix it later
 */
 
@@ -202,6 +202,30 @@ public:
 		if (position >= N)throw IndexOutOfBounds(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		content[position] = value;
 	}
+	std::array<T, N> toArray() const {
+		std::array<T, N> arr = std::array<T, N>();
+		for (Index i = 0; i < N; i++) {
+			arr[i] = content[i];
+		}
+		return arr;
+	}
+
+	/**
+	Creates an array with the data of this `Vector`
+	@return Pointer to an array of data
+	*/
+	const T* flatten() const {
+		return content.data();
+	}
+
+	/**
+	Creates an array with the data of this `Vector`
+	@return Pointer to an array of data
+	*/
+	T* flatten() {
+		return content.data();
+	}
+
 	/**
 	Retrieves the content at a certain `Index`, zero indexed. This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will be undefined.
 	@param i Where to retrieve the data
@@ -491,14 +515,6 @@ public:
 		return !(*this>other);
 	}
 
-	std::array<T,N> toArray() const {
-		std::array<T, N> arr = std::array<T, N>();
-		for (Index i = 0; i < N; i++) {
-			arr[i] = content[i];
-		}
-		return arr;
-	}
-
 	/**
 	Operator used to output to `std::cout`.
 	@param output `std::ostream` the `Matrix` was inserted into
@@ -509,9 +525,10 @@ public:
 		const Vector<T, N> &v) {
 		output << '['<<' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
 		for (Index x = 0; x < N; x++) {
-			output << v[x]<<','<<' ';
+			output << v[x];
+			if (x != N - 1)output << ", ";
 		}
-		output << ' '<<']';
+		output<<' '<<']';
 		return output;
 	}
 
@@ -594,7 +611,7 @@ MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,1) \
 MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,2)  \
 MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,3)  \
 MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,4)  \
-MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,5)  \
+MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,5)  
 
 #define MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,size) \
 /**Vector typedef*/ \

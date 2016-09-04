@@ -42,10 +42,10 @@ namespace gfx {
 		//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 		//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
 		const char* vertexShader2D = {
-#include "shaders/entity2D.vert"
+#include "Shaders/entity2D.vert"
 		};
 		const char* fragmentShader2D = {
-#include "shaders/entity2D.frag"
+#include "Shaders/entity2D.frag"
 		};
 
 		const GLfloat squareVertices[12] = {

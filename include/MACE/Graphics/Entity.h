@@ -9,7 +9,6 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <vector>
-#include <MACE/System/System.h>
 #include <MACE/System/Utility/BitField.h>
 #include <MACE/System/Utility/Transform.h>
 #include <MACE/Graphics/GraphicsConstants.h>

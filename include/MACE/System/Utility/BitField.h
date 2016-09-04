@@ -52,7 +52,6 @@ namespace mc {
 			this->value = val;
 		}
 
-		//dont need a copy constructor, the above constructor acts like one. adding a copy constructor creates too many options when you do ByteField var = 0;
 
 		/**
 		Default destructor.
@@ -126,7 +125,7 @@ namespace mc {
 		@return `true` if the bit is 1, `false` otherwise
 		*/
 		inline bool getBit(Index position) const {
-			return (((value >> position) & 1) == 1);
+			return (((value >> position) & 1))==1;
 		}
 
 		/**
