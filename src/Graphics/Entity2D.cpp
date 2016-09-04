@@ -11,13 +11,10 @@
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_PAINT_DATA_LOCATION 1
 
-//how many bytes in the entityData uniform buffer
-#define MACE_ENTITY_DATA_BUFFER_SIZE 62
+//how many bytes in the entityData uniform buffer. Needs to be multiplied by sizeof(GLfloat)
+#define MACE_ENTITY_DATA_BUFFER_SIZE 52
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 2
-
-//how many values a rotation matrix contains
-#define MACE_ROTATION_MATRIX_SIZE 16
 
 namespace mc {
 namespace gfx {
@@ -63,14 +60,14 @@ void RenderProtocol<Entity2D>::init() {
 	paintData.bind();
 	paintData.bindToUniformBlock(shaders2D.getProgramID(), "paint_data");
 	//we set it to null, because during the actual rendering we set the data
-	paintData.setData(sizeof(float)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr);
+	paintData.setData(sizeof(GLfloat)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr);
 	paintData.unbind();
 
 	entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 	entityData.bind();
 	entityData.bindToUniformBlock(shaders2D.getProgramID(), "entity_data");
 	//we set it to null, because during the actual rendering we set the data
-	entityData.setData(sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE,nullptr);
+	entityData.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE,nullptr);
 	entityData.unbind();
 
 	//gl states
@@ -103,6 +100,7 @@ void RenderProtocol<Entity2D>::render(void* e) {
 	Vector3f inheritedTranslation = { 0,0,0 };
 	Vector3f inheritedScale = { 1,1,1 };
 	Matrix4f inheritedRotation = math::identity<float, 4>();
+	
 	if (entity->hasParent()) {
 		const Entity* const parent = entity->getParent();
 		const TransformMatrix& parentTransform = parent->getBaseTransformation();
@@ -115,23 +113,22 @@ void RenderProtocol<Entity2D>::render(void* e) {
 	//now we set the uniform buffer defining the transformations of the entity
 	entityData.bind();
 	//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-	Byte* mappedEntityData = static_cast<Byte*>(entityData.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
+	Byte* mappedEntityData = static_cast<Byte*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
 	Index offset = 0;
-	std::memcpy((mappedEntityData), transform.translation.flatten(), sizeof(float) * 3);
-	offset += sizeof(float) * 3;
-	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(), sizeof(float) * 3);
-	offset += sizeof(float) * 5;
-	std::memcpy(mappedEntityData + offset, math::transpose(math::rotate(transform.rotation)).flatten(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
-	offset += sizeof(float)*MACE_ROTATION_MATRIX_SIZE;
-	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(), sizeof(float) * 3);
-	offset += sizeof(float) * 3;
-	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(), sizeof(float) * 3);
-	offset += sizeof(float) * 5;
-	std::memcpy(mappedEntityData + offset, math::transpose(inheritedRotation).flatten(), (sizeof(float)*MACE_ROTATION_MATRIX_SIZE));
+	std::memcpy((mappedEntityData), transform.translation.flatten(), sizeof(Vector3f));
+	offset += sizeof(GLfloat) * 4;
+	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(), sizeof(Vector3f));
+	offset += sizeof(GLfloat) * 4;
+	std::memcpy(mappedEntityData + offset, math::transpose(math::rotate(transform.rotation)).flatten(), sizeof(Matrix4f));
+	offset += sizeof(GLfloat)*16;
+	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(), sizeof(Vector3f));
+	offset += sizeof(GLfloat) * 4;
+	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(), sizeof(Vector3f));
+	offset += sizeof(GLfloat) * 4;
+	std::memcpy(mappedEntityData + offset, math::transpose(inheritedRotation).flatten(), sizeof(Matrix4f));
+	
 	entityData.unmap();
 	entityData.bindForRender();
-
-	std::cout <<transform.translation.size()<< transform.translation << " " << sizeof(transform.translation.flatten())<<std::endl;
 	
 	tex.bind();
 	square.bind();
