@@ -11,11 +11,54 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 #include <MACE/System/Utility/BitField.h>
 #include <MACE/System/Utility/Transform.h>
-#include <MACE/Graphics/GraphicsConstants.h>
-#include <MACE/Graphics/Model.h>
+#include <MACE/Graphics/Texture.h>
 
 namespace mc {
 namespace gfx {
+
+using EntityProperties = ByteField;
+
+//values defining which bit in a byte every propety is, or how much to bit shift it
+/**
+Bit location representing whether an `Entity` is dead.
+<p>
+If `true,` any {@link Container} holding it will remove it and call `kill()`
+@see Entity#getProperty(unsigned int)
+*/
+const Byte ENTITY_DEAD = 0;
+/**
+Property defining if an `Entity` can be updated. If this is `true`, `update()` will be called by it's parent.
+@see Entity#getProperty(unsigned int)
+*/
+const Byte ENTITY_UPDATE_DISABLED = 1;
+/**
+Property defining if an `Entity` can be rendered. If this is `true`, `render()` will be called by it's parent.
+@see Entity#getProperty(unsigned int)
+*/
+const Byte ENTITY_RENDER_DISABLED = 2;
+
+/**
+Flag representing whether an Entity's init() function has been called.
+<p>
+If destroy() or update() is called and this is `false`, an `InitializationError` is thrown.
+<p>
+If init() is called and this is `true`, an `InitializationError` is thrown.
+@see Entity#getProperty(unsigned int)
+*/
+const Byte ENTITY_INIT = 3;
+
+/**
+Flag representing whether an Entity's X position should move when it's parent is resized.
+@see ENTITY_STRETCH_Y
+*/
+const Byte ENTITY_STRETCH_X = 4;
+
+/**
+Flag representing whether an Entity's X position should move when it's parent is resized.
+@see ENTITY_STRETCH_X
+*/
+const Byte ENTITY_STRETCH_Y = 5;
+
 
 //forward-defining class for friend declaration
 class Entity;
@@ -231,7 +274,7 @@ public:
 	@see getProperty(Index) const
 	@see setProperty(Index, bool)
 	*/
-	BitField<uint16_t>& getProperties();
+	EntityProperties& getProperties();
 	/**
 	`const` version of `getProperties()`
 	@return The current properties belonging to this `Entity`
@@ -239,7 +282,7 @@ public:
 	@see getProperty(Index) const
 	@see setProperty(Index, bool)
 	*/
-	const BitField<uint16_t>& getProperties() const;
+	const EntityProperties& getProperties() const;
 	/**
 	Set the properties for this `Entity`
 	@param b New `Entity` properties
@@ -247,40 +290,26 @@ public:
 	@see getProperty(Index) const
 	@see setProperty(Index, bool)
 	*/
-	void setProperties(BitField<uint16_t>& b);
+	void setProperties(EntityProperties& b);
 
 	/**
-	Retrieve the value of a property. Property consants start with `ENTITY_PROPERTY_`
+	Retrieve the value of a property. Property consants start with `ENTITY_`
 	@param position Location of the property based on a constant
 	@return `true` or `false` based on the postition
 	@see setProperty(Index, bool)
 	@see getProperties()
 	@see setProperties(ByteField&)
 	*/
-	inline bool getProperty(Index position) const {
-
-#ifdef MACE_ERROR_CHECK
-		if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-		else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
-#endif
-		return properties.getBit(position);
-
-	}
+	bool getProperty(const Index position) const;
 	/**
-	Set a property to be `true` or `false`.Property consants start with `ENTITY_PROPERTY_`
+	Set a property to be `true` or `false`.Property consants start with `ENTITY_`
 	@param position Location of the property based on a constant
 	@param value Whether it is `true` or `false`
 	@see getProperty(Index) const
 	@see getProperties()
 	@see setProperties(ByteField&)
 	*/
-	inline void setProperty(Index position, bool value) {
-#ifdef MACE_ERROR_CHECK
-		if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-		else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
-#endif
-		properties.setBit(position, value);
-	}
+	void setProperty(const Index position, const bool value);
 
 	TransformMatrix& getBaseTransformation();
 	const TransformMatrix& getBaseTransformation() const;
@@ -377,19 +406,10 @@ protected:
 	When `Container.render()` is called, `customRender()` is called on all of it's children.
 	*/
 	virtual void customRender() = 0;
-
-	/**
-	Inherits settings from another `Entity`. Should not be called by extending classes.
-	<p>
-	Override this function to create custom inheritence rules for custom entities.
-	<p>
-	If this Entity's `ENTITY_IGNORE_PARENT` property is true, this is not called. Additionally, if this Entity's `ENTITY_PASS_DOWN` property is true, inherit() will be called on all of it's children.
-	*/
-	virtual void inherit(const Entity& e);
 private:
-	Entity* parent = 0;
+	Entity* parent = nullptr;
 
-	BitField<uint16_t> properties = ENTITY_DEFAULT_PROPERTIES;
+	EntityProperties properties = 0;
 
 	std::vector<Action*> actions = std::vector<Action*>();
 

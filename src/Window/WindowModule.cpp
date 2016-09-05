@@ -13,6 +13,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <chrono>
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <MACE/System/Exceptions.h>
 
 namespace mc {
 	namespace win

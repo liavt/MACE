@@ -382,20 +382,22 @@ TEST_CASE("Testing math") {//eww math
 
 }
 
-TEST_CASE("Testing toArray()") {
-	SECTION("Vector toArray()") {
-		float * arr = Vector4f({3.0f,4.0f,1.0f,-1.0f}).toArray().data();
+TEST_CASE("Testing flatten()") {
+	SECTION("Vector flatten()") {
+		float arr[4];
+		Vector4f({ 3.0f,4.0f,1.0f,-1.0f }).flatten(arr);
 		float result[] = {3.0f,4.0f,1.0f,-1.0f};
 		for (Index i = 0; i < 4; i++) {
 			REQUIRE(arr[i]==result[i]);
 		}
 
 	}
-	SECTION("Matrix toArray()") {
+	SECTION("Matrix flatten()") {
 		SECTION("With square array") {
 			float content[4][4] = { { 1,2,3,4 },{ 5,4,3,2 },{ 1,3,2,4 },{ 0,-1,3,10 } };
 			const Matrix4f m = Matrix4f(content);
-			float * arr = m.toArray().data();
+			float arr[16];
+			m.flatten(arr);
 			Index x = 0,y=0;
 			for (Index i = 0; i < 16;i++){
 				if (y==4) {
@@ -410,7 +412,8 @@ TEST_CASE("Testing toArray()") {
 		SECTION("With non-square array") {
 			float content[4][3] = { { 1,2,3 },{ 5,4,3 },{ 1,3,2 },{ 0,-1,3 } };
 			const Matrix<float,4,3> m = Matrix<float,4,3>(content);
-			float *  arr = m.toArray().data();
+			float arr[12];
+			m.flatten(arr);
 			Index x = 0, y = 0;
 			for (Index i = 0; i <12; i++) {
 				if (y == 3) {

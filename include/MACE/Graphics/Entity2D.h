@@ -2,8 +2,9 @@
 
 #include <MACE/Graphics/Model.h>
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Shaders.h>
+#include <MACE/Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {
@@ -29,15 +30,15 @@ namespace gfx {
 
 		void resize(const Size width, const Size height);
 
-		void init();
+		void init(const Size originalWidth, const Size originalHeight);
 
-		void setUp();
+		void setUp(win::Window* win);
 
-		void render(void* entity);
+		void render(win::Window* win,void* entity);
 
-		void tearDown();
+		void tearDown(win::Window* win);
 
-		void destroy();
+		void destroy(win::Window* win);
 	private:
 		//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 		//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
@@ -67,6 +68,7 @@ namespace gfx {
 			1,2,3
 		};
 
+		UBO windowData = UBO();
 		UBO paintData = UBO();
 		UBO entityData = UBO();
 

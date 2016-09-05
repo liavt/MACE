@@ -9,8 +9,6 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <iostream>
-
 namespace mc {
 	/**
 	Namespace with classes relating to audio and sound playback

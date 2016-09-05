@@ -1,7 +1,6 @@
 #pragma once
 #include <GL/glew.h>
 #include <MACE/System/Constants.h>
-#include <iostream>
 
 namespace mc {
 namespace gfx{

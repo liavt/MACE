@@ -21,7 +21,7 @@ namespace mc{
 			DummyEntity() : Entity() {};
 
 
-			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false,isInherited=false;
+			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false;
 		protected:
 
 			virtual void customUpdate() {
@@ -38,12 +38,6 @@ namespace mc{
 
 			virtual void customRender() {
 				isRendered = true;
-			}
-
-			virtual void inherit(const Entity& e) {
-				Entity::inherit(e);
-
-				isInherited = true;
 			}
 		};
 
@@ -135,9 +129,9 @@ namespace mc{
 			c.addChild(e);
 
 			SECTION("Updating an entity"){
-				REQUIRE(e.getProperty(ENTITY_UPDATE_ENABLED));
+				REQUIRE(!e.getProperty(ENTITY_UPDATE_DISABLED));
 				e.isUpdated = false;
-				e.setProperty(ENTITY_UPDATE_ENABLED, false);
+				e.setProperty(ENTITY_UPDATE_DISABLED, true);
 
 				c.updateChildren();
 
@@ -145,9 +139,9 @@ namespace mc{
 			}
 
 			SECTION("Rendering an entity") {
-				REQUIRE(e.getProperty(ENTITY_RENDER_ENABLED));
+				REQUIRE(!e.getProperty(ENTITY_RENDER_DISABLED));
 				e.isRendered = false;
-				e.setProperty(ENTITY_RENDER_ENABLED, false);
+				e.setProperty(ENTITY_RENDER_DISABLED, true);
 
 				c.renderChildren();
 
@@ -253,127 +247,6 @@ namespace mc{
 
 		}
 
-		TEST_CASE("Testing inheritence","[entity][graphics]") {
-			DummyEntity parent = DummyEntity(),child=DummyEntity();
-			DummyEntity2D parent2d = DummyEntity2D(), child2d = DummyEntity2D();
-			c.addChild(parent);
-			c.addChild(parent2d);
-
-			parent.addChild(child);
-			parent2d.addChild(child2d);
-
-			SECTION("Testing inherit()") {
-				REQUIRE_FALSE(child.getProperty(ENTITY_IGNORE_PARENT));
-				REQUIRE(parent.getProperty(ENTITY_PASS_DOWN));
-				REQUIRE_FALSE(child.isInherited);
-				REQUIRE_FALSE(parent.isInherited);
-
-				c.updateChildren();
-
-				REQUIRE(child.isInherited);
-				//top level entitys (one whose parent is a Container) dont get inheritence
-				REQUIRE_FALSE(parent.isInherited);
-
-				SECTION("Testing pass down and ignore parent") {
-					SECTION("Testing PASS_DOWN") {
-						child.isInherited = false;
-
-						REQUIRE(parent.getProperty(ENTITY_PASS_DOWN));
-						parent.setProperty(ENTITY_PASS_DOWN,false);
-						REQUIRE_FALSE(parent.getProperty(ENTITY_PASS_DOWN));
-						
-						c.updateChildren();
-
-						//child should not have inherited from parent, as pass_down was false
-						REQUIRE_FALSE(child.isInherited);
-						REQUIRE_FALSE(parent.isInherited);
-					}
-					child.isInherited = false;
-					parent.setProperty(ENTITY_PASS_DOWN, true);
-					SECTION("Testing IGNORE_PARENT") {
-						REQUIRE_FALSE(child.isInherited);
-
-						REQUIRE_FALSE(child.getProperty(ENTITY_IGNORE_PARENT));
-						child.setProperty(ENTITY_IGNORE_PARENT, true);
-						REQUIRE(child.getProperty(ENTITY_IGNORE_PARENT));
-
-						c.updateChildren();
-
-						REQUIRE_FALSE(child.isInherited);
-						REQUIRE_FALSE(parent.isInherited);
-					}
-					child.isInherited = false;
-					parent.setProperty(ENTITY_PASS_DOWN, true);
-					child.setProperty(ENTITY_IGNORE_PARENT, false);
-				}
-
-				//instead of repeating this code for Entity2D, i just change the variable pointer
-				SECTION("Testing STRETCH_X and STRETCH_Y") {
-					SECTION("Testing STRETCH_X") {
-						REQUIRE_FALSE(child.getProperty(ENTITY_STRETCH_X));
-						REQUIRE(child.getProperty(ENTITY_INHERIT_STRETCH_X));
-
-						c.updateChildren();
-
-						REQUIRE_FALSE(child.getProperty(ENTITY_STRETCH_X));
-						REQUIRE(child.getProperty(ENTITY_INHERIT_STRETCH_X));
-
-						parent.setProperty(ENTITY_STRETCH_X, true);
-
-						c.updateChildren();
-
-						//should have inherited it from the parent, so it should now be true
-						REQUIRE(child.getProperty(ENTITY_STRETCH_X));
-						REQUIRE(child.getProperty(ENTITY_INHERIT_STRETCH_X));
-
-						child.setProperty(ENTITY_INHERIT_STRETCH_X, false);
-
-						//invert it
-						parent.setProperty(ENTITY_STRETCH_X, true);
-
-						c.updateChildren();
-
-						//the child should not have inherited the change, so ENTITY_STRETCH_X should stay true
-						REQUIRE(child.getProperty(ENTITY_STRETCH_X));
-						REQUIRE_FALSE(child.getProperty(ENTITY_INHERIT_STRETCH_X));
-
-					}
-					SECTION("Testing STRETCH_Y") {
-						REQUIRE_FALSE(child.getProperty(ENTITY_STRETCH_Y));
-						REQUIRE(child.getProperty(ENTITY_INHERIT_STRETCH_Y));
-
-						c.updateChildren();
-
-						REQUIRE_FALSE(child.getProperty(ENTITY_STRETCH_Y));
-						REQUIRE(child.getProperty(ENTITY_INHERIT_STRETCH_Y));
-
-						parent.setProperty(ENTITY_STRETCH_Y, true);
-
-						c.updateChildren();
-
-						//should have inherited it from the parent, so it should now be true
-						REQUIRE(child.getProperty(ENTITY_STRETCH_Y));
-						REQUIRE(child.getProperty(ENTITY_INHERIT_STRETCH_Y));
-
-						child.setProperty(ENTITY_INHERIT_STRETCH_Y, false);
-
-						//invert it
-						parent.setProperty(ENTITY_STRETCH_Y, true);
-
-						c.updateChildren();
-
-						//the child should not have inherited the change, so ENTITY_STRETCH_Y should stay true
-						REQUIRE(child.getProperty(ENTITY_STRETCH_Y));
-						REQUIRE_FALSE(child.getProperty(ENTITY_INHERIT_STRETCH_Y));
-
-					}
-				}//end of STRETCH_X and STRETCH_Y test
-
-			}
-
-			c.clearChildren();
-		}
-
 		TEST_CASE("Testing entity properties","[entity][graphics]") {
 			DummyEntity e = DummyEntity();
 
@@ -382,9 +255,9 @@ namespace mc{
 
 			REQUIRE(e.getProperty(ENTITY_DEAD));
 
-			REQUIRE(e.getProperty(ENTITY_UPDATE_ENABLED));
-			e.setProperty(ENTITY_UPDATE_ENABLED, false);
-			REQUIRE_FALSE(e.getProperty(ENTITY_UPDATE_ENABLED));
+			REQUIRE(!e.getProperty(ENTITY_UPDATE_DISABLED));
+			e.setProperty(ENTITY_UPDATE_DISABLED, true);
+			REQUIRE(e.getProperty(ENTITY_UPDATE_DISABLED));
 			REQUIRE(e.getProperty(ENTITY_DEAD));
 		}
 

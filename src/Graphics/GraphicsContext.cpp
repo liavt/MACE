@@ -79,7 +79,11 @@ void OpenGLContext::init(win::Window * win)
 	auto framebufferResize = [](GLFWwindow* win, int width, int height) {Renderer::resize(width,height); };
 	glfwSetFramebufferSizeCallback(win->getGLFWWindow(), framebufferResize);
 
-	Renderer::init();
+	int width=0, height=0;
+
+	glfwGetFramebufferSize(win->getGLFWWindow(),&width,&height);
+
+	Renderer::init(width,height);
 
 	initChildren();
 
@@ -94,7 +98,7 @@ void OpenGLContext::render(win::Window* win) {
 
 	renderChildren();
 
-	Renderer::renderFrame();
+	Renderer::renderFrame(win);
 
 	glfwSwapBuffers(win->getGLFWWindow());
 }
@@ -105,7 +109,7 @@ void OpenGLContext::destroy(win::Window* win) {
 
 	destroyChildren();
 
-	Renderer::destroy();
+	Renderer::destroy(win);
 
 }
 

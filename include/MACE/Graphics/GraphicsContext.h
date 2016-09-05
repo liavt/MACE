@@ -9,10 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <MACE/System/System.h>
 #include <MACE/Window/WindowModule.h>
 #include <MACE/Graphics/Entity.h>
-#include <GL/glew.h>
 
 namespace mc {
 

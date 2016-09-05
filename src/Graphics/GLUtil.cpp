@@ -3,6 +3,7 @@
 #include <MACE/Graphics/GraphicsConstants.h>
 #include <MACE/System/Constants.h>
 #include <iostream>
+#include <GL/glew.h>
 
 namespace mc {
 	namespace gfx {

@@ -86,7 +86,7 @@ public:
 	Consructs a `Vector` from the contents of an array.
 	@param arr An equally-sized array whose contents will be filled into a `Vector`
 	*/
-	Vector(const T arr[N]) : content ()//we need to initialize the array first, or else we will try to access an empty memory location
+	Vector(const T arr[N]) : content()//we need to initialize the array first, or else we will try to access an empty memory location
 	{
 		static_assert(N != 0, "A Vector's size must be greater than 0!");
 		this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
@@ -110,7 +110,7 @@ public:
 			++counter;
 		}
 	}
-		
+
 	/**
 	Copies the contents of a `Vector` into a new `Vector`
 	@param obj A `Vector` to clone
@@ -174,7 +174,7 @@ public:
 	@throw IndexOutOfBounds If `i` is less than 0
 	@see operator[](Index)
 	*/
-	T& get(Index i){
+	T& get(Index i) {
 		if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		return content[i];
 	}
@@ -186,7 +186,7 @@ public:
 	@throw IndexOutOfBounds If `i` is less than 0
 	@see operator[](Index)
 	*/
-	const T& get(Index i) const{
+	const T& get(Index i) const {
 		if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		return content.at(i);
 	}
@@ -202,29 +202,19 @@ public:
 		if (position >= N)throw IndexOutOfBounds(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		content[position] = value;
 	}
-	std::array<T, N> toArray() const {
-		std::array<T, N> arr = std::array<T, N>();
+
+	/**
+	Creates an array with the data of this `Vector`, in O(N) time
+	@return Pointer to `arr`
+	@param arr The array to fill
+	*/
+	const T* flatten(T arr[N]) const {
 		for (Index i = 0; i < N; i++) {
 			arr[i] = content[i];
 		}
 		return arr;
 	}
 
-	/**
-	Creates an array with the data of this `Vector`
-	@return Pointer to an array of data
-	*/
-	const T* flatten() const {
-		return content.data();
-	}
-
-	/**
-	Creates an array with the data of this `Vector`
-	@return Pointer to an array of data
-	*/
-	T* flatten() {
-		return content.data();
-	}
 
 	/**
 	Retrieves the content at a certain `Index`, zero indexed. This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will be undefined.
@@ -272,6 +262,8 @@ public:
 
 	/**
 	Adds 2 `Vectors` together.
+	<p>
+	This is done in o(N) time
 		
 	@param right Another `Vector`
 	@return A `Vector` that was created by adding 2 `Vectors` together
@@ -286,6 +278,8 @@ public:
 	};
 	/**
 	Subtracts 2 `Vectors` together.
+	<p>
+	This is done in o(N) time
 
 	@param right Another `Vector`
 	@return A `Vector` that was created by subtracting 2 `Vectors` together
@@ -329,6 +323,8 @@ public:
 
 	/**
 	Calculates the dot product of 2 `Vectors`
+	<p>
+	This is done in o(N) time
 
 	@param right Another `Vector`
 	@return The dot product
@@ -348,6 +344,8 @@ public:
 
 	/**
 	Multiplies a `Vector` by a scalar.
+	<p>
+	This is done in O(N) time
 	@param scalar What to multiply this `Vector` by
 	@return A `Vector` scaled.
 	@see operator*(const Vector&) const
@@ -362,6 +360,8 @@ public:
 
 	/**
 	Divides a `Vector` by a scalar.
+	<p>
+	This is done in O(N) time
 	@param scalar What to divided this `Vector` by
 	@return A `Vector` scaled.
 	@see operator*(const T&) const
@@ -420,7 +420,9 @@ public:
 	}
 
 	/**
-	Compares whether 2 `Vectors` have the same values
+	Compares whether 2 `Vectors` have the same values.
+	<p>
+	This is done in O(N) time
 	@param other A `Vector` to compare `this` against
 	@return `true` if the 2 are equal, `false` otherwise
 	@see operator!=(const Vector<T,N>) const
@@ -440,7 +442,9 @@ public:
 	};
 
 	/**
-	Compares whether 2 `Vectors` don't have the same values
+	Compares whether 2 `Vectors` don't have the same values.
+	<p>
+	This is done in O(N) time
 	@param other A `Vector` to compare `this` against
 	@return `true` if the 2 are not equal, `false` otherwise
 	@see operator==(const Vector<T,N>) const
@@ -456,6 +460,8 @@ public:
 
 	/**
 	Compares the `>` operator on 2 `Vectors` elements.
+	<p>
+	This is done in O(N) time
 	@param other A `Vector` to compare against
 	@return The result of the `>` operator on each element
 	@see operator<(const Vector&) const
@@ -475,6 +481,8 @@ public:
 
 	/**
 	Compares the `>=` operator on 2 `Vectors` elements.
+	<p>
+	This is done in O(N) time
 	@param other A `Vector` to compare against
 	@return The result of the `>=` operator on each element
 	@see operator<(const Vector&) const
@@ -489,6 +497,8 @@ public:
 
 	/**
 	Compares the `<` operator on 2 `Vectors` elements.
+	<p>
+	This is done in O(N) time
 	@param other A `Vector` to compare against
 	@return The result of the `<` operator on each element
 	@see operator<=(const Vector&) const
@@ -517,6 +527,8 @@ public:
 
 	/**
 	Operator used to output to `std::cout`.
+	<p>
+	This is done in O(N) time
 	@param output `std::ostream` the `Matrix` was inserted into
 	@param v `Matrix` which will be printed
 	@return `output` for chaining

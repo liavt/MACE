@@ -65,19 +65,7 @@ namespace mc {
 	*/
 	using Index = unsigned int;
 
+	using Enum = unsigned int;
+
 	typedef void(*VoidFunctionPtr)();
-
-	/**
-	Parameter for `System.getFlag(Index)`. Is `true` if `System.init()` has been called.
-	*/
-	const Index SYSTEM_FLAG_INIT = 0;
-	/**
-	Parameter for `System.getFlag(Index)`. Is `true` if `System.destroy()` has been called.
-	*/
-	const Index SYSTEM_FLAG_DESTROYED = 1;
-	/**
-	Parameter for `System.getFlag(Index)`. Is `true` if `System.requestStop()` has been called.
-	*/
-	const Index SYSTEM_FLAG_STOP_REQUESTED = 2;
-
 }

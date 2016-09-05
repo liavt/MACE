@@ -1,8 +1,6 @@
 #pragma once
 
-#include <MACE/System/Utility/Color.h>
-#include <MACE/System/Utility/BitField.h>
-#include <MACE/System/Utility/Transform.h>
+#include <MACE/System/Utility/Matrix.h>
 #include <unordered_map>
 #include <GL/glew.h>
 
@@ -65,11 +63,11 @@ namespace gfx {
 		void setUniform(char * name, const mc::Vector<T, 4> v) {glUniform4##suffix(uniforms[name],v[0],v[1],v[2],v[3]);}		\
 
 #define _CREATE_UNIFORM_MATRIX_FUNCTION(T,suffix,W,H) \
-		void setUniform(char * name, const bool transpose, const mc::Matrix<T, W, H>& m) { glUniformMatrix##W##x##H##suffix(uniforms[name], 1, transpose, m.toArray().data()); } \
+		void setUniform(char * name, const bool transpose, const mc::Matrix<T, W, H>& m) { T flattenedData[W*H];glUniformMatrix##W##x##H##suffix(uniforms[name], 1, transpose, m.flatten(flattenedData)); } \
 		void setUniform(char * name, const mc::Matrix<T,W,H>& m){setUniform(name,true,m);}
 
 #define _CREATE_UNIFORM_SQUARE_MATRIX_FUNCTION(T,suffix,N) \
-		void setUniform(char * name, const bool transpose, const mc::Matrix<T, N, N>& m) { glUniformMatrix##N##suffix(uniforms[name], 1, transpose, m.toArray().data()); } \
+		void setUniform(char * name, const bool transpose, const mc::Matrix<T, N, N>& m) { T flattenedData[N*N];glUniformMatrix##N##suffix(uniforms[name], 1, transpose, m.flatten(flattenedData)); } \
 		void setUniform(char * name, const mc::Matrix<T,N,N>& m){setUniform(name,true,m);}
 
 #define _UNIFORM_MATRIX(T, suffix) \
@@ -126,12 +124,6 @@ namespace gfx {
 #undef _CREATE_UNIFORM_MATRIX_FUNCTION
 #undef _CREATE_UNIFORM_SQUARE_MATRIX_FUNCTION
 
-
-		//overloads for non-primitive types
-
-		void setUniform(char * name, const Color& c);
-		void setUniform(char * name, const ByteField& b);
-		void setUniform(char * name, const TransformMatrix& m);
 	};//ShaderProgram
 
 }

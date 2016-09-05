@@ -9,8 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 #include <MACE/System/Constants.h>
-#include <iosfwd>
-#include <MACE/System/Utility/Math.h>
+#include <ostream>
 
 namespace mc {
 	/**
@@ -48,8 +47,7 @@ namespace mc {
 		Equal to calling {@code BitField<T> = value}
 		@param value Inital value
 		*/
-		BitField(const T val) {
-			this->value = val;
+		BitField(const T val)  : value(val){
 		}
 
 
@@ -80,7 +78,7 @@ namespace mc {
 		Change the internal value.
 		@param newValue New value for this `BitField` to operate on
 		*/
-		inline void set(T newValue) {
+		void set(T newValue) {
 			value = newValue;
 		}
 
@@ -90,7 +88,7 @@ namespace mc {
 		@param state `true` to make the specified bit 1, and `false` to make it 0
 		@return `this` for chaining
 		*/
-		inline BitField& setBit(Index position, bool state) {
+		BitField& setBit(Index position, bool state) {
 			if (state) {
 				return toggleBit(position);
 			}
@@ -104,7 +102,7 @@ namespace mc {
 		@param position 0-indexed integer representing which bit to toggle
 		@return `this` for chaining
 		*/
-		inline BitField& toggleBit(Index position) {
+		BitField& toggleBit(Index position) {
 			value |= (1 << position);
 			return *this;
 		}
@@ -114,7 +112,7 @@ namespace mc {
 		@param position 0-indexed integer representing which bit to untoggle
 		@return `this` for chaining
 		*/
-		inline BitField& untoggleBit(Index position) {
+		BitField& untoggleBit(Index position) {
 			value &= ~(1 << position);
 			return *this;
 		}
@@ -124,8 +122,8 @@ namespace mc {
 		@param position which bit to check
 		@return `true` if the bit is 1, `false` otherwise
 		*/
-		inline bool getBit(Index position) const {
-			return (((value >> position) & 1))==1;
+		bool getBit(Index position) const {
+			return ((((value >> position) & 0x1)))==1;
 		}
 
 		/**
@@ -133,7 +131,7 @@ namespace mc {
 		@param position Which bit to "flip," or invert
 		@return `this` for chaining
 		*/
-		inline BitField& flipBit(Index position) {
+		BitField& flipBit(Index position) {
 			value ^= 1 << position;
 			return *this;
 		}
@@ -144,7 +142,7 @@ namespace mc {
 		Equivelant to calling the ~ operator.
 		@return `this` for chainign
 		*/
-		inline BitField& inverse() {
+		BitField& inverse() {
 			value = ~value;
 			return *this;
 		}
@@ -154,7 +152,7 @@ namespace mc {
 		@return Number of bits
 		*/
 		Size size() const {
-			return sizeof(value) * 8;
+			return sizeof(value) * CHAR_BIT;
 		}
 
 		//i heard you like operators so i added some operators to your operators
@@ -300,7 +298,7 @@ namespace mc {
 		Inverse for {@link operator==}
 		*/
 		bool operator!=(const T other) {
-			return !(value == other);
+			return (value != other);
 		}
 		/**
 		Compares this `BitField` to another. Will return `true` if the bits represented are both equal.

@@ -132,20 +132,5 @@ namespace gfx {
 	{
 		return fragId;
 	}
-
-	void ShaderProgram::setUniform(char * name, const Color & c)
-	{
-		glUniform4f(uniforms[name], c.r, c.g, c.b, c.a);
-	}
-
-	void ShaderProgram::setUniform(char * name, const ByteField & b)
-	{
-		glUniform1i(uniforms[name], b.get());
-	}
-
-	void ShaderProgram::setUniform(char * name, const TransformMatrix & m)
-	{
-		setUniform(name, m.get());
-	}
 }
 }

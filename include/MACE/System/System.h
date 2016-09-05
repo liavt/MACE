@@ -61,6 +61,19 @@ namespace mc {
 	};
 
 	/**
+	Parameter for `System.getFlag(Index)`. Is `true` if `System.init()` has been called.
+	*/
+	const Index SYSTEM_FLAG_INIT = 0;
+	/**
+	Parameter for `System.getFlag(Index)`. Is `true` if `System.destroy()` has been called.
+	*/
+	const Index SYSTEM_FLAG_DESTROYED = 1;
+	/**
+	Parameter for `System.getFlag(Index)`. Is `true` if `System.requestStop()` has been called.
+	*/
+	const Index SYSTEM_FLAG_STOP_REQUESTED = 2;
+
+	/**
 	Core class of MACE, managing `Modules`. `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `terminate()` should be called at the end of your program.
 	<p>
 	If `isRunning()` returns `false`, you should end your program and call `terminate()`

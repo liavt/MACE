@@ -6,12 +6,17 @@
 
 //constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-//how many bytes in the paintData uniform buffer
+//how many floats in the windowData uniform buffer
+#define MACE_WINDOW_DATA_BUFFER_SIZE 8
+//which binding location the windowData uniform buffer should be bound to
+#define MACE_WINDOW_DATA_LOCATION 0
+
+//how many floats in the paintData uniform buffer
 #define MACE_PAINT_DATA_BUFFER_SIZE 8
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_PAINT_DATA_LOCATION 1
 
-//how many bytes in the entityData uniform buffer. Needs to be multiplied by sizeof(GLfloat)
+//how many floats in the entityData uniform buffer. Needs to be multiplied by sizeof(GLfloat)
 #define MACE_ENTITY_DATA_BUFFER_SIZE 52
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 2
@@ -39,9 +44,14 @@ void Image::customDestroy()
 {
 }
 
-void RenderProtocol<Entity2D>::resize(const Size width, const Size height) {}
+void RenderProtocol<Entity2D>::resize(const Size width, const Size height) {
+	windowData.bind();
+	float newSize[2] = { static_cast<float>(width),static_cast<float>(height)};
+	windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
+	windowData.unbind();
+}
 
-void RenderProtocol<Entity2D>::init() {
+void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size originalHeight) {
 	//vao loading
 	square.loadVertices(4, squareVertices);
 	square.loadTextureCoordinates(4, squareTextureCoordinates);
@@ -55,6 +65,14 @@ void RenderProtocol<Entity2D>::init() {
 
 	paintData.init();
 	entityData.init();
+	windowData.init();
+
+	windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
+	windowData.bind();
+	windowData.bindToUniformBlock(shaders2D.getProgramID(),"window_data");
+	float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = {static_cast<float>(originalWidth), static_cast<float>(originalHeight),static_cast<float>(originalWidth),static_cast<float>(originalHeight),0,0};
+	windowData.setData(sizeof(GLfloat)*MACE_WINDOW_DATA_BUFFER_SIZE,defaultWindowData);
+	windowData.unbind();
 
 	paintData.setLocation(MACE_PAINT_DATA_LOCATION);
 	paintData.bind();
@@ -77,9 +95,9 @@ void RenderProtocol<Entity2D>::init() {
 	checkGLError();
 }
 
-void RenderProtocol<Entity2D>::setUp() {};
+void RenderProtocol<Entity2D>::setUp(win::Window* win) {};
 
-void RenderProtocol<Entity2D>::render(void* e) {
+void RenderProtocol<Entity2D>::render(win::Window* win,void* e) {
 	Entity2D * entity = static_cast<Entity2D*>(e);
 	const Texture& tex = entity->getTexture();
 
@@ -110,25 +128,39 @@ void RenderProtocol<Entity2D>::render(void* e) {
 		inheritedRotation = math::rotate(parentTransform.rotation);
 	}
 
+	const float stretch_x = entity->getProperty(ENTITY_STRETCH_X) ? 1.0f : 0.0f;
+	const float stretch_y = entity->getProperty(ENTITY_STRETCH_Y) ? 1.0f : 0.0f;
+
+	//the following are containers for the flatten() call
+	float flattenedMatrixData[16];
+	float flattenedVectorData[3];
+
 	//now we set the uniform buffer defining the transformations of the entity
 	entityData.bind();
 	//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-	Byte* mappedEntityData = static_cast<Byte*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
+	float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
 	Index offset = 0;
-	std::memcpy((mappedEntityData), transform.translation.flatten(), sizeof(Vector3f));
-	offset += sizeof(GLfloat) * 4;
-	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(), sizeof(Vector3f));
-	offset += sizeof(GLfloat) * 4;
-	std::memcpy(mappedEntityData + offset, math::transpose(math::rotate(transform.rotation)).flatten(), sizeof(Matrix4f));
-	offset += sizeof(GLfloat)*16;
-	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(), sizeof(Vector3f));
-	offset += sizeof(GLfloat) * 4;
-	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(), sizeof(Vector3f));
-	offset += sizeof(GLfloat) * 4;
-	std::memcpy(mappedEntityData + offset, math::transpose(inheritedRotation).flatten(), sizeof(Matrix4f));
-	
+	std::memcpy((mappedEntityData)+offset, transform.translation.flatten(flattenedVectorData), sizeof(Vector3f));
+	offset +=  3;
+	std::memcpy(mappedEntityData+offset,&stretch_x,sizeof(stretch_x));
+	offset ++;
+	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(flattenedVectorData), sizeof(Vector3f));
+	offset +=  3;
+	std::memcpy(mappedEntityData + offset, &stretch_y, sizeof(stretch_y));
+	offset ++;
+	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(flattenedVectorData), sizeof(Vector3f));
+	offset += 4;
+	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(flattenedVectorData), sizeof(Vector3f));
+	offset += 4;
+	std::memcpy(mappedEntityData + offset, math::transpose(math::rotate(transform.rotation)).flatten(flattenedMatrixData), sizeof(Matrix4f));
+	offset += 16;
+	std::memcpy(mappedEntityData + offset, math::transpose(inheritedRotation).flatten(flattenedMatrixData), sizeof(Matrix4f));
+
+
 	entityData.unmap();
 	entityData.bindForRender();
+
+	windowData.bindForRender();
 	
 	tex.bind();
 	square.bind();
@@ -139,17 +171,18 @@ void RenderProtocol<Entity2D>::render(void* e) {
 	checkGLError();
 }
 
-void RenderProtocol<Entity2D>::tearDown() {}
+void RenderProtocol<Entity2D>::tearDown(win::Window* win) {}
 
-void RenderProtocol<Entity2D>::destroy() {
+void RenderProtocol<Entity2D>::destroy(win::Window* win) {
 	shaders2D.destroy();
 }
 
 }//gfx
 }//mc
 
+#undef MACE_WINDOW_DATA_BUFFER_SIZE
+#undef MACE_WINDOW_DATA_LOCATION
 #undef MACE_PAINT_DATA_BUFFER_SIZE
 #undef MACE_PAINT_DATA_LOCATION
 #undef MACE_ENTITY_DATA_BUFFER_SIZE
 #undef MACE_ENTITY_DATA_LOCATION
-#undef MACE_ROTATION_MATRIX_SIZE

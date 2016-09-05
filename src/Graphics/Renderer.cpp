@@ -10,13 +10,18 @@ int RenderImpl::index = -1;
 std::queue<std::pair<Index,Entity*>> Renderer::renderQueue = std::queue<std::pair<Index, Entity*>>();
 std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
 
-void Renderer::init()
+Size Renderer::originalWidth = 0;
+Size Renderer::originalHeight = 0;
+
+void Renderer::init(const Size originalWidth, const Size originalHeight)
 {
+	Renderer::originalWidth = originalWidth;
+	Renderer::originalHeight = originalHeight;
 }//init
-void Renderer::setUp()
+void Renderer::setUp(win::Window* win)
 {
 	for (Index i = 0; i < protocols.size(); ++i) {
-		protocols[i]->setUp();
+		protocols[i]->setUp(win);
 	}
 }//setUp
 void Renderer::resize(const Size width, const Size height)
@@ -26,28 +31,28 @@ void Renderer::resize(const Size width, const Size height)
 		protocols[i]->resize(width,height);
 	}
 }//tearDown
-void Renderer::tearDown()
+void Renderer::tearDown(win::Window* win)
 {
 	for (Index i = 0; i < protocols.size(); ++i) {
-		protocols[i]->tearDown();
+		protocols[i]->tearDown(win);
 	}
 }//tearDown
 //resize
-void Renderer::renderFrame()
+void Renderer::renderFrame(win::Window* win)
 {
-	setUp();
+	setUp(win);
 	while (!renderQueue.empty()) {
 		const std::pair<Index, Entity*> pair = renderQueue.front();
-		protocols.at(pair.first)->render(pair.second);
+		protocols.at(pair.first)->render(win,pair.second);
 		renderQueue.pop();
 	}
-	tearDown();
+	tearDown(win);
 }//renderFrame
-void Renderer::destroy()
+void Renderer::destroy(win::Window* win)
 {
 	while(!protocols.empty()){
 		RenderImpl* protocol = protocols.back();
-		protocol->destroy();
+		protocol->destroy(win);
 		delete protocol;
 		protocols.pop_back();
 	}

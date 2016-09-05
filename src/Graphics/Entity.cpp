@@ -111,7 +111,7 @@ void Container::removeChild(Index index) {
 void Entity::render()
 {
 	//check if we can render
-	if(getProperty(ENTITY_RENDER_ENABLED)){
+	if(!getProperty(ENTITY_RENDER_DISABLED)){
 		//we want to render as fast as possible, so we avoid doing anything but rendering here. actions and inheritence is done during update()
 		customRender();
 		renderChildren();
@@ -206,17 +206,7 @@ std::vector<Action*> Entity::getActions()
 
 void Entity::update() {
 	//check if we can update
-	if (getProperty(ENTITY_UPDATE_ENABLED)) {
-
-		//inherit properties from the parent
-		//first,check if we can inherit, and then check if we have a parent()
-		if (!getProperty(ENTITY_IGNORE_PARENT)&&hasParent()) {
-			const Entity& parent = *getParent();//we will be doing multiple calls on the parent, so we assign the refernce to a variable. this is faster than calling getParent() multiple times.
-			//check if the parent can pass it's properties down from the parent
-			if (parent.getProperty(ENTITY_PASS_DOWN)) {//check if the parent is allowed to pass it's properties down
-				inherit(parent);//actually inherit properties
-			}
-		}
+	if (!getProperty(ENTITY_UPDATE_DISABLED)) {
 
 		//update the actions of this entity
 		for (Index i = 0; i < actions.size();i++) {
@@ -252,17 +242,6 @@ void Entity::destroy()
 	customDestroy();
 }
 
-void Entity::inherit(const Entity & e)
-{
-	//check stuff
-	if (getProperty(ENTITY_INHERIT_STRETCH_X)) {
-		setProperty(ENTITY_STRETCH_X, e.getProperty(ENTITY_STRETCH_X));
-	}
-
-	if (getProperty(ENTITY_INHERIT_STRETCH_Y)) {
-		setProperty(ENTITY_STRETCH_Y, e.getProperty(ENTITY_STRETCH_Y));
-	}
-}
 
 Entity::Entity() :Container()
 {
@@ -278,19 +257,36 @@ Entity::~Entity()
 }
 
 
-BitField<uint16_t>& Entity::getProperties() {
+EntityProperties& Entity::getProperties() {
 	return properties;
 }
 
-const BitField<uint16_t>& Entity::getProperties() const
+const EntityProperties& Entity::getProperties() const
 {
 	return properties;
 }
 
-void Entity::setProperties(BitField<uint16_t>& b)
+void Entity::setProperties(EntityProperties& b)
 {
 	properties = b;
 }
+
+bool Entity::getProperty(const Index position) const {
+#ifdef MACE_ERROR_CHECK
+	if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
+	else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
+#endif
+	return properties.getBit(position);
+}
+
+void Entity::setProperty(const Index position, const bool value){
+#ifdef MACE_ERROR_CHECK
+	if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
+	else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
+#endif
+	properties.setBit(position, value);
+}
+
 TransformMatrix & Entity::getBaseTransformation()
 {
 	return baseTransformation;

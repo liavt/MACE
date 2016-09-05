@@ -194,12 +194,17 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 		content[x][y] = value;
 	}
 
-	const T* flatten() const {
-		return toArray().data();
-	}
-
-	T* flatten() {
-		return toArray().data();
+	/**
+	Creates an 1-dimensional array with the data of this `Matrix`, in O(N) time
+	@return Pointer to an array of data
+	*/
+	const T* flatten(T arr[W*H]) const {
+		for (Index x = 0; x < W; x++) {
+			for (Index y = 0; y < H; y++) {
+				arr[y + (x*H)] = (content[x][y]);
+			}
+		}
+		return arr;
 	}
 
 	/**
@@ -458,16 +463,6 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 		}
 		output << ' ' << ']';
 		return output;
-	}
-
-	std::array<T, W*H> toArray() const {
-		std::array<T, W*H> arr = std::array<T, W*H>();
-		for (Index x = 0; x < W; x++) {
-			for (Index y = 0; y < H; y++) {
-				arr[y + (x*H)] = content[x][y];
-			}
-		}
-		return arr;
 	}
 
 };//Matrix

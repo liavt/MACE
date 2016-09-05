@@ -8,12 +8,20 @@ precision mediump float; // Defines precision for float and float-derived (vecto
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 texCoord;
 
+layout(std140) uniform window_data{
+	vec2 originalSize;
+	vec2 currentSize;
+	vec2 mouseCoord;
+};
+
 layout(std140) uniform entity_data{
 	vec3 translation;
+	float stretch_x;
 	vec3 scale;
-	mat4 rotation;
+	float stretch_y;
 	vec3 inheritedTranslation;
 	vec3 inheritedScale;
+	mat4 rotation;
 	mat4 inheritedRotation;
 };
 
@@ -27,17 +35,19 @@ void main(){
 	
 	//applying the parent properties now
 	gl_Position = (vec4(inheritedTranslation,1.0)+((inheritedRotation * (gl_Position * vec4(inheritedScale,0.0)))));//what a MAD man!
-	
-//	gl_Position.xy += 0.5f;
-	
+		
 	gl_Position = ((gl_Position)*vec4(2.0f,2.0f,1.0f,1.0f))+vec4(-0.5f,-0.5f,0,0);//we need to convert it to be 0.0 to 1.0 coordinates and the origin to be the bottom left.
 	
 	gl_Position += vec4(scale/2,0.0f);
-
 	
-	//gl_Position += vec4(scale/2.0f,0.0f);
+	vec2 sizeModifier = originalSize/currentSize;
 	
-	//gl_Position = ortho*gl_Position;
+	if(stretch_x==0){
+		gl_Position.x*=sizeModifier.x;
+	}
+	if(stretch_y==0){
+		gl_Position.y*=sizeModifier.y;
+	}
 	
 	/*
 	For those who didn't get the MAD joke:
