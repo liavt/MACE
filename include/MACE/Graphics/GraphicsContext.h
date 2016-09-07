@@ -19,7 +19,7 @@ Namespace containing classes used for Graphics in MACE.
 */
 namespace gfx{
 
-class OpenGLContext : public mc::gfx::Container, public mc::win::GraphicsContext {
+class OpenGLContext : public mc::gfx::Entity, public mc::win::GraphicsContext {
 	bool vsync;
 
 public:
@@ -32,7 +32,12 @@ public:
 	void destroy(win::Window* win);
 
 	void setVSync(const bool& sync);
-
+private:
+	//these are for the Entity inheritence
+	void customUpdate();
+	void customRender();
+	void customDestroy();
+	void customInit();
 };
 
 }

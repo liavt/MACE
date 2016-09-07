@@ -22,7 +22,7 @@ using EntityProperties = ByteField;
 /**
 Bit location representing whether an `Entity` is dead.
 <p>
-If `true,` any {@link Container} holding it will remove it and call `kill()`
+If `true,` any {@link Entity} holding it will remove it and call `kill()`
 @see Entity#getProperty(unsigned int)
 */
 const Byte ENTITY_DEAD = 0;
@@ -60,7 +60,7 @@ Flag representing whether an Entity's X position should move when it's parent is
 const Byte ENTITY_STRETCH_Y = 5;
 
 
-//forward-defining class for friend declaration
+//forward-defining entity for action
 class Entity;
 
 class Action {
@@ -70,55 +70,90 @@ public:
 	virtual void destroy(Entity& e) = 0;
 };//Action
 
+
 /**
-A class which holds an internal buffer of {@link Entity entities,} known as "children."
-<p>
-Calling `updateChildren()` will call `update()` on all of it's children.
-<p>
-Examples:
+Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
 */
-class Container {
+class Entity{
 public:
-	/**
-	Calls `update()` on all of it's children and actions. Also calls {@link Entity#inherit()} if `ENTITY_PASS_DOWN` is true.
-	*/
-	virtual void updateChildren();
-	/**
-	Calls `init()` on all of it's children.
-	*/
-	void initChildren();
-	/**
-	Calls `destroy()` on all of it's children and actions.
-	*/
-	void destroyChildren();//think of the children!
-	/**
-	Calls `render()` on all of it's children.
-	*/
-	void renderChildren();
 
 	/**
-	Default constructor. Creates an empty list of children.
+	Default constructor. Constructs properties based on `ENTITY_DEFAULT_PROPERTIES`
 	*/
-	Container();
+	Entity();
+	/**
+	Cloning constructor. Copies another's `Entity's` properties and children.
+	*/
+	Entity(const Entity &obj);
+	/**
+	Destructor. Made `virtual` for inheritance.
+	@see ~Entity()
+	*/
+	virtual ~Entity();
 
 	/**
-	Destructor. Clears all of the children.
-	@see #clearChildren
+	Should be called a by `Entity` when `System.update()` is called. Calls `customUpdate()`.
+	<p>
+	When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
+	class Derived : public Entity{
+	void update(){
+	Entity::update()//must call
+	...
+	}
+	}
+	}
+	@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
 	*/
-	virtual ~Container();
+	void update();
+	/**
+	Should be called a by `Entity` when `System.init()` is called. Calls `customInit()`
+	<p>
+	When this function is inherited or overwritten, you must call the base class's `init()` funtion. For example:{@code
+	class Derived : public Entity{
+	void init(){
+	Entity::init()//must call
+	...
+	}
+	}
+	}
+	@throws InitializationError If the property `ENTITY_INIT` is true, meaning `init()` has already been called.
+	*/
+	void init();
+	/**
+	Should be called a by `Entity` when `System.terminate()` is called. Calls `customDestroy()`. Sets `ENTITY_INIT` to be false
+	<p>
+	When this function is inherited or overwritten, you must call the base class's `destroy()` funtion. For example:{@code
+	class Derived : public Entity{
+	void destroy(){
+	Entity::destroy()//must call
+	...
+	}
+	}
+	}
+	@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
+	*/
+	void destroy();
 
 	/**
-	Gets all of this `Container's` children.
-	@return an `std::vector` with all children of this `Container`
+	Should be called by a `Entity` when the graphical `Window` clears the frame.
+	<p>
+	When this function is inherited or overwritten, you must call the base class's `render()` funtion. For example:{@code
+	class Derived : public Entity{
+	void render(){
+	Entity::render()//must call
+	...
+	}
+	}
+	}
+	*/
+	void render();
+
+
+	/**
+	Gets all of this `Entity's` children.
+	@return an `std::vector` with all children of this `Entity`
 	*/
 	const std::vector<Entity*>& getChildren() const;
-
-	/**
-	Add an {@link Entity} to this {@link Container}
-	@param e Reference to an `Entity` to become a child
-	@see #getChildren()
-	*/
-	virtual void addChild(Entity& e);
 	/**
 	Removes a child by reference.
 	@throws ObjectNotFoundInArray if {@link #hasChild(Entity&) const} returns `false`
@@ -137,15 +172,15 @@ public:
 	void removeChild(Index index);
 
 	/**
-	Checks to see if this `Container` contains an `Entity`
+	Checks to see if this `Entity` contains an `Entity`
 	@param e Reference to an `Entity`
-	@return `false` if this `Container` doesn't contain the referenced `Entity`, `true` otherwise
+	@return `false` if this `Entity` doesn't contain the referenced `Entity`, `true` otherwise
 	@see #indexOf(const Entity& ) const
 	*/
 	bool hasChild(Entity& e) const;
 
 	/**
-	Removes EVERY `Entity` from this `Container`
+	Removes EVERY `Entity` from this `Entity`
 	@see #size()
 	@see #removeChild(Index)
 	@see #removeChild(const Entity&)
@@ -163,24 +198,24 @@ public:
 	*/
 	Entity& operator[](Index i);//get children via [i]
 
-	/**
-	`const` version of {@link #operator[](Index i)}
-	@param i Location of an `Entity`
-	@return Reference to the `Entity` located at `i`
-	@see #getChild(Index) const
-	@see #indexOf(const Entity&) const
-	*/
+								/**
+								`const` version of {@link #operator[](Index i)}
+								@param i Location of an `Entity`
+								@return Reference to the `Entity` located at `i`
+								@see #getChild(Index) const
+								@see #indexOf(const Entity&) const
+								*/
 	const Entity& operator[](Index i) const;//get children via [i]
 
-	/**
+											/**
 
-	Retrieves a child at a certain index.
-	@param i Index of the `Entity`
-	@return Reference to the `Entity` located at `i`
-	@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
-	@see #operator[]
-	@see #indexOf(const Entity&) const
-	*/
+											Retrieves a child at a certain index.
+											@param i Index of the `Entity`
+											@return Reference to the `Entity` located at `i`
+											@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
+											@see #operator[]
+											@see #indexOf(const Entity&) const
+											*/
 	Entity& getChild(Index i);
 	/**
 	`const` version of {@link #getChild(Index)}
@@ -194,23 +229,23 @@ public:
 	const Entity& getChild(Index i) const;
 
 	/**
-	Finds the location of an `Entity` in this `Container`
+	Finds the location of an `Entity` in this `Entity`
 	@param e Reference to an `Entity`
-	@return Location of `e,` or -1 if `e` is not a child of this `Container`
+	@return Location of `e,` or -1 if `e` is not a child of this `Entity`
 	@see #operator[]
 	@see #getChild(Index)
 	*/
 	int indexOf(const Entity& e) const;
 
 	/**
-	Gets an iterator over this `Container` for enchanced for loops.
+	Gets an iterator over this `Entity` for enchanced for loops.
 	@return Iterator of the first `Entity`
 	@see #end()
 	@see #size()
 	*/
 	std::vector<Entity*>::iterator begin();
 	/**
-	Gets an iterator over this `Container` for enchanced for loops.
+	Gets an iterator over this `Entity` for enchanced for loops.
 	@return Iterator of the last `Entity`
 	@see #begin()
 	@see #size()
@@ -218,53 +253,10 @@ public:
 	std::vector<Entity*>::iterator end();
 
 	/**
-	Calculates the amount of children this `Container` has.
-	@return Size of this `Container`
+	Calculates the amount of children this `Entity` has.
+	@return Size of this `Entity`
 	*/
 	Size size() const;
-
-	/**
-	Compares if 2 `Containers` are equal.
-	@param other Another `Container` to compare
-	@return `true` if both `Containers` have the same children and `size()`
-	@see #operator!=
-	*/
-	bool operator==(Container& other) const;
-	/**
-	Compares if 2 `Containers` are unequal.
-	@param other Another `Container` to compare
-	@return `false` if both `Containers` have the same children and `size()`, `true` otherwise
-	@see #operator==
-	*/
-	bool operator!=(Container& other) const;
-private:
-	/**
-	`std::vector` of this `Container\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
-	*/
-	std::vector<Entity*> children = std::vector<Entity*>();
-
-
-};//Container
-
-/**
-Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
-*/
-class Entity : public Container {
-public:
-
-	/**
-	Default constructor. Constructs properties based on `ENTITY_DEFAULT_PROPERTIES`
-	*/
-	Entity();
-	/**
-	Cloning constructor. Copies another's `Entity's` properties and children.
-	*/
-	Entity(const Entity &obj);
-	/**
-	Destructor. Made `virtual` for inheritance.
-	@see ~Container()
-	*/
-	virtual ~Entity();
 
 	/**
 	Retrieves the `Entity's` properties as a `ByteField`
@@ -321,15 +313,15 @@ public:
 
 
 	/**
-	Retrieve this `Entitys` parent `Container.`
-	@return A `Container` which contains `this`
-	@see Container#hasChild(const Entity&) const;
+	Retrieve this `Entitys` parent `Entity.`
+	@return A `Entity` which contains `this`
+	@see Entity#hasChild(const Entity&) const;
 	*/
 	Entity* const getParent();
 	/**
 	`const` version of `getParent()`
-	@return A `Container` which contains `this`
-	@see Container#hasChild(const Entity&) const;
+	@return A `Entity` which contains `this`
+	@see Entity#hasChild(const Entity&) const;
 	*/
 	const Entity* const getParent() const;
 
@@ -387,92 +379,54 @@ protected:
 	TransformMatrix baseTransformation = TransformMatrix();
 
 	/**
-	When `Container.update()` is called, `customUpdate()` is called on all of it's children.
+	When `Entity.update()` is called, `customUpdate()` is called on all of it's children.
 	@see System#update()
 	*/
 	virtual void customUpdate() = 0;
 	/**
-	When `Container.init()` is called, `customInit()` is called on all of it's children.
+	When `Entity.init()` is called, `customInit()` is called on all of it's children.
 	@see System#init()
 	*/
 	virtual void customInit() = 0;
 	/**
-	When `Container.destroy()` is called, `customDestroy()` is called on all of it's children.
+	When `Entity.destroy()` is called, `customDestroy()` is called on all of it's children.
 	@see System#terminate()
 	*/
 	virtual void customDestroy() = 0;
 
 	/**
-	When `Container.render()` is called, `customRender()` is called on all of it's children.
+	When `Entity.render()` is called, `customRender()` is called on all of it's children.
 	*/
 	virtual void customRender() = 0;
 private:
+	/**
+	`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
+	*/
+	std::vector<Entity*> children = std::vector<Entity*>();
+
 	Entity* parent = nullptr;
 
 	EntityProperties properties = 0;
 
 	std::vector<Action*> actions = std::vector<Action*>();
 
-	/**
-	A `Container` needs to access `update()`, `render()`, `init()`,  and `destroy()`
-	*/
-	friend class Container;
-	/**
-	Should be called a by `Container` when `System.update()` is called. Calls `customUpdate()`.
-	<p>
-	When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
-	class Derived : public Entity{
-	void update(){
-	Entity::update()//must call
-	...
-	}
-	}
-	}
-	@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
-	*/
-	virtual void update();
-	/**
-	Should be called a by `Container` when `System.init()` is called. Calls `customInit()`
-	<p>
-	When this function is inherited or overwritten, you must call the base class's `init()` funtion. For example:{@code
-	class Derived : public Entity{
-	void init(){
-	Entity::init()//must call
-	...
-	}
-	}
-	}
-	@throws InitializationError If the property `ENTITY_INIT` is true, meaning `init()` has already been called.
-	*/
-	virtual void init();
-	/**
-	Should be called a by `Container` when `System.terminate()` is called. Calls `customDestroy()`. Sets `ENTITY_INIT` to be false
-	<p>
-	When this function is inherited or overwritten, you must call the base class's `destroy()` funtion. For example:{@code
-	class Derived : public Entity{
-	void destroy(){
-	Entity::destroy()//must call
-	...
-	}
-	}
-	}
-	@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
-	*/
-	virtual void destroy();
 
 	/**
-	Should be called by a `Container` when the graphical `Window` clears the frame.
-	<p>
-	When this function is inherited or overwritten, you must call the base class's `render()` funtion. For example:{@code
-	class Derived : public Entity{
-	void render(){
-	Entity::render()//must call
-	...
-	}
-	}
-	}
+	Calls `update()` on all of it's children and actions.
 	*/
-	virtual void render();
+	virtual void updateChildren();
+	/**
+	Calls `init()` on all of it's children.
+	*/
+	void initChildren();
+	/**
+	Calls `destroy()` on all of it's children and actions.
+	*/
+	void destroyChildren();//think of the children!
+	/**
+	Calls `render()` on all of it's children.
+	*/
+	void renderChildren();
 
 	void setParent(Entity* parent);
 };//Entity

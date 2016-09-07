@@ -7,7 +7,7 @@ namespace gfx {
 
 int RenderImpl::index = -1;
 
-std::queue<std::pair<Index,Entity*>> Renderer::renderQueue = std::queue<std::pair<Index, Entity*>>();
+RenderQueue Renderer::renderQueue = RenderQueue();
 std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
 
 Size Renderer::originalWidth = 0;
@@ -41,11 +41,10 @@ void Renderer::tearDown(win::Window* win)
 void Renderer::renderFrame(win::Window* win)
 {
 	setUp(win);
-	while (!renderQueue.empty()) {
-		const std::pair<Index, Entity*> pair = renderQueue.front();
-		protocols.at(pair.first)->render(win,pair.second);
-		renderQueue.pop();
+	for (RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end();++pair) {
+		protocols.at(pair->first)->render(win, pair->second);
 	}
+	renderQueue.clear();
 	tearDown(win);
 }//renderFrame
 void Renderer::destroy(win::Window* win)

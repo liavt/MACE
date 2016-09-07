@@ -14,17 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 namespace gfx {
 
-Container::Container()
-{
-}
-
-
-Container::~Container()
-{
-	children.clear();
-}
-
-void Container::updateChildren()
+void Entity::updateChildren()
 {
 	for (Index i = 0; i < children.size(); i++) {
 		if (children[i]->getProperty(ENTITY_DEAD)) {
@@ -37,7 +27,7 @@ void Container::updateChildren()
 	}
 }
 
-void Container::initChildren()
+void Entity::initChildren()
 {
 	for (Index i = 0; i < children.size(); ++i) {
 		if (!children[i]->getProperty(ENTITY_INIT))children[i]->init();
@@ -45,7 +35,7 @@ void Container::initChildren()
 	}
 }
 
-bool Container::hasChild(Entity & e) const
+bool Entity::hasChild(Entity & e) const
 {
 	for (Size i = 0; i < children.size(); ++i) {
 		if (children[i] == &e) {
@@ -55,37 +45,32 @@ bool Container::hasChild(Entity & e) const
 	return false;
 }
 
-void Container::clearChildren()
+void Entity::clearChildren()
 {
 	children.clear();
 }
 
-void Container::destroyChildren()
+void Entity::destroyChildren()
 {
 	for (Index i = 0; i < children.size(); ++i) {
 		children[i]->destroy();
 	}
 }
 
-void Container::renderChildren()
+void Entity::renderChildren()
 {
 	for (Index i = 0; i < children.size();++i) {
 		children[i]->render();
 	}
 }
 
-const std::vector<Entity*>& Container::getChildren() const
+const std::vector<Entity*>& Entity::getChildren() const
 {
 	return this->children;
 }
 
 
-void Container::addChild(Entity& e)
-{
-	children.push_back(&e);
-}
-
-void Container::removeChild(const Entity& e)
+void Entity::removeChild(const Entity& e)
 {
 	for (Size i = 0; i < children.size(); i++) {
 		if (&e == children.at(i)) {
@@ -96,7 +81,7 @@ void Container::removeChild(const Entity& e)
 	throw mc::ObjectNotFoundInArray("Specified argument is not a valid object in the array!");
 }
 
-void Container::removeChild(Index index) {
+void Entity::removeChild(Index index) {
 	if (index > children.size()) {
 		throw mc::IndexOutOfBounds(index + " is larger than the amount of children!");
 	}
@@ -139,31 +124,31 @@ bool Entity::hasParent() const
 
 void Entity::addChild(Entity & e)
 {
-	Container::addChild(e);
+	children.push_back(&e);
 	e.setParent(this);
 	//if the entity is getting added after init() has been called, we call init() ourselves
 	if (!e.getProperty(ENTITY_INIT) && getProperty(ENTITY_INIT))e.init();
 }
 
-Entity& Container::operator[](Index i) {
+Entity& Entity::operator[](Index i) {
 	return *children[i];
 }
 
-const Entity& Container::operator[](Index i) const
+const Entity& Entity::operator[](Index i) const
 {
 	return *children[i];
 }
 
-Entity& Container::getChild(Index i) {
+Entity& Entity::getChild(Index i) {
 	return *children.at(i);
 }
 
-const Entity& Container::getChild(Index i) const
+const Entity& Entity::getChild(Index i) const
 {
 	return *children.at(i);
 }
 
-int Container::indexOf(const Entity & e) const
+int Entity::indexOf(const Entity & e) const
 {
 	for (Index i = 0; i < children.size(); i++) {
 		if (children[i] == &e) {
@@ -173,17 +158,17 @@ int Container::indexOf(const Entity & e) const
 	return -1;
 }
 
-std::vector<Entity*>::iterator Container::begin()
+std::vector<Entity*>::iterator Entity::begin()
 {
 	return children.begin();
 }
 
-std::vector<Entity*>::iterator Container::end()
+std::vector<Entity*>::iterator Entity::end()
 {
 	return children.end();
 }
 
-Size Container::size() const
+Size Entity::size() const
 {
 	return children.size();
 }
@@ -243,17 +228,20 @@ void Entity::destroy()
 }
 
 
-Entity::Entity() :Container()
+Entity::Entity()
 {
 
 }
-Entity::Entity(const Entity & obj) : Container(obj)
+Entity::Entity(const Entity & obj)
 {
+	children = obj.children;
 	properties = obj.properties;
 }
 
 Entity::~Entity()
 {
+	children.clear();
+
 }
 
 
@@ -333,20 +321,10 @@ bool Entity::operator==(Entity& other) const {
 	if (other.actions!=actions) {
 		return false;
 	}
-	return Container::operator==(other);
+	return children == other.children;
 }
 
 bool Entity::operator!=(Entity & other) const
-{
-	return !(this == &other);
-}
-
-bool Container::operator==(Container & other) const
-{
-	return getChildren() == other.getChildren();
-}
-
-bool Container::operator!=(Container & other) const
 {
 	return !(this == &other);
 }

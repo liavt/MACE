@@ -2,7 +2,7 @@
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Window/Window.h>
-#include <queue>
+#include <deque>
 
 
 namespace mc {
@@ -38,6 +38,9 @@ public:
 	void destroy(win::Window* win) {};
 };
 
+//if the container we use is ever going to be changed, we typedef 
+using RenderQueue = std::deque<std::pair<Index, Entity*>>;
+
 class Renderer {
 public:
 
@@ -49,11 +52,9 @@ public:
 
 	template<typename T>
 	static void queue(T* e) {
-#ifdef MACE_ERROR_CHECK
 		if (e == nullptr || e == NULL)throw NullPointer("Input pointer to an entity must not be null in queue()");
-#endif
 		if (RenderProtocol<T>::index == -1)registerProtocol<T>();
-		renderQueue.push(std::pair<Index, Entity*>(RenderProtocol<T>::index, e));
+		renderQueue.push_back(std::pair<Index, Entity*>(RenderProtocol<T>::index, e));
 	};
 
 	static void tearDown(win::Window* win);
@@ -67,7 +68,7 @@ public:
 
 private:
 
-	static std::queue<std::pair<Index,Entity*>> renderQueue;
+	static RenderQueue renderQueue;
 	static std::vector<RenderImpl*> protocols;
 
 	static Size originalWidth, originalHeight;

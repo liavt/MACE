@@ -10,6 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #include <MACE/System/Constants.h>
 #include <ostream>
+#include <climits>
 
 namespace mc {
 	/**

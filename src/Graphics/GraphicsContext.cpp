@@ -19,7 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 namespace gfx{
 
-OpenGLContext::OpenGLContext() : Container(),GraphicsContext()
+OpenGLContext::OpenGLContext() : Entity(),GraphicsContext()
 {
 
 }
@@ -29,7 +29,7 @@ void OpenGLContext::update() {
 	std::mutex mutex;
 	std::unique_lock<std::mutex> lock(mutex);
 
-	updateChildren();
+	Entity::update();
 }
 
 void OpenGLContext::init(win::Window * win)
@@ -85,7 +85,7 @@ void OpenGLContext::init(win::Window * win)
 
 	Renderer::init(width,height);
 
-	initChildren();
+	Entity::init();
 
 
 }
@@ -96,7 +96,7 @@ void OpenGLContext::render(win::Window* win) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	renderChildren();
+	Entity::render();
 
 	Renderer::renderFrame(win);
 
@@ -107,7 +107,7 @@ void OpenGLContext::destroy(win::Window* win) {
 	std::mutex mutex;
 	std::unique_lock<std::mutex> lock(mutex);
 
-	destroyChildren();
+	Entity::destroy();
 
 	Renderer::destroy(win);
 
@@ -116,6 +116,22 @@ void OpenGLContext::destroy(win::Window* win) {
 void OpenGLContext::setVSync(const bool & sync)
 {
 	vsync = sync;
+}
+
+void OpenGLContext::customUpdate()
+{
+}
+
+void OpenGLContext::customRender()
+{
+}
+
+void OpenGLContext::customDestroy()
+{
+}
+
+void OpenGLContext::customInit()
+{
 }
 
 }//gfx
