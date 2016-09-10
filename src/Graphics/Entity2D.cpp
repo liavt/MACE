@@ -78,7 +78,7 @@ void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size origina
 	paintData.bind();
 	paintData.bindToUniformBlock(shaders2D.getProgramID(), "paint_data");
 	//we set it to null, because during the actual rendering we set the data
-	paintData.setData(sizeof(GLfloat)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr);
+	paintData.setData(sizeof(GLfloat)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr,GL_STREAM_DRAW);
 	paintData.unbind();
 
 	entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
@@ -95,7 +95,7 @@ void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size origina
 	checkGLError();
 }
 
-void RenderProtocol<Entity2D>::setUp(win::Window* win) {};
+void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue) {};
 
 void RenderProtocol<Entity2D>::render(win::Window* win,void* e) {
 	Entity2D * entity = static_cast<Entity2D*>(e);
@@ -132,30 +132,31 @@ void RenderProtocol<Entity2D>::render(win::Window* win,void* e) {
 	const float stretch_y = entity->getProperty(ENTITY_STRETCH_Y) ? 1.0f : 0.0f;
 
 	//the following are containers for the flatten() call
-	float flattenedMatrixData[16];
-	float flattenedVectorData[3];
+	float flattenedData[16];
+
+	
 
 	//now we set the uniform buffer defining the transformations of the entity
 	entityData.bind();
 	//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
 	float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
 	Index offset = 0;
-	std::memcpy((mappedEntityData)+offset, transform.translation.flatten(flattenedVectorData), sizeof(Vector3f));
+	
+	std::memcpy((mappedEntityData)+offset, transform.translation.flatten(flattenedData), sizeof(Vector3f));
 	offset +=  3;
 	std::memcpy(mappedEntityData+offset,&stretch_x,sizeof(stretch_x));
-	offset ++;
-	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(flattenedVectorData), sizeof(Vector3f));
+	++offset;
+	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(flattenedData), sizeof(Vector3f));
 	offset +=  3;
 	std::memcpy(mappedEntityData + offset, &stretch_y, sizeof(stretch_y));
-	offset ++;
-	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(flattenedVectorData), sizeof(Vector3f));
+	++offset;
+	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(flattenedData), sizeof(Vector3f));
 	offset += 4;
-	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(flattenedVectorData), sizeof(Vector3f));
+	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(flattenedData), sizeof(Vector3f));
 	offset += 4;
-	std::memcpy(mappedEntityData + offset, math::transpose(math::rotate(transform.rotation)).flatten(flattenedMatrixData), sizeof(Matrix4f));
+	std::memcpy(mappedEntityData + offset, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix4f));
 	offset += 16;
-	std::memcpy(mappedEntityData + offset, math::transpose(inheritedRotation).flatten(flattenedMatrixData), sizeof(Matrix4f));
-
+	std::memcpy(mappedEntityData + offset, (inheritedRotation).flatten(flattenedData), sizeof(Matrix4f));
 
 	entityData.unmap();
 	entityData.bindForRender();
@@ -171,7 +172,7 @@ void RenderProtocol<Entity2D>::render(win::Window* win,void* e) {
 	checkGLError();
 }
 
-void RenderProtocol<Entity2D>::tearDown(win::Window* win) {}
+void RenderProtocol<Entity2D>::tearDown(win::Window* win, RenderQueue* queue) {}
 
 void RenderProtocol<Entity2D>::destroy(win::Window* win) {
 	shaders2D.destroy();

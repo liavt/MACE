@@ -208,6 +208,21 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 	}
 
 	/**
+	Creates an 1-dimensional array with the transposed data of this `Matrix`, in O(N) time.
+	<p>
+	This method is faster than `math::transpose(matrix).flatten(array)`, as that takes O(N*2) time.
+	@return Pointer to an array of data
+	*/
+	const T* flattenTransposed(T arr[W*H]) const {
+		for (Index x = 0; x < H; x++) {
+			for (Index y = 0; y < W; y++) {
+				arr[y + (x*H)] = (content[y][x]);
+			}
+		}
+		return arr;
+	}
+
+	/**
 	Retrieves content at a certain `Index`, not zero indexed.
 	<p>
 	Equal to {@code

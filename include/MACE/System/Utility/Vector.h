@@ -215,7 +215,6 @@ public:
 		return arr;
 	}
 
-
 	/**
 	Retrieves the content at a certain `Index`, zero indexed. This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will be undefined.
 	@param i Where to retrieve the data

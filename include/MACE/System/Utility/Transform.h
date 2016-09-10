@@ -25,15 +25,6 @@ namespace mc {
 		Matrix4f rotate(const Matrix4f& m,const Vector3f& v);
 		Matrix4f rotate(const Matrix4f& m, const float x, const float y, const float z);
 
-		Matrix4f rotateX(const float x);
-		Matrix4f rotateX(const Matrix4f& m, const float x);
-
-		Matrix4f rotateY(const float y);
-		Matrix4f rotateY(const Matrix4f& m, const float y);
-
-		Matrix4f rotateZ(const float z);
-		Matrix4f rotateZ(const Matrix4f& m, const float z);
-
 		Matrix4f scale(const float x, const float y, const float z);
 		Matrix4f scale(const Matrix4f& m, const float x, const float y, const float z);
 

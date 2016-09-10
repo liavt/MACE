@@ -8,6 +8,8 @@
 namespace mc {
 namespace gfx {
 
+//if the container we use is ever going to be changed, we typedef 
+using RenderQueue = std::deque<std::pair<Index, Entity*>>;
 
 class RenderImpl {
 public:
@@ -18,9 +20,9 @@ public:
 	virtual void resize(const Size width, const Size height) = 0;
 
 	virtual void init(const Size originalWidth, const Size originalHeight) = 0;
-	virtual void setUp(win::Window* win) = 0;
+	virtual void setUp(win::Window* win, RenderQueue* queue) = 0;
 	virtual void render(win::Window* win,void* entity)=0;
-	virtual void tearDown(win::Window* win) = 0;
+	virtual void tearDown(win::Window* win, RenderQueue* queue) = 0;
 	virtual void destroy(win::Window* win) = 0;
 };
 
@@ -32,14 +34,11 @@ public:
 	void resize(const Size width, const Size height) {};
 
 	void init(const Size originalWidth, const Size originalHeight) {}
-	void setUp(win::Window* win) {};
+	void setUp(win::Window* win, RenderQueue* queue) {};
 	void render(win::Window* win,void* entity) { std::cout << "hello"; };
-	void tearDown(win::Window* win) {};
+	void tearDown(win::Window* win,RenderQueue* queue) {};
 	void destroy(win::Window* win) {};
 };
-
-//if the container we use is ever going to be changed, we typedef 
-using RenderQueue = std::deque<std::pair<Index, Entity*>>;
 
 class Renderer {
 public:

@@ -25,47 +25,25 @@ Matrix4f math::rotate(const Matrix4f & m, const Vector3f & v)
 }
 Matrix4f math::rotate(const Matrix4f& m, const float x, const float y, const float z)
 {
-	return rotateX(m,x)*rotateY(m,y)*rotateZ(m,z);
-}
-Matrix4f math::rotateX(const float x)
-{
-	return rotateX(identity<float,4>(), x);
-}
-Matrix4f math::rotateX(const Matrix4f& m, const float x)
-{
+	//Instead of having to calculate it twice, which is quite expensive, we store it in variables.
+	const float cosZ = cos(z), sinZ = sin(z);
+	const float cosY = cos(y), sinY = sin(y);
+	const float cosX = cos(x), sinX = sin(x);
+
+
 	Matrix4f out = m;
-	out[1][1] = cos(x);
-	out[2][2] = cos(x);
-	out[1][2] = sin(x);
-	out[2][1] = -sin(x);
+	out[0][0] = cosZ*cosY;
+	out[0][1] = sinZ;
+	out[0][2] = -sinY;
+	out[1][0] = -sinZ;
+	out[1][1] = cosZ*cosX;
+	out[1][2] = sinX;
+	out[2][0] = sinY;
+	out[2][1] = -sinX;
+	out[2][2] = cosX*cosY;
 	return out;
 }
-Matrix4f math::rotateY(const float y)
-{
-	return rotateY(identity<float, 4>(),y);
-}
-Matrix4f math::rotateY(const Matrix4f& m, const float y)
-{
-	Matrix4f out = m;
-	out[0][0] = cos(y);
-	out[0][2] = -sin(y);
-	out[2][0] = sin(y);
-	out[2][2] = cos(y);
-	return out;
-}
-Matrix4f math::rotateZ(const float z)
-{
-	return rotateZ(identity<float, 4>(), z);
-}
-Matrix4f math::rotateZ(const Matrix4f& m, const float z)
-{
-	Matrix4f out = m;
-	out[0][0] = cos(z);
-	out[0][1] = sin(z);
-	out[1][0] = -sin(z);
-	out[1][1] = cos(z);
-	return out;
-}
+
 Matrix4f math::scale(const float x, const float y, const float z) {
 	return scale(identity<float, 4>(), x, y, z);
 }

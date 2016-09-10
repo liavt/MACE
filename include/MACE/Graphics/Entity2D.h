@@ -32,11 +32,11 @@ namespace gfx {
 
 		void init(const Size originalWidth, const Size originalHeight);
 
-		void setUp(win::Window* win);
+		void setUp(win::Window* win, RenderQueue* queue);
 
 		void render(win::Window* win,void* entity);
 
-		void tearDown(win::Window* win);
+		void tearDown(win::Window* win, RenderQueue* queue);
 
 		void destroy(win::Window* win);
 	private:

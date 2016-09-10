@@ -21,7 +21,7 @@ void Renderer::init(const Size originalWidth, const Size originalHeight)
 void Renderer::setUp(win::Window* win)
 {
 	for (Index i = 0; i < protocols.size(); ++i) {
-		protocols[i]->setUp(win);
+		protocols[i]->setUp(win,&renderQueue);
 	}
 }//setUp
 void Renderer::resize(const Size width, const Size height)
@@ -34,7 +34,7 @@ void Renderer::resize(const Size width, const Size height)
 void Renderer::tearDown(win::Window* win)
 {
 	for (Index i = 0; i < protocols.size(); ++i) {
-		protocols[i]->tearDown(win);
+		protocols[i]->tearDown(win, &renderQueue);
 	}
 }//tearDown
 //resize
@@ -42,10 +42,10 @@ void Renderer::renderFrame(win::Window* win)
 {
 	setUp(win);
 	for (RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end();++pair) {
-		protocols.at(pair->first)->render(win, pair->second);
+		protocols[pair->first]->render(win, pair->second);
 	}
-	renderQueue.clear();
 	tearDown(win);
+	renderQueue.clear();
 }//renderFrame
 void Renderer::destroy(win::Window* win)
 {
