@@ -35,7 +35,7 @@ public:
 
 	void init(const Size originalWidth, const Size originalHeight) {}
 	void setUp(win::Window* win, RenderQueue* queue) {};
-	void render(win::Window* win,void* entity) { std::cout << "hello"; };
+	void render(win::Window* win,void* entity) {};
 	void tearDown(win::Window* win,RenderQueue* queue) {};
 	void destroy(win::Window* win) {};
 };
