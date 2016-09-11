@@ -132,5 +132,13 @@ namespace gfx {
 	{
 		return fragId;
 	}
+	std::string Shader::processIncludes(const std::string & includeDirectory, const std::string & shader)
+	{
+		return nullptr;
+	}
+	std::string Shader::processIncludes(const char * includeDirectory, const char * shader)
+	{
+		return processIncludes(std::string(includeDirectory), std::string(shader)).c_str();
+	}
 }
 }

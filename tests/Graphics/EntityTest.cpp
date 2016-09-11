@@ -89,7 +89,7 @@ namespace mc{
 			}
 		};
 
-		Container c = Container();
+		Group c = Group();
 
 		TEST_CASE("Testing the getParent() function","[entity][graphics]") {
 
@@ -102,15 +102,14 @@ namespace mc{
 			c.addChild(e);
 
 			SECTION("hasParent()") {
-				REQUIRE_FALSE(e.hasParent());
+				REQUIRE(e.hasParent());
 				REQUIRE_FALSE(e2.hasParent());
 			}
 
 			e.addChild(e2);
 
 			SECTION("Checking whether it recognizes the parent"){
-				REQUIRE_FALSE(e.hasParent());
-				REQUIRE_FALSE(e.hasParent());
+				REQUIRE(e.hasParent());
 				REQUIRE(*e2.getParent()==e);
 			}
 
@@ -133,7 +132,7 @@ namespace mc{
 				e.isUpdated = false;
 				e.setProperty(ENTITY_UPDATE_DISABLED, true);
 
-				c.updateChildren();
+				c.update();
 
 				REQUIRE(!e.isUpdated);
 			}
@@ -143,7 +142,7 @@ namespace mc{
 				e.isRendered = false;
 				e.setProperty(ENTITY_RENDER_DISABLED, true);
 
-				c.renderChildren();
+				c.render();
 
 				REQUIRE(!e.isRendered);
 			}
@@ -164,7 +163,7 @@ namespace mc{
 				REQUIRE(c.hasChild(e));
 				REQUIRE(!e.getProperty(ENTITY_DEAD));
 
-				c.updateChildren();
+				c.update();
 
 				REQUIRE(!e.getProperty(ENTITY_DEAD));
 				REQUIRE(e.isUpdated);
@@ -173,7 +172,7 @@ namespace mc{
 				e.isUpdated = false;
 				e.setProperty(ENTITY_DEAD,true);
 
-				c.updateChildren();
+				c.update();
 
 				REQUIRE(!e.isUpdated);
 				REQUIRE(e.isDestroyed);
@@ -188,7 +187,7 @@ namespace mc{
 		TEST_CASE("Testing actions","[entity][graphics]") {
 			DummyAction a = DummyAction();
 			DummyEntity e = DummyEntity();
-			Container c = Container();
+			Group c = Group();
 
 			SECTION("Testing default values") {
 				REQUIRE_FALSE(a.isInit);
@@ -207,13 +206,13 @@ namespace mc{
 			SECTION("Testing update") {
 				for (Index i = 0; i < 10; i++) {
 					REQUIRE(a.updates==i);
-					c.updateChildren();
+					c.update();
 				}
 			}
 
 			SECTION("Testing destruction") {
 				a.destroySelf = true;
-				c.updateChildren();
+				c.update();
 				REQUIRE(a.destroyed);
 			}
 
@@ -236,7 +235,7 @@ namespace mc{
 				REQUIRE(!e.getProperty(ENTITY_INIT));
 
 
-				c.initChildren();
+				c.init();
 
 				REQUIRE(e.isInit);
 				REQUIRE(e.getProperty(ENTITY_INIT));
@@ -272,19 +271,19 @@ namespace mc{
 
 				REQUIRE(e.isUpdated == false);
 
-				c.initChildren();
+				c.init();
 
 				REQUIRE(e.isInit);
 
-				c.updateChildren();
+				c.update();
 
 				REQUIRE(e.isUpdated);
 
-				c.renderChildren();
+				c.render();
 
 				REQUIRE(e.isRendered);
 
-				c.destroyChildren();
+				c.destroy();
 
 				REQUIRE(e.isDestroyed);
 
@@ -296,19 +295,19 @@ namespace mc{
 
 				e.addChild(child);
 
-				c.initChildren();
+				c.init();
 
 				REQUIRE(child.isInit);
 
-				c.updateChildren();
+				c.update();
 
 				REQUIRE(child.isUpdated);
 
-				c.renderChildren();
+				c.render();
 
 				REQUIRE(child.isRendered);
 
-				c.destroyChildren();
+				c.destroy();
 
 				REQUIRE(child.isDestroyed);
 

@@ -47,7 +47,10 @@ bool Entity::hasChild(Entity & e) const
 
 void Entity::clearChildren()
 {
-	children.clear();
+	while (!children.empty()) {
+		children.back()->setParent(nullptr);
+		children.pop_back();
+	}
 }
 
 void Entity::destroyChildren()

@@ -7,6 +7,12 @@
 
 namespace mc {
 namespace gfx {
+	class Shader {
+	public:
+		static std::string processIncludes(const std::string& includeDirectory, const std::string& shader);
+		static std::string processIncludes(const char* includeDirectory,const char* shader);
+	};
+
 	class ShaderProgram {
 		int id = -1;
 		int fragId = -1, vertId = -1;
