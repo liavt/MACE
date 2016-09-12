@@ -20,44 +20,32 @@ namespace mc {
 		
 	};
 
-	struct NullPointer : public Exception {
-		using Exception::Exception;
-	};
+
+	using NullPointerException = Exception;
+
 
 	/**
 	Thrown when an assertion fails.
 	@see System#assertModule(std::string)
 	*/
-	struct AssertionError : public Exception {
-		using Exception::Exception;
-	};	
+	using AssertionError = Exception;
+
 	/**
 	Thrown when an object wasn't initializaed or initializtion failed
 	*/
-	struct InitializationError : public Exception {
-		using Exception::Exception;
+	using InitializationError = Exception;
 
-	};
 	/**
 	Thrown when a function looks for an object, but doesn't find it.
 	*/
-	struct ObjectNotFoundInArray : public Exception {
-		using Exception::Exception;
-
-	};
+	using ObjectNotFoundInArrayException = Exception;
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	struct IndexOutOfBounds : public Exception {
-		using Exception::Exception;
-
-	};
+	using IndexOutOfBoundsException = Exception;
 	/**
 	Thrown when something goes wrong while doing math, like dividing by zero
 	*/
-	struct ArithmeticError : public Exception {
-		using Exception::Exception;
-
-	};
+	using ArithmeticException = Exception;
 
 }

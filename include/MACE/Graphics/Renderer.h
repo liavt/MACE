@@ -51,7 +51,7 @@ public:
 
 	template<typename T>
 	static void queue(T* e) {
-		if (e == nullptr || e == NULL)throw NullPointer("Input pointer to an entity must not be null in queue()");
+		if (e == nullptr || e == NULL)throw NullPointerException("Input pointer to an entity must not be null in queue()");
 		if (RenderProtocol<T>::index == -1)registerProtocol<T>();
 		renderQueue.push_back(std::pair<Index, Entity*>(RenderProtocol<T>::index, e));
 	};

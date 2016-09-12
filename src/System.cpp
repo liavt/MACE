@@ -29,7 +29,7 @@ void System::removeModule(Module& m)
 			return;
 		}
 	}
-	throw ObjectNotFoundInArray("No module by the name of " + m.getName() + " found!");
+	throw ObjectNotFoundInArrayException("No module by the name of " + m.getName() + " found!");
 }
 void System::removeModule(std::string module)
 {
@@ -39,11 +39,11 @@ void System::removeModule(std::string module)
 			return;
 		}
 	}
-	throw ObjectNotFoundInArray("No module by the name of "+module+" found!");
+	throw ObjectNotFoundInArrayException("No module by the name of "+module+" found!");
 }
 void System::removeModule(Index i)
 {
-	if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
+	if (i<0 || i>numberOfModules())throw IndexOutOfBoundsException("Input is not a valid index!");
 	modules.erase(modules.begin()+i);
 }
 Module * System::getModule(std::string keyword)
@@ -53,11 +53,11 @@ Module * System::getModule(std::string keyword)
 			return modules[i];
 		}
 	}
-	throw ObjectNotFoundInArray("No module by the name of " + keyword + " found!");
+	throw ObjectNotFoundInArrayException("No module by the name of " + keyword + " found!");
 }
 Module * System::getModule(Index i)
 {
-	if (i<0 || i>numberOfModules())throw IndexOutOfBounds("Input is not a valid index!");
+	if (i<0 || i>numberOfModules())throw IndexOutOfBoundsException("Input is not a valid index!");
 	return modules[i];
 }
 bool System::moduleExists(std::string module)

@@ -81,12 +81,12 @@ void Entity::removeChild(const Entity& e)
 			return;
 		}
 	}
-	throw mc::ObjectNotFoundInArray("Specified argument is not a valid object in the array!");
+	throw mc::ObjectNotFoundInArrayException("Specified argument is not a valid object in the array!");
 }
 
 void Entity::removeChild(Index index) {
 	if (index > children.size()) {
-		throw mc::IndexOutOfBounds(index + " is larger than the amount of children!");
+		throw mc::IndexOutOfBoundsException(index + " is larger than the amount of children!");
 	}
 	else if (children.size() == 1) {
 		children.clear();
@@ -264,16 +264,16 @@ void Entity::setProperties(EntityProperties& b)
 
 bool Entity::getProperty(const Index position) const {
 #ifdef MACE_ERROR_CHECK
-	if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-	else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
+	if (position > properties.size())throw IndexOutOfBoundsException("Input position is greater than 8");
+	else if (position < 0)throw IndexOutOfBoundsException("Input position is less than 0!");
 #endif
 	return properties.getBit(position);
 }
 
 void Entity::setProperty(const Index position, const bool value){
 #ifdef MACE_ERROR_CHECK
-	if (position > properties.size())throw IndexOutOfBounds("Input position is greater than 8");
-	else if (position < 0)throw IndexOutOfBounds("Input position is less than 0!");
+	if (position > properties.size())throw IndexOutOfBoundsException("Input position is greater than 8");
+	else if (position < 0)throw IndexOutOfBoundsException("Input position is less than 0!");
 #endif
 	properties.setBit(position, value);
 }
@@ -419,7 +419,7 @@ void CallbackEntity::customDestroy()
 
 void CallbackEntity::setInitCallback(const VoidFunctionPtr func)
 {
-	if (func == 0 || func == nullptr)throw NullPointer("Init callback must be a valid pointer, and not null!");
+	if (func == 0 || func == nullptr)throw NullPointerException("Init callback must be a valid pointer, and not null!");
 	initCallback = func;
 }
 
@@ -435,7 +435,7 @@ const VoidFunctionPtr CallbackEntity::getInitCallback() const
 
 void CallbackEntity::setUpdateCallback(const VoidFunctionPtr func)
 {
-	if (func == 0 || func == nullptr)throw NullPointer("Update callback must be a valid pointer, and not null!");
+	if (func == 0 || func == nullptr)throw NullPointerException("Update callback must be a valid pointer, and not null!");
 	updateCallback = func;
 }
 
@@ -451,7 +451,7 @@ const VoidFunctionPtr CallbackEntity::getUpdateCallback() const
 
 void CallbackEntity::setRenderCallback(const VoidFunctionPtr func)
 {
-	if (func == 0 || func == nullptr)throw NullPointer("Render callback must be a valid pointer, and not null!");
+	if (func == 0 || func == nullptr)throw NullPointerException("Render callback must be a valid pointer, and not null!");
 	renderCallback = func;
 }
 
@@ -467,7 +467,7 @@ const VoidFunctionPtr CallbackEntity::getRenderCallback() const
 
 void CallbackEntity::setDestroyCallback(const VoidFunctionPtr func)
 {
-	if (func == 0 || func == nullptr)throw NullPointer("Destroy callback must be a valid pointer, and not null!");
+	if (func == 0 || func == nullptr)throw NullPointerException("Destroy callback must be a valid pointer, and not null!");
 	destroyCallback = func;
 }
 
