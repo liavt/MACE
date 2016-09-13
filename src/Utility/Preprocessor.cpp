@@ -6,7 +6,13 @@ namespace mc {
 
 	//todo:
 	/*
-	#define
+	digraphs (see 6.4.6 of standard)
+	force preprocessor to be first letter in new line
+
+	stringification
+
+
+	#define (and cant use reserved keywords, seee 6.4.1 of standard)
 	#undef
 
 	#ifdef
@@ -19,23 +25,24 @@ namespace mc {
 	#error
 	#warning
 
-	#include
+	#include (and 15 nesting levels)
 
 	#line
 
-	#pragma
+	#pragma (if STDC follows, do no macro replacement)
 
 
-	MACROS:
+	MACROS (can't be undef:)
 	__FILE__
 	__LINE__
 	__DATE__
 	__STDC__
+	__STDC_HOSTED__
 	__STDC_VERSION__
 	__MACE__
 	*/
 
-	std::vector<std::string> Preprocessor::includeDirectories = std::vector<std::string>();
+	Preprocessor Preprocessor::globalPreprocessor = Preprocessor();
 
 	std::string Preprocessor::preprocess(const std::string & input)
 	{/**/
@@ -76,8 +83,8 @@ namespace mc {
 				++iter;
 				continue;
 			}
-			//if its not a backslash-newline, we check if its just a nexline
-			else if ((value == '\n')) { 
+			//if its not a backslash-newline, we check if its just a newline, obviously multiline comments ignore newlines
+			else if ((value == '\n')&&state!=MULTILINE_COMMENT) { 
 				state = NEWLINE;
 			}
 			
@@ -128,22 +135,15 @@ namespace mc {
 				break;
 
 			case SINGLELINE_COMMENT:
-				//prevent it from outputing the comment
-				value = '\0';
-				break;
+				continue;
 
 			case MULTILINE_COMMENT:
-				//input.length() is minus 1 because we check the next value, so just in case the input ends with the * character
-				for (iter;iter<input.length()-1;++iter) {
-					//do nothing until */
-					if (value == '*'&&input[value + 1] == '/') {
-						//we increment iter to account for the next / character
-						++iter;
-						break;
-					}
+				if (value == '/'&&input[iter - 1] == '*') {
+					//we increment iter to account for the next / character
+					state = PROBING;
 				}
-				break;
-
+				continue;
+		
 			case NEWLINE:
 				command = "";
 				params = "";
@@ -151,16 +151,35 @@ namespace mc {
 				break;
 			}
 
-			//the only reason there would be a \0 is because we added one to the value, as the std::string.length() is the actual length of the string
-			if(value!='\0')out += value;
+			out += value;
 		}
 
 		return out;
 	}
 
+	std::string Preprocessor::executeCommand(const std::string & command, const std::string & params)
+	{
+		return std::string();
+	}
+
 	void Preprocessor::addIncludeDirectory(std::string & directory)
 	{
 		includeDirectories.push_back(directory);
+	}
+
+	std::vector<std::string> Preprocessor::getIncludeDirectories()
+	{
+		return includeDirectories;
+	}
+
+	const std::vector<std::string> Preprocessor::getIncludeDirectories() const
+	{
+		return includeDirectories;
+	}
+
+	Preprocessor & Preprocessor::getGlobalPreprocessor()
+	{
+		return globalPreprocessor;
 	}
 
 }
