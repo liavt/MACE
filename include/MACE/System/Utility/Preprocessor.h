@@ -31,6 +31,7 @@ public:
 	void setLine(const unsigned int line);
 
 	void defineMacro(const std::string& name, const std::string& definition);
+	bool isMacroDefined(const std::string& name);
 	void undefineMacro(const std::string& name);
 
 	const std::string& getMacro(const std::string& name) const;
@@ -47,17 +48,22 @@ private:
 
 	static std::vector<std::string> reservedWords;
 
+	const std::string input;
+
 	unsigned int line = 0;
 
-	const std::string input;
 	std::string filename = "";
+
+
 
 	std::vector<std::string> includeDirectories = std::vector<std::string>();
 	std::vector<std::pair<std::string,std::string>> macros = std::vector<std::pair<std::string,std::string>>();
 
 	std::string parse(const std::string& input);
 
-	std::string executeDirective(const std::string& command, const std::string& params);
+	std::string executeDirective(bool& outputValue,const std::string& command, const std::string& params);
+
+	int getMacroLocation(const std::string& name);
 
 
 

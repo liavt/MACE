@@ -175,7 +175,7 @@ public:
 	@see operator[](Index)
 	*/
 	T& get(Index i) {
-		if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+		if (i >= N)throw IndexOutOfBoundsException(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		return content[i];
 	}
 	/**
@@ -187,7 +187,7 @@ public:
 	@see operator[](Index)
 	*/
 	const T& get(Index i) const {
-		if (i >= N)throw IndexOutOfBounds(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+		if (i >= N)throw IndexOutOfBoundsException(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		return content.at(i);
 	}
 	/**
@@ -199,7 +199,7 @@ public:
 	@see operator[](Index)
 	*/
 	void set(Index position, T value) {
-		if (position >= N)throw IndexOutOfBounds(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+		if (position >= N)throw IndexOutOfBoundsException(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 		content[position] = value;
 	}
 

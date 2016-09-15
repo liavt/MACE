@@ -16,12 +16,8 @@ namespace mc {
 
 	stringification
 
-	#ifdef
 	#if, !, &&, (), ||
-	#ifndef
-	#else
 	#elif
-	#endif
 
 	#if defined () or # if defined name
 
@@ -34,12 +30,15 @@ namespace mc {
 	__FILE__
 	__LINE__
 	__DATE__
-	__STDC__
-	__STDC_HOSTED__
-	__STDC_VERSION__
-	__MACE__
+	__TIME__
+	__STDC__ - done
+	__STDC_HOSTED__ - done
+	__BASE_FILE__ - done
+	__STDC_VERSION__ - sometimes defined
+	__MACE__ - done
 	__INCLUDE_LEVEL__
-	__MACRO_NUMBER__
+	__IF_SCOPE__ - done
+	__CHAR_UNSIGNED__ - sometimes defined
 	*/
 
 	std::vector<std::string> Preprocessor::reservedWords = {
@@ -68,7 +67,30 @@ namespace mc {
 	}
 
 	std::string Preprocessor::preprocess()
-	{/**/
+	{
+		defineMacro("__MACE__","1");
+		defineMacro("__BASE_FILE__",filename);
+
+#ifdef __STDC__
+		defineMacro("__STDC__",std::to_string(__STDC__));
+#else
+		defineMacro("__STDC__","1");
+#endif
+
+#ifdef __STDC_HOSTED__
+		defineMacro("__STDC_HOSTED__",std::to_string(__STDC_HOSTED__));
+#else
+		defineMacro("__STDC_HOSTED__","1");
+#endif
+
+#ifdef __STDC_VERSION__
+		defineMacro("__STDC_VERSION__",std::to_string(__STDC_VERSION__));
+#endif
+
+#ifdef __CHAR_UNSIGNED__
+		defineMacro("__CHAR_UNSIGNED__",std::to_string(__CHAR_UNSIGNED__);
+#endif
+
 		return parse(input);
 	}
 
@@ -90,13 +112,23 @@ namespace mc {
 		SINGELINE_COMMENT does nothing and doesn't add to the output until the next newline
 		MULTILINE_COMMENT does nothing and doesn't add to the output until *\/
 
+		FALSE_CONDITIONAL ouputs nothing, and gets changed to PROBING when #endif/#else or #elif is called with correct conditional
+
 		If the next character is a newline, it immediately goes into the NEWLINE state
 
 		NEWLINE processes command and params if they exist, and then sends state back to PROBING_POUND_SIGN
 		*/
-		enum STATE { PROBING, NEWLINE, FINDING_COMMAND_START, COMMAND_NAME, PARAMETERS, STRING_LITERAL, SINGLELINE_COMMENT,MULTILINE_COMMENT};
+		enum STATE { PROBING, NEWLINE, FINDING_COMMAND_START, COMMAND_NAME, PARAMETERS, STRING_LITERAL, SINGLELINE_COMMENT, MULTILINE_COMMENT};
 
 		enum STATE state = PROBING;
+
+		/*
+		If set to true, the current character will be added to final output. This is used when an #if/#ifdef/#ifndef/#elif is called with a false condition.
+		This is used because a false if condition will last multiple lines. The only other thing that doesnt output for multiple lines is a multiline comment, however it only needs to check for multiple characters.
+
+		Instead of using outputvalue, continue should be used instead.
+		*/
+		bool outputValue = true;
 
 		for (Index iter = 0; iter < input.length(); ++iter) {
 			char value = input[iter];
@@ -182,7 +214,9 @@ namespace mc {
 		
 			case NEWLINE:
 				if (command != "") {
-					out += executeDirective(command,params);
+					/*outputValue is passed by reference so it can be changed
+					*/
+					out += executeDirective(outputValue,command,params);
 				}
 				command = "";
 				params = "";
@@ -190,13 +224,18 @@ namespace mc {
 				break;
 			}
 
-			out += value;
+			if(outputValue)out += value;
+		}
+
+		const int macroLocation = getMacroLocation("__IF_SCOPE__");
+		if (macroLocation >= 0) {
+			if (std::stoi(getMacro("__IF_SCOPE__")) > 0)throw PreprocessorException(getLocation() + ": #if is missing an #endif");
 		}
 
 		return out;
 	}
 
-	std::string Preprocessor::executeDirective(const std::string & command, const std::string & params)
+	std::string Preprocessor::executeDirective(bool& outputValue,const std::string & command, const std::string & params)
 	{
 		if (command == "error") {
 			if (params == "")throw PreprocessorException(getLocation() + ": #error must be called with a message");
@@ -276,12 +315,81 @@ namespace mc {
 
 			undefineMacro(params);
 		}
+		else if (command == "ifdef") {
+			if (params == "")throw PreprocessorException(getLocation() + ": Directive ust be called with a macro name");
+
+			Index iterator;
+			std::string macroName = "";
+
+			//first we get the line number
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (params[iterator] == ' ') {
+					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+					break;//the second word, lets go to the second loop
+				}
+				macroName += params[iterator];
+			}
+
+			const int macroLocation = getMacroLocation("__IF_SCOPE__");
+			if (macroLocation == -1) {
+				defineMacro("__IF_SCOPE__",std::to_string(1));
+			}
+			else {
+				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second)+1);
+			}
+
+			outputValue = isMacroDefined(macroName);
+		}
+		else if (command == "ifndef") {
+			//why write it twice when we have recursion?
+			executeDirective(outputValue,"ifdef",params);
+
+			//we reverse the output
+			outputValue = !outputValue;
+		}
+		else if (command == "else") {
+			if (params != "")throw PreprocessorException(getLocation() + ": #else isn't called with arguments");
+
+			const int macroLocation = getMacroLocation("__IF_SCOPE__");
+			if (macroLocation == -1) {
+				throw PreprocessorException(getLocation() + ": #else is missing #if directive");
+			}
+			else {
+				if (std::stoi(macros[macroLocation].second) == 0)throw PreprocessorException(getLocation() + ": #else is missing #if directive");
+			}
+			outputValue = !outputValue;
+		}
+		else if (command == "endif") {
+			if (params != "")throw PreprocessorException(getLocation() + ": ##endif isn't called with arguments");			
+
+			const int macroLocation = getMacroLocation("__IF_SCOPE__");
+			if (macroLocation == -1) {
+				throw PreprocessorException(getLocation() + ": #endif is missing #if directive");
+			}
+			else {
+				if (macros[macroLocation].second == "0")throw PreprocessorException(getLocation() + ": #endif is missing #if directive");
+				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) - 1);
+			}
+
+			outputValue = true;
+		}
 		else {
 			throw PreprocessorException(getLocation()+": Unknown preprocessing directive: "+command);
 		}
 
 		return "";
 	}
+
+	int Preprocessor::getMacroLocation(const std::string & name)
+	{
+		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].first == name) {
+				return iterator;
+			}
+		}
+		return -1;
+	}
+
 
 	void Preprocessor::defineMacro(const std::string & name, const std::string & definition)
 	{
@@ -295,6 +403,16 @@ namespace mc {
 			}
 		}
 		macros.push_back(std::make_pair(name,definition));
+	}
+
+	bool Preprocessor::isMacroDefined(const std::string & name)
+	{
+		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].first == name) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void Preprocessor::undefineMacro(const std::string & name)
