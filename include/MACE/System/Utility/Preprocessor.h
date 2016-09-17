@@ -31,7 +31,7 @@ public:
 	void setLine(const unsigned int line);
 
 	void defineMacro(const std::string& name, const std::string& definition);
-	bool isMacroDefined(const std::string& name);
+	bool isMacroDefined(const std::string& name) const;
 	void undefineMacro(const std::string& name);
 
 	const std::string& getMacro(const std::string& name) const;
@@ -46,7 +46,18 @@ public:
 
 private:
 
-	static std::vector<std::string> reservedWords;
+	static const std::string reservedWords[];
+
+	//i dont have a pun about pun-ctuators
+
+	//punctuators constitute new tokens
+	//punctuators with 1 character (like >)
+	static const std::vector< char > punctuators1c;
+	//punctuators with 2 characters (like >>)
+	static const std::vector< std::string > punctuators2c;
+	//punctuators with 3 characters (like >>=)
+	static const std::vector< std::string > punctuators3c;
+
 
 	const std::string input;
 
@@ -57,13 +68,18 @@ private:
 
 
 	std::vector< std::string > includeDirectories = std::vector< std::string > ();
-	std::vector< std::pair < std::string,std::string> > macros = std::vector < std::pair< std::string, std::string > >();
+	std::vector< std::pair < std::string , std::string > > macros = std::vector < std::pair< std::string , std::string > >();
 
-	std::string parse(const std::string& input);
+	std::vector< std::string > parse(const std::string& input);
 
-	std::string executeDirective(bool& outputValue,const std::string& command, const std::string& params);
+	std::vector< std::string > executeDirective(bool& outputValue,const std::string& command, const std::string& params);
 
-	int getMacroLocation(const std::string& name);
+	int getMacroLocation(const std::string& name) const;
+
+	bool isNewToken(const char lastValue, const char value) const;
+	bool isNonOperator(const char value) const;
+
+	std::string expandMacro(const std::string input) const;
 
 	/**
 	This function doesnt check for reserveed keywords, as opposed to defineMacro which does. defineMacro also uses this function
