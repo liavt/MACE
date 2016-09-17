@@ -14,6 +14,8 @@
 #endif
 
 #define PREDEFINE_MACRO(name) setMacro( #name , std::to_string( name ));
+//used when the macro is a string, so to_string wont raise an error
+#define PREDEFINE_MACRO_S(name) setMacro( #name , name );
 
 namespace mc {
 
@@ -202,11 +204,11 @@ namespace mc {
 #endif
 
 #ifdef __REGISTER_PREFIX__
-		PREDEFINE_MACRO(__REGISTER_PREFIX__);
+		PREDEFINE_MACRO_S(__REGISTER_PREFIX__);
 #endif
 
 #ifdef __USER_LABEL_PREFIX__
-		PREDEFINE_MACRO(__USER_LABEL_PREFIX__);
+		PREDEFINE_MACRO_S(__USER_LABEL_PREFIX__);
 #endif
 
 #ifdef _DEBUG
