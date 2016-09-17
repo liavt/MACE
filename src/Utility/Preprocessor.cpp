@@ -1,6 +1,15 @@
 #include <MACE/System/Utility/Preprocessor.h>
 #include <MACE/System/Constants.h>
 #include <iostream>
+#include <ctime>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#define localtime(pointer,time) localtime_s(pointer,time)
+#elif defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+#define localtime(pointer,time) localtime_r(time,pointer)
+#else
+#error "You must be on a POSIX or Windows system in order to preprocess"
+#endif
 
 namespace mc {
 
@@ -27,8 +36,8 @@ namespace mc {
 
 
 	MACROS (can't be undef:)
-	__FILE__
-	__LINE__
+	__FILE__ - done
+	__LINE__ - done
 	__DATE__
 	__TIME__
 	__STDC__ - done
@@ -39,6 +48,11 @@ namespace mc {
 	__INCLUDE_LEVEL__
 	__IF_SCOPE__ - done
 	__CHAR_UNSIGNED__ - sometimes defined
+	__cplusplus - sometimes defined
+	__STDC_MB_MIGHT_NEQ_WC__ - sometimes defined, if multibyte might give a character a different value
+	__STDC_ISO_10646__ - sometimes defined, specifies date of unicode standard
+	__STDCPP_STRICT_POINTER_SAFETY__ - sometimes defined, if has strict pointer safety
+	__STDCPP_THREADS__ - sometimes defined, if program cna have more than 1 thread
 	*/
 
 	std::vector<std::string> Preprocessor::reservedWords = {
@@ -57,7 +71,11 @@ namespace mc {
 		"template", "this",	"throw", "true", "try",
 		"typedef", "typeid",	"typename", "union",	"unsigned",
 		"using", "virtual",	"void", "volatile", "wchar_t",
-		"while",	"xor", "xor_eq"
+		"while",	"xor", "xor_eq",
+		"__FILE__","__LINE__","__DATE__","__TIME__","__STDC__",
+		"__STDC_HOSTED__","__BASE_FILE__","__STDC_VERSION__","__INCLUDE_LEVEL__",
+		"__IF_SCOPE__","__CHAR_UNSIGNED_","__VA_ARGS__","__cplusplus","__STDC_MB_MIGHT_NEQ_WC__",
+		"__STDC_ISO_10646__","__STDCPP_STRICT_POINTER_SAFETY__","__STDCPP_THREADS__"
 	
 	};
 
@@ -68,31 +86,64 @@ namespace mc {
 
 	std::string Preprocessor::preprocess()
 	{
-		defineMacro("__MACE__","1");
-		defineMacro("__BASE_FILE__",filename);
+		setMacro("__MACE__","1");
+
+		setMacro("__BASE_FILE__",filename);
+		setMacro("__FILE__",filename);
+
+		//its std time boys
+		std::time_t const now = std::time(0);
+
+		struct tm time;
+		//this macro is defined to either localtime_s or localtime_r
+		localtime(&time, &now);
+
+		std::cout << time.tm_mon;
 
 #ifdef __STDC__
-		defineMacro("__STDC__",std::to_string(__STDC__));
+		setMacro("__STDC__",std::to_string(__STDC__));
 #else
-		defineMacro("__STDC__","1");
+		setMacro("__STDC__","1");
 #endif
 
 #ifdef __STDC_HOSTED__
-		defineMacro("__STDC_HOSTED__",std::to_string(__STDC_HOSTED__));
+		setMacro("__STDC_HOSTED__",std::to_string(__STDC_HOSTED__));
 #else
-		defineMacro("__STDC_HOSTED__","1");
+		setMacro("__STDC_HOSTED__","0");
+#endif
+
+#ifdef __STDC_MB_MIGHT_NEQ_WC__
+		setMacro("__STDC_MB_MIGHT_NEQ_WC__",std::to_string(__STDC_MB_MIGHT_NEQ_WC__));
+#endif
+
+#ifdef __STDC_ISO_10646__
+		setMacro("__STDC_ISO_10646__",std::to_string(__STDC_ISO_10646__));
 #endif
 
 #ifdef __STDC_VERSION__
-		defineMacro("__STDC_VERSION__",std::to_string(__STDC_VERSION__));
+		setMacro("__STDC_VERSION__",std::to_string(__STDC_VERSION__));
+#endif
+
+#ifdef __STDCPP_STRICT_POINTER_SAFETY__
+		setMacro("__STDCPP_STRICT_POINTER_SAFETY__",std::to_string(__STDCPP_STRICT_POINTER_SAFETY__));
 #endif
 
 #ifdef __CHAR_UNSIGNED__
-		defineMacro("__CHAR_UNSIGNED__",std::to_string(__CHAR_UNSIGNED__);
+		setMacro("__CHAR_UNSIGNED__",std::to_string(__CHAR_UNSIGNED__);
+#endif
+
+#ifdef __STDCPP_THREADS__
+		setMacro("__STDCPP_THREADS__",std::to_string(__STDCPP_THREADS__));
+#endif
+
+#ifdef __cplusplus
+		setMacro("__cplusplus",std::to_string(__cplusplus));
 #endif
 
 		return parse(input);
 	}
+
+
 
 	std::string Preprocessor::parse(const std::string & input)
 	{
@@ -137,6 +188,7 @@ namespace mc {
 			if (value=='\\'&&(iter < input.length()-1 && input[iter + 1] == '\n')) {
 				++iter;
 				++line;
+				setMacro("__LINE__", std::to_string(line));
 				continue;
 			}
 			//if its not a backslash-newline, we check if its just a newline, obviously multiline comments ignore newlines
@@ -145,6 +197,7 @@ namespace mc {
 					state = NEWLINE;
 				}
 				++line;
+				setMacro("__LINE__",std::to_string(line));
 			}
 			
 			//now we start the switch_case of the state machine.
@@ -235,6 +288,8 @@ namespace mc {
 		return out;
 	}
 
+
+
 	std::string Preprocessor::executeDirective(bool& outputValue,const std::string & command, const std::string & params)
 	{
 		if (command == "error") {
@@ -272,6 +327,9 @@ namespace mc {
 			}
 
 			setLine(std::stoi(newLineNumber));
+
+			setMacro("__LINE__", std::to_string(line));
+			setMacro("__FILE__", (filename));
 		}
 		else if (command == "define") {
 			if (params == "")throw PreprocessorException(getLocation() + ": #define must be called with a name and definition");
@@ -332,9 +390,11 @@ namespace mc {
 
 			const int macroLocation = getMacroLocation("__IF_SCOPE__");
 			if (macroLocation == -1) {
-				defineMacro("__IF_SCOPE__",std::to_string(1));
+				//setMacro() adds a macro if its not defined, so we use it here
+				setMacro("__IF_SCOPE__",std::to_string(1));
 			}
 			else {
+				//this is faster than setMacro(), as its done in O(1) time instead of O(N) time, where N is the amount of macros
 				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second)+1);
 			}
 
@@ -390,19 +450,23 @@ namespace mc {
 		return -1;
 	}
 
-
-	void Preprocessor::defineMacro(const std::string & name, const std::string & definition)
+	void Preprocessor::setMacro(const std::string & name, const std::string & definition)
 	{
-		unsigned int iterator = 0;
-		for (iterator = 0; iterator < reservedWords.size(); ++iterator) {
-			if (reservedWords[iterator] == name)throw PreprocessorException(getLocation()+": can\'t define a reserved word");
-		}
-		for (iterator = 0; iterator < macros.size(); ++iterator) {
+		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
 			if (macros[iterator].first == name) {
 				macros[iterator].second = definition;
 			}
 		}
-		macros.push_back(std::make_pair(name,definition));
+		macros.push_back(std::make_pair(name, definition));
+	}
+
+
+	void Preprocessor::defineMacro(const std::string & name, const std::string & definition)
+	{
+		for (unsigned int iterator = 0; iterator < reservedWords.size(); ++iterator) {
+			if (reservedWords[iterator] == name)throw PreprocessorException(getLocation()+": can\'t define a reserved word");
+		}
+		setMacro(name,definition);
 	}
 
 	bool Preprocessor::isMacroDefined(const std::string & name)

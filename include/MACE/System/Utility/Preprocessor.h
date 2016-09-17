@@ -56,8 +56,8 @@ private:
 
 
 
-	std::vector<std::string> includeDirectories = std::vector<std::string>();
-	std::vector<std::pair<std::string,std::string>> macros = std::vector<std::pair<std::string,std::string>>();
+	std::vector< std::string > includeDirectories = std::vector< std::string > ();
+	std::vector< std::pair < std::string,std::string> > macros = std::vector < std::pair< std::string, std::string > >();
 
 	std::string parse(const std::string& input);
 
@@ -65,7 +65,10 @@ private:
 
 	int getMacroLocation(const std::string& name);
 
-
+	/**
+	This function doesnt check for reserveed keywords, as opposed to defineMacro which does. defineMacro also uses this function
+	*/
+	void setMacro(const std::string& name, const std::string& definition);
 
 };
 
