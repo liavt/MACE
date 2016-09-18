@@ -68,8 +68,8 @@ private:
 
 
 
-	std::vector< std::string > includeDirectories = std::vector< std::string > ();
-	std::vector< std::pair < std::string , std::string > > macros = std::vector < std::pair < std::string , std::string > >();
+	std::vector< std::string > includeDirectories;
+	std::vector< std::pair < std::string, std::string > > macros;
 
 	std::vector< std::string > parse(const std::string& input);
 

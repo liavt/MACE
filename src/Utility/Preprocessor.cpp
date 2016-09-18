@@ -17,7 +17,7 @@
 #define NAME_STRINGIFY( name ) "" #name
 #define STRINGIFY( name ) #name
 //the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define PREDEFINE_MACRO(name) if(strcmp("" #name ,NAME_STRINGIFY(name))){std::cout<< #name <<std::endl;setMacro( #name , STRINGIFY( name ));}
+#define PREDEFINE_MACRO(name) if(std::strcmp("" #name ,NAME_STRINGIFY(name))){std::cout<< #name <<std::endl;setMacro( #name , STRINGIFY( name ));}
 
 namespace mc {
 
