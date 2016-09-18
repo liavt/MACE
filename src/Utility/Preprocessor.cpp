@@ -51,6 +51,12 @@ namespace mc {
 	__IF_SCOPE__ - done
 	__CURRENT_IF_SCOPE__ - done,the scope at which a conditional returned false, shouldnt really be used
 	__CHAR_UNSIGNED__ - sometimes defined, could be __CHAR_UNSIGNED
+	__WCHAR_UNSIGNED__ - sometimes defined
+	__SIZE_TYPE__ - sometimes defined
+	__PTRDIFF_TYPE__ - sometimes defined
+	__WCHAR_TYPE__ - sometimes defined
+	__INTMAX_TYPE__ - sometimes defined
+	__UINTMAX_TYPE__ - sometimes defined
 	__cplusplus - sometimes defined
 	__STDC_MB_MIGHT_NEQ_WC__ - sometimes defined, if multibyte might give a character a different value
 	__STDC_ISO_10646__ - sometimes defined, specifies date of unicode standard
@@ -63,10 +69,13 @@ namespace mc {
 	__INT_MAX__-  sometimes defined
 	__LONG_MAX__-  sometimes defined
 	__LONG_LONG_MAX__-  sometimes defined
-	__REGISTER_PREFIX__-  sometimes defined
-	__USER_LABEL_PREFIX__ -  sometimes defined
+	__INTMAX_MAX__ - sometimes defined
 	_DEBUG - sometimes defined
 	_INTEGRAL_MAX_BITS - sometimes defined
+	__LP64__ - sometimes defined,could be _LP64
+
+
+
 	*/
 
 	//these words can't be defined or undefined
@@ -86,14 +95,15 @@ namespace mc {
 		"template", "this",	"throw", "true", "try",
 		"typedef", "typeid",	"typename", "union",	"unsigned",
 		"using", "virtual",	"void", "volatile", "wchar_t",
-		"while",	"xor", "xor_eq",
-		"__FILE__","__LINE__","__DATE__","__TIME__","__STDC__",
+		"while",	"xor", "xor_eq","__LP64__","_LP64",
+		"__INTMAX_MAX__","__WCHAR_UNSIGNED__","__SIZE_TYPE__","__PTRDIFF_TYPE__",
+		"__FILE__","__LINE__","__DATE__","__TIME__","__STDC__","__WCHAR_TYPE__",
 		"__STDC_HOSTED__","__BASE_FILE__","__STDC_VERSION__","__INCLUDE_LEVEL__",
 		"__IF_SCOPE__","__CHAR_UNSIGNED_","__VA_ARGS__","__cplusplus","__STDC_MB_MIGHT_NEQ_WC__",
 		"__STDC_ISO_10646__","__STDCPP_STRICT_POINTER_SAFETY__","__STDCPP_THREADS__",
 		"defined","__CHAR_BIT__","__INT_SHORT__","__SCHAR_MAX__","__SHRT_MAX__","__INT_MAX__",
-		"__LONG_MAX__","__LONG_LONG_MAX__","__REGISTER_PREFIX__","__USER_LABEL_PREFIX__","_DEBUG","__CHAR_UNSIGNED",
-		"_INTEGRAL_MAX_BITS","__CURRENT_IF_SCOPE__"
+		"__LONG_MAX__","__LONG_LONG_MAX__","_DEBUG","__CHAR_UNSIGNED","__UINTMAX_TYPE__",
+		"_INTEGRAL_MAX_BITS","__CURRENT_IF_SCOPE__","__INTMAX_TYPE__"
 	};
 
 	const std::vector< char > Preprocessor::punctuators1c = {
@@ -164,6 +174,30 @@ namespace mc {
 		PREDEFINE_MACRO(__CHAR_UNSIGNED);
 #endif
 
+#ifdef __WCHAR_UNSIGNED__
+		PREDEFINE_MACRO(__WCHAR_UNSIGNED__);
+#endif
+
+#ifdef __SIZE_TYPE__
+		PREDEFINE_MACRO(__SIZE_TYPE__);
+#endif
+
+#ifdef __PTRDIFF_TYPE__
+		PREDEFINE_MACRO(__PTRDIFF_TYPE__);
+#endif
+
+#ifdef __WCHAR_TYPE__
+		PREDEFINE_MACRO(__WCHAR_TYPE__);
+#endif
+
+#ifdef __INTMAX_TYPE__
+		PREDEFINE_MACRO(__INTMAX_TYPE__);
+#endif
+
+#ifdef __UINTMAX_TYPE__
+		PREDEFINE_MACRO(__UINTMAX_TYPE__);
+#endif
+
 #ifdef __STDCPP_THREADS__
 		PREDEFINE_MACRO(__STDCPP_THREADS__);
 #endif
@@ -200,13 +234,8 @@ namespace mc {
 		PREDEFINE_MACRO(__LONG_LONG_MAX__);
 #endif
 
-#ifdef __REGISTER_PREFIX__
-		//PREDEFINE_MACRO cant be used because to_string doesnt work on a string
-		setMacro("__REGISTER_PREFIX__", __REGISTER_PREFIX__);
-#endif
-
-#ifdef __USER_LABEL_PREFIX__
-		setMacro("__USER_LABEL_PREFIX__", __USER_LABEL_PREFIX__);
+#ifdef __INTMAX_MAX__
+		PREDEFINE_MACRO(__INTMAX_MAX__);
 #endif
 
 #ifdef _DEBUG
@@ -215,6 +244,12 @@ namespace mc {
 
 #ifdef _INTEGRAL_MAX_BITS
 		PREDEFINE_MACRO(_INTEGRAL_MAX_BITS);
+#endif
+
+#ifdef __LP64__
+		PREDEFINE_MACRO(__LP64__);
+#elif defined _LP64
+		PREDEFINE_MACRO(_LP64);
 #endif
 		
 		std::string out = "";
@@ -522,19 +557,30 @@ namespace mc {
 				macroName += params[iterator];
 			}
 
-			const int macroLocation = getMacroLocation("__IF_SCOPE__");
+			int macroLocation = getMacroLocation("__IF_SCOPE__");
+			int currentIfScopeLocation = getMacroLocation("__CURRENT_IF_SCOPE__");
+
+
 			if (macroLocation == -1) {
 				//setMacro() adds a macro if its not defined, so we use it here
-				setMacro("__IF_SCOPE__", std::to_string(1));
+				setMacro("__IF_SCOPE__", "1");
+				macroLocation = getMacroLocation("__IF_SCOPE__");
 			}
-			else if (macros[macroLocation].second == getMacro("__CURRENT_IF_SCOPE__")){
+			if (currentIfScopeLocation == -1) {
+				setMacro("__CURRENT_IF_SCOPE__", macros[macroLocation].second);
+				currentIfScopeLocation = getMacroLocation("__CURRENT_IF_SCOPE__");
+			}
+			if (macros[macroLocation].second == macros[currentIfScopeLocation].second){
 				//this is faster than setMacro(), as its done in O(1) time instead of O(N) time, where N is the amount of macros
 				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) + 1);
 
 				outputValue = isMacroDefined(macroName);
 
-				setMacro("__CURRENT_IF_SCOPE__", macros[macroLocation].second);
+				if(!outputValue)setMacro("__CURRENT_IF_SCOPE__", macros[macroLocation].second);
 			}
+
+			std::cout << macros[macroLocation].second << " " << macros[currentIfScopeLocation].second << std::endl;
+
 
 		}
 		else if (command == "ifndef") {
