@@ -14,15 +14,11 @@
 #endif
 
 #define PREDEFINE_MACRO(name) setMacro( #name , std::to_string( name ));
-//used when the macro is a string, so to_string wont raise an error
-#define PREDEFINE_MACRO_S(name) setMacro( #name , name );
 
 namespace mc {
 
 	//todo:
 	/*
-	fix if scopes
-
 	digraphs (see 6.4.6 of standard)
 
 	functional macros and __VA_ARGS__
@@ -53,7 +49,8 @@ namespace mc {
 	__MACE__ - done
 	__INCLUDE_LEVEL__
 	__IF_SCOPE__ - done
-	__CHAR_UNSIGNED__ - sometimes defined, could be __CHAR_UNSIGND
+	__CURRENT_IF_SCOPE__ - done,the scope at which a conditional returned false, shouldnt really be used
+	__CHAR_UNSIGNED__ - sometimes defined, could be __CHAR_UNSIGNED
 	__cplusplus - sometimes defined
 	__STDC_MB_MIGHT_NEQ_WC__ - sometimes defined, if multibyte might give a character a different value
 	__STDC_ISO_10646__ - sometimes defined, specifies date of unicode standard
@@ -96,7 +93,7 @@ namespace mc {
 		"__STDC_ISO_10646__","__STDCPP_STRICT_POINTER_SAFETY__","__STDCPP_THREADS__",
 		"defined","__CHAR_BIT__","__INT_SHORT__","__SCHAR_MAX__","__SHRT_MAX__","__INT_MAX__",
 		"__LONG_MAX__","__LONG_LONG_MAX__","__REGISTER_PREFIX__","__USER_LABEL_PREFIX__","_DEBUG","__CHAR_UNSIGNED",
-		"_INTEGRAL_MAX_BITS"
+		"_INTEGRAL_MAX_BITS","__CURRENT_IF_SCOPE__"
 	};
 
 	const std::vector< char > Preprocessor::punctuators1c = {
@@ -204,11 +201,12 @@ namespace mc {
 #endif
 
 #ifdef __REGISTER_PREFIX__
-		PREDEFINE_MACRO_S(__REGISTER_PREFIX__);
+		//PREDEFINE_MACRO cant be used because to_string doesnt work on a string
+		setMacro("__REGISTER_PREFIX__", __REGISTER_PREFIX__);
 #endif
 
 #ifdef __USER_LABEL_PREFIX__
-		PREDEFINE_MACRO_S(__USER_LABEL_PREFIX__);
+		setMacro("__USER_LABEL_PREFIX__", __USER_LABEL_PREFIX__);
 #endif
 
 #ifdef _DEBUG
@@ -481,40 +479,6 @@ namespace mc {
 
 				undefineMacro(params);
 			}
-			else if (command == "ifdef") {
-				if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef directive must be called with a macro name");
-
-				Index iterator;
-				std::string macroName = "";
-
-				//first we get the line number
-				for (iterator = 0; iterator < params.length(); ++iterator) {
-					if (isspace(params[iterator])) {
-						++iterator;//lets also increment the iterator so the space doesnt get added to the filename
-						break;//the second word, lets go to the second loop
-					}
-					macroName += params[iterator];
-				}
-
-				const int macroLocation = getMacroLocation("__IF_SCOPE__");
-				if (macroLocation == -1) {
-					//setMacro() adds a macro if its not defined, so we use it here
-					setMacro("__IF_SCOPE__", std::to_string(1));
-				}
-				else {
-					//this is faster than setMacro(), as its done in O(1) time instead of O(N) time, where N is the amount of macros
-					macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) + 1);
-				}
-
-				outputValue = isMacroDefined(macroName);
-			}
-			else if (command == "ifndef") {
-				//why write it twice when we have recursion?
-				executeDirective(outputValue, "ifdef", params);
-
-				//we reverse the output
-				outputValue = !outputValue;
-			}
 		}
 
 		//these 2 commands are executed regardless of if they are inside a false scope
@@ -524,10 +488,10 @@ namespace mc {
 			if (macroLocation == -1) {
 				throw PreprocessorException(getLocation() + ": #else is missing #if directive");
 			}
-			else {
-				if (std::stoi(macros[macroLocation].second) == 0)throw PreprocessorException(getLocation() + ": #else is missing #if directive");
+			else if (std::stoi(macros[macroLocation].second) == 0)throw PreprocessorException(getLocation() + ": #else is missing #if directive");
+			else if (macros[macroLocation].second != getMacro("__CURRENT_IF_SCOPE__")){
+				outputValue = !outputValue;
 			}
-			outputValue = !outputValue;
 		}
 		else if (command == "endif") {
 
@@ -535,12 +499,50 @@ namespace mc {
 			if (macroLocation == -1) {
 				throw PreprocessorException(getLocation() + ": #endif is missing #if directive");
 			}
-			else {
+			else if (macros[macroLocation].second == getMacro("__CURRENT_IF_SCOPE__")){
 				if (macros[macroLocation].second == "0")throw PreprocessorException(getLocation() + ": #endif is missing #if directive");
 				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) - 1);
+
+				outputValue = true;
 			}
 
-			outputValue = true;
+		}
+		else if (command == "ifdef") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef directive must be called with a macro name");
+
+			Index iterator;
+			std::string macroName = "";
+
+			//first we get the line number
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (isspace(params[iterator])) {
+					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+					break;//the second word, lets go to the second loop
+				}
+				macroName += params[iterator];
+			}
+
+			const int macroLocation = getMacroLocation("__IF_SCOPE__");
+			if (macroLocation == -1) {
+				//setMacro() adds a macro if its not defined, so we use it here
+				setMacro("__IF_SCOPE__", std::to_string(1));
+			}
+			else if (macros[macroLocation].second == getMacro("__CURRENT_IF_SCOPE__")){
+				//this is faster than setMacro(), as its done in O(1) time instead of O(N) time, where N is the amount of macros
+				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) + 1);
+
+				outputValue = isMacroDefined(macroName);
+
+				setMacro("__CURRENT_IF_SCOPE__", macros[macroLocation].second);
+			}
+
+		}
+		else if (command == "ifndef") {
+			//why write it twice when we have recursion?
+			executeDirective(outputValue, "ifdef", params);
+
+			//we reverse the output
+			outputValue = !outputValue;
 		}
 
 		return std::vector < std::string >();
