@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ctype.h>
 #include <ctime>
+#include <cstring>
 #include <algorithm>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
