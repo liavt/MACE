@@ -7,6 +7,9 @@
 
 namespace mc {
 
+/**
+`Exception` thrown when a syntax error is encountered, or #error is called.	
+*/
 using PreprocessorException = Exception;
 
 class Preprocessor {
@@ -56,8 +59,6 @@ private:
 	static const std::vector< char > punctuators1c;
 	//punctuators with 2 characters (like >>)
 	static const std::vector< std::string > punctuators2c;
-	//punctuators with 3 characters (like >>=)
-	static const std::vector< std::string > punctuators3c;
 
 
 	const std::string input;
@@ -81,6 +82,12 @@ private:
 	bool isNonOperator(const char value) const;
 
 	std::string expandMacro(const std::string input) const;
+
+	int getIfScopeLocation();
+	int getCurrentIfScopeLocation();
+
+	void calculateIfScope(bool& outputValue, const bool statementPassed);
+	bool parseIfStatement(const std::string statement);
 
 	/**
 	This function doesnt check for reserveed keywords, as opposed to defineMacro which does. defineMacro also uses this function

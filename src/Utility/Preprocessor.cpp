@@ -18,7 +18,7 @@
 #define NAME_STRINGIFY( name ) "" #name
 #define STRINGIFY( name ) #name
 //the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define PREDEFINE_MACRO(name) if(std::strcmp("" #name ,NAME_STRINGIFY(name))){std::cout<< #name <<std::endl;setMacro( #name , STRINGIFY( name ));}
+#define PREDEFINE_MACRO(name) if(std::strcmp("" #name ,NAME_STRINGIFY(name))){setMacro( #name , STRINGIFY( name ));}
 
 namespace mc {
 
@@ -55,30 +55,6 @@ namespace mc {
 	__INCLUDE_LEVEL__
 	__IF_SCOPE__ - done
 	__CURRENT_IF_SCOPE__ - done,the scope at which a conditional returned false, shouldnt really be used
-	__CHAR_UNSIGNED__ - sometimes defined, could be __CHAR_UNSIGNED
-	__WCHAR_UNSIGNED__ - sometimes defined
-	__SIZE_TYPE__ - sometimes defined
-	__PTRDIFF_TYPE__ - sometimes defined
-	__WCHAR_TYPE__ - sometimes defined
-	__INTMAX_TYPE__ - sometimes defined
-	__UINTMAX_TYPE__ - sometimes defined
-	__cplusplus - sometimes defined
-	__STDC_MB_MIGHT_NEQ_WC__ - sometimes defined, if multibyte might give a character a different value
-	__STDC_ISO_10646__ - sometimes defined, specifies date of unicode standard
-	__STDCPP_STRICT_POINTER_SAFETY__ - sometimes defined, if has strict pointer safety
-	__STDCPP_THREADS__ - sometimes defined, if program cna have more than 1 thread
-	__CHAR_BIT__-  sometimes defined
-	__INT_SHORT__-  sometimes defined
-	__SCHAR_MAX__- sometimes defined
-	__SHRT_MAX__-  sometimes defined
-	__INT_MAX__-  sometimes defined
-	__LONG_MAX__-  sometimes defined
-	__LONG_LONG_MAX__-  sometimes defined
-	__INTMAX_MAX__ - sometimes defined
-	_DEBUG - sometimes defined
-	_INTEGRAL_MAX_BITS - sometimes defined
-	__LP64__ - sometimes defined,could be _LP64
-
 	*/
 
 	//these words can't be defined or undefined
@@ -99,7 +75,8 @@ namespace mc {
 		"typedef", "typeid",	"typename", "union",	"unsigned",
 		"using", "virtual",	"void", "volatile", "wchar_t",
 		"while",	"xor", "xor_eq","defined","__FILE__","__LINE__",
-		"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__"
+		"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__",
+		"__MACE__","__IF_SCOPE__","__CURRENT_IF_SCOPE__"
 	};
 
 	const std::vector< char > Preprocessor::punctuators1c = {
@@ -108,10 +85,6 @@ namespace mc {
 
 	const std::vector< std::string > Preprocessor::punctuators2c = {
 		">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::"
-	};
-
-	const std::vector< std::string > Preprocessor::punctuators3c = {
-		">>=","<<="
 	};
 
 	Preprocessor::Preprocessor(const std::string& inputString, const std::string& filename) : input(inputString)
@@ -526,7 +499,7 @@ namespace mc {
 					state = PROBING;
 				}
 
-				currentToken += value;
+				if(outputValue)currentToken += value;
 				continue;
 
 			case SINGLELINE_COMMENT:
@@ -565,15 +538,13 @@ namespace mc {
 
 		const int macroLocation = getMacroLocation("__IF_SCOPE__");
 		if (macroLocation >= 0) {
-			if (std::stoi(getMacro("__IF_SCOPE__")) > 0)throw PreprocessorException(getLocation() + ": #if directive is missing an #endif");
+		//	if (std::stoi(getMacro("__IF_SCOPE__")) > 0)throw PreprocessorException(getLocation() + ": #if directive is missing an #endif");
 		}
 
 		return tokens;
 	}
 
-
-
-	std::vector < std::string > Preprocessor::executeDirective(bool& outputValue,const std::string & command, const std::string & params)
+	std::vector < std::string > Preprocessor::executeDirective(bool& outputValue, const std::string & command, const std::string & params)
 	{
 		//only if we output
 		if (outputValue) {
@@ -661,34 +632,18 @@ namespace mc {
 			}
 		}
 
-		//these 2 commands are executed regardless of if they are inside a false scope
-		if (command == "else") {
+		if (command == "if") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #if must be called with an argument");
 
-			const int macroLocation = getMacroLocation("__IF_SCOPE__");
-			if (macroLocation == -1) {
-				throw PreprocessorException(getLocation() + ": #else is missing #if directive");
-			}
-			else if (std::stoi(macros[macroLocation].second) == 0)throw PreprocessorException(getLocation() + ": #else is missing #if directive");
-			else if (macros[macroLocation].second != getMacro("__CURRENT_IF_SCOPE__")){
-				outputValue = !outputValue;
-			}
+			calculateIfScope(outputValue,parseIfStatement(params));
 		}
-		else if (command == "endif") {
+		else if (command == "elif") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #elif must be called with an argument");
 
-			const int macroLocation = getMacroLocation("__IF_SCOPE__");
-			if (macroLocation == -1) {
-				throw PreprocessorException(getLocation() + ": #endif is missing #if directive");
-			}
-			else if (macros[macroLocation].second == getMacro("__CURRENT_IF_SCOPE__")){
-				if (macros[macroLocation].second == "0")throw PreprocessorException(getLocation() + ": #endif is missing #if directive");
-				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) - 1);
-
-				outputValue = true;
-			}
-
+			calculateIfScope(outputValue, parseIfStatement(params));
 		}
 		else if (command == "ifdef") {
-			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef directive must be called with a macro name");
+			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef must be called with a macro name");
 
 			Index iterator;
 			std::string macroName = "";
@@ -702,39 +657,68 @@ namespace mc {
 				macroName += params[iterator];
 			}
 
-			int macroLocation = getMacroLocation("__IF_SCOPE__");
-			int currentIfScopeLocation = getMacroLocation("__CURRENT_IF_SCOPE__");
-
-
-			if (macroLocation == -1) {
-				//setMacro() adds a macro if its not defined, so we use it here
-				setMacro("__IF_SCOPE__", "1");
-				macroLocation = getMacroLocation("__IF_SCOPE__");
-			}
-			if (currentIfScopeLocation == -1) {
-				setMacro("__CURRENT_IF_SCOPE__", macros[macroLocation].second);
-				currentIfScopeLocation = getMacroLocation("__CURRENT_IF_SCOPE__");
-			}
-			if (macros[macroLocation].second == macros[currentIfScopeLocation].second){
-				//this is faster than setMacro(), as its done in O(1) time instead of O(N) time, where N is the amount of macros
-				macros[macroLocation].second = std::to_string(std::stoi(macros[macroLocation].second) + 1);
-
-				outputValue = isMacroDefined(macroName);
-
-				if(!outputValue)setMacro("__CURRENT_IF_SCOPE__", macros[macroLocation].second);
-			}
-
-			std::cout << macros[macroLocation].second << " " << macros[currentIfScopeLocation].second << std::endl;
-
-
+			calculateIfScope(outputValue, isMacroDefined(macroName));
 		}
 		else if (command == "ifndef") {
-			//why write it twice when we have recursion?
-			executeDirective(outputValue, "ifdef", params);
+			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef must be called with a macro name");
 
-			//we reverse the output
-			outputValue = !outputValue;
+			Index iterator;
+			std::string macroName = "";
+
+			//first we get the line number
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (isspace(params[iterator])) {
+					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+					break;//the second word, lets go to the second loop
+				}
+				macroName += params[iterator];
+			}
+
+			calculateIfScope(outputValue, !isMacroDefined(macroName));
 		}
+		else if (command == "else") {
+			int ifScope = getMacroLocation("__IF_SCOPE__");
+			if (ifScope < 0||std::stoi(macros[ifScope].second)<=0) {
+				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
+			}
+
+			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
+			if (currentIfScope < 0) {
+				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
+			}
+
+
+			if (outputValue||macros[ifScope].second == macros[currentIfScope].second) {
+				outputValue = !outputValue;
+				if (outputValue) {
+					macros[currentIfScope].second = "0";
+				}
+				else {
+					macros[currentIfScope].second = macros[ifScope].second;
+				}
+			}
+		}
+		else if (command == "endif") {
+			int ifScope = getMacroLocation("__IF_SCOPE__");
+			if (ifScope < 0) {
+				throw PreprocessorException(getLocation()+": #endif is missing an if directive");
+			}
+
+			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
+			if (currentIfScope < 0) {
+				throw PreprocessorException(getLocation() + ": #endif is missing an if directive");
+			}
+
+
+			if (!outputValue&&macros[ifScope].second==macros[currentIfScope].second) {
+				outputValue = true;
+				setMacro("__CURRENT_IF_SCOPE__","0");
+			}
+
+			macros[ifScope].second = std::to_string(std::stoi(macros[ifScope].second) - 1);
+
+		}
+		
 
 		return std::vector < std::string >();
 	}
@@ -789,6 +773,47 @@ namespace mc {
 		}
 
 		return input;
+	}
+
+	int Preprocessor::getIfScopeLocation()
+	{
+		int ifScope = getMacroLocation("__IF_SCOPE__");
+		if (ifScope < 0) {
+			ifScope = macros.size();
+			setMacro("__IF_SCOPE__", "0");
+		}
+
+		return ifScope;
+	}
+
+	int Preprocessor::getCurrentIfScopeLocation()
+	{
+
+		int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
+		if (currentIfScope < 0) {
+			currentIfScope = macros.size();
+			setMacro("__CURRENT_IF_SCOPE__", "0");
+		}
+
+		return currentIfScope;
+	}
+
+	void Preprocessor::calculateIfScope(bool& outputValue, const bool statementPassed)
+	{
+		int ifScope = getIfScopeLocation();
+		int currentIfScope = getCurrentIfScopeLocation();
+
+		macros[ifScope].second = std::to_string(std::stoi(macros[ifScope].second) + 1);
+
+		if (!statementPassed&&std::stoi(macros[currentIfScope].second) == 0) {
+			macros[currentIfScope].second = macros[ifScope].second;
+			outputValue = false;
+		}
+	}
+
+	bool Preprocessor::parseIfStatement(const std::string statement)
+	{
+		return false;
 	}
 
 	void Preprocessor::setMacro(const std::string & name, const std::string & definition)
