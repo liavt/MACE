@@ -89,6 +89,8 @@ private:
 	void calculateIfScope(bool& outputValue, const bool statementPassed);
 	bool parseIfStatement(const std::string statement);
 
+	std::pair< std::string, std::vector< std::string > > parseMacroName(const std::string& name) const;
+
 	/**
 	This function doesnt check for reserveed keywords, as opposed to defineMacro which does. defineMacro also uses this function
 	*/

@@ -594,13 +594,44 @@ namespace mc {
 				std::string macroName = "";
 				std::string macroDefinition = "";
 
+				/**
+				A state machine to parse the macro name, because we also have functional names.
+				MACRO_NAME adds everything to the macroName variable. if it encounters a (, goes to PARAMETERS. if it encounters whitespace, breaks the loop
+				PARAMETERS addse everything in the second word, seperating parameters by spaces
+				*/
+				enum STATE {
+					MACRO_NAME,PARAMETERS
+				};
+
+				enum STATE parseState = MACRO_NAME;
+
 				//first we get the line number
 				for (iterator = 0; iterator < params.length(); ++iterator) {
-					if (isspace(params[iterator])) {
-						++iterator;//lets also increment the iterator so the space doesnt get added to the filename
-						break;//the second word, lets go to the second loop
+					char value = params[iterator];
+					
+					if (parseState == MACRO_NAME) {
+						if (value == '(') {
+							parseState = PARAMETERS;
+							macroName += ' ';
+						}
+						else if (isspace(value)) {
+							++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+							break;//the second word, lets go to the second loop
+						}
+
 					}
-					macroName += params[iterator];
+					else if (parseState == PARAMETERS) {
+						//we dont want spaces in our parameters
+						if (isspace(value)) {
+							continue;
+						}
+						else if(value==')'){
+							macroName += value;
+							break;
+						}
+					}
+
+					macroName += value;
 				}
 
 				//remaining characters are added to the filename
@@ -725,8 +756,10 @@ namespace mc {
 
 	int Preprocessor::getMacroLocation(const std::string & name) const
 	{
-		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
-			if (macros[iterator].first == name) {
+		std::string term = name;
+
+		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
+			if (parseMacroName(macros[iterator].first).first == name) {
 				return iterator;
 			}
 		}
@@ -735,6 +768,7 @@ namespace mc {
 
 	bool Preprocessor::isNewToken(const char lastValue, const char value) const
 	{
+
 		//This is quite a complex if statement, but it checks to make sure that == doesnt become = = and a=b becomes a = b
 		bool out = (isspace(value)
 			|| ((std::find(punctuators1c.begin(), punctuators1c.end(), lastValue) != punctuators1c.end()
@@ -753,20 +787,25 @@ namespace mc {
 
 	std::string Preprocessor::expandMacro(const std::string input) const
 	{
-		//so we can edit it safely without interuppting const status
-		std::string token = input;
+		std::pair < std::string, std::vector < std::string > > token = parseMacroName(input);
+
 
 		//remove whitespace to check for macro. a line like int a = MACRO wont work without this line.
-		token.erase(std::remove_if(token.begin(), token.end(), isspace), token.end());
+		token.first.erase(std::remove_if(token.first.begin(), token.first.end(), isspace), token.first.end());
 
-		const int macroLocation = getMacroLocation(token);
+		std::cout << input << std::endl;
+
+		const int macroLocation = getMacroLocation(token.first);
 		if (macroLocation >= 0) {
 			std::string out = input;
 
+
+			std::string replacement = macros[macroLocation].second;
+
 			std::size_t index;
 			//we want to preserve the whitespace in the final output, so this algorithim replaces the non-whitespace with the macro expansion
-			while ((index = out.find(token)) != std::string::npos){
-				out.replace(index, token.size(), macros[macroLocation].second);
+			while ((index = out.find(token.first)) != std::string::npos){
+				out.replace(index, token.first.size(), replacement);
 			}
 
 			return out;
@@ -816,6 +855,44 @@ namespace mc {
 		return false;
 	}
 
+	std::pair<std::string, std::vector<std::string>> Preprocessor::parseMacroName(const std::string & name) const
+	{
+		std::string macroName;
+		std::vector < std::string > params = std::vector< std::string >();
+
+		Index iter;
+
+		for (iter = 0; iter < name.length(); ++iter) {
+			char value = name[iter];
+			if (value == '(') {
+				++iter;
+				break;
+			}
+			else if (!isspace(value)) {
+				macroName += value;
+			}
+		}
+
+		std::string currentParam="";
+
+		for (iter; iter < name.length(); ++iter) {
+			char value = name[iter];
+
+			if (value == ',') {
+				params.push_back(currentParam);
+				currentParam == "";
+			}
+			else if (value == ')') {
+				break;
+			}
+			else if (!isspace(value)) {
+				currentParam += value;
+			}
+		}
+
+		return std::make_pair(macroName,params);
+	}
+
 	void Preprocessor::setMacro(const std::string & name, const std::string & definition)
 	{
 		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
@@ -837,8 +914,10 @@ namespace mc {
 
 	bool Preprocessor::isMacroDefined(const std::string & name) const
 	{
-		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
-			if (macros[iterator].first == name) {
+		std::string term = parseMacroName(name).first;
+
+		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
+			if (parseMacroName(macros[iterator].first).first == name) {
 				return true;
 			}
 		}
@@ -847,12 +926,15 @@ namespace mc {
 
 	void Preprocessor::undefineMacro(const std::string & name)
 	{
-		unsigned int iterator = 0;
+		Index iterator = 0;
+
+		std::string term = parseMacroName(name).first;
+
 		for (iterator = 0; iterator < sizeof(reservedWords) / sizeof(*reservedWords); ++iterator) {
-			if (reservedWords[iterator] == name)throw PreprocessorException(getLocation() + ": can\'t undefine a reserved word");
+			if (reservedWords[iterator] == term)throw PreprocessorException(getLocation() + ": can\'t undefine a reserved word");
 		}
 		for (iterator = 0; iterator < macros.size(); ++iterator) {
-			if (macros[iterator].first == name) {
+			if (parseMacroName(macros[iterator].first).first == term) {
 				macros.erase(macros.begin()+iterator);
 				return;
 			}
