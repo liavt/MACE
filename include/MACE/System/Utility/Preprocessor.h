@@ -12,10 +12,24 @@ namespace mc {
 */
 using PreprocessorException = Exception;
 
+
+
 class Preprocessor {
 public:
-	Preprocessor(const std::string& input,const std::string& filename="Unknown file");
+	struct Macro {
+		Macro(std::string name, std::string definition, std::vector < std::string > parameters);
+		Macro(std::string name,std::string definition);
 
+		std::string name;
+		std::string definition;
+		std::vector < std::string > parameters;
+	};
+
+
+	Preprocessor(const std::string& input,const std::string& filename="Unknown file");
+	explicit Preprocessor(const std::string& input, const Preprocessor& clone);
+
+	std::vector< std::string > preprocessTokens();
 	std::string preprocess();
 
 	void addIncludeDirectory(std::string& directory);
@@ -34,11 +48,11 @@ public:
 	const unsigned int getLine() const;
 	void setLine(const unsigned int line);
 
-	void defineMacro(const std::string& name, const std::string& definition);
+	void defineMacro(const Macro& macro);
 	bool isMacroDefined(const std::string& name) const;
 	void undefineMacro(const std::string& name);
 
-	const std::string& getMacro(const std::string& name) const;
+	const Macro& getMacro(const std::string& name) const;
 
 	/**
 	Generates a string with the current line number and file name.
@@ -70,7 +84,7 @@ private:
 
 
 	std::vector< std::string > includeDirectories;
-	std::vector< std::pair < std::string, std::string > > macros;
+	std::vector< Macro > macros;
 
 	std::vector< std::string > parse(const std::string& input);
 
@@ -89,12 +103,12 @@ private:
 	void calculateIfScope(bool& outputValue, const bool statementPassed);
 	bool parseIfStatement(const std::string statement);
 
-	std::pair< std::string, std::vector< std::string > > parseMacroName(const std::string& name) const;
+	Macro parseMacroName(const std::string& name) const;
 
 	/**
 	This function doesnt check for reserveed keywords, as opposed to defineMacro which does. defineMacro also uses this function
 	*/
-	void setMacro(const std::string& name, const std::string& definition);
+	void setMacro(const Macro& m);
 
 };
 

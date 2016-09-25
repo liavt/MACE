@@ -6,6 +6,7 @@
 #include <cstring>
 #include <algorithm>
 
+/*
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #define localtime(pointer,time) localtime_s(pointer,time)
 #elif defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
@@ -13,12 +14,14 @@
 #else
 #error "You must be on a POSIX or Windows system in order to preprocess"
 #endif
+*/
+
 
 //indirection is the only way to expand macros in other macros
-#define NAME_STRINGIFY( name ) "" #name
-#define STRINGIFY( name ) #name
+#define NAME_STRINGIFY(name) "" #name
+#define STRINGIFY(name) #name
 //the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define PREDEFINE_MACRO(name) if(std::strcmp("" #name ,NAME_STRINGIFY(name))){setMacro( #name , STRINGIFY( name ));}
+#define PREDEFINE_MACRO(name) if(std::strcmp("" #name ,NAME_STRINGIFY(name))){setMacro( Macro( #name , STRINGIFY( name ) ));}
 
 namespace mc {
 
@@ -26,11 +29,11 @@ namespace mc {
 	/*
 	digraphs (see 6.4.6 of standard)
 
-	functional macros and __VA_ARGS__
+	__VA_ARGS__
 
 	self-referntial macros up to 1 recurse
 
-	stringification
+	concat of macros
 
 	#if, !, &&, (), ||
 	#elif
@@ -55,6 +58,12 @@ namespace mc {
 	__INCLUDE_LEVEL__
 	__IF_SCOPE__ - done
 	__CURRENT_IF_SCOPE__ - done,the scope at which a conditional returned false, shouldnt really be used
+
+
+	BUGS:
+
+	" \"hi \
+	#	error this also doesnt foo test string literals" - doesnt output second line
 	*/
 
 	//these words can't be defined or undefined
@@ -76,7 +85,7 @@ namespace mc {
 		"using", "virtual",	"void", "volatile", "wchar_t",
 		"while",	"xor", "xor_eq","defined","__FILE__","__LINE__",
 		"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__",
-		"__MACE__","__IF_SCOPE__","__CURRENT_IF_SCOPE__"
+		"__MACE__","__IF_SCOPE__","__CURRENT_IF_SCOPE__","__VA_ARGS__"
 	};
 
 	const std::vector< char > Preprocessor::punctuators1c = {
@@ -84,7 +93,7 @@ namespace mc {
 	};
 
 	const std::vector< std::string > Preprocessor::punctuators2c = {
-		">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::"
+		">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
 	};
 
 	Preprocessor::Preprocessor(const std::string& inputString, const std::string& filename) : input(inputString)
@@ -92,19 +101,25 @@ namespace mc {
 		this->filename = filename;
 	}
 
-	std::string Preprocessor::preprocess()
+	Preprocessor::Preprocessor(const std::string & input, const Preprocessor & clone) : Preprocessor(input,clone.getFilename())
 	{
-		setMacro("__MACE__","1");
+		includeDirectories = clone.includeDirectories;
+		macros = clone.macros;
+	}
 
-		setMacro("__BASE_FILE__",filename);
-		setMacro("__FILE__",filename);
+	std::vector<std::string> Preprocessor::preprocessTokens()
+	{
+		setMacro(Macro("__MACE__", "1"));
+
+		setMacro(Macro("__BASE_FILE__", filename));
+		setMacro(Macro("__FILE__", filename));
 
 		//its std time boys
 		std::time_t const now = std::time(0);
 
 		struct tm time;
 		//this macro is defined to either localtime_s or localtime_r
-		localtime(&time, &now);
+	//	localtime(&time, &now);
 
 
 
@@ -370,16 +385,21 @@ namespace mc {
 		PREDEFINE_MACRO(__COMPACT__);
 		PREDEFINE_MACRO(__LARGE__);
 
+		return parse(input);
+	}
+
+	std::string Preprocessor::preprocess()
+	{
+	
+
 		std::string out = "";
-		std::vector < std::string > tokens = parse(input);
+		std::vector < std::string > tokens = preprocessTokens();
 		
 		for (unsigned int i = 0; i < tokens.size(); i++) {
 			out += tokens[i];
 		}
 		return out;
 	}
-
-
 
 	std::vector < std::string > Preprocessor::parse(const std::string & input)
 	{
@@ -390,7 +410,7 @@ namespace mc {
 		/*
 		We use a state machine to preprocess. Whenever we #include a file, we also recursively run preprocess on it.
 
-		PROBING starts first. If it finds a # character, it goes to FINDING_COMMAND_START. If it finds a " or ', it goes to STRING_LITERAL. If it finds a //, it goes to SINGLELINE_COMMENT
+		PROBING starts first. If it finds a # character, it goes to FINDING_COMMAND_START. If it finds a " or ', it goes to STRING_LITERAL. If it finds a //, it goes to SINGLELINE_COMMENT. If it finds a ( that has a letter before it, it goes to FUNCTION
 
 		FINDING_COMMAND_START looks for the first non-whitespace character, and when it does, goes to COMMAND_NAME
 		COMMAND_NAME adds every character to command until it encounters a whitespace character, where it goes to PARAMETERS
@@ -401,13 +421,13 @@ namespace mc {
 		SINGELINE_COMMENT does nothing and doesn't add to the output until the next newline
 		MULTILINE_COMMENT does nothing and doesn't add to the output until *\/
 
-		FALSE_CONDITIONAL ouputs nothing, and gets changed to PROBING when #endif/#else or #elif is called with correct conditional
+		FUNCTION does not create a new token until a ')' character is encountered, where it goes back to PROBING.
 
 		If the next character is a newline, it immediately goes into the NEWLINE state
 
 		NEWLINE processes command and params if they exist, and then sends state back to PROBING_POUND_SIGN
 		*/
-		enum STATE { PROBING, NEWLINE, FINDING_COMMAND_START, COMMAND_NAME, PARAMETERS, STRING_LITERAL, SINGLELINE_COMMENT, MULTILINE_COMMENT};
+		enum STATE { PROBING, NEWLINE, FINDING_COMMAND_START, COMMAND_NAME, PARAMETERS, STRING_LITERAL, SINGLELINE_COMMENT, MULTILINE_COMMENT,FUNCTION};
 
 		enum STATE state = PROBING;
 
@@ -419,14 +439,21 @@ namespace mc {
 		*/
 		bool outputValue = true;
 
-		for (Index iter = 0; iter < input.length(); ++iter) {
-			char value = (input[iter]);
+		for (Index iter = 0; iter <= input.length(); ++iter) {
+			char value;
+			//we add a newline at the end, because at the end of a line we do special calculations, and one liners need to do them as well
+			if (iter == input.length()) {
+				value = '\n';
+			}
+			else {
+				value = (input[iter]);
+			}
 
 			//this if statement does the backslash-newline, and converts it to a space by checking the current character is \ and the next one is \n
 			if (value=='\\'&&(iter < input.length()-1 && input[iter + 1] == '\n')) {
 				++iter;
 				++line;
-				setMacro("__LINE__", std::to_string(line));
+				setMacro(Macro("__LINE__", std::to_string(line)));
 				continue;
 			}
 			//if its not a backslash-newline, we check if its just a newline, obviously multiline comments ignore newlines
@@ -435,7 +462,7 @@ namespace mc {
 					state = NEWLINE;
 				}
 				++line;
-				setMacro("__LINE__",std::to_string(line));
+				setMacro(Macro("__LINE__",std::to_string(line)));
 			}
 			
 			//now we start the switch_case of the state machine.
@@ -474,6 +501,11 @@ namespace mc {
 				else if (value == '\0') {
 					value = ' '; 
 				}
+				else if (value == '(' && (iter>0 && (isdigit(input[iter - 1]) || isalpha(input[iter - 1])))) {
+					state = FUNCTION;
+					if (outputValue)currentToken += value;
+					continue;
+				}
 
 				break;
 
@@ -495,7 +527,7 @@ namespace mc {
 
 			case STRING_LITERAL:
 
-				if (value == '\"' || value == '\'') {
+				if (value == '"' || value == '\'') {
 					state = PROBING;
 				}
 
@@ -524,6 +556,11 @@ namespace mc {
 				params = "";
 				state = PROBING;
 				break;
+
+			case FUNCTION:
+				if (outputValue)currentToken += value;
+				if (value == ')')state = PROBING;
+				continue;
 			}
 
 			if (outputValue) {
@@ -584,14 +621,15 @@ namespace mc {
 
 				setLine(std::stoi(newLineNumber));
 
-				setMacro("__LINE__", std::to_string(line));
-				setMacro("__FILE__", (filename));
+				setMacro(Macro("__LINE__", std::to_string(line)));
+				setMacro(Macro("__FILE__", (filename)));
 			}
 			else if (command == "define") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #define must be called with a name and definition");
 
 				Index iterator;
 				std::string macroName = "";
+				std::vector< std::string > macroParameters = std::vector< std::string >();
 				std::string macroDefinition = "";
 
 				/**
@@ -605,19 +643,23 @@ namespace mc {
 
 				enum STATE parseState = MACRO_NAME;
 
+				std::string currentParameter = "";
+
 				//first we get the line number
 				for (iterator = 0; iterator < params.length(); ++iterator) {
 					char value = params[iterator];
-					
+
 					if (parseState == MACRO_NAME) {
 						if (value == '(') {
 							parseState = PARAMETERS;
-							macroName += ' ';
+							continue;
 						}
 						else if (isspace(value)) {
-							++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+							++iterator;//lets also increment the iterator so the space doesnt get added to the macroname
 							break;//the second word, lets go to the second loop
 						}
+
+						macroName += value;
 
 					}
 					else if (parseState == PARAMETERS) {
@@ -626,12 +668,20 @@ namespace mc {
 							continue;
 						}
 						else if(value==')'){
-							macroName += value;
+							++iterator;
+							macroParameters.push_back(currentParameter);
 							break;
+						}
+						else if (value == ',') {
+							macroParameters.push_back(currentParameter);
+							currentParameter = "";
+							continue;
+						}
+						else {
+							currentParameter += value;
 						}
 					}
 
-					macroName += value;
 				}
 
 				//remaining characters are added to the filename
@@ -642,7 +692,7 @@ namespace mc {
 				if (macroDefinition == "")throw PreprocessorException(getLocation() + ": a macro must have a definition");
 
 
-				defineMacro(macroName, macroDefinition);
+				defineMacro(Macro(macroName, macroDefinition,macroParameters));
 			}
 			else if (command == "undef") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #undef must be called with a macro name");
@@ -709,7 +759,7 @@ namespace mc {
 		}
 		else if (command == "else") {
 			int ifScope = getMacroLocation("__IF_SCOPE__");
-			if (ifScope < 0||std::stoi(macros[ifScope].second)<=0) {
+			if (ifScope < 0||std::stoi(macros[ifScope].definition)<=0) {
 				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
 			}
 
@@ -719,19 +769,19 @@ namespace mc {
 			}
 
 
-			if (outputValue||macros[ifScope].second == macros[currentIfScope].second) {
+			if (outputValue||macros[ifScope].definition == macros[currentIfScope].definition) {
 				outputValue = !outputValue;
 				if (outputValue) {
-					macros[currentIfScope].second = "0";
+					macros[currentIfScope].definition = "0";
 				}
 				else {
-					macros[currentIfScope].second = macros[ifScope].second;
+					macros[currentIfScope].definition = macros[ifScope].definition;
 				}
 			}
 		}
 		else if (command == "endif") {
 			int ifScope = getMacroLocation("__IF_SCOPE__");
-			if (ifScope < 0) {
+			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
 				throw PreprocessorException(getLocation()+": #endif is missing an if directive");
 			}
 
@@ -741,12 +791,12 @@ namespace mc {
 			}
 
 
-			if (!outputValue&&macros[ifScope].second==macros[currentIfScope].second) {
+			if (!outputValue&&macros[ifScope].definition==macros[currentIfScope].definition) {
 				outputValue = true;
-				setMacro("__CURRENT_IF_SCOPE__","0");
+				setMacro(Macro("__CURRENT_IF_SCOPE__","0"));
 			}
 
-			macros[ifScope].second = std::to_string(std::stoi(macros[ifScope].second) - 1);
+			macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) - 1);
 
 		}
 		
@@ -756,10 +806,8 @@ namespace mc {
 
 	int Preprocessor::getMacroLocation(const std::string & name) const
 	{
-		std::string term = name;
-
 		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
-			if (parseMacroName(macros[iterator].first).first == name) {
+			if (macros[iterator].name == name) {
 				return iterator;
 			}
 		}
@@ -787,29 +835,64 @@ namespace mc {
 
 	std::string Preprocessor::expandMacro(const std::string input) const
 	{
-		std::pair < std::string, std::vector < std::string > > token = parseMacroName(input);
+		if(!input.empty()||(input.length()==1&&(isspace(input[0])||iscntrl(input[0])||isblank(input[0])))){
 
-
-		//remove whitespace to check for macro. a line like int a = MACRO wont work without this line.
-		token.first.erase(std::remove_if(token.first.begin(), token.first.end(), isspace), token.first.end());
-
-		std::cout << input << std::endl;
-
-		const int macroLocation = getMacroLocation(token.first);
-		if (macroLocation >= 0) {
 			std::string out = input;
 
+			bool stringify = false;
 
-			std::string replacement = macros[macroLocation].second;
+			//if we get input like foo(), we need to check if foo exists, not foo()
+			Macro token = parseMacroName(input);
 
-			std::size_t index;
-			//we want to preserve the whitespace in the final output, so this algorithim replaces the non-whitespace with the macro expansion
-			while ((index = out.find(token.first)) != std::string::npos){
-				out.replace(index, token.first.size(), replacement);
+			//remove whitespace to check for macro. a line like int a = MACRO wont work without this line, as it would be tokenized to be (a),( =), and ( MACRO)
+			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), isspace), token.name.end());
+
+			if (token.name[0] == '#') {
+				//get rid of the # so we can find the macro name
+				token.name = token.name.substr(1);
+
+				stringify = true;
 			}
 
-			return out;
-		}
+			const int macroLocation = getMacroLocation(token.name);
+			if (macroLocation >= 0) {
+
+				//the space is to prevent the execution of directives
+				Preprocessor p = Preprocessor(' '+macros[macroLocation].definition, *this);
+
+				for (Index i = 0; i < token.parameters.size(); ++i) {
+					p.defineMacro(Macro(macros[macroLocation].parameters[i],token.parameters[i]));
+				}
+
+				//the substr one is to get rid of the space we added in the previous line
+				std::string replacement = p.preprocess().substr(1);
+
+				if (stringify) { 
+					//get rid of the # for stringication
+					out.erase(std::remove_if(out.begin(), out.end(), [](char c) {
+						return c == '#';
+					}), out.end());
+
+					replacement = '\"' + replacement + '\"'; 
+				}
+
+				//these lines are to get rid of the parameters from the final output
+				const int parametersLocation = out.find("(");
+				if (parametersLocation != std::string::npos) {
+					out = out.substr(0, parametersLocation);
+				}
+
+				std::size_t index;
+
+				//we want to preserve the whitespace in the final output, so this algorithim replaces the non-whitespace with the macro expansion
+				while ((index = out.find(token.name)) != std::string::npos){
+					out.replace(index, token.name.size(), replacement);
+				}
+
+				return out;
+			}//macroLocation>0
+
+		}//!input.empty
 
 		return input;
 	}
@@ -819,7 +902,7 @@ namespace mc {
 		int ifScope = getMacroLocation("__IF_SCOPE__");
 		if (ifScope < 0) {
 			ifScope = macros.size();
-			setMacro("__IF_SCOPE__", "0");
+			setMacro(Macro("__IF_SCOPE__", "0"));
 		}
 
 		return ifScope;
@@ -831,7 +914,7 @@ namespace mc {
 		int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
 		if (currentIfScope < 0) {
 			currentIfScope = macros.size();
-			setMacro("__CURRENT_IF_SCOPE__", "0");
+			setMacro(Macro("__CURRENT_IF_SCOPE__", "0"));
 		}
 
 		return currentIfScope;
@@ -842,10 +925,10 @@ namespace mc {
 		int ifScope = getIfScopeLocation();
 		int currentIfScope = getCurrentIfScopeLocation();
 
-		macros[ifScope].second = std::to_string(std::stoi(macros[ifScope].second) + 1);
+		macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) + 1);
 
-		if (!statementPassed&&std::stoi(macros[currentIfScope].second) == 0) {
-			macros[currentIfScope].second = macros[ifScope].second;
+		if (!statementPassed&&std::stoi(macros[currentIfScope].definition) == 0) {
+			macros[currentIfScope].definition = macros[ifScope].definition;
 			outputValue = false;
 		}
 	}
@@ -855,9 +938,10 @@ namespace mc {
 		return false;
 	}
 
-	std::pair<std::string, std::vector<std::string>> Preprocessor::parseMacroName(const std::string & name) const
+	Preprocessor::Macro Preprocessor::parseMacroName(const std::string & name) const
 	{
 		std::string macroName;
+		std::string definition = "";
 		std::vector < std::string > params = std::vector< std::string >();
 
 		Index iter;
@@ -880,9 +964,11 @@ namespace mc {
 
 			if (value == ',') {
 				params.push_back(currentParam);
-				currentParam == "";
+				currentParam = "";
 			}
 			else if (value == ')') {
+				++iter;
+				params.push_back(currentParam);
 				break;
 			}
 			else if (!isspace(value)) {
@@ -890,34 +976,38 @@ namespace mc {
 			}
 		}
 
-		return std::make_pair(macroName,params);
+		for (iter; iter < name.length(); ++iter) {
+			definition += name[iter];
+		}
+
+		return Preprocessor::Macro(macroName,definition,params);
 	}
 
-	void Preprocessor::setMacro(const std::string & name, const std::string & definition)
+	void Preprocessor::setMacro(const Macro& m)
 	{
 		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
-			if (macros[iterator].first == name) {
-				macros[iterator].second = definition;
+			if (macros[iterator].name == m.name) {
+				macros[iterator].definition = m.definition;
+				macros[iterator].parameters = m.parameters;
+				return;
 			}
 		}
-		macros.push_back(std::make_pair(name, definition));
+		macros.push_back(m);
 	}
 
 
-	void Preprocessor::defineMacro(const std::string & name, const std::string & definition)
+	void Preprocessor::defineMacro(const Macro& m)
 	{
 		for (unsigned int iterator = 0; iterator < sizeof(reservedWords) / sizeof(*reservedWords); ++iterator) {
-			if (reservedWords[iterator] == name)throw PreprocessorException(getLocation()+": can\'t define a reserved word");
+			if (reservedWords[iterator] == m.name)throw PreprocessorException(getLocation()+": can\'t define a reserved word");
 		}
-		setMacro(name,definition);
+		setMacro(m);
 	}
 
 	bool Preprocessor::isMacroDefined(const std::string & name) const
 	{
-		std::string term = parseMacroName(name).first;
-
 		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
-			if (parseMacroName(macros[iterator].first).first == name) {
+			if (macros[iterator].name == name) {
 				return true;
 			}
 		}
@@ -928,13 +1018,11 @@ namespace mc {
 	{
 		Index iterator = 0;
 
-		std::string term = parseMacroName(name).first;
-
 		for (iterator = 0; iterator < sizeof(reservedWords) / sizeof(*reservedWords); ++iterator) {
-			if (reservedWords[iterator] == term)throw PreprocessorException(getLocation() + ": can\'t undefine a reserved word");
+			if (reservedWords[iterator] == name)throw PreprocessorException(getLocation() + ": can\'t undefine a reserved word");
 		}
 		for (iterator = 0; iterator < macros.size(); ++iterator) {
-			if (parseMacroName(macros[iterator].first).first == term) {
+			if (macros[iterator].name == name) {
 				macros.erase(macros.begin()+iterator);
 				return;
 			}
@@ -943,11 +1031,11 @@ namespace mc {
 		//do nothing if its not found
 	}
 
-	const std::string & Preprocessor::getMacro(const std::string & name) const
+	const Preprocessor::Macro & Preprocessor::getMacro(const std::string & name) const
 	{
 		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
-			if (macros[iterator].first == name) {
-				return macros[iterator].second;
+			if (macros[iterator].name == name) {
+				return macros[iterator];
 			}
 		}
 		throw PreprocessorException(getLocation() + ": Unknown macro "+name);
@@ -1011,6 +1099,16 @@ namespace mc {
 	void Preprocessor::setLine(const unsigned int line)
 	{
 		this->line = line;
+	}
+
+	//d is part of std? how lewd can we get
+	Preprocessor::Macro::Macro(std::string n, std::string d, std::vector<std::string> p) : name(n),definition(d), parameters(p)
+	{
+	}
+
+
+	Preprocessor::Macro::Macro(std::string n, std::string d) : Macro(n,d,std::vector< std::string >())
+	{
 	}
 
 }
