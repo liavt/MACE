@@ -23,6 +23,10 @@
 //the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
 #define PREDEFINE_MACRO(name) if(std::strcmp("" #name ,NAME_STRINGIFY(name))){setMacro( Macro( #name , STRINGIFY( name ) ));}
 
+#ifndef STRINGIFY
+#error blah
+#endif
+
 namespace mc {
 
 	//todo:
@@ -560,7 +564,7 @@ namespace mc {
 			case FUNCTION:
 				if (outputValue)currentToken += value;
 				if (value == ')')state = PROBING;
-				continue;
+				else continue;
 			}
 
 			if (outputValue) {
@@ -940,6 +944,7 @@ namespace mc {
 
 	Preprocessor::Macro Preprocessor::parseMacroName(const std::string & name) const
 	{
+
 		std::string macroName;
 		std::string definition = "";
 		std::vector < std::string > params = std::vector< std::string >();
@@ -958,22 +963,43 @@ namespace mc {
 		}
 
 		std::string currentParam="";
+		//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
+		int functionScope = 0;
 
 		for (iter; iter < name.length(); ++iter) {
 			char value = name[iter];
-
-			if (value == ',') {
+			
+			if (value == '(') {
+				++functionScope;
+				currentParam += value;
+			}
+			else if (value == ','&&functionScope==0) {
+				std::cout << currentParam << std::endl;
 				params.push_back(currentParam);
 				currentParam = "";
 			}
 			else if (value == ')') {
-				++iter;
-				params.push_back(currentParam);
-				break;
+				std::cout << currentParam << std::endl;
+				if (functionScope == 0) {
+					++iter;
+					params.push_back(currentParam);
+					break;
+				}
+				else {
+					--functionScope;
+					currentParam += value;
+				}
 			}
 			else if (!isspace(value)) {
 				currentParam += value;
 			}
+		}
+
+		if (functionScope < 0) {
+			throw PreprocessorException(getLocation() + "Missing ( in function name");
+		}
+		else if (functionScope > 0) {
+			throw PreprocessorException(getLocation() + "Missing ) in function name");
 		}
 
 		for (iter; iter < name.length(); ++iter) {
