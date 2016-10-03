@@ -93,7 +93,7 @@ namespace mc {
 	};
 
 	const std::vector< char > Preprocessor::punctuators1c = {
-		',','\"','\'','{','}','[',']','(',')','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
+		',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
 	};
 
 	const std::vector< std::string > Preprocessor::punctuators2c = {
@@ -431,7 +431,7 @@ namespace mc {
 
 		NEWLINE processes command and params if they exist, and then sends state back to PROBING_POUND_SIGN
 		*/
-		enum STATE { PROBING, NEWLINE, FINDING_COMMAND_START, COMMAND_NAME, PARAMETERS, STRING_LITERAL, SINGLELINE_COMMENT, MULTILINE_COMMENT,FUNCTION};
+		enum STATE { PROBING, NEWLINE, FINDING_COMMAND_START, COMMAND_NAME, PARAMETERS, STRING_LITERAL, SINGLELINE_COMMENT, MULTILINE_COMMENT,PARENTHESIS};
 
 		enum STATE state = PROBING;
 
@@ -442,6 +442,9 @@ namespace mc {
 		Instead of using outputvalue, continue should be used instead.
 		*/
 		bool outputValue = true;
+
+		//used to accurately parse function(function(arg))
+		int parenScope = 0;
 
 		for (Index iter = 0; iter <= input.length(); ++iter) {
 			char value;
@@ -505,10 +508,9 @@ namespace mc {
 				else if (value == '\0') {
 					value = ' '; 
 				}
-				else if (value == '(' && (iter>0 && (isdigit(input[iter - 1]) || isalpha(input[iter - 1])))) {
-					state = FUNCTION;
-					if (outputValue)currentToken += value;
-					continue;
+				else if (value == '(') {
+					++parenScope;
+					state = PARENTHESIS;
 				}
 
 				break;
@@ -547,6 +549,19 @@ namespace mc {
 					state = PROBING;
 				}
 				continue;
+
+			case PARENTHESIS:
+				if(outputValue)currentToken += value;
+				if (value == ')') {
+					--parenScope;
+					if (parenScope == 0) {
+						state = PROBING;
+					}
+				}
+				else if (value == '(') {
+					++parenScope;
+				}
+				continue;
 		
 			case NEWLINE:
 				if (!command.empty()) {
@@ -560,11 +575,6 @@ namespace mc {
 				params = "";
 				state = PROBING;
 				break;
-
-			case FUNCTION:
-				if (outputValue)currentToken += value;
-				if (value == ')')state = PROBING;
-				else continue;
 			}
 
 			if (outputValue) {
@@ -576,6 +586,9 @@ namespace mc {
 				currentToken += value;
 			}
 		}
+
+		
+
 
 		const int macroLocation = getMacroLocation("__IF_SCOPE__");
 		if (macroLocation >= 0) {
@@ -865,7 +878,9 @@ namespace mc {
 				Preprocessor p = Preprocessor(' '+macros[macroLocation].definition, *this);
 
 				for (Index i = 0; i < token.parameters.size(); ++i) {
-					p.defineMacro(Macro(macros[macroLocation].parameters[i],token.parameters[i]));
+					Preprocessor argumentProcessor = Preprocessor(' ' + token.parameters[i],*this);
+
+					p.defineMacro(Macro(macros[macroLocation].parameters[i],p.preprocess()));
 				}
 
 				//the substr one is to get rid of the space we added in the previous line
@@ -951,56 +966,61 @@ namespace mc {
 
 		Index iter;
 
+		int functionScope = 0;
+
+
 		for (iter = 0; iter < name.length(); ++iter) {
 			char value = name[iter];
 			if (value == '(') {
-				++iter;
+
+				//continue the loop and parse the arguments
+				std::string currentParam = "";
+				//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
+
+				for (iter; iter < name.length(); ++iter) {
+					char value = name[iter];
+
+					if (value == '(') {
+						++functionScope;
+						currentParam += value;
+					}
+					else if (value == ','&&functionScope == 0) {
+						params.push_back(currentParam);
+						currentParam = "";
+					}
+					else if (value == ')') {
+						if (functionScope == 0) {
+							++iter;
+							params.push_back(currentParam);
+							break;
+						}
+						else {
+							--functionScope;
+							currentParam += value;
+						}
+					}
+					else if (!isspace(value)) {
+						currentParam += value;
+					}
+				}
+
 				break;
 			}
-			else if (!isspace(value)) {
+			if (!isspace(value)) {
 				macroName += value;
 			}
 		}
 
-		std::string currentParam="";
-		//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
-		int functionScope = 0;
-
-		for (iter; iter < name.length(); ++iter) {
-			char value = name[iter];
-			
-			if (value == '(') {
-				++functionScope;
-				currentParam += value;
-			}
-			else if (value == ','&&functionScope==0) {
-				std::cout << currentParam << std::endl;
-				params.push_back(currentParam);
-				currentParam = "";
-			}
-			else if (value == ')') {
-				std::cout << currentParam << std::endl;
-				if (functionScope == 0) {
-					++iter;
-					params.push_back(currentParam);
-					break;
-				}
-				else {
-					--functionScope;
-					currentParam += value;
-				}
-			}
-			else if (!isspace(value)) {
-				currentParam += value;
-			}
-		}
-
 		if (functionScope < 0) {
-			throw PreprocessorException(getLocation() + "Missing ( in function name");
+			throw PreprocessorException(getLocation() + ": Missing ( in function name");
 		}
 		else if (functionScope > 0) {
-			throw PreprocessorException(getLocation() + "Missing ) in function name");
+			throw PreprocessorException(getLocation() + ": Missing ) in function name");
 		}
+
+
+
+		
 
 		for (iter; iter < name.length(); ++iter) {
 			definition += name[iter];
