@@ -17,12 +17,13 @@ using PreprocessorException = Exception;
 class Preprocessor {
 public:
 	struct Macro {
-		Macro(std::string name, std::string definition, std::vector < std::string > parameters);
+		Macro(std::string name, std::string definition, std::vector < std::string > parameters,std::string parameterString);
 		Macro(std::string name,std::string definition);
 
 		std::string name;
 		std::string definition;
 		std::vector < std::string > parameters;
+		std::string parameterString;
 	};
 
 

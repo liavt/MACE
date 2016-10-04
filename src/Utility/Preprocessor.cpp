@@ -708,8 +708,7 @@ namespace mc {
 
 				if (macroDefinition == "")throw PreprocessorException(getLocation() + ": a macro must have a definition");
 
-
-				defineMacro(Macro(macroName, macroDefinition,macroParameters));
+				defineMacro(Macro(macroName, macroDefinition,macroParameters,""));
 			}
 			else if (command == "undef") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #undef must be called with a macro name");
@@ -878,9 +877,10 @@ namespace mc {
 				Preprocessor p = Preprocessor(' '+macros[macroLocation].definition, *this);
 
 				for (Index i = 0; i < token.parameters.size(); ++i) {
-					Preprocessor argumentProcessor = Preprocessor(' ' + token.parameters[i],*this);
 
-					p.defineMacro(Macro(macros[macroLocation].parameters[i],p.preprocess()));
+					Preprocessor argumentProcessor = Preprocessor(token.parameters[i],*this);
+
+					p.defineMacro(Macro(macros[macroLocation].parameters[i],argumentProcessor.preprocess()));
 				}
 
 				//the substr one is to get rid of the space we added in the previous line
@@ -907,9 +907,30 @@ namespace mc {
 				while ((index = out.find(token.name)) != std::string::npos){
 					out.replace(index, token.name.size(), replacement);
 				}
-
-				return out;
 			}//macroLocation>0
+			else if (!token.parameters.empty()) {
+
+				//if its a function, we expand the parameters
+
+				std::cout << token.parameterString << " : ";
+
+
+				//this will expand macros in the parameters
+				Preprocessor outProcessor = Preprocessor(token.parameterString,*this);
+
+				for (Index i = 0; i < token.parameters.size(); i++) {
+					Preprocessor argumentProcessor = Preprocessor(token.parameters[i], *this);
+
+					outProcessor.setMacro(Macro(token.parameters[i], argumentProcessor.preprocess()));
+				}
+
+				std::string result = outProcessor.preprocess();
+
+				out = token.name + '(' + result + ')';
+
+			}//!token.parameters.empty()
+
+			return out;
 
 		}//!input.empty
 
@@ -963,6 +984,7 @@ namespace mc {
 		std::string macroName;
 		std::string definition = "";
 		std::vector < std::string > params = std::vector< std::string >();
+		std::string parameterString = "";
 
 		Index iter;
 
@@ -973,6 +995,9 @@ namespace mc {
 			char value = name[iter];
 			if (value == '(') {
 
+				//we want to ignore the first parenthsis
+				++iter;
+
 				//continue the loop and parse the arguments
 				std::string currentParam = "";
 				//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
@@ -982,8 +1007,8 @@ namespace mc {
 
 					if (value == '(') {
 						++functionScope;
-						currentParam += value;
 					}
+					//function scope needs to be equal to 1, as that means there has been one set of parenthesis. functionScope==0 means its not a function
 					else if (value == ','&&functionScope == 0) {
 						params.push_back(currentParam);
 						currentParam = "";
@@ -995,18 +1020,20 @@ namespace mc {
 							break;
 						}
 						else {
-							--functionScope;
 							currentParam += value;
 						}
+
+						--functionScope;
 					}
 					else if (!isspace(value)) {
 						currentParam += value;
 					}
+
+					parameterString += value;
 				}
 
 				break;
-			}
-			if (!isspace(value)) {
+			}else if (!isspace(value)) {
 				macroName += value;
 			}
 		}
@@ -1018,15 +1045,12 @@ namespace mc {
 			throw PreprocessorException(getLocation() + ": Missing ) in function name");
 		}
 
-
-
-		
-
 		for (iter; iter < name.length(); ++iter) {
 			definition += name[iter];
 		}
 
-		return Preprocessor::Macro(macroName,definition,params);
+		//the substr of parameterString is to remove the ( at the beginning.
+		return Preprocessor::Macro(macroName,definition,params,parameterString);
 	}
 
 	void Preprocessor::setMacro(const Macro& m)
@@ -1148,12 +1172,12 @@ namespace mc {
 	}
 
 	//d is part of std? how lewd can we get
-	Preprocessor::Macro::Macro(std::string n, std::string d, std::vector<std::string> p) : name(n),definition(d), parameters(p)
+	Preprocessor::Macro::Macro(std::string n, std::string d, std::vector<std::string> p,std::string ps) : name(n),definition(d), parameters(p), parameterString(ps)
 	{
 	}
 
 
-	Preprocessor::Macro::Macro(std::string n, std::string d) : Macro(n,d,std::vector< std::string >())
+	Preprocessor::Macro::Macro(std::string n, std::string d) : Macro(n,d,std::vector< std::string >(),"")
 	{
 	}
 
