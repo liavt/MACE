@@ -5,6 +5,7 @@
 #include <ctime>
 #include <cstring>
 #include <algorithm>
+#include <memory>
 
 /*
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -874,17 +875,17 @@ namespace mc {
 			if (macroLocation >= 0) {
 
 				//the space is to prevent the execution of directives
-				Preprocessor p = Preprocessor(' '+macros[macroLocation].definition, *this);
+				std::unique_ptr< Preprocessor > p = std::unique_ptr< Preprocessor >(new Preprocessor(' '+macros[macroLocation].definition, *this));
 
 				for (Index i = 0; i < token.parameters.size(); ++i) {
 
-					Preprocessor argumentProcessor = Preprocessor(token.parameters[i],*this);
+					std::unique_ptr< Preprocessor > argumentProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameters[i],*this));
 
-					p.defineMacro(Macro(macros[macroLocation].parameters[i],argumentProcessor.preprocess()));
+					p->defineMacro(Macro(macros[macroLocation].parameters[i],argumentProcessor->preprocess()));
 				}
 
 				//the substr one is to get rid of the space we added in the previous line
-				std::string replacement = p.preprocess().substr(1);
+				std::string replacement = p->preprocess().substr(1);
 
 				if (stringify) { 
 					//get rid of the # for stringication
@@ -912,19 +913,20 @@ namespace mc {
 
 				//if its a function, we expand the parameters
 
-				std::cout << token.parameterString << " : ";
+				std::cout << token.parameterString << std::endl;
 
 
 				//this will expand macros in the parameters
-				Preprocessor outProcessor = Preprocessor(token.parameterString,*this);
+				std::unique_ptr< Preprocessor > outProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameterString,*this));
 
 				for (Index i = 0; i < token.parameters.size(); i++) {
-					Preprocessor argumentProcessor = Preprocessor(token.parameters[i], *this);
+					std::unique_ptr< Preprocessor > argumentProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameters[i], *this));
 
-					outProcessor.setMacro(Macro(token.parameters[i], argumentProcessor.preprocess()));
+					outProcessor->setMacro(Macro(token.parameters[i], argumentProcessor->preprocess()));
 				}
 
-				std::string result = outProcessor.preprocess();
+				std::string result = outProcessor->preprocess();
+
 
 				out = token.name + '(' + result + ')';
 
