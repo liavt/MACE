@@ -67,6 +67,14 @@ namespace mc {
 
 	BUGS:
 
+	#define blah 10
+	#define STRINGIFY(name) #name
+	#define foo(macro) #macro STRINGIFY(macro)
+	
+	foo(blah)
+
+	that creates "10" and "10", not "foo" and "10"
+
 	" \"hi \
 	#	error this also doesnt foo test string literals" - doesnt output second line
 	*/
@@ -108,8 +116,9 @@ namespace mc {
 
 	Preprocessor::Preprocessor(const std::string & input, const Preprocessor & clone) : Preprocessor(input,clone.getFilename())
 	{
-		includeDirectories = clone.includeDirectories;
+		includes = clone.includes;
 		macros = clone.macros;
+		line = clone.line;
 	}
 
 	std::vector<std::string> Preprocessor::preprocessTokens()
@@ -466,7 +475,8 @@ namespace mc {
 			}
 			//if its not a backslash-newline, we check if its just a newline, obviously multiline comments ignore newlines
 			else if ((value == '\n')) {
-				if (state != MULTILINE_COMMENT){
+				//if its in the middle of parenthesis, continue on
+				if (state != MULTILINE_COMMENT&&state!=PARENTHESIS){
 					state = NEWLINE;
 				}
 				++line;
@@ -728,6 +738,15 @@ namespace mc {
 
 				undefineMacro(params);
 			}
+			else if (command == "include") {
+				if (params.empty())throw PreprocessorException(getLocation() + ": #include must be called with a filepath");
+
+				std::cout << params << std::endl;
+
+				if (params[0] == '<') {
+				
+				}
+			}
 		}
 
 		if (command == "if") {
@@ -913,16 +932,19 @@ namespace mc {
 
 				//if its a function, we expand the parameters
 
-				std::cout << token.parameterString << std::endl;
-
-
 				//this will expand macros in the parameters
 				std::unique_ptr< Preprocessor > outProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameterString,*this));
 
 				for (Index i = 0; i < token.parameters.size(); i++) {
+					
 					std::unique_ptr< Preprocessor > argumentProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameters[i], *this));
 
-					outProcessor->setMacro(Macro(token.parameters[i], argumentProcessor->preprocess()));
+					std::string newArgument = argumentProcessor->preprocess();
+
+					//if they are the same, a stack overflow happens
+					if(newArgument!=token.parameters[i]){
+						outProcessor->setMacro(Macro(token.parameters[i], newArgument));
+					}
 				}
 
 				std::string result = outProcessor->preprocess();
@@ -980,7 +1002,7 @@ namespace mc {
 		return false;
 	}
 
-	Preprocessor::Macro Preprocessor::parseMacroName(const std::string & name) const
+	Macro Preprocessor::parseMacroName(const std::string & name) const
 	{
 
 		std::string macroName;
@@ -1052,7 +1074,7 @@ namespace mc {
 		}
 
 		//the substr of parameterString is to remove the ( at the beginning.
-		return Preprocessor::Macro(macroName,definition,params,parameterString);
+		return Macro(macroName,definition,params,parameterString);
 	}
 
 	void Preprocessor::setMacro(const Macro& m)
@@ -1103,7 +1125,7 @@ namespace mc {
 		//do nothing if its not found
 	}
 
-	const Preprocessor::Macro & Preprocessor::getMacro(const std::string & name) const
+	const Macro & Preprocessor::getMacro(const std::string & name) const
 	{
 		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
 			if (macros[iterator].name == name) {
@@ -1118,24 +1140,24 @@ namespace mc {
 		return "Line " +std::to_string(line)+" in "+(filename);
 	}
 
-	void Preprocessor::addIncludeDirectory(std::string & directory)
+	void Preprocessor::addInclude(Include & include)
 	{
-		includeDirectories.push_back(directory);
+		includes.push_back(&include);
 	}
 
-	std::vector<std::string> Preprocessor::getIncludeDirectories()
+	std::vector< Include* > Preprocessor::getIncludes()
 	{
-		return includeDirectories;
+		return includes;
 	}
 
-	const std::vector<std::string> Preprocessor::getIncludeDirectories() const
+	const std::vector< Include* > Preprocessor::getIncludes() const
 	{
-		return includeDirectories;
+		return includes;
 	}
 
-	void Preprocessor::setIncludeDirectories(const std::vector<std::string> directories)
+	void Preprocessor::setIncludes(const std::vector< Include* > includes)
 	{
-		this->includeDirectories = directories;
+		this->includes = includes;
 	}
 
 	const std::string Preprocessor::getInput() const
@@ -1174,13 +1196,47 @@ namespace mc {
 	}
 
 	//d is part of std? how lewd can we get
-	Preprocessor::Macro::Macro(std::string n, std::string d, std::vector<std::string> p,std::string ps) : name(n),definition(d), parameters(p), parameterString(ps)
+	Macro::Macro(std::string n, std::string d, std::vector<std::string> p,std::string ps) : name(n),definition(d), parameters(p), parameterString(ps)
 	{
 	}
 
 
-	Preprocessor::Macro::Macro(std::string n, std::string d) : Macro(n,d,std::vector< std::string >(),"")
+	Macro::Macro(std::string n, std::string d) : Macro(n,d,std::vector< std::string >(),"")
 	{
+	}
+
+	IncludeString::IncludeString(const std::string & c, const std::string n) : content(c), name(n)
+	{
+	}
+
+	bool IncludeString::hasFile(const std::string & name) const
+	{
+		return this->name==name;
+	}
+
+	std::string IncludeString::getFile(const std::string & name) const
+	{
+		return this->name == name ? content : "";
+	}
+
+	IncludeDirectory::IncludeDirectory(const std::string & dir) : directory(dir)
+	{
+	}
+
+	bool IncludeDirectory::hasFile(const std::string & name) const
+	{
+		return false;
+	}
+
+	std::string IncludeDirectory::getFile(const std::string & name) const
+	{
+		return std::string();
+	}
+
+	bool Include::hasFile(const std::string & name) const
+	{
+		//does nothing
+		return false;
 	}
 
 }

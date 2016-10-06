@@ -12,19 +12,50 @@ namespace mc {
 */
 using PreprocessorException = Exception;
 
+struct Macro {
+	Macro(std::string name, std::string definition, std::vector < std::string > parameters, std::string parameterString);
+	Macro(std::string name, std::string definition);
 
+	std::string name;
+	std::string definition;
+	std::vector < std::string > parameters;
+	std::string parameterString;
+};
+
+class Include {
+public:
+	virtual bool hasFile(const std::string& name) const = 0;
+	virtual std::string getFile(const std::string& name) const = 0;
+};
+
+class IncludeString : public Include {
+public:
+	IncludeString(const std::string& content, const std::string name);
+
+	bool hasFile(const std::string& name) const;
+	std::string getFile(const std::string& name) const;
+
+private:
+
+	const std::string content = "";
+	const std::string name = "";
+};
+
+class IncludeDirectory : public Include {
+public:
+	IncludeDirectory(const std::string& dir);
+
+	bool hasFile(const std::string& name) const;
+	std::string getFile(const std::string& name) const;
+
+private:
+
+	const std::string directory = "";
+};
 
 class Preprocessor {
 public:
-	struct Macro {
-		Macro(std::string name, std::string definition, std::vector < std::string > parameters,std::string parameterString);
-		Macro(std::string name,std::string definition);
 
-		std::string name;
-		std::string definition;
-		std::vector < std::string > parameters;
-		std::string parameterString;
-	};
 
 
 	Preprocessor(const std::string& input,const std::string& filename="Unknown file");
@@ -33,11 +64,11 @@ public:
 	std::vector< std::string > preprocessTokens();
 	std::string preprocess();
 
-	void addIncludeDirectory(std::string& directory);
+	void addInclude(Include& incl);
 
-	std::vector<std::string> getIncludeDirectories();
-	const std::vector<std::string> getIncludeDirectories() const;
-	void setIncludeDirectories(const std::vector<std::string> directories);
+	std::vector< Include* > getIncludes();
+	const std::vector< Include* > getIncludes() const;
+	void setIncludes(const std::vector< Include* > directories);
 
 	const std::string getInput() const;
 
@@ -84,7 +115,7 @@ private:
 
 
 
-	std::vector< std::string > includeDirectories;
+	std::vector< Include* > includes;
 	std::vector< Macro > macros;
 
 	std::vector< std::string > parse(const std::string& input);
