@@ -6,6 +6,7 @@
 #include <cstring>
 #include <algorithm>
 #include <memory>
+#include <fstream>
 
 /*
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -527,16 +528,30 @@ namespace mc {
 				break;
 
 			case FINDING_COMMAND_START:
-				if (!isspace(value))state = COMMAND_NAME;
+				if (!isspace(value)) {
+					state = COMMAND_NAME;
+					//why are we adding it here? if we directly go to COMMAND_NAME, it will notice the previous character is space and think its time for parameters
+					command += value;
+					continue;
+				}
+				
 
 			case COMMAND_NAME:
-				if (isspace(value)) {
-					state = PARAMETERS;
+				//we check if its not a space
+				if(!isspace(value)){
+					//i can do iter-1 because at this point, a # and a command name must have been called, so no negative indices
+					//if the previous character was a space, then obviously this is the beginning of the parameters
+					if (isspace(input[iter-1])) {
+						state = PARAMETERS;
+					}
+					else{
+						command += value;
+						continue;
+					}
 				}
 				else {
-					command += value;
+					continue;
 				}
-				continue;
 
 			case PARAMETERS:
 				params += value;
@@ -741,10 +756,41 @@ namespace mc {
 			else if (command == "include") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #include must be called with a filepath");
 
-				std::cout << params << std::endl;
 
 				if (params[0] == '<') {
-				
+					std::string term;
+					//complete is whether both <> are found
+					bool complete = false;
+
+					for (Index iter = 1; iter < params.size(); ++iter) {
+						if (params[iter] == '>') {
+							complete = true;
+							break;
+						}
+						else {
+							term += params[iter];
+						}
+					}
+
+					if (!complete)throw PreprocessorException(getLocation()+": Missing > in #include");
+
+					std::cout << term;
+
+					for (Index iter = 0; iter < includes.size(); ++iter) {
+						Include* incl = includes[iter];
+						if (incl->hasFile(term)) {
+							std::string file = incl->getFile(term);
+							Preprocessor fileProcessor = Preprocessor(file,*this);
+							
+							std::vector< std::string > tokens = fileProcessor.preprocessTokens();
+							tokens.insert(tokens.begin(),"\n");
+
+							return tokens;
+						}
+					}
+
+					//if it found the file, it would have returned it by now.
+					throw PreprocessorException(getLocation()+":Include with name "+term+" not found!");
 				}
 			}
 		}
@@ -1225,12 +1271,39 @@ namespace mc {
 
 	bool IncludeDirectory::hasFile(const std::string & name) const
 	{
-		return false;
+
+#if defined(WIN32) || defined(_WIN32) 
+		std::ifstream f(directory + '\\' + name);
+#else 
+		std::ifstream f(directory + '/'+name);
+#endif 		
+		return f.good();
 	}
 
 	std::string IncludeDirectory::getFile(const std::string & name) const
 	{
-		return std::string();
+
+#if defined(WIN32) || defined(_WIN32) 
+		std::ifstream f(directory + '\\' + name);
+#else 
+		std::ifstream f(directory + '/' + name);
+#endif 		
+		std::string out = "";
+
+		std::string line = "";
+		if (f.is_open()) {
+			while (std::getline(f, line)) {
+				out += line;
+				out += '\n';
+			}
+		}
+		else {
+			throw PreprocessorException("File with name "+name+"doesn\'t exist!");
+		}
+		
+		f.close();
+
+		return out;
 	}
 
 	bool Include::hasFile(const std::string & name) const

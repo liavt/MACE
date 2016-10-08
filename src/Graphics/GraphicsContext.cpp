@@ -68,7 +68,7 @@ void OpenGLContext::init(win::Window * win)
 
 	if (!GLEW_VERSION_3_1)
 	{
-		throw InitializationError("OpenGL 3 is not available!");
+		throw InitializationError("OpenGL 3.1 is not available!");
 	}
 
 	checkGLError();
