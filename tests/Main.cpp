@@ -9,12 +9,11 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #define CATCH_CONFIG_RUNNER
 #include <Catch.h>
-#define GLEW_STATIC
-#include <GL/glew.h>
 
 int main(int argc, char* const argv[])
 {
 	//constant? get it?
 	const int result = Catch::Session().run(argc, argv);
+	system("PAUSE");
 	return result;
 }

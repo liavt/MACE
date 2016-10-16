@@ -11,11 +11,15 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_INCLUDED true //this will be true if MACE is included
 
 #ifndef __cplusplus 
-	#error A C++ compiler is required!
+#	error A C++ compiler is required!
 #endif 
 
+#if !(defined(_WIN32) || defined(__APPLE__) || defined(__linux__) || defined(__unix__) || defined(_POSIX_VERSION))
+#	warning "This is a system on which MACE has not been tested with. MACE may have undefined behavior."
+#endif
+
 #if DEBUG==true || _DEBUG==true
-#define MACE_ERROR_CHECK
+#	define MACE_ERROR_CHECK
 #endif
 
 #include <cstdint>

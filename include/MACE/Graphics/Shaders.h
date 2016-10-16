@@ -15,6 +15,7 @@ namespace gfx {
 		std::unordered_map<std::string, int> uniforms = std::unordered_map<std::string,int>();
 
 		int createShader(const char code[], const GLenum& type);
+		int createShaderRaw(const char code[], const GLenum& type);
 
 		void createProgram();
 	public:

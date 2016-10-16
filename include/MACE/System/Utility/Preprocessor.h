@@ -84,6 +84,9 @@ public:
 	bool isMacroDefined(const std::string& name) const;
 	void undefineMacro(const std::string& name);
 
+	void defineStandardMacros();
+	void defineOSMacros();
+
 	const Macro& getMacro(const std::string& name) const;
 
 	/**

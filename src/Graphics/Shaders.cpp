@@ -1,11 +1,18 @@
 #include <MACE/Graphics/Shaders.h>
 #include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/GraphicsConstants.h>
+#include <MACE/System/Utility/Preprocessor.h>
 #include <iostream>
 
 namespace mc {
 namespace gfx {
 	int ShaderProgram::createShader(const char code[], const  GLenum& type)
+	{
+		Preprocessor preprocessor = Preprocessor(code);
+
+		return createShaderRaw(preprocessor.preprocess().c_str(), type);
+	}
+	int ShaderProgram::createShaderRaw(const char code[], const GLenum & type)
 	{
 		if (id == -1)createProgram();
 		const int shaderId = glCreateShader(type);
