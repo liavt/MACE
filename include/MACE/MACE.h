@@ -13,3 +13,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/System/Constants.h>
 #include <MACE/System/Utils.h>
 #include <MACE/System/Exceptions.h>
+
+#include <MACE/Graphics/Graphics.h>
+
+#include <MACE/Audio/Sound.h>
+#include <MACE/Audio/SoundManager.h>
+
+#include <MACE/Window/Window.h>
+#include <MACE/Window/WindowModule.h>

@@ -48,8 +48,8 @@ namespace mc {
 	MACROS (can't be undef:)
 	__FILE__ - done
 	__LINE__ - done
-	__DATE__
-	__TIME__
+	__DATE__ - done
+	__TIME__ - done
 	__STDC__ - done
 	__STDC_HOSTED__ - done
 	__BASE_FILE__ - done
@@ -945,12 +945,26 @@ namespace mc {
 		setMacro(Macro("__BASE_FILE__", filename));
 		setMacro(Macro("__FILE__", filename));
 
-		//its std time boys
-		std::time_t const now = std::time(0);
+		//lets create a new block, so all of these horrendous variables disappear
+		{
 
-		struct tm time;
-		//this macro is defined to either localtime_s or localtime_r. if both of those are unsupported, then localtime is used.
-		localtime(&time, &now);
+			std::time_t time = std::time(0);
+			std::tm timeStruct;
+
+			localtime(&timeStruct, &time);
+
+			char buffer[20];
+
+			strftime(buffer, 80, "%D", &timeStruct);
+			puts(buffer);
+
+			setMacro(Macro("__DATE__", buffer));
+
+			strftime(buffer, 80, "%T", &timeStruct);
+			puts(buffer);
+
+			setMacro(Macro("__TIME__",buffer));
+		}
 
 		//the following are macros denoted by the standard.
 		PREDEFINE_MACRO(__STDC__);

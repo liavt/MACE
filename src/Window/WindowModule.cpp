@@ -57,13 +57,15 @@ namespace mc {
 		}
 
 		void WindowModule::threadCallback() {
+			//mutex for this function.
 			std::mutex mutex;
 
-			bool isRunning = true;
-
+			//now is set to be time(0) every loop, and the delta is calculated from now nad last frame.
 			time_t now = time(0);
+			//each time the frame is swapped, lastFrame is updated with the new time
 			time_t lastFrame = time(0);
 
+			//this stores how many milliseconds it takes for the frame to swap.
 			float windowDelay=0;
 
 			try {
