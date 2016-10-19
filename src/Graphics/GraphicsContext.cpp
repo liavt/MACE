@@ -38,12 +38,12 @@ void OpenGLContext::init(win::Window * win)
 	std::mutex mutex;
 	std::unique_lock<std::mutex> lock(mutex);
 
-	win::Window::setWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	win::Window::setWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	win::Window::setWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	win::Window::setWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	win->makeContextCurrent();
+	glfwMakeContextCurrent(win->getGLFWWindow());
 
 	GLenum result = glewInit();
 	if (result != GLEW_OK)
@@ -73,14 +73,20 @@ void OpenGLContext::init(win::Window * win)
 
 	checkGLError();
 
-	win::Window::setSwapInterval(!vsync);
+	if (vsync)glfwSwapInterval(1);
+	else glfwSwapInterval(0);
 
-	auto framebufferResize = [](GLFWwindow* win, int width, int height) {Renderer::resize(width,height); };
-	win->setFramebufferResizeCallback(framebufferResize);
 
-	Vector2i bufferSize = win->getFramebufferSize();
+	auto framebufferResize = [](GLFWwindow* win, int width, int height) {
+		Renderer::resize(width, height); 
+	};
+	glfwSetFramebufferSizeCallback(win->getGLFWWindow(), framebufferResize);
 
-	Renderer::init(bufferSize[0],bufferSize[1]);
+	int width = 0, height = 0;
+
+	glfwGetFramebufferSize(win->getGLFWWindow(), &width, &height);
+
+	Renderer::init(width, height);
 
 	Entity::init();
 
@@ -97,7 +103,7 @@ void OpenGLContext::render(win::Window* win) {
 
 	Renderer::renderFrame(win);
 
-	win->swapBuffers();
+	glfwSwapBuffers(win->getGLFWWindow());
 }
 
 void OpenGLContext::destroy(win::Window* win) {

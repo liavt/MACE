@@ -2,6 +2,7 @@
 #include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/System/Utility/Matrix.h>
+#include <MACE/System/Utility/Preprocessor.h>
 #include <cstring>
 
 //constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
