@@ -63,7 +63,9 @@ out lowp vec2 textureCoord;
 void main(){
 	
 	gl_Position = getEntityPosition();
-
+	
+	gl_Position.x += mouseCoord.x/currentSize.x;
+	gl_Position.y += (currentSize.y-mouseCoord.y)/currentSize.y;
 	
 	textureCoord=texCoord;
 }

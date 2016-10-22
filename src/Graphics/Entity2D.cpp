@@ -4,6 +4,8 @@
 #include <MACE/System/Utility/Matrix.h>
 #include <MACE/System/Utility/Preprocessor.h>
 #include <cstring>
+#include <iostream>
+
 
 //constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
@@ -21,6 +23,8 @@
 #define MACE_ENTITY_DATA_BUFFER_SIZE 52
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 2
+
+
 
 namespace mc {
 namespace gfx {
@@ -96,9 +100,30 @@ void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size origina
 	checkGLError();
 }
 
-void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue) {};
+void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue) {
 
-void RenderProtocol<Entity2D>::render(win::Window* win,void* e) {
+	GLfloat mouseX, mouseY;
+
+	{
+		//we want mouseX and mouseY as floats, so we temporarly create some doubles (hence the {}) and then we cast it float.
+		double tempMouseX, tempMouseY;
+
+		glfwGetCursorPos(win->getGLFWWindow(), &tempMouseX, &tempMouseY);
+
+		mouseX = static_cast<GLfloat>(tempMouseX);
+		mouseY = static_cast<GLfloat>(tempMouseY);
+	}
+
+
+
+	windowData.bind();
+	GLfloat* mappedWindowData = static_cast<GLfloat*>(windowData.mapRange(4*sizeof(GLfloat), 2, GL_MAP_WRITE_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
+	std::memcpy(mappedWindowData,&mouseX,sizeof(mouseY));
+	std::memcpy(mappedWindowData + 1,&mouseY,sizeof(mouseY));
+	windowData.unmap();
+};
+
+void RenderProtocol<Entity2D>::render(win::Window* win, void* e) {
 	Entity2D * entity = static_cast<Entity2D*>(e);
 	const Texture& tex = entity->getTexture();
 
@@ -135,29 +160,25 @@ void RenderProtocol<Entity2D>::render(win::Window* win,void* e) {
 	//the following are containers for the flatten() call
 	float flattenedData[16];
 
-	
-
 	//now we set the uniform buffer defining the transformations of the entity
 	entityData.bind();
 	//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-	float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
-	Index offset = 0;
-	
-	std::memcpy((mappedEntityData)+offset, transform.translation.flatten(flattenedData), sizeof(Vector3f));
-	offset +=  3;
-	std::memcpy(mappedEntityData+offset,&stretch_x,sizeof(stretch_x));
-	++offset;
-	std::memcpy(mappedEntityData + offset, transform.scaler.flatten(flattenedData), sizeof(Vector3f));
-	offset +=  3;
-	std::memcpy(mappedEntityData + offset, &stretch_y, sizeof(stretch_y));
-	++offset;
-	std::memcpy(mappedEntityData + offset, inheritedTranslation.flatten(flattenedData), sizeof(Vector3f));
-	offset += 4;
-	std::memcpy(mappedEntityData + offset, inheritedScale.flatten(flattenedData), sizeof(Vector3f));
-	offset += 4;
-	std::memcpy(mappedEntityData + offset, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix4f));
-	offset += 16;
-	std::memcpy(mappedEntityData + offset, (inheritedRotation).flatten(flattenedData), sizeof(Matrix4f));
+	float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
+	std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector3f));
+	mappedEntityData +=  3;
+	std::memcpy(mappedEntityData,&stretch_x,sizeof(stretch_x));
+	++mappedEntityData;
+	std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector3f));
+	mappedEntityData +=  3;
+	std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
+	++mappedEntityData;
+	std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector3f));
+	mappedEntityData += 4;
+	std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector3f));
+	mappedEntityData += 4;
+	std::memcpy(mappedEntityData, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix4f));
+	mappedEntityData += 16;
+	std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix4f));
 
 	entityData.unmap();
 	entityData.bindForRender();
