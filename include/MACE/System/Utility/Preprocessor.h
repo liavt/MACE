@@ -116,7 +116,7 @@ private:
 	std::vector< Include* > includes;
 	std::vector< Macro > macros;
 
-	std::vector< std::string > parse(const std::string& input);
+	std::vector< std::string > parse();
 
 	std::vector< std::string > executeDirective(bool& outputValue,const std::string& command, const std::string& params);
 

@@ -106,9 +106,9 @@ void Entity::render()
 	}
 }
 
-void Entity::setParent(Entity * parent)
+void Entity::setParent(Entity * par)
 {
-	this->parent = parent;
+	this->parent = par;
 	setProperty(ENTITY_INIT, false);
 }
 

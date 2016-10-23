@@ -28,6 +28,7 @@ class RenderImpl {
 	friend class Renderer;
 public:
 	RenderImpl();
+	virtual ~RenderImpl() = default;
 
 	virtual void resize(const Size width, const Size height) = 0;
 

@@ -148,18 +148,14 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 	@param x X-coordinate of the requested data
 	@param y Y-coordinate of the requested data
 	@return A reference to the data at `X,Y`
-	@throw IndexOutOfBounds if `x<0`
-	@throw IndexOutOfBounds if `y<0`
-	@throw IndexOutOfBounds if `x>width()`
-	@throw IndexOutOfBounds if `y>height()`
+	@throw IndexOutOfBounds if `x>=width()`
+	@throw IndexOutOfBounds if `y>=height()`
 	@see #set(Index, Index, T)
 	@see #operator[]
 	*/
 	T& get(Index x, Index y) {
 		if (x >= W) throw IndexOutOfBoundsException(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 		if (y >= H) throw IndexOutOfBoundsException(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
-		if (x < 0)throw IndexOutOfBoundsException("The X value, " + std::to_string(x) + " is less than 0!");
-		if (y < 0)throw IndexOutOfBoundsException("The Y value, " + std::to_string(x) + " is less than 0!");
 		return content[x][y];
 	}
 
@@ -168,18 +164,14 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 	@param x X-coordinate of the requested data
 	@param y Y-coordinate of the requested data
 	@return A reference to the `const` data at `X,Y`
-	@throw IndexOutOfBounds if `x<0`
-	@throw IndexOutOfBounds if `y<0`
-	@throw IndexOutOfBounds if `x>width()`
-	@throw IndexOutOfBounds if `y>height()`
+	@throw IndexOutOfBounds if `x>=width()`
+	@throw IndexOutOfBounds if `y>=height()`
 	@see #set(Index, Index, T)
 	@see #operator[]
 	*/
 	const T& get(Index x, Index y) const {
 		if (x >= W) throw IndexOutOfBoundsException(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 		if (y >= H) throw IndexOutOfBoundsException(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
-		if (x < 0)throw IndexOutOfBoundsException("The X value, " + std::to_string(x) + " is less than 0!");
-		if (y < 0)throw IndexOutOfBoundsException("The Y value, " + std::to_string(x) + " is less than 0!");
 		return content[x][y];
 	}
 
@@ -188,18 +180,14 @@ struct Matrix : public Vector<MatrixRow<T, H>, W> {
 	@param x X-coordinate of the new data
 	@param y Y-coordinate of the new data
 	@param value New datat to write to `X,Y`
-	@throw IndexOutOfBounds if `x<0`
-	@throw IndexOutOfBounds if `y<0`
-	@throw IndexOutOfBounds if `x>width()`
-	@throw IndexOutOfBounds if `y>height()`
+	@throw IndexOutOfBounds if `x>=width()`
+	@throw IndexOutOfBounds if `y>=height()`
 	@see #operator[]
 	@see #get(Index, Index)
 	*/
 	void set(Index x, Index y, T value) {
 		if (x >= W) throw IndexOutOfBoundsException(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 		if (y >= H) throw IndexOutOfBoundsException(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
-		if (x < 0)throw IndexOutOfBoundsException("The X value, " + std::to_string(x) + " is less than 0!");
-		if (y < 0)throw IndexOutOfBoundsException("The Y value, " + std::to_string(x) + " is less than 0!");
 		content[x][y] = value;
 	}
 

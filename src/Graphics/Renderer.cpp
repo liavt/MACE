@@ -22,10 +22,10 @@ std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
 Size Renderer::originalWidth = 0;
 Size Renderer::originalHeight = 0;
 
-void Renderer::init(const Size originalWidth, const Size originalHeight)
+void Renderer::init(const Size width, const Size height)
 {
-	Renderer::originalWidth = originalWidth;
-	Renderer::originalHeight = originalHeight;
+	Renderer::originalWidth = width;
+	Renderer::originalHeight = height;
 }//init
 void Renderer::setUp(win::Window* win)
 {

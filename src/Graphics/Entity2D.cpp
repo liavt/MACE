@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/System/Utility/Matrix.h>
 #include <MACE/System/Utility/Preprocessor.h>
+#include <MACE/System/Utility/Math.h>
 #include <cstring>
 #include <iostream>
 
@@ -148,8 +149,8 @@ void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue) {
 
 		glfwGetCursorPos(win->getGLFWWindow(), &tempMouseX, &tempMouseY);
 
-		mouseX = static_cast<GLfloat>(std::floor(tempMouseX));
-		mouseY = static_cast<GLfloat>(std::floor(tempMouseY));
+		mouseX = static_cast<GLfloat>(mc::math::floor(tempMouseX));
+		mouseY = static_cast<GLfloat>(mc::math::floor(tempMouseY));
 	}
 
 	std::cout << mouseX << ", " << mouseY << std::endl;

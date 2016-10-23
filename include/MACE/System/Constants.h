@@ -18,7 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	warning "This is a system on which MACE has not been tested with. MACE may have undefined behavior."
 #endif
 
-#if DEBUG==true || _DEBUG==true
+#if (defined(DEBUG)&&DEBUG==true) || (defined(_DEBUG)&&_DEBUG==true)
 #	define MACE_ERROR_CHECK
 #endif
 

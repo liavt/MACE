@@ -43,7 +43,7 @@ void System::removeModule(std::string module)
 }
 void System::removeModule(Index i)
 {
-	if (i<0 || i>numberOfModules())throw IndexOutOfBoundsException("Input is not a valid index!");
+	if (i>=numberOfModules())throw IndexOutOfBoundsException("Input is not a valid index!");
 	modules.erase(modules.begin()+i);
 }
 Module * System::getModule(std::string keyword)
@@ -57,7 +57,7 @@ Module * System::getModule(std::string keyword)
 }
 Module * System::getModule(Index i)
 {
-	if (i<0 || i>numberOfModules())throw IndexOutOfBoundsException("Input is not a valid index!");
+	if (i>=numberOfModules())throw IndexOutOfBoundsException("Input is not a valid index!");
 	return modules[i];
 }
 bool System::moduleExists(std::string module)
@@ -93,7 +93,7 @@ void System::assertModule(std::string module)
 	assertModule(module, "\'"+module+"\' module has not been registered!");
 }
 
-unsigned int System::indexOf(Module& m) {
+int System::indexOf(Module& m) {
 	for (Index i = 0; i < modules.size(); i++) {
 		if (modules[i]==&m) {
 			return i;
@@ -102,7 +102,7 @@ unsigned int System::indexOf(Module& m) {
 	return -1;
 }
 
-unsigned int System::indexOf(std::string name) {
+int System::indexOf(std::string name) {
 	for (Index i = 0; i < modules.size(); i++) {
 		if (modules[i]->getName() ==name) {
 			return i;

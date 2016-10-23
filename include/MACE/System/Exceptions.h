@@ -23,6 +23,8 @@ namespace mc {
 		static void handleException [[ noreturn ]](const std::exception& e);
 
 		using std::runtime_error::runtime_error;
+
+		Exception() = default;
 		
 	};
 

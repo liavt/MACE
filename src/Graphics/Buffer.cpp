@@ -12,9 +12,9 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 namespace gfx {
 
-void UBO::setLocation(const Index location)
+void UBO::setLocation(const Index loc)
 {
-	this->location = location;
+	this->location = loc;
 }
 
 Index UBO::getLocation()
@@ -29,7 +29,7 @@ const Index UBO::getLocation() const
 
 void UBO::bindForRender(const Index offset, const GLsizeiptr size) const
 {
-	if (size<0 && offset <= offset) {
+	if (size<0 && offset == 0) {
 		glBindBufferBase(GL_UNIFORM_BUFFER, this->location, id);
 	}
 	else {

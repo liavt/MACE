@@ -117,12 +117,12 @@ namespace mc{
 
 		double toRadians(const double degrees)
 		{
-			return degrees*(pi() / 180.0);
+			return degrees*(static_cast<double>(pi()) / 180.0);
 		}
 
 		double toDegrees(const double radians)
 		{
-			return radians*(180.0 / pi());
+			return radians*(180.0 / static_cast<double>(pi()));
 		}
 
 	}

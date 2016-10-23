@@ -74,9 +74,9 @@ void Texture::loadFile(const char * file)
 	stbi_image_free(image);
 }
 
-void Texture::setTarget(GLenum target)
+void Texture::setTarget(GLenum targ)
 {
-	this->target = target;
+	this->target = targ;
 }
 
 GLenum Texture::getTarget()

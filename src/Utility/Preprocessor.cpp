@@ -133,7 +133,7 @@ namespace mc {
 			setMacro(Macro("__INCLUDE_LEVEL__","0"));
 		}
 
-		return parse(input);
+		return parse();
 	}
 
 	std::string Preprocessor::preprocess()
@@ -149,7 +149,7 @@ namespace mc {
 		return out;
 	}
 
-	std::vector < std::string > Preprocessor::parse(const std::string & input)
+	std::vector < std::string > Preprocessor::parse()
 	{
 		std::string command = "", params = "",currentToken="";
 
@@ -684,16 +684,16 @@ namespace mc {
 		return std::find(punctuators1c.begin(), punctuators1c.end(), value) == punctuators1c.end();
 	}
 
-	std::string Preprocessor::expandMacro(const std::string input) const
+	std::string Preprocessor::expandMacro(const std::string macro) const
 	{
-		if(!input.empty()||(input.length()==1&&(std::isspace(input[0])|| std::iscntrl(input[0])|| std::isblank(input[0])))){
+		if(!macro.empty()||(macro.length()==1&&(std::isspace(macro[0])|| std::iscntrl(macro[0])|| std::isblank(macro[0])))){
 
-			std::string out = input;
+			std::string out = macro;
 
 			bool stringify = false;
 
 			//if we get input like foo(), we need to check if foo exists, not foo()
-			Macro token = parseMacroName(input);
+			Macro token = parseMacroName(macro);
 
 			//remove whitespace to check for macro. a line like int a = MACRO wont work without this line, as it would be tokenized to be (a),( =), and ( MACRO)
 			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), std::isspace), token.name.end());
@@ -731,7 +731,7 @@ namespace mc {
 				}
 
 				//these lines are to get rid of the parameters from the final output
-				const int parametersLocation = out.find("(");
+				const unsigned int parametersLocation = out.find("(");
 				if (parametersLocation != std::string::npos) {
 					out = out.substr(0, parametersLocation);
 				}
@@ -767,9 +767,9 @@ namespace mc {
 				//we need to preserve whitespace in the token, so we get it
 				std::string whitespace;
 
-				for (Index iter = 0; iter < input.length(); ++iter) {
-					if (std::isspace(input[iter])) {
-						whitespace += input[iter];
+				for (Index iter = 0; iter < macro.length(); ++iter) {
+					if (std::isspace(macro[iter])) {
+						whitespace += macro[iter];
 					}
 					else {
 						break;
@@ -782,9 +782,9 @@ namespace mc {
 
 			return out;
 
-		}//!input.empty
+		}//!macro.empty
 
-		return input;
+		return macro;
 	}
 
 	int Preprocessor::getIfScopeLocation()
@@ -853,33 +853,33 @@ namespace mc {
 				//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
 
 				for (iter; iter < name.length(); ++iter) {
-					char value = name[iter];
+					char val = name[iter];
 
-					if (value == '(') {
+					if (val == '(') {
 						++functionScope;
 					}
 					//function scope needs to be equal to 1, as that means there has been one set of parenthesis. functionScope==0 means its not a function
-					else if (value == ','&&functionScope == 0) {
+					else if (val == ','&&functionScope == 0) {
 						params.push_back(currentParam);
 						currentParam = "";
 					}
-					else if (value == ')') {
+					else if (val == ')') {
 						if (functionScope == 0) {
 							++iter;
 							params.push_back(currentParam);
 							break;
 						}
 						else {
-							currentParam += value;
+							currentParam += val;
 						}
 
 						--functionScope;
 					}
-					else if (!std::isspace(value)) {
-						currentParam += value;
+					else if (!std::isspace(val)) {
+						currentParam += val;
 					}
 
-					parameterString += value;
+					parameterString += val;
 				}
 
 				break;
@@ -1410,9 +1410,9 @@ namespace mc {
 		return includes;
 	}
 
-	void Preprocessor::setIncludes(const std::vector< Include* > includes)
+	void Preprocessor::setIncludes(const std::vector< Include* > include)
 	{
-		this->includes = includes;
+		this->includes = include;
 	}
 
 	const std::string Preprocessor::getInput() const
@@ -1430,9 +1430,9 @@ namespace mc {
 		return filename;
 	}
 
-	void Preprocessor::setFilename(const std::string & filename)
+	void Preprocessor::setFilename(const std::string & file)
 	{
-		this->filename = filename;
+		this->filename = file;
 	}
 
 	unsigned int Preprocessor::getLine()
@@ -1445,9 +1445,9 @@ namespace mc {
 		return line;
 	}
 
-	void Preprocessor::setLine(const unsigned int line)
+	void Preprocessor::setLine(const unsigned int lineNumber)
 	{
-		this->line = line;
+		this->line = lineNumber;
 	}
 
 	//d is part of std? how lewd can we get
@@ -1464,14 +1464,14 @@ namespace mc {
 	{
 	}
 
-	bool IncludeString::hasFile(const std::string & name) const
+	bool IncludeString::hasFile(const std::string & fileName) const
 	{
-		return this->name==name;
+		return this->name==fileName;
 	}
 
-	std::string IncludeString::getFile(const std::string & name) const
+	std::string IncludeString::getFile(const std::string & fileName) const
 	{
-		return this->name == name ? content : "";
+		return this->name == fileName ? content : "";
 	}
 
 	IncludeDirectory::IncludeDirectory(const std::string & dir) : directory(dir)
@@ -1519,12 +1519,6 @@ namespace mc {
 		f.close();
 
 		return "#line 0 "+fileName+"\n"+out;
-	}
-
-	bool Include::hasFile(const std::string & name) const
-	{
-		//does nothing
-		return false;
 	}
 
 }

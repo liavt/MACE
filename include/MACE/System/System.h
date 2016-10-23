@@ -169,13 +169,13 @@ namespace mc {
 		@see indexOf(Module&)
 		*/
 		//the parameter not being const is not a mistake; it gets derefenced to check for equality
-		static Index indexOf(Module& m);
+		static int indexOf(Module& m);
 		/**
 		Find a `Module` with the specified name.
 		@param name Name to search for
 		@return Location of a `Module` whose `getName()` function returns `name,` or `-1` if wasn't found
 		*/
-		static Index indexOf(std::string name);
+		static int indexOf(std::string name);
 
 		/**
 		Require that a `Module` with the specified name exists, or throw an exception.
