@@ -1,7 +1,16 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #include <MACE/System/Utility/Preprocessor.h>
 #include <MACE/System/Constants.h>
 #include <iostream>
-#include <ctype.h>
+#include <cctype>
 #include <ctime>
 #include <cstring>
 #include <algorithm>
@@ -75,7 +84,7 @@ namespace mc {
 	*/
 
 	//these words can't be defined or undefined
-	const std::string Preprocessor::reservedWords[] = {
+	const std::string reservedWords[] = {
 
 		"and", "and_eq", "asm",	"auto",	"bitand",
 		"bitor", "bool",	"break",	"case",	"catch",
@@ -96,11 +105,11 @@ namespace mc {
 		"__MACE__","__IF_SCOPE__","__CURRENT_IF_SCOPE__","__VA_ARGS__"
 	};
 
-	const std::vector< char > Preprocessor::punctuators1c = {
+	const std::vector< char > punctuators1c = {
 		',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
 	};
 
-	const std::vector< std::string > Preprocessor::punctuators2c = {
+	const std::vector< std::string > punctuators2c = {
 		">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
 	};
 
@@ -216,7 +225,7 @@ namespace mc {
 			case PROBING:
 				//we check if the character is #, and if its the first character in the line. Also checks if its the first line, then dont check below zero
 				if (value == '#') {
-					if(((iter>0 && (iscntrl(input[iter - 1]))) || iter == 0)){
+					if(((iter>0 && (std::iscntrl(input[iter - 1]))) || iter == 0)){
 						state = FINDING_COMMAND_START;
 						continue;
 					}
@@ -252,7 +261,7 @@ namespace mc {
 				break;
 
 			case FINDING_COMMAND_START:
-				if (!isspace(value)) {
+				if (!std::isspace(value)) {
 					state = COMMAND_NAME;
 					//why are we adding it here? if we directly go to COMMAND_NAME, it will notice the previous character is space and think its time for parameters
 					command += value;
@@ -262,10 +271,10 @@ namespace mc {
 
 			case COMMAND_NAME:
 				//we check if its not a space
-				if(!isspace(value)){
+				if(!std::isspace(value)){
 					//i can do iter-1 because at this point, a # and a command name must have been called, so no negative indices
 					//if the previous character was a space, then obviously this is the beginning of the parameters
-					if (isspace(input[iter-1])) {
+					if (std::isspace(input[iter-1])) {
 						state = PARAMETERS;
 					}
 					else{
@@ -421,7 +430,7 @@ namespace mc {
 							parseState = PARAMETERS;
 							continue;
 						}
-						else if (isspace(value)) {
+						else if (std::isspace(value)) {
 							++iterator;//lets also increment the iterator so the space doesnt get added to the macroname
 							break;//the second word, lets go to the second loop
 						}
@@ -431,7 +440,7 @@ namespace mc {
 					}
 					else if (parseState == PARAMETERS) {
 						//we dont want spaces in our parameters
-						if (isspace(value)) {
+						if (std::isspace(value)) {
 							continue;
 						}
 						else if(value==')'){
@@ -466,7 +475,7 @@ namespace mc {
 
 				//first we get the line number
 				for (iterator = 0; iterator < params.length(); ++iterator) {
-					if (isspace(params[iterator])) {
+					if (std::isspace(params[iterator])) {
 						++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 						break;//the second word, lets go to the second loop
 					}
@@ -573,7 +582,7 @@ namespace mc {
 
 			//first we get the line number
 			for (iterator = 0; iterator < params.length(); ++iterator) {
-				if (isspace(params[iterator])) {
+				if (std::isspace(params[iterator])) {
 					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 					break;//the second word, lets go to the second loop
 				}
@@ -590,7 +599,7 @@ namespace mc {
 
 			//first we get the line number
 			for (iterator = 0; iterator < params.length(); ++iterator) {
-				if (isspace(params[iterator])) {
+				if (std::isspace(params[iterator])) {
 					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 					break;//the second word, lets go to the second loop
 				}
@@ -660,7 +669,7 @@ namespace mc {
 	{
 
 		//This is quite a complex if statement, but it checks to make sure that == doesnt become = = and a=b becomes a = b
-		bool out = (isspace(value)
+		bool out = (std::isspace(value)
 			|| ((std::find(punctuators1c.begin(), punctuators1c.end(), lastValue) != punctuators1c.end()
 				|| (!isNonOperator(lastValue) && isNonOperator(value))
 				|| (isNonOperator(lastValue) && !isNonOperator(value))
@@ -677,7 +686,7 @@ namespace mc {
 
 	std::string Preprocessor::expandMacro(const std::string input) const
 	{
-		if(!input.empty()||(input.length()==1&&(isspace(input[0])||iscntrl(input[0])||isblank(input[0])))){
+		if(!input.empty()||(input.length()==1&&(std::isspace(input[0])|| std::iscntrl(input[0])|| std::isblank(input[0])))){
 
 			std::string out = input;
 
@@ -687,7 +696,7 @@ namespace mc {
 			Macro token = parseMacroName(input);
 
 			//remove whitespace to check for macro. a line like int a = MACRO wont work without this line, as it would be tokenized to be (a),( =), and ( MACRO)
-			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), isspace), token.name.end());
+			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), std::isspace), token.name.end());
 
 			if (token.name[0] == '#') {
 				//get rid of the # so we can find the macro name
@@ -759,7 +768,7 @@ namespace mc {
 				std::string whitespace;
 
 				for (Index iter = 0; iter < input.length(); ++iter) {
-					if (isspace(input[iter])) {
+					if (std::isspace(input[iter])) {
 						whitespace += input[iter];
 					}
 					else {
@@ -866,7 +875,7 @@ namespace mc {
 
 						--functionScope;
 					}
-					else if (!isspace(value)) {
+					else if (!std::isspace(value)) {
 						currentParam += value;
 					}
 
@@ -874,7 +883,7 @@ namespace mc {
 				}
 
 				break;
-			}else if (!isspace(value)) {
+			}else if (!std::isspace(value)) {
 				macroName += value;
 			}
 		}

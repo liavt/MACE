@@ -42,10 +42,10 @@ vec4 getEntityPosition(){
 	vec2 sizeModifier = originalSize/currentSize;
 	
 	if(stretch_x==0){
-		gl_Position.x*=sizeModifier.x;
+		position.x*=sizeModifier.x;
 	}
 	if(stretch_y==0){
-		gl_Position.y*=sizeModifier.y;
+		position.y*=sizeModifier.y;
 	}
 	
 	/*

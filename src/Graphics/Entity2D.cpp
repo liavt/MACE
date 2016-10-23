@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/Renderer.h>
@@ -24,10 +33,39 @@
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 2
 
-
-
 namespace mc {
 namespace gfx {
+
+
+//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
+//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
+const char* vertexShader2D = {
+#include <MACE/Graphics/Shaders/entity2D.vert>
+};
+const char* fragmentShader2D = {
+#include <MACE/Graphics/Shaders/entity2D.frag>
+};
+
+const GLfloat squareVertices[12] = {
+	-0.5f,-0.5f,0.0f,
+	-0.5f,0.5f,0.0f,
+	0.5f,0.5f,0.0f,
+	0.5f,-0.5f,0.0f
+};
+
+const GLfloat squareTextureCoordinates[8] = {
+	0.0f,1.0f,
+	0.0f,0.0f,
+	1.0f,0.0f,
+	1.0f,1.0f,
+};
+
+const GLuint squareIndices[6] = {
+	0,1,3,
+	1,2,3
+};
+
+
 Entity2D::Entity2D() : GraphicsEntity()
 {
 }
@@ -110,11 +148,11 @@ void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue) {
 
 		glfwGetCursorPos(win->getGLFWWindow(), &tempMouseX, &tempMouseY);
 
-		mouseX = static_cast<GLfloat>(tempMouseX);
-		mouseY = static_cast<GLfloat>(tempMouseY);
+		mouseX = static_cast<GLfloat>(std::floor(tempMouseX));
+		mouseY = static_cast<GLfloat>(std::floor(tempMouseY));
 	}
 
-
+	std::cout << mouseX << ", " << mouseY << std::endl;
 
 	windowData.bind();
 	GLfloat* mappedWindowData = static_cast<GLfloat*>(windowData.mapRange(4*sizeof(GLfloat), 2, GL_MAP_WRITE_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
@@ -196,7 +234,7 @@ void RenderProtocol<Entity2D>::render(win::Window* win, void* e) {
 
 void RenderProtocol<Entity2D>::tearDown(win::Window* win, RenderQueue* queue) {}
 
-void RenderProtocol<Entity2D>::destroy(win::Window* win) {
+void RenderProtocol<Entity2D>::destroy() {
 	shaders2D.destroy();
 }
 

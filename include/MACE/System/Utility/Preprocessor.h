@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #pragma once
 #include <vector>
 #include <string>
@@ -8,7 +17,7 @@
 namespace mc {
 
 /**
-`Exception` thrown when a syntax error is encountered, or #error is called.	
+`Exception` thrown when a syntax error is encountered, or \#error is called.	
 */
 using PreprocessorException = Exception;
 
@@ -98,25 +107,11 @@ public:
 	std::string getLocation() const;
 
 private:
-
-	static const std::string reservedWords[];
-
-	//i dont have a pun about pun-ctuators
-
-	//punctuators constitute new tokens
-	//punctuators with 1 character (like >)
-	static const std::vector< char > punctuators1c;
-	//punctuators with 2 characters (like >>)
-	static const std::vector< std::string > punctuators2c;
-
-
 	const std::string input;
 
 	unsigned int line = 0;
 
 	std::string filename = "";
-
-
 
 	std::vector< Include* > includes;
 	std::vector< Macro > macros;
@@ -141,7 +136,7 @@ private:
 	Macro parseMacroName(const std::string& name) const;
 
 	/**
-	This function doesnt check for reserveed keywords, as opposed to defineMacro which does. defineMacro also uses this function
+	This function doesnt check for reserved keywords, as opposed to defineMacro which does. defineMacro also uses this function
 	*/
 	void setMacro(const Macro& m);
 

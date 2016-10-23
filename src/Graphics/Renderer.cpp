@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #define MACE_ENTITY2D_EXPOSE_X_MACRO
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/GLUtil.h>
@@ -47,11 +56,11 @@ void Renderer::renderFrame(win::Window* win)
 	tearDown(win);
 	renderQueue.clear();
 }//renderFrame
-void Renderer::destroy(win::Window* win)
+void Renderer::destroy()
 {
 	while(!protocols.empty()){
 		RenderImpl* protocol = protocols.back();
-		protocol->destroy(win);
+		protocol->destroy();
 		delete protocol;
 		protocols.pop_back();
 	}
@@ -63,7 +72,12 @@ void Renderer::setRefreshColor(const float r, const float g, const float b, cons
 void Renderer::setRefreshColor(const Color & c)
 {
 	setRefreshColor(c.r,c.g,c.b,c.a);
-}//setRefreshColor
+}
+Renderer::~Renderer()
+{
+	destroy();
+}
+//setRefreshColor
 
 RenderImpl::RenderImpl()
 {

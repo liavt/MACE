@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #include <MACE/Graphics/GLUtil.h>
 #include <memory>
 #include <MACE/Graphics/GraphicsConstants.h>
@@ -41,7 +50,7 @@ namespace mc {
 			}
 #endif
 		}
-		void throwShaderError(const Index& shaderId, const GLenum& type, const std::string& message)
+		void throwShaderError(const Index& shaderId, const Enum& type, const std::string& message)
 		{
 			if (type == 0 || type == GL_PROGRAM) {
 				throw ShaderError("Error generating shader program with message \"" + message + "\"");
@@ -71,7 +80,7 @@ namespace mc {
 				throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
 			}
 		}
-		void throwShaderError(const Index & shaderId, const GLenum & type)
+		void throwShaderError(const Index & shaderId, const Enum & type)
 		{
 			throwShaderError(shaderId, type, "No message was specified");
 		}

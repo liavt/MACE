@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #pragma once
 
 #include <MACE/Graphics/Entity.h>
@@ -11,10 +20,13 @@ namespace gfx {
 //if the container we use is ever going to be changed, we typedef 
 using RenderQueue = std::deque<std::pair<Index, Entity*>>;
 
-class RenderImpl {
-public:
-	static int index;
+//forward define for friends
+class Renderer;
 
+//we declare RenderImpl which RenderProtocol extends. WE can't store a pointer to RenderProtocol (because its templated), but we can point to RenderImpl
+class RenderImpl {
+	friend class Renderer;
+public:
 	RenderImpl();
 
 	virtual void resize(const Size width, const Size height) = 0;
@@ -23,7 +35,9 @@ public:
 	virtual void setUp(win::Window* win, RenderQueue* queue) = 0;
 	virtual void render(win::Window* win,void* entity)=0;
 	virtual void tearDown(win::Window* win, RenderQueue* queue) = 0;
-	virtual void destroy(win::Window* win) = 0;
+	virtual void destroy() = 0;
+private:
+	static int index;
 };
 
 template<typename T>
@@ -37,7 +51,7 @@ public:
 	void setUp(win::Window* win, RenderQueue* queue) {};
 	void render(win::Window* win,void* entity) {};
 	void tearDown(win::Window* win,RenderQueue* queue) {};
-	void destroy(win::Window* win) {};
+	void destroy() {};
 };
 
 class Renderer {
@@ -60,12 +74,14 @@ public:
 
 	static void renderFrame(win::Window* win);
 
-	static void destroy(win::Window* win);
+	static void destroy();
 
 	static void setRefreshColor(const float r, const float g, const float b, const float a=1.0f);
 	static void setRefreshColor(const Color& c);
 
 private:
+	Renderer();
+	~Renderer();
 
 	static RenderQueue renderQueue;
 	static std::vector<RenderImpl*> protocols;

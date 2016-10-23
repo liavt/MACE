@@ -1,7 +1,7 @@
-/*
+﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2016 Liav Turkia and Shahar Sandhaus
+Copyright (c) 2016 Liav Turkia
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -24,12 +24,15 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <cstdint>
 
-
 namespace mc {
 	/**
 	Primitive type guaranteed to be equal to 8 bits (1 byte). The definition here is for clarity.
+	@see VoidFunctionPtr
+	@see Index
+	@see Enum
+	@see Size
 	*/
-	using Byte = uint8_t;
+	using Byte = std::uint8_t;
 
 	/**
 	Type representing an object's size.
@@ -44,6 +47,8 @@ namespace mc {
 	}
 	Not only is it shorter, but it makes it more obvious, making documentation easier.
 	@see Index
+	@see Enum
+	@see VoidFunctionPtr
 	*/
 	using Size = unsigned int;
 
@@ -66,10 +71,25 @@ namespace mc {
 	}
 
 	@see Size
+	@see VoidFunctionPtr
+	@see Enum
 	*/
 	using Index = unsigned int;
-
+	/**
+	Type representing an int-based enum (such as GL_* constants)
+	@see Index
+	@see VoidFunctionPtr
+	@see Size
+	*/
 	using Enum = unsigned int;
 
+	/**
+	Type representing a function that returns void and has no arguments.
+	<p>
+	Created for clarity and for use in callbacks
+	@see Index
+	@see Size
+	@see Enum
+	*/
 	typedef void(*VoidFunctionPtr)();
 }

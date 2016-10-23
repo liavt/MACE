@@ -1,3 +1,12 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
 #pragma once
 
 #include <MACE/Graphics/Model.h>
@@ -38,35 +47,8 @@ namespace gfx {
 
 		void tearDown(win::Window* win, RenderQueue* queue);
 
-		void destroy(win::Window* win);
+		void destroy();
 	private:
-		//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
-		//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-		const char* vertexShader2D = {
-#include "Shaders/entity2D.vert"
-		};
-		const char* fragmentShader2D = {
-#include "Shaders/entity2D.frag"
-		};
-
-		const GLfloat squareVertices[12] = {
-			-0.5f,-0.5f,0.0f,
-			-0.5f,0.5f,0.0f,
-			0.5f,0.5f,0.0f,
-			0.5f,-0.5f,0.0f
-		};
-
-		const GLfloat squareTextureCoordinates[8] = {
-			0.0f,1.0f,
-			0.0f,0.0f,
-			1.0f,0.0f,
-			1.0f,1.0f,
-		};
-
-		const GLuint squareIndices[6] = {
-			0,1,3,
-			1,2,3
-		};
 
 		UBO windowData = UBO();
 		UBO paintData = UBO();
