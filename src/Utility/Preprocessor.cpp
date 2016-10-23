@@ -696,7 +696,7 @@ namespace mc {
 			Macro token = parseMacroName(macro);
 
 			//remove whitespace to check for macro. a line like int a = MACRO wont work without this line, as it would be tokenized to be (a),( =), and ( MACRO)
-			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), &std::isspace), token.name.end());
+			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), ::isspace), token.name.end());
 
 			if (token.name[0] == '#') {
 				//get rid of the # so we can find the macro name
