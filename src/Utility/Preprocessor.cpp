@@ -208,7 +208,7 @@ namespace mc {
 				continue;
 			}
 			//if its not a backslash-newline, we check if its just a newline, obviously multiline comments ignore newlines
-			else if ((value == '\n')) {
+			else if (value == '\n') {
 				//if its in the middle of parenthesis, continue on
 				if (state != MULTILINE_COMMENT&&state!=PARENTHESIS){
 					state = NEWLINE;
@@ -386,7 +386,7 @@ namespace mc {
 				}
 
 				//remaining characters are added to the filename
-				for (iterator; iterator < params.length(); ++iterator) {
+				for (; iterator < params.length(); ++iterator) {
 					newFileName += params[iterator];
 				}
 
@@ -461,7 +461,7 @@ namespace mc {
 				}
 
 				//remaining characters are added to the filename
-				for (iterator; iterator < params.length(); ++iterator) {
+				for (; iterator < params.length(); ++iterator) {
 					macroDefinition += params[iterator];
 				}
 
@@ -696,7 +696,7 @@ namespace mc {
 			Macro token = parseMacroName(macro);
 
 			//remove whitespace to check for macro. a line like int a = MACRO wont work without this line, as it would be tokenized to be (a),( =), and ( MACRO)
-			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), std::isspace), token.name.end());
+			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), &std::isspace), token.name.end());
 
 			if (token.name[0] == '#') {
 				//get rid of the # so we can find the macro name
@@ -731,7 +731,7 @@ namespace mc {
 				}
 
 				//these lines are to get rid of the parameters from the final output
-				const unsigned int parametersLocation = out.find("(");
+				const size_t parametersLocation = out.find("(");
 				if (parametersLocation != std::string::npos) {
 					out = out.substr(0, parametersLocation);
 				}
@@ -852,7 +852,7 @@ namespace mc {
 				std::string currentParam = "";
 				//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
 
-				for (iter; iter < name.length(); ++iter) {
+				for (; iter < name.length(); ++iter) {
 					char val = name[iter];
 
 					if (val == '(') {
@@ -895,7 +895,7 @@ namespace mc {
 			throw PreprocessorException(getLocation() + ": Missing ) in function name");
 		}
 
-		for (iter; iter < name.length(); ++iter) {
+		for (; iter < name.length(); ++iter) {
 			definition += name[iter];
 		}
 

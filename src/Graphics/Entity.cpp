@@ -10,6 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Entity.h>
 #include <MACE/System/Exceptions.h>
 #include <MACE/System/Constants.h>
+#include <string>
 
 namespace mc {
 namespace gfx {
@@ -85,8 +86,8 @@ void Entity::removeChild(const Entity& e)
 }
 
 void Entity::removeChild(Index index) {
-	if (index > children.size()) {
-		throw mc::IndexOutOfBoundsException(index + " is larger than the amount of children!");
+	if (index >= children.size()) {
+		throw mc::IndexOutOfBoundsException(std::to_string(index) + " is larger than the amount of children!");
 	}
 	else if (children.size() == 1) {
 		children.clear();

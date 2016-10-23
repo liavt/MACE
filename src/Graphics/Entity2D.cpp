@@ -153,8 +153,6 @@ void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue) {
 		mouseY = static_cast<GLfloat>(mc::math::floor(tempMouseY));
 	}
 
-	std::cout << mouseX << ", " << mouseY << std::endl;
-
 	windowData.bind();
 	GLfloat* mappedWindowData = static_cast<GLfloat*>(windowData.mapRange(4*sizeof(GLfloat), 2, GL_MAP_WRITE_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
 	std::memcpy(mappedWindowData,&mouseX,sizeof(mouseY));

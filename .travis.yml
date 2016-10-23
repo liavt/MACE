@@ -45,24 +45,6 @@ matrix:
           packages:
             - clang-3.7
       env: COMPILER=clang++-3.7
-    - compiler: gcc
-      os: osx
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-4.9
-      env: COMPILER=g++-4.9
-    - compiler: gcc
-      os: osx
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-      env: COMPILER=g++-5
     - compiler: clang
       os: osx
       addons:
@@ -85,9 +67,9 @@ matrix:
       env: COMPILER=clang++-3.7
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                                                          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                                      		               ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glew glfw3                                              ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install xorg-dev libglu1-mesa-dev libglew-dev libglfw2;sudo apt-get update  ; git clone https://github.com/glfw/glfw.git ./glfw ; cd ./glfw ; git checkout latest ;cmake . -DBUILD_SHARED_LIBS=ON ; make ; sudo make install ; sudo ldconfig ; cd .. ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install xorg-dev libglu1-mesa-dev libglew-dev libglfw2;sudo apt-get update ; git clone https://github.com/glfw/glfw.git ./glfw ; cd ./glfw ; git checkout latest ;cmake . -DBUILD_SHARED_LIBS=ON ; make ; sudo make install ; sudo ldconfig ; cd .. ; fi
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
