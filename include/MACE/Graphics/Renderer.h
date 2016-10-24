@@ -55,6 +55,12 @@ public:
 	void destroy() {};
 };
 
+/***/
+class SSEL {
+
+
+};
+
 class Renderer {
 public:
 
@@ -80,9 +86,10 @@ public:
 	static void setRefreshColor(const float r, const float g, const float b, const float a=1.0f);
 	static void setRefreshColor(const Color& c);
 
+	static std::string processShader(std::string source);
 private:
-	Renderer();
-	~Renderer();
+	Renderer() = delete;
+	~Renderer() = delete;
 
 	static RenderQueue renderQueue;
 	static std::vector<RenderImpl*> protocols;

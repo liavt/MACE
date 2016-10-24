@@ -10,6 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_ENTITY2D_EXPOSE_X_MACRO
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/GLUtil.h>
+#include <MACE/System/Utility/Preprocessor.h>
 
 namespace mc {
 namespace gfx {
@@ -22,10 +23,13 @@ std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
 Size Renderer::originalWidth = 0;
 Size Renderer::originalHeight = 0;
 
+Preprocessor shaderPreprocessor = Preprocessor("");
+
 void Renderer::init(const Size width, const Size height)
 {
 	Renderer::originalWidth = width;
 	Renderer::originalHeight = height;
+
 }//init
 void Renderer::setUp(win::Window* win)
 {
@@ -64,20 +68,16 @@ void Renderer::destroy()
 		delete protocol;
 		protocols.pop_back();
 	}
-}//destroy
+}//destroy()
 void Renderer::setRefreshColor(const float r, const float g, const float b, const float a)
 {
 	glClearColor(r,g,b,a);
-}//setRefreshColor
+}//setRefreshColor(r,g,b,a)
 void Renderer::setRefreshColor(const Color & c)
 {
 	setRefreshColor(c.r,c.g,c.b,c.a);
-}
-Renderer::~Renderer()
-{
-	destroy();
-}
-//setRefreshColor
+}//setRefreshColor(Color)
+
 
 RenderImpl::RenderImpl()
 {

@@ -14,6 +14,10 @@ layout(std140) uniform paint_data{
 	float opacity;
 };
 
+vec4 getEntityColor(){
+
+}
+
 out lowp vec4 color;
 
 uniform lowp sampler2D tex;
