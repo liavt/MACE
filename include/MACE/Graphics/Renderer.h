@@ -55,7 +55,9 @@ public:
 	void destroy() {};
 };
 
-/***/
+/**
+Holds resources for the Standard Shader Entity Library (SSEL.) SSEL makes it easy to interact with MACE entities from shaders.
+*/
 class SSEL {
 
 
