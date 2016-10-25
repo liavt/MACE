@@ -8,12 +8,12 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Window/WindowModule.h>
+#include <MACE/System/Exceptions.h>
 #include <mutex>
 #include <ctime>
 #include <chrono>
 #include <iostream>
 #include <GLFW/glfw3.h>
-#include <MACE/System/Exceptions.h>
 
 namespace mc {
 	namespace win
@@ -104,9 +104,9 @@ namespace mc {
 						if (context != 0) {
 							context->render(window);
 						}
-							
+
 						if (!System::isRunning())break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
-	
+
 					}
 
 					const time_t delta = now - lastFrame;
