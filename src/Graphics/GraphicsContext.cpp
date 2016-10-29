@@ -51,7 +51,7 @@ void OpenGLContext::init(win::Window * win)
 		throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
 	}
 
-	if (GLEW_VERSION_1_1)
+	if (GL_VERSION_1_1)
 	{
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 		std::cout << "OpenGL has been created succesfully!" << std::endl;
@@ -66,9 +66,11 @@ void OpenGLContext::init(win::Window * win)
 		throw InitializationError("Error retrieving GLEW version!");
 	}
 
-	if (!GLEW_VERSION_3_1)
+	if (!GL_VERSION_3_0)
 	{
-		throw InitializationError("OpenGL 3.1 is not available!");
+		throw InitializationError("OpenGL 3+ is not available!");
+	}else if(!GL_VERSION_3_3){
+        std::cout<<"OpenGL 3.3 not found, falling back to OpenGL 3.0.";
 	}
 
 	checkGLError();
@@ -78,7 +80,7 @@ void OpenGLContext::init(win::Window * win)
 
 
 	auto framebufferResize = [](GLFWwindow* win, int width, int height) {
-		Renderer::resize(width, height); 
+		Renderer::resize(width, height);
 	};
 	glfwSetFramebufferSizeCallback(win->getGLFWWindow(), framebufferResize);
 

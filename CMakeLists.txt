@@ -4,6 +4,8 @@ project(MACE CXX)
 
 message("MACE project added")
 
+enable_language(C)
+
 #For the installation of other projects
 include(ExternalProject)
 include(FindPackageHandleStandardArgs)

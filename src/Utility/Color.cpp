@@ -8,7 +8,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/System/Utility/Color.h>
-#include <exception>
 
 mc::Byte mc::Color::getRed() const
 {
@@ -110,4 +109,24 @@ std::array<float, 4> mc::Color::getValues() const
 {
 	std::array<float, 4> output = { r,g,b,a };
 	return output;
+}
+
+bool mc::Color::operator<(const mc::Color& other) const{
+    //the real g right here
+    return other.r < r && other.g < g && other.b < b && other.a < a;
+}
+
+bool mc::Color::operator<=(const mc::Color& other) const{
+    //the real g right here
+    return other.r <= r && other.g <= g && other.b <= b && other.a <= a;
+}
+
+bool mc::Color::operator>(const mc::Color& other) const{
+    //the real g right here
+    return other.r > r && other.g > g && other.b > b && other.a > a;
+}
+
+bool mc::Color::operator>=(const mc::Color& other) const{
+    //the real g right here
+    return other.r >= r && other.g >= g && other.b >= b && other.a >= a;
 }
