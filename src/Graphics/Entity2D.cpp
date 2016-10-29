@@ -97,8 +97,8 @@ void RenderProtocol<Entity2D>::resize(const Size width, const Size height) {
 
 void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size originalHeight) {
 	//vao loading
-	square.loadVertices(4, squareVertices);
-	square.loadTextureCoordinates(4, squareTextureCoordinates);
+	square.loadVertices(4, squareVertices, 15, 3);
+	square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
 	square.loadIndices(6, squareIndices);
 
 	//shader stuff
@@ -113,21 +113,21 @@ void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size origina
 
 	windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
 	windowData.bind();
-	windowData.bindToUniformBlock(shaders2D.getProgramID(),"window_data");
+	windowData.bindToUniformBlock(shaders2D.getProgramID(),"ssl_WindowData");
 	float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = {static_cast<float>(originalWidth), static_cast<float>(originalHeight),static_cast<float>(originalWidth),static_cast<float>(originalHeight),0,0};
 	windowData.setData(sizeof(GLfloat)*MACE_WINDOW_DATA_BUFFER_SIZE,defaultWindowData);
 	windowData.unbind();
 
 	paintData.setLocation(MACE_PAINT_DATA_LOCATION);
 	paintData.bind();
-	paintData.bindToUniformBlock(shaders2D.getProgramID(), "paint_data");
+	paintData.bindToUniformBlock(shaders2D.getProgramID(), "ssl_PaintData");
 	//we set it to null, because during the actual rendering we set the data
 	paintData.setData(sizeof(GLfloat)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr,GL_STREAM_DRAW);
 	paintData.unbind();
 
 	entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 	entityData.bind();
-	entityData.bindToUniformBlock(shaders2D.getProgramID(), "entity_data");
+	entityData.bindToUniformBlock(shaders2D.getProgramID(), "ssl_EntityData");
 	//we set it to null, because during the actual rendering we set the data
 	entityData.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE,nullptr);
 	entityData.unbind();

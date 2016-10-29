@@ -27,6 +27,7 @@ public:
 
 	void update();
 
+	void setUpWindow(win::Window* win);
 	void init(win::Window* win);
 	void render(win::Window* win);
 	void destroy(win::Window* win);

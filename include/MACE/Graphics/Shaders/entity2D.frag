@@ -9,13 +9,15 @@ precision highp float; // Defines precision for float and float-derived (vector/
 
 in lowp vec2 textureCoord;
 
-layout(std140) uniform paint_data{
-	vec4 paint;
-	float opacity;
+layout(std140) uniform ssl_PaintData{
+	vec4 ssl_Paint;
+	float ssl_Opacity;
 };
 
-vec4 getEntityColor(){
-
+vec4 sslGetEntityColor(vec4 ssl_Tex){
+	vec4 ssl_EntityColor= mix(vec4(ssl_Paint.rgb,1.0),ssl_Tex,ssl_Paint.a);
+	ssl_EntityColor.a=ssl_Opacity;
+	return ssl_EntityColor;
 }
 
 out lowp vec4 color;
@@ -24,8 +26,7 @@ uniform lowp sampler2D tex;
 
 void main (void)  
 {     
-	color= mix(vec4(paint.rgb,1.0),texture(tex,textureCoord),paint.a);
-	color.a=opacity;
+	color = sslGetEntityColor(texture(tex,textureCoord));
 }       
 
 )"

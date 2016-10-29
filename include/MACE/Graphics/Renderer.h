@@ -15,6 +15,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 
 namespace mc {
+
+//forward defining to prevent inclusion of header file
+class Preprocessor;
+
 namespace gfx {
 
 //if the container we use is ever going to be changed, we typedef 
@@ -56,11 +60,11 @@ public:
 };
 
 /**
-Holds resources for the Standard Shader Entity Library (SSEL.) SSEL makes it easy to interact with MACE entities from shaders.
+Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files.
 */
-class SSEL {
-
-
+namespace ssl {
+	std::string processShader(const std::string& shader);
+	const mc::Preprocessor& getSSLPreprocessor();
 };
 
 class Renderer {
@@ -87,8 +91,6 @@ public:
 
 	static void setRefreshColor(const float r, const float g, const float b, const float a=1.0f);
 	static void setRefreshColor(const Color& c);
-
-	static std::string processShader(std::string source);
 private:
 	Renderer() = delete;
 	~Renderer() = delete;

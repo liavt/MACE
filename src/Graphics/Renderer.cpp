@@ -23,7 +23,7 @@ std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
 Size Renderer::originalWidth = 0;
 Size Renderer::originalHeight = 0;
 
-Preprocessor shaderPreprocessor = Preprocessor("");
+static Preprocessor sslPreprocessor = Preprocessor("");
 
 void Renderer::init(const Size width, const Size height)
 {
@@ -82,6 +82,23 @@ void Renderer::setRefreshColor(const Color & c)
 RenderImpl::RenderImpl()
 {
 }//RenderImpl()
+
+std::string ssl::processShader(const std::string & shader)
+{
+	Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
+	return shaderPreprocessor.preprocess();
+}
+
+const mc::Preprocessor& ssl::getSSLPreprocessor()
+{
+	if (sslPreprocessor.macroNumber() == 0) {
+		sslPreprocessor.defineOSMacros();
+		sslPreprocessor.defineStandardMacros();
+
+		sslPreprocessor.defineMacro(mc::Macro("__SSL__","1"));
+	}
+	return sslPreprocessor;
+}
 
 }//gfx
 }//mc

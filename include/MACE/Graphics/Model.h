@@ -26,11 +26,10 @@ public:
 
 	void draw(const GLenum type=GL_TRIANGLES);
 
-	void loadVertices(const Size& verticeSize, const GLfloat vertices[]);
-	void loadTextureCoordinates(const Size& verticeSize, const GLfloat vertices[]);
-	void loadIndices(const Size& indiceNum, const GLuint indices[]);
+	void loadVertices(const Size&& verticeSize, const GLfloat vertices[], const Index&& location = 15, const Size&& attributeSize = 3);
+	void loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType = GL_DYNAMIC_DRAW);
 
-	void storeDataInAttributeList(const GLfloat data[], const Index& attributeNumber, const Size& attributeSize, const Size& verticeSize);
+	void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
 private:
 	Index createID();
 };//VAO

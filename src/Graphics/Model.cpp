@@ -31,25 +31,17 @@ void VAO::draw(GLenum type)
 {
 	glDrawElements(type, indiceNumber, GL_UNSIGNED_INT,0);
 }
-void VAO::loadVertices(const Size & verticeSize, const GLfloat vertices[])
+
+void VAO::loadVertices(const Size && verticeSize, const GLfloat vertices[], const Index && location, const Size && attributeSize)
 {
 	vaoID = createID();
 	vertexNumber = verticeSize;
 
-
 	bind();
-	storeDataInAttributeList(vertices, 0, 3, vertexNumber);
-	unbind();
+	storeDataInAttributeList(std::move(vertexNumber), vertices, std::move(location), std::move(attributeSize));
 }
 
-void VAO::loadTextureCoordinates(const Size & verticeSize, const GLfloat vertices[])
-{
-	bind();
-	storeDataInAttributeList(vertices, 1, 2, vertexNumber);
-	unbind();
-}
-
-void VAO::loadIndices(const Size & indiceNum, const GLuint indices[])
+void VAO::loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType)
 {
 	bind();
 	Index indicesID;
@@ -58,7 +50,7 @@ void VAO::loadIndices(const Size & indiceNum, const GLuint indices[])
 								// The following commands will talk about our 'vertexbuffer' buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
 														// Give our vertices to OpenGL.
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, GL_DYNAMIC_DRAW);//
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, drawType);//
 
 																								//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
 
@@ -75,20 +67,22 @@ Index VAO::createID()
 	checkGLError();
 	return id;
 }
-void VAO::storeDataInAttributeList(const GLfloat data[], const Index & attributeNumber, const Size& attributeSize, const Size & verticeSize)
+void VAO::storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location , const Size&& attributeSize)
 {
+	bind();
+
 	Index vboID;
 	// Generate 1 buffer, put the resulting identifier in vertexbuffer
 	glGenBuffers(1, &vboID);//
 							// The following commands will talk about our 'vertexbuffer' buffer
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);//
 											// Give our data to opengl
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * verticeSize), data, GL_DYNAMIC_DRAW);//
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);//
 	gfx::checkGLError();//
 
-	glVertexAttribPointer(attributeNumber, attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(location, attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glEnableVertexAttribArray(attributeNumber);
+	glEnableVertexAttribArray(location);
 
 
 	//	glBindBuffer(GL_ARRAY_BUFFER, vboID);//

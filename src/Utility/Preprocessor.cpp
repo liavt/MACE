@@ -948,6 +948,11 @@ namespace mc {
 		//do nothing if its not found
 	}
 
+	Size Preprocessor::macroNumber() const
+	{
+		return macros.size();;
+	}
+
 	void Preprocessor::defineStandardMacros()
 	{
 

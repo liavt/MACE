@@ -18,10 +18,11 @@ namespace mc {
 	{
 		class GraphicsContext {
 		public:
-			virtual void init(Window* win);
-			virtual void render(Window* win);
-			virtual void destroy(Window* win);
-			virtual void update();
+			virtual void setUpWindow(Window* win) = 0;
+			virtual void init(Window* win) = 0;
+			virtual void render(Window* win) = 0;
+			virtual void destroy(Window* win) = 0;
+			virtual void update() = 0;
 		};
 
 		class WindowModule : public Module {

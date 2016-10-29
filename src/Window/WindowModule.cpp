@@ -18,25 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace win
 	{
-		void GraphicsContext::init(Window * win)
-		{
-			//do nothing if no context is defined
-		}
-
-		void GraphicsContext::render(Window * win)
-		{
-			//do nothing if no context is defined
-		}
-
-		void GraphicsContext::destroy(Window * win)
-		{
-			//do nothing if no context is defined
-		}
-
-		void GraphicsContext::update()
-		{
-			//do nothing if no context is defined
-		}
 
 		void WindowModule::setContext(GraphicsContext * con)
 		{
@@ -71,9 +52,13 @@ namespace mc {
 			try {
 				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
+				if (context != nullptr) {
+					context->setUpWindow(window);
+				}
+
 				window->create();
 
-				if (context != 0) {
+				if (context != nullptr) {
 					context->init(window);
 				}
 
@@ -101,7 +86,7 @@ namespace mc {
 						//thread doesn't own window, so we have to lock the mutex
 						window->poll();
 
-						if (context != 0) {
+						if (context != nullptr) {
 							context->render(window);
 						}
 
@@ -131,7 +116,7 @@ namespace mc {
 			{
 				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 				try {
-					if (context != 0)context->destroy(window);
+					if (context != nullptr)context->destroy(window);
 
 					window->destroy();
 				}

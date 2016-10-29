@@ -92,6 +92,7 @@ public:
 	void defineMacro(const Macro& macro);
 	bool isMacroDefined(const std::string& name) const;
 	void undefineMacro(const std::string& name);
+	unsigned int macroNumber() const;
 
 	void defineStandardMacros();
 	void defineOSMacros();
