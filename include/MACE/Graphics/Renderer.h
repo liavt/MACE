@@ -10,6 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 
 #include <MACE/Graphics/Entity.h>
+#include <MACE/Graphics/Shaders.h>
 #include <MACE/Window/Window.h>
 #include <deque>
 
@@ -63,7 +64,16 @@ public:
 Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files.
 */
 namespace ssl {
-	std::string processShader(const std::string& shader);
+	void init(const Size& originalWidth, const Size& originalHeight);
+	void setUp(win::Window* win);
+	void tearDown(win::Window* win);
+	void destroy();
+	void resize(const Size& width, const Size& height);
+
+	void bindEntity(const GraphicsEntity* en);
+	void bindShaderProgram(const ShaderProgram& prog);
+
+	std::string processShader(const std::string& shader, const GLenum& type);
 	const mc::Preprocessor& getSSLPreprocessor();
 };
 

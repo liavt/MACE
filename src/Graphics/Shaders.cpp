@@ -99,9 +99,18 @@ namespace gfx {
 	{
 		fragId = createShader(shader, GL_FRAGMENT_SHADER);
 	}
+	void ShaderProgram::createFragment(const std::string & shader)
+	{
+		createFragment(shader.c_str());
+	}
 	void ShaderProgram::createVertex(const char shader[])
 	{
 		vertId = createShader(shader, GL_VERTEX_SHADER);
+	}
+
+	void ShaderProgram::createVertex(const std::string & shader)
+	{
+		createVertex(shader.c_str());
 	}
 
 	void ShaderProgram::createUniform(const std::string& name)

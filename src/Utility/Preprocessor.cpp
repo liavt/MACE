@@ -568,6 +568,8 @@ namespace mc {
 			if (params.empty())throw PreprocessorException(getLocation() + ": #if must be called with an argument");
 
 			calculateIfScope(outputValue,parseIfStatement(params));
+
+
 		}
 		else if (command == "elif") {
 			if (params.empty())throw PreprocessorException(getLocation() + ": #elif must be called with an argument");
@@ -648,11 +650,14 @@ namespace mc {
 			}
 
 			macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) - 1);
-
 		}
-		
 
-		return std::vector < std::string >();
+		
+		std::vector < std::string > output;
+		output.push_back("#" + command + " " + params);
+
+		return output;
+		
 	}
 
 	int Preprocessor::getMacroLocation(const std::string & name) const
@@ -668,7 +673,7 @@ namespace mc {
 	bool Preprocessor::isNewToken(const char lastValue, const char value) const
 	{
 
-		//This is quite a complex if statement, but it checks to make sure that == doesnt become = = and a=b becomes a = b
+		//This is quite a complex if statement, but it checks to make sure that == doesnt become =,= and a=b becomes a,=,b
 		bool out = (std::isspace(value)
 			|| ((std::find(punctuators1c.begin(), punctuators1c.end(), lastValue) != punctuators1c.end()
 				|| (!isNonOperator(lastValue) && isNonOperator(value))

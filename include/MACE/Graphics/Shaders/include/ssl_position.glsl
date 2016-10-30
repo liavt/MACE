@@ -1,18 +1,11 @@
-//when the preprocessor copy and pastes this file, the newlines will be syntax errors. we need to specify that this is a multiline string. if you want syntax highlighting, make sure to configure your editor to ignore this line
 R"(
 
-//VERTEX SHADER
+#include <ssl_window>
 
-#version 330 core
-
+#ifndef SSL_POSITION_LIBRARY
+#define SSL_POSITION_LIBRARY
 
 layout(location = 15) in vec3 ssl_VertexPosition;
-
-layout(std140) uniform ssl_WindowData{
-	vec2 ssl_OriginalSize;
-	vec2 ssl_CurrentSize;
-	vec2 ssl_MouseCoord;
-};
 
 layout(std140) uniform ssl_EntityData{
 	vec3 ssl_Translation;
@@ -23,6 +16,7 @@ layout(std140) uniform ssl_EntityData{
 	vec3 ssl_InheritedScale;
 	mat4 ssl_Rotation;
 	mat4 ssl_InheritedRotation;
+	
 };
 
 vec4 sslGetEntityPosition(){
@@ -55,20 +49,6 @@ vec4 sslGetEntityPosition(){
 	return ssl_Position;
 }
 
-precision mediump float; // Defines precision for float and float-derived (vector/matrix) types.
-
-layout(location = 1) in vec2 texCoord;
-
-out lowp vec2 textureCoord;
-
-void main(){
-	
-	gl_Position = sslGetEntityPosition();
-	
-	gl_Position.x += ssl_MouseCoord.x/ssl_CurrentSize.x;
-	gl_Position.y += (ssl_CurrentSize.y-ssl_MouseCoord.y)/ssl_CurrentSize.y;
-	
-	textureCoord=texCoord;
-}
+#endif
 
 )"

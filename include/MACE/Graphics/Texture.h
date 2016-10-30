@@ -21,7 +21,7 @@ public:
 	Texture();
 	Texture(Index id);
 	Texture(const char* file);
-	Texture(const GLvoid * data, Size width, Size height, GLenum type = GL_FLOAT, GLenum format = GL_RGB, GLenum internalFormat = GL_RGB, Index mipmapLevel = 0);
+	Texture(const void * data, Size width, Size height, GLenum type = GL_FLOAT, GLenum format = GL_RGB, GLenum internalFormat = GL_RGB, Index mipmapLevel = 0);
 
 	void setData(const void * data, Size width, Size height, GLenum type = GL_FLOAT, GLenum format = GL_RGB, GLenum internalFormat = GL_RGB, Index mipmapLevel = 0);
 
@@ -42,6 +42,8 @@ public:
 	float getOpacity();
 	const float getOpacity() const;
 	void setOpacity(const float f);
+
+	void setParameter(const GLenum& name, const GLint& value);
 private:
 	Index id = 0;
 	GLenum target = GL_TEXTURE_2D;

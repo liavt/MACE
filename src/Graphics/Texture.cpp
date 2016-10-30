@@ -48,7 +48,7 @@ Texture::Texture(const char * file)
 }
 
 
-Texture::Texture(const GLvoid * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel)
+Texture::Texture(const void * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel)
 {
 	generateTexture();
 	bind();
@@ -127,6 +127,12 @@ const float Texture::getOpacity() const
 void Texture::setOpacity(const float f)
 {
 	opacity = f;
+}
+
+void Texture::setParameter(const GLenum & name, const GLint & value)
+{
+	bind();
+	glTexParameteri(GL_TEXTURE_2D, name, value);
 }
 
 }

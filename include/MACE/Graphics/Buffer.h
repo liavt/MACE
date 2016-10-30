@@ -18,7 +18,6 @@ template<GLenum bufferType>
 class BufferObject {
 public:
 	virtual ~BufferObject() {
-		if (isBuffer())destroy();
 	};
 
 	void bind() const{
@@ -86,6 +85,52 @@ public:
 private:
 	Index location = 0;
 };//UBO
+
+class RBO {
+public:
+	void init();
+	void destroy();
+
+	void bind() const;
+	void unbind() const;
+
+	void setStorage(const GLenum& format, const GLsizei& width, const GLsizei& height);
+	void setStorageMultisampled(const GLsizei& samples, const GLenum& format, const GLsizei& width, const GLsizei& height);
+
+	GLboolean isCreated() const;
+
+	Index getLocation() const;
+private:
+	Index location = 0;
+};
+
+class FBO {
+public:
+	void init();
+	void destroy();
+
+	void bind(const GLenum& target = GL_FRAMEBUFFER) const;
+	void unbind() const;
+
+	void attachTexture(const GLenum& target, const GLenum& attachment, const GLuint& textureID, const GLint& level);
+	void attachTexture1D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level);
+	void attachTexture2D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level);
+	void attachTextureLayer(const GLenum& target, const GLenum& attachment, const GLuint& texture, const GLint& level, const GLint& layer);
+
+	void attachRenderbuffer(const GLenum& target, const GLenum& attachment, const RBO& buffer);
+
+	void setParameter(const GLenum& paramName, const GLint& value);
+
+	void setDrawBuffers(const Size& arrSize, const GLenum* buffers);
+
+	GLboolean isCreated() const;
+
+	GLenum checkStatus(const GLenum& target);
+
+	Index getLocation() const;
+private:
+	Index location = 0;
+};
 
 }//gfx
 }//mc

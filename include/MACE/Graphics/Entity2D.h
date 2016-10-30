@@ -13,7 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Shaders.h>
-#include <MACE/Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {
@@ -49,10 +48,6 @@ namespace gfx {
 
 		void destroy();
 	private:
-
-		UBO windowData = UBO();
-		UBO paintData = UBO();
-		UBO entityData = UBO();
 
 		ShaderProgram shaders2D = ShaderProgram();
 		VAO square = VAO();

@@ -129,4 +129,8 @@ TEST_CASE("Testing #error", "[system][utility][preprocessor]") {
 	REQUIRE_THROWS_AS(p.preprocess(),PreprocessorException);
 }
 
+TEST_CASE("Testing conditionals", "[system][utility][preprocessor]") {
+
+}
+
 }

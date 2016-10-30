@@ -17,6 +17,9 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 namespace gfx {
 
+/**
+@todo make a shader class
+*/
 class ShaderProgram {
 public:
 	ShaderProgram();
@@ -29,7 +32,9 @@ public:
 	void unbind() const;
 
 	void createFragment(const char shader[]);
+	void createFragment(const std::string& shader);
 	void createVertex(const char shader[]);
+	void createVertex(const std::string& shader);
 
 	void createUniform(const std::string& name);
 	void createUniform(const char* name);
