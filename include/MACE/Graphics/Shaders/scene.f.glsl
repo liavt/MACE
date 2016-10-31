@@ -5,15 +5,15 @@ R"(
 
 #version 330 core
 
-in lowp vec2 textureCoord;
+//in lowp vec2 textureCoord;
 
 out lowp vec4 color;
 
-uniform lowp sampler2D tex;
+//uniform lowp sampler2D tex;
 
 void main(void){
 	
-	color = texture(tex,textureCoord);
+	//color = texture(tex,textureCoord);
 	
 	color = vec4(1,0,0,1);
 }

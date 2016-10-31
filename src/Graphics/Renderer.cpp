@@ -13,6 +13,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Buffer.h>
 #include <MACE/Graphics/Model.h>
 #include <MACE/System/Utility/Preprocessor.h>
+//we need to include string for memcpy
+#include <string>
+
 namespace mc {
 namespace gfx {
 
@@ -206,7 +209,7 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	});
 	renderProgram.init();
 
-	sceneTexture = Texture(0,originalWidth,originalHeight,GL_UNSIGNED_BYTE);
+	sceneTexture = Texture(NULL, originalWidth, originalHeight, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 	sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
@@ -223,7 +226,7 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	frameBuffer.setDrawBuffers(1, buffers);
 
 	const GLfloat squareVertices[12] = {
-		-1.0f,-0.5f,0.0f,
+		-1.0f,-1.0f,0.0f,
 		-1.0f,1.0f,0.0f,
 		1.0f,1.0f,0.0f,
 		1.0f,-1.0f,0.0f
@@ -241,7 +244,13 @@ void init(const Size & originalWidth, const Size & originalHeight)
 		1,2,3
 	};
 
-	renderBuffer.loadVertices(4, squareVertices);
+	if (frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
+	}
+	glViewport(0, 0, originalWidth, originalHeight);
+
+	renderBuffer.loadVertices(4, squareVertices,0,3);
 	renderBuffer.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
 	renderBuffer.loadIndices(6, squareIndices);
 
@@ -273,6 +282,7 @@ void setUp(win::Window * win)
 	windowData.unmap();
 
 	frameBuffer.bind();
+	frameBuffer.unbind();
 }
 
 void bindEntity(const GraphicsEntity * entity)
@@ -360,23 +370,6 @@ std::string ssl::processShader(const std::string & shader, const GLenum& type)
 	Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
 	shaderPreprocessor.defineMacro(mc::Macro("__SHADER_TYPE__", std::to_string(type)));
 
-	if (type == GL_VERTEX_SHADER) {
-		shaderPreprocessor.defineMacro(mc::Macro("__VERTEX_SHADER__", "1"));
-	}
-	else if (type == GL_FRAGMENT_SHADER) {
-		shaderPreprocessor.defineMacro(mc::Macro("__FRAGMENT_SHADER__", "1"));
-	}
-	else if (type == GL_GEOMETRY_SHADER) {
-		shaderPreprocessor.defineMacro(mc::Macro("__GEOMETRY_SHADER__", "1"));
-	}
-	else if (type == GL_TESS_CONTROL_SHADER) {
-		shaderPreprocessor.defineMacro(mc::Macro("__TESS_CONTROL_SHADER__", "1"));
-	}
-	else if (type == GL_TESS_EVALUATION_SHADER) {
-		shaderPreprocessor.defineMacro(mc::Macro("__TESS_EVALUATION_SHADER__", "1"));
-	}
-
-
 	const std::string processedShader = shaderPreprocessor.preprocess();
 
 	return processedShader;
@@ -416,6 +409,10 @@ void destroy()
 	windowData.destroy();
 	entityData.destroy();
 	paintData.destroy();
+
+	depthBuffer.destroy();
+	frameBuffer.destroy();
+	renderProgram.destroy();
 }
 
 #undef MACE_WINDOW_DATA_BUFFER_SIZE
