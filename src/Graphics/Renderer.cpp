@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Model.h>
 #include <MACE/System/Utility/Preprocessor.h>
 //we need to include string for memcpy
-#include <string>
+#include <cstring>
 
 namespace mc {
 namespace gfx {
