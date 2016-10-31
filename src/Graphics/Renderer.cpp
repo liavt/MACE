@@ -365,7 +365,7 @@ void resize(const Size & width, const Size & height)
 	windowData.unbind();
 }
 
-std::string ssl::processShader(const std::string & shader, const GLenum& type)
+std::string processShader(const std::string & shader, const GLenum& type)
 {
 	Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
 	shaderPreprocessor.defineMacro(mc::Macro("__SHADER_TYPE__", std::to_string(type)));
@@ -375,7 +375,7 @@ std::string ssl::processShader(const std::string & shader, const GLenum& type)
 	return processedShader;
 }
 
-const mc::Preprocessor& ssl::getSSLPreprocessor()
+const mc::Preprocessor& getSSLPreprocessor()
 {
 	if (sslPreprocessor.macroNumber() == 0) {
 		sslPreprocessor.defineOSMacros();
