@@ -83,6 +83,10 @@ namespace mc {
 	#	error this also doesnt foo test string literals" - doesnt output second line
 	*/
 
+	/**
+	#version is also supported for glsl shaders
+	*/
+
 	//these words can't be defined or undefined
 	const std::string reservedWords[] = {
 
@@ -201,7 +205,7 @@ namespace mc {
 			}
 
 			//this if statement does the backslash-newline, and converts it to a space by checking the current character is \ and the next one is \n
-			if (value=='\\'&&(iter < input.length()-1 && input[iter + 1] == '\n')) {
+			if (value=='\\' && (iter < input.length()-1 && input[iter + 1] == '\n')) {
 				++iter;
 				++line;
 				setMacro(Macro("__LINE__", std::to_string(line)));
@@ -360,7 +364,103 @@ namespace mc {
 	std::vector < std::string > Preprocessor::executeDirective(bool& outputValue, const std::string & command, const std::string & params)
 	{
 		//only if we output
-		if (outputValue) {
+		if (command == "if") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #if must be called with an argument");
+
+			calculateIfScope(outputValue, parseIfStatement(params));
+
+			return std::vector< std::string >();
+		}
+		else if (command == "elif") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #elif must be called with an argument");
+
+			calculateIfScope(outputValue, parseIfStatement(params));
+
+			return std::vector< std::string >();
+		}
+		else if (command == "ifdef") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef must be called with a macro name");
+
+			Index iterator;
+			std::string macroName = "";
+
+			//first we get the line number
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (std::isspace(params[iterator])) {
+					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+					break;//the second word, lets go to the second loop
+				}
+				macroName += params[iterator];
+			}
+
+			calculateIfScope(outputValue, isMacroDefined(macroName));
+
+			return std::vector< std::string >();
+		}
+		else if (command == "ifndef") {
+			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef must be called with a macro name");
+
+			Index iterator;
+			std::string macroName = "";
+
+			//first we get the line number
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (std::isspace(params[iterator])) {
+					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
+					break;//the second word, lets go to the second loop
+				}
+				macroName += params[iterator];
+			}
+
+			calculateIfScope(outputValue, !isMacroDefined(macroName));
+
+			return std::vector< std::string >();
+		}
+		else if (command == "else") {
+			int ifScope = getMacroLocation("__IF_SCOPE__");
+			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
+				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
+			}
+
+			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
+			if (currentIfScope < 0) {
+				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
+			}
+
+
+			if (outputValue || macros[ifScope].definition == macros[currentIfScope].definition) {
+				outputValue = !outputValue;
+				if (outputValue) {
+					macros[currentIfScope].definition = "0";
+				}
+				else {
+					macros[currentIfScope].definition = macros[ifScope].definition;
+				}
+			}
+
+			return std::vector< std::string >();
+		}
+		else if (command == "endif") {
+			int ifScope = getMacroLocation("__IF_SCOPE__");
+			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
+				throw PreprocessorException(getLocation() + ": #endif is missing an if directive");
+			}
+
+			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
+			if (currentIfScope < 0) {
+				throw PreprocessorException(getLocation() + ": #endif is missing an if directive");
+			}
+
+
+			if (!outputValue&&macros[ifScope].definition == macros[currentIfScope].definition) {
+				outputValue = true;
+				setMacro(Macro("__CURRENT_IF_SCOPE__", "0"));
+			}
+
+			macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) - 1);
+
+			return std::vector< std::string >();
+		}else if (outputValue) {
 			if (command == "error") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #error must be called with a message");
 				throw PreprocessorException(getLocation() + ": " + params);
@@ -368,6 +468,8 @@ namespace mc {
 			else if (command == "warning") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #warning must be called with a message");
 				std::cout << getLocation() << ": " << params << std::endl;
+
+				return std::vector< std::string >();
 			}
 			else if (command == "line") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #line must be called with a line number");
@@ -399,6 +501,8 @@ namespace mc {
 
 				setMacro(Macro("__LINE__", std::to_string(line)));
 				setMacro(Macro("__FILE__", (filename)));
+
+				return std::vector< std::string >();
 			}
 			else if (command == "define") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #define must be called with a name and definition");
@@ -466,6 +570,8 @@ namespace mc {
 				}
 
 				defineMacro(Macro(macroName, macroDefinition,macroParameters,""));
+
+				return std::vector< std::string >();
 			}
 			else if (command == "undef") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #undef must be called with a macro name");
@@ -483,6 +589,8 @@ namespace mc {
 				}
 
 				undefineMacro(params);
+
+				return std::vector< std::string >();
 			}
 			else if (command == "include") {
 				if (params.empty())throw PreprocessorException(getLocation() + ": #include must be called with a filepath");
@@ -561,103 +669,19 @@ namespace mc {
 						throw PreprocessorException(getLocation()+": file with name "+term+" not found!");
 					}
 				}
+
+				return std::vector< std::string >();
+			}
+			else if (command == "version") {
+				//this is for shaders
+				std::vector < std::string > output;
+				output.push_back("#" + command + " " + params);
+
+				return output;
 			}
 		}
 
-		if (command == "if") {
-			if (params.empty())throw PreprocessorException(getLocation() + ": #if must be called with an argument");
-
-			calculateIfScope(outputValue,parseIfStatement(params));
-
-
-		}
-		else if (command == "elif") {
-			if (params.empty())throw PreprocessorException(getLocation() + ": #elif must be called with an argument");
-
-			calculateIfScope(outputValue, parseIfStatement(params));
-		}
-		else if (command == "ifdef") {
-			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef must be called with a macro name");
-
-			Index iterator;
-			std::string macroName = "";
-
-			//first we get the line number
-			for (iterator = 0; iterator < params.length(); ++iterator) {
-				if (std::isspace(params[iterator])) {
-					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
-					break;//the second word, lets go to the second loop
-				}
-				macroName += params[iterator];
-			}
-
-			calculateIfScope(outputValue, isMacroDefined(macroName));
-		}
-		else if (command == "ifndef") {
-			if (params.empty())throw PreprocessorException(getLocation() + ": #ifdef must be called with a macro name");
-
-			Index iterator;
-			std::string macroName = "";
-
-			//first we get the line number
-			for (iterator = 0; iterator < params.length(); ++iterator) {
-				if (std::isspace(params[iterator])) {
-					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
-					break;//the second word, lets go to the second loop
-				}
-				macroName += params[iterator];
-			}
-
-			calculateIfScope(outputValue, !isMacroDefined(macroName));
-		}
-		else if (command == "else") {
-			int ifScope = getMacroLocation("__IF_SCOPE__");
-			if (ifScope < 0||std::stoi(macros[ifScope].definition)<=0) {
-				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
-			}
-
-			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
-			if (currentIfScope < 0) {
-				throw PreprocessorException(getLocation() + ": #else is missing an if directive");
-			}
-
-
-			if (outputValue||macros[ifScope].definition == macros[currentIfScope].definition) {
-				outputValue = !outputValue;
-				if (outputValue) {
-					macros[currentIfScope].definition = "0";
-				}
-				else {
-					macros[currentIfScope].definition = macros[ifScope].definition;
-				}
-			}
-		}
-		else if (command == "endif") {
-			int ifScope = getMacroLocation("__IF_SCOPE__");
-			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
-				throw PreprocessorException(getLocation()+": #endif is missing an if directive");
-			}
-
-			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
-			if (currentIfScope < 0) {
-				throw PreprocessorException(getLocation() + ": #endif is missing an if directive");
-			}
-
-
-			if (!outputValue&&macros[ifScope].definition==macros[currentIfScope].definition) {
-				outputValue = true;
-				setMacro(Macro("__CURRENT_IF_SCOPE__","0"));
-			}
-
-			macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) - 1);
-		}
-
-		
-		std::vector < std::string > output;
-		output.push_back("#" + command + " " + params);
-
-		return output;
-		
+		throw PreprocessorException("Unknown directive: "+command);
 	}
 
 	int Preprocessor::getMacroLocation(const std::string & name) const

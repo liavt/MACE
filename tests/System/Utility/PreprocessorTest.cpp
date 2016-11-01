@@ -112,9 +112,7 @@ TEST_CASE("Text processing") {
 			Preprocessor p = Preprocessor("int foo = (10)");
 			REQUIRE(p.preprocess() == "int foo = (10)");
 		}
-	}
-
-	
+	}	
 }
 
 TEST_CASE("Testing #include", "[system][utility][preprocessor]") {
@@ -129,8 +127,15 @@ TEST_CASE("Testing #error", "[system][utility][preprocessor]") {
 	REQUIRE_THROWS_AS(p.preprocess(),PreprocessorException);
 }
 
-TEST_CASE("Testing conditionals", "[system][utility][preprocessor]") {
 
+TEST_CASE("#version") {
+	Preprocessor p = Preprocessor("#version 330");
+	REQUIRE(p.preprocess() == "#version 330");
+}
+
+TEST_CASE("Unknown directive") {
+	Preprocessor p = Preprocessor("#test");
+	REQUIRE_THROWS_AS(p.preprocess(), PreprocessorException);
 }
 
 }
