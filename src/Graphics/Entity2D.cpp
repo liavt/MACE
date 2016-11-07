@@ -80,13 +80,14 @@ void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size origina
 	shaders2D.init();
 
 	ssl::bindShaderProgram(shaders2D);
+
 }
 
 void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue)
 {
 };
 
-void RenderProtocol<Entity2D>::render(win::Window* win, void* e) {
+void RenderProtocol<Entity2D>::render(win::Window* win, Entity* e) {
 	Entity2D * entity = reinterpret_cast<Entity2D*>(e);
 
 	square.bind();

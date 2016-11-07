@@ -2,8 +2,8 @@ R"(
 
 #include <ssl_window>
 
-#ifndef SSL_POSITION_LIBRARY
-#define SSL_POSITION_LIBRARY
+#ifndef _SSL_POSITION_LIBRARY_
+#define _SSL_POSITION_LIBRARY_
 
 layout(location = 15) in vec3 ssl_VertexPosition;
 
@@ -16,8 +16,8 @@ layout(std140) uniform ssl_EntityData{
 	vec3 ssl_InheritedScale;
 	mat4 ssl_Rotation;
 	mat4 ssl_InheritedRotation;
-	
 };
+
 
 vec4 sslGetEntityPosition(){
 	//we do ssl_Scale first, then rotate, then translate.
@@ -28,7 +28,8 @@ vec4 sslGetEntityPosition(){
 	//applying the parent properties now
 	ssl_Position = (vec4(ssl_InheritedTranslation,1.0)+((ssl_InheritedRotation * (ssl_Position * vec4(ssl_InheritedScale,0.0)))));//what a MAD man!
 		
-	ssl_Position = ((ssl_Position)*vec4(2.0f,2.0f,1.0f,1.0f))+vec4(-0.5f,-0.5f,0,0);//we need to convert it to be 0.0 to 1.0 coordinates and the origin to be the bottom left.
+	ssl_Position.xy *= 2;
+	ssl_Position.xy -= 0.5;
 	
 	ssl_Position += vec4(ssl_Scale/2,0.0f);
 	

@@ -146,42 +146,6 @@ Matrix4f TransformMatrix::get() const
 {
 	return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
 }
-Vector3f & TransformMatrix::getRotation()
-{
-	return rotation;
-}
-Vector3f & TransformMatrix::getTranslation()
-{
-	return translation;
-}
-Vector3f & TransformMatrix::getScale()
-{
-	return scaler;
-}
-const Vector3f & TransformMatrix::getRotation() const
-{
-	return rotation;
-}
-const Vector3f & TransformMatrix::getTranslation() const
-{
-	return translation;
-}
-const Vector3f & TransformMatrix::getScale() const
-{
-	return scaler;
-}
-void TransformMatrix::setRotation(Vector3f & newVector)
-{
-	rotation = newVector;
-}
-void TransformMatrix::setTranslation(Vector3f & newVector)
-{
-	translation = newVector;
-}
-void TransformMatrix::setScale(Vector3f & newVector)
-{
-	scaler = newVector;
-}
 bool TransformMatrix::operator==(const TransformMatrix & other) const
 {
 	return other.translation==translation&&other.rotation==rotation&&other.scaler==scaler;
@@ -189,5 +153,21 @@ bool TransformMatrix::operator==(const TransformMatrix & other) const
 bool TransformMatrix::operator!=(const TransformMatrix & other) const
 {
 	return !(*this==other);
+}
+bool TransformMatrix::operator>(const TransformMatrix & other) const
+{
+	return translation > other.translation && rotation > other.rotation && scaler > other.scaler;
+}
+bool TransformMatrix::operator>=(const TransformMatrix & other) const
+{
+	return translation >= other.translation && rotation >= other.rotation && scaler >= other.scaler;
+}
+bool TransformMatrix::operator<(const TransformMatrix & other) const
+{
+	return translation < other.translation && rotation < other.rotation && scaler < other.scaler;
+}
+bool TransformMatrix::operator<=(const TransformMatrix & other) const
+{
+	return translation <= other.translation && rotation <= other.rotation && scaler <= other.scaler;
 }
 }

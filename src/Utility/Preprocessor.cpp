@@ -34,59 +34,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 
-	//todo:
-	/*
-	digraphs (see 6.4.6 of standard)
-
-	__VA_ARGS__
-
-	self-referntial macros up to 1 recurse
-
-	concat of macros
-
-	#if, !, &&, (), ||
-	#elif
-
-	#if defined () or # if defined name
-
-	#include without macro replacement
-
-	#pragma (if STDC follows, do no macro replacement)
-
-
-	MACROS (can't be undef:)
-	__FILE__ - done
-	__LINE__ - done
-	__DATE__ - done
-	__TIME__ - done
-	__STDC__ - done
-	__STDC_HOSTED__ - done
-	__BASE_FILE__ - done
-	__STDC_VERSION__ - sometimes defined
-	__MACE__ - done
-	__INCLUDE_LEVEL__ - done
-	__IF_SCOPE__ - done
-	__CURRENT_IF_SCOPE__ - done,the scope at which a conditional returned false, shouldnt really be used
-
-
-	BUGS:
-
-	#define blah 10
-	#define STRINGIFY(name) #name
-	#define foo(macro) #macro STRINGIFY(macro)
-	
-	foo(blah)
-
-	that creates "10" and "10", not "foo" and "10"
-
-	" \"hi \
-	#	error this also doesnt foo test string literals" - doesnt output second line
-	*/
-
-	/**
-	#version is also supported for glsl shaders
-	*/
-
 	//these words can't be defined or undefined
 	const std::string reservedWords[] = {
 

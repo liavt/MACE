@@ -42,7 +42,7 @@ namespace gfx {
 
 		void setUp(win::Window* win, RenderQueue* queue);
 
-		void render(win::Window* win,void* entity);
+		void render(win::Window* win, Entity* entity);
 
 		void tearDown(win::Window* win, RenderQueue* queue);
 
@@ -50,7 +50,7 @@ namespace gfx {
 	private:
 
 		ShaderProgram shaders2D = ShaderProgram();
-		VAO square = VAO();
+		VertexArray square = VertexArray();
 	};
 
 }//gfx

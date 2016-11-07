@@ -15,24 +15,24 @@ namespace mc {
 namespace gfx {
 
 
-VAO::~VAO()
+VertexArray::~VertexArray()
 {
 }
 
-void VAO::bind()
+void VertexArray::bind()
 {
 	glBindVertexArray(vaoID);
 }
-void VAO::unbind()
+void VertexArray::unbind()
 {
 	glBindVertexArray(0);
 }
-void VAO::draw(GLenum type)
+void VertexArray::draw(GLenum type)
 {
 	glDrawElements(type, indiceNumber, GL_UNSIGNED_INT,0);
 }
 
-void VAO::loadVertices(const Size && verticeSize, const GLfloat vertices[], const Index && location, const Size && attributeSize)
+void VertexArray::loadVertices(const Size && verticeSize, const GLfloat vertices[], const Index && location, const Size && attributeSize)
 {
 	vaoID = createID();
 	vertexNumber = verticeSize;
@@ -41,7 +41,7 @@ void VAO::loadVertices(const Size && verticeSize, const GLfloat vertices[], cons
 	storeDataInAttributeList(std::move(vertexNumber), vertices, std::move(location), std::move(attributeSize));
 }
 
-void VAO::loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType)
+void VertexArray::loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType)
 {
 	bind();
 	Index indicesID;
@@ -60,14 +60,14 @@ void VAO::loadIndices(const Size&& indiceNum, const GLuint indices[], const GLen
 
 	unbind();
 }
-Index VAO::createID()
+Index VertexArray::createID()
 {
 	Index id;
 	glGenVertexArrays(1, &id);
 	checkGLError();
 	return id;
 }
-void VAO::storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location , const Size&& attributeSize)
+void VertexArray::storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location , const Size&& attributeSize)
 {
 	bind();
 

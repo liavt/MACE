@@ -28,9 +28,28 @@ using RenderQueue = std::deque<std::pair<Index, Entity*>>;
 //forward define for friends
 class Renderer;
 
+/**
+Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files.
+*/
+namespace ssl {
+	void init(const Size& originalWidth, const Size& originalHeight);
+	void setUp(win::Window* win);
+	void tearDown(win::Window* win);
+	void destroy();
+	void resize(const Size& width, const Size& height);
+
+	void bindEntity(const GraphicsEntity* en);
+	void bindShaderProgram(ShaderProgram& prog);
+
+	std::string processShader(const std::string& shader, const GLenum& type);
+	const mc::Preprocessor& getSSLPreprocessor();
+};
+
 //we declare RenderImpl which RenderProtocol extends. WE can't store a pointer to RenderProtocol (because its templated), but we can point to RenderImpl
 class RenderImpl {
 	friend class Renderer;
+	//ssl::init needs to be friends to access the index variable
+	friend void ssl::init(const Size&, const Size&);
 public:
 	RenderImpl();
 	virtual ~RenderImpl() = default;
@@ -39,7 +58,7 @@ public:
 
 	virtual void init(const Size originalWidth, const Size originalHeight) = 0;
 	virtual void setUp(win::Window* win, RenderQueue* queue) = 0;
-	virtual void render(win::Window* win,void* entity)=0;
+	virtual void render(win::Window* win, Entity* entity)=0;
 	virtual void tearDown(win::Window* win, RenderQueue* queue) = 0;
 	virtual void destroy() = 0;
 private:
@@ -55,29 +74,14 @@ public:
 
 	void init(const Size originalWidth, const Size originalHeight) {}
 	void setUp(win::Window* win, RenderQueue* queue) {};
-	void render(win::Window* win,void* entity) {};
-	void tearDown(win::Window* win,RenderQueue* queue) {};
+	void render(win::Window* win, Entity* entity) {};
+	void tearDown(win::Window* win, RenderQueue* queue) {};
 	void destroy() {};
 };
 
-/**
-Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files.
-*/
-namespace ssl {
-	void init(const Size& originalWidth, const Size& originalHeight);
-	void setUp(win::Window* win);
-	void tearDown(win::Window* win);
-	void destroy();
-	void resize(const Size& width, const Size& height);
-
-	void bindEntity(const GraphicsEntity* en);
-	void bindShaderProgram(const ShaderProgram& prog);
-
-	std::string processShader(const std::string& shader, const GLenum& type);
-	const mc::Preprocessor& getSSLPreprocessor();
-};
-
 class Renderer {
+	//needs to access registerProtocol
+	friend void ssl::init(const Size&, const Size&);
 public:
 
 	static void resize(const Size width, const Size hieght);
@@ -90,8 +94,10 @@ public:
 	static void queue(T* e) {
 		if (e == nullptr || e == NULL)throw NullPointerException("Input pointer to an entity must not be null in queue()");
 		if (RenderProtocol<T>::index == -1)registerProtocol<T>();
-		renderQueue.push_back(std::pair<Index, Entity*>(RenderProtocol<T>::index, e));
+		pushEntity(RenderProtocol<T>::index,e);
 	};
+
+	static Size numberOfProtocols();
 
 	static void tearDown(win::Window* win);
 
@@ -101,22 +107,23 @@ public:
 
 	static void setRefreshColor(const float r, const float g, const float b, const float a=1.0f);
 	static void setRefreshColor(const Color& c);
+
+	static Size getOriginalWidth();
+	static Size getOriginalHeight();
 private:
 	Renderer() = delete;
 	~Renderer() = delete;
 
-	static RenderQueue renderQueue;
-	static std::vector<RenderImpl*> protocols;
-
-	static Size originalWidth, originalHeight;
+	static void pushEntity(Index protocol, Entity*  entity);
+	static void pushProtocol(RenderImpl* protocol);
 
 	template<typename T>
 	static void registerProtocol() {
 		//in destroy(), this memory is deleted
 		RenderImpl* protocol = new RenderProtocol<T>();
-		protocol->init(originalWidth, originalHeight);
-		protocols.push_back(protocol);
-		RenderProtocol<T>::index = protocols.size() - 1;
+		protocol->init(getOriginalWidth(), getOriginalHeight());
+		pushProtocol(protocol);
+		RenderProtocol<T>::index = numberOfProtocols() - 1;
 	}
 };//Renderer
 

@@ -15,9 +15,9 @@ namespace mc {
 namespace gfx{
 
 template<GLenum bufferType>
-class BufferObject {
+class Buffer {
 public:
-	virtual ~BufferObject() {
+	virtual ~Buffer() {
 	};
 
 	void bind() const{
@@ -53,7 +53,7 @@ public:
 	};
 
 	template<GLenum otherType>
-	void copyData(BufferObject<otherType> other, GLsizeiptr size, Index readOffset = 0, Index writeOffset = 0) {
+	void copyData(Buffer<otherType> other, GLsizeiptr size, Index readOffset = 0, Index writeOffset = 0) {
 		glCopyBufferSubData(id,other.id,readOffset,writeOffset,size);
 	};
 
@@ -70,9 +70,9 @@ public:
 	};
 protected:
 	Index id=0;
-};//BufferObject
+};//Buffer
 
-class UBO : public BufferObject<GL_UNIFORM_BUFFER> {
+class UniformBuffer : public Buffer<GL_UNIFORM_BUFFER> {
 public:
 	void setLocation(const Index location);
 	Index getLocation();
@@ -84,9 +84,9 @@ public:
 
 private:
 	Index location = 0;
-};//UBO
+};//UniformBuffer
 
-class RBO {
+class RenderBuffer {
 public:
 	void init();
 	void destroy();
@@ -102,9 +102,9 @@ public:
 	Index getLocation() const;
 private:
 	Index location = 0;
-};
+};//RenderBuffer
 
-class FBO {
+class FrameBuffer {
 public:
 	void init();
 	void destroy();
@@ -117,7 +117,7 @@ public:
 	void attachTexture2D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level);
 	void attachTextureLayer(const GLenum& target, const GLenum& attachment, const GLuint& texture, const GLint& level, const GLint& layer);
 
-	void attachRenderbuffer(const GLenum& target, const GLenum& attachment, const RBO& buffer);
+	void attachRenderbuffer(const GLenum& target, const GLenum& attachment, const RenderBuffer& buffer);
 
 	void setParameter(const GLenum& paramName, const GLint& value);
 
@@ -130,7 +130,7 @@ public:
 	Index getLocation() const;
 private:
 	Index location = 0;
-};
+};//FrameBuffer
 
 }//gfx
 }//mc

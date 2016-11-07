@@ -7,13 +7,13 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#define MACE_ENTITY2D_EXPOSE_X_MACRO
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/Buffer.h>
 #include <MACE/Graphics/Model.h>
+#include <MACE/Graphics/Entity2D.h>
 #include <MACE/System/Utility/Preprocessor.h>
-//we need to include string for memcpy
+//we need to include cstring for memcpy
 #include <cstring>
 
 namespace mc {
@@ -21,19 +21,19 @@ namespace gfx {
 
 int RenderImpl::index = -1;
 
-RenderQueue Renderer::renderQueue = RenderQueue();
-std::vector<RenderImpl*> Renderer::protocols = std::vector<RenderImpl*>();
+RenderQueue renderQueue = RenderQueue();
+std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
 
-Size Renderer::originalWidth = 0;
-Size Renderer::originalHeight = 0;
+Size originalWidth = 0;
+Size originalHeight = 0;
 
 //this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
 Index entityIndex = 0;
 
 void Renderer::init(const Size width, const Size height)
 {
-	Renderer::originalWidth = width;
-	Renderer::originalHeight = height;
+	originalWidth = width;
+	originalHeight = height;
 
 	ssl::init(width, height);
 }//init
@@ -54,7 +54,12 @@ void Renderer::resize(const Size width, const Size height)
 	for (Index i = 0; i < protocols.size(); ++i) {
 		protocols[i]->resize(width,height);
 	}
-}//tearDown
+}
+Size Renderer::numberOfProtocols()
+{
+	return protocols.size();
+}
+//tearDown
 void Renderer::tearDown(win::Window* win)
 {
 	for (Index i = 0; i < protocols.size(); ++i) {
@@ -85,14 +90,35 @@ void Renderer::destroy()
 
 	ssl::destroy();
 }//destroy()
+
 void Renderer::setRefreshColor(const float r, const float g, const float b, const float a)
 {
 	glClearColor(r,g,b,a);
 }//setRefreshColor(r,g,b,a)
+
 void Renderer::setRefreshColor(const Color & c)
 {
 	setRefreshColor(c.r,c.g,c.b,c.a);
 }//setRefreshColor(Color)
+
+Size Renderer::getOriginalWidth() {
+	return originalWidth;
+}//getOriginalWidth()
+
+Size Renderer::getOriginalHeight() {
+	return originalHeight;
+}//getOriginalHeight()
+
+void Renderer::pushEntity(Index protocol, Entity * entity)
+{
+	renderQueue.push_back(std::pair<Index, Entity*>(protocol, entity));
+}//pushEntity(protocol, entity)
+
+void Renderer::pushProtocol(RenderImpl * protocol)
+{
+	protocols.push_back(protocol);
+}//pushProtocol(protocol)
+
 
 
 RenderImpl::RenderImpl()
@@ -104,7 +130,7 @@ namespace ssl {
 //constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
 //how many floats in the windowData uniform buffer
-#define MACE_WINDOW_DATA_BUFFER_SIZE 6
+#define MACE_WINDOW_DATA_BUFFER_SIZE 4
 //which binding location the windowData uniform buffer should be bound to
 #define MACE_WINDOW_DATA_LOCATION 0
 
@@ -141,41 +167,21 @@ mc::IncludeString mouseLibrary = mc::IncludeString({
 mc::IncludeString sslLibrary = mc::IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl.glsl>
 }, "ssl");
+
 //ssl buffer objects
-UBO windowData = UBO();
-UBO paintData = UBO();
-UBO entityData = UBO();
+UniformBuffer windowData = UniformBuffer();
+UniformBuffer paintData = UniformBuffer();
+UniformBuffer entityData = UniformBuffer();
 
 //fbo resources
-FBO frameBuffer = FBO();
-RBO depthBuffer = RBO();
+FrameBuffer frameBuffer = FrameBuffer();
+RenderBuffer depthBuffer = RenderBuffer();
 
 Texture sceneTexture;
+Texture idTexture;
 
-//this is for rendering the fbo
-VAO renderBuffer = VAO();
-
-//this is from rendering the fbo as well
-ShaderProgram renderProgram = ShaderProgram();
-
-const GLfloat squareVertices[12] = {
-	-0.5f,-0.5f,0.0f,
-	-0.5f,0.5f,0.0f,
-	0.5f,0.5f,0.0f,
-	0.5f,-0.5f,0.0f
-};
-
-const GLfloat squareTextureCoordinates[8] = {
-	0.0f,1.0f,
-	0.0f,0.0f,
-	1.0f,0.0f,
-	1.0f,1.0f,
-};
-
-const GLuint squareIndices[6] = {
-	0,1,3,
-	1,2,3
-};
+Index protocol;
+Image scene = Image();
 
 void init(const Size & originalWidth, const Size & originalHeight)
 {
@@ -185,7 +191,7 @@ void init(const Size & originalWidth, const Size & originalHeight)
 
 	windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
 	windowData.bind();
-	float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = { static_cast<float>(originalWidth), static_cast<float>(originalHeight),static_cast<float>(originalWidth),static_cast<float>(originalHeight),0,0 };
+	float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = { static_cast<float>(originalWidth), static_cast<float>(originalHeight),static_cast<float>(originalWidth),static_cast<float>(originalHeight) };
 	windowData.setData(sizeof(GLfloat)*MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
 	windowData.unbind();
 
@@ -201,17 +207,13 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	entityData.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
 	entityData.unbind();
 
-	renderProgram.createVertex({
-#		include <MACE/Graphics/Shaders/scene.v.glsl>
-	});
-	renderProgram.createFragment({
-#		include <MACE/Graphics/Shaders/scene.f.glsl>
-	});
-	renderProgram.init();
-
 	sceneTexture = Texture(NULL, originalWidth, originalHeight, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 	sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	idTexture = Texture(NULL, originalWidth, originalHeight, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+	idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	depthBuffer.init();
 	depthBuffer.bind();
@@ -220,29 +222,11 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	//for our custom FBO
 	frameBuffer.init();
 	frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
+	frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
 	frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-	GLenum buffers[1] = { GL_COLOR_ATTACHMENT0 };
-	frameBuffer.setDrawBuffers(1, buffers);
-
-	const GLfloat squareVertices[12] = {
-		-1.0f,-1.0f,0.0f,
-		-1.0f,1.0f,0.0f,
-		1.0f,1.0f,0.0f,
-		1.0f,-1.0f,0.0f
-	};
-
-	const GLfloat squareTextureCoordinates[8] = {
-		0.0f,1.0f,
-		0.0f,0.0f,
-		1.0f,0.0f,
-		1.0f,1.0f,
-	};
-
-	const GLuint squareIndices[6] = {
-		0,1,3,
-		1,2,3
-	};
+	GLenum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	frameBuffer.setDrawBuffers(2, buffers);
 
 	if (frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -250,9 +234,14 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	}
 	glViewport(0, 0, originalWidth, originalHeight);
 
-	renderBuffer.loadVertices(4, squareVertices,0,3);
-	renderBuffer.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
-	renderBuffer.loadIndices(6, squareIndices);
+	scene.setHeight(1);
+	scene.setWidth(1);
+	scene.setX(0.5f);
+	scene.setY(0.5f);
+	scene.setTexture(sceneTexture);
+
+	Renderer::registerProtocol<Entity2D>();
+	protocol = RenderProtocol<Entity2D>::index;
 
 	//gl states
 	glEnable(GL_BLEND);
@@ -263,7 +252,13 @@ void init(const Size & originalWidth, const Size & originalHeight)
 
 void setUp(win::Window * win)
 {
-	GLfloat mouseX, mouseY;
+	frameBuffer.bind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void tearDown(win::Window * win)
+{
+	int mouseX, mouseY;
 
 	{
 		//we want mouseX and mouseY as floats, so we temporarly create some doubles (hence the {}) and then we cast it float.
@@ -271,18 +266,28 @@ void setUp(win::Window * win)
 
 		glfwGetCursorPos(win->getGLFWWindow(), &tempMouseX, &tempMouseY);
 
-		mouseX = static_cast<GLfloat>(mc::math::floor(tempMouseX));
-		mouseY = static_cast<GLfloat>(mc::math::floor(tempMouseY));
+		mouseX = static_cast<int>(mc::math::floor(tempMouseX));
+		mouseY = static_cast<int>(mc::math::floor(tempMouseY));
 	}
 
-	windowData.bind();
-	GLfloat* mappedWindowData = static_cast<GLfloat*>(windowData.mapRange(4 * sizeof(GLfloat), 2, GL_MAP_WRITE_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it
-	std::memcpy(mappedWindowData, &mouseX, sizeof(mouseY));
-	std::memcpy(mappedWindowData + 1, &mouseY, sizeof(mouseY));
-	windowData.unmap();
+	unsigned int pixel = 0;
+	glReadBuffer(GL_COLOR_ATTACHMENT1);
+	glReadPixels(mouseX, mouseY, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
-	frameBuffer.bind();
 	frameBuffer.unbind();
+
+	protocols[protocol]->render(win, &scene);
+}
+
+void destroy()
+{
+	windowData.destroy();
+	entityData.destroy();
+	paintData.destroy();
+
+	depthBuffer.destroy();
+	frameBuffer.destroy();
+
 }
 
 void bindEntity(const GraphicsEntity * entity)
@@ -350,7 +355,7 @@ void bindEntity(const GraphicsEntity * entity)
 	tex.bind();
 }
 
-void bindShaderProgram(const ShaderProgram & prog)
+void bindShaderProgram(ShaderProgram & prog)
 {
 	windowData.bindToUniformBlock(prog.getProgramID(), "ssl_WindowData");
 	entityData.bindToUniformBlock(prog.getProgramID(), "ssl_EntityData");
@@ -391,28 +396,6 @@ const mc::Preprocessor& getSSLPreprocessor()
 		sslPreprocessor.addInclude(sslLibrary);
 	}
 	return sslPreprocessor;
-}
-
-void tearDown(win::Window * win)
-{
-	frameBuffer.unbind();
-
-	sceneTexture.bind();
-	renderProgram.bind();
-	renderBuffer.bind();
-	
-	renderBuffer.draw();
-}
-
-void destroy()
-{
-	windowData.destroy();
-	entityData.destroy();
-	paintData.destroy();
-
-	depthBuffer.destroy();
-	frameBuffer.destroy();
-	renderProgram.destroy();
 }
 
 #undef MACE_WINDOW_DATA_BUFFER_SIZE

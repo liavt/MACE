@@ -14,12 +14,12 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 namespace gfx {
 
-class VAO {
+class VertexArray {
 public:
 	Index vaoID;
 	Size vertexNumber, indiceNumber;
 
-	~VAO();
+	~VertexArray();
 
 	void bind();
 	void unbind();
@@ -32,7 +32,7 @@ public:
 	void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
 private:
 	Index createID();
-};//VAO
+};//VertexArray
 
 }//gfx
 }//mc
