@@ -67,24 +67,24 @@ namespace mc{
 			}
 		};
 
-		class DummyAction : public mc::gfx::Action {
+		class DummyAction : public mc::gfx::Component {
 		public:
 			int updates;
 			bool destroySelf = false;
 			bool isInit = false;
 			bool destroyed = false;
 			
-			void init(Entity& e) {
+			void init(Entity* e) {
 				isInit = true;
 			}
 
-			bool update(Entity& e) {
+			bool update(Entity* e) {
 				updates++;
 				if (destroySelf)return true;
 				else return false;
 			}
 
-			void destroy(Entity& e) {
+			void destroy(Entity* e) {
 				destroyed = true;
 			}
 		};
@@ -196,7 +196,7 @@ namespace mc{
 				REQUIRE_FALSE(a.destroySelf);
 			}
 
-			e.addAction(a);
+			e.addComponent(a);
 			c.addChild(e);
 
 			SECTION("Testing if it gets init") {
