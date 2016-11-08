@@ -73,8 +73,12 @@ void Renderer::renderFrame(win::Window* win)
 {
 	setUp(win);
 	for (RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end();++pair) {
+		Entity* en = pair->second;
+		en->setProperty(ENTITY_HOVERED, false);
+		en->setProperty(ENTITY_CLICKED, false);
+
 		entityIndex = pair - renderQueue.begin();
-		protocols[pair->first]->render(win, pair->second);
+		protocols[pair->first]->render(win, en);
 	}
 	tearDown(win);
 	renderQueue.clear();
@@ -183,6 +187,37 @@ Texture idTexture;
 Index protocol;
 Image scene = Image();
 
+void generateFramebuffer(const Size& width, const Size& height) {
+	sceneTexture.bind();
+	sceneTexture.setData(NULL, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+	sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	idTexture.bind();
+	idTexture.setData(NULL, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+	idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	depthBuffer.init();
+	depthBuffer.bind();
+	depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+
+	//for our custom FBO
+	frameBuffer.init();
+	frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
+	frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
+	frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
+
+	GLenum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	frameBuffer.setDrawBuffers(2, buffers);
+
+	if (frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
+	}
+	glViewport(0, 0, width, height);
+}
+
 void init(const Size & originalWidth, const Size & originalHeight)
 {
 	paintData.init();
@@ -207,37 +242,18 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	entityData.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
 	entityData.unbind();
 
-	sceneTexture = Texture(NULL, originalWidth, originalHeight, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-	sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//initialize to null so it gets an id
+	sceneTexture = Texture(NULL, 0, 0);
+	idTexture = Texture(NULL, 0, 0);
 
-	idTexture = Texture(NULL, originalWidth, originalHeight, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
-	idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	depthBuffer.init();
-	depthBuffer.bind();
-	depthBuffer.setStorage(GL_DEPTH_COMPONENT, originalWidth, originalHeight);
-
-	//for our custom FBO
-	frameBuffer.init();
-	frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
-	frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
-	frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
-
-	GLenum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-	frameBuffer.setDrawBuffers(2, buffers);
-
-	if (frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
-	}
-	glViewport(0, 0, originalWidth, originalHeight);
+	generateFramebuffer(originalWidth, originalHeight);
 
 	scene.setHeight(1);
 	scene.setWidth(1);
 	scene.setX(0.5f);
 	scene.setY(0.5f);
+	scene.setProperty(ENTITY_STRETCH_X, true);
+	scene.setProperty(ENTITY_STRETCH_Y, true);
 	scene.setTexture(sceneTexture);
 
 	Renderer::registerProtocol<Entity2D>();
@@ -270,9 +286,18 @@ void tearDown(win::Window * win)
 		mouseY = static_cast<int>(mc::math::floor(tempMouseY));
 	}
 
-	unsigned int pixel = 0;
+	Index pixel = 0;
 	glReadBuffer(GL_COLOR_ATTACHMENT1);
 	glReadPixels(mouseX, mouseY, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
+
+	if(pixel>0){
+		//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex
+		--pixel;
+		renderQueue[pixel].second->setProperty(ENTITY_HOVERED, true);
+
+		int state = glfwGetMouseButton(win->getGLFWWindow(), GLFW_MOUSE_BUTTON_LEFT);
+		renderQueue[pixel].second->setProperty(ENTITY_CLICKED, state == GLFW_PRESS);
+	}
 
 	frameBuffer.unbind();
 
@@ -297,7 +322,7 @@ void bindEntity(const GraphicsEntity * entity)
 
 	paintData.bind();
 	const Color& paint = tex.getPaint();
-	const float data[6] = { paint.r,paint.g,paint.b,paint.a,tex.getOpacity(), static_cast<float>(entityIndex) };
+	const float data[6] = { paint.r,paint.g,paint.b,paint.a,tex.getOpacity(), static_cast<float>(entityIndex+1) };
 	paintData.setData(sizeof(data), data, GL_STATIC_DRAW);
 	paintData.bindForRender();
 
@@ -368,6 +393,11 @@ void resize(const Size & width, const Size & height)
 	float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
 	windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
 	windowData.unbind();
+
+	depthBuffer.destroy();
+	frameBuffer.destroy();
+
+	generateFramebuffer(width, height);
 }
 
 std::string processShader(const std::string & shader, const GLenum& type)

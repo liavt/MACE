@@ -31,7 +31,7 @@ void Texture::generateTexture()
 
 Texture::Texture()
 {
-	id = 0;
+	this->id = 0;
 }
 
 Texture::Texture(Index id)

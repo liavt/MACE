@@ -7,13 +7,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/Graphics/Actions.h>
+#include <MACE/Graphics/Components.h>
 
 namespace mc {
-	namespace gfx {
-		void TransformationAction::init(Entity & e)
-		{
+namespace gfx {
 
-		}
-	}
-}
+
+}//gfx
+}//mc

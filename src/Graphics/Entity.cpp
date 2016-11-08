@@ -32,7 +32,6 @@ void Entity::initChildren()
 {
 	for (Index i = 0; i < children.size(); ++i) {
 		if (!children[i]->getProperty(ENTITY_INIT))children[i]->init();
-
 	}
 }
 
@@ -101,7 +100,7 @@ void Entity::render()
 {
 	//check if we can render
 	if(!getProperty(ENTITY_RENDER_DISABLED)){
-		//we want to render as fast as possible, so we avoid doing anything but rendering here. actions and inheritence is done during update()
+		//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
 		customRender();
 		renderChildren();
 	}
@@ -182,27 +181,26 @@ void Entity::kill() {
 	//need to verify if getParent().removeEntity(this) needs to be called here
 }
 
-void Entity::addAction(Action & action)
+void Entity::addComponent(Component & action)
 {
-	actions.push_back(&action);
-	action.init(*this);
+	components.push_back(&action);
+	action.init(this);
 }
 
-std::vector<Action*> Entity::getActions()
+std::vector<Component*> Entity::getComponents()
 {
-	return actions;
+	return components;
 }
 
 void Entity::update() {
 	//check if we can update
 	if (!getProperty(ENTITY_UPDATE_DISABLED)) {
-
-		//update the actions of this entity
-		for (Index i = 0; i < actions.size();i++) {
-			Action* a = actions.at(i);
-			if (a->update(*this)) {
-				a->destroy(*this);
-				actions.erase(actions.begin() + i);
+		//update the components of this entity
+		for (Index i = 0; i < components.size();i++) {
+			Component* a = components.at(i);
+			if (a->update(this)) {
+				a->destroy(this);
+				components.erase(components.begin() + i);
 				i--;//update the index after a removal, so we dont get an exception for accessing deleted memory
 			}
 		}
@@ -223,10 +221,10 @@ void Entity::init()
 void Entity::destroy()
 {
 	//destroy each action
-	for (Index i = 0; i < actions.size();i++) {
-		actions[i]->destroy(*this);
+	for (Index i = 0; i < components.size();i++) {
+		components[i]->destroy(this);
 	}
-	actions.clear();
+	components.clear();
 	destroyChildren();
 	customDestroy();
 }
@@ -322,7 +320,7 @@ bool Entity::operator==(Entity& other) const {
 	if (other.getBaseTransformation() != getBaseTransformation()) {
 		return false;
 	}
-	if (other.actions!=actions) {
+	if (other.components!=components) {
 		return false;
 	}
 	return children == other.children;
@@ -397,7 +395,6 @@ void Entity::setY(const float & newY)
 {
 	baseTransformation.translation[1] = newY;
 }
-
 void CallbackEntity::customInit()
 {
 	initCallback();

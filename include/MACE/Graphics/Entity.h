@@ -59,16 +59,28 @@ Flag representing whether an Entity's X position should move when it's parent is
 */
 const Byte ENTITY_STRETCH_Y = 5;
 
+/**
+Flag representing whether an entity has been hovered over
+@see ENTITY_CLICKED
+*/
+const Byte ENTITY_HOVERED = 6;
 
-//forward-defining entity for action
+/**
+Flag representing whether an entity has been clicked on.
+@see ENTITY_HOVERED
+*/
+const Byte ENTITY_CLICKED = 7;
+
+
+//forward-defining entity for component
 class Entity;
 
-class Action {
+class Component {
 public:
-	virtual void init(Entity& e) = 0;
-	virtual bool update(Entity& e) = 0;
-	virtual void destroy(Entity& e) = 0;
-};//Action
+	virtual void init(Entity* e) = 0;
+	virtual bool update(Entity* e) = 0;
+	virtual void destroy(Entity* e) = 0;
+};//Component
 
 
 /**
@@ -198,24 +210,24 @@ public:
 	*/
 	Entity& operator[](Index i);//get children via [i]
 
-								/**
-								`const` version of {@link #operator[](Index i)}
-								@param i Location of an `Entity`
-								@return Reference to the `Entity` located at `i`
-								@see #getChild(Index) const
-								@see #indexOf(const Entity&) const
-								*/
+	/**
+	`const` version of {@link #operator[](Index i)}
+	@param i Location of an `Entity`
+	@return Reference to the `Entity` located at `i`
+	@see #getChild(Index) const
+	@see #indexOf(const Entity&) const
+	*/
 	const Entity& operator[](Index i) const;//get children via [i]
 
-											/**
+	/**
 
-											Retrieves a child at a certain index.
-											@param i Index of the `Entity`
-											@return Reference to the `Entity` located at `i`
-											@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
-											@see #operator[]
-											@see #indexOf(const Entity&) const
-											*/
+	Retrieves a child at a certain index.
+	@param i Index of the `Entity`
+	@return Reference to the `Entity` located at `i`
+	@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
+	@see #operator[]
+	@see #indexOf(const Entity&) const
+	*/
 	Entity& getChild(Index i);
 	/**
 	`const` version of {@link #getChild(Index)}
@@ -330,6 +342,32 @@ public:
 	void addChild(Entity& e);
 
 	/**
+	Automatically called when `ENTITY_PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
+	@see getParent()
+	@todo Verify if getParent().remove(this) needs to be called
+	*/
+	void kill();
+
+	void addComponent(Component& action);
+	std::vector<Component*> getComponents();
+
+	float& getWidth();
+	const float& getWidth() const;
+	void setWidth(const float& s);
+
+	float& getHeight();
+	const float& getHeight() const;
+	void setHeight(const float& s);
+
+	float& getX();
+	const float& getX() const;
+	void setX(const float& newX);
+
+	float& getY();
+	const float& getY() const;
+	void setY(const float& newY);
+
+	/**
 	Compares if 2 `Entities` have the same children, parent, and properties.
 	@param other An `Entity` compare this one to
 	@return `true` if they are equal
@@ -349,32 +387,6 @@ public:
 	@see operator==
 	*/
 	bool operator!=(Entity& other) const;
-
-	/**
-	Automatically called when `ENTITY_PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
-	@see getParent()
-	@todo Verify if getParent().remove(this) needs to be called
-	*/
-	void kill();
-
-	void addAction(Action& action);
-	std::vector<Action*> getActions();
-
-	float& getWidth();
-	const float& getWidth() const;
-	void setWidth(const float& s);
-
-	float& getHeight();
-	const float& getHeight() const;
-	void setHeight(const float& s);
-
-	float& getX();
-	const float& getX() const;
-	void setX(const float& newX);
-
-	float& getY();
-	const float& getY() const;
-	void setY(const float& newY);
 protected:
 	TransformMatrix baseTransformation = TransformMatrix();
 
@@ -408,11 +420,10 @@ private:
 
 	EntityProperties properties = 0;
 
-	std::vector<Action*> actions = std::vector<Action*>();
-
+	std::vector<Component*> components = std::vector<Component*>();
 
 	/**
-	Calls `update()` on all of it's children and actions.
+	Calls `update()` on all of it's children and components.
 	*/
 	virtual void updateChildren();
 	/**
@@ -420,7 +431,7 @@ private:
 	*/
 	void initChildren();
 	/**
-	Calls `destroy()` on all of it's children and actions.
+	Calls `destroy()` on all of it's children and components.
 	*/
 	void destroyChildren();//think of the children!
 	/**
