@@ -10,7 +10,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/Buffer.h>
-#include <MACE/Graphics/Model.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/System/Utility/Preprocessor.h>
 //we need to include cstring for memcpy
@@ -181,22 +180,17 @@ UniformBuffer entityData = UniformBuffer();
 FrameBuffer frameBuffer = FrameBuffer();
 RenderBuffer depthBuffer = RenderBuffer();
 
-Texture sceneTexture;
-Texture idTexture;
+Texture sceneTexture = Texture();
+Texture idTexture = Texture();
 
 Index protocol;
 Image scene = Image();
 
 void generateFramebuffer(const Size& width, const Size& height) {
-	sceneTexture.bind();
-	sceneTexture.setData(NULL, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-	sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	idTexture.bind();
+	sceneTexture.setData(NULL, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+
 	idTexture.setData(NULL, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
-	idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	depthBuffer.init();
 	depthBuffer.bind();
@@ -242,9 +236,13 @@ void init(const Size & originalWidth, const Size & originalHeight)
 	entityData.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
 	entityData.unbind();
 
-	//initialize to null so it gets an id
-	sceneTexture = Texture(NULL, 0, 0);
-	idTexture = Texture(NULL, 0, 0);
+	sceneTexture.init();
+	sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	idTexture.init();
+	idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	generateFramebuffer(originalWidth, originalHeight);
 
@@ -312,6 +310,9 @@ void destroy()
 
 	depthBuffer.destroy();
 	frameBuffer.destroy();
+
+	sceneTexture.destroy();
+	idTexture.destroy();
 
 }
 

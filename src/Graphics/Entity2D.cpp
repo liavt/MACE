@@ -68,6 +68,8 @@ void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size origina
 		1,2,3
 	};
 
+	square.init();
+
 	//vao loading
 	square.loadVertices(4, squareVertices, 15, 3);
 	square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
@@ -104,6 +106,7 @@ void RenderProtocol<Entity2D>::tearDown(win::Window* win, RenderQueue* queue) {}
 
 void RenderProtocol<Entity2D>::destroy() {
 	shaders2D.destroy();
+	square.destroy();
 }
 
 }//gfx

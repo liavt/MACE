@@ -10,29 +10,61 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #include <GL/glew.h>
 #include <MACE/System/Constants.h>
+#include <MACE/System/Utility/Color.h>
 
 namespace mc {
 namespace gfx{
 
+class Object {
+public:
+	virtual ~Object() = default;
+
+	virtual void init() = 0;
+	virtual void destroy() = 0;
+
+	void bind() const;
+	void unbind() const;
+
+	virtual bool isCreated() const = 0;
+
+	Index getID() const;
+
+protected:
+	Index id = 0;
+
+	virtual void bindIndex(const Index& id) const = 0;
+};
+
+class VertexArray : public Object{
+public:
+	Size vertexNumber, indiceNumber;
+
+	~VertexArray();
+
+	void init();
+	void destroy();
+
+	bool isCreated() const;
+
+	void draw(const GLenum type = GL_TRIANGLES) const;
+
+	void loadVertices(const Size&& verticeSize, const GLfloat vertices[], const Index&& location = 15, const Size&& attributeSize = 3);
+	void loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType = GL_DYNAMIC_DRAW);
+
+	void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
+
+private:
+	void bindIndex(const Index& id) const;
+};//VertexArray
+
 template<GLenum bufferType>
-class Buffer {
+class Buffer : public Object{
 public:
 	virtual ~Buffer() {
 	};
 
-	void bind() const{
-		glBindBuffer(bufferType, id);
-	};
-	void unbind() const {
-		glBindBuffer(bufferType, 0);
-	};
-
-	Index getID() const {
-		return id;
-	};
-
-	GLboolean isBuffer() const {
-		return glIsBuffer(id);
+	bool isCreated() const {
+		return glIsBuffer(id)==1;
 	};
 
 	void init() {
@@ -68,8 +100,10 @@ public:
 	GLboolean unmap() {
 		return glUnmapBuffer(bufferType);
 	};
-protected:
-	Index id=0;
+private:
+	void bindIndex(const Index& id) const {
+		glBindBuffer(bufferType, id);
+	}
 };//Buffer
 
 class UniformBuffer : public Buffer<GL_UNIFORM_BUFFER> {
@@ -86,31 +120,23 @@ private:
 	Index location = 0;
 };//UniformBuffer
 
-class RenderBuffer {
+class RenderBuffer : public Object{
 public:
 	void init();
 	void destroy();
-
-	void bind() const;
-	void unbind() const;
 
 	void setStorage(const GLenum& format, const GLsizei& width, const GLsizei& height);
 	void setStorageMultisampled(const GLsizei& samples, const GLenum& format, const GLsizei& width, const GLsizei& height);
 
-	GLboolean isCreated() const;
-
-	Index getLocation() const;
+	bool isCreated() const;
 private:
-	Index location = 0;
+	void bindIndex(const Index& id) const;
 };//RenderBuffer
 
-class FrameBuffer {
+class FrameBuffer : public Object{
 public:
 	void init();
 	void destroy();
-
-	void bind(const GLenum& target = GL_FRAMEBUFFER) const;
-	void unbind() const;
 
 	void attachTexture(const GLenum& target, const GLenum& attachment, const GLuint& textureID, const GLint& level);
 	void attachTexture1D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level);
@@ -123,14 +149,45 @@ public:
 
 	void setDrawBuffers(const Size& arrSize, const GLenum* buffers);
 
-	GLboolean isCreated() const;
+	bool isCreated() const;
 
 	GLenum checkStatus(const GLenum& target);
-
-	Index getLocation() const;
 private:
-	Index location = 0;
+	void bindIndex(const Index& id) const;
 };//FrameBuffer
+
+class Texture : public Object{
+public:
+	void init();
+	void destroy();
+
+	void setData(const void * data, Size width, Size height, GLenum type = GL_FLOAT, GLenum format = GL_RGB, GLenum internalFormat = GL_RGB, Index mipmapLevel = 0);
+
+	void loadFile(const char* file);
+
+	void setTarget(const GLenum target);
+	GLenum getTarget();
+
+	Color& getPaint();
+	const Color& getPaint() const;
+	void setPaint(const Color& c);
+
+	float getOpacity();
+	const float getOpacity() const;
+	void setOpacity(const float f);
+
+	bool isCreated() const;
+
+	void setParameter(const GLenum& name, const GLint& value);
+private:
+	GLenum target = GL_TEXTURE_2D;
+
+	Color paint = Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+	float opacity = 1.0f;
+
+	void bindIndex(const Index& id) const;
+};//Texture
 
 }//gfx
 }//mc

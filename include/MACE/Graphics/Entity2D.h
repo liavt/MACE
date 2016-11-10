@@ -9,10 +9,10 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#include <MACE/Graphics/Model.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Shaders.h>
+#include <MACE/Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {

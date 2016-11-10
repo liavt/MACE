@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 #include <MACE/System/Utility/BitField.h>
 #include <MACE/System/Utility/Transform.h>
-#include <MACE/Graphics/Texture.h>
+#include <MACE/Graphics/Buffer.h>
 
 namespace mc {
 namespace gfx {
