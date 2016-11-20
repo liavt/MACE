@@ -4,40 +4,35 @@ project(MACE CXX)
 
 message("MACE project added")
 
+#On unix systems this language is requied to compile GLFW and GLEW
 enable_language(C)
 
-#For the installation of other projects
-include(ExternalProject)
 include(FindPackageHandleStandardArgs)
+include(CheckCXXCompilerFlag)
+
+option(MACE_UNIT_TESTING "Whether to build the unit tests under MACE/Testing." OFF)
+option(MACE_DOWNLOAD_DEPENDENCIES "Whether to download and extract dependencies that are not found. If turned off, will instead error." ON)
+mark_as_advanced(MACE_DOWNLOAD_DEPENDENCIES)
+option(MACE_STATIC_LIBRARY "Whether to build static library files" ON)
+
 #for glfw
 set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-set(MACE_UNIT_TESTING OFF CACHE BOOL "Whether to build the unit tests under MACE/Testing.")
-set(MACE_DOWNLOAD_DEPENDENCIES ON CACHE BOOL "Whether to download and extract dependencies that are not found. If turnd off, will instead error.")
-set(MACE_STATIC_LIBRARY ON CACHE BOOL "Whether to build static library files")
-
 #Source name is the version to use
 set(GLFW_SOURCE_NAME "glfw-3.2")
 
 set(GLFW_URL "http://downloads.sourceforge.net/project/glfw/glfw/3.2/${GLFW_SOURCE_NAME}.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fglfw%2Ffiles%2Fglfw%2F3.2%2F&ts=1470492725&use_mirror=heanet")
-set(GLFW_DOWNLOAD_PATH "${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME}.tar.gz")
-#This is where the source will be located in
-set(GLFW_DOWNLOAD_SOURCE_DIR "${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME}")
-#This is where the headers for GLFW will be located in
+
+set(GLEW_SOURCE_NAME "glew-1.13.0")
+#this is the url to download GLEW from
+set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/1.13.0/${GLEW_SOURCE_NAME}.tgz/download")
+
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
 set(CATCH_DOWNLOAD_PATH "${MACE_INCLUDES}/Catch.h")
-
-SET(GLEW_NAME "glew-1.13.0")
-#this is the url to download GLEW from
-set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/1.13.0/${GLEW_NAME}.tgz/download")
-#if glew needs downloading, this is where it willbe downloaded to
-set(GLEW_DOWNLOAD_PATH "${PROJECT_SOURCE_DIR}/${GLEW_NAME}.tar.gz")
-#where the downloading tarbell will be extracted to
-set(GLEW_DOWNLOAD_SOURCE_DIR "${PROJECT_SOURCE_DIR}/${GLEW_NAME}")
 
 #stb_image is a single header only image loading library.
 set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
@@ -45,91 +40,105 @@ set(STB_IMAGE_DOWNLOAD_PATH "${MACE_INCLUDES}/stb_image.h")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Try to find GLFW library and include path.
-# Once done this will define
-#
-# GLFW_FOUND
-# GLFW_INCLUDE_DIR
-# GLFW_LIBRARY
-#
-message(STATUS "Finding GLFW...")
-if (WIN32)
-    find_path( GLFW_INCLUDE_DIR
-        NAMES
-            GLFW/glfw3.h
-        PATHS
-            ${PROJECT_SOURCE_DIR}/shared_external/glfw/include
-            ${PROJECT_SOURCE_DIR}/../shared_external/glfw/include
-            ${GLFW_LOCATION}/include
-            $ENV{GLFW_LOCATION}/include
-            $ENV{PROGRAMFILES}/GLFW/include
-            ${GLFW_LOCATION}
-            $ENV{GLFW_LOCATION}
-            DOC "The directory where GLFW/glfw3.h resides" )
-    if(ARCH STREQUAL "x86")
-      find_library( GLFW_LIBRARY
-          NAMES
-              glfw3
-          PATHS
-              ${GLFW_LOCATION}/lib
-              $ENV{GLFW_LOCATION}/lib
-              $ENV{PROGRAMFILES}/GLFW/lib
-              DOC "The GLFW library")
-    else()
-      find_library( GLFW_LIBRARY
-          NAMES
-              glfw3
-          PATHS
-              ${GLFW_LOCATION}/lib
-              $ENV{GLFW_LOCATION}/lib
-              $ENV{PROGRAMFILES}/GLFW/lib
-              DOC "The GLFW library")
-    endif()
-endif ()
+function(download_library name url)
+	if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${name}")
+		if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${name}.tar.gz")
+			if(NOT ${MACE_DOWNLOAD_DEPENDENCIES})
+				message(FATAL_ERROR "${name} NOT FOUND")
+			endif()
+			message(STATUS "Downloading ${CMAKE_CURRENT_SOURCE_DIR}/${name} from ${url}")
+			file(DOWNLOAD ${url} ${PROJECT_SOURCE_DIR}/${name}.tar.gz TIMEOUT 10)
+		endif()
+		
+		file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/${name})
+		
+		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${name}.tar.gz WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+	endif()
+	
+	message(STATUS "Found ${name} in source directory")
+endfunction()
 
-if (${CMAKE_HOST_UNIX})
-    find_path( GLFW_INCLUDE_DIR
-        NAMES
-            GLFW/glfw3.h
-        PATHS
-            ${GLFW_LOCATION}/include
-            $ENV{GLFW_LOCATION}/include
-            /usr/include
-            /usr/local/include
-            /sw/include
-            /opt/local/include
-            NO_DEFAULT_PATH
-            DOC "The directory where GLFW/glfw3.h resides"
-    )
-    find_library( GLFW_LIBRARY
-        NAMES
-            glfw3 glfw
-        PATHS
-            ${GLFW_LOCATION}/lib
-            $ENV{GLFW_LOCATION}/lib
-            /usr/lib64
-            /usr/lib
-            /usr/local/lib64
-            /usr/local/lib
-            /sw/lib
-            /opt/local/lib
-            /usr/lib/x86_64-linux-gnu
-            NO_DEFAULT_PATH
-            DOC "The GLFW library")
-endif ()
+macro(get_library name)
+	if(${name} STREQUAL "glfw3" OR ${name} STREQUAL "glfw-3.2")
+		if (WIN32)
+			find_path( GLFW_INCLUDE_DIR
+				NAMES
+					GLFW/glfw3.h
+				PATHS
+					${PROJECT_SOURCE_DIR}/shared_external/glfw/include
+					${PROJECT_SOURCE_DIR}/../shared_external/glfw/include
+					${GLFW_LOCATION}/include
+					$ENV{GLFW_LOCATION}/include
+					$ENV{PROGRAMFILES}/GLFW/include
+					${GLFW_LOCATION}
+					$ENV{GLFW_LOCATION}
+					DOC "The directory where GLFW/glfw3.h resides" )
+			if(ARCH STREQUAL "x86")
+			  find_library( GLFW_LIBRARY
+				  NAMES
+					  glfw3
+				  PATHS
+					  ${GLFW_LOCATION}/lib
+					  $ENV{GLFW_LOCATION}/lib
+					  $ENV{PROGRAMFILES}/GLFW/lib
+					  DOC "The GLFW library")
+			else()
+			  find_library( GLFW_LIBRARY
+				  NAMES
+					  glfw3
+				  PATHS
+					  ${GLFW_LOCATION}/lib
+					  $ENV{GLFW_LOCATION}/lib
+					  $ENV{PROGRAMFILES}/GLFW/lib
+					  DOC "The GLFW library")
+			endif()
+		endif ()
 
-find_package_handle_standard_args(GLFW DEFAULT_MSG
-    GLFW_INCLUDE_DIR
-    GLFW_LIBRARY
-)
+		if (${CMAKE_HOST_UNIX})
+			find_path( GLFW_INCLUDE_DIR
+				NAMES
+					GLFW/glfw3.h
+				PATHS
+					${GLFW_LOCATION}/include
+					$ENV{GLFW_LOCATION}/include
+					/usr/include
+					/usr/local/include
+					/sw/include
+					/opt/local/include
+					NO_DEFAULT_PATH
+					DOC "The directory where GLFW/glfw3.h resides"
+			)
+			find_library( GLFW_LIBRARY
+				NAMES
+					glfw3 glfw
+				PATHS
+					${GLFW_LOCATION}/lib
+					$ENV{GLFW_LOCATION}/lib
+					/usr/lib64
+					/usr/lib
+					/usr/local/lib64
+					/usr/local/lib
+					/sw/lib
+					/opt/local/lib
+					/usr/lib/x86_64-linux-gnu
+					NO_DEFAULT_PATH
+					DOC "The GLFW library")
+		endif ()
 
-mark_as_advanced( GLFW_FOUND )
+		find_package_handle_standard_args(GLFW DEFAULT_MSG
+			GLFW_INCLUDE_DIR
+			GLFW_LIBRARY
+		)
 
-if(NOT ${GLFW_FOUND})
-	message(FATAL_ERROR "GLFW not found!")
-endif()
+		mark_as_advanced( GLFW_FOUND )
+	else()
+		find_package(${name})
+	endif()
+endmacro()
 
-find_package(GLEW REQUIRED)
+get_library("glfw-3.2" ${GLFW_URL})
+get_library("glew" ${GLEW_URL})
+
 find_package(OpenGL REQUIRED)
 
 #Catch is for unit testing.
@@ -163,17 +172,16 @@ else()
 endif()
 
 #verify that we are using C++ 11
-include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 if(COMPILER_SUPPORTS_CXX11)
-	message(STATUS "Found CXX11 support in ${CMAKE_CXX_COMPILER}")
+	message(STATUS "Found C++ 11 support in ${CMAKE_CXX_COMPILER}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 elseif(COMPILER_SUPPORTS_CXX0X)
-	message(STATUS "Found CXX0X support in ${CMAKE_CXX_COMPILER}")
+	message(STATUS "Found C++ 0X support in ${CMAKE_CXX_COMPILER}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 else()
-	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++ 11 support. Please use a different C++ compiler.")
 endif()
 
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/Window/*.h" "${MACE_INCLUDES}/MACE/Graphics/*.h" "${MACE_INCLUDES}/MACE/Audio/*.h" "${MACE_INCLUDES}/MACE/Network/*.h" "${MACE_INCLUDES}/MACE/System/*.h")
@@ -232,13 +240,30 @@ if(${MACE_UNIT_TESTING})
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
 endif()
 
+if(NOT ${GLFW_FOUND})
+	download_library(${GLFW_SOURCE_NAME} ${GLFW_URL})
+	add_subdirectory(${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME})
+	
+	set(GLFW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME}/include)
+	set(GLFW_LIBRARY glfw)
+endif()
+
+if(NOT ${GLEW_FOUND})
+	download_library(${GLEW_SOURCE_NAME} ${GLEW_URL})
+	add_subdirectory(${PROJECT_SOURCE_DIR}/${GLEW_SOURCE_NAME}/build/cmake)
+	
+	set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${GLEW_SOURCE_NAME}/include)
+	set(GLEW_LIBRARY glew)
+endif()
+
+target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
+target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 
 target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})
-target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
+target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
+
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
-target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
-target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 
 
