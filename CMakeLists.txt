@@ -59,7 +59,7 @@ function(download_library name url)
 endfunction()
 
 macro(get_library name)
-	if(${name} STREQUAL "glfw3" OR ${name} STREQUAL "glfw-3.2")
+	if(${name} STREQUAL "glfw3" OR ${name} STREQUAL "${GLFW_SOURCE_NAME}")
 		if (WIN32)
 			find_path( GLFW_INCLUDE_DIR
 				NAMES
@@ -74,23 +74,23 @@ macro(get_library name)
 					$ENV{GLFW_LOCATION}
 					DOC "The directory where GLFW/glfw3.h resides" )
 			if(ARCH STREQUAL "x86")
-			  find_library( GLFW_LIBRARY
-				  NAMES
-					  glfw3
-				  PATHS
-					  ${GLFW_LOCATION}/lib
-					  $ENV{GLFW_LOCATION}/lib
-					  $ENV{PROGRAMFILES}/GLFW/lib
-					  DOC "The GLFW library")
+				find_library( GLFW_LIBRARY
+					NAMES
+						glfw3
+					PATHS
+						${GLFW_LOCATION}/lib
+						$ENV{GLFW_LOCATION}/lib
+						$ENV{PROGRAMFILES}/GLFW/lib
+						DOC "The GLFW library")
 			else()
-			  find_library( GLFW_LIBRARY
-				  NAMES
-					  glfw3
-				  PATHS
-					  ${GLFW_LOCATION}/lib
-					  $ENV{GLFW_LOCATION}/lib
-					  $ENV{PROGRAMFILES}/GLFW/lib
-					  DOC "The GLFW library")
+				find_library( GLFW_LIBRARY
+					NAMES
+						glfw3
+					PATHS
+						${GLFW_LOCATION}/lib
+						$ENV{GLFW_LOCATION}/lib
+						$ENV{PROGRAMFILES}/GLFW/lib
+						DOC "The GLFW library")
 			endif()
 		endif ()
 
@@ -131,15 +131,98 @@ macro(get_library name)
 		)
 
 		mark_as_advanced( GLFW_FOUND )
+	elseif(${name} STREQUAL "glew" OR ${name} STREQUAL "${GLEW_SOURCE_NAME}")
+		if (WIN32)
+			find_path( GLEW_INCLUDE_DIR
+				NAMES
+					GL/glew.h
+				PATHS
+					${OPENGL_INCLUDE_DIR}}
+					${PROJECT_SOURCE_DIR}/shared_external/gl/include
+					${PROJECT_SOURCE_DIR}/../shared_external/gl/include
+					${GLEW_LOCATION}/include
+					$ENV{GLEW_LOCATION}/include
+					$ENV{PROGRAMFILES}/GL/include
+					${GLEW_LOCATION}
+					$ENV{GLEW_LOCATION}
+					DOC "The directory where GL/glew.h resides" )
+			if(ARCH STREQUAL "x86")
+				find_library( GLFW_LIBRARY
+					NAMES
+						glew32
+						glew
+					PATHS
+						${GLEW_LOCATION}/lib
+						${OPENGL_LIBRARIES}
+						$ENV{GLEW_LOCATION}/lib
+						$ENV{PROGRAMFILES}/GLEW/lib
+						DOC "The GLEW library")
+			else()
+				find_library( GLFW_LIBRARY
+					NAMES
+						glew
+						glew32
+						glew64
+					PATHS
+						${OPENGL_LIBRARIES}
+						${GLEW_LOCATION}/lib
+						$ENV{GLEW_LOCATION}/lib
+						$ENV{PROGRAMFILES}/GLEW/lib
+						DOC "The GLEW library")
+			endif()
+		endif ()
+
+		if (${CMAKE_HOST_UNIX})
+			find_path( GLFW_INCLUDE_DIR
+				NAMES
+					GL/glew.h
+					glew.h
+				PATHS
+					${GLEW_LOCATION}/include
+					$ENV{GLEW_LOCATION}/include
+					${OPENGL_INCLUDE_DIR}
+					/usr/include
+					/usr/local/include
+					/sw/include
+					/opt/local/include
+					NO_DEFAULT_PATH
+					DOC "The directory where GL/glew.h resides"
+			)
+			find_library( GLFW_LIBRARY
+				NAMES
+					glew
+					glew32
+					glew64
+				PATHS
+					${OPENGL_LIBRARIES}
+					${GLEW_LOCATION}/lib
+					$ENV{GLEW_LOCATION}/lib
+					/usr/lib64
+					/usr/lib
+					/usr/local/lib64
+					/usr/local/lib
+					/sw/lib
+					/opt/local/lib
+					/usr/lib/x86_64-linux-gnu
+					NO_DEFAULT_PATH
+					DOC "The GLEW library")
+		endif ()
+
+		find_package_handle_standard_args(GLEW DEFAULT_MSG
+			GLEW_INCLUDE_DIR
+			GLEW_LIBRARY
+		)
+
+		mark_as_advanced( GLEW_FOUND )
 	else()
 		find_package(${name})
 	endif()
 endmacro()
 
+find_package(OpenGL REQUIRED)
+
 get_library("glfw-3.2" ${GLFW_URL})
 get_library("glew" ${GLEW_URL})
-
-find_package(OpenGL REQUIRED)
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
@@ -176,10 +259,10 @@ CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 if(COMPILER_SUPPORTS_CXX11)
 	message(STATUS "Found C++ 11 support in ${CMAKE_CXX_COMPILER}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 elseif(COMPILER_SUPPORTS_CXX0X)
 	message(STATUS "Found C++ 0X support in ${CMAKE_CXX_COMPILER}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 else()
 	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++ 11 support. Please use a different C++ compiler.")
 endif()
@@ -188,43 +271,43 @@ file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/Window/*.h" "${MACE_INCLUDES}/M
 file(GLOB_RECURSE SRC "src/*.cpp")
 
 foreach(FILE ${HEADERS}) 
-    # Get the directory of the source file
-    get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
+	# Get the directory of the source file
+	get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
 
-    # Remove common directory prefix to make the group
-    string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
+	# Remove common directory prefix to make the group
+	string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
 
-    # Make sure we are using windows slashes
-    string(REPLACE "/" "\\" GROUP "${GROUP}")
+	# Make sure we are using windows slashes
+	string(REPLACE "/" "\\" GROUP "${GROUP}")
 
-    # Group into "Source Files" and "Header Files"
-    if ("${FILE}" MATCHES ".*\\.cpp")
-       set(GROUP "Source Files${GROUP}")
-    elseif("${FILE}" MATCHES ".*\\.h")
-       set(GROUP "Header Files${GROUP}")
-    endif()
+	# Group into "Source Files" and "Header Files"
+	if ("${FILE}" MATCHES ".*\\.cpp")
+	   set(GROUP "Source Files${GROUP}")
+	elseif("${FILE}" MATCHES ".*\\.h")
+	   set(GROUP "Header Files${GROUP}")
+	endif()
 
-    source_group("${GROUP}" FILES "${FILE}")
+	source_group("${GROUP}" FILES "${FILE}")
 endforeach()
 
 foreach(FILE ${SRC}) 
-    # Get the directory of the source file
-    get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
+	# Get the directory of the source file
+	get_filename_component(PARENT_DIR "${FILE}" DIRECTORY)
 
-    # Remove common directory prefix to make the group
-    string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
+	# Remove common directory prefix to make the group
+	string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
 
-    # Make sure we are using windows slashes
-    string(REPLACE "/" "\\" GROUP "${GROUP}")
+	# Make sure we are using windows slashes
+	string(REPLACE "/" "\\" GROUP "${GROUP}")
 
-    # Group into "Source Files" and "Header Files"
-    if ("${FILE}" MATCHES ".*\\.cpp")
-       set(GROUP "Source Files${GROUP}")
-    elseif("${FILE}" MATCHES ".*\\.h")
-       set(GROUP "Header Files${GROUP}")
-    endif()
+	# Group into "Source Files" and "Header Files"
+	if ("${FILE}" MATCHES ".*\\.cpp")
+	   set(GROUP "Source Files${GROUP}")
+	elseif("${FILE}" MATCHES ".*\\.h")
+	   set(GROUP "Header Files${GROUP}")
+	endif()
 
-    source_group("${GROUP}" FILES "${FILE}")
+	source_group("${GROUP}" FILES "${FILE}")
 endforeach()
 
 if(${MACE_STATIC_LIBRARY})
@@ -265,6 +348,3 @@ target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
-
-
-message(STATUS "Done! Thank you for using MACE.")
