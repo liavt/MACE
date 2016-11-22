@@ -8,80 +8,55 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_UTILITY_BITFIELD_H
+#define MACE_UTILITY_BITFIELD_H
+
 #include <MACE/System/Constants.h>
 #include <ostream>
-#include <climits>
 
 namespace mc {
 	/**
 	Wrapper class for a primitive type that allows for easy bit manipulation. Can set individual bits. Additionally, it overrides almost every operator
-	to operate on it's wrapped value, to allow for you to manually manipulate it.
+	to operate on it's value, to allow for you to manually manipulate it.
+	<p>
+	It is guarenteed to contain 8 bits. On systems where an unsigned char is 8 bits, sizeof(BitField) will be 1.
 	<p>
 	Examples:
 	{@code
-	BitField<int> field = 15;//Creation
+	BitField field = 15;//Creation
 
 	field.setBit(i,state)//Set bit in position i to state
 
 	field.getBit(i) //Get whether bit in position i is true or false
 	}
-	@tparam T What primitive the`BitField` should use to store the bits
 	*/
-	template<typename T>
 	struct BitField {
 		/**
 		The value this `BitField` will be acting upon
 		*/
-		T value;
+
+		Byte value;
 
 		/**
 		Default constructor.
 		<p>
 		Equal to calling {@code BitField(0)}
 		*/
-		BitField() : value() {//default initilize value, incase it is not integral
-		}
+		BitField();
 
 		/**
 		Constructs a `BitField` with the specified value.
 		<p>
-		Equal to calling {@code BitField<T> = value}
+		Equal to calling {@code BitField = value}
 		@param val Inital value
 		*/
-		BitField(const T val)  : value(val){
-		}
+		BitField(const Byte val);
 
 
 		/**
 		Default destructor.
 		*/
-		~BitField() {
-			//nothing to delete, just here to complete the constructors
-		}
-		/**
-		Retrieve the `const` value inside of this `BitField`
-		@return The value represented by this `BitField`
-		@see get()
-		*/
-		const T get() const {
-			return value;
-		}
-		/**
-		Retrieve the value inside of this `BitField`
-		@return The value represented by this `BitField`
-		@see get() const
-		*/
-		T get() {
-			return value;
-		}
-
-		/**
-		Change the internal value.
-		@param newValue New value for this `BitField` to operate on
-		*/
-		void set(T newValue) {
-			value = newValue;
-		}
+		~BitField();
 
 		/**
 		Make the bit at a certain position toggled or untoggled
@@ -89,53 +64,35 @@ namespace mc {
 		@param state `true` to make the specified bit 1, and `false` to make it 0
 		@return `this` for chaining
 		*/
-		BitField& setBit(Index position, bool state) {
-			if (state) {
-				return toggleBit(position);
-			}
-			else {
-				return untoggleBit(position);
-			}
-		}
+		BitField& setBit(Index position, bool state);
 
 		/**
 		Turn bit at `position` to be `true` or `1`
 		@param position 0-indexed integer representing which bit to toggle
 		@return `this` for chaining
 		*/
-		BitField& toggleBit(Index position) {
-			value |= (1 << position);
-			return *this;
-		}
+		BitField& toggleBit(Index position);
 
 		/**
 		Turn bit at `position` to be `false` or `0`
 		@param position 0-indexed integer representing which bit to untoggle
 		@return `this` for chaining
 		*/
-		BitField& untoggleBit(Index position) {
-			value &= ~(1 << position);
-			return *this;
-		}
+		BitField& untoggleBit(Index position);
 
 		/**
 		Retrieve the value of a specified bit
 		@param position which bit to check
 		@return `true` if the bit is 1, `false` otherwise
 		*/
-		bool getBit(Index position) const {
-			return ((((value >> position) & 0x1)))==1;
-		}
+		bool getBit(Index position) const;
 
 		/**
 		Inverts a certain bit
 		@param position Which bit to "flip," or invert
 		@return `this` for chaining
 		*/
-		BitField& flipBit(Index position) {
-			value ^= 1 << position;
-			return *this;
-		}
+		BitField& flipBit(Index position);
 
 		/**
 		Inverses every bit, making every 0 a 1 and every 1 a 0.
@@ -143,18 +100,7 @@ namespace mc {
 		Equivelant to calling the ~ operator.
 		@return `this` for chainign
 		*/
-		BitField& inverse() {
-			value = ~value;
-			return *this;
-		}
-
-		/**
-		Gets how many bits this `BitField` is holding
-		@return Number of bits
-		*/
-		Size size() const {
-			return sizeof(value) * CHAR_BIT;
-		}
+		BitField& inverse();
 
 		//i heard you like operators so i added some operators to your operators
 		//dont worry i know how to operate
@@ -163,8 +109,9 @@ namespace mc {
 		/**
 		Operator for `std::cout` to correctly print this class
 		*/
-		friend std::ostream &operator<<(std::ostream &os, const BitField<T>& b) {
-			for (Index i = 0; i < b.size(); i++)os << b.getBit((b.size() - 1) - i);
+		friend std::ostream& operator<<(std::ostream &os, const BitField& b) {
+			//has to have 8 bits, so we countdown from 8
+			for( Index i = 0; i < 8; i++ )os << b.getBit((7) - i);//0 indexed so that explains the magic number of 7
 			return os;
 		}
 
@@ -172,307 +119,218 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator|(const T value) {
-			return BitField<T>(this->value | value);
-		}
+		BitField operator|(const Byte value);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator|=(const T value) {
-			this->value |= value;
-		}
+		void operator|=(const Byte value);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator&(const T value) {
-			return BitField<T>(this->value & value);
-		}
+		BitField operator&(const Byte value);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator&=(const T value) {
-			this->value &= value;
-		}
+		void operator&=(const Byte value);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator^(const T value) {
-			return BitField<T>(this->value ^ value);
-		}
+		BitField operator^(const Byte value);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator^=(const T value) {
-			this->value ^= value;
-		}
+		void operator^=(const Byte value);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator|(BitField& other) {
-			return BitField<T>(this->value | other.value);
-		}
+		BitField operator|(BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator|=(BitField& other) {
-			this->value |= other.value;
-		}
+		void operator|=(BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator&(BitField& other) {
-			return BitField<T>(this->value & other.value);
-		}
+		BitField operator&(BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator&=(BitField& other) {
-			this->value &= other.value;
-		}
+		void operator&=(BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator^(BitField& other) {
-			return BitField<T>(this->value ^ other.value);
-		}
+		BitField operator^(BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator^=(BitField& other) {
-			this->value ^= other.value;
-		}
+		void operator^=(BitField& other);
 		/**
 		Operator which acts upon the internal value.
 		<p>
 		Same as calling {@link inverse()}
 		@see get() @see value
 		*/
-		BitField operator~() {
-			return BitField<T>((const T)~value);
-		}
+		BitField operator~();
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator>>(Index places) {
-			return BitField<T>(value >> places);
-		}
+		BitField operator>>(Index places);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator<<(Index places) {
-			return BitField<T>(value << places);
-		}
+		BitField operator<<(Index places);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator>>=(Index places) {
-			value >>= places;
-		}
+		void operator>>=(Index places);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator<<=(Index places) {
-			value <<= places;
-		}
+		void operator<<=(Index places);
 		/**
 		Compares this `BitField` to another value. Will return `true` if the bits represented are both equal.
 		*/
-		bool operator==(const T other) {
-			return value == other;
-		}
+		bool operator==(const Byte other);
 		/**
 		Inverse for {@link operator==}
 		*/
-		bool operator!=(const T other) {
-			return (value != other);
-		}
+		bool operator!=(const Byte other);
 		/**
 		Compares this `BitField` to another. Will return `true` if the bits represented are both equal.
 		*/
-		bool operator==(const BitField& other) {
-			return value == other.value;
-		}
+		bool operator==(const BitField& other);
 		/**
 		Inverse for {@link operator==}
 		*/
-		bool operator!=(const BitField& other) {
-			return (value != other.value);
-		}
+		bool operator!=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator+(const T other) const {
-			return BitField<T>(value + other);
-		}
+		BitField operator+(const Byte other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator+(const BitField& other) const {
-			return BitField<T>(value + other.value);
-		}
+		BitField operator+(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator+=(const BitField& other) {
-			value += other.value;
-		}
+		void operator+=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator+=(const T other) {
-			value += other;
-		}
+		void operator+=(const Byte other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator-(const T other) const {
-			return BitField<T>(value - other);
-		}
+		BitField operator-(const Byte other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator-(const BitField& other) const {
-			return BitField<T>(value - other.value);
-		}
+		BitField operator-(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator-=(const BitField& other) {
-			value -= other.value;
-		}
+		void operator-=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator-=(const T other) {
-			value -= other;
-		}
+		void operator-=(const Byte other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator*(const T other) {
-			return BitField<T>(value * other);
-		}
+		BitField operator*(const Byte other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator*(const BitField& other) const {
-			return BitField<T>(value * other.value);
-		}
+		BitField operator*(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator*=(const BitField& other) {
-			value *= other.value;
-		}
+		void operator*=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator*=(const T other) {
-			value *= other;
-		}
+		void operator*=(const Byte other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator/(const T other) const {
-			return BitField<T>(value / other);
-		}
+		BitField operator/(const Byte other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator/(const BitField& other) const {
-			return BitField<T>(value / other.value);
-		}
+		BitField operator/(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator/=(const BitField& other) {
-			value /= other.value;
-		}
+		void operator/=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator/=(const T other) {
-			value /= other;
-		}
+		void operator/=(const Byte other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		T operator%(const T other) {
-			return value % other;
-		}
+		Byte operator%(const Byte other);
 		/**
 		Gets a bit at a certain position
 		@param position Which bit to retrieve. Zero-indexed
 		@return `true` if the bit is 1, `false` otherwise.
 		@see getBit(Index)
 		*/
-		bool operator[](Index position) {
-			return getBit(position);
-		}
+		bool operator[](Index position);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator++() {
-			value++;
-		}
+		void operator++();
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator++(int dummy) {
-			++value;
-		}
+		void operator++(int dummy);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator--() {
-			value--;
-		}
+		void operator--();
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator--(int dummy) {
-			--value;
-		}
-	};
+		void operator--(int dummy);
+	};//BitField
+}//mc
 
-	/**
-	{@link BitField} which wraps around a {@link Byte byte,} meaning that it will have 8 bits.
-	*/
-	using ByteField = BitField<Byte>;
-}
+#endif

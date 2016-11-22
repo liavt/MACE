@@ -8,13 +8,16 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#include <MACE/System/Utility/Vector.h>
+#ifndef MACE_UTILITY_MATH_H
+#define MACE_UTILITY_MATH_H
+
+#include <MACE/Utility/Vector.h>
 
 namespace mc {
 	/**
 	Namespace with various mathmatical functions
 	*/
-	namespace math{
+	namespace math {
 		/**
 		Calculates the mathmatical constant `pi`. `Pi` is the ratio of a circle's circumfernce to it's diameter, always coming out to equal roughly 3.14, no matter the size of the circle.
 		<p>
@@ -29,7 +32,7 @@ namespace mc {
 		@see #toRadians()
 		*/
 		long double tau();
-		
+
 		/**
 		Calculates the mathmatical constant represented by `gamma`, or the `Euler–Mascheroni constant.` Gamma is used in number theory and analysis.
 		@return The `Euler–Mascheroni constant`
@@ -113,7 +116,7 @@ namespace mc {
 		@see isEven(const int)
 		*/
 		bool isOdd(const int value);
-		
+
 		/**
 		Calculates a number to an exponenet, or `value^power`
 		@param value Base number
@@ -157,5 +160,7 @@ namespace mc {
 		@see #pi()
 		*/
 		double toDegrees(const double radians);
-	};
-}
+	}//math
+}//mc
+
+#endif

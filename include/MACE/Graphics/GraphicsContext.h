@@ -8,39 +8,38 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_GRAPHICS_GRAPHICSCONTEXT_H
+#define MACE_GRAPHICS_GRAPHICSCONTEXT_H
 
-#include <MACE/Window/WindowModule.h>
+#include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Entity.h>
 
 namespace mc {
+	namespace gfx {
 
-/**
-Namespace containing classes used for Graphics in MACE.
-*/
-namespace gfx{
+		class OpenGLContext: public Entity, public GraphicsContext {
+			bool vsync;
 
-class OpenGLContext : public mc::gfx::Entity, public mc::win::GraphicsContext {
-	bool vsync;
+		public:
+			OpenGLContext();
 
-public:
-	OpenGLContext();
+			void update();
 
-	void update();
+			void setUpWindow(Window* win);
+			void init(Window* win);
+			void render(Window* win);
+			void destroy(Window* win);
 
-	void setUpWindow(win::Window* win);
-	void init(win::Window* win);
-	void render(win::Window* win);
-	void destroy(win::Window* win);
+			void setVSync(const bool& sync);
+		private:
+			//these are for the Entity inheritence
+			void customUpdate();
+			void customRender();
+			void customDestroy();
+			void customInit();
+		};
 
-	void setVSync(const bool& sync);
-private:
-	//these are for the Entity inheritence
-	void customUpdate();
-	void customRender();
-	void customDestroy();
-	void customInit();
-};
-
-}
+	}
 }
 
+#endif

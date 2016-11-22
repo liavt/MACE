@@ -7,7 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/Window/WindowModule.h>
+#include <MACE/Graphics/Window.h>
 #include <MACE/System/Exceptions.h>
 #include <mutex>
 #include <ctime>
@@ -16,24 +16,62 @@ The above copyright notice and this permission notice shall be included in all c
 #include <GLFW/glfw3.h>
 
 namespace mc {
-	namespace win
-	{
+	namespace gfx {
+		Window::Window(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
-		void WindowModule::setContext(GraphicsContext * con)
-		{
-			if(System::getFlag(SYSTEM_FLAG_INIT)){
+		void Window::create() {
+			window = glfwCreateWindow(originalWidth, originalHeight, title.c_str(), NULL, NULL);
+
+			auto closeCallback = [] (GLFWwindow* win) {mc::System::requestStop(); };
+			glfwSetWindowCloseCallback(window, closeCallback);
+		}
+
+		void Window::poll() {
+			glfwPollEvents();
+		}
+
+		GLFWwindow* Window::getGLFWWindow() {
+			return window;
+		}
+
+		const unsigned int & Window::getFPS() const {
+			return fps;
+		}
+
+		void Window::setFPS(const unsigned int & FPS) {
+			fps = FPS;
+		}
+
+		void Window::destroy() {
+			glfwDestroyWindow(window);
+		}
+		const int Window::getOriginalWidth() const {
+			return originalWidth;
+		}
+		const int Window::getOriginalHeight() const {
+			return originalHeight;
+		}
+		std::string Window::getTitle() {
+			return title;
+		}
+		const std::string Window::getTitle() const {
+			return title;
+		}
+		void Window::setTitle(const std::string & newTitle) {
+			glfwSetWindowTitle(window, newTitle.c_str());
+		}
+		void WindowModule::setContext(GraphicsContext * con) {
+			if( System::getFlag(SYSTEM_FLAG_INIT) ) {
 				throw InitializationError("Cannot set a GraphicsContext after init() has been called!");
 			}
 			context = con;
 		}
 
-		GraphicsContext* WindowModule::getContext()
-		{
+		GraphicsContext* WindowModule::getContext() {
 			return context;
 		}
 
-		const GraphicsContext* WindowModule::getContext() const
-		{
+		const GraphicsContext* WindowModule::getContext() const {
 			return context;
 		}
 
@@ -47,36 +85,34 @@ namespace mc {
 			time_t lastFrame = time(0);
 
 			//this stores how many milliseconds it takes for the frame to swap.
-			float windowDelay=0;
+			float windowDelay = 0;
 
 			try {
 				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-				if (context != nullptr) {
+				if( context != nullptr ) {
 					context->setUpWindow(window);
 				}
 
 				window->create();
 
-				if (context != nullptr) {
+				if( context != nullptr ) {
 					context->init(window);
 				}
 
-				if (window->fps != 0) {
-					windowDelay = 1000.0f / (float)window->fps;
+				if( window->fps != 0 ) {
+					windowDelay = 1000.0f / (float) window->fps;
 				}
-			}
-			catch (const std::exception& e) {
+			} catch( const std::exception& e ) {
 				Exception::handleException(e);
-			}
-			catch (...) {
+			} catch( ... ) {
 				std::cerr << "An error has occured";
 				System::requestStop();
 			}
 
 			//this is the main rendering loop.
 			//we loop infinitely until break is called. break is called when an exception is thrown or System::isRunning is false
-			for(;;) {//;_;
+			for( ;;) {//;_;
 				try {
 					now = time(0);
 
@@ -86,27 +122,25 @@ namespace mc {
 						//thread doesn't own window, so we have to lock the mutex
 						window->poll();
 
-						if (context != nullptr) {
+						if( context != nullptr ) {
 							context->render(window);
 						}
 
-						if (!System::isRunning())break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
+						if( !System::isRunning() )break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 
 					}
 
 					const time_t delta = now - lastFrame;
 
-					if (delta < windowDelay) {
+					if( delta < windowDelay ) {
 						lastFrame = now;
 
-						std::this_thread::sleep_for(std::chrono::milliseconds((unsigned int)windowDelay));
+						std::this_thread::sleep_for(std::chrono::milliseconds((unsigned int) windowDelay));
 					}
-				}
-				catch (const std::exception& e) {
+				} catch( const std::exception& e ) {
 					Exception::handleException(e);
 					break;
-				}
-				catch (...) {
+				} catch( ... ) {
 					std::cerr << "An error has occured";
 					System::requestStop();
 					break;
@@ -116,14 +150,12 @@ namespace mc {
 			{
 				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 				try {
-					if (context != nullptr)context->destroy(window);
+					if( context != nullptr )context->destroy(window);
 
 					window->destroy();
-				}
-				catch (const std::exception& e) {
+				} catch( const std::exception& e ) {
 					Exception::handleException(e);
-				}
-				catch (...) {
+				} catch( ... ) {
 					std::cerr << "An error has occured";
 					System::requestStop();
 				}
@@ -135,17 +167,17 @@ namespace mc {
 
 		}
 		void WindowModule::init() {
-			if (!glfwInit()) {
+			if( !glfwInit() ) {
 				throw InitializationError("GLFW failed to initialize!");
 			}
 
-			windowThread = std::thread(&WindowModule::threadCallback,this);
+			windowThread = std::thread(&WindowModule::threadCallback, this);
 		}
 
 		void WindowModule::update() {
 			std::mutex mutex;
 			std::unique_lock<std::mutex> guard(mutex);
-			if (context != 0)context->update();
+			if( context != 0 )context->update();
 			guard.unlock();
 		}
 

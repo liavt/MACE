@@ -8,19 +8,18 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_WINDOW_WINDOWMODULE_H
+#define MACE_WINDOW_WINDOWMODULE_H
 
 //so we can use glew
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <MACE/System/Module.h>
+#include <thread>
 #include <string>
-#include <MACE/System/Utility/Vector.h>
 
 namespace mc {
-	/**
-	Namespace with classes relating to input and windows.
-	*/
-	namespace win
-	{
+	namespace gfx {
 		class Window {
 			friend class WindowModule;
 		protected:
@@ -29,7 +28,7 @@ namespace mc {
 			int originalHeight;
 			std::string title;
 
-			unsigned int fps=0;
+			unsigned int fps = 0;
 		public:
 			Window(const int width, const int height, const char* title);
 			GLFWwindow* getGLFWWindow();
@@ -48,5 +47,40 @@ namespace mc {
 			const std::string getTitle() const;
 			void setTitle(const std::string& newTitle);
 		};
+
+		class GraphicsContext {
+		public:
+			virtual void setUpWindow(Window* win) = 0;
+			virtual void init(Window* win) = 0;
+			virtual void render(Window* win) = 0;
+			virtual void destroy(Window* win) = 0;
+			virtual void update() = 0;
+		};
+
+		class WindowModule: public Module {
+			Window* window;
+
+			bool destroyed = false;
+
+			std::thread windowThread;
+
+			void threadCallback();
+
+			GraphicsContext* context = 0;//initailize an empty context
+		public:
+			WindowModule(Window* window);
+
+			void init();
+			void update();
+			void destroy();
+
+			void setContext(GraphicsContext* con);
+			GraphicsContext* getContext();
+			const GraphicsContext* getContext() const;
+
+			std::string getName() const;
+		};
 	}
 }
+
+#endif

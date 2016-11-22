@@ -8,6 +8,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_SYSTEM_CONSTANTS_H
+#define MACE_SYSTEM_CONSTANTS_H
+
 #define MACE_INCLUDED true //this will be true if MACE is included
 
 #ifndef __cplusplus 
@@ -53,14 +56,14 @@ namespace mc {
 	using Size = unsigned int;
 
 	/**
-	Type representing an index in an array. 
+	Type representing an index in an array.
 	<p>
 	The definition here is for clarity, and it makes code more obvious and self-documenting. Imagine this:
-	{@code 
+	{@code
 		removeObject(unsigned int)
 	}
 	or
-	{@code 
+	{@code
 		getObject(unsigned int)
 	}
 	`unsigned int` is ambigious! What if the object is an `unsigned int`? With this definition, it becomes much more clear:
@@ -93,3 +96,5 @@ namespace mc {
 	*/
 	typedef void(*VoidFunctionPtr)();
 }
+
+#endif

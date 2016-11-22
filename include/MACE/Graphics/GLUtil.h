@@ -8,6 +8,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_GL_UTIL_HEADER_
+#define MACE_GL_UTIL_HEADER_
+
 #include <MACE/System/Constants.h>
 #include <string>
 
@@ -18,3 +21,5 @@ namespace mc {
 		void throwShaderError(const Index& shaderId, const Enum& type);
 	}
 }
+
+#endif

@@ -11,103 +11,89 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/GLUtil.h>
 
 namespace mc {
-namespace gfx {
+	namespace gfx {
 
 
-Entity2D::Entity2D() : GraphicsEntity()
-{
-}
+		Entity2D::Entity2D() : GraphicsEntity() {}
 
-void Image::customInit()
-{
-}
+		void Image::customInit() {}
 
-void Image::customUpdate()
-{
-}
+		void Image::customUpdate() {}
 
-void Image::customRender()
-{
-	Renderer::queue<Entity2D>(this);
-}
+		void Image::customRender() {}
 
-void Image::customDestroy()
-{
-}
+		void Image::customDestroy() {}
 
-void RenderProtocol<Entity2D>::resize(const Size width, const Size height) {
-}
+		void RenderProtocol<Entity2D>::resize(const Size width, const Size height) {}
 
-void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size originalHeight) {
+		void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size originalHeight) {
 
-	//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
-	//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-	const char* vertexShader2D = {
-#	include <MACE/Graphics/Shaders/entity2D.v.glsl>
-	};
-	const char* fragmentShader2D = {
-#	include <MACE/Graphics/Shaders/entity2D.f.glsl>
-	};
+			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
+			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
+			const char* vertexShader2D = {
+		#	include <MACE/Graphics/Shaders/entity2D.v.glsl>
+			};
+			const char* fragmentShader2D = {
+		#	include <MACE/Graphics/Shaders/entity2D.f.glsl>
+			};
 
-	const GLfloat squareVertices[12] = {
-		-0.5f,-0.5f,0.0f,
-		-0.5f,0.5f,0.0f,
-		0.5f,0.5f,0.0f,
-		0.5f,-0.5f,0.0f
-	};
+			const GLfloat squareVertices[12] = {
+				-0.5f,-0.5f,0.0f,
+				-0.5f,0.5f,0.0f,
+				0.5f,0.5f,0.0f,
+				0.5f,-0.5f,0.0f
+			};
 
-	const GLfloat squareTextureCoordinates[8] = {
-		0.0f,1.0f,
-		0.0f,0.0f,
-		1.0f,0.0f,
-		1.0f,1.0f,
-	};
+			const GLfloat squareTextureCoordinates[8] = {
+				0.0f,1.0f,
+				0.0f,0.0f,
+				1.0f,0.0f,
+				1.0f,1.0f,
+			};
 
-	const GLuint squareIndices[6] = {
-		0,1,3,
-		1,2,3
-	};
+			const GLuint squareIndices[6] = {
+				0,1,3,
+				1,2,3
+			};
 
-	square.init();
+			square.init();
 
-	//vao loading
-	square.loadVertices(4, squareVertices, 15, 3);
-	square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
-	square.loadIndices(6, squareIndices);
+			//vao loading
+			square.loadVertices(4, squareVertices, 15, 3);
+			square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
+			square.loadIndices(6, squareIndices);
 
-	//shader stuff
-	shaders2D.createVertex(ssl::processShader(vertexShader2D,GL_VERTEX_SHADER));
-	shaders2D.createFragment(ssl::processShader(fragmentShader2D,GL_FRAGMENT_SHADER));
+			//shader stuff
+			shaders2D.createVertex(ssl::processShader(vertexShader2D, GL_VERTEX_SHADER));
+			shaders2D.createFragment(ssl::processShader(fragmentShader2D, GL_FRAGMENT_SHADER));
 
-	shaders2D.init();
+			shaders2D.init();
 
-	ssl::bindShaderProgram(shaders2D);
+			ssl::bindShaderProgram(shaders2D);
 
-}
+		}
 
-void RenderProtocol<Entity2D>::setUp(win::Window* win, RenderQueue* queue)
-{
-};
+		void RenderProtocol<Entity2D>::setUp(Window* win, RenderQueue* queue) {};
 
-void RenderProtocol<Entity2D>::render(win::Window* win, Entity* e) {
-	Entity2D * entity = reinterpret_cast<Entity2D*>(e);
+		void RenderProtocol<Entity2D>::render(Window* win, Entity* e) {
+			Entity2D * entity = reinterpret_cast<Entity2D*>(e);
 
-	square.bind();
-	shaders2D.bind();
+			square.bind();
+			shaders2D.bind();
 
-	ssl::bindEntity(entity);
+			ssl::bindEntity(entity);
 
-	square.draw();
+			square.draw();
 
-	checkGLError();
-}
+			checkGLError();
+		}
 
-void RenderProtocol<Entity2D>::tearDown(win::Window* win, RenderQueue* queue) {}
+		void RenderProtocol<Entity2D>::tearDown(Window* win, RenderQueue* queue) {}
 
-void RenderProtocol<Entity2D>::destroy() {
-	shaders2D.destroy();
-	square.destroy();
-}
+		void RenderProtocol<Entity2D>::destroy() {
+			shaders2D.destroy();
+			square.destroy();
+		}
 
-}//gfx
+	}//gfx
 }//mc

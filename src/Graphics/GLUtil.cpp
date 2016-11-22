@@ -16,12 +16,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		void checkGLError()
-		{
+		void checkGLError() {
 #ifdef MACE_ERROR_CHECK
 			GLenum result = GL_NO_ERROR;
-			while ((result = glGetError()) != GL_NO_ERROR) {
-				switch (result) {
+			while( (result = glGetError()) != GL_NO_ERROR ) {
+				switch( result ) {
 				case GL_INVALID_ENUM:
 					throw GLError("GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
 					break;
@@ -50,38 +49,30 @@ namespace mc {
 			}
 #endif
 		}
-		void throwShaderError(const Index& shaderId, const Enum& type, const std::string& message)
-		{
-			if (type == 0 || type == GL_PROGRAM) {
+		void throwShaderError(const Index& shaderId, const Enum& type, const std::string& message) {
+			if( type == 0 || type == GL_PROGRAM ) {
 				throw ShaderError("Error generating shader program with message \"" + message + "\"");
-			}
-			else {
+			} else {
 				std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
 				glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
 				std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
-				if (type == GL_VERTEX_SHADER) {
+				if( type == GL_VERTEX_SHADER ) {
 					friendlyType = "VERTEX";
-				}
-				else if (type == GL_FRAGMENT_SHADER) {
+				} else if( type == GL_FRAGMENT_SHADER ) {
 					friendlyType = "FRAGMENT";
-				}
-				else if (type == GL_COMPUTE_SHADER) {
+				} else if( type == GL_COMPUTE_SHADER ) {
 					friendlyType = "COMPUTE";
-				}
-				else if (type == GL_GEOMETRY_SHADER) {
+				} else if( type == GL_GEOMETRY_SHADER ) {
 					friendlyType = "GEOMETERY";
-				}
-				else if (type == GL_TESS_CONTROL_SHADER) {
+				} else if( type == GL_TESS_CONTROL_SHADER ) {
 					friendlyType = "TESSELATION CONTROL";
-				}
-				else if (type == GL_TESS_EVALUATION_SHADER) {
+				} else if( type == GL_TESS_EVALUATION_SHADER ) {
 					friendlyType = "TESSELATION EVALUATION";
 				}
 				throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
 			}
 		}
-		void throwShaderError(const Index & shaderId, const Enum & type)
-		{
+		void throwShaderError(const Index & shaderId, const Enum & type) {
 			throwShaderError(shaderId, type, "No message was specified");
 		}
 	}

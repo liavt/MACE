@@ -9,6 +9,16 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
+#ifndef MACE_GRAPHICS_GRAPHICS_H
+#define MACE_GRAPHICS_GRAPHICS_H
+
+namespace mc {
+	/**
+	Namespace containing classes used for Graphics in MACE.
+	*/
+	namespace gfx {}
+}
+
 #include <MACE/Graphics/GLUtil.h>
 #include <MACE/Graphics/Shaders.h>
 #include <MACE/Graphics/GraphicsContext.h>
@@ -17,3 +27,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Window.h>
+
+#endif

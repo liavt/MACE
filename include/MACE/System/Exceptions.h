@@ -8,6 +8,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_SYSTEM_EXCEPTIONS_H
+#define MACE_SYSTEM_EXCEPTIONS_H
+
 #include <stdexcept>
 
 namespace mc {
@@ -15,22 +18,22 @@ namespace mc {
 	/**
 	Superclass that all exceptions in MACE extend.
 	*/
-	class Exception : public std::runtime_error{
+	class Exception: public std::runtime_error {
 	public:
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/
-		static void handleException [[ noreturn ]](const std::exception& e);
+		static void handleException[[noreturn]](const std::exception& e);
 
 		using std::runtime_error::runtime_error;
 
 		Exception() = default;
-		
+
 	};
 
 
 	/**
-	Thrown when a pointer is equal to NULL 
+	Thrown when a pointer is equal to NULL
 	*/
 	using NullPointerException = Exception;
 
@@ -60,3 +63,5 @@ namespace mc {
 	using ArithmeticException = Exception;
 
 }
+
+#endif

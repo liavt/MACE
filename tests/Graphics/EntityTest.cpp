@@ -13,10 +13,10 @@ The above copyright notice and this permission notice shall be included in all c
 #include <type_traits>
 #include <MACE/Graphics/Entity2D.h>
 
-namespace mc{
-	namespace gfx{
+namespace mc {
+	namespace gfx {
 
-		class DummyEntity : public mc::gfx::Entity {
+		class DummyEntity: public mc::gfx::Entity {
 		public:
 			DummyEntity() : Entity() {};
 
@@ -41,7 +41,7 @@ namespace mc{
 			}
 		};
 
-		class DummyEntity2D :  public mc::gfx::Entity2D {
+		class DummyEntity2D: public mc::gfx::Entity2D {
 
 		public:
 			DummyEntity2D() : mc::gfx::Entity2D() {};
@@ -67,20 +67,20 @@ namespace mc{
 			}
 		};
 
-		class DummyAction : public mc::gfx::Component {
+		class DummyAction: public mc::gfx::Component {
 		public:
 			int updates;
 			bool destroySelf = false;
 			bool isInit = false;
 			bool destroyed = false;
-			
+
 			void init(Entity* e) {
 				isInit = true;
 			}
 
 			bool update(Entity* e) {
 				updates++;
-				if (destroySelf)return true;
+				if( destroySelf )return true;
 				else return false;
 			}
 
@@ -91,7 +91,7 @@ namespace mc{
 
 		Group c = Group();
 
-		TEST_CASE("Testing the getParent() function","[entity][graphics]") {
+		TEST_CASE("Testing the getParent() function", "[entity][graphics]") {
 
 			DummyEntity e = DummyEntity();
 			DummyEntity e2 = DummyEntity();
@@ -108,9 +108,9 @@ namespace mc{
 
 			e.addChild(e2);
 
-			SECTION("Checking whether it recognizes the parent"){
+			SECTION("Checking whether it recognizes the parent") {
 				REQUIRE(e.hasParent());
-				REQUIRE(*e2.getParent()==e);
+				REQUIRE(*e2.getParent() == e);
 			}
 
 			c.clearChildren();
@@ -119,7 +119,7 @@ namespace mc{
 			REQUIRE(e2.hasParent());
 
 		}
-	
+
 		TEST_CASE("Testing the ENABLE property of an entity", "[entity][graphics]") {
 
 			DummyEntity e = DummyEntity();
@@ -127,7 +127,7 @@ namespace mc{
 
 			c.addChild(e);
 
-			SECTION("Updating an entity"){
+			SECTION("Updating an entity") {
 				REQUIRE(!e.getProperty(ENTITY_UPDATE_DISABLED));
 				e.isUpdated = false;
 				e.setProperty(ENTITY_UPDATE_DISABLED, true);
@@ -152,14 +152,14 @@ namespace mc{
 
 		}
 
-		TEST_CASE("Testing death","[entity][graphics]") {//the sweet embrace of death
-	
+		TEST_CASE("Testing death", "[entity][graphics]") {//the sweet embrace of death
+
 
 			DummyEntity e = DummyEntity();
-	
+
 			c.addChild(e);
 
-			SECTION("Killing some entities"){//RIP
+			SECTION("Killing some entities") {//RIP
 				REQUIRE(c.hasChild(e));
 				REQUIRE(!e.getProperty(ENTITY_DEAD));
 
@@ -168,23 +168,23 @@ namespace mc{
 				REQUIRE(!e.getProperty(ENTITY_DEAD));
 				REQUIRE(e.isUpdated);
 
-	
+
 				e.isUpdated = false;
-				e.setProperty(ENTITY_DEAD,true);
+				e.setProperty(ENTITY_DEAD, true);
 
 				c.update();
 
 				REQUIRE(!e.isUpdated);
 				REQUIRE(e.isDestroyed);
-				REQUIRE(!c.hasChild(e));	
+				REQUIRE(!c.hasChild(e));
 			}
 
 			c.clearChildren();
 
-	
+
 		}
 
-		TEST_CASE("Testing actions","[entity][graphics]") {
+		TEST_CASE("Testing actions", "[entity][graphics]") {
 			DummyAction a = DummyAction();
 			DummyEntity e = DummyEntity();
 			Group c = Group();
@@ -192,7 +192,7 @@ namespace mc{
 			SECTION("Testing default values") {
 				REQUIRE_FALSE(a.isInit);
 				REQUIRE_FALSE(a.destroyed);
-				REQUIRE(a.updates==0);
+				REQUIRE(a.updates == 0);
 				REQUIRE_FALSE(a.destroySelf);
 			}
 
@@ -204,8 +204,8 @@ namespace mc{
 			}
 
 			SECTION("Testing update") {
-				for (Index i = 0; i < 10; i++) {
-					REQUIRE(a.updates==i);
+				for( Index i = 0; i < 10; i++ ) {
+					REQUIRE(a.updates == i);
 					c.update();
 				}
 			}
@@ -222,14 +222,14 @@ namespace mc{
 
 		}
 
-		TEST_CASE("Testing init()","[entity][graphics]") {
+		TEST_CASE("Testing init()", "[entity][graphics]") {
 
 			DummyEntity e = DummyEntity();
 			c.addChild(e);
 
 
 
-			SECTION("Calling init() on entities"){
+			SECTION("Calling init() on entities") {
 
 
 				REQUIRE(!e.getProperty(ENTITY_INIT));
@@ -246,7 +246,7 @@ namespace mc{
 
 		}
 
-		TEST_CASE("Testing entity properties","[entity][graphics]") {
+		TEST_CASE("Testing entity properties", "[entity][graphics]") {
 			DummyEntity e = DummyEntity();
 
 			REQUIRE_FALSE(e.getProperty(ENTITY_DEAD));
@@ -291,7 +291,7 @@ namespace mc{
 
 			DummyEntity child = DummyEntity();
 
-			SECTION("Testing init() destroy() render() and update() with children"){
+			SECTION("Testing init() destroy() render() and update() with children") {
 
 				e.addChild(child);
 

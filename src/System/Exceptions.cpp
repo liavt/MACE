@@ -7,15 +7,15 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+#include <MACE/System/Exceptions.h>
+#include <MACE/System/System.h>
+#include <iostream>
+#include <string>
 
-/**
-Includes all utility files in MACE.
-*/
-#pragma once
-
-#include <MACE/System/Utility/Color.h>
-#include <MACE/System/Utility/Vector.h>
-#include <MACE/System/Utility/BitField.h>
-#include <MACE/System/Utility/Math.h>
-#include <MACE/System/Utility/Transform.h>
-#include <MACE/System/Utility/Preprocessor.h>
+namespace mc {
+	void Exception::handleException(const std::exception & e) {
+		System::requestStop();
+		std::cerr << "Error occured: " << e.what() << std::endl;
+		throw e;
+	}
+}

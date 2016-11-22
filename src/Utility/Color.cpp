@@ -7,25 +7,21 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/System/Utility/Color.h>
+#include <MACE/Utility/Color.h>
 
-mc::Byte mc::Color::getRed() const
-{
+mc::Byte mc::Color::getRed() const {
 	return mc::Color::convertFloatToRGBA(this->r);
 }
 
-mc::Byte mc::Color::getGreen() const
-{
+mc::Byte mc::Color::getGreen() const {
 	return mc::Color::convertFloatToRGBA(this->g);
 }
 
-mc::Byte mc::Color::getBlue() const
-{
+mc::Byte mc::Color::getBlue() const {
 	return mc::Color::convertFloatToRGBA(this->b);
 }
 
-mc::Byte mc::Color::getAlpha() const
-{
+mc::Byte mc::Color::getAlpha() const {
 	return mc::Color::convertFloatToRGBA(this->a);
 }
 
@@ -48,85 +44,70 @@ void mc::Color::setAlpha(const mc::Byte& alpha) {
 }
 
 
-mc::Color::Color(const float& red, const float& green, const float& blue, const float& alpha) : r(red),g(green),b(blue),a(alpha)
-{
-}
+mc::Color::Color(const float& red, const float& green, const float& blue, const float& alpha) : r(red), g(green), b(blue), a(alpha) {}
 
-mc::Color::Color(const std::array<float,4>& rgba)
-{
+mc::Color::Color(const std::array<float, 4>& rgba) {
 	this->setValues(rgba);
 }
 
-mc::Color::Color(const Color & copy) : r(copy.r),g(copy.g),b(copy.b),a(copy.a)
-{
+mc::Color::Color(const Color & copy) : r(copy.r), g(copy.g), b(copy.b), a(copy.a) {}
+
+mc::Color::Color() : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
+
+bool mc::Color::operator==(const Color & other) const {
+	return r == other.r&&g == other.g&&b == other.b&&a == other.a;
 }
 
-mc::Color::Color() : r(0.0f),g(0.0f),b(0.0f),a(1.0f)
-{
-}
-
-bool mc::Color::operator==(const Color & other) const
-{
-	return r==other.r&&g==other.g&&b==other.b&&a==other.a;
-}
-
-bool mc::Color::operator!=(const Color & other) const
-{
+bool mc::Color::operator!=(const Color & other) const {
 	return !(*this == other);
 }
 
-mc::Byte mc::Color::convertFloatToRGBA(const float& color)
-{
+mc::Byte mc::Color::convertFloatToRGBA(const float& color) {
 	return (mc::Byte)(trimFloat(color)*254.0f);
 }
 
-float mc::Color::convertRGBAToFloat(const mc::Byte& color)
-{
+float mc::Color::convertRGBAToFloat(const mc::Byte& color) {
 	return color / 254.0f;
 }
 
-float mc::Color::trimFloat(const float& color)
-{
+float mc::Color::trimFloat(const float& color) {
 	return color < 0.0f ? 0.0f : (color>1.0f ? 1.0f : color);
 }
 
-void mc::Color::setValues(const std::array<float, 3>& rgb)
-{
+void mc::Color::setValues(const std::array<float, 3>& rgb) {
 	this->r = rgb[0];
 	this->g = rgb[1];
 	this->b = rgb[2];
 }
 
-void mc::Color::setValues(const std::array<float, 4>& rgba)
-{
+void mc::Color::setValues(const std::array<float, 4>& rgba) {
 	this->r = rgba[0];
 	this->g = rgba[1];
 	this->b = rgba[2];
 	this->a = rgba[3];
 }
 
-std::array<float, 4> mc::Color::getValues() const
-{
+std::array<float, 4> mc::Color::getValues() const {
 	std::array<float, 4> output = { r,g,b,a };
 	return output;
 }
 
-bool mc::Color::operator<(const mc::Color& other) const{
-    //the real g right here
-    return other.r < r && other.g < g && other.b < b && other.a < a;
+bool mc::Color::operator<(const mc::Color& other) const {
+	//the real g right here
+	return other.r < r && other.g < g && other.b < b && other.a < a;
 }
 
-bool mc::Color::operator<=(const mc::Color& other) const{
-    //the real g right here
-    return other.r <= r && other.g <= g && other.b <= b && other.a <= a;
+bool mc::Color::operator<=(const mc::Color& other) const {
+	//the real g right here
+	return other.r <= r && other.g <= g && other.b <= b && other.a <= a;
 }
 
-bool mc::Color::operator>(const mc::Color& other) const{
-    //the real g right here
-    return other.r > r && other.g > g && other.b > b && other.a > a;
+bool mc::Color::operator>(const mc::Color& other) const {
+	//the real g right here
+	return other.r > r && other.g > g && other.b > b && other.a > a;
 }
 
-bool mc::Color::operator>=(const mc::Color& other) const{
-    //the real g right here
-    return other.r >= r && other.g >= g && other.b >= b && other.a >= a;
+bool mc::Color::operator>=(const mc::Color& other) const {
+	//the real g right here
+	return other.r >= r && other.g >= g && other.b >= b && other.a >= a;
 }

@@ -75,7 +75,7 @@ else()
 	message(STATUS "STB_IMAGE found.")
 endif()
 
-file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/Window/*.h" "${MACE_INCLUDES}/MACE/Graphics/*.h" "${MACE_INCLUDES}/MACE/Audio/*.h" "${MACE_INCLUDES}/MACE/Network/*.h" "${MACE_INCLUDES}/MACE/System/*.h")
+file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/*.h"  "${MACE_INCLUDES}/MACE/Graphics/*.h" "${MACE_INCLUDES}/MACE/System/*.h" "${MACE_INCLUDES}/MACE/Utility/*.h")
 file(GLOB_RECURSE SRC "src/*.cpp")
 
 foreach(FILE ${HEADERS}) 
@@ -159,6 +159,8 @@ if(NOT ${GLEW_FOUND})
 		download_library(${GLEW_SOURCE_NAME} ${GLEW_URL})
 		add_subdirectory(${PROJECT_SOURCE_DIR}/${GLEW_SOURCE_NAME}/build/cmake)
 		
+		set(GLEW_LIBRARY glew_s)
+		
 		if(BUILD_SHARED_LIBS)
 			add_definitions(-DGLEW_BUILD)
 		else()
@@ -166,7 +168,6 @@ if(NOT ${GLEW_FOUND})
 		endif()
 		
 		set(GLEW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${GLEW_SOURCE_NAME}/include)
-		set(GLEW_LIBRARY glew)
 	endif()
 endif()
 

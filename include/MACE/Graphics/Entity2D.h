@@ -9,49 +9,54 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
+#ifndef MACE_GRAPHICS_ENTITY2D_H
+#define MACE_GRAPHICS_ENTITY2D_H
+
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Shaders.h>
 #include <MACE/Graphics/Buffer.h>
 
 namespace mc {
-namespace gfx {
+	namespace gfx {
 
-	class Entity2D : public GraphicsEntity {
-	public:
-		Entity2D();
-	protected:
-	};//Entity2D
+		class Entity2D: public GraphicsEntity {
+		public:
+			Entity2D();
+		protected:
+		};//Entity2D
 
-	class Image : public Entity2D {
-	protected:
-		void customInit();
-		void customUpdate();
-		void customRender();
-		void customDestroy();
+		class Image: public Entity2D {
+		protected:
+			void customInit();
+			void customUpdate();
+			void customRender();
+			void customDestroy();
 
-	};
+		};
 
-	template<>
-	class RenderProtocol<Entity2D> : public RenderImpl {
-	public:
+		template<>
+		class RenderProtocol<Entity2D>: public RenderImpl {
+		public:
 
-		void resize(const Size width, const Size height);
+			void resize(const Size width, const Size height);
 
-		void init(const Size originalWidth, const Size originalHeight);
+			void init(const Size originalWidth, const Size originalHeight);
 
-		void setUp(win::Window* win, RenderQueue* queue);
+			void setUp(Window* win, RenderQueue* queue);
 
-		void render(win::Window* win, Entity* entity);
+			void render(Window* win, Entity* entity);
 
-		void tearDown(win::Window* win, RenderQueue* queue);
+			void tearDown(Window* win, RenderQueue* queue);
 
-		void destroy();
-	private:
+			void destroy();
+		private:
 
-		ShaderProgram shaders2D = ShaderProgram();
-		VertexArray square = VertexArray();
-	};
+			ShaderProgram shaders2D = ShaderProgram();
+			VertexArray square = VertexArray();
+		};
 
-}//gfx
+	}//gfx
 }//mc
+
+#endif

@@ -8,16 +8,18 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
+#ifndef MACE_H
+#define MACE_H
+
+/**
+Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.
+<p>
+Preproccessor definitions will start with `MACE_` and `MACE_INCLUDED` will be defined to equal `true` if MACE is included.
+*/
+namespace mc {}
 
 #include <MACE/System/System.h>
-#include <MACE/System/Constants.h>
-#include <MACE/System/Utils.h>
-#include <MACE/System/Exceptions.h>
-
+#include <MACE/Utility/Utility.h>
 #include <MACE/Graphics/Graphics.h>
 
-#include <MACE/Audio/Sound.h>
-#include <MACE/Audio/SoundManager.h>
-
-#include <MACE/Window/Window.h>
-#include <MACE/Window/WindowModule.h>
+#endif

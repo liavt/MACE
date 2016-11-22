@@ -7,16 +7,26 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+
+/**
+Includes all utility files in MACE.
+*/
 #pragma once
+#ifndef MACE_UTILITY_UTILITY_H
+#define MACE_UTILITY_UTILITY_H
 
 namespace mc {
-	namespace aud
-	{
-		class SoundManager {
-		private:
-		public:
-			static void init();
-			static void destroy();
-		};
-	}
+	/**
+	Namespace that contains mathmathetics with vectors and functions relevant in graphics programming.
+	*/
+	namespace math {}
 }
+
+#include <MACE/Utility/Color.h>
+#include <MACE/Utility/Vector.h>
+#include <MACE/Utility/BitField.h>
+#include <MACE/Utility/Math.h>
+#include <MACE/Utility/Transform.h>
+#include <MACE/Utility/Preprocessor.h>
+
+#endif
