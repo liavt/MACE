@@ -7,7 +7,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/Graphics/GLUtil.h>
 #include <memory>
 #include <MACE/Graphics/GraphicsConstants.h>
 #include <MACE/System/Constants.h>

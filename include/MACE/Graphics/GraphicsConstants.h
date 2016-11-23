@@ -10,7 +10,8 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #ifndef MACE_GRAPHICS_GRAPHICSCONSTANTS_H
 #define MACE_GRAPHICS_GRAPHICSCONSTANTS_H
-#include <MACE/System/Exceptions.h>
+#include <MACE/System/Constants.h>
+#include <string>
 
 
 namespace mc {
@@ -19,6 +20,10 @@ namespace mc {
 		using GLError = Exception;
 
 		using ShaderError = Exception;
+
+		void checkGLError();
+		void throwShaderError(const Index& shaderId, const Enum& type, const std::string& message);
+		void throwShaderError(const Index& shaderId, const Enum& type);
 	}
 }
 

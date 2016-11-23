@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <MACE/System/Module.h>
+#include <MACE/Graphics/Entity.h>
 #include <thread>
 #include <string>
 
@@ -46,7 +47,7 @@ namespace mc {
 			std::string getTitle();
 			const std::string getTitle() const;
 			void setTitle(const std::string& newTitle);
-		};
+		};//Window
 
 		class GraphicsContext {
 		public:
@@ -55,7 +56,7 @@ namespace mc {
 			virtual void render(Window* win) = 0;
 			virtual void destroy(Window* win) = 0;
 			virtual void update() = 0;
-		};
+		};//GraphicsContext
 
 		class WindowModule: public Module {
 			Window* window;
@@ -79,7 +80,29 @@ namespace mc {
 			const GraphicsContext* getContext() const;
 
 			std::string getName() const;
-		};
+		};//WindowModule
+
+		class OpenGLContext: public Entity, public GraphicsContext {
+			bool vsync;
+
+		public:
+			OpenGLContext();
+
+			void update();
+
+			void setUpWindow(Window* win);
+			void init(Window* win);
+			void render(Window* win);
+			void destroy(Window* win);
+
+			void setVSync(const bool& sync);
+		private:
+			//these are for the Entity inheritence
+			void customUpdate();
+			void customRender();
+			void customDestroy();
+			void customInit();
+		};//OpenGLContext
 	}
 }
 

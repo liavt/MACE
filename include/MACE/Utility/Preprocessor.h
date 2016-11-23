@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 #include <string>
 #include <map>
-#include <MACE/System/Exceptions.h>
+#include <MACE/System/Constants.h>
 
 
 namespace mc {

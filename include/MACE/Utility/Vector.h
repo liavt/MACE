@@ -11,7 +11,6 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_UTILITY_VECTOR_H
 #define MACE_UTILITY_VECTOR_H
 
-#include <MACE/System/Exceptions.h>
 #include <MACE/System/Constants.h>
 #include <MACE/Utility/Math.h>
 #include <array>
@@ -605,45 +604,8 @@ namespace mc {
 		}
 	}//Vector
 
+	using Vector1i = Vector< int, 1 >; using Vector2i = Vector< int, 2 >; using Vector3i = Vector< int, 3 >; using Vector4i = Vector< int, 4 >; using Vector5i = Vector< int, 5 >; using Vector1ui = Vector< unsigned int, 1 >; using Vector2ui = Vector< unsigned int, 2 >; using Vector3ui = Vector< unsigned int, 3 >; using Vector4ui = Vector< unsigned int, 4 >; using Vector5ui = Vector< unsigned int, 5 >; using Vector1si = Vector< signed int, 1 >; using Vector2si = Vector< signed int, 2 >; using Vector3si = Vector< signed int, 3 >; using Vector4si = Vector< signed int, 4 >; using Vector5si = Vector< signed int, 5 >; using Vector1f = Vector< float, 1 >; using Vector2f = Vector< float, 2 >; using Vector3f = Vector< float, 3 >; using Vector4f = Vector< float, 4 >; using Vector5f = Vector< float, 5 >; using Vector1d = Vector< double, 1 >; using Vector2d = Vector< double, 2 >; using Vector3d = Vector< double, 3 >; using Vector4d = Vector< double, 4 >; using Vector5d = Vector< double, 5 >; using Vector1ld = Vector< long double, 1 >; using Vector2ld = Vector< long double, 2 >; using Vector3ld = Vector< long double, 3 >; using Vector4ld = Vector< long double, 4 >; using Vector5ld = Vector< long double, 5 >; using Vector1s = Vector< short int, 1 >; using Vector2s = Vector< short int, 2 >; using Vector3s = Vector< short int, 3 >; using Vector4s = Vector< short int, 4 >; using Vector5s = Vector< short int, 5 >; using Vector1us = Vector< unsigned short int, 1 >; using Vector2us = Vector< unsigned short int, 2 >; using Vector3us = Vector< unsigned short int, 3 >; using Vector4us = Vector< unsigned short int, 4 >; using Vector5us = Vector< unsigned short int, 5 >; using Vector1ss = Vector< signed short int, 1 >; using Vector2ss = Vector< signed short int, 2 >; using Vector3ss = Vector< signed short int, 3 >; using Vector4ss = Vector< signed short int, 4 >; using Vector5ss = Vector< signed short int, 5 >; using Vector1l = Vector< long int, 1 >; using Vector2l = Vector< long int, 2 >; using Vector3l = Vector< long int, 3 >; using Vector4l = Vector< long int, 4 >; using Vector5l = Vector< long int, 5 >; using Vector1ul = Vector< unsigned long int, 1 >; using Vector2ul = Vector< unsigned long int, 2 >; using Vector3ul = Vector< unsigned long int, 3 >; using Vector4ul = Vector< unsigned long int, 4 >; using Vector5ul = Vector< unsigned long int, 5 >; using Vector1sl = Vector< signed long int, 1 >; using Vector2sl = Vector< signed long int, 2 >; using Vector3sl = Vector< signed long int, 3 >; using Vector4sl = Vector< signed long int, 4 >; using Vector5sl = Vector< signed long int, 5 >; using Vector1ll = Vector< long long int, 1 >; using Vector2ll = Vector< long long int, 2 >; using Vector3ll = Vector< long long int, 3 >; using Vector4ll = Vector< long long int, 4 >; using Vector5ll = Vector< long long int, 5 >; using Vector1ull = Vector< unsigned long long int, 1 >; using Vector2ull = Vector< unsigned long long int, 2 >; using Vector3ull = Vector< unsigned long long int, 3 >; using Vector4ull = Vector< unsigned long long int, 4 >; using Vector5ull = Vector< unsigned long long int, 5 >; using Vector1sll = Vector< signed long long int, 1 >; using Vector2sll = Vector< signed long long int, 2 >; using Vector3sll = Vector< signed long long int, 3 >; using Vector4sll = Vector< signed long long int, 4 >; using Vector5sll = Vector< signed long long int, 5 >; using Vector1c = Vector< char, 1 >; using Vector2c = Vector< char, 2 >; using Vector3c = Vector< char, 3 >; using Vector4c = Vector< char, 4 >; using Vector5c = Vector< char, 5 >; using Vector1uc = Vector< unsigned char, 1 >; using Vector2uc = Vector< unsigned char, 2 >; using Vector3uc = Vector< unsigned char, 3 >; using Vector4uc = Vector< unsigned char, 4 >; using Vector5uc = Vector< unsigned char, 5 >; using Vector1sc = Vector< signed char, 1 >; using Vector2sc = Vector< signed char, 2 >; using Vector3sc = Vector< signed char, 3 >; using Vector4sc = Vector< signed char, 4 >; using Vector5sc = Vector< signed char, 5 >;
 
-	//this following X_MACRO is create a bunch of preset typedefs for vector, for basically every type of possible primitive
-#define MACE_VECTOR_ENTRY(suffix,type) \
-	MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,1) \
-	MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,2)  \
-	MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,3)  \
-	MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,4)  \
-	MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,5)  
-
-#define MACE_VECTOR_CREATE_VECTOR_TYPEDEF(suffix,type,size) \
-	/**Vector typedef*/ \
-	using Vector##size##suffix = Vector< type , size >;
-
-
-#define MACE_VECTOR_X_MACRO \
-	MACE_VECTOR_ENTRY(i, int) \
-	MACE_VECTOR_ENTRY(ui, unsigned int) \
-	MACE_VECTOR_ENTRY(si, signed int) \
-	MACE_VECTOR_ENTRY(f, float) \
-	MACE_VECTOR_ENTRY(d, double) \
-	MACE_VECTOR_ENTRY(ld,long double) \
-	MACE_VECTOR_ENTRY(s, short int) \
-	MACE_VECTOR_ENTRY(us, unsigned short int) \
-	MACE_VECTOR_ENTRY(ss, signed short int) \
-	MACE_VECTOR_ENTRY(l, long int) \
-	MACE_VECTOR_ENTRY(ul, unsigned long int) \
-	MACE_VECTOR_ENTRY(sl, signed long int) \
-	MACE_VECTOR_ENTRY(ll, long long int) \
-	MACE_VECTOR_ENTRY(ull, unsigned long long int) \
-	MACE_VECTOR_ENTRY(sll, signed long long int) \
-	MACE_VECTOR_ENTRY(c, char) \
-	MACE_VECTOR_ENTRY(uc, unsigned char) \
-	MACE_VECTOR_ENTRY(sc, signed char) \
-
-	MACE_VECTOR_X_MACRO
-
-#undef MACE_VECTOR_X_MACRO
-#undef MACE_VECTOR_ENTRY
-#undef MACE_VECTOR_CREATE_VECTOR_TYPEDEF
 }//mc
 
 #endif

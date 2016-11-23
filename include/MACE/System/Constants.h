@@ -26,6 +26,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif
 
 #include <cstdint>
+#include <stdexcept>
 
 namespace mc {
 	/**
@@ -95,6 +96,55 @@ namespace mc {
 	@see Enum
 	*/
 	typedef void(*VoidFunctionPtr)();
+
+	/*Exceptions*/
+
+	/**
+	Superclass that all exceptions in MACE extend.
+	*/
+	class Exception: public std::runtime_error {
+	public:
+		/**
+		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
+		*/
+		static void handleException[[noreturn]](const std::exception& e);
+
+		using std::runtime_error::runtime_error;
+
+		Exception() = default;
+
+	};
+
+
+	/**
+	Thrown when a pointer is equal to NULL
+	*/
+	using NullPointerException = Exception;
+
+
+	/**
+	Thrown when an assertion fails.
+	@see System#assertModule(std::string)
+	*/
+	using AssertionError = Exception;
+
+	/**
+	Thrown when an object wasn't initializaed or initializtion failed
+	*/
+	using InitializationError = Exception;
+
+	/**
+	Thrown when a function looks for an object, but doesn't find it.
+	*/
+	using ObjectNotFoundInArrayException = Exception;
+	/**
+	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
+	*/
+	using IndexOutOfBoundsException = Exception;
+	/**
+	Thrown when something goes wrong while doing math, like dividing by zero
+	*/
+	using ArithmeticException = Exception;
 }
 
 #endif

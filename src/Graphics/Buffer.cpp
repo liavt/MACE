@@ -8,7 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Buffer.h>
-#include <MACE/Graphics/GLUtil.h>
+#include <MACE/Graphics/GraphicsConstants.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -81,6 +81,9 @@ namespace mc {
 
 		void VertexArray::bindIndex(const Index & id) const {
 			glBindVertexArray(id);
+		}
+
+		UniformBuffer::UniformBuffer() : Buffer(GL_UNIFORM_BUFFER) {
 		}
 
 		void UniformBuffer::setLocation(const Index loc) {
@@ -271,5 +274,48 @@ namespace mc {
 			glBindTexture(target, id);
 		}
 
-	}
+		Buffer::Buffer(const GLenum type) : bufferType(type) {}
+
+		bool Buffer::isCreated() const {
+			return glIsBuffer(id) == 1;
+		}
+
+		void Buffer::init() {
+			glGenBuffers(1, &id);
+		}
+
+		void Buffer::destroy() {
+			glDeleteBuffers(1, &id);
+		};
+
+		void Buffer::setImmutableData(const GLsizeiptr dataSize, const GLvoid* data, GLbitfield flags) {
+			glBufferStorage(bufferType, dataSize, data, flags);
+		};
+		void Buffer::setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType) const {
+			glBufferData(bufferType, dataSize, data, drawType);
+		};
+		void Buffer::setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid* data) const {
+			glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
+		};
+
+		void Buffer::copyData(Buffer other, GLsizeiptr size, Index readOffset, Index writeOffset) {
+			glCopyBufferSubData(id, other.id, readOffset, writeOffset, size);
+		};
+
+		GLvoid* Buffer::map(const GLenum access) {
+			return glMapBuffer(bufferType, access);
+		};
+
+		GLvoid* Buffer::mapRange(const Index offset, const Size length, const GLbitfield access) {
+			return glMapBufferRange(bufferType, offset, length, access);
+		};
+
+		GLboolean Buffer::unmap() {
+			return glUnmapBuffer(bufferType);
+		}
+		void Buffer::bindIndex(const Index & id) const {
+			glBindBuffer(bufferType, id);
+		}
+
+}
 }

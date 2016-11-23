@@ -61,56 +61,38 @@ namespace mc {
 			void bindIndex(const Index& id) const;
 		};//VertexArray
 
-		template<GLenum bufferType>
 		class Buffer: public Object {
 		public:
-			virtual ~Buffer() {};
+			virtual ~Buffer() = default;
 
-			bool isCreated() const {
-				return glIsBuffer(id) == 1;
-			};
+			Buffer(const GLenum bufferType);
 
-			void init() {
-				glGenBuffers(1, &id);
-			};
-			void destroy() {
-				glDeleteBuffers(1, &id);
-			};
+			bool isCreated() const;
 
-			void setImmutableData(const GLsizeiptr dataSize, const GLvoid* data, GLbitfield flags) {
-				glBufferStorage(bufferType, dataSize, data, flags);
-			};
-			void setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType = GL_DYNAMIC_DRAW) const {
-				glBufferData(bufferType, dataSize, data, drawType);
-			};
-			void setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid* data) const {
-				glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
-			};
+			void init();
+			void destroy();
 
-			template<GLenum otherType>
-			void copyData(Buffer<otherType> other, GLsizeiptr size, Index readOffset = 0, Index writeOffset = 0) {
-				glCopyBufferSubData(id, other.id, readOffset, writeOffset, size);
-			};
+			void setImmutableData(const GLsizeiptr dataSize, const GLvoid* data, GLbitfield flags);
+			void setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType = GL_DYNAMIC_DRAW) const;
+			void setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid* data) const;
 
-			GLvoid* map(const GLenum access = GL_READ_WRITE) {
-				return glMapBuffer(bufferType, access);
-			};
+			void copyData(Buffer other, GLsizeiptr size, Index readOffset = 0, Index writeOffset = 0);
 
-			GLvoid* mapRange(const Index offset, const Size length, const GLbitfield access) {
-				return glMapBufferRange(bufferType, offset, length, access);
-			};
+			GLvoid* map(const GLenum access = GL_READ_WRITE);
 
-			GLboolean unmap() {
-				return glUnmapBuffer(bufferType);
-			};
+			GLvoid* mapRange(const Index offset, const Size length, const GLbitfield access);
+
+			GLboolean unmap();
 		private:
-			void bindIndex(const Index& id) const {
-				glBindBuffer(bufferType, id);
-			}
+			GLenum bufferType;
+
+			void bindIndex(const Index& id) const;
 		};//Buffer
 
-		class UniformBuffer: public Buffer<GL_UNIFORM_BUFFER> {
+		class UniformBuffer: public Buffer {
 		public:
+			UniformBuffer();
+
 			void setLocation(const Index location);
 			Index getLocation();
 			const Index getLocation() const;
