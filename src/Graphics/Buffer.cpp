@@ -15,8 +15,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
-		VertexArray::~VertexArray() {}
-
 		void VertexArray::init() {
 			glGenVertexArrays(1, &id);
 		}

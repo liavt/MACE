@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_WINDOW_WINDOWMODULE_H
-#define MACE_WINDOW_WINDOWMODULE_H
+#ifndef MACE_GRAPHICS_WINDOW_H
+#define MACE_GRAPHICS_WINDOW_H
 
 //so we can use glew
 #define GLFW_INCLUDE_NONE
@@ -23,13 +23,6 @@ namespace mc {
 	namespace gfx {
 		class Window {
 			friend class WindowModule;
-		protected:
-			GLFWwindow* window;
-			int originalWidth;
-			int originalHeight;
-			std::string title;
-
-			unsigned int fps = 0;
 		public:
 			Window(const int width, const int height, const char* title);
 			GLFWwindow* getGLFWWindow();
@@ -47,6 +40,13 @@ namespace mc {
 			std::string getTitle();
 			const std::string getTitle() const;
 			void setTitle(const std::string& newTitle);
+		protected:
+			unsigned int fps = 0;
+
+			GLFWwindow* window;
+			int originalWidth;
+			int originalHeight;
+			std::string title;
 		};//Window
 
 		class GraphicsContext {
@@ -59,15 +59,6 @@ namespace mc {
 		};//GraphicsContext
 
 		class WindowModule: public Module {
-			Window* window;
-
-			bool destroyed = false;
-
-			std::thread windowThread;
-
-			void threadCallback();
-
-			GraphicsContext* context = 0;//initailize an empty context
 		public:
 			WindowModule(Window* window);
 
@@ -80,11 +71,19 @@ namespace mc {
 			const GraphicsContext* getContext() const;
 
 			std::string getName() const;
+		private:
+			Window* window;
+
+			bool destroyed = false;
+
+			std::thread windowThread;
+
+			GraphicsContext* context = nullptr;//initailize an empty context
+
+			void threadCallback();
 		};//WindowModule
 
 		class OpenGLContext: public Entity, public GraphicsContext {
-			bool vsync;
-
 		public:
 			OpenGLContext();
 
@@ -97,12 +96,18 @@ namespace mc {
 
 			void setVSync(const bool& sync);
 		private:
+			bool vsync = false;
+
 			//these are for the Entity inheritence
 			void customUpdate();
 			void customRender();
 			void customDestroy();
 			void customInit();
 		};//OpenGLContext
+
+		class InputManager {
+
+		};
 	}
 }
 

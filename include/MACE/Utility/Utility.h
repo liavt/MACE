@@ -28,5 +28,6 @@ namespace mc {
 #include <MACE/Utility/Math.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Preprocessor.h>
+#include <MACE/Utility/MatrixAliases.h>
 
 #endif

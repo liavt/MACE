@@ -316,9 +316,9 @@ namespace mc {
 
 				//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
 
-				Vector3f inheritedTranslation = { 0,0,0 };
-				Vector3f inheritedScale = { 1,1,1 };
-				Matrix4f inheritedRotation = math::identity<float, 4>();
+				Vector<float,3> inheritedTranslation = { 0,0,0 };
+				Vector<float,3> inheritedScale = { 1,1,1 };
+				Matrix<float,4,4> inheritedRotation = math::identity<float, 4>();
 
 				if( entity->hasParent() ) {
 					const Entity* const parent = entity->getParent();
@@ -339,21 +339,21 @@ namespace mc {
 				entityData.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
-				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector3f));
+				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float,3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector3f));
+				std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector<float,3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector3f));
+				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector<float,3>));
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector3f));
+				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector<float,3>));
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix4f));
+				std::memcpy(mappedEntityData, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix<float,4,4>));
 				mappedEntityData += 16;
-				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix4f));
+				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix<float,4,4>));
 
 				entityData.unmap();
 				entityData.bindForRender();

@@ -25,7 +25,7 @@ namespace mc {
 		@param z Rotation in radians around the Z axis
 		@return A rotation `Matrix4f`
 		*/
-		Matrix4f rotate(const float x, const float y, const float z);
+		Matrix<float,4, 4> rotate(const float x, const float y, const float z);
 		/**
 		Creates a rotation matrix, which when multiplied by a `Vector4f`, rotates it.
 		<p>
@@ -33,23 +33,23 @@ namespace mc {
 		@param v A quaternion representing a rotation
 		@return A rotated `Matrix4f`
 		*/
-		Matrix4f rotate(const Vector3f& v);
+		Matrix<float, 4, 4> rotate(const Vector<float, 3>& v);
 		/**
 		Rotates an existing `Matrix4f`
 		@param v A quaternion representing a rotation
 		@param m `Matrix4f` base to rotate
 		@return A rotated `Matrix4f`
 		*/
-		Matrix4f rotate(const Matrix4f& m, const Vector3f& v);
+		Matrix<float, 4, 4> rotate(const Matrix<float, 4, 4>& m, const Vector<float, 3>& v);
 		/**
 		Rotates an existing `Matrix4f`
-		@param x Rotation in radians around the X
+		@param m A `Matrix4f` to rotate
 		@param x Rotation in radians around the X axis
 		@param y Rotation in radians around the Y axis
 		@param z Rotation in radians around the Z axis
 		@return A rotated `Matrix4f`
 		*/
-		Matrix4f rotate(const Matrix4f& m, const float x, const float y, const float z);
+		Matrix<float, 4, 4> rotate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values.
@@ -60,7 +60,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix4f` that is scaled based on the supplied values
 		*/
-		Matrix4f scale(const float x, const float y, const float z);
+		Matrix<float, 4, 4> scale(const float x, const float y, const float z);
 		/**
 		Scales an existing transformation matrix.
 		@param m The base `Matrix4f` to get scaled
@@ -69,7 +69,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix4f` that is scaled based on the supplied values
 		*/
-		Matrix4f scale(const Matrix4f& m, const float x, const float y, const float z);
+		Matrix<float, 4, 4> scale(const Matrix<float, 4, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values.
@@ -80,7 +80,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix4f` that is translated based on the supplied values
 		*/
-		Matrix4f translate(const float x, const float y, const float z);
+		Matrix<float, 4, 4> translate(const float x, const float y, const float z);
 		/**
 		Translates an existing transformation matrix.
 		@param m The base `Matrix4f` to get translated
@@ -89,7 +89,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix4f` that is translated based on the supplied values
 		*/
-		Matrix4f translate(const Matrix4f& m, const float x, const float y, const float z);
+		Matrix<float, 4, 4> translate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Generates a projection matrix based on values. Each time the window changes size, you need to regenerate your projection matrix
@@ -102,7 +102,7 @@ namespace mc {
 		@return A projection matrix made from the specified settings
 		@see ortho(const float, const float, const float, const float, const float)
 		*/
-		Matrix4f projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
+		Matrix<float, 4, 4> projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
 		/**
 		Generates an orthographic projection matrix. As opposed to a standard projection matrix, vectors in an orthographic projection don't become smaller the farther away they are. When combined with a rotational matrix, it can create an isometric view, which is used extensively in games like Simcity. Isometric views are also used heavily in 3D modeling software to represent the dimensions of an object.In a 2D environment, an orthographic projection matrix can be used to scale the screen.
 		@param left The left plane of the orthographic projection
@@ -114,7 +114,7 @@ namespace mc {
 		@return An ortographic projection matrix generated from the values.
 		@see projection(const float, const float, const float, const float)
 		*/
-		Matrix4f ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
+		Matrix<float, 4, 4> ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
 
 	}//math
 
@@ -167,7 +167,7 @@ namespace mc {
 		Converts this `TransformMatrix` into a `Matrix4f` based on the stored transformations.
 		@return The transformation matrix represented by the values stored via `rotate()`, `scale()`, and `translate()`
 		*/
-		Matrix4f get() const;
+		Matrix<float, 4, 4> get() const;
 
 		/**
 		Checks if the values represented by 2 `TransformMatrix` are the same
@@ -211,19 +211,19 @@ namespace mc {
 		@see translate(const float, const float, const float)
 		@see get()
 		*/
-		Vector3f translation;
+		Vector<float, 3> translation;
 		/**
 		Represents this `TransformMatrix`'s rotation
 		@see rotate(const float, const float, const float)
 		@see get()
 		*/
-		Vector3f rotation;
+		Vector<float, 3> rotation;
 		/**
 		Represents this `TransformMatrix`'s scale
 		@see scale(const float, const float, const float)
 		@see get()
 		*/
-		Vector3f scaler;
+		Vector<float, 3> scaler;
 	};//TransformMatrix
 }//mc
 

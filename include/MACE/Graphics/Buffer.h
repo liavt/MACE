@@ -43,8 +43,6 @@ namespace mc {
 		public:
 			Size vertexNumber, indiceNumber;
 
-			~VertexArray();
-
 			void init();
 			void destroy();
 
