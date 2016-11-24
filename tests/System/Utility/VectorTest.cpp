@@ -9,7 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <Catch.h>
 #include <MACE/Utility/Matrix.h>
-#include <iostream>
+#include <MACE/Utility/MatrixAliases.h>
 
 namespace mc {
 
