@@ -1,5 +1,6 @@
 #include <Catch.h>
 #include <MACE/Utility/Transform.h>
+#include <MACE/Utility/MatrixAliases.h>
 
 namespace mc {
 	namespace math {
