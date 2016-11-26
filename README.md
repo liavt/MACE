@@ -13,7 +13,6 @@ Additionally, the following compilers are unit tested automatically:
 * Clang 3.3
 * Clang 3.8
 * VS 2015
-* VS 2013
 
 MACE requires a C++ 11 compliant compiler.
 
