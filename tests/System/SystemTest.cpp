@@ -137,28 +137,28 @@ namespace mc {
 			SECTION("Testing init() and update()") {
 				System::init();
 
-				REQUIRE(System::getFlag(SYSTEM_FLAG_INIT));
-				REQUIRE_FALSE(System::getFlag(SYSTEM_FLAG_DESTROYED));
-				REQUIRE_FALSE(System::getFlag(SYSTEM_FLAG_STOP_REQUESTED));
+				REQUIRE(System::getFlag(System::INIT));
+				REQUIRE_FALSE(System::getFlag(System::DESTROYED));
+				REQUIRE_FALSE(System::getFlag(System::STOP_REQUESTED));
 
 
 				for( Index i = 0; i < 10; i++ ) {
 					REQUIRE(m.updates == i);
 					mc::System::update();
 					REQUIRE(System::isRunning());
-					REQUIRE_FALSE(System::getFlag(SYSTEM_FLAG_STOP_REQUESTED));
+					REQUIRE_FALSE(System::getFlag(System::STOP_REQUESTED));
 				}
 
 				System::requestStop();
 
-				REQUIRE(System::getFlag(SYSTEM_FLAG_STOP_REQUESTED));
+				REQUIRE(System::getFlag(System::STOP_REQUESTED));
 				REQUIRE(!System::isRunning());
 
 				System::terminate();
 
-				REQUIRE(System::getFlag(SYSTEM_FLAG_DESTROYED));
-				REQUIRE_FALSE(System::getFlag(SYSTEM_FLAG_INIT));
-				REQUIRE_FALSE(System::getFlag(SYSTEM_FLAG_STOP_REQUESTED));
+				REQUIRE(System::getFlag(System::DESTROYED));
+				REQUIRE_FALSE(System::getFlag(System::INIT));
+				REQUIRE_FALSE(System::getFlag(System::STOP_REQUESTED));
 
 			}
 		}

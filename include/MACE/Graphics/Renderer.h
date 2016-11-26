@@ -39,7 +39,10 @@ namespace mc {
 			void destroy();
 			void resize(const Size& width, const Size& height);
 
-			void bindEntity(const GraphicsEntity* en);
+			void bindBuffer(UniformBuffer& buf);
+			void fillBuffer(UniformBuffer& buf, const Entity* en);
+
+			void bindEntity(const GraphicsEntity* en, ShaderProgram& prog);
 			void bindShaderProgram(ShaderProgram& prog);
 
 			std::string processShader(const std::string& shader, const GLenum& type);

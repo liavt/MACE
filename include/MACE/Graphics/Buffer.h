@@ -33,6 +33,8 @@ namespace mc {
 
 			Index getID() const;
 
+			bool operator==(const Object& other) const;
+			bool operator!=(const Object& other) const;
 		protected:
 			Index id = 0;
 
@@ -54,7 +56,9 @@ namespace mc {
 			void loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType = GL_DYNAMIC_DRAW);
 
 			void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
-
+		
+			bool operator==(const VertexArray& other) const;
+			bool operator!=(const VertexArray& other) const;
 		private:
 			void bindIndex(const Index& id) const;
 		};//VertexArray
@@ -81,6 +85,9 @@ namespace mc {
 			GLvoid* mapRange(const Index offset, const Size length, const GLbitfield access);
 
 			GLboolean unmap();
+
+			bool operator==(const Buffer& other) const;
+			bool operator!=(const Buffer& other) const;
 		private:
 			GLenum bufferType;
 
@@ -99,6 +106,8 @@ namespace mc {
 
 			void bindToUniformBlock(const Index programID, const char* blockName) const;
 
+			bool operator==(const UniformBuffer& other) const;
+			bool operator!=(const UniformBuffer& other) const;
 		private:
 			Index location = 0;
 		};//UniformBuffer
@@ -112,6 +121,9 @@ namespace mc {
 			void setStorageMultisampled(const GLsizei& samples, const GLenum& format, const GLsizei& width, const GLsizei& height);
 
 			bool isCreated() const;
+
+			using Object::operator==;
+			using Object::operator!=;
 		private:
 			void bindIndex(const Index& id) const;
 		};//RenderBuffer
@@ -135,6 +147,9 @@ namespace mc {
 			bool isCreated() const;
 
 			GLenum checkStatus(const GLenum& target);
+
+			using Object::operator==;
+			using Object::operator!=;
 		private:
 			void bindIndex(const Index& id) const;
 		};//FrameBuffer

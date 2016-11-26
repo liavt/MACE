@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Preprocessor.h>
 //we need to include cstring for memcpy
 #include <cstring>
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -70,7 +71,7 @@ namespace mc {
 			setUp(win);
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
 				Entity* en = pair->second;
-				en->setProperty(ENTITY_HOVERED, false);
+				en->setProperty(Entity::HOVERED, false);
 
 				entityIndex = pair - renderQueue.begin();
 				protocols[pair->first]->render(win, en);
@@ -164,7 +165,6 @@ namespace mc {
 				//ssl buffer objects
 				UniformBuffer windowData = UniformBuffer();
 				UniformBuffer paintData = UniformBuffer();
-				UniformBuffer entityData = UniformBuffer();
 
 				//fbo resources
 				FrameBuffer frameBuffer = FrameBuffer();
@@ -210,7 +210,6 @@ namespace mc {
 
 			void init(const Size &, const Size &) {
 				paintData.init();
-				entityData.init();
 				windowData.init();
 
 				windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
@@ -224,12 +223,6 @@ namespace mc {
 				//we set it to null, because during the actual rendering we set the data
 				paintData.setData(sizeof(GLfloat)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr, GL_STREAM_DRAW);
 				paintData.unbind();
-
-				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
-				entityData.bind();
-				//we set it to null, because during the actual rendering we set the data
-				entityData.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
-				entityData.unbind();
 
 				sceneTexture.init();
 				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -246,8 +239,8 @@ namespace mc {
 				scene.setWidth(1);
 				scene.setX(0.5f);
 				scene.setY(0.5f);
-				scene.setProperty(ENTITY_STRETCH_X, true);
-				scene.setProperty(ENTITY_STRETCH_Y, true);
+				scene.setProperty(Entity::STRETCH_X, true);
+				scene.setProperty(Entity::STRETCH_Y, true);
 				scene.setTexture(sceneTexture);
 
 				Renderer::registerProtocol<Entity2D>();
@@ -285,7 +278,7 @@ namespace mc {
 				if( pixel > 0 ) {
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex
 					--pixel;
-					renderQueue[pixel].second->setProperty(ENTITY_HOVERED, true);
+					renderQueue[pixel].second->setProperty(Entity::HOVERED, true);
 				}
 
 				frameBuffer.unbind();
@@ -295,7 +288,6 @@ namespace mc {
 
 			void destroy() {
 				windowData.destroy();
-				entityData.destroy();
 				paintData.destroy();
 
 				depthBuffer.destroy();
@@ -305,9 +297,8 @@ namespace mc {
 				idTexture.destroy();
 			}//destroy
 
-			void bindEntity(const GraphicsEntity * entity) {
+			void bindEntity(const GraphicsEntity * entity, ShaderProgram& prog) {
 				const Texture& tex = entity->getTexture();
-
 
 				paintData.bind();
 				const Color& paint = tex.getPaint();
@@ -315,7 +306,49 @@ namespace mc {
 				paintData.setData(sizeof(data), data, GL_STATIC_DRAW);
 				paintData.bindForRender();
 
+				UniformBuffer& entityData = const_cast<UniformBuffer&>(entity->getBuffer());
 
+				std::cout << entity->getProperty(Entity::INIT);
+				std::cout << entityData.isCreated()<<std::endl;
+				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
+				entityData.bind();
+				entityData.bindToUniformBlock(prog.getProgramID(), "ssl_BaseEntityBuffer");
+				fillBuffer(entityData, entity);
+				entityData.bindForRender();
+
+				windowData.bindForRender();
+
+				tex.bind();
+			}//bindEntity
+
+			void bindShaderProgram(ShaderProgram & prog) {
+				windowData.bindToUniformBlock(prog.getProgramID(), "ssl_WindowData");
+				paintData.bindToUniformBlock(prog.getProgramID(), "ssl_PaintData");
+			}//bindShaderProgram
+
+			void resize(const Size & width, const Size & height) {
+				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we dont do anything
+				if( width != 0 && height != 0 ) {
+					windowData.bind();
+					float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
+					windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
+					windowData.unbind();
+
+					depthBuffer.destroy();
+					frameBuffer.destroy();
+
+					generateFramebuffer(width, height);
+				}
+			}//resize
+
+			void bindBuffer(UniformBuffer & buf) {
+				buf.bind();
+				//we set it to null, because during the actual rendering we set the data
+				buf.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
+				buf.unbind();
+			}
+
+			void fillBuffer(UniformBuffer & buf, const Entity * entity) {
 
 				//setting all of these values is quite slow, need to change it
 				const TransformMatrix& transform = entity->getTransformation();
@@ -335,16 +368,16 @@ namespace mc {
 					inheritedRotation = math::rotate(parentTransform.rotation);
 				}
 
-				const float stretch_x = entity->getProperty(ENTITY_STRETCH_X) ? 1.0f : 0.0f;
-				const float stretch_y = entity->getProperty(ENTITY_STRETCH_Y) ? 1.0f : 0.0f;
+				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
+				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
 
 				//the following are containers for the flatten() call
 				float flattenedData[16];
 
 				//now we set the uniform buffer defining the transformations of the entity
-				entityData.bind();
+				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
+				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
 				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
@@ -361,34 +394,8 @@ namespace mc {
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix<float, 4, 4>));
 
-				entityData.unmap();
-				entityData.bindForRender();
-
-				windowData.bindForRender();
-
-				tex.bind();
-			}//bindEntity
-
-			void bindShaderProgram(ShaderProgram & prog) {
-				windowData.bindToUniformBlock(prog.getProgramID(), "ssl_WindowData");
-				entityData.bindToUniformBlock(prog.getProgramID(), "ssl_BaseEntityBuffer");
-				paintData.bindToUniformBlock(prog.getProgramID(), "ssl_PaintData");
-			}//bindShaderProgram
-
-			void resize(const Size & width, const Size & height) {
-				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we dont do anything
-				if( width != 0 && height != 0 ) {
-					windowData.bind();
-					float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
-					windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
-					windowData.unbind();
-
-					depthBuffer.destroy();
-					frameBuffer.destroy();
-
-					generateFramebuffer(width, height);
-				}
-			}//resize
+				buf.unmap();
+			}
 
 			std::string processShader(const std::string & shader, const GLenum& type) {
 				Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());

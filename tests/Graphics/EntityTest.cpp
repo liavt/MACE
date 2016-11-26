@@ -128,9 +128,9 @@ namespace mc {
 			c.addChild(e);
 
 			SECTION("Updating an entity") {
-				REQUIRE(!e.getProperty(ENTITY_UPDATE_DISABLED));
+				REQUIRE(!e.getProperty(Entity::UPDATE_DISABLED));
 				e.isUpdated = false;
-				e.setProperty(ENTITY_UPDATE_DISABLED, true);
+				e.setProperty(Entity::UPDATE_DISABLED, true);
 
 				c.update();
 
@@ -138,9 +138,9 @@ namespace mc {
 			}
 
 			SECTION("Rendering an entity") {
-				REQUIRE(!e.getProperty(ENTITY_RENDER_DISABLED));
+				REQUIRE(!e.getProperty(Entity::RENDER_DISABLED));
 				e.isRendered = false;
-				e.setProperty(ENTITY_RENDER_DISABLED, true);
+				e.setProperty(Entity::RENDER_DISABLED, true);
 
 				c.render();
 
@@ -161,16 +161,16 @@ namespace mc {
 
 			SECTION("Killing some entities") {//RIP
 				REQUIRE(c.hasChild(e));
-				REQUIRE(!e.getProperty(ENTITY_DEAD));
+				REQUIRE(!e.getProperty(Entity::DEAD));
 
 				c.update();
 
-				REQUIRE(!e.getProperty(ENTITY_DEAD));
+				REQUIRE(!e.getProperty(Entity::DEAD));
 				REQUIRE(e.isUpdated);
 
 
 				e.isUpdated = false;
-				e.setProperty(ENTITY_DEAD, true);
+				e.setProperty(Entity::DEAD, true);
 
 				c.update();
 
@@ -232,13 +232,13 @@ namespace mc {
 			SECTION("Calling init() on entities") {
 
 
-				REQUIRE(!e.getProperty(ENTITY_INIT));
+				REQUIRE(!e.getProperty(Entity::INIT));
 
 
 				c.init();
 
 				REQUIRE(e.isInit);
-				REQUIRE(e.getProperty(ENTITY_INIT));
+				REQUIRE(e.getProperty(Entity::INIT));
 
 
 			}
@@ -249,15 +249,15 @@ namespace mc {
 		TEST_CASE("Testing entity properties", "[entity][graphics]") {
 			DummyEntity e = DummyEntity();
 
-			REQUIRE_FALSE(e.getProperty(ENTITY_DEAD));
-			e.setProperty(ENTITY_DEAD, true);
+			REQUIRE_FALSE(e.getProperty(Entity::DEAD));
+			e.setProperty(Entity::DEAD, true);
 
-			REQUIRE(e.getProperty(ENTITY_DEAD));
+			REQUIRE(e.getProperty(Entity::DEAD));
 
-			REQUIRE(!e.getProperty(ENTITY_UPDATE_DISABLED));
-			e.setProperty(ENTITY_UPDATE_DISABLED, true);
-			REQUIRE(e.getProperty(ENTITY_UPDATE_DISABLED));
-			REQUIRE(e.getProperty(ENTITY_DEAD));
+			REQUIRE(!e.getProperty(Entity::UPDATE_DISABLED));
+			e.setProperty(Entity::UPDATE_DISABLED, true);
+			REQUIRE(e.getProperty(Entity::UPDATE_DISABLED));
+			REQUIRE(e.getProperty(Entity::DEAD));
 		}
 
 

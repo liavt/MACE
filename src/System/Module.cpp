@@ -111,8 +111,8 @@ namespace mc {
 
 	void System::init() {
 		if( modules.size() == 0 )throw InitializationError("Must add a Module via System::addModule!");
-		flags.untoggleBit(SYSTEM_FLAG_DESTROYED);
-		flags.toggleBit(SYSTEM_FLAG_INIT);
+		flags.untoggleBit(System::DESTROYED);
+		flags.toggleBit(System::INIT);
 
 		for( Index i = 0; i < modules.size(); i++ ) {
 			modules[i]->init();
@@ -120,30 +120,30 @@ namespace mc {
 	}
 
 	void System::terminate() {
-		if( !flags.getBit(SYSTEM_FLAG_INIT) ) {
+		if( !flags.getBit(System::INIT) ) {
 			throw InitializationError("Can't terminate System without calling init() first!");
 		}
-		flags.toggleBit(SYSTEM_FLAG_DESTROYED);
-		flags.untoggleBit(SYSTEM_FLAG_INIT);
-		flags.untoggleBit(SYSTEM_FLAG_STOP_REQUESTED);
+		flags.toggleBit(System::DESTROYED);
+		flags.untoggleBit(System::INIT);
+		flags.untoggleBit(System::STOP_REQUESTED);
 		for( Index i = 0; i < modules.size(); i++ ) {
 			modules[i]->destroy();
 		}
 	}
 
 	void System::update() {
-		if( !flags.getBit(SYSTEM_FLAG_INIT) )throw InitializationError("init() must be called!");
+		if( !flags.getBit(System::INIT) )throw InitializationError("init() must be called!");
 		for( Index i = 0; i < modules.size(); i++ ) {
 			modules[i]->update();
 		}
 	}
 	bool System::isRunning() {
-		return !flags.getBit(SYSTEM_FLAG_STOP_REQUESTED) && flags.getBit(SYSTEM_FLAG_INIT) && !flags.getBit(SYSTEM_FLAG_DESTROYED);
+		return !flags.getBit(System::STOP_REQUESTED) && flags.getBit(System::INIT) && !flags.getBit(System::DESTROYED);
 	}
 	void System::requestStop() {
-		flags.toggleBit(SYSTEM_FLAG_STOP_REQUESTED);
+		flags.toggleBit(System::STOP_REQUESTED);
 	}
-	bool System::getFlag(Byte flag) {
+	bool System::getFlag(const Byte flag) {
 		return flags.getBit(flag);
 	}
 	void System::reset() {

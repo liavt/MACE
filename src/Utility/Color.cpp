@@ -59,7 +59,7 @@ bool mc::Color::operator==(const Color & other) const {
 }
 
 bool mc::Color::operator!=(const Color & other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 mc::Byte mc::Color::convertFloatToRGBA(const float& color) {

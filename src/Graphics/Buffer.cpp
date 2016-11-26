@@ -77,6 +77,14 @@ namespace mc {
 			checkGLError();
 		}
 
+		bool VertexArray::operator==(const VertexArray & other) const {
+			return vertexNumber == other.vertexNumber&&indiceNumber == other.indiceNumber&&Object::operator==(other);
+		}
+
+		bool VertexArray::operator!=(const VertexArray & other) const {
+			return !operator==(other);
+		}
+
 		void VertexArray::bindIndex(const Index & ID) const {
 			glBindVertexArray(ID);
 		}
@@ -105,6 +113,14 @@ namespace mc {
 
 		void UniformBuffer::bindToUniformBlock(const Index programID, const char* blockName) const {
 			glUniformBlockBinding(programID, glGetUniformBlockIndex(programID, blockName), location);
+		}
+
+		bool UniformBuffer::operator==(const UniformBuffer & other) const {
+			return location == other.location&&Buffer::operator==(other);
+		}
+
+		bool UniformBuffer::operator!=(const UniformBuffer & other) const {
+			return !(*this == other);
 		}
 
 		void FrameBuffer::init() {
@@ -201,6 +217,14 @@ namespace mc {
 			return id;
 		}
 
+		bool Object::operator==(const Object & other) const {
+			return this->id == other.id;
+		}
+
+		bool Object::operator!=(const Object & other) const {
+			return !operator==(other);
+		}
+
 		void Texture::init() {
 			glGenTextures(1, &id);
 		}
@@ -268,19 +292,19 @@ namespace mc {
 		}
 
 		bool Texture::operator==(const Texture & other) const {
-			return target == other.target&&paint == other.paint&&opacity == other.opacity&&id == other.id;
+			return target == other.target&&paint == other.paint&&opacity == other.opacity&&Object::operator==(other);
 		}
 
 		bool Texture::operator!=(const Texture & other) const {
-			return !(*this == other);
+			return !operator==(other);
 		}
 
 		bool Texture::operator>=(const Texture & other) const {
-			return *this == other || *this > other;
+			return operator==(other) || operator>(other);
 		}
 
 		bool Texture::operator<=(const Texture & other) const {
-			return *this == other || !(*this > other);
+			return operator==(other) || !operator>(other);
 		}
 
 		bool Texture::operator>(const Texture & other) const {
@@ -288,7 +312,7 @@ namespace mc {
 		}
 
 		bool Texture::operator<(const Texture & other) const {
-			return !(*this == other && *this > other);
+			return !(operator==(other) || operator>(other));
 		}
 
 		void Texture::bindIndex(const Index & ID) const {
@@ -333,6 +357,12 @@ namespace mc {
 
 		GLboolean Buffer::unmap() {
 			return glUnmapBuffer(bufferType);
+		}
+		bool Buffer::operator==(const Buffer & other) const {
+			return this->bufferType == other.bufferType&&Object::operator==(other);
+		}
+		bool Buffer::operator!=(const Buffer & other) const {
+			return !operator==(other);
 		}
 		void Buffer::bindIndex(const Index & ID) const {
 			glBindBuffer(bufferType, ID);

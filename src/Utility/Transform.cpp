@@ -20,23 +20,23 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 namespace mc {
-	Matrix<float,4,4> math::rotate(const float x, const float y, const float z) {
+	Matrix<float, 4, 4> math::rotate(const float x, const float y, const float z) {
 		return rotate(identity<float, 4>(), x, y, z);
 	}
-	Matrix<float,4,4> math::rotate(const Vector<float,3> & v) {
+	Matrix<float, 4, 4> math::rotate(const Vector<float, 3> & v) {
 		return rotate(v[0], v[1], v[2]);
 	}
-	Matrix<float,4,4> math::rotate(const Matrix<float,4,4> & m, const Vector<float,3> & v) {
+	Matrix<float, 4, 4> math::rotate(const Matrix<float, 4, 4> & m, const Vector<float, 3> & v) {
 		return rotate(m, v[0], v[1], v[2]);
 	}
-	Matrix<float,4,4> math::rotate(const Matrix<float,4,4>& m, const float x, const float y, const float z) {
+	Matrix<float, 4, 4> math::rotate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z) {
 		//Instead of having to calculate it twice, which is quite expensive, we store it in variables.
 		const float cosZ = cos(z), sinZ = sin(z);
 		const float cosY = cos(y), sinY = sin(y);
 		const float cosX = cos(x), sinX = sin(x);
 
 
-		Matrix<float,4,4> out = m;
+		Matrix<float, 4, 4> out = m;
 		out[0][0] = cosZ*cosY;
 		out[0][1] = sinZ;
 		out[0][2] = -sinY;
@@ -49,33 +49,33 @@ namespace mc {
 		return out;
 	}
 
-	Matrix<float,4,4> math::scale(const float x, const float y, const float z) {
+	Matrix<float, 4, 4> math::scale(const float x, const float y, const float z) {
 		return scale(identity<float, 4>(), x, y, z);
 	}
 
-	Matrix<float,4,4> math::scale(const Matrix<float,4,4>& m, const float x, const float y, const float z) {
-		Matrix<float,4,4> out = m;
+	Matrix<float, 4, 4> math::scale(const Matrix<float, 4, 4>& m, const float x, const float y, const float z) {
+		Matrix<float, 4, 4> out = m;
 		out[0][0] = x;
 		out[1][1] = y;
 		out[2][2] = z;
 		return out;
 	}
-	Matrix<float,4,4> math::translate(const float x, const float y, const float z) {
+	Matrix<float, 4, 4> math::translate(const float x, const float y, const float z) {
 		return translate(identity<float, 4>(), x, y, z);
 	}
-	Matrix<float,4,4> math::translate(const Matrix<float,4,4>& in, const float x, const float y, const float z) {
-		Matrix<float,4,4> m = in;
+	Matrix<float, 4, 4> math::translate(const Matrix<float, 4, 4>& in, const float x, const float y, const float z) {
+		Matrix<float, 4, 4> m = in;
 		m[3][0] = x;
 		m[3][1] = y;
 		m[3][2] = z;
 		return m;
 	}
-	Matrix<float,4,4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
+	Matrix<float, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
 		const float y_scale = (float) ((1.0f / tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
 		const float x_scale = y_scale / aspectRatio;
 		const float frustum_length = FAR_PLANE - NEAR_PLANE;
 
-		Matrix<float,4,4> projectionMatrix = Matrix<float,4,4>();
+		Matrix<float, 4, 4> projectionMatrix = Matrix<float, 4, 4>();
 		projectionMatrix[0][0] = x_scale;
 		projectionMatrix[1][1] = y_scale;
 		projectionMatrix[2][2] = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
@@ -85,8 +85,8 @@ namespace mc {
 
 		return projectionMatrix;
 	}
-	Matrix<float,4,4> math::ortho(const float left, const float right, const float bottom, const float top, const float near, const float far) {
-		Matrix<float,4,4> orthoMatrix;
+	Matrix<float, 4, 4> math::ortho(const float left, const float right, const float bottom, const float top, const float near, const float far) {
+		Matrix<float, 4, 4> orthoMatrix;
 		orthoMatrix[0][0] = 2.0f / (right - left);
 		orthoMatrix[1][1] = 2.0f / (top - bottom);
 		orthoMatrix[2][2] = -2.0f / (far - near);
@@ -128,25 +128,25 @@ namespace mc {
 		TransformMatrix();
 		return *this;
 	}
-	Matrix<float,4,4> TransformMatrix::get() const {
+	Matrix<float, 4, 4> TransformMatrix::get() const {
 		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
 	}
 	bool TransformMatrix::operator==(const TransformMatrix & other) const {
 		return other.translation == translation&&other.rotation == rotation&&other.scaler == scaler;
 	}
 	bool TransformMatrix::operator!=(const TransformMatrix & other) const {
-		return !(*this == other);
+		return !operator==(other);
 	}
 	bool TransformMatrix::operator>(const TransformMatrix & other) const {
 		return translation > other.translation && rotation > other.rotation && scaler > other.scaler;
 	}
 	bool TransformMatrix::operator>=(const TransformMatrix & other) const {
-		return translation >= other.translation && rotation >= other.rotation && scaler >= other.scaler;
+		return operator>(other) || operator==(other);
 	}
 	bool TransformMatrix::operator<(const TransformMatrix & other) const {
-		return translation < other.translation && rotation < other.rotation && scaler < other.scaler;
+		return !(operator>(other) || operator==(other));
 	}
 	bool TransformMatrix::operator<=(const TransformMatrix & other) const {
-		return translation <= other.translation && rotation <= other.rotation && scaler <= other.scaler;
+		return !operator>(other) || operator==(other);
 	}
 }

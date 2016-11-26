@@ -80,7 +80,7 @@ namespace mc {
 			square.bind();
 			shaders2D.bind();
 
-			ssl::bindEntity(entity);
+			ssl::bindEntity(entity, shaders2D);
 
 			square.draw();
 

@@ -105,7 +105,7 @@ namespace mc {
 			glfwSetWindowTitle(window, newTitle.c_str());
 		}
 		void WindowModule::setContext(GraphicsContext * con) {
-			if( System::getFlag(SYSTEM_FLAG_INIT) ) {
+			if( System::getFlag(System::INIT) ) {
 				throw InitializationError("Cannot set a GraphicsContext after init() has been called!");
 			}
 			context = con;
@@ -320,7 +320,7 @@ namespace mc {
 			glfwSetFramebufferSizeCallback(win->getGLFWWindow(), framebufferResize);
 
 			auto windowDamaged = [] (GLFWwindow* window) {
-				static_cast<OpenGLContext*>(glfwGetWindowUserPointer(window))->setProperty(ENTITY_DIRTY, true);
+				static_cast<OpenGLContext*>(glfwGetWindowUserPointer(window))->setProperty(Entity::DIRTY, true);
 			};
 			glfwSetWindowRefreshCallback(win->getGLFWWindow(), windowDamaged);
 

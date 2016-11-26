@@ -54,18 +54,7 @@ namespace mc {
 		virtual std::string getName() const = 0;
 	};
 
-	/**
-	Parameter for `System.getFlag(Index)`. Is `true` if `System.init()` has been called.
-	*/
-	const Index SYSTEM_FLAG_INIT = 0;
-	/**
-	Parameter for `System.getFlag(Index)`. Is `true` if `System.destroy()` has been called.
-	*/
-	const Index SYSTEM_FLAG_DESTROYED = 1;
-	/**
-	Parameter for `System.getFlag(Index)`. Is `true` if `System.requestStop()` has been called.
-	*/
-	const Index SYSTEM_FLAG_STOP_REQUESTED = 2;
+
 
 	/**
 	Core class of MACE, managing `Modules`. `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `terminate()` should be called at the end of your program.
@@ -87,6 +76,21 @@ namespace mc {
 	}
 	*/
 	namespace System {
+		enum Flags: Byte{
+			/**
+			Parameter for `System.getFlag(const Byte)`. Is `true` if `System.init()` has been called.
+			*/
+			INIT = 0,
+			/**
+			Parameter for `System.getFlag(const Byte)`. Is `true` if `System.destroy()` has been called.
+			*/
+			DESTROYED = 1,
+			/**
+			Parameter for `System.getFlag(const Byte)`. Is `true` if `System.requestStop()` has been called.
+			*/
+			STOP_REQUESTED = 2
+		};
+
 		/**
 		Register a {@link Module}.
 		<p>
@@ -236,7 +240,7 @@ namespace mc {
 		@param flag Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
 		@return Whether the specified flag is `true`
 		*/
-		bool getFlag(Byte flag);
+		bool getFlag(const Byte flag);
 
 		/**
 		"Resets" the `System` to its default state. `Modules` are cleared, and all flags are set to 0.
