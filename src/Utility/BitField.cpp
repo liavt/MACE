@@ -10,7 +10,7 @@ namespace mc {
 	//nothing to delete, just here to complete the constructor trifecta
 	BitField::~BitField() {}
 
-	BitField& BitField::setBit(Index position, bool state) {
+	BitField& BitField::setBit(Byte position, bool state) {
 		if( state ) {
 			return toggleBit(position);
 		} else {
@@ -18,21 +18,21 @@ namespace mc {
 		}
 	}
 
-	BitField& BitField::toggleBit(Index position) {
+	BitField& BitField::toggleBit(Byte position) {
 		value |= (1 << position);
 		return *this;
 	}
 
-	BitField& BitField::untoggleBit(Index position) {
+	BitField& BitField::untoggleBit(Byte position) {
 		value &= ~(1 << position);
 		return *this;
 	}
 
-	bool BitField::getBit(Index position) const {
+	bool BitField::getBit(Byte position) const {
 		return ((((value >> position) & 0x1))) == 1;
 	}
 
-	BitField& BitField::flipBit(Index position) {
+	BitField& BitField::flipBit(Byte position) {
 		value ^= 1 << position;
 		return *this;
 	}
@@ -43,28 +43,28 @@ namespace mc {
 	}
 
 
-	BitField BitField::operator|(const Byte value) {
-		return BitField(this->value | value);
+	BitField BitField::operator|(const Byte val) {
+		return BitField(this->value | val);
 	}
 
-	void BitField::operator|=(const Byte value) {
-		this->value |= value;
+	void BitField::operator|=(const Byte val) {
+		this->value |= val;
 	}
 
-	BitField BitField::operator&(const Byte value) {
-		return BitField(this->value & value);
+	BitField BitField::operator&(const Byte val) {
+		return BitField(this->value & val);
 	}
 
-	void BitField::operator&=(const Byte value) {
-		this->value &= value;
+	void BitField::operator&=(const Byte val) {
+		this->value &= val;
 	}
 
-	BitField BitField::operator^(const Byte value) {
-		return BitField(this->value ^ value);
+	BitField BitField::operator^(const Byte val) {
+		return BitField(this->value ^ val);
 	}
 
-	void BitField::operator^=(const Byte value) {
-		this->value ^= value;
+	void BitField::operator^=(const Byte val) {
+		this->value ^= val;
 	}
 
 	BitField BitField::operator|(BitField& other) {
@@ -195,7 +195,7 @@ namespace mc {
 		return value % other;
 	}
 
-	bool BitField::operator[](Index position) {
+	bool BitField::operator[](Byte position) {
 		return getBit(position);
 	}
 
@@ -203,7 +203,7 @@ namespace mc {
 		value++;
 	}
 
-	void BitField::operator++(int dummy) {
+	void BitField::operator++(int) {
 		++value;
 	}
 
@@ -211,7 +211,7 @@ namespace mc {
 		value--;
 	}
 
-	void BitField::operator--(int dummy) {
+	void BitField::operator--(int) {
 		--value;
 	}
 }//mc

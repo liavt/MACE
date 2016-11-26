@@ -43,11 +43,11 @@ namespace mc {
 
 			void init(const Size originalWidth, const Size originalHeight);
 
-			void setUp(Window* win, RenderQueue* queue);
+			void setUp(os::Window* win, RenderQueue* queue);
 
-			void render(Window* win, Entity* entity);
+			void render(os::Window* win, Entity* entity);
 
-			void tearDown(Window* win, RenderQueue* queue);
+			void tearDown(os::Window* win, RenderQueue* queue);
 
 			void destroy();
 		private:

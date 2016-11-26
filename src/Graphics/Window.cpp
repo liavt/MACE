@@ -11,22 +11,63 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/System/Constants.h>
 #include <MACE/Graphics/GraphicsConstants.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Utility/BitField.h>
 #include <mutex>
 #include <ctime>
 #include <chrono>
 #include <iostream>
+#include <unordered_map>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
 
 namespace mc {
-	namespace gfx {
+	namespace os {
+		namespace {
+			std::unordered_map< short int, BitField > keys = std::unordered_map< short int, BitField >();
+
+			void pushKeyEvent(const short int& key, const BitField action) {
+				keys[key] = action;
+			}
+		}
+
 		Window::Window(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void Window::create() {
 			window = glfwCreateWindow(originalWidth, originalHeight, title.c_str(), NULL, NULL);
 
-			auto closeCallback = [] (GLFWwindow* win) {mc::System::requestStop(); };
+			auto closeCallback = [] (GLFWwindow*) {
+				mc::System::requestStop();
+			};
 			glfwSetWindowCloseCallback(window, closeCallback);
+
+			auto keyDown = [] (GLFWwindow*, int key, int, int action, int mods) {
+				BitField actions = BitField(0);
+				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
+				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
+				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
+				actions.setBit(Input::MOD_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
+				actions.setBit(Input::MOD_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
+				actions.setBit(Input::MOD_ALT, (mods & GLFW_MOD_ALT) != 0);
+				actions.setBit(Input::MOD_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+
+				pushKeyEvent(static_cast<short int>(key), actions);
+			};
+			glfwSetKeyCallback(window, keyDown);
+
+			auto mouseDown = [] (GLFWwindow*, int button, int action, int mods) {
+				BitField actions = BitField(0);
+				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
+				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
+				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
+				actions.setBit(Input::MOD_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
+				actions.setBit(Input::MOD_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
+				actions.setBit(Input::MOD_ALT, (mods & GLFW_MOD_ALT) != 0);
+				actions.setBit(Input::MOD_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+
+				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
+				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
+			};
+			glfwSetMouseButtonCallback(window, mouseDown);
 		}
 
 		void Window::poll() {
@@ -120,14 +161,15 @@ namespace mc {
 					now = time(0);
 
 					{
+						//thread doesn't own window, so we have to lock the mutex
 						std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-						//thread doesn't own window, so we have to lock the mutex
-						window->poll();
 
 						if( context != nullptr ) {
 							context->render(window);
 						}
+
+						window->poll();
 
 						if( !System::isRunning() )break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 
@@ -163,7 +205,7 @@ namespace mc {
 					System::requestStop();
 				}
 			}
-		}
+		}//threadCallback
 
 		WindowModule::WindowModule(Window* win) {
 			this->window = win;
@@ -180,6 +222,7 @@ namespace mc {
 		void WindowModule::update() {
 			std::mutex mutex;
 			std::unique_lock<std::mutex> guard(mutex);
+			window->poll();
 			if( context != 0 )context->update();
 			guard.unlock();
 		}
@@ -193,28 +236,48 @@ namespace mc {
 
 		std::string WindowModule::getName() const {
 			return "MACE/Window";
-		}
+		}//getName()
 
-		OpenGLContext::OpenGLContext() : Entity(), GraphicsContext() {
+		namespace Input {
+			const BitField & getKey(const short int key) {
+				return keys[key];
+			}
 
-		}
+			bool isKeyDown(const short int key) {
+				return keys[key].getBit(Input::PRESSED);
+			}
+
+			bool isKeyRepeated(const short int key) {
+				return keys[key].getBit(Input::REPEATED);
+			}
+
+			bool isKeyReleased(const short int key) {
+				return keys[key].getBit(Input::RELEASED);
+			}
+		}//Input
+
+		GraphicsContext::GraphicsContext() : Entity() {}
+
+	}//os
+
+	namespace gfx {
+		OpenGLContext::OpenGLContext() : GraphicsContext() {}
+
 		void OpenGLContext::update() {
-			//	SDL_GL_MakeCurrent(window->getSDLWindow(), context);
-
 			std::mutex mutex;
 			std::unique_lock<std::mutex> lock(mutex);
 
 			Entity::update();
-		}
+		}//update
 
-		void OpenGLContext::setUpWindow(Window * win) {
+		void OpenGLContext::setUpWindow(os::Window *) {
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		}
+		}//setUpWindow
 
-		void OpenGLContext::init(Window * win) {
+		void OpenGLContext::init(os::Window * win) {
 
 			std::mutex mutex;
 			std::unique_lock<std::mutex> lock(mutex);
@@ -249,11 +312,17 @@ namespace mc {
 			if( vsync )glfwSwapInterval(1);
 			else glfwSwapInterval(0);
 
+			glfwSetWindowUserPointer(win->getGLFWWindow(), this);
 
-			auto framebufferResize = [] (GLFWwindow* win, int width, int height) {
+			auto framebufferResize = [] (GLFWwindow*, int width, int height) {
 				Renderer::resize(width, height);
 			};
 			glfwSetFramebufferSizeCallback(win->getGLFWWindow(), framebufferResize);
+
+			auto windowDamaged = [] (GLFWwindow* window) {
+				static_cast<OpenGLContext*>(glfwGetWindowUserPointer(window))->setProperty(ENTITY_DIRTY, true);
+			};
+			glfwSetWindowRefreshCallback(win->getGLFWWindow(), windowDamaged);
 
 			int width = 0, height = 0;
 
@@ -262,11 +331,9 @@ namespace mc {
 			Renderer::init(width, height);
 
 			Entity::init();
+		}//init
 
-
-		}
-
-		void OpenGLContext::render(Window* win) {
+		void OpenGLContext::render(os::Window* win) {
 			std::mutex mutex;
 			std::unique_lock<std::mutex> lock(mutex);
 
@@ -277,9 +344,9 @@ namespace mc {
 			Renderer::renderFrame(win);
 
 			glfwSwapBuffers(win->getGLFWWindow());
-		}
+		}//render
 
-		void OpenGLContext::destroy(Window* win) {
+		void OpenGLContext::destroy(os::Window*) {
 			std::mutex mutex;
 			std::unique_lock<std::mutex> lock(mutex);
 
@@ -287,11 +354,11 @@ namespace mc {
 
 			Renderer::destroy();
 
-		}
-
+		}//destroy
+		i wi
 		void OpenGLContext::setVSync(const bool & sync) {
 			vsync = sync;
-		}
+		}//setVSync
 
 		void OpenGLContext::customUpdate() {}
 
@@ -300,6 +367,5 @@ namespace mc {
 		void OpenGLContext::customDestroy() {}
 
 		void OpenGLContext::customInit() {}
-
-	}
-}
+	}//gfx
+}//mc

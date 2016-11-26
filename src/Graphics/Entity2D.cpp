@@ -24,9 +24,9 @@ namespace mc {
 
 		void Image::customDestroy() {}
 
-		void RenderProtocol<Entity2D>::resize(const Size width, const Size height) {}
+		void RenderProtocol<Entity2D>::resize(const Size, const Size) {}
 
-		void RenderProtocol<Entity2D>::init(const Size originalWidth, const Size originalHeight) {
+		void RenderProtocol<Entity2D>::init(const Size, const Size) {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
@@ -70,12 +70,11 @@ namespace mc {
 			shaders2D.init();
 
 			ssl::bindShaderProgram(shaders2D);
+		}//init
 
-		}
+		void RenderProtocol<Entity2D>::setUp(os::Window*, RenderQueue*) {};
 
-		void RenderProtocol<Entity2D>::setUp(Window* win, RenderQueue* queue) {};
-
-		void RenderProtocol<Entity2D>::render(Window* win, Entity* e) {
+		void RenderProtocol<Entity2D>::render(os::Window*, Entity* e) {
 			Entity2D * entity = reinterpret_cast<Entity2D*>(e);
 
 			square.bind();
@@ -86,14 +85,14 @@ namespace mc {
 			square.draw();
 
 			checkGLError();
-		}
+		}//render
 
-		void RenderProtocol<Entity2D>::tearDown(Window* win, RenderQueue* queue) {}
+		void RenderProtocol<Entity2D>::tearDown(os::Window*, RenderQueue*) {}
 
 		void RenderProtocol<Entity2D>::destroy() {
 			shaders2D.destroy();
 			square.destroy();
-		}
+		}//destroy
 
 	}//gfx
 }//mc

@@ -147,6 +147,18 @@ if(NOT ${GLFW_FOUND})
 		download_library(${GLFW_SOURCE_NAME} ${GLFW_URL})
 		add_subdirectory(${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME})
 		
+		if(MSVC)
+			#the /rtc flag breaks glfw. we have to remove it.
+		    foreach(flag_var
+			CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
+			CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO)
+				if(${flag_var} MATCHES "/MD")
+					string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+					STRING (REGEX REPLACE "/RTC(su|[1su])" "" ${flag_var} "${${flag_var}}")
+				endif()
+			endforeach(flag_var)
+		endif()
+		
 		set(GLFW_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${GLFW_SOURCE_NAME}/include)
 		set(GLFW_LIBRARY glfw)
 	endif()

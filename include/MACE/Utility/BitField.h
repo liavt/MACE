@@ -64,35 +64,35 @@ namespace mc {
 		@param state `true` to make the specified bit 1, and `false` to make it 0
 		@return `this` for chaining
 		*/
-		BitField& setBit(Index position, bool state);
+		BitField& setBit(Byte position, bool state);
 
 		/**
 		Turn bit at `position` to be `true` or `1`
 		@param position 0-indexed integer representing which bit to toggle
 		@return `this` for chaining
 		*/
-		BitField& toggleBit(Index position);
+		BitField& toggleBit(Byte position);
 
 		/**
 		Turn bit at `position` to be `false` or `0`
 		@param position 0-indexed integer representing which bit to untoggle
 		@return `this` for chaining
 		*/
-		BitField& untoggleBit(Index position);
+		BitField& untoggleBit(Byte position);
 
 		/**
 		Retrieve the value of a specified bit
 		@param position which bit to check
 		@return `true` if the bit is 1, `false` otherwise
 		*/
-		bool getBit(Index position) const;
+		bool getBit(Byte position) const;
 
 		/**
 		Inverts a certain bit
 		@param position Which bit to "flip," or invert
 		@return `this` for chaining
 		*/
-		BitField& flipBit(Index position);
+		BitField& flipBit(Byte position);
 
 		/**
 		Inverses every bit, making every 0 a 1 and every 1 a 0.
@@ -111,7 +111,7 @@ namespace mc {
 		*/
 		friend std::ostream& operator<<(std::ostream &os, const BitField& b) {
 			//has to have 8 bits, so we countdown from 8
-			for( Index i = 0; i < 8; i++ )os << b.getBit((7) - i);//0 indexed so that explains the magic number of 7
+			for( Byte i = 0; i < 8; i++ )os << b.getBit((7) - i);//0 indexed so that explains the magic number of 7
 			return os;
 		}
 
@@ -307,9 +307,9 @@ namespace mc {
 		Gets a bit at a certain position
 		@param position Which bit to retrieve. Zero-indexed
 		@return `true` if the bit is 1, `false` otherwise.
-		@see getBit(Index)
+		@see getBit(Byte)
 		*/
-		bool operator[](Index position);
+		bool operator[](Byte position);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value

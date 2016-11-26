@@ -359,9 +359,6 @@ namespace mc {
 
 		int getMacroLocation(const std::string& name) const;
 
-		bool isNewToken(const char lastValue, const char value) const;
-		bool isNonOperator(const char value) const;
-
 		std::string expandMacro(const std::string input) const;
 
 		int getIfScopeLocation();

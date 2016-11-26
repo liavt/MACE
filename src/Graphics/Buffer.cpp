@@ -77,12 +77,11 @@ namespace mc {
 			checkGLError();
 		}
 
-		void VertexArray::bindIndex(const Index & id) const {
-			glBindVertexArray(id);
+		void VertexArray::bindIndex(const Index & ID) const {
+			glBindVertexArray(ID);
 		}
 
-		UniformBuffer::UniformBuffer() : Buffer(GL_UNIFORM_BUFFER) {
-		}
+		UniformBuffer::UniformBuffer() : Buffer(GL_UNIFORM_BUFFER) {}
 
 		void UniformBuffer::setLocation(const Index loc) {
 			this->location = loc;
@@ -160,8 +159,8 @@ namespace mc {
 			return glCheckFramebufferStatus(target);
 		}
 
-		void FrameBuffer::bindIndex(const Index & id) const {
-			glBindFramebuffer(GL_FRAMEBUFFER, id);
+		void FrameBuffer::bindIndex(const Index & ID) const {
+			glBindFramebuffer(GL_FRAMEBUFFER, ID);
 		}
 
 		void RenderBuffer::init() {
@@ -186,8 +185,8 @@ namespace mc {
 			return glIsRenderbuffer(id) == 1;
 		}
 
-		void RenderBuffer::bindIndex(const Index & id) const {
-			glBindRenderbuffer(GL_RENDERBUFFER, id);
+		void RenderBuffer::bindIndex(const Index & ID) const {
+			glBindRenderbuffer(GL_RENDERBUFFER, ID);
 		}
 
 		void Object::bind() const {
@@ -268,8 +267,32 @@ namespace mc {
 			glTexParameteri(GL_TEXTURE_2D, name, value);
 		}
 
-		void Texture::bindIndex(const Index & id) const {
-			glBindTexture(target, id);
+		bool Texture::operator==(const Texture & other) const {
+			return target == other.target&&paint == other.paint&&opacity == other.opacity&&id == other.id;
+		}
+
+		bool Texture::operator!=(const Texture & other) const {
+			return !(*this == other);
+		}
+
+		bool Texture::operator>=(const Texture & other) const {
+			return *this == other || *this > other;
+		}
+
+		bool Texture::operator<=(const Texture & other) const {
+			return *this == other || !(*this > other);
+		}
+
+		bool Texture::operator>(const Texture & other) const {
+			return target > other.target&&paint > other.paint&&opacity > other.opacity&&id > other.id;
+		}
+
+		bool Texture::operator<(const Texture & other) const {
+			return !(*this == other && *this > other);
+		}
+
+		void Texture::bindIndex(const Index & ID) const {
+			glBindTexture(target, ID);
 		}
 
 		Buffer::Buffer(const GLenum type) : bufferType(type) {}
@@ -311,9 +334,9 @@ namespace mc {
 		GLboolean Buffer::unmap() {
 			return glUnmapBuffer(bufferType);
 		}
-		void Buffer::bindIndex(const Index & id) const {
-			glBindBuffer(bufferType, id);
+		void Buffer::bindIndex(const Index & ID) const {
+			glBindBuffer(bufferType, ID);
 		}
 
-}
+	}
 }

@@ -236,7 +236,7 @@ namespace mc {
 		@param flag Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
 		@return Whether the specified flag is `true`
 		*/
-		bool getFlag(Index flag);
+		bool getFlag(Byte flag);
 
 		/**
 		"Resets" the `System` to its default state. `Modules` are cleared, and all flags are set to 0.

@@ -162,6 +162,14 @@ namespace mc {
 			bool isCreated() const;
 
 			void setParameter(const GLenum& name, const GLint& value);
+
+			bool operator==(const Texture& other) const;
+			bool operator!=(const Texture& other) const;
+			bool operator>=(const Texture& other) const;
+			bool operator<=(const Texture& other) const;
+			bool operator>(const Texture& other) const;
+			bool operator<(const Texture& other) const;
+
 		private:
 			GLenum target = GL_TEXTURE_2D;
 

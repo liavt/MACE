@@ -18,17 +18,19 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
-
 		int RenderImpl::index = -1;
 
-		RenderQueue renderQueue = RenderQueue();
-		std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
 
-		Size originalWidth = 0;
-		Size originalHeight = 0;
+		namespace {
+			RenderQueue renderQueue = RenderQueue();
+			std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
 
-		//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
-		Index entityIndex = 0;
+			Size originalWidth = 0;
+			Size originalHeight = 0;
+
+			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
+			Index entityIndex = 0;
+		}//anon namespace
 
 		void Renderer::init(const Size width, const Size height) {
 			originalWidth = width;
@@ -36,7 +38,7 @@ namespace mc {
 
 			ssl::init(width, height);
 		}//init
-		void Renderer::setUp(Window* win) {
+		void Renderer::setUp(os::Window* win) {
 			ssl::setUp(win);
 
 			for( Index i = 0; i < protocols.size(); ++i ) {
@@ -56,7 +58,7 @@ namespace mc {
 			return protocols.size();
 		}
 		//tearDown
-		void Renderer::tearDown(Window* win) {
+		void Renderer::tearDown(os::Window* win) {
 			for( Index i = 0; i < protocols.size(); ++i ) {
 				protocols[i]->tearDown(win, &renderQueue);
 			}
@@ -64,12 +66,11 @@ namespace mc {
 			ssl::tearDown(win);
 		}//tearDown
 		//resize
-		void Renderer::renderFrame(Window* win) {
+		void Renderer::renderFrame(os::Window* win) {
 			setUp(win);
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
 				Entity* en = pair->second;
 				en->setProperty(ENTITY_HOVERED, false);
-				en->setProperty(ENTITY_CLICKED, false);
 
 				entityIndex = pair - renderQueue.begin();
 				protocols[pair->first]->render(win, en);
@@ -137,69 +138,77 @@ namespace mc {
 
 //ssl resources
 //preprocessor
-			Preprocessor sslPreprocessor = Preprocessor("");
+			namespace {
+				Preprocessor sslPreprocessor = Preprocessor("");
 
-			mc::IncludeString vertexLibrary = mc::IncludeString({
-			#	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
-			}, "ssl_vertex");
+				mc::IncludeString vertexLibrary = mc::IncludeString({
+				#	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
+				}, "ssl_vertex");
 
-			mc::IncludeString fragmentLibrary = mc::IncludeString({
-			#	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
-			}, "ssl_frag");
-			mc::IncludeString colorLibrary = mc::IncludeString({
-			#	include <MACE/Graphics/Shaders/include/ssl_color.glsl>
-			}, "ssl_color");
-			mc::IncludeString positionLibrary = mc::IncludeString({
-			#	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
-			}, "ssl_position");
-			mc::IncludeString mouseLibrary = mc::IncludeString({
-			#	include <MACE/Graphics/Shaders/include/ssl_window.glsl>
-			}, "ssl_window");
-			mc::IncludeString sslLibrary = mc::IncludeString({
-			#	include <MACE/Graphics/Shaders/include/ssl.glsl>
-			}, "ssl");
+				mc::IncludeString fragmentLibrary = mc::IncludeString({
+				#	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
+				}, "ssl_frag");
+				mc::IncludeString colorLibrary = mc::IncludeString({
+				#	include <MACE/Graphics/Shaders/include/ssl_color.glsl>
+				}, "ssl_color");
+				mc::IncludeString positionLibrary = mc::IncludeString({
+				#	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
+				}, "ssl_position");
+				mc::IncludeString mouseLibrary = mc::IncludeString({
+				#	include <MACE/Graphics/Shaders/include/ssl_window.glsl>
+				}, "ssl_window");
+				mc::IncludeString sslLibrary = mc::IncludeString({
+				#	include <MACE/Graphics/Shaders/include/ssl.glsl>
+				}, "ssl");
 
-			//ssl buffer objects
-			UniformBuffer windowData = UniformBuffer();
-			UniformBuffer paintData = UniformBuffer();
-			UniformBuffer entityData = UniformBuffer();
+				//ssl buffer objects
+				UniformBuffer windowData = UniformBuffer();
+				UniformBuffer paintData = UniformBuffer();
+				UniformBuffer entityData = UniformBuffer();
 
-			//fbo resources
-			FrameBuffer frameBuffer = FrameBuffer();
-			RenderBuffer depthBuffer = RenderBuffer();
+				//fbo resources
+				FrameBuffer frameBuffer = FrameBuffer();
+				RenderBuffer depthBuffer = RenderBuffer();
 
-			Texture sceneTexture = Texture();
-			Texture idTexture = Texture();
+				Texture sceneTexture = Texture();
+				Texture idTexture = Texture();
 
-			Index protocol;
-			Image scene = Image();
+				Index protocol;
+				Image scene = Image();
 
-			void generateFramebuffer(const Size& width, const Size& height) {
+				//this function goes into the anonymous namespace because it technically doesn't belong in the ssl namespace. it should remain to this source file
+				void generateFramebuffer(const Size& width, const Size& height) {
 
-				sceneTexture.setData(NULL, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+					sceneTexture.setData(NULL, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 
-				idTexture.setData(NULL, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+					idTexture.setData(NULL, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 
-				depthBuffer.init();
-				depthBuffer.bind();
-				depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+					depthBuffer.init();
+					depthBuffer.bind();
+					depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
 
-				//for our custom FBO
-				frameBuffer.init();
-				frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
-				frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
-				frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
+					//for our custom FBO
+					frameBuffer.init();
+					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
+					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
+					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-				GLenum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-				frameBuffer.setDrawBuffers(2, buffers);
+					GLenum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+					frameBuffer.setDrawBuffers(2, buffers);
 
-				if( frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE ) {
-					throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
-				}
-				glViewport(0, 0, width, height);
-			}
+					if( frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE ) {
+						throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
+					}
 
-			void init(const Size & originalWidth, const Size & originalHeight) {
+					checkGLError();
+
+					glViewport(0, 0, width, height);
+				}//generateFrambuffer
+			}//anon namespace
+
+
+
+			void init(const Size &, const Size &) {
 				paintData.init();
 				entityData.init();
 				windowData.init();
@@ -230,6 +239,7 @@ namespace mc {
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+				//better to access originalWidth and originalHeigh directly than via a parameter.
 				generateFramebuffer(originalWidth, originalHeight);
 
 				scene.setHeight(1);
@@ -248,14 +258,14 @@ namespace mc {
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 				checkGLError();
-			}
+			}//init
 
-			void setUp(Window * win) {
+			void setUp(os::Window *) {
 				frameBuffer.bind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			}
+			}//setUp
 
-			void tearDown(Window * win) {
+			void tearDown(os::Window * win) {
 				int mouseX, mouseY;
 
 				{
@@ -276,15 +286,12 @@ namespace mc {
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex
 					--pixel;
 					renderQueue[pixel].second->setProperty(ENTITY_HOVERED, true);
-
-					int state = glfwGetMouseButton(win->getGLFWWindow(), GLFW_MOUSE_BUTTON_LEFT);
-					renderQueue[pixel].second->setProperty(ENTITY_CLICKED, state == GLFW_PRESS);
 				}
 
 				frameBuffer.unbind();
 
 				protocols[protocol]->render(win, &scene);
-			}
+			}//tearDown
 
 			void destroy() {
 				windowData.destroy();
@@ -296,8 +303,7 @@ namespace mc {
 
 				sceneTexture.destroy();
 				idTexture.destroy();
-
-			}
+			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity) {
 				const Texture& tex = entity->getTexture();
@@ -312,17 +318,17 @@ namespace mc {
 
 
 				//setting all of these values is quite slow, need to change it
-				const TransformMatrix& transform = entity->getBaseTransformation();
+				const TransformMatrix& transform = entity->getTransformation();
 
 				//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
 
-				Vector<float,3> inheritedTranslation = { 0,0,0 };
-				Vector<float,3> inheritedScale = { 1,1,1 };
-				Matrix<float,4,4> inheritedRotation = math::identity<float, 4>();
+				Vector<float, 3> inheritedTranslation = { 0,0,0 };
+				Vector<float, 3> inheritedScale = { 1,1,1 };
+				Matrix<float, 4, 4> inheritedRotation = math::identity<float, 4>();
 
 				if( entity->hasParent() ) {
 					const Entity* const parent = entity->getParent();
-					const TransformMatrix& parentTransform = parent->getBaseTransformation();
+					const TransformMatrix& parentTransform = parent->getTransformation();
 
 					inheritedTranslation = parentTransform.translation;
 					inheritedScale = parentTransform.scaler;
@@ -339,21 +345,21 @@ namespace mc {
 				entityData.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
-				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float,3>));
+				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector<float,3>));
+				std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector<float,3>));
-				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector<float,3>));
-				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix<float,4,4>));
+				std::memcpy(mappedEntityData, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix<float, 4, 4>));
 				mappedEntityData += 16;
-				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix<float,4,4>));
+				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector<float, 3>));
+				mappedEntityData += 4;
+				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector<float, 3>));
+				mappedEntityData += 4;
+				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix<float, 4, 4>));
 
 				entityData.unmap();
 				entityData.bindForRender();
@@ -361,25 +367,28 @@ namespace mc {
 				windowData.bindForRender();
 
 				tex.bind();
-			}
+			}//bindEntity
 
 			void bindShaderProgram(ShaderProgram & prog) {
 				windowData.bindToUniformBlock(prog.getProgramID(), "ssl_WindowData");
-				entityData.bindToUniformBlock(prog.getProgramID(), "ssl_EntityData");
+				entityData.bindToUniformBlock(prog.getProgramID(), "ssl_BaseEntityBuffer");
 				paintData.bindToUniformBlock(prog.getProgramID(), "ssl_PaintData");
-			}
+			}//bindShaderProgram
 
 			void resize(const Size & width, const Size & height) {
-				windowData.bind();
-				float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
-				windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
-				windowData.unbind();
+				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we dont do anything
+				if( width != 0 && height != 0 ) {
+					windowData.bind();
+					float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
+					windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
+					windowData.unbind();
 
-				depthBuffer.destroy();
-				frameBuffer.destroy();
+					depthBuffer.destroy();
+					frameBuffer.destroy();
 
-				generateFramebuffer(width, height);
-			}
+					generateFramebuffer(width, height);
+				}
+			}//resize
 
 			std::string processShader(const std::string & shader, const GLenum& type) {
 				Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
@@ -388,7 +397,7 @@ namespace mc {
 				const std::string processedShader = shaderPreprocessor.preprocess();
 
 				return processedShader;
-			}
+			}//processShader
 
 			const mc::Preprocessor& getSSLPreprocessor() {
 				if( sslPreprocessor.macroNumber() == 0 ) {
@@ -405,7 +414,7 @@ namespace mc {
 					sslPreprocessor.addInclude(sslLibrary);
 				}
 				return sslPreprocessor;
-			}
+			}//getSSLPreprocessor
 
 #undef MACE_WINDOW_DATA_BUFFER_SIZE
 #undef MACE_WINDOW_DATA_LOCATION

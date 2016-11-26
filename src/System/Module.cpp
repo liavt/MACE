@@ -13,15 +13,17 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 
-	/**
-	All of the `Modules` registered
-	*/
-	std::vector<Module*> modules;
+	namespace {
+		/**
+		All of the `Modules` registered
+		*/
+		std::vector<Module*> modules;
 
-	/**
-	Stores various flags for the System, like whether it is running, or a close is requested.
-	*/
-	BitField flags = 0;
+		/**
+		Stores various flags for the System, like whether it is running, or a close is requested.
+		*/
+		BitField flags = 0;
+	}
 
 	Index System::addModule(Module& m) {
 		modules.push_back(&m);
@@ -141,7 +143,7 @@ namespace mc {
 	void System::requestStop() {
 		flags.toggleBit(SYSTEM_FLAG_STOP_REQUESTED);
 	}
-	bool System::getFlag(Index flag) {
+	bool System::getFlag(Byte flag) {
 		return flags.getBit(flag);
 	}
 	void System::reset() {

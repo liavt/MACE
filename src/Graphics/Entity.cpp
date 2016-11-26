@@ -45,6 +45,8 @@ namespace mc {
 		}
 
 		void Entity::clearChildren() {
+			setProperty(ENTITY_DIRTY, true);
+
 			while( !children.empty() ) {
 				children.back()->setParent(nullptr);
 				children.pop_back();
@@ -69,6 +71,8 @@ namespace mc {
 
 
 		void Entity::removeChild(const Entity& e) {
+			setProperty(ENTITY_DIRTY, true);
+
 			for( Size i = 0; i < children.size(); i++ ) {
 				if( &e == children.at(i) ) {
 					removeChild(i);
@@ -79,6 +83,8 @@ namespace mc {
 		}
 
 		void Entity::removeChild(Index index) {
+			setProperty(ENTITY_DIRTY, true);
+
 			if( index >= children.size() ) {
 				throw mc::IndexOutOfBoundsException(std::to_string(index) + " is larger than the amount of children!");
 			} else if( children.size() == 1 ) {
@@ -89,6 +95,21 @@ namespace mc {
 		}
 
 		void Entity::render() {
+			if( getProperty(ENTITY_DIRTY) ) {
+				clean();
+
+				if( hasParent() ) {
+					Entity* par = getParent();
+
+					//get the highest level element
+					while( par->hasParent() ) {
+						par = par->getParent();
+					}
+
+					par->setProperty(ENTITY_DIRTY, true);
+				}
+			}
+
 			//check if we can render
 			if( !getProperty(ENTITY_RENDER_DISABLED) ) {
 				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
@@ -98,8 +119,14 @@ namespace mc {
 		}
 
 		void Entity::setParent(Entity * par) {
+			setProperty(ENTITY_DIRTY, true);
+
 			this->parent = par;
 			setProperty(ENTITY_INIT, false);
+		}
+
+		void Entity::clean() {
+			setProperty(ENTITY_DIRTY, false);
 		}
 
 		Entity* const Entity::getParent() {
@@ -115,6 +142,8 @@ namespace mc {
 		}
 
 		void Entity::addChild(Entity & e) {
+			setProperty(ENTITY_DIRTY, true);
+
 			children.push_back(&e);
 			e.setParent(this);
 			//if the entity is getting added after init() has been called, we call init() ourselves
@@ -192,12 +221,14 @@ namespace mc {
 		}
 
 		void Entity::init() {
+			setProperty(ENTITY_DIRTY, true);
 			customInit();
 			initChildren();
 			setProperty(ENTITY_INIT, true);
 		}
 
 		void Entity::destroy() {
+			setProperty(ENTITY_DIRTY, true);
 			//destroy each action
 			for( Index i = 0; i < components.size(); i++ ) {
 				components[i]->destroy(this);
@@ -223,6 +254,8 @@ namespace mc {
 
 
 		EntityProperties& Entity::getProperties() {
+			setProperty(ENTITY_DIRTY, true);
+
 			return properties;
 		}
 
@@ -231,10 +264,13 @@ namespace mc {
 		}
 
 		void Entity::setProperties(EntityProperties& b) {
-			properties = b;
+			if( b != properties ) {
+				setProperty(ENTITY_DIRTY, true);
+				properties = b;
+			}
 		}
 
-		bool Entity::getProperty(const Index position) const {
+		bool Entity::getProperty(const Byte position) const {
 #ifdef MACE_ERROR_CHECK
 			if( position > 8 )throw IndexOutOfBoundsException("Input position is greater than 8");
 			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
@@ -242,38 +278,59 @@ namespace mc {
 			return properties.getBit(position);
 		}
 
-		void Entity::setProperty(const Index position, const bool value) {
+		void Entity::setProperty(const Byte position, const bool value) {
 #ifdef MACE_ERROR_CHECK
 			if( position > 8 )throw IndexOutOfBoundsException("Input position is greater than 8");
 			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
 #endif
-			properties.setBit(position, value);
+			if( properties.getBit(position) != value ) {
+				if( position != ENTITY_DIRTY && position != ENTITY_HOVERED ) {
+					properties.setBit(ENTITY_DIRTY, true);
+				}
+				properties.setBit(position, value);
+			}
 		}
 
-		TransformMatrix & Entity::getBaseTransformation() {
-			return baseTransformation;
+		TransformMatrix & Entity::getTransformation() {
+			setProperty(ENTITY_DIRTY, true);
+
+			return transformation;
 		}
 
-		const TransformMatrix & Entity::getBaseTransformation() const {
-			return baseTransformation;
+		const TransformMatrix & Entity::getTransformation() const {
+			return transformation;
 		}
 
-		void Entity::setBaseTransformation(TransformMatrix & trans) {
-			baseTransformation = trans;
+		//we are trans-supportive here!
+		void Entity::setTransformation(TransformMatrix & trans) {
+			if( transformation != trans ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				transformation = trans;
+			}
 		}
 
 		Entity & Entity::translate(float x, float y, float z) {
-			baseTransformation.translate(x, y, z);
+			setProperty(ENTITY_DIRTY, true);
+
+			transformation.translate(x, y, z);
+
 			return *this;
 		}
 
 		Entity & Entity::rotate(float x, float y, float z) {
-			baseTransformation.rotate(x, y, z);
+			setProperty(ENTITY_DIRTY, true);
+
+			transformation.rotate(x, y, z);
+
 			return *this;
 		}
 
 		Entity & Entity::scale(float x, float y, float z) {
-			baseTransformation.scale(x, y, z);
+			setProperty(ENTITY_DIRTY, true);
+
+			transformation.scale(x, y, z);
+
 			return *this;
 		}
 
@@ -284,7 +341,7 @@ namespace mc {
 			if( *other.getParent() != const_cast<Entity&>(*getParent()) ) {
 				return false;
 			}
-			if( other.getBaseTransformation() != getBaseTransformation() ) {
+			if( other.getTransformation() != getTransformation() ) {
 				return false;
 			}
 			if( other.components != components ) {
@@ -306,40 +363,64 @@ namespace mc {
 		void Group::customDestroy() {}
 
 		float & Entity::getWidth() {
-			return baseTransformation.scaler[0];
+			setProperty(ENTITY_DIRTY, true);
+
+			return transformation.scaler[0];
 		}
 		const float & Entity::getWidth() const {
-			return baseTransformation.scaler[0];
+			return transformation.scaler[0];
 		}
 		void Entity::setWidth(const float & s) {
-			baseTransformation.scaler[0] = s;
+			if( transformation.scaler[1] != s ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				transformation.scaler[0] = s;
+			}
 		}
 		float & Entity::getHeight() {
-			return baseTransformation.scaler[1];
+			setProperty(ENTITY_DIRTY, true);
+
+			return transformation.scaler[1];
 		}
 		const float & Entity::getHeight() const {
-			return baseTransformation.scaler[1];
+			return transformation.scaler[1];
 		}
 		void Entity::setHeight(const float & s) {
-			baseTransformation.scaler[1] = s;
+			if( transformation.scaler[1] != s ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				transformation.scaler[1] = s;
+			}
 		}
 		float & Entity::getX() {
-			return baseTransformation.translation[0];
+			setProperty(ENTITY_DIRTY, true);
+
+			return transformation.translation[0];
 		}
 		const float & Entity::getX() const {
-			return baseTransformation.translation[0];
+			return transformation.translation[0];
 		}
 		void Entity::setX(const float & newX) {
-			baseTransformation.translation[0] = newX;
+			if( transformation.translation[0] != newX ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				transformation.translation[0] = newX;
+			}
 		}
 		float & Entity::getY() {
-			return baseTransformation.translation[1];
+			setProperty(ENTITY_DIRTY, true);
+
+			return transformation.translation[1];
 		}
 		const float & Entity::getY() const {
-			return baseTransformation.translation[1];
+			return transformation.translation[1];
 		}
 		void Entity::setY(const float & newY) {
-			baseTransformation.translation[1] = newY;
+			if( transformation.translation[1] != newY ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				transformation.translation[1] = newY;
+			}
 		}
 		void CallbackEntity::customInit() {
 			initCallback();
@@ -418,15 +499,57 @@ namespace mc {
 		GraphicsEntity::~GraphicsEntity() {}
 
 		void GraphicsEntity::setTexture(Texture & tex) {
-			texture = tex;
+			if( tex != texture ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				texture = tex;
+			}
 		}
 
 		Texture & GraphicsEntity::getTexture() {
+			setProperty(ENTITY_DIRTY, true);
+
 			return texture;
 		}
 
-		const mc::gfx::Texture & GraphicsEntity::getTexture() const {
+		const Texture & GraphicsEntity::getTexture() const {
 			return texture;
+		}
+
+		Color & GraphicsEntity::getPaint() {
+			setProperty(ENTITY_DIRTY, true);
+
+			return texture.getPaint();
+		}
+
+		const Color & GraphicsEntity::getPaint() const {
+			return texture.getPaint();
+		}
+
+		void GraphicsEntity::setPaint(const Color & c) {
+			if( texture.getPaint() != c ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				texture.setPaint(c);
+			}
+		}
+
+		float GraphicsEntity::getOpacity() {
+			setProperty(ENTITY_DIRTY, true);
+
+			return texture.getOpacity();
+		}
+
+		const float GraphicsEntity::getOpacity() const {
+			return texture.getOpacity();
+		}
+
+		void GraphicsEntity::setOpacity(const float f) {
+			if( texture.getOpacity() != f ) {
+				setProperty(ENTITY_DIRTY, true);
+
+				texture.setOpacity(f);
+			}
 		}
 
 	}//gfx

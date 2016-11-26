@@ -22,57 +22,70 @@ namespace mc {
 		using EntityProperties = BitField;
 
 		//values defining which bit in a byte every propety is, or how much to bit shift it
-		/**
-		Bit location representing whether an `Entity` is dead.
-		<p>
-		If `true,` any {@link Entity} holding it will remove it and call `kill()`
-		@see Entity#getProperty(unsigned int)
-		*/
-		const Byte ENTITY_DEAD = 0;
-		/**
-		Property defining if an `Entity` can be updated. If this is `true`, `update()` will be called by it's parent.
-		@see Entity#getProperty(unsigned int)
-		*/
-		const Byte ENTITY_UPDATE_DISABLED = 1;
-		/**
-		Property defining if an `Entity` can be rendered. If this is `true`, `render()` will be called by it's parent.
-		@see Entity#getProperty(unsigned int)
-		*/
-		const Byte ENTITY_RENDER_DISABLED = 2;
+		enum EntityProperty: Byte {
+			/**
+			Bit location representing whether an `Entity` is dead.
+			<p>
+			If `true,` any {@link Entity} holding it will remove it and call `kill()`
+			@see Entity#getProperty(unsigned int)
+			*/
+			ENTITY_DEAD = 0,
+			/**
+			Property defining if an `Entity` can be updated. If this is `true`, `update()` will be called by it's parent.
+			@see Entity#getProperty(unsigned int)
+			*/
+			ENTITY_UPDATE_DISABLED = 1,
+			/**
+			Property defining if an `Entity` can be rendered. If this is `true`, `render()` will be called by it's parent.
+			@see Entity#getProperty(unsigned int)
+			*/
+			ENTITY_RENDER_DISABLED = 2,
 
-		/**
-		Flag representing whether an Entity's init() function has been called.
-		<p>
-		If destroy() or update() is called and this is `false`, an `InitializationError` is thrown.
-		<p>
-		If init() is called and this is `true`, an `InitializationError` is thrown.
-		@see Entity#getProperty(unsigned int)
-		*/
-		const Byte ENTITY_INIT = 3;
+			/**
+			Flag representing whether an Entity's init() function has been called.
+			<p>
+			If destroy() or update() is called and this is `false`, an `InitializationError` is thrown.
+			<p>
+			If init() is called and this is `true`, an `InitializationError` is thrown.
+			@see Entity#getProperty(unsigned int)
+			*/
+			ENTITY_INIT = 3,
 
-		/**
-		Flag representing whether an Entity's X position should move when it's parent is resized.
-		@see ENTITY_STRETCH_Y
-		*/
-		const Byte ENTITY_STRETCH_X = 4;
+			/**
+			Flag representing whether an Entity's X position should move when it's parent is resized.
+			@see ENTITY_STRETCH_Y
+			*/
+			ENTITY_STRETCH_X = 4,
 
-		/**
-		Flag representing whether an Entity's X position should move when it's parent is resized.
-		@see ENTITY_STRETCH_X
-		*/
-		const Byte ENTITY_STRETCH_Y = 5;
+			/**
+			Flag representing whether an Entity's X position should move when it's parent is resized.
+			@see ENTITY_STRETCH_X
+			*/
+			ENTITY_STRETCH_Y = 5,
 
-		/**
-		Flag representing whether an entity has been hovered over
-		@see ENTITY_CLICKED
-		*/
-		const Byte ENTITY_HOVERED = 6;
+			/**
+			Flag representing whether this `Entity` has been hovered over. The `RenderProtocol` used to render the `Entity` must set this.
+			@see ssl::bindEntity(Entity*)
+			*/
+			ENTITY_HOVERED = 6,
 
-		/**
-		Flag representing whether an entity has been clicked on.
-		@see ENTITY_HOVERED
-		*/
-		const Byte ENTITY_CLICKED = 7;
+			/**
+			Flag representing whether this `Entity` is dirty and it's positions needs to be recalculated.
+			<p>
+			This will become true under the following conditions:
+			- The `Entity` has been changed. Assume that any non-const function other than render() and update() will trigger this condition.
+			- The window is resized, moved, or created
+			<p>
+			Other classes that inherit `Entity` can also set this to true via Entity#setProperty(Byte, bool)
+			<p>
+			When an `Entity` becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level `Entity`, which is usually the `GraphicsContext`. From there, it will decide what to do based on it's `ENTITY_DIRTY` flag.
+			<p>
+			Certain `GraphicsContexts` may only render when something is dirty, heavily increasing performance in applications with little moving objects.
+			<p>
+			Additionally, an `Entity` that is considered dirty will have it's buffer updated on the GPU side.
+			*/
+			ENTITY_DIRTY = 7
+		};
 
 
 		//forward-defining entity for component
@@ -109,42 +122,23 @@ namespace mc {
 			/**
 			Should be called a by `Entity` when `System.update()` is called. Calls `customUpdate()`.
 			<p>
-			When this function is inherited or overwritten, you must call the base class's `update()` funtion. For example:{@code
-			class Derived : public Entity{
-			void update(){
-			Entity::update()//must call
-			...
-			}
-			}
-			}
+			You should never override this function. Instead, override `customUpdate()`
 			@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
 			*/
 			void update();
 			/**
 			Should be called a by `Entity` when `System.init()` is called. Calls `customInit()`
 			<p>
-			When this function is inherited or overwritten, you must call the base class's `init()` funtion. For example:{@code
-			class Derived : public Entity{
-			void init(){
-			Entity::init()//must call
-			...
-			}
-			}
-			}
+			You should never override this function. Instead, override `customInit()`
+			@dirty
 			@throws InitializationError If the property `ENTITY_INIT` is true, meaning `init()` has already been called.
 			*/
 			void init();
 			/**
 			Should be called a by `Entity` when `System.terminate()` is called. Calls `customDestroy()`. Sets `ENTITY_INIT` to be false
 			<p>
-			When this function is inherited or overwritten, you must call the base class's `destroy()` funtion. For example:{@code
-			class Derived : public Entity{
-			void destroy(){
-			Entity::destroy()//must call
-			...
-			}
-			}
-			}
+			You should never override this function. Instead, override `customDestroy()`
+			@dirty
 			@throws InitializationError If the property `ENTITY_INIT` is false, meaning `init()` was not called.
 			*/
 			void destroy();
@@ -152,14 +146,7 @@ namespace mc {
 			/**
 			Should be called by a `Entity` when the graphical `Window` clears the frame.
 			<p>
-			When this function is inherited or overwritten, you must call the base class's `render()` funtion. For example:{@code
-			class Derived : public Entity{
-			void render(){
-			Entity::render()//must call
-			...
-			}
-			}
-			}
+			You should never override this function. Instead, override `customRender()`
 			*/
 			void render();
 
@@ -171,6 +158,7 @@ namespace mc {
 			const std::vector<Entity*>& getChildren() const;
 			/**
 			Removes a child by reference.
+			@dirty
 			@throws ObjectNotFoundInArray if {@link #hasChild(Entity&) const} returns `false`
 			@param e Reference to a child
 			@see #removeChild(Index)
@@ -179,6 +167,7 @@ namespace mc {
 
 			/**
 			Removes a child via location.
+			@dirty
 			@throws IndexOutOfBounds if the index is less than 0 or greater than {@link #size()}
 			@param index Index of the `Entity` to be removed
 			@see #indexOf(const Entity&) const
@@ -196,6 +185,7 @@ namespace mc {
 
 			/**
 			Removes EVERY `Entity` from this `Entity`
+			@dirty
 			@see #size()
 			@see #removeChild(Index)
 			@see #removeChild(const Entity&)
@@ -275,6 +265,7 @@ namespace mc {
 
 			/**
 			Retrieves the `Entity's` properties as a `ByteField`
+			@dirty
 			@return The current properties belonging to this `Entity`
 			@see getProperties() const
 			@see setProperties(ByteField&)
@@ -292,6 +283,7 @@ namespace mc {
 			const EntityProperties& getProperties() const;
 			/**
 			Set the properties for this `Entity`
+			@dirty
 			@param b New `Entity` properties
 			@see getProperties()
 			@see getProperty(Index) const
@@ -307,23 +299,39 @@ namespace mc {
 			@see getProperties()
 			@see setProperties(ByteField&)
 			*/
-			bool getProperty(const Index position) const;
+			bool getProperty(const Byte position) const;
 			/**
 			Set a property to be `true` or `false`.Property consants start with `ENTITY_`
+			@dirty
 			@param position Location of the property based on a constant
 			@param value Whether it is `true` or `false`
 			@see getProperty(Index) const
 			@see getProperties()
 			@see setProperties(ByteField&)
 			*/
-			void setProperty(const Index position, const bool value);
+			void setProperty(const Byte position, const bool value);
 
-			TransformMatrix& getBaseTransformation();
-			const TransformMatrix& getBaseTransformation() const;
-			void setBaseTransformation(TransformMatrix& trans);
+			/**
+			@dirty
+			*/
+			TransformMatrix& getTransformation();
+			const TransformMatrix& getTransformation() const;
+			/**
+			@dirty
+			*/
+			void setTransformation(TransformMatrix& trans);
 
+			/**
+			@dirty
+			*/
 			Entity& translate(float x, float y, float z);
+			/**
+			@dirty
+			*/
 			Entity& rotate(float x, float y, float z);
+			/**
+			@dirty
+			*/
 			Entity& scale(float x, float y, float z);
 
 
@@ -342,32 +350,59 @@ namespace mc {
 
 			bool hasParent() const;
 
+			/**
+			@dirty
+			*/
 			void addChild(Entity& e);
 
 			/**
 			Automatically called when `ENTITY_PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
+			@dirty
 			@see getParent()
-			@todo Verify if getParent().remove(this) needs to be called
 			*/
 			void kill();
 
 			void addComponent(Component& action);
 			std::vector<Component*> getComponents();
 
+			/**
+			@dirty
+			*/
 			float& getWidth();
 			const float& getWidth() const;
+			/**
+			@dirty
+			*/
 			void setWidth(const float& s);
 
+			/**
+			@dirty
+			*/
 			float& getHeight();
 			const float& getHeight() const;
+			/**
+			@dirty
+			*/
 			void setHeight(const float& s);
 
+			/**
+			@dirty
+			*/
 			float& getX();
 			const float& getX() const;
+			/**
+			@dirty
+			*/
 			void setX(const float& newX);
 
+			/**
+			@dirty
+			*/
 			float& getY();
 			const float& getY() const;
+			/**
+			@dirty
+			*/
 			void setY(const float& newY);
 
 			/**
@@ -391,7 +426,7 @@ namespace mc {
 			*/
 			bool operator!=(Entity& other) const;
 		protected:
-			TransformMatrix baseTransformation;
+			TransformMatrix transformation;
 
 			/**
 			When `Entity.update()` is called, `customUpdate()` is called on all of it's children.
@@ -443,6 +478,8 @@ namespace mc {
 			void renderChildren();
 
 			void setParent(Entity* parent);
+
+			void clean();
 		};//Entity
 
 		class Group: public Entity {
@@ -488,10 +525,36 @@ namespace mc {
 			GraphicsEntity(Texture& t);
 			virtual ~GraphicsEntity();
 
+			/**
+			@dirty
+			*/
+			Color& getPaint();
+			const Color& getPaint() const;
+			/**
+			@dirty
+			*/
+			void setPaint(const Color& c);
+
+			/**
+			@dirty
+			*/
+			float getOpacity();
+			const float getOpacity() const;
+			/**
+			@dirty
+			*/
+			void setOpacity(const float f);
+
+			/**
+			@dirty
+			*/
 			void setTexture(Texture& tex);
+			/**
+			@dirty
+			*/
 			Texture& getTexture();
 			const Texture& getTexture() const;
-		protected:
+		private:
 			Texture texture;
 		};//GraphicsEntity
 
