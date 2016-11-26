@@ -68,7 +68,7 @@ namespace mc {
 				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
 			};
 			glfwSetMouseButtonCallback(window, mouseDown);
-		}
+		}//create
 
 		void Window::poll() {
 			glfwPollEvents();
@@ -355,7 +355,7 @@ namespace mc {
 			Renderer::destroy();
 
 		}//destroy
-		i wi
+		
 		void OpenGLContext::setVSync(const bool & sync) {
 			vsync = sync;
 		}//setVSync
