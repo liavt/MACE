@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matrix',['Matrix',['../db/db2/a00020_a5880bba4fcab857fa2957db287e97442.html#a5880bba4fcab857fa2957db287e97442',1,'mc::Vector']]]
+  ['init',['init',['../d5/d79/a00030_ae5cf0daa36c2ea61af27de6a4474f733.html#ae5cf0daa36c2ea61af27de6a4474f733',1,'mc::gfx::RenderImpl::init()'],['../d5/d16/a00029_ae5cf0daa36c2ea61af27de6a4474f733.html#ae5cf0daa36c2ea61af27de6a4474f733',1,'mc::gfx::Renderer::init()']]]
 ];

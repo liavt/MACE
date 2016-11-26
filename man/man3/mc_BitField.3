@@ -1,0 +1,942 @@
+.TH "mc::BitField" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::BitField \- Wrapper class for a primitive type that allows for easy bit manipulation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <BitField\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBitField\fP ()"
+.br
+.RI "\fIDefault constructor\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP (const \fBByte\fP val)"
+.br
+.RI "\fIConstructs a \fC\fBBitField\fP\fP with the specified value\&. \fP"
+.ti -1c
+.RI "\fB~BitField\fP ()"
+.br
+.RI "\fIDefault destructor\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP & \fBsetBit\fP (\fBByte\fP position, bool state)"
+.br
+.RI "\fIMake the bit at a certain position toggled or untoggled\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP & \fBtoggleBit\fP (\fBByte\fP position)"
+.br
+.RI "\fITurn bit at \fCposition\fP to be \fCtrue\fP or \fC1\fP \fP"
+.ti -1c
+.RI "\fBBitField\fP & \fBuntoggleBit\fP (\fBByte\fP position)"
+.br
+.RI "\fITurn bit at \fCposition\fP to be \fCfalse\fP or \fC0\fP \fP"
+.ti -1c
+.RI "bool \fBgetBit\fP (\fBByte\fP position) const "
+.br
+.RI "\fIRetrieve the value of a specified bit\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP & \fBflipBit\fP (\fBByte\fP position)"
+.br
+.RI "\fIInverts a certain bit\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP & \fBinverse\fP ()"
+.br
+.RI "\fIInverses every bit, making every 0 a 1 and every 1 a 0\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator|\fP (const \fBByte\fP \fBvalue\fP)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator|=\fP (const \fBByte\fP \fBvalue\fP)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator&\fP (const \fBByte\fP \fBvalue\fP)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator&=\fP (const \fBByte\fP \fBvalue\fP)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator^\fP (const \fBByte\fP \fBvalue\fP)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator^=\fP (const \fBByte\fP \fBvalue\fP)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator|\fP (\fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator|=\fP (\fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator&\fP (\fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator&=\fP (\fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator^\fP (\fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator^=\fP (\fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator~\fP ()"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator>>\fP (\fBIndex\fP places)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator<<\fP (\fBIndex\fP places)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator>>=\fP (\fBIndex\fP places)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator<<=\fP (\fBIndex\fP places)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBByte\fP other)"
+.br
+.RI "\fICompares this \fC\fBBitField\fP\fP to another value\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBByte\fP other)"
+.br
+.RI "\fIInverse for \fBoperator==\fP\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBBitField\fP &other)"
+.br
+.RI "\fICompares this \fC\fBBitField\fP\fP to another\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBBitField\fP &other)"
+.br
+.RI "\fIInverse for \fBoperator==\fP\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator+\fP (const \fBByte\fP other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator+\fP (const \fBBitField\fP &other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator+=\fP (const \fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator+=\fP (const \fBByte\fP other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator\-\fP (const \fBByte\fP other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator\-\fP (const \fBBitField\fP &other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-=\fP (const \fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-=\fP (const \fBByte\fP other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator*\fP (const \fBByte\fP other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator*\fP (const \fBBitField\fP &other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator*=\fP (const \fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator*=\fP (const \fBByte\fP other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator/\fP (const \fBByte\fP other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBBitField\fP \fBoperator/\fP (const \fBBitField\fP &other) const "
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator/=\fP (const \fBBitField\fP &other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator/=\fP (const \fBByte\fP other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "\fBByte\fP \fBoperator%\fP (const \fBByte\fP other)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "bool \fBoperator[]\fP (\fBByte\fP position)"
+.br
+.RI "\fIGets a bit at a certain position\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP ()"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP (int dummy)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-\-\fP ()"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-\-\fP (int dummy)"
+.br
+.RI "\fIOperator which acts upon the internal value\&. \fP"
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBByte\fP \fBvalue\fP"
+.br
+.RI "\fIThe value this \fC\fBBitField\fP\fP will be acting upon\&. \fP"
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "std::ostream & \fBoperator<<\fP (std::ostream &os, const \fBBitField\fP &b)"
+.br
+.RI "\fIOperator for \fCstd::cout\fP to correctly print this class\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Wrapper class for a primitive type that allows for easy bit manipulation\&. 
+
+Can set individual bits\&. Additionally, it overrides almost every operator to operate on it's value, to allow for you to manually manipulate it\&. 
+.PP
+It is guarenteed to contain 8 bits\&. On systems where an unsigned char is 8 bits, sizeof(BitField) will be 1\&. 
+.PP
+Examples: 
+.PP
+.nf
+BitField field = 15;//Creation
+
+field\&.setBit(i,state)//Set bit in position i to state
+
+field\&.getBit(i) //Get whether bit in position i is true or false
+
+.fi
+.PP
+ 
+.PP
+Definition at line 33 of file BitField\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::BitField::BitField ()"
+
+.PP
+Default constructor\&. Equal to calling
+.PP
+.nf
+BitField(0) 
+
+.fi
+.PP
+ 
+.SS "mc::BitField::BitField (const \fBByte\fP val)"
+
+.PP
+Constructs a \fC\fBBitField\fP\fP with the specified value\&. Equal to calling
+.PP
+.nf
+BitField = value 
+
+.fi
+.PP
+ 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIval\fP Inital value 
+.RE
+.PP
+
+.SS "mc::BitField::~BitField ()"
+
+.PP
+Default destructor\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBBitField\fP& mc::BitField::flipBit (\fBByte\fP position)"
+
+.PP
+Inverts a certain bit\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Which bit to 'flip,' or invert 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCthis\fP for chaining 
+.RE
+.PP
+
+.SS "bool mc::BitField::getBit (\fBByte\fP position) const"
+
+.PP
+Retrieve the value of a specified bit\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP which bit to check 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the bit is 1, \fCfalse\fP otherwise 
+.RE
+.PP
+
+.SS "\fBBitField\fP& mc::BitField::inverse ()"
+
+.PP
+Inverses every bit, making every 0 a 1 and every 1 a 0\&. Equivelant to calling the ~ operator\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fCthis\fP for chainign 
+.RE
+.PP
+
+.SS "bool mc::BitField::operator!= (const \fBByte\fP other)"
+
+.PP
+Inverse for \fBoperator==\fP\&. 
+.SS "bool mc::BitField::operator!= (const \fBBitField\fP & other)"
+
+.PP
+Inverse for \fBoperator==\fP\&. 
+.SS "\fBByte\fP mc::BitField::operator% (const \fBByte\fP other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator& (const \fBByte\fP value)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator& (\fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator&= (const \fBByte\fP value)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator&= (\fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator* (const \fBByte\fP other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator* (const \fBBitField\fP & other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator*= (const \fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator*= (const \fBByte\fP other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator+ (const \fBByte\fP other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator+ (const \fBBitField\fP & other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator++ ()"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator++ (int dummy)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator+= (const \fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator+= (const \fBByte\fP other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator\- (const \fBByte\fP other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator\- (const \fBBitField\fP & other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator\-\- ()"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator\-\- (int dummy)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator\-= (const \fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator\-= (const \fBByte\fP other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator/ (const \fBByte\fP other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator/ (const \fBBitField\fP & other) const"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator/= (const \fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator/= (const \fBByte\fP other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator<< (\fBIndex\fP places)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator<<= (\fBIndex\fP places)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "bool mc::BitField::operator== (const \fBByte\fP other)"
+
+.PP
+Compares this \fC\fBBitField\fP\fP to another value\&. Will return \fCtrue\fP if the bits represented are both equal\&. 
+.SS "bool mc::BitField::operator== (const \fBBitField\fP & other)"
+
+.PP
+Compares this \fC\fBBitField\fP\fP to another\&. Will return \fCtrue\fP if the bits represented are both equal\&. 
+.SS "\fBBitField\fP mc::BitField::operator>> (\fBIndex\fP places)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator>>= (\fBIndex\fP places)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "bool mc::BitField::operator[] (\fBByte\fP position)"
+
+.PP
+Gets a bit at a certain position\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Which bit to retrieve\&. Zero-indexed 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the bit is 1, \fCfalse\fP otherwise\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+getBit(Byte) 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator^ (const \fBByte\fP value)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator^ (\fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator^= (const \fBByte\fP value)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator^= (\fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator| (const \fBByte\fP value)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator| (\fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator|= (const \fBByte\fP value)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "void mc::BitField::operator|= (\fBBitField\fP & other)"
+
+.PP
+Operator which acts upon the internal value\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP mc::BitField::operator~ ()"
+
+.PP
+Operator which acts upon the internal value\&. Same as calling \fBinverse()\fP 
+.PP
+\fBSee also:\fP
+.RS 4
+get() 
+.PP
+\fBvalue\fP 
+.RE
+.PP
+
+.SS "\fBBitField\fP& mc::BitField::setBit (\fBByte\fP position, bool state)"
+
+.PP
+Make the bit at a certain position toggled or untoggled\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP 0-indexed integer reprsenting which bit to set 
+.br
+\fIstate\fP \fCtrue\fP to make the specified bit 1, and \fCfalse\fP to make it 0 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCthis\fP for chaining 
+.RE
+.PP
+
+.SS "\fBBitField\fP& mc::BitField::toggleBit (\fBByte\fP position)"
+
+.PP
+Turn bit at \fCposition\fP to be \fCtrue\fP or \fC1\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP 0-indexed integer representing which bit to toggle 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCthis\fP for chaining 
+.RE
+.PP
+
+.SS "\fBBitField\fP& mc::BitField::untoggleBit (\fBByte\fP position)"
+
+.PP
+Turn bit at \fCposition\fP to be \fCfalse\fP or \fC0\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP 0-indexed integer representing which bit to untoggle 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCthis\fP for chaining 
+.RE
+.PP
+
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "std::ostream& operator<< (std::ostream & os, const \fBBitField\fP & b)\fC [friend]\fP"
+
+.PP
+Operator for \fCstd::cout\fP to correctly print this class\&. 
+.PP
+Definition at line 112 of file BitField\&.h\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBByte\fP mc::BitField::value"
+
+.PP
+The value this \fC\fBBitField\fP\fP will be acting upon\&. 
+.PP
+Definition at line 38 of file BitField\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

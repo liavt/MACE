@@ -1,0 +1,1126 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="de/d21/a00006" kind="struct" language="C++" prot="public">
+    <compoundname>mc::BitField</compoundname>
+    <includes refid="df/d03/a00062" local="no">BitField.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" prot="public" static="no" mutable="no">
+        <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+        <definition>Byte mc::BitField::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <briefdescription>
+<para>The value this <computeroutput><ref refid="de/d21/a00006" kindref="compound">BitField</ref></computeroutput> will be acting upon. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="38" column="1" bodyfile="include/MACE/Utility/BitField.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="de/d21/a00006_a9846400e38e52693ad796daee1f4538f_1a9846400e38e52693ad796daee1f4538f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::BitField::BitField</definition>
+        <argsstring>()</argsstring>
+        <name>BitField</name>
+        <briefdescription>
+<para>Default constructor. </para>        </briefdescription>
+        <detaileddescription>
+<para>Equal to calling<programlisting><codeline><highlight class="normal">BitField(0)<sp/></highlight></codeline>
+</programlisting> </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="45" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a6ea1f64d0e3d4045c36ac78990dd81e1_1a6ea1f64d0e3d4045c36ac78990dd81e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::BitField::BitField</definition>
+        <argsstring>(const Byte val)</argsstring>
+        <name>BitField</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+<para>Constructs a <computeroutput><ref refid="de/d21/a00006" kindref="compound">BitField</ref></computeroutput> with the specified value. </para>        </briefdescription>
+        <detaileddescription>
+<para>Equal to calling<programlisting><codeline><highlight class="normal">BitField<sp/>=<sp/>value<sp/></highlight></codeline>
+</programlisting> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>val</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Inital value </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="53" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a748a04e8ed75dcf7e4f8cc47e152587d_1a748a04e8ed75dcf7e4f8cc47e152587d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::BitField::~BitField</definition>
+        <argsstring>()</argsstring>
+        <name>~BitField</name>
+        <briefdescription>
+<para>Default destructor. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="59" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a849326870a8be577ac1d71794fcc01e8_1a849326870a8be577ac1d71794fcc01e8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+        <definition>BitField&amp; mc::BitField::setBit</definition>
+        <argsstring>(Byte position, bool state)</argsstring>
+        <name>setBit</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+<para>Make the bit at a certain position toggled or untoggled. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>0-indexed integer reprsenting which bit to set </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>state</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>true</computeroutput> to make the specified bit 1, and <computeroutput>false</computeroutput> to make it 0 </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>this</computeroutput> for chaining </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="67" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a75dcdcdc01ae41e3562cd19c6c0bf967_1a75dcdcdc01ae41e3562cd19c6c0bf967" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+        <definition>BitField&amp; mc::BitField::toggleBit</definition>
+        <argsstring>(Byte position)</argsstring>
+        <name>toggleBit</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Turn bit at <computeroutput>position</computeroutput> to be <computeroutput>true</computeroutput> or <computeroutput>1</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>0-indexed integer representing which bit to toggle </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>this</computeroutput> for chaining </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="74" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aea742f2081072cdd6d841083706643f7_1aea742f2081072cdd6d841083706643f7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+        <definition>BitField&amp; mc::BitField::untoggleBit</definition>
+        <argsstring>(Byte position)</argsstring>
+        <name>untoggleBit</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Turn bit at <computeroutput>position</computeroutput> to be <computeroutput>false</computeroutput> or <computeroutput>0</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>0-indexed integer representing which bit to untoggle </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>this</computeroutput> for chaining </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="81" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a7697f5d91662e6e816fdd60c5811dc7d_1a7697f5d91662e6e816fdd60c5811dc7d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::BitField::getBit</definition>
+        <argsstring>(Byte position) const </argsstring>
+        <name>getBit</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Retrieve the value of a specified bit. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>which bit to check </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the bit is 1, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="88" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a0f2b1aa5cf2b95b3723b7821db5e40a2_1a0f2b1aa5cf2b95b3723b7821db5e40a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+        <definition>BitField&amp; mc::BitField::flipBit</definition>
+        <argsstring>(Byte position)</argsstring>
+        <name>flipBit</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Inverts a certain bit. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which bit to &quot;flip,&quot; or invert </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>this</computeroutput> for chaining </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="95" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a750852482dab9b2a8c543b5f8403dfff_1a750852482dab9b2a8c543b5f8403dfff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+        <definition>BitField&amp; mc::BitField::inverse</definition>
+        <argsstring>()</argsstring>
+        <name>inverse</name>
+        <briefdescription>
+<para>Inverses every bit, making every 0 a 1 and every 1 a 0. </para>        </briefdescription>
+        <detaileddescription>
+<para>Equivelant to calling the ~ operator. <simplesect kind="return"><para><computeroutput>this</computeroutput> for chainign </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="103" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_afa41e33173309daf0e1875320ee48214_1afa41e33173309daf0e1875320ee48214" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator|</definition>
+        <argsstring>(const Byte value)</argsstring>
+        <name>operator|</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="122" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a297c1dae72bcf6b1ccec079299a2989a_1a297c1dae72bcf6b1ccec079299a2989a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator|=</definition>
+        <argsstring>(const Byte value)</argsstring>
+        <name>operator|=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="127" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_af79b0d3baee4a903f710b1b39fcd1acf_1af79b0d3baee4a903f710b1b39fcd1acf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator&amp;</definition>
+        <argsstring>(const Byte value)</argsstring>
+        <name>operator&amp;</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="132" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aff0f7dc392d4fb000c6dc7c479573e0f_1aff0f7dc392d4fb000c6dc7c479573e0f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator&amp;=</definition>
+        <argsstring>(const Byte value)</argsstring>
+        <name>operator&amp;=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="137" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a0702a73026bef4f60a71f4a3160c559e_1a0702a73026bef4f60a71f4a3160c559e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator^</definition>
+        <argsstring>(const Byte value)</argsstring>
+        <name>operator^</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="142" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_afb3f8504bdefd8fabb3b2b0b6f3ddaa0_1afb3f8504bdefd8fabb3b2b0b6f3ddaa0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator^=</definition>
+        <argsstring>(const Byte value)</argsstring>
+        <name>operator^=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="147" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a4781182e3555552f4daaaaba7112e67b_1a4781182e3555552f4daaaaba7112e67b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator|</definition>
+        <argsstring>(BitField &amp;other)</argsstring>
+        <name>operator|</name>
+        <param>
+          <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="152" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aff10c34381437130bdfcfb40b70d7e2d_1aff10c34381437130bdfcfb40b70d7e2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator|=</definition>
+        <argsstring>(BitField &amp;other)</argsstring>
+        <name>operator|=</name>
+        <param>
+          <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="157" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a72d32a26b8b4cf1f82b95db51e824f1b_1a72d32a26b8b4cf1f82b95db51e824f1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator&amp;</definition>
+        <argsstring>(BitField &amp;other)</argsstring>
+        <name>operator&amp;</name>
+        <param>
+          <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="162" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a0bd87786c0772b04651639de3821cf3e_1a0bd87786c0772b04651639de3821cf3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator&amp;=</definition>
+        <argsstring>(BitField &amp;other)</argsstring>
+        <name>operator&amp;=</name>
+        <param>
+          <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="167" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aa90cd377d6f8511e77d5462d627df3ca_1aa90cd377d6f8511e77d5462d627df3ca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator^</definition>
+        <argsstring>(BitField &amp;other)</argsstring>
+        <name>operator^</name>
+        <param>
+          <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="172" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a889acb1537abd6683feef19f4fca7258_1a889acb1537abd6683feef19f4fca7258" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator^=</definition>
+        <argsstring>(BitField &amp;other)</argsstring>
+        <name>operator^=</name>
+        <param>
+          <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="177" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a6b58f54a90dbeda2b560bd17fee426ce_1a6b58f54a90dbeda2b560bd17fee426ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator~</definition>
+        <argsstring>()</argsstring>
+        <name>operator~</name>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para>Same as calling <ref refid="de/d21/a00006_a750852482dab9b2a8c543b5f8403dfff_1a750852482dab9b2a8c543b5f8403dfff" kindref="member">inverse()</ref> <simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="184" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_afb5170f8f99d3b2ddf9f026e10167a6d_1afb5170f8f99d3b2ddf9f026e10167a6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator&gt;&gt;</definition>
+        <argsstring>(Index places)</argsstring>
+        <name>operator&gt;&gt;</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>places</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="189" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ace2f1d2107823fcc1600aac5cde3f460_1ace2f1d2107823fcc1600aac5cde3f460" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator&lt;&lt;</definition>
+        <argsstring>(Index places)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>places</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="194" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_acd05ce152c4b3d619b3a7661c9c105fd_1acd05ce152c4b3d619b3a7661c9c105fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator&gt;&gt;=</definition>
+        <argsstring>(Index places)</argsstring>
+        <name>operator&gt;&gt;=</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>places</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="199" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aa914a0ac6d69c5d69144a820ba998547_1aa914a0ac6d69c5d69144a820ba998547" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator&lt;&lt;=</definition>
+        <argsstring>(Index places)</argsstring>
+        <name>operator&lt;&lt;=</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>places</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="204" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a249ab9bb5b8b9938e181e7db2a05b932_1a249ab9bb5b8b9938e181e7db2a05b932" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::BitField::operator==</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares this <computeroutput><ref refid="de/d21/a00006" kindref="compound">BitField</ref></computeroutput> to another value. </para>        </briefdescription>
+        <detaileddescription>
+<para>Will return <computeroutput>true</computeroutput> if the bits represented are both equal. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="208" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a26b3ac418ae6751ed165024953f0d17c_1a26b3ac418ae6751ed165024953f0d17c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::BitField::operator!=</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Inverse for <ref refid="de/d21/a00006_a249ab9bb5b8b9938e181e7db2a05b932_1a249ab9bb5b8b9938e181e7db2a05b932" kindref="member">operator==</ref>. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="212" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a294cd99756ef6c920514ac64e9e09db2_1a294cd99756ef6c920514ac64e9e09db2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::BitField::operator==</definition>
+        <argsstring>(const BitField &amp;other)</argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares this <computeroutput><ref refid="de/d21/a00006" kindref="compound">BitField</ref></computeroutput> to another. </para>        </briefdescription>
+        <detaileddescription>
+<para>Will return <computeroutput>true</computeroutput> if the bits represented are both equal. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="216" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aafb766d2cca2994a769da7b7b248e1a7_1aafb766d2cca2994a769da7b7b248e1a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::BitField::operator!=</definition>
+        <argsstring>(const BitField &amp;other)</argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Inverse for <ref refid="de/d21/a00006_a249ab9bb5b8b9938e181e7db2a05b932_1a249ab9bb5b8b9938e181e7db2a05b932" kindref="member">operator==</ref>. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="220" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_afb3ea02f18220a2d0e738a14b5823a4e_1afb3ea02f18220a2d0e738a14b5823a4e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator+</definition>
+        <argsstring>(const Byte other) const </argsstring>
+        <name>operator+</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="225" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a2069118b5e1325357e3ffdae94cb88dc_1a2069118b5e1325357e3ffdae94cb88dc" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator+</definition>
+        <argsstring>(const BitField &amp;other) const </argsstring>
+        <name>operator+</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="230" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a5bdd9a2c0e954ee68dc350677cb58c97_1a5bdd9a2c0e954ee68dc350677cb58c97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator+=</definition>
+        <argsstring>(const BitField &amp;other)</argsstring>
+        <name>operator+=</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="235" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a10796a21868259bfde5d07460cdfa1fe_1a10796a21868259bfde5d07460cdfa1fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator+=</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator+=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="240" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ac104dfe24a47d21688074f4d51c89718_1ac104dfe24a47d21688074f4d51c89718" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator-</definition>
+        <argsstring>(const Byte other) const </argsstring>
+        <name>operator-</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="245" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a2e1fdbae238b2cff1521e5effeb5eb60_1a2e1fdbae238b2cff1521e5effeb5eb60" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator-</definition>
+        <argsstring>(const BitField &amp;other) const </argsstring>
+        <name>operator-</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="250" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a54b0e5d999d9b651559fbd1c9eec7763_1a54b0e5d999d9b651559fbd1c9eec7763" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator-=</definition>
+        <argsstring>(const BitField &amp;other)</argsstring>
+        <name>operator-=</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="255" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a126560988f9de1abb9a06c0b5cb00866_1a126560988f9de1abb9a06c0b5cb00866" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator-=</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator-=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="260" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aa6c86965fd4b49ff8a1667997793e0d0_1aa6c86965fd4b49ff8a1667997793e0d0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator*</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator*</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="265" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ac10f1bb1d52a961572941413ab62aa40_1ac10f1bb1d52a961572941413ab62aa40" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator*</definition>
+        <argsstring>(const BitField &amp;other) const </argsstring>
+        <name>operator*</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="270" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aea3a58b2b56ea42c33499c559baa0a71_1aea3a58b2b56ea42c33499c559baa0a71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator*=</definition>
+        <argsstring>(const BitField &amp;other)</argsstring>
+        <name>operator*=</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="275" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a4736b46f8cb8488cdc79bba8117be9d4_1a4736b46f8cb8488cdc79bba8117be9d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator*=</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator*=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="280" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a96074bf053a919d7bb15ce89e75c0efd_1a96074bf053a919d7bb15ce89e75c0efd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator/</definition>
+        <argsstring>(const Byte other) const </argsstring>
+        <name>operator/</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="285" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ae2ff92f4282a925939f36e9fb6df3b4a_1ae2ff92f4282a925939f36e9fb6df3b4a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::BitField::operator/</definition>
+        <argsstring>(const BitField &amp;other) const </argsstring>
+        <name>operator/</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="290" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a7a145977ed8b2e3118c5d67778ae900c_1a7a145977ed8b2e3118c5d67778ae900c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator/=</definition>
+        <argsstring>(const BitField &amp;other)</argsstring>
+        <name>operator/=</name>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="295" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ab41a8ddab137cff4a618147d7cb6d454_1ab41a8ddab137cff4a618147d7cb6d454" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator/=</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator/=</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="300" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a393f772a53586057be0f56e9cc983b52_1a393f772a53586057be0f56e9cc983b52" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+        <definition>Byte mc::BitField::operator%</definition>
+        <argsstring>(const Byte other)</argsstring>
+        <name>operator%</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="305" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a820e7f0d82b6f0bddb030792279b0851_1a820e7f0d82b6f0bddb030792279b0851" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::BitField::operator[]</definition>
+        <argsstring>(Byte position)</argsstring>
+        <name>operator[]</name>
+        <param>
+          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Gets a bit at a certain position. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which bit to retrieve. Zero-indexed </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the bit is 1, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
+<simplesect kind="see"><para>getBit(Byte) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="312" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ac730cb5d30060f600514a4208c48fd90_1ac730cb5d30060f600514a4208c48fd90" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator++</definition>
+        <argsstring>()</argsstring>
+        <name>operator++</name>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="317" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a661fa26ae5ff7231765125ea2999ffcf_1a661fa26ae5ff7231765125ea2999ffcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator++</definition>
+        <argsstring>(int dummy)</argsstring>
+        <name>operator++</name>
+        <param>
+          <type>int</type>
+          <declname>dummy</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="322" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a1feccc3d0947543f09cfa78225ae0898_1a1feccc3d0947543f09cfa78225ae0898" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator--</definition>
+        <argsstring>()</argsstring>
+        <name>operator--</name>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="327" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_ad6a056b3d093122a8af565e8f8145461_1ad6a056b3d093122a8af565e8f8145461" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::BitField::operator--</definition>
+        <argsstring>(int dummy)</argsstring>
+        <name>operator--</name>
+        <param>
+          <type>int</type>
+          <declname>dummy</declname>
+        </param>
+        <briefdescription>
+<para>Operator which acts upon the internal value. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get() </para></simplesect>
+<simplesect kind="see"><para><ref refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" kindref="member">value</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="332" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="de/d21/a00006_a3a04cdff22fc544a3b422d4ed0459a47_1a3a04cdff22fc544a3b422d4ed0459a47" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>friend std::ostream &amp;</type>
+        <definition>std::ostream&amp; operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;os, const BitField &amp;b)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>const <ref refid="de/d21/a00006" kindref="compound">BitField</ref> &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Operator for <computeroutput>std::cout</computeroutput> to correctly print this class. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/BitField.h" line="112" column="1" bodyfile="include/MACE/Utility/BitField.h" bodystart="112" bodyend="116"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Wrapper class for a primitive type that allows for easy bit manipulation. </para>    </briefdescription>
+    <detaileddescription>
+<para>Can set individual bits. Additionally, it overrides almost every operator to operate on it&apos;s value, to allow for you to manually manipulate it. </para><para>It is guarenteed to contain 8 bits. On systems where an unsigned char is 8 bits, sizeof(BitField) will be 1. </para><para>Examples: <programlisting><codeline><highlight class="normal">BitField<sp/>field<sp/>=<sp/>15;//Creation</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">field.setBit(i,state)//Set<sp/>bit<sp/>in<sp/>position<sp/>i<sp/>to<sp/>state</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">field.getBit(i)<sp/>//Get<sp/>whether<sp/>bit<sp/>in<sp/>position<sp/>i<sp/>is<sp/>true<sp/>or<sp/>false</highlight></codeline>
+</programlisting> </para>    </detaileddescription>
+    <location file="include/MACE/Utility/BitField.h" line="33" column="1" bodyfile="include/MACE/Utility/BitField.h" bodystart="33" bodyend="333"/>
+    <listofallmembers>
+      <member refid="de/d21/a00006_a9846400e38e52693ad796daee1f4538f_1a9846400e38e52693ad796daee1f4538f" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>BitField</name></member>
+      <member refid="de/d21/a00006_a6ea1f64d0e3d4045c36ac78990dd81e1_1a6ea1f64d0e3d4045c36ac78990dd81e1" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>BitField</name></member>
+      <member refid="de/d21/a00006_a0f2b1aa5cf2b95b3723b7821db5e40a2_1a0f2b1aa5cf2b95b3723b7821db5e40a2" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>flipBit</name></member>
+      <member refid="de/d21/a00006_a7697f5d91662e6e816fdd60c5811dc7d_1a7697f5d91662e6e816fdd60c5811dc7d" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>getBit</name></member>
+      <member refid="de/d21/a00006_a750852482dab9b2a8c543b5f8403dfff_1a750852482dab9b2a8c543b5f8403dfff" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>inverse</name></member>
+      <member refid="de/d21/a00006_a26b3ac418ae6751ed165024953f0d17c_1a26b3ac418ae6751ed165024953f0d17c" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator!=</name></member>
+      <member refid="de/d21/a00006_aafb766d2cca2994a769da7b7b248e1a7_1aafb766d2cca2994a769da7b7b248e1a7" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator!=</name></member>
+      <member refid="de/d21/a00006_a393f772a53586057be0f56e9cc983b52_1a393f772a53586057be0f56e9cc983b52" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator%</name></member>
+      <member refid="de/d21/a00006_af79b0d3baee4a903f710b1b39fcd1acf_1af79b0d3baee4a903f710b1b39fcd1acf" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&amp;</name></member>
+      <member refid="de/d21/a00006_a72d32a26b8b4cf1f82b95db51e824f1b_1a72d32a26b8b4cf1f82b95db51e824f1b" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&amp;</name></member>
+      <member refid="de/d21/a00006_aff0f7dc392d4fb000c6dc7c479573e0f_1aff0f7dc392d4fb000c6dc7c479573e0f" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&amp;=</name></member>
+      <member refid="de/d21/a00006_a0bd87786c0772b04651639de3821cf3e_1a0bd87786c0772b04651639de3821cf3e" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&amp;=</name></member>
+      <member refid="de/d21/a00006_aa6c86965fd4b49ff8a1667997793e0d0_1aa6c86965fd4b49ff8a1667997793e0d0" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator*</name></member>
+      <member refid="de/d21/a00006_ac10f1bb1d52a961572941413ab62aa40_1ac10f1bb1d52a961572941413ab62aa40" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator*</name></member>
+      <member refid="de/d21/a00006_aea3a58b2b56ea42c33499c559baa0a71_1aea3a58b2b56ea42c33499c559baa0a71" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator*=</name></member>
+      <member refid="de/d21/a00006_a4736b46f8cb8488cdc79bba8117be9d4_1a4736b46f8cb8488cdc79bba8117be9d4" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator*=</name></member>
+      <member refid="de/d21/a00006_afb3ea02f18220a2d0e738a14b5823a4e_1afb3ea02f18220a2d0e738a14b5823a4e" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator+</name></member>
+      <member refid="de/d21/a00006_a2069118b5e1325357e3ffdae94cb88dc_1a2069118b5e1325357e3ffdae94cb88dc" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator+</name></member>
+      <member refid="de/d21/a00006_ac730cb5d30060f600514a4208c48fd90_1ac730cb5d30060f600514a4208c48fd90" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator++</name></member>
+      <member refid="de/d21/a00006_a661fa26ae5ff7231765125ea2999ffcf_1a661fa26ae5ff7231765125ea2999ffcf" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator++</name></member>
+      <member refid="de/d21/a00006_a5bdd9a2c0e954ee68dc350677cb58c97_1a5bdd9a2c0e954ee68dc350677cb58c97" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator+=</name></member>
+      <member refid="de/d21/a00006_a10796a21868259bfde5d07460cdfa1fe_1a10796a21868259bfde5d07460cdfa1fe" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator+=</name></member>
+      <member refid="de/d21/a00006_ac104dfe24a47d21688074f4d51c89718_1ac104dfe24a47d21688074f4d51c89718" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator-</name></member>
+      <member refid="de/d21/a00006_a2e1fdbae238b2cff1521e5effeb5eb60_1a2e1fdbae238b2cff1521e5effeb5eb60" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator-</name></member>
+      <member refid="de/d21/a00006_a1feccc3d0947543f09cfa78225ae0898_1a1feccc3d0947543f09cfa78225ae0898" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator--</name></member>
+      <member refid="de/d21/a00006_ad6a056b3d093122a8af565e8f8145461_1ad6a056b3d093122a8af565e8f8145461" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator--</name></member>
+      <member refid="de/d21/a00006_a54b0e5d999d9b651559fbd1c9eec7763_1a54b0e5d999d9b651559fbd1c9eec7763" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator-=</name></member>
+      <member refid="de/d21/a00006_a126560988f9de1abb9a06c0b5cb00866_1a126560988f9de1abb9a06c0b5cb00866" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator-=</name></member>
+      <member refid="de/d21/a00006_a96074bf053a919d7bb15ce89e75c0efd_1a96074bf053a919d7bb15ce89e75c0efd" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator/</name></member>
+      <member refid="de/d21/a00006_ae2ff92f4282a925939f36e9fb6df3b4a_1ae2ff92f4282a925939f36e9fb6df3b4a" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator/</name></member>
+      <member refid="de/d21/a00006_a7a145977ed8b2e3118c5d67778ae900c_1a7a145977ed8b2e3118c5d67778ae900c" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator/=</name></member>
+      <member refid="de/d21/a00006_ab41a8ddab137cff4a618147d7cb6d454_1ab41a8ddab137cff4a618147d7cb6d454" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator/=</name></member>
+      <member refid="de/d21/a00006_a3a04cdff22fc544a3b422d4ed0459a47_1a3a04cdff22fc544a3b422d4ed0459a47" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&lt;&lt;</name></member>
+      <member refid="de/d21/a00006_ace2f1d2107823fcc1600aac5cde3f460_1ace2f1d2107823fcc1600aac5cde3f460" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&lt;&lt;</name></member>
+      <member refid="de/d21/a00006_aa914a0ac6d69c5d69144a820ba998547_1aa914a0ac6d69c5d69144a820ba998547" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&lt;&lt;=</name></member>
+      <member refid="de/d21/a00006_a249ab9bb5b8b9938e181e7db2a05b932_1a249ab9bb5b8b9938e181e7db2a05b932" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator==</name></member>
+      <member refid="de/d21/a00006_a294cd99756ef6c920514ac64e9e09db2_1a294cd99756ef6c920514ac64e9e09db2" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator==</name></member>
+      <member refid="de/d21/a00006_afb5170f8f99d3b2ddf9f026e10167a6d_1afb5170f8f99d3b2ddf9f026e10167a6d" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&gt;&gt;</name></member>
+      <member refid="de/d21/a00006_acd05ce152c4b3d619b3a7661c9c105fd_1acd05ce152c4b3d619b3a7661c9c105fd" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator&gt;&gt;=</name></member>
+      <member refid="de/d21/a00006_a820e7f0d82b6f0bddb030792279b0851_1a820e7f0d82b6f0bddb030792279b0851" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator[]</name></member>
+      <member refid="de/d21/a00006_a0702a73026bef4f60a71f4a3160c559e_1a0702a73026bef4f60a71f4a3160c559e" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator^</name></member>
+      <member refid="de/d21/a00006_aa90cd377d6f8511e77d5462d627df3ca_1aa90cd377d6f8511e77d5462d627df3ca" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator^</name></member>
+      <member refid="de/d21/a00006_afb3f8504bdefd8fabb3b2b0b6f3ddaa0_1afb3f8504bdefd8fabb3b2b0b6f3ddaa0" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator^=</name></member>
+      <member refid="de/d21/a00006_a889acb1537abd6683feef19f4fca7258_1a889acb1537abd6683feef19f4fca7258" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator^=</name></member>
+      <member refid="de/d21/a00006_afa41e33173309daf0e1875320ee48214_1afa41e33173309daf0e1875320ee48214" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator|</name></member>
+      <member refid="de/d21/a00006_a4781182e3555552f4daaaaba7112e67b_1a4781182e3555552f4daaaaba7112e67b" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator|</name></member>
+      <member refid="de/d21/a00006_a297c1dae72bcf6b1ccec079299a2989a_1a297c1dae72bcf6b1ccec079299a2989a" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator|=</name></member>
+      <member refid="de/d21/a00006_aff10c34381437130bdfcfb40b70d7e2d_1aff10c34381437130bdfcfb40b70d7e2d" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator|=</name></member>
+      <member refid="de/d21/a00006_a6b58f54a90dbeda2b560bd17fee426ce_1a6b58f54a90dbeda2b560bd17fee426ce" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>operator~</name></member>
+      <member refid="de/d21/a00006_a849326870a8be577ac1d71794fcc01e8_1a849326870a8be577ac1d71794fcc01e8" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>setBit</name></member>
+      <member refid="de/d21/a00006_a75dcdcdc01ae41e3562cd19c6c0bf967_1a75dcdcdc01ae41e3562cd19c6c0bf967" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>toggleBit</name></member>
+      <member refid="de/d21/a00006_aea742f2081072cdd6d841083706643f7_1aea742f2081072cdd6d841083706643f7" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>untoggleBit</name></member>
+      <member refid="de/d21/a00006_a68fa9e774cd5a1b71b6c91930ba2d592_1a68fa9e774cd5a1b71b6c91930ba2d592" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>value</name></member>
+      <member refid="de/d21/a00006_a748a04e8ed75dcf7e4f8cc47e152587d_1a748a04e8ed75dcf7e4f8cc47e152587d" prot="public" virt="non-virtual"><scope>mc::BitField</scope><name>~BitField</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

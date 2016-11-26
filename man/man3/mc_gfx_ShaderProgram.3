@@ -1,0 +1,479 @@
+.TH "mc::gfx::ShaderProgram" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::ShaderProgram \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Shaders\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBShaderProgram\fP ()"
+.br
+.ti -1c
+.RI "\fB~ShaderProgram\fP ()"
+.br
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBunbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBcreateFragment\fP (const char shader[])"
+.br
+.ti -1c
+.RI "void \fBcreateFragment\fP (const std::string &shader)"
+.br
+.ti -1c
+.RI "void \fBcreateVertex\fP (const char shader[])"
+.br
+.ti -1c
+.RI "void \fBcreateVertex\fP (const std::string &shader)"
+.br
+.ti -1c
+.RI "void \fBcreateUniform\fP (const std::string &name)"
+.br
+.ti -1c
+.RI "void \fBcreateUniform\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBgetUniformLocation\fP (const std::string &name)"
+.br
+.ti -1c
+.RI "int \fBgetUniformLocation\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBgetProgramID\fP () const "
+.br
+.ti -1c
+.RI "int \fBgetVertexID\fP () const "
+.br
+.ti -1c
+.RI "int \fBgetFragmentID\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a, const float b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a, const float b, const float c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a, const float b, const float c, const float d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const float *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const float *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a, const double b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a, const double b, const double c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a, const double b, const double c, const double d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const double *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const double *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a, const int b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a, const int b, const int c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a, const int b, const int c, const int d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a, const unsigned int b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a, const unsigned int b, const unsigned int c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const unsigned int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const unsigned int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 4 > v)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBTodo\fP
+.RS 4
+make a shader class 
+.RE
+.PP
+
+.PP
+Definition at line 25 of file Shaders\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::gfx::ShaderProgram::ShaderProgram ()"
+
+.SS "mc::gfx::ShaderProgram::~ShaderProgram ()"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::ShaderProgram::bind () const"
+
+.SS "void mc::gfx::ShaderProgram::createFragment (const char shader[])"
+
+.SS "void mc::gfx::ShaderProgram::createFragment (const std::string & shader)"
+
+.SS "void mc::gfx::ShaderProgram::createUniform (const std::string & name)"
+
+.SS "void mc::gfx::ShaderProgram::createUniform (const char * name)"
+
+.SS "void mc::gfx::ShaderProgram::createVertex (const char shader[])"
+
+.SS "void mc::gfx::ShaderProgram::createVertex (const std::string & shader)"
+
+.SS "void mc::gfx::ShaderProgram::destroy ()"
+
+.SS "int mc::gfx::ShaderProgram::getFragmentID () const"
+
+.SS "int mc::gfx::ShaderProgram::getProgramID () const"
+
+.SS "int mc::gfx::ShaderProgram::getUniformLocation (const std::string & name)"
+
+.SS "int mc::gfx::ShaderProgram::getUniformLocation (const char * name)"
+
+.SS "int mc::gfx::ShaderProgram::getVertexID () const"
+
+.SS "void mc::gfx::ShaderProgram::init ()"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 2, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 3, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 4, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 2, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 3, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 2, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 3, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 4, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 2, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 3, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 4, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 2, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 3, 2 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 2, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 3, 4 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 4, 3 > & m)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const float a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const float a, const float b)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const float a, const float b, const float c)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const float a, const float b, const float c, const float d)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const float * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const float * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 1 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 2 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 3 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 4 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const double a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const double a, const double b)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const double a, const double b, const double c)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const double a, const double b, const double c, const double d)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const double * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const double * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 1 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 2 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 3 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 4 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const int a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const int a, const int b)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const int a, const int b, const int c)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const int a, const int b, const int c, const int d)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const int * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const int * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 1 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 2 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 3 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 4 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const unsigned int a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const unsigned int a, const unsigned int b)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const unsigned int a, const unsigned int b, const unsigned int c)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const unsigned int * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const unsigned int * a)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 1 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 2 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 3 > v)"
+
+.SS "void mc::gfx::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 4 > v)"
+
+.SS "void mc::gfx::ShaderProgram::unbind () const"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

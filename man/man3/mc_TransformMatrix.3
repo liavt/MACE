@@ -1,0 +1,347 @@
+.TH "mc::TransformMatrix" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::TransformMatrix \- Matrix-based class that allows for the easy creation and management of transformation matrices\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Transform\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTransformMatrix\fP ()"
+.br
+.RI "\fIDefault constructor\&. \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP & \fBtranslate\fP (const float x, const float y, const float z)"
+.br
+.RI "\fITranslates this \fC\fBTransformMatrix\fP\fP in any 3 directions\&. \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP & \fBrotate\fP (const float x, const float y, const float z)"
+.br
+.RI "\fIRotates this \fC\fBTransformMatrix\fP\fP in any 3 directions\&. \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP & \fBscale\fP (const float x, const float y, const float z)"
+.br
+.RI "\fIScales this \fC\fBTransformMatrix\fP\fP in any 3 directions\&. \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP & \fBreset\fP ()"
+.br
+.RI "\fIDeletes any transformations on this \fC\fBTransformMatrix\fP\fP, effectively making it an identity matrix\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP< float, 4, 4 > \fBget\fP () const "
+.br
+.RI "\fIConverts this \fC\fBTransformMatrix\fP\fP into a \fCMatrix4f\fP based on the stored transformations\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBTransformMatrix\fP &other) const "
+.br
+.RI "\fIChecks if the values represented by 2 \fC\fBTransformMatrix\fP\fP are the same\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBTransformMatrix\fP &other) const "
+.br
+.RI "\fIChecks if the values represented by 2 \fC\fBTransformMatrix\fP\fP are not the same\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBTransformMatrix\fP &other) const "
+.br
+.RI "\fIChecks whether a \fC\fBTransformMatrix\fP\fP is larger than another\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBTransformMatrix\fP &other) const "
+.br
+.RI "\fIChecks whether a \fC\fBTransformMatrix\fP\fP is larger than or equal to another\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBTransformMatrix\fP &other) const "
+.br
+.RI "\fIChecks whether a \fC\fBTransformMatrix\fP\fP is smaller than another\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBTransformMatrix\fP &other) const "
+.br
+.RI "\fIChecks whether a \fC\fBTransformMatrix\fP\fP is small than or equal to another\&. \fP"
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBVector\fP< float, 3 > \fBtranslation\fP"
+.br
+.RI "\fIRepresents this \fC\fBTransformMatrix\fP\fP's translation\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< float, 3 > \fBrotation\fP"
+.br
+.RI "\fIRepresents this \fC\fBTransformMatrix\fP\fP's rotation\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< float, 3 > \fBscaler\fP"
+.br
+.RI "\fIRepresents this \fC\fBTransformMatrix\fP\fP's scale\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Matrix-based class that allows for the easy creation and management of transformation matrices\&. 
+
+Transformation matrices can scale, rotate, and translate any vector\&. 
+.PP
+This should not be confused with the \fC\fBMatrix\fP\fP class, which allows for the arbitrary storage of data in a matrix-like fashion 
+.PP
+Definition at line 126 of file Transform\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::TransformMatrix::TransformMatrix ()"
+
+.PP
+Default constructor\&. Generates a \fC\fBTransformMatrix\fP\fP as an identity matrix\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBreset()\fP 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBMatrix\fP<float, 4, 4> mc::TransformMatrix::get () const"
+
+.PP
+Converts this \fC\fBTransformMatrix\fP\fP into a \fCMatrix4f\fP based on the stored transformations\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The transformation matrix represented by the values stored via \fC\fBrotate()\fP\fP, \fC\fBscale()\fP\fP, and \fC\fBtranslate()\fP\fP 
+.RE
+.PP
+
+.SS "bool mc::TransformMatrix::operator!= (const \fBTransformMatrix\fP & other) const"
+
+.PP
+Checks if the values represented by 2 \fC\fBTransformMatrix\fP\fP are not the same\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+
+.SS "bool mc::TransformMatrix::operator< (const \fBTransformMatrix\fP & other) const"
+
+.PP
+Checks whether a \fC\fBTransformMatrix\fP\fP is smaller than another\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+whether \fCthis\fP is smaller than \fCother\fP, based on \fCtranslation\fP, \fCrotation\fP, and \fCscaler\fP 
+.RE
+.PP
+
+.SS "bool mc::TransformMatrix::operator<= (const \fBTransformMatrix\fP & other) const"
+
+.PP
+Checks whether a \fC\fBTransformMatrix\fP\fP is small than or equal to another\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+whether \fCthis\fP is smaller than or equal to \fCother\fP, based on \fCtranslation\fP, \fCrotation\fP, and \fCscaler\fP 
+.RE
+.PP
+
+.SS "bool mc::TransformMatrix::operator== (const \fBTransformMatrix\fP & other) const"
+
+.PP
+Checks if the values represented by 2 \fC\fBTransformMatrix\fP\fP are the same\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are equal 
+.RE
+.PP
+
+.SS "bool mc::TransformMatrix::operator> (const \fBTransformMatrix\fP & other) const"
+
+.PP
+Checks whether a \fC\fBTransformMatrix\fP\fP is larger than another\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+whether \fCthis\fP is larger than \fCother\fP, based on \fCtranslation\fP, \fCrotation\fP, and \fCscaler\fP 
+.RE
+.PP
+
+.SS "bool mc::TransformMatrix::operator>= (const \fBTransformMatrix\fP & other) const"
+
+.PP
+Checks whether a \fC\fBTransformMatrix\fP\fP is larger than or equal to another\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+whether \fCthis\fP is larger than or equal to \fCother\fP, based on \fCtranslation\fP, \fCrotation\fP, and \fCscaler\fP 
+.RE
+.PP
+
+.SS "\fBTransformMatrix\fP& mc::TransformMatrix::reset ()"
+
+.PP
+Deletes any transformations on this \fC\fBTransformMatrix\fP\fP, effectively making it an identity matrix\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Itself for chaining 
+.RE
+.PP
+
+.SS "\fBTransformMatrix\fP& mc::TransformMatrix::rotate (const float x, const float y, const float z)"
+
+.PP
+Rotates this \fC\fBTransformMatrix\fP\fP in any 3 directions\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP How much to rotate in the X plane\&. 
+.br
+\fIy\fP How much to rotate in the Y plane\&. 
+.br
+\fIz\fP How much to rotate in the Z plane\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Itself for chaining 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+rotate(const Matrix4f&, const float, const float, const float) 
+.RE
+.PP
+
+.SS "\fBTransformMatrix\fP& mc::TransformMatrix::scale (const float x, const float y, const float z)"
+
+.PP
+Scales this \fC\fBTransformMatrix\fP\fP in any 3 directions\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP How much to scale in the X plane\&. 
+.br
+\fIy\fP How much to scale in the Y plane\&. 
+.br
+\fIz\fP How much to scale in the Z plane\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Itself for chaining 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+scale(const Matrix4f&, const float, const float, const float) 
+.RE
+.PP
+
+.SS "\fBTransformMatrix\fP& mc::TransformMatrix::translate (const float x, const float y, const float z)"
+
+.PP
+Translates this \fC\fBTransformMatrix\fP\fP in any 3 directions\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP How much to translate in the X plane\&. 
+.br
+\fIy\fP How much to translate in the Y plane\&. 
+.br
+\fIz\fP How much to translate in the Z plane\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Itself for chaining 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+translate(const Matrix4f&, const float, const float, const float) 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBVector\fP<float, 3> mc::TransformMatrix::rotation"
+
+.PP
+Represents this \fC\fBTransformMatrix\fP\fP's rotation\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBrotate(const float, const float, const float)\fP 
+.PP
+\fBget()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 220 of file Transform\&.h\&.
+.SS "\fBVector\fP<float, 3> mc::TransformMatrix::scaler"
+
+.PP
+Represents this \fC\fBTransformMatrix\fP\fP's scale\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBscale(const float, const float, const float)\fP 
+.PP
+\fBget()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 226 of file Transform\&.h\&.
+.SS "\fBVector\fP<float, 3> mc::TransformMatrix::translation"
+
+.PP
+Represents this \fC\fBTransformMatrix\fP\fP's translation\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtranslate(const float, const float, const float)\fP 
+.PP
+\fBget()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 214 of file Transform\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

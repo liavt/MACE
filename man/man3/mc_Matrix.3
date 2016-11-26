@@ -1,0 +1,1654 @@
+.TH "mc::Matrix< T, W, H >" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::Matrix< T, W, H > \- A class representing a 2-dimensional matrix, and allows for math involving matrices\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Matrix\&.h>\fP
+.PP
+Inherits \fBmc::Vector< MatrixRow< T, H >, W >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMatrix\fP ()"
+.br
+.RI "\fIDefault constructor\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP (T arr[W][H])"
+.br
+.RI "\fICreates a \fC\fBMatrix\fP\fP based on a 2-dimensional array\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP (const std::initializer_list< const std::initializer_list< T >> args)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP (const \fBMatrix\fP &copy)"
+.br
+.RI "\fICopy constructor\&. \fP"
+.ti -1c
+.RI "constexpr \fBSize\fP \fBsize\fP () const "
+.br
+.RI "\fICalculates how many elements are in this \fC\fBMatrix\fP\fP \fP"
+.ti -1c
+.RI "constexpr \fBSize\fP \fBwidth\fP () const "
+.br
+.RI "\fICalculates the width of this \fC\fBMatrix\fP\fP\&. \fP"
+.ti -1c
+.RI "constexpr \fBSize\fP \fBheight\fP () const "
+.br
+.RI "\fICalculates the height of this \fC\fBMatrix\fP\fP\&. \fP"
+.ti -1c
+.RI "T & \fBget\fP (\fBIndex\fP x, \fBIndex\fP y)"
+.br
+.RI "\fIRetrieves the content at a certain position\&. \fP"
+.ti -1c
+.RI "const T & \fBget\fP (\fBIndex\fP x, \fBIndex\fP y) const "
+.br
+.RI "\fI\fCconst\fP version of \fBget(Index,Index)\fP \fP"
+.ti -1c
+.RI "void \fBset\fP (\fBIndex\fP x, \fBIndex\fP y, T value)"
+.br
+.RI "\fIWrites data at certain coordinates to a new value\&. \fP"
+.ti -1c
+.RI "const T * \fBflatten\fP (T arr[W *H]) const "
+.br
+.RI "\fICreates an 1-dimensional array with the data of this \fC\fBMatrix\fP\fP, in O(N) time\&. \fP"
+.ti -1c
+.RI "const T * \fBflattenTransposed\fP (T arr[W *H]) const "
+.br
+.RI "\fICreates an 1-dimensional array with the transposed data of this \fC\fBMatrix\fP\fP, in O(N) time\&. \fP"
+.ti -1c
+.RI "virtual T & \fBoperator()\fP (\fBIndex\fP x, \fBIndex\fP y)"
+.br
+.RI "\fIRetrieves content at a certain \fCIndex\fP, not zero indexed\&. \fP"
+.ti -1c
+.RI "const T & \fBoperator()\fP (\fBIndex\fP x, \fBIndex\fP y) const "
+.br
+.RI "\fI\fCconst\fP version of \fC\fBoperator()(Index,Index)\fP\fP\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< T, H > \fBoperator+\fP (const \fBVector\fP< T, H > &right) const "
+.br
+.RI "\fIAdds a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< T, H > \fBoperator\-\fP (const \fBVector\fP< T, H > &right) const "
+.br
+.RI "\fISubtracts a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< T, H > \fBoperator*\fP (const \fBVector\fP< T, H > &right) const "
+.br
+.RI "\fIMultiplies a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP< T, W, H > \fBoperator+\fP (const \fBMatrix\fP< T, W, H > &right) const "
+.br
+.RI "\fIAdds 2 \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP< T, W, H > \fBoperator\-\fP (const \fBMatrix\fP< T, W, H > &right) const "
+.br
+.RI "\fISubtracts 2 \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP< T, W, H > \fBoperator*\fP (const \fBMatrix\fP< T, W, H > &right) const "
+.br
+.RI "\fIMultiplies 2 \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP< T, W, H > \fBoperator*\fP (const T &scalar) const "
+.br
+.RI "\fIScales a \fC\fBMatrix\fP\fP from a scalar value\&. \fP"
+.ti -1c
+.RI "\fBMatrix\fP< T, W, H > \fBoperator/\fP (const \fBMatrix\fP< T, W, H > &right) const "
+.br
+.RI "\fIDivides 2 \fC\fBMatrix\fP\fP together\&. \fP"
+.ti -1c
+.RI "void \fBoperator+=\fP (const \fBMatrix\fP< T, W, H > &right)"
+.br
+.RI "\fIAdds a \fC\fBMatrix\fP\fP to this one\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-=\fP (const \fBMatrix\fP< T, W, H > &right)"
+.br
+.RI "\fISubtracts a \fC\fBMatrix\fP\fP from this one\&. \fP"
+.ti -1c
+.RI "void \fBoperator*=\fP (\fBMatrix\fP< T, W, H > &right)"
+.br
+.RI "\fIMultiplies \fCthis\fP by a \fC\fBMatrix\fP\fP \fP"
+.ti -1c
+.RI "void \fBoperator*=\fP (const T &scalar)"
+.br
+.RI "\fIMultiplies \fCthis\fP by a scalar\&. \fP"
+.ti -1c
+.RI "void \fBoperator/=\fP (const \fBMatrix\fP< T, W, H > &right)"
+.br
+.RI "\fIDivides a \fC\fBMatrix\fP\fP from this one\&. \fP"
+.ti -1c
+.RI "std::array< \fBMatrixRow\fP< T, H >, N > & \fBgetContents\fP ()"
+.br
+.RI "\fIRetrieves the contents of this \fCVector\fP \fP"
+.ti -1c
+.RI "const std::array< \fBMatrixRow\fP< T, H >, N > & \fBgetContents\fP () const"
+.br
+.RI "\fI\fCconst\fP version of \fC\fBgetContents()\fP\fP \fP"
+.ti -1c
+.RI "void \fBsetContents\fP (const std::array< \fBMatrixRow\fP< T, H >, N > contents)"
+.br
+.RI "\fICopies the contents of an \fCstd::array\fP into this \fCVector\fP \fP"
+.ti -1c
+.RI "void \fBsetContents\fP (const \fBMatrixRow\fP< T, H > arr[N])"
+.br
+.RI "\fICopies the contents of an array into this \fCVector\fP \fP"
+.ti -1c
+.RI "\fBMatrixRow\fP< T, H > & \fBget\fP (\fBIndex\fP i)"
+.br
+.RI "\fIGet the value at a position\&. \fP"
+.ti -1c
+.RI "const \fBMatrixRow\fP< T, H > & \fBget\fP (\fBIndex\fP i) const"
+.br
+.RI "\fI\fCconst\fP version of \fC\fBget(Index)\fP,\fP in case a \fCVector\fP is declared \fCconst\fP \fP"
+.ti -1c
+.RI "void \fBset\fP (\fBIndex\fP position, \fBMatrixRow\fP< T, H > value)"
+.br
+.RI "\fISet data at a certain position to equal a new value\&. \fP"
+.ti -1c
+.RI "const \fBMatrixRow\fP< T, H > * \fBflatten\fP (\fBMatrixRow\fP< T, H > arr[N]) const"
+.br
+.RI "\fICreates an array with the data of this \fCVector\fP, in O(N) time\&. \fP"
+.ti -1c
+.RI "\fBMatrixRow\fP< T, H > & \fBoperator[]\fP (\fBIndex\fP i)"
+.br
+.RI "\fIRetrieves the content at a certain \fCIndex\fP, zero indexed\&. \fP"
+.ti -1c
+.RI "const \fBMatrixRow\fP< T, H > & \fBoperator[]\fP (\fBIndex\fP i) const"
+.br
+.RI "\fI\fCconst\fP version of \fC\fBoperator[](Index)\fP\fP used if a \fCVector\fP is declared \fCconst\fP\&. \fP"
+.ti -1c
+.RI "virtual \fBMatrixRow\fP< T, H > & \fBoperator()\fP (\fBIndex\fP i)"
+.br
+.RI "\fIRetrieves content at a certain \fCIndex\fP, not zero indexed\&. \fP"
+.ti -1c
+.RI "const \fBMatrixRow\fP< T, H > & \fBoperator()\fP (\fBIndex\fP i) const"
+.br
+.RI "\fI\fCconst\fP version of \fC\fBoperator()(Index)\fP\fP\&. \fP"
+.ti -1c
+.RI "\fBVector\fP \fBoperator+\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &right) const"
+.br
+.RI "\fIAdds 2 \fCVectors\fP together\&. \fP"
+.ti -1c
+.RI "\fBVector\fP \fBoperator\-\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &right) const"
+.br
+.RI "\fISubtracts 2 \fCVectors\fP together\&. \fP"
+.ti -1c
+.RI "\fBVector\fP \fBoperator*\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, 3 > &right) const"
+.br
+.RI "\fICalculates the cross product of 2 \fCVectors\fP \fP"
+.ti -1c
+.RI "\fBVector\fP \fBoperator*\fP (const \fBMatrixRow\fP< T, H > scalar) const"
+.br
+.RI "\fIMultiplies a \fCVector\fP by a scalar\&. \fP"
+.ti -1c
+.RI "\fBMatrixRow\fP< T, H > \fBoperator%\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, 3 > &right) const"
+.br
+.RI "\fICalculates the dot product of 2 \fCVectors\fP \fP"
+.ti -1c
+.RI "\fBVector\fP \fBoperator/\fP (const \fBMatrixRow\fP< T, H > scalar) const"
+.br
+.RI "\fIDivides a \fCVector\fP by a scalar\&. \fP"
+.ti -1c
+.RI "void \fBoperator+=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &right)"
+.br
+.RI "\fIAdds a \fCVector\fP to this one\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &right)"
+.br
+.RI "\fISubtracts a \fCVector\fP from this one\&. \fP"
+.ti -1c
+.RI "void \fBoperator*=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &right)"
+.br
+.RI "\fIMultiplies a \fCVector\fP by this one\&. \fP"
+.ti -1c
+.RI "void \fBoperator*=\fP (const \fBMatrixRow\fP< T, H > &scalar)"
+.br
+.RI "\fIScales this \fCVector\fP \fP"
+.ti -1c
+.RI "void \fBoperator/=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &right)"
+.br
+.RI "\fIDivides a \fCVector\fP by this one\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &other) const"
+.br
+.RI "\fICompares whether 2 \fCVectors\fP have the same values\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &other) const"
+.br
+.RI "\fICompares whether 2 \fCVectors\fP don't have the same values\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &other) const"
+.br
+.RI "\fICompares the \fC>\fP operator on 2 \fCVectors\fP elements\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &other) const"
+.br
+.RI "\fICompares the \fC>=\fP operator on 2 \fCVectors\fP elements\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &other) const"
+.br
+.RI "\fICompares the \fC<\fP operator on 2 \fCVectors\fP elements\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBVector\fP< \fBMatrixRow\fP< T, H >, N > &other) const"
+.br
+.RI "\fICompares the \fC<=\fP operator on 2 \fCVectors\fP elements\&. \fP"
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::array< \fBMatrixRow\fP< T, H >, N > \fBcontent\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "std::ostream & \fBoperator<<\fP (std::ostream &output, const \fBMatrix\fP< T, W, H > &m)"
+.br
+.RI "\fIOperator used to output to \fCstd::cout\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, Size W, Size H>
+.br
+struct mc::Matrix< T, W, H >"
+A class representing a 2-dimensional matrix, and allows for math involving matrices\&. 
+
+A \fC\fBMatrix\fP\fP can be known as a \fC\fBVector\fP\fP of \fCVectors\fP\&. 
+.PP
+\fCMatrices\fP can be added, subtracted, and multiplyed by eachother, and by \fCVectors\fP of equal width\&. 
+.PP
+Examples: 
+.PP
+.nf
+Matrix<int,3,4> matrix = Matrix<int,3,4>()//Create a 3 by 4 Matrix of ints\&. By default, every value is 0
+
+int arr[3][4] = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+matrix = arr;//Create a Matrix from an existing array\&. The array must be the same size as the Matrix\&.
+
+arr\&.get(x,y);//Retrieve the value at x and y
+arr[x][y];//Retrieve the value at x and y
+
+arr\&.set(x,y,value); //Set the int at x and y to a new  value
+arr[x][y]=value; //Set the int at x and y to a new value
+
+//Iterate over a Matrix's contents:
+for(Index x = 0;x<matrix\&.width();x++){
+for(Index y = 0;y<matrix\&.height();y++){
+int value = matrix[x][y];
+}
+}
+
+matrix\&.size();//Get how many values the Matrix is holding
+
+.fi
+.PP
+ 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP 
+.RE
+.PP
+\fBTemplate Parameters:\fP
+.RS 4
+\fIT\fP What the \fC\fBMatrix\fP\fP should consist of 
+.br
+\fIW\fP The width of the \fC\fBMatrix\fP\fP 
+.br
+\fIH\fP The height of the \fC\fBMatrix\fP\fP 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file Matrix\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T, Size W, Size H> \fBmc::Matrix\fP< T, W, H >::\fBMatrix\fP ()\fC [inline]\fP"
+
+.PP
+Default constructor\&. Creates a \fC\fBMatrix\fP\fP of the specified size where every spot is unallocated 
+.PP
+Definition at line 73 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBmc::Matrix\fP< T, W, H >::\fBMatrix\fP (T arr[W][H])\fC [inline]\fP"
+
+.PP
+Creates a \fC\fBMatrix\fP\fP based on a 2-dimensional array\&. The array's contents will be copied into this \fC\fBMatrix\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIarr\fP An array of contents 
+.RE
+.PP
+
+.PP
+Definition at line 86 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBmc::Matrix\fP< T, W, H >::\fBMatrix\fP (const std::initializer_list< const std::initializer_list< T >> args)\fC [inline]\fP"
+
+.PP
+Definition at line 95 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBmc::Matrix\fP< T, W, H >::\fBMatrix\fP (const \fBMatrix\fP< T, W, H > & copy)\fC [inline]\fP"
+
+.PP
+Copy constructor\&. Clones the contents of another \fC\fBMatrix\fP\fP into a new \fC\fBMatrix\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcopy\fP What the clone 
+.RE
+.PP
+
+.PP
+Definition at line 115 of file Matrix\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T, Size W, Size H> const T* \fBmc::Matrix\fP< T, W, H >::flatten (T arr[W *H]) const\fC [inline]\fP"
+
+.PP
+Creates an 1-dimensional array with the data of this \fC\fBMatrix\fP\fP, in O(N) time\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to an array of data 
+.RE
+.PP
+
+.PP
+Definition at line 198 of file Matrix\&.h\&.
+.SS "const \fBMatrixRow\fP< T, H > * \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::flatten (\fBMatrixRow\fP< T, H > arr[N]) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Creates an array with the data of this \fCVector\fP, in O(N) time\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to \fCarr\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIarr\fP The array to fill 
+.RE
+.PP
+
+.PP
+Definition at line 204 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> const T* \fBmc::Matrix\fP< T, W, H >::flattenTransposed (T arr[W *H]) const\fC [inline]\fP"
+
+.PP
+Creates an 1-dimensional array with the transposed data of this \fC\fBMatrix\fP\fP, in O(N) time\&. This method is faster than \fCmath::transpose(matrix)\&.flatten(array)\fP, as that takes O(N*2) time\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to an array of data 
+.RE
+.PP
+
+.PP
+Definition at line 213 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> T& \fBmc::Matrix\fP< T, W, H >::get (\fBIndex\fP x, \fBIndex\fP y)\fC [inline]\fP"
+
+.PP
+Retrieves the content at a certain position\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP X-coordinate of the requested data 
+.br
+\fIy\fP Y-coordinate of the requested data 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A reference to the data at \fCX,Y\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCx>=\fBwidth()\fP\fP 
+.br
+\fIIndexOutOfBounds\fP if \fCy>=\fBheight()\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset(Index, Index, T)\fP 
+.PP
+\fBoperator[]\fP 
+.RE
+.PP
+
+.PP
+Definition at line 156 of file Matrix\&.h\&.
+.SS "\fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::get (\fBIndex\fP i)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Get the value at a position\&. Slower than \fCoperator[]\fP because it does bounds checking\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP \fCIndex\fP of the requested data, zero-indexed 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The value located at \fCi\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP If \fCi\fP is greater than \fC\fBsize()\fP\fP 
+.br
+\fIIndexOutOfBounds\fP If \fCi\fP is less than 0 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 170 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> const T& \fBmc::Matrix\fP< T, W, H >::get (\fBIndex\fP x, \fBIndex\fP y) const\fC [inline]\fP"
+
+.PP
+\fCconst\fP version of \fBget(Index,Index)\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP X-coordinate of the requested data 
+.br
+\fIy\fP Y-coordinate of the requested data 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A reference to the \fCconst\fP data at \fCX,Y\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCx>=\fBwidth()\fP\fP 
+.br
+\fIIndexOutOfBounds\fP if \fCy>=\fBheight()\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset(Index, Index, T)\fP 
+.PP
+\fBoperator[]\fP 
+.RE
+.PP
+
+.PP
+Definition at line 172 of file Matrix\&.h\&.
+.SS "const \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::get (\fBIndex\fP i) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBget(Index)\fP,\fP in case a \fCVector\fP is declared \fCconst\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP \fCIndex\fP of the requested data, zero-indexed 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The \fCconst\fP value located at \fCi\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP If \fCi\fP is greater than \fC\fBsize()\fP\fP 
+.br
+\fIIndexOutOfBounds\fP If \fCi\fP is less than 0 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 182 of file Vector\&.h\&.
+.SS "std::array< \fBMatrixRow\fP< T, H > , N>& \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::getContents ()\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Retrieves the contents of this \fCVector\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+An \fCstd::array\fP of this \fCVector\fP contents 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+setContents(std::array<T,N>) 
+.RE
+.PP
+
+.PP
+Definition at line 124 of file Vector\&.h\&.
+.SS "const std::array< \fBMatrixRow\fP< T, H > , N>& \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::getContents () const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBgetContents()\fP\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+A \fCconst std::array\fP of this \fCconst Vector\fP contents 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+setContents(std::array<T,N>) 
+.RE
+.PP
+
+.PP
+Definition at line 133 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> constexpr \fBSize\fP \fBmc::Matrix\fP< T, W, H >::height () const\fC [inline]\fP"
+
+.PP
+Calculates the height of this \fC\fBMatrix\fP\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The height specified by the template\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBwidth()\fP 
+.PP
+\fBsize()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 142 of file Matrix\&.h\&.
+.SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator!= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Compares whether 2 \fCVectors\fP don't have the same values\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP A \fCVector\fP to compare \fCthis\fP against 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the 2 are not equal, \fCfalse\fP otherwise 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator==(const Vector<T,N>) const 
+.PP
+operator<(const Vector&) const 
+.PP
+operator>=(const Vector&) const 
+.PP
+operator<=(const Vector&) const 
+.PP
+operator>(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 445 of file Vector\&.h\&.
+.SS "\fBMatrixRow\fP< T, H >  \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator% (const \fBVector\fP< \fBMatrixRow\fP< T, H > , 3 > & right) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Calculates the dot product of 2 \fCVectors\fP This is done in o(N) time
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP Another \fCVector\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The dot product 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP math 
+.PP
+cross(const Vector&, const Vector&) 
+.PP
+operator*(const T) 
+.PP
+operator*(const Vector&) 
+.RE
+.PP
+
+.PP
+Definition at line 326 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> virtual T& \fBmc::Matrix\fP< T, W, H >::operator() (\fBIndex\fP x, \fBIndex\fP y)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Retrieves content at a certain \fCIndex\fP, not zero indexed\&. Equal to
+.PP
+.nf
+matrix[x-1][y-1]
+
+.fi
+.PP
+ 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP Not zero-indexed X-coordinate 
+.br
+\fIy\fP Not zero-indexed y-coordinate 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Value at \fCx-1\fP and \fCy-1\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index)\fP 
+.PP
+\fBset(Index, Index,T)\fP 
+.PP
+\fBget(Index,Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 235 of file Matrix\&.h\&.
+.SS "virtual \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator() (\fBIndex\fP i)\fC [inline]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Retrieves content at a certain \fCIndex\fP, not zero indexed\&. Equal to
+.PP
+.nf
+vector[i-1]
+
+.fi
+.PP
+ 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Not zero indexed \fCIndex\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Value at \fCi-1\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 240 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> const T& \fBmc::Matrix\fP< T, W, H >::operator() (\fBIndex\fP x, \fBIndex\fP y) const\fC [inline]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBoperator()(Index,Index)\fP\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP Not zero-indexed X-coordinate 
+.br
+\fIy\fP Not zero-indexed y-coordinate 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Value at \fCx-1\fP and \fCy-1\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset(Index, Index,T)\fP 
+.PP
+\fBget(Index,Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 247 of file Matrix\&.h\&.
+.SS "const \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator() (\fBIndex\fP i) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBoperator()(Index)\fP\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Not zero indexed \fCIndex\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Value at \fCi-1\fP 
+.RE
+.PP
+
+.PP
+Definition at line 249 of file Vector\&.h\&.
+.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator* (const \fBVector\fP< \fBMatrixRow\fP< T, H > , 3 > & right) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Calculates the cross product of 2 \fCVectors\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP Another \fCVector\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The cross product 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP math 
+.PP
+cross(const Vector&, const Vector&) 
+.PP
+operator*(const T) 
+.PP
+operator%(const Vector&) 
+.RE
+.PP
+
+.PP
+Definition at line 295 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBVector\fP<T, H> \fBmc::Matrix\fP< T, W, H >::operator* (const \fBVector\fP< T, H > & right) const\fC [inline]\fP"
+
+.PP
+Multiplies a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBVector\fP\fP of equal width 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBVector\fP\fP that was created by multiplying a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIArithmeticError\fP If \fC\fBwidth()\fP\fP is greater than \fC\fBheight()\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBVector\fP\fP and \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 301 of file Matrix\&.h\&.
+.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator* (const \fBMatrixRow\fP< T, H > scalar) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Multiplies a \fCVector\fP by a scalar\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIscalar\fP What to multiply this \fCVector\fP by 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fCVector\fP scaled\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator*(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 343 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator* (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
+
+.PP
+Multiplies 2 \fC\fBMatrix\fP\fP together\&. \fC\fBwidth()\fP\fP must equal \fC\fBheight()\fP\fP, or else this will error\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to multiply 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBMatrix\fP\fP whose contents is 2 \fC\fBMatrix\fP\fP multiplied together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.PP
+\fBoperator*(const T&) const\fP 
+.RE
+.PP
+
+.PP
+Definition at line 357 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator* (const T & scalar) const\fC [inline]\fP"
+
+.PP
+Scales a \fC\fBMatrix\fP\fP from a scalar value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIscalar\fP What to multiply each value of this \fC\fBMatrix\fP\fP by\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBMatrix\fP\fP multiplied by the scalar 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator*(const Matrix&) const\fP 
+.PP
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 379 of file Matrix\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator*= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Multiplies a \fCVector\fP by this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fCVector\fP to multiply 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator+(const Vector<T,N>&) const 
+.RE
+.PP
+
+.PP
+Definition at line 390 of file Vector\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator*= (const \fBMatrixRow\fP< T, H >  & scalar)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Scales this \fCVector\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIscalar\fP How much to scale 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator*(const Vector<T,3>&) const 
+.PP
+operator*(const T) const 
+.RE
+.PP
+
+.PP
+Definition at line 408 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator*= (\fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
+
+.PP
+Multiplies \fCthis\fP by a \fC\fBMatrix\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to multiply 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator*(const Matrix<T,W,H>&) const\fP 
+.PP
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 431 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator*= (const T & scalar)\fC [inline]\fP"
+
+.PP
+Multiplies \fCthis\fP by a scalar\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIscalar\fP What to multiply each value of this \fC\fBMatrix\fP\fP by 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator*(const T&) const\fP 
+.PP
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 442 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBVector\fP<T, H> \fBmc::Matrix\fP< T, W, H >::operator+ (const \fBVector\fP< T, H > & right) const\fC [inline]\fP"
+
+.PP
+Adds a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBVector\fP\fP of equal width 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBVector\fP\fP that was created by adding a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIArithmeticError\fP If \fC\fBwidth()\fP\fP is greater than \fC\fBheight()\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBVector\fP\fP and \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 260 of file Matrix\&.h\&.
+.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator+ (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Adds 2 \fCVectors\fP together\&. This is done in o(N) time
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP Another \fCVector\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fCVector\fP that was created by adding 2 \fCVectors\fP together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP math 
+.RE
+.PP
+
+.PP
+Definition at line 262 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator+ (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
+
+.PP
+Adds 2 \fC\fBMatrix\fP\fP together\&. \fC\fBwidth()\fP\fP MUST be equal to \fC\fBheight()\fP\fP in order to do \fC\fBMatrix\fP\fP math\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to add 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBMatrix\fP\fP whose contents is 2 \fC\fBMatrix\fP\fP added together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 320 of file Matrix\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator+= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Adds a \fCVector\fP to this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fCVector\fP to add 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator+(const Vector<T,N>&) const 
+.RE
+.PP
+
+.PP
+Definition at line 372 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator+= (const \fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
+
+.PP
+Adds a \fC\fBMatrix\fP\fP to this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to add 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator+(const Matrix<T,W,H>&) const\fP 
+.PP
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 409 of file Matrix\&.h\&.
+.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator\- (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Subtracts 2 \fCVectors\fP together\&. This is done in o(N) time
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP Another \fCVector\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fCVector\fP that was created by subtracting 2 \fCVectors\fP together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP math 
+.RE
+.PP
+
+.PP
+Definition at line 278 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBVector\fP<T, H> \fBmc::Matrix\fP< T, W, H >::operator\- (const \fBVector\fP< T, H > & right) const\fC [inline]\fP"
+
+.PP
+Subtracts a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together\&. The \fBMatrix\fP's \fC\fBwidth()\fP\fP must not be larger than \fC\fBheight()\fP\fP
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBVector\fP\fP of equal width 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBVector\fP\fP that was created by subtracting a \fC\fBVector\fP\fP and a \fC\fBMatrix\fP\fP together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBVector\fP\fP and \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 280 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator\- (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
+
+.PP
+Subtracts 2 \fC\fBMatrix\fP\fP together\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to subtracts 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBMatrix\fP\fP whose contents is 2 \fC\fBMatrix\fP\fP subtracted together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 338 of file Matrix\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator\-= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Subtracts a \fCVector\fP from this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fCVector\fP to subtract 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator-(const Vector<T,N>&) const 
+.RE
+.PP
+
+.PP
+Definition at line 381 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator\-= (const \fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
+
+.PP
+Subtracts a \fC\fBMatrix\fP\fP from this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to subtracts 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator-(const Matrix<T,W,H>&) const\fP 
+.PP
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 420 of file Matrix\&.h\&.
+.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator/ (const \fBMatrixRow\fP< T, H > scalar) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Divides a \fCVector\fP by a scalar\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIscalar\fP What to divided this \fCVector\fP by 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fCVector\fP scaled\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator*(const T&) const 
+.RE
+.PP
+
+.PP
+Definition at line 359 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator/ (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
+
+.PP
+Divides 2 \fC\fBMatrix\fP\fP together\&. \fC\fBwidth()\fP\fP must equal \fC\fBheight()\fP\fP, or else this will error\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to divide 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBMatrix\fP\fP whose contents is 2 \fC\fBMatrix\fP\fP divide together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+\fBBug\fP
+.RS 4
+Not finished 
+.RE
+.PP
+
+.PP
+Definition at line 397 of file Matrix\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator/= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Divides a \fCVector\fP by this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fCVector\fP to divide 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator+(const Vector<T,N>&) const 
+.RE
+.PP
+
+.PP
+Definition at line 399 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator/= (const \fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
+
+.PP
+Divides a \fC\fBMatrix\fP\fP from this one\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP A \fC\fBMatrix\fP\fP to divide 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator/(const Matrix<T,W,H>&) const\fP 
+.PP
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP \fBmath\fP 
+.PP
+\fBMatrix\fP for an explanation of \fC\fBMatrix\fP\fP \fBmath\fP 
+.RE
+.PP
+
+.PP
+Definition at line 453 of file Matrix\&.h\&.
+.SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator< (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Compares the \fC<\fP operator on 2 \fCVectors\fP elements\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP A \fCVector\fP to compare against 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The result of the \fC<\fP operator on each element 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator<=(const Vector&) const 
+.PP
+operator>=(const Vector&) const 
+.PP
+operator>(const Vector&) const 
+.PP
+operator==(const Vector&) const 
+.PP
+operator!=(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 498 of file Vector\&.h\&.
+.SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator<= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Compares the \fC<=\fP operator on 2 \fCVectors\fP elements\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP A \fCVector\fP to compare against 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The result of the \fC<=\fP operator on each element 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator<(const Vector&) const 
+.PP
+operator>=(const Vector&) const 
+.PP
+operator>(const Vector&) const 
+.PP
+operator==(const Vector&) const 
+.PP
+operator!=(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 512 of file Vector\&.h\&.
+.SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator== (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Compares whether 2 \fCVectors\fP have the same values\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP A \fCVector\fP to compare \fCthis\fP against 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the 2 are equal, \fCfalse\fP otherwise 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator!=(const Vector<T,N>) const 
+.PP
+operator<(const Vector&) const 
+.PP
+operator>=(const Vector&) const 
+.PP
+operator<=(const Vector&) const 
+.PP
+operator>(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 424 of file Vector\&.h\&.
+.SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator> (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Compares the \fC>\fP operator on 2 \fCVectors\fP elements\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP A \fCVector\fP to compare against 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The result of the \fC>\fP operator on each element 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator<(const Vector&) const 
+.PP
+operator>=(const Vector&) const 
+.PP
+operator<=(const Vector&) const 
+.PP
+operator==(const Vector&) const 
+.PP
+operator!=(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 461 of file Vector\&.h\&.
+.SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator>= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Compares the \fC>=\fP operator on 2 \fCVectors\fP elements\&. This is done in O(N) time 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP A \fCVector\fP to compare against 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The result of the \fC>=\fP operator on each element 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+operator<(const Vector&) const 
+.PP
+operator>(const Vector&) const 
+.PP
+operator<=(const Vector&) const 
+.PP
+operator==(const Vector&) const 
+.PP
+operator!=(const Vector&) const 
+.RE
+.PP
+
+.PP
+Definition at line 482 of file Vector\&.h\&.
+.SS "\fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator[] (\fBIndex\fP i)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Retrieves the content at a certain \fCIndex\fP, zero indexed\&. This operator is faster than \fC\fBget(Index)\fP,\fP as it doesn't do bounds checking\&. However, accessing an invalid index will be undefined\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Where to retrieve the data 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The data at \fCi\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index) const\fP 
+.RE
+.PP
+
+.PP
+Definition at line 217 of file Vector\&.h\&.
+.SS "const \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator[] (\fBIndex\fP i) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBoperator[](Index)\fP\fP used if a \fCVector\fP is declared \fCconst\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Where to retrieve the data 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The data at \fCi\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 226 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::set (\fBIndex\fP x, \fBIndex\fP y, T value)\fC [inline]\fP"
+
+.PP
+Writes data at certain coordinates to a new value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP X-coordinate of the new data 
+.br
+\fIy\fP Y-coordinate of the new data 
+.br
+\fIvalue\fP New datat to write to \fCX,Y\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCx>=\fBwidth()\fP\fP 
+.br
+\fIIndexOutOfBounds\fP if \fCy>=\fBheight()\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBget(Index, Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 188 of file Matrix\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::set (\fBIndex\fP position, \fBMatrixRow\fP< T, H > value)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Set data at a certain position to equal a new value\&. Slower than \fCoperator[]\fP because it does bounds checking\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Where to put the new value, zero indexed\&. 
+.br
+\fIvalue\fP What to put in \fCposition\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP If \fCi\fP is greater than \fC\fBsize()\fP\fP 
+.br
+\fIIndexOutOfBounds\fP If \fCi\fP is less than 0 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[](Index)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 194 of file Vector\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::setContents (const std::array< \fBMatrixRow\fP< T, H > , N > contents)\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Copies the contents of an \fCstd::array\fP into this \fCVector\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcontents\fP An \fCstd::array\fP whose data will be dumped into this \fCVector\fP 
+.RE
+.PP
+
+.PP
+Definition at line 140 of file Vector\&.h\&.
+.SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::setContents (const \fBMatrixRow\fP< T, H > arr[N])\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Copies the contents of an array into this \fCVector\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIarr\fP An equally sized array whose contents will cloned in this \fCVector\fP 
+.RE
+.PP
+
+.PP
+Definition at line 147 of file Vector\&.h\&.
+.SS "template<typename T, Size W, Size H> constexpr \fBSize\fP \fBmc::Matrix\fP< T, W, H >::size () const\fC [inline]\fP"
+
+.PP
+Calculates how many elements are in this \fC\fBMatrix\fP\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+\fC\fBwidth()\fP\fP times \fC\fBheight()\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBheight()\fP 
+.PP
+\fBwidth()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file Matrix\&.h\&.
+.SS "template<typename T, Size W, Size H> constexpr \fBSize\fP \fBmc::Matrix\fP< T, W, H >::width () const\fC [inline]\fP"
+
+.PP
+Calculates the width of this \fC\fBMatrix\fP\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The width specified by the template\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBheight()\fP 
+.PP
+\fBsize()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 133 of file Matrix\&.h\&.
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "template<typename T, Size W, Size H> std::ostream& operator<< (std::ostream & output, const \fBMatrix\fP< T, W, H > & m)\fC [friend]\fP"
+
+.PP
+Operator used to output to \fCstd::cout\fP\&. The output will take up multiple lines and will show all of the \fC\fBMatrix\fP\fP contents 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoutput\fP \fCstd::ostream\fP the \fC\fBMatrix\fP\fP was inserted into 
+.br
+\fIm\fP \fC\fBMatrix\fP\fP which will be printed 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCoutput\fP for chaining 
+.RE
+.PP
+\fBBug\fP
+.RS 4
+the order is not retained exactly 
+.RE
+.PP
+
+.PP
+Definition at line 466 of file Matrix\&.h\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::array<\fBMatrixRow\fP< T, H > , N> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::content\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 536 of file Vector\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

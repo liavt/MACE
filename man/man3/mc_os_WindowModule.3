@@ -1,0 +1,93 @@
+.TH "mc::os::WindowModule" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::os::WindowModule \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Window\&.h>\fP
+.PP
+Inherits \fBmc::Module\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBWindowModule\fP (\fBWindow\fP *window)"
+.br
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.RI "\fICalled when \fBSystem#init\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.ti -1c
+.RI "void \fBupdate\fP ()"
+.br
+.RI "\fICalled when \fBSystem#update\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.RI "\fICalled when \fBSystem#terminate\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.ti -1c
+.RI "void \fBsetContext\fP (\fBGraphicsContext\fP *con)"
+.br
+.ti -1c
+.RI "\fBGraphicsContext\fP * \fBgetContext\fP ()"
+.br
+.ti -1c
+.RI "const \fBGraphicsContext\fP * \fBgetContext\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBgetName\fP () const "
+.br
+.RI "\fIOverride this function and return a UNIQUE name for this \fC\fBModule\fP\fP \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 70 of file Window\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::os::WindowModule::WindowModule (\fBWindow\fP * window)"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::os::WindowModule::destroy ()\fC [virtual]\fP"
+
+.PP
+Called when \fBSystem#terminate\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to clear memory, close streams, or clean up anything that needs to be cleaned up\&. 
+.PP
+Should only be called before the program is closed\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+.SS "\fBGraphicsContext\fP* mc::os::WindowModule::getContext ()"
+
+.SS "const \fBGraphicsContext\fP* mc::os::WindowModule::getContext () const"
+
+.SS "std::string mc::os::WindowModule::getName () const\fC [virtual]\fP"
+
+.PP
+Override this function and return a UNIQUE name for this \fC\fBModule\fP\fP The name for your \fC\fBModule\fP\fP is used in comparison, so make sure it is as unique as possible\&. 
+.PP
+It is akin to a hashcode\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+.SS "void mc::os::WindowModule::init ()\fC [virtual]\fP"
+
+.PP
+Called when \fBSystem#init\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to initialize variables, start streams, or launch a context\&. 
+.PP
+Should only be called once\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+.SS "void mc::os::WindowModule::setContext (\fBGraphicsContext\fP * con)"
+
+.SS "void mc::os::WindowModule::update ()\fC [virtual]\fP"
+
+.PP
+Called when \fBSystem#update\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

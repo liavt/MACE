@@ -1,0 +1,159 @@
+.TH "mc::gfx::Texture" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::Texture \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Buffer\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Object\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetData\fP (const void *data, \fBSize\fP width, \fBSize\fP height, GLenum type=GL_FLOAT, GLenum format=GL_RGB, GLenum internalFormat=GL_RGB, \fBIndex\fP mipmapLevel=0)"
+.br
+.ti -1c
+.RI "void \fBloadFile\fP (const char *file)"
+.br
+.ti -1c
+.RI "void \fBsetTarget\fP (const GLenum target)"
+.br
+.ti -1c
+.RI "GLenum \fBgetTarget\fP ()"
+.br
+.ti -1c
+.RI "\fBColor\fP & \fBgetPaint\fP ()"
+.br
+.ti -1c
+.RI "const \fBColor\fP & \fBgetPaint\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetPaint\fP (const \fBColor\fP &c)"
+.br
+.ti -1c
+.RI "float \fBgetOpacity\fP ()"
+.br
+.ti -1c
+.RI "const float \fBgetOpacity\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetOpacity\fP (const float f)"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetParameter\fP (const GLenum &name, const GLint &value)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBTexture\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBTexture\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBTexture\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBTexture\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBTexture\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBTexture\fP &other) const "
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBunbind\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 142 of file Buffer\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::Texture::destroy ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.SS "float mc::gfx::Texture::getOpacity ()"
+
+.SS "const float mc::gfx::Texture::getOpacity () const"
+
+.SS "\fBColor\fP& mc::gfx::Texture::getPaint ()"
+
+.SS "const \fBColor\fP& mc::gfx::Texture::getPaint () const"
+
+.SS "GLenum mc::gfx::Texture::getTarget ()"
+
+.SS "void mc::gfx::Texture::init ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Texture::isCreated () const\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "void mc::gfx::Texture::loadFile (const char * file)"
+
+.SS "bool mc::gfx::Texture::operator!= (const \fBTexture\fP & other) const"
+
+.SS "bool mc::gfx::Texture::operator< (const \fBTexture\fP & other) const"
+
+.SS "bool mc::gfx::Texture::operator<= (const \fBTexture\fP & other) const"
+
+.SS "bool mc::gfx::Texture::operator== (const \fBTexture\fP & other) const"
+
+.SS "bool mc::gfx::Texture::operator> (const \fBTexture\fP & other) const"
+
+.SS "bool mc::gfx::Texture::operator>= (const \fBTexture\fP & other) const"
+
+.SS "void mc::gfx::Texture::setData (const void * data, \fBSize\fP width, \fBSize\fP height, GLenum type = \fCGL_FLOAT\fP, GLenum format = \fCGL_RGB\fP, GLenum internalFormat = \fCGL_RGB\fP, \fBIndex\fP mipmapLevel = \fC0\fP)"
+
+.SS "void mc::gfx::Texture::setOpacity (const float f)"
+
+.SS "void mc::gfx::Texture::setPaint (const \fBColor\fP & c)"
+
+.SS "void mc::gfx::Texture::setParameter (const GLenum & name, const GLint & value)"
+
+.SS "void mc::gfx::Texture::setTarget (const GLenum target)"
+
+.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 37 of file Buffer\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['assertionerror',['AssertionError',['../d0/d0b/a00004.html',1,'mc']]]
+  ['bitfield',['BitField',['../de/d21/a00006.html',1,'mc']]],
+  ['buffer',['Buffer',['../de/d5e/a00007.html',1,'mc::gfx']]]
 ];

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="dd/da2/a00019" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>mc::Include</compoundname>
+    <derivedcompoundref refid="db/db2/a00020" prot="public" virt="non-virtual">mc::IncludeDirectory</derivedcompoundref>
+    <derivedcompoundref refid="de/d11/a00021" prot="public" virt="non-virtual">mc::IncludeString</derivedcompoundref>
+    <includes refid="da/d24/a00068" local="no">Preprocessor.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="dd/da2/a00019_a1aaf4bc2ad50c93962901c653bbed0bc_1a1aaf4bc2ad50c93962901c653bbed0bc" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool mc::Include::hasFile</definition>
+        <argsstring>(const std::string &amp;name) const  =0</argsstring>
+        <name>hasFile</name>
+        <reimplementedby refid="de/d11/a00021_a10836d3440eb2d1df3c6c84ef9f4896b_1a10836d3440eb2d1df3c6c84ef9f4896b">hasFile</reimplementedby>
+        <reimplementedby refid="db/db2/a00020_aad2d7f5d8ae4c397b944663e00e0c359_1aad2d7f5d8ae4c397b944663e00e0c359">hasFile</reimplementedby>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Checks whether this include has the specified file. </para>        </briefdescription>
+        <detaileddescription>
+<para>If there isn&apos;t an <computeroutput><ref refid="dd/da2/a00019" kindref="compound">Include</ref></computeroutput> with the file, then a <computeroutput>PreprocessorException</computeroutput> is thrown. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="80" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_aaeb33580110dc594eb065363fcdd65bf_1aaeb33580110dc594eb065363fcdd65bf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>std::string</type>
+        <definition>virtual std::string mc::Include::getFile</definition>
+        <argsstring>(const std::string &amp;name) const  =0</argsstring>
+        <name>getFile</name>
+        <reimplementedby refid="de/d11/a00021_a6d27894e4df26c44e8aab157fc2cecdb_1a6d27894e4df26c44e8aab157fc2cecdb">getFile</reimplementedby>
+        <reimplementedby refid="db/db2/a00020_a7488daf3a1e77c84a4892e221f610957_1a7488daf3a1e77c84a4892e221f610957">getFile</reimplementedby>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves a file with a certain name. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="84" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Superclass for classes that represent items that can be included via #include. </para>    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="de/d11/a00021" kindref="compound">IncludeString</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="db/db2/a00020" kindref="compound">IncludeDirectory</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027" kindref="compound">Preprocessor</ref> </para></simplesect>
+</para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="341">
+        <label>mc::IncludeString</label>
+        <link refid="de/d11/a00021"/>
+        <childnode refid="339" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="339">
+        <label>mc::Include</label>
+        <link refid="dd/da2/a00019"/>
+      </node>
+      <node id="340">
+        <label>mc::IncludeDirectory</label>
+        <link refid="db/db2/a00020"/>
+        <childnode refid="339" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="include/MACE/Utility/Preprocessor.h" line="75" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="75" bodyend="85"/>
+    <listofallmembers>
+      <member refid="dd/da2/a00019_aaeb33580110dc594eb065363fcdd65bf_1aaeb33580110dc594eb065363fcdd65bf" prot="public" virt="pure-virtual"><scope>mc::Include</scope><name>getFile</name></member>
+      <member refid="dd/da2/a00019_a1aaf4bc2ad50c93962901c653bbed0bc_1a1aaf4bc2ad50c93962901c653bbed0bc" prot="public" virt="pure-virtual"><scope>mc::Include</scope><name>hasFile</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

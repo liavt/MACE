@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kill',['kill',['../d4/dee/a00008_a00d40394078cb8f1abc7461bad968fb3.html#a00d40394078cb8f1abc7461bad968fb3',1,'mc::gfx::Entity']]]
+  ['j',['J',['../d1/d51/a00079_a090bf578a34c41fc751131d34152b9aa.html#a090bf578a34c41fc751131d34152b9aaa91f8bb93586e0799c6ba78a5daec6adf',1,'mc::os::Input']]]
 ];

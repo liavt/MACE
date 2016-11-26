@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="dc/de2/a00024" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>mc::Module</compoundname>
+    <derivedcompoundref refid="db/d3a/a00040" prot="public" virt="non-virtual">mc::os::WindowModule</derivedcompoundref>
+    <includes refid="d9/d73/a00060" local="no">Module.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="dc/de2/a00024_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void mc::Module::init</definition>
+        <argsstring>()=0</argsstring>
+        <name>init</name>
+        <reimplementedby refid="db/d3a/a00040_aa667f5529e93f3ae067ca99f496ceb03_1aa667f5529e93f3ae067ca99f496ceb03">init</reimplementedby>
+        <briefdescription>
+<para>Called when <ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System#init</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para>Use this to initialize variables, start streams, or launch a context. </para><para>Should only be called once. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="31" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void mc::Module::update</definition>
+        <argsstring>()=0</argsstring>
+        <name>update</name>
+        <reimplementedby refid="db/d3a/a00040_a73e5d753d3654926e641bc12c0a84c51_1a73e5d753d3654926e641bc12c0a84c51">update</reimplementedby>
+        <briefdescription>
+<para>Called when <ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">System#update</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para>Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="37" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void mc::Module::destroy</definition>
+        <argsstring>()=0</argsstring>
+        <name>destroy</name>
+        <reimplementedby refid="db/d3a/a00040_a88c57fd19426587fe2f3641cef2a5dac_1a88c57fd19426587fe2f3641cef2a5dac">destroy</reimplementedby>
+        <briefdescription>
+<para>Called when <ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">System#terminate</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para>Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. </para><para>Should only be called before the program is closed. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="45" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>std::string</type>
+        <definition>virtual std::string mc::Module::getName</definition>
+        <argsstring>() const  =0</argsstring>
+        <name>getName</name>
+        <reimplementedby refid="db/d3a/a00040_ab2c762a61a27767d5403265c6402ac7a_1ab2c762a61a27767d5403265c6402ac7a">getName</reimplementedby>
+        <briefdescription>
+<para>Override this function and return a UNIQUE name for this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para>The name for your <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is used in comparison, so make sure it is as unique as possible. </para><para>It is akin to a hashcode. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="54" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Abstract class used for doing a task in MACE. </para>    </briefdescription>
+    <detaileddescription>
+<para>Plugged into <ref refid="da/dec/a00080" kindref="compound">System</ref> via <ref refid="da/dec/a00080_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule().</ref> </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="369">
+        <label>mc::os::WindowModule</label>
+        <link refid="db/d3a/a00040"/>
+        <childnode refid="368" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="368">
+        <label>mc::Module</label>
+        <link refid="dc/de2/a00024"/>
+      </node>
+    </inheritancegraph>
+    <location file="include/MACE/System/Module.h" line="22" column="1" bodyfile="include/MACE/System/Module.h" bodystart="22" bodyend="55"/>
+    <listofallmembers>
+      <member refid="dc/de2/a00024_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>destroy</name></member>
+      <member refid="dc/de2/a00024_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>getName</name></member>
+      <member refid="dc/de2/a00024_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>init</name></member>
+      <member refid="dc/de2/a00024_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>update</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

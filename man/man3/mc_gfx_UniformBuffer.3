@@ -1,0 +1,141 @@
+.TH "mc::gfx::UniformBuffer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::UniformBuffer \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Buffer\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Buffer\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBUniformBuffer\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetLocation\fP (const \fBIndex\fP location)"
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetLocation\fP ()"
+.br
+.ti -1c
+.RI "const \fBIndex\fP \fBgetLocation\fP () const "
+.br
+.ti -1c
+.RI "void \fBbindForRender\fP (const \fBIndex\fP offset=0, const GLsizeiptr size=\-1) const "
+.br
+.ti -1c
+.RI "void \fBbindToUniformBlock\fP (const \fBIndex\fP programID, const char *blockName) const "
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const "
+.br
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetImmutableData\fP (const GLsizeiptr dataSize, const GLvoid *data, GLbitfield flags)"
+.br
+.ti -1c
+.RI "void \fBsetData\fP (const GLsizeiptr dataSize, const GLvoid *data, const GLenum drawType=GL_DYNAMIC_DRAW) const "
+.br
+.ti -1c
+.RI "void \fBsetDataRange\fP (const \fBIndex\fP offset, const GLsizeiptr dataSize, const GLvoid *data) const "
+.br
+.ti -1c
+.RI "void \fBcopyData\fP (\fBBuffer\fP other, GLsizeiptr size, \fBIndex\fP readOffset=0, \fBIndex\fP writeOffset=0)"
+.br
+.ti -1c
+.RI "GLvoid * \fBmap\fP (const GLenum access=GL_READ_WRITE)"
+.br
+.ti -1c
+.RI "GLvoid * \fBmapRange\fP (const \fBIndex\fP offset, const \fBSize\fP length, const GLbitfield access)"
+.br
+.ti -1c
+.RI "GLboolean \fBunmap\fP ()"
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBunbind\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 90 of file Buffer\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::gfx::UniformBuffer::UniformBuffer ()"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::UniformBuffer::bindForRender (const \fBIndex\fP offset = \fC0\fP, const GLsizeiptr size = \fC\-1\fP) const"
+
+.SS "void mc::gfx::UniformBuffer::bindToUniformBlock (const \fBIndex\fP programID, const char * blockName) const"
+
+.SS "void mc::gfx::Buffer::copyData (\fBBuffer\fP other, GLsizeiptr size, \fBIndex\fP readOffset = \fC0\fP, \fBIndex\fP writeOffset = \fC0\fP)\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::destroy ()\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.SS "\fBIndex\fP mc::gfx::UniformBuffer::getLocation ()"
+
+.SS "const \fBIndex\fP mc::gfx::UniformBuffer::getLocation () const"
+
+.SS "void mc::gfx::Buffer::init ()\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Buffer::isCreated () const\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "GLvoid* mc::gfx::Buffer::map (const GLenum access = \fCGL_READ_WRITE\fP)\fC [inherited]\fP"
+
+.SS "GLvoid* mc::gfx::Buffer::mapRange (const \fBIndex\fP offset, const \fBSize\fP length, const GLbitfield access)\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::setData (const GLsizeiptr dataSize, const GLvoid * data, const GLenum drawType = \fCGL_DYNAMIC_DRAW\fP) const\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::setDataRange (const \fBIndex\fP offset, const GLsizeiptr dataSize, const GLvoid * data) const\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::setImmutableData (const GLsizeiptr dataSize, const GLvoid * data, GLbitfield flags)\fC [inherited]\fP"
+
+.SS "void mc::gfx::UniformBuffer::setLocation (const \fBIndex\fP location)"
+
+.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.SS "GLboolean mc::gfx::Buffer::unmap ()\fC [inherited]\fP"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 37 of file Buffer\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

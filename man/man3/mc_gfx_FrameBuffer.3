@@ -1,0 +1,114 @@
+.TH "mc::gfx::FrameBuffer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::FrameBuffer \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Buffer\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Object\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBattachTexture\fP (const GLenum &target, const GLenum &attachment, const GLuint &textureID, const GLint &level)"
+.br
+.ti -1c
+.RI "void \fBattachTexture1D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level)"
+.br
+.ti -1c
+.RI "void \fBattachTexture2D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level)"
+.br
+.ti -1c
+.RI "void \fBattachTextureLayer\fP (const GLenum &target, const GLenum &attachment, const GLuint &texture, const GLint &level, const GLint &layer)"
+.br
+.ti -1c
+.RI "void \fBattachRenderbuffer\fP (const GLenum &target, const GLenum &attachment, const \fBRenderBuffer\fP &buffer)"
+.br
+.ti -1c
+.RI "void \fBsetParameter\fP (const GLenum &paramName, const GLint &value)"
+.br
+.ti -1c
+.RI "void \fBsetDrawBuffers\fP (const \fBSize\fP &arrSize, const GLenum *buffers)"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const "
+.br
+.ti -1c
+.RI "GLenum \fBcheckStatus\fP (const GLenum &target)"
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBunbind\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 119 of file Buffer\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::FrameBuffer::attachRenderbuffer (const GLenum & target, const GLenum & attachment, const \fBRenderBuffer\fP & buffer)"
+
+.SS "void mc::gfx::FrameBuffer::attachTexture (const GLenum & target, const GLenum & attachment, const GLuint & textureID, const GLint & level)"
+
+.SS "void mc::gfx::FrameBuffer::attachTexture1D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level)"
+
+.SS "void mc::gfx::FrameBuffer::attachTexture2D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level)"
+
+.SS "void mc::gfx::FrameBuffer::attachTextureLayer (const GLenum & target, const GLenum & attachment, const GLuint & texture, const GLint & level, const GLint & layer)"
+
+.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+
+.SS "GLenum mc::gfx::FrameBuffer::checkStatus (const GLenum & target)"
+
+.SS "void mc::gfx::FrameBuffer::destroy ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::FrameBuffer::init ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::FrameBuffer::isCreated () const\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "void mc::gfx::FrameBuffer::setDrawBuffers (const \fBSize\fP & arrSize, const GLenum * buffers)"
+
+.SS "void mc::gfx::FrameBuffer::setParameter (const GLenum & paramName, const GLint & value)"
+
+.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 37 of file Buffer\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

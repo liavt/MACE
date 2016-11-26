@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['g',['g',['../de/d21/a00006_a16c106a491d5ab2deef17a0a5f4c0a95.html#a16c106a491d5ab2deef17a0a5f4c0a95',1,'mc::Color']]]
+  ['definition',['definition',['../d7/de0/a00022_ac61bcdc639d34b41e44fea3de9f437c0.html#ac61bcdc639d34b41e44fea3de9f437c0',1,'mc::Macro']]]
 ];

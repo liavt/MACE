@@ -1,0 +1,1080 @@
+.TH "mc::gfx::Group" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::Group \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Entity\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Entity\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBupdate\fP ()"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.terminate()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "void \fBrender\fP ()"
+.br
+.RI "\fIShould be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. \fP"
+.ti -1c
+.RI "const std::vector< \fBEntity\fP * > & \fBgetChildren\fP () const "
+.br
+.RI "\fIGets all of this \fC\fBEntity\fP's\fP children\&. \fP"
+.ti -1c
+.RI "void \fBremoveChild\fP (const \fBEntity\fP &e)"
+.br
+.RI "\fIRemoves a child by reference\&. \fP"
+.ti -1c
+.RI "void \fBremoveChild\fP (\fBIndex\fP index)"
+.br
+.RI "\fIRemoves a child via location\&. \fP"
+.ti -1c
+.RI "bool \fBhasChild\fP (\fBEntity\fP &e) const "
+.br
+.RI "\fIChecks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "void \fBclearChildren\fP ()"
+.br
+.RI "\fIRemoves EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "\fBEntity\fP & \fBoperator[]\fP (\fBIndex\fP i)"
+.br
+.RI "\fIAccess an \fC\fBEntity\fP\fP\&. \fP"
+.ti -1c
+.RI "const \fBEntity\fP & \fBoperator[]\fP (\fBIndex\fP i) const "
+.br
+.RI "\fI\fCconst\fP version of \fBoperator[](Index i)\fP \fP"
+.ti -1c
+.RI "\fBEntity\fP & \fBgetChild\fP (\fBIndex\fP i)"
+.br
+.RI "\fIRetrieves a child at a certain index\&. \fP"
+.ti -1c
+.RI "const \fBEntity\fP & \fBgetChild\fP (\fBIndex\fP i) const "
+.br
+.RI "\fI\fCconst\fP version of \fBgetChild(Index)\fP \fP"
+.ti -1c
+.RI "int \fBindexOf\fP (const \fBEntity\fP &e) const "
+.br
+.RI "\fIFinds the location of an \fC\fBEntity\fP\fP in this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "std::vector< \fBEntity\fP * >::iterator \fBbegin\fP ()"
+.br
+.RI "\fIGets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. \fP"
+.ti -1c
+.RI "std::vector< \fBEntity\fP * >::iterator \fBend\fP ()"
+.br
+.RI "\fIGets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. \fP"
+.ti -1c
+.RI "\fBSize\fP \fBsize\fP () const "
+.br
+.RI "\fICalculates the amount of children this \fC\fBEntity\fP\fP has\&. \fP"
+.ti -1c
+.RI "\fBEntityProperties\fP & \fBgetProperties\fP ()"
+.br
+.RI "\fIRetrieves the \fC\fBEntity\fP's\fP properties as a \fCByteField\fP \fP"
+.ti -1c
+.RI "const \fBEntityProperties\fP & \fBgetProperties\fP () const "
+.br
+.RI "\fI\fCconst\fP version of \fC\fBgetProperties()\fP\fP \fP"
+.ti -1c
+.RI "void \fBsetProperties\fP (\fBEntityProperties\fP &b)"
+.br
+.RI "\fISet the properties for this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "bool \fBgetProperty\fP (const \fBByte\fP position) const "
+.br
+.RI "\fIRetrieve the value of a property\&. \fP"
+.ti -1c
+.RI "void \fBsetProperty\fP (const \fBByte\fP position, const bool value)"
+.br
+.RI "\fISet a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fCENTITY_\fP \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP & \fBgetTransformation\fP ()"
+.br
+.ti -1c
+.RI "const \fBTransformMatrix\fP & \fBgetTransformation\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetTransformation\fP (\fBTransformMatrix\fP &trans)"
+.br
+.ti -1c
+.RI "\fBEntity\fP & \fBtranslate\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "\fBEntity\fP & \fBrotate\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "\fBEntity\fP & \fBscale\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "\fBEntity\fP *const \fBgetParent\fP ()"
+.br
+.RI "\fIRetrieve this \fCEntitys\fP parent `Entity\&. \fP"
+.ti -1c
+.RI "const \fBEntity\fP *const \fBgetParent\fP () const "
+.br
+.RI "\fI\fCconst\fP version of \fC\fBgetParent()\fP\fP \fP"
+.ti -1c
+.RI "bool \fBhasParent\fP () const "
+.br
+.ti -1c
+.RI "void \fBaddChild\fP (\fBEntity\fP &e)"
+.br
+.ti -1c
+.RI "void \fBkill\fP ()"
+.br
+.RI "\fIAutomatically called when \fCENTITY_PROPERTY_DEAD\fP is true\&. \fP"
+.ti -1c
+.RI "void \fBaddComponent\fP (\fBComponent\fP &action)"
+.br
+.ti -1c
+.RI "std::vector< \fBComponent\fP * > \fBgetComponents\fP ()"
+.br
+.ti -1c
+.RI "float & \fBgetWidth\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetWidth\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetWidth\fP (const float &s)"
+.br
+.ti -1c
+.RI "float & \fBgetHeight\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetHeight\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetHeight\fP (const float &s)"
+.br
+.ti -1c
+.RI "float & \fBgetX\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetX\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetX\fP (const float &newX)"
+.br
+.ti -1c
+.RI "float & \fBgetY\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetY\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetY\fP (const float &newY)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (\fBEntity\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCEntities\fP have the same children, parent, and properties\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (\fBEntity\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. \fP"
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcustomInit\fP ()"
+.br
+.RI "\fIWhen \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "void \fBcustomUpdate\fP ()"
+.br
+.RI "\fIWhen \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "void \fBcustomRender\fP ()"
+.br
+.RI "\fIWhen \fC\fBEntity\&.render()\fP\fP is called, \fC\fBcustomRender()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "void \fBcustomDestroy\fP ()"
+.br
+.RI "\fIWhen \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBcustomDestroy()\fP\fP is called on all of it's children\&. \fP"
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBTransformMatrix\fP \fBtransformation\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 485 of file Entity\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Entity::addChild (\fBEntity\fP & e)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::addComponent (\fBComponent\fP & action)\fC [inherited]\fP"
+
+.SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::begin ()\fC [inherited]\fP"
+
+.PP
+Gets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Iterator of the first \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBend()\fP 
+.PP
+\fBsize()\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::clearChildren ()\fC [inherited]\fP"
+
+.PP
+Removes EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.PP
+\fBsize()\fP 
+.PP
+\fBremoveChild(Index)\fP 
+.PP
+\fBremoveChild(const Entity&)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Group::customDestroy ()\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBcustomDestroy()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSystem::terminate()\fP 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Group::customInit ()\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSystem::init()\fP 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Group::customRender ()\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.render()\fP\fP is called, \fC\fBcustomRender()\fP\fP is called on all of it's children\&. 
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Group::customUpdate ()\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSystem::update()\fP 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Entity::destroy ()\fC [inherited]\fP"
+
+.PP
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.terminate()\fP\fP is called\&. Calls \fC\fBcustomDestroy()\fP\fP\&. Sets \fCENTITY_INIT\fP to be false 
+.PP
+You should never override this function\&. Instead, override \fC\fBcustomDestroy()\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIInitializationError\fP If the property \fCENTITY_INIT\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
+.RE
+.PP
+
+.SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::end ()\fC [inherited]\fP"
+
+.PP
+Gets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Iterator of the last \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBbegin()\fP 
+.PP
+\fBsize()\fP 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::getChild (\fBIndex\fP i)\fC [inherited]\fP"
+
+.PP
+Retrieves a child at a certain index\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Index of the \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCi\fP is less than \fC0\fP or greater than \fBsize()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "const \fBEntity\fP& mc::gfx::Entity::getChild (\fBIndex\fP i) const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fBgetChild(Index)\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP \fCIndex\fP of the \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCi\fP is less than \fC0\fP or greater than \fBsize()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "const std::vector<\fBEntity\fP*>& mc::gfx::Entity::getChildren () const\fC [inherited]\fP"
+
+.PP
+Gets all of this \fC\fBEntity\fP's\fP children\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+an \fCstd::vector\fP with all children of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+
+.SS "std::vector<\fBComponent\fP*> mc::gfx::Entity::getComponents ()\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getHeight ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getHeight () const\fC [inherited]\fP"
+
+.SS "\fBEntity\fP* const mc::gfx::Entity::getParent ()\fC [inherited]\fP"
+
+.PP
+Retrieve this \fCEntitys\fP parent `Entity\&. \fC @return A\fP\fBEntity\fP\fCwhich contains\fPthis` 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::hasChild(const Entity&) const; 
+.RE
+.PP
+
+.SS "const \fBEntity\fP* const mc::gfx::Entity::getParent () const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBgetParent()\fP\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBEntity\fP\fP which contains \fCthis\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::hasChild(const Entity&) const; 
+.RE
+.PP
+
+.SS "\fBEntityProperties\fP& mc::gfx::Entity::getProperties ()\fC [inherited]\fP"
+
+.PP
+Retrieves the \fC\fBEntity\fP's\fP properties as a \fCByteField\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The current properties belonging to this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties() const\fP 
+.PP
+setProperties(ByteField&) 
+.PP
+getProperty(Index) const 
+.PP
+setProperty(Index, bool) 
+.RE
+.PP
+
+.SS "const \fBEntityProperties\fP& mc::gfx::Entity::getProperties () const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBgetProperties()\fP\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+The current properties belonging to this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+setProperties(ByteField&) 
+.PP
+getProperty(Index) const 
+.PP
+setProperty(Index, bool) 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::getProperty (const \fBByte\fP position) const\fC [inherited]\fP"
+
+.PP
+Retrieve the value of a property\&. Property consants start with \fCENTITY_\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Location of the property based on a constant 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP or \fCfalse\fP based on the postition 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+setProperty(Index, bool) 
+.PP
+\fBgetProperties()\fP 
+.PP
+setProperties(ByteField&) 
+.RE
+.PP
+
+.SS "\fBTransformMatrix\fP& mc::gfx::Entity::getTransformation ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBTransformMatrix\fP& mc::gfx::Entity::getTransformation () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getWidth ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getWidth () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getX ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getX () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getY ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getY () const\fC [inherited]\fP"
+
+.SS "bool mc::gfx::Entity::hasChild (\fBEntity\fP & e) const\fC [inherited]\fP"
+
+.PP
+Checks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP Reference to an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCfalse\fP if this \fC\fBEntity\fP\fP doesn't contain the referenced \fC\fBEntity\fP\fP, \fCtrue\fP otherwise 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBindexOf(const Entity& ) const\fP 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::hasParent () const\fC [inherited]\fP"
+
+.SS "int mc::gfx::Entity::indexOf (const \fBEntity\fP & e) const\fC [inherited]\fP"
+
+.PP
+Finds the location of an \fC\fBEntity\fP\fP in this \fC\fBEntity\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP Reference to an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBgetChild(Index)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::init ()\fC [inherited]\fP"
+
+.PP
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. Calls \fC\fBcustomInit()\fP\fP 
+.PP
+You should never override this function\&. Instead, override \fC\fBcustomInit()\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIInitializationError\fP If the property \fCENTITY_INIT\fP is true, meaning \fC\fBinit()\fP\fP has already been called\&. 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::kill ()\fC [inherited]\fP"
+
+.PP
+Automatically called when \fCENTITY_PROPERTY_DEAD\fP is true\&. Removes this entity from it's parent, and calls it's \fC\fBdestroy()\fP\fP method\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.PP
+\fBgetParent()\fP 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::operator!= (\fBEntity\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP An \fC\fBEntity\fP\fP compare this one to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCfalse\fP if they are equal 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties() const\fP 
+.PP
+\fBgetParent() const\fP 
+.PP
+\fBgetChildren() const\fP 
+.PP
+operator== 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::operator== (\fBEntity\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCEntities\fP have the same children, parent, and properties\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP An \fC\fBEntity\fP\fP compare this one to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if they are equal 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties() const\fP 
+.PP
+\fBgetParent() const\fP 
+.PP
+\fBgetChildren() const\fP 
+.PP
+operator!= 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::operator[] (\fBIndex\fP i)\fC [inherited]\fP"
+
+.PP
+Access an \fC\fBEntity\fP\fP\&. This is different than \fC\fBgetChild()\fP\fP because \fCoperator[]\fP doesn't do bounds checking\&. Accessing an invalid location will result in a memory error\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Location of an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetChild(Index)\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "const \fBEntity\fP& mc::gfx::Entity::operator[] (\fBIndex\fP i) const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fBoperator[](Index i)\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Location of an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetChild(Index) const\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::removeChild (const \fBEntity\fP & e)\fC [inherited]\fP"
+
+.PP
+Removes a child by reference\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIObjectNotFoundInArray\fP if \fBhasChild(Entity&) const\fP returns \fCfalse\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP Reference to a child 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBremoveChild(Index)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::removeChild (\fBIndex\fP index)\fC [inherited]\fP"
+
+.PP
+Removes a child via location\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if the index is less than 0 or greater than \fBsize()\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIindex\fP Index of the \fC\fBEntity\fP\fP to be removed 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBindexOf(const Entity&) const\fP 
+.PP
+\fBremoveChild(const Entity&)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::render ()\fC [inherited]\fP"
+
+.PP
+Should be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. You should never override this function\&. Instead, override \fC\fBcustomRender()\fP\fP 
+.SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::scale (float x, float y, float z)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setHeight (const float & s)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setProperties (\fBEntityProperties\fP & b)\fC [inherited]\fP"
+
+.PP
+Set the properties for this \fC\fBEntity\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIb\fP New \fC\fBEntity\fP\fP properties 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties()\fP 
+.PP
+getProperty(Index) const 
+.PP
+setProperty(Index, bool) 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setProperty (const \fBByte\fP position, const bool value)\fC [inherited]\fP"
+
+.PP
+Set a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fCENTITY_\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Location of the property based on a constant 
+.br
+\fIvalue\fP Whether it is \fCtrue\fP or \fCfalse\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+getProperty(Index) const 
+.PP
+\fBgetProperties()\fP 
+.PP
+setProperties(ByteField&) 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setTransformation (\fBTransformMatrix\fP & trans)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setWidth (const float & s)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setX (const float & newX)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setY (const float & newY)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "\fBSize\fP mc::gfx::Entity::size () const\fC [inherited]\fP"
+
+.PP
+Calculates the amount of children this \fC\fBEntity\fP\fP has\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Size of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::translate (float x, float y, float z)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This function will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBENTITY_DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::update ()\fC [inherited]\fP"
+
+.PP
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. Calls \fC\fBcustomUpdate()\fP\fP\&. 
+.PP
+You should never override this function\&. Instead, override \fC\fBcustomUpdate()\fP\fP 
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIInitializationError\fP If the property \fCENTITY_INIT\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 429 of file Entity\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

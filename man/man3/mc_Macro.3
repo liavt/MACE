@@ -1,0 +1,145 @@
+.TH "mc::Macro" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::Macro \- Represents a \fC\fBMacro\fP\fP in code\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Preprocessor\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMacro\fP (std::string \fBname\fP, std::string \fBdefinition\fP, std::vector< std::string > \fBparameters\fP, std::string \fBparameterString\fP)"
+.br
+.RI "\fIGenerates a function macro\&. \fP"
+.ti -1c
+.RI "\fBMacro\fP (std::string \fBname\fP, std::string \fBdefinition\fP)"
+.br
+.RI "\fIGenerates a standard, variable like macro\&. \fP"
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::string \fBname\fP"
+.br
+.RI "\fIThe name of the macro, as specified by the constructor\&. \fP"
+.ti -1c
+.RI "std::string \fBdefinition\fP"
+.br
+.RI "\fIThe definition of the macro\&. \fP"
+.ti -1c
+.RI "std::vector< std::string > \fBparameters\fP"
+.br
+.RI "\fIIf the macro is a function, list of parameters that the macro takes in\&. \fP"
+.ti -1c
+.RI "std::string \fBparameterString\fP"
+.br
+.RI "\fIThe original string with the parenthesis, spaces, and parameters intact, but without the name\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents a \fC\fBMacro\fP\fP in code\&. 
+
+Created automatically when #define is encountered\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBPreprocessor\fP 
+.RE
+.PP
+
+.PP
+Definition at line 31 of file Preprocessor\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::Macro::Macro (std::string name, std::string definition, std::vector< std::string > parameters, std::string parameterString)"
+
+.PP
+Generates a function macro\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP The name of the macro, not including parenthesis 
+.br
+\fIdefinition\fP What it expands to\&. Parameters can be used here\&. 
+.br
+\fIparameters\fP A list of every parameter\&. Spaces parenthesis should not be included\&. 
+.br
+\fIparameterString\fP The original string with the parenthesis, spaces, and parameters intact\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBMacro(std::string, std::string)\fP 
+.RE
+.PP
+
+.SS "mc::Macro::Macro (std::string name, std::string definition)"
+
+.PP
+Generates a standard, variable like macro\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP The name of the macro\&. Whenever this is encountered in the input, it will be expanded\&. 
+.br
+\fIdefinition\fP What the macro expands to\&. 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::string mc::Macro::definition"
+
+.PP
+The definition of the macro\&. Whenever \fCname\fP is encountered, it will be expanded to the definition\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBname\fP 
+.RE
+.PP
+
+.PP
+Definition at line 57 of file Preprocessor\&.h\&.
+.SS "std::string mc::Macro::name"
+
+.PP
+The name of the macro, as specified by the constructor\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBdefinition\fP 
+.RE
+.PP
+
+.PP
+Definition at line 52 of file Preprocessor\&.h\&.
+.SS "std::vector< std::string > mc::Macro::parameters"
+
+.PP
+If the macro is a function, list of parameters that the macro takes in\&. Can be empty if not a function\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBparameterString\fP 
+.RE
+.PP
+
+.PP
+Definition at line 62 of file Preprocessor\&.h\&.
+.SS "std::string mc::Macro::parameterString"
+
+.PP
+The original string with the parenthesis, spaces, and parameters intact, but without the name\&. 
+.PP
+Definition at line 66 of file Preprocessor\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

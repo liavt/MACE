@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['r',['r',['../d4/dee/a00008_a21e476d9238f36f210f5cd35868b3d08.html#a21e476d9238f36f210f5cd35868b3d08',1,'mc::Color']]],
-  ['ready',['ready',['../dd/dad/a00005_a2e97834650457f62396535593b954d3e.html#a2e97834650457f62396535593b954d3e',1,'_SDLNet_GenericSocket']]]
+  ['r',['r',['../da/da0/a00009_a21e476d9238f36f210f5cd35868b3d08.html#a21e476d9238f36f210f5cd35868b3d08',1,'mc::Color']]],
+  ['rotation',['rotation',['../d4/d8c/a00035_a3ed9fc5756560490b92f7e13893e9dc4.html#a3ed9fc5756560490b92f7e13893e9dc4',1,'mc::TransformMatrix']]]
 ];

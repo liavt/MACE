@@ -1,0 +1,123 @@
+.TH "mc::gfx::Buffer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::Buffer \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Buffer\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Object\fP\&.
+.PP
+Inherited by \fBmc::gfx::UniformBuffer\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fB~Buffer\fP ()=default"
+.br
+.ti -1c
+.RI "\fBBuffer\fP (const GLenum bufferType)"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const "
+.br
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetImmutableData\fP (const GLsizeiptr dataSize, const GLvoid *data, GLbitfield flags)"
+.br
+.ti -1c
+.RI "void \fBsetData\fP (const GLsizeiptr dataSize, const GLvoid *data, const GLenum drawType=GL_DYNAMIC_DRAW) const "
+.br
+.ti -1c
+.RI "void \fBsetDataRange\fP (const \fBIndex\fP offset, const GLsizeiptr dataSize, const GLvoid *data) const "
+.br
+.ti -1c
+.RI "void \fBcopyData\fP (\fBBuffer\fP other, GLsizeiptr size, \fBIndex\fP readOffset=0, \fBIndex\fP writeOffset=0)"
+.br
+.ti -1c
+.RI "GLvoid * \fBmap\fP (const GLenum access=GL_READ_WRITE)"
+.br
+.ti -1c
+.RI "GLvoid * \fBmapRange\fP (const \fBIndex\fP offset, const \fBSize\fP length, const GLbitfield access)"
+.br
+.ti -1c
+.RI "GLboolean \fBunmap\fP ()"
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBunbind\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 62 of file Buffer\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "virtual mc::gfx::Buffer::~Buffer ()\fC [virtual]\fP, \fC [default]\fP"
+
+.SS "mc::gfx::Buffer::Buffer (const GLenum bufferType)"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::copyData (\fBBuffer\fP other, GLsizeiptr size, \fBIndex\fP readOffset = \fC0\fP, \fBIndex\fP writeOffset = \fC0\fP)"
+
+.SS "void mc::gfx::Buffer::destroy ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::init ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Buffer::isCreated () const\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "GLvoid* mc::gfx::Buffer::map (const GLenum access = \fCGL_READ_WRITE\fP)"
+
+.SS "GLvoid* mc::gfx::Buffer::mapRange (const \fBIndex\fP offset, const \fBSize\fP length, const GLbitfield access)"
+
+.SS "void mc::gfx::Buffer::setData (const GLsizeiptr dataSize, const GLvoid * data, const GLenum drawType = \fCGL_DYNAMIC_DRAW\fP) const"
+
+.SS "void mc::gfx::Buffer::setDataRange (const \fBIndex\fP offset, const GLsizeiptr dataSize, const GLvoid * data) const"
+
+.SS "void mc::gfx::Buffer::setImmutableData (const GLsizeiptr dataSize, const GLvoid * data, GLbitfield flags)"
+
+.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.SS "GLboolean mc::gfx::Buffer::unmap ()"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 37 of file Buffer\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

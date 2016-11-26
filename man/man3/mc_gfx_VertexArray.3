@@ -1,0 +1,112 @@
+.TH "mc::gfx::VertexArray" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::VertexArray \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Buffer\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Object\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const "
+.br
+.ti -1c
+.RI "void \fBdraw\fP (const GLenum type=GL_TRIANGLES) const "
+.br
+.ti -1c
+.RI "void \fBloadVertices\fP (const \fBSize\fP &&verticeSize, const GLfloat vertices[], const \fBIndex\fP &&location=15, const \fBSize\fP &&attributeSize=3)"
+.br
+.ti -1c
+.RI "void \fBloadIndices\fP (const \fBSize\fP &&indiceNum, const GLuint indices[], const GLenum &&drawType=GL_DYNAMIC_DRAW)"
+.br
+.ti -1c
+.RI "void \fBstoreDataInAttributeList\fP (const \fBSize\fP &&dataSize, const GLvoid *data, const \fBIndex\fP &&location=0, const \fBSize\fP &&attributeSize=3)"
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
+.br
+.ti -1c
+.RI "void \fBunbind\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBSize\fP \fBvertexNumber\fP"
+.br
+.ti -1c
+.RI "\fBSize\fP \fBindiceNumber\fP"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 42 of file Buffer\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::VertexArray::destroy ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "void mc::gfx::VertexArray::draw (const GLenum type = \fCGL_TRIANGLES\fP) const"
+
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.SS "void mc::gfx::VertexArray::init ()\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::VertexArray::isCreated () const\fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "void mc::gfx::VertexArray::loadIndices (const \fBSize\fP && indiceNum, const GLuint indices[], const GLenum && drawType = \fCGL_DYNAMIC_DRAW\fP)"
+
+.SS "void mc::gfx::VertexArray::loadVertices (const \fBSize\fP && verticeSize, const GLfloat vertices[], const \fBIndex\fP && location = \fC15\fP, const \fBSize\fP && attributeSize = \fC3\fP)"
+
+.SS "void mc::gfx::VertexArray::storeDataInAttributeList (const \fBSize\fP && dataSize, const GLvoid * data, const \fBIndex\fP && location = \fC0\fP, const \fBSize\fP && attributeSize = \fC3\fP)"
+
+.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 37 of file Buffer\&.h\&.
+.SS "\fBSize\fP mc::gfx::VertexArray::indiceNumber"
+
+.PP
+Definition at line 44 of file Buffer\&.h\&.
+.SS "\fBSize\fP mc::gfx::VertexArray::vertexNumber"
+
+.PP
+Definition at line 44 of file Buffer\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

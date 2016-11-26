@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="db/df8/a00076" kind="namespace" language="C++">
+    <compoundname>mc::gfx</compoundname>
+    <innerclass refid="de/d5e/a00007" prot="public">mc::gfx::Buffer</innerclass>
+    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
+    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
+    <innerclass refid="da/d45/a00011" prot="public">mc::gfx::Entity</innerclass>
+    <innerclass refid="df/d86/a00012" prot="public">mc::gfx::Entity2D</innerclass>
+    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::FrameBuffer</innerclass>
+    <innerclass refid="d7/d7a/a00016" prot="public">mc::gfx::GraphicsEntity</innerclass>
+    <innerclass refid="d4/d51/a00017" prot="public">mc::gfx::Group</innerclass>
+    <innerclass refid="d1/d2b/a00018" prot="public">mc::gfx::Image</innerclass>
+    <innerclass refid="d3/dfe/a00025" prot="public">mc::gfx::Object</innerclass>
+    <innerclass refid="d6/d5b/a00026" prot="public">mc::gfx::OpenGLContext</innerclass>
+    <innerclass refid="dc/d3c/a00028" prot="public">mc::gfx::RenderBuffer</innerclass>
+    <innerclass refid="d5/d16/a00029" prot="public">mc::gfx::Renderer</innerclass>
+    <innerclass refid="d5/d79/a00030" prot="public">mc::gfx::RenderImpl</innerclass>
+    <innerclass refid="df/d61/a00031" prot="public">mc::gfx::RenderProtocol</innerclass>
+    <innerclass refid="dc/d87/a00032" prot="public">mc::gfx::RenderProtocol&lt; Entity2D &gt;</innerclass>
+    <innerclass refid="d0/dc0/a00033" prot="public">mc::gfx::ShaderProgram</innerclass>
+    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::Texture</innerclass>
+    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::UniformBuffer</innerclass>
+    <innerclass refid="d8/d41/a00038" prot="public">mc::gfx::VertexArray</innerclass>
+    <innernamespace refid="d1/d09/a00077">mc::gfx::ssl</innernamespace>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5c" prot="public" static="no">
+        <name>EntityProperty</name>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca230b02c337b474a7472372b38f03b5da" prot="public">
+          <name>ENTITY_DEAD</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Bit location representing whether an <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> is dead. </para>          </briefdescription>
+          <detaileddescription>
+<para>If <computeroutput>true,</computeroutput> any <ref refid="da/d45/a00011" kindref="compound">Entity</ref> holding it will remove it and call <computeroutput>kill()</computeroutput> <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca35491b0b4f46c4bebc0975259ecdb7f2" prot="public">
+          <name>ENTITY_UPDATE_DISABLED</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>Property defining if an <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> can be updated. </para>          </briefdescription>
+          <detaileddescription>
+<para>If this is <computeroutput>true</computeroutput>, <computeroutput>update()</computeroutput> will be called by it&apos;s parent. <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca0b1dd508b327916c77f8baf85b5e961e" prot="public">
+          <name>ENTITY_RENDER_DISABLED</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+<para>Property defining if an <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> can be rendered. </para>          </briefdescription>
+          <detaileddescription>
+<para>If this is <computeroutput>true</computeroutput>, <computeroutput>render()</computeroutput> will be called by it&apos;s parent. <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca8730ffdc7eb7b38144aec3b84a455559" prot="public">
+          <name>ENTITY_INIT</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+<para>Flag representing whether an <ref refid="da/d45/a00011" kindref="compound">Entity</ref>&apos;s init() function has been called. </para>          </briefdescription>
+          <detaileddescription>
+<para>If destroy() or update() is called and this is <computeroutput>false</computeroutput>, an <computeroutput>InitializationError</computeroutput> is thrown. </para><para>If init() is called and this is <computeroutput>true</computeroutput>, an <computeroutput>InitializationError</computeroutput> is thrown. <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca641e07d0f9920bc65a5d498c3613a6c8" prot="public">
+          <name>ENTITY_STRETCH_X</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+<para>Flag representing whether an <ref refid="da/d45/a00011" kindref="compound">Entity</ref>&apos;s X position should move when it&apos;s parent is resized. </para>          </briefdescription>
+          <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca15fdb7ab364f8f7996e60eb44deb0a20" kindref="member">ENTITY_STRETCH_Y</ref> </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca15fdb7ab364f8f7996e60eb44deb0a20" prot="public">
+          <name>ENTITY_STRETCH_Y</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+<para>Flag representing whether an <ref refid="da/d45/a00011" kindref="compound">Entity</ref>&apos;s X position should move when it&apos;s parent is resized. </para>          </briefdescription>
+          <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca641e07d0f9920bc65a5d498c3613a6c8" kindref="member">ENTITY_STRETCH_X</ref> </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5caff327c964d646f2d66a0bb29a7888a57" prot="public">
+          <name>ENTITY_HOVERED</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+<para>Flag representing whether this <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> has been hovered over. </para>          </briefdescription>
+          <detaileddescription>
+<para>The <computeroutput><ref refid="df/d61/a00031" kindref="compound">RenderProtocol</ref></computeroutput> used to render the <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> must set this. <simplesect kind="see"><para>ssl::bindEntity(Entity*) </para></simplesect>
+</para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="db/df8/a00076_a2ec6f566878cc5fca6fff76415cb7a5c_1a2ec6f566878cc5fca6fff76415cb7a5ca85171527d16d1434a550ee09a76a35e2" prot="public">
+          <name>ENTITY_DIRTY</name>
+          <initializer>= 7</initializer>
+          <briefdescription>
+<para>Flag representing whether this <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> is dirty and it&apos;s positions needs to be recalculated. </para>          </briefdescription>
+          <detaileddescription>
+<para>This will become true under the following conditions:<itemizedlist>
+<listitem><para>The <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> has been changed. Assume that any non-const function other than render() and update() will trigger this condition.</para></listitem><listitem><para>The window is resized, moved, or created </para></listitem></itemizedlist>
+</para><para>Other classes that inherit <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> can also set this to true via <ref refid="da/d45/a00011_ab7d0bef41e5a511452abcdfdd15d3d78_1ab7d0bef41e5a511452abcdfdd15d3d78" kindref="member">Entity::setProperty(Byte, bool)</ref> </para><para>When an <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> becomes dirty, it will propogate up the tree. It&apos;s parent will become dirty, it&apos;s parent will become dirty, etc. This will continue until it reaches the highest level <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput>, which is usually the <computeroutput>GraphicsContext</computeroutput>. From there, it will decide what to do based on it&apos;s <computeroutput>ENTITY_DIRTY</computeroutput> flag. </para><para>Certain <computeroutput>GraphicsContexts</computeroutput> may only render when something is dirty, heavily increasing performance in applications with little moving objects. </para><para>Additionally, an <computeroutput><ref refid="da/d45/a00011" kindref="compound">Entity</ref></computeroutput> that is considered dirty will have it&apos;s buffer updated on the GPU side. </para>          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="25" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="25" bodyend="88"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="db/df8/a00076_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" prot="public" static="no">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>using mc::gfx::EntityProperties = typedef BitField</definition>
+        <argsstring></argsstring>
+        <name>EntityProperties</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="22" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="db/df8/a00076_a5ec3c90c72c1f476325a75981f887846_1a5ec3c90c72c1f476325a75981f887846" prot="public" static="no">
+        <type><ref refid="d7/dd4/a00013" kindref="compound">Exception</ref></type>
+        <definition>using mc::gfx::GLError = typedef Exception</definition>
+        <argsstring></argsstring>
+        <name>GLError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="20" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="db/df8/a00076_a528a122e45ab2808323ee471e9a86797_1a528a122e45ab2808323ee471e9a86797" prot="public" static="no">
+        <type><ref refid="d7/dd4/a00013" kindref="compound">Exception</ref></type>
+        <definition>using mc::gfx::ShaderError = typedef Exception</definition>
+        <argsstring></argsstring>
+        <name>ShaderError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="22" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="db/df8/a00076_a752c6b5764bf4e0d5f43a55474d02aa7_1a752c6b5764bf4e0d5f43a55474d02aa7" prot="public" static="no">
+        <type>std::deque&lt; std::pair&lt; <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>, <ref refid="da/d45/a00011" kindref="compound">Entity</ref> * &gt;&gt;</type>
+        <definition>using mc::gfx::RenderQueue = typedef std::deque&lt;std::pair&lt;Index, Entity*&gt;&gt;</definition>
+        <argsstring></argsstring>
+        <name>RenderQueue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="27" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="db/df8/a00076_a76c7ba19bf08d8dbfefd32eebda71744_1a76c7ba19bf08d8dbfefd32eebda71744" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::checkGLError</definition>
+        <argsstring>()</argsstring>
+        <name>checkGLError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="24" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df8/a00076_a03d92c41bbd9a64c1706292fe4c3c217_1a03d92c41bbd9a64c1706292fe4c3c217" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::throwShaderError</definition>
+        <argsstring>(const Index &amp;shaderId, const Enum &amp;type, const std::string &amp;message)</argsstring>
+        <name>throwShaderError</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>shaderId</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="25" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df8/a00076_a15996c355485bf87f30f008457a54ca2_1a15996c355485bf87f30f008457a54ca2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::throwShaderError</definition>
+        <argsstring>(const Index &amp;shaderId, const Enum &amp;type)</argsstring>
+        <name>throwShaderError</name>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>shaderId</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d9/da5/a00075_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="26" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Namespace containing classes used for Graphics in MACE. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/MACE/Graphics/Buffer.h" line="20" column="1"/>
+  </compounddef>
+</doxygen>

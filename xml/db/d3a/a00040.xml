@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="db/d3a/a00040" kind="class" language="C++" prot="public">
+    <compoundname>mc::os::WindowModule</compoundname>
+    <basecompoundref refid="dc/de2/a00024" prot="public" virt="non-virtual">mc::Module</basecompoundref>
+    <includes refid="d1/d22/a00057" local="no">Window.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="db/d3a/a00040_1a2729266117df0d89988bbe2f21f47edb" prot="private" static="no" mutable="no">
+        <type><ref refid="d3/de7/a00039" kindref="compound">Window</ref> *</type>
+        <definition>Window* mc::os::WindowModule::window</definition>
+        <argsstring></argsstring>
+        <name>window</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="84" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/d3a/a00040_1a0c985c728c65dcf93a1a99c01a870838" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool mc::os::WindowModule::destroyed</definition>
+        <argsstring></argsstring>
+        <name>destroyed</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="86" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/d3a/a00040_1a4b92f07258280d23784641dbd9b778a4" prot="private" static="no" mutable="no">
+        <type>std::thread</type>
+        <definition>std::thread mc::os::WindowModule::windowThread</definition>
+        <argsstring></argsstring>
+        <name>windowThread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="88" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/d3a/a00040_1a3941966f0a77fb654fbcfcd206364442" prot="private" static="no" mutable="no">
+        <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
+        <definition>GraphicsContext* mc::os::WindowModule::context</definition>
+        <argsstring></argsstring>
+        <name>context</name>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="90" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="db/d3a/a00040_aa2a3b8291b0288753d1a015b07466fbe_1aa2a3b8291b0288753d1a015b07466fbe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::os::WindowModule::WindowModule</definition>
+        <argsstring>(Window *window)</argsstring>
+        <name>WindowModule</name>
+        <param>
+          <type><ref refid="d3/de7/a00039" kindref="compound">Window</ref> *</type>
+          <declname>window</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="72" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_aa667f5529e93f3ae067ca99f496ceb03_1aa667f5529e93f3ae067ca99f496ceb03" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::os::WindowModule::init</definition>
+        <argsstring>()</argsstring>
+        <name>init</name>
+        <reimplements refid="dc/de2/a00024_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6">init</reimplements>
+        <briefdescription>
+<para>Called when <ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System#init</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para>Use this to initialize variables, start streams, or launch a context. </para><para>Should only be called once. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="74" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a73e5d753d3654926e641bc12c0a84c51_1a73e5d753d3654926e641bc12c0a84c51" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::os::WindowModule::update</definition>
+        <argsstring>()</argsstring>
+        <name>update</name>
+        <reimplements refid="dc/de2/a00024_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c">update</reimplements>
+        <briefdescription>
+<para>Called when <ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">System#update</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para>Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="75" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a88c57fd19426587fe2f3641cef2a5dac_1a88c57fd19426587fe2f3641cef2a5dac" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::os::WindowModule::destroy</definition>
+        <argsstring>()</argsstring>
+        <name>destroy</name>
+        <reimplements refid="dc/de2/a00024_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2">destroy</reimplements>
+        <briefdescription>
+<para>Called when <ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">System#terminate</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+        <detaileddescription>
+<para>Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. </para><para>Should only be called before the program is closed. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="76" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_ad373fdd4f97f48fe6737fcea94a4452d_1ad373fdd4f97f48fe6737fcea94a4452d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::os::WindowModule::setContext</definition>
+        <argsstring>(GraphicsContext *con)</argsstring>
+        <name>setContext</name>
+        <param>
+          <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
+          <declname>con</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="78" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a2e5162ce88a89135170da58de135333e_1a2e5162ce88a89135170da58de135333e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
+        <definition>GraphicsContext* mc::os::WindowModule::getContext</definition>
+        <argsstring>()</argsstring>
+        <name>getContext</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="79" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a733b1b476c26eb6447d2730d8d2048d1_1a733b1b476c26eb6447d2730d8d2048d1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
+        <definition>const GraphicsContext* mc::os::WindowModule::getContext</definition>
+        <argsstring>() const </argsstring>
+        <name>getContext</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="80" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_ab2c762a61a27767d5403265c6402ac7a_1ab2c762a61a27767d5403265c6402ac7a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>std::string</type>
+        <definition>std::string mc::os::WindowModule::getName</definition>
+        <argsstring>() const </argsstring>
+        <name>getName</name>
+        <reimplements refid="dc/de2/a00024_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49">getName</reimplements>
+        <briefdescription>
+<para>Override this function and return a UNIQUE name for this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para>The name for your <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is used in comparison, so make sure it is as unique as possible. </para><para>It is akin to a hashcode. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="82" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="db/d3a/a00040_1ab42e5f80db5fc4ee50bb28ee8de5e9dd" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::os::WindowModule::threadCallback</definition>
+        <argsstring>()</argsstring>
+        <name>threadCallback</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="92" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="448">
+        <label>mc::os::WindowModule</label>
+        <link refid="db/d3a/a00040"/>
+        <childnode refid="449" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="449">
+        <label>mc::Module</label>
+        <link refid="dc/de2/a00024"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="450">
+        <label>mc::os::WindowModule</label>
+        <link refid="db/d3a/a00040"/>
+        <childnode refid="451" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="451">
+        <label>mc::Module</label>
+        <link refid="dc/de2/a00024"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Graphics/Window.h" line="70" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="70" bodyend="93"/>
+    <listofallmembers>
+      <member refid="db/d3a/a00040_1a3941966f0a77fb654fbcfcd206364442" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>context</name></member>
+      <member refid="db/d3a/a00040_a88c57fd19426587fe2f3641cef2a5dac_1a88c57fd19426587fe2f3641cef2a5dac" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>destroy</name></member>
+      <member refid="db/d3a/a00040_1a0c985c728c65dcf93a1a99c01a870838" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>destroyed</name></member>
+      <member refid="db/d3a/a00040_a2e5162ce88a89135170da58de135333e_1a2e5162ce88a89135170da58de135333e" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>getContext</name></member>
+      <member refid="db/d3a/a00040_a733b1b476c26eb6447d2730d8d2048d1_1a733b1b476c26eb6447d2730d8d2048d1" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>getContext</name></member>
+      <member refid="db/d3a/a00040_ab2c762a61a27767d5403265c6402ac7a_1ab2c762a61a27767d5403265c6402ac7a" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>getName</name></member>
+      <member refid="db/d3a/a00040_aa667f5529e93f3ae067ca99f496ceb03_1aa667f5529e93f3ae067ca99f496ceb03" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>init</name></member>
+      <member refid="db/d3a/a00040_ad373fdd4f97f48fe6737fcea94a4452d_1ad373fdd4f97f48fe6737fcea94a4452d" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>setContext</name></member>
+      <member refid="db/d3a/a00040_1ab42e5f80db5fc4ee50bb28ee8de5e9dd" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>threadCallback</name></member>
+      <member refid="db/d3a/a00040_a73e5d753d3654926e641bc12c0a84c51_1a73e5d753d3654926e641bc12c0a84c51" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>update</name></member>
+      <member refid="db/d3a/a00040_1a2729266117df0d89988bbe2f21f47edb" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>window</name></member>
+      <member refid="db/d3a/a00040_aa2a3b8291b0288753d1a015b07466fbe_1aa2a3b8291b0288753d1a015b07466fbe" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>WindowModule</name></member>
+      <member refid="db/d3a/a00040_1a4b92f07258280d23784641dbd9b778a4" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>windowThread</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
