@@ -119,7 +119,7 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator|(const Byte value);
+		BitField operator|(const Byte value) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
@@ -129,7 +129,7 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator&(const Byte value);
+		BitField operator&(const Byte value) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
@@ -139,7 +139,7 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator^(const Byte value);
+		BitField operator^(const Byte value) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
@@ -149,32 +149,32 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator|(BitField& other);
+		BitField operator|(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator|=(BitField& other);
+		void operator|=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator&(BitField& other);
+		BitField operator&(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator&=(BitField& other);
+		void operator&=(const BitField& other);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator^(BitField& other);
+		BitField operator^(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator^=(BitField& other);
+		void operator^=(const BitField& other);
 		/**
 		Operator which acts upon the internal value.
 		<p>
@@ -186,38 +186,38 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator>>(Index places);
+		BitField operator>>(const Index places) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		BitField operator<<(Index places);
+		BitField operator<<(const Index places) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator>>=(Index places);
+		void operator>>=(const Index places);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		void operator<<=(Index places);
+		void operator<<=(const Index places);
 		/**
 		Compares this `BitField` to another value. Will return `true` if the bits represented are both equal.
 		*/
-		bool operator==(const Byte other);
+		bool operator==(const Byte other) const;
 		/**
 		Inverse for {@link operator==}
 		*/
-		bool operator!=(const Byte other);
+		bool operator!=(const Byte other) const;
 		/**
 		Compares this `BitField` to another. Will return `true` if the bits represented are both equal.
 		*/
-		bool operator==(const BitField& other);
+		bool operator==(const BitField& other) const;
 		/**
 		Inverse for {@link operator==}
 		*/
-		bool operator!=(const BitField& other);
+		bool operator!=(const BitField& other) const;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value
@@ -302,14 +302,14 @@ namespace mc {
 		Operator which acts upon the internal value
 		@see get() @see value
 		*/
-		Byte operator%(const Byte other);
+		Byte operator%(const Byte other) const;
 		/**
 		Gets a bit at a certain position
 		@param position Which bit to retrieve. Zero-indexed
 		@return `true` if the bit is 1, `false` otherwise.
 		@see getBit(Byte)
 		*/
-		bool operator[](Byte position);
+		bool operator[](const Byte position);
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value

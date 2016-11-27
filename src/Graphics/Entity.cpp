@@ -19,24 +19,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
-		void Entity::updateChildren() {
-			for( Index i = 0; i < children.size(); i++ ) {
-				if( children[i]->getProperty(Entity::DEAD) ) {
-					children[i]->kill();
-					removeChild(i);
-					i--;//update the index after the removal of an element, dont want an error
-					return;
-				}
-				children[i]->update();
-			}
-		}
-
-		void Entity::initChildren() {
-			for( Index i = 0; i < children.size(); ++i ) {
-				if( !children[i]->getProperty(Entity::INIT) )children[i]->init();
-			}
-		}
-
 		bool Entity::hasChild(Entity & e) const {
 			for( Size i = 0; i < children.size(); ++i ) {
 				if( children[i] == &e ) {
@@ -52,18 +34,6 @@ namespace mc {
 			while( !children.empty() ) {
 				children.back()->setParent(nullptr);
 				children.pop_back();
-			}
-		}
-
-		void Entity::destroyChildren() {
-			for( Index i = 0; i < children.size(); ++i ) {
-				children[i]->destroy();
-			}
-		}
-
-		void Entity::renderChildren() {
-			for( Index i = 0; i < children.size(); ++i ) {
-				children[i]->render();
 			}
 		}
 
@@ -116,14 +86,18 @@ namespace mc {
 			if( !getProperty(Entity::RENDER_DISABLED) ) {
 				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
 				customRender();
-				renderChildren();
+				for( Index i = 0; i < children.size(); ++i ) {
+					children[i]->render();
+				}
 			}
 		}
 
 		void Entity::clean() {
 			setProperty(Entity::DIRTY, false);
 
-			ssl::fillBuffer(buffer, this);
+			for( Size i = 0; i < children.size(); i++ ) {
+				children[i]->clean();
+			}
 		}
 
 		void Entity::setParent(Entity * par) {
@@ -208,10 +182,6 @@ namespace mc {
 		void Entity::update() {
 			//check if we can update
 			if( !getProperty(Entity::UPDATE_DISABLED) ) {
-				if( !getProperty(Entity::INIT) ) {
-					init();
-				}
-
 				//update the components of this entity
 				for( Index i = 0; i < components.size(); i++ ) {
 					Component* a = components.at(i);
@@ -224,16 +194,26 @@ namespace mc {
 
 				customUpdate();
 				//call update() on children
-				updateChildren();
+				for( Index i = 0; i < children.size(); i++ ) {
+					if( children[i]->getProperty(Entity::DEAD) ) {
+						children[i]->kill();
+						removeChild(i);
+						i--;//update the index after the removal of an element, dont want an error
+						return;
+					}
+					children[i]->update();
+				}
 			}
 		}
 
 		void Entity::init() {
 			setProperty(Entity::DIRTY, true);
-			buffer.init();
-			ssl::bindBuffer(buffer);
 			customInit();
-			initChildren();
+			for( Index i = 0; i < children.size(); ++i ) {
+				if( !children[i]->getProperty(Entity::INIT) ) {
+					children[i]->init();
+				}
+			}
 			setProperty(Entity::INIT, true);
 		}
 
@@ -244,9 +224,10 @@ namespace mc {
 				components[i]->destroy(this);
 			}
 			components.clear();
-			destroyChildren();
+			for( Index i = 0; i < children.size(); ++i ) {
+				children[i]->destroy();
+			}
 			customDestroy();
-			buffer.destroy();
 		}
 
 
@@ -260,7 +241,6 @@ namespace mc {
 
 		Entity::~Entity() {
 			children.clear();
-
 		}
 
 
@@ -345,7 +325,7 @@ namespace mc {
 			return *this;
 		}
 
-		bool Entity::operator==(Entity& other) const {
+		bool Entity::operator==(const Entity& other) const {
 			if( other.properties != properties ) {
 				return false;
 			}
@@ -358,13 +338,10 @@ namespace mc {
 			if( other.components != components ) {
 				return false;
 			}
-			if( other.buffer != buffer ) {
-				return false;
-			}
 			return children == other.children;
 		}
 
-		bool Entity::operator!=(Entity & other) const {
+		bool Entity::operator!=(const Entity & other) const {
 			return !(this == &other);
 		}
 
@@ -436,14 +413,14 @@ namespace mc {
 				transformation.translation[1] = newY;
 			}
 		}
-		UniformBuffer & Entity::getBuffer() {
+		UniformBuffer & GraphicsEntity::getBuffer() {
 			setProperty(Entity::DIRTY, true);
 			return buffer;
 		}
-		const UniformBuffer & Entity::getBuffer() const {
+		const UniformBuffer & GraphicsEntity::getBuffer() const {
 			return buffer;
 		}
-		void Entity::setBuffer(const UniformBuffer & newBuffer) {
+		void GraphicsEntity::setBuffer(const UniformBuffer & newBuffer) {
 			if( newBuffer != buffer ) {
 				setProperty(Entity::DIRTY, true);
 				buffer = newBuffer;
@@ -542,6 +519,30 @@ namespace mc {
 
 		const Texture & GraphicsEntity::getTexture() const {
 			return texture;
+		}
+
+		void GraphicsEntity::init() {
+			buffer.init();
+			ssl::bindBuffer(buffer);
+			Entity::init();
+		}
+
+		void GraphicsEntity::destroy() {
+			Entity::destroy();
+			buffer.destroy();
+		}
+
+		bool GraphicsEntity::operator==(const GraphicsEntity & other) const {
+			return texture == other.texture&&buffer == other.buffer&&Entity::operator==(other);
+		}
+
+		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const {
+			return !(operator==(other));
+		}
+
+		void GraphicsEntity::clean() {
+			Entity::clean();
+			ssl::fillBuffer(buffer, this);
 		}
 
 		Color & GraphicsEntity::getPaint() {

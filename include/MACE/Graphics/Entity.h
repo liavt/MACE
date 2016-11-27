@@ -132,7 +132,7 @@ namespace mc {
 			@dirty
 			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
 			*/
-			void init();
+			virtual void init();
 			/**
 			Should be called a by `Entity` when `System.terminate()` is called. Calls `customDestroy()`. Sets `Entity::INIT` to be false
 			<p>
@@ -140,7 +140,7 @@ namespace mc {
 			@dirty
 			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
 			*/
-			void destroy();
+			virtual void destroy();
 
 			/**
 			Should be called by a `Entity` when the graphical `Window` clears the frame.
@@ -404,16 +404,6 @@ namespace mc {
 			void setY(const float& newY);
 
 			/**
-			@dirty
-			*/
-			UniformBuffer& getBuffer();
-			const UniformBuffer& getBuffer() const;
-			/**
-			@dirty
-			*/
-			void setBuffer(const UniformBuffer& newBuffer);
-
-			/**
 			Compares if 2 `Entities` have the same children, parent, and properties.
 			@param other An `Entity` compare this one to
 			@return `true` if they are equal
@@ -422,7 +412,7 @@ namespace mc {
 			@see getChildren() const
 			@see operator!=
 			*/
-			bool operator==(Entity& other) const;
+			bool operator==(const Entity& other) const;
 			/**
 			Compares if 2 `Entities` don't have the same children, parent, and properties.
 			@param other An `Entity` compare this one to
@@ -432,7 +422,7 @@ namespace mc {
 			@see getChildren() const
 			@see operator==
 			*/
-			bool operator!=(Entity& other) const;
+			bool operator!=(const Entity& other) const;
 		protected:
 			/**
 			When `Entity.update()` is called, `customUpdate()` is called on all of it's children.
@@ -454,6 +444,8 @@ namespace mc {
 			When `Entity.render()` is called, `customRender()` is called on all of it's children.
 			*/
 			virtual void customRender() = 0;
+
+			virtual void clean();
 		private:
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
@@ -467,27 +459,6 @@ namespace mc {
 			std::vector<Component*> components = std::vector<Component*>();
 
 			TransformMatrix transformation;
-
-			UniformBuffer buffer = UniformBuffer();
-
-			/**
-			Calls `update()` on all of it's children and components.
-			*/
-			virtual void updateChildren();
-			/**
-			Calls `init()` on all of it's children.
-			*/
-			void initChildren();
-			/**
-			Calls `destroy()` on all of it's children and components.
-			*/
-			void destroyChildren();//think of the children!
-			/**
-			Calls `render()` on all of it's children.
-			*/
-			void renderChildren();
-
-			void clean();
 
 			void setParent(Entity* parent);
 		};//Entity
@@ -564,8 +535,31 @@ namespace mc {
 			*/
 			Texture& getTexture();
 			const Texture& getTexture() const;
+
+			/**
+			@dirty
+			*/
+			UniformBuffer& getBuffer();
+			const UniformBuffer& getBuffer() const;
+			/**
+			@dirty
+			*/
+			void setBuffer(const UniformBuffer& newBuffer);
+
+			void init();
+
+			void destroy();
+
+			bool operator==(const GraphicsEntity& other) const;
+			bool operator!=(const GraphicsEntity& other) const;
+
 		private:
 			Texture texture;
+
+			UniformBuffer buffer = UniformBuffer();
+
+			void clean();
+
 		};//GraphicsEntity
 
 	}//gfx

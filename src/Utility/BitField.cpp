@@ -43,7 +43,7 @@ namespace mc {
 	}
 
 
-	BitField BitField::operator|(const Byte val) {
+	BitField BitField::operator|(const Byte val) const {
 		return BitField(this->value | val);
 	}
 
@@ -51,7 +51,7 @@ namespace mc {
 		this->value |= val;
 	}
 
-	BitField BitField::operator&(const Byte val) {
+	BitField BitField::operator&(const Byte val) const {
 		return BitField(this->value & val);
 	}
 
@@ -59,7 +59,7 @@ namespace mc {
 		this->value &= val;
 	}
 
-	BitField BitField::operator^(const Byte val) {
+	BitField BitField::operator^(const Byte val) const {
 		return BitField(this->value ^ val);
 	}
 
@@ -67,27 +67,27 @@ namespace mc {
 		this->value ^= val;
 	}
 
-	BitField BitField::operator|(BitField& other) {
+	BitField BitField::operator|(const BitField& other) const {
 		return BitField(this->value | other.value);
 	}
 
-	void BitField::operator|=(BitField& other) {
+	void BitField::operator|=(const BitField& other) {
 		this->value |= other.value;
 	}
 
-	BitField BitField::operator&(BitField& other) {
+	BitField BitField::operator&(const BitField& other) const {
 		return BitField(this->value & other.value);
 	}
 
-	void BitField::operator&=(BitField& other) {
+	void BitField::operator&=(const BitField& other) {
 		this->value &= other.value;
 	}
 
-	BitField BitField::operator^(BitField& other) {
+	BitField BitField::operator^(const BitField& other) const {
 		return BitField(this->value ^ other.value);
 	}
 
-	void BitField::operator^=(BitField& other) {
+	void BitField::operator^=(const BitField& other) {
 		this->value ^= other.value;
 	}
 
@@ -95,11 +95,11 @@ namespace mc {
 		return BitField((const Byte) ~value);
 	}
 
-	BitField BitField::operator>>(Index places) {
+	BitField BitField::operator>>(Index places) const {
 		return BitField(value >> places);
 	}
 
-	BitField BitField::operator<<(Index places) {
+	BitField BitField::operator<<(Index places) const {
 		return BitField(value << places);
 	}
 
@@ -111,19 +111,19 @@ namespace mc {
 		value <<= places;
 	}
 
-	bool BitField::operator==(const Byte other) {
+	bool BitField::operator==(const Byte other) const {
 		return value == other;
 	}
 
-	bool BitField::operator!=(const Byte other) {
+	bool BitField::operator!=(const Byte other) const {
 		return (value != other);
 	}
 
-	bool BitField::operator==(const BitField& other) {
+	bool BitField::operator==(const BitField& other) const {
 		return value == other.value;
 	}
 
-	bool BitField::operator!=(const BitField& other) {
+	bool BitField::operator!=(const BitField& other) const {
 		return (value != other.value);
 	}
 
@@ -191,7 +191,7 @@ namespace mc {
 		value /= other;
 	}
 
-	Byte BitField::operator%(const Byte other) {
+	Byte BitField::operator%(const Byte other) const {
 		return value % other;
 	}
 
