@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Shaders.h>
 #include <MACE/Graphics/Renderer.h>
 #include <string>
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -67,18 +68,15 @@ namespace mc {
 		}
 
 		void Entity::render() {
+			if( !getProperty(Entity::INIT) ) {
+				init();
+			}
+
 			if( getProperty(Entity::DIRTY) ) {
 				clean();
 
 				if( hasParent() ) {
-					Entity* par = getParent();
-
-					//get the highest level element
-					while( par->hasParent() ) {
-						par = par->getParent();
-					}
-
-					par->setProperty(Entity::DIRTY, true);
+					getTopParent()->setProperty(Entity::DIRTY, true);
 				}
 			}
 
@@ -93,18 +91,47 @@ namespace mc {
 		}
 
 		void Entity::clean() {
+			std::cout << "hello" << std::endl;
+
 			setProperty(Entity::DIRTY, false);
 
 			for( Size i = 0; i < children.size(); i++ ) {
-				children[i]->clean();
+				children[i]->setProperty(Entity::DIRTY, true);
 			}
+		}
+
+		Entity * Entity::getTopParent() {
+			setProperty(Entity::DIRTY, true);
+
+			if( !hasParent() ) return nullptr;
+
+			Entity* par = getParent();
+
+			//get the highest level element
+			while( par->hasParent() ) {
+				par = par->getParent();
+			}
+
+			return par;
+		}
+
+		const Entity * Entity::getTopParent() const {
+			const Entity* par = getParent();
+
+			if( !hasParent() ) return nullptr;
+
+			//get the highest level element
+			while( par->hasParent() ) {
+				par = par->getParent();
+			}
+
+			return par;
 		}
 
 		void Entity::setParent(Entity * par) {
 			setProperty(Entity::DIRTY, true);
 
 			this->parent = par;
-			setProperty(Entity::INIT, false);
 		}
 
 		Entity* const Entity::getParent() {
@@ -124,8 +151,6 @@ namespace mc {
 
 			children.push_back(&e);
 			e.setParent(this);
-			//if the entity is getting added after init() has been called, we call init() ourselves
-			if( !e.getProperty(Entity::INIT) && getProperty(Entity::INIT) )e.init();
 		}
 
 		Entity& Entity::operator[](Index i) {
@@ -207,17 +232,18 @@ namespace mc {
 		}
 
 		void Entity::init() {
+			if( getProperty(Entity::INIT) ) {
+				throw InitializationError("Entity can not have init() called twice.");
+			}
 			setProperty(Entity::DIRTY, true);
 			customInit();
-			for( Index i = 0; i < children.size(); ++i ) {
-				if( !children[i]->getProperty(Entity::INIT) ) {
-					children[i]->init();
-				}
-			}
 			setProperty(Entity::INIT, true);
 		}
 
 		void Entity::destroy() {
+			if( !getProperty(Entity::INIT) ) {
+				throw InitializationError("Entity can not have destroy() called when it has not been initialized");
+			}
 			setProperty(Entity::DIRTY, true);
 			//destroy each action
 			for( Index i = 0; i < components.size(); i++ ) {
@@ -522,7 +548,9 @@ namespace mc {
 		}
 
 		void GraphicsEntity::init() {
-			buffer.init();
+			if( !buffer.isCreated() ) {
+				buffer.init();
+			}
 			ssl::bindBuffer(buffer);
 			Entity::init();
 		}
@@ -541,8 +569,8 @@ namespace mc {
 		}
 
 		void GraphicsEntity::clean() {
-			Entity::clean();
 			ssl::fillBuffer(buffer, this);
+			Entity::clean();
 		}
 
 		Color & GraphicsEntity::getPaint() {

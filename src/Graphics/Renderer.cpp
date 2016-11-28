@@ -14,7 +14,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Preprocessor.h>
 //we need to include cstring for memcpy
 #include <cstring>
-#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -70,7 +69,7 @@ namespace mc {
 		void Renderer::renderFrame(os::Window* win) {
 			setUp(win);
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
-				Entity* en = pair->second;
+				GraphicsEntity* en = pair->second;
 				en->setProperty(Entity::HOVERED, false);
 
 				entityIndex = pair - renderQueue.begin();
@@ -106,8 +105,8 @@ namespace mc {
 			return originalHeight;
 		}//getOriginalHeight()
 
-		void Renderer::pushEntity(Index protocol, Entity * entity) {
-			renderQueue.push_back(std::pair<Index, Entity*>(protocol, entity));
+		void Renderer::pushEntity(Index protocol, GraphicsEntity * entity) {
+			renderQueue.push_back(std::pair<Index, GraphicsEntity*>(protocol, entity));
 		}//pushEntity(protocol, entity)
 
 		void Renderer::pushProtocol(RenderImpl * protocol) {
@@ -246,6 +245,8 @@ namespace mc {
 				Renderer::registerProtocol<Entity2D>();
 				protocol = RenderProtocol<Entity2D>::index;
 
+				scene.init();
+
 				//gl states
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -283,6 +284,8 @@ namespace mc {
 
 				frameBuffer.unbind();
 
+				scene.clean();
+
 				protocols[protocol]->render(win, &scene);
 			}//tearDown
 
@@ -295,6 +298,8 @@ namespace mc {
 
 				sceneTexture.destroy();
 				idTexture.destroy();
+
+				scene.destroy();
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ShaderProgram& prog) {
@@ -306,10 +311,9 @@ namespace mc {
 				paintData.setData(sizeof(data), data, GL_STATIC_DRAW);
 				paintData.bindForRender();
 
+				//if we use the non const version, it will make it dirty again. we dont want this function to make it dirty.
 				UniformBuffer& entityData = const_cast<UniformBuffer&>(entity->getBuffer());
 
-				std::cout << entity->getProperty(Entity::INIT);
-				std::cout << entityData.isCreated()<<std::endl;
 				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 				entityData.bind();
 				entityData.bindToUniformBlock(prog.getProgramID(), "ssl_BaseEntityBuffer");
@@ -349,6 +353,9 @@ namespace mc {
 			}
 
 			void fillBuffer(UniformBuffer & buf, const Entity * entity) {
+				if( !entity->getProperty(Entity::INIT) ) {
+					throw InitializationError("Internal error: Entity is not initializd.");
+				}
 
 				//setting all of these values is quite slow, need to change it
 				const TransformMatrix& transform = entity->getTransformation();

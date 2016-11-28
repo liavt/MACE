@@ -74,13 +74,11 @@ namespace mc {
 
 		void RenderProtocol<Entity2D>::setUp(os::Window*, RenderQueue*) {};
 
-		void RenderProtocol<Entity2D>::render(os::Window*, Entity* e) {
-			Entity2D * entity = reinterpret_cast<Entity2D*>(e);
-
+		void RenderProtocol<Entity2D>::render(os::Window*, GraphicsEntity* e) {
 			square.bind();
 			shaders2D.bind();
 
-			ssl::bindEntity(entity, shaders2D);
+			ssl::bindEntity(e, shaders2D);
 
 			square.draw();
 

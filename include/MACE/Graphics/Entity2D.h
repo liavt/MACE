@@ -45,7 +45,7 @@ namespace mc {
 
 			void setUp(os::Window* win, RenderQueue* queue);
 
-			void render(os::Window* win, Entity* entity);
+			void render(os::Window* win, GraphicsEntity* entity);
 
 			void tearDown(os::Window* win, RenderQueue* queue);
 

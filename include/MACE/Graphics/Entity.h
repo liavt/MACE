@@ -423,6 +423,14 @@ namespace mc {
 			@see operator==
 			*/
 			bool operator!=(const Entity& other) const;
+
+			virtual void clean();
+
+			/**
+			@dirty
+			*/
+			Entity* getTopParent();
+			const Entity* getTopParent() const;
 		protected:
 			/**
 			When `Entity.update()` is called, `customUpdate()` is called on all of it's children.
@@ -444,8 +452,6 @@ namespace mc {
 			When `Entity.render()` is called, `customRender()` is called on all of it's children.
 			*/
 			virtual void customRender() = 0;
-
-			virtual void clean();
 		private:
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
@@ -553,13 +559,11 @@ namespace mc {
 			bool operator==(const GraphicsEntity& other) const;
 			bool operator!=(const GraphicsEntity& other) const;
 
+			void clean();
 		private:
 			Texture texture;
 
 			UniformBuffer buffer = UniformBuffer();
-
-			void clean();
-
 		};//GraphicsEntity
 
 	}//gfx

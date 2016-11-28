@@ -24,7 +24,7 @@ namespace mc {
 	namespace gfx {
 
 		//if the container we use is ever going to be changed, we typedef 
-		using RenderQueue = std::deque<std::pair<Index, Entity*>>;
+		using RenderQueue = std::deque<std::pair<Index, GraphicsEntity*>>;
 
 		//forward define for friends
 		class Renderer;
@@ -62,7 +62,7 @@ namespace mc {
 
 			virtual void init(const Size originalWidth, const Size originalHeight) = 0;
 			virtual void setUp(os::Window* win, RenderQueue* queue) = 0;
-			virtual void render(os::Window* win, Entity* entity) = 0;
+			virtual void render(os::Window* win, GraphicsEntity* entity) = 0;
 			virtual void tearDown(os::Window* win, RenderQueue* queue) = 0;
 			virtual void destroy() = 0;
 		private:
@@ -78,7 +78,7 @@ namespace mc {
 
 			void init(const Size originalWidth, const Size originalHeight) {}
 			void setUp(os::Window* win, RenderQueue* queue) {};
-			void render(os::Window* win, Entity* entity) {};
+			void render(os::Window* win, GraphicsEntity* entity) {};
 			void tearDown(os::Window* win, RenderQueue* queue) {};
 			void destroy() {};
 		};
@@ -118,7 +118,7 @@ namespace mc {
 			Renderer() = delete;
 			~Renderer() = delete;
 
-			static void pushEntity(Index protocol, Entity*  entity);
+			static void pushEntity(Index protocol, GraphicsEntity*  entity);
 			static void pushProtocol(RenderImpl* protocol);
 
 			template<typename T>
