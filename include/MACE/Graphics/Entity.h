@@ -190,6 +190,8 @@ namespace mc {
 			*/
 			void clearChildren();
 
+			void clearComponents();
+
 			/**
 			Access an `Entity`.
 			<p>
@@ -431,6 +433,11 @@ namespace mc {
 			*/
 			Entity* getTopParent();
 			const Entity* getTopParent() const;
+
+			/**
+			@dirty
+			*/
+			void reset();
 		protected:
 			/**
 			When `Entity.update()` is called, `customUpdate()` is called on all of it's children.

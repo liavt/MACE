@@ -21,7 +21,7 @@ namespace mc {
 			DummyEntity() : Entity() {};
 
 
-			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false;
+			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
 		protected:
 
 			virtual void customUpdate() {
@@ -38,6 +38,11 @@ namespace mc {
 
 			virtual void customRender() {
 				isRendered = true;
+			}
+
+			void clean() {
+				Entity::clean();
+				isCleaned = true;
 			}
 		};
 
@@ -91,6 +96,33 @@ namespace mc {
 
 		Group c = Group();
 
+		TEST_CASE("Testing dirtiness") {
+			DummyEntity e = DummyEntity();
+
+			SECTION("Testing what makes something dirty") {
+				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				e.setProperty(Entity::STRETCH_X, true);
+				REQUIRE(e.getProperty(Entity::DIRTY));
+				e.reset();
+				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+			}
+
+			SECTION("Testing clean()") {
+				e.reset();
+				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				REQUIRE_FALSE(e.isCleaned);
+
+				e.setProperty(Entity::DIRTY, true);
+				REQUIRE(e.getProperty(Entity::DIRTY));
+				REQUIRE_FALSE(e.isCleaned);
+
+				e.render();
+
+				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				REQUIRE(e.isCleaned);
+			}
+		}
+
 		TEST_CASE("Testing the getParent() function", "[entity][graphics]") {
 
 			DummyEntity e = DummyEntity();
@@ -113,7 +145,7 @@ namespace mc {
 				REQUIRE(*e2.getParent() == e);
 			}
 
-			c.clearChildren();
+			c.reset();
 
 			REQUIRE_FALSE(e.hasParent());
 			REQUIRE(e2.hasParent());
@@ -147,9 +179,7 @@ namespace mc {
 				REQUIRE(!e.isRendered);
 			}
 
-			c.clearChildren();
-
-
+			c.reset();
 		}
 
 		TEST_CASE("Testing death", "[entity][graphics]") {//the sweet embrace of death
@@ -160,6 +190,9 @@ namespace mc {
 			c.addChild(e);
 
 			SECTION("Killing some entities") {//RIP
+
+				c.init();
+
 				REQUIRE(c.hasChild(e));
 				REQUIRE(!e.getProperty(Entity::DEAD));
 
@@ -179,9 +212,7 @@ namespace mc {
 				REQUIRE(!c.hasChild(e));
 			}
 
-			c.clearChildren();
-
-
+			c.reset();
 		}
 
 		TEST_CASE("Testing actions", "[entity][graphics]") {
@@ -216,14 +247,10 @@ namespace mc {
 				REQUIRE(a.destroyed);
 			}
 
-			c.clearChildren();
-
-
-
+			c.reset();
 		}
 
 		TEST_CASE("Testing init()", "[entity][graphics]") {
-
 			DummyEntity e = DummyEntity();
 			c.addChild(e);
 
@@ -242,8 +269,8 @@ namespace mc {
 
 
 			}
-			c.clearChildren();
 
+			c.reset();
 		}
 
 		TEST_CASE("Testing entity properties", "[entity][graphics]") {
@@ -263,7 +290,6 @@ namespace mc {
 
 		TEST_CASE("Testing entity module and updating", "[entity][graphics]") {
 			DummyEntity e = DummyEntity();
-
 
 			c.addChild(e);
 
@@ -289,11 +315,14 @@ namespace mc {
 
 			}
 
+			c.reset();
+
 			DummyEntity child = DummyEntity();
 
 			SECTION("Testing init() destroy() render() and update() with children") {
 
 				e.addChild(child);
+				c.addChild(e);
 
 				c.init();
 
@@ -313,7 +342,7 @@ namespace mc {
 
 			}
 
-			c.clearChildren();
+			c.reset();
 		}
 	}
 }

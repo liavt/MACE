@@ -38,6 +38,13 @@ namespace mc {
 			}
 		}
 
+		void Entity::clearComponents() {
+			for( Index i = 0; i < components.size(); i++ ) {
+				components[i]->destroy(this);
+			}
+			components.clear();
+		}
+
 		const std::vector<Entity*>& Entity::getChildren() const {
 			return this->children;
 		}
@@ -47,19 +54,21 @@ namespace mc {
 			setProperty(Entity::DIRTY, true);
 
 			for( Size i = 0; i < children.size(); i++ ) {
-				if( &e == children.at(i) ) {
+				if( &e == children[i] ) {
 					removeChild(i);
 					return;
 				}
 			}
-			throw mc::ObjectNotFoundInArrayException("Specified argument is not a valid object in the array!");
+			throw ObjectNotFoundInArrayException("Specified argument is not a valid object in the array!");
 		}
 
 		void Entity::removeChild(Index index) {
 			setProperty(Entity::DIRTY, true);
-
-			if( index >= children.size() ) {
-				throw mc::IndexOutOfBoundsException(std::to_string(index) + " is larger than the amount of children!");
+			
+			if( children.empty() ) {
+				throw IndexOutOfBoundsException("Can\'t remove a child from an empty entity!");
+			}else if( index >= children.size() ) {
+				throw IndexOutOfBoundsException(std::to_string(index) + " is larger than the amount of children!");
 			} else if( children.size() == 1 ) {
 				children.clear();
 			} else {
@@ -91,8 +100,6 @@ namespace mc {
 		}
 
 		void Entity::clean() {
-			std::cout << "hello" << std::endl;
-
 			setProperty(Entity::DIRTY, false);
 
 			for( Size i = 0; i < children.size(); i++ ) {
@@ -126,6 +133,14 @@ namespace mc {
 			}
 
 			return par;
+		}
+
+		void Entity::reset() {
+
+			clearChildren();
+			properties = 0;
+			transformation.reset();
+			clearComponents();
 		}
 
 		void Entity::setParent(Entity * par) {
@@ -192,7 +207,6 @@ namespace mc {
 
 		void Entity::kill() {
 			destroy();
-			//need to verify if getParent().removeEntity(this) needs to be called here
 		}
 
 		void Entity::addComponent(Component & action) {
@@ -236,6 +250,9 @@ namespace mc {
 				throw InitializationError("Entity can not have init() called twice.");
 			}
 			setProperty(Entity::DIRTY, true);
+			for( Index i = 0; i < children.size(); ++i ) {
+				children[i]->init();
+			}
 			customInit();
 			setProperty(Entity::INIT, true);
 		}
@@ -245,21 +262,16 @@ namespace mc {
 				throw InitializationError("Entity can not have destroy() called when it has not been initialized");
 			}
 			setProperty(Entity::DIRTY, true);
-			//destroy each action
-			for( Index i = 0; i < components.size(); i++ ) {
-				components[i]->destroy(this);
-			}
-			components.clear();
 			for( Index i = 0; i < children.size(); ++i ) {
 				children[i]->destroy();
 			}
 			customDestroy();
+			reset();
 		}
 
 
-		Entity::Entity() {
+		Entity::Entity() {}
 
-		}
 		Entity::Entity(const Entity & obj) {
 			children = obj.children;
 			properties = obj.properties;
