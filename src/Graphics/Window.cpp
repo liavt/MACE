@@ -337,13 +337,15 @@ namespace mc {
 			std::mutex mutex;
 			std::unique_lock<std::mutex> lock(mutex);
 
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			if( getProperty(Entity::DIRTY) ) {
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			Entity::render();
+				Entity::render();
 
-			Renderer::renderFrame(win);
+				Renderer::renderFrame(win);
 
-			glfwSwapBuffers(win->getGLFWWindow());
+				glfwSwapBuffers(win->getGLFWWindow());
+			}
 		}//render
 
 		void OpenGLContext::destroy(os::Window*) {
@@ -355,7 +357,7 @@ namespace mc {
 			Renderer::destroy();
 
 		}//destroy
-		
+
 		void OpenGLContext::setVSync(const bool & sync) {
 			vsync = sync;
 		}//setVSync

@@ -64,10 +64,10 @@ namespace mc {
 
 		void Entity::removeChild(Index index) {
 			setProperty(Entity::DIRTY, true);
-			
+
 			if( children.empty() ) {
 				throw IndexOutOfBoundsException("Can\'t remove a child from an empty entity!");
-			}else if( index >= children.size() ) {
+			} else if( index >= children.size() ) {
 				throw IndexOutOfBoundsException(std::to_string(index) + " is larger than the amount of children!");
 			} else if( children.size() == 1 ) {
 				children.clear();
@@ -100,6 +100,7 @@ namespace mc {
 		}
 
 		void Entity::clean() {
+			std::cout << "Hello" << std::endl;
 			setProperty(Entity::DIRTY, false);
 
 			for( Size i = 0; i < children.size(); i++ ) {

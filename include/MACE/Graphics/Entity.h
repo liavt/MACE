@@ -459,19 +459,22 @@ namespace mc {
 			When `Entity.render()` is called, `customRender()` is called on all of it's children.
 			*/
 			virtual void customRender() = 0;
-		private:
+
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			*/
 			std::vector<Entity*> children = std::vector<Entity*>();
 
-			Entity* parent = nullptr;
+			TransformMatrix transformation;
+
+		private:
+			std::vector<Component*> components = std::vector<Component*>();
 
 			EntityProperties properties = 0;
 
-			std::vector<Component*> components = std::vector<Component*>();
 
-			TransformMatrix transformation;
+			Entity* parent = nullptr;
+
 
 			void setParent(Entity* parent);
 		};//Entity

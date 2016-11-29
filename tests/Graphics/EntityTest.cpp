@@ -52,7 +52,7 @@ namespace mc {
 			DummyEntity2D() : mc::gfx::Entity2D() {};
 
 
-			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false;
+			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned=false;
 		protected:
 
 			virtual void customUpdate() {
@@ -69,6 +69,11 @@ namespace mc {
 
 			virtual void customRender() {
 				isRendered = true;
+			}
+
+			void clean() {
+				Entity2D::clean();
+				isCleaned = true;
 			}
 		};
 
@@ -98,6 +103,7 @@ namespace mc {
 
 		TEST_CASE("Testing dirtiness") {
 			DummyEntity e = DummyEntity();
+			DummyEntity2D e2 = DummyEntity2D();
 
 			SECTION("Testing what makes something dirty") {
 				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
