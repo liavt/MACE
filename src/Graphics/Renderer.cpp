@@ -38,7 +38,7 @@ namespace mc {
 
 			ssl::init(width, height);
 		}//init
-		void Renderer::setUp(os::Window* win) {
+		void Renderer::setUp(os::WindowModule* win) {
 			ssl::setUp(win);
 
 			for( Index i = 0; i < protocols.size(); ++i ) {
@@ -58,7 +58,7 @@ namespace mc {
 			return protocols.size();
 		}
 		//tearDown
-		void Renderer::tearDown(os::Window* win) {
+		void Renderer::tearDown(os::WindowModule* win) {
 			for( Index i = 0; i < protocols.size(); ++i ) {
 				protocols[i]->tearDown(win, &renderQueue);
 			}
@@ -66,7 +66,7 @@ namespace mc {
 			ssl::tearDown(win);
 		}//tearDown
 		//resize
-		void Renderer::renderFrame(os::Window* win) {
+		void Renderer::renderFrame(os::WindowModule* win) {
 			setUp(win);
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
 				GraphicsEntity* en = pair->second;
@@ -254,12 +254,12 @@ namespace mc {
 				checkGLError();
 			}//init
 
-			void setUp(os::Window *) {
+			void setUp(os::WindowModule *) {
 				frameBuffer.bind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			}//setUp
 
-			void tearDown(os::Window * win) {
+			void tearDown(os::WindowModule * win) {
 				int mouseX, mouseY;
 
 				{

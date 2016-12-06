@@ -28,18 +28,15 @@ namespace mc {
 	Namespace with classes related to the operating system like keyboard input, mouse, and windows.
 	*/
 	namespace os {
-		class Window {
-			friend class WindowModule;
+		class WindowModule: public Module, public gfx::Entity {
 		public:
-			Window(const int width, const int height, const char* title);
+			WindowModule(const int width, const int height, const char* title);
 			GLFWwindow* getGLFWWindow();
 
 			const unsigned int& getFPS() const;
 			void setFPS(const unsigned int& FPS);
 
 			void create();
-			void poll();
-			void destroy();
 
 			const int getOriginalWidth() const;
 			const int getOriginalHeight() const;
@@ -47,47 +44,34 @@ namespace mc {
 			std::string getTitle();
 			const std::string getTitle() const;
 			void setTitle(const std::string& newTitle);
-		protected:
+
+			void init();
+			void update();
+			void destroy();
+
+			std::string getName() const;
+
+			void setVSync(const bool& sync);
+			bool isVSync() const;
+		private:
+			bool destroyed = false;
+
+			std::thread windowThread;
+
 			unsigned int fps = 0;
 
 			GLFWwindow* window;
 			int originalWidth;
 			int originalHeight;
 			std::string title;
-		};//Window
 
-		class GraphicsContext: public gfx::Entity {
-		public:
-			GraphicsContext();
+			bool vsync = false;
 
-			virtual void setUpWindow(Window* win) = 0;
-			virtual void init(Window* win) = 0;
-			virtual void render(Window* win) = 0;
-			virtual void destroy(Window* win) = 0;
-			virtual void update() = 0;
-		};//GraphicsContext
-
-		class WindowModule: public Module {
-		public:
-			WindowModule(Window* window);
-
-			void init();
-			void update();
-			void destroy();
-
-			void setContext(GraphicsContext* con);
-			GraphicsContext* getContext();
-			const GraphicsContext* getContext() const;
-
-			std::string getName() const;
-		private:
-			Window* window;
-
-			bool destroyed = false;
-
-			std::thread windowThread;
-
-			GraphicsContext* context = nullptr;//initailize an empty context
+			//these are for the Entity inheritence
+			void customUpdate();
+			void customRender();
+			void customDestroy();
+			void customInit();
 
 			void threadCallback();
 		};//WindowModule
@@ -386,31 +370,7 @@ namespace mc {
 			bool isKeyRepeated(const short int key);
 			bool isKeyReleased(const short int key);
 		}//Input
-	}//win
-
-	namespace gfx {
-		class OpenGLContext: public os::GraphicsContext {
-		public:
-			OpenGLContext();
-
-			void update();
-
-			void setUpWindow(os::Window* win);
-			void init(os::Window* win);
-			void render(os::Window* win);
-			void destroy(os::Window* win);
-
-			void setVSync(const bool& sync);
-		private:
-			bool vsync = false;
-
-			//these are for the Entity inheritence
-			void customUpdate();
-			void customRender();
-			void customDestroy();
-			void customInit();
-		};//OpenGLContext
-	}//gfx
+	}//os
 }//mc
 
 #endif

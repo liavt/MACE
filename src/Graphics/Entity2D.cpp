@@ -72,9 +72,9 @@ namespace mc {
 			ssl::bindShaderProgram(shaders2D);
 		}//init
 
-		void RenderProtocol<Entity2D>::setUp(os::Window*, RenderQueue*) {};
+		void RenderProtocol<Entity2D>::setUp(os::WindowModule*, RenderQueue*) {};
 
-		void RenderProtocol<Entity2D>::render(os::Window*, GraphicsEntity* e) {
+		void RenderProtocol<Entity2D>::render(os::WindowModule*, GraphicsEntity* e) {
 			square.bind();
 			shaders2D.bind();
 
@@ -85,7 +85,7 @@ namespace mc {
 			checkGLError();
 		}//render
 
-		void RenderProtocol<Entity2D>::tearDown(os::Window*, RenderQueue*) {}
+		void RenderProtocol<Entity2D>::tearDown(os::WindowModule*, RenderQueue*) {}
 
 		void RenderProtocol<Entity2D>::destroy() {
 			shaders2D.destroy();

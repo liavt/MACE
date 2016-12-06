@@ -97,14 +97,16 @@ namespace mc {
 					children[i]->render();
 				}
 			}
+
 		}
 
 		void Entity::clean() {
-			std::cout << "Hello" << std::endl;
 			setProperty(Entity::DIRTY, false);
 
 			for( Size i = 0; i < children.size(); i++ ) {
-				children[i]->setProperty(Entity::DIRTY, true);
+				if( children[i]->getProperty(Entity::INIT) ) {
+					children[i]->clean();
+				}
 			}
 		}
 

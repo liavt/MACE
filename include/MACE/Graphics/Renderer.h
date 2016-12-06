@@ -34,8 +34,8 @@ namespace mc {
 		*/
 		namespace ssl {
 			void init(const Size& originalWidth, const Size& originalHeight);
-			void setUp(os::Window* win);
-			void tearDown(os::Window* win);
+			void setUp(os::WindowModule* win);
+			void tearDown(os::WindowModule* win);
 			void destroy();
 			void resize(const Size& width, const Size& height);
 
@@ -61,9 +61,9 @@ namespace mc {
 			virtual void resize(const Size width, const Size height) = 0;
 
 			virtual void init(const Size originalWidth, const Size originalHeight) = 0;
-			virtual void setUp(os::Window* win, RenderQueue* queue) = 0;
-			virtual void render(os::Window* win, GraphicsEntity* entity) = 0;
-			virtual void tearDown(os::Window* win, RenderQueue* queue) = 0;
+			virtual void setUp(os::WindowModule* win, RenderQueue* queue) = 0;
+			virtual void render(os::WindowModule* win, GraphicsEntity* entity) = 0;
+			virtual void tearDown(os::WindowModule* win, RenderQueue* queue) = 0;
 			virtual void destroy() = 0;
 		private:
 			static int index;
@@ -77,9 +77,9 @@ namespace mc {
 			void resize(const Size width, const Size height) {};
 
 			void init(const Size originalWidth, const Size originalHeight) {}
-			void setUp(os::Window* win, RenderQueue* queue) {};
-			void render(os::Window* win, GraphicsEntity* entity) {};
-			void tearDown(os::Window* win, RenderQueue* queue) {};
+			void setUp(os::WindowModule* win, RenderQueue* queue) {};
+			void render(os::WindowModule* win, GraphicsEntity* entity) {};
+			void tearDown(os::WindowModule* win, RenderQueue* queue) {};
 			void destroy() {};
 		};
 
@@ -92,7 +92,7 @@ namespace mc {
 
 			static void init(const Size originalWidth, const Size originalHeight);
 
-			static void setUp(os::Window* win);
+			static void setUp(os::WindowModule* win);
 
 			template<typename T>
 			static void queue(T* e) {
@@ -103,9 +103,9 @@ namespace mc {
 
 			static Size numberOfProtocols();
 
-			static void tearDown(os::Window* win);
+			static void tearDown(os::WindowModule* win);
 
-			static void renderFrame(os::Window* win);
+			static void renderFrame(os::WindowModule* win);
 
 			static void destroy();
 
