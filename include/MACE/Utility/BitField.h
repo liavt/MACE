@@ -42,7 +42,7 @@ namespace mc {
 		<p>
 		Equal to calling {@code BitField(0)}
 		*/
-		BitField();
+		BitField() noexcept;
 
 		/**
 		Constructs a `BitField` with the specified value.
@@ -50,13 +50,13 @@ namespace mc {
 		Equal to calling {@code BitField = value}
 		@param val Inital value
 		*/
-		BitField(const Byte val);
+		BitField(const Byte val) noexcept;
 
 
 		/**
 		Default destructor.
 		*/
-		~BitField();
+		~BitField() noexcept;
 
 		/**
 		Make the bit at a certain position toggled or untoggled
@@ -205,19 +205,19 @@ namespace mc {
 		/**
 		Compares this `BitField` to another value. Will return `true` if the bits represented are both equal.
 		*/
-		bool operator==(const Byte other) const;
+		bool operator==(const Byte other) const noexcept;
 		/**
 		Inverse for {@link operator==}
 		*/
-		bool operator!=(const Byte other) const;
+		bool operator!=(const Byte other) const noexcept;
 		/**
 		Compares this `BitField` to another. Will return `true` if the bits represented are both equal.
 		*/
-		bool operator==(const BitField& other) const;
+		bool operator==(const BitField& other) const noexcept;
 		/**
 		Inverse for {@link operator==}
 		*/
-		bool operator!=(const BitField& other) const;
+		bool operator!=(const BitField& other) const noexcept;
 		/**
 		Operator which acts upon the internal value
 		@see get() @see value

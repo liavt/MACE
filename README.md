@@ -7,12 +7,13 @@ MACE stands for MACE is A C++ Engine
 ##Compatibility
 The graphics capabilities target hardware with OpenGL 3.3 compatibility
 
-Additionally, the following compilers are unit tested automatically:
-* G++ 5
-* G++ 4
-* Clang 3.3
-* Clang 3.8
-* VS 2015
+The following compilers are unit tested automatically:
+* G++ 5 on OSX and Linux
+* G++ 4 on OSX and Linux
+* Clang 3.3 on OSX and Linux
+* Clang 3.8 on OSX
+* Clang 3.7 on Linux
+* VS 2015 on Windows
 
 MACE requires a C++ 11 compliant compiler.
 

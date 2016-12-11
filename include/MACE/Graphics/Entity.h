@@ -107,16 +107,16 @@ namespace mc {
 			/**
 			Default constructor. Constructs properties based on `Entity::DEFAULT_PROPERTIES`
 			*/
-			Entity();
+			Entity() noexcept;
 			/**
 			Cloning constructor. Copies another's `Entity's` properties and children.
 			*/
-			Entity(const Entity &obj);
+			Entity(const Entity &obj) noexcept;
 			/**
 			Destructor. Made `virtual` for inheritance.
 			@see ~Entity()
 			*/
-			virtual ~Entity();
+			virtual ~Entity() noexcept;
 
 			/**
 			Should be called a by `Entity` when `System.update()` is called. Calls `customUpdate()`.
@@ -130,14 +130,16 @@ namespace mc {
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customInit()`
 			@dirty
+			@opengl
 			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
 			*/
 			virtual void init();
 			/**
-			Should be called a by `Entity` when `System.terminate()` is called. Calls `customDestroy()`. Sets `Entity::INIT` to be false
+			Should be called a by `Entity` when `System.destroy()` is called. Calls `customDestroy()`. Sets `Entity::INIT` to be false
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customDestroy()`
 			@dirty
+			@opengl
 			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
 			*/
 			virtual void destroy();
@@ -146,6 +148,8 @@ namespace mc {
 			Should be called by a `Entity` when the graphical `Window` clears the frame.
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customRender()`
+			@opengl
+			@see Entity#update()
 			*/
 			void render();
 			
@@ -414,7 +418,7 @@ namespace mc {
 			@see getChildren() const
 			@see operator!=
 			*/
-			bool operator==(const Entity& other) const;
+			bool operator==(const Entity& other) const noexcept;
 			/**
 			Compares if 2 `Entities` don't have the same children, parent, and properties.
 			@param other An `Entity` compare this one to
@@ -424,47 +428,68 @@ namespace mc {
 			@see getChildren() const
 			@see operator==
 			*/
-			bool operator!=(const Entity& other) const;
+			bool operator!=(const Entity& other) const noexcept;
 
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void clean();
 
 			/**
 			@dirty
 			*/
-			Entity* getTopParent();
-			const Entity* getTopParent() const;
+			Entity* getRootParent();
+			const Entity* getRootParent() const;
 
 			/**
 			@dirty
 			*/
 			void reset();
+
+			/**
+			Makes this `Entity` dirty and the root level parent dirty. Should be used over `setProperty(Entity::DIRTY,true)` as it updaets the root parent.
+			@dirty
+			*/
+			void makeDirty();
 		protected:
 			/**
 			When `Entity.update()` is called, `customUpdate()` is called on all of it's children.
 			@see System#update()
+			@internal
 			*/
 			virtual void customUpdate() = 0;
 			/**
 			When `Entity.init()` is called, `customInit()` is called on all of it's children.
 			@see System#init()
+			@internal
+			@opengl
 			*/
 			virtual void customInit() = 0;
 			/**
 			When `Entity.destroy()` is called, `customDestroy()` is called on all of it's children.
-			@see System#terminate()
+			@see System#destroy()
+			@internal
+			@opengl
 			*/
 			virtual void customDestroy() = 0;
 
 			/**
 			When `Entity.render()` is called, `customRender()` is called on all of it's children.
+			@internal
+			@opengl
 			*/
 			virtual void customRender() = 0;
 
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
+			@internal
 			*/
 			std::vector<Entity*> children = std::vector<Entity*>();
 
+			/**
+			@internal
+			*/
 			TransformMatrix transformation;
 
 		private:
@@ -481,10 +506,10 @@ namespace mc {
 
 		class Group: public Entity {
 		protected:
-			void customInit();
-			void customUpdate();
-			void customRender();
-			void customDestroy();
+			void customInit() override;
+			void customUpdate() override;
+			void customRender() override;
+			void customDestroy() override;
 
 		};//Group
 
@@ -506,21 +531,20 @@ namespace mc {
 			VoidFunctionPtr getDestroyCallback();
 			const VoidFunctionPtr getDestroyCallback() const;
 		protected:
-			void customInit();
-			void customUpdate();
-			void customRender();
-			void customDestroy();
+			void customInit() final;
+			void customUpdate() final;
+			void customRender() final;
+			void customDestroy() final;
 		private:
 			VoidFunctionPtr destroyCallback = [] {}, updateCallback = [] {}, renderCallback = [] {}, initCallback = [] {};
 		};//CallbackEntity
 
 		class GraphicsEntity: public Entity {
 		public:
+			GraphicsEntity() noexcept;
 
-			GraphicsEntity();
-
-			GraphicsEntity(Texture& t);
-			virtual ~GraphicsEntity();
+			GraphicsEntity(Texture& t) noexcept;
+			virtual ~GraphicsEntity() noexcept;
 
 			/**
 			@dirty
@@ -562,14 +586,14 @@ namespace mc {
 			*/
 			void setBuffer(const UniformBuffer& newBuffer);
 
-			void init();
+			void init() override;
 
-			void destroy();
+			void destroy() override;
 
-			bool operator==(const GraphicsEntity& other) const;
-			bool operator!=(const GraphicsEntity& other) const;
+			bool operator==(const GraphicsEntity& other) const noexcept;
+			bool operator!=(const GraphicsEntity& other) const noexcept;
 
-			void clean();
+			void clean() override;
 		private:
 			Texture texture;
 

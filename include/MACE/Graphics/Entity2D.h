@@ -28,28 +28,31 @@ namespace mc {
 
 		class Image: public Entity2D {
 		protected:
-			void customInit();
-			void customUpdate();
-			void customRender();
-			void customDestroy();
+			void customInit() override;
+			void customUpdate() override;
+			void customRender() override;
+			void customDestroy() override;
 
 		};
 
+		/**
+		@internal
+		@opengl
+		*/
 		template<>
 		class RenderProtocol<Entity2D>: public RenderImpl {
 		public:
+			void resize(const Size width, const Size height) override;
 
-			void resize(const Size width, const Size height);
+			void init(const Size originalWidth, const Size originalHeight) override;
 
-			void init(const Size originalWidth, const Size originalHeight);
+			void setUp(os::WindowModule* win, RenderQueue* queue) override;
 
-			void setUp(os::WindowModule* win, RenderQueue* queue);
+			void render(os::WindowModule* win, GraphicsEntity* entity) override;
 
-			void render(os::WindowModule* win, GraphicsEntity* entity);
+			void tearDown(os::WindowModule* win, RenderQueue* queue) override;
 
-			void tearDown(os::WindowModule* win, RenderQueue* queue);
-
-			void destroy();
+			void destroy() override;
 		private:
 
 			ShaderProgram shaders2D = ShaderProgram();

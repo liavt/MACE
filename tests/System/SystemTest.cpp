@@ -154,7 +154,7 @@ namespace mc {
 				REQUIRE(System::getFlag(System::STOP_REQUESTED));
 				REQUIRE(!System::isRunning());
 
-				System::terminate();
+				System::destroy();
 
 				REQUIRE(System::getFlag(System::DESTROYED));
 				REQUIRE_FALSE(System::getFlag(System::INIT));
@@ -192,7 +192,7 @@ namespace mc {
 					mc::System::update();
 				}
 
-				mc::System::terminate();
+				mc::System::destroy();
 
 				REQUIRE(m.updates == 10);
 				REQUIRE_FALSE(m.isInit);

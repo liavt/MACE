@@ -148,6 +148,11 @@ namespace mc {
 			glFramebufferTexture2D(target, attachment, texTarget, textureID, level);
 		}
 
+		void FrameBuffer::attachTexture3D(const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level, const GLint& layer) {
+			bind();
+			glFramebufferTexture3D(target, attachment, texTarget, textureID, level, layer);
+		}
+
 		void FrameBuffer::attachTextureLayer(const GLenum & target, const GLenum & attachment, const GLuint& texture, const GLint & level, const GLint & layer) {
 			bind();
 			glFramebufferTextureLayer(target, attachment, level, texture, layer);
@@ -156,10 +161,6 @@ namespace mc {
 		void FrameBuffer::attachRenderbuffer(const GLenum & target, const GLenum & attachment, const RenderBuffer & buffer) {
 			bind();
 			glFramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, buffer.getID());
-		}
-
-		void FrameBuffer::setParameter(const GLenum & paramName, const GLint & value) {
-			glFramebufferParameteri(id, paramName, value);
 		}
 
 		void FrameBuffer::setDrawBuffers(const Size & arrSize, const GLenum * buffers) {
@@ -297,22 +298,6 @@ namespace mc {
 
 		bool Texture::operator!=(const Texture & other) const {
 			return !operator==(other);
-		}
-
-		bool Texture::operator>=(const Texture & other) const {
-			return operator==(other) || operator>(other);
-		}
-
-		bool Texture::operator<=(const Texture & other) const {
-			return operator==(other) || !operator>(other);
-		}
-
-		bool Texture::operator>(const Texture & other) const {
-			return target > other.target&&paint > other.paint&&opacity > other.opacity&&id > other.id;
-		}
-
-		bool Texture::operator<(const Texture & other) const {
-			return !(operator==(other) || operator>(other));
 		}
 
 		void Texture::bindIndex(const Index & ID) const {

@@ -24,8 +24,8 @@ namespace mc {
 		*/
 		class ShaderProgram {
 		public:
-			ShaderProgram();
-			~ShaderProgram();
+			ShaderProgram() noexcept;
+			~ShaderProgram() noexcept = default;
 
 			void init();
 			void destroy();

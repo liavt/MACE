@@ -31,6 +31,10 @@ namespace mc {
 		class WindowModule: public Module, public gfx::Entity {
 		public:
 			WindowModule(const int width, const int height, const char* title);
+
+			/**
+			@internal
+			*/
 			GLFWwindow* getGLFWWindow();
 
 			const unsigned int& getFPS() const;
@@ -45,9 +49,9 @@ namespace mc {
 			const std::string getTitle() const;
 			void setTitle(const std::string& newTitle);
 
-			void init();
-			void update();
-			void destroy();
+			void init() override;
+			void update() override;
+			void destroy() override;
 
 			std::string getName() const;
 
@@ -68,10 +72,10 @@ namespace mc {
 			bool vsync = false;
 
 			//these are for the Entity inheritence
-			void customUpdate();
-			void customRender();
-			void customDestroy();
-			void customInit();
+			void customUpdate() final;
+			void customRender() final;
+			void customDestroy() final;
+			void customInit() final;
 
 			void threadCallback();
 		};//WindowModule
@@ -369,6 +373,12 @@ namespace mc {
 			bool isKeyDown(const short int key);
 			bool isKeyRepeated(const short int key);
 			bool isKeyReleased(const short int key);
+
+			int getMouseX() noexcept;
+			int getMouseY() noexcept;
+
+			double getScrollVertical() noexcept;
+			double getScrollHorizontal() noexcept;
 		}//Input
 	}//os
 }//mc

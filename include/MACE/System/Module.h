@@ -36,7 +36,7 @@ namespace mc {
 		*/
 		virtual void update() = 0;
 		/**
-		Called when {@link System#terminate} is called and this `Module` is registered.
+		Called when {@link System#destroy} is called and this `Module` is registered.
 		<p>
 		Use this to clear memory, close streams, or clean up anything that needs to be cleaned up.
 		<p>
@@ -57,9 +57,9 @@ namespace mc {
 
 
 	/**
-	Core class of MACE, managing `Modules`. `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `terminate()` should be called at the end of your program.
+	Core class of MACE, managing `Modules`. `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `destroy()` should be called at the end of your program.
 	<p>
-	If `isRunning()` returns `false`, you should end your program and call `terminate()`
+	If `isRunning()` returns `false`, you should end your program and call `destroy()`
 	<p>
 	Your main loop should look like this:{@code
 
@@ -71,7 +71,7 @@ namespace mc {
 		mc::System::update();
 	}
 
-	mc::System::terminate();
+	mc::System::destroy();
 
 	}
 	*/
@@ -94,7 +94,7 @@ namespace mc {
 		/**
 		Register a {@link Module}.
 		<p>
-		Registered `Modules` will have `update(), init(),` and `destroy()` are respectivaly called when `System.update(), System.init(),` and `System.terminate()` are called.
+		Registered `Modules` will have `update(), init(),` and `destroy()` are respectivaly called when `System.update(), System.init(),` and `System.destroy()` are called.
 		@param m Reference to a `Module.` If the `Module` referenced leaves scope or gets deallocated, a `read access violation will occur.`
 		@return Location of the `Module` in the buffer. This index can be used in various other methods.
 		*/
@@ -104,7 +104,7 @@ namespace mc {
 		@param m Reference to Module in the buffer.
 		@throws ObjectNotFoundInArray if the referenced `Module` doesn't exist.
 		*/
-		void removeModule(Module& m);
+		void removeModule(const Module& m);
 		/**
 		Remove a `Module` by name.
 		<p>
@@ -112,13 +112,13 @@ namespace mc {
 		@param module Name of a `Module`
 		@throws ObjectNotFoundInArray if a `Module` with the given name doesn't exist.
 		*/
-		void removeModule(std::string module);
+		void removeModule(const std::string module);
 		/**
 		Remove a `Module` by it's index. The index is provided from {@link #addModule(Module&)} or {@link #indexOf(Module&)}
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		@param i Index of a `Module` to delete
 		*/
-		void removeModule(Index i);
+		void removeModule(const Index i);
 		/**
 		Retrieve a pointer to a `Module` with the specified name.
 		<p>
@@ -128,27 +128,27 @@ namespace mc {
 		@param keyword Name to look for
 		@see #getModule(Index)
 		*/
-		Module* getModule(std::string keyword);
+		Module* getModule(const std::string keyword);
 		/**
 		Retrieves the `Module` at a certain index.
 		@return A pointer to a `Module` at the specified location
 		@param i Valid index to a `Module`
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		*/
-		Module* getModule(Index i);
+		Module* getModule(const Index i);
 		/**
 		Checks whether a `Module` exists via it's `getName()` function.
 		@param module Name to search for
 		@return `true` if there is a `Module` with the specified name, `false` otherwise.
 		*/
-		bool moduleExists(std::string module);
+		bool moduleExists(const std::string module);
 
 		/**
 		Checks whether a `Module` exists via a pointer.
 		@param module `Module` to search for
 		@return `true` if the `Module` exists, `false` otherwise.
 		*/
-		bool moduleExists(Module* module);
+		bool moduleExists(const Module* module);
 		/**
 		Retrieves the amount of `Module` currently being updated by `System`
 		@return `Size` of the internal `Module` buffer
@@ -165,13 +165,13 @@ namespace mc {
 		@see indexOf(Module&)
 		*/
 		//the parameter not being const is not a mistake; it gets derefenced to check for equality
-		int indexOf(Module& m);
+		int indexOf(const Module& m);
 		/**
 		Find a `Module` with the specified name.
 		@param name Name to search for
 		@return Location of a `Module` whose `getName()` function returns `name,` or `-1` if wasn't found
 		*/
-		int indexOf(std::string name);
+		int indexOf(const std::string name);
 
 		/**
 		Require that a `Module` with the specified name exists, or throw an exception.
@@ -181,13 +181,13 @@ namespace mc {
 		@param errorMessage What to print if the assertion fails
 		@throw AssertionError if there isn't a `Module` with the requested name.
 		*/
-		void assertModule(std::string module, std::string errorMessage);
+		void assertModule(const std::string module, std::string errorMessage);
 		/**
 		Overloads {@link #assertModule(std::string,std::string)} with `errorMessage` being `The specified Module does not exist!`
 		@param module Name of a `Module` to assert
 		@see #assertModule(std::string,std::string)
 		*/
-		void assertModule(std::string module);
+		void assertModule(const std::string module);
 
 		/**
 		Initializes MACE and calls {@link Module#init() init()} on all registered `Modules.`
@@ -198,6 +198,16 @@ namespace mc {
 		*/
 		void init();
 		/**
+		Update MACE and all `Modules` registered, and checks if a close has been requested.
+		<p>
+		Should be called in your main loop.
+		@return `true` if it updated succesfully. `false` if an error occurred, or a close has been requested from a `Module`. When this returns `false`, you should end the main loop and call `destroy()`
+		@throw InitializationError if `init()` has not been called yet or `destroy()` has been called.
+		@see #addModule(Module&)
+		@see System for an optimal main loop
+		*/
+		void update();
+		/**
 		Destroys MACE and calls {@link Module#destroy() destroy()} on all registered `Modules.`
 		<p>
 		Should be called at the end of the program after `System.isRunning()` is `false`
@@ -205,28 +215,18 @@ namespace mc {
 		@see #addModule(Module&)
 		@see System for an optimal main loop
 		*/
-		void terminate();
-		/**
-		Update MACE and all `Modules` registered, and checks if a close has been requested.
-		<p>
-		Should be called in your main loop.
-		@return `true` if it updated succesfully. `false` if an error occurred, or a close has been requested from a `Module`. When this returns `false`, you should end the main loop and call `terminate()`
-		@throw InitializationError if `init()` has not been called yet or `terminate()` has been called.
-		@see #addModule(Module&)
-		@see System for an optimal main loop
-		*/
-		void update();
+		void destroy();
 
 		/**
-		Checks whether the `System` is ready to be updated. `init()` must have been called and `terminate()` must not have been called. Additionally, if `shouldStop()` is `true`, this function also returns `false`.
-		@return If `update()` should be called. If this returns `false`, you should exit the main loop and call `terminate()`
+		Checks whether the `System` is ready to be updated. `init()` must have been called and `destroy()` must not have been called. Additionally, if `shouldStop()` is `true`, this function also returns `false`.
+		@return If `update()` should be called. If this returns `false`, you should exit the main loop and call `destroy()`
 		@see requestStop()
 		@see System for an optimal main loop
 		*/
 		bool isRunning();
 
 		/**
-		Tell the `System` to terminate. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
+		Tell the `System` to destroy. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
 		@see System for an optimal main loop
 		*/
 		void requestStop();

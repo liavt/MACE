@@ -154,7 +154,7 @@ namespace mc {
 		Retrieves how many elements this `Vector` holds
 		@return How large this `Vector` is
 		*/
-		constexpr Size size() const {
+		constexpr Size size() const noexcept {
 			return N;
 		};
 

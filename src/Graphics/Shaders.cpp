@@ -36,6 +36,7 @@ namespace mc {
 
 			return shaderId;
 		}
+
 		void ShaderProgram::createProgram() {
 			id = glCreateProgram();
 			checkGLError();
@@ -43,8 +44,9 @@ namespace mc {
 				throwShaderError(id, GL_PROGRAM, "Failed to retrieve program ID");
 			}
 		}
-		ShaderProgram::ShaderProgram() {}
-		ShaderProgram::~ShaderProgram() {}
+
+		ShaderProgram::ShaderProgram() noexcept {}
+
 		void ShaderProgram::init() {
 			if( id == 0 )createProgram();
 

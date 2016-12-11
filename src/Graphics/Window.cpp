@@ -28,6 +28,12 @@ namespace mc {
 			void pushKeyEvent(const short int& key, const BitField action) {
 				keys[key] = action;
 			}
+
+			int mouseX = -1;
+			int mouseY = -1;
+
+			double scrollX = 0;
+			double scrollY = 0;
 		}
 
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
@@ -75,7 +81,7 @@ namespace mc {
 			glfwSetWindowUserPointer(window, this);
 
 			auto closeCallback = [] (GLFWwindow* window) {
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->setProperty(Entity::DIRTY, true);
+				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 
 				mc::System::requestStop();
 			};
@@ -92,12 +98,10 @@ namespace mc {
 				actions.setBit(Input::MOD_SUPER, (mods & GLFW_MOD_SUPER) != 0);
 
 				pushKeyEvent(static_cast<short int>(key), actions);
-
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->setProperty(Entity::DIRTY, true);
 			};
 			glfwSetKeyCallback(window, keyDown);
 
-			auto mouseDown = [] (GLFWwindow* window, int button, int action, int mods) {
+			auto mouseDown = [] (GLFWwindow*, int button, int action, int mods) {
 				BitField actions = BitField(0);
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
@@ -109,19 +113,29 @@ namespace mc {
 
 				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
 				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
-
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->setProperty(Entity::DIRTY, true);
 			};
 			glfwSetMouseButtonCallback(window, mouseDown);
 
+			auto cursorPosition = [] (GLFWwindow*, double xpos, double ypos) {
+				mouseX = static_cast<int>(mc::math::floor(xpos));
+				mouseY = static_cast<int>(mc::math::floor(ypos));
+			};
+			glfwSetCursorPosCallback(window, cursorPosition);
+
+			auto scrollWheel = [] (GLFWwindow*, double xoffset, double yoffset) {
+				scrollY = yoffset;
+				scrollX = xoffset;
+			};
+			glfwSetScrollCallback(window, scrollWheel);
+
 			auto framebufferResize = [] (GLFWwindow* window, int width, int height) {
 				gfx::Renderer::resize(width, height);
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->setProperty(Entity::DIRTY, true);
+				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetFramebufferSizeCallback(window, framebufferResize);
 
 			auto windowDamaged = [] (GLFWwindow* window) {
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->setProperty(Entity::DIRTY, true);
+				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetWindowRefreshCallback(window, windowDamaged);
 
@@ -169,7 +183,7 @@ namespace mc {
 			//each time the frame is swapped, lastFrame is updated with the new time
 			time_t lastFrame = time(0);
 
-			//this stores how many milliseconds it takes for the frame to swap.
+			//this stores how many milliseconds it takes for the frame to swap. it is 1 by default so it doesnt create an infinite loop
 			float windowDelay = 0;
 
 			try {
@@ -179,8 +193,8 @@ namespace mc {
 
 				Entity::init();
 
-				if( fps != 0 ) {
-					windowDelay = 1000.0f / (float) fps;
+				if( fps != 0.0f ) {
+					windowDelay = 1000.0f / static_cast<float>(fps);
 				}
 			} catch( const std::exception& e ) {
 				Exception::handleException(e);
@@ -193,26 +207,30 @@ namespace mc {
 			//we loop infinitely until break is called. break is called when an exception is thrown or System::isRunning is false
 			for( ;;) {//;_;
 				try {
-					now = time(0);
 
 					{
 						//thread doesn't own window, so we have to lock the mutex
 						std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
+						glfwPollEvents();
+
 						if( getProperty(Entity::DIRTY) ) {
-							glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+							gfx::Renderer::clearBuffers();
 
 							Entity::render();
 
 							gfx::Renderer::renderFrame(this);
-
-							glfwSwapBuffers(window);
 						}
 
-						glfwPollEvents();
+						gfx::Renderer::checkInput();
 
-						if( !System::isRunning() )break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
+						if( !System::isRunning() ) {
+							break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
+						}
+
 					}
+
+					now = time(0);
 
 					const time_t delta = now - lastFrame;
 
@@ -247,7 +265,7 @@ namespace mc {
 				}
 			}
 		}//threadCallback
-	
+
 		void WindowModule::init() {
 			if( !glfwInit() ) {
 				throw InitializationError("GLFW failed to initialize!");
@@ -259,13 +277,6 @@ namespace mc {
 		void WindowModule::update() {
 			std::mutex mutex;
 			std::unique_lock<std::mutex> guard(mutex);
-
-			//glfw only polls the callback when the mouse state changes. if the mouse button is held down, the callback is called once, so we check the cached state if it is held down.
-			for( Index i = Input::MOUSE_FIRST; i < Input::MOUSE_LAST; ++i ) {
-				if( Input::isKeyDown(i) ) {
-					setProperty(Entity::DIRTY, true);
-				}
-			}
 
 			Entity::update();
 		}//update
@@ -312,6 +323,18 @@ namespace mc {
 
 			bool isKeyReleased(const short int key) {
 				return keys[key].getBit(Input::RELEASED);
+			}
+			int getMouseX() noexcept {
+				return mouseX;
+			}
+			int getMouseY() noexcept {
+				return mouseY;
+			}
+			double getScrollVertical() noexcept {
+				return scrollY;
+			}
+			double getScrollHorizontal() noexcept {
+				return scrollX;
 			}
 		}//Input
 	}//os

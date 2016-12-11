@@ -31,67 +31,159 @@ namespace mc {
 
 		/**
 		Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files.
+		@internal
 		*/
 		namespace ssl {
+			/**
+			@internal
+			@opengl
+			*/
 			void init(const Size& originalWidth, const Size& originalHeight);
+			/**
+			@internal
+			@opengl
+			*/
 			void setUp(os::WindowModule* win);
+			/**
+			@internal
+			@opengl
+			*/
 			void tearDown(os::WindowModule* win);
+			/**
+			@internal
+			@opengl
+			*/
 			void destroy();
+			/**
+			@internal
+			@opengl
+			*/
 			void resize(const Size& width, const Size& height);
 
+			/**
+			@internal
+			@opengl
+			*/
+			void checkInput();
+
+			/**
+			@internal
+			@opengl
+			*/
 			void bindBuffer(UniformBuffer& buf);
+			/**
+			@internal
+			@opengl
+			*/
 			void fillBuffer(UniformBuffer& buf, const Entity* en);
 
+			/**
+			@internal
+			@opengl
+			*/
 			void bindEntity(const GraphicsEntity* en, ShaderProgram& prog);
+			/**
+			@internal
+			@opengl
+			*/
 			void bindShaderProgram(ShaderProgram& prog);
 
+			/**
+			@internal
+			*/
 			std::string processShader(const std::string& shader, const GLenum& type);
+			/**
+			@internal
+			*/
 			const mc::Preprocessor& getSSLPreprocessor();
 		};
 
 		//we declare RenderImpl which RenderProtocol extends. WE can't store a pointer to RenderProtocol (because its templated), but we can point to RenderImpl
+		/**
+		@internal
+		*/
 		class RenderImpl {
 			friend class Renderer;
 			//ssl::init needs to be friends to access the index variable
 			friend void ssl::init(const Size&, const Size&);
 		public:
-			RenderImpl();
-			virtual ~RenderImpl() = default;
+			RenderImpl() noexcept = default;
+			virtual ~RenderImpl() noexcept = default;
 
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void resize(const Size width, const Size height) = 0;
 
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void init(const Size originalWidth, const Size originalHeight) = 0;
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void setUp(os::WindowModule* win, RenderQueue* queue) = 0;
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void render(os::WindowModule* win, GraphicsEntity* entity) = 0;
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void tearDown(os::WindowModule* win, RenderQueue* queue) = 0;
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void destroy() = 0;
 		private:
 			static int index;
 		};
 
+		/**
+		@internal
+		@opengl
+		*/
 		template<typename T>
 		class RenderProtocol: public RenderImpl {
 		public:
 			using RenderImpl::RenderImpl;
 
-			void resize(const Size width, const Size height) {};
+			void resize(const Size, const Size) override {};
 
-			void init(const Size originalWidth, const Size originalHeight) {}
-			void setUp(os::WindowModule* win, RenderQueue* queue) {};
-			void render(os::WindowModule* win, GraphicsEntity* entity) {};
-			void tearDown(os::WindowModule* win, RenderQueue* queue) {};
-			void destroy() {};
+			void init(const Size, const Size) override {}
+			void setUp(os::WindowModule*, RenderQueue*) override {};
+			void render(os::WindowModule*, GraphicsEntity*) override {};
+			void tearDown(os::WindowModule*, RenderQueue*) override {};
+			void destroy() override {};
 		};
 
-		class Renderer {
+
+		class Renderer final{
 			//needs to access registerProtocol
 			friend void ssl::init(const Size&, const Size&);
 		public:
-
+			/**
+			@internal
+			@opengl
+			*/
 			static void resize(const Size width, const Size hieght);
 
+			/**
+			@internal
+			@opengl
+			*/
 			static void init(const Size originalWidth, const Size originalHeight);
 
+			/**
+			@internal
+			@opengl
+			*/
 			static void setUp(os::WindowModule* win);
 
 			template<typename T>
@@ -103,13 +195,43 @@ namespace mc {
 
 			static Size numberOfProtocols();
 
+			/**
+			@internal
+			@opengl
+			*/
 			static void tearDown(os::WindowModule* win);
 
+			/**
+			@internal
+			@opengl
+			*/
 			static void renderFrame(os::WindowModule* win);
 
+			/**
+			@internal
+			@opengl
+			*/
+			static void checkInput();
+
+			/**
+			@internal
+			@opengl
+			*/
 			static void destroy();
 
+			/**
+			@internal
+			@opengl
+			*/
+			static void clearBuffers();
+
+			/**
+			@opengl
+			*/
 			static void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f);
+			/**
+			@opengl
+			*/
 			static void setRefreshColor(const Color& c);
 
 			static Size getOriginalWidth();

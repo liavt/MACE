@@ -52,7 +52,7 @@ mc::Color::Color(const std::array<float, 4>& rgba) {
 
 mc::Color::Color(const Color & copy) : r(copy.r), g(copy.g), b(copy.b), a(copy.a) {}
 
-mc::Color::Color() : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
+mc::Color::Color() noexcept : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
 
 bool mc::Color::operator==(const Color & other) const {
 	return r == other.r&&g == other.g&&b == other.b&&a == other.a;

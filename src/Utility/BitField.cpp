@@ -3,12 +3,12 @@
 namespace mc {
 
 	//default initilize value, incase it is not integral
-	BitField::BitField() : value() {}
+	BitField::BitField() noexcept : value() {}
 
-	BitField::BitField(const Byte val) : value(val) {}
+	BitField::BitField(const Byte val) noexcept : value(val) {}
 
 	//nothing to delete, just here to complete the constructor trifecta
-	BitField::~BitField() {}
+	BitField::~BitField() noexcept {}
 
 	BitField& BitField::setBit(Byte position, bool state) {
 		if( state ) {
@@ -111,19 +111,19 @@ namespace mc {
 		value <<= places;
 	}
 
-	bool BitField::operator==(const Byte other) const {
+	bool BitField::operator==(const Byte other) const noexcept {
 		return value == other;
 	}
 
-	bool BitField::operator!=(const Byte other) const {
+	bool BitField::operator!=(const Byte other) const noexcept {
 		return (value != other);
 	}
 
-	bool BitField::operator==(const BitField& other) const {
+	bool BitField::operator==(const BitField& other) const noexcept {
 		return value == other.value;
 	}
 
-	bool BitField::operator!=(const BitField& other) const {
+	bool BitField::operator!=(const BitField& other) const noexcept {
 		return (value != other.value);
 	}
 

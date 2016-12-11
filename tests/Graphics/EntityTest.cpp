@@ -8,9 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <Catch.h>
-#include <iostream>
 #include <MACE/Graphics/Entity.h>
-#include <type_traits>
 #include <MACE/Graphics/Entity2D.h>
 
 namespace mc {
@@ -122,6 +120,7 @@ namespace mc {
 				REQUIRE(e.getProperty(Entity::DIRTY));
 				REQUIRE_FALSE(e.isCleaned);
 
+				e.update();
 				e.render();
 
 				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));

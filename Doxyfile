@@ -238,7 +238,9 @@ TAB_SIZE               = 4
 # "Side Effects:". You can put \n's in the value part of an alias to insert
 # newlines.
 
-ALIASES                = "dirty=@note This function will make this `Entity` dirty.\n@see ENTITY_DIRTY"
+ALIASES                = "dirty=@note This will make this `Entity` dirty.\n@see Entity::DIRTY" \
+                         "opengl=@note This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown.\n@exception GL_INVALID_OPERATION If the current thread does not have an OpenGL context" \
+                         "internal=@warning This should only be used internally or by advanced users. Misuse can cause undefined behavior"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
@@ -499,7 +501,7 @@ HIDE_FRIEND_COMPOUNDS  = NO
 # blocks will be appended to the function's detailed documentation block.
 # The default value is: NO.
 
-HIDE_IN_BODY_DOCS      = NO
+HIDE_IN_BODY_DOCS      = YES
 
 # The INTERNAL_DOCS tag determines if documentation that is typed after a
 # \internal command is included. If the tag is set to NO then the documentation
@@ -542,7 +544,7 @@ SHOW_INCLUDE_FILES     = YES
 # which file to include in order to use the member.
 # The default value is: NO.
 
-SHOW_GROUPED_MEMB_INC  = NO
+SHOW_GROUPED_MEMB_INC  = YES
 
 # If the FORCE_LOCAL_INCLUDES tag is set to YES then doxygen will list include
 # files with double quotes in the documentation rather than with sharp brackets.

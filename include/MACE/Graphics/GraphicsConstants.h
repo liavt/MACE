@@ -21,9 +21,18 @@ namespace mc {
 
 		using ShaderError = Exception;
 
+		/**
+		@opengl
+		*/
 		void checkGLError();
-		void throwShaderError(const Index& shaderId, const Enum& type, const std::string& message);
-		void throwShaderError(const Index& shaderId, const Enum& type);
+		/**
+		@opengl
+		*/
+		void throwShaderError[[noreturn]](const Index& shaderId, const Enum& type, const std::string& message);
+		/**
+		@opengl
+		*/
+		void throwShaderError[[noreturn]](const Index& shaderId, const Enum& type);
 	}
 }
 

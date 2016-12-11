@@ -111,8 +111,8 @@ namespace mc {
 
 		using std::runtime_error::runtime_error;
 
-		Exception() = default;
-
+		Exception() noexcept = default;
+		~Exception() noexcept = default;
 	};
 
 

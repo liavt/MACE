@@ -27,83 +27,62 @@ namespace mc {
 
 	Index System::addModule(Module& m) {
 		modules.push_back(&m);
-		return (Index) (modules.size() - 1);
+		return static_cast<Index>(modules.size() - 1);
 	}
-	void System::removeModule(Module& m) {
-		for( Index i = 0; i < modules.size(); i++ ) {
-			if( modules[i] == &m ) {
-				removeModule(i);
-				return;
-			}
-		}
-		throw ObjectNotFoundInArrayException("No module by the name of " + m.getName() + " found!");
+	void System::removeModule(const Module& m) {
+		const int location = indexOf(m);
+		if( location < 0 )throw ObjectNotFoundInArrayException("Module by name of " + m.getName() + " not found! Can\'t remove!");
+		removeModule(location);
 	}
-	void System::removeModule(std::string module) {
-		for( Index i = 0; i < modules.size(); i++ ) {
-			if( modules[i]->getName() == module ) {
-				removeModule(i);
-				return;
-			}
-		}
-		throw ObjectNotFoundInArrayException("No module by the name of " + module + " found!");
+	void System::removeModule(const std::string module) {
+		const int location = indexOf(module);
+		if( location < 0 )throw ObjectNotFoundInArrayException("Module by name of " + module + " not found! Can\'t remove!");
+		removeModule(location);
 	}
-	void System::removeModule(Index i) {
-		if( i >= numberOfModules() )throw IndexOutOfBoundsException("Input is not a valid index!");
+	void System::removeModule(const Index i) {
+		if( i >= numberOfModules() )throw IndexOutOfBoundsException("Input is greater than the amount of modules!");
 		modules.erase(modules.begin() + i);
 	}
-	Module * System::getModule(std::string keyword) {
-		for( Index i = 0; i < modules.size(); i++ ) {
-			if( modules[i]->getName() == keyword ) {
-				return modules[i];
-			}
-		}
-		throw ObjectNotFoundInArrayException("No module by the name of " + keyword + " found!");
+	Module * System::getModule(const std::string keyword) {
+		const int location = indexOf(keyword);
+		if( location < 0 )throw ObjectNotFoundInArrayException("No module by the name of " + keyword + " found!");
+		return modules[location];
 	}
-	Module * System::getModule(Index i) {
+	Module * System::getModule(const Index i) {
 		if( i >= numberOfModules() )throw IndexOutOfBoundsException("Input is not a valid index!");
 		return modules[i];
 	}
-	bool System::moduleExists(std::string module) {
-		for( Index i = 0; i < modules.size(); i++ ) {
-			if( modules[i]->getName() == module ) {
-				return true;
-			}
-		}
-		return false;
+	bool System::moduleExists(const std::string module) {
+		return indexOf(module) >= 0;
 	}
-	bool System::moduleExists(Module * module) {
-		for( Index i = 0; i < modules.size(); i++ ) {
-			if( modules[i] == module ) {
-				return true;
-			}
-		}
-		return false;
+	bool System::moduleExists(const Module * module) {
+		return indexOf(*module) >= 0;
 	}
 	Size System::numberOfModules() {
 		return modules.size();
 	}
-	void System::assertModule(std::string module, std::string errorMessage) {
+	void System::assertModule(const std::string module, const std::string errorMessage) {
 		if( !moduleExists(module) ) {
 			throw AssertionError(errorMessage);
 		}
 	}
-	void System::assertModule(std::string module) {
+	void System::assertModule(const std::string module) {
 		assertModule(module, "\'" + module + "\' module has not been registered!");
 	}
 
-	int System::indexOf(Module& m) {
+	int System::indexOf(const Module& m) {
 		for( Index i = 0; i < modules.size(); i++ ) {
 			if( modules[i] == &m ) {
-				return i;
+				return static_cast<int>(i);
 			}
 		}
 		return -1;
 	}
 
-	int System::indexOf(std::string name) {
+	int System::indexOf(const std::string name) {
 		for( Index i = 0; i < modules.size(); i++ ) {
 			if( modules[i]->getName() == name ) {
-				return i;
+				return static_cast<int>(i);
 			}
 		}
 		return -1;
@@ -119,9 +98,9 @@ namespace mc {
 		}
 	}
 
-	void System::terminate() {
+	void System::destroy() {
 		if( !flags.getBit(System::INIT) ) {
-			throw InitializationError("Can't terminate System without calling init() first!");
+			throw InitializationError("Can't destroy System without calling init() first!");
 		}
 		flags.toggleBit(System::DESTROYED);
 		flags.untoggleBit(System::INIT);

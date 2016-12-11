@@ -98,7 +98,7 @@ namespace mc {
 		/**
 		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
 		*/
-		Color();
+		Color() noexcept;
 
 		/**
 		Retrieves the red component of this `Color`

@@ -30,7 +30,7 @@ namespace mc {
 		}
 
 		void Entity::clearChildren() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			while( !children.empty() ) {
 				children.back()->setParent(nullptr);
@@ -51,7 +51,7 @@ namespace mc {
 
 
 		void Entity::removeChild(const Entity& e) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			for( Size i = 0; i < children.size(); i++ ) {
 				if( &e == children[i] ) {
@@ -63,7 +63,7 @@ namespace mc {
 		}
 
 		void Entity::removeChild(Index index) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			if( children.empty() ) {
 				throw IndexOutOfBoundsException("Can\'t remove a child from an empty entity!");
@@ -81,18 +81,16 @@ namespace mc {
 				init();
 			}
 
+			//we want to do the actual cleaning in render() because clean() does some graphical work
 			if( getProperty(Entity::DIRTY) ) {
 				clean();
-
-				if( hasParent() ) {
-					getTopParent()->setProperty(Entity::DIRTY, true);
-				}
 			}
 
 			//check if we can render
 			if( !getProperty(Entity::RENDER_DISABLED) ) {
 				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
 				customRender();
+
 				for( Index i = 0; i < children.size(); ++i ) {
 					children[i]->render();
 				}
@@ -110,8 +108,8 @@ namespace mc {
 			}
 		}
 
-		Entity * Entity::getTopParent() {
-			setProperty(Entity::DIRTY, true);
+		Entity * Entity::getRootParent() {
+			makeDirty();
 
 			if( !hasParent() ) return nullptr;
 
@@ -125,7 +123,7 @@ namespace mc {
 			return par;
 		}
 
-		const Entity * Entity::getTopParent() const {
+		const Entity * Entity::getRootParent() const {
 			const Entity* par = getParent();
 
 			if( !hasParent() ) return nullptr;
@@ -146,8 +144,18 @@ namespace mc {
 			clearComponents();
 		}
 
+		void Entity::makeDirty() {
+			//checking for the parent can be slow. only want to do the pointer stuff if its not already dirty
+			if( !getProperty(Entity::DIRTY) ) {
+				setProperty(Entity::DIRTY, true);
+				if( hasParent() ) {
+					getRootParent()->setProperty(Entity::DIRTY, true);
+				}
+			}
+		}
+
 		void Entity::setParent(Entity * par) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			this->parent = par;
 		}
@@ -165,7 +173,7 @@ namespace mc {
 		}
 
 		void Entity::addChild(Entity & e) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			children.push_back(&e);
 			e.setParent(this);
@@ -224,6 +232,7 @@ namespace mc {
 		void Entity::update() {
 			//check if we can update
 			if( !getProperty(Entity::UPDATE_DISABLED) ) {
+
 				//update the components of this entity
 				for( Index i = 0; i < components.size(); i++ ) {
 					Component* a = components.at(i);
@@ -234,7 +243,10 @@ namespace mc {
 					}
 				}
 
+
+
 				customUpdate();
+
 				//call update() on children
 				for( Index i = 0; i < children.size(); i++ ) {
 					if( children[i]->getProperty(Entity::DEAD) ) {
@@ -252,7 +264,7 @@ namespace mc {
 			if( getProperty(Entity::INIT) ) {
 				throw InitializationError("Entity can not have init() called twice.");
 			}
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 			for( Index i = 0; i < children.size(); ++i ) {
 				children[i]->init();
 			}
@@ -264,7 +276,7 @@ namespace mc {
 			if( !getProperty(Entity::INIT) ) {
 				throw InitializationError("Entity can not have destroy() called when it has not been initialized");
 			}
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 			for( Index i = 0; i < children.size(); ++i ) {
 				children[i]->destroy();
 			}
@@ -273,20 +285,20 @@ namespace mc {
 		}
 
 
-		Entity::Entity() {}
+		Entity::Entity() noexcept {}
 
-		Entity::Entity(const Entity & obj) {
+		Entity::Entity(const Entity & obj) noexcept {
 			children = obj.children;
 			properties = obj.properties;
 		}
 
-		Entity::~Entity() {
+		Entity::~Entity() noexcept {
 			children.clear();
 		}
 
 
 		EntityProperties& Entity::getProperties() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return properties;
 		}
@@ -297,7 +309,7 @@ namespace mc {
 
 		void Entity::setProperties(EntityProperties& b) {
 			if( b != properties ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 				properties = b;
 			}
 		}
@@ -324,7 +336,7 @@ namespace mc {
 		}
 
 		TransformMatrix & Entity::getTransformation() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return transformation;
 		}
@@ -336,14 +348,14 @@ namespace mc {
 		//we are trans-supportive here!
 		void Entity::setTransformation(TransformMatrix & trans) {
 			if( transformation != trans ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				transformation = trans;
 			}
 		}
 
 		Entity & Entity::translate(float x, float y, float z) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			transformation.translate(x, y, z);
 
@@ -351,7 +363,7 @@ namespace mc {
 		}
 
 		Entity & Entity::rotate(float x, float y, float z) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			transformation.rotate(x, y, z);
 
@@ -359,18 +371,18 @@ namespace mc {
 		}
 
 		Entity & Entity::scale(float x, float y, float z) {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			transformation.scale(x, y, z);
 
 			return *this;
 		}
 
-		bool Entity::operator==(const Entity& other) const {
+		bool Entity::operator==(const Entity& other) const noexcept {
 			if( other.properties != properties ) {
 				return false;
 			}
-			if( *other.parent != const_cast<Entity&>(*parent) ) {
+			if( other.parent != parent ) {
 				return false;
 			}
 			if( other.transformation != transformation ) {
@@ -382,7 +394,7 @@ namespace mc {
 			return children == other.children;
 		}
 
-		bool Entity::operator!=(const Entity & other) const {
+		bool Entity::operator!=(const Entity & other) const noexcept {
 			return !(this == &other);
 		}
 
@@ -395,7 +407,7 @@ namespace mc {
 		void Group::customDestroy() {}
 
 		float & Entity::getWidth() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return transformation.scaler[0];
 		}
@@ -404,13 +416,13 @@ namespace mc {
 		}
 		void Entity::setWidth(const float & s) {
 			if( transformation.scaler[1] != s ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				transformation.scaler[0] = s;
 			}
 		}
 		float & Entity::getHeight() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return transformation.scaler[1];
 		}
@@ -419,13 +431,13 @@ namespace mc {
 		}
 		void Entity::setHeight(const float & s) {
 			if( transformation.scaler[1] != s ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				transformation.scaler[1] = s;
 			}
 		}
 		float & Entity::getX() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return transformation.translation[0];
 		}
@@ -434,13 +446,13 @@ namespace mc {
 		}
 		void Entity::setX(const float & newX) {
 			if( transformation.translation[0] != newX ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				transformation.translation[0] = newX;
 			}
 		}
 		float & Entity::getY() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return transformation.translation[1];
 		}
@@ -449,13 +461,13 @@ namespace mc {
 		}
 		void Entity::setY(const float & newY) {
 			if( transformation.translation[1] != newY ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				transformation.translation[1] = newY;
 			}
 		}
 		UniformBuffer & GraphicsEntity::getBuffer() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 			return buffer;
 		}
 		const UniformBuffer & GraphicsEntity::getBuffer() const {
@@ -463,7 +475,7 @@ namespace mc {
 		}
 		void GraphicsEntity::setBuffer(const UniformBuffer & newBuffer) {
 			if( newBuffer != buffer ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 				buffer = newBuffer;
 			}
 		}
@@ -536,24 +548,24 @@ namespace mc {
 			return destroyCallback;
 		}
 
-		GraphicsEntity::GraphicsEntity() : Entity() {}
+		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
 
-		GraphicsEntity::GraphicsEntity(Texture & t) : Entity() {
+		GraphicsEntity::GraphicsEntity(Texture & t) noexcept : Entity() {
 			texture = t;
 		}
 
-		GraphicsEntity::~GraphicsEntity() {}
+		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::setTexture(Texture & tex) {
 			if( tex != texture ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				texture = tex;
 			}
 		}
 
 		Texture & GraphicsEntity::getTexture() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return texture;
 		}
@@ -575,11 +587,11 @@ namespace mc {
 			buffer.destroy();
 		}
 
-		bool GraphicsEntity::operator==(const GraphicsEntity & other) const {
+		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
 			return texture == other.texture&&buffer == other.buffer&&Entity::operator==(other);
 		}
 
-		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const {
+		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
 			return !(operator==(other));
 		}
 
@@ -589,7 +601,7 @@ namespace mc {
 		}
 
 		Color & GraphicsEntity::getPaint() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return texture.getPaint();
 		}
@@ -600,14 +612,14 @@ namespace mc {
 
 		void GraphicsEntity::setPaint(const Color & c) {
 			if( texture.getPaint() != c ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				texture.setPaint(c);
 			}
 		}
 
 		float GraphicsEntity::getOpacity() {
-			setProperty(Entity::DIRTY, true);
+			makeDirty();
 
 			return texture.getOpacity();
 		}
@@ -618,7 +630,7 @@ namespace mc {
 
 		void GraphicsEntity::setOpacity(const float f) {
 			if( texture.getOpacity() != f ) {
-				setProperty(Entity::DIRTY, true);
+				makeDirty();
 
 				texture.setOpacity(f);
 			}
