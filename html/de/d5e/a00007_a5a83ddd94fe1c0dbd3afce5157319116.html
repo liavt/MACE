@@ -119,7 +119,29 @@ $(document).ready(function(){initNavTree('de/d5e/a00007_a5a83ddd94fe1c0dbd3afce5
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="../../d3/dfe/a00025_a58c034fb6bdf87e3f0d312bd3a563e80.html#a58c034fb6bdf87e3f0d312bd3a563e80">mc::gfx::Object</a>.</p>
+<p>Calls the corresponding glDestroy* function and deletes the ID. </p>
+<dl class="section note"><dt>Note</dt><dd>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If the current thread does not have an OpenGL context </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914.html#ab2fb38f2d3ec9640f61c730456538914" title="Calls the corresponding glCreate* function and assigns an ID. ">Object::init()</a> </dd>
+<dd>
+<a class="el" href="../../dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d.html#a9a59b47f57c7a7e83ee9d268f692cc4d" title="Binds this Object to be used in an OpenGL function. ">Object::bind() const</a> </dd>
+<dd>
+<a class="el" href="../../dc/de2/a00024_af36391f915aeed8452b6f21e926932f2.html#af36391f915aeed8452b6f21e926932f2" title="Unbinds this Object which is equivalent to binding ID 0. ">Object::unbind</a> const </dd>
+<dd>
+<a class="el" href="../../dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76.html#ad729e7f4f11794cdfedec12fa46e2e76" title="Queries OpenGL whether this Object&#39;s ID is a valid object. ">Object::isCreated() const</a> </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If this <code><a class="el" href="../../dc/de2/a00024.html" title="Represents a OpenGL object in memory. ">Object</a></code> has not been created yet </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80.html#a58c034fb6bdf87e3f0d312bd3a563e80">mc::gfx::Object</a>.</p>
 
 </div>
 </div>

@@ -85,8 +85,8 @@
 mc::BitField Struct Reference\par \pard\plain 
 {\tc\tcl2 \v mc::BitField}
 {\xe \v mc::BitField}
-{\bkmkstart AAAAAAAAQD}
-{\bkmkend AAAAAAAAQD}
+{\bkmkstart AAAAAAAAQC}
+{\bkmkend AAAAAAAAQC}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -99,21 +99,21 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} ()\par
+{\b BitField} () noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Default constructor. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} (const {\b Byte} val)\par
+{\b BitField} (const {\b Byte} val) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Constructs a {\f2 {\b BitField}}  with the specified value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ~BitField} ()\par
+{\b ~BitField} () noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Default destructor. }{
@@ -162,7 +162,7 @@ Inverses every bit, making every 0 a 1 and every 1 a 0. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator|} (const {\b Byte} {\b value})\par
+{\b BitField} {\b operator|} (const {\b Byte} {\b value}) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
@@ -176,7 +176,7 @@ Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator&} (const {\b Byte} {\b value})\par
+{\b BitField} {\b operator&} (const {\b Byte} {\b value}) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
@@ -190,7 +190,7 @@ Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator^} (const {\b Byte} {\b value})\par
+{\b BitField} {\b operator^} (const {\b Byte} {\b value}) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
@@ -204,42 +204,42 @@ Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator|} ({\b BitField} &other)\par
+{\b BitField} {\b operator|} (const {\b BitField} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b operator|=} ({\b BitField} &other)\par
+void {\b operator|=} (const {\b BitField} &other)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator&} ({\b BitField} &other)\par
+{\b BitField} {\b operator&} (const {\b BitField} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b operator&=} ({\b BitField} &other)\par
+void {\b operator&=} (const {\b BitField} &other)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator^} ({\b BitField} &other)\par
+{\b BitField} {\b operator^} (const {\b BitField} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b operator^=} ({\b BitField} &other)\par
+void {\b operator^=} (const {\b BitField} &other)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
@@ -253,56 +253,56 @@ Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator>>} ({\b Index} places)\par
+{\b BitField} {\b operator>>} (const {\b Index} places) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b BitField} {\b operator<<} ({\b Index} places)\par
+{\b BitField} {\b operator<<} (const {\b Index} places) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b operator>>=} ({\b Index} places)\par
+void {\b operator>>=} (const {\b Index} places)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b operator<<=} ({\b Index} places)\par
+void {\b operator<<=} (const {\b Index} places)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Byte} other)\par
+bool {\b operator==} (const {\b Byte} other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares this {\f2 {\b BitField}}  to another value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Byte} other)\par
+bool {\b operator!=} (const {\b Byte} other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Inverse for {\b operator==}. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b BitField} &other)\par
+bool {\b operator==} (const {\b BitField} &other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares this {\f2 {\b BitField}}  to another. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b BitField} &other)\par
+bool {\b operator!=} (const {\b BitField} &other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Inverse for {\b operator==}. }{
@@ -421,14 +421,14 @@ Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Byte} {\b operator%} (const {\b Byte} other)\par
+{\b Byte} {\b operator%} (const {\b Byte} other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Operator which acts upon the internal value. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator[]} ({\b Byte} position)\par
+bool {\b operator[]} (const {\b Byte} position)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Gets a bit at a certain position. }{
@@ -521,10 +521,10 @@ Constructor & Destructor Documentation\par
 {\xe \v mc::BitField\:BitField}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::BitField::BitField ()}}
+mc::BitField::BitField (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAAQE}
-{\bkmkend AAAAAAAAQE}
+{\bkmkstart AAAAAAAAQD}
+{\bkmkend AAAAAAAAQD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -542,10 +542,10 @@ Equal to calling{
 {\xe \v mc::BitField\:BitField}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::BitField::BitField (const {\b Byte}  {\i val})}}
+mc::BitField::BitField (const {\b Byte}  {\i val}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAAQF}
-{\bkmkend AAAAAAAAQF}
+{\bkmkstart AAAAAAAAQE}
+{\bkmkend AAAAAAAAQE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -572,10 +572,10 @@ Parameters:\par}
 {\xe \v mc::BitField\:~BitField}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::BitField::~BitField ()}}
+mc::BitField::~BitField (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAAQG}
-{\bkmkend AAAAAAAAQG}
+{\bkmkstart AAAAAAAAQF}
+{\bkmkend AAAAAAAAQF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -593,8 +593,8 @@ Member Function Documentation\par
 {\b 
 {\b BitField}& mc::BitField::flipBit ({\b Byte}  {\i position})}}
 \par
-{\bkmkstart AAAAAAAAQH}
-{\bkmkend AAAAAAAAQH}
+{\bkmkstart AAAAAAAAQG}
+{\bkmkend AAAAAAAAQG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -621,8 +621,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 th
 {\b 
 bool mc::BitField::getBit ({\b Byte}  {\i position}) const}}
 \par
-{\bkmkstart AAAAAAAAQI}
-{\bkmkend AAAAAAAAQI}
+{\bkmkstart AAAAAAAAQH}
+{\bkmkend AAAAAAAAQH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -649,8 +649,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 tr
 {\b 
 {\b BitField}& mc::BitField::inverse ()}}
 \par
-{\bkmkstart AAAAAAAAQJ}
-{\bkmkend AAAAAAAAQJ}
+{\bkmkstart AAAAAAAAQI}
+{\bkmkend AAAAAAAAQI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -666,10 +666,10 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 th
 {\xe \v mc::BitField\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::BitField::operator!= (const {\b Byte}  {\i other})}}
+bool mc::BitField::operator!= (const {\b Byte}  {\i other}) const{\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAAQK}
-{\bkmkend AAAAAAAAQK}
+{\bkmkstart AAAAAAAAQJ}
+{\bkmkend AAAAAAAAQJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -681,10 +681,10 @@ Inverse for {\b operator==}. }}\par
 {\xe \v mc::BitField\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::BitField::operator!= (const {\b BitField} &  {\i other})}}
+bool mc::BitField::operator!= (const {\b BitField} &  {\i other}) const{\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAAQL}
-{\bkmkend AAAAAAAAQL}
+{\bkmkstart AAAAAAAAQK}
+{\bkmkend AAAAAAAAQK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -696,7 +696,27 @@ Inverse for {\b operator==}. }}\par
 {\xe \v mc::BitField\:operator%}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Byte} mc::BitField::operator% (const {\b Byte}  {\i other})}}
+{\b Byte} mc::BitField::operator% (const {\b Byte}  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAAAQL}
+{\bkmkend AAAAAAAAQL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Operator which acts upon the internal value. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
+{\b value} \par
+}}}
+{\xe \v operator&\:mc::BitField}
+{\xe \v mc::BitField\:operator&}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b BitField} mc::BitField::operator& (const {\b Byte}  {\i value}) const}}
 \par
 {\bkmkstart AAAAAAAAQM}
 {\bkmkend AAAAAAAAQM}
@@ -716,7 +736,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator&}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator& (const {\b Byte}  {\i value})}}
+{\b BitField} mc::BitField::operator& (const {\b BitField} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAAQN}
 {\bkmkend AAAAAAAAQN}
@@ -732,11 +752,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator&\:mc::BitField}
-{\xe \v mc::BitField\:operator&}
+{\xe \v operator&=\:mc::BitField}
+{\xe \v mc::BitField\:operator&=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator& ({\b BitField} &  {\i other})}}
+void mc::BitField::operator&= (const {\b Byte}  {\i value})}}
 \par
 {\bkmkstart AAAAAAAAQO}
 {\bkmkend AAAAAAAAQO}
@@ -756,7 +776,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator&=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator&= (const {\b Byte}  {\i value})}}
+void mc::BitField::operator&= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAAQP}
 {\bkmkend AAAAAAAAQP}
@@ -772,11 +792,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator&=\:mc::BitField}
-{\xe \v mc::BitField\:operator&=}
+{\xe \v operator*\:mc::BitField}
+{\xe \v mc::BitField\:operator*}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator&= ({\b BitField} &  {\i other})}}
+{\b BitField} mc::BitField::operator* (const {\b Byte}  {\i other})}}
 \par
 {\bkmkstart AAAAAAAAQQ}
 {\bkmkend AAAAAAAAQQ}
@@ -796,7 +816,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator*}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator* (const {\b Byte}  {\i other})}}
+{\b BitField} mc::BitField::operator* (const {\b BitField} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAAQR}
 {\bkmkend AAAAAAAAQR}
@@ -812,11 +832,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator*\:mc::BitField}
-{\xe \v mc::BitField\:operator*}
+{\xe \v operator*=\:mc::BitField}
+{\xe \v mc::BitField\:operator*=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator* (const {\b BitField} &  {\i other}) const}}
+void mc::BitField::operator*= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAAQS}
 {\bkmkend AAAAAAAAQS}
@@ -836,7 +856,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator*=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator*= (const {\b BitField} &  {\i other})}}
+void mc::BitField::operator*= (const {\b Byte}  {\i other})}}
 \par
 {\bkmkstart AAAAAAAAQT}
 {\bkmkend AAAAAAAAQT}
@@ -852,11 +872,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator*=\:mc::BitField}
-{\xe \v mc::BitField\:operator*=}
+{\xe \v operator+\:mc::BitField}
+{\xe \v mc::BitField\:operator+}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator*= (const {\b Byte}  {\i other})}}
+{\b BitField} mc::BitField::operator+ (const {\b Byte}  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAAQU}
 {\bkmkend AAAAAAAAQU}
@@ -876,7 +896,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator+}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator+ (const {\b Byte}  {\i other}) const}}
+{\b BitField} mc::BitField::operator+ (const {\b BitField} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAAQV}
 {\bkmkend AAAAAAAAQV}
@@ -892,11 +912,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator+\:mc::BitField}
-{\xe \v mc::BitField\:operator+}
+{\xe \v operator++\:mc::BitField}
+{\xe \v mc::BitField\:operator++}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator+ (const {\b BitField} &  {\i other}) const}}
+void mc::BitField::operator++ ()}}
 \par
 {\bkmkstart AAAAAAAAQW}
 {\bkmkend AAAAAAAAQW}
@@ -916,7 +936,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator++}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator++ ()}}
+void mc::BitField::operator++ (int  {\i dummy})}}
 \par
 {\bkmkstart AAAAAAAAQX}
 {\bkmkend AAAAAAAAQX}
@@ -932,11 +952,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator++\:mc::BitField}
-{\xe \v mc::BitField\:operator++}
+{\xe \v operator+=\:mc::BitField}
+{\xe \v mc::BitField\:operator+=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator++ (int  {\i dummy})}}
+void mc::BitField::operator+= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAAQY}
 {\bkmkend AAAAAAAAQY}
@@ -956,7 +976,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator+=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator+= (const {\b BitField} &  {\i other})}}
+void mc::BitField::operator+= (const {\b Byte}  {\i other})}}
 \par
 {\bkmkstart AAAAAAAAQZ}
 {\bkmkend AAAAAAAAQZ}
@@ -972,11 +992,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator+=\:mc::BitField}
-{\xe \v mc::BitField\:operator+=}
+{\xe \v operator-\:mc::BitField}
+{\xe \v mc::BitField\:operator-}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator+= (const {\b Byte}  {\i other})}}
+{\b BitField} mc::BitField::operator- (const {\b Byte}  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAARA}
 {\bkmkend AAAAAAAARA}
@@ -996,7 +1016,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator-}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator- (const {\b Byte}  {\i other}) const}}
+{\b BitField} mc::BitField::operator- (const {\b BitField} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAARB}
 {\bkmkend AAAAAAAARB}
@@ -1012,11 +1032,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator-\:mc::BitField}
-{\xe \v mc::BitField\:operator-}
+{\xe \v operator--\:mc::BitField}
+{\xe \v mc::BitField\:operator--}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator- (const {\b BitField} &  {\i other}) const}}
+void mc::BitField::operator-- ()}}
 \par
 {\bkmkstart AAAAAAAARC}
 {\bkmkend AAAAAAAARC}
@@ -1036,7 +1056,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator--}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator-- ()}}
+void mc::BitField::operator-- (int  {\i dummy})}}
 \par
 {\bkmkstart AAAAAAAARD}
 {\bkmkend AAAAAAAARD}
@@ -1052,11 +1072,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator--\:mc::BitField}
-{\xe \v mc::BitField\:operator--}
+{\xe \v operator-=\:mc::BitField}
+{\xe \v mc::BitField\:operator-=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator-- (int  {\i dummy})}}
+void mc::BitField::operator-= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAARE}
 {\bkmkend AAAAAAAARE}
@@ -1076,7 +1096,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator-=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator-= (const {\b BitField} &  {\i other})}}
+void mc::BitField::operator-= (const {\b Byte}  {\i other})}}
 \par
 {\bkmkstart AAAAAAAARF}
 {\bkmkend AAAAAAAARF}
@@ -1092,11 +1112,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator-=\:mc::BitField}
-{\xe \v mc::BitField\:operator-=}
+{\xe \v operator/\:mc::BitField}
+{\xe \v mc::BitField\:operator/}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator-= (const {\b Byte}  {\i other})}}
+{\b BitField} mc::BitField::operator/ (const {\b Byte}  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAARG}
 {\bkmkend AAAAAAAARG}
@@ -1116,7 +1136,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator/}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator/ (const {\b Byte}  {\i other}) const}}
+{\b BitField} mc::BitField::operator/ (const {\b BitField} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAARH}
 {\bkmkend AAAAAAAARH}
@@ -1132,11 +1152,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator/\:mc::BitField}
-{\xe \v mc::BitField\:operator/}
+{\xe \v operator/=\:mc::BitField}
+{\xe \v mc::BitField\:operator/=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator/ (const {\b BitField} &  {\i other}) const}}
+void mc::BitField::operator/= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAARI}
 {\bkmkend AAAAAAAARI}
@@ -1156,30 +1176,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator/=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator/= (const {\b BitField} &  {\i other})}}
+void mc::BitField::operator/= (const {\b Byte}  {\i other})}}
 \par
 {\bkmkstart AAAAAAAARJ}
 {\bkmkend AAAAAAAARJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Operator which acts upon the internal value. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
-{\b value} \par
-}}}
-{\xe \v operator/=\:mc::BitField}
-{\xe \v mc::BitField\:operator/=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::BitField::operator/= (const {\b Byte}  {\i other})}}
-\par
-{\bkmkstart AAAAAAAARK}
-{\bkmkend AAAAAAAARK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1196,10 +1196,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator<<}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator<< ({\b Index}  {\i places})}}
+{\b BitField} mc::BitField::operator<< (const {\b Index}  {\i places}) const}}
 \par
-{\bkmkstart AAAAAAAARL}
-{\bkmkend AAAAAAAARL}
+{\bkmkstart AAAAAAAARK}
+{\bkmkend AAAAAAAARK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1216,10 +1216,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator<<=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator<<= ({\b Index}  {\i places})}}
+void mc::BitField::operator<<= (const {\b Index}  {\i places})}}
 \par
-{\bkmkstart AAAAAAAARM}
-{\bkmkend AAAAAAAARM}
+{\bkmkstart AAAAAAAARL}
+{\bkmkend AAAAAAAARL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1236,10 +1236,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::BitField::operator== (const {\b Byte}  {\i other})}}
+bool mc::BitField::operator== (const {\b Byte}  {\i other}) const{\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAARN}
-{\bkmkend AAAAAAAARN}
+{\bkmkstart AAAAAAAARM}
+{\bkmkend AAAAAAAARM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1253,10 +1253,10 @@ Will return {\f2 true}  if the bits represented are both equal. \par
 {\xe \v mc::BitField\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::BitField::operator== (const {\b BitField} &  {\i other})}}
+bool mc::BitField::operator== (const {\b BitField} &  {\i other}) const{\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAARO}
-{\bkmkend AAAAAAAARO}
+{\bkmkstart AAAAAAAARN}
+{\bkmkend AAAAAAAARN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1270,10 +1270,10 @@ Will return {\f2 true}  if the bits represented are both equal. \par
 {\xe \v mc::BitField\:operator>>}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator>> ({\b Index}  {\i places})}}
+{\b BitField} mc::BitField::operator>> (const {\b Index}  {\i places}) const}}
 \par
-{\bkmkstart AAAAAAAARP}
-{\bkmkend AAAAAAAARP}
+{\bkmkstart AAAAAAAARO}
+{\bkmkend AAAAAAAARO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1290,10 +1290,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator>>=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator>>= ({\b Index}  {\i places})}}
+void mc::BitField::operator>>= (const {\b Index}  {\i places})}}
 \par
-{\bkmkstart AAAAAAAARQ}
-{\bkmkend AAAAAAAARQ}
+{\bkmkstart AAAAAAAARP}
+{\bkmkend AAAAAAAARP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1310,10 +1310,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator[]}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::BitField::operator[] ({\b Byte}  {\i position})}}
+bool mc::BitField::operator[] (const {\b Byte}  {\i position})}}
 \par
-{\bkmkstart AAAAAAAARR}
-{\bkmkend AAAAAAAARR}
+{\bkmkstart AAAAAAAARQ}
+{\bkmkend AAAAAAAARQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1340,10 +1340,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid getBit
 {\xe \v mc::BitField\:operator^}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator^ (const {\b Byte}  {\i value})}}
+{\b BitField} mc::BitField::operator^ (const {\b Byte}  {\i value}) const}}
 \par
-{\bkmkstart AAAAAAAARS}
-{\bkmkend AAAAAAAARS}
+{\bkmkstart AAAAAAAARR}
+{\bkmkend AAAAAAAARR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1360,7 +1360,27 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator^}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator^ ({\b BitField} &  {\i other})}}
+{\b BitField} mc::BitField::operator^ (const {\b BitField} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAAARS}
+{\bkmkend AAAAAAAARS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Operator which acts upon the internal value. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
+{\b value} \par
+}}}
+{\xe \v operator^=\:mc::BitField}
+{\xe \v mc::BitField\:operator^=}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::BitField::operator^= (const {\b Byte}  {\i value})}}
 \par
 {\bkmkstart AAAAAAAART}
 {\bkmkend AAAAAAAART}
@@ -1380,7 +1400,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator^=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator^= (const {\b Byte}  {\i value})}}
+void mc::BitField::operator^= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAARU}
 {\bkmkend AAAAAAAARU}
@@ -1396,11 +1416,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator^=\:mc::BitField}
-{\xe \v mc::BitField\:operator^=}
+{\xe \v operator|\:mc::BitField}
+{\xe \v mc::BitField\:operator|}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator^= ({\b BitField} &  {\i other})}}
+{\b BitField} mc::BitField::operator| (const {\b Byte}  {\i value}) const}}
 \par
 {\bkmkstart AAAAAAAARV}
 {\bkmkend AAAAAAAARV}
@@ -1420,7 +1440,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator|}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator| (const {\b Byte}  {\i value})}}
+{\b BitField} mc::BitField::operator| (const {\b BitField} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAAARW}
 {\bkmkend AAAAAAAARW}
@@ -1436,11 +1456,11 @@ Operator which acts upon the internal value. }}\par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
 {\b value} \par
 }}}
-{\xe \v operator|\:mc::BitField}
-{\xe \v mc::BitField\:operator|}
+{\xe \v operator|=\:mc::BitField}
+{\xe \v mc::BitField\:operator|=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b BitField} mc::BitField::operator| ({\b BitField} &  {\i other})}}
+void mc::BitField::operator|= (const {\b Byte}  {\i value})}}
 \par
 {\bkmkstart AAAAAAAARX}
 {\bkmkend AAAAAAAARX}
@@ -1460,30 +1480,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\xe \v mc::BitField\:operator|=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::BitField::operator|= (const {\b Byte}  {\i value})}}
+void mc::BitField::operator|= (const {\b BitField} &  {\i other})}}
 \par
 {\bkmkstart AAAAAAAARY}
 {\bkmkend AAAAAAAARY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Operator which acts upon the internal value. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() \par
-{\b value} \par
-}}}
-{\xe \v operator|=\:mc::BitField}
-{\xe \v mc::BitField\:operator|=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::BitField::operator|= ({\b BitField} &  {\i other})}}
-\par
-{\bkmkstart AAAAAAAARZ}
-{\bkmkend AAAAAAAARZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1502,8 +1502,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\b 
 {\b BitField} mc::BitField::operator~ ()}}
 \par
-{\bkmkstart AAAAAAAASA}
-{\bkmkend AAAAAAAASA}
+{\bkmkstart AAAAAAAARZ}
+{\bkmkend AAAAAAAARZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1522,8 +1522,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid get() 
 {\b 
 {\b BitField}& mc::BitField::setBit ({\b Byte}  {\i position}, bool  {\i state})}}
 \par
-{\bkmkstart AAAAAAAASB}
-{\bkmkend AAAAAAAASB}
+{\bkmkstart AAAAAAAASA}
+{\bkmkend AAAAAAAASA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1556,8 +1556,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 th
 {\b 
 {\b BitField}& mc::BitField::toggleBit ({\b Byte}  {\i position})}}
 \par
-{\bkmkstart AAAAAAAASC}
-{\bkmkend AAAAAAAASC}
+{\bkmkstart AAAAAAAASB}
+{\bkmkend AAAAAAAASB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1584,8 +1584,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 th
 {\b 
 {\b BitField}& mc::BitField::untoggleBit ({\b Byte}  {\i position})}}
 \par
-{\bkmkstart AAAAAAAASD}
-{\bkmkend AAAAAAAASD}
+{\bkmkstart AAAAAAAASC}
+{\bkmkend AAAAAAAASC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1616,8 +1616,8 @@ Friends And Related Function Documentation\par
 {\b 
 std::ostream& operator<< (std::ostream &  {\i os}, const {\b BitField} &  {\i b}){\f2 [friend]}}}
 \par
-{\bkmkstart AAAAAAAASE}
-{\bkmkend AAAAAAAASE}
+{\bkmkstart AAAAAAAASD}
+{\bkmkend AAAAAAAASD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1637,8 +1637,8 @@ Member Data Documentation\par
 {\b 
 {\b Byte} mc::BitField::value}}
 \par
-{\bkmkstart AAAAAAAASF}
-{\bkmkend AAAAAAAASF}
+{\bkmkstart AAAAAAAASE}
+{\bkmkend AAAAAAAASE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par

@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('d2/de7/a00014_aa49107301cfbb0c90986424
         <tr>
           <td class="memname">void mc::gfx::FrameBuffer::setDrawBuffers </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e.html#ad1c06461067735b3b17e0df612532c4e">Size</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e.html#ad1c06461067735b3b17e0df612532c4e">Size</a> &amp;&#160;</td>
           <td class="paramname"><em>arrSize</em>, </td>
         </tr>
         <tr>
@@ -121,6 +121,35 @@ $(document).ready(function(){initNavTree('d2/de7/a00014_aa49107301cfbb0c90986424
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Specifies what buffers to render to. </p>
+<p>Takes in an array of attachments. A <code><a class="el" href="../../d6/d5b/a00026.html" title="Represents a render buffer for use with a `FrameBuffer. ">RenderBuffer</a></code> or <code><a class="el" href="../../dc/d87/a00032.html">Texture</a></code> can be attached to act as a draw buffer. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arrSize</td><td>Size of the array of render buffers </td></tr>
+    <tr><td class="paramname">buffers</td><td>Pointer to the first element of the array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.opengl.org/wiki/GLAPI/glDrawBuffers">https://www.opengl.org/wiki/GLAPI/glDrawBuffers</a> </dd>
+<dd>
+FrameBuffer::attachTexture(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;) </dd>
+<dd>
+<a class="el" href="../../d2/de7/a00014_af4cb479dd83383250fc37dcf49c9ad3c.html#af4cb479dd83383250fc37dcf49c9ad3c" title="Attaches a texture to this FrameBuffer ">FrameBuffer::attachTexture1D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</a> </dd>
+<dd>
+<a class="el" href="../../d2/de7/a00014_ac849e55b1aab89440bcf809773ff36f8.html#ac849e55b1aab89440bcf809773ff36f8" title="Attaches a texture to this FrameBuffer ">FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</a> </dd>
+<dd>
+FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;, const GLint&amp;) </dd>
+<dd>
+FrameBuffer::attachTextureLayer(const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;) </dd>
+<dd>
+<a class="el" href="../../d2/de7/a00014_a134a6bd75a1b1da1e73e3760a65d729d.html#a134a6bd75a1b1da1e73e3760a65d729d" title="Attaches a RenderBuffer to this FrameBuffer for rendering. ">FrameBuffer::attachRenderbuffer(const GLenum&amp;, const GLenum&amp;, const RenderBuffer&amp;)</a> </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If the current thread does not have an OpenGL context </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
-.TH "mc::System" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::System" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -7,6 +7,13 @@ mc::System \- Core class of MACE, managing \fCModules\fP\&.
 .SH SYNOPSIS
 .br
 .PP
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBFlags\fP : Byte { \fBINIT\fP = 0, \fBDESTROYED\fP = 1, \fBSTOP_REQUESTED\fP = 2 }"
+.br
+.in -1c
 .SS "Functions"
 
 .in +1c
@@ -15,31 +22,31 @@ mc::System \- Core class of MACE, managing \fCModules\fP\&.
 .br
 .RI "\fIRegister a \fBModule\fP\&. \fP"
 .ti -1c
-.RI "void \fBremoveModule\fP (\fBModule\fP &m)"
+.RI "void \fBremoveModule\fP (const \fBModule\fP &m)"
 .br
 .RI "\fIRemove a \fC\fBModule\fP\fP by reference\&. \fP"
 .ti -1c
-.RI "void \fBremoveModule\fP (std::string module)"
+.RI "void \fBremoveModule\fP (const std::string module)"
 .br
 .RI "\fIRemove a \fC\fBModule\fP\fP by name\&. \fP"
 .ti -1c
-.RI "void \fBremoveModule\fP (\fBIndex\fP i)"
+.RI "void \fBremoveModule\fP (const \fBIndex\fP i)"
 .br
 .RI "\fIRemove a \fC\fBModule\fP\fP by it's index\&. \fP"
 .ti -1c
-.RI "\fBModule\fP * \fBgetModule\fP (std::string keyword)"
+.RI "\fBModule\fP * \fBgetModule\fP (const std::string keyword)"
 .br
 .RI "\fIRetrieve a pointer to a \fC\fBModule\fP\fP with the specified name\&. \fP"
 .ti -1c
-.RI "\fBModule\fP * \fBgetModule\fP (\fBIndex\fP i)"
+.RI "\fBModule\fP * \fBgetModule\fP (const \fBIndex\fP i)"
 .br
 .RI "\fIRetrieves the \fC\fBModule\fP\fP at a certain index\&. \fP"
 .ti -1c
-.RI "bool \fBmoduleExists\fP (std::string module)"
+.RI "bool \fBmoduleExists\fP (const std::string module)"
 .br
 .RI "\fIChecks whether a \fC\fBModule\fP\fP exists via it's \fCgetName()\fP function\&. \fP"
 .ti -1c
-.RI "bool \fBmoduleExists\fP (\fBModule\fP *module)"
+.RI "bool \fBmoduleExists\fP (const \fBModule\fP *module)"
 .br
 .RI "\fIChecks whether a \fC\fBModule\fP\fP exists via a pointer\&. \fP"
 .ti -1c
@@ -47,19 +54,19 @@ mc::System \- Core class of MACE, managing \fCModules\fP\&.
 .br
 .RI "\fIRetrieves the amount of \fC\fBModule\fP\fP currently being updated by \fC\fBSystem\fP\fP \fP"
 .ti -1c
-.RI "int \fBindexOf\fP (\fBModule\fP &m)"
+.RI "int \fBindexOf\fP (const \fBModule\fP &m)"
 .br
 .RI "\fIRetrieves the location of a \fC\fBModule\fP\fP in the buffer\&. \fP"
 .ti -1c
-.RI "int \fBindexOf\fP (std::string name)"
+.RI "int \fBindexOf\fP (const std::string name)"
 .br
 .RI "\fIFind a \fC\fBModule\fP\fP with the specified name\&. \fP"
 .ti -1c
-.RI "void \fBassertModule\fP (std::string module, std::string errorMessage)"
+.RI "void \fBassertModule\fP (const std::string module, std::string errorMessage)"
 .br
 .RI "\fIRequire that a \fC\fBModule\fP\fP with the specified name exists, or throw an exception\&. \fP"
 .ti -1c
-.RI "void \fBassertModule\fP (std::string module)"
+.RI "void \fBassertModule\fP (const std::string module)"
 .br
 .RI "\fIOverloads \fBassertModule(std::string,std::string)\fP with \fCerrorMessage\fP being \fCThe specified \fBModule\fP does not exist!\fP \fP"
 .ti -1c
@@ -67,13 +74,13 @@ mc::System \- Core class of MACE, managing \fCModules\fP\&.
 .br
 .RI "\fIInitializes MACE and calls \fBinit()\fP on all registered `Modules\&. \fP"
 .ti -1c
-.RI "void \fBterminate\fP ()"
-.br
-.RI "\fIDestroys MACE and calls \fBdestroy()\fP on all registered `Modules\&. \fP"
-.ti -1c
 .RI "void \fBupdate\fP ()"
 .br
 .RI "\fIUpdate MACE and all \fCModules\fP registered, and checks if a close has been requested\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.RI "\fIDestroys MACE and calls \fBdestroy()\fP on all registered `Modules\&. \fP"
 .ti -1c
 .RI "bool \fBisRunning\fP ()"
 .br
@@ -81,9 +88,9 @@ mc::System \- Core class of MACE, managing \fCModules\fP\&.
 .ti -1c
 .RI "void \fBrequestStop\fP ()"
 .br
-.RI "\fITell the \fC\fBSystem\fP\fP to terminate\&. \fP"
+.RI "\fITell the \fC\fBSystem\fP\fP to destroy\&. \fP"
 .ti -1c
-.RI "bool \fBgetFlag\fP (\fBByte\fP flag)"
+.RI "bool \fBgetFlag\fP (const \fBByte\fP flag)"
 .br
 .RI "\fIRetrieve an internal flag about the current state of the \fC\fBSystem\fP\fP\&. \fP"
 .ti -1c
@@ -95,9 +102,9 @@ mc::System \- Core class of MACE, managing \fCModules\fP\&.
 .PP 
 Core class of MACE, managing \fCModules\fP\&. 
 
-\fC\fBinit()\fP\fP should be called after all \fCModules\fP are added and before the main loop\&. \fC\fBupdate()\fP\fP should be called in the loop, and \fC\fBterminate()\fP\fP should be called at the end of your program\&. 
+\fC\fBinit()\fP\fP should be called after all \fCModules\fP are added and before the main loop\&. \fC\fBupdate()\fP\fP should be called in the loop, and \fC\fBdestroy()\fP\fP should be called at the end of your program\&. 
 .PP
-If \fC\fBisRunning()\fP\fP returns \fCfalse\fP, you should end your program and call \fC\fBterminate()\fP\fP 
+If \fC\fBisRunning()\fP\fP returns \fCfalse\fP, you should end your program and call \fC\fBdestroy()\fP\fP 
 .PP
 Your main loop should look like this:
 .PP
@@ -110,17 +117,35 @@ while(mc::System::isRunning()){
     mc::System::update();
 }
 
-mc::System::terminate();
+mc::System::destroy();
 
 .fi
 .PP
  
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBmc::System::Flags\fP : \fBByte\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIINIT \fP\fP
+Parameter for \fC\fBSystem\&.getFlag(const Byte)\fP\fP\&. Is \fCtrue\fP if \fC\fBSystem\&.init()\fP\fP has been called\&. 
+.TP
+\fB\fIDESTROYED \fP\fP
+Parameter for \fC\fBSystem\&.getFlag(const Byte)\fP\fP\&. Is \fCtrue\fP if \fC\fBSystem\&.destroy()\fP\fP has been called\&. 
+.TP
+\fB\fISTOP_REQUESTED \fP\fP
+Parameter for \fC\fBSystem\&.getFlag(const Byte)\fP\fP\&. Is \fCtrue\fP if \fC\fBSystem\&.requestStop()\fP\fP has been called\&. 
+.PP
+Definition at line 79 of file Module\&.h\&.
 .SH "Function Documentation"
 .PP 
 .SS "\fBIndex\fP mc::System::addModule (\fBModule\fP & m)"
 
 .PP
-Register a \fBModule\fP\&. Registered \fCModules\fP will have \fC\fBupdate()\fP, \fBinit()\fP,\fP and \fCdestroy()\fP are respectivaly called when \fC\fBSystem\&.update()\fP, \fBSystem\&.init()\fP,\fP and \fC\fBSystem\&.terminate()\fP\fP are called\&. 
+Register a \fBModule\fP\&. Registered \fCModules\fP will have \fC\fBupdate()\fP, \fBinit()\fP,\fP and \fC\fBdestroy()\fP\fP are respectivaly called when \fC\fBSystem\&.update()\fP, \fBSystem\&.init()\fP,\fP and \fC\fBSystem\&.destroy()\fP\fP are called\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -133,7 +158,7 @@ Location of the \fC\fBModule\fP\fP in the buffer\&. This index can be used in va
 .RE
 .PP
 
-.SS "void mc::System::assertModule (std::string module, std::string errorMessage)"
+.SS "void mc::System::assertModule (const std::string module, std::string errorMessage)"
 
 .PP
 Require that a \fC\fBModule\fP\fP with the specified name exists, or throw an exception\&. If your \fC\fBModule\fP\fP depends on another \fC\fBModule\fP,\fP use this function to require your dependencies\&. 
@@ -151,7 +176,7 @@ Require that a \fC\fBModule\fP\fP with the specified name exists, or throw an ex
 .RE
 .PP
 
-.SS "void mc::System::assertModule (std::string module)"
+.SS "void mc::System::assertModule (const std::string module)"
 
 .PP
 Overloads \fBassertModule(std::string,std::string)\fP with \fCerrorMessage\fP being \fCThe specified \fBModule\fP does not exist!\fP 
@@ -167,7 +192,27 @@ Overloads \fBassertModule(std::string,std::string)\fP with \fCerrorMessage\fP be
 .RE
 .PP
 
-.SS "bool mc::System::getFlag (\fBByte\fP flag)"
+.SS "void mc::System::destroy ()"
+
+.PP
+Destroys MACE and calls \fBdestroy()\fP on all registered `Modules\&. ` 
+.PP
+Should be called at the end of the program after \fC\fBSystem\&.isRunning()\fP\fP is \fCfalse\fP 
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIInitializationError\fP if \fC\fBinit()\fP\fP has not been called yet 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBaddModule(Module&)\fP 
+.PP
+\fBSystem\fP for an optimal main loop 
+.RE
+.PP
+
+.SS "bool mc::System::getFlag (const \fBByte\fP flag)"
 
 .PP
 Retrieve an internal flag about the current state of the \fC\fBSystem\fP\fP\&. Example usage:
@@ -190,7 +235,7 @@ Whether the specified flag is \fCtrue\fP
 .RE
 .PP
 
-.SS "\fBModule\fP* mc::System::getModule (std::string keyword)"
+.SS "\fBModule\fP* mc::System::getModule (const std::string keyword)"
 
 .PP
 Retrieve a pointer to a \fC\fBModule\fP\fP with the specified name\&. It will find the \fC\fBModule\fP\fP based on their \fBgetName()\fP function, so if there are multiple \fCModules\fP with the same name, this function may produce unexpected behavior\&. 
@@ -216,7 +261,7 @@ A \fC\fBModule\fP\fP whose \fCgetName()\fP function returns the specified keywor
 .RE
 .PP
 
-.SS "\fBModule\fP* mc::System::getModule (\fBIndex\fP i)"
+.SS "\fBModule\fP* mc::System::getModule (const \fBIndex\fP i)"
 
 .PP
 Retrieves the \fC\fBModule\fP\fP at a certain index\&. 
@@ -237,7 +282,7 @@ A pointer to a \fC\fBModule\fP\fP at the specified location
 .RE
 .PP
 
-.SS "int mc::System::indexOf (\fBModule\fP & m)"
+.SS "int mc::System::indexOf (const \fBModule\fP & m)"
 
 .PP
 Retrieves the location of a \fC\fBModule\fP\fP in the buffer\&. Equivalent to calling
@@ -261,11 +306,11 @@ Location of the \fC\fBModule\fP,\fP or \fC-1\fP if it doesnt exist\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBindexOf(Module&)\fP 
+indexOf(Module&) 
 .RE
 .PP
 
-.SS "int mc::System::indexOf (std::string name)"
+.SS "int mc::System::indexOf (const std::string name)"
 
 .PP
 Find a \fC\fBModule\fP\fP with the specified name\&. 
@@ -299,11 +344,11 @@ Should be called at the start of the program\&.
 .SS "bool mc::System::isRunning ()"
 
 .PP
-Checks whether the \fC\fBSystem\fP\fP is ready to be updated\&. \fC\fBinit()\fP\fP must have been called and \fC\fBterminate()\fP\fP must not have been called\&. Additionally, if \fCshouldStop()\fP is \fCtrue\fP, this function also returns \fCfalse\fP\&. 
+Checks whether the \fC\fBSystem\fP\fP is ready to be updated\&. \fC\fBinit()\fP\fP must have been called and \fC\fBdestroy()\fP\fP must not have been called\&. Additionally, if \fCshouldStop()\fP is \fCtrue\fP, this function also returns \fCfalse\fP\&. 
 .PP
 \fBReturns:\fP
 .RS 4
-If \fC\fBupdate()\fP\fP should be called\&. If this returns \fCfalse\fP, you should exit the main loop and call \fC\fBterminate()\fP\fP 
+If \fC\fBupdate()\fP\fP should be called\&. If this returns \fCfalse\fP, you should exit the main loop and call \fC\fBdestroy()\fP\fP 
 .RE
 .PP
 \fBSee also:\fP
@@ -314,7 +359,7 @@ If \fC\fBupdate()\fP\fP should be called\&. If this returns \fCfalse\fP, you sho
 .RE
 .PP
 
-.SS "bool mc::System::moduleExists (std::string module)"
+.SS "bool mc::System::moduleExists (const std::string module)"
 
 .PP
 Checks whether a \fC\fBModule\fP\fP exists via it's \fCgetName()\fP function\&. 
@@ -330,7 +375,7 @@ Checks whether a \fC\fBModule\fP\fP exists via it's \fCgetName()\fP function\&.
 .RE
 .PP
 
-.SS "bool mc::System::moduleExists (\fBModule\fP * module)"
+.SS "bool mc::System::moduleExists (const \fBModule\fP * module)"
 
 .PP
 Checks whether a \fC\fBModule\fP\fP exists via a pointer\&. 
@@ -357,7 +402,7 @@ Retrieves the amount of \fC\fBModule\fP\fP currently being updated by \fC\fBSyst
 .RE
 .PP
 
-.SS "void mc::System::removeModule (\fBModule\fP & m)"
+.SS "void mc::System::removeModule (const \fBModule\fP & m)"
 
 .PP
 Remove a \fC\fBModule\fP\fP by reference\&. This is generally more safe than \fC\fBremoveModule(std::string)\fP\fP as this checks by reference, not by name\&. 
@@ -373,7 +418,7 @@ Remove a \fC\fBModule\fP\fP by reference\&. This is generally more safe than \fC
 .RE
 .PP
 
-.SS "void mc::System::removeModule (std::string module)"
+.SS "void mc::System::removeModule (const std::string module)"
 
 .PP
 Remove a \fC\fBModule\fP\fP by name\&. It will find the \fC\fBModule\fP\fP based on their \fBgetName()\fP function, so if there are multiple \fCModules\fP with the same name, this function may produce unexpected behavior\&. 
@@ -389,7 +434,7 @@ Remove a \fC\fBModule\fP\fP by name\&. It will find the \fC\fBModule\fP\fP based
 .RE
 .PP
 
-.SS "void mc::System::removeModule (\fBIndex\fP i)"
+.SS "void mc::System::removeModule (const \fBIndex\fP i)"
 
 .PP
 Remove a \fC\fBModule\fP\fP by it's index\&. The index is provided from \fBaddModule(Module&)\fP or \fBindexOf(Module&)\fP 
@@ -408,7 +453,7 @@ Remove a \fC\fBModule\fP\fP by it's index\&. The index is provided from \fBaddMo
 .SS "void mc::System::requestStop ()"
 
 .PP
-Tell the \fC\fBSystem\fP\fP to terminate\&. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program\&. Use of this function makes \fC\fBupdate()\fP\fP and \fC\fBisRunning()\fP\fP return \fCfalse\fP, 
+Tell the \fC\fBSystem\fP\fP to destroy\&. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program\&. Use of this function makes \fC\fBupdate()\fP\fP and \fC\fBisRunning()\fP\fP return \fCfalse\fP, 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -420,26 +465,6 @@ Tell the \fC\fBSystem\fP\fP to terminate\&. This is not a guarentee, as it is up
 
 .PP
 'Resets' the \fC\fBSystem\fP\fP to its default state\&. \fCModules\fP are cleared, and all flags are set to 0\&. 
-.SS "void mc::System::terminate ()"
-
-.PP
-Destroys MACE and calls \fBdestroy()\fP on all registered `Modules\&. ` 
-.PP
-Should be called at the end of the program after \fC\fBSystem\&.isRunning()\fP\fP is \fCfalse\fP 
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIInitializationError\fP if \fC\fBinit()\fP\fP has not been called yet 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBaddModule(Module&)\fP 
-.PP
-\fBSystem\fP for an optimal main loop 
-.RE
-.PP
-
 .SS "void mc::System::update ()"
 
 .PP
@@ -447,12 +472,12 @@ Update MACE and all \fCModules\fP registered, and checks if a close has been req
 .PP
 \fBReturns:\fP
 .RS 4
-\fCtrue\fP if it updated succesfully\&. \fCfalse\fP if an error occurred, or a close has been requested from a \fC\fBModule\fP\fP\&. When this returns \fCfalse\fP, you should end the main loop and call \fC\fBterminate()\fP\fP 
+\fCtrue\fP if it updated succesfully\&. \fCfalse\fP if an error occurred, or a close has been requested from a \fC\fBModule\fP\fP\&. When this returns \fCfalse\fP, you should end the main loop and call \fC\fBdestroy()\fP\fP 
 .RE
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIInitializationError\fP if \fC\fBinit()\fP\fP has not been called yet or \fC\fBterminate()\fP\fP has been called\&. 
+\fIInitializationError\fP if \fC\fBinit()\fP\fP has not been called yet or \fC\fBdestroy()\fP\fP has been called\&. 
 .RE
 .PP
 \fBSee also:\fP

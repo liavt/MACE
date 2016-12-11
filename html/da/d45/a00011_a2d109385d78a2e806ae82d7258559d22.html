@@ -119,10 +119,18 @@ $(document).ready(function(){initNavTree('da/d45/a00011_a2d109385d78a2e806ae82d7
 </table>
 </div><div class="memdoc">
 
-<p>When <code><a class="el" href="../../da/d45/a00011_ab280eb11bbd47b9d618a41f7ba666090.html#ab280eb11bbd47b9d618a41f7ba666090" title="Should be called a by Entity when System.terminate() is called. ">Entity.destroy()</a></code> is called, <code><a class="el" href="../../da/d45/a00011_a2d109385d78a2e806ae82d7258559d22.html#a2d109385d78a2e806ae82d7258559d22" title="When Entity.destroy() is called, customDestroy() is called on all of it&#39;s children. ">customDestroy()</a></code> is called on all of it's children. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd.html#a37d9b4e42bc96bddf835abd0bf3176bd" title="Destroys MACE and calls destroy() on all registered `Modules. ">System::terminate()</a> </dd></dl>
+<p>When <code><a class="el" href="../../da/d45/a00011_a07a66f2c02ff3b29f45f0a1c200e3cb3.html#a07a66f2c02ff3b29f45f0a1c200e3cb3" title="Should be called a by Entity when System.destroy() is called. ">Entity.destroy()</a></code> is called, <code><a class="el" href="../../da/d45/a00011_a2d109385d78a2e806ae82d7258559d22.html#a2d109385d78a2e806ae82d7258559d22" title="When Entity.destroy() is called, customDestroy() is called on all of it&#39;s children. ">customDestroy()</a></code> is called on all of it's children. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d1/d09/a00077_a2479db7b835f5641194f02b22ad66551.html#a2479db7b835f5641194f02b22ad66551" title="Destroys MACE and calls destroy() on all registered `Modules. ">System::destroy()</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This should only be used internally or by advanced users. Misuse can cause undefined behavior </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If the current thread does not have an OpenGL context </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="../../d4/dee/a00008_af7e6ca3e1a4997ef191d26bc5b4ba7ad.html#af7e6ca3e1a4997ef191d26bc5b4ba7ad">mc::gfx::CallbackEntity</a>, <a class="el" href="../../d4/d51/a00017_a303eb5ece295c7c53055024b6e59e048.html#a303eb5ece295c7c53055024b6e59e048">mc::gfx::Group</a>, and <a class="el" href="../../d1/d2b/a00018_ab14b2ae36921244bb37ce97b1b8bfbf7.html#ab14b2ae36921244bb37ce97b1b8bfbf7">mc::gfx::Image</a>.</p>
+<p>Implemented in <a class="el" href="../../d4/dee/a00008_a982ee3c8b80234e43f55574b59943571.html#a982ee3c8b80234e43f55574b59943571">mc::gfx::CallbackEntity</a>, <a class="el" href="../../d7/d7a/a00016_a6ee901225da5eef6bdfb3ae61568a764.html#a6ee901225da5eef6bdfb3ae61568a764">mc::gfx::Group</a>, and <a class="el" href="../../d4/d51/a00017_a6418603141e6736d9c4d63055cfd5323.html#a6418603141e6736d9c4d63055cfd5323">mc::gfx::Image</a>.</p>
 
 </div>
 </div>

@@ -1,241 +1,405 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="db/d3a/a00040" kind="class" language="C++" prot="public">
-    <compoundname>mc::os::WindowModule</compoundname>
-    <basecompoundref refid="dc/de2/a00024" prot="public" virt="non-virtual">mc::Module</basecompoundref>
-    <includes refid="d1/d22/a00057" local="no">Window.h</includes>
-      <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="db/d3a/a00040_1a2729266117df0d89988bbe2f21f47edb" prot="private" static="no" mutable="no">
-        <type><ref refid="d3/de7/a00039" kindref="compound">Window</ref> *</type>
-        <definition>Window* mc::os::WindowModule::window</definition>
-        <argsstring></argsstring>
-        <name>window</name>
+  <compounddef id="db/d3a/a00040" kind="file" language="C++">
+    <compoundname>Entity.h</compoundname>
+    <includes refid="d3/d8b/a00059" local="no">MACE/Utility/BitField.h</includes>
+    <includes refid="d9/db3/a00066" local="no">MACE/Utility/Transform.h</includes>
+    <includedby refid="d3/de7/a00039" local="no">include/MACE/Graphics/Components.h</includedby>
+    <includedby refid="dd/d32/a00041" local="no">include/MACE/Graphics/Entity2D.h</includedby>
+    <includedby refid="d5/df9/a00044" local="no">include/MACE/Graphics/Renderer.h</includedby>
+    <includedby refid="d5/db6/a00042" local="no">include/MACE/Graphics/Graphics.h</includedby>
+    <includedby refid="d1/dea/a00054" local="no">include/MACE/Graphics/Window.h</includedby>
+    <incdepgraph>
+      <node id="23">
+        <label>cstdint</label>
+      </node>
+      <node id="24">
+        <label>stdexcept</label>
+      </node>
+      <node id="22">
+        <label>MACE/System/Constants.h</label>
+        <link refid="d9/d2e/a00056_source"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>MACE/Utility/Matrix.h</label>
+        <link refid="df/d03/a00062_source"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>MACE/Utility/BitField.h</label>
+        <link refid="d3/d8b/a00059_source"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>ostream</label>
+      </node>
+      <node id="28">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="da/d24/a00068_source"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>array</label>
+      </node>
+      <node id="29">
+        <label>MACE/Utility/Math.h</label>
+        <link refid="d4/de8/a00061_source"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>MACE/Utility/Transform.h</label>
+        <link refid="d9/db3/a00066_source"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>include/MACE/Graphics/Entity.h</label>
+        <link refid="Entity.h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="37">
+        <label>include/MACE/Graphics/Window.h</label>
+        <link refid="d1/dea/a00054_source"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="d5/df9/a00044_source"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="d5/db6/a00042_source"/>
+      </node>
+      <node id="33">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="d3/de7/a00039_source"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="dd/d32/a00041_source"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>include/MACE/Graphics/Entity.h</label>
+        <link refid="Entity.h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
+    <innerclass refid="da/d45/a00011" prot="public">mc::gfx::Entity</innerclass>
+    <innerclass refid="d7/d7a/a00016" prot="public">mc::gfx::Group</innerclass>
+    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
+    <innerclass refid="dd/d1b/a00015" prot="public">mc::gfx::GraphicsEntity</innerclass>
+    <innernamespace refid="d6/d2c/a00072">mc</innernamespace>
+    <innernamespace refid="d1/d6e/a00073">mc::gfx</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="db/d3a/a00040_add2c7e0e3d279c18ae2a28eb8bc0b1dd_1add2c7e0e3d279c18ae2a28eb8bc0b1dd" prot="public" static="no">
+        <name>MACE_GRAPHICS_ENTITY_H</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="84" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="84" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="db/d3a/a00040_1a0c985c728c65dcf93a1a99c01a870838" prot="private" static="no" mutable="no">
-        <type>bool</type>
-        <definition>bool mc::os::WindowModule::destroyed</definition>
-        <argsstring></argsstring>
-        <name>destroyed</name>
-        <initializer>= false</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="86" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="86" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="db/d3a/a00040_1a4b92f07258280d23784641dbd9b778a4" prot="private" static="no" mutable="no">
-        <type>std::thread</type>
-        <definition>std::thread mc::os::WindowModule::windowThread</definition>
-        <argsstring></argsstring>
-        <name>windowThread</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="88" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="88" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="db/d3a/a00040_1a3941966f0a77fb654fbcfcd206364442" prot="private" static="no" mutable="no">
-        <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
-        <definition>GraphicsContext* mc::os::WindowModule::context</definition>
-        <argsstring></argsstring>
-        <name>context</name>
-        <initializer>= nullptr</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="90" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="90" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-func">
-      <memberdef kind="function" id="db/d3a/a00040_aa2a3b8291b0288753d1a015b07466fbe_1aa2a3b8291b0288753d1a015b07466fbe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::os::WindowModule::WindowModule</definition>
-        <argsstring>(Window *window)</argsstring>
-        <name>WindowModule</name>
-        <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">Window</ref> *</type>
-          <declname>window</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="72" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_aa667f5529e93f3ae067ca99f496ceb03_1aa667f5529e93f3ae067ca99f496ceb03" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::os::WindowModule::init</definition>
-        <argsstring>()</argsstring>
-        <name>init</name>
-        <reimplements refid="dc/de2/a00024_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6">init</reimplements>
-        <briefdescription>
-<para>Called when <ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System#init</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
-        <detaileddescription>
-<para>Use this to initialize variables, start streams, or launch a context. </para><para>Should only be called once. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="74" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a73e5d753d3654926e641bc12c0a84c51_1a73e5d753d3654926e641bc12c0a84c51" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::os::WindowModule::update</definition>
-        <argsstring>()</argsstring>
-        <name>update</name>
-        <reimplements refid="dc/de2/a00024_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c">update</reimplements>
-        <briefdescription>
-<para>Called when <ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">System#update</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
-        <detaileddescription>
-<para>Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="75" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a88c57fd19426587fe2f3641cef2a5dac_1a88c57fd19426587fe2f3641cef2a5dac" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::os::WindowModule::destroy</definition>
-        <argsstring>()</argsstring>
-        <name>destroy</name>
-        <reimplements refid="dc/de2/a00024_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2">destroy</reimplements>
-        <briefdescription>
-<para>Called when <ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">System#terminate</ref> is called and this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
-        <detaileddescription>
-<para>Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. </para><para>Should only be called before the program is closed. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="76" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_ad373fdd4f97f48fe6737fcea94a4452d_1ad373fdd4f97f48fe6737fcea94a4452d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::WindowModule::setContext</definition>
-        <argsstring>(GraphicsContext *con)</argsstring>
-        <name>setContext</name>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
-          <declname>con</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="78" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a2e5162ce88a89135170da58de135333e_1a2e5162ce88a89135170da58de135333e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
-        <definition>GraphicsContext* mc::os::WindowModule::getContext</definition>
-        <argsstring>()</argsstring>
-        <name>getContext</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="79" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a733b1b476c26eb6447d2730d8d2048d1_1a733b1b476c26eb6447d2730d8d2048d1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="dd/d1b/a00015" kindref="compound">GraphicsContext</ref> *</type>
-        <definition>const GraphicsContext* mc::os::WindowModule::getContext</definition>
-        <argsstring>() const </argsstring>
-        <name>getContext</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="80" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_ab2c762a61a27767d5403265c6402ac7a_1ab2c762a61a27767d5403265c6402ac7a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>std::string</type>
-        <definition>std::string mc::os::WindowModule::getName</definition>
-        <argsstring>() const </argsstring>
-        <name>getName</name>
-        <reimplements refid="dc/de2/a00024_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49">getName</reimplements>
-        <briefdescription>
-<para>Override this function and return a UNIQUE name for this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para>The name for your <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> is used in comparison, so make sure it is as unique as possible. </para><para>It is akin to a hashcode. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="82" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="private-func">
-      <memberdef kind="function" id="db/d3a/a00040_1ab42e5f80db5fc4ee50bb28ee8de5e9dd" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::WindowModule::threadCallback</definition>
-        <argsstring>()</argsstring>
-        <name>threadCallback</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="92" column="1"/>
+        <location file="include/MACE/Graphics/Entity.h" line="12" column="9" bodyfile="include/MACE/Graphics/Entity.h" bodystart="12" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="448">
-        <label>mc::os::WindowModule</label>
-        <link refid="db/d3a/a00040"/>
-        <childnode refid="449" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="449">
-        <label>mc::Module</label>
-        <link refid="dc/de2/a00024"/>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="450">
-        <label>mc::os::WindowModule</label>
-        <link refid="db/d3a/a00040"/>
-        <childnode refid="451" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="451">
-        <label>mc::Module</label>
-        <link refid="dc/de2/a00024"/>
-      </node>
-    </collaborationgraph>
-    <location file="include/MACE/Graphics/Window.h" line="70" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="70" bodyend="93"/>
-    <listofallmembers>
-      <member refid="db/d3a/a00040_1a3941966f0a77fb654fbcfcd206364442" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>context</name></member>
-      <member refid="db/d3a/a00040_a88c57fd19426587fe2f3641cef2a5dac_1a88c57fd19426587fe2f3641cef2a5dac" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>destroy</name></member>
-      <member refid="db/d3a/a00040_1a0c985c728c65dcf93a1a99c01a870838" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>destroyed</name></member>
-      <member refid="db/d3a/a00040_a2e5162ce88a89135170da58de135333e_1a2e5162ce88a89135170da58de135333e" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>getContext</name></member>
-      <member refid="db/d3a/a00040_a733b1b476c26eb6447d2730d8d2048d1_1a733b1b476c26eb6447d2730d8d2048d1" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>getContext</name></member>
-      <member refid="db/d3a/a00040_ab2c762a61a27767d5403265c6402ac7a_1ab2c762a61a27767d5403265c6402ac7a" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>getName</name></member>
-      <member refid="db/d3a/a00040_aa667f5529e93f3ae067ca99f496ceb03_1aa667f5529e93f3ae067ca99f496ceb03" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>init</name></member>
-      <member refid="db/d3a/a00040_ad373fdd4f97f48fe6737fcea94a4452d_1ad373fdd4f97f48fe6737fcea94a4452d" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>setContext</name></member>
-      <member refid="db/d3a/a00040_1ab42e5f80db5fc4ee50bb28ee8de5e9dd" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>threadCallback</name></member>
-      <member refid="db/d3a/a00040_a73e5d753d3654926e641bc12c0a84c51_1a73e5d753d3654926e641bc12c0a84c51" prot="public" virt="virtual"><scope>mc::os::WindowModule</scope><name>update</name></member>
-      <member refid="db/d3a/a00040_1a2729266117df0d89988bbe2f21f47edb" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>window</name></member>
-      <member refid="db/d3a/a00040_aa2a3b8291b0288753d1a015b07466fbe_1aa2a3b8291b0288753d1a015b07466fbe" prot="public" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>WindowModule</name></member>
-      <member refid="db/d3a/a00040_1a4b92f07258280d23784641dbd9b778a4" prot="private" virt="non-virtual"><scope>mc::os::WindowModule</scope><name>windowThread</name></member>
-    </listofallmembers>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_GRAPHICS_ENTITY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_GRAPHICS_ENTITY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/BitField.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Transform.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Graphics/Buffer.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;vector&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d6/d2c/a00072" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">gfx<sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="d1/d6e/a00073_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="de/d21/a00006" kindref="compound">EntityProperties</ref><sp/>=<sp/><ref refid="de/d21/a00006" kindref="compound">BitField</ref>;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//forward-defining<sp/>entity<sp/>for<sp/>component</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="da/d45/a00011" kindref="compound">Entity</ref>;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="df/d61/a00031" kindref="compound">ShaderProgram</ref>;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28" refid="d7/dec/a00010" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d7/dec/a00010" kindref="compound">Component</ref><sp/>{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" kindref="member">init</ref>(<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>e)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" kindref="member">update</ref>(<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>e)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">destroy</ref>(<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>e)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Component</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="da/d45/a00011" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="da/d45/a00011" kindref="compound">Entity</ref><sp/>{</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//values<sp/>defining<sp/>which<sp/>bit<sp/>in<sp/>a<sp/>byte<sp/>every<sp/>propety<sp/>is,<sp/>or<sp/>how<sp/>much<sp/>to<sp/>bit<sp/>shift<sp/>it</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5" kindref="member">EntityProperty</ref>:<sp/><ref refid="d6/d2c/a00072_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>{</highlight></codeline>
+<codeline lineno="49" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a24af0038cdbff90b6ef551f68e5c0bd2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DEAD<sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="54" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5abcd450b7328279557f5fa705765fbbef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UPDATE_DISABLED<sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="59" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a4c97680c05c4edc1f62b80042ca468b8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>RENDER_DISABLED<sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>INIT<sp/>=<sp/>3,</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>STRETCH_X<sp/>=<sp/>4,</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>STRETCH_Y<sp/>=<sp/>5,</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5aab9852f164950027087269949f9ceeb8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>HOVERED<sp/>=<sp/>6,</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104" refid="da/d45/a00011_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DIRTY<sp/>=<sp/>7</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>()<sp/>noexcept;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>(const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref><sp/>&amp;obj)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/>~<ref refid="da/d45/a00011" kindref="compound">Entity</ref>()<sp/>noexcept;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" kindref="member">update</ref>();</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" kindref="member">init</ref>();</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">destroy</ref>();</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>render();</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*&gt;&amp;<sp/>getChildren()<sp/>const;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>removeChild(const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>e);</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>removeChild(<ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>index);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hasChild(<ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>e)<sp/>const;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>clearChildren();</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>clearComponents();</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>operator[](<ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i);</highlight><highlight class="comment">//get<sp/>children<sp/>via<sp/>[i]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>operator[](<ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i)<sp/>const;</highlight><highlight class="comment">//get<sp/>children<sp/>via<sp/>[i]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>getChild(<ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>getChild(<ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i)<sp/>const;</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>indexOf(const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>e)<sp/>const;</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*&gt;::iterator<sp/>begin();</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*&gt;::iterator<sp/>end();</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>size()<sp/>const;</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="de/d21/a00006" kindref="compound">EntityProperties</ref>&amp;<sp/>getProperties();</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="de/d21/a00006" kindref="compound">EntityProperties</ref>&amp;<sp/>getProperties()<sp/>const;</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setProperties(<ref refid="de/d21/a00006" kindref="compound">EntityProperties</ref>&amp;<sp/>b);</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>getProperty(const<sp/><ref refid="d6/d2c/a00072_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>position)<sp/>const;</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setProperty(const<sp/><ref refid="d6/d2c/a00072_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>position,<sp/>const<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d0/dc0/a00033" kindref="compound">TransformMatrix</ref>&amp;<sp/>getTransformation();</highlight></codeline>
+<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="d0/dc0/a00033" kindref="compound">TransformMatrix</ref>&amp;<sp/>getTransformation()<sp/>const;</highlight></codeline>
+<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setTransformation(<ref refid="d0/dc0/a00033" kindref="compound">TransformMatrix</ref>&amp;<sp/>trans);</highlight></codeline>
+<codeline lineno="327"><highlight class="normal"></highlight></codeline>
+<codeline lineno="331"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>translate(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>rotate(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>scale(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"></highlight></codeline>
+<codeline lineno="341"><highlight class="normal"></highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>const<sp/>getParent();</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>const<sp/>getParent()<sp/>const;</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"></highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hasParent()<sp/>const;</highlight></codeline>
+<codeline lineno="356"><highlight class="normal"></highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>addChild(<ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>e);</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>kill();</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"></highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>addComponent(<ref refid="d7/dec/a00010" kindref="compound">Component</ref>&amp;<sp/>action);</highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="d7/dec/a00010" kindref="compound">Component</ref>*&gt;<sp/>getComponents();</highlight></codeline>
+<codeline lineno="371"><highlight class="normal"></highlight></codeline>
+<codeline lineno="375"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getWidth();</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getWidth()<sp/>const;</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setWidth(const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>s);</highlight></codeline>
+<codeline lineno="381"><highlight class="normal"></highlight></codeline>
+<codeline lineno="385"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getHeight();</highlight></codeline>
+<codeline lineno="386"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getHeight()<sp/>const;</highlight></codeline>
+<codeline lineno="390"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setHeight(const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>s);</highlight></codeline>
+<codeline lineno="391"><highlight class="normal"></highlight></codeline>
+<codeline lineno="395"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getX();</highlight></codeline>
+<codeline lineno="396"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getX()<sp/>const;</highlight></codeline>
+<codeline lineno="400"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setX(const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>newX);</highlight></codeline>
+<codeline lineno="401"><highlight class="normal"></highlight></codeline>
+<codeline lineno="405"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getY();</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>getY()<sp/>const;</highlight></codeline>
+<codeline lineno="410"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setY(const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>newY);</highlight></codeline>
+<codeline lineno="411"><highlight class="normal"></highlight></codeline>
+<codeline lineno="421"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator==(const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>other)<sp/>const<sp/>noexcept;</highlight></codeline>
+<codeline lineno="431"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator!=(const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>&amp;<sp/>other)<sp/>const<sp/>noexcept;</highlight></codeline>
+<codeline lineno="432"><highlight class="normal"></highlight></codeline>
+<codeline lineno="437"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>clean();</highlight></codeline>
+<codeline lineno="438"><highlight class="normal"></highlight></codeline>
+<codeline lineno="442"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>getRootParent();</highlight></codeline>
+<codeline lineno="443"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref>*<sp/>getRootParent()<sp/>const;</highlight></codeline>
+<codeline lineno="444"><highlight class="normal"></highlight></codeline>
+<codeline lineno="448"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>reset();</highlight></codeline>
+<codeline lineno="449"><highlight class="normal"></highlight></codeline>
+<codeline lineno="454"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>makeDirty();</highlight></codeline>
+<codeline lineno="455"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>protected:</highlight></codeline>
+<codeline lineno="461"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customUpdate()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="468"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customInit()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="475"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customDestroy()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="476"><highlight class="normal"></highlight></codeline>
+<codeline lineno="482"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customRender()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="483"><highlight class="normal"></highlight></codeline>
+<codeline lineno="488" refid="da/d45/a00011_a843be07a7155289c9769e128aed7efdc_1a843be07a7155289c9769e128aed7efdc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*&gt;<sp/>children<sp/>=<sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="da/d45/a00011" kindref="compound">Entity</ref>*&gt;();</highlight></codeline>
+<codeline lineno="489"><highlight class="normal"></highlight></codeline>
+<codeline lineno="493" refid="da/d45/a00011_a2f423919fa564ce852cb641b74f21d87_1a2f423919fa564ce852cb641b74f21d87" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d0/dc0/a00033" kindref="compound">TransformMatrix</ref><sp/>transformation;</highlight></codeline>
+<codeline lineno="494"><highlight class="normal"></highlight></codeline>
+<codeline lineno="495"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>private:</highlight></codeline>
+<codeline lineno="496"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="d7/dec/a00010" kindref="compound">Component</ref>*&gt;<sp/>components<sp/>=<sp/><ref refid="d9/da4/a00078" kindref="compound">std</ref>::vector&lt;<ref refid="d7/dec/a00010" kindref="compound">Component</ref>*&gt;();</highlight></codeline>
+<codeline lineno="497"><highlight class="normal"></highlight></codeline>
+<codeline lineno="498"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="de/d21/a00006" kindref="compound">EntityProperties</ref><sp/>properties<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="499"><highlight class="normal"></highlight></codeline>
+<codeline lineno="500"><highlight class="normal"></highlight></codeline>
+<codeline lineno="501"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Entity*<sp/>parent<sp/>=<sp/></highlight><highlight class="keywordtype">nullptr</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="502"><highlight class="normal"></highlight></codeline>
+<codeline lineno="503"><highlight class="normal"></highlight></codeline>
+<codeline lineno="504"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setParent(Entity*<sp/>parent);</highlight></codeline>
+<codeline lineno="505"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Entity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="506"><highlight class="normal"></highlight></codeline>
+<codeline lineno="507" refid="d7/d7a/a00016" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>class<sp/><ref refid="d7/d7a/a00016" kindref="compound">Group</ref>:<sp/>public<sp/>Entity<sp/>{</highlight></codeline>
+<codeline lineno="508"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="509"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customInit()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="510"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customUpdate()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="511"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customRender()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="512"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customDestroy()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="513"><highlight class="normal"></highlight></codeline>
+<codeline lineno="514"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Group</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="515"><highlight class="normal"></highlight></codeline>
+<codeline lineno="516" refid="d4/dee/a00008" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d4/dee/a00008" kindref="compound">CallbackEntity</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref><sp/>{</highlight></codeline>
+<codeline lineno="517"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="518"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setInitCallback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="519"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getInitCallback();</highlight></codeline>
+<codeline lineno="520"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getInitCallback()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="521"><highlight class="normal"></highlight></codeline>
+<codeline lineno="522"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setUpdateCallback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="523"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getUpdateCallback();</highlight></codeline>
+<codeline lineno="524"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getUpdateCallback()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="525"><highlight class="normal"></highlight></codeline>
+<codeline lineno="526"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setRenderCallback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="527"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getRenderCallback();</highlight></codeline>
+<codeline lineno="528"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getRenderCallback()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="529"><highlight class="normal"></highlight></codeline>
+<codeline lineno="530"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setDestroyCallback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="531"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getDestroyCallback();</highlight></codeline>
+<codeline lineno="532"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>getDestroyCallback()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="533"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="534"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customInit()<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="535"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customUpdate()<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="536"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customRender()<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="537"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>customDestroy()<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="538"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="539"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref><sp/>destroyCallback<sp/>=<sp/>[]<sp/>{},<sp/>updateCallback<sp/>=<sp/>[]<sp/>{},<sp/>renderCallback<sp/>=<sp/>[]<sp/>{},<sp/>initCallback<sp/>=<sp/>[]<sp/>{};</highlight></codeline>
+<codeline lineno="540"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//CallbackEntity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="541"><highlight class="normal"></highlight></codeline>
+<codeline lineno="542" refid="dd/d1b/a00015" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="da/d45/a00011" kindref="compound">Entity</ref><sp/>{</highlight></codeline>
+<codeline lineno="543"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="544"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref>()<sp/>noexcept;</highlight></codeline>
+<codeline lineno="545"><highlight class="normal"></highlight></codeline>
+<codeline lineno="546"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref>(<ref refid="dc/d87/a00032" kindref="compound">Texture</ref>&amp;<sp/>t)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="547"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/>~<ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref>()<sp/>noexcept;</highlight></codeline>
+<codeline lineno="548"><highlight class="normal"></highlight></codeline>
+<codeline lineno="552"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>getPaint();</highlight></codeline>
+<codeline lineno="553"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>getPaint()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="557"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setPaint(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>c);</highlight></codeline>
+<codeline lineno="558"><highlight class="normal"></highlight></codeline>
+<codeline lineno="562"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>getOpacity();</highlight></codeline>
+<codeline lineno="563"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>getOpacity()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="567"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setOpacity(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>f);</highlight></codeline>
+<codeline lineno="568"><highlight class="normal"></highlight></codeline>
+<codeline lineno="572"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setTexture(<ref refid="dc/d87/a00032" kindref="compound">Texture</ref>&amp;<sp/>tex);</highlight></codeline>
+<codeline lineno="576"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/d87/a00032" kindref="compound">Texture</ref>&amp;<sp/>getTexture();</highlight></codeline>
+<codeline lineno="577"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/d87/a00032" kindref="compound">Texture</ref>&amp;<sp/>getTexture()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="578"><highlight class="normal"></highlight></codeline>
+<codeline lineno="582"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>&amp;<sp/>getBuffer();</highlight></codeline>
+<codeline lineno="583"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>&amp;<sp/>getBuffer()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="587"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setBuffer(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>&amp;<sp/>newBuffer);</highlight></codeline>
+<codeline lineno="588"><highlight class="normal"></highlight></codeline>
+<codeline lineno="589"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" kindref="member">init</ref>()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="590"><highlight class="normal"></highlight></codeline>
+<codeline lineno="591"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">destroy</ref>()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="592"><highlight class="normal"></highlight></codeline>
+<codeline lineno="593"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator==(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>noexcept;</highlight></codeline>
+<codeline lineno="594"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator!=(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>noexcept;</highlight></codeline>
+<codeline lineno="595"><highlight class="normal"></highlight></codeline>
+<codeline lineno="596"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>clean()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="597"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="598"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/d87/a00032" kindref="compound">Texture</ref><sp/>texture;</highlight></codeline>
+<codeline lineno="599"><highlight class="normal"></highlight></codeline>
+<codeline lineno="600"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref><sp/>buffer<sp/>=<sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>();</highlight></codeline>
+<codeline lineno="601"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//GraphicsEntity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="602"><highlight class="normal"></highlight></codeline>
+<codeline lineno="603"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//gfx</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="604"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="605"><highlight class="normal"></highlight></codeline>
+<codeline lineno="606"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Graphics/Entity.h"/>
   </compounddef>
 </doxygen>

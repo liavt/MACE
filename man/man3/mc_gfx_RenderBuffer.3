@@ -1,8 +1,9 @@
-.TH "mc::gfx::RenderBuffer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::RenderBuffer" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc::gfx::RenderBuffer \- 
+mc::gfx::RenderBuffer \- Represents a render buffer for use with a `FrameBuffer\&.  
+
 .SH SYNOPSIS
 .br
 .PP
@@ -16,27 +17,43 @@ Inherits \fBmc::gfx::Object\fP\&.
 .ti -1c
 .RI "void \fBinit\fP ()"
 .br
+.RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
 .ti -1c
 .RI "void \fBdestroy\fP ()"
 .br
+.RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
 .RI "void \fBsetStorage\fP (const GLenum &format, const GLsizei &width, const GLsizei &height)"
 .br
+.RI "\fISets the flags for the storage of this `RenderBuffer\&. \fP"
 .ti -1c
 .RI "void \fBsetStorageMultisampled\fP (const GLsizei &samples, const GLenum &format, const GLsizei &width, const GLsizei &height)"
 .br
+.RI "\fISets the flags for the storage of this `RenderBuffer\&. \fP"
 .ti -1c
 .RI "bool \fBisCreated\fP () const "
 .br
+.RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
 .RI "void \fBbind\fP () const "
 .br
+.RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
 .ti -1c
 .RI "void \fBunbind\fP () const "
 .br
+.RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
 .ti -1c
 .RI "\fBIndex\fP \fBgetID\fP () const "
 .br
+.RI "\fIRetrieves the current ID that this \fC\fBObject\fP\fP represents\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
 .in -1c
 .SS "Protected Attributes"
 
@@ -44,40 +61,303 @@ Inherits \fBmc::gfx::Object\fP\&.
 .ti -1c
 .RI "\fBIndex\fP \fBid\fP = 0"
 .br
+.RI "\fIThe ID of this `Object\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 106 of file Buffer\&.h\&.
+Represents a render buffer for use with a `FrameBuffer\&. 
+
+\fCInstead of using a\fP\fBTexture\fP\fCtarget, you can attach a\fP\fBRenderBuffer\fP\fCinstead and accomplish a similar effect\&. A\fPRenderBuffer` supports anti-aliasing natively but you can not access or modify it's data\&. It also represents a single image, similar to a texture\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBFrameBuffer\fP 
+.PP
+https://www.opengl.org/wiki/Renderbuffer_Object 
+.RE
+.PP
+
+.PP
+Definition at line 141 of file Buffer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
 
+.PP
+Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::unbind() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
+
 .SS "void mc::gfx::RenderBuffer::destroy ()\fC [virtual]\fP"
+
+.PP
+Calls the corresponding glDestroy* function and deletes the ID\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::init()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
 
+.PP
+Retrieves the current ID that this \fC\fBObject\fP\fP represents\&. The ID is an unsigned number that acts like a pointer to OpenGL memory\&. It is assigned when \fBObject::init()\fP is called\&. 
+.PP
+If it is 0, the \fC\fBObject\fP\fP is considered uncreated\&. 
+.PP
+When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbind() const \fPwill bind to ID 0, which is the equivelant of a null pointer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
 .SS "void mc::gfx::RenderBuffer::init ()\fC [virtual]\fP"
+
+.PP
+Calls the corresponding glCreate* function and assigns an ID\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::destroy()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "bool mc::gfx::RenderBuffer::isCreated () const\fC [virtual]\fP"
 
 .PP
+Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBObject\fP\fP represents memory 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.PP
+\fBObject::init()\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
 Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
 .SS "void mc::gfx::RenderBuffer::setStorage (const GLenum & format, const GLsizei & width, const GLsizei & height)"
+
+.PP
+Sets the flags for the storage of this `RenderBuffer\&. ` 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIformat\fP A valied OpenGL image format such as GL_RGBA8 
+.br
+\fIwidth\fP The width of the buffer 
+.br
+\fIheight\fP The height of the buffer 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBRenderBuffer::setStorageMultisampled(const GLsizei&, const GLenum&, const GLsizei&, const GLsizei&)\fP 
+.PP
+https://www.opengl.org/wiki/GLAPI/glRenderbufferStorage 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "void mc::gfx::RenderBuffer::setStorageMultisampled (const GLsizei & samples, const GLenum & format, const GLsizei & width, const GLsizei & height)"
 
+.PP
+Sets the flags for the storage of this `RenderBuffer\&. ` This version can have anti-aliasing\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsamples\fP How many samples to use for MSAA 
+.br
+\fIformat\fP A valied OpenGL image format such as GL_RGBA8 
+.br
+\fIwidth\fP The width of the buffer 
+.br
+\fIheight\fP The height of the buffer 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBRenderBuffer::setStorage(const GLenum&, const GLsizei&, const GLsizei&)\fP 
+.PP
+https://www.opengl.org/wiki/GLAPI/glRenderbufferStorageMultisample 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.PP
+Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.RE
+.PP
 
 .SH "Member Data Documentation"
 .PP 
 .SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 37 of file Buffer\&.h\&.
+The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 in \fBObject::destroy()\fP 
+.PP
+\fBObject::getID() const \fPreturns this\&. 
+.PP
+Definition at line 123 of file Buffer\&.h\&.
 
 .SH "Author"
 .PP 

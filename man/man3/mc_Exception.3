@@ -1,4 +1,4 @@
-.TH "mc::Exception" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Exception" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,7 +15,10 @@ Inherits std::runtime_error\&.
 
 .in +1c
 .ti -1c
-.RI "\fBException\fP ()=default"
+.RI "\fBException\fP () noexcept=default"
+.br
+.ti -1c
+.RI "\fB~Exception\fP () noexcept=default"
 .br
 .in -1c
 .SS "Static Public Member Functions"
@@ -33,7 +36,9 @@ Superclass that all exceptions in MACE extend\&.
 Definition at line 105 of file Constants\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "mc::Exception::Exception ()\fC [default]\fP"
+.SS "mc::Exception::Exception ()\fC [default]\fP, \fC [noexcept]\fP"
+
+.SS "mc::Exception::~Exception ()\fC [default]\fP, \fC [noexcept]\fP"
 
 .SH "Member Function Documentation"
 .PP 

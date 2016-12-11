@@ -1,9 +1,25 @@
 var a00032 =
 [
-    [ "destroy", "dc/d87/a00032_aa57bdc941f53f4fbc8ee10eb29be6bb2.html#aa57bdc941f53f4fbc8ee10eb29be6bb2", null ],
-    [ "init", "dc/d87/a00032_a9bf3f0dcf0829df248047562da3ea90d.html#a9bf3f0dcf0829df248047562da3ea90d", null ],
-    [ "render", "dc/d87/a00032_a5f883c110374d251af8fa176988cf0b7.html#a5f883c110374d251af8fa176988cf0b7", null ],
-    [ "resize", "dc/d87/a00032_aedee904fc6c0dbb4ebe8171f3e15f320.html#aedee904fc6c0dbb4ebe8171f3e15f320", null ],
-    [ "setUp", "dc/d87/a00032_a9b99fb79a9fcd3c5c6e7d712abbeee61.html#a9b99fb79a9fcd3c5c6e7d712abbeee61", null ],
-    [ "tearDown", "dc/d87/a00032_a1c94c1163f8463d0e6ec4a50b7784f0d.html#a1c94c1163f8463d0e6ec4a50b7784f0d", null ]
+    [ "bind", "dc/d87/a00032.html#a9a59b47f57c7a7e83ee9d268f692cc4d", null ],
+    [ "destroy", "dc/d87/a00032_a56741a1f705b7b3e6ddb085c1fe8fe45.html#a56741a1f705b7b3e6ddb085c1fe8fe45", null ],
+    [ "getID", "dc/d87/a00032.html#adcc524a5d4ce6e79e9c1893c0f935559", null ],
+    [ "getOpacity", "dc/d87/a00032_a73f099a1c1c226e101c28c70b517e23b.html#a73f099a1c1c226e101c28c70b517e23b", null ],
+    [ "getOpacity", "dc/d87/a00032_af59d6a7103ceacc08e707882043eaba8.html#af59d6a7103ceacc08e707882043eaba8", null ],
+    [ "getPaint", "dc/d87/a00032_a4abd1d7944c0c80fbd484fad810d8b77.html#a4abd1d7944c0c80fbd484fad810d8b77", null ],
+    [ "getPaint", "dc/d87/a00032_a89e965418f2da04a68ba9724623e9ae2.html#a89e965418f2da04a68ba9724623e9ae2", null ],
+    [ "getTarget", "dc/d87/a00032_a1974ac906f5e0d5e796dc82c2e05c0ec.html#a1974ac906f5e0d5e796dc82c2e05c0ec", null ],
+    [ "init", "dc/d87/a00032_af9bf71115d34b7064254348e7743c37b.html#af9bf71115d34b7064254348e7743c37b", null ],
+    [ "isCreated", "dc/d87/a00032_a984b861a6a3cb3e9e46c9e93e306fcef.html#a984b861a6a3cb3e9e46c9e93e306fcef", null ],
+    [ "loadFile", "dc/d87/a00032_a4c619193ee9a4b354bdf5b0382302197.html#a4c619193ee9a4b354bdf5b0382302197", null ],
+    [ "operator!=", "dc/d87/a00032.html#a46f8d2830121ba4397bbf6ab8c1ab439", null ],
+    [ "operator!=", "dc/d87/a00032_ac43bd1d99904943697d6a76c238f9be0.html#ac43bd1d99904943697d6a76c238f9be0", null ],
+    [ "operator==", "dc/d87/a00032.html#adf01757b2750668b7fbb42b3677e8e70", null ],
+    [ "operator==", "dc/d87/a00032_a7f40e8f1091382117829940678577b55.html#a7f40e8f1091382117829940678577b55", null ],
+    [ "setData", "dc/d87/a00032_a70c25cd28c47f4201388aa1216e3cd2d.html#a70c25cd28c47f4201388aa1216e3cd2d", null ],
+    [ "setOpacity", "dc/d87/a00032_aebd0d76cdc2e89864118b4c119cc09da.html#aebd0d76cdc2e89864118b4c119cc09da", null ],
+    [ "setPaint", "dc/d87/a00032_a53696fcdbef5ef8dfa6bf9a90c649be7.html#a53696fcdbef5ef8dfa6bf9a90c649be7", null ],
+    [ "setParameter", "dc/d87/a00032_a6ec1b99fe4f8eb9f4c9566c1a79c8d15.html#a6ec1b99fe4f8eb9f4c9566c1a79c8d15", null ],
+    [ "setTarget", "dc/d87/a00032_acf4bc454a146b237fa87756c29eefb90.html#acf4bc454a146b237fa87756c29eefb90", null ],
+    [ "unbind", "dc/d87/a00032.html#af36391f915aeed8452b6f21e926932f2", null ],
+    [ "id", "dc/d87/a00032.html#a5c44ad260b3bd8a5825c434037d5f89f", null ]
 ];

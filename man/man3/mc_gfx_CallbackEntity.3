@@ -1,4 +1,4 @@
-.TH "mc::gfx::CallbackEntity" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::CallbackEntity" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,6 +10,13 @@ mc::gfx::CallbackEntity \-
 \fC#include <Entity\&.h>\fP
 .PP
 Inherits \fBmc::gfx::Entity\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBHOVERED\fP = 6, \fBDIRTY\fP = 7 }"
+.br
+.in -1c
 .SS "Public Member Functions"
 
 .in +1c
@@ -54,13 +61,13 @@ Inherits \fBmc::gfx::Entity\fP\&.
 .br
 .RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. \fP"
 .ti -1c
-.RI "void \fBinit\fP ()"
+.RI "virtual void \fBinit\fP ()"
 .br
 .RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. \fP"
 .ti -1c
-.RI "void \fBdestroy\fP ()"
+.RI "virtual void \fBdestroy\fP ()"
 .br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.terminate()\fP\fP is called\&. \fP"
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. \fP"
 .ti -1c
 .RI "void \fBrender\fP ()"
 .br
@@ -85,6 +92,9 @@ Inherits \fBmc::gfx::Entity\fP\&.
 .RI "void \fBclearChildren\fP ()"
 .br
 .RI "\fIRemoves EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "void \fBclearComponents\fP ()"
+.br
 .ti -1c
 .RI "\fBEntity\fP & \fBoperator[]\fP (\fBIndex\fP i)"
 .br
@@ -136,7 +146,7 @@ Inherits \fBmc::gfx::Entity\fP\&.
 .ti -1c
 .RI "void \fBsetProperty\fP (const \fBByte\fP position, const bool value)"
 .br
-.RI "\fISet a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fCENTITY_\fP \fP"
+.RI "\fISet a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fC\fBEntity\fP::\fP \fP"
 .ti -1c
 .RI "\fBTransformMatrix\fP & \fBgetTransformation\fP ()"
 .br
@@ -172,7 +182,7 @@ Inherits \fBmc::gfx::Entity\fP\&.
 .ti -1c
 .RI "void \fBkill\fP ()"
 .br
-.RI "\fIAutomatically called when \fCENTITY_PROPERTY_DEAD\fP is true\&. \fP"
+.RI "\fIAutomatically called when \fCEntity::PROPERTY_DEAD\fP is true\&. \fP"
 .ti -1c
 .RI "void \fBaddComponent\fP (\fBComponent\fP &action)"
 .br
@@ -216,31 +226,47 @@ Inherits \fBmc::gfx::Entity\fP\&.
 .RI "void \fBsetY\fP (const float &newY)"
 .br
 .ti -1c
-.RI "bool \fBoperator==\fP (\fBEntity\fP &other) const "
+.RI "bool \fBoperator==\fP (const \fBEntity\fP &other) const  noexcept"
 .br
 .RI "\fICompares if 2 \fCEntities\fP have the same children, parent, and properties\&. \fP"
 .ti -1c
-.RI "bool \fBoperator!=\fP (\fBEntity\fP &other) const "
+.RI "bool \fBoperator!=\fP (const \fBEntity\fP &other) const  noexcept"
 .br
 .RI "\fICompares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. \fP"
+.ti -1c
+.RI "virtual void \fBclean\fP ()"
+.br
+.ti -1c
+.RI "\fBEntity\fP * \fBgetRootParent\fP ()"
+.br
+.ti -1c
+.RI "const \fBEntity\fP * \fBgetRootParent\fP () const "
+.br
+.ti -1c
+.RI "void \fBreset\fP ()"
+.br
+.ti -1c
+.RI "void \fBmakeDirty\fP ()"
+.br
+.RI "\fIMakes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. \fP"
 .in -1c
 .SS "Protected Member Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBcustomInit\fP ()"
+.RI "void \fBcustomInit\fP () final"
 .br
 .RI "\fIWhen \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called on all of it's children\&. \fP"
 .ti -1c
-.RI "void \fBcustomUpdate\fP ()"
+.RI "void \fBcustomUpdate\fP () final"
 .br
 .RI "\fIWhen \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is called on all of it's children\&. \fP"
 .ti -1c
-.RI "void \fBcustomRender\fP ()"
+.RI "void \fBcustomRender\fP () final"
 .br
 .RI "\fIWhen \fC\fBEntity\&.render()\fP\fP is called, \fC\fBcustomRender()\fP\fP is called on all of it's children\&. \fP"
 .ti -1c
-.RI "void \fBcustomDestroy\fP ()"
+.RI "void \fBcustomDestroy\fP () final"
 .br
 .RI "\fIWhen \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBcustomDestroy()\fP\fP is called on all of it's children\&. \fP"
 .in -1c
@@ -248,12 +274,113 @@ Inherits \fBmc::gfx::Entity\fP\&.
 
 .in +1c
 .ti -1c
+.RI "std::vector< \fBEntity\fP * > \fBchildren\fP = std::vector<\fBEntity\fP*>()"
+.br
+.RI "\fI\fCstd::vector\fP of this \fC\fBEntity\fP\\'s\fP children\&. \fP"
+.ti -1c
 .RI "\fBTransformMatrix\fP \fBtransformation\fP"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 494 of file Entity\&.h\&.
+Definition at line 516 of file Entity\&.h\&.
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIDEAD \fP\fP
+Bit location representing whether an \fC\fBEntity\fP\fP is dead\&. If \fCtrue,\fP any \fBEntity\fP holding it will remove it and call \fC\fBkill()\fP\fP 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fIUPDATE_DISABLED \fP\fP
+Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCtrue\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fIRENDER_DISABLED \fP\fP
+Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCtrue\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fIINIT \fP\fP
+Flag representing whether an \fBEntity\fP's \fBinit()\fP function has been called\&. If \fBdestroy()\fP or \fBupdate()\fP is called and this is \fCfalse\fP, an \fCInitializationError\fP is thrown\&. 
+.PP
+If \fBinit()\fP is called and this is \fCtrue\fP, an \fCInitializationError\fP is thrown\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_X \fP\fP
+Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_Y\fP 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_Y \fP\fP
+Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.RE
+.PP
+
+.TP
+\fB\fIHOVERED \fP\fP
+Flag representing whether this \fC\fBEntity\fP\fP has been hovered over\&. The \fC\fBRenderProtocol\fP\fP used to render the \fC\fBEntity\fP\fP must set this\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+ssl::bindEntity(Entity*) 
+.RE
+.PP
+
+.TP
+\fB\fIDIRTY \fP\fP
+Flag representing whether this \fC\fBEntity\fP\fP is dirty and it's positions needs to be recalculated\&. This will become true under the following conditions:
+.IP "\(bu" 2
+The \fC\fBEntity\fP\fP has been changed\&. Assume that any non-const function other than \fBrender()\fP and \fBupdate()\fP will trigger this condition\&.
+.IP "\(bu" 2
+The window is resized, moved, or created 
+.PP
+.PP
+Other classes that inherit \fC\fBEntity\fP\fP can also set this to true via \fBEntity::setProperty(Byte, bool)\fP 
+.PP
+When an \fC\fBEntity\fP\fP becomes dirty, it will propogate up the tree\&. It's parent will become dirty, it's parent will become dirty, etc\&. This will continue until it reaches the highest level \fC\fBEntity\fP\fP, which is usually the \fCGraphicsContext\fP\&. From there, it will decide what to do based on it's \fC\fBEntity::DIRTY\fP\fP flag\&. 
+.PP
+Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily increasing performance in applications with little moving objects\&. 
+.PP
+Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
+.PP
+Definition at line 42 of file Entity\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::Entity::addChild (\fBEntity\fP & e)\fC [inherited]\fP"
@@ -261,12 +388,12 @@ Definition at line 494 of file Entity\&.h\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -290,6 +417,27 @@ Iterator of the first \fC\fBEntity\fP\fP
 .RE
 .PP
 
+.SS "virtual void mc::gfx::Entity::clean ()\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::gfx::GraphicsEntity\fP\&.
 .SS "void mc::gfx::Entity::clearChildren ()\fC [inherited]\fP"
 
 .PP
@@ -297,12 +445,12 @@ Removes EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .PP
 \fBsize()\fP 
 .PP
@@ -312,20 +460,37 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::gfx::CallbackEntity::customDestroy ()\fC [protected]\fP, \fC [virtual]\fP"
+.SS "void mc::gfx::Entity::clearComponents ()\fC [inherited]\fP"
+
+.SS "void mc::gfx::CallbackEntity::customDestroy ()\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
 When \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBcustomDestroy()\fP\fP is called on all of it's children\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBSystem::terminate()\fP 
+\fBSystem::destroy()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
 .RE
 .PP
 
 .PP
 Implements \fBmc::gfx::Entity\fP\&.
-.SS "void mc::gfx::CallbackEntity::customInit ()\fC [protected]\fP, \fC [virtual]\fP"
+.SS "void mc::gfx::CallbackEntity::customInit ()\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
 When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called on all of it's children\&. 
@@ -335,16 +500,48 @@ When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called o
 \fBSystem::init()\fP 
 .RE
 .PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Entity\fP\&.
-.SS "void mc::gfx::CallbackEntity::customRender ()\fC [protected]\fP, \fC [virtual]\fP"
+.SS "void mc::gfx::CallbackEntity::customRender ()\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
 When \fC\fBEntity\&.render()\fP\fP is called, \fC\fBcustomRender()\fP\fP is called on all of it's children\&. 
 .PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
 Implements \fBmc::gfx::Entity\fP\&.
-.SS "void mc::gfx::CallbackEntity::customUpdate ()\fC [protected]\fP, \fC [virtual]\fP"
+.SS "void mc::gfx::CallbackEntity::customUpdate ()\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
 When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is called on all of it's children\&. 
@@ -354,32 +551,46 @@ When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is call
 \fBSystem::update()\fP 
 .RE
 .PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Entity\fP\&.
-.SS "void mc::gfx::Entity::destroy ()\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Entity::destroy ()\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.terminate()\fP\fP is called\&. Calls \fC\fBcustomDestroy()\fP\fP\&. Sets \fCENTITY_INIT\fP to be false 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. Calls \fC\fBcustomDestroy()\fP\fP\&. Sets \fC\fBEntity::INIT\fP\fP to be false 
 .PP
-You should never override this function\&. Instead, override \fC\fBcustomDestroy()\fP\fP 
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomDestroy()\fP\fP 
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIInitializationError\fP If the property \fCENTITY_INIT\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.br
+\fIInitializationError\fP If the property \fC\fBEntity::INIT\fP\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::gfx::GraphicsEntity\fP, and \fBmc::os::WindowModule\fP\&.
 .SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::end ()\fC [inherited]\fP"
 
 .PP
@@ -476,12 +687,12 @@ an \fCstd::vector\fP with all children of this \fC\fBEntity\fP\fP
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -525,12 +736,12 @@ Retrieves the \fC\fBEntity\fP's\fP properties as a \fCByteField\fP
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 \fBReturns:\fP
@@ -573,7 +784,7 @@ setProperty(Index, bool)
 .SS "bool mc::gfx::Entity::getProperty (const \fBByte\fP position) const\fC [inherited]\fP"
 
 .PP
-Retrieve the value of a property\&. Property consants start with \fCENTITY_\fP 
+Retrieve the value of a property\&. Property consants start with \fC\fBEntity\fP::\fP 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -599,17 +810,33 @@ setProperties(ByteField&)
 
 .SS "const \fBVoidFunctionPtr\fP mc::gfx::CallbackEntity::getRenderCallback () const"
 
+.SS "\fBEntity\fP* mc::gfx::Entity::getRootParent ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBEntity\fP* mc::gfx::Entity::getRootParent () const\fC [inherited]\fP"
+
 .SS "\fBTransformMatrix\fP& mc::gfx::Entity::getTransformation ()\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -624,12 +851,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -640,12 +867,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -656,12 +883,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -713,48 +940,73 @@ Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "void mc::gfx::Entity::init ()\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Entity::init ()\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. Calls \fC\fBcustomInit()\fP\fP 
 .PP
-You should never override this function\&. Instead, override \fC\fBcustomInit()\fP\fP 
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomInit()\fP\fP 
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIInitializationError\fP If the property \fCENTITY_INIT\fP is true, meaning \fC\fBinit()\fP\fP has already been called\&. 
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.br
+\fIInitializationError\fP If the property \fC\fBEntity::INIT\fP\fP is true, meaning \fC\fBinit()\fP\fP has already been called\&. 
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::gfx::GraphicsEntity\fP, and \fBmc::os::WindowModule\fP\&.
 .SS "void mc::gfx::Entity::kill ()\fC [inherited]\fP"
 
 .PP
-Automatically called when \fCENTITY_PROPERTY_DEAD\fP is true\&. Removes this entity from it's parent, and calls it's \fC\fBdestroy()\fP\fP method\&. 
+Automatically called when \fCEntity::PROPERTY_DEAD\fP is true\&. Removes this entity from it's parent, and calls it's \fC\fBdestroy()\fP\fP method\&. 
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .PP
 \fBgetParent()\fP 
 .RE
 .PP
 
-.SS "bool mc::gfx::Entity::operator!= (\fBEntity\fP & other) const\fC [inherited]\fP"
+.SS "void mc::gfx::Entity::makeDirty ()\fC [inherited]\fP"
+
+.PP
+Makes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. Should be used over \fCsetProperty(Entity::DIRTY,true)\fP as it updaets the root parent\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::operator!= (const \fBEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
 
 .PP
 Compares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. 
@@ -781,7 +1033,7 @@ operator==
 .RE
 .PP
 
-.SS "bool mc::gfx::Entity::operator== (\fBEntity\fP & other) const\fC [inherited]\fP"
+.SS "bool mc::gfx::Entity::operator== (const \fBEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
 
 .PP
 Compares if 2 \fCEntities\fP have the same children, parent, and properties\&. 
@@ -861,12 +1113,12 @@ Removes a child by reference\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 \fBExceptions:\fP
@@ -892,12 +1144,12 @@ Removes a child via location\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 \fBExceptions:\fP
@@ -921,18 +1173,49 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "void mc::gfx::Entity::render ()\fC [inherited]\fP"
 
 .PP
-Should be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. You should never override this function\&. Instead, override \fC\fBcustomRender()\fP\fP 
+Should be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomRender()\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::update()\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::reset ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
 .SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -941,12 +1224,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -957,12 +1240,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -975,12 +1258,12 @@ Set the properties for this \fC\fBEntity\fP\fP
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 \fBParameters:\fP
@@ -1001,16 +1284,16 @@ setProperty(Index, bool)
 .SS "void mc::gfx::Entity::setProperty (const \fBByte\fP position, const bool value)\fC [inherited]\fP"
 
 .PP
-Set a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fCENTITY_\fP 
+Set a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fC\fBEntity\fP::\fP 
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 \fBParameters:\fP
@@ -1037,12 +1320,12 @@ setProperties(ByteField&)
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1053,12 +1336,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1067,12 +1350,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1081,12 +1364,12 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1106,12 +1389,12 @@ Size of this \fC\fBEntity\fP\fP
 .PP
 \fBNote:\fP
 .RS 4
-This function will make this \fC\fBEntity\fP\fP dirty\&. 
+This will make this \fC\fBEntity\fP\fP dirty\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBENTITY_DIRTY\fP 
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1120,20 +1403,40 @@ This function will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. Calls \fC\fBcustomUpdate()\fP\fP\&. 
 .PP
-You should never override this function\&. Instead, override \fC\fBcustomUpdate()\fP\fP 
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomUpdate()\fP\fP 
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIInitializationError\fP If the property \fCENTITY_INIT\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
+\fIInitializationError\fP If the property \fC\fBEntity::INIT\fP\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
 .RE
 .PP
 
 .SH "Member Data Documentation"
 .PP 
+.SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+\fCstd::vector\fP of this \fC\fBEntity\fP\\'s\fP children\&. Use of this variable directly is unrecommended\&. Use \fC\fBaddChild()\fP\fP or \fC\fBremoveChild()\fP\fP instead\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Definition at line 488 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 429 of file Entity\&.h\&.
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Definition at line 493 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

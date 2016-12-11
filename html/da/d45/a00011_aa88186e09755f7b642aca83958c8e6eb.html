@@ -120,7 +120,14 @@ $(document).ready(function(){initNavTree('da/d45/a00011_aa88186e09755f7b642aca83
 </div><div class="memdoc">
 
 <p>Should be called by a <code><a class="el" href="../../da/d45/a00011.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> when the graphical <code>Window</code> clears the frame. </p>
-<p>You should never override this function. Instead, override <code><a class="el" href="../../da/d45/a00011_a9bcf256567a4bde045a091a68e0a21d9.html#a9bcf256567a4bde045a091a68e0a21d9" title="When Entity.render() is called, customRender() is called on all of it&#39;s children. ...">customRender()</a></code> </p>
+<p>Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override <code><a class="el" href="../../da/d45/a00011_a9bcf256567a4bde045a091a68e0a21d9.html#a9bcf256567a4bde045a091a68e0a21d9" title="When Entity.render() is called, customRender() is called on all of it&#39;s children. ...">customRender()</a></code> </p><dl class="section note"><dt>Note</dt><dd>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If the current thread does not have an OpenGL context </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../da/d45/a00011_aa25f9fe4426e7135fbd01f8282d04023.html#aa25f9fe4426e7135fbd01f8282d04023" title="Should be called a by Entity when System.update() is called. ">Entity::update()</a> </dd></dl>
 
 </div>
 </div>

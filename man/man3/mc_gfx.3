@@ -1,4 +1,4 @@
-.TH "mc::gfx" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -37,6 +37,7 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBFrameBuffer\fP"
 .br
+.RI "\fIRepresents an OpenGL Framebuffer \fBObject\fP which allows rendering to a non-screen location\&. \fP"
 .ti -1c
 .RI "class \fBGraphicsEntity\fP"
 .br
@@ -49,12 +50,11 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBObject\fP"
 .br
-.ti -1c
-.RI "class \fBOpenGLContext\fP"
-.br
+.RI "\fIRepresents a OpenGL object in memory\&. \fP"
 .ti -1c
 .RI "class \fBRenderBuffer\fP"
 .br
+.RI "\fIRepresents a render buffer for use with a `FrameBuffer\&. \fP"
 .ti -1c
 .RI "class \fBRenderer\fP"
 .br
@@ -93,14 +93,7 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "using \fBShaderError\fP = \fBException\fP"
 .br
 .ti -1c
-.RI "using \fBRenderQueue\fP = std::deque< std::pair< \fBIndex\fP, \fBEntity\fP * >>"
-.br
-.in -1c
-.SS "Enumerations"
-
-.in +1c
-.ti -1c
-.RI "enum \fBEntityProperty\fP : Byte { \fBENTITY_DEAD\fP = 0, \fBENTITY_UPDATE_DISABLED\fP = 1, \fBENTITY_RENDER_DISABLED\fP = 2, \fBENTITY_INIT\fP = 3, \fBENTITY_STRETCH_X\fP = 4, \fBENTITY_STRETCH_Y\fP = 5, \fBENTITY_HOVERED\fP = 6, \fBENTITY_DIRTY\fP = 7 }"
+.RI "using \fBRenderQueue\fP = std::deque< std::pair< \fBIndex\fP, \fBGraphicsEntity\fP * >>"
 .br
 .in -1c
 .SS "Functions"
@@ -129,7 +122,7 @@ Definition at line 22 of file Entity\&.h\&.
 
 .PP
 Definition at line 20 of file GraphicsConstants\&.h\&.
-.SS "using \fBmc::gfx::RenderQueue\fP = typedef std::deque<std::pair<\fBIndex\fP, \fBEntity\fP*>>"
+.SS "using \fBmc::gfx::RenderQueue\fP = typedef std::deque<std::pair<\fBIndex\fP, \fBGraphicsEntity\fP*>>"
 
 .PP
 Definition at line 27 of file Renderer\&.h\&.
@@ -137,110 +130,49 @@ Definition at line 27 of file Renderer\&.h\&.
 
 .PP
 Definition at line 22 of file GraphicsConstants\&.h\&.
-.SH "Enumeration Type Documentation"
-.PP 
-.SS "enum \fBmc::gfx::EntityProperty\fP : \fBByte\fP"
-
-.PP
-\fBEnumerator\fP
-.in +1c
-.TP
-\fB\fIENTITY_DEAD \fP\fP
-Bit location representing whether an \fC\fBEntity\fP\fP is dead\&. If \fCtrue,\fP any \fBEntity\fP holding it will remove it and call \fCkill()\fP 
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::getProperty(unsigned int) 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_UPDATE_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCtrue\fP, \fCupdate()\fP will be called by it's parent\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::getProperty(unsigned int) 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_RENDER_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCtrue\fP, \fCrender()\fP will be called by it's parent\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::getProperty(unsigned int) 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_INIT \fP\fP
-Flag representing whether an \fBEntity\fP's init() function has been called\&. If destroy() or update() is called and this is \fCfalse\fP, an \fCInitializationError\fP is thrown\&. 
-.PP
-If init() is called and this is \fCtrue\fP, an \fCInitializationError\fP is thrown\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::getProperty(unsigned int) 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_STRETCH_X \fP\fP
-Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBENTITY_STRETCH_Y\fP 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_STRETCH_Y \fP\fP
-Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBENTITY_STRETCH_X\fP 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_HOVERED \fP\fP
-Flag representing whether this \fC\fBEntity\fP\fP has been hovered over\&. The \fC\fBRenderProtocol\fP\fP used to render the \fC\fBEntity\fP\fP must set this\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-ssl::bindEntity(Entity*) 
-.RE
-.PP
-
-.TP
-\fB\fIENTITY_DIRTY \fP\fP
-Flag representing whether this \fC\fBEntity\fP\fP is dirty and it's positions needs to be recalculated\&. This will become true under the following conditions:
-.IP "\(bu" 2
-The \fC\fBEntity\fP\fP has been changed\&. Assume that any non-const function other than render() and update() will trigger this condition\&.
-.IP "\(bu" 2
-The window is resized, moved, or created 
-.PP
-.PP
-Other classes that inherit \fC\fBEntity\fP\fP can also set this to true via \fBEntity::setProperty(Byte, bool)\fP 
-.PP
-When an \fC\fBEntity\fP\fP becomes dirty, it will propogate up the tree\&. It's parent will become dirty, it's parent will become dirty, etc\&. This will continue until it reaches the highest level \fC\fBEntity\fP\fP, which is usually the \fCGraphicsContext\fP\&. From there, it will decide what to do based on it's \fCENTITY_DIRTY\fP flag\&. 
-.PP
-Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily increasing performance in applications with little moving objects\&. 
-.PP
-Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
-.PP
-Definition at line 25 of file Entity\&.h\&.
 .SH "Function Documentation"
 .PP 
 .SS "void mc::gfx::checkGLError ()"
 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::throwShaderError (const \fBIndex\fP & shaderId, const \fBEnum\fP & type, const std::string & message)"
 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::throwShaderError (const \fBIndex\fP & shaderId, const \fBEnum\fP & type)"
+
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SH "Author"
 .PP 

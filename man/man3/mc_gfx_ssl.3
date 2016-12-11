@@ -1,4 +1,4 @@
-.TH "mc::gfx::ssl" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ssl" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,10 +14,10 @@ mc::gfx::ssl \- Holds resources for the Standard Shader Library (SSL\&.) SSL mak
 .RI "void \fBinit\fP (const \fBSize\fP &originalWidth, const \fBSize\fP &originalHeight)"
 .br
 .ti -1c
-.RI "void \fBsetUp\fP (\fBos::Window\fP *win)"
+.RI "void \fBsetUp\fP (\fBos::WindowModule\fP *win)"
 .br
 .ti -1c
-.RI "void \fBtearDown\fP (\fBos::Window\fP *win)"
+.RI "void \fBtearDown\fP (\fBos::WindowModule\fP *win)"
 .br
 .ti -1c
 .RI "void \fBdestroy\fP ()"
@@ -26,7 +26,16 @@ mc::gfx::ssl \- Holds resources for the Standard Shader Library (SSL\&.) SSL mak
 .RI "void \fBresize\fP (const \fBSize\fP &width, const \fBSize\fP &height)"
 .br
 .ti -1c
-.RI "void \fBbindEntity\fP (const \fBGraphicsEntity\fP *en)"
+.RI "void \fBcheckInput\fP ()"
+.br
+.ti -1c
+.RI "void \fBbindBuffer\fP (\fBUniformBuffer\fP &buf)"
+.br
+.ti -1c
+.RI "void \fBfillBuffer\fP (\fBUniformBuffer\fP &buf, const \fBEntity\fP *en)"
+.br
+.ti -1c
+.RI "void \fBbindEntity\fP (const \fBGraphicsEntity\fP *en, \fBShaderProgram\fP &prog)"
 .br
 .ti -1c
 .RI "void \fBbindShaderProgram\fP (\fBShaderProgram\fP &prog)"
@@ -41,25 +50,224 @@ mc::gfx::ssl \- Holds resources for the Standard Shader Library (SSL\&.) SSL mak
 .SH "Detailed Description"
 .PP 
 Holds resources for the Standard Shader Library (SSL\&.) SSL makes it easy to interact with MACE entities from shaders through special header files\&. 
+
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
 .SH "Function Documentation"
 .PP 
-.SS "void mc::gfx::ssl::bindEntity (const \fBGraphicsEntity\fP * en)"
+.SS "void mc::gfx::ssl::bindBuffer (\fBUniformBuffer\fP & buf)"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ssl::bindEntity (const \fBGraphicsEntity\fP * en, \fBShaderProgram\fP & prog)"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "void mc::gfx::ssl::bindShaderProgram (\fBShaderProgram\fP & prog)"
 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ssl::checkInput ()"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::ssl::destroy ()"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ssl::fillBuffer (\fBUniformBuffer\fP & buf, const \fBEntity\fP * en)"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "const \fBmc::Preprocessor\fP& mc::gfx::ssl::getSSLPreprocessor ()"
 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
 .SS "void mc::gfx::ssl::init (const \fBSize\fP & originalWidth, const \fBSize\fP & originalHeight)"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "std::string mc::gfx::ssl::processShader (const std::string & shader, const GLenum & type)"
 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
 .SS "void mc::gfx::ssl::resize (const \fBSize\fP & width, const \fBSize\fP & height)"
 
-.SS "void mc::gfx::ssl::setUp (\fBos::Window\fP * win)"
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
-.SS "void mc::gfx::ssl::tearDown (\fBos::Window\fP * win)"
+.SS "void mc::gfx::ssl::setUp (\fBos::WindowModule\fP * win)"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ssl::tearDown (\fBos::WindowModule\fP * win)"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SH "Author"
 .PP 

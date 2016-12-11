@@ -1,4 +1,4 @@
-.TH "mc::gfx::Buffer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Buffer" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -24,12 +24,15 @@ Inherited by \fBmc::gfx::UniformBuffer\fP\&.
 .ti -1c
 .RI "bool \fBisCreated\fP () const "
 .br
+.RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
 .RI "void \fBinit\fP ()"
 .br
+.RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
 .ti -1c
 .RI "void \fBdestroy\fP ()"
 .br
+.RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
 .RI "void \fBsetImmutableData\fP (const GLsizeiptr dataSize, const GLvoid *data, GLbitfield flags)"
 .br
@@ -52,14 +55,31 @@ Inherited by \fBmc::gfx::UniformBuffer\fP\&.
 .RI "GLboolean \fBunmap\fP ()"
 .br
 .ti -1c
+.RI "bool \fBoperator==\fP (const \fBBuffer\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBBuffer\fP &other) const "
+.br
+.ti -1c
 .RI "void \fBbind\fP () const "
 .br
+.RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
 .ti -1c
 .RI "void \fBunbind\fP () const "
 .br
+.RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
 .ti -1c
 .RI "\fBIndex\fP \fBgetID\fP () const "
 .br
+.RI "\fIRetrieves the current ID that this \fC\fBObject\fP\fP represents\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
 .in -1c
 .SS "Protected Attributes"
 
@@ -67,10 +87,11 @@ Inherited by \fBmc::gfx::UniformBuffer\fP\&.
 .ti -1c
 .RI "\fBIndex\fP \fBid\fP = 0"
 .br
+.RI "\fIThe ID of this `Object\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 62 of file Buffer\&.h\&.
+Definition at line 347 of file Buffer\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "virtual mc::gfx::Buffer::~Buffer ()\fC [virtual]\fP, \fC [default]\fP"
@@ -81,42 +102,352 @@ Definition at line 62 of file Buffer\&.h\&.
 .PP 
 .SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
 
+.PP
+Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::unbind() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
+
 .SS "void mc::gfx::Buffer::copyData (\fBBuffer\fP other, GLsizeiptr size, \fBIndex\fP readOffset = \fC0\fP, \fBIndex\fP writeOffset = \fC0\fP)"
 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::Buffer::destroy ()\fC [virtual]\fP"
+
+.PP
+Calls the corresponding glDestroy* function and deletes the ID\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::init()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
 
+.PP
+Retrieves the current ID that this \fC\fBObject\fP\fP represents\&. The ID is an unsigned number that acts like a pointer to OpenGL memory\&. It is assigned when \fBObject::init()\fP is called\&. 
+.PP
+If it is 0, the \fC\fBObject\fP\fP is considered uncreated\&. 
+.PP
+When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbind() const \fPwill bind to ID 0, which is the equivelant of a null pointer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
 .SS "void mc::gfx::Buffer::init ()\fC [virtual]\fP"
+
+.PP
+Calls the corresponding glCreate* function and assigns an ID\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::destroy()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "bool mc::gfx::Buffer::isCreated () const\fC [virtual]\fP"
 
 .PP
+Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBObject\fP\fP represents memory 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.PP
+\fBObject::init()\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "GLvoid* mc::gfx::Buffer::map (const GLenum access = \fCGL_READ_WRITE\fP)"
 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glMapBuffer 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "GLvoid* mc::gfx::Buffer::mapRange (const \fBIndex\fP offset, const \fBSize\fP length, const GLbitfield access)"
+
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glMapBufferRange 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Buffer::operator!= (const \fBBuffer\fP & other) const"
+
+.SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Buffer::operator== (const \fBBuffer\fP & other) const"
 
 .SS "void mc::gfx::Buffer::setData (const GLsizeiptr dataSize, const GLvoid * data, const GLenum drawType = \fCGL_DYNAMIC_DRAW\fP) const"
 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glBufferData 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::Buffer::setDataRange (const \fBIndex\fP offset, const GLsizeiptr dataSize, const GLvoid * data) const"
+
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glBufferSubData 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "void mc::gfx::Buffer::setImmutableData (const GLsizeiptr dataSize, const GLvoid * data, GLbitfield flags)"
 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glBufferStorage 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
 
+.PP
+Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.RE
+.PP
+
 .SS "GLboolean mc::gfx::Buffer::unmap ()"
+
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glMapBuffer 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SH "Member Data Documentation"
 .PP 
 .SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 37 of file Buffer\&.h\&.
+The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 in \fBObject::destroy()\fP 
+.PP
+\fBObject::getID() const \fPreturns this\&. 
+.PP
+Definition at line 123 of file Buffer\&.h\&.
 
 .SH "Author"
 .PP 

@@ -82,25 +82,20 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::IncludeString Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::IncludeString}
-{\xe \v mc::IncludeString}
-{\bkmkstart AAAAAAAATV}
-{\bkmkend AAAAAAAATV}
+mc::Macro Struct Reference\par \pard\plain 
+{\tc\tcl2 \v mc::Macro}
+{\xe \v mc::Macro}
+{\bkmkstart AAAAAAAATX}
+{\bkmkend AAAAAAAATX}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Represents a fake file, in which you can add include files that don't exist on the filesystem. }}\par
+Represents a {\f2 {\b Macro}}  in code. }}\par
 {
 {\f2 #include <Preprocessor.h>}}\par
-Inheritance diagram for mc::IncludeString:{
+Collaboration diagram for mc::Macro:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d77/a00095.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::IncludeString:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/df8/a00096.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d1/d44/a00098.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -109,24 +104,51 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b IncludeString} (const std::string &content, const std::string name)\par
+{\b Macro} (std::string {\b name}, std::string {\b definition}, std::vector< std::string > {\b parameters}, std::string {\b parameterString})\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates an {\f2 {\b IncludeString}}  with the specified info. }{
+Generates a function macro. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b hasFile} (const std::string &name) const \par
+{\b Macro} (std::string {\b name}, std::string {\b definition})\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks whether this include has the specified file. }{
+Generates a standard, variable like macro. }{
+}\par
+}}
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Public Attributes\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+std::string {\b name}\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The name of the macro, as specified by the constructor. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::string {\b getFile} (const std::string &name) const \par
+std::string {\b definition}\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves a file with a certain name. }{
+The definition of the macro. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+std::vector< std::string > {\b parameters}\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If the macro is a function, list of parameters that the macro takes in. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+std::string {\b parameterString}\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The original string with the parenthesis, spaces, and parameters intact, but without the name. }{
 }\par
 }}
 }
@@ -136,35 +158,34 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Represents a fake file, in which you can add include files that don't exist on the filesystem. \par
+Represents a {\f2 {\b Macro}}  in code. \par
 }
 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
+Created automatically when #define is encountered. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b IncludeDirectory} \par
-{\b Preprocessor} \par
+See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b Preprocessor} \par
 }}{
-Definition at line 92 of file Preprocessor.h.}\par
+Definition at line 31 of file Preprocessor.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v IncludeString\:mc::IncludeString}
-{\xe \v mc::IncludeString\:IncludeString}
+{\xe \v Macro\:mc::Macro}
+{\xe \v mc::Macro\:Macro}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::IncludeString::IncludeString (const std::string &  {\i content}, const std::string  {\i name})}}
+mc::Macro::Macro (std::string  {\i name}, std::string  {\i definition}, std::vector< std::string >  {\i parameters}, std::string  {\i parameterString})}}
 \par
-{\bkmkstart AAAAAAAATW}
-{\bkmkend AAAAAAAATW}
+{\bkmkstart AAAAAAAATY}
+{\bkmkend AAAAAAAATY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates an {\f2 {\b IncludeString}}  with the specified info. }}\par
+Generates a function macro. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -173,58 +194,148 @@ Parameters:\par}
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i content} \cell }{What the {\f2 {\b IncludeString}}  returns when included \cell }
+{{\i name} \cell }{The name of the macro, not including parenthesis \cell }
 {\row }
 \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i name} \cell }{The name of the {\f2 {\b IncludeString}}  which is used by #include \cell }
+{{\i definition} \cell }{What it expands to. Parameters can be used here. \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i parameters} \cell }{A list of every parameter. Spaces parenthesis should not be included. \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i parameterString} \cell }{The original string with the parenthesis, spaces, and parameters intact. \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Macro(std::string, std::string)} \par
+}}}
+{\xe \v Macro\:mc::Macro}
+{\xe \v mc::Macro\:Macro}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::Macro::Macro (std::string  {\i name}, std::string  {\i definition})}}
+\par
+{\bkmkstart AAAAAAAATZ}
+{\bkmkend AAAAAAAATZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Generates a standard, variable like macro. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+{\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i name} \cell }{The name of the macro. Whenever this is encountered in the input, it will be expanded. \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i definition} \cell }{What the macro expands to. \cell }
 {\row }
 }
 }}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Function Documentation\par
+Member Data Documentation\par
 \pard\plain 
-{\xe \v getFile\:mc::IncludeString}
-{\xe \v mc::IncludeString\:getFile}
+{\xe \v definition\:mc::Macro}
+{\xe \v mc::Macro\:definition}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::string mc::IncludeString::getFile (const std::string &  {\i name}) const{\f2 [virtual]}}}
+std::string mc::Macro::definition}}
 \par
-{\bkmkstart AAAAAAAATP}
-{\bkmkend AAAAAAAATP}
+{\bkmkstart AAAAAAAAUA}
+{\bkmkend AAAAAAAAUA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves a file with a certain name. }}\par
-{
-Implements {\b mc::Include} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAATN \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+The definition of the macro. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Whenever {\f2 name}  is encountered, it will be expanded to the definition. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b name} \par
+}}{
+Definition at line 57 of file Preprocessor.h.}\par
 }
-{\xe \v hasFile\:mc::IncludeString}
-{\xe \v mc::IncludeString\:hasFile}
+{\xe \v name\:mc::Macro}
+{\xe \v mc::Macro\:name}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::IncludeString::hasFile (const std::string &  {\i name}) const{\f2 [virtual]}}}
+std::string mc::Macro::name}}
 \par
-{\bkmkstart AAAAAAAATS}
-{\bkmkend AAAAAAAATS}
+{\bkmkstart AAAAAAAAUB}
+{\bkmkend AAAAAAAAUB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks whether this include has the specified file. }}\par
+The name of the macro, as specified by the constructor. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If there isn't an {\f2 {\b Include}}  with the file, then a {\f2 PreprocessorException}  is thrown. \par
-}{
-Implements {\b mc::Include} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAATQ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b definition} \par
+}}{
+Definition at line 52 of file Preprocessor.h.}\par
+}
+{\xe \v parameters\:mc::Macro}
+{\xe \v mc::Macro\:parameters}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+std::vector< std::string > mc::Macro::parameters}}
+\par
+{\bkmkstart AAAAAAAAUC}
+{\bkmkend AAAAAAAAUC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If the macro is a function, list of parameters that the macro takes in. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Can be empty if not a function. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b parameterString} \par
+}}{
+Definition at line 62 of file Preprocessor.h.}\par
+}
+{\xe \v parameterString\:mc::Macro}
+{\xe \v mc::Macro\:parameterString}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+std::string mc::Macro::parameterString}}
+\par
+{\bkmkstart AAAAAAAAUD}
+{\bkmkend AAAAAAAAUD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The original string with the parenthesis, spaces, and parameters intact, but without the name. }}\par
+{
+Definition at line 66 of file Preprocessor.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-The documentation for this class was generated from the following file:{\par
+The documentation for this struct was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
 include/MACE/Utility/Preprocessor.h\par
 }}

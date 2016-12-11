@@ -1,36 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d2/dee/a00049" kind="file" language="C++">
-    <compoundname>entity2D.f.glsl</compoundname>
+    <compoundname>ssl_color.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">//when<sp/>the<sp/>preprocessor<sp/>copy<sp/>and<sp/>pastes<sp/>this<sp/>file,<sp/>the<sp/>newlines<sp/>will<sp/>be<sp/>syntax<sp/>errors.<sp/>we<sp/>need<sp/>to<sp/>specify<sp/>that<sp/>this<sp/>is<sp/>a<sp/>multiline<sp/>string.<sp/>if<sp/>you<sp/>want<sp/>syntax<sp/>highlighting,<sp/>make<sp/>sure<sp/>to<sp/>configure<sp/>your<sp/>editor<sp/>to<sp/>ignore<sp/>this<sp/>line</highlight></codeline>
 <codeline><highlight class="normal">R&quot;(</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">//FRAGMENT<sp/>SHADER</highlight></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_COLOR_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_COLOR_LIBRARY_</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#version<sp/>330<sp/>core</highlight></codeline>
+<codeline><highlight class="normal">layout(location<sp/>=<sp/>1)<sp/>out<sp/>uint<sp/>ssl_ID;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_frag&gt;</highlight></codeline>
+<codeline><highlight class="normal">layout(std140)<sp/>uniform<sp/>ssl_PaintData{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_Paint;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_Opacity;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_EntityID;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">precision<sp/>highp<sp/>float;<sp/>//<sp/>Defines<sp/>precision<sp/>for<sp/>float<sp/>and<sp/>float-derived<sp/>(vector/matrix)<sp/>types.</highlight></codeline>
+<codeline><highlight class="normal">vec4<sp/>sslGetEntityColor(vec4<sp/>ssl_Tex){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_EntityColor=<sp/>mix(vec4(ssl_Paint.rgb,1.0),ssl_Tex,ssl_Paint.a);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_EntityColor.a=ssl_Opacity;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_ID<sp/>=<sp/>uint(ssl_EntityID);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>ssl_EntityColor;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">in<sp/>lowp<sp/>vec2<sp/>textureCoord;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">layout(location<sp/>=<sp/>0)<sp/>out<sp/>lowp<sp/>vec4<sp/>color;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">uniform<sp/>lowp<sp/>sampler2D<sp/>tex;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">void<sp/>main<sp/>(void)<sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal">{<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>color<sp/>=<sp/>sslGetEntityColor(texture(tex,textureCoord));</highlight></codeline>
-<codeline><highlight class="normal">}<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal">#endif</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/entity2D.f.glsl"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_color.glsl"/>
   </compounddef>
 </doxygen>

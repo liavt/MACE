@@ -2,41 +2,75 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d2/de7/a00014" kind="class" language="C++" prot="public">
     <compoundname>mc::gfx::FrameBuffer</compoundname>
-    <basecompoundref refid="d3/dfe/a00025" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
-    <includes refid="dd/d32/a00041" local="no">Buffer.h</includes>
+    <basecompoundref refid="dc/de2/a00024" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
+    <includes refid="d8/d41/a00038" local="no">Buffer.h</includes>
       <sectiondef kind="public-func">
       <memberdef kind="function" id="d2/de7/a00014_aee32d15d15704225a84465984a270ee7_1aee32d15d15704225a84465984a270ee7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::gfx::FrameBuffer::init</definition>
         <argsstring>()</argsstring>
         <name>init</name>
-        <reimplements refid="d3/dfe/a00025_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
+        <reimplements refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="121" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="182" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d2/de7/a00014_a6404eaa7e4edb031d364b166ad15df82_1a6404eaa7e4edb031d364b166ad15df82" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::gfx::FrameBuffer::destroy</definition>
         <argsstring>()</argsstring>
         <name>destroy</name>
-        <reimplements refid="d3/dfe/a00025_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
+        <reimplements refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="122" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="183" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d2/de7/a00014_ac66c5590c0d4b1d9cccb7552414ce11a_1ac66c5590c0d4b1d9cccb7552414ce11a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d2/de7/a00014_af0828c4dd326f069e7e9615dbd08f632_1af0828c4dd326f069e7e9615dbd08f632" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::FrameBuffer::attachTexture</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLuint &amp;textureID, const GLint &amp;level)</argsstring>
+        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLuint &amp;textureID, const GLint &amp;level=0)</argsstring>
         <name>attachTexture</name>
         <param>
           <type>const GLenum &amp;</type>
@@ -53,19 +87,60 @@
         <param>
           <type>const GLint &amp;</type>
           <declname>level</declname>
+          <defval>0</defval>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Attaches a texture to this <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>textureID</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID for the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_aa49107301cfbb0c90986424781304adf_1aa49107301cfbb0c90986424781304adf" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000002"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="dc/d87/a00032" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="124" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="196" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d2/de7/a00014_a11149e3d4884c83e80828f4379848d93_1a11149e3d4884c83e80828f4379848d93" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d2/de7/a00014_af4cb479dd83383250fc37dcf49c9ad3c_1af4cb479dd83383250fc37dcf49c9ad3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::FrameBuffer::attachTexture1D</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level)</argsstring>
+        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level=0)</argsstring>
         <name>attachTexture1D</name>
         <param>
           <type>const GLenum &amp;</type>
@@ -86,19 +161,68 @@
         <param>
           <type>const GLint &amp;</type>
           <declname>level</declname>
+          <defval>0</defval>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Attaches a texture to this <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>textureID</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID for the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_aa49107301cfbb0c90986424781304adf_1aa49107301cfbb0c90986424781304adf" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000002"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="dc/d87/a00032" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>texTarget</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="125" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="201" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d2/de7/a00014_a47822d9f5c14b085e0527b288bab65de_1a47822d9f5c14b085e0527b288bab65de" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d2/de7/a00014_ac849e55b1aab89440bcf809773ff36f8_1ac849e55b1aab89440bcf809773ff36f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::FrameBuffer::attachTexture2D</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level)</argsstring>
+        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level=0)</argsstring>
         <name>attachTexture2D</name>
         <param>
           <type>const GLenum &amp;</type>
@@ -119,19 +243,162 @@
         <param>
           <type>const GLint &amp;</type>
           <declname>level</declname>
+          <defval>0</defval>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Attaches a texture to this <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>textureID</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID for the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_aa49107301cfbb0c90986424781304adf_1aa49107301cfbb0c90986424781304adf" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000002"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="dc/d87/a00032" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>texTarget</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="126" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="205" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d2/de7/a00014_a133731106ba2c6c9356e624d98b50ca8_1a133731106ba2c6c9356e624d98b50ca8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d2/de7/a00014_ad388bd1236c469aa1bd88b712f9c2de1_1ad388bd1236c469aa1bd88b712f9c2de1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::FrameBuffer::attachTexture3D</definition>
+        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level=0, const GLint &amp;layer=0)</argsstring>
+        <name>attachTexture3D</name>
+        <param>
+          <type>const GLenum &amp;</type>
+          <declname>target</declname>
+        </param>
+        <param>
+          <type>const GLenum &amp;</type>
+          <declname>attachment</declname>
+        </param>
+        <param>
+          <type>const GLenum &amp;</type>
+          <declname>texTarget</declname>
+        </param>
+        <param>
+          <type>const GLuint &amp;</type>
+          <declname>textureID</declname>
+        </param>
+        <param>
+          <type>const GLint &amp;</type>
+          <declname>level</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>const GLint &amp;</type>
+          <declname>layer</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Attaches a texture to this <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>textureID</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID for the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_aa49107301cfbb0c90986424781304adf_1aa49107301cfbb0c90986424781304adf" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000002"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="dc/d87/a00032" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>texTarget</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>layer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which layer of the 3-dimensional image to use. It is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="210" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d2/de7/a00014_a72425ec025ea5b934b10849cb36735b8_1a72425ec025ea5b934b10849cb36735b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::FrameBuffer::attachTextureLayer</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLuint &amp;texture, const GLint &amp;level, const GLint &amp;layer)</argsstring>
+        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLuint &amp;texture, const GLint &amp;level=0, const GLint &amp;layer=0)</argsstring>
         <name>attachTextureLayer</name>
         <param>
           <type>const GLenum &amp;</type>
@@ -148,18 +415,66 @@
         <param>
           <type>const GLint &amp;</type>
           <declname>level</declname>
+          <defval>0</defval>
         </param>
         <param>
           <type>const GLint &amp;</type>
           <declname>layer</declname>
+          <defval>0</defval>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Attaches a single layer from a texture to this <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>texture</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID for the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>layer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which layer of the texture to use. It is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer">https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="127" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="222" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d2/de7/a00014_a134a6bd75a1b1da1e73e3760a65d729d_1a134a6bd75a1b1da1e73e3760a65d729d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -175,37 +490,39 @@
           <declname>attachment</declname>
         </param>
         <param>
-          <type>const <ref refid="dc/d3c/a00028" kindref="compound">RenderBuffer</ref> &amp;</type>
+          <type>const <ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref> &amp;</type>
           <declname>buffer</declname>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Attaches a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref></computeroutput> to this <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> for rendering. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buffer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref></computeroutput> to use. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer">https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer</ulink> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="129" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d2/de7/a00014_a0ea0b4e1e018a2e599fc432ac6bf7606_1a0ea0b4e1e018a2e599fc432ac6bf7606" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FrameBuffer::setParameter</definition>
-        <argsstring>(const GLenum &amp;paramName, const GLint &amp;value)</argsstring>
-        <name>setParameter</name>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>paramName</declname>
-        </param>
-        <param>
-          <type>const GLint &amp;</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="131" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="231" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d2/de7/a00014_aa49107301cfbb0c90986424781304adf_1aa49107301cfbb0c90986424781304adf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -213,7 +530,7 @@
         <argsstring>(const Size &amp;arrSize, const GLenum *buffers)</argsstring>
         <name>setDrawBuffers</name>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
           <declname>arrSize</declname>
         </param>
         <param>
@@ -221,26 +538,69 @@
           <declname>buffers</declname>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Specifies what buffers to render to. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>Takes in an array of attachments. A <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref></computeroutput> or <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> can be attached to act as a draw buffer. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arrSize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the array of render buffers </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buffers</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the first element of the array </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glDrawBuffers">https://www.opengl.org/wiki/GLAPI/glDrawBuffers</ulink> </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTexture(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_af4cb479dd83383250fc37dcf49c9ad3c_1af4cb479dd83383250fc37dcf49c9ad3c" kindref="member">FrameBuffer::attachTexture1D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_ac849e55b1aab89440bcf809773ff36f8_1ac849e55b1aab89440bcf809773ff36f8" kindref="member">FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;, const GLint&amp;) </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTextureLayer(const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d2/de7/a00014_a134a6bd75a1b1da1e73e3760a65d729d_1a134a6bd75a1b1da1e73e3760a65d729d" kindref="member">FrameBuffer::attachRenderbuffer(const GLenum&amp;, const GLenum&amp;, const RenderBuffer&amp;)</ref> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="133" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="247" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d2/de7/a00014_ac3fd2dce3459a4b9ea24cb1aff17deae_1ac3fd2dce3459a4b9ea24cb1aff17deae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>bool</type>
         <definition>bool mc::gfx::FrameBuffer::isCreated</definition>
         <argsstring>() const </argsstring>
         <name>isCreated</name>
-        <reimplements refid="d3/dfe/a00025_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
+        <reimplements refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Queries OpenGL whether this <ref refid="dc/de2/a00024" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="135" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="249" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d2/de7/a00014_a1ea5631800390eb09b0ed72ee86461cc_1a1ea5631800390eb09b0ed72ee86461cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>GLenum</type>
@@ -252,51 +612,155 @@
           <declname>target</declname>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Queries OpenGL for the status of this `FrameBuffer. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><computeroutput>Can be used to detect whether this</computeroutput>FrameBuffer` encountered an error during creation. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The <computeroutput><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref></computeroutput> status. The full list of enums is described in the OpenGL specification. </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glCheckFramebufferStatus">https://www.opengl.org/wiki/GLAPI/glCheckFramebufferStatus</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="137" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="259" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/dfe/a00025_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::Object::bind</definition>
         <argsstring>() const </argsstring>
         <name>bind</name>
         <briefdescription>
-        </briefdescription>
+<para>Binds this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="29" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="72" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/dfe/a00025_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::Object::unbind</definition>
         <argsstring>() const </argsstring>
         <name>unbind</name>
         <briefdescription>
-        </briefdescription>
+<para>Unbinds this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="30" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="78" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/dfe/a00025_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+      <memberdef kind="function" id="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::Object::getID</definition>
         <argsstring>() const </argsstring>
         <name>getID</name>
         <briefdescription>
-        </briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="34" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="99" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="dc/de2/a00024" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="108" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="dc/de2/a00024" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="116" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="private-func">
@@ -305,41 +769,72 @@
         <definition>void mc::gfx::FrameBuffer::bindIndex</definition>
         <argsstring>(const Index &amp;id) const </argsstring>
         <name>bindIndex</name>
-        <reimplements refid="d3/dfe/a00025_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
+        <reimplements refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
         <param>
-          <type>const <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
           <declname>id</declname>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const </ref>and <ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="139" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="264" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="d3/dfe/a00025_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
-        <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+      <memberdef kind="variable" id="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
+        <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::Object::id</definition>
         <argsstring></argsstring>
         <name>id</name>
         <initializer>= 0</initializer>
         <briefdescription>
-        </briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>` Should be set in <ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> and become 0 in <ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="37" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="37" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="123" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="123" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>Represents an OpenGL Framebuffer <ref refid="dc/de2/a00024" kindref="compound">Object</ref> which allows rendering to a non-screen location. </para>    </briefdescription>
     <detaileddescription>
-    </detaileddescription>
+<para>This also allows rendering to a <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Texture</ref></computeroutput> or <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref></computeroutput> object. <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Framebuffer_Object">https://www.opengl.org/wiki/Framebuffer_Object</ulink> </para></simplesect>
+</para>    </detaileddescription>
     <inheritancegraph>
+      <node id="282">
+        <label>mc::gfx::FrameBuffer</label>
+        <link refid="d2/de7/a00014"/>
+        <childnode refid="283" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="283">
+        <label>mc::gfx::Object</label>
+        <link refid="dc/de2/a00024"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
       <node id="284">
         <label>mc::gfx::FrameBuffer</label>
         <link refid="d2/de7/a00014"/>
@@ -348,40 +843,30 @@
       </node>
       <node id="285">
         <label>mc::gfx::Object</label>
-        <link refid="d3/dfe/a00025"/>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="286">
-        <label>mc::gfx::FrameBuffer</label>
-        <link refid="d2/de7/a00014"/>
-        <childnode refid="287" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="287">
-        <label>mc::gfx::Object</label>
-        <link refid="d3/dfe/a00025"/>
+        <link refid="dc/de2/a00024"/>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/Buffer.h" line="119" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="119" bodyend="140"/>
+    <location file="include/MACE/Graphics/Buffer.h" line="180" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="180" bodyend="265"/>
     <listofallmembers>
       <member refid="d2/de7/a00014_a134a6bd75a1b1da1e73e3760a65d729d_1a134a6bd75a1b1da1e73e3760a65d729d" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachRenderbuffer</name></member>
-      <member refid="d2/de7/a00014_ac66c5590c0d4b1d9cccb7552414ce11a_1ac66c5590c0d4b1d9cccb7552414ce11a" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture</name></member>
-      <member refid="d2/de7/a00014_a11149e3d4884c83e80828f4379848d93_1a11149e3d4884c83e80828f4379848d93" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture1D</name></member>
-      <member refid="d2/de7/a00014_a47822d9f5c14b085e0527b288bab65de_1a47822d9f5c14b085e0527b288bab65de" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture2D</name></member>
-      <member refid="d2/de7/a00014_a133731106ba2c6c9356e624d98b50ca8_1a133731106ba2c6c9356e624d98b50ca8" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTextureLayer</name></member>
-      <member refid="d3/dfe/a00025_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>bind</name></member>
+      <member refid="d2/de7/a00014_af0828c4dd326f069e7e9615dbd08f632_1af0828c4dd326f069e7e9615dbd08f632" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture</name></member>
+      <member refid="d2/de7/a00014_af4cb479dd83383250fc37dcf49c9ad3c_1af4cb479dd83383250fc37dcf49c9ad3c" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture1D</name></member>
+      <member refid="d2/de7/a00014_ac849e55b1aab89440bcf809773ff36f8_1ac849e55b1aab89440bcf809773ff36f8" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture2D</name></member>
+      <member refid="d2/de7/a00014_ad388bd1236c469aa1bd88b712f9c2de1_1ad388bd1236c469aa1bd88b712f9c2de1" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTexture3D</name></member>
+      <member refid="d2/de7/a00014_a72425ec025ea5b934b10849cb36735b8_1a72425ec025ea5b934b10849cb36735b8" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>attachTextureLayer</name></member>
+      <member refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>bind</name></member>
       <member refid="d2/de7/a00014_1a0cd48fa5f307e0c24487ffaca65b5ceb" prot="private" virt="virtual"><scope>mc::gfx::FrameBuffer</scope><name>bindIndex</name></member>
       <member refid="d2/de7/a00014_a1ea5631800390eb09b0ed72ee86461cc_1a1ea5631800390eb09b0ed72ee86461cc" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>checkStatus</name></member>
       <member refid="d2/de7/a00014_a6404eaa7e4edb031d364b166ad15df82_1a6404eaa7e4edb031d364b166ad15df82" prot="public" virt="virtual"><scope>mc::gfx::FrameBuffer</scope><name>destroy</name></member>
-      <member refid="d3/dfe/a00025_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>getID</name></member>
-      <member refid="d3/dfe/a00025_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>id</name></member>
+      <member refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>getID</name></member>
+      <member refid="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>id</name></member>
       <member refid="d2/de7/a00014_aee32d15d15704225a84465984a270ee7_1aee32d15d15704225a84465984a270ee7" prot="public" virt="virtual"><scope>mc::gfx::FrameBuffer</scope><name>init</name></member>
       <member refid="d2/de7/a00014_ac3fd2dce3459a4b9ea24cb1aff17deae_1ac3fd2dce3459a4b9ea24cb1aff17deae" prot="public" virt="virtual"><scope>mc::gfx::FrameBuffer</scope><name>isCreated</name></member>
+      <member refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>operator!=</name></member>
+      <member refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>operator==</name></member>
       <member refid="d2/de7/a00014_aa49107301cfbb0c90986424781304adf_1aa49107301cfbb0c90986424781304adf" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>setDrawBuffers</name></member>
-      <member refid="d2/de7/a00014_a0ea0b4e1e018a2e599fc432ac6bf7606_1a0ea0b4e1e018a2e599fc432ac6bf7606" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>setParameter</name></member>
-      <member refid="d3/dfe/a00025_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>unbind</name></member>
-      <member refid="d3/dfe/a00025_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::FrameBuffer</scope><name>~Object</name></member>
+      <member refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" virt="non-virtual"><scope>mc::gfx::FrameBuffer</scope><name>unbind</name></member>
+      <member refid="dc/de2/a00024_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::FrameBuffer</scope><name>~Object</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="dc/dee/a00053" kind="file" language="C++">
-    <compoundname>ssl_frag.glsl</compoundname>
+    <compoundname>ssl_window.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
@@ -9,10 +9,18 @@
     <programlisting>
 <codeline><highlight class="normal">R&quot;(</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_color&gt;</highlight></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_WINDOW_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_WINDOW_LIBRARY_</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">layout(std140)<sp/>uniform<sp/>ssl_WindowData{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec2<sp/>ssl_OriginalSize;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec2<sp/>ssl_CurrentSize;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#endif</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/include/ssl_frag.glsl"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_window.glsl"/>
   </compounddef>
 </doxygen>

@@ -2,9 +2,9 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="de/d5e/a00007" kind="class" language="C++" prot="public">
     <compoundname>mc::gfx::Buffer</compoundname>
-    <basecompoundref refid="d3/dfe/a00025" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
-    <derivedcompoundref refid="de/d8c/a00036" prot="public" virt="non-virtual">mc::gfx::UniformBuffer</derivedcompoundref>
-    <includes refid="dd/d32/a00041" local="no">Buffer.h</includes>
+    <basecompoundref refid="dc/de2/a00024" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
+    <derivedcompoundref refid="db/df3/a00034" prot="public" virt="non-virtual">mc::gfx::UniformBuffer</derivedcompoundref>
+    <includes refid="d8/d41/a00038" local="no">Buffer.h</includes>
       <sectiondef kind="private-attrib">
       <memberdef kind="variable" id="de/d5e/a00007_1acc9361729065c57524a3fd32445076e3" prot="private" static="no" mutable="no">
         <type>GLenum</type>
@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="85" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="85" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="401" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="401" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="64" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="349" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_a04453b83666d5d8c079d4018a996793c_1a04453b83666d5d8c079d4018a996793c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
@@ -49,49 +49,95 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="66" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="351" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_a0fe9d2b30be7b281cd44570f4cd27f34_1a0fe9d2b30be7b281cd44570f4cd27f34" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>bool</type>
         <definition>bool mc::gfx::Buffer::isCreated</definition>
         <argsstring>() const </argsstring>
         <name>isCreated</name>
-        <reimplements refid="d3/dfe/a00025_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
+        <reimplements refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Queries OpenGL whether this <ref refid="dc/de2/a00024" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="68" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="353" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_aa3ecc32c995337b12fd924d93107f66d_1aa3ecc32c995337b12fd924d93107f66d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::gfx::Buffer::init</definition>
         <argsstring>()</argsstring>
         <name>init</name>
-        <reimplements refid="d3/dfe/a00025_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
+        <reimplements refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="70" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="355" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_a5a83ddd94fe1c0dbd3afce5157319116_1a5a83ddd94fe1c0dbd3afce5157319116" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::gfx::Buffer::destroy</definition>
         <argsstring>()</argsstring>
         <name>destroy</name>
-        <reimplements refid="d3/dfe/a00025_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
+        <reimplements refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="71" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="356" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_afc734edb76df2f7c048e5e98865d45fe_1afc734edb76df2f7c048e5e98865d45fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -113,10 +159,20 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferStorage">https://www.opengl.org/wiki/GLAPI/glBufferStorage</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="73" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="362" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_a3c8add91e87a0ae846328c88d4ca25a2_1a3c8add91e87a0ae846328c88d4ca25a2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -139,10 +195,20 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferData">https://www.opengl.org/wiki/GLAPI/glBufferData</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="74" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="367" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_aada7ce3d232ad1ca92f002703620f122_1aada7ce3d232ad1ca92f002703620f122" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -150,7 +216,7 @@
         <argsstring>(const Index offset, const GLsizeiptr dataSize, const GLvoid *data) const </argsstring>
         <name>setDataRange</name>
         <param>
-          <type>const <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
           <declname>offset</declname>
         </param>
         <param>
@@ -164,10 +230,20 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferSubData">https://www.opengl.org/wiki/GLAPI/glBufferSubData</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="75" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="372" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_a961573fe546431cb3938fa6744620504_1a961573fe546431cb3938fa6744620504" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -183,22 +259,32 @@
           <declname>size</declname>
         </param>
         <param>
-          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
           <declname>readOffset</declname>
           <defval>0</defval>
         </param>
         <param>
-          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
           <declname>writeOffset</declname>
           <defval>0</defval>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData">https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="77" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="378" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_abc3a12bc1d66e9efcf533824cd782cdc_1abc3a12bc1d66e9efcf533824cd782cdc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>GLvoid *</type>
@@ -213,10 +299,20 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBuffer">https://www.opengl.org/wiki/GLAPI/glMapBuffer</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="79" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="384" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_a1b0efb2ce8e42687976d336432a5dc9e_1a1b0efb2ce8e42687976d336432a5dc9e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>GLvoid *</type>
@@ -224,11 +320,11 @@
         <argsstring>(const Index offset, const Size length, const GLbitfield access)</argsstring>
         <name>mapRange</name>
         <param>
-          <type>const <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
           <declname>offset</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>length</declname>
         </param>
         <param>
@@ -238,10 +334,20 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBufferRange">https://www.opengl.org/wiki/GLAPI/glMapBufferRange</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="81" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="390" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d5e/a00007_ae9b9ba8d0c02462e6a679a1b978a87c0_1ae9b9ba8d0c02462e6a679a1b978a87c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>GLboolean</type>
@@ -251,49 +357,178 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBuffer">https://www.opengl.org/wiki/GLAPI/glMapBuffer</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="396" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d5e/a00007_aba3829c409b1a2dd781dd7b12ee7019d_1aba3829c409b1a2dd781dd7b12ee7019d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Buffer::operator==</definition>
+        <argsstring>(const Buffer &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="de/d5e/a00007" kindref="compound">Buffer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="83" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="398" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/dfe/a00025_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="de/d5e/a00007_a9d5b5b3d8126102784cad2d692d8f517_1a9d5b5b3d8126102784cad2d692d8f517" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Buffer::operator!=</definition>
+        <argsstring>(const Buffer &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="de/d5e/a00007" kindref="compound">Buffer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="399" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::Object::bind</definition>
         <argsstring>() const </argsstring>
         <name>bind</name>
         <briefdescription>
-        </briefdescription>
+<para>Binds this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="29" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="72" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/dfe/a00025_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::Object::unbind</definition>
         <argsstring>() const </argsstring>
         <name>unbind</name>
         <briefdescription>
-        </briefdescription>
+<para>Unbinds this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="30" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="78" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/dfe/a00025_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+      <memberdef kind="function" id="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::Object::getID</definition>
         <argsstring>() const </argsstring>
         <name>getID</name>
         <briefdescription>
-        </briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="34" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="99" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="dc/de2/a00024" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="108" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="dc/de2/a00024" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="116" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="private-func">
@@ -302,34 +537,52 @@
         <definition>void mc::gfx::Buffer::bindIndex</definition>
         <argsstring>(const Index &amp;id) const </argsstring>
         <name>bindIndex</name>
-        <reimplements refid="d3/dfe/a00025_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
+        <reimplements refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
         <param>
-          <type>const <ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
           <declname>id</declname>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const </ref>and <ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="87" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="403" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="d3/dfe/a00025_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
-        <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+      <memberdef kind="variable" id="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
+        <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::Object::id</definition>
         <argsstring></argsstring>
         <name>id</name>
         <initializer>= 0</initializer>
         <briefdescription>
-        </briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>` Should be set in <ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> and become 0 in <ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="37" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="37" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="123" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="123" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -337,56 +590,60 @@
     <detaileddescription>
     </detaileddescription>
     <inheritancegraph>
-      <node id="228">
+      <node id="221">
         <label>mc::gfx::Buffer</label>
         <link refid="de/d5e/a00007"/>
-        <childnode refid="229" relation="public-inheritance">
+        <childnode refid="222" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="230">
+      <node id="223">
         <label>mc::gfx::UniformBuffer</label>
-        <link refid="de/d8c/a00036"/>
-        <childnode refid="228" relation="public-inheritance">
+        <link refid="db/df3/a00034"/>
+        <childnode refid="221" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="229">
+      <node id="222">
         <label>mc::gfx::Object</label>
-        <link refid="d3/dfe/a00025"/>
+        <link refid="dc/de2/a00024"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="231">
+      <node id="224">
         <label>mc::gfx::Buffer</label>
         <link refid="de/d5e/a00007"/>
-        <childnode refid="232" relation="public-inheritance">
+        <childnode refid="225" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="232">
+      <node id="225">
         <label>mc::gfx::Object</label>
-        <link refid="d3/dfe/a00025"/>
+        <link refid="dc/de2/a00024"/>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/Buffer.h" line="62" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="62" bodyend="88"/>
+    <location file="include/MACE/Graphics/Buffer.h" line="347" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="347" bodyend="404"/>
     <listofallmembers>
-      <member refid="d3/dfe/a00025_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>bind</name></member>
+      <member refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>bind</name></member>
       <member refid="de/d5e/a00007_1ab481b6525680a3fb8736653c1f1a6cca" prot="private" virt="virtual"><scope>mc::gfx::Buffer</scope><name>bindIndex</name></member>
       <member refid="de/d5e/a00007_a04453b83666d5d8c079d4018a996793c_1a04453b83666d5d8c079d4018a996793c" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>Buffer</name></member>
       <member refid="de/d5e/a00007_1acc9361729065c57524a3fd32445076e3" prot="private" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>bufferType</name></member>
       <member refid="de/d5e/a00007_a961573fe546431cb3938fa6744620504_1a961573fe546431cb3938fa6744620504" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>copyData</name></member>
       <member refid="de/d5e/a00007_a5a83ddd94fe1c0dbd3afce5157319116_1a5a83ddd94fe1c0dbd3afce5157319116" prot="public" virt="virtual"><scope>mc::gfx::Buffer</scope><name>destroy</name></member>
-      <member refid="d3/dfe/a00025_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>getID</name></member>
-      <member refid="d3/dfe/a00025_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>id</name></member>
+      <member refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>getID</name></member>
+      <member refid="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>id</name></member>
       <member refid="de/d5e/a00007_aa3ecc32c995337b12fd924d93107f66d_1aa3ecc32c995337b12fd924d93107f66d" prot="public" virt="virtual"><scope>mc::gfx::Buffer</scope><name>init</name></member>
       <member refid="de/d5e/a00007_a0fe9d2b30be7b281cd44570f4cd27f34_1a0fe9d2b30be7b281cd44570f4cd27f34" prot="public" virt="virtual"><scope>mc::gfx::Buffer</scope><name>isCreated</name></member>
       <member refid="de/d5e/a00007_abc3a12bc1d66e9efcf533824cd782cdc_1abc3a12bc1d66e9efcf533824cd782cdc" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>map</name></member>
       <member refid="de/d5e/a00007_a1b0efb2ce8e42687976d336432a5dc9e_1a1b0efb2ce8e42687976d336432a5dc9e" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>mapRange</name></member>
+      <member refid="de/d5e/a00007_a9d5b5b3d8126102784cad2d692d8f517_1a9d5b5b3d8126102784cad2d692d8f517" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>operator!=</name></member>
+      <member refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::Object::"><scope>mc::gfx::Buffer</scope><name>operator!=</name></member>
+      <member refid="de/d5e/a00007_aba3829c409b1a2dd781dd7b12ee7019d_1aba3829c409b1a2dd781dd7b12ee7019d" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>operator==</name></member>
+      <member refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::Object::"><scope>mc::gfx::Buffer</scope><name>operator==</name></member>
       <member refid="de/d5e/a00007_a3c8add91e87a0ae846328c88d4ca25a2_1a3c8add91e87a0ae846328c88d4ca25a2" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>setData</name></member>
       <member refid="de/d5e/a00007_aada7ce3d232ad1ca92f002703620f122_1aada7ce3d232ad1ca92f002703620f122" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>setDataRange</name></member>
       <member refid="de/d5e/a00007_afc734edb76df2f7c048e5e98865d45fe_1afc734edb76df2f7c048e5e98865d45fe" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>setImmutableData</name></member>
-      <member refid="d3/dfe/a00025_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>unbind</name></member>
+      <member refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>unbind</name></member>
       <member refid="de/d5e/a00007_ae9b9ba8d0c02462e6a679a1b978a87c0_1ae9b9ba8d0c02462e6a679a1b978a87c0" prot="public" virt="non-virtual"><scope>mc::gfx::Buffer</scope><name>unmap</name></member>
       <member refid="de/d5e/a00007_aa01febba34d6b6e0e062631a35aafaf6_1aa01febba34d6b6e0e062631a35aafaf6" prot="public" virt="virtual"><scope>mc::gfx::Buffer</scope><name>~Buffer</name></member>
-      <member refid="d3/dfe/a00025_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::Buffer</scope><name>~Object</name></member>
+      <member refid="dc/de2/a00024_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::Buffer</scope><name>~Object</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

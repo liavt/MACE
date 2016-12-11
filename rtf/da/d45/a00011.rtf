@@ -85,8 +85,8 @@
 mc::gfx::Entity Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::Entity}
 {\xe \v mc::gfx::Entity}
-{\bkmkstart AAAAAAABCY}
-{\bkmkend AAAAAAABCY}
+{\bkmkstart AAAAAAABDM}
+{\bkmkend AAAAAAABDM}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -95,35 +95,51 @@ Abstract superclass for all graphical objects. }}\par
 {\f2 #include <Entity.h>}}\par
 Inheritance diagram for mc::gfx::Entity:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/dc8/a00122.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/d6a/a00119.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 Collaboration diagram for mc::gfx::Entity:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "de/d36/a00123.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d4/d98/a00120.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Public Types\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+enum {\b EntityProperty} : Byte \{ {\b DEAD} = 0, 
+{\b UPDATE_DISABLED} = 1, 
+{\b RENDER_DISABLED} = 2, 
+{\b INIT} = 3, 
+{\b STRETCH_X} = 4, 
+{\b STRETCH_Y} = 5, 
+{\b HOVERED} = 6, 
+{\b DIRTY} = 7
+ \}\par
+}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} ()\par
+{\b Entity} () noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Default constructor. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} (const {\b Entity} &obj)\par
+{\b Entity} (const {\b Entity} &obj) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Cloning constructor. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual {\b ~Entity} ()\par
+virtual {\b ~Entity} () noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Destructor. }{
@@ -137,17 +153,17 @@ Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.update()}}  is cal
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} ()\par
+virtual void {\b init} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.init()}}  is called. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} ()\par
+virtual void {\b destroy} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.terminate()}}  is called. }{
+Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.destroy()}}  is called. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -192,6 +208,8 @@ void {\b clearChildren} ()\par
 Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }{
 }\par
 }}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b clearComponents} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b Entity} & {\b operator[]} ({\b Index} i)\par
 {
@@ -280,7 +298,7 @@ Retrieve the value of a property. }{
 void {\b setProperty} (const {\b Byte} position, const bool value)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 ENTITY_}  }{
+Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 {\b Entity}::}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -317,7 +335,7 @@ void {\b addChild} ({\b Entity} &e)\par
 void {\b kill} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Automatically called when {\f2 ENTITY_PROPERTY_DEAD}  is true. }{
+Automatically called when {\f2 Entity::PROPERTY_DEAD}  is true. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -349,17 +367,32 @@ const float & {\b getY} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b setY} (const float &newY)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} ({\b Entity} &other) const \par
+bool {\b operator==} (const {\b Entity} &other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Entities}  have the same children, parent, and properties. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} ({\b Entity} &other) const \par
+bool {\b operator!=} (const {\b Entity} &other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Entities}  don't have the same children, parent, and properties. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b clean} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Entity} * {\b getRootParent} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b Entity} * {\b getRootParent} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b reset} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b makeDirty} ()\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Makes this {\f2 {\b Entity}}  dirty and the root level parent dirty. }{
 }\par
 }}
 }
@@ -403,6 +436,13 @@ Protected Attributes\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+std::vector< {\b Entity} * > {\b children} = std::vector<{\b Entity}*>()\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+{\f2 std::vector}  of this {\f2 {\b Entity}\\'s}  children. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b TransformMatrix} {\b transformation}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
@@ -417,7 +457,115 @@ Abstract superclass for all graphical objects. \par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Contains basic information like position, and provides a standard interface for communicating with graphical objects. \par
 }{
-Definition at line 105 of file Entity.h.}\par
+Definition at line 39 of file Entity.h.}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Member Enumeration Documentation\par
+\pard\plain 
+{\xe \v EntityProperty\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:EntityProperty}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+enum {\b mc::gfx::Entity::EntityProperty} : {\b Byte}}}
+\par
+{\bkmkstart AAAAAAAAZX}
+{\bkmkend AAAAAAAAZX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{{{\b \par
+Enumerator}}\par
+\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\xe \v DEAD\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:DEAD}
+{\b {\i DEAD{\bkmkstart AAAAAAAAZY}
+{\bkmkend AAAAAAAAZY}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Bit location representing whether an {\f2 {\b Entity}}  is dead. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If {\f2 true,}  any {\b Entity} holding it will remove it and call {\f2 {\b kill()}}  \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
+}}{\xe \v UPDATE_DISABLED\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:UPDATE_DISABLED}
+{\b {\i UPDATE_DISABLED{\bkmkstart AAAAAAAAZZ}
+{\bkmkend AAAAAAAAZZ}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Property defining if an {\f2 {\b Entity}}  can be updated. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If this is {\f2 true} , {\f2 {\b update()}}  will be called by it's parent. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
+}}{\xe \v RENDER_DISABLED\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:RENDER_DISABLED}
+{\b {\i RENDER_DISABLED{\bkmkstart AAAAAAABAA}
+{\bkmkend AAAAAAABAA}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Property defining if an {\f2 {\b Entity}}  can be rendered. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If this is {\f2 true} , {\f2 {\b render()}}  will be called by it's parent. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
+}}{\xe \v INIT\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:INIT}
+{\b {\i INIT{\bkmkstart AAAAAAABAB}
+{\bkmkend AAAAAAABAB}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Flag representing whether an {\b Entity}'s {\b init()} function has been called. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If {\b destroy()} or {\b update()} is called and this is {\f2 false} , an {\f2 InitializationError}  is thrown. \par
+If {\b init()} is called and this is {\f2 true} , an {\f2 InitializationError}  is thrown. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
+}}{\xe \v STRETCH_X\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:STRETCH_X}
+{\b {\i STRETCH_X{\bkmkstart AAAAAAABAC}
+{\bkmkend AAAAAAABAC}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_Y} \par
+}}{\xe \v STRETCH_Y\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:STRETCH_Y}
+{\b {\i STRETCH_Y{\bkmkstart AAAAAAABAD}
+{\bkmkend AAAAAAABAD}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_X} \par
+}}{\xe \v HOVERED\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:HOVERED}
+{\b {\i HOVERED{\bkmkstart AAAAAAABAE}
+{\bkmkend AAAAAAABAE}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Flag representing whether this {\f2 {\b Entity}}  has been hovered over. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\f2 {\b RenderProtocol}}  used to render the {\f2 {\b Entity}}  must set this. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid ssl::bindEntity(Entity*) \par
+}}{\xe \v DIRTY\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:DIRTY}
+{\b {\i DIRTY{\bkmkstart AAAAAAABAF}
+{\bkmkend AAAAAAABAF}
+}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Flag representing whether this {\f2 {\b Entity}}  is dirty and it's positions needs to be recalculated. \par
+}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This will become true under the following conditions:{
+\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+The {\f2 {\b Entity}}  has been changed. Assume that any non-const function other than {\b render()} and {\b update()} will trigger this condition.\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+The window is resized, moved, or created \par}
+Other classes that inherit {\f2 {\b Entity}}  can also set this to true via {\b Entity::setProperty(Byte, bool)} \par
+When an {\f2 {\b Entity}}  becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level {\f2 {\b Entity}} , which is usually the {\f2 GraphicsContext} . From there, it will decide what to do based on it's {\f2 {\b Entity::DIRTY}}  flag. \par
+Certain {\f2 GraphicsContexts}  may only render when something is dirty, heavily increasing performance in applications with little moving objects. \par
+Additionally, an {\f2 {\b Entity}}  that is considered dirty will have it's buffer updated on the GPU side. \par
+}\par
+}{
+Definition at line 42 of file Entity.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -427,10 +575,10 @@ Constructor & Destructor Documentation\par
 {\xe \v mc::gfx::Entity\:Entity}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::Entity::Entity ()}}
+mc::gfx::Entity::Entity (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABCZ}
-{\bkmkend AAAAAAABCZ}
+{\bkmkstart AAAAAAABDN}
+{\bkmkend AAAAAAABDN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -438,16 +586,16 @@ mc::gfx::Entity::Entity ()}}
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Default constructor. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Constructs properties based on {\f2 ENTITY_DEFAULT_PROPERTIES}  \par
+Constructs properties based on {\f2 Entity::DEFAULT_PROPERTIES}  \par
 }}
 {\xe \v Entity\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:Entity}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::Entity::Entity (const {\b Entity} &  {\i obj})}}
+mc::gfx::Entity::Entity (const {\b Entity} &  {\i obj}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABDA}
-{\bkmkend AAAAAAABDA}
+{\bkmkstart AAAAAAABDO}
+{\bkmkend AAAAAAABDO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -461,10 +609,10 @@ Copies another's {\f2 {\b Entity}'s}  properties and children. \par
 {\xe \v mc::gfx::Entity\:~Entity}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual mc::gfx::Entity::~Entity (){\f2 [virtual]}}}
+virtual mc::gfx::Entity::~Entity (){\f2 [virtual]}, {\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABDB}
-{\bkmkend AAAAAAABDB}
+{\bkmkstart AAAAAAABDP}
+{\bkmkend AAAAAAABDP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -486,16 +634,16 @@ Member Function Documentation\par
 {\b 
 void mc::gfx::Entity::addChild ({\b Entity} &  {\i e})}}
 \par
-{\bkmkstart AAAAAAABAC}
-{\bkmkend AAAAAAABAC}
+{\bkmkstart AAAAAAABAG}
+{\bkmkend AAAAAAABAG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v addComponent\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:addComponent}
@@ -503,8 +651,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::addComponent ({\b Component} &  {\i action})}}
 \par
-{\bkmkstart AAAAAAABAD}
-{\bkmkend AAAAAAABAD}
+{\bkmkstart AAAAAAABAH}
+{\bkmkend AAAAAAABAH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -514,8 +662,8 @@ void mc::gfx::Entity::addComponent ({\b Component} &  {\i action})}}
 {\b 
 std::vector<{\b Entity}*>::iterator mc::gfx::Entity::begin ()}}
 \par
-{\bkmkstart AAAAAAABAE}
-{\bkmkend AAAAAAABAE}
+{\bkmkstart AAAAAAABAI}
+{\bkmkend AAAAAAABAI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -530,14 +678,42 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Iterato
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b end()} \par
 {\b size()} \par
 }}}
+{\xe \v clean\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:clean}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Entity::clean (){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABAJ}
+{\bkmkend AAAAAAABAJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Reimplemented in {\b mc::gfx::GraphicsEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
 {\xe \v clearChildren\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:clearChildren}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 void mc::gfx::Entity::clearChildren ()}}
 \par
-{\bkmkstart AAAAAAABAF}
-{\bkmkend AAAAAAABAF}
+{\bkmkstart AAAAAAABAL}
+{\bkmkend AAAAAAABAL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -547,21 +723,32 @@ Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 {\b size()} \par
 {\b removeChild(Index)} \par
 {\b removeChild(const Entity&)} \par
 }}}
+{\xe \v clearComponents\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:clearComponents}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Entity::clearComponents ()}}
+\par
+{\bkmkstart AAAAAAABAM}
+{\bkmkend AAAAAAABAM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
 {\xe \v customDestroy\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:customDestroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 virtual void mc::gfx::Entity::customDestroy (){\f2 [protected]}, {\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABAH}
-{\bkmkend AAAAAAABAH}
+{\bkmkstart AAAAAAABAO}
+{\bkmkend AAAAAAABAO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -571,9 +758,22 @@ When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b customDestroy()}}  is call
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::terminate()} \par
-}}{
-Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAG \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDC \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDD \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::destroy()} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAN \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDQ \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDR \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v customInit\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:customInit}
@@ -581,8 +781,8 @@ Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst P
 {\b 
 virtual void mc::gfx::Entity::customInit (){\f2 [protected]}, {\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABAJ}
-{\bkmkend AAAAAAABAJ}
+{\bkmkstart AAAAAAABAQ}
+{\bkmkend AAAAAAABAQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -593,8 +793,21 @@ When {\f2 {\b Entity.init()}}  is called, {\f2 {\b customInit()}}  is called on 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::init()} \par
-}}{
-Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAI \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDE \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAP \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDS \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDT \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v customRender\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:customRender}
@@ -602,16 +815,31 @@ Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst P
 {\b 
 virtual void mc::gfx::Entity::customRender (){\f2 [protected]}, {\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABAL}
-{\bkmkend AAAAAAABAL}
+{\bkmkstart AAAAAAABAS}
+{\bkmkend AAAAAAABAS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 When {\f2 {\b Entity.render()}}  is called, {\f2 {\b customRender()}}  is called on all of it's children. }}\par
-{
-Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAK \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDG \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAR \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDU \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDV \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v customUpdate\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:customUpdate}
@@ -619,8 +847,8 @@ Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst P
 {\b 
 virtual void mc::gfx::Entity::customUpdate (){\f2 [protected]}, {\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABAN}
-{\bkmkend AAAAAAABAN}
+{\bkmkstart AAAAAAABAU}
+{\bkmkend AAAAAAABAU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -631,48 +859,60 @@ When {\f2 {\b Entity.update()}}  is called, {\f2 {\b customUpdate()}}  is called
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::update()} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
 }}{
-Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAM \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDI \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::CallbackEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAT \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::Group} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDW \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::Image} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDX \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v destroy\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::destroy ()}}
+virtual void mc::gfx::Entity::destroy (){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABAO}
-{\bkmkend AAAAAAABAO}
+{\bkmkstart AAAAAAABAV}
+{\bkmkend AAAAAAABAV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.terminate()}}  is called. }}\par
+Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.destroy()}}  is called. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b customDestroy()}} . Sets {\f2 ENTITY_INIT}  to be false \par
-You should never override this function. Instead, override {\f2 {\b customDestroy()}}  \par
+Calls {\f2 {\b customDestroy()}} . Sets {\f2 {\b Entity::INIT}}  to be false \par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customDestroy()}}  \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 ENTITY_INIT}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
 {\row }
 }
-}}
+}{
+Reimplemented in {\b mc::gfx::GraphicsEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAW \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAWN \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
 {\xe \v end\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:end}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 std::vector<{\b Entity}*>::iterator mc::gfx::Entity::end ()}}
 \par
-{\bkmkstart AAAAAAABAP}
-{\bkmkend AAAAAAABAP}
+{\bkmkstart AAAAAAABAX}
+{\bkmkend AAAAAAABAX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -693,8 +933,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b be
 {\b 
 {\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i})}}
 \par
-{\bkmkstart AAAAAAABAQ}
-{\bkmkend AAAAAAABAQ}
+{\bkmkstart AAAAAAABAY}
+{\bkmkend AAAAAAABAY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -733,8 +973,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b op
 {\b 
 const {\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}) const}}
 \par
-{\bkmkstart AAAAAAABAR}
-{\bkmkend AAAAAAABAR}
+{\bkmkstart AAAAAAABAZ}
+{\bkmkend AAAAAAABAZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -773,8 +1013,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b op
 {\b 
 const std::vector<{\b Entity}*>& mc::gfx::Entity::getChildren () const}}
 \par
-{\bkmkstart AAAAAAABAS}
-{\bkmkend AAAAAAABAS}
+{\bkmkstart AAAAAAABBA}
+{\bkmkend AAAAAAABBA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -792,8 +1032,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid an {\f2
 {\b 
 std::vector<{\b Component}*> mc::gfx::Entity::getComponents ()}}
 \par
-{\bkmkstart AAAAAAABAT}
-{\bkmkend AAAAAAABAT}
+{\bkmkstart AAAAAAABBB}
+{\bkmkend AAAAAAABBB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -803,16 +1043,16 @@ std::vector<{\b Component}*> mc::gfx::Entity::getComponents ()}}
 {\b 
 float& mc::gfx::Entity::getHeight ()}}
 \par
-{\bkmkstart AAAAAAABAW}
-{\bkmkend AAAAAAABAW}
+{\bkmkstart AAAAAAABBE}
+{\bkmkend AAAAAAABBE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v getHeight\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:getHeight}
@@ -820,8 +1060,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 const float& mc::gfx::Entity::getHeight () const}}
 \par
-{\bkmkstart AAAAAAABAX}
-{\bkmkend AAAAAAABAX}
+{\bkmkstart AAAAAAABBF}
+{\bkmkend AAAAAAABBF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -831,8 +1071,8 @@ const float& mc::gfx::Entity::getHeight () const}}
 {\b 
 {\b Entity}* const mc::gfx::Entity::getParent ()}}
 \par
-{\bkmkstart AAAAAAABBA}
-{\bkmkend AAAAAAABBA}
+{\bkmkstart AAAAAAABBI}
+{\bkmkend AAAAAAABBI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -850,8 +1090,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity
 {\b 
 const {\b Entity}* const mc::gfx::Entity::getParent () const}}
 \par
-{\bkmkstart AAAAAAABBB}
-{\bkmkend AAAAAAABBB}
+{\bkmkstart AAAAAAABBJ}
+{\bkmkend AAAAAAABBJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -871,8 +1111,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity
 {\b 
 {\b EntityProperties}& mc::gfx::Entity::getProperties ()}}
 \par
-{\bkmkstart AAAAAAABBC}
-{\bkmkend AAAAAAABBC}
+{\bkmkstart AAAAAAABBK}
+{\bkmkend AAAAAAABBK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -882,9 +1122,9 @@ Retrieves the {\f2 {\b Entity}'s}  properties as a {\f2 ByteField}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current properties belonging to this {\f2 {\b Entity}}  \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -899,8 +1139,8 @@ setProperty(Index, bool) \par
 {\b 
 const {\b EntityProperties}& mc::gfx::Entity::getProperties () const}}
 \par
-{\bkmkstart AAAAAAABBD}
-{\bkmkend AAAAAAABBD}
+{\bkmkstart AAAAAAABBL}
+{\bkmkend AAAAAAABBL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -922,8 +1162,8 @@ setProperty(Index, bool) \par
 {\b 
 bool mc::gfx::Entity::getProperty (const {\b Byte}  {\i position}) const}}
 \par
-{\bkmkstart AAAAAAABBE}
-{\bkmkend AAAAAAABBE}
+{\bkmkstart AAAAAAABBM}
+{\bkmkend AAAAAAABBM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -931,7 +1171,7 @@ bool mc::gfx::Entity::getProperty (const {\b Byte}  {\i position}) const}}
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Retrieve the value of a property. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property consants start with {\f2 ENTITY_}  {\par
+Property consants start with {\f2 {\b Entity}::}  {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -948,22 +1188,50 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid setPro
 {\b getProperties()} \par
 setProperties(ByteField&) \par
 }}}
+{\xe \v getRootParent\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:getRootParent}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Entity}* mc::gfx::Entity::getRootParent ()}}
+\par
+{\bkmkstart AAAAAAABBP}
+{\bkmkend AAAAAAABBP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+}}}
+{\xe \v getRootParent\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:getRootParent}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b Entity}* mc::gfx::Entity::getRootParent () const}}
+\par
+{\bkmkstart AAAAAAABBQ}
+{\bkmkend AAAAAAABBQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
 {\xe \v getTransformation\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:getTransformation}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 {\b TransformMatrix}& mc::gfx::Entity::getTransformation ()}}
 \par
-{\bkmkstart AAAAAAABBH}
-{\bkmkend AAAAAAABBH}
+{\bkmkstart AAAAAAABBR}
+{\bkmkend AAAAAAABBR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v getTransformation\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:getTransformation}
@@ -971,8 +1239,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 const {\b TransformMatrix}& mc::gfx::Entity::getTransformation () const}}
 \par
-{\bkmkstart AAAAAAABBI}
-{\bkmkend AAAAAAABBI}
+{\bkmkstart AAAAAAABBS}
+{\bkmkend AAAAAAABBS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -982,16 +1250,16 @@ const {\b TransformMatrix}& mc::gfx::Entity::getTransformation () const}}
 {\b 
 float& mc::gfx::Entity::getWidth ()}}
 \par
-{\bkmkstart AAAAAAABBL}
-{\bkmkend AAAAAAABBL}
+{\bkmkstart AAAAAAABBV}
+{\bkmkend AAAAAAABBV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v getWidth\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:getWidth}
@@ -999,8 +1267,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 const float& mc::gfx::Entity::getWidth () const}}
 \par
-{\bkmkstart AAAAAAABBM}
-{\bkmkend AAAAAAABBM}
+{\bkmkstart AAAAAAABBW}
+{\bkmkend AAAAAAABBW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1010,16 +1278,16 @@ const float& mc::gfx::Entity::getWidth () const}}
 {\b 
 float& mc::gfx::Entity::getX ()}}
 \par
-{\bkmkstart AAAAAAABBN}
-{\bkmkend AAAAAAABBN}
+{\bkmkstart AAAAAAABBX}
+{\bkmkend AAAAAAABBX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v getX\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:getX}
@@ -1027,8 +1295,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 const float& mc::gfx::Entity::getX () const}}
 \par
-{\bkmkstart AAAAAAABBO}
-{\bkmkend AAAAAAABBO}
+{\bkmkstart AAAAAAABBY}
+{\bkmkend AAAAAAABBY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1038,16 +1306,16 @@ const float& mc::gfx::Entity::getX () const}}
 {\b 
 float& mc::gfx::Entity::getY ()}}
 \par
-{\bkmkstart AAAAAAABBP}
-{\bkmkend AAAAAAABBP}
+{\bkmkstart AAAAAAABBZ}
+{\bkmkend AAAAAAABBZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v getY\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:getY}
@@ -1055,8 +1323,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 const float& mc::gfx::Entity::getY () const}}
 \par
-{\bkmkstart AAAAAAABBQ}
-{\bkmkend AAAAAAABBQ}
+{\bkmkstart AAAAAAABCA}
+{\bkmkend AAAAAAABCA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1066,8 +1334,8 @@ const float& mc::gfx::Entity::getY () const}}
 {\b 
 bool mc::gfx::Entity::hasChild ({\b Entity} &  {\i e}) const}}
 \par
-{\bkmkstart AAAAAAABBR}
-{\bkmkend AAAAAAABBR}
+{\bkmkstart AAAAAAABCB}
+{\bkmkend AAAAAAABCB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1096,8 +1364,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b in
 {\b 
 bool mc::gfx::Entity::hasParent () const}}
 \par
-{\bkmkstart AAAAAAABBS}
-{\bkmkend AAAAAAABBS}
+{\bkmkstart AAAAAAABCC}
+{\bkmkend AAAAAAABCC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1107,8 +1375,8 @@ bool mc::gfx::Entity::hasParent () const}}
 {\b 
 int mc::gfx::Entity::indexOf (const {\b Entity} &  {\i e}) const}}
 \par
-{\bkmkstart AAAAAAABBT}
-{\bkmkend AAAAAAABBT}
+{\bkmkstart AAAAAAABCD}
+{\bkmkend AAAAAAABCD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1136,10 +1404,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b op
 {\xe \v mc::gfx::Entity\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::init ()}}
+virtual void mc::gfx::Entity::init (){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABBU}
-{\bkmkend AAAAAAABBU}
+{\bkmkstart AAAAAAABCE}
+{\bkmkend AAAAAAABCE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1148,51 +1416,82 @@ void mc::gfx::Entity::init ()}}
 Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.init()}}  is called. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Calls {\f2 {\b customInit()}}  \par
-You should never override this function. Instead, override {\f2 {\b customInit()}}  \par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customInit()}}  \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 ENTITY_INIT}  is true, meaning {\f2 {\b init()}}  has already been called. \cell }
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is true, meaning {\f2 {\b init()}}  has already been called. \cell }
 {\row }
 }
-}}
+}{
+Reimplemented in {\b mc::gfx::GraphicsEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCF \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAWR \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
 {\xe \v kill\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:kill}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 void mc::gfx::Entity::kill ()}}
 \par
-{\bkmkstart AAAAAAABBV}
-{\bkmkend AAAAAAABBV}
+{\bkmkstart AAAAAAABCG}
+{\bkmkend AAAAAAABCG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Automatically called when {\f2 ENTITY_PROPERTY_DEAD}  is true. }}\par
+Automatically called when {\f2 Entity::PROPERTY_DEAD}  is true. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Removes this entity from it's parent, and calls it's {\f2 {\b destroy()}}  method. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 {\b getParent()} \par
+}}}
+{\xe \v makeDirty\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:makeDirty}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Entity::makeDirty ()}}
+\par
+{\bkmkstart AAAAAAABCH}
+{\bkmkend AAAAAAABCH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Makes this {\f2 {\b Entity}}  dirty and the root level parent dirty. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Should be used over {\f2 setProperty(Entity::DIRTY,true)}  as it updaets the root parent. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v operator!=\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Entity::operator!= ({\b Entity} &  {\i other}) const}}
+bool mc::gfx::Entity::operator!= (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABBW}
-{\bkmkend AAAAAAABBW}
+{\bkmkstart AAAAAAABCI}
+{\bkmkend AAAAAAABCI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1222,10 +1521,10 @@ operator== \par
 {\xe \v mc::gfx::Entity\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Entity::operator== ({\b Entity} &  {\i other}) const}}
+bool mc::gfx::Entity::operator== (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABBX}
-{\bkmkend AAAAAAABBX}
+{\bkmkstart AAAAAAABCJ}
+{\bkmkend AAAAAAABCJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1257,8 +1556,8 @@ operator!= \par
 {\b 
 {\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i})}}
 \par
-{\bkmkstart AAAAAAABBY}
-{\bkmkend AAAAAAABBY}
+{\bkmkstart AAAAAAABCK}
+{\bkmkend AAAAAAABCK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1288,8 +1587,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ge
 {\b 
 const {\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}) const}}
 \par
-{\bkmkstart AAAAAAABBZ}
-{\bkmkend AAAAAAABBZ}
+{\bkmkstart AAAAAAABCL}
+{\bkmkend AAAAAAABCL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1319,8 +1618,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ge
 {\b 
 void mc::gfx::Entity::removeChild (const {\b Entity} &  {\i e})}}
 \par
-{\bkmkstart AAAAAAABCA}
-{\bkmkend AAAAAAABCA}
+{\bkmkstart AAAAAAABCM}
+{\bkmkend AAAAAAABCM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1330,9 +1629,9 @@ Removes a child by reference. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -1360,8 +1659,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b re
 {\b 
 void mc::gfx::Entity::removeChild ({\b Index}  {\i index})}}
 \par
-{\bkmkstart AAAAAAABCB}
-{\bkmkend AAAAAAABCB}
+{\bkmkstart AAAAAAABCN}
+{\bkmkend AAAAAAABCN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1371,9 +1670,9 @@ Removes a child via location. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -1402,8 +1701,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b in
 {\b 
 void mc::gfx::Entity::render ()}}
 \par
-{\bkmkstart AAAAAAABCC}
-{\bkmkend AAAAAAABCC}
+{\bkmkstart AAAAAAABCO}
+{\bkmkend AAAAAAABCO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1411,24 +1710,54 @@ void mc::gfx::Entity::render ()}}
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-You should never override this function. Instead, override {\f2 {\b customRender()}}  \par
-}}
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customRender()}}  \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::update()} \par
+}}}
+{\xe \v reset\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:reset}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Entity::reset ()}}
+\par
+{\bkmkstart AAAAAAABCP}
+{\bkmkend AAAAAAABCP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+}}}
 {\xe \v rotate\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:rotate}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 {\b Entity}& mc::gfx::Entity::rotate (float  {\i x}, float  {\i y}, float  {\i z})}}
 \par
-{\bkmkstart AAAAAAABCD}
-{\bkmkend AAAAAAABCD}
+{\bkmkstart AAAAAAABCQ}
+{\bkmkend AAAAAAABCQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v scale\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:scale}
@@ -1436,16 +1765,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 {\b Entity}& mc::gfx::Entity::scale (float  {\i x}, float  {\i y}, float  {\i z})}}
 \par
-{\bkmkstart AAAAAAABCE}
-{\bkmkend AAAAAAABCE}
+{\bkmkstart AAAAAAABCR}
+{\bkmkend AAAAAAABCR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v setHeight\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:setHeight}
@@ -1453,16 +1782,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::setHeight (const float &  {\i s})}}
 \par
-{\bkmkstart AAAAAAABCG}
-{\bkmkend AAAAAAABCG}
+{\bkmkstart AAAAAAABCT}
+{\bkmkend AAAAAAABCT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v setProperties\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:setProperties}
@@ -1470,8 +1799,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::setProperties ({\b EntityProperties} &  {\i b})}}
 \par
-{\bkmkstart AAAAAAABCI}
-{\bkmkend AAAAAAABCI}
+{\bkmkstart AAAAAAABCV}
+{\bkmkend AAAAAAABCV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1481,9 +1810,9 @@ Set the properties for this {\f2 {\b Entity}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -1504,20 +1833,20 @@ setProperty(Index, bool) \par
 {\b 
 void mc::gfx::Entity::setProperty (const {\b Byte}  {\i position}, const bool  {\i value})}}
 \par
-{\bkmkstart AAAAAAABCJ}
-{\bkmkend AAAAAAABCJ}
+{\bkmkstart AAAAAAABCW}
+{\bkmkend AAAAAAABCW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 ENTITY_}  }}\par
+Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 {\b Entity}::}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -1544,16 +1873,16 @@ setProperties(ByteField&) \par
 {\b 
 void mc::gfx::Entity::setTransformation ({\b TransformMatrix} &  {\i trans})}}
 \par
-{\bkmkstart AAAAAAABCL}
-{\bkmkend AAAAAAABCL}
+{\bkmkstart AAAAAAABCY}
+{\bkmkend AAAAAAABCY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v setWidth\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:setWidth}
@@ -1561,16 +1890,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::setWidth (const float &  {\i s})}}
 \par
-{\bkmkstart AAAAAAABCN}
-{\bkmkend AAAAAAABCN}
+{\bkmkstart AAAAAAABDA}
+{\bkmkend AAAAAAABDA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v setX\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:setX}
@@ -1578,16 +1907,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::setX (const float &  {\i newX})}}
 \par
-{\bkmkstart AAAAAAABCO}
-{\bkmkend AAAAAAABCO}
+{\bkmkstart AAAAAAABDB}
+{\bkmkend AAAAAAABDB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v setY\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:setY}
@@ -1595,16 +1924,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::setY (const float &  {\i newY})}}
 \par
-{\bkmkstart AAAAAAABCP}
-{\bkmkend AAAAAAABCP}
+{\bkmkstart AAAAAAABDC}
+{\bkmkend AAAAAAABDC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v size\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:size}
@@ -1612,8 +1941,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 {\b Size} mc::gfx::Entity::size () const}}
 \par
-{\bkmkstart AAAAAAABCQ}
-{\bkmkend AAAAAAABCQ}
+{\bkmkstart AAAAAAABDD}
+{\bkmkend AAAAAAABDD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1631,16 +1960,16 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Size of
 {\b 
 {\b Entity}& mc::gfx::Entity::translate (float  {\i x}, float  {\i y}, float  {\i z})}}
 \par
-{\bkmkstart AAAAAAABCR}
-{\bkmkend AAAAAAABCR}
+{\bkmkstart AAAAAAABDE}
+{\bkmkend AAAAAAABDE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This function will make this {\f2 {\b Entity}}  dirty. \par
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ENTITY_DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
 {\xe \v update\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:update}
@@ -1648,8 +1977,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b EN
 {\b 
 void mc::gfx::Entity::update ()}}
 \par
-{\bkmkstart AAAAAAABCS}
-{\bkmkend AAAAAAABCS}
+{\bkmkstart AAAAAAABDF}
+{\bkmkend AAAAAAABDF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1658,14 +1987,14 @@ void mc::gfx::Entity::update ()}}
 Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.update()}}  is called. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Calls {\f2 {\b customUpdate()}} . \par
-You should never override this function. Instead, override {\f2 {\b customUpdate()}}  {\par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customUpdate()}}  {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 ENTITY_INIT}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
+{{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
 {\row }
 }
 }}
@@ -1673,19 +2002,43 @@ Exceptions:\par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
 \pard\plain 
+{\xe \v children\:mc::gfx::Entity}
+{\xe \v mc::gfx::Entity\:children}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+std::vector<{\b Entity}*> mc::gfx::Entity::children = std::vector<{\b Entity}*>(){\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABDG}
+{\bkmkend AAAAAAABDG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+{\f2 std::vector}  of this {\f2 {\b Entity}\\'s}  children. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Use of this variable directly is unrecommended. Use {\f2 {\b addChild()}}  or {\f2 {\b removeChild()}}  instead. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}}{
+Definition at line 488 of file Entity.h.}\par
+}
 {\xe \v transformation\:mc::gfx::Entity}
 {\xe \v mc::gfx::Entity\:transformation}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 {\b TransformMatrix} mc::gfx::Entity::transformation{\f2 [protected]}}}
 \par
-{\bkmkstart AAAAAAABCT}
-{\bkmkend AAAAAAABCT}
+{\bkmkstart AAAAAAABDH}
+{\bkmkend AAAAAAABDH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
-{
-Definition at line 429 of file Entity.h.}\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}}{
+Definition at line 493 of file Entity.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

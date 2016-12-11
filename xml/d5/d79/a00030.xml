@@ -1,252 +1,277 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d5/d79/a00030" kind="class" language="C++" prot="public" abstract="yes">
-    <compoundname>mc::gfx::RenderImpl</compoundname>
-    <derivedcompoundref refid="df/d61/a00031" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; T &gt;</derivedcompoundref>
-    <derivedcompoundref refid="dc/d87/a00032" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; Entity2D &gt;</derivedcompoundref>
-    <includes refid="d6/d2d/a00047" local="no">Renderer.h</includes>
-      <sectiondef kind="friend">
-      <memberdef kind="friend" id="d5/d79/a00030_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>friend class</type>
-        <definition>friend class Renderer</definition>
+  <compounddef id="d5/d79/a00030" kind="class" language="C++" prot="public">
+    <compoundname>mc::gfx::RenderProtocol&lt; Entity2D &gt;</compoundname>
+    <basecompoundref refid="dc/d3c/a00028" prot="public" virt="non-virtual">mc::gfx::RenderImpl</basecompoundref>
+    <includes refid="dd/d32/a00041" local="no">Entity2D.h</includes>
+    <templateparamlist>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d5/d79/a00030_1a0b89e976b890c3f3491925d9344bc916" prot="private" static="no" mutable="no">
+        <type><ref refid="df/d61/a00031" kindref="compound">ShaderProgram</ref></type>
+        <definition>ShaderProgram mc::gfx::RenderProtocol&lt; Entity2D &gt;::shaders2D</definition>
         <argsstring></argsstring>
-        <name>Renderer</name>
+        <name>shaders2D</name>
+        <initializer>= <ref refid="df/d61/a00031" kindref="compound">ShaderProgram</ref>()</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="51" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="51" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="58" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="58" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="friend" id="d5/d79/a00030_ae5cf0daa36c2ea61af27de6a4474f733_1ae5cf0daa36c2ea61af27de6a4474f733" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>friend void</type>
-        <definition>void ssl::init</definition>
-        <argsstring>(const Size &amp;, const Size &amp;)</argsstring>
-        <name>ssl::init</name>
-        <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-        </param>
-        <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="53" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="private-static-attrib">
-      <memberdef kind="variable" id="d5/d79/a00030_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" static="yes" mutable="no">
-        <type>int</type>
-        <definition>int mc::gfx::RenderImpl::index</definition>
+      <memberdef kind="variable" id="d5/d79/a00030_1af8166f52dd796e0d40cbbe3d07006471" prot="private" static="no" mutable="no">
+        <type><ref refid="de/d8c/a00036" kindref="compound">VertexArray</ref></type>
+        <definition>VertexArray mc::gfx::RenderProtocol&lt; Entity2D &gt;::square</definition>
         <argsstring></argsstring>
-        <name>index</name>
+        <name>square</name>
+        <initializer>= <ref refid="de/d8c/a00036" kindref="compound">VertexArray</ref>()</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="66" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="66" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="59" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="59" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d5/d79/a00030_a4e783fb4702e5637b34da9c4750d3f3e_1a4e783fb4702e5637b34da9c4750d3f3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::RenderImpl::RenderImpl</definition>
-        <argsstring>()</argsstring>
-        <name>RenderImpl</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="55" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_a10f7f0d130b85a77dbd54b885555a0a4_1a10f7f0d130b85a77dbd54b885555a0a4" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type></type>
-        <definition>virtual mc::gfx::RenderImpl::~RenderImpl</definition>
-        <argsstring>()=default</argsstring>
-        <name>~RenderImpl</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="56" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d5/d79/a00030_a7e9d118a4f81190d9ebabf970afd7213_1a7e9d118a4f81190d9ebabf970afd7213" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::resize</definition>
-        <argsstring>(const Size width, const Size height)=0</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::resize</definition>
+        <argsstring>(const Size width, const Size height) override</argsstring>
         <name>resize</name>
-        <reimplementedby refid="dc/d87/a00032_aedee904fc6c0dbb4ebe8171f3e15f320_1aedee904fc6c0dbb4ebe8171f3e15f320">resize</reimplementedby>
-        <reimplementedby refid="df/d61/a00031_aa0c9423f0cd01807992e52608573e6a4_1aa0c9423f0cd01807992e52608573e6a4">resize</reimplementedby>
+        <reimplements refid="dc/d3c/a00028_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c">resize</reimplements>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>width</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>height</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="58" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="45" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d5/d79/a00030_a2f738b2b7177dd79de63011ea246c25d_1a2f738b2b7177dd79de63011ea246c25d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::init</definition>
-        <argsstring>(const Size originalWidth, const Size originalHeight)=0</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::init</definition>
+        <argsstring>(const Size originalWidth, const Size originalHeight) override</argsstring>
         <name>init</name>
-        <reimplementedby refid="dc/d87/a00032_a9bf3f0dcf0829df248047562da3ea90d_1a9bf3f0dcf0829df248047562da3ea90d">init</reimplementedby>
-        <reimplementedby refid="df/d61/a00031_adc9899ec5f32315c125b8adb30fe8e97_1adc9899ec5f32315c125b8adb30fe8e97">init</reimplementedby>
+        <reimplements refid="dc/d3c/a00028_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1">init</reimplements>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>originalWidth</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>originalHeight</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="60" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="47" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_a0b904148f57835eded1393c3e175d280_1a0b904148f57835eded1393c3e175d280" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d5/d79/a00030_a2fb5afde4608667dac429efcd2d07438_1a2fb5afde4608667dac429efcd2d07438" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::setUp</definition>
-        <argsstring>(os::Window *win, RenderQueue *queue)=0</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::setUp</definition>
+        <argsstring>(os::WindowModule *win, RenderQueue *queue) override</argsstring>
         <name>setUp</name>
-        <reimplementedby refid="dc/d87/a00032_a9b99fb79a9fcd3c5c6e7d712abbeee61_1a9b99fb79a9fcd3c5c6e7d712abbeee61">setUp</reimplementedby>
-        <reimplementedby refid="df/d61/a00031_a2595653868343d4cd2f9afd58ad931af_1a2595653868343d4cd2f9afd58ad931af">setUp</reimplementedby>
+        <reimplements refid="dc/d3c/a00028_a13d3c43299a124a1b95d113c902e9476_1a13d3c43299a124a1b95d113c902e9476">setUp</reimplements>
         <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">os::Window</ref> *</type>
+          <type><ref refid="d1/dc6/a00037" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="db/df8/a00076_a752c6b5764bf4e0d5f43a55474d02aa7_1a752c6b5764bf4e0d5f43a55474d02aa7" kindref="member">RenderQueue</ref> *</type>
+          <type><ref refid="d1/d6e/a00073_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
           <declname>queue</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="61" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="49" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_aae0c0cbdbfc1210014dbd1743990c67f_1aae0c0cbdbfc1210014dbd1743990c67f" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d5/d79/a00030_a2aa8c704dc99ff2589d10869a694a400_1a2aa8c704dc99ff2589d10869a694a400" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::render</definition>
-        <argsstring>(os::Window *win, Entity *entity)=0</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::render</definition>
+        <argsstring>(os::WindowModule *win, GraphicsEntity *entity) override</argsstring>
         <name>render</name>
-        <reimplementedby refid="dc/d87/a00032_a5f883c110374d251af8fa176988cf0b7_1a5f883c110374d251af8fa176988cf0b7">render</reimplementedby>
-        <reimplementedby refid="df/d61/a00031_a51c373eb3472d992b67f8afdd481860b_1a51c373eb3472d992b67f8afdd481860b">render</reimplementedby>
+        <reimplements refid="dc/d3c/a00028_a06a982c8b438aaa052e1fa1d1fc995ae_1a06a982c8b438aaa052e1fa1d1fc995ae">render</reimplements>
         <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">os::Window</ref> *</type>
+          <type><ref refid="d1/dc6/a00037" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="da/d45/a00011" kindref="compound">Entity</ref> *</type>
+          <type><ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref> *</type>
           <declname>entity</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="62" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="51" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_a359c9a236cdcc001783e5141435b85ae_1a359c9a236cdcc001783e5141435b85ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d5/d79/a00030_ade7012f8089ee90e548370ccdfb41008_1ade7012f8089ee90e548370ccdfb41008" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::tearDown</definition>
-        <argsstring>(os::Window *win, RenderQueue *queue)=0</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::tearDown</definition>
+        <argsstring>(os::WindowModule *win, RenderQueue *queue) override</argsstring>
         <name>tearDown</name>
-        <reimplementedby refid="dc/d87/a00032_a1c94c1163f8463d0e6ec4a50b7784f0d_1a1c94c1163f8463d0e6ec4a50b7784f0d">tearDown</reimplementedby>
-        <reimplementedby refid="df/d61/a00031_a70a027d25c4b98a4eccad61ac583cbdd_1a70a027d25c4b98a4eccad61ac583cbdd">tearDown</reimplementedby>
+        <reimplements refid="dc/d3c/a00028_ac1b569053de9c46379c954f71e64659b_1ac1b569053de9c46379c954f71e64659b">tearDown</reimplements>
         <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">os::Window</ref> *</type>
+          <type><ref refid="d1/dc6/a00037" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="db/df8/a00076_a752c6b5764bf4e0d5f43a55474d02aa7_1a752c6b5764bf4e0d5f43a55474d02aa7" kindref="member">RenderQueue</ref> *</type>
+          <type><ref refid="d1/d6e/a00073_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
           <declname>queue</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="63" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="53" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d5/d79/a00030_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d5/d79/a00030_a5d1a4c0291ceb2bba79f81e88c9d1bb2_1a5d1a4c0291ceb2bba79f81e88c9d1bb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::destroy</definition>
-        <argsstring>()=0</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::destroy</definition>
+        <argsstring>() override</argsstring>
         <name>destroy</name>
-        <reimplementedby refid="dc/d87/a00032_aa57bdc941f53f4fbc8ee10eb29be6bb2_1aa57bdc941f53f4fbc8ee10eb29be6bb2">destroy</reimplementedby>
-        <reimplementedby refid="df/d61/a00031_a8ab0750bf78eac6b09c39cab849fa948_1a8ab0750bf78eac6b09c39cab849fa948">destroy</reimplementedby>
+        <reimplements refid="dc/d3c/a00028_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee">destroy</reimplements>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="64" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="55" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>    </detaileddescription>
     <inheritancegraph>
-      <node id="402">
+      <node id="387">
         <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
-        <link refid="dc/d87/a00032"/>
-        <childnode refid="400" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="400">
-        <label>mc::gfx::RenderImpl</label>
         <link refid="d5/d79/a00030"/>
-      </node>
-      <node id="401">
-        <label>mc::gfx::RenderProtocol&lt; T &gt;</label>
-        <link refid="df/d61/a00031"/>
-        <childnode refid="400" relation="public-inheritance">
+        <childnode refid="388" relation="public-inheritance">
         </childnode>
+      </node>
+      <node id="388">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="dc/d3c/a00028"/>
       </node>
     </inheritancegraph>
-    <location file="include/MACE/Graphics/Renderer.h" line="50" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="50" bodyend="67"/>
+    <collaborationgraph>
+      <node id="389">
+        <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
+        <link refid="d5/d79/a00030"/>
+        <childnode refid="390" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="390">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="dc/d3c/a00028"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Graphics/Entity2D.h" line="43" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="43" bodyend="60"/>
     <listofallmembers>
-      <member refid="d5/d79/a00030_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>destroy</name></member>
-      <member refid="d5/d79/a00030_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>index</name></member>
-      <member refid="d5/d79/a00030_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>init</name></member>
-      <member refid="d5/d79/a00030_aae0c0cbdbfc1210014dbd1743990c67f_1aae0c0cbdbfc1210014dbd1743990c67f" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>render</name></member>
-      <member refid="d5/d79/a00030_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>Renderer</name></member>
-      <member refid="d5/d79/a00030_a4e783fb4702e5637b34da9c4750d3f3e_1a4e783fb4702e5637b34da9c4750d3f3e" prot="public" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>RenderImpl</name></member>
-      <member refid="d5/d79/a00030_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>resize</name></member>
-      <member refid="d5/d79/a00030_a0b904148f57835eded1393c3e175d280_1a0b904148f57835eded1393c3e175d280" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>setUp</name></member>
-      <member refid="d5/d79/a00030_ae5cf0daa36c2ea61af27de6a4474f733_1ae5cf0daa36c2ea61af27de6a4474f733" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>ssl::init</name></member>
-      <member refid="d5/d79/a00030_a359c9a236cdcc001783e5141435b85ae_1a359c9a236cdcc001783e5141435b85ae" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>tearDown</name></member>
-      <member refid="d5/d79/a00030_a10f7f0d130b85a77dbd54b885555a0a4_1a10f7f0d130b85a77dbd54b885555a0a4" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>~RenderImpl</name></member>
+      <member refid="d5/d79/a00030_a5d1a4c0291ceb2bba79f81e88c9d1bb2_1a5d1a4c0291ceb2bba79f81e88c9d1bb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>destroy</name></member>
+      <member refid="d5/d79/a00030_a2f738b2b7177dd79de63011ea246c25d_1a2f738b2b7177dd79de63011ea246c25d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>init</name></member>
+      <member refid="d5/d79/a00030_a2aa8c704dc99ff2589d10869a694a400_1a2aa8c704dc99ff2589d10869a694a400" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>render</name></member>
+      <member refid="dc/d3c/a00028_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>RenderImpl</name></member>
+      <member refid="d5/d79/a00030_a7e9d118a4f81190d9ebabf970afd7213_1a7e9d118a4f81190d9ebabf970afd7213" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>resize</name></member>
+      <member refid="d5/d79/a00030_a2fb5afde4608667dac429efcd2d07438_1a2fb5afde4608667dac429efcd2d07438" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>setUp</name></member>
+      <member refid="d5/d79/a00030_1a0b89e976b890c3f3491925d9344bc916" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>shaders2D</name></member>
+      <member refid="d5/d79/a00030_1af8166f52dd796e0d40cbbe3d07006471" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>square</name></member>
+      <member refid="d5/d79/a00030_ade7012f8089ee90e548370ccdfb41008_1ade7012f8089ee90e548370ccdfb41008" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>tearDown</name></member>
+      <member refid="dc/d3c/a00028_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>~RenderImpl</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

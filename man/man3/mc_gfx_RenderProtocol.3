@@ -1,4 +1,4 @@
-.TH "mc::gfx::RenderProtocol< T >" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::RenderProtocol< T >" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,22 +14,22 @@ Inherits \fBmc::gfx::RenderImpl\fP\&.
 
 .in +1c
 .ti -1c
-.RI "void \fBresize\fP (const \fBSize\fP width, const \fBSize\fP height)"
+.RI "void \fBresize\fP (const \fBSize\fP, const \fBSize\fP) override"
 .br
 .ti -1c
-.RI "void \fBinit\fP (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)"
+.RI "void \fBinit\fP (const \fBSize\fP, const \fBSize\fP) override"
 .br
 .ti -1c
-.RI "void \fBsetUp\fP (\fBos::Window\fP *win, \fBRenderQueue\fP *queue)"
+.RI "void \fBsetUp\fP (\fBos::WindowModule\fP *, \fBRenderQueue\fP *) override"
 .br
 .ti -1c
-.RI "void \fBrender\fP (\fBos::Window\fP *win, \fBEntity\fP *entity)"
+.RI "void \fBrender\fP (\fBos::WindowModule\fP *, \fBGraphicsEntity\fP *) override"
 .br
 .ti -1c
-.RI "void \fBtearDown\fP (\fBos::Window\fP *win, \fBRenderQueue\fP *queue)"
+.RI "void \fBtearDown\fP (\fBos::WindowModule\fP *, \fBRenderQueue\fP *) override"
 .br
 .ti -1c
-.RI "void \fBdestroy\fP ()"
+.RI "void \fBdestroy\fP () override"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -40,45 +40,164 @@ Inherits \fBmc::gfx::RenderImpl\fP\&.
 class mc::gfx::RenderProtocol< T >"
 
 .PP
-Definition at line 70 of file Renderer\&.h\&.
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Definition at line 153 of file Renderer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::destroy ()\fC [inline]\fP, \fC [virtual]\fP"
+.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::destroy ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::RenderImpl\fP\&.
 .PP
-Definition at line 80 of file Renderer\&.h\&.
-.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [inline]\fP, \fC [virtual]\fP"
+Definition at line 163 of file Renderer\&.h\&.
+.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::RenderImpl\fP\&.
 .PP
-Definition at line 76 of file Renderer\&.h\&.
-.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::render (\fBos::Window\fP * win, \fBEntity\fP * entity)\fC [inline]\fP, \fC [virtual]\fP"
+Definition at line 159 of file Renderer\&.h\&.
+.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::render (\fBos::WindowModule\fP * win, \fBGraphicsEntity\fP * entity)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::RenderImpl\fP\&.
 .PP
-Definition at line 78 of file Renderer\&.h\&.
-.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::resize (const \fBSize\fP width, const \fBSize\fP height)\fC [inline]\fP, \fC [virtual]\fP"
+Definition at line 161 of file Renderer\&.h\&.
+.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::resize (const \fBSize\fP width, const \fBSize\fP height)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::RenderImpl\fP\&.
 .PP
-Definition at line 74 of file Renderer\&.h\&.
-.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::setUp (\fBos::Window\fP * win, \fBRenderQueue\fP * queue)\fC [inline]\fP, \fC [virtual]\fP"
+Definition at line 157 of file Renderer\&.h\&.
+.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::setUp (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::RenderImpl\fP\&.
 .PP
-Definition at line 77 of file Renderer\&.h\&.
-.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::tearDown (\fBos::Window\fP * win, \fBRenderQueue\fP * queue)\fC [inline]\fP, \fC [virtual]\fP"
+Definition at line 160 of file Renderer\&.h\&.
+.SS "template<typename T > void \fBmc::gfx::RenderProtocol\fP< T >::tearDown (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::RenderImpl\fP\&.
 .PP
-Definition at line 79 of file Renderer\&.h\&.
+Definition at line 162 of file Renderer\&.h\&.
 
 .SH "Author"
 .PP 

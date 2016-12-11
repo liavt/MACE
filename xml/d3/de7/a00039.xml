@@ -1,310 +1,146 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d3/de7/a00039" kind="class" language="C++" prot="public">
-    <compoundname>mc::os::Window</compoundname>
-    <includes refid="d1/d22/a00057" local="no">Window.h</includes>
-      <sectiondef kind="friend">
-      <memberdef kind="friend" id="d3/de7/a00039_a832d299d0131fc9740d25c15c804e42e_1a832d299d0131fc9740d25c15c804e42e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>friend class</type>
-        <definition>friend class WindowModule</definition>
-        <argsstring></argsstring>
-        <name>WindowModule</name>
+  <compounddef id="d3/de7/a00039" kind="file" language="C++">
+    <compoundname>Components.h</compoundname>
+    <includes refid="db/d3a/a00040" local="no">MACE/Graphics/Entity.h</includes>
+    <includedby refid="d5/db6/a00042" local="no">include/MACE/Graphics/Graphics.h</includedby>
+    <incdepgraph>
+      <node id="9">
+        <label>cstdint</label>
+      </node>
+      <node id="10">
+        <label>stdexcept</label>
+      </node>
+      <node id="8">
+        <label>MACE/System/Constants.h</label>
+        <link refid="d9/d2e/a00056_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>MACE/Utility/Matrix.h</label>
+        <link refid="df/d03/a00062_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>MACE/Utility/BitField.h</label>
+        <link refid="d3/d8b/a00059_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ostream</label>
+      </node>
+      <node id="14">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="da/d24/a00068_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="Components.h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>array</label>
+      </node>
+      <node id="15">
+        <label>MACE/Utility/Math.h</label>
+        <link refid="d4/de8/a00061_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>MACE/Utility/Transform.h</label>
+        <link refid="d9/db3/a00066_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>MACE/Graphics/Entity.h</label>
+        <link refid="db/d3a/a00040_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="19">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="d5/db6/a00042_source"/>
+      </node>
+      <node id="18">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="Components.h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="d6/d2c/a00072">mc</innernamespace>
+    <innernamespace refid="d1/d6e/a00073">mc::gfx</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d3/de7/a00039_a7295e4863b900b0dbc33a85023e8580c_1a7295e4863b900b0dbc33a85023e8580c" prot="public" static="no">
+        <name>MACE_GRAPHICS_COMPONENTS_H</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="32" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="32" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="d3/de7/a00039_a85cd60eaa0dcf9c559ae62c109320066_1a85cd60eaa0dcf9c559ae62c109320066" prot="protected" static="no" mutable="no">
-        <type>unsigned int</type>
-        <definition>unsigned int mc::os::Window::fps</definition>
-        <argsstring></argsstring>
-        <name>fps</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="51" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="51" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d3/de7/a00039_affb6e826d0732a6e10d6c2efe71bf695_1affb6e826d0732a6e10d6c2efe71bf695" prot="protected" static="no" mutable="no">
-        <type>GLFWwindow *</type>
-        <definition>GLFWwindow* mc::os::Window::window</definition>
-        <argsstring></argsstring>
-        <name>window</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="53" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="53" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d3/de7/a00039_a869a3be735693336e9717f9898d48785_1a869a3be735693336e9717f9898d48785" prot="protected" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::os::Window::originalWidth</definition>
-        <argsstring></argsstring>
-        <name>originalWidth</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="54" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="54" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d3/de7/a00039_ab9f5d3339c56615e3f88c9bdab4280de_1ab9f5d3339c56615e3f88c9bdab4280de" prot="protected" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::os::Window::originalHeight</definition>
-        <argsstring></argsstring>
-        <name>originalHeight</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="55" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="55" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d3/de7/a00039_abc38ef5f7fa4e39799adc651e3a6eba3_1abc38ef5f7fa4e39799adc651e3a6eba3" prot="protected" static="no" mutable="no">
-        <type>std::string</type>
-        <definition>std::string mc::os::Window::title</definition>
-        <argsstring></argsstring>
-        <name>title</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="56" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="56" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-func">
-      <memberdef kind="function" id="d3/de7/a00039_a71b8266ea5d892328ccebc05c65b3753_1a71b8266ea5d892328ccebc05c65b3753" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::os::Window::Window</definition>
-        <argsstring>(const int width, const int height, const char *title)</argsstring>
-        <name>Window</name>
-        <param>
-          <type>const int</type>
-          <declname>width</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>height</declname>
-        </param>
-        <param>
-          <type>const char *</type>
-          <declname>title</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="34" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a463d4fc2c297b73d8fa15f117f583671_1a463d4fc2c297b73d8fa15f117f583671" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>GLFWwindow *</type>
-        <definition>GLFWwindow* mc::os::Window::getGLFWWindow</definition>
-        <argsstring>()</argsstring>
-        <name>getGLFWWindow</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="35" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a8ceff671d359d991b2b586e3281f1517_1a8ceff671d359d991b2b586e3281f1517" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const unsigned int &amp;</type>
-        <definition>const unsigned int&amp; mc::os::Window::getFPS</definition>
-        <argsstring>() const </argsstring>
-        <name>getFPS</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="37" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a1e88dfbac008f41c919864ccab3e9aca_1a1e88dfbac008f41c919864ccab3e9aca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::Window::setFPS</definition>
-        <argsstring>(const unsigned int &amp;FPS)</argsstring>
-        <name>setFPS</name>
-        <param>
-          <type>const unsigned int &amp;</type>
-          <declname>FPS</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="38" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a10ba257998d0f19b5e9caa95430fa04a_1a10ba257998d0f19b5e9caa95430fa04a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::Window::create</definition>
-        <argsstring>()</argsstring>
-        <name>create</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="40" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a2b776e80c34912fc8b6c4dda36da1d00_1a2b776e80c34912fc8b6c4dda36da1d00" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::Window::poll</definition>
-        <argsstring>()</argsstring>
-        <name>poll</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="41" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a6434d707ac569e278fafec1aeb573536_1a6434d707ac569e278fafec1aeb573536" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::Window::destroy</definition>
-        <argsstring>()</argsstring>
-        <name>destroy</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="42" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a43005c8cc4ebc2e5fe2b9f91d7a4b569_1a43005c8cc4ebc2e5fe2b9f91d7a4b569" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const int</type>
-        <definition>const int mc::os::Window::getOriginalWidth</definition>
-        <argsstring>() const </argsstring>
-        <name>getOriginalWidth</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="44" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a8e4c99136a703f2cdcfeaf9a34af757c_1a8e4c99136a703f2cdcfeaf9a34af757c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const int</type>
-        <definition>const int mc::os::Window::getOriginalHeight</definition>
-        <argsstring>() const </argsstring>
-        <name>getOriginalHeight</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="45" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_ab9b3cee21dc9ce11d9599fb39b52b0c3_1ab9b3cee21dc9ce11d9599fb39b52b0c3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::string</type>
-        <definition>std::string mc::os::Window::getTitle</definition>
-        <argsstring>()</argsstring>
-        <name>getTitle</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="47" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a34a7567a89f34594d5d3b21c55cba891_1a34a7567a89f34594d5d3b21c55cba891" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const std::string</type>
-        <definition>const std::string mc::os::Window::getTitle</definition>
-        <argsstring>() const </argsstring>
-        <name>getTitle</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="48" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/de7/a00039_a39f971682f397527a72596ba307c6cf5_1a39f971682f397527a72596ba307c6cf5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::os::Window::setTitle</definition>
-        <argsstring>(const std::string &amp;newTitle)</argsstring>
-        <name>setTitle</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>newTitle</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Window.h" line="49" column="1"/>
+        <location file="include/MACE/Graphics/Components.h" line="12" column="9" bodyfile="include/MACE/Graphics/Components.h" bodystart="12" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <collaborationgraph>
-      <node id="445">
-        <label>mc::os::Window</label>
-        <link refid="d3/de7/a00039"/>
-        <childnode refid="446" relation="usage">
-          <edgelabel>title</edgelabel>
-        </childnode>
-      </node>
-      <node id="447">
-        <label>std::basic_string&lt; char &gt;</label>
-      </node>
-      <node id="446">
-        <label>std::string</label>
-        <childnode refid="447" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="include/MACE/Graphics/Window.h" line="31" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="31" bodyend="57"/>
-    <listofallmembers>
-      <member refid="d3/de7/a00039_a10ba257998d0f19b5e9caa95430fa04a_1a10ba257998d0f19b5e9caa95430fa04a" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>create</name></member>
-      <member refid="d3/de7/a00039_a6434d707ac569e278fafec1aeb573536_1a6434d707ac569e278fafec1aeb573536" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>destroy</name></member>
-      <member refid="d3/de7/a00039_a85cd60eaa0dcf9c559ae62c109320066_1a85cd60eaa0dcf9c559ae62c109320066" prot="protected" virt="non-virtual"><scope>mc::os::Window</scope><name>fps</name></member>
-      <member refid="d3/de7/a00039_a8ceff671d359d991b2b586e3281f1517_1a8ceff671d359d991b2b586e3281f1517" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>getFPS</name></member>
-      <member refid="d3/de7/a00039_a463d4fc2c297b73d8fa15f117f583671_1a463d4fc2c297b73d8fa15f117f583671" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>getGLFWWindow</name></member>
-      <member refid="d3/de7/a00039_a8e4c99136a703f2cdcfeaf9a34af757c_1a8e4c99136a703f2cdcfeaf9a34af757c" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>getOriginalHeight</name></member>
-      <member refid="d3/de7/a00039_a43005c8cc4ebc2e5fe2b9f91d7a4b569_1a43005c8cc4ebc2e5fe2b9f91d7a4b569" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>getOriginalWidth</name></member>
-      <member refid="d3/de7/a00039_ab9b3cee21dc9ce11d9599fb39b52b0c3_1ab9b3cee21dc9ce11d9599fb39b52b0c3" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>getTitle</name></member>
-      <member refid="d3/de7/a00039_a34a7567a89f34594d5d3b21c55cba891_1a34a7567a89f34594d5d3b21c55cba891" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>getTitle</name></member>
-      <member refid="d3/de7/a00039_ab9f5d3339c56615e3f88c9bdab4280de_1ab9f5d3339c56615e3f88c9bdab4280de" prot="protected" virt="non-virtual"><scope>mc::os::Window</scope><name>originalHeight</name></member>
-      <member refid="d3/de7/a00039_a869a3be735693336e9717f9898d48785_1a869a3be735693336e9717f9898d48785" prot="protected" virt="non-virtual"><scope>mc::os::Window</scope><name>originalWidth</name></member>
-      <member refid="d3/de7/a00039_a2b776e80c34912fc8b6c4dda36da1d00_1a2b776e80c34912fc8b6c4dda36da1d00" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>poll</name></member>
-      <member refid="d3/de7/a00039_a1e88dfbac008f41c919864ccab3e9aca_1a1e88dfbac008f41c919864ccab3e9aca" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>setFPS</name></member>
-      <member refid="d3/de7/a00039_a39f971682f397527a72596ba307c6cf5_1a39f971682f397527a72596ba307c6cf5" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>setTitle</name></member>
-      <member refid="d3/de7/a00039_abc38ef5f7fa4e39799adc651e3a6eba3_1abc38ef5f7fa4e39799adc651e3a6eba3" prot="protected" virt="non-virtual"><scope>mc::os::Window</scope><name>title</name></member>
-      <member refid="d3/de7/a00039_affb6e826d0732a6e10d6c2efe71bf695_1affb6e826d0732a6e10d6c2efe71bf695" prot="protected" virt="non-virtual"><scope>mc::os::Window</scope><name>window</name></member>
-      <member refid="d3/de7/a00039_a71b8266ea5d892328ccebc05c65b3753_1a71b8266ea5d892328ccebc05c65b3753" prot="public" virt="non-virtual"><scope>mc::os::Window</scope><name>Window</name></member>
-      <member refid="d3/de7/a00039_a832d299d0131fc9740d25c15c804e42e_1a832d299d0131fc9740d25c15c804e42e" prot="private" virt="non-virtual"><scope>mc::os::Window</scope><name>WindowModule</name></member>
-    </listofallmembers>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_GRAPHICS_COMPONENTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_GRAPHICS_COMPONENTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Graphics/Entity.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d6/d2c/a00072" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">gfx<sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//gfx</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Graphics/Components.h"/>
   </compounddef>
 </doxygen>

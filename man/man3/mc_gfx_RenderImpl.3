@@ -1,4 +1,4 @@
-.TH "mc::gfx::RenderImpl" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::RenderImpl" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,10 +14,10 @@ Inherited by \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol<
 
 .in +1c
 .ti -1c
-.RI "\fBRenderImpl\fP ()"
+.RI "\fBRenderImpl\fP () noexcept=default"
 .br
 .ti -1c
-.RI "virtual \fB~RenderImpl\fP ()=default"
+.RI "virtual \fB~RenderImpl\fP () noexcept=default"
 .br
 .ti -1c
 .RI "virtual void \fBresize\fP (const \fBSize\fP width, const \fBSize\fP height)=0"
@@ -26,13 +26,13 @@ Inherited by \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol<
 .RI "virtual void \fBinit\fP (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)=0"
 .br
 .ti -1c
-.RI "virtual void \fBsetUp\fP (\fBos::Window\fP *win, \fBRenderQueue\fP *queue)=0"
+.RI "virtual void \fBsetUp\fP (\fBos::WindowModule\fP *win, \fBRenderQueue\fP *queue)=0"
 .br
 .ti -1c
-.RI "virtual void \fBrender\fP (\fBos::Window\fP *win, \fBEntity\fP *entity)=0"
+.RI "virtual void \fBrender\fP (\fBos::WindowModule\fP *win, \fBGraphicsEntity\fP *entity)=0"
 .br
 .ti -1c
-.RI "virtual void \fBtearDown\fP (\fBos::Window\fP *win, \fBRenderQueue\fP *queue)=0"
+.RI "virtual void \fBtearDown\fP (\fBos::WindowModule\fP *win, \fBRenderQueue\fP *queue)=0"
 .br
 .ti -1c
 .RI "virtual void \fBdestroy\fP ()=0"
@@ -50,36 +50,147 @@ Inherited by \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol<
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 50 of file Renderer\&.h\&.
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Definition at line 105 of file Renderer\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "mc::gfx::RenderImpl::RenderImpl ()"
+.SS "mc::gfx::RenderImpl::RenderImpl ()\fC [default]\fP, \fC [noexcept]\fP"
 
-.SS "virtual mc::gfx::RenderImpl::~RenderImpl ()\fC [virtual]\fP, \fC [default]\fP"
+.SS "virtual mc::gfx::RenderImpl::~RenderImpl ()\fC [virtual]\fP, \fC [default]\fP, \fC [noexcept]\fP"
 
 .SH "Member Function Documentation"
 .PP 
 .SS "virtual void mc::gfx::RenderImpl::destroy ()\fC [pure virtual]\fP"
 
 .PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
 Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [pure virtual]\fP"
 
 .PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
 Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::render (\fBos::Window\fP * win, \fBEntity\fP * entity)\fC [pure virtual]\fP"
+.SS "virtual void mc::gfx::RenderImpl::render (\fBos::WindowModule\fP * win, \fBGraphicsEntity\fP * entity)\fC [pure virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::resize (const \fBSize\fP width, const \fBSize\fP height)\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::setUp (\fBos::Window\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::tearDown (\fBos::Window\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
+.SS "virtual void mc::gfx::RenderImpl::setUp (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
+.SS "virtual void mc::gfx::RenderImpl::tearDown (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .PP
 Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Entity2D >\fP\&.
@@ -88,7 +199,7 @@ Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtoco
 .SS "friend class \fBRenderer\fP\fC [friend]\fP"
 
 .PP
-Definition at line 51 of file Renderer\&.h\&.
+Definition at line 106 of file Renderer\&.h\&.
 .SS "void \fBssl::init\fP (const \fBSize\fP &, const \fBSize\fP &)\fC [friend]\fP"
 
 

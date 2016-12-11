@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['originalheight',['originalHeight',['../d3/de7/a00039_ab9f5d3339c56615e3f88c9bdab4280de.html#ab9f5d3339c56615e3f88c9bdab4280de',1,'mc::os::Window']]],
-  ['originalwidth',['originalWidth',['../d3/de7/a00039_a869a3be735693336e9717f9898d48785.html#a869a3be735693336e9717f9898d48785',1,'mc::os::Window']]]
+  ['r',['r',['../da/da0/a00009_a21e476d9238f36f210f5cd35868b3d08.html#a21e476d9238f36f210f5cd35868b3d08',1,'mc::Color']]],
+  ['rotation',['rotation',['../d0/dc0/a00033_a3ed9fc5756560490b92f7e13893e9dc4.html#a3ed9fc5756560490b92f7e13893e9dc4',1,'mc::TransformMatrix']]]
 ];

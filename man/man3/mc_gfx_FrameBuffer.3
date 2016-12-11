@@ -1,8 +1,9 @@
-.TH "mc::gfx::FrameBuffer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::FrameBuffer" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc::gfx::FrameBuffer \- 
+mc::gfx::FrameBuffer \- Represents an OpenGL Framebuffer \fBObject\fP which allows rendering to a non-screen location\&.  
+
 .SH SYNOPSIS
 .br
 .PP
@@ -16,45 +17,67 @@ Inherits \fBmc::gfx::Object\fP\&.
 .ti -1c
 .RI "void \fBinit\fP ()"
 .br
+.RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
 .ti -1c
 .RI "void \fBdestroy\fP ()"
 .br
+.RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
-.RI "void \fBattachTexture\fP (const GLenum &target, const GLenum &attachment, const GLuint &textureID, const GLint &level)"
+.RI "void \fBattachTexture\fP (const GLenum &target, const GLenum &attachment, const GLuint &textureID, const GLint &level=0)"
 .br
+.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTexture1D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level)"
+.RI "void \fBattachTexture1D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level=0)"
 .br
+.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTexture2D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level)"
+.RI "void \fBattachTexture2D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level=0)"
 .br
+.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTextureLayer\fP (const GLenum &target, const GLenum &attachment, const GLuint &texture, const GLint &level, const GLint &layer)"
+.RI "void \fBattachTexture3D\fP (const GLenum &target, const GLenum &attachment, const GLenum &texTarget, const GLuint &textureID, const GLint &level=0, const GLint &layer=0)"
 .br
+.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
+.ti -1c
+.RI "void \fBattachTextureLayer\fP (const GLenum &target, const GLenum &attachment, const GLuint &texture, const GLint &level=0, const GLint &layer=0)"
+.br
+.RI "\fIAttaches a single layer from a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
 .RI "void \fBattachRenderbuffer\fP (const GLenum &target, const GLenum &attachment, const \fBRenderBuffer\fP &buffer)"
 .br
-.ti -1c
-.RI "void \fBsetParameter\fP (const GLenum &paramName, const GLint &value)"
-.br
+.RI "\fIAttaches a \fC\fBRenderBuffer\fP\fP to this \fC\fBFrameBuffer\fP\fP for rendering\&. \fP"
 .ti -1c
 .RI "void \fBsetDrawBuffers\fP (const \fBSize\fP &arrSize, const GLenum *buffers)"
 .br
+.RI "\fISpecifies what buffers to render to\&. \fP"
 .ti -1c
 .RI "bool \fBisCreated\fP () const "
 .br
+.RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
 .RI "GLenum \fBcheckStatus\fP (const GLenum &target)"
 .br
+.RI "\fIQueries OpenGL for the status of this `FrameBuffer\&. \fP"
 .ti -1c
 .RI "void \fBbind\fP () const "
 .br
+.RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
 .ti -1c
 .RI "void \fBunbind\fP () const "
 .br
+.RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
 .ti -1c
 .RI "\fBIndex\fP \fBgetID\fP () const "
 .br
+.RI "\fIRetrieves the current ID that this \fC\fBObject\fP\fP represents\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
 .in -1c
 .SS "Protected Attributes"
 
@@ -62,52 +85,533 @@ Inherits \fBmc::gfx::Object\fP\&.
 .ti -1c
 .RI "\fBIndex\fP \fBid\fP = 0"
 .br
+.RI "\fIThe ID of this `Object\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 119 of file Buffer\&.h\&.
+Represents an OpenGL Framebuffer \fBObject\fP which allows rendering to a non-screen location\&. 
+
+This also allows rendering to a \fC\fBTexture\fP\fP or \fC\fBRenderBuffer\fP\fP object\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/Framebuffer_Object 
+.RE
+.PP
+
+.PP
+Definition at line 180 of file Buffer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::FrameBuffer::attachRenderbuffer (const GLenum & target, const GLenum & attachment, const \fBRenderBuffer\fP & buffer)"
 
-.SS "void mc::gfx::FrameBuffer::attachTexture (const GLenum & target, const GLenum & attachment, const GLuint & textureID, const GLint & level)"
+.PP
+Attaches a \fC\fBRenderBuffer\fP\fP to this \fC\fBFrameBuffer\fP\fP for rendering\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.br
+\fIattachment\fP Which attachment port to use 
+.br
+\fIbuffer\fP The \fC\fBRenderBuffer\fP\fP to use\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer 
+.RE
+.PP
 
-.SS "void mc::gfx::FrameBuffer::attachTexture1D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level)"
+.SS "void mc::gfx::FrameBuffer::attachTexture (const GLenum & target, const GLenum & attachment, const GLuint & textureID, const GLint & level = \fC0\fP)"
 
-.SS "void mc::gfx::FrameBuffer::attachTexture2D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level)"
+.PP
+Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.br
+\fIattachment\fP Which attachment port to use\&. 
+.br
+\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
+.br
+\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
+.PP
+\fBsetDrawBuffers(const Size&, const GLenum*)\fP 
+.RE
+.PP
+\fBTodo\fP
+.RS 4
+Replace this with the actual \fBTexture\fP class 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
-.SS "void mc::gfx::FrameBuffer::attachTextureLayer (const GLenum & target, const GLenum & attachment, const GLuint & texture, const GLint & level, const GLint & layer)"
+.SS "void mc::gfx::FrameBuffer::attachTexture1D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level = \fC0\fP)"
+
+.PP
+Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.br
+\fIattachment\fP Which attachment port to use\&. 
+.br
+\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
+.br
+\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
+.PP
+\fBsetDrawBuffers(const Size&, const GLenum*)\fP 
+.RE
+.PP
+\fBTodo\fP
+.RS 4
+Replace this with the actual \fBTexture\fP class 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fItexTarget\fP Target for the texture\&. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link\&. 
+.RE
+.PP
+
+.SS "void mc::gfx::FrameBuffer::attachTexture2D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level = \fC0\fP)"
+
+.PP
+Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.br
+\fIattachment\fP Which attachment port to use\&. 
+.br
+\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
+.br
+\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
+.PP
+\fBsetDrawBuffers(const Size&, const GLenum*)\fP 
+.RE
+.PP
+\fBTodo\fP
+.RS 4
+Replace this with the actual \fBTexture\fP class 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fItexTarget\fP Target for the texture\&. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link\&. 
+.RE
+.PP
+
+.SS "void mc::gfx::FrameBuffer::attachTexture3D (const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level = \fC0\fP, const GLint & layer = \fC0\fP)"
+
+.PP
+Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.br
+\fIattachment\fP Which attachment port to use\&. 
+.br
+\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
+.br
+\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
+.PP
+\fBsetDrawBuffers(const Size&, const GLenum*)\fP 
+.RE
+.PP
+\fBTodo\fP
+.RS 4
+Replace this with the actual \fBTexture\fP class 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fItexTarget\fP Target for the texture\&. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link\&. 
+.br
+\fIlayer\fP Which layer of the 3-dimensional image to use\&. It is 0 by default\&. 
+.RE
+.PP
+
+.SS "void mc::gfx::FrameBuffer::attachTextureLayer (const GLenum & target, const GLenum & attachment, const GLuint & texture, const GLint & level = \fC0\fP, const GLint & layer = \fC0\fP)"
+
+.PP
+Attaches a single layer from a texture to this \fC\fBFrameBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.br
+\fIattachment\fP Which attachment port to use\&. 
+.br
+\fItexture\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
+.br
+\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
+.br
+\fIlayer\fP Which layer of the texture to use\&. It is 0 by default\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
 
+.PP
+Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::unbind() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
+
 .SS "GLenum mc::gfx::FrameBuffer::checkStatus (const GLenum & target)"
 
+.PP
+Queries OpenGL for the status of this `FrameBuffer\&. \fCCan be used to detect whether this\fPFrameBuffer` encountered an error during creation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The \fC\fBFrameBuffer\fP\fP status\&. The full list of enums is described in the OpenGL specification\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glCheckFramebufferStatus 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::FrameBuffer::destroy ()\fC [virtual]\fP"
+
+.PP
+Calls the corresponding glDestroy* function and deletes the ID\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::init()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
 
+.PP
+Retrieves the current ID that this \fC\fBObject\fP\fP represents\&. The ID is an unsigned number that acts like a pointer to OpenGL memory\&. It is assigned when \fBObject::init()\fP is called\&. 
+.PP
+If it is 0, the \fC\fBObject\fP\fP is considered uncreated\&. 
+.PP
+When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbind() const \fPwill bind to ID 0, which is the equivelant of a null pointer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
 .SS "void mc::gfx::FrameBuffer::init ()\fC [virtual]\fP"
+
+.PP
+Calls the corresponding glCreate* function and assigns an ID\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::destroy()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
 .SS "bool mc::gfx::FrameBuffer::isCreated () const\fC [virtual]\fP"
 
 .PP
+Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBObject\fP\fP represents memory 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.PP
+\fBObject::init()\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
 Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
 .SS "void mc::gfx::FrameBuffer::setDrawBuffers (const \fBSize\fP & arrSize, const GLenum * buffers)"
 
-.SS "void mc::gfx::FrameBuffer::setParameter (const GLenum & paramName, const GLint & value)"
+.PP
+Specifies what buffers to render to\&. Takes in an array of attachments\&. A \fC\fBRenderBuffer\fP\fP or \fC\fBTexture\fP\fP can be attached to act as a draw buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIarrSize\fP Size of the array of render buffers 
+.br
+\fIbuffers\fP Pointer to the first element of the array 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glDrawBuffers 
+.PP
+FrameBuffer::attachTexture(const GLenum&, const GLenum&, const GLenum&, const GLuint&) 
+.PP
+\fBFrameBuffer::attachTexture1D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)\fP 
+.PP
+\fBFrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)\fP 
+.PP
+FrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&, const GLint&) 
+.PP
+FrameBuffer::attachTextureLayer(const GLenum&, const GLenum&, const GLuint&, const GLint&) 
+.PP
+\fBFrameBuffer::attachRenderbuffer(const GLenum&, const GLenum&, const RenderBuffer&)\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+
+.PP
+Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.RE
+.PP
 
 .SH "Member Data Documentation"
 .PP 
 .SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 37 of file Buffer\&.h\&.
+The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 in \fBObject::destroy()\fP 
+.PP
+\fBObject::getID() const \fPreturns this\&. 
+.PP
+Definition at line 123 of file Buffer\&.h\&.
 
 .SH "Author"
 .PP 

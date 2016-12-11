@@ -1,4 +1,4 @@
-.TH "mc::gfx::Renderer" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Renderer" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -18,7 +18,7 @@ mc::gfx::Renderer \-
 .RI "static void \fBinit\fP (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)"
 .br
 .ti -1c
-.RI "static void \fBsetUp\fP (\fBos::Window\fP *win)"
+.RI "static void \fBsetUp\fP (\fBos::WindowModule\fP *win)"
 .br
 .ti -1c
 .RI "template<typename T > static void \fBqueue\fP (T *e)"
@@ -27,13 +27,19 @@ mc::gfx::Renderer \-
 .RI "static \fBSize\fP \fBnumberOfProtocols\fP ()"
 .br
 .ti -1c
-.RI "static void \fBtearDown\fP (\fBos::Window\fP *win)"
+.RI "static void \fBtearDown\fP (\fBos::WindowModule\fP *win)"
 .br
 .ti -1c
-.RI "static void \fBrenderFrame\fP (\fBos::Window\fP *win)"
+.RI "static void \fBrenderFrame\fP (\fBos::WindowModule\fP *win)"
+.br
+.ti -1c
+.RI "static void \fBcheckInput\fP ()"
 .br
 .ti -1c
 .RI "static void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "static void \fBclearBuffers\fP ()"
 .br
 .ti -1c
 .RI "static void \fBsetRefreshColor\fP (const float r, const float g, const float b, const float a=1\&.0f)"
@@ -57,10 +63,65 @@ mc::gfx::Renderer \-
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 83 of file Renderer\&.h\&.
+Definition at line 167 of file Renderer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "static void mc::gfx::Renderer::checkInput ()\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "static void mc::gfx::Renderer::clearBuffers ()\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "static void mc::gfx::Renderer::destroy ()\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "static \fBSize\fP mc::gfx::Renderer::getOriginalHeight ()\fC [static]\fP"
 
@@ -68,23 +129,132 @@ Definition at line 83 of file Renderer\&.h\&.
 
 .SS "static void mc::gfx::Renderer::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [static]\fP"
 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "static \fBSize\fP mc::gfx::Renderer::numberOfProtocols ()\fC [static]\fP"
 
 .SS "template<typename T > static void mc::gfx::Renderer::queue (T * e)\fC [inline]\fP, \fC [static]\fP"
 
 .PP
-Definition at line 95 of file Renderer\&.h\&.
-.SS "static void mc::gfx::Renderer::renderFrame (\fBos::Window\fP * win)\fC [static]\fP"
+Definition at line 190 of file Renderer\&.h\&.
+.SS "static void mc::gfx::Renderer::renderFrame (\fBos::WindowModule\fP * win)\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "static void mc::gfx::Renderer::resize (const \fBSize\fP width, const \fBSize\fP hieght)\fC [static]\fP"
 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "static void mc::gfx::Renderer::setRefreshColor (const float r, const float g, const float b, const float a = \fC1\&.0f\fP)\fC [static]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SS "static void mc::gfx::Renderer::setRefreshColor (const \fBColor\fP & c)\fC [static]\fP"
 
-.SS "static void mc::gfx::Renderer::setUp (\fBos::Window\fP * win)\fC [static]\fP"
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
-.SS "static void mc::gfx::Renderer::tearDown (\fBos::Window\fP * win)\fC [static]\fP"
+.SS "static void mc::gfx::Renderer::setUp (\fBos::WindowModule\fP * win)\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "static void mc::gfx::Renderer::tearDown (\fBos::WindowModule\fP * win)\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
 
 .SH "Friends And Related Function Documentation"
 .PP 

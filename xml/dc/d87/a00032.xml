@@ -1,143 +1,205 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="dc/d87/a00032" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::RenderProtocol&lt; Entity2D &gt;</compoundname>
-    <basecompoundref refid="d5/d79/a00030" prot="public" virt="non-virtual">mc::gfx::RenderImpl</basecompoundref>
-    <includes refid="d5/df9/a00044" local="no">Entity2D.h</includes>
-    <templateparamlist>
-    </templateparamlist>
+    <compoundname>mc::gfx::Texture</compoundname>
+    <basecompoundref refid="dc/de2/a00024" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
+    <includes refid="d8/d41/a00038" local="no">Buffer.h</includes>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="dc/d87/a00032_1a0b89e976b890c3f3491925d9344bc916" prot="private" static="no" mutable="no">
-        <type><ref refid="d0/dc0/a00033" kindref="compound">ShaderProgram</ref></type>
-        <definition>ShaderProgram mc::gfx::RenderProtocol&lt; Entity2D &gt;::shaders2D</definition>
+      <memberdef kind="variable" id="dc/d87/a00032_1a49586468450408856fa10aed40ef4bce" prot="private" static="no" mutable="no">
+        <type>GLenum</type>
+        <definition>GLenum mc::gfx::Texture::target</definition>
         <argsstring></argsstring>
-        <name>shaders2D</name>
-        <initializer>= <ref refid="d0/dc0/a00033" kindref="compound">ShaderProgram</ref>()</initializer>
+        <name>target</name>
+        <initializer>= GL_TEXTURE_2D</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="55" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="55" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="309" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="309" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="dc/d87/a00032_1af8166f52dd796e0d40cbbe3d07006471" prot="private" static="no" mutable="no">
-        <type><ref refid="d8/d41/a00038" kindref="compound">VertexArray</ref></type>
-        <definition>VertexArray mc::gfx::RenderProtocol&lt; Entity2D &gt;::square</definition>
+      <memberdef kind="variable" id="dc/d87/a00032_1a14a18551970c09664881a37cb96ade3d" prot="private" static="no" mutable="no">
+        <type><ref refid="da/da0/a00009" kindref="compound">Color</ref></type>
+        <definition>Color mc::gfx::Texture::paint</definition>
         <argsstring></argsstring>
-        <name>square</name>
-        <initializer>= <ref refid="d8/d41/a00038" kindref="compound">VertexArray</ref>()</initializer>
+        <name>paint</name>
+        <initializer>= <ref refid="da/da0/a00009" kindref="compound">Color</ref>(1.0f, 1.0f, 1.0f, 1.0f)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="56" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="56" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="311" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="311" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dc/d87/a00032_1a7e7bc0b3087bf23ab4bfb494a00f3346" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float mc::gfx::Texture::opacity</definition>
+        <argsstring></argsstring>
+        <name>opacity</name>
+        <initializer>= 1.0f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="313" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="313" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="dc/d87/a00032_aedee904fc6c0dbb4ebe8171f3e15f320_1aedee904fc6c0dbb4ebe8171f3e15f320" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_af9bf71115d34b7064254348e7743c37b_1af9bf71115d34b7064254348e7743c37b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::resize</definition>
-        <argsstring>(const Size width, const Size height)</argsstring>
-        <name>resize</name>
-        <reimplements refid="d5/d79/a00030_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c">resize</reimplements>
+        <definition>void mc::gfx::Texture::init</definition>
+        <argsstring>()</argsstring>
+        <name>init</name>
+        <reimplements refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
+        <briefdescription>
+<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="272" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a56741a1f705b7b3e6ddb085c1fe8fe45_1a56741a1f705b7b3e6ddb085c1fe8fe45" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::destroy</definition>
+        <argsstring>()</argsstring>
+        <name>destroy</name>
+        <reimplements refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
+        <briefdescription>
+<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="273" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a70c25cd28c47f4201388aa1216e3cd2d_1a70c25cd28c47f4201388aa1216e3cd2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setData</definition>
+        <argsstring>(const void *data, Size width, Size height, GLenum type=GL_FLOAT, GLenum format=GL_RGB, GLenum internalFormat=GL_RGB, Index mipmapLevel=0)</argsstring>
+        <name>setData</name>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>width</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>height</declname>
         </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="42" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a9bf3f0dcf0829df248047562da3ea90d_1a9bf3f0dcf0829df248047562da3ea90d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::init</definition>
-        <argsstring>(const Size originalWidth, const Size originalHeight)</argsstring>
-        <name>init</name>
-        <reimplements refid="d5/d79/a00030_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1">init</reimplements>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>originalWidth</declname>
+          <type>GLenum</type>
+          <declname>type</declname>
+          <defval>GL_FLOAT</defval>
         </param>
         <param>
-          <type>const <ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>originalHeight</declname>
+          <type>GLenum</type>
+          <declname>format</declname>
+          <defval>GL_RGB</defval>
+        </param>
+        <param>
+          <type>GLenum</type>
+          <declname>internalFormat</declname>
+          <defval>GL_RGB</defval>
+        </param>
+        <param>
+          <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>mipmapLevel</declname>
+          <defval>0</defval>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glTexImage2D">https://www.opengl.org/wiki/GLAPI/glTexImage2D</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="44" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="279" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a9b99fb79a9fcd3c5c6e7d712abbeee61_1a9b99fb79a9fcd3c5c6e7d712abbeee61" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_a4c619193ee9a4b354bdf5b0382302197_1a4c619193ee9a4b354bdf5b0382302197" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::setUp</definition>
-        <argsstring>(os::Window *win, RenderQueue *queue)</argsstring>
-        <name>setUp</name>
-        <reimplements refid="d5/d79/a00030_a0b904148f57835eded1393c3e175d280_1a0b904148f57835eded1393c3e175d280">setUp</reimplements>
+        <definition>void mc::gfx::Texture::loadFile</definition>
+        <argsstring>(const char *file)</argsstring>
+        <name>loadFile</name>
         <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">os::Window</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <param>
-          <type><ref refid="db/df8/a00076_a752c6b5764bf4e0d5f43a55474d02aa7_1a752c6b5764bf4e0d5f43a55474d02aa7" kindref="member">RenderQueue</ref> *</type>
-          <declname>queue</declname>
+          <type>const char *</type>
+          <declname>file</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="46" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="284" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a5f883c110374d251af8fa176988cf0b7_1a5f883c110374d251af8fa176988cf0b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_acf4bc454a146b237fa87756c29eefb90_1acf4bc454a146b237fa87756c29eefb90" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::render</definition>
-        <argsstring>(os::Window *win, Entity *entity)</argsstring>
-        <name>render</name>
-        <reimplements refid="d5/d79/a00030_aae0c0cbdbfc1210014dbd1743990c67f_1aae0c0cbdbfc1210014dbd1743990c67f">render</reimplements>
+        <definition>void mc::gfx::Texture::setTarget</definition>
+        <argsstring>(const GLenum target)</argsstring>
+        <name>setTarget</name>
         <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">os::Window</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <param>
-          <type><ref refid="da/d45/a00011" kindref="compound">Entity</ref> *</type>
-          <declname>entity</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="48" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a1c94c1163f8463d0e6ec4a50b7784f0d_1a1c94c1163f8463d0e6ec4a50b7784f0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::tearDown</definition>
-        <argsstring>(os::Window *win, RenderQueue *queue)</argsstring>
-        <name>tearDown</name>
-        <reimplements refid="d5/d79/a00030_a359c9a236cdcc001783e5141435b85ae_1a359c9a236cdcc001783e5141435b85ae">tearDown</reimplements>
-        <param>
-          <type><ref refid="d3/de7/a00039" kindref="compound">os::Window</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <param>
-          <type><ref refid="db/df8/a00076_a752c6b5764bf4e0d5f43a55474d02aa7_1a752c6b5764bf4e0d5f43a55474d02aa7" kindref="member">RenderQueue</ref> *</type>
-          <declname>queue</declname>
+          <type>const GLenum</type>
+          <declname>target</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -145,63 +207,435 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="50" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="286" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_aa57bdc941f53f4fbc8ee10eb29be6bb2_1aa57bdc941f53f4fbc8ee10eb29be6bb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; Entity2D &gt;::destroy</definition>
+      <memberdef kind="function" id="dc/d87/a00032_a1974ac906f5e0d5e796dc82c2e05c0ec_1a1974ac906f5e0d5e796dc82c2e05c0ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>GLenum</type>
+        <definition>GLenum mc::gfx::Texture::getTarget</definition>
         <argsstring>()</argsstring>
-        <name>destroy</name>
-        <reimplements refid="d5/d79/a00030_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee">destroy</reimplements>
+        <name>getTarget</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="52" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="287" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a4abd1d7944c0c80fbd484fad810d8b77_1a4abd1d7944c0c80fbd484fad810d8b77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="da/da0/a00009" kindref="compound">Color</ref> &amp;</type>
+        <definition>Color&amp; mc::gfx::Texture::getPaint</definition>
+        <argsstring>()</argsstring>
+        <name>getPaint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="289" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a89e965418f2da04a68ba9724623e9ae2_1a89e965418f2da04a68ba9724623e9ae2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="da/da0/a00009" kindref="compound">Color</ref> &amp;</type>
+        <definition>const Color&amp; mc::gfx::Texture::getPaint</definition>
+        <argsstring>() const </argsstring>
+        <name>getPaint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="290" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a53696fcdbef5ef8dfa6bf9a90c649be7_1a53696fcdbef5ef8dfa6bf9a90c649be7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setPaint</definition>
+        <argsstring>(const Color &amp;c)</argsstring>
+        <name>setPaint</name>
+        <param>
+          <type>const <ref refid="da/da0/a00009" kindref="compound">Color</ref> &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="291" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a73f099a1c1c226e101c28c70b517e23b_1a73f099a1c1c226e101c28c70b517e23b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float mc::gfx::Texture::getOpacity</definition>
+        <argsstring>()</argsstring>
+        <name>getOpacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="293" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_af59d6a7103ceacc08e707882043eaba8_1af59d6a7103ceacc08e707882043eaba8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const float</type>
+        <definition>const float mc::gfx::Texture::getOpacity</definition>
+        <argsstring>() const </argsstring>
+        <name>getOpacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="294" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_aebd0d76cdc2e89864118b4c119cc09da_1aebd0d76cdc2e89864118b4c119cc09da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setOpacity</definition>
+        <argsstring>(const float f)</argsstring>
+        <name>setOpacity</name>
+        <param>
+          <type>const float</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="295" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a984b861a6a3cb3e9e46c9e93e306fcef_1a984b861a6a3cb3e9e46c9e93e306fcef" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Texture::isCreated</definition>
+        <argsstring>() const </argsstring>
+        <name>isCreated</name>
+        <reimplements refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
+        <briefdescription>
+<para>Queries OpenGL whether this <ref refid="dc/de2/a00024" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="297" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a6ec1b99fe4f8eb9f4c9566c1a79c8d15_1a6ec1b99fe4f8eb9f4c9566c1a79c8d15" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setParameter</definition>
+        <argsstring>(const GLenum &amp;name, const GLint &amp;value)</argsstring>
+        <name>setParameter</name>
+        <param>
+          <type>const GLenum &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const GLint &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glTexParameter">https://www.opengl.org/wiki/GLAPI/glTexParameter</ulink> </para></simplesect>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="303" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a7f40e8f1091382117829940678577b55_1a7f40e8f1091382117829940678577b55" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Texture::operator==</definition>
+        <argsstring>(const Texture &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="dc/d87/a00032" kindref="compound">Texture</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="305" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_ac43bd1d99904943697d6a76c238f9be0_1ac43bd1d99904943697d6a76c238f9be0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Texture::operator!=</definition>
+        <argsstring>(const Texture &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="dc/d87/a00032" kindref="compound">Texture</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="306" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Object::bind</definition>
+        <argsstring>() const </argsstring>
+        <name>bind</name>
+        <briefdescription>
+<para>Binds this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="72" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Object::unbind</definition>
+        <argsstring>() const </argsstring>
+        <name>unbind</name>
+        <briefdescription>
+<para>Unbinds this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="78" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Object::getID</definition>
+        <argsstring>() const </argsstring>
+        <name>getID</name>
+        <briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
+        <detaileddescription>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="99" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="dc/de2/a00024" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="108" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="dc/de2/a00024" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="116" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="dc/d87/a00032_1aa5ceae4927c83da121132589791254f7" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::bindIndex</definition>
+        <argsstring>(const Index &amp;id) const </argsstring>
+        <name>bindIndex</name>
+        <reimplements refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
+        <param>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
+        <detaileddescription>
+<para><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">Object::bind() const </ref>and <ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="315" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
+        <type><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Object::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
+        <detaileddescription>
+<para>` Should be set in <ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> and become 0 in <ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para><para><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="123" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="123" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Texture">https://www.opengl.org/wiki/Texture</ulink> </para></simplesect>
+</para>    </detaileddescription>
     <inheritancegraph>
-      <node id="408">
-        <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
+      <node id="393">
+        <label>mc::gfx::Texture</label>
         <link refid="dc/d87/a00032"/>
-        <childnode refid="409" relation="public-inheritance">
+        <childnode refid="394" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="409">
-        <label>mc::gfx::RenderImpl</label>
-        <link refid="d5/d79/a00030"/>
+      <node id="394">
+        <label>mc::gfx::Object</label>
+        <link refid="dc/de2/a00024"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="410">
-        <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
+      <node id="395">
+        <label>mc::gfx::Texture</label>
         <link refid="dc/d87/a00032"/>
-        <childnode refid="411" relation="public-inheritance">
+        <childnode refid="396" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="411">
-        <label>mc::gfx::RenderImpl</label>
-        <link refid="d5/d79/a00030"/>
+      <node id="396">
+        <label>mc::gfx::Object</label>
+        <link refid="dc/de2/a00024"/>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/Entity2D.h" line="39" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="39" bodyend="57"/>
+    <location file="include/MACE/Graphics/Buffer.h" line="270" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="270" bodyend="316"/>
     <listofallmembers>
-      <member refid="dc/d87/a00032_aa57bdc941f53f4fbc8ee10eb29be6bb2_1aa57bdc941f53f4fbc8ee10eb29be6bb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>destroy</name></member>
-      <member refid="dc/d87/a00032_a9bf3f0dcf0829df248047562da3ea90d_1a9bf3f0dcf0829df248047562da3ea90d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>init</name></member>
-      <member refid="dc/d87/a00032_a5f883c110374d251af8fa176988cf0b7_1a5f883c110374d251af8fa176988cf0b7" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>render</name></member>
-      <member refid="d5/d79/a00030_a4e783fb4702e5637b34da9c4750d3f3e_1a4e783fb4702e5637b34da9c4750d3f3e" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>RenderImpl</name></member>
-      <member refid="dc/d87/a00032_aedee904fc6c0dbb4ebe8171f3e15f320_1aedee904fc6c0dbb4ebe8171f3e15f320" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>resize</name></member>
-      <member refid="dc/d87/a00032_a9b99fb79a9fcd3c5c6e7d712abbeee61_1a9b99fb79a9fcd3c5c6e7d712abbeee61" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>setUp</name></member>
-      <member refid="dc/d87/a00032_1a0b89e976b890c3f3491925d9344bc916" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>shaders2D</name></member>
-      <member refid="dc/d87/a00032_1af8166f52dd796e0d40cbbe3d07006471" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>square</name></member>
-      <member refid="dc/d87/a00032_a1c94c1163f8463d0e6ec4a50b7784f0d_1a1c94c1163f8463d0e6ec4a50b7784f0d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>tearDown</name></member>
-      <member refid="d5/d79/a00030_a10f7f0d130b85a77dbd54b885555a0a4_1a10f7f0d130b85a77dbd54b885555a0a4" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>~RenderImpl</name></member>
+      <member refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>bind</name></member>
+      <member refid="dc/d87/a00032_1aa5ceae4927c83da121132589791254f7" prot="private" virt="virtual"><scope>mc::gfx::Texture</scope><name>bindIndex</name></member>
+      <member refid="dc/d87/a00032_a56741a1f705b7b3e6ddb085c1fe8fe45_1a56741a1f705b7b3e6ddb085c1fe8fe45" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>destroy</name></member>
+      <member refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getID</name></member>
+      <member refid="dc/d87/a00032_a73f099a1c1c226e101c28c70b517e23b_1a73f099a1c1c226e101c28c70b517e23b" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getOpacity</name></member>
+      <member refid="dc/d87/a00032_af59d6a7103ceacc08e707882043eaba8_1af59d6a7103ceacc08e707882043eaba8" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getOpacity</name></member>
+      <member refid="dc/d87/a00032_a4abd1d7944c0c80fbd484fad810d8b77_1a4abd1d7944c0c80fbd484fad810d8b77" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getPaint</name></member>
+      <member refid="dc/d87/a00032_a89e965418f2da04a68ba9724623e9ae2_1a89e965418f2da04a68ba9724623e9ae2" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getPaint</name></member>
+      <member refid="dc/d87/a00032_a1974ac906f5e0d5e796dc82c2e05c0ec_1a1974ac906f5e0d5e796dc82c2e05c0ec" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getTarget</name></member>
+      <member refid="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>id</name></member>
+      <member refid="dc/d87/a00032_af9bf71115d34b7064254348e7743c37b_1af9bf71115d34b7064254348e7743c37b" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>init</name></member>
+      <member refid="dc/d87/a00032_a984b861a6a3cb3e9e46c9e93e306fcef_1a984b861a6a3cb3e9e46c9e93e306fcef" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>isCreated</name></member>
+      <member refid="dc/d87/a00032_a4c619193ee9a4b354bdf5b0382302197_1a4c619193ee9a4b354bdf5b0382302197" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>loadFile</name></member>
+      <member refid="dc/d87/a00032_1a7e7bc0b3087bf23ab4bfb494a00f3346" prot="private" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>opacity</name></member>
+      <member refid="dc/d87/a00032_ac43bd1d99904943697d6a76c238f9be0_1ac43bd1d99904943697d6a76c238f9be0" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>operator!=</name></member>
+      <member refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::Object::"><scope>mc::gfx::Texture</scope><name>operator!=</name></member>
+      <member refid="dc/d87/a00032_a7f40e8f1091382117829940678577b55_1a7f40e8f1091382117829940678577b55" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>operator==</name></member>
+      <member refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::Object::"><scope>mc::gfx::Texture</scope><name>operator==</name></member>
+      <member refid="dc/d87/a00032_1a14a18551970c09664881a37cb96ade3d" prot="private" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>paint</name></member>
+      <member refid="dc/d87/a00032_a70c25cd28c47f4201388aa1216e3cd2d_1a70c25cd28c47f4201388aa1216e3cd2d" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setData</name></member>
+      <member refid="dc/d87/a00032_aebd0d76cdc2e89864118b4c119cc09da_1aebd0d76cdc2e89864118b4c119cc09da" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setOpacity</name></member>
+      <member refid="dc/d87/a00032_a53696fcdbef5ef8dfa6bf9a90c649be7_1a53696fcdbef5ef8dfa6bf9a90c649be7" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setPaint</name></member>
+      <member refid="dc/d87/a00032_a6ec1b99fe4f8eb9f4c9566c1a79c8d15_1a6ec1b99fe4f8eb9f4c9566c1a79c8d15" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setParameter</name></member>
+      <member refid="dc/d87/a00032_acf4bc454a146b237fa87756c29eefb90_1acf4bc454a146b237fa87756c29eefb90" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setTarget</name></member>
+      <member refid="dc/d87/a00032_1a49586468450408856fa10aed40ef4bce" prot="private" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>target</name></member>
+      <member refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>unbind</name></member>
+      <member refid="dc/de2/a00024_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>~Object</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

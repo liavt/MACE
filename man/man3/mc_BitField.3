@@ -1,4 +1,4 @@
-.TH "mc::BitField" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::BitField" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,15 +13,15 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 
 .in +1c
 .ti -1c
-.RI "\fBBitField\fP ()"
+.RI "\fBBitField\fP () noexcept"
 .br
 .RI "\fIDefault constructor\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP (const \fBByte\fP val)"
+.RI "\fBBitField\fP (const \fBByte\fP val) noexcept"
 .br
 .RI "\fIConstructs a \fC\fBBitField\fP\fP with the specified value\&. \fP"
 .ti -1c
-.RI "\fB~BitField\fP ()"
+.RI "\fB~BitField\fP () noexcept"
 .br
 .RI "\fIDefault destructor\&. \fP"
 .ti -1c
@@ -49,7 +49,7 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 .br
 .RI "\fIInverses every bit, making every 0 a 1 and every 1 a 0\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator|\fP (const \fBByte\fP \fBvalue\fP)"
+.RI "\fBBitField\fP \fBoperator|\fP (const \fBByte\fP \fBvalue\fP) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
@@ -57,7 +57,7 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator&\fP (const \fBByte\fP \fBvalue\fP)"
+.RI "\fBBitField\fP \fBoperator&\fP (const \fBByte\fP \fBvalue\fP) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
@@ -65,7 +65,7 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator^\fP (const \fBByte\fP \fBvalue\fP)"
+.RI "\fBBitField\fP \fBoperator^\fP (const \fBByte\fP \fBvalue\fP) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
@@ -73,27 +73,27 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator|\fP (\fBBitField\fP &other)"
+.RI "\fBBitField\fP \fBoperator|\fP (const \fBBitField\fP &other) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "void \fBoperator|=\fP (\fBBitField\fP &other)"
+.RI "void \fBoperator|=\fP (const \fBBitField\fP &other)"
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator&\fP (\fBBitField\fP &other)"
+.RI "\fBBitField\fP \fBoperator&\fP (const \fBBitField\fP &other) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "void \fBoperator&=\fP (\fBBitField\fP &other)"
+.RI "void \fBoperator&=\fP (const \fBBitField\fP &other)"
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator^\fP (\fBBitField\fP &other)"
+.RI "\fBBitField\fP \fBoperator^\fP (const \fBBitField\fP &other) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "void \fBoperator^=\fP (\fBBitField\fP &other)"
+.RI "void \fBoperator^=\fP (const \fBBitField\fP &other)"
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
@@ -101,35 +101,35 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator>>\fP (\fBIndex\fP places)"
+.RI "\fBBitField\fP \fBoperator>>\fP (const \fBIndex\fP places) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBBitField\fP \fBoperator<<\fP (\fBIndex\fP places)"
+.RI "\fBBitField\fP \fBoperator<<\fP (const \fBIndex\fP places) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "void \fBoperator>>=\fP (\fBIndex\fP places)"
+.RI "void \fBoperator>>=\fP (const \fBIndex\fP places)"
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "void \fBoperator<<=\fP (\fBIndex\fP places)"
+.RI "void \fBoperator<<=\fP (const \fBIndex\fP places)"
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "bool \fBoperator==\fP (const \fBByte\fP other)"
+.RI "bool \fBoperator==\fP (const \fBByte\fP other) const  noexcept"
 .br
 .RI "\fICompares this \fC\fBBitField\fP\fP to another value\&. \fP"
 .ti -1c
-.RI "bool \fBoperator!=\fP (const \fBByte\fP other)"
+.RI "bool \fBoperator!=\fP (const \fBByte\fP other) const  noexcept"
 .br
 .RI "\fIInverse for \fBoperator==\fP\&. \fP"
 .ti -1c
-.RI "bool \fBoperator==\fP (const \fBBitField\fP &other)"
+.RI "bool \fBoperator==\fP (const \fBBitField\fP &other) const  noexcept"
 .br
 .RI "\fICompares this \fC\fBBitField\fP\fP to another\&. \fP"
 .ti -1c
-.RI "bool \fBoperator!=\fP (const \fBBitField\fP &other)"
+.RI "bool \fBoperator!=\fP (const \fBBitField\fP &other) const  noexcept"
 .br
 .RI "\fIInverse for \fBoperator==\fP\&. \fP"
 .ti -1c
@@ -197,11 +197,11 @@ mc::BitField \- Wrapper class for a primitive type that allows for easy bit mani
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "\fBByte\fP \fBoperator%\fP (const \fBByte\fP other)"
+.RI "\fBByte\fP \fBoperator%\fP (const \fBByte\fP other) const "
 .br
 .RI "\fIOperator which acts upon the internal value\&. \fP"
 .ti -1c
-.RI "bool \fBoperator[]\fP (\fBByte\fP position)"
+.RI "bool \fBoperator[]\fP (const \fBByte\fP position)"
 .br
 .RI "\fIGets a bit at a certain position\&. \fP"
 .ti -1c
@@ -261,7 +261,7 @@ field\&.getBit(i) //Get whether bit in position i is true or false
 Definition at line 33 of file BitField\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "mc::BitField::BitField ()"
+.SS "mc::BitField::BitField ()\fC [noexcept]\fP"
 
 .PP
 Default constructor\&. Equal to calling
@@ -272,7 +272,7 @@ BitField(0)
 .fi
 .PP
  
-.SS "mc::BitField::BitField (const \fBByte\fP val)"
+.SS "mc::BitField::BitField (const \fBByte\fP val)\fC [noexcept]\fP"
 
 .PP
 Constructs a \fC\fBBitField\fP\fP with the specified value\&. Equal to calling
@@ -290,7 +290,7 @@ BitField = value
 .RE
 .PP
 
-.SS "mc::BitField::~BitField ()"
+.SS "mc::BitField::~BitField ()\fC [noexcept]\fP"
 
 .PP
 Default destructor\&. 
@@ -339,15 +339,15 @@ Inverses every bit, making every 0 a 1 and every 1 a 0\&. Equivelant to calling 
 .RE
 .PP
 
-.SS "bool mc::BitField::operator!= (const \fBByte\fP other)"
+.SS "bool mc::BitField::operator!= (const \fBByte\fP other) const\fC [noexcept]\fP"
 
 .PP
 Inverse for \fBoperator==\fP\&. 
-.SS "bool mc::BitField::operator!= (const \fBBitField\fP & other)"
+.SS "bool mc::BitField::operator!= (const \fBBitField\fP & other) const\fC [noexcept]\fP"
 
 .PP
 Inverse for \fBoperator==\fP\&. 
-.SS "\fBByte\fP mc::BitField::operator% (const \fBByte\fP other)"
+.SS "\fBByte\fP mc::BitField::operator% (const \fBByte\fP other) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -360,7 +360,7 @@ get()
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator& (const \fBByte\fP value)"
+.SS "\fBBitField\fP mc::BitField::operator& (const \fBByte\fP value) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -373,7 +373,7 @@ get()
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator& (\fBBitField\fP & other)"
+.SS "\fBBitField\fP mc::BitField::operator& (const \fBBitField\fP & other) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -399,7 +399,7 @@ get()
 .RE
 .PP
 
-.SS "void mc::BitField::operator&= (\fBBitField\fP & other)"
+.SS "void mc::BitField::operator&= (const \fBBitField\fP & other)"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -672,7 +672,7 @@ get()
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator<< (\fBIndex\fP places)"
+.SS "\fBBitField\fP mc::BitField::operator<< (const \fBIndex\fP places) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -685,7 +685,7 @@ get()
 .RE
 .PP
 
-.SS "void mc::BitField::operator<<= (\fBIndex\fP places)"
+.SS "void mc::BitField::operator<<= (const \fBIndex\fP places)"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -698,15 +698,15 @@ get()
 .RE
 .PP
 
-.SS "bool mc::BitField::operator== (const \fBByte\fP other)"
+.SS "bool mc::BitField::operator== (const \fBByte\fP other) const\fC [noexcept]\fP"
 
 .PP
 Compares this \fC\fBBitField\fP\fP to another value\&. Will return \fCtrue\fP if the bits represented are both equal\&. 
-.SS "bool mc::BitField::operator== (const \fBBitField\fP & other)"
+.SS "bool mc::BitField::operator== (const \fBBitField\fP & other) const\fC [noexcept]\fP"
 
 .PP
 Compares this \fC\fBBitField\fP\fP to another\&. Will return \fCtrue\fP if the bits represented are both equal\&. 
-.SS "\fBBitField\fP mc::BitField::operator>> (\fBIndex\fP places)"
+.SS "\fBBitField\fP mc::BitField::operator>> (const \fBIndex\fP places) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -719,7 +719,7 @@ get()
 .RE
 .PP
 
-.SS "void mc::BitField::operator>>= (\fBIndex\fP places)"
+.SS "void mc::BitField::operator>>= (const \fBIndex\fP places)"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -732,7 +732,7 @@ get()
 .RE
 .PP
 
-.SS "bool mc::BitField::operator[] (\fBByte\fP position)"
+.SS "bool mc::BitField::operator[] (const \fBByte\fP position)"
 
 .PP
 Gets a bit at a certain position\&. 
@@ -753,7 +753,7 @@ getBit(Byte)
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator^ (const \fBByte\fP value)"
+.SS "\fBBitField\fP mc::BitField::operator^ (const \fBByte\fP value) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -766,7 +766,7 @@ get()
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator^ (\fBBitField\fP & other)"
+.SS "\fBBitField\fP mc::BitField::operator^ (const \fBBitField\fP & other) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -792,7 +792,7 @@ get()
 .RE
 .PP
 
-.SS "void mc::BitField::operator^= (\fBBitField\fP & other)"
+.SS "void mc::BitField::operator^= (const \fBBitField\fP & other)"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -805,7 +805,7 @@ get()
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator| (const \fBByte\fP value)"
+.SS "\fBBitField\fP mc::BitField::operator| (const \fBByte\fP value) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -818,7 +818,7 @@ get()
 .RE
 .PP
 
-.SS "\fBBitField\fP mc::BitField::operator| (\fBBitField\fP & other)"
+.SS "\fBBitField\fP mc::BitField::operator| (const \fBBitField\fP & other) const"
 
 .PP
 Operator which acts upon the internal value\&. 
@@ -844,7 +844,7 @@ get()
 .RE
 .PP
 
-.SS "void mc::BitField::operator|= (\fBBitField\fP & other)"
+.SS "void mc::BitField::operator|= (const \fBBitField\fP & other)"
 
 .PP
 Operator which acts upon the internal value\&. 

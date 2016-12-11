@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['r',['r',['../da/da0/a00009_a21e476d9238f36f210f5cd35868b3d08.html#a21e476d9238f36f210f5cd35868b3d08',1,'mc::Color']]],
-  ['rotation',['rotation',['../d4/d8c/a00035_a3ed9fc5756560490b92f7e13893e9dc4.html#a3ed9fc5756560490b92f7e13893e9dc4',1,'mc::TransformMatrix']]]
+  ['transformation',['transformation',['../da/d45/a00011_a2f423919fa564ce852cb641b74f21d87.html#a2f423919fa564ce852cb641b74f21d87',1,'mc::gfx::Entity']]],
+  ['translation',['translation',['../d0/dc0/a00033_ab1d6d109dbc3524efa2aba9f8dddea37.html#ab1d6d109dbc3524efa2aba9f8dddea37',1,'mc::TransformMatrix']]]
 ];

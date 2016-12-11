@@ -1,34 +1,173 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d1/d6e/a00073" kind="file" language="Markdown">
-    <compoundname>LICENSE.md</compoundname>
+  <compounddef id="d1/d6e/a00073" kind="namespace" language="C++">
+    <compoundname>mc::gfx</compoundname>
+    <innerclass refid="de/d5e/a00007" prot="public">mc::gfx::Buffer</innerclass>
+    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
+    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
+    <innerclass refid="da/d45/a00011" prot="public">mc::gfx::Entity</innerclass>
+    <innerclass refid="df/d86/a00012" prot="public">mc::gfx::Entity2D</innerclass>
+    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::FrameBuffer</innerclass>
+    <innerclass refid="dd/d1b/a00015" prot="public">mc::gfx::GraphicsEntity</innerclass>
+    <innerclass refid="d7/d7a/a00016" prot="public">mc::gfx::Group</innerclass>
+    <innerclass refid="d4/d51/a00017" prot="public">mc::gfx::Image</innerclass>
+    <innerclass refid="dc/de2/a00024" prot="public">mc::gfx::Object</innerclass>
+    <innerclass refid="d6/d5b/a00026" prot="public">mc::gfx::RenderBuffer</innerclass>
+    <innerclass refid="d0/d33/a00027" prot="public">mc::gfx::Renderer</innerclass>
+    <innerclass refid="dc/d3c/a00028" prot="public">mc::gfx::RenderImpl</innerclass>
+    <innerclass refid="d5/d16/a00029" prot="public">mc::gfx::RenderProtocol</innerclass>
+    <innerclass refid="d5/d79/a00030" prot="public">mc::gfx::RenderProtocol&lt; Entity2D &gt;</innerclass>
+    <innerclass refid="df/d61/a00031" prot="public">mc::gfx::ShaderProgram</innerclass>
+    <innerclass refid="dc/d87/a00032" prot="public">mc::gfx::Texture</innerclass>
+    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::UniformBuffer</innerclass>
+    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::VertexArray</innerclass>
+    <innernamespace refid="db/db6/a00074">mc::gfx::ssl</innernamespace>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="d1/d6e/a00073_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" prot="public" static="no">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>using mc::gfx::EntityProperties = typedef BitField</definition>
+        <argsstring></argsstring>
+        <name>EntityProperties</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="22" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="d1/d6e/a00073_a5ec3c90c72c1f476325a75981f887846_1a5ec3c90c72c1f476325a75981f887846" prot="public" static="no">
+        <type><ref refid="d7/dd4/a00013" kindref="compound">Exception</ref></type>
+        <definition>using mc::gfx::GLError = typedef Exception</definition>
+        <argsstring></argsstring>
+        <name>GLError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="20" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="d1/d6e/a00073_a528a122e45ab2808323ee471e9a86797_1a528a122e45ab2808323ee471e9a86797" prot="public" static="no">
+        <type><ref refid="d7/dd4/a00013" kindref="compound">Exception</ref></type>
+        <definition>using mc::gfx::ShaderError = typedef Exception</definition>
+        <argsstring></argsstring>
+        <name>ShaderError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="22" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="d1/d6e/a00073_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" prot="public" static="no">
+        <type>std::deque&lt; std::pair&lt; <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>, <ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref> * &gt;&gt;</type>
+        <definition>using mc::gfx::RenderQueue = typedef std::deque&lt;std::pair&lt;Index, GraphicsEntity*&gt;&gt;</definition>
+        <argsstring></argsstring>
+        <name>RenderQueue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="27" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="d1/d6e/a00073_a76c7ba19bf08d8dbfefd32eebda71744_1a76c7ba19bf08d8dbfefd32eebda71744" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::checkGLError</definition>
+        <argsstring>()</argsstring>
+        <name>checkGLError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="27" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d1/d6e/a00073_a03d92c41bbd9a64c1706292fe4c3c217_1a03d92c41bbd9a64c1706292fe4c3c217" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::throwShaderError</definition>
+        <argsstring>(const Index &amp;shaderId, const Enum &amp;type, const std::string &amp;message)</argsstring>
+        <name>throwShaderError</name>
+        <param>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>shaderId</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d6/d2c/a00072_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>message</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="31" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d1/d6e/a00073_a15996c355485bf87f30f008457a54ca2_1a15996c355485bf87f30f008457a54ca2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::throwShaderError</definition>
+        <argsstring>(const Index &amp;shaderId, const Enum &amp;type)</argsstring>
+        <name>throwShaderError</name>
+        <param>
+          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>shaderId</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d6/d2c/a00072_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="35" column="1"/>
+      </memberdef>
+      </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>Namespace containing classes used for Graphics in MACE. </para>    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <programlisting>
-<codeline><highlight class="normal">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
-<codeline><highlight class="normal">of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
-<codeline><highlight class="normal">in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
-<codeline><highlight class="normal">to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
-<codeline><highlight class="normal">copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
-<codeline><highlight class="normal">furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
-<codeline><highlight class="normal">copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
-<codeline><highlight class="normal">IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
-<codeline><highlight class="normal">FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
-<codeline><highlight class="normal">AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
-<codeline><highlight class="normal">LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
-<codeline><highlight class="normal">OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
-<codeline><highlight class="normal">SOFTWARE.</highlight></codeline>
-    </programlisting>
-    <location file="LICENSE.md"/>
+    <location file="include/MACE/Graphics/Buffer.h" line="20" column="1"/>
   </compounddef>
 </doxygen>

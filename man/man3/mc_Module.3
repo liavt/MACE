@@ -1,4 +1,4 @@
-.TH "mc::Module" 3 "Fri Nov 25 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Module" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -25,7 +25,7 @@ Inherited by \fBmc::os::WindowModule\fP\&.
 .ti -1c
 .RI "virtual void \fBdestroy\fP ()=0"
 .br
-.RI "\fICalled when \fBSystem#terminate\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.RI "\fICalled when \fBSystem#destroy\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
 .ti -1c
 .RI "virtual std::string \fBgetName\fP () const  =0"
 .br
@@ -43,7 +43,7 @@ Definition at line 22 of file Module\&.h\&.
 .SS "virtual void mc::Module::destroy ()\fC [pure virtual]\fP"
 
 .PP
-Called when \fBSystem#terminate\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to clear memory, close streams, or clean up anything that needs to be cleaned up\&. 
+Called when \fBSystem#destroy\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to clear memory, close streams, or clean up anything that needs to be cleaned up\&. 
 .PP
 Should only be called before the program is closed\&. 
 .PP
