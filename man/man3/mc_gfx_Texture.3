@@ -1,4 +1,4 @@
-.TH "mc::gfx::Texture" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Texture" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,11 +14,11 @@ Inherits \fBmc::gfx::Object\fP\&.
 
 .in +1c
 .ti -1c
-.RI "void \fBinit\fP ()"
+.RI "void \fBinit\fP () override"
 .br
 .RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
 .ti -1c
-.RI "void \fBdestroy\fP ()"
+.RI "void \fBdestroy\fP () override"
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
@@ -52,7 +52,7 @@ Inherits \fBmc::gfx::Object\fP\&.
 .RI "void \fBsetOpacity\fP (const float f)"
 .br
 .ti -1c
-.RI "bool \fBisCreated\fP () const "
+.RI "bool \fBisCreated\fP () const  override"
 .br
 .RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
@@ -65,11 +65,11 @@ Inherits \fBmc::gfx::Object\fP\&.
 .RI "bool \fBoperator!=\fP (const \fBTexture\fP &other) const "
 .br
 .ti -1c
-.RI "void \fBbind\fP () const "
+.RI "virtual void \fBbind\fP () const "
 .br
 .RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
 .ti -1c
-.RI "void \fBunbind\fP () const "
+.RI "virtual void \fBunbind\fP () const "
 .br
 .RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
 .ti -1c
@@ -104,15 +104,15 @@ https://www.opengl.org/wiki/Texture
 .PP
 
 .PP
-Definition at line 270 of file Buffer\&.h\&.
+Definition at line 414 of file Buffer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Object::bind () const\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -133,12 +133,12 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::Texture::destroy ()\fC [virtual]\fP"
+.SS "void mc::gfx::Texture::destroy ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Calls the corresponding glDestroy* function and deletes the ID\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -161,7 +161,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet (\fBObject::init()\fP has not been called) 
 .RE
 .PP
 
@@ -192,12 +192,12 @@ The ID represented by this \fC\fBObject\fP\fP
 
 .SS "GLenum mc::gfx::Texture::getTarget ()"
 
-.SS "void mc::gfx::Texture::init ()\fC [virtual]\fP"
+.SS "void mc::gfx::Texture::init ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Calls the corresponding glCreate* function and assigns an ID\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -221,7 +221,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
-.SS "bool mc::gfx::Texture::isCreated () const\fC [virtual]\fP"
+.SS "bool mc::gfx::Texture::isCreated () const\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
@@ -238,7 +238,7 @@ Whether this \fC\fBObject\fP\fP represents memory
 \fBObject::init()\fP 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -254,7 +254,7 @@ Implements \fBmc::gfx::Object\fP\&.
 .SS "void mc::gfx::Texture::loadFile (const char * file)"
 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -323,7 +323,7 @@ Whether \fCthis\fP and \fCother\fP are the same
 https://www.opengl.org/wiki/GLAPI/glTexImage2D 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -346,7 +346,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 https://www.opengl.org/wiki/GLAPI/glTexParameter 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -359,12 +359,12 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .SS "void mc::gfx::Texture::setTarget (const GLenum target)"
 
-.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Object::unbind () const\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE

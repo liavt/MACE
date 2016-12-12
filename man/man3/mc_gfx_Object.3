@@ -1,4 +1,4 @@
-.TH "mc::gfx::Object" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Object" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,7 +10,7 @@ mc::gfx::Object \- Represents a OpenGL object in memory\&.
 .PP
 \fC#include <Buffer\&.h>\fP
 .PP
-Inherited by \fBmc::gfx::Buffer\fP, \fBmc::gfx::FrameBuffer\fP, \fBmc::gfx::RenderBuffer\fP, \fBmc::gfx::Texture\fP, and \fBmc::gfx::VertexArray\fP\&.
+Inherited by \fBmc::gfx::Buffer\fP, \fBmc::gfx::FrameBuffer\fP, \fBmc::gfx::QueryObject\fP, \fBmc::gfx::RenderBuffer\fP, \fBmc::gfx::Texture\fP, and \fBmc::gfx::VertexArray\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -27,11 +27,11 @@ Inherited by \fBmc::gfx::Buffer\fP, \fBmc::gfx::FrameBuffer\fP, \fBmc::gfx::Rend
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
-.RI "void \fBbind\fP () const "
+.RI "virtual void \fBbind\fP () const "
 .br
 .RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
 .ti -1c
-.RI "void \fBunbind\fP () const "
+.RI "virtual void \fBunbind\fP () const "
 .br
 .RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
 .ti -1c
@@ -111,12 +111,12 @@ Definition at line 39 of file Buffer\&.h\&.
 Virtual destructor for subclasses and safety\&. 
 .SH "Member Function Documentation"
 .PP 
-.SS "void mc::gfx::Object::bind () const"
+.SS "virtual void mc::gfx::Object::bind () const\fC [virtual]\fP"
 
 .PP
 Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -147,7 +147,7 @@ Intended to be overloaded to bind to a certain index\&. \fBObject::bind() const 
 \fIid\fP Index to bind to\&. If it is 0, it needs to be unbinded\&. 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -168,7 +168,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 Calls the corresponding glDestroy* function and deletes the ID\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -191,12 +191,12 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet (\fBObject::init()\fP has not been called) 
 .RE
 .PP
 
 .PP
-Implemented in \fBmc::gfx::Buffer\fP, \fBmc::gfx::VertexArray\fP, \fBmc::gfx::Texture\fP, \fBmc::gfx::FrameBuffer\fP, and \fBmc::gfx::RenderBuffer\fP\&.
+Implemented in \fBmc::gfx::VertexArray\fP, \fBmc::gfx::Buffer\fP, \fBmc::gfx::Texture\fP, \fBmc::gfx::FrameBuffer\fP, \fBmc::gfx::RenderBuffer\fP, and \fBmc::gfx::QueryObject\fP\&.
 .SS "\fBIndex\fP mc::gfx::Object::getID () const"
 
 .PP
@@ -217,7 +217,7 @@ The ID represented by this \fC\fBObject\fP\fP
 .PP
 Calls the corresponding glCreate* function and assigns an ID\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -240,7 +240,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::Buffer\fP, \fBmc::gfx::VertexArray\fP, \fBmc::gfx::Texture\fP, \fBmc::gfx::FrameBuffer\fP, and \fBmc::gfx::RenderBuffer\fP\&.
+Implemented in \fBmc::gfx::VertexArray\fP, \fBmc::gfx::Buffer\fP, \fBmc::gfx::Texture\fP, \fBmc::gfx::FrameBuffer\fP, \fBmc::gfx::RenderBuffer\fP, and \fBmc::gfx::QueryObject\fP\&.
 .SS "virtual bool mc::gfx::Object::isCreated () const\fC [pure virtual]\fP"
 
 .PP
@@ -258,7 +258,7 @@ Whether this \fC\fBObject\fP\fP represents memory
 \fBObject::init()\fP 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -270,7 +270,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::Buffer\fP, \fBmc::gfx::VertexArray\fP, \fBmc::gfx::Texture\fP, \fBmc::gfx::FrameBuffer\fP, and \fBmc::gfx::RenderBuffer\fP\&.
+Implemented in \fBmc::gfx::VertexArray\fP, \fBmc::gfx::Buffer\fP, \fBmc::gfx::Texture\fP, \fBmc::gfx::FrameBuffer\fP, \fBmc::gfx::RenderBuffer\fP, and \fBmc::gfx::QueryObject\fP\&.
 .SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const"
 
 .PP
@@ -317,12 +317,12 @@ Whether \fCthis\fP and \fCother\fP are the same
 .RE
 .PP
 
-.SS "void mc::gfx::Object::unbind () const"
+.SS "virtual void mc::gfx::Object::unbind () const\fC [virtual]\fP"
 
 .PP
 Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE

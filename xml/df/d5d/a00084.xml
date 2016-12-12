@@ -1,0 +1,574 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="df/d5d/a00084" kind="namespace" language="C++">
+    <compoundname>mc::System</compoundname>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="df/d5d/a00084_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eb" prot="public" static="no">
+        <name>Flags</name>
+        <enumvalue id="df/d5d/a00084_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eba3b79ef33aaf03110b4c56653f7ee9b46" prot="public">
+          <name>INIT</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Parameter for <computeroutput><ref refid="df/d5d/a00084_a217ac5015288b208e12be276992964ae_1a217ac5015288b208e12be276992964ae" kindref="member">System.getFlag(const Byte)</ref></computeroutput>. </para>          </briefdescription>
+          <detaileddescription>
+<para>Is <computeroutput>true</computeroutput> if <computeroutput><ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System.init()</ref></computeroutput> has been called. </para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="df/d5d/a00084_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eba5da102c6757ade702138e35fa6417b93" prot="public">
+          <name>DESTROYED</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>Parameter for <computeroutput><ref refid="df/d5d/a00084_a217ac5015288b208e12be276992964ae_1a217ac5015288b208e12be276992964ae" kindref="member">System.getFlag(const Byte)</ref></computeroutput>. </para>          </briefdescription>
+          <detaileddescription>
+<para>Is <computeroutput>true</computeroutput> if <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">System.destroy()</ref></computeroutput> has been called. </para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="df/d5d/a00084_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40ebaacd6d48da16177b2de46aecedcec099f" prot="public">
+          <name>STOP_REQUESTED</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+<para>Parameter for <computeroutput><ref refid="df/d5d/a00084_a217ac5015288b208e12be276992964ae_1a217ac5015288b208e12be276992964ae" kindref="member">System.getFlag(const Byte)</ref></computeroutput>. </para>          </briefdescription>
+          <detaileddescription>
+<para>Is <computeroutput>true</computeroutput> if <computeroutput><ref refid="df/d5d/a00084_a356cd822e782c2d2138b6bf241d1c94b_1a356cd822e782c2d2138b6bf241d1c94b" kindref="member">System.requestStop()</ref></computeroutput> has been called. </para>          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="79" column="1" bodyfile="include/MACE/System/Module.h" bodystart="79" bodyend="92"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="df/d5d/a00084_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::System::addModule</definition>
+        <argsstring>(Module &amp;m)</argsstring>
+        <name>addModule</name>
+        <param>
+          <type><ref refid="d6/d5b/a00026" kindref="compound">Module</ref> &amp;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="d6/d5b/a00026" kindref="compound">Module</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para>Registered <computeroutput>Modules</computeroutput> will have <computeroutput><ref refid="df/d5d/a00084_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref>, <ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref>,</computeroutput> and <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> are respectivaly called when <computeroutput><ref refid="df/d5d/a00084_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">System.update()</ref>, <ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System.init()</ref>,</computeroutput> and <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">System.destroy()</ref></computeroutput> are called. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Reference to a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref>.</computeroutput> If the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> referenced leaves scope or gets deallocated, a <computeroutput>read access violation will occur.</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Location of the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> in the buffer. This index can be used in various other methods. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="101" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a6b4b91ae379415da0d68ed1920d30b93_1a6b4b91ae379415da0d68ed1920d30b93" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::removeModule</definition>
+        <argsstring>(const Module &amp;m)</argsstring>
+        <name>removeModule</name>
+        <param>
+          <type>const <ref refid="d6/d5b/a00026" kindref="compound">Module</ref> &amp;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+<para>Remove a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> by reference. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is generally more safe than <computeroutput><ref refid="df/d5d/a00084_afde6ec9162eecdae64698064aa570e65_1afde6ec9162eecdae64698064aa570e65" kindref="member">removeModule(std::string)</ref></computeroutput> as this checks by reference, not by name. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Reference to <ref refid="d6/d5b/a00026" kindref="compound">Module</ref> in the buffer. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>ObjectNotFoundInArray</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if the referenced <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> doesn&apos;t exist. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="107" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_afde6ec9162eecdae64698064aa570e65_1afde6ec9162eecdae64698064aa570e65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::removeModule</definition>
+        <argsstring>(const std::string module)</argsstring>
+        <name>removeModule</name>
+        <param>
+          <type>const std::string</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Remove a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> by name. </para>        </briefdescription>
+        <detaileddescription>
+<para>It will find the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> based on their <ref refid="d6/d5b/a00026_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>ObjectNotFoundInArray</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the given name doesn&apos;t exist. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="115" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a184c7acdb036d282c5015991da0b34db_1a184c7acdb036d282c5015991da0b34db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::removeModule</definition>
+        <argsstring>(const Index i)</argsstring>
+        <name>removeModule</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Remove a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> by it&apos;s index. </para>        </briefdescription>
+        <detaileddescription>
+<para>The index is provided from <ref refid="df/d5d/a00084_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> or <ref refid="" kindref="compound">indexOf(Module&amp;)</ref> <parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if <computeroutput>i&lt;0</computeroutput> or <computeroutput>i&gt;<ref refid="df/d5d/a00084_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" kindref="member">numberOfModules()</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index of a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> to delete </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="121" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a74b95d8579836b3d85a76fda72f084c2_1a74b95d8579836b3d85a76fda72f084c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d6/d5b/a00026" kindref="compound">Module</ref> *</type>
+        <definition>Module* mc::System::getModule</definition>
+        <argsstring>(const std::string keyword)</argsstring>
+        <name>getModule</name>
+        <param>
+          <type>const std::string</type>
+          <declname>keyword</declname>
+        </param>
+        <briefdescription>
+<para>Retrieve a pointer to a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
+        <detaileddescription>
+<para>It will find the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> based on their <ref refid="d6/d5b/a00026_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>ObjectNotFoundInArray</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if there is no <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the specified name </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns the specified keyword </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>keyword</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name to look for </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084_a73e4c5ba1fc8448a1d8dd72a0e5f135f_1a73e4c5ba1fc8448a1d8dd72a0e5f135f" kindref="member">getModule(Index)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="131" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a73e4c5ba1fc8448a1d8dd72a0e5f135f_1a73e4c5ba1fc8448a1d8dd72a0e5f135f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d6/d5b/a00026" kindref="compound">Module</ref> *</type>
+        <definition>Module* mc::System::getModule</definition>
+        <argsstring>(const Index i)</argsstring>
+        <name>getModule</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> at a certain index. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A pointer to a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> at the specified location </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Valid index to a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if <computeroutput>i&lt;0</computeroutput> or <computeroutput>i&gt;<ref refid="df/d5d/a00084_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" kindref="member">numberOfModules()</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="138" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_aa34bff02fdd3dc0556d71a9e58cc2af8_1aa34bff02fdd3dc0556d71a9e58cc2af8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::System::moduleExists</definition>
+        <argsstring>(const std::string module)</argsstring>
+        <name>moduleExists</name>
+        <param>
+          <type>const std::string</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Checks whether a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> exists via it&apos;s <computeroutput>getName()</computeroutput> function. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name to search for </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if there is a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the specified name, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="144" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a3b2e897fc086f70df833777a70058f13_1a3b2e897fc086f70df833777a70058f13" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::System::moduleExists</definition>
+        <argsstring>(const Module *module)</argsstring>
+        <name>moduleExists</name>
+        <param>
+          <type>const <ref refid="d6/d5b/a00026" kindref="compound">Module</ref> *</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Checks whether a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> exists via a pointer. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> to search for </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> exists, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="151" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        <definition>Size mc::System::numberOfModules</definition>
+        <argsstring>()</argsstring>
+        <name>numberOfModules</name>
+        <briefdescription>
+<para>Retrieves the amount of <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> currently being updated by <computeroutput><ref refid="df/d5d/a00084" kindref="compound">System</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><computeroutput>Size</computeroutput> of the internal <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> buffer </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="156" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_af5b36fb81779ac4924c062693757f740_1af5b36fb81779ac4924c062693757f740" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::System::indexOf</definition>
+        <argsstring>(const Module &amp;m)</argsstring>
+        <name>indexOf</name>
+        <param>
+          <type>const <ref refid="d6/d5b/a00026" kindref="compound">Module</ref> &amp;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves the location of a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> in the buffer. </para>        </briefdescription>
+        <detaileddescription>
+<para>Equivalent to calling<programlisting><codeline><highlight class="normal">indexOf(m.getName());</highlight></codeline>
+</programlisting> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="d6/d5b/a00026" kindref="compound">Module</ref> to find the index of. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Location of the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref>,</computeroutput> or <computeroutput>-1</computeroutput> if it doesnt exist. </para></simplesect>
+<simplesect kind="see"><para>indexOf(Module&amp;) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="168" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a12e03ee17f58d6967ccd8d7dbd2e46ed_1a12e03ee17f58d6967ccd8d7dbd2e46ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::System::indexOf</definition>
+        <argsstring>(const std::string name)</argsstring>
+        <name>indexOf</name>
+        <param>
+          <type>const std::string</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Find a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name to search for </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Location of a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns <computeroutput>name,</computeroutput> or <computeroutput>-1</computeroutput> if wasn&apos;t found </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="174" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_aef883d5b7917238ddfaf37ca11662487_1aef883d5b7917238ddfaf37ca11662487" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::assertModule</definition>
+        <argsstring>(const std::string module, std::string errorMessage)</argsstring>
+        <name>assertModule</name>
+        <param>
+          <type>const std::string</type>
+          <declname>module</declname>
+        </param>
+        <param>
+          <type>std::string</type>
+          <declname>errorMessage</declname>
+        </param>
+        <briefdescription>
+<para>Require that a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the specified name exists, or throw an exception. </para>        </briefdescription>
+        <detaileddescription>
+<para>If your <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> depends on another <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref>,</computeroutput> use this function to require your dependencies. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name to assert </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>errorMessage</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to print if the assertion fails </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>AssertionError</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if there isn&apos;t a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> with the requested name. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="184" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a6048b206700f2642ee07a6b85b4e5add_1a6048b206700f2642ee07a6b85b4e5add" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::assertModule</definition>
+        <argsstring>(const std::string module)</argsstring>
+        <name>assertModule</name>
+        <param>
+          <type>const std::string</type>
+          <declname>module</declname>
+        </param>
+        <briefdescription>
+<para>Overloads <ref refid="df/d5d/a00084_aef883d5b7917238ddfaf37ca11662487_1aef883d5b7917238ddfaf37ca11662487" kindref="member">assertModule(std::string,std::string)</ref> with <computeroutput>errorMessage</computeroutput> being <computeroutput>The specified <ref refid="d6/d5b/a00026" kindref="compound">Module</ref> does not exist!</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput> to assert </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084_aef883d5b7917238ddfaf37ca11662487_1aef883d5b7917238ddfaf37ca11662487" kindref="member">assertModule(std::string,std::string)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="190" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::init</definition>
+        <argsstring>()</argsstring>
+        <name>init</name>
+        <briefdescription>
+<para>Initializes MACE and calls <ref refid="d6/d5b/a00026_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" kindref="member">init()</ref> on all registered `Modules. </para>        </briefdescription>
+        <detaileddescription>
+<para>` </para><para>Should be called at the start of the program. <simplesect kind="see"><para><ref refid="df/d5d/a00084_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="199" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::update</definition>
+        <argsstring>()</argsstring>
+        <name>update</name>
+        <briefdescription>
+<para>Update MACE and all <computeroutput>Modules</computeroutput> registered, and checks if a close has been requested. </para>        </briefdescription>
+        <detaileddescription>
+<para>Should be called in your main loop. <simplesect kind="return"><para><computeroutput>true</computeroutput> if it updated succesfully. <computeroutput>false</computeroutput> if an error occurred, or a close has been requested from a <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">Module</ref></computeroutput>. When this returns <computeroutput>false</computeroutput>, you should end the main loop and call <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>InitializationError</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if <computeroutput><ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> has not been called yet or <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> has been called. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="209" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::destroy</definition>
+        <argsstring>()</argsstring>
+        <name>destroy</name>
+        <briefdescription>
+<para>Destroys MACE and calls <ref refid="d6/d5b/a00026_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" kindref="member">destroy()</ref> on all registered `Modules. </para>        </briefdescription>
+        <detaileddescription>
+<para>` </para><para>Should be called at the end of the program after <computeroutput><ref refid="df/d5d/a00084_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">System.isRunning()</ref></computeroutput> is <computeroutput>false</computeroutput> <parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>InitializationError</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if <computeroutput><ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> has not been called yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="218" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::System::isRunning</definition>
+        <argsstring>()</argsstring>
+        <name>isRunning</name>
+        <briefdescription>
+<para>Checks whether the <computeroutput><ref refid="df/d5d/a00084" kindref="compound">System</ref></computeroutput> is ready to be updated. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput><ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> must have been called and <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> must not have been called. Additionally, if <computeroutput>shouldStop()</computeroutput> is <computeroutput>true</computeroutput>, this function also returns <computeroutput>false</computeroutput>. <simplesect kind="return"><para>If <computeroutput><ref refid="df/d5d/a00084_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref></computeroutput> should be called. If this returns <computeroutput>false</computeroutput>, you should exit the main loop and call <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084_a356cd822e782c2d2138b6bf241d1c94b_1a356cd822e782c2d2138b6bf241d1c94b" kindref="member">requestStop()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d5d/a00084" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="226" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a356cd822e782c2d2138b6bf241d1c94b_1a356cd822e782c2d2138b6bf241d1c94b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::requestStop</definition>
+        <argsstring>()</argsstring>
+        <name>requestStop</name>
+        <briefdescription>
+<para>Tell the <computeroutput><ref refid="df/d5d/a00084" kindref="compound">System</ref></computeroutput> to destroy. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes <computeroutput><ref refid="df/d5d/a00084_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref></computeroutput> and <computeroutput><ref refid="df/d5d/a00084_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">isRunning()</ref></computeroutput> return <computeroutput>false</computeroutput>, <simplesect kind="see"><para><ref refid="df/d5d/a00084" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="232" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a217ac5015288b208e12be276992964ae_1a217ac5015288b208e12be276992964ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::System::getFlag</definition>
+        <argsstring>(const Byte flag)</argsstring>
+        <name>getFlag</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+<para>Retrieve an internal flag about the current state of the <computeroutput><ref refid="df/d5d/a00084" kindref="compound">System</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>Example usage:<programlisting><codeline><highlight class="normal">mc::System::getFlag(SYSTEM_FLAG_INIT);//get<sp/>whether<sp/>init()<sp/>has<sp/>been<sp/>called</highlight></codeline>
+</programlisting> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>flag</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Location of the flag to retrieve. Locations are stored as <computeroutput>const Index</computeroutput> and start with <computeroutput>SYSTEM_FLAG_</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Whether the specified flag is <computeroutput>true</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="243" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d5d/a00084_a96d64af50e1206f121e0b067cb0c7b0d_1a96d64af50e1206f121e0b067cb0c7b0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::System::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <briefdescription>
+<para>&quot;Resets&quot; the <computeroutput><ref refid="df/d5d/a00084" kindref="compound">System</ref></computeroutput> to its default state. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>Modules</computeroutput> are cleared, and all flags are set to 0. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/System/Module.h" line="248" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Core class of MACE, managing <computeroutput>Modules</computeroutput>. </para>    </briefdescription>
+    <detaileddescription>
+<para><computeroutput><ref refid="df/d5d/a00084_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> should be called after all <computeroutput>Modules</computeroutput> are added and before the main loop. <computeroutput><ref refid="df/d5d/a00084_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref></computeroutput> should be called in the loop, and <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> should be called at the end of your program. </para><para>If <computeroutput><ref refid="df/d5d/a00084_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">isRunning()</ref></computeroutput> returns <computeroutput>false</computeroutput>, you should end your program and call <computeroutput><ref refid="df/d5d/a00084_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">destroy()</ref></computeroutput> </para><para>Your main loop should look like this:<programlisting><codeline><highlight class="normal">//add<sp/>modules<sp/>that<sp/>you<sp/>need</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">mc::System::init();</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">while(mc::System::isRunning()){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>mc::System::update();</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">mc::System::destroy();</highlight></codeline>
+</programlisting> </para>    </detaileddescription>
+    <location file="include/MACE/System/Module.h" line="78" column="1"/>
+  </compounddef>
+</doxygen>

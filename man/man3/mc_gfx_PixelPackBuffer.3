@@ -1,0 +1,548 @@
+.TH "mc::gfx::PixelPackBuffer" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::PixelPackBuffer \- Special buffer that excels at asynchronous pixel transfer operations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Buffer\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Buffer\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPixelPackBuffer\fP ()"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const  override"
+.br
+.RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
+.ti -1c
+.RI "void \fBinit\fP () override"
+.br
+.RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP () override"
+.br
+.RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
+.ti -1c
+.RI "void \fBsetData\fP (const GLsizeiptr &dataSize, const void *data, const \fBEnum\fP &drawType=GL_DYNAMIC_DRAW)"
+.br
+.RI "\fICreates and initalizes the data store for this \fC\fBBuffer\fP\fP \fP"
+.ti -1c
+.RI "void \fBsetDataRange\fP (const \fBIndex\fP &offset, const GLsizeiptr &dataSize, const void *data)"
+.br
+.RI "\fISets data in a range of the buffer\&. \fP"
+.ti -1c
+.RI "void \fBcopyData\fP (\fBBuffer\fP &other, const GLsizeiptr &size, const \fBIndex\fP &readOffset=0, const \fBIndex\fP &writeOffset=0)"
+.br
+.RI "\fICopy part of the data store of this \fC\fBBuffer\fP\fP into another \fC\fBBuffer\fP\fP \fP"
+.ti -1c
+.RI "void * \fBmap\fP (const \fBEnum\fP &access=GL_READ_WRITE)"
+.br
+.RI "\fIMaps the data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. \fP"
+.ti -1c
+.RI "void * \fBmapRange\fP (const \fBIndex\fP &offset, const \fBSize\fP &length, const unsigned int &access)"
+.br
+.RI "\fIMaps a range of data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. \fP"
+.ti -1c
+.RI "bool \fBunmap\fP ()"
+.br
+.RI "\fIUnmaps the buffer\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBBuffer\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBBuffer\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
+.ti -1c
+.RI "virtual void \fBbind\fP () const "
+.br
+.RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
+.ti -1c
+.RI "virtual void \fBunbind\fP () const "
+.br
+.RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.RI "\fIRetrieves the current ID that this \fC\fBObject\fP\fP represents\&. \fP"
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.RI "\fIThe ID of this `Object\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Special buffer that excels at asynchronous pixel transfer operations\&. 
+
+The \fC\fBPixelUnpackBuffer\fP\fP is fast at reading pixels while the \fC\fBPixelPackBuffer\fP\fP is fast at writing pixels\&. 
+.PP
+Not to be confused with a \fC\fBFrameBuffer\fP\fP or \fC\fBTexture\fP\&.\fP 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/Pixel_Buffer_Object 
+.RE
+.PP
+
+.PP
+Definition at line 604 of file Buffer\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::gfx::PixelPackBuffer::PixelPackBuffer ()"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void mc::gfx::Object::bind () const\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::unbind() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
+
+.SS "void mc::gfx::Buffer::copyData (\fBBuffer\fP & other, const GLsizeiptr & size, const \fBIndex\fP & readOffset = \fC0\fP, const \fBIndex\fP & writeOffset = \fC0\fP)\fC [inherited]\fP"
+
+.PP
+Copy part of the data store of this \fC\fBBuffer\fP\fP into another \fC\fBBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP Target \fC\fBBuffer\fP\fP to copy into 
+.br
+\fIsize\fP How much data to copy 
+.br
+\fIreadOffset\fP How much data to offset by in this \fC\fBBuffer\fP\fP 
+.br
+\fIwriteOffset\fP Where to write the data in the target \fC\fBBuffer\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBBuffer::setData(const GLsizeiptr&, const void*, const Enum&)\fP 
+.PP
+https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData 
+.PP
+\fBCopyReadBuffer\fP 
+.PP
+\fBCopyWriteBuffer\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::Buffer::destroy ()\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Calls the corresponding glDestroy* function and deletes the ID\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::init()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet (\fBObject::init()\fP has not been called) 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.PP
+Retrieves the current ID that this \fC\fBObject\fP\fP represents\&. The ID is an unsigned number that acts like a pointer to OpenGL memory\&. It is assigned when \fBObject::init()\fP is called\&. 
+.PP
+If it is 0, the \fC\fBObject\fP\fP is considered uncreated\&. 
+.PP
+When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbind() const \fPwill bind to ID 0, which is the equivelant of a null pointer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Buffer::init ()\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Calls the corresponding glCreate* function and assigns an ID\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::destroy()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Buffer::isCreated () const\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBObject\fP\fP represents memory 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.PP
+\fBObject::init()\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "void* mc::gfx::Buffer::map (const \fBEnum\fP & access = \fCGL_READ_WRITE\fP)\fC [inherited]\fP"
+
+.PP
+Maps the data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. May be slow\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIaccess\fP Which access to use\&. Must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glMapBuffer 
+.PP
+\fBBuffer::mapRange(const Index&, const Size&, const unsigned int&)\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+DO NOT DELETE THE POINTER RETURNED\&. IT IS NOT DYNAMICALLY ALLOCATED\&. 
+.PP
+After \fBBuffer::unmap()\fP is called, the pointer returned may be unsafe\&. Using it will be undefined\&. 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+When using this function don't forget to use \fBBuffer::unmap()\fP when you are done using the pointer 
+.PP
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void* mc::gfx::Buffer::mapRange (const \fBIndex\fP & offset, const \fBSize\fP & length, const unsigned int & access)\fC [inherited]\fP"
+
+.PP
+Maps a range of data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoffset\fP The starting offset to map 
+.br
+\fIlength\fP How much data to map 
+.br
+\fIaccess\fP A combination of access flags to determine how the data will be used\&. These flags determine how fast or slow the mapping will take\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glMapBufferRange 
+.PP
+\fBBuffer::map(const Enum&)\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+DO NOT DELETE THE POINTER RETURNED\&. IT IS NOT DYNAMICALLY ALLOCATED\&. 
+.PP
+After \fBBuffer::unmap()\fP is called, the pointer returned may be unsafe\&. Using it will be undefined\&. 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+When using this function don't forget to use \fBBuffer::unmap()\fP when you are done using the pointer 
+.PP
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Buffer::operator!= (const \fBBuffer\fP & other) const\fC [inherited]\fP"
+
+.SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. Their ID is compared\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Buffer::operator== (const \fBBuffer\fP & other) const\fC [inherited]\fP"
+
+.SS "void mc::gfx::Buffer::setData (const GLsizeiptr & dataSize, const void * data, const \fBEnum\fP & drawType = \fCGL_DYNAMIC_DRAW\fP)\fC [inherited]\fP"
+
+.PP
+Creates and initalizes the data store for this \fC\fBBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdataSize\fP Size of the buffer, measured in bytes\&. 
+.br
+\fIdata\fP Pointer to the actual data\&. Using \fCnullptr\fP or \fCNULL\fP will create an empty buffer\&. 
+.br
+\fIdrawType\fP Expected usage pattern for the data\&. GL_DYNAMIC_DRAW by default 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+Buffer::setDataRange(const Index, const GLsizeiptr, const void*) 
+.PP
+\fBBuffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)\fP 
+.PP
+https://www.opengl.org/wiki/GLAPI/glBufferData 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::Buffer::setDataRange (const \fBIndex\fP & offset, const GLsizeiptr & dataSize, const void * data)\fC [inherited]\fP"
+
+.PP
+Sets data in a range of the buffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const GLsizeiptr&, const void*, const Enum&)\fP must be called first\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoffset\fP Offset into the buffer to set the data, measured in bytes 
+.br
+\fIdataSize\fP How large the region being inserted is, measured in bytes 
+.br
+\fIdata\fP Pointer to the data being inserted 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glBufferSubData 
+.PP
+\fBBuffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::Object::unbind () const\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.RE
+.PP
+
+.SS "bool mc::gfx::Buffer::unmap ()\fC [inherited]\fP"
+
+.PP
+Unmaps the buffer\&. Any mapped points will be deleted and using them will be undefined\&.
+.PP
+\fBReturns:\fP
+.RS 4
+Whether the data was corrupted during reading\&. This will be very rare but when it does happen you must reinitialize the data\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBBuffer::map(const Enum&)\fP 
+.PP
+\fBBuffer::mapRange(const Index&, const Size&, const unsigned int&)\fP 
+.PP
+https://www.opengl.org/wiki/GLAPI/glMapBuffer 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Using a pointer after it was unmapped will be undefined 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 in \fBObject::destroy()\fP 
+.PP
+\fBObject::getID() const \fPreturns this\&. 
+.PP
+Definition at line 123 of file Buffer\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

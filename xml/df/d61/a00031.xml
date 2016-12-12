@@ -1,2181 +1,629 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="df/d61/a00031" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::ShaderProgram</compoundname>
-    <includes refid="d6/d97/a00045" local="no">Shaders.h</includes>
-      <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="df/d61/a00031_1ace7ac1a20ec5197223e55d28f678b835" prot="private" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::id</definition>
-        <argsstring></argsstring>
-        <name>id</name>
-        <initializer>= -1</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="133" column="1" bodyfile="include/MACE/Graphics/Shaders.h" bodystart="133" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="df/d61/a00031_1aa2fafb4fffa4f44e776f2378a8af0ce5" prot="private" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::fragId</definition>
-        <argsstring></argsstring>
-        <name>fragId</name>
-        <initializer>= -1</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="134" column="1" bodyfile="include/MACE/Graphics/Shaders.h" bodystart="134" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="df/d61/a00031_1a51eef64910e89bc51fd52ca934f16b19" prot="private" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::vertId</definition>
-        <argsstring></argsstring>
-        <name>vertId</name>
-        <initializer>= -1</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="134" column="1" bodyfile="include/MACE/Graphics/Shaders.h" bodystart="134" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="df/d61/a00031_1ad59697d5502e685587c3bf3fcbfd9c7a" prot="private" static="no" mutable="no">
-        <type>std::unordered_map&lt; std::string, int &gt;</type>
-        <definition>std::unordered_map&lt;std::string, int&gt; mc::gfx::ShaderProgram::uniforms</definition>
-        <argsstring></argsstring>
-        <name>uniforms</name>
-        <initializer>= std::unordered_map&lt;std::string, int&gt;()</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="136" column="1" bodyfile="include/MACE/Graphics/Shaders.h" bodystart="136" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
+    <compoundname>mc::gfx::QueryObject</compoundname>
+    <basecompoundref refid="d0/d33/a00027" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
+    <includes refid="d6/d97/a00045" local="no">Buffer.h</includes>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="df/d61/a00031_a659a4706802b241b64427c25c225320e_1a659a4706802b241b64427c25c225320e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::ShaderProgram::ShaderProgram</definition>
-        <argsstring>() noexcept</argsstring>
-        <name>ShaderProgram</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="27" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a45e90469fd50c4ee979ded56ccb0ab69_1a45e90469fd50c4ee979ded56ccb0ab69" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::ShaderProgram::~ShaderProgram</definition>
-        <argsstring>() noexcept=default</argsstring>
-        <name>~ShaderProgram</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="28" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a7bc5fc15808b30231eea9005ebd44355_1a7bc5fc15808b30231eea9005ebd44355" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::init</definition>
+        <definition>void mc::gfx::QueryObject::begin</definition>
+        <argsstring>(const Enum &amp;target)</argsstring>
+        <name>begin</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>This <computeroutput><ref refid="df/d61/a00031" kindref="compound">QueryObject</ref></computeroutput> will begin querying data for a specified target. </para>        </briefdescription>
+        <detaileddescription>
+<para>Replacement for the <ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const </ref>function. </para><para>The results can be queried with one of the <computeroutput><ref refid="df/d61/a00031_a5273f375615f4b9ea2d1590e5e47cf62_1a5273f375615f4b9ea2d1590e5e47cf62" kindref="member">QueryObject::get</ref></computeroutput> funcitons. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>THe kind of data to query. Can not be GL_TIMESTAMP. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBeginQuery">https://www.opengl.org/wiki/GLAPI/glBeginQuery</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" kindref="member">QueryObject::counter()</ref> </para></simplesect>
+<simplesect kind="attention"><para>When you use this function make sure to also call <ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> eventually </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="156" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::end</definition>
+        <argsstring>(const Enum &amp;target)</argsstring>
+        <name>end</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+<para>Stops querying data for a certain target. </para>        </briefdescription>
+        <detaileddescription>
+<para>Replacement for the <ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const </ref>function </para><para>The results can be queried with one of the <computeroutput><ref refid="df/d61/a00031_a5273f375615f4b9ea2d1590e5e47cf62_1a5273f375615f4b9ea2d1590e5e47cf62" kindref="member">QueryObject::get</ref></computeroutput> funcitons. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The kind of data being queried. Can not be GL_TIMESTAMP </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBeginQuery">https://www.opengl.org/wiki/GLAPI/glBeginQuery</ulink> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If QueryObject::begin(const Enum&amp; was never called) </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="168" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_a5273f375615f4b9ea2d1590e5e47cf62_1a5273f375615f4b9ea2d1590e5e47cf62" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::get</definition>
+        <argsstring>(const Enum &amp;name, int *data) const </argsstring>
+        <name>get</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves data from a begin/end pair. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the results you want to retrieve. Must be GL_QUERY_RESULT, GL_QUERY_RESULT_NO_WAIT​, or GL_QUERY_RESULT_AVAILABLE </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to put the data into. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" kindref="member">QueryObject::begin(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" kindref="member">QueryObject::counter()</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glGetQueryObject">https://www.opengl.org/wiki/GLAPI/glGetQueryObject</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="180" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_a37b6f23b22e9513386e9bb7818090ac4_1a37b6f23b22e9513386e9bb7818090ac4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::get</definition>
+        <argsstring>(const Enum &amp;name, unsigned int *data) const </argsstring>
+        <name>get</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>unsigned int *</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves data from a begin/end pair. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the results you want to retrieve. Must be GL_QUERY_RESULT, GL_QUERY_RESULT_NO_WAIT​, or GL_QUERY_RESULT_AVAILABLE </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to put the data into. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" kindref="member">QueryObject::begin(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" kindref="member">QueryObject::counter()</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glGetQueryObject">https://www.opengl.org/wiki/GLAPI/glGetQueryObject</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="185" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_ab8c8460e07615c31fd4a450d7634e7d5_1ab8c8460e07615c31fd4a450d7634e7d5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::get</definition>
+        <argsstring>(const Enum &amp;name, int64_t *data) const </argsstring>
+        <name>get</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>int64_t *</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves data from a begin/end pair. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the results you want to retrieve. Must be GL_QUERY_RESULT, GL_QUERY_RESULT_NO_WAIT​, or GL_QUERY_RESULT_AVAILABLE </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to put the data into. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" kindref="member">QueryObject::begin(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" kindref="member">QueryObject::counter()</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glGetQueryObject">https://www.opengl.org/wiki/GLAPI/glGetQueryObject</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="190" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_ac3077e48f04e3673712f8fe5248c1cfd_1ac3077e48f04e3673712f8fe5248c1cfd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::get</definition>
+        <argsstring>(const Enum &amp;name, uint64_t *data) const </argsstring>
+        <name>get</name>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>uint64_t *</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves data from a begin/end pair. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the results you want to retrieve. Must be GL_QUERY_RESULT, GL_QUERY_RESULT_NO_WAIT​, or GL_QUERY_RESULT_AVAILABLE </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to put the data into. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" kindref="member">QueryObject::begin(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" kindref="member">QueryObject::counter()</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glGetQueryObject">https://www.opengl.org/wiki/GLAPI/glGetQueryObject</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="194" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::counter</definition>
         <argsstring>()</argsstring>
+        <name>counter</name>
+        <briefdescription>
+<para>Records the current GPU time into this `QueryObject. </para>        </briefdescription>
+        <detaileddescription>
+<para>` This returns immediately. </para><para>Can be used in conjunction with <ref refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" kindref="member">QueryObject::begin(const Enum&amp;)</ref> with a target of <computeroutput>GL_TIME_ELAPSED</computeroutput> <simplesect kind="see"><para><ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="df/d61/a00031_ac3077e48f04e3673712f8fe5248c1cfd_1ac3077e48f04e3673712f8fe5248c1cfd" kindref="member">QueryObject::get(const Enum&amp;, uint64_t*) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glQueryCounter">https://www.opengl.org/wiki/GLAPI/glQueryCounter</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="206" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_a82cd27fe5528545930d516ed60e04e21_1a82cd27fe5528545930d516ed60e04e21" prot="public" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::init</definition>
+        <argsstring>() final</argsstring>
         <name>init</name>
+        <reimplements refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="30" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="208" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a3efbd29de3977984c7a4cda590aa3278_1a3efbd29de3977984c7a4cda590aa3278" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="df/d61/a00031_a52094232aec69733ab764e0a30fcc35a_1a52094232aec69733ab764e0a30fcc35a" prot="public" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::destroy</definition>
-        <argsstring>()</argsstring>
+        <definition>void mc::gfx::QueryObject::destroy</definition>
+        <argsstring>() final</argsstring>
         <name>destroy</name>
+        <reimplements refid="d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="31" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="209" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ada4e8597cf6cdd35ebbc84a825c588f4_1ada4e8597cf6cdd35ebbc84a825c588f4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::bind</definition>
+      <memberdef kind="function" id="df/d61/a00031_affbc309af0cf63f2b3c8a3977b141573_1affbc309af0cf63f2b3c8a3977b141573" prot="public" static="no" const="yes" explicit="no" inline="no" final="yes" virt="virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::QueryObject::isCreated</definition>
+        <argsstring>() const  final</argsstring>
+        <name>isCreated</name>
+        <reimplements refid="d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
+        <briefdescription>
+<para>Queries OpenGL whether this <ref refid="d0/d33/a00027" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="211" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Object::getID</definition>
         <argsstring>() const </argsstring>
-        <name>bind</name>
+        <name>getID</name>
         <briefdescription>
-        </briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="33" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="99" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ade6fbfa5b10ded6710062ac4a6bf5d70_1ade6fbfa5b10ded6710062ac4a6bf5d70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::unbind</definition>
-        <argsstring>() const </argsstring>
-        <name>unbind</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="34" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ab4c9999ede0f36708b55221436a54f70_1ab4c9999ede0f36708b55221436a54f70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createFragment</definition>
-        <argsstring>(const char shader[])</argsstring>
-        <name>createFragment</name>
-        <param>
-          <type>const char</type>
-          <declname>shader</declname>
-          <array>[]</array>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="36" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a7bc588e1ad571d027bff3ce5305a6b62_1a7bc588e1ad571d027bff3ce5305a6b62" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createFragment</definition>
-        <argsstring>(const std::string &amp;shader)</argsstring>
-        <name>createFragment</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>shader</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="37" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a5e6f5fdcfc1afa3f0167f06d997fbbd6_1a5e6f5fdcfc1afa3f0167f06d997fbbd6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createVertex</definition>
-        <argsstring>(const char shader[])</argsstring>
-        <name>createVertex</name>
-        <param>
-          <type>const char</type>
-          <declname>shader</declname>
-          <array>[]</array>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="38" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a31ac934a29270b0dc805f86e0ae7c70a_1a31ac934a29270b0dc805f86e0ae7c70a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createVertex</definition>
-        <argsstring>(const std::string &amp;shader)</argsstring>
-        <name>createVertex</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>shader</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="39" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a0dbd21b7aa6174e1163fbfdbcf8e83b8_1a0dbd21b7aa6174e1163fbfdbcf8e83b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createUniform</definition>
-        <argsstring>(const std::string &amp;name)</argsstring>
-        <name>createUniform</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>name</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="41" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a9e433380d442b01f9b2bec847d5b398a_1a9e433380d442b01f9b2bec847d5b398a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createUniform</definition>
-        <argsstring>(const char *name)</argsstring>
-        <name>createUniform</name>
-        <param>
-          <type>const char *</type>
-          <declname>name</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="42" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a3cf6d8ddd4397ec976a331a8be6e4944_1a3cf6d8ddd4397ec976a331a8be6e4944" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::getUniformLocation</definition>
-        <argsstring>(const std::string &amp;name)</argsstring>
-        <name>getUniformLocation</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>name</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="44" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a65241516801cad648a606eb53a404484_1a65241516801cad648a606eb53a404484" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::getUniformLocation</definition>
-        <argsstring>(const char *name)</argsstring>
-        <name>getUniformLocation</name>
-        <param>
-          <type>const char *</type>
-          <declname>name</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="45" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a5f1ee3de3f2d6ab32d787e49dbae4f7c_1a5f1ee3de3f2d6ab32d787e49dbae4f7c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::getProgramID</definition>
-        <argsstring>() const </argsstring>
-        <name>getProgramID</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="47" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a5b3b32ed73505ca7784afac5d796a16d_1a5b3b32ed73505ca7784afac5d796a16d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::getVertexID</definition>
-        <argsstring>() const </argsstring>
-        <name>getVertexID</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="48" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a00fcb781fe5665f51572373c7861902a_1a00fcb781fe5665f51572373c7861902a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::getFragmentID</definition>
-        <argsstring>() const </argsstring>
-        <name>getFragmentID</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="49" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a9b56aa9cfd26169029ba6bd5e8e38e81_1a9b56aa9cfd26169029ba6bd5e8e38e81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 2, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 2, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="53" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ac7ea46c731a6285267f42763822c2080_1ac7ea46c731a6285267f42763822c2080" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 2, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 2, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="54" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aff9e925ae01cb023529aab7da793cdfa_1aff9e925ae01cb023529aab7da793cdfa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 3, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 3, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="55" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a068661e83629e0ce19bcc34539a5410b_1a068661e83629e0ce19bcc34539a5410b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 3, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 3, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="56" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a93ab9600742262095b501fac0413fd3b_1a93ab9600742262095b501fac0413fd3b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 4, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="57" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a22865bc54ba9a29e80a5e734c25d9f4e_1a22865bc54ba9a29e80a5e734c25d9f4e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 4, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="58" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a85c97483d10d880e265a6ff6d08d7efd_1a85c97483d10d880e265a6ff6d08d7efd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 2, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 2, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="59" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a2a97617f01ccaaa28d0761af06bdbb97_1a2a97617f01ccaaa28d0761af06bdbb97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 2, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 2, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="60" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_abef80c98854be80cbabe468b92c557e3_1abef80c98854be80cbabe468b92c557e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 3, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 3, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="61" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a2c52bee042d470133d4087885e35f328_1a2c52bee042d470133d4087885e35f328" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 3, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 3, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="62" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a7c65ea34cf03a8405ef873d56ebfa61c_1a7c65ea34cf03a8405ef873d56ebfa61c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 2, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 2, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="63" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a2a7c5f30c885fa989a7a8e9829c4c667_1a2a7c5f30c885fa989a7a8e9829c4c667" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 2, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 2, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="64" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ae0af00505a4dca868a9071ac7210281f_1ae0af00505a4dca868a9071ac7210281f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 3, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 3, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="65" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ab00c4aaec9df50a227a40e5815f2219a_1ab00c4aaec9df50a227a40e5815f2219a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 3, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 3, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="66" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a331e61e28bafb57de038e4a7ade762f0_1a331e61e28bafb57de038e4a7ade762f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; float, 4, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 4, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="67" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ac773a16f9292b9361a7f80f7ebf79c59_1ac773a16f9292b9361a7f80f7ebf79c59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; float, 4, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; float, 4, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="68" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a31d0e379b1f06013ef41b01980842ccd_1a31d0e379b1f06013ef41b01980842ccd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 2, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 2, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="70" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aa80cc7be8ce4ef4b301efec47cae39c8_1aa80cc7be8ce4ef4b301efec47cae39c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 2, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 2, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="71" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a49ae565bd6fdd625f29666b987c87506_1a49ae565bd6fdd625f29666b987c87506" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 3, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 3, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="72" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a62baf05fa3e390d2e6d10db820e45131_1a62baf05fa3e390d2e6d10db820e45131" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 3, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 3, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="73" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ac65619891d762f91848e6bbfbaaf087c_1ac65619891d762f91848e6bbfbaaf087c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 4, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="74" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aab3832cc44a2898cd146eacb08565c6e_1aab3832cc44a2898cd146eacb08565c6e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 4, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="75" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_afeb3a75b8d0f1145d617d94249449f3e_1afeb3a75b8d0f1145d617d94249449f3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 2, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 2, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="76" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aed8e6148133e4bde1977d220ff2bb41e_1aed8e6148133e4bde1977d220ff2bb41e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 2, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 2, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="77" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aaedd8e0ef6f7931a97de44dfab964d3e_1aaedd8e0ef6f7931a97de44dfab964d3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 3, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 3, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="78" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a30b9bcd2ad66abd4005671c88c9b3ef8_1a30b9bcd2ad66abd4005671c88c9b3ef8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 3, 2 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 3, 2 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="79" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a89dbe74d014e845d94dcc0830bb6fd44_1a89dbe74d014e845d94dcc0830bb6fd44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 2, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 2, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="80" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a2eb8c0d22a3ef379173b997329ce5c6a_1a2eb8c0d22a3ef379173b997329ce5c6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 2, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 2, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="81" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_af234649932d9e781380133df7669f004_1af234649932d9e781380133df7669f004" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 3, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 3, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="82" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aae55497b0dc747bcd3b7223be9fd9e7d_1aae55497b0dc747bcd3b7223be9fd9e7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 3, 4 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 3, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="83" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aaf94fd7a10429669f0f4f29c170257de_1aaf94fd7a10429669f0f4f29c170257de" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const bool transpose, const mc::Matrix&lt; double, 4, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>transpose</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 4, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="84" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a6c7a9d043fcb3650cd19b4e80468527b_1a6c7a9d043fcb3650cd19b4e80468527b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Matrix&lt; double, 4, 3 &gt; &amp;m)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">mc::Matrix</ref>&lt; double, 4, 3 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="85" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a2927e37626ecf6ea3a8e76b2ef994633_1a2927e37626ecf6ea3a8e76b2ef994633" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const float a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="88" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_af76dd34561f1b3ea74324e7b0b71ebcf_1af76dd34561f1b3ea74324e7b0b71ebcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const float a, const float b)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="89" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a5af4881d61c602c9cf18f44a8b05eb0a_1a5af4881d61c602c9cf18f44a8b05eb0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const float a, const float b, const float c)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>c</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="90" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a47434a585e5dde7b1b8430bdbde467fd_1a47434a585e5dde7b1b8430bdbde467fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const float a, const float b, const float c, const float d)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>c</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>d</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="91" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a864ac93f5cac6088659ef989082c3d23_1a864ac93f5cac6088659ef989082c3d23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size arraySize, const float *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const float *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="92" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a81088654e3ca5e34bad6bfc692cd4288_1a81088654e3ca5e34bad6bfc692cd4288" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size componentSize, const Size arraySize, const float *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>componentSize</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const float *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="93" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a8e712a8e3fedbed535ada336dfc8c5ff_1a8e712a8e3fedbed535ada336dfc8c5ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; float, 1 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; float, 1 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="94" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a0a5b5ec7b2b193f65ca4ae2113748e27_1a0a5b5ec7b2b193f65ca4ae2113748e27" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; float, 2 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; float, 2 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="95" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ad7abacf9ede008ed68d6a4f180d16899_1ad7abacf9ede008ed68d6a4f180d16899" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; float, 3 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; float, 3 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="96" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a7646df2ea83b9cf6d117d0b395745b72_1a7646df2ea83b9cf6d117d0b395745b72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; float, 4 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; float, 4 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="97" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_af5b575f566c36efb49fea7f96b1b0e5f_1af5b575f566c36efb49fea7f96b1b0e5f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const double a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="99" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a6e514a09b946d80e69b358c3de0e7fc7_1a6e514a09b946d80e69b358c3de0e7fc7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const double a, const double b)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="100" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a0ea18c62ea7449e31d8434c228a5daa4_1a0ea18c62ea7449e31d8434c228a5daa4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const double a, const double b, const double c)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>c</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="101" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a90f25f7c7b523f9c7af6f83b91b909d6_1a90f25f7c7b523f9c7af6f83b91b909d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const double a, const double b, const double c, const double d)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>c</declname>
-        </param>
-        <param>
-          <type>const double</type>
-          <declname>d</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="102" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a8d558a65458b5b0bf3220572e92360d4_1a8d558a65458b5b0bf3220572e92360d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size arraySize, const double *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const double *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="103" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ab581b59d4df8d1fd15f80bc11e656489_1ab581b59d4df8d1fd15f80bc11e656489" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size componentSize, const Size arraySize, const double *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>componentSize</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const double *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="104" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a1cc22976b1c31439eb0da06eb051b78e_1a1cc22976b1c31439eb0da06eb051b78e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; double, 1 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; double, 1 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="105" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ac17e9b9f0f7a40e2ac7930d5bf9f3589_1ac17e9b9f0f7a40e2ac7930d5bf9f3589" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; double, 2 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; double, 2 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="106" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a856fa230c729c7e6161b57facec72235_1a856fa230c729c7e6161b57facec72235" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; double, 3 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; double, 3 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="107" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a588afa14f1e6fe3d23520a4326b8dc37_1a588afa14f1e6fe3d23520a4326b8dc37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; double, 4 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; double, 4 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="108" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aa263661a7dae88475ebc72958e809f85_1aa263661a7dae88475ebc72958e809f85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const int a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="110" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_aeadfe77421bf7f29e48f4693ae25273d_1aeadfe77421bf7f29e48f4693ae25273d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const int a, const int b)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="111" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ad1a2e9572919c5d33cc691b3a1706bc8_1ad1a2e9572919c5d33cc691b3a1706bc8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const int a, const int b, const int c)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>c</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="112" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_abea959d4815e96b8f6410831908df11e_1abea959d4815e96b8f6410831908df11e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const int a, const int b, const int c, const int d)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>c</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>d</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="113" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ac1bc46b796fba38af7c38d6ff31faffd_1ac1bc46b796fba38af7c38d6ff31faffd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size arraySize, const int *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const int *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="114" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a95ce6f91d7303dd4c02af74238a407fb_1a95ce6f91d7303dd4c02af74238a407fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size componentSize, const Size arraySize, const int *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>componentSize</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const int *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="115" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ae3b98d4f62c8e41cee648cfe210bada7_1ae3b98d4f62c8e41cee648cfe210bada7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; int, 1 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; int, 1 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="116" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ababc89e4828a07ae866e78818640fa92_1ababc89e4828a07ae866e78818640fa92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; int, 2 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; int, 2 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="117" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_abec8d60b8042cd0beeb168217a677f94_1abec8d60b8042cd0beeb168217a677f94" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; int, 3 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; int, 3 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="118" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a764765aca2f28fe8249bf4a826a27562_1a764765aca2f28fe8249bf4a826a27562" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; int, 4 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; int, 4 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="119" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a6d5b95b01cedde8dd899779b8cba1f36_1a6d5b95b01cedde8dd899779b8cba1f36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const unsigned int a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="121" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ad05f00eb80db18bb3a4f34be40e62f32_1ad05f00eb80db18bb3a4f34be40e62f32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const unsigned int a, const unsigned int b)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="122" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ac5febe69cc9bf7999acdc1062778c022_1ac5febe69cc9bf7999acdc1062778c022" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const unsigned int a, const unsigned int b, const unsigned int c)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>c</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="123" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a194d1ff560ac9fbe2e170d560b89c60f_1a194d1ff560ac9fbe2e170d560b89c60f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>b</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>c</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>d</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="124" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_adbd1966373cfb230e2ff8b94dfb1451f_1adbd1966373cfb230e2ff8b94dfb1451f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size arraySize, const unsigned int *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const unsigned int *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="125" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_af6245896d5fc84a1d62ba71c3aab371a_1af6245896d5fc84a1d62ba71c3aab371a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const Size componentSize, const Size arraySize, const unsigned int *a)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
+      <memberdef kind="function" id="d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
         <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>componentSize</declname>
+          <type>const <ref refid="d0/d33/a00027" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
         </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>arraySize</declname>
-        </param>
-        <param>
-          <type>const unsigned int *</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="126" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ae5f49622e67a2b43ce2fdb3be9935d10_1ae5f49622e67a2b43ce2fdb3be9935d10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; unsigned int, 1 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; unsigned int, 1 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="127" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ab3b74d8919fc02db7c470fe33b92918e_1ab3b74d8919fc02db7c470fe33b92918e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; unsigned int, 2 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; unsigned int, 2 &gt;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="128" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a300eddfc73c2000af1a348279b799db5_1a300eddfc73c2000af1a348279b799db5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; unsigned int, 3 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; unsigned int, 3 &gt;</type>
-          <declname>v</declname>
-        </param>
         <briefdescription>
-        </briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="129" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="108" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ae77ae33ec559e4932b98546fc027130e_1ae77ae33ec559e4932b98546fc027130e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::setUniform</definition>
-        <argsstring>(char *name, const mc::Vector&lt; unsigned int, 4 &gt; v)</argsstring>
-        <name>setUniform</name>
-        <param>
-          <type>char *</type>
-          <declname>name</declname>
-        </param>
+      <memberdef kind="function" id="d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
         <param>
-          <type>const <ref refid="d4/d8c/a00035" kindref="compound">mc::Vector</ref>&lt; unsigned int, 4 &gt;</type>
-          <declname>v</declname>
+          <type>const <ref refid="d0/d33/a00027" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
         </param>
         <briefdescription>
-        </briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="130" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="116" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="private-func">
-      <memberdef kind="function" id="df/d61/a00031_1a86cf07c7865d08739ca9581e2c624202" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::ShaderProgram::createShader</definition>
-        <argsstring>(const char code[], const GLenum &amp;type)</argsstring>
-        <name>createShader</name>
-        <param>
-          <type>const char</type>
-          <declname>code</declname>
-          <array>[]</array>
-        </param>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>type</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="138" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_1a5c248bd09c05d1c89b947f70f0e01efc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="df/d61/a00031_1a055cd452ca943cb84a4663d5dfca4f61" prot="private" static="no" const="yes" explicit="no" inline="no" final="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::ShaderProgram::createProgram</definition>
-        <argsstring>()</argsstring>
-        <name>createProgram</name>
+        <definition>void mc::gfx::QueryObject::bind</definition>
+        <argsstring>() const  final</argsstring>
+        <name>bind</name>
+        <reimplements refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458">bind</reimplements>
         <briefdescription>
-        </briefdescription>
+<para>Binds this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Shaders.h" line="140" column="1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="215" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_1a509b3f1d7b32a0b12060535698889b30" prot="private" static="no" const="yes" explicit="no" inline="no" final="yes" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::unbind</definition>
+        <argsstring>() const  final</argsstring>
+        <name>unbind</name>
+        <reimplements refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596">unbind</reimplements>
+        <briefdescription>
+<para>Unbinds this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="216" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="df/d61/a00031_1abf5494d78d1a8533ec31d92adb28dee6" prot="private" static="no" const="yes" explicit="no" inline="no" final="yes" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::QueryObject::bindIndex</definition>
+        <argsstring>(const Index &amp;id) const  final</argsstring>
+        <name>bindIndex</name>
+        <reimplements refid="d0/d33/a00027_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
+        <detaileddescription>
+<para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const </ref>and <ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="218" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
+        <type><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Object::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
+        <detaileddescription>
+<para>` Should be set in <ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> and become 0 in <ref refid="d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para><para><ref refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="123" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="123" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>Special object that is used for asynchronous queries of information from the GPU. </para>    </briefdescription>
     <detaileddescription>
-<para><xrefsect id="d8/d84/a00001_1_todo000003"><xreftitle>Todo</xreftitle><xrefdescription><para>make a shader class </para></xrefdescription></xrefsect></para>    </detaileddescription>
-    <location file="include/MACE/Graphics/Shaders.h" line="25" column="1" bodyfile="include/MACE/Graphics/Shaders.h" bodystart="25" bodyend="142"/>
+<para>Even though it extends <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> it does not implement the <ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const </ref>or <computeroutput>unbind()</computeroutput> functions. Instead, the <computeroutput><ref refid="df/d61/a00031" kindref="compound">QueryObject</ref></computeroutput> uses the <ref refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" kindref="member">QueryObject::begin(const Enum&amp;)</ref> and <ref refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" kindref="member">QueryObject::end(const Enum&amp;)</ref> functions. <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Query_Object">https://www.opengl.org/wiki/Query_Object</ulink> </para></simplesect>
+</para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="469">
+        <label>mc::gfx::QueryObject</label>
+        <link refid="df/d61/a00031"/>
+        <childnode refid="470" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="470">
+        <label>mc::gfx::Object</label>
+        <link refid="d0/d33/a00027"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="471">
+        <label>mc::gfx::QueryObject</label>
+        <link refid="df/d61/a00031"/>
+        <childnode refid="472" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="472">
+        <label>mc::gfx::Object</label>
+        <link refid="d0/d33/a00027"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Graphics/Buffer.h" line="142" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="142" bodyend="219"/>
     <listofallmembers>
-      <member refid="df/d61/a00031_ada4e8597cf6cdd35ebbc84a825c588f4_1ada4e8597cf6cdd35ebbc84a825c588f4" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>bind</name></member>
-      <member refid="df/d61/a00031_ab4c9999ede0f36708b55221436a54f70_1ab4c9999ede0f36708b55221436a54f70" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createFragment</name></member>
-      <member refid="df/d61/a00031_a7bc588e1ad571d027bff3ce5305a6b62_1a7bc588e1ad571d027bff3ce5305a6b62" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createFragment</name></member>
-      <member refid="df/d61/a00031_1a5c248bd09c05d1c89b947f70f0e01efc" prot="private" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createProgram</name></member>
-      <member refid="df/d61/a00031_1a86cf07c7865d08739ca9581e2c624202" prot="private" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createShader</name></member>
-      <member refid="df/d61/a00031_a0dbd21b7aa6174e1163fbfdbcf8e83b8_1a0dbd21b7aa6174e1163fbfdbcf8e83b8" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createUniform</name></member>
-      <member refid="df/d61/a00031_a9e433380d442b01f9b2bec847d5b398a_1a9e433380d442b01f9b2bec847d5b398a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createUniform</name></member>
-      <member refid="df/d61/a00031_a5e6f5fdcfc1afa3f0167f06d997fbbd6_1a5e6f5fdcfc1afa3f0167f06d997fbbd6" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createVertex</name></member>
-      <member refid="df/d61/a00031_a31ac934a29270b0dc805f86e0ae7c70a_1a31ac934a29270b0dc805f86e0ae7c70a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>createVertex</name></member>
-      <member refid="df/d61/a00031_a3efbd29de3977984c7a4cda590aa3278_1a3efbd29de3977984c7a4cda590aa3278" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>destroy</name></member>
-      <member refid="df/d61/a00031_1aa2fafb4fffa4f44e776f2378a8af0ce5" prot="private" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>fragId</name></member>
-      <member refid="df/d61/a00031_a00fcb781fe5665f51572373c7861902a_1a00fcb781fe5665f51572373c7861902a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>getFragmentID</name></member>
-      <member refid="df/d61/a00031_a5f1ee3de3f2d6ab32d787e49dbae4f7c_1a5f1ee3de3f2d6ab32d787e49dbae4f7c" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>getProgramID</name></member>
-      <member refid="df/d61/a00031_a3cf6d8ddd4397ec976a331a8be6e4944_1a3cf6d8ddd4397ec976a331a8be6e4944" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>getUniformLocation</name></member>
-      <member refid="df/d61/a00031_a65241516801cad648a606eb53a404484_1a65241516801cad648a606eb53a404484" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>getUniformLocation</name></member>
-      <member refid="df/d61/a00031_a5b3b32ed73505ca7784afac5d796a16d_1a5b3b32ed73505ca7784afac5d796a16d" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>getVertexID</name></member>
-      <member refid="df/d61/a00031_1ace7ac1a20ec5197223e55d28f678b835" prot="private" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>id</name></member>
-      <member refid="df/d61/a00031_a7bc5fc15808b30231eea9005ebd44355_1a7bc5fc15808b30231eea9005ebd44355" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>init</name></member>
-      <member refid="df/d61/a00031_a9b56aa9cfd26169029ba6bd5e8e38e81_1a9b56aa9cfd26169029ba6bd5e8e38e81" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ac7ea46c731a6285267f42763822c2080_1ac7ea46c731a6285267f42763822c2080" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aff9e925ae01cb023529aab7da793cdfa_1aff9e925ae01cb023529aab7da793cdfa" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a068661e83629e0ce19bcc34539a5410b_1a068661e83629e0ce19bcc34539a5410b" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a93ab9600742262095b501fac0413fd3b_1a93ab9600742262095b501fac0413fd3b" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a22865bc54ba9a29e80a5e734c25d9f4e_1a22865bc54ba9a29e80a5e734c25d9f4e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a85c97483d10d880e265a6ff6d08d7efd_1a85c97483d10d880e265a6ff6d08d7efd" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a2a97617f01ccaaa28d0761af06bdbb97_1a2a97617f01ccaaa28d0761af06bdbb97" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_abef80c98854be80cbabe468b92c557e3_1abef80c98854be80cbabe468b92c557e3" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a2c52bee042d470133d4087885e35f328_1a2c52bee042d470133d4087885e35f328" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a7c65ea34cf03a8405ef873d56ebfa61c_1a7c65ea34cf03a8405ef873d56ebfa61c" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a2a7c5f30c885fa989a7a8e9829c4c667_1a2a7c5f30c885fa989a7a8e9829c4c667" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ae0af00505a4dca868a9071ac7210281f_1ae0af00505a4dca868a9071ac7210281f" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ab00c4aaec9df50a227a40e5815f2219a_1ab00c4aaec9df50a227a40e5815f2219a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a331e61e28bafb57de038e4a7ade762f0_1a331e61e28bafb57de038e4a7ade762f0" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ac773a16f9292b9361a7f80f7ebf79c59_1ac773a16f9292b9361a7f80f7ebf79c59" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a31d0e379b1f06013ef41b01980842ccd_1a31d0e379b1f06013ef41b01980842ccd" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aa80cc7be8ce4ef4b301efec47cae39c8_1aa80cc7be8ce4ef4b301efec47cae39c8" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a49ae565bd6fdd625f29666b987c87506_1a49ae565bd6fdd625f29666b987c87506" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a62baf05fa3e390d2e6d10db820e45131_1a62baf05fa3e390d2e6d10db820e45131" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ac65619891d762f91848e6bbfbaaf087c_1ac65619891d762f91848e6bbfbaaf087c" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aab3832cc44a2898cd146eacb08565c6e_1aab3832cc44a2898cd146eacb08565c6e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_afeb3a75b8d0f1145d617d94249449f3e_1afeb3a75b8d0f1145d617d94249449f3e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aed8e6148133e4bde1977d220ff2bb41e_1aed8e6148133e4bde1977d220ff2bb41e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aaedd8e0ef6f7931a97de44dfab964d3e_1aaedd8e0ef6f7931a97de44dfab964d3e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a30b9bcd2ad66abd4005671c88c9b3ef8_1a30b9bcd2ad66abd4005671c88c9b3ef8" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a89dbe74d014e845d94dcc0830bb6fd44_1a89dbe74d014e845d94dcc0830bb6fd44" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a2eb8c0d22a3ef379173b997329ce5c6a_1a2eb8c0d22a3ef379173b997329ce5c6a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_af234649932d9e781380133df7669f004_1af234649932d9e781380133df7669f004" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aae55497b0dc747bcd3b7223be9fd9e7d_1aae55497b0dc747bcd3b7223be9fd9e7d" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aaf94fd7a10429669f0f4f29c170257de_1aaf94fd7a10429669f0f4f29c170257de" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a6c7a9d043fcb3650cd19b4e80468527b_1a6c7a9d043fcb3650cd19b4e80468527b" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a2927e37626ecf6ea3a8e76b2ef994633_1a2927e37626ecf6ea3a8e76b2ef994633" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_af76dd34561f1b3ea74324e7b0b71ebcf_1af76dd34561f1b3ea74324e7b0b71ebcf" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a5af4881d61c602c9cf18f44a8b05eb0a_1a5af4881d61c602c9cf18f44a8b05eb0a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a47434a585e5dde7b1b8430bdbde467fd_1a47434a585e5dde7b1b8430bdbde467fd" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a864ac93f5cac6088659ef989082c3d23_1a864ac93f5cac6088659ef989082c3d23" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a81088654e3ca5e34bad6bfc692cd4288_1a81088654e3ca5e34bad6bfc692cd4288" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a8e712a8e3fedbed535ada336dfc8c5ff_1a8e712a8e3fedbed535ada336dfc8c5ff" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a0a5b5ec7b2b193f65ca4ae2113748e27_1a0a5b5ec7b2b193f65ca4ae2113748e27" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ad7abacf9ede008ed68d6a4f180d16899_1ad7abacf9ede008ed68d6a4f180d16899" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a7646df2ea83b9cf6d117d0b395745b72_1a7646df2ea83b9cf6d117d0b395745b72" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_af5b575f566c36efb49fea7f96b1b0e5f_1af5b575f566c36efb49fea7f96b1b0e5f" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a6e514a09b946d80e69b358c3de0e7fc7_1a6e514a09b946d80e69b358c3de0e7fc7" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a0ea18c62ea7449e31d8434c228a5daa4_1a0ea18c62ea7449e31d8434c228a5daa4" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a90f25f7c7b523f9c7af6f83b91b909d6_1a90f25f7c7b523f9c7af6f83b91b909d6" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a8d558a65458b5b0bf3220572e92360d4_1a8d558a65458b5b0bf3220572e92360d4" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ab581b59d4df8d1fd15f80bc11e656489_1ab581b59d4df8d1fd15f80bc11e656489" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a1cc22976b1c31439eb0da06eb051b78e_1a1cc22976b1c31439eb0da06eb051b78e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ac17e9b9f0f7a40e2ac7930d5bf9f3589_1ac17e9b9f0f7a40e2ac7930d5bf9f3589" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a856fa230c729c7e6161b57facec72235_1a856fa230c729c7e6161b57facec72235" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a588afa14f1e6fe3d23520a4326b8dc37_1a588afa14f1e6fe3d23520a4326b8dc37" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aa263661a7dae88475ebc72958e809f85_1aa263661a7dae88475ebc72958e809f85" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_aeadfe77421bf7f29e48f4693ae25273d_1aeadfe77421bf7f29e48f4693ae25273d" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ad1a2e9572919c5d33cc691b3a1706bc8_1ad1a2e9572919c5d33cc691b3a1706bc8" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_abea959d4815e96b8f6410831908df11e_1abea959d4815e96b8f6410831908df11e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ac1bc46b796fba38af7c38d6ff31faffd_1ac1bc46b796fba38af7c38d6ff31faffd" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a95ce6f91d7303dd4c02af74238a407fb_1a95ce6f91d7303dd4c02af74238a407fb" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ae3b98d4f62c8e41cee648cfe210bada7_1ae3b98d4f62c8e41cee648cfe210bada7" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ababc89e4828a07ae866e78818640fa92_1ababc89e4828a07ae866e78818640fa92" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_abec8d60b8042cd0beeb168217a677f94_1abec8d60b8042cd0beeb168217a677f94" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a764765aca2f28fe8249bf4a826a27562_1a764765aca2f28fe8249bf4a826a27562" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a6d5b95b01cedde8dd899779b8cba1f36_1a6d5b95b01cedde8dd899779b8cba1f36" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ad05f00eb80db18bb3a4f34be40e62f32_1ad05f00eb80db18bb3a4f34be40e62f32" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ac5febe69cc9bf7999acdc1062778c022_1ac5febe69cc9bf7999acdc1062778c022" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a194d1ff560ac9fbe2e170d560b89c60f_1a194d1ff560ac9fbe2e170d560b89c60f" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_adbd1966373cfb230e2ff8b94dfb1451f_1adbd1966373cfb230e2ff8b94dfb1451f" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_af6245896d5fc84a1d62ba71c3aab371a_1af6245896d5fc84a1d62ba71c3aab371a" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ae5f49622e67a2b43ce2fdb3be9935d10_1ae5f49622e67a2b43ce2fdb3be9935d10" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ab3b74d8919fc02db7c470fe33b92918e_1ab3b74d8919fc02db7c470fe33b92918e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a300eddfc73c2000af1a348279b799db5_1a300eddfc73c2000af1a348279b799db5" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_ae77ae33ec559e4932b98546fc027130e_1ae77ae33ec559e4932b98546fc027130e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>setUniform</name></member>
-      <member refid="df/d61/a00031_a659a4706802b241b64427c25c225320e_1a659a4706802b241b64427c25c225320e" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>ShaderProgram</name></member>
-      <member refid="df/d61/a00031_ade6fbfa5b10ded6710062ac4a6bf5d70_1ade6fbfa5b10ded6710062ac4a6bf5d70" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>unbind</name></member>
-      <member refid="df/d61/a00031_1ad59697d5502e685587c3bf3fcbfd9c7a" prot="private" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>uniforms</name></member>
-      <member refid="df/d61/a00031_1a51eef64910e89bc51fd52ca934f16b19" prot="private" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>vertId</name></member>
-      <member refid="df/d61/a00031_a45e90469fd50c4ee979ded56ccb0ab69_1a45e90469fd50c4ee979ded56ccb0ab69" prot="public" virt="non-virtual"><scope>mc::gfx::ShaderProgram</scope><name>~ShaderProgram</name></member>
+      <member refid="df/d61/a00031_a79bdb0a7b5911b0e5088cd742487c77d_1a79bdb0a7b5911b0e5088cd742487c77d" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>begin</name></member>
+      <member refid="df/d61/a00031_1a055cd452ca943cb84a4663d5dfca4f61" prot="private" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>bind</name></member>
+      <member refid="df/d61/a00031_1abf5494d78d1a8533ec31d92adb28dee6" prot="private" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>bindIndex</name></member>
+      <member refid="df/d61/a00031_a1cab6c1be5cc8b3e3be0bd0d32e15ffb_1a1cab6c1be5cc8b3e3be0bd0d32e15ffb" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>counter</name></member>
+      <member refid="df/d61/a00031_a52094232aec69733ab764e0a30fcc35a_1a52094232aec69733ab764e0a30fcc35a" prot="public" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>destroy</name></member>
+      <member refid="df/d61/a00031_a99ec59a04ffacd80718403a475619d31_1a99ec59a04ffacd80718403a475619d31" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>end</name></member>
+      <member refid="df/d61/a00031_a5273f375615f4b9ea2d1590e5e47cf62_1a5273f375615f4b9ea2d1590e5e47cf62" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>get</name></member>
+      <member refid="df/d61/a00031_a37b6f23b22e9513386e9bb7818090ac4_1a37b6f23b22e9513386e9bb7818090ac4" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>get</name></member>
+      <member refid="df/d61/a00031_ab8c8460e07615c31fd4a450d7634e7d5_1ab8c8460e07615c31fd4a450d7634e7d5" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>get</name></member>
+      <member refid="df/d61/a00031_ac3077e48f04e3673712f8fe5248c1cfd_1ac3077e48f04e3673712f8fe5248c1cfd" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>get</name></member>
+      <member refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>getID</name></member>
+      <member refid="d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>id</name></member>
+      <member refid="df/d61/a00031_a82cd27fe5528545930d516ed60e04e21_1a82cd27fe5528545930d516ed60e04e21" prot="public" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>init</name></member>
+      <member refid="df/d61/a00031_affbc309af0cf63f2b3c8a3977b141573_1affbc309af0cf63f2b3c8a3977b141573" prot="public" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>isCreated</name></member>
+      <member refid="d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>operator!=</name></member>
+      <member refid="d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" virt="non-virtual"><scope>mc::gfx::QueryObject</scope><name>operator==</name></member>
+      <member refid="df/d61/a00031_1a509b3f1d7b32a0b12060535698889b30" prot="private" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>unbind</name></member>
+      <member refid="d0/d33/a00027_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::QueryObject</scope><name>~Object</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,175 +1,18 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d1/d22/a00057" kind="file" language="C++">
-    <compoundname>Module.h</compoundname>
-    <includes refid="d9/d2e/a00056" local="no">MACE/System/Constants.h</includes>
-    <includes local="no">string</includes>
-    <includedby refid="d1/dea/a00054" local="no">include/MACE/Graphics/Window.h</includedby>
-    <includedby refid="d7/df7/a00058" local="no">include/MACE/System/System.h</includedby>
-    <incdepgraph>
-      <node id="224">
-        <label>cstdint</label>
-      </node>
-      <node id="225">
-        <label>stdexcept</label>
-      </node>
-      <node id="223">
-        <label>MACE/System/Constants.h</label>
-        <link refid="d9/d2e/a00056_source"/>
-        <childnode refid="224" relation="include">
-        </childnode>
-        <childnode refid="225" relation="include">
-        </childnode>
-      </node>
-      <node id="226">
-        <label>string</label>
-      </node>
-      <node id="222">
-        <label>include/MACE/System/Module.h</label>
-        <link refid="Module.h"/>
-        <childnode refid="223" relation="include">
-        </childnode>
-        <childnode refid="226" relation="include">
-        </childnode>
-      </node>
-    </incdepgraph>
-    <invincdepgraph>
-      <node id="228">
-        <label>include/MACE/Graphics/Window.h</label>
-        <link refid="d1/dea/a00054_source"/>
-        <childnode refid="229" relation="include">
-        </childnode>
-        <childnode refid="231" relation="include">
-        </childnode>
-      </node>
-      <node id="233">
-        <label>include/MACE/MACE.h</label>
-        <link refid="d4/d6d/a00055_source"/>
-      </node>
-      <node id="229">
-        <label>include/MACE/Graphics/Renderer.h</label>
-        <link refid="d5/df9/a00044_source"/>
-        <childnode refid="230" relation="include">
-        </childnode>
-        <childnode refid="231" relation="include">
-        </childnode>
-      </node>
-      <node id="231">
-        <label>include/MACE/Graphics/Graphics.h</label>
-        <link refid="d5/db6/a00042_source"/>
-      </node>
-      <node id="227">
-        <label>include/MACE/System/Module.h</label>
-        <link refid="Module.h"/>
-        <childnode refid="228" relation="include">
-        </childnode>
-        <childnode refid="232" relation="include">
-        </childnode>
-      </node>
-      <node id="232">
-        <label>include/MACE/System/System.h</label>
-        <link refid="d7/df7/a00058_source"/>
-        <childnode refid="233" relation="include">
-        </childnode>
-      </node>
-      <node id="230">
-        <label>include/MACE/Graphics/Entity2D.h</label>
-        <link refid="dd/d32/a00041_source"/>
-        <childnode refid="231" relation="include">
-        </childnode>
-      </node>
-    </invincdepgraph>
-    <innerclass refid="d3/d52/a00023" prot="public">mc::Module</innerclass>
-    <innernamespace refid="d6/d2c/a00072">mc</innernamespace>
-    <innernamespace refid="d1/d09/a00077">mc::System</innernamespace>
-      <sectiondef kind="define">
-      <memberdef kind="define" id="d1/d22/a00057_a5f9c6b64b0a6922d2b127e59d962cd5c_1a5f9c6b64b0a6922d2b127e59d962cd5c" prot="public" static="no">
-        <name>MACE_SYSTEM_MODULE_H</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="13" column="9" bodyfile="include/MACE/System/Module.h" bodystart="13" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
+    <compoundname>ssl_frag.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"></highlight></codeline>
-<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"></highlight></codeline>
-<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="10"><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_SYSTEM_MODULE_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_SYSTEM_MODULE_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/System/Constants.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d6/d2c/a00072" kindref="compound">mc</ref><sp/>{</highlight></codeline>
-<codeline lineno="22" refid="d3/d52/a00023" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d3/d52/a00023" kindref="compound">Module</ref><sp/>{</highlight></codeline>
-<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" kindref="member">init</ref>()<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c" kindref="member">update</ref>()<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" kindref="member">destroy</ref>()<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/>std::string<sp/><ref refid="d3/d52/a00023_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="78" refid="d1/d09/a00077" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">System<sp/>{</highlight></codeline>
-<codeline lineno="79" refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eb" kindref="member">Flags</ref>:<sp/><ref refid="d6/d2c/a00072_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>{</highlight></codeline>
-<codeline lineno="83" refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eba3b79ef33aaf03110b4c56653f7ee9b46" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eba3b79ef33aaf03110b4c56653f7ee9b46" kindref="member">INIT</ref><sp/>=<sp/>0,</highlight></codeline>
-<codeline lineno="87" refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eba5da102c6757ade702138e35fa6417b93" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40eba5da102c6757ade702138e35fa6417b93" kindref="member">DESTROYED</ref><sp/>=<sp/>1,</highlight></codeline>
-<codeline lineno="91" refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40ebaacd6d48da16177b2de46aecedcec099f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d09/a00077_ab5d9943b0712123fef05740dd59d40eb_1ab5d9943b0712123fef05740dd59d40ebaacd6d48da16177b2de46aecedcec099f" kindref="member">STOP_REQUESTED</ref><sp/>=<sp/>2</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"></highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/><ref refid="d1/d09/a00077_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule</ref>(<ref refid="d3/d52/a00023" kindref="compound">Module</ref>&amp;<sp/>m);</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a6b4b91ae379415da0d68ed1920d30b93_1a6b4b91ae379415da0d68ed1920d30b93" kindref="member">removeModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023" kindref="compound">Module</ref>&amp;<sp/>m);</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a6b4b91ae379415da0d68ed1920d30b93_1a6b4b91ae379415da0d68ed1920d30b93" kindref="member">removeModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>module);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a6b4b91ae379415da0d68ed1920d30b93_1a6b4b91ae379415da0d68ed1920d30b93" kindref="member">removeModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i);</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/d52/a00023" kindref="compound">Module</ref>*<sp/><ref refid="d1/d09/a00077_a74b95d8579836b3d85a76fda72f084c2_1a74b95d8579836b3d85a76fda72f084c2" kindref="member">getModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>keyword);</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/d52/a00023" kindref="compound">Module</ref>*<sp/><ref refid="d1/d09/a00077_a74b95d8579836b3d85a76fda72f084c2_1a74b95d8579836b3d85a76fda72f084c2" kindref="member">getModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i);</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_aa34bff02fdd3dc0556d71a9e58cc2af8_1aa34bff02fdd3dc0556d71a9e58cc2af8" kindref="member">moduleExists</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>module);</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"></highlight></codeline>
-<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_aa34bff02fdd3dc0556d71a9e58cc2af8_1aa34bff02fdd3dc0556d71a9e58cc2af8" kindref="member">moduleExists</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023" kindref="compound">Module</ref>*<sp/>module);</highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/><ref refid="d1/d09/a00077_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" kindref="member">numberOfModules</ref>();</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//the<sp/>parameter<sp/>not<sp/>being<sp/>const<sp/>is<sp/>not<sp/>a<sp/>mistake;<sp/>it<sp/>gets<sp/>derefenced<sp/>to<sp/>check<sp/>for<sp/>equality</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_af5b36fb81779ac4924c062693757f740_1af5b36fb81779ac4924c062693757f740" kindref="member">indexOf</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023" kindref="compound">Module</ref>&amp;<sp/>m);</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_af5b36fb81779ac4924c062693757f740_1af5b36fb81779ac4924c062693757f740" kindref="member">indexOf</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>name);</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"></highlight></codeline>
-<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_aef883d5b7917238ddfaf37ca11662487_1aef883d5b7917238ddfaf37ca11662487" kindref="member">assertModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>module,<sp/>std::string<sp/>errorMessage);</highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_aef883d5b7917238ddfaf37ca11662487_1aef883d5b7917238ddfaf37ca11662487" kindref="member">assertModule</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>module);</highlight></codeline>
-<codeline lineno="191"><highlight class="normal"></highlight></codeline>
-<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" kindref="member">init</ref>();</highlight></codeline>
-<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c" kindref="member">update</ref>();</highlight></codeline>
-<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/d52/a00023_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" kindref="member">destroy</ref>();</highlight></codeline>
-<codeline lineno="219"><highlight class="normal"></highlight></codeline>
-<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">isRunning</ref>();</highlight></codeline>
-<codeline lineno="227"><highlight class="normal"></highlight></codeline>
-<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a356cd822e782c2d2138b6bf241d1c94b_1a356cd822e782c2d2138b6bf241d1c94b" kindref="member">requestStop</ref>();</highlight></codeline>
-<codeline lineno="233"><highlight class="normal"></highlight></codeline>
-<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a217ac5015288b208e12be276992964ae_1a217ac5015288b208e12be276992964ae" kindref="member">getFlag</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>flag);</highlight></codeline>
-<codeline lineno="244"><highlight class="normal"></highlight></codeline>
-<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d1/d09/a00077_a96d64af50e1206f121e0b067cb0c7b0d_1a96d64af50e1206f121e0b067cb0c7b0d" kindref="member">reset</ref>();</highlight></codeline>
-<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="250"><highlight class="normal"></highlight></codeline>
-<codeline lineno="251"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="252"><highlight class="normal"></highlight></codeline>
-<codeline lineno="253"><highlight class="normal"></highlight></codeline>
-<codeline lineno="254"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline><highlight class="normal">R&quot;(</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;ssl_color&gt;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/System/Module.h"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_frag.glsl"/>
   </compounddef>
 </doxygen>

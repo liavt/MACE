@@ -82,470 +82,234 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::os::WindowModule Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::os::WindowModule}
-{\xe \v mc::os::WindowModule}
-{\bkmkstart AAAAAAABOE}
-{\bkmkend AAAAAAABOE}
+mc::gfx::ShaderProgram Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram}
+{\bkmkstart AAAAAAABII}
+{\bkmkend AAAAAAABII}
 \par
 {
-{\f2 #include <Window.h>}}\par
-Inheritance diagram for mc::os::WindowModule:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d6/d7d/a00161.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::os::WindowModule:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "db/d44/a00162.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Public Types\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-enum {\b EntityProperty} : Byte \{ {\b DEAD} = 0, 
-{\b UPDATE_DISABLED} = 1, 
-{\b RENDER_DISABLED} = 2, 
-{\b INIT} = 3, 
-{\b STRETCH_X} = 4, 
-{\b STRETCH_Y} = 5, 
-{\b HOVERED} = 6, 
-{\b DIRTY} = 7
- \}\par
-}
+{\f2 #include <Shaders.h>}}\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b WindowModule} (const int width, const int height, const char *title)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-GLFWwindow * {\b getGLFWWindow} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const unsigned int & {\b getFPS} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setFPS} (const unsigned int &FPS)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b create} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const int {\b getOriginalWidth} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const int {\b getOriginalHeight} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::string {\b getTitle} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const std::string {\b getTitle} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setTitle} (const std::string &newTitle)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 Entity}  when {\f2 {\b System.init()}}  is called. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b update} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#update} is called and this {\f2 {\b Module}}  is registered. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 Entity}  when {\f2 {\b System.destroy()}}  is called. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::string {\b getName} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Override this function and return a UNIQUE name for this {\f2 {\b Module}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setVSync} (const bool &sync)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b isVSync} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b render} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const std::vector< {\b Entity} * > & {\b getChildren} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets all of this {\f2 {\b Entity}'s}  children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b removeChild} (const {\b Entity} &e)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child by reference. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b removeChild} ({\b Index} index)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child via location. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b hasChild} ({\b Entity} &e) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks to see if this {\f2 {\b Entity}}  contains an {\f2 {\b Entity}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clearChildren} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clearComponents} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b operator[]} ({\b Index} i)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Access an {\f2 {\b Entity}} . }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} & {\b operator[]} ({\b Index} i) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b operator[](Index i)} }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b getChild} ({\b Index} i)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves a child at a certain index. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} & {\b getChild} ({\b Index} i) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b getChild(Index)} }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b indexOf} (const {\b Entity} &e) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Finds the location of an {\f2 {\b Entity}}  in this {\f2 {\b Entity}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Entity} * >::iterator {\b begin} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Entity} * >::iterator {\b end} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Size} {\b size} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calculates the amount of children this {\f2 {\b Entity}}  has. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-EntityProperties & {\b getProperties} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the {\f2 {\b Entity}'s}  properties as a {\f2 ByteField}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const EntityProperties & {\b getProperties} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getProperties()}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setProperties} (EntityProperties &b)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set the properties for this {\f2 {\b Entity}}  }{
-}\par
-}}
+{\b ShaderProgram} () noexcept\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b getProperty} (const {\b Byte} position) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve the value of a property. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setProperty} (const {\b Byte} position, const bool value)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 {\b Entity}::}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b TransformMatrix} & {\b getTransformation} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b TransformMatrix} & {\b getTransformation} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setTransformation} ({\b TransformMatrix} &trans)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b translate} (float x, float y, float z)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b rotate} (float x, float y, float z)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b scale} (float x, float y, float z)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} *const {\b getParent} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve this {\f2 Entitys}  parent `Entity. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} *const {\b getParent} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getParent()}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b hasParent} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addChild} ({\b Entity} &e)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b kill} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Automatically called when {\f2 Entity::PROPERTY_DEAD}  is true. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addComponent} (Component &action)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< Component * > {\b getComponents} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getWidth} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getWidth} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setWidth} (const float &s)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getHeight} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getHeight} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setHeight} (const float &s)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getX} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getX} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setX} (const float &newX)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getY} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getY} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setY} (const float &newY)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Entity} &other) const  noexcept\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  have the same children, parent, and properties. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Entity} &other) const  noexcept\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  don't have the same children, parent, and properties. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b clean} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} * {\b getRootParent} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} * {\b getRootParent} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b reset} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b makeDirty} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Makes this {\f2 {\b Entity}}  dirty and the root level parent dirty. }{
-}\par
-}}
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Protected Attributes\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Entity} * > {\b children} = std::vector<{\b Entity}*>()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 std::vector}  of this {\f2 {\b Entity}\\'s}  children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b TransformMatrix} {\b transformation}\par
+{\b ~ShaderProgram} () noexcept=default\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b init} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b destroy} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b bind} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b unbind} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b createFragment} (const char shader[])\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b createFragment} (const std::string &shader)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b createVertex} (const char shader[])\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b createVertex} (const std::string &shader)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b createUniform} (const std::string &name)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b createUniform} (const char *name)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getUniformLocation} (const std::string &name)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getUniformLocation} (const char *name)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getProgramID} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getVertexID} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getFragmentID} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 2, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 2, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 3, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 3, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 4, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 4, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 2, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 2, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 3, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 3, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 2, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 2, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 3, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 3, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< float, 4, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< float, 4, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 2, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 2, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 3, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 3, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 4, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 4, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 2, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 2, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 3, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 3, 2 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 2, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 2, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 3, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 3, 4 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const bool transpose, const {\b mc::Matrix}< double, 4, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Matrix}< double, 4, 3 > &m)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const float a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const float a, const float b)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const float a, const float b, const float c)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const float a, const float b, const float c, const float d)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} arraySize, const float *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} componentSize, const {\b Size} arraySize, const float *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< float, 1 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< float, 2 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< float, 3 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< float, 4 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const double a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const double a, const double b)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const double a, const double b, const double c)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const double a, const double b, const double c, const double d)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} arraySize, const double *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} componentSize, const {\b Size} arraySize, const double *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< double, 1 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< double, 2 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< double, 3 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< double, 4 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const int a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const int a, const int b)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const int a, const int b, const int c)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const int a, const int b, const int c, const int d)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} arraySize, const int *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} componentSize, const {\b Size} arraySize, const int *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< int, 1 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< int, 2 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< int, 3 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< int, 4 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const unsigned int a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const unsigned int a, const unsigned int b)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const unsigned int a, const unsigned int b, const unsigned int c)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} arraySize, const unsigned int *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b Size} componentSize, const {\b Size} arraySize, const unsigned int *a)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< unsigned int, 1 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< unsigned int, 2 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< unsigned int, 3 > v)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setUniform} (char *name, const {\b mc::Vector}< unsigned int, 4 > v)\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 31 of file Window.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid make a shader class \par
 }
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Enumeration Documentation\par
-\pard\plain 
-{\xe \v EntityProperty\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:EntityProperty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-enum {\b mc::gfx::Entity::EntityProperty} : {\b Byte}{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAAAZX}
-{\bkmkend AAAAAAAAZX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{{{\b \par
-Enumerator}}\par
-\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\xe \v DEAD\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:DEAD}
-{\b {\i DEAD{\bkmkstart AAAAAAAAZY}
-{\bkmkend AAAAAAAAZY}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Bit location representing whether an {\f2 {\b Entity}}  is dead. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If {\f2 true,}  any {\b Entity} holding it will remove it and call {\f2 {\b kill()}}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v UPDATE_DISABLED\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:UPDATE_DISABLED}
-{\b {\i UPDATE_DISABLED{\bkmkstart AAAAAAAAZZ}
-{\bkmkend AAAAAAAAZZ}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property defining if an {\f2 {\b Entity}}  can be updated. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If this is {\f2 true} , {\f2 {\b update()}}  will be called by it's parent. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v RENDER_DISABLED\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:RENDER_DISABLED}
-{\b {\i RENDER_DISABLED{\bkmkstart AAAAAAABAA}
-{\bkmkend AAAAAAABAA}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property defining if an {\f2 {\b Entity}}  can be rendered. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If this is {\f2 true} , {\f2 {\b render()}}  will be called by it's parent. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v INIT\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:INIT}
-{\b {\i INIT{\bkmkstart AAAAAAABAB}
-{\bkmkend AAAAAAABAB}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether an {\b Entity}'s {\b init()} function has been called. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If {\b destroy()} or {\b update()} is called and this is {\f2 false} , an {\f2 InitializationError}  is thrown. \par
-If {\b init()} is called and this is {\f2 true} , an {\f2 InitializationError}  is thrown. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v STRETCH_X\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:STRETCH_X}
-{\b {\i STRETCH_X{\bkmkstart AAAAAAABAC}
-{\bkmkend AAAAAAABAC}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_Y} \par
-}}{\xe \v STRETCH_Y\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:STRETCH_Y}
-{\b {\i STRETCH_Y{\bkmkstart AAAAAAABAD}
-{\bkmkend AAAAAAABAD}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_X} \par
-}}{\xe \v HOVERED\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:HOVERED}
-{\b {\i HOVERED{\bkmkstart AAAAAAABAE}
-{\bkmkend AAAAAAABAE}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether this {\f2 {\b Entity}}  has been hovered over. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The {\f2 {\b RenderProtocol}}  used to render the {\f2 {\b Entity}}  must set this. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid ssl::bindEntity(Entity*) \par
-}}{\xe \v DIRTY\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:DIRTY}
-{\b {\i DIRTY{\bkmkstart AAAAAAABAF}
-{\bkmkend AAAAAAABAF}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether this {\f2 {\b Entity}}  is dirty and it's positions needs to be recalculated. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This will become true under the following conditions:{
-\par
-\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-The {\f2 {\b Entity}}  has been changed. Assume that any non-const function other than {\b render()} and {\b update()} will trigger this condition.\par
-\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-The window is resized, moved, or created \par}
-Other classes that inherit {\f2 {\b Entity}}  can also set this to true via {\b Entity::setProperty(Byte, bool)} \par
-When an {\f2 {\b Entity}}  becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level {\f2 {\b Entity}} , which is usually the {\f2 GraphicsContext} . From there, it will decide what to do based on it's {\f2 {\b Entity::DIRTY}}  flag. \par
-Certain {\f2 GraphicsContexts}  may only render when something is dirty, heavily increasing performance in applications with little moving objects. \par
-Additionally, an {\f2 {\b Entity}}  that is considered dirty will have it's buffer updated on the GPU side. \par
-}\par
 }{
-Definition at line 42 of file Entity.h.}\par
+Definition at line 25 of file Shaders.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v WindowModule\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:WindowModule}
+{\xe \v ShaderProgram\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:ShaderProgram}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::os::WindowModule::WindowModule (const int  {\i width}, const int  {\i height}, const char *  {\i title})}}
+mc::gfx::ShaderProgram::ShaderProgram (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABOF}
-{\bkmkend AAAAAAABOF}
+{\bkmkstart AAAAAAABIJ}
+{\bkmkend AAAAAAABIJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v ~ShaderProgram\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:~ShaderProgram}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::ShaderProgram::~ShaderProgram (){\f2 [default]}, {\f2 [noexcept]}}}
+\par
+{\bkmkstart AAAAAAABIK}
+{\bkmkend AAAAAAABIK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -553,1434 +317,965 @@ mc::os::WindowModule::WindowModule (const int  {\i width}, const int  {\i height
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v addChild\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:addChild}
+{\xe \v bind\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:bind}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::addChild ({\b Entity} &  {\i e}){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::bind () const}}
 \par
-{\bkmkstart AAAAAAABAG}
-{\bkmkend AAAAAAABAG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v addComponent\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:addComponent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::addComponent ({\b Component} &  {\i action}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAH}
-{\bkmkend AAAAAAABAH}
+{\bkmkstart AAAAAAABIL}
+{\bkmkend AAAAAAABIL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v begin\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:begin}
+{\xe \v createFragment\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:createFragment}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::vector<{\b Entity}*>::iterator mc::gfx::Entity::begin (){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::createFragment (const char  {\i shader}[])}}
 \par
-{\bkmkstart AAAAAAABAI}
-{\bkmkend AAAAAAABAI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Iterator of the first {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b end()} \par
-{\b size()} \par
-}}}
-{\xe \v clean\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:clean}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::Entity::clean (){\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAJ}
-{\bkmkend AAAAAAABAJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Reimplemented in {\b mc::gfx::GraphicsEntity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v clearChildren\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:clearChildren}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::clearChildren (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAL}
-{\bkmkend AAAAAAABAL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-{\b size()} \par
-{\b removeChild(Index)} \par
-{\b removeChild(const Entity&)} \par
-}}}
-{\xe \v clearComponents\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:clearComponents}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::clearComponents (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAM}
-{\bkmkend AAAAAAABAM}
+{\bkmkstart AAAAAAABIM}
+{\bkmkend AAAAAAABIM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v create\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:create}
+{\xe \v createFragment\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:createFragment}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::os::WindowModule::create ()}}
+void mc::gfx::ShaderProgram::createFragment (const std::string &  {\i shader})}}
 \par
-{\bkmkstart AAAAAAABOG}
-{\bkmkend AAAAAAABOG}
+{\bkmkstart AAAAAAABIN}
+{\bkmkend AAAAAAABIN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v destroy\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:destroy}
+{\xe \v createUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:createUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::os::WindowModule::destroy (){\f2 [override]}, {\f2 [virtual]}}}
+void mc::gfx::ShaderProgram::createUniform (const std::string &  {\i name})}}
 \par
-{\bkmkstart AAAAAAAAWN}
-{\bkmkend AAAAAAAAWN}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 Entity}  when {\f2 {\b System.destroy()}}  is called. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 customDestroy()} . Sets {\f2 Entity::INIT}  to be false \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 customDestroy()}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 Entity}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::DIRTY \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 Entity::INIT}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
-{\row }
-}
-}{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAV \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v end\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:end}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-std::vector<{\b Entity}*>::iterator mc::gfx::Entity::end (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAX}
-{\bkmkend AAAAAAABAX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Iterator of the last {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b begin()} \par
-{\b size()} \par
-}}}
-{\xe \v getChild\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAY}
-{\bkmkend AAAAAAABAY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves a child at a certain index. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{Index of the {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i IndexOutOfBounds} \cell }{if {\f2 i}  is less than {\f2 0}  or greater than {\b size()} \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b operator[]} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v getChild\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABAZ}
-{\bkmkend AAAAAAABAZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b getChild(Index)} }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{{\f2 Index}  of the {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i IndexOutOfBounds} \cell }{if {\f2 i}  is less than {\f2 0}  or greater than {\b size()} \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b operator[]} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v getChildren\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getChildren}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const std::vector<{\b Entity}*>& mc::gfx::Entity::getChildren () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBA}
-{\bkmkend AAAAAAABBA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets all of this {\f2 {\b Entity}'s}  children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid an {\f2 std::vector}  with all children of this {\f2 {\b Entity}}  \par
-}}}
-{\xe \v getComponents\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getComponents}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-std::vector<Component*> mc::gfx::Entity::getComponents (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBB}
-{\bkmkend AAAAAAABBB}
+{\bkmkstart AAAAAAABIO}
+{\bkmkend AAAAAAABIO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getFPS\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getFPS}
+{\xe \v createUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:createUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const unsigned int& mc::os::WindowModule::getFPS () const}}
+void mc::gfx::ShaderProgram::createUniform (const char *  {\i name})}}
 \par
-{\bkmkstart AAAAAAABOH}
-{\bkmkend AAAAAAABOH}
+{\bkmkstart AAAAAAABIP}
+{\bkmkend AAAAAAABIP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getGLFWWindow\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getGLFWWindow}
+{\xe \v createVertex\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:createVertex}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-GLFWwindow* mc::os::WindowModule::getGLFWWindow ()}}
+void mc::gfx::ShaderProgram::createVertex (const char  {\i shader}[])}}
 \par
-{\bkmkstart AAAAAAABOI}
-{\bkmkend AAAAAAABOI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}}
-{\xe \v getHeight\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getHeight}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::Entity::getHeight (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBE}
-{\bkmkend AAAAAAABBE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getHeight\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getHeight}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getHeight () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBF}
-{\bkmkend AAAAAAABBF}
+{\bkmkstart AAAAAAABIQ}
+{\bkmkend AAAAAAABIQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getName\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getName}
+{\xe \v createVertex\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:createVertex}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::string mc::os::WindowModule::getName () const{\f2 [virtual]}}}
+void mc::gfx::ShaderProgram::createVertex (const std::string &  {\i shader})}}
 \par
-{\bkmkstart AAAAAAAAWP}
-{\bkmkend AAAAAAAAWP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Override this function and return a UNIQUE name for this {\f2 {\b Module}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The name for your {\f2 {\b Module}}  is used in comparison, so make sure it is as unique as possible. \par
-It is akin to a hashcode. \par
-}{
-Implements {\b mc::Module} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAWO \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v getOriginalHeight\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getOriginalHeight}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const int mc::os::WindowModule::getOriginalHeight () const}}
-\par
-{\bkmkstart AAAAAAABOJ}
-{\bkmkend AAAAAAABOJ}
+{\bkmkstart AAAAAAABIR}
+{\bkmkend AAAAAAABIR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getOriginalWidth\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getOriginalWidth}
+{\xe \v destroy\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const int mc::os::WindowModule::getOriginalWidth () const}}
+void mc::gfx::ShaderProgram::destroy ()}}
 \par
-{\bkmkstart AAAAAAABOK}
-{\bkmkend AAAAAAABOK}
+{\bkmkstart AAAAAAABIS}
+{\bkmkend AAAAAAABIS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getParent\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getParent}
+{\xe \v getFragmentID\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:getFragmentID}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Entity}* const mc::gfx::Entity::getParent (){\f2 [inherited]}}}
+int mc::gfx::ShaderProgram::getFragmentID () const}}
 \par
-{\bkmkstart AAAAAAABBI}
-{\bkmkend AAAAAAABBI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve this {\f2 Entitys}  parent `Entity. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2  @return A} {\b Entity}{\f2 which contains} this` \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::hasChild(const Entity&) const; \par
-}}}
-{\xe \v getParent\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}* const mc::gfx::Entity::getParent () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBJ}
-{\bkmkend AAAAAAABBJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getParent()}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 {\b Entity}}  which contains {\f2 this}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::hasChild(const Entity&) const; \par
-}}}
-{\xe \v getProperties\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getProperties}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-EntityProperties& mc::gfx::Entity::getProperties (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBK}
-{\bkmkend AAAAAAABBK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the {\f2 {\b Entity}'s}  properties as a {\f2 ByteField}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current properties belonging to this {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties() const} \par
-setProperties(ByteField&) \par
-getProperty(Index) const \par
-setProperty(Index, bool) \par
-}}}
-{\xe \v getProperties\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getProperties}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const EntityProperties& mc::gfx::Entity::getProperties () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBL}
-{\bkmkend AAAAAAABBL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getProperties()}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current properties belonging to this {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid setProperties(ByteField&) \par
-getProperty(Index) const \par
-setProperty(Index, bool) \par
-}}}
-{\xe \v getProperty\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getProperty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::getProperty (const {\b Byte}  {\i position}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBM}
-{\bkmkend AAAAAAABBM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve the value of a property. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property consants start with {\f2 {\b Entity}::}  {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i position} \cell }{Location of the property based on a constant \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 true}  or {\f2 false}  based on the postition \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid setProperty(Index, bool) \par
-{\b getProperties()} \par
-setProperties(ByteField&) \par
-}}}
-{\xe \v getRootParent\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getRootParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}* mc::gfx::Entity::getRootParent (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBP}
-{\bkmkend AAAAAAABBP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getRootParent\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getRootParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}* mc::gfx::Entity::getRootParent () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBQ}
-{\bkmkend AAAAAAABBQ}
+{\bkmkstart AAAAAAABIT}
+{\bkmkend AAAAAAABIT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getTitle\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getTitle}
+{\xe \v getProgramID\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:getProgramID}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::string mc::os::WindowModule::getTitle ()}}
+int mc::gfx::ShaderProgram::getProgramID () const}}
 \par
-{\bkmkstart AAAAAAABOL}
-{\bkmkend AAAAAAABOL}
+{\bkmkstart AAAAAAABIU}
+{\bkmkend AAAAAAABIU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getTitle\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getTitle}
+{\xe \v getUniformLocation\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:getUniformLocation}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const std::string mc::os::WindowModule::getTitle () const}}
+int mc::gfx::ShaderProgram::getUniformLocation (const std::string &  {\i name})}}
 \par
-{\bkmkstart AAAAAAABOM}
-{\bkmkend AAAAAAABOM}
+{\bkmkstart AAAAAAABIV}
+{\bkmkend AAAAAAABIV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getTransformation\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getTransformation}
+{\xe \v getUniformLocation\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:getUniformLocation}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b TransformMatrix}& mc::gfx::Entity::getTransformation (){\f2 [inherited]}}}
+int mc::gfx::ShaderProgram::getUniformLocation (const char *  {\i name})}}
 \par
-{\bkmkstart AAAAAAABBR}
-{\bkmkend AAAAAAABBR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getTransformation\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getTransformation}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b TransformMatrix}& mc::gfx::Entity::getTransformation () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBS}
-{\bkmkend AAAAAAABBS}
+{\bkmkstart AAAAAAABIW}
+{\bkmkend AAAAAAABIW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getWidth\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getWidth}
+{\xe \v getVertexID\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:getVertexID}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-float& mc::gfx::Entity::getWidth (){\f2 [inherited]}}}
+int mc::gfx::ShaderProgram::getVertexID () const}}
 \par
-{\bkmkstart AAAAAAABBV}
-{\bkmkend AAAAAAABBV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getWidth\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getWidth}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getWidth () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBW}
-{\bkmkend AAAAAAABBW}
+{\bkmkstart AAAAAAABIX}
+{\bkmkend AAAAAAABIX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getX\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getX}
+{\xe \v init\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-float& mc::gfx::Entity::getX (){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::init ()}}
 \par
-{\bkmkstart AAAAAAABBX}
-{\bkmkend AAAAAAABBX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getX\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getX}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getX () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBY}
-{\bkmkend AAAAAAABBY}
+{\bkmkstart AAAAAAABIY}
+{\bkmkend AAAAAAABIY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getY\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getY}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-float& mc::gfx::Entity::getY (){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 2, 2 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABBZ}
-{\bkmkend AAAAAAABBZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getY\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:getY}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getY () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCA}
-{\bkmkend AAAAAAABCA}
+{\bkmkstart AAAAAAABIZ}
+{\bkmkend AAAAAAABIZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v hasChild\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:hasChild}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Entity::hasChild ({\b Entity} &  {\i e}) const{\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 2, 2 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABCB}
-{\bkmkend AAAAAAABCB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks to see if this {\f2 {\b Entity}}  contains an {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{Reference to an {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 false}  if this {\f2 {\b Entity}}  doesn't contain the referenced {\f2 {\b Entity}} , {\f2 true}  otherwise \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b indexOf(const Entity& ) const} \par
-}}}
-{\xe \v hasParent\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:hasParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::hasParent () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCC}
-{\bkmkend AAAAAAABCC}
+{\bkmkstart AAAAAAABJA}
+{\bkmkend AAAAAAABJA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v indexOf\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:indexOf}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-int mc::gfx::Entity::indexOf (const {\b Entity} &  {\i e}) const{\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 3, 3 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABCD}
-{\bkmkend AAAAAAABCD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Finds the location of an {\f2 {\b Entity}}  in this {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{Reference to an {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Location of {\f2 e,}  or -1 if {\f2 e}  is not a child of this {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b operator[]} \par
-{\b getChild(Index)} \par
-}}}
-{\xe \v init\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:init}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::os::WindowModule::init (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAAAWR}
-{\bkmkend AAAAAAAAWR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 Entity}  when {\f2 {\b System.init()}}  is called. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 customInit()}  \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 customInit()}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 Entity}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::DIRTY \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 Entity::INIT}  is true, meaning {\f2 {\b init()}}  has already been called. \cell }
-{\row }
-}
-}{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCE \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v isVSync\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:isVSync}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::os::WindowModule::isVSync () const}}
-\par
-{\bkmkstart AAAAAAABON}
-{\bkmkend AAAAAAABON}
+{\bkmkstart AAAAAAABJB}
+{\bkmkend AAAAAAABJB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v kill\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:kill}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::kill (){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 3, 3 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABCG}
-{\bkmkend AAAAAAABCG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Automatically called when {\f2 Entity::PROPERTY_DEAD}  is true. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes this entity from it's parent, and calls it's {\f2 {\b destroy()}}  method. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-{\b getParent()} \par
-}}}
-{\xe \v makeDirty\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:makeDirty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::makeDirty (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCH}
-{\bkmkend AAAAAAABCH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Makes this {\f2 {\b Entity}}  dirty and the root level parent dirty. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be used over {\f2 setProperty(Entity::DIRTY,true)}  as it updaets the root parent. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v operator!=\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:operator!=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::operator!= (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCI}
-{\bkmkend AAAAAAABCI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  don't have the same children, parent, and properties. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{An {\f2 {\b Entity}}  compare this one to \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 false}  if they are equal \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties() const} \par
-{\b getParent() const} \par
-{\b getChildren() const} \par
-operator== \par
-}}}
-{\xe \v operator==\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::operator== (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCJ}
-{\bkmkend AAAAAAABCJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  have the same children, parent, and properties. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{An {\f2 {\b Entity}}  compare this one to \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 true}  if they are equal \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties() const} \par
-{\b getParent() const} \par
-{\b getChildren() const} \par
-operator!= \par
-}}}
-{\xe \v operator[]\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:operator[]}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCK}
-{\bkmkend AAAAAAABCK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Access an {\f2 {\b Entity}} . }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This is different than {\f2 {\b getChild()}}  because {\f2 operator[]}  doesn't do bounds checking. Accessing an invalid location will result in a memory error. {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{Location of an {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getChild(Index)} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v operator[]\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:operator[]}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCL}
-{\bkmkend AAAAAAABCL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b operator[](Index i)} }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{Location of an {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getChild(Index) const} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v removeChild\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:removeChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::removeChild (const {\b Entity} &  {\i e}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCM}
-{\bkmkend AAAAAAABCM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child by reference. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i ObjectNotFoundInArray} \cell }{if {\b hasChild(Entity&) const} returns {\f2 false}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{Reference to a child \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b removeChild(Index)} \par
-}}}
-{\xe \v removeChild\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:removeChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::removeChild ({\b Index}  {\i index}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCN}
-{\bkmkend AAAAAAABCN}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child via location. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i IndexOutOfBounds} \cell }{if the index is less than 0 or greater than {\b size()} \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i index} \cell }{Index of the {\f2 {\b Entity}}  to be removed \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b indexOf(const Entity&) const} \par
-{\b removeChild(const Entity&)} \par
-}}}
-{\xe \v render\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:render}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::render (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCO}
-{\bkmkend AAAAAAABCO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customRender()}}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::update()} \par
-}}}
-{\xe \v reset\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:reset}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::reset (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCP}
-{\bkmkend AAAAAAABCP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v rotate\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:rotate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::rotate (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCQ}
-{\bkmkend AAAAAAABCQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v scale\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:scale}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::scale (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCR}
-{\bkmkend AAAAAAABCR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setFPS\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setFPS}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::os::WindowModule::setFPS (const unsigned int &  {\i FPS})}}
-\par
-{\bkmkstart AAAAAAABOO}
-{\bkmkend AAAAAAABOO}
+{\bkmkstart AAAAAAABJC}
+{\bkmkend AAAAAAABJC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v setHeight\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setHeight}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::setHeight (const float &  {\i s}){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 4, 4 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABCT}
-{\bkmkend AAAAAAABCT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setProperties\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setProperties}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setProperties ({\b EntityProperties} &  {\i b}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCV}
-{\bkmkend AAAAAAABCV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set the properties for this {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i b} \cell }{New {\f2 {\b Entity}}  properties \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties()} \par
-getProperty(Index) const \par
-setProperty(Index, bool) \par
-}}}
-{\xe \v setProperty\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setProperty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setProperty (const {\b Byte}  {\i position}, const bool  {\i value}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCW}
-{\bkmkend AAAAAAABCW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 {\b Entity}::}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i position} \cell }{Location of the property based on a constant \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i value} \cell }{Whether it is {\f2 true}  or {\f2 false}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid getProperty(Index) const \par
-{\b getProperties()} \par
-setProperties(ByteField&) \par
-}}}
-{\xe \v setTitle\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setTitle}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::os::WindowModule::setTitle (const std::string &  {\i newTitle})}}
-\par
-{\bkmkstart AAAAAAABOP}
-{\bkmkend AAAAAAABOP}
+{\bkmkstart AAAAAAABJD}
+{\bkmkend AAAAAAABJD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v setTransformation\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setTransformation}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::setTransformation ({\b TransformMatrix} &  {\i trans}){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 4, 4 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABCY}
-{\bkmkend AAAAAAABCY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setVSync\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setVSync}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::os::WindowModule::setVSync (const bool &  {\i sync})}}
-\par
-{\bkmkstart AAAAAAABOQ}
-{\bkmkend AAAAAAABOQ}
+{\bkmkstart AAAAAAABJE}
+{\bkmkend AAAAAAABJE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v setWidth\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setWidth}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::setWidth (const float &  {\i s}){\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 2, 3 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABDA}
-{\bkmkend AAAAAAABDA}
+{\bkmkstart AAAAAAABJF}
+{\bkmkend AAAAAAABJF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setX\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setX}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setX (const float &  {\i newX}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDB}
-{\bkmkend AAAAAAABDB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setY\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:setY}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setY (const float &  {\i newY}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDC}
-{\bkmkend AAAAAAABDC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v size\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:size}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Size} mc::gfx::Entity::size () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDD}
-{\bkmkend AAAAAAABDD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calculates the amount of children this {\f2 {\b Entity}}  has. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Size of this {\f2 {\b Entity}}  \par
-}}}
-{\xe \v translate\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:translate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::translate (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDE}
-{\bkmkend AAAAAAABDE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v update\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:update}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::os::WindowModule::update (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAAAWT}
-{\bkmkend AAAAAAAAWT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#update} is called and this {\f2 {\b Module}}  is registered. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. \par
-}{
-Implements {\b mc::Module} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAWS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Data Documentation\par
-\pard\plain 
-{\xe \v children\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:children}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::vector<{\b Entity}*> mc::gfx::Entity::children = std::vector<{\b Entity}*>(){\f2 [protected]}, {\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 2, 3 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABDG}
-{\bkmkend AAAAAAABDG}
+{\bkmkstart AAAAAAABJG}
+{\bkmkend AAAAAAABJG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 std::vector}  of this {\f2 {\b Entity}\\'s}  children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use of this variable directly is unrecommended. Use {\f2 {\b addChild()}}  or {\f2 {\b removeChild()}}  instead. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}{
-Definition at line 488 of file Entity.h.}\par
 }
-{\xe \v transformation\:mc::os::WindowModule}
-{\xe \v mc::os::WindowModule\:transformation}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b TransformMatrix} mc::gfx::Entity::transformation{\f2 [protected]}, {\f2 [inherited]}}}
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 3, 2 > &  {\i m})}}
 \par
-{\bkmkstart AAAAAAABDH}
-{\bkmkend AAAAAAABDH}
+{\bkmkstart AAAAAAABJH}
+{\bkmkend AAAAAAABJH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 3, 2 > &  {\i m})}}
 \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}{
-Definition at line 493 of file Entity.h.}\par
+{\bkmkstart AAAAAAABJI}
+{\bkmkend AAAAAAABJI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 2, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJJ}
+{\bkmkend AAAAAAABJJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 2, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJK}
+{\bkmkend AAAAAAABJK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 3, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJL}
+{\bkmkend AAAAAAABJL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 3, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJM}
+{\bkmkend AAAAAAABJM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 4, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJN}
+{\bkmkend AAAAAAABJN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< float, 4, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJO}
+{\bkmkend AAAAAAABJO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 2, 2 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJP}
+{\bkmkend AAAAAAABJP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 2, 2 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJQ}
+{\bkmkend AAAAAAABJQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 3, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJR}
+{\bkmkend AAAAAAABJR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 3, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJS}
+{\bkmkend AAAAAAABJS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 4, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJT}
+{\bkmkend AAAAAAABJT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 4, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJU}
+{\bkmkend AAAAAAABJU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 2, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJV}
+{\bkmkend AAAAAAABJV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 2, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJW}
+{\bkmkend AAAAAAABJW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 3, 2 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJX}
+{\bkmkend AAAAAAABJX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 3, 2 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJY}
+{\bkmkend AAAAAAABJY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 2, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABJZ}
+{\bkmkend AAAAAAABJZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 2, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABKA}
+{\bkmkend AAAAAAABKA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 3, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABKB}
+{\bkmkend AAAAAAABKB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 3, 4 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABKC}
+{\bkmkend AAAAAAABKC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 4, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABKD}
+{\bkmkend AAAAAAABKD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Matrix}< double, 4, 3 > &  {\i m})}}
+\par
+{\bkmkstart AAAAAAABKE}
+{\bkmkend AAAAAAABKE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const float  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKF}
+{\bkmkend AAAAAAABKF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const float  {\i a}, const float  {\i b})}}
+\par
+{\bkmkstart AAAAAAABKG}
+{\bkmkend AAAAAAABKG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const float  {\i a}, const float  {\i b}, const float  {\i c})}}
+\par
+{\bkmkstart AAAAAAABKH}
+{\bkmkend AAAAAAABKH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const float  {\i a}, const float  {\i b}, const float  {\i c}, const float  {\i d})}}
+\par
+{\bkmkstart AAAAAAABKI}
+{\bkmkend AAAAAAABKI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i arraySize}, const float *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKJ}
+{\bkmkend AAAAAAABKJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const float *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKK}
+{\bkmkend AAAAAAABKK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< float, 1 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKL}
+{\bkmkend AAAAAAABKL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< float, 2 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKM}
+{\bkmkend AAAAAAABKM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< float, 3 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKN}
+{\bkmkend AAAAAAABKN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< float, 4 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKO}
+{\bkmkend AAAAAAABKO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const double  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKP}
+{\bkmkend AAAAAAABKP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const double  {\i a}, const double  {\i b})}}
+\par
+{\bkmkstart AAAAAAABKQ}
+{\bkmkend AAAAAAABKQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const double  {\i a}, const double  {\i b}, const double  {\i c})}}
+\par
+{\bkmkstart AAAAAAABKR}
+{\bkmkend AAAAAAABKR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const double  {\i a}, const double  {\i b}, const double  {\i c}, const double  {\i d})}}
+\par
+{\bkmkstart AAAAAAABKS}
+{\bkmkend AAAAAAABKS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i arraySize}, const double *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKT}
+{\bkmkend AAAAAAABKT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const double *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKU}
+{\bkmkend AAAAAAABKU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< double, 1 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKV}
+{\bkmkend AAAAAAABKV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< double, 2 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKW}
+{\bkmkend AAAAAAABKW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< double, 3 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKX}
+{\bkmkend AAAAAAABKX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< double, 4 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABKY}
+{\bkmkend AAAAAAABKY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const int  {\i a})}}
+\par
+{\bkmkstart AAAAAAABKZ}
+{\bkmkend AAAAAAABKZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const int  {\i a}, const int  {\i b})}}
+\par
+{\bkmkstart AAAAAAABLA}
+{\bkmkend AAAAAAABLA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const int  {\i a}, const int  {\i b}, const int  {\i c})}}
+\par
+{\bkmkstart AAAAAAABLB}
+{\bkmkend AAAAAAABLB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const int  {\i a}, const int  {\i b}, const int  {\i c}, const int  {\i d})}}
+\par
+{\bkmkstart AAAAAAABLC}
+{\bkmkend AAAAAAABLC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i arraySize}, const int *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABLD}
+{\bkmkend AAAAAAABLD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const int *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABLE}
+{\bkmkend AAAAAAABLE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< int, 1 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLF}
+{\bkmkend AAAAAAABLF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< int, 2 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLG}
+{\bkmkend AAAAAAABLG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< int, 3 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLH}
+{\bkmkend AAAAAAABLH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< int, 4 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLI}
+{\bkmkend AAAAAAABLI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const unsigned int  {\i a})}}
+\par
+{\bkmkstart AAAAAAABLJ}
+{\bkmkend AAAAAAABLJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const unsigned int  {\i a}, const unsigned int  {\i b})}}
+\par
+{\bkmkstart AAAAAAABLK}
+{\bkmkend AAAAAAABLK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const unsigned int  {\i a}, const unsigned int  {\i b}, const unsigned int  {\i c})}}
+\par
+{\bkmkstart AAAAAAABLL}
+{\bkmkend AAAAAAABLL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const unsigned int  {\i a}, const unsigned int  {\i b}, const unsigned int  {\i c}, const unsigned int  {\i d})}}
+\par
+{\bkmkstart AAAAAAABLM}
+{\bkmkend AAAAAAABLM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i arraySize}, const unsigned int *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABLN}
+{\bkmkend AAAAAAABLN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const unsigned int *  {\i a})}}
+\par
+{\bkmkstart AAAAAAABLO}
+{\bkmkend AAAAAAABLO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< unsigned int, 1 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLP}
+{\bkmkend AAAAAAABLP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< unsigned int, 2 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLQ}
+{\bkmkend AAAAAAABLQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< unsigned int, 3 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLR}
+{\bkmkend AAAAAAABLR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setUniform\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:setUniform}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::setUniform (char *  {\i name}, const {\b mc::Vector}< unsigned int, 4 >  {\i v})}}
+\par
+{\bkmkstart AAAAAAABLS}
+{\bkmkend AAAAAAABLS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v unbind\:mc::gfx::ShaderProgram}
+{\xe \v mc::gfx::ShaderProgram\:unbind}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ShaderProgram::unbind () const}}
+\par
+{\bkmkstart AAAAAAABLT}
+{\bkmkend AAAAAAABLT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Window.h\par
+include/MACE/Graphics/Shaders.h\par
 }}

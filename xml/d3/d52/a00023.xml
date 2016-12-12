@@ -1,89 +1,150 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d3/d52/a00023" kind="class" language="C++" prot="public" abstract="yes">
-    <compoundname>mc::Module</compoundname>
-    <derivedcompoundref refid="d1/dc6/a00037" prot="public" virt="non-virtual">mc::os::WindowModule</derivedcompoundref>
-    <includes refid="d1/d22/a00057" local="no">Module.h</includes>
+  <compounddef id="d3/d52/a00023" kind="class" language="C++" prot="public">
+    <compoundname>mc::IncludeString</compoundname>
+    <basecompoundref refid="de/d11/a00021" prot="public" virt="non-virtual">mc::Include</basecompoundref>
+    <includes refid="d6/d2c/a00072" local="no">Preprocessor.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d3/d52/a00023_1a523d1a5d2d318f7df273f3c83bafb52f" prot="private" static="no" mutable="no">
+        <type>const std::string</type>
+        <definition>const std::string mc::IncludeString::content</definition>
+        <argsstring></argsstring>
+        <name>content</name>
+        <initializer>= &quot;&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="105" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d3/d52/a00023_1adcbad79571ce400a01afa2e90d998c2b" prot="private" static="no" mutable="no">
+        <type>const std::string</type>
+        <definition>const std::string mc::IncludeString::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <initializer>= &quot;&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="106" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d3/d52/a00023_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::Module::init</definition>
-        <argsstring>()=0</argsstring>
-        <name>init</name>
-        <reimplementedby refid="d1/dc6/a00037_aa14fd4f80a3b582f1584ecacbf541f54_1aa14fd4f80a3b582f1584ecacbf541f54">init</reimplementedby>
+      <memberdef kind="function" id="d3/d52/a00023_a5f8405820b4aa484698275841cf66789_1a5f8405820b4aa484698275841cf66789" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::IncludeString::IncludeString</definition>
+        <argsstring>(const std::string &amp;content, const std::string name)</argsstring>
+        <name>IncludeString</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>content</declname>
+        </param>
+        <param>
+          <type>const std::string</type>
+          <declname>name</declname>
+        </param>
         <briefdescription>
-<para>Called when <ref refid="d1/d09/a00077_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System#init</ref> is called and this <computeroutput><ref refid="d3/d52/a00023" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+<para>Creates an <computeroutput><ref refid="d3/d52/a00023" kindref="compound">IncludeString</ref></computeroutput> with the specified info. </para>        </briefdescription>
         <detaileddescription>
-<para>Use this to initialize variables, start streams, or launch a context. </para><para>Should only be called once. </para>        </detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>content</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What the <computeroutput><ref refid="d3/d52/a00023" kindref="compound">IncludeString</ref></computeroutput> returns when included </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the <computeroutput><ref refid="d3/d52/a00023" kindref="compound">IncludeString</ref></computeroutput> which is used by #include </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="31" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="99" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/d52/a00023_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::Module::update</definition>
-        <argsstring>()=0</argsstring>
-        <name>update</name>
-        <reimplementedby refid="d1/dc6/a00037_a4e30b4c62fb168a976063b265dd50c38_1a4e30b4c62fb168a976063b265dd50c38">update</reimplementedby>
+      <memberdef kind="function" id="d3/d52/a00023_a10836d3440eb2d1df3c6c84ef9f4896b_1a10836d3440eb2d1df3c6c84ef9f4896b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool mc::IncludeString::hasFile</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>hasFile</name>
+        <reimplements refid="de/d11/a00021_a1aaf4bc2ad50c93962901c653bbed0bc_1a1aaf4bc2ad50c93962901c653bbed0bc">hasFile</reimplements>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
         <briefdescription>
-<para>Called when <ref refid="d1/d09/a00077_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">System#update</ref> is called and this <computeroutput><ref refid="d3/d52/a00023" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+<para>Checks whether this include has the specified file. </para>        </briefdescription>
         <detaileddescription>
-<para>Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. </para>        </detaileddescription>
+<para>If there isn&apos;t an <computeroutput><ref refid="de/d11/a00021" kindref="compound">Include</ref></computeroutput> with the file, then a <computeroutput>PreprocessorException</computeroutput> is thrown. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="37" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="101" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d3/d52/a00023_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::Module::destroy</definition>
-        <argsstring>()=0</argsstring>
-        <name>destroy</name>
-        <reimplementedby refid="d1/dc6/a00037_a588d592078a0b1ca34b3cec75a2f4ae3_1a588d592078a0b1ca34b3cec75a2f4ae3">destroy</reimplementedby>
-        <briefdescription>
-<para>Called when <ref refid="d1/d09/a00077_a2479db7b835f5641194f02b22ad66551_1a2479db7b835f5641194f02b22ad66551" kindref="member">System#destroy</ref> is called and this <computeroutput><ref refid="d3/d52/a00023" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
-        <detaileddescription>
-<para>Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. </para><para>Should only be called before the program is closed. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="45" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d3/d52/a00023_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d3/d52/a00023_a6d27894e4df26c44e8aab157fc2cecdb_1a6d27894e4df26c44e8aab157fc2cecdb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>std::string</type>
-        <definition>virtual std::string mc::Module::getName</definition>
-        <argsstring>() const  =0</argsstring>
-        <name>getName</name>
-        <reimplementedby refid="d1/dc6/a00037_ab2c762a61a27767d5403265c6402ac7a_1ab2c762a61a27767d5403265c6402ac7a">getName</reimplementedby>
+        <definition>std::string mc::IncludeString::getFile</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>getFile</name>
+        <reimplements refid="de/d11/a00021_aaeb33580110dc594eb065363fcdd65bf_1aaeb33580110dc594eb065363fcdd65bf">getFile</reimplements>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
         <briefdescription>
-<para>Override this function and return a UNIQUE name for this <computeroutput><ref refid="d3/d52/a00023" kindref="compound">Module</ref></computeroutput> </para>        </briefdescription>
+<para>Retrieves a file with a certain name. </para>        </briefdescription>
         <detaileddescription>
-<para>The name for your <computeroutput><ref refid="d3/d52/a00023" kindref="compound">Module</ref></computeroutput> is used in comparison, so make sure it is as unique as possible. </para><para>It is akin to a hashcode. </para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="54" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="102" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Abstract class used for doing a task in MACE. </para>    </briefdescription>
+<para>Represents a fake file, in which you can add include files that don&apos;t exist on the filesystem. </para>    </briefdescription>
     <detaileddescription>
-<para>Plugged into <ref refid="d1/d09/a00077" kindref="compound">System</ref> via <ref refid="d1/d09/a00077_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule().</ref> </para>    </detaileddescription>
+<para><simplesect kind="see"><para><ref refid="d7/de0/a00022" kindref="compound">IncludeDirectory</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d5/d79/a00030" kindref="compound">Preprocessor</ref> </para></simplesect>
+</para>    </detaileddescription>
     <inheritancegraph>
-      <node id="361">
-        <label>mc::os::WindowModule</label>
-        <link refid="d1/dc6/a00037"/>
-        <childnode refid="360" relation="public-inheritance">
+      <node id="416">
+        <label>mc::IncludeString</label>
+        <link refid="d3/d52/a00023"/>
+        <childnode refid="417" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="360">
-        <label>mc::Module</label>
-        <link refid="d3/d52/a00023"/>
+      <node id="417">
+        <label>mc::Include</label>
+        <link refid="de/d11/a00021"/>
       </node>
     </inheritancegraph>
-    <location file="include/MACE/System/Module.h" line="22" column="1" bodyfile="include/MACE/System/Module.h" bodystart="22" bodyend="55"/>
+    <collaborationgraph>
+      <node id="418">
+        <label>mc::IncludeString</label>
+        <link refid="d3/d52/a00023"/>
+        <childnode refid="419" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="419">
+        <label>mc::Include</label>
+        <link refid="de/d11/a00021"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Utility/Preprocessor.h" line="92" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="92" bodyend="107"/>
     <listofallmembers>
-      <member refid="d3/d52/a00023_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>destroy</name></member>
-      <member refid="d3/d52/a00023_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>getName</name></member>
-      <member refid="d3/d52/a00023_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>init</name></member>
-      <member refid="d3/d52/a00023_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c" prot="public" virt="pure-virtual"><scope>mc::Module</scope><name>update</name></member>
+      <member refid="d3/d52/a00023_1a523d1a5d2d318f7df273f3c83bafb52f" prot="private" virt="non-virtual"><scope>mc::IncludeString</scope><name>content</name></member>
+      <member refid="d3/d52/a00023_a6d27894e4df26c44e8aab157fc2cecdb_1a6d27894e4df26c44e8aab157fc2cecdb" prot="public" virt="virtual"><scope>mc::IncludeString</scope><name>getFile</name></member>
+      <member refid="d3/d52/a00023_a10836d3440eb2d1df3c6c84ef9f4896b_1a10836d3440eb2d1df3c6c84ef9f4896b" prot="public" virt="virtual"><scope>mc::IncludeString</scope><name>hasFile</name></member>
+      <member refid="d3/d52/a00023_a5f8405820b4aa484698275841cf66789_1a5f8405820b4aa484698275841cf66789" prot="public" virt="non-virtual"><scope>mc::IncludeString</scope><name>IncludeString</name></member>
+      <member refid="d3/d52/a00023_1adcbad79571ce400a01afa2e90d998c2b" prot="private" virt="non-virtual"><scope>mc::IncludeString</scope><name>name</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,173 +1,215 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d1/d6e/a00073" kind="namespace" language="C++">
-    <compoundname>mc::gfx</compoundname>
-    <innerclass refid="de/d5e/a00007" prot="public">mc::gfx::Buffer</innerclass>
-    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
-    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
-    <innerclass refid="da/d45/a00011" prot="public">mc::gfx::Entity</innerclass>
-    <innerclass refid="df/d86/a00012" prot="public">mc::gfx::Entity2D</innerclass>
-    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::FrameBuffer</innerclass>
-    <innerclass refid="dd/d1b/a00015" prot="public">mc::gfx::GraphicsEntity</innerclass>
-    <innerclass refid="d7/d7a/a00016" prot="public">mc::gfx::Group</innerclass>
-    <innerclass refid="d4/d51/a00017" prot="public">mc::gfx::Image</innerclass>
-    <innerclass refid="dc/de2/a00024" prot="public">mc::gfx::Object</innerclass>
-    <innerclass refid="d6/d5b/a00026" prot="public">mc::gfx::RenderBuffer</innerclass>
-    <innerclass refid="d0/d33/a00027" prot="public">mc::gfx::Renderer</innerclass>
-    <innerclass refid="dc/d3c/a00028" prot="public">mc::gfx::RenderImpl</innerclass>
-    <innerclass refid="d5/d16/a00029" prot="public">mc::gfx::RenderProtocol</innerclass>
-    <innerclass refid="d5/d79/a00030" prot="public">mc::gfx::RenderProtocol&lt; Entity2D &gt;</innerclass>
-    <innerclass refid="df/d61/a00031" prot="public">mc::gfx::ShaderProgram</innerclass>
-    <innerclass refid="dc/d87/a00032" prot="public">mc::gfx::Texture</innerclass>
-    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::UniformBuffer</innerclass>
-    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::VertexArray</innerclass>
-    <innernamespace refid="db/db6/a00074">mc::gfx::ssl</innernamespace>
-      <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="d1/d6e/a00073_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" prot="public" static="no">
-        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
-        <definition>using mc::gfx::EntityProperties = typedef BitField</definition>
-        <argsstring></argsstring>
-        <name>EntityProperties</name>
+  <compounddef id="d1/d6e/a00073" kind="file" language="C++">
+    <compoundname>Transform.h</compoundname>
+    <includes refid="d1/d6f/a00063" local="no">MACE/System/Constants.h</includes>
+    <includes refid="d4/d31/a00069" local="no">MACE/Utility/Matrix.h</includes>
+    <includedby refid="d6/d2d/a00047" local="no">include/MACE/Graphics/Entity.h</includedby>
+    <includedby refid="db/db6/a00074" local="no">include/MACE/Utility/Utility.h</includedby>
+    <incdepgraph>
+      <node id="332">
+        <label>cstdint</label>
+      </node>
+      <node id="333">
+        <label>stdexcept</label>
+      </node>
+      <node id="331">
+        <label>MACE/System/Constants.h</label>
+        <link refid="d1/d6f/a00063_source"/>
+        <childnode refid="332" relation="include">
+        </childnode>
+        <childnode refid="333" relation="include">
+        </childnode>
+      </node>
+      <node id="334">
+        <label>MACE/Utility/Matrix.h</label>
+        <link refid="d4/d31/a00069_source"/>
+        <childnode refid="335" relation="include">
+        </childnode>
+      </node>
+      <node id="338">
+        <label>ostream</label>
+      </node>
+      <node id="335">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="d9/da5/a00075_source"/>
+        <childnode refid="331" relation="include">
+        </childnode>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="337" relation="include">
+        </childnode>
+        <childnode refid="338" relation="include">
+        </childnode>
+        <childnode refid="339" relation="include">
+        </childnode>
+      </node>
+      <node id="337">
+        <label>array</label>
+      </node>
+      <node id="336">
+        <label>MACE/Utility/Math.h</label>
+        <link refid="da/d24/a00068_source"/>
+        <childnode refid="335" relation="include">
+        </childnode>
+      </node>
+      <node id="330">
+        <label>include/MACE/Utility/Transform.h</label>
+        <link refid="Transform.h"/>
+        <childnode refid="331" relation="include">
+        </childnode>
+        <childnode refid="334" relation="include">
+        </childnode>
+      </node>
+      <node id="339">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="347">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="db/db6/a00074_source"/>
+        <childnode refid="348" relation="include">
+        </childnode>
+      </node>
+      <node id="346">
+        <label>include/MACE/Graphics/Window.h</label>
+        <link refid="d4/de8/a00061_source"/>
+        <childnode refid="345" relation="include">
+        </childnode>
+        <childnode refid="343" relation="include">
+        </childnode>
+      </node>
+      <node id="348">
+        <label>include/MACE/MACE.h</label>
+        <link refid="df/d03/a00062_source"/>
+      </node>
+      <node id="345">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="d2/d79/a00051_source"/>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="343" relation="include">
+        </childnode>
+      </node>
+      <node id="343">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="d2/dee/a00049_source"/>
+      </node>
+      <node id="342">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="d3/dea/a00046_source"/>
+        <childnode refid="343" relation="include">
+        </childnode>
+      </node>
+      <node id="344">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="d4/dca/a00048_source"/>
+        <childnode refid="343" relation="include">
+        </childnode>
+      </node>
+      <node id="340">
+        <label>include/MACE/Utility/Transform.h</label>
+        <link refid="Transform.h"/>
+        <childnode refid="341" relation="include">
+        </childnode>
+        <childnode refid="347" relation="include">
+        </childnode>
+      </node>
+      <node id="341">
+        <label>include/MACE/Graphics/Entity.h</label>
+        <link refid="d6/d2d/a00047_source"/>
+        <childnode refid="342" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="345" relation="include">
+        </childnode>
+        <childnode refid="343" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="d3/de7/a00039" prot="public">mc::TransformMatrix</innerclass>
+    <innernamespace refid="d1/d51/a00079">mc</innernamespace>
+    <innernamespace refid="d2/db1/a00070">mc::math</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d1/d6e/a00073_aff9ca01b4b74c2093bad03de3d60da51_1aff9ca01b4b74c2093bad03de3d60da51" prot="public" static="no">
+        <name>MACE_UTILITY_TRANSFORM_H</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="22" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="22" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="d1/d6e/a00073_a5ec3c90c72c1f476325a75981f887846_1a5ec3c90c72c1f476325a75981f887846" prot="public" static="no">
-        <type><ref refid="d7/dd4/a00013" kindref="compound">Exception</ref></type>
-        <definition>using mc::gfx::GLError = typedef Exception</definition>
-        <argsstring></argsstring>
-        <name>GLError</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/GraphicsConstants.h" line="20" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="20" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="d1/d6e/a00073_a528a122e45ab2808323ee471e9a86797_1a528a122e45ab2808323ee471e9a86797" prot="public" static="no">
-        <type><ref refid="d7/dd4/a00013" kindref="compound">Exception</ref></type>
-        <definition>using mc::gfx::ShaderError = typedef Exception</definition>
-        <argsstring></argsstring>
-        <name>ShaderError</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/GraphicsConstants.h" line="22" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="22" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="d1/d6e/a00073_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" prot="public" static="no">
-        <type>std::deque&lt; std::pair&lt; <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>, <ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref> * &gt;&gt;</type>
-        <definition>using mc::gfx::RenderQueue = typedef std::deque&lt;std::pair&lt;Index, GraphicsEntity*&gt;&gt;</definition>
-        <argsstring></argsstring>
-        <name>RenderQueue</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="27" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="27" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="d1/d6e/a00073_a76c7ba19bf08d8dbfefd32eebda71744_1a76c7ba19bf08d8dbfefd32eebda71744" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::checkGLError</definition>
-        <argsstring>()</argsstring>
-        <name>checkGLError</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/GraphicsConstants.h" line="27" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d1/d6e/a00073_a03d92c41bbd9a64c1706292fe4c3c217_1a03d92c41bbd9a64c1706292fe4c3c217" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::throwShaderError</definition>
-        <argsstring>(const Index &amp;shaderId, const Enum &amp;type, const std::string &amp;message)</argsstring>
-        <name>throwShaderError</name>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
-          <declname>shaderId</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
-          <declname>type</declname>
-        </param>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>message</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/GraphicsConstants.h" line="31" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d1/d6e/a00073_a15996c355485bf87f30f008457a54ca2_1a15996c355485bf87f30f008457a54ca2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::throwShaderError</definition>
-        <argsstring>(const Index &amp;shaderId, const Enum &amp;type)</argsstring>
-        <name>throwShaderError</name>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
-          <declname>shaderId</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
-          <declname>type</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/GraphicsConstants.h" line="35" column="1"/>
+        <location file="include/MACE/Utility/Transform.h" line="12" column="9" bodyfile="include/MACE/Utility/Transform.h" bodystart="12" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Namespace containing classes used for Graphics in MACE. </para>    </briefdescription>
+    </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="include/MACE/Graphics/Buffer.h" line="20" column="1"/>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_TRANSFORM_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_TRANSFORM_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/System/Constants.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Matrix.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d1/d51/a00079" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">math<sp/>{</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" kindref="member">rotate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" kindref="member">rotate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>Vector&lt;float,<sp/>3&gt;&amp;<sp/>v);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" kindref="member">rotate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;&amp;<sp/>m,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>Vector&lt;float,<sp/>3&gt;&amp;<sp/>v);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" kindref="member">rotate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;&amp;<sp/>m,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_abd992f7c72bfd0f63282550deace7a6d_1abd992f7c72bfd0f63282550deace7a6d" kindref="member">scale</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_abd992f7c72bfd0f63282550deace7a6d_1abd992f7c72bfd0f63282550deace7a6d" kindref="member">scale</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;&amp;<sp/>m,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a65116d02abed05f10cd80a9d89496a18_1a65116d02abed05f10cd80a9d89496a18" kindref="member">translate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a65116d02abed05f10cd80a9d89496a18_1a65116d02abed05f10cd80a9d89496a18" kindref="member">translate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;&amp;<sp/>m,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" kindref="member">projection</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>FOV,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>NEAR_PLANE,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>FAR_PLANE,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>aspectRatio);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Matrix&lt;float,<sp/>4,<sp/>4&gt;<sp/><ref refid="d2/db1/a00070_a6d5b57499cae06fda4e86d95258b1c2c_1a6d5b57499cae06fda4e86d95258b1c2c" kindref="member">ortho</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>left,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>right,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>bottom,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>top,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>near,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>far);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//math</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126" refid="d3/de7/a00039" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref><sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>();</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/><ref refid="d2/db1/a00070_a65116d02abed05f10cd80a9d89496a18_1a65116d02abed05f10cd80a9d89496a18" kindref="member">translate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/><ref refid="d2/db1/a00070_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" kindref="member">rotate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/><ref refid="d2/db1/a00070_abd992f7c72bfd0f63282550deace7a6d_1abd992f7c72bfd0f63282550deace7a6d" kindref="member">scale</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>reset();</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;float, 4, 4&gt;</ref><sp/></highlight><highlight class="keyword">get</highlight><highlight class="normal">()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator==(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator!=(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&gt;(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&gt;=(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&lt;(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&lt;=(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/de7/a00039" kindref="compound">TransformMatrix</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214" refid="d3/de7/a00039_ab1d6d109dbc3524efa2aba9f8dddea37_1ab1d6d109dbc3524efa2aba9f8dddea37" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;float, 3&gt;</ref><sp/><ref refid="d3/de7/a00039_ab1d6d109dbc3524efa2aba9f8dddea37_1ab1d6d109dbc3524efa2aba9f8dddea37" kindref="member">translation</ref>;</highlight></codeline>
+<codeline lineno="220" refid="d3/de7/a00039_a3ed9fc5756560490b92f7e13893e9dc4_1a3ed9fc5756560490b92f7e13893e9dc4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;float, 3&gt;</ref><sp/><ref refid="d3/de7/a00039_a3ed9fc5756560490b92f7e13893e9dc4_1a3ed9fc5756560490b92f7e13893e9dc4" kindref="member">rotation</ref>;</highlight></codeline>
+<codeline lineno="226" refid="d3/de7/a00039_a4f2f6d4592045082c076e46058d6e74d_1a4f2f6d4592045082c076e46058d6e74d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;float, 3&gt;</ref><sp/><ref refid="d3/de7/a00039_a4f2f6d4592045082c076e46058d6e74d_1a4f2f6d4592045082c076e46058d6e74d" kindref="member">scaler</ref>;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//TransformMatrix</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Utility/Transform.h"/>
   </compounddef>
 </doxygen>

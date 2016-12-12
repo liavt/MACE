@@ -1,254 +1,643 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d8/d41/a00038" kind="file" language="C++">
-    <compoundname>Buffer.h</compoundname>
-    <includes refid="d9/d2e/a00056" local="no">MACE/System/Constants.h</includes>
-    <incdepgraph>
-      <node id="2">
-        <label>cstdint</label>
-      </node>
-      <node id="0">
-        <label>include/MACE/Graphics/Buffer.h</label>
-        <link refid="Buffer.h"/>
-        <childnode refid="1" relation="include">
-        </childnode>
-      </node>
-      <node id="3">
-        <label>stdexcept</label>
-      </node>
-      <node id="1">
-        <label>MACE/System/Constants.h</label>
-        <link refid="d9/d2e/a00056_source"/>
-        <childnode refid="2" relation="include">
-        </childnode>
-        <childnode refid="3" relation="include">
-        </childnode>
-      </node>
-    </incdepgraph>
-    <innerclass refid="dc/de2/a00024" prot="public">mc::gfx::Object</innerclass>
-    <innerclass refid="d6/d5b/a00026" prot="public">mc::gfx::RenderBuffer</innerclass>
-    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::FrameBuffer</innerclass>
-    <innerclass refid="dc/d87/a00032" prot="public">mc::gfx::Texture</innerclass>
-    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::VertexArray</innerclass>
-    <innerclass refid="de/d5e/a00007" prot="public">mc::gfx::Buffer</innerclass>
-    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::UniformBuffer</innerclass>
-    <innernamespace refid="d6/d2c/a00072">mc</innernamespace>
-    <innernamespace refid="d1/d6e/a00073">mc::gfx</innernamespace>
-      <sectiondef kind="define">
-      <memberdef kind="define" id="d8/d41/a00038_a85db439786f15947c7995f0a2e938eef_1a85db439786f15947c7995f0a2e938eef" prot="public" static="no">
-        <name>MACE_GRAPHICS_BUFFER_H</name>
+  <compounddef id="d8/d41/a00038" kind="class" language="C++" prot="public">
+    <compoundname>mc::gfx::Texture</compoundname>
+    <basecompoundref refid="d0/d33/a00027" prot="public" virt="non-virtual">mc::gfx::Object</basecompoundref>
+    <includes refid="d6/d97/a00045" local="no">Buffer.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d8/d41/a00038_1a49586468450408856fa10aed40ef4bce" prot="private" static="no" mutable="no">
+        <type>GLenum</type>
+        <definition>GLenum mc::gfx::Texture::target</definition>
+        <argsstring></argsstring>
+        <name>target</name>
+        <initializer>= GL_TEXTURE_2D</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Buffer.h" line="12" column="9" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="12" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Buffer.h" line="453" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="453" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d8/d41/a00038_1a14a18551970c09664881a37cb96ade3d" prot="private" static="no" mutable="no">
+        <type><ref refid="da/da0/a00009" kindref="compound">Color</ref></type>
+        <definition>Color mc::gfx::Texture::paint</definition>
+        <argsstring></argsstring>
+        <name>paint</name>
+        <initializer>= <ref refid="da/da0/a00009" kindref="compound">Color</ref>(1.0f, 1.0f, 1.0f, 1.0f)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="455" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="455" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d8/d41/a00038_1a7e7bc0b3087bf23ab4bfb494a00f3346" prot="private" static="no" mutable="no">
+        <type>float</type>
+        <definition>float mc::gfx::Texture::opacity</definition>
+        <argsstring></argsstring>
+        <name>opacity</name>
+        <initializer>= 1.0f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="457" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="457" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d8/d41/a00038_aebf5c2464c0e7219f79a776296a19efe_1aebf5c2464c0e7219f79a776296a19efe" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::init</definition>
+        <argsstring>() override</argsstring>
+        <name>init</name>
+        <reimplements refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914">init</reimplements>
+        <briefdescription>
+<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="416" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a86ce84fbf111118dbe1cb4ffe50267ff_1a86ce84fbf111118dbe1cb4ffe50267ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::destroy</definition>
+        <argsstring>() override</argsstring>
+        <name>destroy</name>
+        <reimplements refid="d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80">destroy</reimplements>
+        <briefdescription>
+<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="417" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a70c25cd28c47f4201388aa1216e3cd2d_1a70c25cd28c47f4201388aa1216e3cd2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setData</definition>
+        <argsstring>(const void *data, Size width, Size height, GLenum type=GL_FLOAT, GLenum format=GL_RGB, GLenum internalFormat=GL_RGB, Index mipmapLevel=0)</argsstring>
+        <name>setData</name>
+        <param>
+          <type>const void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>height</declname>
+        </param>
+        <param>
+          <type>GLenum</type>
+          <declname>type</declname>
+          <defval>GL_FLOAT</defval>
+        </param>
+        <param>
+          <type>GLenum</type>
+          <declname>format</declname>
+          <defval>GL_RGB</defval>
+        </param>
+        <param>
+          <type>GLenum</type>
+          <declname>internalFormat</declname>
+          <defval>GL_RGB</defval>
+        </param>
+        <param>
+          <type><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>mipmapLevel</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glTexImage2D">https://www.opengl.org/wiki/GLAPI/glTexImage2D</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="423" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a4c619193ee9a4b354bdf5b0382302197_1a4c619193ee9a4b354bdf5b0382302197" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::loadFile</definition>
+        <argsstring>(const char *file)</argsstring>
+        <name>loadFile</name>
+        <param>
+          <type>const char *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="428" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_acf4bc454a146b237fa87756c29eefb90_1acf4bc454a146b237fa87756c29eefb90" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setTarget</definition>
+        <argsstring>(const GLenum target)</argsstring>
+        <name>setTarget</name>
+        <param>
+          <type>const GLenum</type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="430" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a1974ac906f5e0d5e796dc82c2e05c0ec_1a1974ac906f5e0d5e796dc82c2e05c0ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>GLenum</type>
+        <definition>GLenum mc::gfx::Texture::getTarget</definition>
+        <argsstring>()</argsstring>
+        <name>getTarget</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="431" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a4abd1d7944c0c80fbd484fad810d8b77_1a4abd1d7944c0c80fbd484fad810d8b77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="da/da0/a00009" kindref="compound">Color</ref> &amp;</type>
+        <definition>Color&amp; mc::gfx::Texture::getPaint</definition>
+        <argsstring>()</argsstring>
+        <name>getPaint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="433" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a89e965418f2da04a68ba9724623e9ae2_1a89e965418f2da04a68ba9724623e9ae2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="da/da0/a00009" kindref="compound">Color</ref> &amp;</type>
+        <definition>const Color&amp; mc::gfx::Texture::getPaint</definition>
+        <argsstring>() const </argsstring>
+        <name>getPaint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="434" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a53696fcdbef5ef8dfa6bf9a90c649be7_1a53696fcdbef5ef8dfa6bf9a90c649be7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setPaint</definition>
+        <argsstring>(const Color &amp;c)</argsstring>
+        <name>setPaint</name>
+        <param>
+          <type>const <ref refid="da/da0/a00009" kindref="compound">Color</ref> &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="435" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a73f099a1c1c226e101c28c70b517e23b_1a73f099a1c1c226e101c28c70b517e23b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float mc::gfx::Texture::getOpacity</definition>
+        <argsstring>()</argsstring>
+        <name>getOpacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="437" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_af59d6a7103ceacc08e707882043eaba8_1af59d6a7103ceacc08e707882043eaba8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const float</type>
+        <definition>const float mc::gfx::Texture::getOpacity</definition>
+        <argsstring>() const </argsstring>
+        <name>getOpacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="438" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_aebd0d76cdc2e89864118b4c119cc09da_1aebd0d76cdc2e89864118b4c119cc09da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setOpacity</definition>
+        <argsstring>(const float f)</argsstring>
+        <name>setOpacity</name>
+        <param>
+          <type>const float</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="439" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_aa37c4d2135816293164f06c93fd95ace_1aa37c4d2135816293164f06c93fd95ace" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Texture::isCreated</definition>
+        <argsstring>() const  override</argsstring>
+        <name>isCreated</name>
+        <reimplements refid="d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76">isCreated</reimplements>
+        <briefdescription>
+<para>Queries OpenGL whether this <ref refid="d0/d33/a00027" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="441" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a6ec1b99fe4f8eb9f4c9566c1a79c8d15_1a6ec1b99fe4f8eb9f4c9566c1a79c8d15" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::setParameter</definition>
+        <argsstring>(const GLenum &amp;name, const GLint &amp;value)</argsstring>
+        <name>setParameter</name>
+        <param>
+          <type>const GLenum &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const GLint &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glTexParameter">https://www.opengl.org/wiki/GLAPI/glTexParameter</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="447" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_a7f40e8f1091382117829940678577b55_1a7f40e8f1091382117829940678577b55" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Texture::operator==</definition>
+        <argsstring>(const Texture &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="d8/d41/a00038" kindref="compound">Texture</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="449" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d8/d41/a00038_ac43bd1d99904943697d6a76c238f9be0_1ac43bd1d99904943697d6a76c238f9be0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Texture::operator!=</definition>
+        <argsstring>(const Texture &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="d8/d41/a00038" kindref="compound">Texture</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="450" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::Object::bind</definition>
+        <argsstring>() const </argsstring>
+        <name>bind</name>
+        <reimplementedby refid="df/d61/a00031_1a055cd452ca943cb84a4663d5dfca4f61">bind</reimplementedby>
+        <briefdescription>
+<para>Binds this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="72" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::Object::unbind</definition>
+        <argsstring>() const </argsstring>
+        <name>unbind</name>
+        <reimplementedby refid="df/d61/a00031_1a509b3f1d7b32a0b12060535698889b30">unbind</reimplementedby>
+        <briefdescription>
+<para>Unbinds this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="78" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Object::getID</definition>
+        <argsstring>() const </argsstring>
+        <name>getID</name>
+        <briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
+        <detaileddescription>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="d0/d33/a00027" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="99" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="d0/d33/a00027" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="108" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="d0/d33/a00027" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para>Their ID is compared. <simplesect kind="see"><para><ref refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="116" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="d8/d41/a00038_1a0af83083bb92d56422b38df8ac2835ec" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Texture::bindIndex</definition>
+        <argsstring>(const Index &amp;id) const  override</argsstring>
+        <name>bindIndex</name>
+        <reimplements refid="d0/d33/a00027_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce">bindIndex</reimplements>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
+        <detaileddescription>
+<para><ref refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" kindref="member">Object::bind() const </ref>and <ref refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="459" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" static="no" mutable="no">
+        <type><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Object::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
+        <detaileddescription>
+<para>` Should be set in <ref refid="d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">Object::init()</ref> and become 0 in <ref refid="d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">Object::destroy()</ref> </para><para><ref refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Buffer.h" line="123" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="123" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"></highlight></codeline>
-<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"></highlight></codeline>
-<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_GRAPHICS_BUFFER_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_GRAPHICS_BUFFER_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/System/Constants.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Color.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;GL/glew.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight></codeline>
-<codeline lineno="19" refid="d6/d2c/a00072" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d6/d2c/a00072" kindref="compound">mc</ref><sp/>{</highlight></codeline>
-<codeline lineno="20" refid="d1/d6e/a00073" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">gfx<sp/>{</highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight></codeline>
-<codeline lineno="39" refid="dc/de2/a00024" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dc/de2/a00024" kindref="compound">Object</ref><sp/>{</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" kindref="member">~Object</ref>()<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">init</ref>()<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">destroy</ref>()<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a9a59b47f57c7a7e83ee9d268f692cc4d_1a9a59b47f57c7a7e83ee9d268f692cc4d" kindref="member">bind</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_af36391f915aeed8452b6f21e926932f2_1af36391f915aeed8452b6f21e926932f2" kindref="member">unbind</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">isCreated</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/><ref refid="dc/de2/a00024_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" kindref="member">getID</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">operator==</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">operator!=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="123" refid="dc/de2/a00024_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"></highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce" kindref="member">bindIndex</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="141" refid="d6/d5b/a00026" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref><sp/>{</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">init</ref>();</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">destroy</ref>();</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"></highlight></codeline>
-<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setStorage(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>format,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizei&amp;<sp/>width,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizei&amp;<sp/>height);</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setStorageMultisampled(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizei&amp;<sp/>samples,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>format,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizei&amp;<sp/>width,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizei&amp;<sp/>height);</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"></highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">isCreated</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"></highlight></codeline>
-<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>Object::operator==;</highlight></codeline>
-<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>Object::operator!=;</highlight></codeline>
-<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce" kindref="member">bindIndex</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//RenderBuffer</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="175"><highlight class="normal"></highlight></codeline>
-<codeline lineno="180" refid="d2/de7/a00014" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d2/de7/a00014" kindref="compound">FrameBuffer</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref><sp/>{</highlight></codeline>
-<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">init</ref>();</highlight></codeline>
-<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">destroy</ref>();</highlight></codeline>
-<codeline lineno="184"><highlight class="normal"></highlight></codeline>
-<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>attachTexture(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>attachment,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLuint&amp;<sp/>textureID,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>level<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>attachTexture1D(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>attachment,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>texTarget,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLuint&amp;<sp/>textureID,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>level<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>attachTexture2D(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>attachment,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>texTarget,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLuint&amp;<sp/>textureID,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>level<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>attachTexture3D(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>attachment,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>texTarget,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLuint&amp;<sp/>textureID,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>level<sp/>=<sp/>0,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>layer<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="211"><highlight class="normal"></highlight></codeline>
-<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>attachTextureLayer(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>attachment,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLuint&amp;<sp/>texture,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>level<sp/>=<sp/>0,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>layer<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="223"><highlight class="normal"></highlight></codeline>
-<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>attachRenderbuffer(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>attachment,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d5b/a00026" kindref="compound">RenderBuffer</ref>&amp;<sp/>buffer);</highlight></codeline>
-<codeline lineno="232"><highlight class="normal"></highlight></codeline>
-<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setDrawBuffers(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;<sp/>arrSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum*<sp/>buffers);</highlight></codeline>
-<codeline lineno="248"><highlight class="normal"></highlight></codeline>
-<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">isCreated</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="250"><highlight class="normal"></highlight></codeline>
-<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLenum<sp/>checkStatus(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>target);</highlight></codeline>
-<codeline lineno="260"><highlight class="normal"></highlight></codeline>
-<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>Object::operator==;</highlight></codeline>
-<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>Object::operator!=;</highlight></codeline>
-<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce" kindref="member">bindIndex</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//FrameBuffer</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="266"><highlight class="normal"></highlight></codeline>
-<codeline lineno="270" refid="dc/d87/a00032" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dc/d87/a00032" kindref="compound">Texture</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref><sp/>{</highlight></codeline>
-<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">init</ref>();</highlight></codeline>
-<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">destroy</ref>();</highlight></codeline>
-<codeline lineno="274"><highlight class="normal"></highlight></codeline>
-<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setData(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>data,<sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>width,<sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>height,<sp/>GLenum<sp/>type<sp/>=<sp/>GL_FLOAT,<sp/>GLenum<sp/>format<sp/>=<sp/>GL_RGB,<sp/>GLenum<sp/>internalFormat<sp/>=<sp/>GL_RGB,<sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>mipmapLevel<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="280"><highlight class="normal"></highlight></codeline>
-<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>loadFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>file);</highlight></codeline>
-<codeline lineno="285"><highlight class="normal"></highlight></codeline>
-<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setTarget(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum<sp/>target);</highlight></codeline>
-<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLenum<sp/>getTarget();</highlight></codeline>
-<codeline lineno="288"><highlight class="normal"></highlight></codeline>
-<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>getPaint();</highlight></codeline>
-<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>getPaint()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setPaint(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>c);</highlight></codeline>
-<codeline lineno="292"><highlight class="normal"></highlight></codeline>
-<codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>getOpacity();</highlight></codeline>
-<codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>getOpacity()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setOpacity(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>f);</highlight></codeline>
-<codeline lineno="296"><highlight class="normal"></highlight></codeline>
-<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">isCreated</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="298"><highlight class="normal"></highlight></codeline>
-<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setParameter(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>name,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLint&amp;<sp/>value);</highlight></codeline>
-<codeline lineno="304"><highlight class="normal"></highlight></codeline>
-<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">operator==</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/d87/a00032" kindref="compound">Texture</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">operator!=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/d87/a00032" kindref="compound">Texture</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="307"><highlight class="normal"></highlight></codeline>
-<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLenum<sp/>target<sp/>=<sp/>GL_TEXTURE_2D;</highlight></codeline>
-<codeline lineno="310"><highlight class="normal"></highlight></codeline>
-<codeline lineno="311"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref><sp/>paint<sp/>=<sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>(1.0f,<sp/>1.0f,<sp/>1.0f,<sp/>1.0f);</highlight></codeline>
-<codeline lineno="312"><highlight class="normal"></highlight></codeline>
-<codeline lineno="313"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>opacity<sp/>=<sp/>1.0f;</highlight></codeline>
-<codeline lineno="314"><highlight class="normal"></highlight></codeline>
-<codeline lineno="315"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce" kindref="member">bindIndex</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="316"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Texture</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="317"><highlight class="normal"></highlight></codeline>
-<codeline lineno="321" refid="de/d8c/a00036" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="de/d8c/a00036" kindref="compound">VertexArray</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref><sp/>{</highlight></codeline>
-<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="323" refid="de/d8c/a00036_adb5e75902d33d713ffa56a6d8af4d8c9_1adb5e75902d33d713ffa56a6d8af4d8c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/><ref refid="de/d8c/a00036_adb5e75902d33d713ffa56a6d8af4d8c9_1adb5e75902d33d713ffa56a6d8af4d8c9" kindref="member">vertexNumber</ref>,<sp/>indiceNumber;</highlight></codeline>
-<codeline lineno="324"><highlight class="normal"></highlight></codeline>
-<codeline lineno="325"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">init</ref>();</highlight></codeline>
-<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">destroy</ref>();</highlight></codeline>
-<codeline lineno="327"><highlight class="normal"></highlight></codeline>
-<codeline lineno="328"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">isCreated</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="329"><highlight class="normal"></highlight></codeline>
-<codeline lineno="334"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>draw(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum<sp/>type<sp/>=<sp/>GL_TRIANGLES)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="335"><highlight class="normal"></highlight></codeline>
-<codeline lineno="336"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>loadVertices(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;&amp;<sp/>verticeSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLfloat<sp/>vertices[],<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;&amp;<sp/>location<sp/>=<sp/>15,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;&amp;<sp/>attributeSize<sp/>=<sp/>3);</highlight></codeline>
-<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>loadIndices(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;&amp;<sp/>indiceNum,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLuint<sp/>indices[],<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;&amp;<sp/>drawType<sp/>=<sp/>GL_DYNAMIC_DRAW);</highlight></codeline>
-<codeline lineno="338"><highlight class="normal"></highlight></codeline>
-<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>storeDataInAttributeList(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;&amp;<sp/>dataSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLvoid*<sp/>data,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;&amp;<sp/>location<sp/>=<sp/>0,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;&amp;<sp/>attributeSize<sp/>=<sp/>3);</highlight></codeline>
-<codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">operator==</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="de/d8c/a00036" kindref="compound">VertexArray</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">operator!=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="de/d8c/a00036" kindref="compound">VertexArray</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce" kindref="member">bindIndex</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//VertexArray</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="346"><highlight class="normal"></highlight></codeline>
-<codeline lineno="347" refid="de/d5e/a00007" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Object</ref><sp/>{</highlight></codeline>
-<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="349"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/>~<ref refid="de/d5e/a00007" kindref="compound">Buffer</ref>()<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="350"><highlight class="normal"></highlight></codeline>
-<codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum<sp/>bufferType);</highlight></codeline>
-<codeline lineno="352"><highlight class="normal"></highlight></codeline>
-<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ad729e7f4f11794cdfedec12fa46e2e76_1ad729e7f4f11794cdfedec12fa46e2e76" kindref="member">isCreated</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="354"><highlight class="normal"></highlight></codeline>
-<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_ab2fb38f2d3ec9640f61c730456538914_1ab2fb38f2d3ec9640f61c730456538914" kindref="member">init</ref>();</highlight></codeline>
-<codeline lineno="356"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a58c034fb6bdf87e3f0d312bd3a563e80_1a58c034fb6bdf87e3f0d312bd3a563e80" kindref="member">destroy</ref>();</highlight></codeline>
-<codeline lineno="357"><highlight class="normal"></highlight></codeline>
-<codeline lineno="362"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setImmutableData(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizeiptr<sp/>dataSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLvoid*<sp/>data,<sp/>GLbitfield<sp/>flags);</highlight></codeline>
-<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setData(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizeiptr<sp/>dataSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLvoid*<sp/>data,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum<sp/>drawType<sp/>=<sp/>GL_DYNAMIC_DRAW)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="372"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setDataRange(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>offset,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizeiptr<sp/>dataSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLvoid*<sp/>data)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="373"><highlight class="normal"></highlight></codeline>
-<codeline lineno="378"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>copyData(<ref refid="de/d5e/a00007" kindref="compound">Buffer</ref><sp/>other,<sp/>GLsizeiptr<sp/>size,<sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>readOffset<sp/>=<sp/>0,<sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>writeOffset<sp/>=<sp/>0);</highlight></codeline>
-<codeline lineno="379"><highlight class="normal"></highlight></codeline>
-<codeline lineno="384"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLvoid*<sp/>map(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum<sp/>access<sp/>=<sp/>GL_READ_WRITE);</highlight></codeline>
-<codeline lineno="385"><highlight class="normal"></highlight></codeline>
-<codeline lineno="390"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLvoid*<sp/>mapRange(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>offset,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>length,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLbitfield<sp/>access);</highlight></codeline>
-<codeline lineno="391"><highlight class="normal"></highlight></codeline>
-<codeline lineno="396"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLboolean<sp/>unmap();</highlight></codeline>
-<codeline lineno="397"><highlight class="normal"></highlight></codeline>
-<codeline lineno="398"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">operator==</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="399"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">operator!=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="400"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="401"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GLenum<sp/>bufferType;</highlight></codeline>
-<codeline lineno="402"><highlight class="normal"></highlight></codeline>
-<codeline lineno="403"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a45afac15d5bd595db56bad1a096befce_1a45afac15d5bd595db56bad1a096befce" kindref="member">bindIndex</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="404"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Buffer</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="405"><highlight class="normal"></highlight></codeline>
-<codeline lineno="406" refid="db/df3/a00034" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref><sp/>{</highlight></codeline>
-<codeline lineno="407"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="408"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>();</highlight></codeline>
-<codeline lineno="409"><highlight class="normal"></highlight></codeline>
-<codeline lineno="410"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setLocation(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>location);</highlight></codeline>
-<codeline lineno="411"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>getLocation();</highlight></codeline>
-<codeline lineno="412"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>getLocation()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="413"><highlight class="normal"></highlight></codeline>
-<codeline lineno="419"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>bindForRender(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>offset<sp/>=<sp/>0,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLsizeiptr<sp/>size<sp/>=<sp/>-1)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="420"><highlight class="normal"></highlight></codeline>
-<codeline lineno="425"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>bindToUniformBlock(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>programID,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>blockName)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="426"><highlight class="normal"></highlight></codeline>
-<codeline lineno="427"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" kindref="member">operator==</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="428"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" kindref="member">operator!=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="429"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="430"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2c/a00072_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>location<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="431"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//UniformBuffer</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="432"><highlight class="normal"></highlight></codeline>
-<codeline lineno="433"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//gfx</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="434"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="435"><highlight class="normal"></highlight></codeline>
-<codeline lineno="436"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-    </programlisting>
-    <location file="include/MACE/Graphics/Buffer.h"/>
+<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Texture">https://www.opengl.org/wiki/Texture</ulink> </para></simplesect>
+</para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="493">
+        <label>mc::gfx::Texture</label>
+        <link refid="d8/d41/a00038"/>
+        <childnode refid="494" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="494">
+        <label>mc::gfx::Object</label>
+        <link refid="d0/d33/a00027"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="495">
+        <label>mc::gfx::Texture</label>
+        <link refid="d8/d41/a00038"/>
+        <childnode refid="496" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="496">
+        <label>mc::gfx::Object</label>
+        <link refid="d0/d33/a00027"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Graphics/Buffer.h" line="414" column="1" bodyfile="include/MACE/Graphics/Buffer.h" bodystart="414" bodyend="460"/>
+    <listofallmembers>
+      <member refid="d0/d33/a00027_a2df5914839494c38664a4bd27dffd458_1a2df5914839494c38664a4bd27dffd458" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>bind</name></member>
+      <member refid="d8/d41/a00038_1a0af83083bb92d56422b38df8ac2835ec" prot="private" virt="virtual"><scope>mc::gfx::Texture</scope><name>bindIndex</name></member>
+      <member refid="d8/d41/a00038_a86ce84fbf111118dbe1cb4ffe50267ff_1a86ce84fbf111118dbe1cb4ffe50267ff" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>destroy</name></member>
+      <member refid="d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559_1adcc524a5d4ce6e79e9c1893c0f935559" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getID</name></member>
+      <member refid="d8/d41/a00038_a73f099a1c1c226e101c28c70b517e23b_1a73f099a1c1c226e101c28c70b517e23b" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getOpacity</name></member>
+      <member refid="d8/d41/a00038_af59d6a7103ceacc08e707882043eaba8_1af59d6a7103ceacc08e707882043eaba8" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getOpacity</name></member>
+      <member refid="d8/d41/a00038_a4abd1d7944c0c80fbd484fad810d8b77_1a4abd1d7944c0c80fbd484fad810d8b77" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getPaint</name></member>
+      <member refid="d8/d41/a00038_a89e965418f2da04a68ba9724623e9ae2_1a89e965418f2da04a68ba9724623e9ae2" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getPaint</name></member>
+      <member refid="d8/d41/a00038_a1974ac906f5e0d5e796dc82c2e05c0ec_1a1974ac906f5e0d5e796dc82c2e05c0ec" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>getTarget</name></member>
+      <member refid="d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f_1a5c44ad260b3bd8a5825c434037d5f89f" prot="protected" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>id</name></member>
+      <member refid="d8/d41/a00038_aebf5c2464c0e7219f79a776296a19efe_1aebf5c2464c0e7219f79a776296a19efe" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>init</name></member>
+      <member refid="d8/d41/a00038_aa37c4d2135816293164f06c93fd95ace_1aa37c4d2135816293164f06c93fd95ace" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>isCreated</name></member>
+      <member refid="d8/d41/a00038_a4c619193ee9a4b354bdf5b0382302197_1a4c619193ee9a4b354bdf5b0382302197" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>loadFile</name></member>
+      <member refid="d8/d41/a00038_1a7e7bc0b3087bf23ab4bfb494a00f3346" prot="private" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>opacity</name></member>
+      <member refid="d8/d41/a00038_ac43bd1d99904943697d6a76c238f9be0_1ac43bd1d99904943697d6a76c238f9be0" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>operator!=</name></member>
+      <member refid="d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439_1a46f8d2830121ba4397bbf6ab8c1ab439" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::Object::"><scope>mc::gfx::Texture</scope><name>operator!=</name></member>
+      <member refid="d8/d41/a00038_a7f40e8f1091382117829940678577b55_1a7f40e8f1091382117829940678577b55" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>operator==</name></member>
+      <member refid="d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70_1adf01757b2750668b7fbb42b3677e8e70" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::Object::"><scope>mc::gfx::Texture</scope><name>operator==</name></member>
+      <member refid="d8/d41/a00038_1a14a18551970c09664881a37cb96ade3d" prot="private" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>paint</name></member>
+      <member refid="d8/d41/a00038_a70c25cd28c47f4201388aa1216e3cd2d_1a70c25cd28c47f4201388aa1216e3cd2d" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setData</name></member>
+      <member refid="d8/d41/a00038_aebd0d76cdc2e89864118b4c119cc09da_1aebd0d76cdc2e89864118b4c119cc09da" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setOpacity</name></member>
+      <member refid="d8/d41/a00038_a53696fcdbef5ef8dfa6bf9a90c649be7_1a53696fcdbef5ef8dfa6bf9a90c649be7" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setPaint</name></member>
+      <member refid="d8/d41/a00038_a6ec1b99fe4f8eb9f4c9566c1a79c8d15_1a6ec1b99fe4f8eb9f4c9566c1a79c8d15" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setParameter</name></member>
+      <member refid="d8/d41/a00038_acf4bc454a146b237fa87756c29eefb90_1acf4bc454a146b237fa87756c29eefb90" prot="public" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>setTarget</name></member>
+      <member refid="d8/d41/a00038_1a49586468450408856fa10aed40ef4bce" prot="private" virt="non-virtual"><scope>mc::gfx::Texture</scope><name>target</name></member>
+      <member refid="d0/d33/a00027_a00c18026339561f7c4e705c417c5e596_1a00c18026339561f7c4e705c417c5e596" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>unbind</name></member>
+      <member refid="d0/d33/a00027_a4ea5dacb16804b43f4be8c2567bbd48b_1a4ea5dacb16804b43f4be8c2567bbd48b" prot="public" virt="virtual"><scope>mc::gfx::Texture</scope><name>~Object</name></member>
+    </listofallmembers>
   </compounddef>
 </doxygen>

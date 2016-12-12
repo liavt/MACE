@@ -1,70 +1,336 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d2/d79/a00051" kind="file" language="C++">
-    <compoundname>ssl_position.glsl</compoundname>
+    <compoundname>Renderer.h</compoundname>
+    <includes refid="d6/d2d/a00047" local="no">MACE/Graphics/Entity.h</includes>
+    <includes refid="d1/d84/a00052" local="no">MACE/Graphics/Shaders.h</includes>
+    <includes refid="d4/de8/a00061" local="no">MACE/Graphics/Window.h</includes>
+    <includes local="no">deque</includes>
+    <includedby refid="d4/dca/a00048" local="no">include/MACE/Graphics/Entity2D.h</includedby>
+    <includedby refid="d2/dee/a00049" local="no">include/MACE/Graphics/Graphics.h</includedby>
+    <incdepgraph>
+      <node id="101">
+        <label>cstdint</label>
+      </node>
+      <node id="113">
+        <label>MACE/Graphics/Window.h</label>
+        <link refid="d4/de8/a00061_source"/>
+        <childnode refid="114" relation="include">
+        </childnode>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="117" relation="include">
+        </childnode>
+        <childnode refid="116" relation="include">
+        </childnode>
+      </node>
+      <node id="102">
+        <label>stdexcept</label>
+      </node>
+      <node id="97">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="Renderer.h"/>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="113" relation="include">
+        </childnode>
+        <childnode refid="118" relation="include">
+        </childnode>
+      </node>
+      <node id="100">
+        <label>MACE/System/Constants.h</label>
+        <link refid="d1/d6f/a00063_source"/>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="102" relation="include">
+        </childnode>
+      </node>
+      <node id="105">
+        <label>MACE/Utility/Matrix.h</label>
+        <link refid="d4/d31/a00069_source"/>
+        <childnode refid="106" relation="include">
+        </childnode>
+      </node>
+      <node id="116">
+        <label>string</label>
+      </node>
+      <node id="112">
+        <label>GL/glew.h</label>
+      </node>
+      <node id="99">
+        <label>MACE/Utility/BitField.h</label>
+        <link refid="d9/db3/a00066_source"/>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="103" relation="include">
+        </childnode>
+      </node>
+      <node id="114">
+        <label>GLFW/glfw3.h</label>
+      </node>
+      <node id="103">
+        <label>ostream</label>
+      </node>
+      <node id="110">
+        <label>MACE/Graphics/Shaders.h</label>
+        <link refid="d1/d84/a00052_source"/>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+      </node>
+      <node id="115">
+        <label>MACE/System/Module.h</label>
+        <link refid="df/d5f/a00064_source"/>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="116" relation="include">
+        </childnode>
+      </node>
+      <node id="106">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="d9/da5/a00075_source"/>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="103" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+      </node>
+      <node id="108">
+        <label>array</label>
+      </node>
+      <node id="107">
+        <label>MACE/Utility/Math.h</label>
+        <link refid="da/d24/a00068_source"/>
+        <childnode refid="106" relation="include">
+        </childnode>
+      </node>
+      <node id="104">
+        <label>MACE/Utility/Transform.h</label>
+        <link refid="d1/d6e/a00073_source"/>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+      </node>
+      <node id="118">
+        <label>deque</label>
+      </node>
+      <node id="111">
+        <label>unordered_map</label>
+      </node>
+      <node id="98">
+        <label>MACE/Graphics/Entity.h</label>
+        <link refid="d6/d2d/a00047_source"/>
+        <childnode refid="99" relation="include">
+        </childnode>
+        <childnode refid="104" relation="include">
+        </childnode>
+      </node>
+      <node id="117">
+        <label>thread</label>
+      </node>
+      <node id="109">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="119">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="Renderer.h"/>
+        <childnode refid="120" relation="include">
+        </childnode>
+        <childnode refid="121" relation="include">
+        </childnode>
+      </node>
+      <node id="121">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="d2/dee/a00049_source"/>
+      </node>
+      <node id="120">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="d4/dca/a00048_source"/>
+        <childnode refid="121" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::RenderImpl</innerclass>
+    <innerclass refid="d4/d8c/a00035" prot="public">mc::gfx::RenderProtocol</innerclass>
+    <innerclass refid="d0/dc0/a00033" prot="public">mc::gfx::Renderer</innerclass>
+    <innernamespace refid="d1/d51/a00079">mc</innernamespace>
+    <innernamespace refid="da/dec/a00080">mc::gfx</innernamespace>
+    <innernamespace refid="d8/d53/a00081">mc::gfx::ssl</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d2/d79/a00051_a3ac0e63280fbf574e9e3861878c16675_1a3ac0e63280fbf574e9e3861878c16675" prot="public" static="no">
+        <name>MACE_GRAPHICS_RENDERER_H</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="12" column="9" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">R&quot;(</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_window&gt;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#ifndef<sp/>_SSL_POSITION_LIBRARY_</highlight></codeline>
-<codeline><highlight class="normal">#define<sp/>_SSL_POSITION_LIBRARY_</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">struct<sp/>ssl_EntityDataStruct{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec3<sp/>ssl_Translation;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_StretchX;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec3<sp/>ssl_Scale;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_StretchY;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>mat4<sp/>ssl_Rotation;</highlight></codeline>
-<codeline><highlight class="normal">};</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">layout(location<sp/>=<sp/>15)<sp/>in<sp/>vec3<sp/>ssl_VertexPosition;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">layout(std140)<sp/>uniform<sp/>ssl_BaseEntityBuffer{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_EntityDataStruct<sp/>ssl_BaseEntity;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_EntityDataStruct<sp/>ssl_ParentEntity;</highlight></codeline>
-<codeline><highlight class="normal">};</highlight></codeline>
-<codeline></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">vec4<sp/>sslGetEntityPosition(){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//we<sp/>do<sp/>ssl_Scale<sp/>first,<sp/>then<sp/>rotate,<sp/>then<sp/>translate.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_Position<sp/>=<sp/>(vec4(ssl_BaseEntity.ssl_Translation,1.0)+(ssl_BaseEntity.ssl_Rotation<sp/>*<sp/>(vec4(ssl_BaseEntity.ssl_Scale*ssl_VertexPosition,0.0))));//MAD<sp/>operations<sp/>right<sp/>here!</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position.xy<sp/>-=<sp/>0.5f;//because<sp/>we<sp/>moved<sp/>the<sp/>origin<sp/>to<sp/>be<sp/>the<sp/>bottom<sp/>left,<sp/>we<sp/>need<sp/>to<sp/>move<sp/>it<sp/>back<sp/>to<sp/>the<sp/>center<sp/>for<sp/>ssl_Rotation</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//applying<sp/>the<sp/>parent<sp/>properties<sp/>now</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position<sp/>=<sp/>(vec4(ssl_ParentEntity.ssl_Translation,1.0)+((ssl_ParentEntity.ssl_Rotation<sp/>*<sp/>(ssl_Position<sp/>*<sp/>vec4(ssl_ParentEntity.ssl_Scale,0.0)))));//what<sp/>a<sp/>MAD<sp/>man!</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position.xy<sp/>*=<sp/>2;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position.xy<sp/>-=<sp/>0.5;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position<sp/>+=<sp/>vec4(ssl_BaseEntity.ssl_Scale/2,0.0f);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec2<sp/>ssl_SizeModifier<sp/>=<sp/>ssl_OriginalSize/ssl_CurrentSize;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(ssl_BaseEntity.ssl_StretchX==0){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ssl_Position.x*=ssl_SizeModifier.x;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(ssl_BaseEntity.ssl_StretchY==0){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ssl_Position.y*=ssl_SizeModifier.y;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>/*</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>For<sp/>those<sp/>who<sp/>didn&apos;t<sp/>get<sp/>the<sp/>MAD<sp/>joke:</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>MAD<sp/>means<sp/>multipy,<sp/>add,<sp/>then<sp/>divide.<sp/>Doing<sp/>math<sp/>in<sp/>that<sp/>sequence<sp/>will<sp/>be<sp/>done<sp/>in<sp/>1<sp/>gpu<sp/>cycle<sp/>instead<sp/>of<sp/>3,<sp/>which<sp/>saves<sp/>a<sp/>lot<sp/>of<sp/>processing<sp/>power.<sp/><sp/>Thats<sp/>what<sp/>we<sp/>are<sp/>doing<sp/>up<sp/>there.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>ssl_Position;</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#endif</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">)&quot;</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_GRAPHICS_RENDERER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_GRAPHICS_RENDERER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Graphics/Entity.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Graphics/Shaders.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Graphics/Window.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;deque&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d1/d51/a00079" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//forward<sp/>defining<sp/>to<sp/>prevent<sp/>inclusion<sp/>of<sp/>header<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">Preprocessor;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">gfx<sp/>{</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//if<sp/>the<sp/>container<sp/>we<sp/>use<sp/>is<sp/>ever<sp/>going<sp/>to<sp/>be<sp/>changed,<sp/>we<sp/>typedef<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref><sp/>=<sp/>std::deque&lt;std::pair&lt;Index,<sp/>GraphicsEntity*&gt;&gt;;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//forward<sp/>define<sp/>for<sp/>friends</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d0/dc0/a00033" kindref="compound">Renderer</ref>;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="d8/d53/a00081" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">ssl<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" kindref="member">init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;<sp/>originalWidth,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;<sp/>originalHeight);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a329c6799b3cebe722f7bcbdc476c4f55_1a329c6799b3cebe722f7bcbdc476c4f55" kindref="member">setUp</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*<sp/>win);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_ae97c934f1995505f7d4c1827df2ad6b5_1ae97c934f1995505f7d4c1827df2ad6b5" kindref="member">tearDown</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*<sp/>win);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a5c2e736611e0deaed33a5d5d4c8244f1_1a5c2e736611e0deaed33a5d5d4c8244f1" kindref="member">destroy</ref>();</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a18ef93d8629fab4c9285965c12c0a3eb_1a18ef93d8629fab4c9285965c12c0a3eb" kindref="member">resize</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;<sp/>width,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;<sp/>height);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_ab1f194595341e95398a607e9d9014550_1ab1f194595341e95398a607e9d9014550" kindref="member">checkInput</ref>();</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a2a076e52264a578f9581f45af8376c38_1a2a076e52264a578f9581f45af8376c38" kindref="member">bindBuffer</ref>(<ref refid="db/d3a/a00040" kindref="compound">UniformBuffer</ref>&amp;<sp/>buf);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a994bfe876e76a7ba9a10a085735ab7d9_1a994bfe876e76a7ba9a10a085735ab7d9" kindref="member">fillBuffer</ref>(<ref refid="db/d3a/a00040" kindref="compound">UniformBuffer</ref>&amp;<sp/>buf,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d2/de7/a00014" kindref="compound">Entity</ref>*<sp/>en);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_ae2f09ba14c8b683e806e2f2cb3d6748c_1ae2f09ba14c8b683e806e2f2cb3d6748c" kindref="member">bindEntity</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref>*<sp/>en,<sp/><ref refid="d1/dc6/a00037" kindref="compound">ShaderProgram</ref>&amp;<sp/>prog);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a4294f01b2f003eca9e849cafa5a039f6_1a4294f01b2f003eca9e849cafa5a039f6" kindref="member">bindShaderProgram</ref>(<ref refid="d1/dc6/a00037" kindref="compound">ShaderProgram</ref>&amp;<sp/>prog);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/><ref refid="d8/d53/a00081_a277a469dd85e47913f76caac8b4ea08c_1a277a469dd85e47913f76caac8b4ea08c" kindref="member">processShader</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>shader,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GLenum&amp;<sp/>type);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d5/d79/a00030" kindref="compound">mc::Preprocessor</ref>&amp;<sp/><ref refid="d8/d53/a00081_a3841d4e7123805769222ac714deafe5c_1a3841d4e7123805769222ac714deafe5c" kindref="member">getSSLPreprocessor</ref>();</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//we<sp/>declare<sp/>RenderImpl<sp/>which<sp/>RenderProtocol<sp/>extends.<sp/>WE<sp/>can&apos;t<sp/>store<sp/>a<sp/>pointer<sp/>to<sp/>RenderProtocol<sp/>(because<sp/>its<sp/>templated),<sp/>but<sp/>we<sp/>can<sp/>point<sp/>to<sp/>RenderImpl</highlight></codeline>
+<codeline lineno="105" refid="db/df3/a00034" refkind="compound"><highlight class="comment"></highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="db/df3/a00034" kindref="compound">RenderImpl</ref><sp/>{</highlight></codeline>
+<codeline lineno="106" refid="db/df3/a00034_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">friend</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d0/dc0/a00033" kindref="compound">Renderer</ref>;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//ssl::init<sp/>needs<sp/>to<sp/>be<sp/>friends<sp/>to<sp/>access<sp/>the<sp/>index<sp/>variable</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">friend</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" kindref="member">ssl::init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="db/df3/a00034" kindref="compound">RenderImpl</ref>()<sp/>noexcept<sp/>=<sp/>default;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/>~<ref refid="db/df3/a00034" kindref="compound">RenderImpl</ref>()<sp/>noexcept<sp/>=<sp/>default;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a18ef93d8629fab4c9285965c12c0a3eb_1a18ef93d8629fab4c9285965c12c0a3eb" kindref="member">resize</ref>(const<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>width,<sp/>const<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>height)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" kindref="member">init</ref>(const<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>originalWidth,<sp/>const<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>originalHeight)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a329c6799b3cebe722f7bcbdc476c4f55_1a329c6799b3cebe722f7bcbdc476c4f55" kindref="member">setUp</ref>(os::WindowModule*<sp/>win,<sp/><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref>*<sp/>queue)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>render(os::WindowModule*<sp/>win,<sp/><ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref>*<sp/>entity)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_ae97c934f1995505f7d4c1827df2ad6b5_1ae97c934f1995505f7d4c1827df2ad6b5" kindref="member">tearDown</ref>(os::WindowModule*<sp/>win,<sp/><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref>*<sp/>queue)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>virtual<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a5c2e736611e0deaed33a5d5d4c8244f1_1a5c2e736611e0deaed33a5d5d4c8244f1" kindref="member">destroy</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>private:</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>template&lt;typename<sp/>T&gt;</highlight></codeline>
+<codeline lineno="153" refid="d4/d8c/a00035" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>class<sp/><ref refid="d4/d8c/a00035" kindref="compound">RenderProtocol</ref>:<sp/>public<sp/><ref refid="db/df3/a00034" kindref="compound">RenderImpl</ref><sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="db/df3/a00034_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" kindref="member">RenderImpl::RenderImpl</ref>;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="d4/d8c/a00035_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1" kindref="member">resize</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>)</highlight><highlight class="keyword"><sp/>override<sp/></highlight><highlight class="normal">{};</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159" refid="d4/d8c/a00035_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54" kindref="member">init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>)</highlight><highlight class="keyword"><sp/>override<sp/></highlight><highlight class="normal">{}</highlight></codeline>
+<codeline lineno="160" refid="d4/d8c/a00035_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba" kindref="member">setUp</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*,<sp/><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref>*)</highlight><highlight class="keyword"><sp/>override<sp/></highlight><highlight class="normal">{};</highlight></codeline>
+<codeline lineno="161" refid="d4/d8c/a00035_a9d43b72296acfbba53ba52d562a01030_1a9d43b72296acfbba53ba52d562a01030" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035_a9d43b72296acfbba53ba52d562a01030_1a9d43b72296acfbba53ba52d562a01030" kindref="member">render</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*,<sp/><ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref>*)</highlight><highlight class="keyword"><sp/>override<sp/></highlight><highlight class="normal">{};</highlight></codeline>
+<codeline lineno="162" refid="d4/d8c/a00035_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538" kindref="member">tearDown</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*,<sp/><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref>*)</highlight><highlight class="keyword"><sp/>override<sp/></highlight><highlight class="normal">{};</highlight></codeline>
+<codeline lineno="163" refid="d4/d8c/a00035_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8" kindref="member">destroy</ref>()</highlight><highlight class="keyword"><sp/>override<sp/></highlight><highlight class="normal">{};</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="d0/dc0/a00033" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d0/dc0/a00033" kindref="compound">Renderer</ref><sp/>final{</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//needs<sp/>to<sp/>access<sp/>registerProtocol</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">friend</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" kindref="member">ssl::init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref>&amp;);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a18ef93d8629fab4c9285965c12c0a3eb_1a18ef93d8629fab4c9285965c12c0a3eb" kindref="member">resize</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>width,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>hieght);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" kindref="member">init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>originalWidth,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>originalHeight);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a329c6799b3cebe722f7bcbdc476c4f55_1a329c6799b3cebe722f7bcbdc476c4f55" kindref="member">setUp</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*<sp/>win);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T&gt;</highlight></codeline>
+<codeline lineno="190" refid="d0/dc0/a00033_a529dff1752fb51055411c300f5ffe7db_1a529dff1752fb51055411c300f5ffe7db" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d0/dc0/a00033_a529dff1752fb51055411c300f5ffe7db_1a529dff1752fb51055411c300f5ffe7db" kindref="member">queue</ref>(T*<sp/>e)<sp/>{</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>e<sp/>==<sp/></highlight><highlight class="keyword">nullptr</highlight><highlight class="normal"><sp/>||<sp/>e<sp/>==<sp/>NULL<sp/>)</highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_a4a3cdc4c9ec7d01a918b7870ef055ba4_1a4a3cdc4c9ec7d01a918b7870ef055ba4" kindref="member">NullPointerException</ref>(</highlight><highlight class="stringliteral">&quot;Input<sp/>pointer<sp/>to<sp/>an<sp/>entity<sp/>must<sp/>not<sp/>be<sp/>null<sp/>in<sp/>queue()&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/><ref refid="d4/d8c/a00035" kindref="compound">RenderProtocol&lt;T&gt;::index</ref><sp/>==<sp/>-1<sp/>)registerProtocol&lt;T&gt;();</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pushEntity(<ref refid="d4/d8c/a00035" kindref="compound">RenderProtocol&lt;T&gt;::index</ref>,<sp/>e);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>numberOfProtocols();</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_ae97c934f1995505f7d4c1827df2ad6b5_1ae97c934f1995505f7d4c1827df2ad6b5" kindref="member">tearDown</ref>(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*<sp/>win);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>renderFrame(<ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref>*<sp/>win);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_ab1f194595341e95398a607e9d9014550_1ab1f194595341e95398a607e9d9014550" kindref="member">checkInput</ref>();</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d8/d53/a00081_a5c2e736611e0deaed33a5d5d4c8244f1_1a5c2e736611e0deaed33a5d5d4c8244f1" kindref="member">destroy</ref>();</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>clearBuffers();</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setRefreshColor(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>r,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>g,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>b,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>a<sp/>=<sp/>1.0f);</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setRefreshColor(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009" kindref="compound">Color</ref>&amp;<sp/>c);</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>getOriginalWidth();</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>getOriginalHeight();</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d0/dc0/a00033" kindref="compound">Renderer</ref>()<sp/>=<sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>~<ref refid="d0/dc0/a00033" kindref="compound">Renderer</ref>()<sp/>=<sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>pushEntity(<ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>protocol,<sp/><ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref>*<sp/><sp/>entity);</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>pushProtocol(<ref refid="db/df3/a00034" kindref="compound">RenderImpl</ref>*<sp/>protocol);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T&gt;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>registerProtocol()<sp/>{</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//in<sp/>destroy(),<sp/>this<sp/>memory<sp/>is<sp/>deleted</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="db/df3/a00034" kindref="compound">RenderImpl</ref>*<sp/>protocol<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><ref refid="d4/d8c/a00035" kindref="compound">RenderProtocol&lt;T&gt;</ref>();</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>protocol-&gt;<ref refid="db/df3/a00034_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1" kindref="member">init</ref>(getOriginalWidth(),<sp/>getOriginalHeight());</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pushProtocol(protocol);</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d4/d8c/a00035" kindref="compound">RenderProtocol&lt;T&gt;::index</ref><sp/>=<sp/>numberOfProtocols()<sp/>-<sp/>1;</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Renderer</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//gfx</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/include/ssl_position.glsl"/>
+    <location file="include/MACE/Graphics/Renderer.h"/>
   </compounddef>
 </doxygen>

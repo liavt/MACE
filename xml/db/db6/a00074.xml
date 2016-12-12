@@ -1,328 +1,196 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="db/db6/a00074" kind="namespace" language="C++">
-    <compoundname>mc::gfx::ssl</compoundname>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="db/db6/a00074_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::init</definition>
-        <argsstring>(const Size &amp;originalWidth, const Size &amp;originalHeight)</argsstring>
-        <name>init</name>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>originalWidth</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>originalHeight</declname>
-        </param>
+  <compounddef id="db/db6/a00074" kind="file" language="C++">
+    <compoundname>Utility.h</compoundname>
+    <includes refid="dc/ddf/a00067" local="no">MACE/Utility/Color.h</includes>
+    <includes refid="d9/da5/a00075" local="no">MACE/Utility/Vector.h</includes>
+    <includes refid="d9/db3/a00066" local="no">MACE/Utility/BitField.h</includes>
+    <includes refid="da/d24/a00068" local="no">MACE/Utility/Math.h</includes>
+    <includes refid="d1/d6e/a00073" local="no">MACE/Utility/Transform.h</includes>
+    <includes refid="d6/d2c/a00072" local="no">MACE/Utility/Preprocessor.h</includes>
+    <includes refid="d0/d89/a00071" local="no">MACE/Utility/MatrixAliases.h</includes>
+    <includedby refid="df/d03/a00062" local="no">include/MACE/MACE.h</includedby>
+    <incdepgraph>
+      <node id="349">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="Utility.h"/>
+        <childnode refid="350" relation="include">
+        </childnode>
+        <childnode refid="355" relation="include">
+        </childnode>
+        <childnode refid="359" relation="include">
+        </childnode>
+        <childnode refid="356" relation="include">
+        </childnode>
+        <childnode refid="360" relation="include">
+        </childnode>
+        <childnode refid="362" relation="include">
+        </childnode>
+        <childnode refid="366" relation="include">
+        </childnode>
+      </node>
+      <node id="350">
+        <label>MACE/Utility/Color.h</label>
+        <link refid="dc/ddf/a00067_source"/>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="354" relation="include">
+        </childnode>
+      </node>
+      <node id="352">
+        <label>cstdint</label>
+      </node>
+      <node id="353">
+        <label>stdexcept</label>
+      </node>
+      <node id="351">
+        <label>MACE/System/Constants.h</label>
+        <link refid="d1/d6f/a00063_source"/>
+        <childnode refid="352" relation="include">
+        </childnode>
+        <childnode refid="353" relation="include">
+        </childnode>
+      </node>
+      <node id="361">
+        <label>MACE/Utility/Matrix.h</label>
+        <link refid="d4/d31/a00069_source"/>
+        <childnode refid="355" relation="include">
+        </childnode>
+      </node>
+      <node id="364">
+        <label>string</label>
+      </node>
+      <node id="365">
+        <label>map</label>
+      </node>
+      <node id="359">
+        <label>MACE/Utility/BitField.h</label>
+        <link refid="d9/db3/a00066_source"/>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="357" relation="include">
+        </childnode>
+      </node>
+      <node id="366">
+        <label>MACE/Utility/MatrixAliases.h</label>
+        <link refid="d0/d89/a00071_source"/>
+        <childnode refid="355" relation="include">
+        </childnode>
+        <childnode refid="361" relation="include">
+        </childnode>
+      </node>
+      <node id="357">
+        <label>ostream</label>
+      </node>
+      <node id="355">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="d9/da5/a00075_source"/>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="356" relation="include">
+        </childnode>
+        <childnode refid="354" relation="include">
+        </childnode>
+        <childnode refid="357" relation="include">
+        </childnode>
+        <childnode refid="358" relation="include">
+        </childnode>
+      </node>
+      <node id="363">
+        <label>vector</label>
+      </node>
+      <node id="362">
+        <label>MACE/Utility/Preprocessor.h</label>
+        <link refid="d6/d2c/a00072_source"/>
+        <childnode refid="363" relation="include">
+        </childnode>
+        <childnode refid="364" relation="include">
+        </childnode>
+        <childnode refid="365" relation="include">
+        </childnode>
+        <childnode refid="351" relation="include">
+        </childnode>
+      </node>
+      <node id="354">
+        <label>array</label>
+      </node>
+      <node id="356">
+        <label>MACE/Utility/Math.h</label>
+        <link refid="da/d24/a00068_source"/>
+        <childnode refid="355" relation="include">
+        </childnode>
+      </node>
+      <node id="360">
+        <label>MACE/Utility/Transform.h</label>
+        <link refid="d1/d6e/a00073_source"/>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="361" relation="include">
+        </childnode>
+      </node>
+      <node id="358">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="367">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="Utility.h"/>
+        <childnode refid="368" relation="include">
+        </childnode>
+      </node>
+      <node id="368">
+        <label>include/MACE/MACE.h</label>
+        <link refid="df/d03/a00062_source"/>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="d1/d51/a00079">mc</innernamespace>
+    <innernamespace refid="d2/db1/a00070">mc::math</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="db/db6/a00074_a034e64a32cecda916dc432840a98b9a2_1a034e64a32cecda916dc432840a98b9a2" prot="public" static="no">
+        <name>MACE_UTILITY_UTILITY_H</name>
         <briefdescription>
-        </briefdescription>
+<para>Includes all utility files in MACE. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="41" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a329c6799b3cebe722f7bcbdc476c4f55_1a329c6799b3cebe722f7bcbdc476c4f55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::setUp</definition>
-        <argsstring>(os::WindowModule *win)</argsstring>
-        <name>setUp</name>
-        <param>
-          <type><ref refid="d1/dc6/a00037" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="46" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_ae97c934f1995505f7d4c1827df2ad6b5_1ae97c934f1995505f7d4c1827df2ad6b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::tearDown</definition>
-        <argsstring>(os::WindowModule *win)</argsstring>
-        <name>tearDown</name>
-        <param>
-          <type><ref refid="d1/dc6/a00037" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="51" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a5c2e736611e0deaed33a5d5d4c8244f1_1a5c2e736611e0deaed33a5d5d4c8244f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::destroy</definition>
-        <argsstring>()</argsstring>
-        <name>destroy</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="56" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a18ef93d8629fab4c9285965c12c0a3eb_1a18ef93d8629fab4c9285965c12c0a3eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::resize</definition>
-        <argsstring>(const Size &amp;width, const Size &amp;height)</argsstring>
-        <name>resize</name>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>width</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d6/d2c/a00072_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>height</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="61" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_ab1f194595341e95398a607e9d9014550_1ab1f194595341e95398a607e9d9014550" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::checkInput</definition>
-        <argsstring>()</argsstring>
-        <name>checkInput</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="67" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a2a076e52264a578f9581f45af8376c38_1a2a076e52264a578f9581f45af8376c38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::bindBuffer</definition>
-        <argsstring>(UniformBuffer &amp;buf)</argsstring>
-        <name>bindBuffer</name>
-        <param>
-          <type><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref> &amp;</type>
-          <declname>buf</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="73" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a994bfe876e76a7ba9a10a085735ab7d9_1a994bfe876e76a7ba9a10a085735ab7d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::fillBuffer</definition>
-        <argsstring>(UniformBuffer &amp;buf, const Entity *en)</argsstring>
-        <name>fillBuffer</name>
-        <param>
-          <type><ref refid="db/df3/a00034" kindref="compound">UniformBuffer</ref> &amp;</type>
-          <declname>buf</declname>
-        </param>
-        <param>
-          <type>const <ref refid="da/d45/a00011" kindref="compound">Entity</ref> *</type>
-          <declname>en</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="78" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_ae2f09ba14c8b683e806e2f2cb3d6748c_1ae2f09ba14c8b683e806e2f2cb3d6748c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::bindEntity</definition>
-        <argsstring>(const GraphicsEntity *en, ShaderProgram &amp;prog)</argsstring>
-        <name>bindEntity</name>
-        <param>
-          <type>const <ref refid="dd/d1b/a00015" kindref="compound">GraphicsEntity</ref> *</type>
-          <declname>en</declname>
-        </param>
-        <param>
-          <type><ref refid="df/d61/a00031" kindref="compound">ShaderProgram</ref> &amp;</type>
-          <declname>prog</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="84" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a4294f01b2f003eca9e849cafa5a039f6_1a4294f01b2f003eca9e849cafa5a039f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::bindShaderProgram</definition>
-        <argsstring>(ShaderProgram &amp;prog)</argsstring>
-        <name>bindShaderProgram</name>
-        <param>
-          <type><ref refid="df/d61/a00031" kindref="compound">ShaderProgram</ref> &amp;</type>
-          <declname>prog</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="note"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="89" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a277a469dd85e47913f76caac8b4ea08c_1a277a469dd85e47913f76caac8b4ea08c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::string</type>
-        <definition>std::string mc::gfx::ssl::processShader</definition>
-        <argsstring>(const std::string &amp;shader, const GLenum &amp;type)</argsstring>
-        <name>processShader</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>shader</declname>
-        </param>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>type</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="94" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="db/db6/a00074_a3841d4e7123805769222ac714deafe5c_1a3841d4e7123805769222ac714deafe5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d3/dfe/a00025" kindref="compound">mc::Preprocessor</ref> &amp;</type>
-        <definition>const mc::Preprocessor&amp; mc::gfx::ssl::getSSLPreprocessor</definition>
-        <argsstring>()</argsstring>
-        <name>getSSLPreprocessor</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="98" column="1"/>
+        <location file="include/MACE/Utility/Utility.h" line="16" column="9" bodyfile="include/MACE/Utility/Utility.h" bodystart="16" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files. </para>    </briefdescription>
+    </briefdescription>
     <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>    </detaileddescription>
-    <location file="include/MACE/Graphics/Renderer.h" line="36" column="1"/>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_UTILITY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_UTILITY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d1/d51/a00079" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">math<sp/>{}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Color.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Vector.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/BitField.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Math.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Transform.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Preprocessor.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/MatrixAliases.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Utility/Utility.h"/>
   </compounddef>
 </doxygen>

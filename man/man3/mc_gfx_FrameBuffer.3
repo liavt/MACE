@@ -1,4 +1,4 @@
-.TH "mc::gfx::FrameBuffer" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::FrameBuffer" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,11 +15,11 @@ Inherits \fBmc::gfx::Object\fP\&.
 
 .in +1c
 .ti -1c
-.RI "void \fBinit\fP ()"
+.RI "void \fBinit\fP () override"
 .br
 .RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
 .ti -1c
-.RI "void \fBdestroy\fP ()"
+.RI "void \fBdestroy\fP () override"
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
@@ -51,7 +51,23 @@ Inherits \fBmc::gfx::Object\fP\&.
 .br
 .RI "\fISpecifies what buffers to render to\&. \fP"
 .ti -1c
-.RI "bool \fBisCreated\fP () const "
+.RI "void \fBsetReadBuffer\fP (const \fBEnum\fP &mode)"
+.br
+.RI "\fISelect which color buffer to use for reading via \fBFrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const\fP\&. \fP"
+.ti -1c
+.RI "void \fBreadPixels\fP (const int &x, const int &y, const \fBSize\fP &width, const \fBSize\fP &height, const \fBEnum\fP &format, const \fBEnum\fP &type, void *data) const "
+.br
+.RI "\fIRead pixels from this \fC\fBFrameBuffer\fP\fP \fP"
+.ti -1c
+.RI "void \fBsetPixelStore\fP (const \fBEnum\fP &name, const float &param)"
+.br
+.RI "\fISet the pixel storage mode for this \fC\fBFrameBuffer\fP\fP for use in \fBFrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const\fP\&. \fP"
+.ti -1c
+.RI "void \fBsetPixelStore\fP (const \fBEnum\fP &name, const int &param)"
+.br
+.RI "\fISet the pixel storage mode for this \fC\fBFrameBuffer\fP\fP for use in \fBFrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const\fP\&. \fP"
+.ti -1c
+.RI "bool \fBisCreated\fP () const  override"
 .br
 .RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
@@ -59,11 +75,11 @@ Inherits \fBmc::gfx::Object\fP\&.
 .br
 .RI "\fIQueries OpenGL for the status of this `FrameBuffer\&. \fP"
 .ti -1c
-.RI "void \fBbind\fP () const "
+.RI "virtual void \fBbind\fP () const "
 .br
 .RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
 .ti -1c
-.RI "void \fBunbind\fP () const "
+.RI "virtual void \fBunbind\fP () const "
 .br
 .RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
 .ti -1c
@@ -93,14 +109,20 @@ Represents an OpenGL Framebuffer \fBObject\fP which allows rendering to a non-sc
 
 This also allows rendering to a \fC\fBTexture\fP\fP or \fC\fBRenderBuffer\fP\fP object\&. 
 .PP
+This is not a subclass of the \fC\fBBuffer\fP\fP object as this is technically not an OpenGL buffer\&. The name is misleading\&.
+.PP
 \fBSee also:\fP
 .RS 4
 https://www.opengl.org/wiki/Framebuffer_Object 
+.PP
+\fBRenderBuffer\fP 
+.PP
+\fBTexture\fP 
 .RE
 .PP
 
 .PP
-Definition at line 180 of file Buffer\&.h\&.
+Definition at line 274 of file Buffer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::FrameBuffer::attachRenderbuffer (const GLenum & target, const GLenum & attachment, const \fBRenderBuffer\fP & buffer)"
@@ -151,7 +173,7 @@ https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 Replace this with the actual \fBTexture\fP class 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -190,7 +212,7 @@ https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 Replace this with the actual \fBTexture\fP class 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -234,7 +256,7 @@ https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 Replace this with the actual \fBTexture\fP class 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -278,7 +300,7 @@ https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 Replace this with the actual \fBTexture\fP class 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -319,7 +341,7 @@ Attaches a single layer from a texture to this \fC\fBFrameBuffer\fP\fP
 https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -330,12 +352,12 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::Object::bind () const\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Object::bind () const\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -376,7 +398,7 @@ The \fC\fBFrameBuffer\fP\fP status\&. The full list of enums is described in the
 https://www.opengl.org/wiki/GLAPI/glCheckFramebufferStatus 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -387,12 +409,12 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::FrameBuffer::destroy ()\fC [virtual]\fP"
+.SS "void mc::gfx::FrameBuffer::destroy ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Calls the corresponding glDestroy* function and deletes the ID\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -415,7 +437,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet (\fBObject::init()\fP has not been called) 
 .RE
 .PP
 
@@ -436,12 +458,12 @@ The ID represented by this \fC\fBObject\fP\fP
 .RE
 .PP
 
-.SS "void mc::gfx::FrameBuffer::init ()\fC [virtual]\fP"
+.SS "void mc::gfx::FrameBuffer::init ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Calls the corresponding glCreate* function and assigns an ID\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -465,7 +487,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
-.SS "bool mc::gfx::FrameBuffer::isCreated () const\fC [virtual]\fP"
+.SS "bool mc::gfx::FrameBuffer::isCreated () const\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
@@ -482,7 +504,7 @@ Whether this \fC\fBObject\fP\fP represents memory
 \fBObject::init()\fP 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -541,6 +563,48 @@ Whether \fCthis\fP and \fCother\fP are the same
 .RE
 .PP
 
+.SS "void mc::gfx::FrameBuffer::readPixels (const int & x, const int & y, const \fBSize\fP & width, const \fBSize\fP & height, const \fBEnum\fP & format, const \fBEnum\fP & type, void * data) const"
+
+.PP
+Read pixels from this \fC\fBFrameBuffer\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP The x-coordinate of the lower-left pixel block you want to read\&. The origin is the lower left corner of the framebuffer 
+.br
+\fIy\fP The y-coordinate of the lower-left pixel block you want to read\&. The origin is the lower left corner of the framebuffer 
+.br
+\fIwidth\fP The width of the pixel block you want to read\&. A width and height of 1 means a single pixel 
+.br
+\fIheight\fP The height of the pixel block you want to read\&. A width and height of 1 means a single pixel 
+.br
+\fIformat\fP The format of the pixel data\&. Must be one of GL_STENCIL_INDEX, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_RED, GL_GREEN, GL_BLUE, GL_RGB, GL_BGR, GL_RGBA, and GL_BGRA\&. 
+.br
+\fItype\fP The type of the pixel data 
+.br
+\fIdata\fP Pointer to where you want the data to be written to\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/sdk/docs/man/html/glReadPixels.xhtml 
+.PP
+\fBFrameBuffer::setPixelStore(const Enum&, const float&)\fP 
+.PP
+\fBFrameBuffer::setReadBuffer(const Enum&)\fP; 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::FrameBuffer::setDrawBuffers (const \fBSize\fP & arrSize, const GLenum * buffers)"
 
 .PP
@@ -570,7 +634,7 @@ FrameBuffer::attachTextureLayer(const GLenum&, const GLenum&, const GLuint&, con
 \fBFrameBuffer::attachRenderbuffer(const GLenum&, const GLenum&, const RenderBuffer&)\fP 
 .RE
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -581,12 +645,110 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::Object::unbind () const\fC [inherited]\fP"
+.SS "void mc::gfx::FrameBuffer::setPixelStore (const \fBEnum\fP & name, const float & param)"
+
+.PP
+Set the pixel storage mode for this \fC\fBFrameBuffer\fP\fP for use in \fBFrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP The parameter to change 
+.br
+\fIparam\fP What to change it to 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml 
+.PP
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::FrameBuffer::setPixelStore (const \fBEnum\fP & name, const int & param)"
+
+.PP
+Set the pixel storage mode for this \fC\fBFrameBuffer\fP\fP for use in \fBFrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP The parameter to change 
+.br
+\fIparam\fP What to change it to 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml 
+.PP
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::FrameBuffer::setReadBuffer (const \fBEnum\fP & mode)"
+
+.PP
+Select which color buffer to use for reading via \fBFrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImode\fP Which attachment to use 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBFrameBuffer::setPixelStore(const Enum&, const float&)\fP 
+.PP
+https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml 
+.PP
+FrameBuffer::attachTexture(const GLenum&, const GLenum&, const GLenum&, const GLuint&) 
+.PP
+\fBFrameBuffer::attachTexture1D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)\fP 
+.PP
+\fBFrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)\fP 
+.PP
+FrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&, const GLint&) 
+.PP
+FrameBuffer::attachTextureLayer(const GLenum&, const GLenum&, const GLuint&, const GLint&) 
+.PP
+\fBFrameBuffer::attachRenderbuffer(const GLenum&, const GLenum&, const RenderBuffer&)\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::Object::unbind () const\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE

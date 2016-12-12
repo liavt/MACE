@@ -1,538 +1,180 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="da/dec/a00080" kind="namespace" language="C++">
-    <compoundname>mc::System</compoundname>
+    <compoundname>mc::gfx</compoundname>
+    <innerclass refid="de/d5e/a00007" prot="public">mc::gfx::Buffer</innerclass>
+    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
+    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
+    <innerclass refid="da/d45/a00011" prot="public">mc::gfx::CopyReadBuffer</innerclass>
+    <innerclass refid="df/d86/a00012" prot="public">mc::gfx::CopyWriteBuffer</innerclass>
+    <innerclass refid="d7/dd4/a00013" prot="public">mc::gfx::ElementBuffer</innerclass>
+    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::Entity</innerclass>
+    <innerclass refid="dd/d1b/a00015" prot="public">mc::gfx::Entity2D</innerclass>
+    <innerclass refid="d4/d51/a00017" prot="public">mc::gfx::FrameBuffer</innerclass>
+    <innerclass refid="d1/d2b/a00018" prot="public">mc::gfx::GraphicsEntity</innerclass>
+    <innerclass refid="dd/da2/a00019" prot="public">mc::gfx::Group</innerclass>
+    <innerclass refid="db/db2/a00020" prot="public">mc::gfx::Image</innerclass>
+    <innerclass refid="d0/d33/a00027" prot="public">mc::gfx::Object</innerclass>
+    <innerclass refid="dc/d3c/a00028" prot="public">mc::gfx::PixelPackBuffer</innerclass>
+    <innerclass refid="d5/d16/a00029" prot="public">mc::gfx::PixelUnpackBuffer</innerclass>
+    <innerclass refid="df/d61/a00031" prot="public">mc::gfx::QueryObject</innerclass>
+    <innerclass refid="dc/d87/a00032" prot="public">mc::gfx::RenderBuffer</innerclass>
+    <innerclass refid="d0/dc0/a00033" prot="public">mc::gfx::Renderer</innerclass>
+    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::RenderImpl</innerclass>
+    <innerclass refid="d4/d8c/a00035" prot="public">mc::gfx::RenderProtocol</innerclass>
+    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::RenderProtocol&lt; Entity2D &gt;</innerclass>
+    <innerclass refid="d1/dc6/a00037" prot="public">mc::gfx::ShaderProgram</innerclass>
+    <innerclass refid="d8/d41/a00038" prot="public">mc::gfx::Texture</innerclass>
+    <innerclass refid="db/d3a/a00040" prot="public">mc::gfx::UniformBuffer</innerclass>
+    <innerclass refid="d5/db6/a00042" prot="public">mc::gfx::VertexArray</innerclass>
+    <innerclass refid="d6/d42/a00043" prot="public">mc::gfx::VertexBuffer</innerclass>
+    <innernamespace refid="d8/d53/a00081">mc::gfx::ssl</innernamespace>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="da/dec/a00080_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" prot="public" static="no">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>using mc::gfx::EntityProperties = typedef BitField</definition>
+        <argsstring></argsstring>
+        <name>EntityProperties</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="22" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="da/dec/a00080_a5ec3c90c72c1f476325a75981f887846_1a5ec3c90c72c1f476325a75981f887846" prot="public" static="no">
+        <type><ref refid="d7/d7a/a00016" kindref="compound">Exception</ref></type>
+        <definition>using mc::gfx::GLError = typedef Exception</definition>
+        <argsstring></argsstring>
+        <name>GLError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="20" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="da/dec/a00080_a528a122e45ab2808323ee471e9a86797_1a528a122e45ab2808323ee471e9a86797" prot="public" static="no">
+        <type><ref refid="d7/d7a/a00016" kindref="compound">Exception</ref></type>
+        <definition>using mc::gfx::ShaderError = typedef Exception</definition>
+        <argsstring></argsstring>
+        <name>ShaderError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="22" column="1" bodyfile="include/MACE/Graphics/GraphicsConstants.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" prot="public" static="no">
+        <type>std::deque&lt; std::pair&lt; <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>, <ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref> * &gt;&gt;</type>
+        <definition>using mc::gfx::RenderQueue = typedef std::deque&lt;std::pair&lt;Index, GraphicsEntity*&gt;&gt;</definition>
+        <argsstring></argsstring>
+        <name>RenderQueue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="27" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="da/dec/a00080_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::System::addModule</definition>
-        <argsstring>(Module &amp;m)</argsstring>
-        <name>addModule</name>
-        <param>
-          <type><ref refid="dc/de2/a00024" kindref="compound">Module</ref> &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-<para>Register a <ref refid="dc/de2/a00024" kindref="compound">Module</ref>. </para>        </briefdescription>
-        <detaileddescription>
-<para>Registered <computeroutput>Modules</computeroutput> will have <computeroutput><ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref>, <ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref>,</computeroutput> and <computeroutput>destroy()</computeroutput> are respectivaly called when <computeroutput><ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">System.update()</ref>, <ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">System.init()</ref>,</computeroutput> and <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">System.terminate()</ref></computeroutput> are called. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Reference to a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref>.</computeroutput> If the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> referenced leaves scope or gets deallocated, a <computeroutput>read access violation will occur.</computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Location of the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> in the buffer. This index can be used in various other methods. </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="97" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_ab37f8cd571040772e73a07584f8b0dba_1ab37f8cd571040772e73a07584f8b0dba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="da/dec/a00080_a76c7ba19bf08d8dbfefd32eebda71744_1a76c7ba19bf08d8dbfefd32eebda71744" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::System::removeModule</definition>
-        <argsstring>(Module &amp;m)</argsstring>
-        <name>removeModule</name>
-        <param>
-          <type><ref refid="dc/de2/a00024" kindref="compound">Module</ref> &amp;</type>
-          <declname>m</declname>
-        </param>
+        <definition>void mc::gfx::checkGLError</definition>
+        <argsstring>()</argsstring>
+        <name>checkGLError</name>
         <briefdescription>
-<para>Remove a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> by reference. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para>This is generally more safe than <computeroutput><ref refid="da/dec/a00080_a08969e2d1572536469827e7b44e904f9_1a08969e2d1572536469827e7b44e904f9" kindref="member">removeModule(std::string)</ref></computeroutput> as this checks by reference, not by name. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Reference to <ref refid="dc/de2/a00024" kindref="compound">Module</ref> in the buffer. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>ObjectNotFoundInArray</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if the referenced <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> doesn&apos;t exist. </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="103" column="1"/>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="27" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a08969e2d1572536469827e7b44e904f9_1a08969e2d1572536469827e7b44e904f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="da/dec/a00080_a03d92c41bbd9a64c1706292fe4c3c217_1a03d92c41bbd9a64c1706292fe4c3c217" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::System::removeModule</definition>
-        <argsstring>(std::string module)</argsstring>
-        <name>removeModule</name>
+        <definition>void mc::gfx::throwShaderError</definition>
+        <argsstring>(const Index &amp;shaderId, const Enum &amp;type, const std::string &amp;message)</argsstring>
+        <name>throwShaderError</name>
         <param>
-          <type>std::string</type>
-          <declname>module</declname>
+          <type>const <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>shaderId</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>message</declname>
         </param>
         <briefdescription>
-<para>Remove a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> by name. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para>It will find the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> based on their <ref refid="dc/de2/a00024_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>module</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Name of a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>ObjectNotFoundInArray</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the given name doesn&apos;t exist. </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="111" column="1"/>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="31" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a2639a8f0a5f3da2ad8db2a4a9c126200_1a2639a8f0a5f3da2ad8db2a4a9c126200" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="da/dec/a00080_a15996c355485bf87f30f008457a54ca2_1a15996c355485bf87f30f008457a54ca2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::System::removeModule</definition>
-        <argsstring>(Index i)</argsstring>
-        <name>removeModule</name>
+        <definition>void mc::gfx::throwShaderError</definition>
+        <argsstring>(const Index &amp;shaderId, const Enum &amp;type)</argsstring>
+        <name>throwShaderError</name>
         <param>
-          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>i</declname>
+          <type>const <ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <declname>shaderId</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d1/d51/a00079_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <declname>type</declname>
         </param>
         <briefdescription>
-<para>Remove a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> by it&apos;s index. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para>The index is provided from <ref refid="da/dec/a00080_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> or <ref refid="da/dec/a00080_ae75f2a7a69b1e84bfc57f837a771b6d0_1ae75f2a7a69b1e84bfc57f837a771b6d0" kindref="member">indexOf(Module&amp;)</ref> <parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>IndexOutOfBounds</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if <computeroutput>i&lt;0</computeroutput> or <computeroutput>i&gt;<ref refid="da/dec/a00080_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" kindref="member">numberOfModules()</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>i</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Index of a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> to delete </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="117" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a201be6382309ecb16365dfa8516813b1_1a201be6382309ecb16365dfa8516813b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dc/de2/a00024" kindref="compound">Module</ref> *</type>
-        <definition>Module* mc::System::getModule</definition>
-        <argsstring>(std::string keyword)</argsstring>
-        <name>getModule</name>
-        <param>
-          <type>std::string</type>
-          <declname>keyword</declname>
-        </param>
-        <briefdescription>
-<para>Retrieve a pointer to a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
-        <detaileddescription>
-<para>It will find the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> based on their <ref refid="dc/de2/a00024_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>ObjectNotFoundInArray</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if there is no <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the specified name </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns the specified keyword </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>keyword</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Name to look for </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="da/dec/a00080_a3b06684c8d45e6a992b64a8c20d50ed3_1a3b06684c8d45e6a992b64a8c20d50ed3" kindref="member">getModule(Index)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="127" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a3b06684c8d45e6a992b64a8c20d50ed3_1a3b06684c8d45e6a992b64a8c20d50ed3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dc/de2/a00024" kindref="compound">Module</ref> *</type>
-        <definition>Module* mc::System::getModule</definition>
-        <argsstring>(Index i)</argsstring>
-        <name>getModule</name>
-        <param>
-          <type><ref refid="d9/da5/a00075_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>i</declname>
-        </param>
-        <briefdescription>
-<para>Retrieves the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> at a certain index. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>A pointer to a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> at the specified location </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>i</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Valid index to a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>IndexOutOfBounds</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if <computeroutput>i&lt;0</computeroutput> or <computeroutput>i&gt;<ref refid="da/dec/a00080_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" kindref="member">numberOfModules()</ref></computeroutput> </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="134" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a8d33e21ec54da4940e14e7d1eb1a522b_1a8d33e21ec54da4940e14e7d1eb1a522b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::System::moduleExists</definition>
-        <argsstring>(std::string module)</argsstring>
-        <name>moduleExists</name>
-        <param>
-          <type>std::string</type>
-          <declname>module</declname>
-        </param>
-        <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> exists via it&apos;s <computeroutput>getName()</computeroutput> function. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>module</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Name to search for </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if there is a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the specified name, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="140" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a16b15b813b7eb7dfbb84845bb4568f94_1a16b15b813b7eb7dfbb84845bb4568f94" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::System::moduleExists</definition>
-        <argsstring>(Module *module)</argsstring>
-        <name>moduleExists</name>
-        <param>
-          <type><ref refid="dc/de2/a00024" kindref="compound">Module</ref> *</type>
-          <declname>module</declname>
-        </param>
-        <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> exists via a pointer. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>module</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> to search for </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> exists, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="147" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_adf3dad3de5f7b16ccae9fd980ed2bcaf_1adf3dad3de5f7b16ccae9fd980ed2bcaf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/da5/a00075_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-        <definition>Size mc::System::numberOfModules</definition>
-        <argsstring>()</argsstring>
-        <name>numberOfModules</name>
-        <briefdescription>
-<para>Retrieves the amount of <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> currently being updated by <computeroutput><ref refid="da/dec/a00080" kindref="compound">System</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para><computeroutput>Size</computeroutput> of the internal <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> buffer </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="152" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_ae75f2a7a69b1e84bfc57f837a771b6d0_1ae75f2a7a69b1e84bfc57f837a771b6d0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::System::indexOf</definition>
-        <argsstring>(Module &amp;m)</argsstring>
-        <name>indexOf</name>
-        <param>
-          <type><ref refid="dc/de2/a00024" kindref="compound">Module</ref> &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-<para>Retrieves the location of a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> in the buffer. </para>        </briefdescription>
-        <detaileddescription>
-<para>Equivalent to calling<programlisting><codeline><highlight class="normal">indexOf(m.getName());</highlight></codeline>
-</programlisting> <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><ref refid="dc/de2/a00024" kindref="compound">Module</ref> to find the index of. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Location of the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref>,</computeroutput> or <computeroutput>-1</computeroutput> if it doesnt exist. </para></simplesect>
-<simplesect kind="see"><para><ref refid="da/dec/a00080_ae75f2a7a69b1e84bfc57f837a771b6d0_1ae75f2a7a69b1e84bfc57f837a771b6d0" kindref="member">indexOf(Module&amp;)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="164" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a7fc4e577e85c3b424eb009e9ab4b9d44_1a7fc4e577e85c3b424eb009e9ab4b9d44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::System::indexOf</definition>
-        <argsstring>(std::string name)</argsstring>
-        <name>indexOf</name>
-        <param>
-          <type>std::string</type>
-          <declname>name</declname>
-        </param>
-        <briefdescription>
-<para>Find a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>name</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Name to search for </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Location of a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns <computeroutput>name,</computeroutput> or <computeroutput>-1</computeroutput> if wasn&apos;t found </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="170" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_aa8164cbb910ce94ba763e7033ade380f_1aa8164cbb910ce94ba763e7033ade380f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::assertModule</definition>
-        <argsstring>(std::string module, std::string errorMessage)</argsstring>
-        <name>assertModule</name>
-        <param>
-          <type>std::string</type>
-          <declname>module</declname>
-        </param>
-        <param>
-          <type>std::string</type>
-          <declname>errorMessage</declname>
-        </param>
-        <briefdescription>
-<para>Require that a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the specified name exists, or throw an exception. </para>        </briefdescription>
-        <detaileddescription>
-<para>If your <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> depends on another <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref>,</computeroutput> use this function to require your dependencies. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>module</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Name to assert </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>errorMessage</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to print if the assertion fails </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>AssertionError</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if there isn&apos;t a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> with the requested name. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="180" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_ae1828bcb4d2661c51e164ef986205a2c_1ae1828bcb4d2661c51e164ef986205a2c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::assertModule</definition>
-        <argsstring>(std::string module)</argsstring>
-        <name>assertModule</name>
-        <param>
-          <type>std::string</type>
-          <declname>module</declname>
-        </param>
-        <briefdescription>
-<para>Overloads <ref refid="da/dec/a00080_aa8164cbb910ce94ba763e7033ade380f_1aa8164cbb910ce94ba763e7033ade380f" kindref="member">assertModule(std::string,std::string)</ref> with <computeroutput>errorMessage</computeroutput> being <computeroutput>The specified <ref refid="dc/de2/a00024" kindref="compound">Module</ref> does not exist!</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>module</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Name of a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput> to assert </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="da/dec/a00080_aa8164cbb910ce94ba763e7033ade380f_1aa8164cbb910ce94ba763e7033ade380f" kindref="member">assertModule(std::string,std::string)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="186" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::init</definition>
-        <argsstring>()</argsstring>
-        <name>init</name>
-        <briefdescription>
-<para>Initializes MACE and calls <ref refid="dc/de2/a00024_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" kindref="member">init()</ref> on all registered `Modules. </para>        </briefdescription>
-        <detaileddescription>
-<para>` </para><para>Should be called at the start of the program. <simplesect kind="see"><para><ref refid="da/dec/a00080_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="da/dec/a00080" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="195" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::terminate</definition>
-        <argsstring>()</argsstring>
-        <name>terminate</name>
-        <briefdescription>
-<para>Destroys MACE and calls <ref refid="dc/de2/a00024_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" kindref="member">destroy()</ref> on all registered `Modules. </para>        </briefdescription>
-        <detaileddescription>
-<para>` </para><para>Should be called at the end of the program after <computeroutput><ref refid="da/dec/a00080_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">System.isRunning()</ref></computeroutput> is <computeroutput>false</computeroutput> <parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>InitializationError</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if <computeroutput><ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> has not been called yet </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="da/dec/a00080_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="da/dec/a00080" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="204" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::update</definition>
-        <argsstring>()</argsstring>
-        <name>update</name>
-        <briefdescription>
-<para>Update MACE and all <computeroutput>Modules</computeroutput> registered, and checks if a close has been requested. </para>        </briefdescription>
-        <detaileddescription>
-<para>Should be called in your main loop. <simplesect kind="return"><para><computeroutput>true</computeroutput> if it updated succesfully. <computeroutput>false</computeroutput> if an error occurred, or a close has been requested from a <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Module</ref></computeroutput>. When this returns <computeroutput>false</computeroutput>, you should end the main loop and call <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">terminate()</ref></computeroutput> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>InitializationError</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if <computeroutput><ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> has not been called yet or <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">terminate()</ref></computeroutput> has been called. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="da/dec/a00080_a110d878f49e4dcb0c348caa433b4fe70_1a110d878f49e4dcb0c348caa433b4fe70" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="da/dec/a00080" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="214" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::System::isRunning</definition>
-        <argsstring>()</argsstring>
-        <name>isRunning</name>
-        <briefdescription>
-<para>Checks whether the <computeroutput><ref refid="da/dec/a00080" kindref="compound">System</ref></computeroutput> is ready to be updated. </para>        </briefdescription>
-        <detaileddescription>
-<para><computeroutput><ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> must have been called and <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">terminate()</ref></computeroutput> must not have been called. Additionally, if <computeroutput>shouldStop()</computeroutput> is <computeroutput>true</computeroutput>, this function also returns <computeroutput>false</computeroutput>. <simplesect kind="return"><para>If <computeroutput><ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref></computeroutput> should be called. If this returns <computeroutput>false</computeroutput>, you should exit the main loop and call <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">terminate()</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="da/dec/a00080_a356cd822e782c2d2138b6bf241d1c94b_1a356cd822e782c2d2138b6bf241d1c94b" kindref="member">requestStop()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="da/dec/a00080" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="222" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a356cd822e782c2d2138b6bf241d1c94b_1a356cd822e782c2d2138b6bf241d1c94b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::requestStop</definition>
-        <argsstring>()</argsstring>
-        <name>requestStop</name>
-        <briefdescription>
-<para>Tell the <computeroutput><ref refid="da/dec/a00080" kindref="compound">System</ref></computeroutput> to terminate. </para>        </briefdescription>
-        <detaileddescription>
-<para>This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes <computeroutput><ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref></computeroutput> and <computeroutput><ref refid="da/dec/a00080_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">isRunning()</ref></computeroutput> return <computeroutput>false</computeroutput>, <simplesect kind="see"><para><ref refid="da/dec/a00080" kindref="compound">System</ref> for an optimal main loop </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="228" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_aad3baafba25a8f4dffa6343e3836136d_1aad3baafba25a8f4dffa6343e3836136d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::System::getFlag</definition>
-        <argsstring>(Byte flag)</argsstring>
-        <name>getFlag</name>
-        <param>
-          <type><ref refid="d9/da5/a00075_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>flag</declname>
-        </param>
-        <briefdescription>
-<para>Retrieve an internal flag about the current state of the <computeroutput><ref refid="da/dec/a00080" kindref="compound">System</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>Example usage:<programlisting><codeline><highlight class="normal">mc::System::getFlag(SYSTEM_FLAG_INIT);//get<sp/>whether<sp/>init()<sp/>has<sp/>been<sp/>called</highlight></codeline>
-</programlisting> <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>flag</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Location of the flag to retrieve. Locations are stored as <computeroutput>const Index</computeroutput> and start with <computeroutput>SYSTEM_FLAG_</computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Whether the specified flag is <computeroutput>true</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="239" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="da/dec/a00080_a96d64af50e1206f121e0b067cb0c7b0d_1a96d64af50e1206f121e0b067cb0c7b0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::System::reset</definition>
-        <argsstring>()</argsstring>
-        <name>reset</name>
-        <briefdescription>
-<para>&quot;Resets&quot; the <computeroutput><ref refid="da/dec/a00080" kindref="compound">System</ref></computeroutput> to its default state. </para>        </briefdescription>
-        <detaileddescription>
-<para><computeroutput>Modules</computeroutput> are cleared, and all flags are set to 0. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/System/Module.h" line="244" column="1"/>
+        <location file="include/MACE/Graphics/GraphicsConstants.h" line="35" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Core class of MACE, managing <computeroutput>Modules</computeroutput>. </para>    </briefdescription>
+<para>Namespace containing classes used for Graphics in MACE. </para>    </briefdescription>
     <detaileddescription>
-<para><computeroutput><ref refid="da/dec/a00080_a86b7559895967af432c5c3db728bd0bc_1a86b7559895967af432c5c3db728bd0bc" kindref="member">init()</ref></computeroutput> should be called after all <computeroutput>Modules</computeroutput> are added and before the main loop. <computeroutput><ref refid="da/dec/a00080_a90e14e44eb5a6019c913a6a197deb4a0_1a90e14e44eb5a6019c913a6a197deb4a0" kindref="member">update()</ref></computeroutput> should be called in the loop, and <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">terminate()</ref></computeroutput> should be called at the end of your program. </para><para>If <computeroutput><ref refid="da/dec/a00080_a85b977eb77e408cb01c7ae0e02026a1b_1a85b977eb77e408cb01c7ae0e02026a1b" kindref="member">isRunning()</ref></computeroutput> returns <computeroutput>false</computeroutput>, you should end your program and call <computeroutput><ref refid="da/dec/a00080_a37d9b4e42bc96bddf835abd0bf3176bd_1a37d9b4e42bc96bddf835abd0bf3176bd" kindref="member">terminate()</ref></computeroutput> </para><para>Your main loop should look like this:<programlisting><codeline><highlight class="normal">//add<sp/>modules<sp/>that<sp/>you<sp/>need</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">mc::System::init();</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">while(mc::System::isRunning()){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>mc::System::update();</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">mc::System::terminate();</highlight></codeline>
-</programlisting> </para>    </detaileddescription>
-    <location file="include/MACE/System/Module.h" line="89" column="1"/>
+    </detaileddescription>
+    <location file="include/MACE/Graphics/Buffer.h" line="20" column="1"/>
   </compounddef>
 </doxygen>

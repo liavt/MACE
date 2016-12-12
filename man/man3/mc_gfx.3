@@ -1,4 +1,4 @@
-.TH "mc::gfx" 3 "Sat Dec 10 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -21,12 +21,25 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBBuffer\fP"
 .br
+.RI "\fIRepresents a buffer of memory in the GPU\&. \fP"
 .ti -1c
 .RI "class \fBCallbackEntity\fP"
 .br
 .ti -1c
 .RI "class \fBComponent\fP"
 .br
+.ti -1c
+.RI "class \fBCopyReadBuffer\fP"
+.br
+.RI "\fISpecial buffer with no extra semantics to be used as a proxy in copying\&. \fP"
+.ti -1c
+.RI "class \fBCopyWriteBuffer\fP"
+.br
+.RI "\fISpecial buffer with no extra semantics to be used as a proxy in copying\&. \fP"
+.ti -1c
+.RI "class \fBElementBuffer\fP"
+.br
+.RI "\fIStores element indices to save vertex data\&. \fP"
 .ti -1c
 .RI "class \fBEntity\fP"
 .br
@@ -52,6 +65,18 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .br
 .RI "\fIRepresents a OpenGL object in memory\&. \fP"
 .ti -1c
+.RI "class \fBPixelPackBuffer\fP"
+.br
+.RI "\fISpecial buffer that excels at asynchronous pixel transfer operations\&. \fP"
+.ti -1c
+.RI "class \fBPixelUnpackBuffer\fP"
+.br
+.RI "\fISpecial buffer that excels at asynchronous pixel transfer operations\&. \fP"
+.ti -1c
+.RI "class \fBQueryObject\fP"
+.br
+.RI "\fISpecial object that is used for asynchronous queries of information from the GPU\&. \fP"
+.ti -1c
 .RI "class \fBRenderBuffer\fP"
 .br
 .RI "\fIRepresents a render buffer for use with a `FrameBuffer\&. \fP"
@@ -76,9 +101,14 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBUniformBuffer\fP"
 .br
+.RI "\fIStores uniform data for a shader in the form of a buffer\&. \fP"
 .ti -1c
 .RI "class \fBVertexArray\fP"
 .br
+.ti -1c
+.RI "class \fBVertexBuffer\fP"
+.br
+.RI "\fIStores vertex data for a `VertexArray\&. \fP"
 .in -1c
 .SS "Typedefs"
 
@@ -135,7 +165,7 @@ Definition at line 22 of file GraphicsConstants\&.h\&.
 .SS "void mc::gfx::checkGLError ()"
 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -149,7 +179,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "void mc::gfx::throwShaderError (const \fBIndex\fP & shaderId, const \fBEnum\fP & type, const std::string & message)"
 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -163,7 +193,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "void mc::gfx::throwShaderError (const \fBIndex\fP & shaderId, const \fBEnum\fP & type)"
 
 .PP
-\fBNote:\fP
+\fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
