@@ -167,6 +167,26 @@ namespace mc {
 			glDrawBuffers(arrSize, buffers);
 		}
 
+		void FrameBuffer::setReadBuffer(const Enum & mode) {
+			bind();
+			glReadBuffer(mode);
+		}
+
+		void FrameBuffer::readPixels(const int & x, const int & y, const Size & width, const Size & height, const Enum & format, const Enum & type, void * data) const {
+			bind();
+			glReadPixels(x, y, width, height, format, type, data);
+		}
+
+		void FrameBuffer::setPixelStore(const Enum & name, const float & param) {
+			bind();
+			glPixelStoref(name, param);
+		}
+
+		void FrameBuffer::setPixelStore(const Enum & name, const int & param) {
+			bind();
+			glPixelStorei(name, param);
+		}
+
 		bool FrameBuffer::isCreated() const {
 			return glIsFramebuffer(id) == 1;
 		}
@@ -304,7 +324,7 @@ namespace mc {
 			glBindTexture(target, ID);
 		}
 
-		Buffer::Buffer(const GLenum type) : bufferType(type) {}
+		Buffer::Buffer(const Enum& type) : bufferType(type) {}
 
 		bool Buffer::isCreated() const {
 			return glIsBuffer(id) == 1;
@@ -317,31 +337,32 @@ namespace mc {
 		void Buffer::destroy() {
 			glDeleteBuffers(1, &id);
 		};
-
-		void Buffer::setImmutableData(const GLsizeiptr dataSize, const GLvoid* data, GLbitfield flags) {
-			glBufferStorage(bufferType, dataSize, data, flags);
-		};
-		void Buffer::setData(const GLsizeiptr dataSize, const GLvoid* data, const GLenum drawType) const {
+		void Buffer::setData(const GLsizeiptr& dataSize, const void* data, const Enum& drawType) {
+			bind();
 			glBufferData(bufferType, dataSize, data, drawType);
 		};
-		void Buffer::setDataRange(const Index offset, const GLsizeiptr dataSize, const GLvoid* data) const {
+		void Buffer::setDataRange(const Index& offset, const GLsizeiptr& dataSize, const void* data) {
+			bind();
 			glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
 		};
 
-		void Buffer::copyData(Buffer other, GLsizeiptr size, Index readOffset, Index writeOffset) {
+		void Buffer::copyData(Buffer& other, const GLsizeiptr& size, const Index& readOffset, const Index& writeOffset) {
 			glCopyBufferSubData(id, other.id, readOffset, writeOffset, size);
 		};
 
-		GLvoid* Buffer::map(const GLenum access) {
+		void* Buffer::map(const Enum& access) {
+			bind();
 			return glMapBuffer(bufferType, access);
 		};
 
-		GLvoid* Buffer::mapRange(const Index offset, const Size length, const GLbitfield access) {
+		void* Buffer::mapRange(const Index& offset, const Size& length, const unsigned int& access) {
+			bind();
 			return glMapBufferRange(bufferType, offset, length, access);
 		};
 
-		GLboolean Buffer::unmap() {
-			return glUnmapBuffer(bufferType);
+		bool Buffer::unmap() {
+			bind();
+			return glUnmapBuffer(bufferType) == 1;
 		}
 		bool Buffer::operator==(const Buffer & other) const {
 			return this->bufferType == other.bufferType&&Object::operator==(other);
@@ -352,6 +373,114 @@ namespace mc {
 		void Buffer::bindIndex(const Index & ID) const {
 			glBindBuffer(bufferType, ID);
 		}
+
+		VertexBuffer::VertexBuffer() : Buffer(GL_ARRAY_BUFFER) {}
+
+		void VertexBuffer::setAttributePointer(const Byte & attribSize, const Enum & type, const bool & normalized, const Index & stride, const void * pointer) {
+			bind();
+			if( !normalized && (
+				type == GL_BYTE ||
+				type == GL_UNSIGNED_BYTE ||
+				type == GL_SHORT ||
+				type == GL_UNSIGNED_SHORT ||
+				type == GL_INT ||
+				type == GL_UNSIGNED_INT
+				) ) {
+
+				glVertexAttribIPointer(location, attribSize, type, stride, pointer);
+			} else {
+				glVertexAttribPointer(location, attribSize, type, normalized, stride, pointer);
+			}
+		}
+
+		void VertexBuffer::setDivisor(const unsigned int & divisor) {
+			bind();
+			glVertexAttribDivisor(location, divisor);
+		}
+
+		void VertexBuffer::enable() const {
+			glEnableVertexAttribArray(location);
+		}
+
+		void VertexBuffer::disable() const {
+			glDisableVertexAttribArray(location);
+		}
+
+		Index VertexBuffer::getLocation() {
+			return location;
+		}
+
+		const Index VertexBuffer::getLocation() const {
+			return location;
+		}
+
+		void VertexBuffer::setLocation(const Index & newLocation) {
+			location = newLocation;
+		}
+
+		bool VertexBuffer::operator==(const VertexBuffer & other) const {
+			return Buffer::operator==(other) && location == other.location;
+		}
+
+		bool VertexBuffer::operator!=(const VertexBuffer & other) const {
+			return !operator==(other);
+		}
+
+		ElementBuffer::ElementBuffer() : Buffer(GL_ELEMENT_ARRAY_BUFFER) {}
+
+		CopyReadBuffer::CopyReadBuffer() : Buffer(GL_COPY_READ_BUFFER) {}
+
+		CopyWriteBuffer::CopyWriteBuffer() : Buffer(GL_COPY_WRITE_BUFFER) {}
+
+		void QueryObject::begin(const Enum & target) {
+			glBeginQuery(target, id);
+		}
+
+		void QueryObject::end(const Enum & target) {
+			glEndQuery(target);
+		}
+
+		void QueryObject::get(const Enum & name, int * data) const {
+			glGetQueryObjectiv(id, name, data);
+		}
+
+		void QueryObject::get(const Enum & name, unsigned int * data) const {
+			glGetQueryObjectuiv(id, name, data);
+		}
+
+		void QueryObject::get(const Enum & name, int64_t * data) const {
+			glGetQueryObjecti64v(id, name, data);
+		}
+
+		void QueryObject::get(const Enum & name, uint64_t * data) const {
+			glGetQueryObjectui64v(id, name, data);
+		}
+
+		void QueryObject::counter() {
+			glQueryCounter(id, GL_TIMESTAMP);
+		}
+
+		void QueryObject::init() {
+			glGenQueries(1, &id);
+		}
+
+		void QueryObject::destroy() {
+			glDeleteQueries(1, &id);
+		}
+
+		bool QueryObject::isCreated() const {
+			return glIsQuery(id) == 1;
+		}
+
+		void QueryObject::bind() const {}
+
+		void QueryObject::unbind() const {}
+
+		void QueryObject::bindIndex(const Index & id) const {}
+
+		PixelUnpackBuffer::PixelUnpackBuffer() : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
+
+		PixelPackBuffer::PixelPackBuffer() : Buffer(GL_PIXEL_PACK_BUFFER) {}
 
 	}
 }

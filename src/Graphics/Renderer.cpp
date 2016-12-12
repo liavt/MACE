@@ -335,8 +335,8 @@ namespace mc {
 				frameBuffer.bind();
 
 				Index pixel = 0;
-				glReadBuffer(GL_COLOR_ATTACHMENT1);
-				glReadPixels(os::Input::getMouseX(), os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
+				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT1);
+				frameBuffer.readPixels(os::Input::getMouseX(), os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
 				if( pixel > 0 ) {
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex
