@@ -13,10 +13,15 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/System/Constants.h>
 #include <MACE/Utility/Color.h>
+#include <vector>
 #include <GL/glew.h>
 
 
 namespace mc {
+	/**
+	@todo make an ogl namespace with opengl abstractiosn
+	@todo create a ReadableBuffer class with functions like glReadPixels
+	*/
 	namespace gfx {
 
 		/**
@@ -35,6 +40,7 @@ namespace mc {
 		- It will override == and !=
 		@see Buffer
 		@see https://www.opengl.org/wiki/OpenGL_Object
+		@todo create an RAII wrapper which calls init() and destroy() automatically
 		*/
 		class Object {
 		public:
@@ -99,7 +105,7 @@ namespace mc {
 			Index getID() const;
 
 			/**
-			Compares if 2 `Objects` are equal. Their ID is compared.
+			Compares if 2 `Objects` are equal.
 			@see Object::getID() const
 			@see Object::operator!=(const Object&) const
 			@return Whether `this` and `other` are the same
@@ -107,7 +113,7 @@ namespace mc {
 			*/
 			bool operator==(const Object& other) const;
 			/**
-			Compares if 2 `Objects` are not equal. Their ID is compared.
+			Compares if 2 `Objects` are not equal..
 			@see Object::getID() const
 			@see Object::operator==(const Object&) const
 			@return Whether `this` and `other` are different
@@ -209,6 +215,9 @@ namespace mc {
 			void destroy() final;
 
 			bool isCreated() const final;
+
+			using Object::operator==;
+			using Object::operator!=;
 
 		private:
 			//queryobjects cant be bound or unbound according to the opengl spec
@@ -446,7 +455,13 @@ namespace mc {
 			*/
 			void setParameter(const GLenum& name, const GLint& value);
 
+			/**
+			@copydoc Object::operator==(const Object&) const
+			*/
 			bool operator==(const Texture& other) const;
+			/**
+			@copydoc Object::operator!=(const Object&) const
+			*/
 			bool operator!=(const Texture& other) const;
 
 		private:
@@ -575,7 +590,19 @@ namespace mc {
 			*/
 			bool unmap();
 
+			/**
+			Retrieves the buffer type for this buffer. This is based on the class.
+			@return The buffer type
+			*/
+			const Enum& getBufferType() const;
+
+			/**
+			@copydoc Object::operator==(const Object&) const
+			*/
 			bool operator==(const Buffer& other) const;
+			/**
+			@copydoc Object::operator!=(const Object&) const
+			*/
 			bool operator!=(const Buffer& other) const;
 		private:
 			Enum bufferType;
@@ -668,18 +695,24 @@ namespace mc {
 			Gets the current attribute location of this `VertexBuffer`
 			@return The attribute index
 			*/
-			Index getLocation();
+			Index& getLocation();
 			/**
 			@copydoc VertexBuffer::getLocation()
 			*/
-			const Index getLocation() const;
+			const Index& getLocation() const;
 			/**
 			Sets the attribute location of this `VertexBuffer.` 0 by default.
 			@param newLocation What to set it to
 			*/
 			void setLocation(const Index& newLocation);
-
+			
+			/**
+			@copydoc Object::operator==(const Object&) const
+			*/
 			bool operator==(const VertexBuffer& other) const;
+			/**
+			@copydoc Object::operator!=(const Object&) const
+			*/
 			bool operator!=(const VertexBuffer& other) const;
 		private:
 			Index location = 0;
@@ -692,22 +725,59 @@ namespace mc {
 		@see https://www.opengl.org/wiki/GLAPI/glDrawElements
 		@see VertexArray
 		@see VertexBuffer
+		@note You must use the ElementBuffer::setIndiceNumber(const Size&) function for this class to work correctly.
 		*/
 		class ElementBuffer: public Buffer {
 		public:
 			ElementBuffer();
 
-			using Buffer::operator==;
-			using Buffer::operator!=;
+			/**
+			Constructs an `ElementBuffer` with a specified amount of indices. Analagous to calling ElementBuffer::setIndiceNumber(const Size&)
+			immediately after construction.
+			@param indiceNum The amount of indices this `ElementBuffer` will have
+			@see https://www.opengl.org/wiki/GLAPI/glDrawElements
+			@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
+			@see ElementBuffer::getIndiceNumber()
+			@see VertexArray
+			*/
+			ElementBuffer(const Size& indiceNum);
+
+			/**
+			Tell this `ElementBuffer` how many indices there are. This is required for proper usage in the `VertexArray` class.
+			@see https://www.opengl.org/wiki/GLAPI/glDrawElements
+			@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
+			@see Buffer::setData(const GLsizeiptr&, const void*, const Enum&)
+			@param indices The amount of indices loaded
+			*/
+			void setIndiceNumber(const Size& indices);
+			/**
+			
+			*/
+			Size& getIndiceNumber();
+			/**
+			@copydoc ElementBuffer::getIndiceNumber()
+			*/
+			const Size& getIndiceNumber() const;
+
+			/**
+			@copydoc Object::operator==(const Object&) const
+			*/
+			bool operator==(const ElementBuffer& other) const;
+			/**
+			@copydoc Object::operator!=(const Object&) const
+			*/
+			bool operator!=(const ElementBuffer& other) const;
+		private:
+			Size indiceNumber;
 		};//ElementBuffer
 
 		/**
-		@todo Create a VBO class
+		@see https://www.opengl.org/wiki/Vertex_Specification#Vertex_Array_Object
+		@see VertexBuffer
+		@todo figure out what to do with the storeDataInAttributeList and loadIndices function
 		*/
 		class VertexArray: public Object {
 		public:
-			Size vertexNumber, indiceNumber;
-
 			void init() override;
 			void destroy() override;
 
@@ -720,14 +790,40 @@ namespace mc {
 			void draw(const GLenum type = GL_TRIANGLES) const;
 
 			void loadVertices(const Size&& verticeSize, const GLfloat vertices[], const Index&& location = 15, const Size&& attributeSize = 3);
-			void loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType = GL_DYNAMIC_DRAW);
 
 			void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
 
+			void loadIndices(const Size& indiceNum, const unsigned int* indiceData);
+
+			void addBuffer(const VertexBuffer& newBuffer);
+
+			void setVertexNumber(const Size& vertexNum);
+			Size& getVertexNumber();
+			const Size& getVertexNumber() const;
+
+			void setIndices(const ElementBuffer& buffer);
+			ElementBuffer& getIndices();
+			const ElementBuffer& getIndices() const;
+
+			void setBuffers(const std::vector<VertexBuffer>& newBuffers);
+			std::vector<VertexBuffer>& getBuffers();
+			const std::vector<VertexBuffer>& getBuffers() const;
+
+			/**
+			@copydoc Object::operator==(const Object&) const
+			*/
 			bool operator==(const VertexArray& other) const;
+			/**
+			@copydoc Object::operator!=(const Object&) const
+			*/
 			bool operator!=(const VertexArray& other) const;
 		private:
 			void bindIndex(const Index& id) const override;
+
+			ElementBuffer indices;
+			std::vector<VertexBuffer> buffers = std::vector<VertexBuffer>();
+
+			Size vertexNumber;
 		};//VertexArray
 
 		/**
@@ -783,11 +879,11 @@ namespace mc {
 			@return The location
 			@see UniformBuffer::setLocation(const Index)
 			*/
-			Index getLocation();
+			Index& getLocation();
 			/**
 			@copydoc UniformBuffer::getLocation()
 			*/
-			const Index getLocation() const;
+			const Index& getLocation() const;
 
 			/**
 			Binds this `UniformBuffer` for rendering. Must be called before a rendering call is used.
@@ -811,7 +907,13 @@ namespace mc {
 			*/
 			void bindToUniformBlock(const Index programID, const char* blockName) const;
 
+			/**
+			@copydoc Object::operator==(const Object&) const
+			*/
 			bool operator==(const UniformBuffer& other) const;
+			/**
+			@copydoc Object::operator!=(const Object&) const
+			*/
 			bool operator!=(const UniformBuffer& other) const;
 		private:
 			Index location = 0;

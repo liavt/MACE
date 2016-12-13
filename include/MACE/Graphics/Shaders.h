@@ -21,6 +21,7 @@ namespace mc {
 
 		/**
 		@todo make a shader class
+		@todo add this to a unified opengl abstraction header and namespace
 		*/
 		class ShaderProgram {
 		public:

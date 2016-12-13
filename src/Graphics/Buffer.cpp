@@ -21,6 +21,16 @@ namespace mc {
 
 		void VertexArray::destroy() {
 			glDeleteVertexArrays(1, &id);
+
+			if( indices.isCreated() ) {
+				indices.destroy();
+			}
+
+			for( Index i = 0; i < buffers.size(); ++i ) {
+				if( buffers[i].isCreated() ) {
+					buffers[i].destroy();
+				}
+			}
 		}
 
 		bool VertexArray::isCreated() const {
@@ -28,7 +38,7 @@ namespace mc {
 		}
 
 		void VertexArray::draw(GLenum type) const {
-			glDrawElements(type, indiceNumber, GL_UNSIGNED_INT, 0);
+			glDrawElements(type, indices.getIndiceNumber(), GL_UNSIGNED_INT, 0);
 		}
 
 		void VertexArray::loadVertices(const Size && verticeSize, const GLfloat vertices[], const Index && location, const Size && attributeSize) {
@@ -38,47 +48,73 @@ namespace mc {
 			storeDataInAttributeList(std::move(vertexNumber), vertices, std::move(location), std::move(attributeSize));
 		}
 
-		void VertexArray::loadIndices(const Size&& indiceNum, const GLuint indices[], const GLenum&& drawType) {
-			bind();
-			Index indicesID;
-			// Generate 1 buffer, put the resulting identifier in vertexbuffer
-			glGenBuffers(1, &indicesID);//
-										// The following commands will talk about our 'vertexbuffer' buffer
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
-																// Give our vertices to OpenGL.
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*(indiceNum), indices, drawType);//
-
-																									//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);//
-
-			gfx::checkGLError();//
-
-			this->indiceNumber = indiceNum;
-
-			unbind();
-		}
 		void VertexArray::storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location, const Size&& attributeSize) {
 			bind();
 
-			Index vboID;
-			// Generate 1 buffer, put the resulting identifier in vertexbuffer
-			glGenBuffers(1, &vboID);//
-									// The following commands will talk about our 'vertexbuffer' buffer
-			glBindBuffer(GL_ARRAY_BUFFER, vboID);//
-													// Give our data to opengl
-			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);//
-			gfx::checkGLError();//
+			VertexBuffer buffer = VertexBuffer();
+			buffer.init();
+			buffer.setLocation(location);
+			// Give our data to opengl
+			buffer.setData(sizeof(GLfloat)*(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);
+			buffer.setAttributePointer(attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
 
-			glVertexAttribPointer(location, attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
+			addBuffer(buffer);
 
-			glEnableVertexAttribArray(location);
-
-
-			//	glBindBuffer(GL_ARRAY_BUFFER, vboID);//
 			checkGLError();
 		}
 
+		void VertexArray::loadIndices(const Size & indiceNum, const unsigned int * indiceData) {
+			indices = ElementBuffer(indiceNum);
+			indices.init();
+			indices.setData(sizeof(unsigned int)*indiceNum, indiceData, GL_STATIC_DRAW);
+		}
+
+		void VertexArray::addBuffer(const VertexBuffer & newBuffer) {
+			bind();
+			newBuffer.bind();
+			newBuffer.enable();
+
+			buffers.push_back(newBuffer);
+		}
+
+		void VertexArray::setVertexNumber(const Size & vertexNum) {
+			vertexNumber = vertexNum;
+		}
+
+		Size & VertexArray::getVertexNumber() {
+			return vertexNumber;
+		}
+
+		const Size & VertexArray::getVertexNumber() const {
+			return vertexNumber;
+		}
+
+		void VertexArray::setIndices(const ElementBuffer & buffer) {
+			indices = buffer;
+		}
+
+		ElementBuffer & VertexArray::getIndices() {
+			return indices;
+		}
+
+		const ElementBuffer & VertexArray::getIndices() const {
+			return indices;
+		}
+
+		void VertexArray::setBuffers(const std::vector<VertexBuffer>& newBuffers) {
+			buffers = newBuffers;
+		}
+
+		std::vector<VertexBuffer>& VertexArray::getBuffers() {
+			return buffers;
+		}
+
+		const std::vector<VertexBuffer>& VertexArray::getBuffers() const {
+			return buffers;
+		}
+
 		bool VertexArray::operator==(const VertexArray & other) const {
-			return vertexNumber == other.vertexNumber&&indiceNumber == other.indiceNumber&&Object::operator==(other);
+			return vertexNumber == other.vertexNumber&&indices == other.indices&&Object::operator==(other);
 		}
 
 		bool VertexArray::operator!=(const VertexArray & other) const {
@@ -95,11 +131,11 @@ namespace mc {
 			this->location = loc;
 		}
 
-		Index UniformBuffer::getLocation() {
+		Index& UniformBuffer::getLocation() {
 			return location;
 		}
 
-		const Index UniformBuffer::getLocation() const {
+		const Index& UniformBuffer::getLocation() const {
 			return location;
 		}
 
@@ -364,6 +400,9 @@ namespace mc {
 			bind();
 			return glUnmapBuffer(bufferType) == 1;
 		}
+		const Enum & Buffer::getBufferType() const {
+			return bufferType;
+		}
 		bool Buffer::operator==(const Buffer & other) const {
 			return this->bufferType == other.bufferType&&Object::operator==(other);
 		}
@@ -406,11 +445,11 @@ namespace mc {
 			glDisableVertexAttribArray(location);
 		}
 
-		Index VertexBuffer::getLocation() {
+		Index& VertexBuffer::getLocation() {
 			return location;
 		}
 
-		const Index VertexBuffer::getLocation() const {
+		const Index& VertexBuffer::getLocation() const {
 			return location;
 		}
 
@@ -427,6 +466,30 @@ namespace mc {
 		}
 
 		ElementBuffer::ElementBuffer() : Buffer(GL_ELEMENT_ARRAY_BUFFER) {}
+
+		ElementBuffer::ElementBuffer(const Size & indiceNum) : ElementBuffer() {
+			indiceNumber = indiceNum;
+		}
+
+		void ElementBuffer::setIndiceNumber(const Size & indices) {
+			indiceNumber = indices;
+		}
+
+		Size & ElementBuffer::getIndiceNumber() {
+			return indiceNumber;
+		}
+
+		const Size & ElementBuffer::getIndiceNumber() const {
+			return indiceNumber;
+		}
+
+		bool ElementBuffer::operator==(const ElementBuffer & other) const {
+			return Buffer::operator==(other) && indiceNumber == other.indiceNumber;
+		}
+
+		bool ElementBuffer::operator!=(const ElementBuffer & other) const {
+			return !operator==(other);
+		}
 
 		CopyReadBuffer::CopyReadBuffer() : Buffer(GL_COPY_READ_BUFFER) {}
 

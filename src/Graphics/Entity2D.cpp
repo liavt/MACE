@@ -37,21 +37,21 @@ namespace mc {
 		#	include <MACE/Graphics/Shaders/entity2D.f.glsl>
 			};
 
-			const GLfloat squareVertices[12] = {
+			const float squareVertices[12] = {
 				-0.5f,-0.5f,0.0f,
 				-0.5f,0.5f,0.0f,
 				0.5f,0.5f,0.0f,
 				0.5f,-0.5f,0.0f
 			};
 
-			const GLfloat squareTextureCoordinates[8] = {
+			const float squareTextureCoordinates[8] = {
 				0.0f,1.0f,
 				0.0f,0.0f,
 				1.0f,0.0f,
 				1.0f,1.0f,
 			};
 
-			const GLuint squareIndices[6] = {
+			const unsigned int squareIndices[6] = {
 				0,1,3,
 				1,2,3
 			};
@@ -61,7 +61,8 @@ namespace mc {
 			//vao loading
 			square.loadVertices(4, squareVertices, 15, 3);
 			square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
-			square.loadIndices(6, squareIndices);
+			
+			square.loadIndices(6,squareIndices);
 
 			//shader stuff
 			shaders2D.createVertex(ssl::processShader(vertexShader2D, GL_VERTEX_SHADER));
