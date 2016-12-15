@@ -503,7 +503,7 @@ namespace mc {
 			@see UniformBuffer
 			@param bufferType OpenGL symbolic constant with the desired type.
 			*/
-			Buffer(const Enum& bufferType);
+			Buffer(const Enum& bufferType) noexcept;
 
 			bool isCreated() const override;
 
@@ -619,7 +619,7 @@ namespace mc {
 		*/
 		class PixelUnpackBuffer: public Buffer {
 		public:
-			PixelUnpackBuffer();
+			PixelUnpackBuffer() noexcept;
 
 			using Buffer::operator==;
 			using Buffer::operator!=;
@@ -630,7 +630,7 @@ namespace mc {
 		*/
 		class PixelPackBuffer: public Buffer {
 		public:
-			PixelPackBuffer();
+			PixelPackBuffer() noexcept;
 
 			using Buffer::operator==;
 			using Buffer::operator!=;
@@ -646,7 +646,7 @@ namespace mc {
 		*/
 		class VertexBuffer: public Buffer {
 		public:
-			VertexBuffer();
+			VertexBuffer() noexcept;
 
 			/**
 			Tells OpenGL how to interpret array data. Must be called in order for rendering to work. Must be used in
@@ -729,7 +729,7 @@ namespace mc {
 		*/
 		class ElementBuffer: public Buffer {
 		public:
-			ElementBuffer();
+			ElementBuffer() noexcept;
 
 			/**
 			Constructs an `ElementBuffer` with a specified amount of indices. Analagous to calling ElementBuffer::setIndiceNumber(const Size&)
@@ -740,18 +740,24 @@ namespace mc {
 			@see ElementBuffer::getIndiceNumber()
 			@see VertexArray
 			*/
-			ElementBuffer(const Size& indiceNum);
+			ElementBuffer(const Size& indiceNum) noexcept;
 
 			/**
 			Tell this `ElementBuffer` how many indices there are. This is required for proper usage in the `VertexArray` class.
 			@see https://www.opengl.org/wiki/GLAPI/glDrawElements
 			@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
 			@see Buffer::setData(const GLsizeiptr&, const void*, const Enum&)
+			@see VertexArray
 			@param indices The amount of indices loaded
 			*/
 			void setIndiceNumber(const Size& indices);
 			/**
-			
+			Retrieves how many indices this `ElementBuffer` has.
+			@see ElementBuffer::setIndiceNumber(const Size&)
+			@see VertexArray
+			@see https://www.opengl.org/wiki/GLAPI/glDrawElements
+			@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
+			@return The amount of indices
 			*/
 			Size& getIndiceNumber();
 			/**
@@ -789,12 +795,26 @@ namespace mc {
 			*/
 			void draw(const GLenum type = GL_TRIANGLES) const;
 
+			/**
+			@opengl
+			@see VertexBuffer
+			*/
 			void loadVertices(const Size&& verticeSize, const GLfloat vertices[], const Index&& location = 15, const Size&& attributeSize = 3);
-
-			void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
-
+			/**
+			@opengl
+			@see VertexBuffer
+			*/
 			void loadIndices(const Size& indiceNum, const unsigned int* indiceData);
 
+			/**
+			@opengl
+			@see VertexBuffer
+			*/
+			void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
+
+			/**
+			@opengl
+			*/
 			void addBuffer(const VertexBuffer& newBuffer);
 
 			void setVertexNumber(const Size& vertexNum);
@@ -837,7 +857,7 @@ namespace mc {
 		*/
 		class CopyReadBuffer: public Buffer {
 		public:
-			CopyReadBuffer();
+			CopyReadBuffer() noexcept;
 
 			using Buffer::operator==;
 			using Buffer::operator!=;
@@ -849,7 +869,7 @@ namespace mc {
 		*/
 		class CopyWriteBuffer: public Buffer {
 		public:
-			CopyWriteBuffer();
+			CopyWriteBuffer() noexcept;
 
 			using Buffer::operator==;
 			using Buffer::operator!=;
@@ -863,7 +883,7 @@ namespace mc {
 		*/
 		class UniformBuffer: public Buffer {
 		public:
-			UniformBuffer();
+			UniformBuffer() noexcept;
 
 			/**
 			Modify the location that this `UniformBuffer` is currently bound to.

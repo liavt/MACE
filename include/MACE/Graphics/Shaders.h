@@ -12,27 +12,45 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_GRAPHICS_SHADERS_H
 
 #include <MACE/Utility/Matrix.h>
+#include <MACE/Graphics/Buffer.h>
 #include <unordered_map>
 #include <GL/glew.h>
 
 
 namespace mc {
 	namespace gfx {
+		
+		class Shader:public Object {
+		public:
+			Shader();
+			
+			void init() override;
+			void destroy() override;
+
+			bool isCreated() const override;
+
+			using Object::operator==;
+			using Object::operator!=;
+		private:
+			//shaders cant be bound or unbound according to the opengl spec
+			void bind() const final;
+			void unbind() const final;
+
+			void bindIndex(const Index& id) const final;
+		};
 
 		/**
 		@todo make a shader class
 		@todo add this to a unified opengl abstraction header and namespace
 		*/
-		class ShaderProgram {
+		class ShaderProgram: public Object {
 		public:
-			ShaderProgram() noexcept;
-			~ShaderProgram() noexcept = default;
+			void init() override;
+			void destroy() override;
 
-			void init();
-			void destroy();
+			void link();
 
-			void bind() const;
-			void unbind() const;
+			bool isCreated() const override;
 
 			void createFragment(const char shader[]);
 			void createFragment(const std::string& shader);
@@ -42,10 +60,9 @@ namespace mc {
 			void createUniform(const std::string& name);
 			void createUniform(const char* name);
 
-			int getUniformLocation(const std::string& name);
-			int getUniformLocation(const char* name);
+			int getUniformLocation(const std::string& name) const;
+			int getUniformLocation(const char* name) const;
 
-			int getProgramID() const;
 			int getVertexID() const;
 			int getFragmentID() const;
 
@@ -130,16 +147,17 @@ namespace mc {
 			void setUniform(char * name, const mc::Vector<unsigned int, 3> v);
 			void setUniform(char * name, const mc::Vector<unsigned int, 4> v);
 
+			bool operator==(const ShaderProgram& other) const;
+			bool operator!=(const ShaderProgram& other) const;
+
 		private:
-			int id = -1;
 			int fragId = -1, vertId = -1;
 
 			std::unordered_map<std::string, int> uniforms = std::unordered_map<std::string, int>();
 
 			int createShader(const char code[], const GLenum& type);
 
-			void createProgram();
-
+			void bindIndex(const Index& id) const override;
 		};//ShaderProgram
 
 	}//gfx

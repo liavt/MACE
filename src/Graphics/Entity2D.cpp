@@ -56,6 +56,7 @@ namespace mc {
 				1,2,3
 			};
 
+			shaders2D.init();
 			square.init();
 
 			//vao loading
@@ -68,7 +69,7 @@ namespace mc {
 			shaders2D.createVertex(ssl::processShader(vertexShader2D, GL_VERTEX_SHADER));
 			shaders2D.createFragment(ssl::processShader(fragmentShader2D, GL_FRAGMENT_SHADER));
 
-			shaders2D.init();
+			shaders2D.link();
 
 			ssl::bindShaderProgram(shaders2D);
 		}//init

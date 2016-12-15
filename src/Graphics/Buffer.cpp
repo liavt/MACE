@@ -125,7 +125,7 @@ namespace mc {
 			glBindVertexArray(ID);
 		}
 
-		UniformBuffer::UniformBuffer() : Buffer(GL_UNIFORM_BUFFER) {}
+		UniformBuffer::UniformBuffer() noexcept : Buffer(GL_UNIFORM_BUFFER) {}
 
 		void UniformBuffer::setLocation(const Index loc) {
 			this->location = loc;
@@ -360,7 +360,7 @@ namespace mc {
 			glBindTexture(target, ID);
 		}
 
-		Buffer::Buffer(const Enum& type) : bufferType(type) {}
+		Buffer::Buffer(const Enum& type) noexcept : bufferType(type) {}
 
 		bool Buffer::isCreated() const {
 			return glIsBuffer(id) == 1;
@@ -413,7 +413,7 @@ namespace mc {
 			glBindBuffer(bufferType, ID);
 		}
 
-		VertexBuffer::VertexBuffer() : Buffer(GL_ARRAY_BUFFER) {}
+		VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
 		void VertexBuffer::setAttributePointer(const Byte & attribSize, const Enum & type, const bool & normalized, const Index & stride, const void * pointer) {
 			bind();
@@ -465,9 +465,9 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		ElementBuffer::ElementBuffer() : Buffer(GL_ELEMENT_ARRAY_BUFFER) {}
+		ElementBuffer::ElementBuffer() noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER) {}
 
-		ElementBuffer::ElementBuffer(const Size & indiceNum) : ElementBuffer() {
+		ElementBuffer::ElementBuffer(const Size & indiceNum) noexcept : ElementBuffer() {
 			indiceNumber = indiceNum;
 		}
 
@@ -491,9 +491,9 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		CopyReadBuffer::CopyReadBuffer() : Buffer(GL_COPY_READ_BUFFER) {}
+		CopyReadBuffer::CopyReadBuffer() noexcept : Buffer(GL_COPY_READ_BUFFER) {}
 
-		CopyWriteBuffer::CopyWriteBuffer() : Buffer(GL_COPY_WRITE_BUFFER) {}
+		CopyWriteBuffer::CopyWriteBuffer() noexcept : Buffer(GL_COPY_WRITE_BUFFER) {}
 
 		void QueryObject::begin(const Enum & target) {
 			glBeginQuery(target, id);
@@ -541,9 +541,9 @@ namespace mc {
 
 		void QueryObject::bindIndex(const Index & id) const {}
 
-		PixelUnpackBuffer::PixelUnpackBuffer() : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
+		PixelUnpackBuffer::PixelUnpackBuffer() noexcept : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
 
-		PixelPackBuffer::PixelPackBuffer() : Buffer(GL_PIXEL_PACK_BUFFER) {}
+		PixelPackBuffer::PixelPackBuffer() noexcept : Buffer(GL_PIXEL_PACK_BUFFER) {}
 
 	}
 }

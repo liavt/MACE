@@ -302,7 +302,7 @@ namespace mc {
 
 				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 				entityData.bind();
-				entityData.bindToUniformBlock(prog.getProgramID(), "ssl_BaseEntityBuffer");
+				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
 				fillBuffer(entityData, entity);
 				entityData.bindForRender();
 
@@ -312,8 +312,8 @@ namespace mc {
 			}//bindEntity
 
 			void bindShaderProgram(ShaderProgram & prog) {
-				windowData.bindToUniformBlock(prog.getProgramID(), "ssl_WindowData");
-				paintData.bindToUniformBlock(prog.getProgramID(), "ssl_PaintData");
+				windowData.bindToUniformBlock(prog.getID(), "ssl_WindowData");
+				paintData.bindToUniformBlock(prog.getID(), "ssl_PaintData");
 			}//bindShaderProgram
 
 			void resize(const Size & width, const Size & height) {
