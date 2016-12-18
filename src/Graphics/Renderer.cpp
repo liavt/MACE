@@ -8,8 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/GraphicsConstants.h>
-#include <MACE/Graphics/Buffer.h>
+#include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Utility/Preprocessor.h>
 //we need to include cstring for memcpy
@@ -168,15 +167,15 @@ namespace mc {
 				}, "ssl");
 
 				//ssl buffer objects
-				UniformBuffer windowData = UniformBuffer();
-				UniformBuffer paintData = UniformBuffer();
+				ogl::UniformBuffer windowData = ogl::UniformBuffer();
+				ogl::UniformBuffer paintData = ogl::UniformBuffer();
 
 				//fbo resources
-				FrameBuffer frameBuffer = FrameBuffer();
-				RenderBuffer depthBuffer = RenderBuffer();
+				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
+				ogl::RenderBuffer depthBuffer = ogl::RenderBuffer();
 
-				Texture sceneTexture = Texture();
-				Texture idTexture = Texture();
+				ogl::Texture sceneTexture = ogl::Texture();
+				ogl::Texture idTexture = ogl::Texture();
 
 				Index protocol;
 				Image scene = Image();
@@ -205,7 +204,7 @@ namespace mc {
 						throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
 					}
 
-					checkGLError();
+					ogl::checkGLError();
 
 					glViewport(0, 0, width, height);
 				}//generateFrambuffer
@@ -257,7 +256,7 @@ namespace mc {
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				checkGLError();
+				ogl::checkGLError();
 			}//init
 
 			void setUp(os::WindowModule *) {
@@ -288,8 +287,8 @@ namespace mc {
 				scene.destroy();
 			}//destroy
 
-			void bindEntity(const GraphicsEntity * entity, ShaderProgram& prog) {
-				const Texture& tex = entity->getTexture();
+			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
+				const ogl::Texture& tex = entity->getTexture();
 
 				paintData.bind();
 				const Color& paint = tex.getPaint();
@@ -298,7 +297,7 @@ namespace mc {
 				paintData.bindForRender();
 
 				//if we use the non const version, it will make it dirty again. we dont want this function to make it dirty.
-				UniformBuffer& entityData = const_cast<UniformBuffer&>(entity->getBuffer());
+				ogl::UniformBuffer& entityData = const_cast<ogl::UniformBuffer&>(entity->getBuffer());
 
 				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 				entityData.bind();
@@ -311,7 +310,7 @@ namespace mc {
 				tex.bind();
 			}//bindEntity
 
-			void bindShaderProgram(ShaderProgram & prog) {
+			void bindShaderProgram(ogl::ShaderProgram & prog) {
 				windowData.bindToUniformBlock(prog.getID(), "ssl_WindowData");
 				paintData.bindToUniformBlock(prog.getID(), "ssl_PaintData");
 			}//bindShaderProgram
@@ -347,14 +346,14 @@ namespace mc {
 				frameBuffer.unbind();
 			}//resize
 
-			void bindBuffer(UniformBuffer & buf) {
+			void bindBuffer(ogl::UniformBuffer & buf) {
 				buf.bind();
 				//we set it to null, because during the actual rendering we set the data
-				buf.setData(sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
+				buf.setData(sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
 				buf.unbind();
 			}
 
-			void fillBuffer(UniformBuffer & buf, const Entity * entity) {
+			void fillBuffer(ogl::UniformBuffer & buf, const Entity * entity) {
 				if( !entity->getProperty(Entity::INIT) ) {
 					throw InitializationError("Internal error: Entity is not initializd.");
 				}

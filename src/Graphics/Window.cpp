@@ -9,7 +9,6 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Graphics/Window.h>
 #include <MACE/System/Constants.h>
-#include <MACE/Graphics/GraphicsConstants.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Utility/BitField.h>
 #include <mutex>
@@ -73,7 +72,7 @@ namespace mc {
 				std::cout << "OpenGL 3.3 not found, falling back to OpenGL 3.0.";
 			}
 
-			gfx::checkGLError();
+			gfx::ogl::checkGLError();
 
 			if( vsync )glfwSwapInterval(1);
 			else glfwSwapInterval(0);

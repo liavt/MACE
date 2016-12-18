@@ -12,7 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_GRAPHICS_RENDERER_H
 
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/Shaders.h>
+#include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Window.h>
 #include <deque>
 
@@ -70,23 +70,23 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void bindBuffer(UniformBuffer& buf);
+			void bindBuffer(ogl::UniformBuffer& buf);
 			/**
 			@internal
 			@opengl
 			*/
-			void fillBuffer(UniformBuffer& buf, const Entity* en);
+			void fillBuffer(ogl::UniformBuffer& buf, const Entity* en);
 
 			/**
 			@internal
 			@opengl
 			*/
-			void bindEntity(const GraphicsEntity* en, ShaderProgram& prog);
+			void bindEntity(const GraphicsEntity* en, ogl::ShaderProgram& prog);
 			/**
 			@internal
 			@opengl
 			*/
-			void bindShaderProgram(ShaderProgram& prog);
+			void bindShaderProgram(ogl::ShaderProgram& prog);
 
 			/**
 			@internal

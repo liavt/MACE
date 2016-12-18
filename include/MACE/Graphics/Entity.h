@@ -13,7 +13,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Transform.h>
-#include <MACE/Graphics/Buffer.h>
+#include <MACE/Graphics/OGL.h>
 #include <vector>
 
 namespace mc {
@@ -543,7 +543,7 @@ namespace mc {
 		public:
 			GraphicsEntity() noexcept;
 
-			GraphicsEntity(Texture& t) noexcept;
+			GraphicsEntity(ogl::Texture& t) noexcept;
 			virtual ~GraphicsEntity() noexcept;
 
 			/**
@@ -569,22 +569,22 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setTexture(Texture& tex);
+			void setTexture(ogl::Texture& tex);
 			/**
 			@dirty
 			*/
-			Texture& getTexture();
-			const Texture& getTexture() const;
+			ogl::Texture& getTexture();
+			const ogl::Texture& getTexture() const;
 
 			/**
 			@dirty
 			*/
-			UniformBuffer& getBuffer();
-			const UniformBuffer& getBuffer() const;
+			ogl::UniformBuffer& getBuffer();
+			const ogl::UniformBuffer& getBuffer() const;
 			/**
 			@dirty
 			*/
-			void setBuffer(const UniformBuffer& newBuffer);
+			void setBuffer(const ogl::UniformBuffer& newBuffer);
 
 			void init() override;
 
@@ -595,9 +595,9 @@ namespace mc {
 
 			void clean() override;
 		private:
-			Texture texture;
+			ogl::Texture texture;
 
-			UniformBuffer buffer = UniformBuffer();
+			ogl::UniformBuffer buffer = ogl::UniformBuffer();
 		};//GraphicsEntity
 
 	}//gfx

@@ -19,8 +19,7 @@ namespace mc {
 	namespace gfx {}
 }
 
-#include <MACE/Graphics/Shaders.h>
-#include <MACE/Graphics/GraphicsConstants.h>
+#include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/Entity2D.h>

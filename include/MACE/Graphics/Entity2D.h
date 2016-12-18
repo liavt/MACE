@@ -14,8 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/Shaders.h>
-#include <MACE/Graphics/Buffer.h>
+#include <MACE/Graphics/OGL.h>
 
 namespace mc {
 	namespace gfx {
@@ -55,8 +54,8 @@ namespace mc {
 			void destroy() override;
 		private:
 
-			ShaderProgram shaders2D = ShaderProgram();
-			VertexArray square = VertexArray();
+			ogl::ShaderProgram shaders2D = ogl::ShaderProgram();
+			ogl::VertexArray square = ogl::VertexArray();
 		};
 
 	}//gfx

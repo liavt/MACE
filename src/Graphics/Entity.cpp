@@ -11,8 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/System/Constants.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/BitField.h>
-#include <MACE/Graphics/Buffer.h>
-#include <MACE/Graphics/Shaders.h>
+#include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Renderer.h>
 #include <string>
 #include <iostream>
@@ -466,14 +465,14 @@ namespace mc {
 				transformation.translation[1] = newY;
 			}
 		}
-		UniformBuffer & GraphicsEntity::getBuffer() {
+		ogl::UniformBuffer & GraphicsEntity::getBuffer() {
 			makeDirty();
 			return buffer;
 		}
-		const UniformBuffer & GraphicsEntity::getBuffer() const {
+		const ogl::UniformBuffer & GraphicsEntity::getBuffer() const {
 			return buffer;
 		}
-		void GraphicsEntity::setBuffer(const UniformBuffer & newBuffer) {
+		void GraphicsEntity::setBuffer(const ogl::UniformBuffer & newBuffer) {
 			if( newBuffer != buffer ) {
 				makeDirty();
 				buffer = newBuffer;
@@ -550,13 +549,13 @@ namespace mc {
 
 		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
 
-		GraphicsEntity::GraphicsEntity(Texture & t) noexcept : Entity() {
+		GraphicsEntity::GraphicsEntity(ogl::Texture & t) noexcept : Entity() {
 			texture = t;
 		}
 
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
-		void GraphicsEntity::setTexture(Texture & tex) {
+		void GraphicsEntity::setTexture(ogl::Texture & tex) {
 			if( tex != texture ) {
 				makeDirty();
 
@@ -564,13 +563,13 @@ namespace mc {
 			}
 		}
 
-		Texture & GraphicsEntity::getTexture() {
+		ogl::Texture & GraphicsEntity::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		const Texture & GraphicsEntity::getTexture() const {
+		const ogl::Texture & GraphicsEntity::getTexture() const {
 			return texture;
 		}
 
