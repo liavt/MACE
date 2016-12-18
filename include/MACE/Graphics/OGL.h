@@ -55,11 +55,11 @@ namespace mc {
 			/**
 			@opengl
 			*/
-			void throwShaderError[[noreturn]](const Index& shaderId, const Enum& type, const std::string& message);
+			void throwShaderError[[noreturn]](const Index shaderId, const Enum type, const std::string& message);
 			/**
 			@opengl
 			*/
-			void throwShaderError[[noreturn]](const Index& shaderId, const Enum& type);
+			void throwShaderError[[noreturn]](const Index shaderId, const Enum type);
 
 			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
@@ -172,14 +172,14 @@ namespace mc {
 				@opengl
 				@internal
 				*/
-				virtual void bindIndex(const Index& id) const = 0;
+				virtual void bindIndex(const Index id) const = 0;
 			};
 
 			/**
 			Special object that is used for asynchronous queries of information from the GPU.
 			<p>
 			Even though it extends `Object` it does not implement the Object::bind() const or `unbind()` functions.
-			Instead, the `QueryObject` uses the QueryObject::begin(const Enum&) and QueryObject::end(const Enum&)
+			Instead, the `QueryObject` uses the QueryObject::begin(const Enum) and QueryObject::end(const Enum)
 			functions.
 			@see https://www.opengl.org/wiki/Query_Object
 			*/
@@ -194,10 +194,10 @@ namespace mc {
 				@param target THe kind of data to query. Can not be GL_TIMESTAMP.
 				@see https://www.opengl.org/wiki/GLAPI/glBeginQuery
 				@see QueryObject::counter()
-				@attention When you use this function make sure to also call QueryObject::end(const Enum&) eventually
+				@attention When you use this function make sure to also call QueryObject::end(const Enum) eventually
 				@opengl
 				*/
-				void begin(const Enum& target);
+				void begin(const Enum target);
 				/**
 				Stops querying data for a certain target.
 				<p>
@@ -206,44 +206,44 @@ namespace mc {
 				The results can be queried with one of the `QueryObject::get` funcitons.
 				@param target The kind of data being queried. Can not be GL_TIMESTAMP
 				@see https://www.opengl.org/wiki/GLAPI/glBeginQuery
-				@throws GL_INVALID_OPERATION If QueryObject::begin(const Enum& was never called)
+				@throws GL_INVALID_OPERATION If QueryObject::begin(const Enum was never called)
 				@opengl
 				*/
-				void end(const Enum& target);
+				void end(const Enum target);
 
 				/**
 				Retrieves data from a begin/end pair.
 				@param name The name of the results you want to retrieve. Must be GL_QUERY_RESULT, GL_QUERY_RESULT_NO_WAIT​, or GL_QUERY_RESULT_AVAILABLE
 				@param data Where to put the data into.
-				@see QueryObject::begin(const Enum&)
-				@see QueryObject::end(const Enum&)
+				@see QueryObject::begin(const Enum)
+				@see QueryObject::end(const Enum)
 				@see QueryObject::counter()
 				@see https://www.opengl.org/wiki/GLAPI/glGetQueryObject
 				@opengl
 				*/
-				void get(const Enum& name, int* data) const;
+				void get(const Enum name, int* data) const;
 
 				/**
-				@copydoc get(const Enum&, int* data) const
+				@copydoc get(const Enum, int* data) const
 				*/
-				void get(const Enum& name, unsigned int* data) const;
+				void get(const Enum name, unsigned int* data) const;
 
 				/**
-				@copydoc get(const Enum&, int* data) const
+				@copydoc get(const Enum, int* data) const
 				*/
-				void get(const Enum& name, int64_t* data) const;
+				void get(const Enum name, int64_t* data) const;
 				/**
-				@copydoc get(const Enum&, int* data) const
+				@copydoc get(const Enum, int* data) const
 				*/
-				void get(const Enum& name, uint64_t* data) const;
+				void get(const Enum name, uint64_t* data) const;
 
 				/**
 				Records the current GPU time into this `QueryObject.` This returns immediately.
 				<p>
-				Can be used in conjunction with QueryObject::begin(const Enum&) with a target of
+				Can be used in conjunction with QueryObject::begin(const Enum) with a target of
 				`GL_TIME_ELAPSED`
-				@see QueryObject::end(const Enum&)
-				@see QueryObject::get(const Enum&, uint64_t*) const
+				@see QueryObject::end(const Enum)
+				@see QueryObject::get(const Enum, uint64_t*) const
 				@see https://www.opengl.org/wiki/GLAPI/glQueryCounter
 				@opengl
 				*/
@@ -262,7 +262,7 @@ namespace mc {
 				void bind() const final;
 				void unbind() const final;
 
-				void bindIndex(const Index& id) const final;
+				void bindIndex(const Index id) const final;
 			};//QueryObject
 
 			/**
@@ -282,29 +282,29 @@ namespace mc {
 				@param format A valied OpenGL image format such as GL_RGBA8
 				@param width The width of the buffer
 				@param height The height of the buffer
-				@see RenderBuffer::setStorageMultisampled(const GLsizei&, const GLenum&, const GLsizei&, const GLsizei&)
+				@see RenderBuffer::setStorageMultisampled(const Size, const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorage
 				@opengl
 				*/
-				void setStorage(const GLenum& format, const GLsizei& width, const GLsizei& height);
+				void setStorage(const Enum format, const Size width, const Size height);
 				/**
 				Sets the flags for the storage of this `RenderBuffer.` This version can have anti-aliasing.
 				@param samples How many samples to use for MSAA
 				@param format A valied OpenGL image format such as GL_RGBA8
 				@param width The width of the buffer
 				@param height The height of the buffer
-				@see RenderBuffer::setStorage(const GLenum&, const GLsizei&, const GLsizei&)
+				@see RenderBuffer::setStorage(const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorageMultisample
 				@opengl
 				*/
-				void setStorageMultisampled(const GLsizei& samples, const GLenum& format, const GLsizei& width, const GLsizei& height);
+				void setStorageMultisampled(const Size samples, const Enum format, const Size width, const Size height);
 
 				bool isCreated() const override;
 
 				using Object::operator==;
 				using Object::operator!=;
 			private:
-				void bindIndex(const Index& id) const override;
+				void bindIndex(const Index id) const override;
 			};//RenderBuffer
 
 			/**
@@ -330,25 +330,25 @@ namespace mc {
 				@param textureID ID for the `Texture` to attach. See Texture::getID() const
 				@param level Mipmap level to attach. Is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
-				@see setDrawBuffers(const Size&, const GLenum*)
+				@see setDrawBuffers(const Size, const Enum*)
 				@todo Replace this with the actual Texture class
 				@opengl
 				*/
-				void attachTexture(const GLenum& target, const GLenum& attachment, const GLuint& textureID, const GLint& level = 0);
+				void attachTexture(const Enum target, const Enum attachment, const unsigned int textureID, const int level = 0);
 				/**
-				@copydoc FrameBuffer::attachTexture(const GLenum&, const GLenum&, const GLuint&, const GLint&)
+				@copydoc FrameBuffer::attachTexture(const Enum, const Enum, const unsigned int, const int)
 				@param texTarget Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link.
 				*/
-				void attachTexture1D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level = 0);
+				void attachTexture1D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level = 0);
 				/**
-				@copydoc FrameBuffer::attachTexture1D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)
+				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
 				*/
-				void attachTexture2D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level = 0);
+				void attachTexture2D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level = 0);
 				/**
-				@copydoc FrameBuffer::attachTexture1D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)
+				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
 				@param layer Which layer of the 3-dimensional image to use. It is 0 by default.
 				*/
-				void attachTexture3D(const GLenum& target, const GLenum& attachment, const GLenum& texTarget, const GLuint& textureID, const GLint& level = 0, const GLint& layer = 0);
+				void attachTexture3D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level = 0, const int layer = 0);
 
 				/**
 				Attaches a single layer from a texture to this `FrameBuffer`
@@ -360,7 +360,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer
 				@opengl
 				*/
-				void attachTextureLayer(const GLenum& target, const GLenum& attachment, const GLuint& texture, const GLint& level = 0, const GLint& layer = 0);
+				void attachTextureLayer(const Enum target, const Enum attachment, const unsigned int texture, const int level = 0, const int layer = 0);
 
 				/**
 				Attaches a `RenderBuffer` to this `FrameBuffer` for rendering.
@@ -369,7 +369,7 @@ namespace mc {
 				@param buffer The `RenderBuffer` to use.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer
 				*/
-				void attachRenderbuffer(const GLenum& target, const GLenum& attachment, const RenderBuffer& buffer);
+				void attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer& buffer);
 
 				/**
 				Specifies what buffers to render to. Takes in an array of attachments. A `RenderBuffer` or `Texture` can be attached to act
@@ -377,32 +377,32 @@ namespace mc {
 				@param arrSize Size of the array of render buffers
 				@param buffers Pointer to the first element of the array
 				@see https://www.opengl.org/wiki/GLAPI/glDrawBuffers
-				@see FrameBuffer::attachTexture(const GLenum&, const GLenum&, const GLenum&, const GLuint&)
-				@see FrameBuffer::attachTexture1D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)
-				@see FrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)
-				@see FrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&, const GLint&)
-				@see FrameBuffer::attachTextureLayer(const GLenum&, const GLenum&, const GLuint&, const GLint&)
-				@see FrameBuffer::attachRenderbuffer(const GLenum&, const GLenum&, const RenderBuffer&)
+				@see FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int)
+				@see FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int)
+				@see FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
 				@opengl
 				*/
-				void setDrawBuffers(const Size& arrSize, const GLenum* buffers);
+				void setDrawBuffers(const Size arrSize, const Enum* buffers);
 
 				/**
 				Select which color buffer to use for reading via
-				FrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const
+				FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const
 
 				@param mode Which attachment to use
-				@see FrameBuffer::setPixelStore(const Enum&, const float&)
+				@see FrameBuffer::setPixelStore(const Enum, const float)
 				@see https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml
-				@see FrameBuffer::attachTexture(const GLenum&, const GLenum&, const GLenum&, const GLuint&)
-				@see FrameBuffer::attachTexture1D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)
-				@see FrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&)
-				@see FrameBuffer::attachTexture2D(const GLenum&, const GLenum&, const GLenum&, const GLuint&, const GLint&, const GLint&)
-				@see FrameBuffer::attachTextureLayer(const GLenum&, const GLenum&, const GLuint&, const GLint&)
-				@see FrameBuffer::attachRenderbuffer(const GLenum&, const GLenum&, const RenderBuffer&)
+				@see FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int)
+				@see FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int)
+				@see FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
 				@opengl
 				*/
-				void setReadBuffer(const Enum& mode);
+				void setReadBuffer(const Enum mode);
 
 				/**
 				Read pixels from this `FrameBuffer`
@@ -415,15 +415,15 @@ namespace mc {
 				@param type The type of the pixel data
 				@param data Pointer to where you want the data to be written to.
 				@see https://www.opengl.org/sdk/docs/man/html/glReadPixels.xhtml
-				@see FrameBuffer::setPixelStore(const Enum&, const float&)
-				@see FrameBuffer::setReadBuffer(const Enum&);
+				@see FrameBuffer::setPixelStore(const Enum, const float)
+				@see FrameBuffer::setReadBuffer(const Enum);
 				@opengl
 				*/
-				void readPixels(const int& x, const int& y, const Size& width, const Size& height, const Enum& format, const Enum& type, void* data) const;
+				void readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data) const;
 
 				/**
 				Set the pixel storage mode for this `FrameBuffer` for use in
-				FrameBuffer::readPixels(const int&, const int&, const Size&, const Size&, const Enum&, const Enum&, void*) const
+				FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const
 
 				@param name The parameter to change
 				@param param What to change it to
@@ -431,11 +431,11 @@ namespace mc {
 				@see
 				@opengl
 				*/
-				void setPixelStore(const Enum& name, const float& param);
+				void setPixelStore(const Enum name, const float param);
 				/**
-				@copydoc setPixelStore(const Enum&, const float&)
+				@copydoc setPixelStore(const Enum, const float)
 				*/
-				void setPixelStore(const Enum& name, const int& param);
+				void setPixelStore(const Enum name, const int param);
 
 				bool isCreated() const override;
 
@@ -447,12 +447,12 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glCheckFramebufferStatus
 				@opengl
 				*/
-				GLenum checkStatus(const GLenum& target);
+				Enum checkStatus(const Enum target);
 
 				using Object::operator==;
 				using Object::operator!=;
 			private:
-				void bindIndex(const Index& id) const override;
+				void bindIndex(const Index id) const override;
 			};//FrameBuffer
 
 			/**
@@ -467,15 +467,15 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				@opengl
 				*/
-				void setData(const void * data, Size width, Size height, GLenum type = GL_FLOAT, GLenum format = GL_RGB, GLenum internalFormat = GL_RGB, Index mipmapLevel = 0);
+				void setData(const void * data, const Size width, const Size height, const Enum type = GL_FLOAT, const Enum format = GL_RGB, const Enum internalFormat = GL_RGB, const Index mipmapLevel = 0);
 
 				/**
 				@opengl
 				*/
 				void loadFile(const char* file);
 
-				void setTarget(const GLenum target);
-				GLenum getTarget();
+				void setTarget(const Enum target);
+				Enum getTarget();
 
 				Color& getPaint();
 				const Color& getPaint() const;
@@ -491,7 +491,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
 				@opengl
 				*/
-				void setParameter(const GLenum& name, const GLint& value);
+				void setParameter(const Enum name, const int value);
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -503,13 +503,13 @@ namespace mc {
 				bool operator!=(const Texture& other) const;
 
 			private:
-				GLenum target = GL_TEXTURE_2D;
+				Enum target = GL_TEXTURE_2D;
 
 				Color paint = Color(1.0f, 1.0f, 1.0f, 1.0f);
 
 				float opacity = 1.0f;
 
-				void bindIndex(const Index& id) const override;
+				void bindIndex(const Index id) const override;
 			};//Texture
 
 			/**
@@ -541,7 +541,7 @@ namespace mc {
 				@see UniformBuffer
 				@param bufferType OpenGL symbolic constant with the desired type.
 				*/
-				Buffer(const Enum& bufferType) noexcept;
+				Buffer(const Enum bufferType) noexcept;
 
 				bool isCreated() const override;
 
@@ -554,24 +554,24 @@ namespace mc {
 				@param dataSize Size of the buffer, measured in bytes.
 				@param data Pointer to the actual data. Using `nullptr` or `NULL` will create an empty buffer.
 				@param drawType Expected usage pattern for the data. GL_DYNAMIC_DRAW by default
-				@see Buffer::setDataRange(const Index, const GLsizeiptr, const void*)
-				@see Buffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)
+				@see Buffer::setDataRange(const Index, const ptrdiff_t, const void*)
+				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
 				@see https://www.opengl.org/wiki/GLAPI/glBufferData
 				@opengl
 				*/
-				void setData(const GLsizeiptr& dataSize, const void* data, const Enum& drawType = GL_DYNAMIC_DRAW);
+				void setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType = GL_DYNAMIC_DRAW);
 				/**
 				Sets data in a range of the buffer.
 				<p>
-				Does not initialize data. Buffer:setData(const GLsizeiptr&, const void*, const Enum&) must be called first.
+				Does not initialize data. Buffer:setData(const ptrdiff_t&, const void*, const Enum) must be called first.
 				@param offset Offset into the buffer to set the data, measured in bytes
 				@param dataSize How large the region being inserted is, measured in bytes
 				@param data Pointer to the data being inserted
 				@see https://www.opengl.org/wiki/GLAPI/glBufferSubData
-				@see Buffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)
+				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
 				@opengl
 				*/
-				void setDataRange(const Index& offset, const GLsizeiptr& dataSize, const void* data);
+				void setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data);
 
 				/**
 				Copy part of the data store of this `Buffer` into another `Buffer`
@@ -580,26 +580,26 @@ namespace mc {
 				@param size How much data to copy
 				@param readOffset How much data to offset by in this `Buffer`
 				@param writeOffset Where to write the data in the target `Buffer`
-				@see Buffer::setData(const GLsizeiptr&, const void*, const Enum&)
+				@see Buffer::setData(const ptrdiff_t&, const void*, const Enum)
 				@see https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData
 				@see CopyReadBuffer
 				@see CopyWriteBuffer
 				@opengl
 				*/
-				void copyData(Buffer& other, const GLsizeiptr& size, const Index& readOffset = 0, const Index& writeOffset = 0);
+				void copyData(Buffer& other, const ptrdiff_t& size, const Index readOffset = 0, const Index writeOffset = 0);
 
 				/**
 				Maps the data in this `Buffer` to a pointer on the CPU side. May be slow.
 
 				@param access Which access to use. Must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE.
 				@see https://www.opengl.org/wiki/GLAPI/glMapBuffer
-				@see Buffer::mapRange(const Index&, const Size&, const unsigned int&)
+				@see Buffer::mapRange(const Index, const Size, const unsigned int)
 				@warning DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED.
 				@warning After Buffer::unmap() is called, the pointer returned may be unsafe. Using it will be undefined.
 				@attention When using this function don't forget to use Buffer::unmap() when you are done using the pointer
 				@opengl
 				*/
-				void* map(const Enum& access = GL_READ_WRITE);
+				void* map(const Enum access = GL_READ_WRITE);
 
 				/**
 				Maps a range of data in this `Buffer` to a pointer on the CPU side.
@@ -608,20 +608,20 @@ namespace mc {
 				@param length How much data to map
 				@param access A combination of access flags to determine how the data will be used. These flags determine how fast or slow the mapping will take.
 				@see https://www.opengl.org/wiki/GLAPI/glMapBufferRange
-				@see Buffer::map(const Enum&)
+				@see Buffer::map(const Enum)
 				@warning DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED.
 				@warning After Buffer::unmap() is called, the pointer returned may be unsafe. Using it will be undefined.
 				@attention When using this function don't forget to use Buffer::unmap() when you are done using the pointer
 				@opengl
 				*/
-				void* mapRange(const Index& offset, const Size& length, const unsigned int& access);
+				void* mapRange(const Index offset, const Size length, const unsigned int access);
 
 				/**
 				Unmaps the buffer. Any mapped points will be deleted and using them will be undefined.
 
 				@return Whether the data was corrupted during reading. This will be very rare but when it does happen you must reinitialize the data.
-				@see Buffer::map(const Enum&)
-				@see Buffer::mapRange(const Index&, const Size&, const unsigned int&)
+				@see Buffer::map(const Enum)
+				@see Buffer::mapRange(const Index, const Size, const unsigned int)
 				@see https://www.opengl.org/wiki/GLAPI/glMapBuffer
 				@warning Using a pointer after it was unmapped will be undefined
 				@opengl
@@ -632,7 +632,7 @@ namespace mc {
 				Retrieves the buffer type for this buffer. This is based on the class.
 				@return The buffer type
 				*/
-				const Enum& getBufferType() const;
+				const Enum getBufferType() const;
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -645,7 +645,7 @@ namespace mc {
 			private:
 				Enum bufferType;
 
-				void bindIndex(const Index& id) const override;
+				void bindIndex(const Index id) const override;
 			};//Buffer
 
 			/**
@@ -688,7 +688,7 @@ namespace mc {
 
 				/**
 				Tells OpenGL how to interpret array data. Must be called in order for rendering to work. Must be used in
-				conjuction with Buffer::setData(const GLsizeiptr, const GLvoid*, const GLenum)
+				conjuction with Buffer::setData(const ptrdiff_t, const GLvoid*, const Enum)
 				<p>
 				Behind the scenes, it will call either `glVertexAttribPointer` or `glVertexAttribIPointer` based on the
 				arguments provided.
@@ -701,7 +701,7 @@ namespace mc {
 				@see VertexArray
 				@opengl
 				*/
-				void setAttributePointer(const Byte& attribSize, const Enum& type, const bool& normalized = 0, const Index& stride = 0, const void* pointer = nullptr);
+				void setAttributePointer(const Byte& attribSize, const Enum type, const bool& normalized = 0, const Index stride = 0, const void* pointer = nullptr);
 
 				/**
 				Modify the rate at which vertex attribute advance during instancing. If instanced rendering is not being used,
@@ -710,7 +710,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glVertexAttribDivisor
 				@opengl
 				@*/
-				void setDivisor(const unsigned int& divisor);
+				void setDivisor(const unsigned int divisor);
 
 				/**
 				Enables this `VertexBuffer` for use in rendering. Not to be confused with Object::bind() const which binds
@@ -733,16 +733,16 @@ namespace mc {
 				Gets the current attribute location of this `VertexBuffer`
 				@return The attribute index
 				*/
-				Index& getLocation();
+				Index getLocation();
 				/**
 				@copydoc VertexBuffer::getLocation()
 				*/
-				const Index& getLocation() const;
+				const Index getLocation() const;
 				/**
 				Sets the attribute location of this `VertexBuffer.` 0 by default.
 				@param newLocation What to set it to
 				*/
-				void setLocation(const Index& newLocation);
+				void setLocation(const Index newLocation);
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -763,14 +763,14 @@ namespace mc {
 			@see https://www.opengl.org/wiki/GLAPI/glDrawElements
 			@see VertexArray
 			@see VertexBuffer
-			@note You must use the ElementBuffer::setIndiceNumber(const Size&) function for this class to work correctly.
+			@note You must use the ElementBuffer::setIndiceNumber(const Size) function for this class to work correctly.
 			*/
 			class ElementBuffer: public Buffer {
 			public:
 				ElementBuffer() noexcept;
 
 				/**
-				Constructs an `ElementBuffer` with a specified amount of indices. Analagous to calling ElementBuffer::setIndiceNumber(const Size&)
+				Constructs an `ElementBuffer` with a specified amount of indices. Analagous to calling ElementBuffer::setIndiceNumber(const Size)
 				immediately after construction.
 				@param indiceNum The amount of indices this `ElementBuffer` will have
 				@see https://www.opengl.org/wiki/GLAPI/glDrawElements
@@ -778,30 +778,30 @@ namespace mc {
 				@see ElementBuffer::getIndiceNumber()
 				@see VertexArray
 				*/
-				ElementBuffer(const Size& indiceNum) noexcept;
+				ElementBuffer(const Size indiceNum) noexcept;
 
 				/**
 				Tell this `ElementBuffer` how many indices there are. This is required for proper usage in the `VertexArray` class.
 				@see https://www.opengl.org/wiki/GLAPI/glDrawElements
 				@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
-				@see Buffer::setData(const GLsizeiptr&, const void*, const Enum&)
+				@see Buffer::setData(const ptrdiff_t&, const void*, const Enum)
 				@see VertexArray
 				@param indices The amount of indices loaded
 				*/
-				void setIndiceNumber(const Size& indices);
+				void setIndiceNumber(const Size indices);
 				/**
 				Retrieves how many indices this `ElementBuffer` has.
-				@see ElementBuffer::setIndiceNumber(const Size&)
+				@see ElementBuffer::setIndiceNumber(const Size)
 				@see VertexArray
 				@see https://www.opengl.org/wiki/GLAPI/glDrawElements
 				@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
 				@return The amount of indices
 				*/
-				Size& getIndiceNumber();
+				Size getIndiceNumber();
 				/**
 				@copydoc ElementBuffer::getIndiceNumber()
 				*/
-				const Size& getIndiceNumber() const;
+				const Size getIndiceNumber() const;
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -830,33 +830,33 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glDrawElements
 				@opengl
 				*/
-				void draw(const GLenum type = GL_TRIANGLES) const;
+				void draw(const Enum type = GL_TRIANGLES) const;
 
 				/**
 				@opengl
 				@see VertexBuffer
 				*/
-				void loadVertices(const Size&& verticeSize, const GLfloat vertices[], const Index&& location = 15, const Size&& attributeSize = 3);
+				void loadVertices(const Size& verticeSize, const GLfloat vertices[], const Index& location = 15, const Size& attributeSize = 3);
 				/**
 				@opengl
 				@see VertexBuffer
 				*/
-				void loadIndices(const Size& indiceNum, const unsigned int* indiceData);
+				void loadIndices(const Size indiceNum, const unsigned int* indiceData);
 
 				/**
 				@opengl
 				@see VertexBuffer
 				*/
-				void storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location = 0, const Size&& attributeSize = 3);
+				void storeDataInAttributeList(const Size& dataSize, const GLvoid* data, const Index& location = 0, const Size& attributeSize = 3);
 
 				/**
 				@opengl
 				*/
 				void addBuffer(const VertexBuffer& newBuffer);
 
-				void setVertexNumber(const Size& vertexNum);
-				Size& getVertexNumber();
-				const Size& getVertexNumber() const;
+				void setVertexNumber(const Size vertexNum);
+				Size getVertexNumber();
+				const Size getVertexNumber() const;
 
 				void setIndices(const ElementBuffer& buffer);
 				ElementBuffer& getIndices();
@@ -875,7 +875,7 @@ namespace mc {
 				*/
 				bool operator!=(const VertexArray& other) const;
 			private:
-				void bindIndex(const Index& id) const override;
+				void bindIndex(const Index id) const override;
 
 				ElementBuffer indices;
 				std::vector<VertexBuffer> buffers = std::vector<VertexBuffer>();
@@ -888,7 +888,7 @@ namespace mc {
 			this buffer can be used easily.
 
 			@see https://www.opengl.org/wiki/Buffer_Object::Copying
-			@see Buffer::copyData(Buffer, GLsizeiptr, Index, Index);
+			@see Buffer::copyData(Buffer, ptrdiff_t, Index, Index);
 			@see CopyWriteBuffer
 			@see Buffer
 			*/
@@ -925,7 +925,7 @@ namespace mc {
 				/**
 				Modify the location that this `UniformBuffer` is currently bound to.
 				<p>
-				The location is used in the UniformBuffer::bindForRender(const Index, const GLsizeiptr) const
+				The location is used in the UniformBuffer::bindForRender(const Index, const ptrdiff_t) const
 				and UniformBuffer::bindToUniformBlock(const Index, const char*) const functions, as well as
 				in the shaders.
 				@param location The new location for this `UniformBuffer` object.
@@ -936,11 +936,11 @@ namespace mc {
 				@return The location
 				@see UniformBuffer::setLocation(const Index)
 				*/
-				Index& getLocation();
+				Index getLocation();
 				/**
 				@copydoc UniformBuffer::getLocation()
 				*/
-				const Index& getLocation() const;
+				const Index getLocation() const;
 
 				/**
 				Binds this `UniformBuffer` for rendering. Must be called before a rendering call is used.
@@ -952,7 +952,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glBindBufferRange
 				@opengl
 				*/
-				void bindForRender(const Index offset = 0, const GLsizeiptr size = -1) const;
+				void bindForRender(const Index offset = 0, const ptrdiff_t size = -1) const;
 
 				/**
 				Binds this `UniformBuffer` to a `ShaderProgram.` Must be used or else the shader won't be
@@ -981,7 +981,7 @@ namespace mc {
 			<p>
 			The `Shader` class must be used with the `ShaderProgram` class.
 			<p>
-			In order to work correctly, Shader::setType(const Enum&) or Shader::Shader(const Enum&) noexcept must be called and a type must be
+			In order to work correctly, Shader::setType(const Enum) or Shader::Shader(const Enum) noexcept must be called and a type must be
 			set.
 			<p>
 			Unlike other `Objects`, the default constructor of `Shader` should not be used. It is only implemented for compatibility reasons.
@@ -998,8 +998,8 @@ namespace mc {
 				Default constructor which sets `type` to `GL_FALSE`. If a function that requires `type` to be set is called, an error
 				is thrown.
 				<p>
-				If this constructor is used, the Shader::setType(const Enum&) function should be used later to set a type.
-				@see Shader::Shader(const Enum&) noexcept
+				If this constructor is used, the Shader::setType(const Enum) function should be used later to set a type.
+				@see Shader::Shader(const Enum) noexcept
 				@see Shader
 				*/
 				Shader() noexcept;
@@ -1009,10 +1009,10 @@ namespace mc {
 				The `type` must be a valid OpenGL constant representing a type of shader. If it is incorrect, an
 				`OpenGLError` is thrown.
 				@param type The type of `Shader`. Must be `GL_VERTEX_SHADER`, `GL_FRAGMENT_SHADER`, `GL_GEOMETRY_SHADER`, or the following if available: `GL_TESS_CONTROL_SHADER`, `GL_TESS_EVALUATION_SHADER`, and `GL_COMPUTE_SHADER`
-				@see Shader::setType(const Enum&)
+				@see Shader::setType(const Enum)
 				@see Shader
 				*/
-				Shader(const Enum& type) noexcept;
+				Shader(const Enum type) noexcept;
 
 				void init() override;
 				void destroy() override;
@@ -1021,8 +1021,8 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glShaderSource
 				@opengl
 				*/
-				void setSource(const Size& count, const char* strings[], const int lengths[]);
-				void setSource(const char string[], const int& length);
+				void setSource(const Size count, const char* strings[], const int lengths[]);
+				void setSource(const char string[], const int length);
 				void setSource(const std::string& string);
 
 				/**
@@ -1032,9 +1032,9 @@ namespace mc {
 
 				bool isCreated() const override;
 
-				void setType(const Enum& newType);
-				Enum& getType();
-				const Enum& getType() const;
+				void setType(const Enum newType);
+				Enum getType();
+				const Enum getType() const;
 
 				bool operator==(const Shader& other) const;
 				bool operator!=(const Shader& other) const;
@@ -1045,7 +1045,7 @@ namespace mc {
 				void bind() const final;
 				void unbind() const final;
 
-				void bindIndex(const Index& id) const final;
+				void bindIndex(const Index id) const final;
 			};//Shader
 
 			/**
@@ -1207,7 +1207,7 @@ namespace mc {
 
 				std::unordered_map<std::string, int> uniforms = std::unordered_map<std::string, int>();
 
-				void bindIndex(const Index& id) const override;
+				void bindIndex(const Index id) const override;
 			};//ShaderProgram
 		}
 	}//gfx

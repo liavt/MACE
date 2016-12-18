@@ -18,28 +18,31 @@ namespace mc {
 		public:
 			DummyEntity() : Entity() {};
 
+			using Entity::init;
+			using Entity::update;
+			using Entity::render;
+			using Entity::destroy;
 
 			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
 		protected:
 
-			virtual void customUpdate() {
+			virtual void onUpdate() override {
 				isUpdated = true;
 			}
 
-			virtual void customInit() {
+			virtual void onInit() override {
 				isInit = true;
 			}
 
-			virtual void customDestroy() {
+			virtual void onDestroy() override {
 				isDestroyed = true;
 			}
 
-			virtual void customRender() {
+			virtual void onRender() override {
 				isRendered = true;
 			}
 
-			void clean() {
-				Entity::clean();
+			virtual void onClean() override {
 				isCleaned = true;
 			}
 		};
@@ -50,29 +53,42 @@ namespace mc {
 			DummyEntity2D() : mc::gfx::Entity2D() {};
 
 
-			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned=false;
+			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
+
+			using Entity2D::init;
+			using Entity2D::update;
+			using Entity2D::render;
+			using Entity2D::destroy;
+
 		protected:
 
-			virtual void customUpdate() {
+			virtual void onUpdate() override {
 				isUpdated = true;
 			}
 
-			virtual void customInit() {
+			virtual void onInit() override {
 				isInit = true;
 			}
 
-			virtual void customDestroy() {
+			virtual void onDestroy() override {
 				isDestroyed = true;
 			}
 
-			virtual void customRender() {
+			virtual void onRender() override {
 				isRendered = true;
 			}
 
-			void clean() {
-				Entity2D::clean();
+			virtual void onClean() override{
 				isCleaned = true;
 			}
+		};
+
+		class DummyGroup: public mc::gfx::Group {
+		public:
+			using Entity::init;
+			using Entity::update;
+			using Entity::render;
+			using Entity::destroy;
 		};
 
 		class DummyAction: public mc::gfx::Component {
@@ -97,7 +113,7 @@ namespace mc {
 			}
 		};
 
-		Group c = Group();
+		DummyGroup c = DummyGroup();
 
 		TEST_CASE("Testing dirtiness") {
 			DummyEntity e = DummyEntity();
@@ -223,7 +239,6 @@ namespace mc {
 		TEST_CASE("Testing actions", "[entity][graphics]") {
 			DummyAction a = DummyAction();
 			DummyEntity e = DummyEntity();
-			Group c = Group();
 
 			SECTION("Testing default values") {
 				REQUIRE_FALSE(a.isInit);

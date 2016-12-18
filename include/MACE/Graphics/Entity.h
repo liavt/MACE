@@ -18,12 +18,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-
 		using EntityProperties = BitField;
 
-		//forward-defining entity for component
+		//forward-defining dependencies
 		class Entity;
-		class ShaderProgram;
 
 		class Component {
 		public:
@@ -35,6 +33,10 @@ namespace mc {
 
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
+		@see GraphicsEntity
+		@see Entity2D
+		@see Component
+		@todo Events for hover for both Entity and Component
 		*/
 		class Entity {
 		public:
@@ -117,41 +119,6 @@ namespace mc {
 			@see ~Entity()
 			*/
 			virtual ~Entity() noexcept;
-
-			/**
-			Should be called a by `Entity` when `System.update()` is called. Calls `customUpdate()`.
-			<p>
-			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customUpdate()`
-			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
-			*/
-			void update();
-			/**
-			Should be called a by `Entity` when `System.init()` is called. Calls `customInit()`
-			<p>
-			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customInit()`
-			@dirty
-			@opengl
-			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
-			*/
-			virtual void init();
-			/**
-			Should be called a by `Entity` when `System.destroy()` is called. Calls `customDestroy()`. Sets `Entity::INIT` to be false
-			<p>
-			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customDestroy()`
-			@dirty
-			@opengl
-			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
-			*/
-			virtual void destroy();
-
-			/**
-			Should be called by a `Entity` when the graphical `Window` clears the frame.
-			<p>
-			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `customRender()`
-			@opengl
-			@see Entity#update()
-			*/
-			void render();
 			
 			/**
 			Gets all of this `Entity's` children.
@@ -359,13 +326,6 @@ namespace mc {
 			*/
 			void addChild(Entity& e);
 
-			/**
-			Automatically called when `Entity::PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
-			@dirty
-			@see getParent()
-			*/
-			void kill();
-
 			void addComponent(Component& action);
 			std::vector<Component*> getComponents();
 
@@ -431,16 +391,16 @@ namespace mc {
 			bool operator!=(const Entity& other) const noexcept;
 
 			/**
-			@internal
-			@opengl
-			*/
-			virtual void clean();
-
-			/**
 			@dirty
 			*/
 			Entity* getRootParent();
 			const Entity* getRootParent() const;
+
+			/**
+			@internal
+			@opengl
+			*/
+			void clean();
 
 			/**
 			@dirty
@@ -454,32 +414,69 @@ namespace mc {
 			void makeDirty();
 		protected:
 			/**
-			When `Entity.update()` is called, `customUpdate()` is called on all of it's children.
+			Should be called a by `Entity` when `System.update()` is called. Calls `onUpdate()`.
+			<p>
+			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onUpdate()`
+			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
+			*/
+			void update();
+			/**
+			Should be called a by `Entity` when `System.init()` is called. Calls `onInit()`
+			<p>
+			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onInit()`
+			@dirty
+			@opengl
+			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
+			*/
+			virtual void init();
+			/**
+			Should be called a by `Entity` when `System.destroy()` is called. Calls `onDestroy()`. Sets `Entity::INIT` to be false
+			<p>
+			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onDestroy()`
+			@dirty
+			@opengl
+			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
+			*/
+			virtual void destroy();
+
+			/**
+			Should be called by a `Entity` when the graphical `Window` clears the frame.
+			<p>
+			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onRender()`
+			@opengl
+			@see Entity#update()
+			*/
+			void render();
+
+			/**
+			When `Entity.update()` is called, `onUpdate()` is called on all of it's children.
 			@see System#update()
 			@internal
 			*/
-			virtual void customUpdate() = 0;
+			virtual void onUpdate() = 0;
 			/**
-			When `Entity.init()` is called, `customInit()` is called on all of it's children.
+			When `Entity.init()` is called, `onInit()` is called on all of it's children.
 			@see System#init()
 			@internal
 			@opengl
 			*/
-			virtual void customInit() = 0;
+			virtual void onInit() = 0;
 			/**
-			When `Entity.destroy()` is called, `customDestroy()` is called on all of it's children.
+			When `Entity.destroy()` is called, `onDestroy()` is called on all of it's children.
 			@see System#destroy()
 			@internal
 			@opengl
 			*/
-			virtual void customDestroy() = 0;
+			virtual void onDestroy() = 0;
 
 			/**
-			When `Entity.render()` is called, `customRender()` is called on all of it's children.
+			When `Entity.render()` is called, `onRender()` is called on all of it's children.
 			@internal
 			@opengl
 			*/
-			virtual void customRender() = 0;
+			virtual void onRender() = 0;
+
+			virtual void onClean();
 
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
@@ -500,16 +497,22 @@ namespace mc {
 
 			Entity* parent = nullptr;
 
+			/**
+			Automatically called when `Entity::PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
+			@dirty
+			@see getParent()
+			*/
+			void kill();
 
 			void setParent(Entity* parent);
 		};//Entity
 
 		class Group: public Entity {
 		protected:
-			void customInit() override;
-			void customUpdate() override;
-			void customRender() override;
-			void customDestroy() override;
+			void onInit() override;
+			void onUpdate() override;
+			void onRender() override;
+			void onDestroy() override;
 
 		};//Group
 
@@ -531,10 +534,10 @@ namespace mc {
 			VoidFunctionPtr getDestroyCallback();
 			const VoidFunctionPtr getDestroyCallback() const;
 		protected:
-			void customInit() final;
-			void customUpdate() final;
-			void customRender() final;
-			void customDestroy() final;
+			void onInit() final;
+			void onUpdate() final;
+			void onRender() final;
+			void onDestroy() final;
 		private:
 			VoidFunctionPtr destroyCallback = [] {}, updateCallback = [] {}, renderCallback = [] {}, initCallback = [] {};
 		};//CallbackEntity
@@ -593,7 +596,7 @@ namespace mc {
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
 
-			void clean() override;
+			void onClean() override;
 		private:
 			ogl::Texture texture;
 

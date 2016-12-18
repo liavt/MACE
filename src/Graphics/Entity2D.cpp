@@ -15,13 +15,13 @@ namespace mc {
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
 
-		void Image::customInit() {}
+		void Image::onInit() {}
 
-		void Image::customUpdate() {}
+		void Image::onUpdate() {}
 
-		void Image::customRender() {}
+		void Image::onRender() {}
 
-		void Image::customDestroy() {}
+		void Image::onDestroy() {}
 
 		void RenderProtocol<Entity2D>::resize(const Size, const Size) {}
 

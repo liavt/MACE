@@ -72,10 +72,10 @@ namespace mc {
 			bool vsync = false;
 
 			//these are for the Entity inheritence
-			void customUpdate() final;
-			void customRender() final;
-			void customDestroy() final;
-			void customInit() final;
+			void onUpdate() final;
+			void onRender() final;
+			void onDestroy() final;
+			void onInit() final;
 
 			void threadCallback();
 		};//WindowModule

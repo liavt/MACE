@@ -299,13 +299,13 @@ namespace mc {
 			return vsync;
 		}//isVSync
 
-		void WindowModule::customInit() {}
+		void WindowModule::onInit() {}
 
-		void WindowModule::customUpdate() {}
+		void WindowModule::onUpdate() {}
 
-		void WindowModule::customRender() {}
+		void WindowModule::onRender() {}
 
-		void WindowModule::customDestroy() {}
+		void WindowModule::onDestroy() {}
 
 		namespace Input {
 			const BitField & getKey(const short int key) {

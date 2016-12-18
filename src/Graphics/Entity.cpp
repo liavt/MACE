@@ -88,7 +88,7 @@ namespace mc {
 			//check if we can render
 			if( !getProperty(Entity::RENDER_DISABLED) ) {
 				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
-				customRender();
+				onRender();
 
 				for( Index i = 0; i < children.size(); ++i ) {
 					children[i]->render();
@@ -98,12 +98,16 @@ namespace mc {
 		}
 
 		void Entity::clean() {
-			setProperty(Entity::DIRTY, false);
+			if( getProperty(Entity::DIRTY) ) {
+				onClean();
 
-			for( Size i = 0; i < children.size(); i++ ) {
-				if( children[i]->getProperty(Entity::INIT) ) {
-					children[i]->clean();
+				for( Size i = 0; i < children.size(); i++ ) {
+					if( children[i]->getProperty(Entity::INIT) ) {
+						children[i]->clean();
+					}
 				}
+
+				setProperty(Entity::DIRTY, false);
 			}
 		}
 
@@ -152,6 +156,8 @@ namespace mc {
 				}
 			}
 		}
+
+		void Entity::onClean() {}
 
 		void Entity::setParent(Entity * par) {
 			makeDirty();
@@ -244,7 +250,7 @@ namespace mc {
 
 
 
-				customUpdate();
+				onUpdate();
 
 				//call update() on children
 				for( Index i = 0; i < children.size(); i++ ) {
@@ -267,7 +273,7 @@ namespace mc {
 			for( Index i = 0; i < children.size(); ++i ) {
 				children[i]->init();
 			}
-			customInit();
+			onInit();
 			setProperty(Entity::INIT, true);
 		}
 
@@ -279,7 +285,7 @@ namespace mc {
 			for( Index i = 0; i < children.size(); ++i ) {
 				children[i]->destroy();
 			}
-			customDestroy();
+			onDestroy();
 			reset();
 		}
 
@@ -397,13 +403,13 @@ namespace mc {
 			return !(this == &other);
 		}
 
-		void Group::customInit() {}
+		void Group::onInit() {}
 
-		void Group::customUpdate() {}
+		void Group::onUpdate() {}
 
-		void Group::customRender() {}
+		void Group::onRender() {}
 
-		void Group::customDestroy() {}
+		void Group::onDestroy() {}
 
 		float & Entity::getWidth() {
 			makeDirty();
@@ -479,19 +485,19 @@ namespace mc {
 			}
 		}
 
-		void CallbackEntity::customInit() {
+		void CallbackEntity::onInit() {
 			initCallback();
 		}
 
-		void CallbackEntity::customUpdate() {
+		void CallbackEntity::onUpdate() {
 			updateCallback();
 		}
 
-		void CallbackEntity::customRender() {
+		void CallbackEntity::onRender() {
 			renderCallback();
 		}
 
-		void CallbackEntity::customDestroy() {
+		void CallbackEntity::onDestroy() {
 			destroyCallback();
 		}
 
@@ -594,9 +600,8 @@ namespace mc {
 			return !(operator==(other));
 		}
 
-		void GraphicsEntity::clean() {
+		void GraphicsEntity::onClean() {
 			ssl::fillBuffer(buffer, this);
-			Entity::clean();
 		}
 
 		Color & GraphicsEntity::getPaint() {

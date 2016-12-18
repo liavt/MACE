@@ -27,11 +27,10 @@ namespace mc {
 
 		class Image: public Entity2D {
 		protected:
-			void customInit() override;
-			void customUpdate() override;
-			void customRender() override;
-			void customDestroy() override;
-
+			void onInit() override;
+			void onUpdate() override;
+			void onRender() override;
+			void onDestroy() override;
 		};
 
 		/**

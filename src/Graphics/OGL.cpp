@@ -17,7 +17,7 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			namespace {
-				Shader createShader(const Enum& type, const char* source) {
+				Shader createShader(const Enum type, const char* source) {
 					Shader s = Shader(type);
 					s.init();
 					s.setSource(source);
@@ -28,7 +28,7 @@ namespace mc {
 
 			void checkGLError() {
 #ifdef MACE_ERROR_CHECK
-				GLenum result = GL_NO_ERROR;
+				Enum result = GL_NO_ERROR;
 				while( (result = glGetError()) != GL_NO_ERROR ) {
 					switch( result ) {
 					case GL_INVALID_ENUM:
@@ -59,7 +59,7 @@ namespace mc {
 				}
 #endif
 			}
-			void throwShaderError(const Index& shaderId, const Enum& type, const std::string& message) {
+			void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
 				if( type == 0 || type == GL_PROGRAM ) {
 					throw ShaderError("Error generating shader program with message \"" + message + "\"");
 				} else {
@@ -82,7 +82,7 @@ namespace mc {
 					throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
 				}
 			}
-			void throwShaderError(const Index & shaderId, const Enum & type) {
+			void throwShaderError(const Index shaderId, const Enum type) {
 				throwShaderError(shaderId, type, "No message was specified");
 			}
 
@@ -108,18 +108,18 @@ namespace mc {
 				return glIsVertexArray(id) == 1;
 			}
 
-			void VertexArray::draw(GLenum type) const {
+			void VertexArray::draw(Enum type) const {
 				glDrawElements(type, indices.getIndiceNumber(), GL_UNSIGNED_INT, 0);
 			}
 
-			void VertexArray::loadVertices(const Size && verticeSize, const GLfloat vertices[], const Index && location, const Size && attributeSize) {
+			void VertexArray::loadVertices(const Size& verticeSize, const GLfloat vertices[], const Index& location, const Size& attributeSize) {
 				vertexNumber = verticeSize;
 
 				bind();
 				storeDataInAttributeList(std::move(vertexNumber), vertices, std::move(location), std::move(attributeSize));
 			}
 
-			void VertexArray::storeDataInAttributeList(const Size&& dataSize, const GLvoid* data, const Index&& location, const Size&& attributeSize) {
+			void VertexArray::storeDataInAttributeList(const Size& dataSize, const GLvoid* data, const Index& location, const Size& attributeSize) {
 				bind();
 
 				VertexBuffer buffer = VertexBuffer();
@@ -134,7 +134,7 @@ namespace mc {
 				checkGLError();
 			}
 
-			void VertexArray::loadIndices(const Size & indiceNum, const unsigned int * indiceData) {
+			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
 				indices = ElementBuffer(indiceNum);
 				indices.init();
 				indices.setData(sizeof(unsigned int)*indiceNum, indiceData, GL_STATIC_DRAW);
@@ -148,15 +148,15 @@ namespace mc {
 				buffers.push_back(newBuffer);
 			}
 
-			void VertexArray::setVertexNumber(const Size & vertexNum) {
+			void VertexArray::setVertexNumber(const Size vertexNum) {
 				vertexNumber = vertexNum;
 			}
 
-			Size & VertexArray::getVertexNumber() {
+			Size VertexArray::getVertexNumber() {
 				return vertexNumber;
 			}
 
-			const Size & VertexArray::getVertexNumber() const {
+			const Size VertexArray::getVertexNumber() const {
 				return vertexNumber;
 			}
 
@@ -192,7 +192,7 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			void VertexArray::bindIndex(const Index & ID) const {
+			void VertexArray::bindIndex(const Index ID) const {
 				glBindVertexArray(ID);
 			}
 
@@ -202,15 +202,15 @@ namespace mc {
 				this->location = loc;
 			}
 
-			Index& UniformBuffer::getLocation() {
+			Index UniformBuffer::getLocation() {
 				return location;
 			}
 
-			const Index& UniformBuffer::getLocation() const {
+			const Index UniformBuffer::getLocation() const {
 				return location;
 			}
 
-			void UniformBuffer::bindForRender(const Index offset, const GLsizeiptr size) const {
+			void UniformBuffer::bindForRender(const Index offset, const ptrdiff_t size) const {
 				if( size < 0 && offset == 0 ) {
 					glBindBufferBase(GL_UNIFORM_BUFFER, this->location, id);
 				} else {
@@ -240,56 +240,56 @@ namespace mc {
 				id = 0;
 			}
 
-			void FrameBuffer::attachTexture(const GLenum & target, const GLenum & attachment, const GLuint & textureID, const GLint & level) {
+			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const unsigned int textureID, const int level) {
 				bind();
 				glFramebufferTexture(target, attachment, textureID, level);
 			}
 
-			void FrameBuffer::attachTexture1D(const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level) {
+			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level) {
 				bind();
 				glFramebufferTexture1D(target, attachment, texTarget, textureID, level);
 			}
 
-			void FrameBuffer::attachTexture2D(const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level) {
+			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level) {
 				bind();
 				glFramebufferTexture2D(target, attachment, texTarget, textureID, level);
 			}
 
-			void FrameBuffer::attachTexture3D(const GLenum & target, const GLenum & attachment, const GLenum & texTarget, const GLuint & textureID, const GLint & level, const GLint& layer) {
+			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level, const int layer) {
 				bind();
 				glFramebufferTexture3D(target, attachment, texTarget, textureID, level, layer);
 			}
 
-			void FrameBuffer::attachTextureLayer(const GLenum & target, const GLenum & attachment, const GLuint& texture, const GLint & level, const GLint & layer) {
+			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const unsigned int texture, const int level, const int layer) {
 				bind();
 				glFramebufferTextureLayer(target, attachment, level, texture, layer);
 			}
 
-			void FrameBuffer::attachRenderbuffer(const GLenum & target, const GLenum & attachment, const RenderBuffer & buffer) {
+			void FrameBuffer::attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer & buffer) {
 				bind();
 				glFramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, buffer.getID());
 			}
 
-			void FrameBuffer::setDrawBuffers(const Size & arrSize, const GLenum * buffers) {
+			void FrameBuffer::setDrawBuffers(const Size arrSize, const Enum * buffers) {
 				glDrawBuffers(arrSize, buffers);
 			}
 
-			void FrameBuffer::setReadBuffer(const Enum & mode) {
+			void FrameBuffer::setReadBuffer(const Enum mode) {
 				bind();
 				glReadBuffer(mode);
 			}
 
-			void FrameBuffer::readPixels(const int & x, const int & y, const Size & width, const Size & height, const Enum & format, const Enum & type, void * data) const {
+			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void * data) const {
 				bind();
 				glReadPixels(x, y, width, height, format, type, data);
 			}
 
-			void FrameBuffer::setPixelStore(const Enum & name, const float & param) {
+			void FrameBuffer::setPixelStore(const Enum name, const float param) {
 				bind();
 				glPixelStoref(name, param);
 			}
 
-			void FrameBuffer::setPixelStore(const Enum & name, const int & param) {
+			void FrameBuffer::setPixelStore(const Enum name, const int param) {
 				bind();
 				glPixelStorei(name, param);
 			}
@@ -298,12 +298,12 @@ namespace mc {
 				return glIsFramebuffer(id) == 1;
 			}
 
-			GLenum FrameBuffer::checkStatus(const GLenum & target) {
+			Enum FrameBuffer::checkStatus(const Enum target) {
 				bind();
 				return glCheckFramebufferStatus(target);
 			}
 
-			void FrameBuffer::bindIndex(const Index & ID) const {
+			void FrameBuffer::bindIndex(const Index ID) const {
 				glBindFramebuffer(GL_FRAMEBUFFER, ID);
 			}
 
@@ -315,12 +315,12 @@ namespace mc {
 				glDeleteRenderbuffers(1, &id);
 			}
 
-			void RenderBuffer::setStorage(const GLenum & format, const GLsizei & width, const GLsizei & height) {
+			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
 				bind();
 				glRenderbufferStorage(GL_RENDERBUFFER, format, width, height);
 			}
 
-			void RenderBuffer::setStorageMultisampled(const GLsizei & samples, const GLenum & format, const GLsizei & width, const GLsizei & height) {
+			void RenderBuffer::setStorageMultisampled(const Size samples, const Enum format, const Size width, const Size height) {
 				bind();
 				glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, format, width, height);
 			}
@@ -329,7 +329,7 @@ namespace mc {
 				return glIsRenderbuffer(id) == 1;
 			}
 
-			void RenderBuffer::bindIndex(const Index & ID) const {
+			void RenderBuffer::bindIndex(const Index ID) const {
 				glBindRenderbuffer(GL_RENDERBUFFER, ID);
 			}
 
@@ -361,7 +361,7 @@ namespace mc {
 				glDeleteTextures(1, &id);
 			}
 
-			void Texture::setData(const void * data, Size width, Size height, GLenum type, GLenum format, GLenum internalFormat, Index mipmapLevel) {
+			void Texture::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
 				bind();
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 
@@ -378,11 +378,11 @@ namespace mc {
 				stbi_image_free(image);
 			}
 
-			void Texture::setTarget(GLenum targ) {
+			void Texture::setTarget(Enum targ) {
 				this->target = targ;
 			}
 
-			GLenum Texture::getTarget() {
+			Enum Texture::getTarget() {
 				return target;
 			}
 
@@ -414,7 +414,7 @@ namespace mc {
 				return glIsTexture(id) == 1;
 			}
 
-			void Texture::setParameter(const GLenum & name, const GLint & value) {
+			void Texture::setParameter(const Enum name, const int value) {
 				bind();
 				glTexParameteri(GL_TEXTURE_2D, name, value);
 			}
@@ -427,11 +427,11 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			void Texture::bindIndex(const Index & ID) const {
+			void Texture::bindIndex(const Index ID) const {
 				glBindTexture(target, ID);
 			}
 
-			Buffer::Buffer(const Enum& type) noexcept : bufferType(type) {}
+			Buffer::Buffer(const Enum type) noexcept : bufferType(type) {}
 
 			bool Buffer::isCreated() const {
 				return glIsBuffer(id) == 1;
@@ -444,25 +444,25 @@ namespace mc {
 			void Buffer::destroy() {
 				glDeleteBuffers(1, &id);
 			};
-			void Buffer::setData(const GLsizeiptr& dataSize, const void* data, const Enum& drawType) {
+			void Buffer::setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType) {
 				bind();
 				glBufferData(bufferType, dataSize, data, drawType);
 			};
-			void Buffer::setDataRange(const Index& offset, const GLsizeiptr& dataSize, const void* data) {
+			void Buffer::setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data) {
 				bind();
 				glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
 			};
 
-			void Buffer::copyData(Buffer& other, const GLsizeiptr& size, const Index& readOffset, const Index& writeOffset) {
+			void Buffer::copyData(Buffer& other, const ptrdiff_t& size, const Index readOffset, const Index writeOffset) {
 				glCopyBufferSubData(id, other.id, readOffset, writeOffset, size);
 			};
 
-			void* Buffer::map(const Enum& access) {
+			void* Buffer::map(const Enum access) {
 				bind();
 				return glMapBuffer(bufferType, access);
 			};
 
-			void* Buffer::mapRange(const Index& offset, const Size& length, const unsigned int& access) {
+			void* Buffer::mapRange(const Index offset, const Size length, const unsigned int access) {
 				bind();
 				return glMapBufferRange(bufferType, offset, length, access);
 			};
@@ -471,7 +471,7 @@ namespace mc {
 				bind();
 				return glUnmapBuffer(bufferType) == 1;
 			}
-			const Enum & Buffer::getBufferType() const {
+			const Enum Buffer::getBufferType() const {
 				return bufferType;
 			}
 			bool Buffer::operator==(const Buffer & other) const {
@@ -480,13 +480,13 @@ namespace mc {
 			bool Buffer::operator!=(const Buffer & other) const {
 				return !operator==(other);
 			}
-			void Buffer::bindIndex(const Index & ID) const {
+			void Buffer::bindIndex(const Index ID) const {
 				glBindBuffer(bufferType, ID);
 			}
 
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
-			void VertexBuffer::setAttributePointer(const Byte & attribSize, const Enum & type, const bool & normalized, const Index & stride, const void * pointer) {
+			void VertexBuffer::setAttributePointer(const Byte & attribSize, const Enum type, const bool & normalized, const Index stride, const void * pointer) {
 				bind();
 				if( !normalized && (
 					type == GL_BYTE ||
@@ -503,7 +503,7 @@ namespace mc {
 				}
 			}
 
-			void VertexBuffer::setDivisor(const unsigned int & divisor) {
+			void VertexBuffer::setDivisor(const unsigned int divisor) {
 				bind();
 				glVertexAttribDivisor(location, divisor);
 			}
@@ -516,15 +516,15 @@ namespace mc {
 				glDisableVertexAttribArray(location);
 			}
 
-			Index& VertexBuffer::getLocation() {
+			Index VertexBuffer::getLocation() {
 				return location;
 			}
 
-			const Index& VertexBuffer::getLocation() const {
+			const Index VertexBuffer::getLocation() const {
 				return location;
 			}
 
-			void VertexBuffer::setLocation(const Index & newLocation) {
+			void VertexBuffer::setLocation(const Index newLocation) {
 				location = newLocation;
 			}
 
@@ -538,19 +538,19 @@ namespace mc {
 
 			ElementBuffer::ElementBuffer() noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER) {}
 
-			ElementBuffer::ElementBuffer(const Size & indiceNum) noexcept : ElementBuffer() {
+			ElementBuffer::ElementBuffer(const Size indiceNum) noexcept : ElementBuffer() {
 				indiceNumber = indiceNum;
 			}
 
-			void ElementBuffer::setIndiceNumber(const Size & indices) {
+			void ElementBuffer::setIndiceNumber(const Size indices) {
 				indiceNumber = indices;
 			}
 
-			Size & ElementBuffer::getIndiceNumber() {
+			Size ElementBuffer::getIndiceNumber() {
 				return indiceNumber;
 			}
 
-			const Size & ElementBuffer::getIndiceNumber() const {
+			const Size ElementBuffer::getIndiceNumber() const {
 				return indiceNumber;
 			}
 
@@ -566,27 +566,27 @@ namespace mc {
 
 			CopyWriteBuffer::CopyWriteBuffer() noexcept : Buffer(GL_COPY_WRITE_BUFFER) {}
 
-			void QueryObject::begin(const Enum & target) {
+			void QueryObject::begin(const Enum target) {
 				glBeginQuery(target, id);
 			}
 
-			void QueryObject::end(const Enum & target) {
+			void QueryObject::end(const Enum target) {
 				glEndQuery(target);
 			}
 
-			void QueryObject::get(const Enum & name, int * data) const {
+			void QueryObject::get(const Enum name, int * data) const {
 				glGetQueryObjectiv(id, name, data);
 			}
 
-			void QueryObject::get(const Enum & name, unsigned int * data) const {
+			void QueryObject::get(const Enum name, unsigned int * data) const {
 				glGetQueryObjectuiv(id, name, data);
 			}
 
-			void QueryObject::get(const Enum & name, int64_t * data) const {
+			void QueryObject::get(const Enum name, int64_t * data) const {
 				glGetQueryObjecti64v(id, name, data);
 			}
 
-			void QueryObject::get(const Enum & name, uint64_t * data) const {
+			void QueryObject::get(const Enum name, uint64_t * data) const {
 				glGetQueryObjectui64v(id, name, data);
 			}
 
@@ -610,7 +610,7 @@ namespace mc {
 
 			void QueryObject::unbind() const {}
 
-			void QueryObject::bindIndex(const Index & id) const {}
+			void QueryObject::bindIndex(const Index id) const {}
 
 			PixelUnpackBuffer::PixelUnpackBuffer() noexcept : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
 
@@ -618,7 +618,7 @@ namespace mc {
 
 			Shader::Shader() noexcept : Shader(GL_FALSE) {}
 
-			Shader::Shader(const Enum & shaderType) noexcept : type(shaderType) {}
+			Shader::Shader(const Enum shaderType) noexcept : type(shaderType) {}
 
 			void Shader::init() {
 				if( type == GL_FALSE ) {
@@ -631,7 +631,7 @@ namespace mc {
 				glDeleteShader(id);
 			}
 
-			void Shader::setSource(const Size & count, const char * strings[], const int lengths[]) {
+			void Shader::setSource(const Size count, const char * strings[], const int lengths[]) {
 				if( type == GL_FALSE ) {
 					throw ShaderError("Shader must have a type before compile() is called");
 				}
@@ -639,7 +639,7 @@ namespace mc {
 				glShaderSource(id, count, strings, lengths);
 			}
 
-			void Shader::setSource(const char string[], const int& length) {
+			void Shader::setSource(const char string[], const int length) {
 				const int lengths[1] = { length };
 				const char* strings[1] = { string };
 				setSource(1, strings, lengths);
@@ -668,15 +668,15 @@ namespace mc {
 				return glIsShader(id) == 1;
 			}
 
-			void Shader::setType(const Enum & newType) {
+			void Shader::setType(const Enum newType) {
 				type = newType;
 			}
 
-			Enum & Shader::getType() {
+			Enum Shader::getType() {
 				return type;
 			}
 
-			const Enum & Shader::getType() const {
+			const Enum Shader::getType() const {
 				return type;
 			}
 
@@ -690,9 +690,9 @@ namespace mc {
 
 			void Shader::bind() const {}
 			void Shader::unbind() const {}
-			void Shader::bindIndex(const Index & id) const {}
+			void Shader::bindIndex(const Index id) const {}
 
-			void ShaderProgram::bindIndex(const Index & ID) const {
+			void ShaderProgram::bindIndex(const Index ID) const {
 				glUseProgram(ID);
 			}
 
@@ -718,7 +718,7 @@ namespace mc {
 			void ShaderProgram::link() {
 				glLinkProgram(id);
 
-				GLint result = -1;
+				int result = -1;
 				glGetProgramiv(id, GL_LINK_STATUS, &result);
 				if( result == 0 ) {
 					throwShaderError(id, GL_PROGRAM, "The shader program was unable to link with result " + std::to_string(result));
