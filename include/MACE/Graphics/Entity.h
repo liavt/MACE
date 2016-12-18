@@ -30,7 +30,6 @@ namespace mc {
 			virtual void destroy(Entity* e) = 0;
 		};//Component
 
-
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
 		@see GraphicsEntity
@@ -400,7 +399,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void clean();
+			virtual void clean();
 
 			/**
 			@dirty
@@ -419,7 +418,7 @@ namespace mc {
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onUpdate()`
 			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
 			*/
-			void update();
+			virtual void update();
 			/**
 			Should be called a by `Entity` when `System.init()` is called. Calls `onInit()`
 			<p>
@@ -446,7 +445,7 @@ namespace mc {
 			@opengl
 			@see Entity#update()
 			*/
-			void render();
+			virtual void render();
 
 			/**
 			When `Entity.update()` is called, `onUpdate()` is called on all of it's children.
@@ -589,9 +588,9 @@ namespace mc {
 			*/
 			void setBuffer(const ogl::UniformBuffer& newBuffer);
 
-			void init() override;
+			void init() final;
 
-			void destroy() override;
+			void destroy() final;
 
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;

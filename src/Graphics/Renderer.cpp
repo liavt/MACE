@@ -302,7 +302,6 @@ namespace mc {
 				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
 				entityData.bind();
 				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
-				fillBuffer(entityData, entity);
 				entityData.bindForRender();
 
 				windowData.bindForRender();

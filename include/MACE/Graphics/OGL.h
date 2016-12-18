@@ -1203,9 +1203,8 @@ namespace mc {
 				bool operator!=(const ShaderProgram& other) const;
 
 			private:
-				std::unordered_map<Enum, Shader> shaders = std::unordered_map<Enum, Shader>();
-
-				std::unordered_map<std::string, int> uniforms = std::unordered_map<std::string, int>();
+				std::unordered_map<Enum, Shader> shaders;
+				std::unordered_map<std::string, int> uniforms;
 
 				void bindIndex(const Index id) const override;
 			};//ShaderProgram

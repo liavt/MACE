@@ -103,11 +103,18 @@ namespace mc {
 
 				for( Size i = 0; i < children.size(); i++ ) {
 					if( children[i]->getProperty(Entity::INIT) ) {
+						children[i]->setProperty(Entity::DIRTY, true);
 						children[i]->clean();
 					}
 				}
 
 				setProperty(Entity::DIRTY, false);
+			}else{
+				for( Size i = 0; i < children.size(); i++ ) {
+					if( children[i]->getProperty(Entity::INIT) ) {
+						children[i]->clean();
+					}
+				}
 			}
 		}
 

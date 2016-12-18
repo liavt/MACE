@@ -204,7 +204,7 @@ namespace mc {
 
 			//this is the main rendering loop.
 			//we loop infinitely until break is called. break is called when an exception is thrown or System::isRunning is false
-			for( ;;) {//;_;
+			for( ;;) {//( ;_;)
 				try {
 
 					{
@@ -306,6 +306,10 @@ namespace mc {
 		void WindowModule::onRender() {}
 
 		void WindowModule::onDestroy() {}
+
+		void WindowModule::clean() {
+			setProperty(Entity::DIRTY, false);
+		}//clean()
 
 		namespace Input {
 			const BitField & getKey(const short int key) {

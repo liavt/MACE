@@ -71,6 +71,8 @@ namespace mc {
 
 			bool vsync = false;
 
+			void clean() final;
+
 			//these are for the Entity inheritence
 			void onUpdate() final;
 			void onRender() final;
