@@ -11,7 +11,7 @@ var hierarchy =
         ] ]
       ] ],
       [ "mc::gfx::Group", "dd/da2/a00019.html", null ],
-      [ "mc::os::WindowModule", "d5/df9/a00044.html", null ]
+      [ "mc::os::WindowModule", "d6/d97/a00045.html", null ]
     ] ],
     [ "std::exception", null, [
       [ "std::runtime_error", null, [
@@ -24,23 +24,25 @@ var hierarchy =
     ] ],
     [ "mc::Macro", "dc/de2/a00024.html", null ],
     [ "mc::Module", "d6/d5b/a00026.html", [
-      [ "mc::os::WindowModule", "d5/df9/a00044.html", null ]
+      [ "mc::os::WindowModule", "d6/d97/a00045.html", null ]
     ] ],
-    [ "mc::gfx::Object", "d0/d33/a00027.html", [
-      [ "mc::gfx::Buffer", "de/d5e/a00007.html", [
-        [ "mc::gfx::CopyReadBuffer", "da/d45/a00011.html", null ],
-        [ "mc::gfx::CopyWriteBuffer", "df/d86/a00012.html", null ],
-        [ "mc::gfx::ElementBuffer", "d7/dd4/a00013.html", null ],
-        [ "mc::gfx::PixelPackBuffer", "dc/d3c/a00028.html", null ],
-        [ "mc::gfx::PixelUnpackBuffer", "d5/d16/a00029.html", null ],
-        [ "mc::gfx::UniformBuffer", "db/d3a/a00040.html", null ],
-        [ "mc::gfx::VertexBuffer", "d6/d42/a00043.html", null ]
+    [ "mc::gfx::ogl::Object", "d0/d33/a00027.html", [
+      [ "mc::gfx::ogl::Buffer", "de/d5e/a00007.html", [
+        [ "mc::gfx::ogl::CopyReadBuffer", "da/d45/a00011.html", null ],
+        [ "mc::gfx::ogl::CopyWriteBuffer", "df/d86/a00012.html", null ],
+        [ "mc::gfx::ogl::ElementBuffer", "d7/dd4/a00013.html", null ],
+        [ "mc::gfx::ogl::PixelPackBuffer", "dc/d3c/a00028.html", null ],
+        [ "mc::gfx::ogl::PixelUnpackBuffer", "d5/d16/a00029.html", null ],
+        [ "mc::gfx::ogl::UniformBuffer", "dd/d32/a00041.html", null ],
+        [ "mc::gfx::ogl::VertexBuffer", "d5/df9/a00044.html", null ]
       ] ],
-      [ "mc::gfx::FrameBuffer", "d4/d51/a00017.html", null ],
-      [ "mc::gfx::QueryObject", "df/d61/a00031.html", null ],
-      [ "mc::gfx::RenderBuffer", "dc/d87/a00032.html", null ],
-      [ "mc::gfx::Texture", "d8/d41/a00038.html", null ],
-      [ "mc::gfx::VertexArray", "d5/db6/a00042.html", null ]
+      [ "mc::gfx::ogl::FrameBuffer", "d4/d51/a00017.html", null ],
+      [ "mc::gfx::ogl::QueryObject", "df/d61/a00031.html", null ],
+      [ "mc::gfx::ogl::RenderBuffer", "dc/d87/a00032.html", null ],
+      [ "mc::gfx::ogl::Shader", "d1/dc6/a00037.html", null ],
+      [ "mc::gfx::ogl::ShaderProgram", "d8/d41/a00038.html", null ],
+      [ "mc::gfx::ogl::Texture", "d3/de7/a00039.html", null ],
+      [ "mc::gfx::ogl::VertexArray", "d6/d42/a00043.html", null ]
     ] ],
     [ "mc::Preprocessor", "d5/d79/a00030.html", null ],
     [ "mc::gfx::Renderer", "d0/dc0/a00033.html", null ],
@@ -48,11 +50,10 @@ var hierarchy =
       [ "mc::gfx::RenderProtocol< T >", "d4/d8c/a00035.html", null ],
       [ "mc::gfx::RenderProtocol< Entity2D >", "de/d8c/a00036.html", null ]
     ] ],
-    [ "mc::gfx::ShaderProgram", "d1/dc6/a00037.html", null ],
-    [ "mc::TransformMatrix", "d3/de7/a00039.html", null ],
-    [ "mc::Vector< T, N >", "dd/d32/a00041.html", null ],
-    [ "mc::Vector< float, 3 >", "dd/d32/a00041.html", null ],
-    [ "mc::Vector< MatrixRow< T, H >, W >", "dd/d32/a00041.html", [
+    [ "mc::TransformMatrix", "db/d3a/a00040.html", null ],
+    [ "mc::Vector< T, N >", "d5/db6/a00042.html", null ],
+    [ "mc::Vector< float, 3 >", "d5/db6/a00042.html", null ],
+    [ "mc::Vector< MatrixRow< T, H >, W >", "d5/db6/a00042.html", [
       [ "mc::Matrix< T, W, H >", "d3/dfe/a00025.html", null ]
     ] ]
 ];

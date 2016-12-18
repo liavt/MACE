@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d1/d22/a00057" kind="file" language="C++">
-    <compoundname>ssl_frag.glsl</compoundname>
+    <compoundname>ssl_position.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
@@ -9,10 +9,62 @@
     <programlisting>
 <codeline><highlight class="normal">R&quot;(</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_color&gt;</highlight></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;ssl_window&gt;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_POSITION_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_POSITION_LIBRARY_</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">struct<sp/>ssl_EntityDataStruct{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec3<sp/>ssl_Translation;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_StretchX;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec3<sp/>ssl_Scale;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_StretchY;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>mat4<sp/>ssl_Rotation;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">layout(location<sp/>=<sp/>15)<sp/>in<sp/>vec3<sp/>ssl_VertexPosition;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">layout(std140)<sp/>uniform<sp/>ssl_BaseEntityBuffer{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_EntityDataStruct<sp/>ssl_BaseEntity;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_EntityDataStruct<sp/>ssl_ParentEntity;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vec4<sp/>sslGetEntityPosition(){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//we<sp/>do<sp/>ssl_Scale<sp/>first,<sp/>then<sp/>rotate,<sp/>then<sp/>translate.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_Position<sp/>=<sp/>(vec4(ssl_BaseEntity.ssl_Translation,1.0)+(ssl_BaseEntity.ssl_Rotation<sp/>*<sp/>(vec4(ssl_BaseEntity.ssl_Scale*ssl_VertexPosition,0.0))));//MAD<sp/>operations<sp/>right<sp/>here!</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position.xy<sp/>-=<sp/>0.5f;//because<sp/>we<sp/>moved<sp/>the<sp/>origin<sp/>to<sp/>be<sp/>the<sp/>bottom<sp/>left,<sp/>we<sp/>need<sp/>to<sp/>move<sp/>it<sp/>back<sp/>to<sp/>the<sp/>center<sp/>for<sp/>ssl_Rotation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//applying<sp/>the<sp/>parent<sp/>properties<sp/>now</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position<sp/>=<sp/>(vec4(ssl_ParentEntity.ssl_Translation,1.0)+((ssl_ParentEntity.ssl_Rotation<sp/>*<sp/>(ssl_Position<sp/>*<sp/>vec4(ssl_ParentEntity.ssl_Scale,0.0)))));//what<sp/>a<sp/>MAD<sp/>man!</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position.xy<sp/>*=<sp/>2;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position.xy<sp/>-=<sp/>0.5;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Position<sp/>+=<sp/>vec4(ssl_BaseEntity.ssl_Scale/2,0.0f);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec2<sp/>ssl_SizeModifier<sp/>=<sp/>ssl_OriginalSize/ssl_CurrentSize;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(ssl_BaseEntity.ssl_StretchX==0){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ssl_Position.x*=ssl_SizeModifier.x;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(ssl_BaseEntity.ssl_StretchY==0){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ssl_Position.y*=ssl_SizeModifier.y;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>/*</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>For<sp/>those<sp/>who<sp/>didn&apos;t<sp/>get<sp/>the<sp/>MAD<sp/>joke:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>MAD<sp/>means<sp/>multipy,<sp/>add,<sp/>then<sp/>divide.<sp/>Doing<sp/>math<sp/>in<sp/>that<sp/>sequence<sp/>will<sp/>be<sp/>done<sp/>in<sp/>1<sp/>gpu<sp/>cycle<sp/>instead<sp/>of<sp/>3,<sp/>which<sp/>saves<sp/>a<sp/>lot<sp/>of<sp/>processing<sp/>power.<sp/><sp/>Thats<sp/>what<sp/>we<sp/>are<sp/>doing<sp/>up<sp/>there.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>ssl_Position;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#endif</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/include/ssl_frag.glsl"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_position.glsl"/>
   </compounddef>
 </doxygen>

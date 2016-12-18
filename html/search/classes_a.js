@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['renderbuffer',['RenderBuffer',['../dc/d87/a00032.html',1,'mc::gfx']]],
+  ['renderbuffer',['RenderBuffer',['../dc/d87/a00032.html',1,'mc::gfx::ogl']]],
   ['renderer',['Renderer',['../d0/dc0/a00033.html',1,'mc::gfx']]],
   ['renderimpl',['RenderImpl',['../db/df3/a00034.html',1,'mc::gfx']]],
   ['renderprotocol',['RenderProtocol',['../d4/d8c/a00035.html',1,'mc::gfx']]],

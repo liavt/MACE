@@ -1,4 +1,4 @@
-.TH "mc::gfx::Texture" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Texture" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -7,7 +7,7 @@ mc::gfx::Texture \-
 .br
 .PP
 .PP
-\fC#include <Buffer\&.h>\fP
+\fC#include <OGL\&.h>\fP
 .PP
 Inherits \fBmc::gfx::Object\fP\&.
 .SS "Public Member Functions"
@@ -61,9 +61,11 @@ Inherits \fBmc::gfx::Object\fP\&.
 .ti -1c
 .RI "bool \fBoperator==\fP (const \fBTexture\fP &other) const "
 .br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
 .ti -1c
 .RI "bool \fBoperator!=\fP (const \fBTexture\fP &other) const "
 .br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
 .ti -1c
 .RI "virtual void \fBbind\fP () const "
 .br
@@ -104,7 +106,7 @@ https://www.opengl.org/wiki/Texture
 .PP
 
 .PP
-Definition at line 414 of file Buffer\&.h\&.
+Definition at line 429 of file OGL\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "virtual void mc::gfx::Object::bind () const\fC [virtual]\fP, \fC [inherited]\fP"
@@ -268,7 +270,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
 
 .PP
-Compares if 2 \fCObjects\fP are not equal\&. Their ID is compared\&. 
+Compares if 2 \fCObjects\fP are not equal\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -290,10 +292,31 @@ Whether \fCthis\fP and \fCother\fP are different
 
 .SS "bool mc::gfx::Texture::operator!= (const \fBTexture\fP & other) const"
 
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
 .SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
 
 .PP
-Compares if 2 \fCObjects\fP are equal\&. Their ID is compared\&. 
+Compares if 2 \fCObjects\fP are equal\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -314,6 +337,27 @@ Whether \fCthis\fP and \fCother\fP are the same
 .PP
 
 .SS "bool mc::gfx::Texture::operator== (const \fBTexture\fP & other) const"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
 
 .SS "void mc::gfx::Texture::setData (const void * data, \fBSize\fP width, \fBSize\fP height, GLenum type = \fCGL_FLOAT\fP, GLenum format = \fCGL_RGB\fP, GLenum internalFormat = \fCGL_RGB\fP, \fBIndex\fP mipmapLevel = \fC0\fP)"
 
@@ -389,7 +433,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 123 of file Buffer\&.h\&.
+Definition at line 135 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

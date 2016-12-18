@@ -82,25 +82,25 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::CopyWriteBuffer Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer}
-{\bkmkstart AAAAAAABDN}
-{\bkmkend AAAAAAABDN}
+mc::gfx::ogl::CopyWriteBuffer Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer}
+{\bkmkstart AAAAAAABGM}
+{\bkmkend AAAAAAABGM}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Special buffer with no extra semantics to be used as a proxy in copying. }}\par
 {
-{\f2 #include <Buffer.h>}}\par
-Inheritance diagram for mc::gfx::CopyWriteBuffer:{
+{\f2 #include <OGL.h>}}\par
+Inheritance diagram for mc::gfx::ogl::CopyWriteBuffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d47/a00129.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "da/d01/a00153.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
-Collaboration diagram for mc::gfx::CopyWriteBuffer:{
+Collaboration diagram for mc::gfx::ogl::CopyWriteBuffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d6/db3/a00130.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d3/d65/a00154.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -109,7 +109,7 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b CopyWriteBuffer} ()\par
+{\b CopyWriteBuffer} () noexcept\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b isCreated} () const  override\par
 {
@@ -174,7 +174,19 @@ Unmaps the buffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b Enum} & {\b getBufferType} () const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves the buffer type for this buffer. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b Buffer} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b Object} &other) const \par
 {
@@ -184,6 +196,11 @@ Compares if 2 {\f2 Objects}  are equal. }{
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator!=} (const {\b Buffer} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator!=} (const {\b Object} &other) const \par
 {
@@ -244,20 +261,20 @@ Buffer::copyData(Buffer, GLsizeiptr, Index, Index); \par
 {\b Buffer} \par
 {\b CopyReadBuffer} \par
 }}{
-Definition at line 754 of file Buffer.h.}\par
+Definition at line 909 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v CopyWriteBuffer\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:CopyWriteBuffer}
+{\xe \v CopyWriteBuffer\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:CopyWriteBuffer}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::CopyWriteBuffer::CopyWriteBuffer ()}}
+mc::gfx::ogl::CopyWriteBuffer::CopyWriteBuffer (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABDO}
-{\bkmkend AAAAAAABDO}
+{\bkmkstart AAAAAAABGN}
+{\bkmkend AAAAAAABGN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -265,14 +282,14 @@ mc::gfx::CopyWriteBuffer::CopyWriteBuffer ()}}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v bind\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:bind}
+{\xe \v bind\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:bind}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZB}
-{\bkmkend AAAAAAAAZB}
+{\bkmkstart AAAAAAABFP}
+{\bkmkend AAAAAAABFP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -304,14 +321,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v copyData\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:copyData}
+{\xe \v copyData\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:copyData}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::copyData ({\b Buffer} &  {\i other}, const GLsizeiptr &  {\i size}, const {\b Index} &  {\i readOffset} = {\f2 0}, const {\b Index} &  {\i writeOffset} = {\f2 0}){\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::copyData ({\b Buffer} &  {\i other}, const GLsizeiptr &  {\i size}, const {\b Index} &  {\i readOffset} = {\f2 0}, const {\b Index} &  {\i writeOffset} = {\f2 0}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZC}
-{\bkmkend AAAAAAAAZC}
+{\bkmkstart AAAAAAABFQ}
+{\bkmkend AAAAAAABFQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -364,14 +381,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v destroy\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:destroy}
+{\xe \v destroy\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZD}
-{\bkmkend AAAAAAAAZD}
+{\bkmkstart AAAAAAABFR}
+{\bkmkend AAAAAAABFR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -406,16 +423,35 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZE \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getID\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:getID}
+{\xe \v getBufferType\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:getBufferType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::Object::getID () const{\f2 [inherited]}}}
+const {\b Enum}& mc::gfx::ogl::Buffer::getBufferType () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZF}
-{\bkmkend AAAAAAAAZF}
+{\bkmkstart AAAAAAABFT}
+{\bkmkend AAAAAAABFT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves the buffer type for this buffer. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This is based on the class. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The buffer type \par
+}}}
+{\xe \v getID\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:getID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABFU}
+{\bkmkend AAAAAAABFU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -429,14 +465,14 @@ When using {\b Object::bind() const }it will bind to this ID. {\b Object::unbind
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID represented by this {\f2 {\b Object}}  \par
 }}}
-{\xe \v init\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:init}
+{\xe \v init\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZG}
-{\bkmkend AAAAAAAAZG}
+{\bkmkstart AAAAAAABFV}
+{\bkmkend AAAAAAABFV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -462,16 +498,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v isCreated\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:isCreated}
+{\xe \v isCreated\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:isCreated}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZI}
-{\bkmkend AAAAAAAAZI}
+{\bkmkstart AAAAAAABFX}
+{\bkmkend AAAAAAABFX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -497,16 +533,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v map\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:map}
+{\xe \v map\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:map}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::Buffer::map (const {\b Enum} &  {\i access} = {\f2 GL_READ_WRITE}){\f2 [inherited]}}}
+void* mc::gfx::ogl::Buffer::map (const {\b Enum} &  {\i access} = {\f2 GL_READ_WRITE}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZK}
-{\bkmkend AAAAAAAAZK}
+{\bkmkstart AAAAAAABFZ}
+{\bkmkend AAAAAAABFZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -543,14 +579,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v mapRange\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:mapRange}
+{\xe \v mapRange\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:mapRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::Buffer::mapRange (const {\b Index} &  {\i offset}, const {\b Size} &  {\i length}, const unsigned int &  {\i access}){\f2 [inherited]}}}
+void* mc::gfx::ogl::Buffer::mapRange (const {\b Index} &  {\i offset}, const {\b Size} &  {\i length}, const unsigned int &  {\i access}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZL}
-{\bkmkend AAAAAAAAZL}
+{\bkmkstart AAAAAAABGA}
+{\bkmkend AAAAAAABGA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -599,14 +635,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:operator!=}
+{\xe \v operator!=\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZM}
-{\bkmkend AAAAAAAAZM}
+{\bkmkstart AAAAAAABGB}
+{\bkmkend AAAAAAABGB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -614,7 +650,7 @@ bool mc::gfx::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [in
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Objects}  are not equal. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Their ID is compared. \par
+\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
 {\b Object::operator==(const Object&) const} \par
@@ -630,25 +666,45 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:operator!=}
+{\xe \v operator!=\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::operator!= (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::operator!= (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZN}
-{\bkmkend AAAAAAAAZN}
+{\bkmkstart AAAAAAABGC}
+{\bkmkend AAAAAAABGC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
+{\b Object::operator==(const Object&) const} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are different \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i other} \cell }{What to compare with \cell }
+{\row }
 }
-{\xe \v operator==\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:operator==}
+}}
+{\xe \v operator==\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZO}
-{\bkmkend AAAAAAAAZO}
+{\bkmkstart AAAAAAABGD}
+{\bkmkend AAAAAAABGD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -656,7 +712,7 @@ bool mc::gfx::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [in
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Objects}  are equal. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Their ID is compared. \par
+\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
 {\b Object::operator!=(const Object&) const} \par
@@ -672,25 +728,45 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator==\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:operator==}
+{\xe \v operator==\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::operator== (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::operator== (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZP}
-{\bkmkend AAAAAAAAZP}
+{\bkmkstart AAAAAAABGE}
+{\bkmkend AAAAAAABGE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
+{\b Object::operator!=(const Object&) const} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are the same \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i other} \cell }{What to compare with \cell }
+{\row }
 }
-{\xe \v setData\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:setData}
+}}
+{\xe \v setData\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:setData}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::setData (const GLsizeiptr &  {\i dataSize}, const void *  {\i data}, const {\b Enum} &  {\i drawType} = {\f2 GL_DYNAMIC_DRAW}){\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::setData (const GLsizeiptr &  {\i dataSize}, const void *  {\i data}, const {\b Enum} &  {\i drawType} = {\f2 GL_DYNAMIC_DRAW}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZQ}
-{\bkmkend AAAAAAAAZQ}
+{\bkmkstart AAAAAAABGF}
+{\bkmkend AAAAAAABGF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -736,14 +812,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v setDataRange\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:setDataRange}
+{\xe \v setDataRange\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:setDataRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::setDataRange (const {\b Index} &  {\i offset}, const GLsizeiptr &  {\i dataSize}, const void *  {\i data}){\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::setDataRange (const {\b Index} &  {\i offset}, const GLsizeiptr &  {\i dataSize}, const void *  {\i data}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZR}
-{\bkmkend AAAAAAAAZR}
+{\bkmkstart AAAAAAABGG}
+{\bkmkend AAAAAAABGG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -788,14 +864,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v unbind\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:unbind}
+{\xe \v unbind\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:unbind}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZS}
-{\bkmkend AAAAAAAAZS}
+{\bkmkstart AAAAAAABGH}
+{\bkmkend AAAAAAABGH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -818,14 +894,14 @@ Exceptions:\par}
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::bind() const} \par
 }}}
-{\xe \v unmap\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:unmap}
+{\xe \v unmap\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:unmap}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::unmap (){\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::unmap (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZT}
-{\bkmkend AAAAAAAAZT}
+{\bkmkstart AAAAAAABGI}
+{\bkmkend AAAAAAABGI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -858,14 +934,14 @@ Exceptions:\par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
 \pard\plain 
-{\xe \v id\:mc::gfx::CopyWriteBuffer}
-{\xe \v mc::gfx::CopyWriteBuffer\:id}
+{\xe \v id\:mc::gfx::ogl::CopyWriteBuffer}
+{\xe \v mc::gfx::ogl::CopyWriteBuffer\:id}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
+{\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZU}
-{\bkmkend AAAAAAAAZU}
+{\bkmkstart AAAAAAABGJ}
+{\bkmkend AAAAAAABGJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -876,10 +952,10 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 123 of file Buffer.h.}\par
+Definition at line 169 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Buffer.h\par
+include/MACE/Graphics/OGL.h\par
 }}

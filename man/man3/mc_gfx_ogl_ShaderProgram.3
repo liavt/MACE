@@ -1,0 +1,881 @@
+.TH "mc::gfx::ogl::ShaderProgram" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::ogl::ShaderProgram \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <OGL\&.h>\fP
+.PP
+Inherits \fBmc::gfx::ogl::Object\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP () override"
+.br
+.RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP () override"
+.br
+.RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
+.ti -1c
+.RI "void \fBlink\fP ()"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const  override"
+.br
+.RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
+.ti -1c
+.RI "void \fBattachShader\fP (const \fBShader\fP shader)"
+.br
+.ti -1c
+.RI "void \fBcreateFragment\fP (const char shader[])"
+.br
+.ti -1c
+.RI "void \fBcreateFragment\fP (const std::string &shader)"
+.br
+.ti -1c
+.RI "void \fBcreateVertex\fP (const char shader[])"
+.br
+.ti -1c
+.RI "void \fBcreateVertex\fP (const std::string &shader)"
+.br
+.ti -1c
+.RI "void \fBcreateGeometry\fP (const char shader[])"
+.br
+.ti -1c
+.RI "void \fBcreateGeometry\fP (const std::string &shader)"
+.br
+.ti -1c
+.RI "void \fBcreateUniform\fP (const std::string &name)"
+.br
+.ti -1c
+.RI "void \fBcreateUniform\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBgetUniformLocation\fP (const std::string &name) const "
+.br
+.ti -1c
+.RI "int \fBgetUniformLocation\fP (const char *name) const "
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< float, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 2, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 3, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 4, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 2, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 3, 2 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 2, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 3, 4 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Matrix\fP< double, 4, 3 > &m)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a, const float b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a, const float b, const float c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const float a, const float b, const float c, const float d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const float *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const float *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< float, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a, const double b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a, const double b, const double c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const double a, const double b, const double c, const double d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const double *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const double *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< double, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a, const int b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a, const int b, const int c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const int a, const int b, const int c, const int d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< int, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a, const unsigned int b)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a, const unsigned int b, const unsigned int c)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP arraySize, const unsigned int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const unsigned int *a)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 1 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 2 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 3 > v)"
+.br
+.ti -1c
+.RI "void \fBsetUniform\fP (char *name, const \fBmc::Vector\fP< unsigned int, 4 > v)"
+.br
+.ti -1c
+.RI "void \fBsetShaders\fP (const std::unordered_map< \fBEnum\fP, \fBShader\fP > &newShaders)"
+.br
+.ti -1c
+.RI "const std::unordered_map< \fBEnum\fP, \fBShader\fP > & \fBgetShaders\fP () const "
+.br
+.ti -1c
+.RI "std::unordered_map< \fBEnum\fP, \fBShader\fP > & \fBgetShaders\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetUniforms\fP (const std::unordered_map< std::string, int > &newUniforms)"
+.br
+.ti -1c
+.RI "const std::unordered_map< std::string, int > & \fBgetUniforms\fP () const "
+.br
+.ti -1c
+.RI "std::unordered_map< std::string, int > & \fBgetUniforms\fP ()"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBShaderProgram\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBShaderProgram\fP &other) const "
+.br
+.ti -1c
+.RI "virtual void \fBbind\fP () const "
+.br
+.RI "\fIBinds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. \fP"
+.ti -1c
+.RI "virtual void \fBunbind\fP () const "
+.br
+.RI "\fIUnbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. \fP"
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.RI "\fIRetrieves the current ID that this \fC\fBObject\fP\fP represents\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.RI "\fIThe ID of this `Object\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/Shader 
+.PP
+https://www.opengl.org/wiki/GLSL_Object#Program_objects 
+.PP
+\fBShader\fP 
+.RE
+.PP
+
+.PP
+Definition at line 1058 of file OGL\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::ogl::ShaderProgram::attachShader (const \fBShader\fP shader)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::ogl::Object::bind () const\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Binds this \fC\fBObject\fP\fP to be used in an OpenGL function\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::unbind() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createFragment (const char shader[])"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createFragment (const std::string & shader)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createGeometry (const char shader[])"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createGeometry (const std::string & shader)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createUniform (const std::string & name)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createUniform (const char * name)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createVertex (const char shader[])"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::createVertex (const std::string & shader)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::destroy ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Calls the corresponding glDestroy* function and deletes the ID\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::init()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet (\fBObject::init()\fP has not been called) 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::ogl::Object::getID () const\fC [inherited]\fP"
+
+.PP
+Retrieves the current ID that this \fC\fBObject\fP\fP represents\&. The ID is an unsigned number that acts like a pointer to OpenGL memory\&. It is assigned when \fBObject::init()\fP is called\&. 
+.PP
+If it is 0, the \fC\fBObject\fP\fP is considered uncreated\&. 
+.PP
+When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbind() const \fPwill bind to ID 0, which is the equivelant of a null pointer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
+.SS "const std::unordered_map<\fBEnum\fP, \fBShader\fP>& mc::gfx::ogl::ShaderProgram::getShaders () const"
+
+.SS "std::unordered_map<\fBEnum\fP, \fBShader\fP>& mc::gfx::ogl::ShaderProgram::getShaders ()"
+
+.SS "int mc::gfx::ogl::ShaderProgram::getUniformLocation (const std::string & name) const"
+
+.SS "int mc::gfx::ogl::ShaderProgram::getUniformLocation (const char * name) const"
+
+.SS "const std::unordered_map<std::string, int>& mc::gfx::ogl::ShaderProgram::getUniforms () const"
+
+.SS "std::unordered_map<std::string, int>& mc::gfx::ogl::ShaderProgram::getUniforms ()"
+
+.SS "void mc::gfx::ogl::ShaderProgram::init ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Calls the corresponding glCreate* function and assigns an ID\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::destroy()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "bool mc::gfx::ogl::ShaderProgram::isCreated () const\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBObject\fP\fP represents memory 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.PP
+\fBObject::init()\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "void mc::gfx::ogl::ShaderProgram::link ()"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "bool mc::gfx::ogl::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::ogl::ShaderProgram::operator!= (const \fBShaderProgram\fP & other) const"
+
+.SS "bool mc::gfx::ogl::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::ogl::ShaderProgram::operator== (const \fBShaderProgram\fP & other) const"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setShaders (const std::unordered_map< \fBEnum\fP, \fBShader\fP > & newShaders)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 2 > & m)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 2, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 3, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 4, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 2, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 3, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 2, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 2, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 3, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 3, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< float, 4, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< float, 4, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 2, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 3, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 4, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 2, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 3, 2 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 2, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 2, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 3, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 3, 4 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const bool transpose, const \fBmc::Matrix\fP< double, 4, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Matrix\fP< double, 4, 3 > & m)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const float a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const float a, const float b)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const float a, const float b, const float c)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const float a, const float b, const float c, const float d)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const float * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const float * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 1 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 2 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 3 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< float, 4 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const double a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const double a, const double b)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const double a, const double b, const double c)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const double a, const double b, const double c, const double d)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const double * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const double * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 1 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 2 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 3 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< double, 4 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const int a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const int a, const int b)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const int a, const int b, const int c)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const int a, const int b, const int c, const int d)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const int * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const int * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 1 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 2 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 3 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< int, 4 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const unsigned int a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const unsigned int a, const unsigned int b)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const unsigned int a, const unsigned int b, const unsigned int c)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP arraySize, const unsigned int * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBSize\fP componentSize, const \fBSize\fP arraySize, const unsigned int * a)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 1 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 2 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 3 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniform (char * name, const \fBmc::Vector\fP< unsigned int, 4 > v)"
+
+.SS "void mc::gfx::ogl::ShaderProgram::setUniforms (const std::unordered_map< std::string, int > & newUniforms)"
+
+.SS "virtual void mc::gfx::ogl::Object::unbind () const\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Unbinds this \fC\fBObject\fP\fP which is equivalent to binding ID 0\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::ogl::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 in \fBObject::destroy()\fP 
+.PP
+\fBObject::getID() const \fPreturns this\&. 
+.PP
+Definition at line 169 of file OGL\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

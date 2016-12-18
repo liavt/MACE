@@ -1,4 +1,4 @@
-.TH "mc::gfx::GraphicsEntity" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::GraphicsEntity" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -26,7 +26,7 @@ Inherited by \fBmc::gfx::Entity2D\fP\&.
 .RI "\fBGraphicsEntity\fP () noexcept"
 .br
 .ti -1c
-.RI "\fBGraphicsEntity\fP (\fBTexture\fP &t) noexcept"
+.RI "\fBGraphicsEntity\fP (\fBogl::Texture\fP &t) noexcept"
 .br
 .ti -1c
 .RI "virtual \fB~GraphicsEntity\fP () noexcept"
@@ -50,22 +50,22 @@ Inherited by \fBmc::gfx::Entity2D\fP\&.
 .RI "void \fBsetOpacity\fP (const float f)"
 .br
 .ti -1c
-.RI "void \fBsetTexture\fP (\fBTexture\fP &tex)"
+.RI "void \fBsetTexture\fP (\fBogl::Texture\fP &tex)"
 .br
 .ti -1c
-.RI "\fBTexture\fP & \fBgetTexture\fP ()"
+.RI "\fBogl::Texture\fP & \fBgetTexture\fP ()"
 .br
 .ti -1c
-.RI "const \fBTexture\fP & \fBgetTexture\fP () const "
+.RI "const \fBogl::Texture\fP & \fBgetTexture\fP () const "
 .br
 .ti -1c
-.RI "\fBUniformBuffer\fP & \fBgetBuffer\fP ()"
+.RI "\fBogl::UniformBuffer\fP & \fBgetBuffer\fP ()"
 .br
 .ti -1c
-.RI "const \fBUniformBuffer\fP & \fBgetBuffer\fP () const "
+.RI "const \fBogl::UniformBuffer\fP & \fBgetBuffer\fP () const "
 .br
 .ti -1c
-.RI "void \fBsetBuffer\fP (const \fBUniformBuffer\fP &newBuffer)"
+.RI "void \fBsetBuffer\fP (const \fBogl::UniformBuffer\fP &newBuffer)"
 .br
 .ti -1c
 .RI "void \fBinit\fP () override"
@@ -402,7 +402,7 @@ Definition at line 42 of file Entity\&.h\&.
 .PP 
 .SS "mc::gfx::GraphicsEntity::GraphicsEntity ()\fC [noexcept]\fP"
 
-.SS "mc::gfx::GraphicsEntity::GraphicsEntity (\fBTexture\fP & t)\fC [noexcept]\fP"
+.SS "mc::gfx::GraphicsEntity::GraphicsEntity (\fBogl::Texture\fP & t)\fC [noexcept]\fP"
 
 .SS "virtual mc::gfx::GraphicsEntity::~GraphicsEntity ()\fC [virtual]\fP, \fC [noexcept]\fP"
 
@@ -634,7 +634,7 @@ Iterator of the last \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "\fBUniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer ()"
+.SS "\fBogl::UniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer ()"
 
 .PP
 \fBNote:\fP
@@ -648,7 +648,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "const \fBUniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer () const"
+.SS "const \fBogl::UniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer () const"
 
 .SS "\fBEntity\fP& mc::gfx::Entity::getChild (\fBIndex\fP i)\fC [inherited]\fP"
 
@@ -887,7 +887,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 
 .SS "const \fBEntity\fP* mc::gfx::Entity::getRootParent () const\fC [inherited]\fP"
 
-.SS "\fBTexture\fP& mc::gfx::GraphicsEntity::getTexture ()"
+.SS "\fBogl::Texture\fP& mc::gfx::GraphicsEntity::getTexture ()"
 
 .PP
 \fBNote:\fP
@@ -901,7 +901,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "const \fBTexture\fP& mc::gfx::GraphicsEntity::getTexture () const"
+.SS "const \fBogl::Texture\fP& mc::gfx::GraphicsEntity::getTexture () const"
 
 .SS "\fBTransformMatrix\fP& mc::gfx::Entity::getTransformation ()\fC [inherited]\fP"
 
@@ -1310,7 +1310,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::gfx::GraphicsEntity::setBuffer (const \fBUniformBuffer\fP & newBuffer)"
+.SS "void mc::gfx::GraphicsEntity::setBuffer (const \fBogl::UniformBuffer\fP & newBuffer)"
 
 .PP
 \fBNote:\fP
@@ -1428,7 +1428,7 @@ setProperties(ByteField&)
 .RE
 .PP
 
-.SS "void mc::gfx::GraphicsEntity::setTexture (\fBTexture\fP & tex)"
+.SS "void mc::gfx::GraphicsEntity::setTexture (\fBogl::Texture\fP & tex)"
 
 .PP
 \fBNote:\fP

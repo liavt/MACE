@@ -82,25 +82,25 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::ElementBuffer Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer}
-{\bkmkstart AAAAAAABDP}
-{\bkmkend AAAAAAABDP}
+mc::gfx::ogl::ElementBuffer Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer}
+{\bkmkstart AAAAAAABGO}
+{\bkmkend AAAAAAABGO}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Stores element indices to save vertex data. }}\par
 {
-{\f2 #include <Buffer.h>}}\par
-Inheritance diagram for mc::gfx::ElementBuffer:{
+{\f2 #include <OGL.h>}}\par
+Inheritance diagram for mc::gfx::ogl::ElementBuffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d5/deb/a00132.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d2/d34/a00156.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
-Collaboration diagram for mc::gfx::ElementBuffer:{
+Collaboration diagram for mc::gfx::ogl::ElementBuffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d0/de8/a00133.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d1/db7/a00157.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -109,7 +109,49 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ElementBuffer} ()\par
+{\b ElementBuffer} () noexcept\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b ElementBuffer} (const {\b Size} &indiceNum) noexcept\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Constructs an {\f2 {\b ElementBuffer}}  with a specified amount of indices. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setIndiceNumber} (const {\b Size} &indices)\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Tell this {\f2 {\b ElementBuffer}}  how many indices there are. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} & {\b getIndiceNumber} ()\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves how many indices this {\f2 {\b ElementBuffer}}  has. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b Size} & {\b getIndiceNumber} () const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves how many indices this {\f2 {\b ElementBuffer}}  has. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator==} (const {\b ElementBuffer} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator!=} (const {\b ElementBuffer} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b isCreated} () const  override\par
 {
@@ -174,7 +216,19 @@ Unmaps the buffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b Enum} & {\b getBufferType} () const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves the buffer type for this buffer. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b Buffer} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b Object} &other) const \par
 {
@@ -184,6 +238,11 @@ Compares if 2 {\f2 Objects}  are equal. }{
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator!=} (const {\b Buffer} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator!=} (const {\b Object} &other) const \par
 {
@@ -242,36 +301,69 @@ See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\f2 h
 {\f2 https://www.opengl.org/wiki/GLAPI/glDrawElements} \par
 {\b VertexArray} \par
 {\b VertexBuffer} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid You must use the {\b ElementBuffer::setIndiceNumber(const Size&)} function for this class to work correctly. \par
 }}{
-Definition at line 696 of file Buffer.h.}\par
+Definition at line 770 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v ElementBuffer\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:ElementBuffer}
+{\xe \v ElementBuffer\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:ElementBuffer}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::ElementBuffer::ElementBuffer ()}}
+mc::gfx::ogl::ElementBuffer::ElementBuffer (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABDQ}
-{\bkmkend AAAAAAABDQ}
+{\bkmkstart AAAAAAABGP}
+{\bkmkend AAAAAAABGP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
+{\xe \v ElementBuffer\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:ElementBuffer}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::ogl::ElementBuffer::ElementBuffer (const {\b Size} &  {\i indiceNum}){\f2 [noexcept]}}}
+\par
+{\bkmkstart AAAAAAABGQ}
+{\bkmkend AAAAAAABGQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Constructs an {\f2 {\b ElementBuffer}}  with a specified amount of indices. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Analagous to calling {\b ElementBuffer::setIndiceNumber(const Size&)} immediately after construction. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i indiceNum} \cell }{The amount of indices this {\f2 {\b ElementBuffer}}  will have \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glDrawElements} \par
+{\f2 https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing} \par
+{\b ElementBuffer::getIndiceNumber()} \par
+{\b VertexArray} \par
+}}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v bind\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:bind}
+{\xe \v bind\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:bind}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZB}
-{\bkmkend AAAAAAAAZB}
+{\bkmkstart AAAAAAABFP}
+{\bkmkend AAAAAAABFP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -303,14 +395,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v copyData\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:copyData}
+{\xe \v copyData\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:copyData}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::copyData ({\b Buffer} &  {\i other}, const GLsizeiptr &  {\i size}, const {\b Index} &  {\i readOffset} = {\f2 0}, const {\b Index} &  {\i writeOffset} = {\f2 0}){\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::copyData ({\b Buffer} &  {\i other}, const GLsizeiptr &  {\i size}, const {\b Index} &  {\i readOffset} = {\f2 0}, const {\b Index} &  {\i writeOffset} = {\f2 0}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZC}
-{\bkmkend AAAAAAAAZC}
+{\bkmkstart AAAAAAABFQ}
+{\bkmkend AAAAAAABFQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -363,14 +455,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v destroy\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:destroy}
+{\xe \v destroy\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZD}
-{\bkmkend AAAAAAAAZD}
+{\bkmkstart AAAAAAABFR}
+{\bkmkend AAAAAAABFR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -405,16 +497,35 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZE \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getID\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:getID}
+{\xe \v getBufferType\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:getBufferType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::Object::getID () const{\f2 [inherited]}}}
+const {\b Enum}& mc::gfx::ogl::Buffer::getBufferType () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZF}
-{\bkmkend AAAAAAAAZF}
+{\bkmkstart AAAAAAABFT}
+{\bkmkend AAAAAAABFT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves the buffer type for this buffer. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This is based on the class. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The buffer type \par
+}}}
+{\xe \v getID\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:getID}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABFU}
+{\bkmkend AAAAAAABFU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -428,14 +539,62 @@ When using {\b Object::bind() const }it will bind to this ID. {\b Object::unbind
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID represented by this {\f2 {\b Object}}  \par
 }}}
-{\xe \v init\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:init}
+{\xe \v getIndiceNumber\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:getIndiceNumber}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+{\b Size}& mc::gfx::ogl::ElementBuffer::getIndiceNumber ()}}
 \par
-{\bkmkstart AAAAAAAAZG}
-{\bkmkend AAAAAAAAZG}
+{\bkmkstart AAAAAAABGR}
+{\bkmkend AAAAAAABGR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves how many indices this {\f2 {\b ElementBuffer}}  has. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ElementBuffer::setIndiceNumber(const Size&)} \par
+{\b VertexArray} \par
+{\f2 https://www.opengl.org/wiki/GLAPI/glDrawElements} \par
+{\f2 https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The amount of indices \par
+}}}
+{\xe \v getIndiceNumber\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:getIndiceNumber}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b Size}& mc::gfx::ogl::ElementBuffer::getIndiceNumber () const}}
+\par
+{\bkmkstart AAAAAAABGS}
+{\bkmkend AAAAAAABGS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves how many indices this {\f2 {\b ElementBuffer}}  has. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ElementBuffer::setIndiceNumber(const Size&)} \par
+{\b VertexArray} \par
+{\f2 https://www.opengl.org/wiki/GLAPI/glDrawElements} \par
+{\f2 https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The amount of indices \par
+}}}
+{\xe \v init\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ogl::Buffer::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABFV}
+{\bkmkend AAAAAAABFV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -461,16 +620,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v isCreated\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:isCreated}
+{\xe \v isCreated\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:isCreated}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZI}
-{\bkmkend AAAAAAAAZI}
+{\bkmkstart AAAAAAABFX}
+{\bkmkend AAAAAAABFX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -496,16 +655,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v map\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:map}
+{\xe \v map\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:map}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::Buffer::map (const {\b Enum} &  {\i access} = {\f2 GL_READ_WRITE}){\f2 [inherited]}}}
+void* mc::gfx::ogl::Buffer::map (const {\b Enum} &  {\i access} = {\f2 GL_READ_WRITE}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZK}
-{\bkmkend AAAAAAAAZK}
+{\bkmkstart AAAAAAABFZ}
+{\bkmkend AAAAAAABFZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -542,14 +701,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v mapRange\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:mapRange}
+{\xe \v mapRange\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:mapRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::Buffer::mapRange (const {\b Index} &  {\i offset}, const {\b Size} &  {\i length}, const unsigned int &  {\i access}){\f2 [inherited]}}}
+void* mc::gfx::ogl::Buffer::mapRange (const {\b Index} &  {\i offset}, const {\b Size} &  {\i length}, const unsigned int &  {\i access}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZL}
-{\bkmkend AAAAAAAAZL}
+{\bkmkstart AAAAAAABGA}
+{\bkmkend AAAAAAABGA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -598,14 +757,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:operator!=}
+{\xe \v operator!=\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZM}
-{\bkmkend AAAAAAAAZM}
+{\bkmkstart AAAAAAABGB}
+{\bkmkend AAAAAAABGB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -613,7 +772,7 @@ bool mc::gfx::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [in
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Objects}  are not equal. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Their ID is compared. \par
+\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
 {\b Object::operator==(const Object&) const} \par
@@ -629,25 +788,76 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:operator!=}
+{\xe \v operator!=\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::operator!= (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::operator!= (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZN}
-{\bkmkend AAAAAAAAZN}
+{\bkmkstart AAAAAAABGC}
+{\bkmkend AAAAAAABGC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
+{\b Object::operator==(const Object&) const} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are different \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i other} \cell }{What to compare with \cell }
+{\row }
 }
-{\xe \v operator==\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:operator==}
+}}
+{\xe \v operator!=\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::ElementBuffer::operator!= (const {\b ElementBuffer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAAZO}
-{\bkmkend AAAAAAAAZO}
+{\bkmkstart AAAAAAABGT}
+{\bkmkend AAAAAAABGT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
+{\b Object::operator==(const Object&) const} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are different \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i other} \cell }{What to compare with \cell }
+{\row }
+}
+}}
+{\xe \v operator==\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:operator==}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABGD}
+{\bkmkend AAAAAAABGD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -655,7 +865,7 @@ bool mc::gfx::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [in
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Objects}  are equal. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Their ID is compared. \par
+\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
 {\b Object::operator!=(const Object&) const} \par
@@ -671,25 +881,76 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator==\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:operator==}
+{\xe \v operator==\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::operator== (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::operator== (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZP}
-{\bkmkend AAAAAAAAZP}
+{\bkmkstart AAAAAAABGE}
+{\bkmkend AAAAAAABGE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
+{\b Object::operator!=(const Object&) const} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are the same \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i other} \cell }{What to compare with \cell }
+{\row }
 }
-{\xe \v setData\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:setData}
+}}
+{\xe \v operator==\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::setData (const GLsizeiptr &  {\i dataSize}, const void *  {\i data}, const {\b Enum} &  {\i drawType} = {\f2 GL_DYNAMIC_DRAW}){\f2 [inherited]}}}
+bool mc::gfx::ogl::ElementBuffer::operator== (const {\b ElementBuffer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAAZQ}
-{\bkmkend AAAAAAAAZQ}
+{\bkmkstart AAAAAAABGU}
+{\bkmkend AAAAAAABGU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
+{\b Object::operator!=(const Object&) const} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are the same \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i other} \cell }{What to compare with \cell }
+{\row }
+}
+}}
+{\xe \v setData\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:setData}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ogl::Buffer::setData (const GLsizeiptr &  {\i dataSize}, const void *  {\i data}, const {\b Enum} &  {\i drawType} = {\f2 GL_DYNAMIC_DRAW}){\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABGF}
+{\bkmkend AAAAAAABGF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -735,14 +996,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v setDataRange\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:setDataRange}
+{\xe \v setDataRange\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:setDataRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Buffer::setDataRange (const {\b Index} &  {\i offset}, const GLsizeiptr &  {\i dataSize}, const void *  {\i data}){\f2 [inherited]}}}
+void mc::gfx::ogl::Buffer::setDataRange (const {\b Index} &  {\i offset}, const GLsizeiptr &  {\i dataSize}, const void *  {\i data}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZR}
-{\bkmkend AAAAAAAAZR}
+{\bkmkstart AAAAAAABGG}
+{\bkmkend AAAAAAABGG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -787,14 +1048,45 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v unbind\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:unbind}
+{\xe \v setIndiceNumber\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:setIndiceNumber}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::ogl::ElementBuffer::setIndiceNumber (const {\b Size} &  {\i indices})}}
 \par
-{\bkmkstart AAAAAAAAZS}
-{\bkmkend AAAAAAAAZS}
+{\bkmkstart AAAAAAABGV}
+{\bkmkend AAAAAAABGV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Tell this {\f2 {\b ElementBuffer}}  how many indices there are. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This is required for proper usage in the {\f2 {\b VertexArray}}  class. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glDrawElements} \par
+{\f2 https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing} \par
+{\b Buffer::setData(const GLsizeiptr&, const void*, const Enum&)} \par
+{\b VertexArray} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i indices} \cell }{The amount of indices loaded \cell }
+{\row }
+}
+}}
+{\xe \v unbind\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:unbind}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABGH}
+{\bkmkend AAAAAAABGH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -817,14 +1109,14 @@ Exceptions:\par}
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::bind() const} \par
 }}}
-{\xe \v unmap\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:unmap}
+{\xe \v unmap\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:unmap}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::Buffer::unmap (){\f2 [inherited]}}}
+bool mc::gfx::ogl::Buffer::unmap (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZT}
-{\bkmkend AAAAAAAAZT}
+{\bkmkstart AAAAAAABGI}
+{\bkmkend AAAAAAABGI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -857,14 +1149,14 @@ Exceptions:\par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
 \pard\plain 
-{\xe \v id\:mc::gfx::ElementBuffer}
-{\xe \v mc::gfx::ElementBuffer\:id}
+{\xe \v id\:mc::gfx::ogl::ElementBuffer}
+{\xe \v mc::gfx::ogl::ElementBuffer\:id}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
+{\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZU}
-{\bkmkend AAAAAAAAZU}
+{\bkmkstart AAAAAAABGJ}
+{\bkmkend AAAAAAABGJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -875,10 +1167,10 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 123 of file Buffer.h.}\par
+Definition at line 169 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Buffer.h\par
+include/MACE/Graphics/OGL.h\par
 }}

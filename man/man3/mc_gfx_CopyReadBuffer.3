@@ -1,4 +1,4 @@
-.TH "mc::gfx::CopyReadBuffer" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::CopyReadBuffer" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -8,14 +8,14 @@ mc::gfx::CopyReadBuffer \- Special buffer with no extra semantics to be used as 
 .br
 .PP
 .PP
-\fC#include <Buffer\&.h>\fP
+\fC#include <OGL\&.h>\fP
 .PP
 Inherits \fBmc::gfx::Buffer\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
 .ti -1c
-.RI "\fBCopyReadBuffer\fP ()"
+.RI "\fBCopyReadBuffer\fP () noexcept"
 .br
 .ti -1c
 .RI "bool \fBisCreated\fP () const  override"
@@ -54,8 +54,13 @@ Inherits \fBmc::gfx::Buffer\fP\&.
 .br
 .RI "\fIUnmaps the buffer\&. \fP"
 .ti -1c
+.RI "const \fBEnum\fP & \fBgetBufferType\fP () const "
+.br
+.RI "\fIRetrieves the buffer type for this buffer\&. \fP"
+.ti -1c
 .RI "bool \fBoperator==\fP (const \fBBuffer\fP &other) const "
 .br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
 .ti -1c
 .RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
 .br
@@ -63,6 +68,7 @@ Inherits \fBmc::gfx::Buffer\fP\&.
 .ti -1c
 .RI "bool \fBoperator!=\fP (const \fBBuffer\fP &other) const "
 .br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
 .ti -1c
 .RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
 .br
@@ -107,10 +113,10 @@ Buffer::copyData(Buffer, GLsizeiptr, Index, Index);
 .PP
 
 .PP
-Definition at line 742 of file Buffer\&.h\&.
+Definition at line 864 of file OGL\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "mc::gfx::CopyReadBuffer::CopyReadBuffer ()"
+.SS "mc::gfx::CopyReadBuffer::CopyReadBuffer ()\fC [noexcept]\fP"
 
 .SH "Member Function Documentation"
 .PP 
@@ -212,6 +218,17 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::Object\fP\&.
+.SS "const \fBEnum\fP& mc::gfx::Buffer::getBufferType () const\fC [inherited]\fP"
+
+.PP
+Retrieves the buffer type for this buffer\&. This is based on the class\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The buffer type 
+.RE
+.PP
+
 .SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
 
 .PP
@@ -367,7 +384,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
 
 .PP
-Compares if 2 \fCObjects\fP are not equal\&. Their ID is compared\&. 
+Compares if 2 \fCObjects\fP are not equal\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -389,10 +406,31 @@ Whether \fCthis\fP and \fCother\fP are different
 
 .SS "bool mc::gfx::Buffer::operator!= (const \fBBuffer\fP & other) const\fC [inherited]\fP"
 
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
 .SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
 
 .PP
-Compares if 2 \fCObjects\fP are equal\&. Their ID is compared\&. 
+Compares if 2 \fCObjects\fP are equal\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -413,6 +451,27 @@ Whether \fCthis\fP and \fCother\fP are the same
 .PP
 
 .SS "bool mc::gfx::Buffer::operator== (const \fBBuffer\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
 
 .SS "void mc::gfx::Buffer::setData (const GLsizeiptr & dataSize, const void * data, const \fBEnum\fP & drawType = \fCGL_DYNAMIC_DRAW\fP)\fC [inherited]\fP"
 
@@ -545,7 +604,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 123 of file Buffer\&.h\&.
+Definition at line 135 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

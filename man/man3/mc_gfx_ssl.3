@@ -1,4 +1,4 @@
-.TH "mc::gfx::ssl" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ssl" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -29,16 +29,16 @@ mc::gfx::ssl \- Holds resources for the Standard Shader Library (SSL\&.) SSL mak
 .RI "void \fBcheckInput\fP ()"
 .br
 .ti -1c
-.RI "void \fBbindBuffer\fP (\fBUniformBuffer\fP &buf)"
+.RI "void \fBbindBuffer\fP (\fBogl::UniformBuffer\fP &buf)"
 .br
 .ti -1c
-.RI "void \fBfillBuffer\fP (\fBUniformBuffer\fP &buf, const \fBEntity\fP *en)"
+.RI "void \fBfillBuffer\fP (\fBogl::UniformBuffer\fP &buf, const \fBEntity\fP *en)"
 .br
 .ti -1c
-.RI "void \fBbindEntity\fP (const \fBGraphicsEntity\fP *en, \fBShaderProgram\fP &prog)"
+.RI "void \fBbindEntity\fP (const \fBGraphicsEntity\fP *en, \fBogl::ShaderProgram\fP &prog)"
 .br
 .ti -1c
-.RI "void \fBbindShaderProgram\fP (\fBShaderProgram\fP &prog)"
+.RI "void \fBbindShaderProgram\fP (\fBogl::ShaderProgram\fP &prog)"
 .br
 .ti -1c
 .RI "std::string \fBprocessShader\fP (const std::string &shader, const GLenum &type)"
@@ -61,7 +61,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 
 .SH "Function Documentation"
 .PP 
-.SS "void mc::gfx::ssl::bindBuffer (\fBUniformBuffer\fP & buf)"
+.SS "void mc::gfx::ssl::bindBuffer (\fBogl::UniformBuffer\fP & buf)"
 
 .PP
 \fBWarning:\fP
@@ -80,7 +80,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ssl::bindEntity (const \fBGraphicsEntity\fP * en, \fBShaderProgram\fP & prog)"
+.SS "void mc::gfx::ssl::bindEntity (const \fBGraphicsEntity\fP * en, \fBogl::ShaderProgram\fP & prog)"
 
 .PP
 \fBWarning:\fP
@@ -99,7 +99,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ssl::bindShaderProgram (\fBShaderProgram\fP & prog)"
+.SS "void mc::gfx::ssl::bindShaderProgram (\fBogl::ShaderProgram\fP & prog)"
 
 .PP
 \fBWarning:\fP
@@ -156,7 +156,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ssl::fillBuffer (\fBUniformBuffer\fP & buf, const \fBEntity\fP * en)"
+.SS "void mc::gfx::ssl::fillBuffer (\fBogl::UniformBuffer\fP & buf, const \fBEntity\fP * en)"
 
 .PP
 \fBWarning:\fP

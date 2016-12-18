@@ -1,4 +1,4 @@
-.TH "mc::gfx" 3 "Sun Dec 11 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -11,6 +11,10 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 
 .in +1c
 .ti -1c
+.RI " \fBogl\fP"
+.br
+.RI "\fIContains various abstractions for OpenGL\&. \fP"
+.ti -1c
 .RI " \fBssl\fP"
 .br
 .RI "\fIHolds resources for the Standard Shader Library (SSL\&.) SSL makes it easy to interact with MACE entities from shaders through special header files\&. \fP"
@@ -19,27 +23,11 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 
 .in +1c
 .ti -1c
-.RI "class \fBBuffer\fP"
-.br
-.RI "\fIRepresents a buffer of memory in the GPU\&. \fP"
-.ti -1c
 .RI "class \fBCallbackEntity\fP"
 .br
 .ti -1c
 .RI "class \fBComponent\fP"
 .br
-.ti -1c
-.RI "class \fBCopyReadBuffer\fP"
-.br
-.RI "\fISpecial buffer with no extra semantics to be used as a proxy in copying\&. \fP"
-.ti -1c
-.RI "class \fBCopyWriteBuffer\fP"
-.br
-.RI "\fISpecial buffer with no extra semantics to be used as a proxy in copying\&. \fP"
-.ti -1c
-.RI "class \fBElementBuffer\fP"
-.br
-.RI "\fIStores element indices to save vertex data\&. \fP"
 .ti -1c
 .RI "class \fBEntity\fP"
 .br
@@ -47,10 +35,6 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBEntity2D\fP"
 .br
-.ti -1c
-.RI "class \fBFrameBuffer\fP"
-.br
-.RI "\fIRepresents an OpenGL Framebuffer \fBObject\fP which allows rendering to a non-screen location\&. \fP"
 .ti -1c
 .RI "class \fBGraphicsEntity\fP"
 .br
@@ -60,26 +44,6 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBImage\fP"
 .br
-.ti -1c
-.RI "class \fBObject\fP"
-.br
-.RI "\fIRepresents a OpenGL object in memory\&. \fP"
-.ti -1c
-.RI "class \fBPixelPackBuffer\fP"
-.br
-.RI "\fISpecial buffer that excels at asynchronous pixel transfer operations\&. \fP"
-.ti -1c
-.RI "class \fBPixelUnpackBuffer\fP"
-.br
-.RI "\fISpecial buffer that excels at asynchronous pixel transfer operations\&. \fP"
-.ti -1c
-.RI "class \fBQueryObject\fP"
-.br
-.RI "\fISpecial object that is used for asynchronous queries of information from the GPU\&. \fP"
-.ti -1c
-.RI "class \fBRenderBuffer\fP"
-.br
-.RI "\fIRepresents a render buffer for use with a `FrameBuffer\&. \fP"
 .ti -1c
 .RI "class \fBRenderer\fP"
 .br
@@ -92,23 +56,6 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBRenderProtocol< Entity2D >\fP"
 .br
-.ti -1c
-.RI "class \fBShaderProgram\fP"
-.br
-.ti -1c
-.RI "class \fBTexture\fP"
-.br
-.ti -1c
-.RI "class \fBUniformBuffer\fP"
-.br
-.RI "\fIStores uniform data for a shader in the form of a buffer\&. \fP"
-.ti -1c
-.RI "class \fBVertexArray\fP"
-.br
-.ti -1c
-.RI "class \fBVertexBuffer\fP"
-.br
-.RI "\fIStores vertex data for a `VertexArray\&. \fP"
 .in -1c
 .SS "Typedefs"
 
@@ -117,93 +64,31 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "using \fBEntityProperties\fP = \fBBitField\fP"
 .br
 .ti -1c
-.RI "using \fBGLError\fP = \fBException\fP"
-.br
-.ti -1c
-.RI "using \fBShaderError\fP = \fBException\fP"
-.br
-.ti -1c
 .RI "using \fBRenderQueue\fP = std::deque< std::pair< \fBIndex\fP, \fBGraphicsEntity\fP * >>"
-.br
-.in -1c
-.SS "Functions"
-
-.in +1c
-.ti -1c
-.RI "void \fBcheckGLError\fP ()"
-.br
-.ti -1c
-.RI "void \fBthrowShaderError\fP (const \fBIndex\fP &shaderId, const \fBEnum\fP &type, const std::string &message)"
-.br
-.ti -1c
-.RI "void \fBthrowShaderError\fP (const \fBIndex\fP &shaderId, const \fBEnum\fP &type)"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
 Namespace containing classes used for Graphics in MACE\&. 
+
+
+.PP
+\fBTodo\fP
+.RS 4
+create a ReadableBuffer class with functions like glReadPixels 
+.RE
+.PP
+
 .SH "Typedef Documentation"
 .PP 
 .SS "using \fBmc::gfx::EntityProperties\fP = typedef \fBBitField\fP"
 
 .PP
 Definition at line 22 of file Entity\&.h\&.
-.SS "using \fBmc::gfx::GLError\fP = typedef \fBException\fP"
-
-.PP
-Definition at line 20 of file GraphicsConstants\&.h\&.
 .SS "using \fBmc::gfx::RenderQueue\fP = typedef std::deque<std::pair<\fBIndex\fP, \fBGraphicsEntity\fP*>>"
 
 .PP
 Definition at line 27 of file Renderer\&.h\&.
-.SS "using \fBmc::gfx::ShaderError\fP = typedef \fBException\fP"
-
-.PP
-Definition at line 22 of file GraphicsConstants\&.h\&.
-.SH "Function Documentation"
-.PP 
-.SS "void mc::gfx::checkGLError ()"
-
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.SS "void mc::gfx::throwShaderError (const \fBIndex\fP & shaderId, const \fBEnum\fP & type, const std::string & message)"
-
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.SS "void mc::gfx::throwShaderError (const \fBIndex\fP & shaderId, const \fBEnum\fP & type)"
-
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

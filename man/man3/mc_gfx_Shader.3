@@ -1,0 +1,357 @@
+.TH "mc::gfx::Shader" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::Shader \- Represents a shader object in OpenGL\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <OGL\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Object\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBShader\fP () noexcept"
+.br
+.RI "\fIDefault constructor which sets \fCtype\fP to \fCGL_FALSE\fP\&. \fP"
+.ti -1c
+.RI "\fBShader\fP (const \fBEnum\fP &type) noexcept"
+.br
+.RI "\fIConstructor which sets the type of the \fC\fBShader\fP\fP\&. \fP"
+.ti -1c
+.RI "void \fBinit\fP () override"
+.br
+.RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP () override"
+.br
+.RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
+.ti -1c
+.RI "void \fBsetSource\fP (const \fBSize\fP &count, const char *strings[], const int lengths[])"
+.br
+.ti -1c
+.RI "void \fBsetSource\fP (const char string[], const int &length)"
+.br
+.ti -1c
+.RI "void \fBsetSource\fP (const std::string &string)"
+.br
+.ti -1c
+.RI "void \fBcompile\fP ()"
+.br
+.ti -1c
+.RI "bool \fBisCreated\fP () const  override"
+.br
+.RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
+.ti -1c
+.RI "void \fBsetType\fP (const \fBEnum\fP &newType)"
+.br
+.ti -1c
+.RI "\fBEnum\fP & \fBgetType\fP ()"
+.br
+.ti -1c
+.RI "const \fBEnum\fP & \fBgetType\fP () const "
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBShader\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBShader\fP &other) const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetID\fP () const "
+.br
+.RI "\fIRetrieves the current ID that this \fC\fBObject\fP\fP represents\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are equal\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBObject\fP &other) const "
+.br
+.RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBid\fP = 0"
+.br
+.RI "\fIThe ID of this `Object\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents a shader object in OpenGL\&. 
+
+A shader is a special program that gets executed during different parts of rendering\&. 
+.PP
+The \fC\fBShader\fP\fP class must be used with the \fC\fBShaderProgram\fP\fP class\&. 
+.PP
+In order to work correctly, \fBShader::setType(const Enum&)\fP or \fBShader::Shader(const Enum&)\fP noexcept must be called and a type must be set\&. 
+.PP
+Unlike other \fCObjects\fP, the default constructor of \fC\fBShader\fP\fP should not be used\&. It is only implemented for compatibility reasons\&. The \fCtype\fP of the shader must be set before most functions are called\&. If \fCtype\fP is equal to \fCGL_FALSE\fP an error is thrown\&. 
+.PP
+Even though it extends \fC\fBObject\fP\fP it does not implement the \fBObject::bind() const \fPor \fCunbind()\fP functions\&. Instead, add the shader to a \fC\fBShaderProgram\fP\fP and it will link from there\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/Shader 
+.PP
+https://www.opengl.org/wiki/GLSL_Object#Program_objects 
+.RE
+.PP
+
+.PP
+Definition at line 964 of file OGL\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::gfx::Shader::Shader ()\fC [noexcept]\fP"
+
+.PP
+Default constructor which sets \fCtype\fP to \fCGL_FALSE\fP\&. If a function that requires \fCtype\fP to be set is called, an error is thrown\&. 
+.PP
+If this constructor is used, the \fBShader::setType(const Enum&)\fP function should be used later to set a type\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBShader::Shader(const Enum&)\fP noexcept 
+.PP
+\fBShader\fP 
+.RE
+.PP
+
+.SS "mc::gfx::Shader::Shader (const \fBEnum\fP & type)\fC [noexcept]\fP"
+
+.PP
+Constructor which sets the type of the \fC\fBShader\fP\fP\&. Should be used instead of \fC\fBShader::Shader()\fP noexcept\fP 
+.PP
+The \fCtype\fP must be a valid OpenGL constant representing a type of shader\&. If it is incorrect, an \fCOpenGLError\fP is thrown\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP The type of \fC\fBShader\fP\fP\&. Must be \fCGL_VERTEX_SHADER\fP, \fCGL_FRAGMENT_SHADER\fP, \fCGL_GEOMETRY_SHADER\fP, or the following if available: \fCGL_TESS_CONTROL_SHADER\fP, \fCGL_TESS_EVALUATION_SHADER\fP, and \fCGL_COMPUTE_SHADER\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBShader::setType(const Enum&)\fP 
+.PP
+\fBShader\fP 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Shader::compile ()"
+
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glCompileShader 
+.RE
+.PP
+
+.SS "void mc::gfx::Shader::destroy ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Calls the corresponding glDestroy* function and deletes the ID\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::init()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If this \fC\fBObject\fP\fP has not been created yet (\fBObject::init()\fP has not been called) 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "\fBIndex\fP mc::gfx::Object::getID () const\fC [inherited]\fP"
+
+.PP
+Retrieves the current ID that this \fC\fBObject\fP\fP represents\&. The ID is an unsigned number that acts like a pointer to OpenGL memory\&. It is assigned when \fBObject::init()\fP is called\&. 
+.PP
+If it is 0, the \fC\fBObject\fP\fP is considered uncreated\&. 
+.PP
+When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbind() const \fPwill bind to ID 0, which is the equivelant of a null pointer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
+.SS "\fBEnum\fP& mc::gfx::Shader::getType ()"
+
+.SS "const \fBEnum\fP& mc::gfx::Shader::getType () const"
+
+.SS "void mc::gfx::Shader::init ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Calls the corresponding glCreate* function and assigns an ID\&. 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::destroy()\fP 
+.PP
+\fBObject::bind() const\fP 
+.PP
+\fBObject::unbind\fP const 
+.PP
+\fBObject::isCreated() const\fP 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Shader::isCreated () const\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Queries OpenGL whether this \fBObject\fP's ID is a valid object\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBObject\fP\fP represents memory 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::bind() const\fP 
+.PP
+\fBObject::init()\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Object\fP\&.
+.SS "bool mc::gfx::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are not equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator==(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are different 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Shader::operator!= (const \fBShader\fP & other) const"
+
+.SS "bool mc::gfx::Object::operator== (const \fBObject\fP & other) const\fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCObjects\fP are equal\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBObject::getID() const\fP 
+.PP
+\fBObject::operator!=(const Object&) const\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether \fCthis\fP and \fCother\fP are the same 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP What to compare with 
+.RE
+.PP
+
+.SS "bool mc::gfx::Shader::operator== (const \fBShader\fP & other) const"
+
+.SS "void mc::gfx::Shader::setSource (const \fBSize\fP & count, const char * strings[], const int lengths[])"
+
+.PP
+\fBSee also:\fP
+.RS 4
+https://www.opengl.org/wiki/GLAPI/glShaderSource 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::Shader::setSource (const char string[], const int & length)"
+
+.SS "void mc::gfx::Shader::setSource (const std::string & string)"
+
+.SS "void mc::gfx::Shader::setType (const \fBEnum\fP & newType)"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBIndex\fP mc::gfx::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 in \fBObject::destroy()\fP 
+.PP
+\fBObject::getID() const \fPreturns this\&. 
+.PP
+Definition at line 135 of file OGL\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

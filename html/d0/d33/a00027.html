@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>MACE: mc::gfx::Object Class Reference</title>
+<title>MACE: mc::gfx::ogl::Object Class Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -110,63 +110,64 @@ $(document).ready(function(){initNavTree('d0/d33/a00027.html','../../');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="../../d7/d9a/a00152.html">List of all members</a>  </div>
+<a href="../../d6/d7d/a00161.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc::gfx::Object Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">mc::gfx::ogl::Object Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Represents a OpenGL object in memory.  
  <a href="../../d0/d33/a00027.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d6/d97/a00045_source.html">Buffer.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d5/de0/a00050_source.html">OGL.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for mc::gfx::Object:</div>
+Inheritance diagram for mc::gfx::ogl::Object:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="../../da/d01/a00153.svg" width="543" height="443"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="../../db/d44/a00162.svg" width="623" height="544"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4ea5dacb16804b43f4be8c2567bbd48b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a4ea5dacb16804b43f4be8c2567bbd48b.html#a4ea5dacb16804b43f4be8c2567bbd48b">~Object</a> ()=default</td></tr>
-<tr class="memdesc:a4ea5dacb16804b43f4be8c2567bbd48b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for subclasses and safety.  <a href="../../d0/d33/a00027_a4ea5dacb16804b43f4be8c2567bbd48b.html#a4ea5dacb16804b43f4be8c2567bbd48b">More...</a><br /></td></tr>
-<tr class="separator:a4ea5dacb16804b43f4be8c2567bbd48b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2fb38f2d3ec9640f61c730456538914"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914.html#ab2fb38f2d3ec9640f61c730456538914">init</a> ()=0</td></tr>
-<tr class="memdesc:ab2fb38f2d3ec9640f61c730456538914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the corresponding glCreate* function and assigns an ID.  <a href="../../d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914.html#ab2fb38f2d3ec9640f61c730456538914">More...</a><br /></td></tr>
-<tr class="separator:ab2fb38f2d3ec9640f61c730456538914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58c034fb6bdf87e3f0d312bd3a563e80"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80.html#a58c034fb6bdf87e3f0d312bd3a563e80">destroy</a> ()=0</td></tr>
-<tr class="memdesc:a58c034fb6bdf87e3f0d312bd3a563e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the corresponding glDestroy* function and deletes the ID.  <a href="../../d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80.html#a58c034fb6bdf87e3f0d312bd3a563e80">More...</a><br /></td></tr>
-<tr class="separator:a58c034fb6bdf87e3f0d312bd3a563e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2df5914839494c38664a4bd27dffd458"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a2df5914839494c38664a4bd27dffd458.html#a2df5914839494c38664a4bd27dffd458">bind</a> () const </td></tr>
-<tr class="memdesc:a2df5914839494c38664a4bd27dffd458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds this <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> to be used in an OpenGL function.  <a href="../../d0/d33/a00027_a2df5914839494c38664a4bd27dffd458.html#a2df5914839494c38664a4bd27dffd458">More...</a><br /></td></tr>
-<tr class="separator:a2df5914839494c38664a4bd27dffd458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00c18026339561f7c4e705c417c5e596"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a00c18026339561f7c4e705c417c5e596.html#a00c18026339561f7c4e705c417c5e596">unbind</a> () const </td></tr>
-<tr class="memdesc:a00c18026339561f7c4e705c417c5e596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds this <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> which is equivalent to binding ID 0.  <a href="../../d0/d33/a00027_a00c18026339561f7c4e705c417c5e596.html#a00c18026339561f7c4e705c417c5e596">More...</a><br /></td></tr>
-<tr class="separator:a00c18026339561f7c4e705c417c5e596"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad729e7f4f11794cdfedec12fa46e2e76"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76.html#ad729e7f4f11794cdfedec12fa46e2e76">isCreated</a> () const  =0</td></tr>
-<tr class="memdesc:ad729e7f4f11794cdfedec12fa46e2e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries OpenGL whether this <a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a>'s ID is a valid object.  <a href="../../d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76.html#ad729e7f4f11794cdfedec12fa46e2e76">More...</a><br /></td></tr>
-<tr class="separator:ad729e7f4f11794cdfedec12fa46e2e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcc524a5d4ce6e79e9c1893c0f935559"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9.html#a5cd2bc023fe3e9f155cb6baf56f045d9">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559.html#adcc524a5d4ce6e79e9c1893c0f935559">getID</a> () const </td></tr>
-<tr class="memdesc:adcc524a5d4ce6e79e9c1893c0f935559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current ID that this <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> represents.  <a href="../../d0/d33/a00027_adcc524a5d4ce6e79e9c1893c0f935559.html#adcc524a5d4ce6e79e9c1893c0f935559">More...</a><br /></td></tr>
-<tr class="separator:adcc524a5d4ce6e79e9c1893c0f935559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf01757b2750668b7fbb42b3677e8e70"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70.html#adf01757b2750668b7fbb42b3677e8e70">operator==</a> (const <a class="el" href="../../d0/d33/a00027.html">Object</a> &amp;other) const </td></tr>
-<tr class="memdesc:adf01757b2750668b7fbb42b3677e8e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares if 2 <code>Objects</code> are equal.  <a href="../../d0/d33/a00027_adf01757b2750668b7fbb42b3677e8e70.html#adf01757b2750668b7fbb42b3677e8e70">More...</a><br /></td></tr>
-<tr class="separator:adf01757b2750668b7fbb42b3677e8e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46f8d2830121ba4397bbf6ab8c1ab439"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439.html#a46f8d2830121ba4397bbf6ab8c1ab439">operator!=</a> (const <a class="el" href="../../d0/d33/a00027.html">Object</a> &amp;other) const </td></tr>
-<tr class="memdesc:a46f8d2830121ba4397bbf6ab8c1ab439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares if 2 <code>Objects</code> are not equal.  <a href="../../d0/d33/a00027_a46f8d2830121ba4397bbf6ab8c1ab439.html#a46f8d2830121ba4397bbf6ab8c1ab439">More...</a><br /></td></tr>
-<tr class="separator:a46f8d2830121ba4397bbf6ab8c1ab439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bf5ddbce67658a6dd14bedfa00bcac5"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a4bf5ddbce67658a6dd14bedfa00bcac5.html#a4bf5ddbce67658a6dd14bedfa00bcac5">~Object</a> ()=default</td></tr>
+<tr class="memdesc:a4bf5ddbce67658a6dd14bedfa00bcac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor for subclasses and safety.  <a href="../../d0/d33/a00027_a4bf5ddbce67658a6dd14bedfa00bcac5.html#a4bf5ddbce67658a6dd14bedfa00bcac5">More...</a><br /></td></tr>
+<tr class="separator:a4bf5ddbce67658a6dd14bedfa00bcac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d8fead77f923fc687b367c12f5e0f7c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a3d8fead77f923fc687b367c12f5e0f7c.html#a3d8fead77f923fc687b367c12f5e0f7c">init</a> ()=0</td></tr>
+<tr class="memdesc:a3d8fead77f923fc687b367c12f5e0f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the corresponding glCreate* function and assigns an ID.  <a href="../../d0/d33/a00027_a3d8fead77f923fc687b367c12f5e0f7c.html#a3d8fead77f923fc687b367c12f5e0f7c">More...</a><br /></td></tr>
+<tr class="separator:a3d8fead77f923fc687b367c12f5e0f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff0ae807b5e930697ea3766301588f6d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_aff0ae807b5e930697ea3766301588f6d.html#aff0ae807b5e930697ea3766301588f6d">destroy</a> ()=0</td></tr>
+<tr class="memdesc:aff0ae807b5e930697ea3766301588f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the corresponding glDestroy* function and deletes the ID.  <a href="../../d0/d33/a00027_aff0ae807b5e930697ea3766301588f6d.html#aff0ae807b5e930697ea3766301588f6d">More...</a><br /></td></tr>
+<tr class="separator:aff0ae807b5e930697ea3766301588f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f02451ab4df9d4d732d79ed2941dfb1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a3f02451ab4df9d4d732d79ed2941dfb1.html#a3f02451ab4df9d4d732d79ed2941dfb1">bind</a> () const </td></tr>
+<tr class="memdesc:a3f02451ab4df9d4d732d79ed2941dfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds this <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> to be used in an OpenGL function.  <a href="../../d0/d33/a00027_a3f02451ab4df9d4d732d79ed2941dfb1.html#a3f02451ab4df9d4d732d79ed2941dfb1">More...</a><br /></td></tr>
+<tr class="separator:a3f02451ab4df9d4d732d79ed2941dfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae357cedf8793a3ccd358c0174d645a63"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_ae357cedf8793a3ccd358c0174d645a63.html#ae357cedf8793a3ccd358c0174d645a63">unbind</a> () const </td></tr>
+<tr class="memdesc:ae357cedf8793a3ccd358c0174d645a63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds this <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> which is equivalent to binding ID 0.  <a href="../../d0/d33/a00027_ae357cedf8793a3ccd358c0174d645a63.html#ae357cedf8793a3ccd358c0174d645a63">More...</a><br /></td></tr>
+<tr class="separator:ae357cedf8793a3ccd358c0174d645a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac965ad8371e8691103fe2418152f9d67"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_ac965ad8371e8691103fe2418152f9d67.html#ac965ad8371e8691103fe2418152f9d67">isCreated</a> () const  =0</td></tr>
+<tr class="memdesc:ac965ad8371e8691103fe2418152f9d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries OpenGL whether this <a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a>'s ID is a valid object.  <a href="../../d0/d33/a00027_ac965ad8371e8691103fe2418152f9d67.html#ac965ad8371e8691103fe2418152f9d67">More...</a><br /></td></tr>
+<tr class="separator:ac965ad8371e8691103fe2418152f9d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a717ff2f0b9420b4ce0939ff51ed9d545"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/da4/a00078_a5cd2bc023fe3e9f155cb6baf56f045d9.html#a5cd2bc023fe3e9f155cb6baf56f045d9">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545.html#a717ff2f0b9420b4ce0939ff51ed9d545">getID</a> () const </td></tr>
+<tr class="memdesc:a717ff2f0b9420b4ce0939ff51ed9d545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current ID that this <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> represents.  <a href="../../d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545.html#a717ff2f0b9420b4ce0939ff51ed9d545">More...</a><br /></td></tr>
+<tr class="separator:a717ff2f0b9420b4ce0939ff51ed9d545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75cf124fcf3b2ce36c402d9ff8b9447d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a75cf124fcf3b2ce36c402d9ff8b9447d.html#a75cf124fcf3b2ce36c402d9ff8b9447d">operator==</a> (const <a class="el" href="../../d0/d33/a00027.html">Object</a> &amp;other) const </td></tr>
+<tr class="memdesc:a75cf124fcf3b2ce36c402d9ff8b9447d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares if 2 <code>Objects</code> are equal.  <a href="../../d0/d33/a00027_a75cf124fcf3b2ce36c402d9ff8b9447d.html#a75cf124fcf3b2ce36c402d9ff8b9447d">More...</a><br /></td></tr>
+<tr class="separator:a75cf124fcf3b2ce36c402d9ff8b9447d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ff3ea4d06441e968ab9f3933329a828"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a5ff3ea4d06441e968ab9f3933329a828.html#a5ff3ea4d06441e968ab9f3933329a828">operator!=</a> (const <a class="el" href="../../d0/d33/a00027.html">Object</a> &amp;other) const </td></tr>
+<tr class="memdesc:a5ff3ea4d06441e968ab9f3933329a828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares if 2 <code>Objects</code> are not equal.  <a href="../../d0/d33/a00027_a5ff3ea4d06441e968ab9f3933329a828.html#a5ff3ea4d06441e968ab9f3933329a828">More...</a><br /></td></tr>
+<tr class="separator:a5ff3ea4d06441e968ab9f3933329a828"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a45afac15d5bd595db56bad1a096befce"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a45afac15d5bd595db56bad1a096befce.html#a45afac15d5bd595db56bad1a096befce">bindIndex</a> (const <a class="el" href="../../d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9.html#a5cd2bc023fe3e9f155cb6baf56f045d9">Index</a> &amp;<a class="el" href="../../d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f.html#a5c44ad260b3bd8a5825c434037d5f89f">id</a>) const  =0</td></tr>
-<tr class="memdesc:a45afac15d5bd595db56bad1a096befce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intended to be overloaded to bind to a certain index.  <a href="../../d0/d33/a00027_a45afac15d5bd595db56bad1a096befce.html#a45afac15d5bd595db56bad1a096befce">More...</a><br /></td></tr>
-<tr class="separator:a45afac15d5bd595db56bad1a096befce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a969d8bf457ee31a5cbca56c64f054e15"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a969d8bf457ee31a5cbca56c64f054e15.html#a969d8bf457ee31a5cbca56c64f054e15">bindIndex</a> (const <a class="el" href="../../d9/da4/a00078_a5cd2bc023fe3e9f155cb6baf56f045d9.html#a5cd2bc023fe3e9f155cb6baf56f045d9">Index</a> &amp;<a class="el" href="../../d0/d33/a00027_aa6f2acefb1ac01ff347ff593738eab46.html#aa6f2acefb1ac01ff347ff593738eab46">id</a>) const  =0</td></tr>
+<tr class="memdesc:a969d8bf457ee31a5cbca56c64f054e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intended to be overloaded to bind to a certain index.  <a href="../../d0/d33/a00027_a969d8bf457ee31a5cbca56c64f054e15.html#a969d8bf457ee31a5cbca56c64f054e15">More...</a><br /></td></tr>
+<tr class="separator:a969d8bf457ee31a5cbca56c64f054e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a5c44ad260b3bd8a5825c434037d5f89f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9.html#a5cd2bc023fe3e9f155cb6baf56f045d9">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f.html#a5c44ad260b3bd8a5825c434037d5f89f">id</a> = 0</td></tr>
-<tr class="memdesc:a5c44ad260b3bd8a5825c434037d5f89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of this `Object.  <a href="../../d0/d33/a00027_a5c44ad260b3bd8a5825c434037d5f89f.html#a5c44ad260b3bd8a5825c434037d5f89f">More...</a><br /></td></tr>
-<tr class="separator:a5c44ad260b3bd8a5825c434037d5f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f2acefb1ac01ff347ff593738eab46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/da4/a00078_a5cd2bc023fe3e9f155cb6baf56f045d9.html#a5cd2bc023fe3e9f155cb6baf56f045d9">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d33/a00027_aa6f2acefb1ac01ff347ff593738eab46.html#aa6f2acefb1ac01ff347ff593738eab46">id</a> = 0</td></tr>
+<tr class="memdesc:aa6f2acefb1ac01ff347ff593738eab46"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of this `Object.  <a href="../../d0/d33/a00027_aa6f2acefb1ac01ff347ff593738eab46.html#aa6f2acefb1ac01ff347ff593738eab46">More...</a><br /></td></tr>
+<tr class="separator:aa6f2acefb1ac01ff347ff593738eab46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a OpenGL object in memory. </p>
@@ -174,20 +175,21 @@ Protected Attributes</h2></td></tr>
 <p>Due to how the OpenGL model works, using an OpenGL function outside of a thread with a context will throw an error. Thus, this class does not follow the RAII model. </p>
 <p>A subclass of <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> will observe the following rules:</p><ul>
 <li>The constructor and destructor will do nothing, as there is no guarantee that the <code><a class="el" href="../../d0/d33/a00027.html" title="Represents a OpenGL object in memory. ">Object</a></code> will be declared in a OpenGL thread.</li>
-<li>The <a class="el" href="../../d0/d33/a00027_ab2fb38f2d3ec9640f61c730456538914.html#ab2fb38f2d3ec9640f61c730456538914" title="Calls the corresponding glCreate* function and assigns an ID. ">init()</a> and <a class="el" href="../../d0/d33/a00027_a58c034fb6bdf87e3f0d312bd3a563e80.html#a58c034fb6bdf87e3f0d312bd3a563e80" title="Calls the corresponding glDestroy* function and deletes the ID. ">destroy()</a> functions must be called in an OpenGL thread and will call the coressponding glCreate* and glDestroy* functions</li>
-<li>The <a class="el" href="../../d0/d33/a00027_a2df5914839494c38664a4bd27dffd458.html#a2df5914839494c38664a4bd27dffd458" title="Binds this Object to be used in an OpenGL function. ">bind()</a> and <a class="el" href="../../d0/d33/a00027_a00c18026339561f7c4e705c417c5e596.html#a00c18026339561f7c4e705c417c5e596" title="Unbinds this Object which is equivalent to binding ID 0. ">unbind()</a> functions must be called in an OpenGL thread and will call the coressponding glBind* functions.</li>
+<li>The <a class="el" href="../../d0/d33/a00027_a3d8fead77f923fc687b367c12f5e0f7c.html#a3d8fead77f923fc687b367c12f5e0f7c" title="Calls the corresponding glCreate* function and assigns an ID. ">init()</a> and <a class="el" href="../../d0/d33/a00027_aff0ae807b5e930697ea3766301588f6d.html#aff0ae807b5e930697ea3766301588f6d" title="Calls the corresponding glDestroy* function and deletes the ID. ">destroy()</a> functions must be called in an OpenGL thread and will call the coressponding glCreate* and glDestroy* functions</li>
+<li>The <a class="el" href="../../d0/d33/a00027_a3f02451ab4df9d4d732d79ed2941dfb1.html#a3f02451ab4df9d4d732d79ed2941dfb1" title="Binds this Object to be used in an OpenGL function. ">bind()</a> and <a class="el" href="../../d0/d33/a00027_ae357cedf8793a3ccd358c0174d645a63.html#ae357cedf8793a3ccd358c0174d645a63" title="Unbinds this Object which is equivalent to binding ID 0. ">unbind()</a> functions must be called in an OpenGL thread and will call the coressponding glBind* functions.</li>
 <li>It will have an ID generated by glCreate* and be deleted in glDelete*.</li>
-<li><a class="el" href="../../d0/d33/a00027_a2df5914839494c38664a4bd27dffd458.html#a2df5914839494c38664a4bd27dffd458" title="Binds this Object to be used in an OpenGL function. ">bind()</a> will use the ID created by glCreate* and no other</li>
-<li><a class="el" href="../../d0/d33/a00027_ad729e7f4f11794cdfedec12fa46e2e76.html#ad729e7f4f11794cdfedec12fa46e2e76" title="Queries OpenGL whether this Object&#39;s ID is a valid object. ">isCreated()</a> has to be called in an OpenGL thread</li>
-<li>It will override == and != <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../de/d5e/a00007.html" title="Represents a buffer of memory in the GPU. ">Buffer</a> </dd>
+<li><a class="el" href="../../d0/d33/a00027_a3f02451ab4df9d4d732d79ed2941dfb1.html#a3f02451ab4df9d4d732d79ed2941dfb1" title="Binds this Object to be used in an OpenGL function. ">bind()</a> will use the ID created by glCreate* and no other</li>
+<li><a class="el" href="../../d0/d33/a00027_ac965ad8371e8691103fe2418152f9d67.html#ac965ad8371e8691103fe2418152f9d67" title="Queries OpenGL whether this Object&#39;s ID is a valid object. ">isCreated()</a> has to be called in an OpenGL thread</li>
+<li>It will override == and !=</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../de/d5e/a00007.html" title="Represents a buffer of memory in the GPU. ">Buffer</a> </dd>
 <dd>
 <a href="https://www.opengl.org/wiki/OpenGL_Object">https://www.opengl.org/wiki/OpenGL_Object</a> </dd></dl>
-</li>
-</ul>
+<dl class="todo"><dt><b><a class="el" href="../../d8/d84/a00001.html#_todo000002">Todo:</a></b></dt><dd>create an RAII wrapper which calls <a class="el" href="../../d0/d33/a00027_a3d8fead77f923fc687b367c12f5e0f7c.html#a3d8fead77f923fc687b367c12f5e0f7c" title="Calls the corresponding glCreate* function and assigns an ID. ">init()</a> and <a class="el" href="../../d0/d33/a00027_aff0ae807b5e930697ea3766301588f6d.html#aff0ae807b5e930697ea3766301588f6d" title="Calls the corresponding glDestroy* function and deletes the ID. ">destroy()</a> automatically </dd></dl>
 
-<p>Definition at line <a class="el" href="../../d6/d97/a00045_source.html#l00039">39</a> of file <a class="el" href="../../d6/d97/a00045_source.html">Buffer.h</a>.</p>
+<p>Definition at line <a class="el" href="../../d5/de0/a00050_source.html#l00085">85</a> of file <a class="el" href="../../d5/de0/a00050_source.html">OGL.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/MACE/Graphics/<a class="el" href="../../d6/d97/a00045_source.html">Buffer.h</a></li>
+<li>include/MACE/Graphics/<a class="el" href="../../d5/de0/a00050_source.html">OGL.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,505 +1,1480 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d4/d31/a00069" kind="file" language="C++">
-    <compoundname>Matrix.h</compoundname>
-    <includes refid="d9/da5/a00075" local="no">MACE/Utility/Vector.h</includes>
-    <includedby refid="d1/d6e/a00073" local="no">include/MACE/Utility/Transform.h</includedby>
-    <includedby refid="d1/d84/a00052" local="no">include/MACE/Graphics/Shaders.h</includedby>
-    <includedby refid="d0/d89/a00071" local="no">include/MACE/Utility/MatrixAliases.h</includedby>
-    <incdepgraph>
-      <node id="289">
-        <label>cstdint</label>
-      </node>
-      <node id="290">
-        <label>stdexcept</label>
-      </node>
-      <node id="288">
-        <label>MACE/System/Constants.h</label>
-        <link refid="d1/d6f/a00063_source"/>
-        <childnode refid="289" relation="include">
-        </childnode>
-        <childnode refid="290" relation="include">
-        </childnode>
-      </node>
-      <node id="286">
-        <label>include/MACE/Utility/Matrix.h</label>
-        <link refid="Matrix.h"/>
-        <childnode refid="287" relation="include">
-        </childnode>
-      </node>
-      <node id="293">
-        <label>ostream</label>
-      </node>
-      <node id="287">
-        <label>MACE/Utility/Vector.h</label>
-        <link refid="d9/da5/a00075_source"/>
-        <childnode refid="288" relation="include">
-        </childnode>
-        <childnode refid="291" relation="include">
-        </childnode>
-        <childnode refid="292" relation="include">
-        </childnode>
-        <childnode refid="293" relation="include">
-        </childnode>
-        <childnode refid="294" relation="include">
-        </childnode>
-      </node>
-      <node id="292">
-        <label>array</label>
-      </node>
-      <node id="291">
-        <label>MACE/Utility/Math.h</label>
-        <link refid="da/d24/a00068_source"/>
-        <childnode refid="287" relation="include">
-        </childnode>
-      </node>
-      <node id="294">
-        <label>initializer_list</label>
-      </node>
-    </incdepgraph>
-    <invincdepgraph>
-      <node id="303">
-        <label>include/MACE/Utility/Utility.h</label>
-        <link refid="db/db6/a00074_source"/>
-        <childnode refid="304" relation="include">
-        </childnode>
-      </node>
-      <node id="302">
-        <label>include/MACE/Graphics/Window.h</label>
-        <link refid="d4/de8/a00061_source"/>
-        <childnode refid="301" relation="include">
-        </childnode>
-        <childnode refid="299" relation="include">
-        </childnode>
-      </node>
-      <node id="304">
-        <label>include/MACE/MACE.h</label>
-        <link refid="df/d03/a00062_source"/>
-      </node>
-      <node id="301">
-        <label>include/MACE/Graphics/Renderer.h</label>
-        <link refid="d2/d79/a00051_source"/>
-        <childnode refid="300" relation="include">
-        </childnode>
-        <childnode refid="299" relation="include">
-        </childnode>
-      </node>
-      <node id="295">
-        <label>include/MACE/Utility/Matrix.h</label>
-        <link refid="Matrix.h"/>
-        <childnode refid="296" relation="include">
-        </childnode>
-        <childnode refid="305" relation="include">
-        </childnode>
-        <childnode refid="306" relation="include">
-        </childnode>
-      </node>
-      <node id="299">
-        <label>include/MACE/Graphics/Graphics.h</label>
-        <link refid="d2/dee/a00049_source"/>
-      </node>
-      <node id="306">
-        <label>include/MACE/Utility/MatrixAliases.h</label>
-        <link refid="d0/d89/a00071_source"/>
-        <childnode refid="303" relation="include">
-        </childnode>
-      </node>
-      <node id="305">
-        <label>include/MACE/Graphics/Shaders.h</label>
-        <link refid="d1/d84/a00052_source"/>
-        <childnode refid="301" relation="include">
-        </childnode>
-        <childnode refid="299" relation="include">
-        </childnode>
-      </node>
-      <node id="298">
-        <label>include/MACE/Graphics/Components.h</label>
-        <link refid="d3/dea/a00046_source"/>
-        <childnode refid="299" relation="include">
-        </childnode>
-      </node>
-      <node id="300">
-        <label>include/MACE/Graphics/Entity2D.h</label>
-        <link refid="d4/dca/a00048_source"/>
-        <childnode refid="299" relation="include">
-        </childnode>
-      </node>
-      <node id="296">
-        <label>include/MACE/Utility/Transform.h</label>
-        <link refid="d1/d6e/a00073_source"/>
-        <childnode refid="297" relation="include">
-        </childnode>
-        <childnode refid="303" relation="include">
-        </childnode>
-      </node>
-      <node id="297">
-        <label>include/MACE/Graphics/Entity.h</label>
-        <link refid="d6/d2d/a00047_source"/>
-        <childnode refid="298" relation="include">
-        </childnode>
-        <childnode refid="300" relation="include">
-        </childnode>
-        <childnode refid="301" relation="include">
-        </childnode>
-        <childnode refid="299" relation="include">
-        </childnode>
-        <childnode refid="302" relation="include">
-        </childnode>
-      </node>
-    </invincdepgraph>
-    <innerclass refid="d3/dfe/a00025" prot="public">mc::Matrix</innerclass>
-    <innerclass refid="d3/dfe/a00025" prot="public">mc::Matrix</innerclass>
-    <innernamespace refid="d1/d51/a00079">mc</innernamespace>
-    <innernamespace refid="d2/db1/a00070">mc::math</innernamespace>
-      <sectiondef kind="define">
-      <memberdef kind="define" id="d4/d31/a00069_abf78d14112436db23f558b5996256abd_1abf78d14112436db23f558b5996256abd" prot="public" static="no">
-        <name>MACE_UTILITY_MATRIX_H</name>
+  <compounddef id="d4/d31/a00069" kind="namespace" language="C++">
+    <compoundname>mc::math</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="d4/d31/a00069_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::pi</definition>
+        <argsstring>()</argsstring>
+        <name>pi</name>
         <briefdescription>
-        </briefdescription>
+<para>Calculates the mathmatical constant <computeroutput>pi</computeroutput>. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><computeroutput>Pi</computeroutput> is the ratio of a circle&apos;s circumfernce to it&apos;s diameter, always coming out to equal roughly 3.14, no matter the size of the circle. </para><para>It is located here as a <computeroutput>long double</computeroutput> to have the most possible digits. <simplesect kind="return"><para>Pi </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="12" column="9" bodyfile="include/MACE/Utility/Matrix.h" bodystart="12" bodyend="-1"/>
+        <location file="include/MACE/Utility/Math.h" line="27" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_aa14a0de605cdb48db7525a542bcbac64_1aa14a0de605cdb48db7525a542bcbac64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::tau</definition>
+        <argsstring>()</argsstring>
+        <name>tau</name>
+        <briefdescription>
+<para>Calculates the mathmatical constant <computeroutput>tau</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>Tau</computeroutput> is known as <computeroutput>2pi</computeroutput> and represents the full turn of a circle. It also represents 6.28 radians, a full circle, equal to 360 degrees. <simplesect kind="return"><para>Tau </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" kindref="member">toRadians()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="34" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a4ed92aa582855134db34180b30b4626b_1a4ed92aa582855134db34180b30b4626b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::gamma</definition>
+        <argsstring>()</argsstring>
+        <name>gamma</name>
+        <briefdescription>
+<para>Calculates the mathmatical constant represented by <computeroutput>gamma</computeroutput>, or the `Euler–Mascheroni constant. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>Gamma is used in number theory and analysis. @return The</computeroutput>Euler–Mascheroni constant` </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="40" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a5befd79b41cbf0e5e5b08f452e56aac2_1a5befd79b41cbf0e5e5b08f452e56aac2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::e</definition>
+        <argsstring>()</argsstring>
+        <name>e</name>
+        <briefdescription>
+<para>Calculates the mathmatical constant known as <computeroutput>Eulers Number,</computeroutput> or <computeroutput>e</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>E</computeroutput> is used as the base for the natural logarithim. <simplesect kind="return"><para><computeroutput>Eulers Number</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>logn(double); </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="47" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a3012b8cabf72e8a9c7587d6e7cbf2933_1a3012b8cabf72e8a9c7587d6e7cbf2933" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::root2</definition>
+        <argsstring>()</argsstring>
+        <name>root2</name>
+        <briefdescription>
+<para>Calculates the square root of 2, also known as the <computeroutput>principal square root of 2</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>This number when multiplied by itself returns 2. It is used in trigonometry. <simplesect kind="return"><para>Square root of 2 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="53" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a403cc4a12c80482af028d90cdec8284c_1a403cc4a12c80482af028d90cdec8284c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::root3</definition>
+        <argsstring>()</argsstring>
+        <name>root3</name>
+        <briefdescription>
+<para>Calculates the square root of 3, also known as the <computeroutput>principal square root of 3</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>This number when multiplied by itself returns 3. It is used in geometery and trigonometry. <simplesect kind="return"><para>Square root of 3 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="59" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a8b04d5f2c0675d6678d9e5e2ff84ad42_1a8b04d5f2c0675d6678d9e5e2ff84ad42" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::root5</definition>
+        <argsstring>()</argsstring>
+        <name>root5</name>
+        <briefdescription>
+<para>Calculates the square root of 5, also known as the <computeroutput>principal square root of 5</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>This number when multiplied by itself returns 5. It is used in geometery and trigonometry. <simplesect kind="return"><para>Square root of 5 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="65" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a94fbffd48dac845ff382ae7de18b0306_1a94fbffd48dac845ff382ae7de18b0306" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::phi</definition>
+        <argsstring>()</argsstring>
+        <name>phi</name>
+        <briefdescription>
+<para>Calculates the golden ratio, also represented by <computeroutput>phi</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="70" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a504106941c2d9d5309889b12a48722c0_1a504106941c2d9d5309889b12a48722c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::abs</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>abs</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Gets the absolute value of a number. </para>        </briefdescription>
+        <detaileddescription>
+<para>The absolute value is the unsigned version of a number. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number that is either negative or positive </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>|value|</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="77" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::math::ceil</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>ceil</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>&quot;Ceils&quot; a number, or rounds it up. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to ceil </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value,</computeroutput> but rounded up. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" kindref="member">floor(const double)</ref> </para></simplesect>
+<simplesect kind="see"><para>round(const double) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="86" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::math::floor</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>floor</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>&quot;Floors&quot; a number, or rounds it down. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to floor </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value,</computeroutput> but rounded down. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" kindref="member">ceil(const double)</ref> </para></simplesect>
+<simplesect kind="see"><para>round(const double) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="96" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a61ac68996d847d2c8b01865714480a59_1a61ac68996d847d2c8b01865714480a59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::math::isPrime</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>isPrime</name>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Verifies whether a number is prime. </para>        </briefdescription>
+        <detaileddescription>
+<para>A prime number is one that&apos;s only factors are one and itself. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to check if prime </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the number is prime, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="103" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::math::isEven</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>isEven</name>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Checks if a number is even. </para>        </briefdescription>
+        <detaileddescription>
+<para>An even number is one that is divisable by 2. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to check if even </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput>value</computeroutput> is divisable by 2, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" kindref="member">isOdd(const int)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="111" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::math::isOdd</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>isOdd</name>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Checks if a number is odd. </para>        </briefdescription>
+        <detaileddescription>
+<para>An odd number is one that is not divisable by 2. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to check if odd </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput>value</computeroutput> is not divisable by 2, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" kindref="member">isEven(const int)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="118" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a45b58ebbe8267f90c859e692e253af23_1a45b58ebbe8267f90c859e692e253af23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::pow</definition>
+        <argsstring>(const double value, const int power)</argsstring>
+        <name>pow</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>const int</type>
+          <declname>power</declname>
+        </param>
+        <briefdescription>
+<para>Calculates a number to an exponenet, or <computeroutput>value^power</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Base number </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>power</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The exponent </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value^power</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr(const double)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube(const double)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="128" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::sqr</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>sqr</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Squares a number. </para>        </briefdescription>
+        <detaileddescription>
+<para>Squaring a number equals a number times iteslf. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to square </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value^2</computeroutput> or <computeroutput>value*value</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>pow(const double, const double) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube(const double)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="137" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::cube</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>cube</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Cubes a number. </para>        </briefdescription>
+        <detaileddescription>
+<para>Cubing a number is equal to itself to the power of 3. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to cube </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value^3</computeroutput> or <computeroutput>value*value*value</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>pow(const double, const double) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr(const double)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="146" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::toRadians</definition>
+        <argsstring>(const double degrees)</argsstring>
+        <name>toRadians</name>
+        <param>
+          <type>const double</type>
+          <declname>degrees</declname>
+        </param>
+        <briefdescription>
+<para>Conversion of degreees to radians. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>degrees</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An angle in degrees </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The same number represented as radians </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="154" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_aac7930263e025b720ac6033de95f7711_1aac7930263e025b720ac6033de95f7711" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::toDegrees</definition>
+        <argsstring>(const double radians)</argsstring>
+        <name>toDegrees</name>
+        <param>
+          <type>const double</type>
+          <declname>radians</declname>
+        </param>
+        <briefdescription>
+<para>Conversion of radians to degrees. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>radians</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An angle in radians </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The same number represented as degrees </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="162" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt;</type>
+        <definition>Matrix&lt; T, N, N &gt; mc::math::inverse</definition>
+        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;matrix)</argsstring>
+        <name>inverse</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
+          <defname>matrix</defname>
+        </param>
+        <briefdescription>
+<para>Inverses a <computeroutput>N</computeroutput> by <computeroutput>N</computeroutput> <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>An inversed <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> times a normal <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> equals the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para><para>Not to be confused with <computeroutput><ref refid="d4/d31/a00069_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" kindref="member">tr()</ref></computeroutput> </para><para>If <computeroutput>T</computeroutput> is not a floating point type, the output may not work, as it will round. </para><para>The output is calculated via the Caley-Hamilton theorum (<ulink url="https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem">https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem</ulink>) <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to invert </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The inverse of <computeroutput>matrix</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Order of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="d7/d46/a00002_1_bug000004"><xreftitle>Bug</xreftitle><xrefdescription><para>Matrices bigger then 2x2 dont work </para></xrefdescription></xrefsect></para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="31" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="612" bodyend="617"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>W</declname>
+            <defname>W</defname>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>H</declname>
+            <defname>H</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, H, W &gt;</type>
+        <definition>Matrix&lt;T, H, W&gt; mc::math::transpose</definition>
+        <argsstring>(const Matrix&lt; T, W, H &gt; &amp;matrix)</argsstring>
+        <name>transpose</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, W, H &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+<para>Transposes a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>Transposing a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> creates a reflection of it, where every row is a column. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to transpose </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A reflected <computeroutput>matrix</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>W</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Width of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>H</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Height of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="492" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="492" bodyend="500"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::det</definition>
+        <argsstring>(const Matrix&lt; T, 2, 2 &gt; &amp;matrix)</argsstring>
+        <name>det</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, 2, 2 &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the determinate of a 2x2 <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A square 2x2 <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to find the determinate of </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The determinate of <computeroutput>matrix</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="509" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="509" bodyend="511"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_ad0b604c0b56449aa4e2cb9c231e7d7ec_1ad0b604c0b56449aa4e2cb9c231e7d7ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::det</definition>
+        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;matrix)</argsstring>
+        <name>det</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the determinate of a any sized <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A square <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to find the determinate of </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The determinate of <computeroutput>matrix</computeroutput> </para></simplesect>
+<xrefsect id="d7/d46/a00002_1_bug000003"><xreftitle>Bug</xreftitle><xrefdescription><para>Array subscript out of range with matrices bigger than 2x2 </para></xrefdescription></xrefsect><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="522" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="522" bodyend="552"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::tr</definition>
+        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;m)</argsstring>
+        <name>tr</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the trace of a <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The trace is the sum of all of the diagonal elements of a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para><para>The trace is related to the derivative of a <ref refid="d4/d31/a00069_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" kindref="member">determinate.</ref> </para><para>Not to be confused with <computeroutput><ref refid="d4/d31/a00069_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" kindref="member">transpose(const Matrix&amp;)</ref>)</computeroutput> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to calculate the trace of </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The sum of the diagonal elements of <computeroutput>m</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" kindref="member">inverse(const Matrix&lt;T,N,N&gt;&amp;)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="567" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="567" bodyend="574"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a80edefaa133d7673d8023b612a5925a2_1a80edefaa133d7673d8023b612a5925a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt;</type>
+        <definition>Matrix&lt;T, N, N&gt; mc::math::identity</definition>
+        <argsstring>()</argsstring>
+        <name>identity</name>
+        <briefdescription>
+<para>Creates an indentity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> of a certain size. </para>        </briefdescription>
+        <detaileddescription>
+<para>An identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> times another <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> equals the same <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> <simplesect kind="return"><para>An indentity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> whose diagonal elements are <computeroutput>1</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="583" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="583" bodyend="595"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float,4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const float x, const float y, const float z)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a rotation matrix, which when multiplied by a <computeroutput>Vector4f</computeroutput>, rotates it. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the X axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Y axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Z axis </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotation <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="28" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a51931dc3e83f5ecdc7262b3974ef6fc5_1a51931dc3e83f5ecdc7262b3974ef6fc5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const Vector&lt; float, 3 &gt; &amp;v)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; float, 3 &gt; &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Creates a rotation matrix, which when multiplied by a <computeroutput>Vector4f</computeroutput>, rotates it. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>v</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A quaternion representing a rotation </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="36" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a9d5c92e8301c849af62f6b721eee13e9_1a9d5c92e8301c849af62f6b721eee13e9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const Vector&lt; float, 3 &gt; &amp;v)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; float, 3 &gt; &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Rotates an existing <computeroutput>Matrix4f</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>v</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A quaternion representing a rotation </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>Matrix4f</computeroutput> base to rotate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="43" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a6acf4ae84e8f65be0237c23d4bb07b72_1a6acf4ae84e8f65be0237c23d4bb07b72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Rotates an existing <computeroutput>Matrix4f</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>Matrix4f</computeroutput> to rotate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the X axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Y axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Z axis </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="52" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_abd992f7c72bfd0f63282550deace7a6d_1abd992f7c72bfd0f63282550deace7a6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::scale</definition>
+        <argsstring>(const float x, const float y, const float z)</argsstring>
+        <name>scale</name>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is scaled based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="63" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_ad022fe23efde75d0dc744534635cbda0_1ad022fe23efde75d0dc744534635cbda0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::scale</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
+        <name>scale</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Scales an existing transformation matrix. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> to get scaled </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is scaled based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="72" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a65116d02abed05f10cd80a9d89496a18_1a65116d02abed05f10cd80a9d89496a18" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::translate</definition>
+        <argsstring>(const float x, const float y, const float z)</argsstring>
+        <name>translate</name>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is translated based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="83" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_aeb201f7e27dce203cb52d274ca27262b_1aeb201f7e27dce203cb52d274ca27262b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::translate</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
+        <name>translate</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Translates an existing transformation matrix. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> to get translated </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is translated based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="92" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::projection</definition>
+        <argsstring>(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio)</argsstring>
+        <name>projection</name>
+        <param>
+          <type>const float</type>
+          <declname>FOV</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>NEAR_PLANE</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>FAR_PLANE</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>aspectRatio</declname>
+        </param>
+        <briefdescription>
+<para>Generates a projection matrix based on values. </para>        </briefdescription>
+        <detaileddescription>
+<para>Each time the window changes size, you need to regenerate your projection matrix </para><para>Projection matrices are used in 3D graphics. Vectors multiplied by a projection matrix are transformed to &quot;look&quot; 3-dimensional. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>FOV</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The field of vision, in degrees </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>NEAR_PLANE</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>float</computeroutput> representing the near clipping plane. Z values lower than this are not visible to the viewer </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>FAR_PLANE</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>float</computeroutput> representing the far clipping plane. Z values higher than this are not visible to the viewer </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>aspectRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The aspect ratio of the screen. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A projection matrix made from the specified settings </para></simplesect>
+<simplesect kind="see"><para>ortho(const float, const float, const float, const float, const float) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="105" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a6d5b57499cae06fda4e86d95258b1c2c_1a6d5b57499cae06fda4e86d95258b1c2c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::ortho</definition>
+        <argsstring>(const float left, const float right, const float bottom, const float top, const float near, const float far)</argsstring>
+        <name>ortho</name>
+        <param>
+          <type>const float</type>
+          <declname>left</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>right</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>bottom</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>top</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>near</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>far</declname>
+        </param>
+        <briefdescription>
+<para>Generates an orthographic projection matrix. </para>        </briefdescription>
+        <detaileddescription>
+<para>As opposed to a standard projection matrix, vectors in an orthographic projection don&apos;t become smaller the farther away they are. When combined with a rotational matrix, it can create an isometric view, which is used extensively in games like Simcity. Isometric views are also used heavily in 3D modeling software to represent the dimensions of an object.In a 2D environment, an orthographic projection matrix can be used to scale the screen. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>left</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The left plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The right plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bottom</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The bottom plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>top</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The top plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>near</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The near plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>far</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The far plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>An ortographic projection matrix generated from the values. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" kindref="member">projection(const float, const float, const float, const float)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="117" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a2afa253e79730670dfb6298d282236b5_1a2afa253e79730670dfb6298d282236b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, 3 &gt;</type>
+        <definition>Vector&lt;T, 3&gt; mc::math::cross</definition>
+        <argsstring>(const Vector&lt; T, 3 &gt; &amp;a, const Vector&lt; T, 3 &gt; &amp;b)</argsstring>
+        <name>cross</name>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the cross product of 2 <computeroutput>Vectors</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> must be 3-dimensional. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Second <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector calculated from the cross product of <computeroutput>a</computeroutput> and <computeroutput>b</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="552" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="552" bodyend="555"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::dot</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;a, const Vector&lt; T, N &gt; &amp;b)</argsstring>
+        <name>dot</name>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the dot product of 2 <computeroutput>Vectors</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to use </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Second <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to use </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A scalar calculated from the dot product of <computeroutput>a</computeroutput> and <computeroutput>b</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="568" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="568" bodyend="570"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::magnitude</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;a)</argsstring>
+        <name>magnitude</name>
+        <param>
+          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the magnitude of a <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput>, or how long it is. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to calculate from </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The magnitude of <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref> a</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="582" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="582" bodyend="589"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d31/a00069_ad11a3dbb6a8527a40a6fdd83fc654490_1ad11a3dbb6a8527a40a6fdd83fc654490" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt;</type>
+        <definition>Vector&lt;T, N&gt; mc::math::normalize</definition>
+        <argsstring>(Vector&lt; T, N &gt; &amp;vector)</argsstring>
+        <name>normalize</name>
+        <param>
+          <type><ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>vector</declname>
+        </param>
+        <briefdescription>
+<para>Normalize a <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>A normalized <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> has a length of 1, and is also known as a unit vector. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>vector</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to normalize </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A unit <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> with a norm of ` </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="602" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="602" bodyend="604"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>Namespace with various mathmatical functions. </para>    </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"></highlight></codeline>
-<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"></highlight></codeline>
-<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_MATRIX_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_MATRIX_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Vector.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d1/d51/a00079" kindref="compound">mc</ref><sp/>{</highlight></codeline>
-<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal"><sp/>&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>N&gt;</highlight></codeline>
-<codeline lineno="24" refid="d1/d51/a00079_a864ada9f6799e62e26d4b02bbd1ac4c2_1a864ada9f6799e62e26d4b02bbd1ac4c2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="dd/d32/a00041" kindref="compound">MatrixRow</ref><sp/>=<sp/><ref refid="dd/d32/a00041" kindref="compound">mc::Vector&lt;T, N&gt;</ref>;</highlight><highlight class="comment">//this<sp/>is<sp/>for<sp/>clarity</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="25"><highlight class="normal"></highlight></codeline>
-<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>W,<sp/>Size<sp/>H&gt;</highlight></codeline>
-<codeline lineno="27" refid="d3/dfe/a00025" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>;</highlight></codeline>
-<codeline lineno="28"><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">math<sp/>{</highlight></codeline>
-<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>N&gt;</highlight></codeline>
-<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref><sp/><ref refid="d2/db1/a00070_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" kindref="member">inverse</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref>&amp;);</highlight></codeline>
-<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//math</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>W,<sp/>Size<sp/>H&gt;</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector</ref>&lt;MatrixRow&lt;T,<sp/>H&gt;,<sp/>W&gt;<sp/>{</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;MatrixRow&lt;T, H&gt;</ref>,<sp/>W&gt;::content;</highlight><highlight class="comment">//some<sp/>compilers<sp/>need<sp/>this<sp/>line<sp/>even<sp/>though<sp/>content<sp/>is<sp/>protected</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight></codeline>
-<codeline lineno="73" refid="d3/dfe/a00025_a1c0107dd6bf262a240653fcc2650fb2b_1a1c0107dd6bf262a240653fcc2650fb2b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025_a1c0107dd6bf262a240653fcc2650fb2b_1a1c0107dd6bf262a240653fcc2650fb2b" kindref="member">Matrix</ref>()<sp/>:<sp/><ref refid="dd/d32/a00041" kindref="compound">Vector</ref>&lt;<ref refid="dd/d32/a00041" kindref="compound">MatrixRow</ref>&lt;T,<sp/>H&gt;,<sp/>W&gt;()</highlight><highlight class="comment">//extending<sp/>defautl<sp/>construtor<sp/>so<sp/>it<sp/>initializes<sp/>the<sp/>array</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>!=<sp/>0,<sp/></highlight><highlight class="stringliteral">&quot;A<sp/>Matrix&apos;s<sp/>width<sp/>must<sp/>be<sp/>greater<sp/>than<sp/>0!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(H<sp/>!=<sp/>0,<sp/></highlight><highlight class="stringliteral">&quot;A<sp/>Matrix&apos;s<sp/>height<sp/>must<sp/>be<sp/>greater<sp/>than<sp/>0!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>content.size();<sp/>i++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>content[i]<sp/>=<sp/><ref refid="dd/d32/a00041" kindref="compound">MatrixRow&lt;T, H&gt;</ref>();</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"></highlight></codeline>
-<codeline lineno="86" refid="d3/dfe/a00025_a4bceda87f2c87294d4a631b2229dff8f_1a4bceda87f2c87294d4a631b2229dff8f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025_a4bceda87f2c87294d4a631b2229dff8f_1a4bceda87f2c87294d4a631b2229dff8f" kindref="member">Matrix</ref>(T<sp/>arr[W][H])<sp/>:<sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>content[x][y]<sp/>=<sp/>arr[x][y];</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"></highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight></codeline>
-<codeline lineno="95" refid="d3/dfe/a00025_a59561b3a04ab8113b2dc8811cf498a58_1a59561b3a04ab8113b2dc8811cf498a58" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025_a59561b3a04ab8113b2dc8811cf498a58_1a59561b3a04ab8113b2dc8811cf498a58" kindref="member">Matrix</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::initializer_list&lt;</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::initializer_list&lt;T&gt;&gt;<sp/>args)<sp/>:<sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>()</highlight><highlight class="comment">//this<sp/>is<sp/>for<sp/>aggregate<sp/>initializaition</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>args.size()<sp/>!=<sp/>W<sp/>)</highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(</highlight><highlight class="stringliteral">&quot;The<sp/>width<sp/>of<sp/>the<sp/>argument<sp/>must<sp/>be<sp/>equal<sp/>to<sp/>to<sp/>the<sp/>height<sp/>of<sp/>the<sp/>Matrix!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>counterX<sp/>=<sp/>0,<sp/>counterY<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/>std::initializer_list&lt;T&gt;<sp/>elemX<sp/>:<sp/>args<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>elemX.size()<sp/>!=<sp/>H<sp/>)</highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(</highlight><highlight class="stringliteral">&quot;The<sp/>height<sp/>of<sp/>the<sp/>argument<sp/>must<sp/>be<sp/>equal<sp/>to<sp/>to<sp/>the<sp/>height<sp/>of<sp/>the<sp/>Matrix!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counterY<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/>T<sp/>elemY<sp/>:<sp/>elemX<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>content[counterX][counterY]<sp/>=<sp/>elemY;</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counterY++;</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counterX++;</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"></highlight></codeline>
-<codeline lineno="115" refid="d3/dfe/a00025_a16a62a958729f121805a76d43554bc69_1a16a62a958729f121805a76d43554bc69" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025_a16a62a958729f121805a76d43554bc69_1a16a62a958729f121805a76d43554bc69" kindref="member">Matrix</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&amp;<sp/>copy)<sp/>:<sp/><ref refid="dd/d32/a00041" kindref="compound">Vector</ref>&lt;<ref refid="dd/d32/a00041" kindref="compound">MatrixRow</ref>&lt;T,<sp/>H&gt;,<sp/>W&gt;(copy.content)<sp/>{}</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"></highlight></codeline>
-<codeline lineno="123" refid="d3/dfe/a00025_a69643200eb846e53dcd8b1f5aa11ab9d_1a69643200eb846e53dcd8b1f5aa11ab9d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>constexpr<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/><ref refid="d3/dfe/a00025_a69643200eb846e53dcd8b1f5aa11ab9d_1a69643200eb846e53dcd8b1f5aa11ab9d" kindref="member">size</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>W*H;</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"></highlight></codeline>
-<codeline lineno="133" refid="d3/dfe/a00025_a62d693520c176b4aca04958a68e9a937_1a62d693520c176b4aca04958a68e9a937" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>constexpr<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/><ref refid="d3/dfe/a00025_a62d693520c176b4aca04958a68e9a937_1a62d693520c176b4aca04958a68e9a937" kindref="member">width</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>W;</highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="142" refid="d3/dfe/a00025_a63c8002ee17532ba731d384f5ab3c492_1a63c8002ee17532ba731d384f5ab3c492" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>constexpr<sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/><ref refid="d3/dfe/a00025_a63c8002ee17532ba731d384f5ab3c492_1a63c8002ee17532ba731d384f5ab3c492" kindref="member">height</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>H;</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"></highlight></codeline>
-<codeline lineno="156" refid="d3/dfe/a00025_ae066c33e758cbbd03509d27bfa7c13d7_1ae066c33e758cbbd03509d27bfa7c13d7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T&amp;<sp/></highlight><highlight class="keyword">get</highlight><highlight class="normal">(<ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x,<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y)<sp/>{</highlight></codeline>
-<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>x<sp/>&gt;=<sp/>W<sp/>)<sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(std::to_string(x)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>is<sp/>greater<sp/>than<sp/>this<sp/>Matrix&apos;s<sp/>width,<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>std::to_string(W)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>y<sp/>&gt;=<sp/>H<sp/>)<sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(std::to_string(y)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>is<sp/>greater<sp/>than<sp/>this<sp/>Matrix&apos;s<sp/>width,<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>std::to_string(H)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>content[x][y];</highlight></codeline>
-<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="161"><highlight class="normal"></highlight></codeline>
-<codeline lineno="172" refid="d3/dfe/a00025_ab6e29507a89ad102b4a65911132b6c0e_1ab6e29507a89ad102b4a65911132b6c0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>T&amp;<sp/></highlight><highlight class="keyword">get</highlight><highlight class="normal">(<ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x,<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>x<sp/>&gt;=<sp/>W<sp/>)<sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(std::to_string(x)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>is<sp/>greater<sp/>than<sp/>this<sp/>Matrix&apos;s<sp/>width,<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>std::to_string(W)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>y<sp/>&gt;=<sp/>H<sp/>)<sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(std::to_string(y)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>is<sp/>greater<sp/>than<sp/>this<sp/>Matrix&apos;s<sp/>width,<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>std::to_string(H)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>content[x][y];</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="177"><highlight class="normal"></highlight></codeline>
-<codeline lineno="188" refid="d3/dfe/a00025_aadb1be5388fafceb50d459e5f9242cab_1aadb1be5388fafceb50d459e5f9242cab" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">set</highlight><highlight class="normal">(<ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x,<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y,<sp/>T<sp/>value)<sp/>{</highlight></codeline>
-<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>x<sp/>&gt;=<sp/>W<sp/>)<sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(std::to_string(x)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>is<sp/>greater<sp/>than<sp/>this<sp/>Matrix&apos;s<sp/>width,<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>std::to_string(W)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>y<sp/>&gt;=<sp/>H<sp/>)<sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" kindref="member">IndexOutOfBoundsException</ref>(std::to_string(y)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;<sp/>is<sp/>greater<sp/>than<sp/>this<sp/>Matrix&apos;s<sp/>width,<sp/>&quot;</highlight><highlight class="normal"><sp/>+<sp/>std::to_string(H)<sp/>+<sp/></highlight><highlight class="stringliteral">&quot;!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>content[x][y]<sp/>=<sp/>value;</highlight></codeline>
-<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"></highlight></codeline>
-<codeline lineno="198" refid="d3/dfe/a00025_ada45de3d753dc0a3b221fb40f5e906f0_1ada45de3d753dc0a3b221fb40f5e906f0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>T*<sp/><ref refid="d3/dfe/a00025_ada45de3d753dc0a3b221fb40f5e906f0_1ada45de3d753dc0a3b221fb40f5e906f0" kindref="member">flatten</ref>(T<sp/>arr[W*H])</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[y<sp/>+<sp/>(x*H)]<sp/>=<sp/>(content[x][y]);</highlight></codeline>
-<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="206"><highlight class="normal"></highlight></codeline>
-<codeline lineno="213" refid="d3/dfe/a00025_a0b67307fb45cc46b029d73d8ff2e9a60_1a0b67307fb45cc46b029d73d8ff2e9a60" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>T*<sp/><ref refid="d3/dfe/a00025_a0b67307fb45cc46b029d73d8ff2e9a60_1a0b67307fb45cc46b029d73d8ff2e9a60" kindref="member">flattenTransposed</ref>(T<sp/>arr[W*H])</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>H;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>W;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[y<sp/>+<sp/>(x*H)]<sp/>=<sp/>(content[y][x]);</highlight></codeline>
-<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="221"><highlight class="normal"></highlight></codeline>
-<codeline lineno="235" refid="d3/dfe/a00025_a38adcd2607104d5323c064463d8299a7_1a38adcd2607104d5323c064463d8299a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/>T&amp;<sp/><ref refid="d3/dfe/a00025_a38adcd2607104d5323c064463d8299a7_1a38adcd2607104d5323c064463d8299a7" kindref="member">operator()</ref>(<ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x,<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y)<sp/>{</highlight></codeline>
-<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>content[x<sp/>-<sp/>1][y<sp/>-<sp/>1];</highlight></codeline>
-<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="238"><highlight class="normal"></highlight></codeline>
-<codeline lineno="247" refid="d3/dfe/a00025_a4b509b9169919a3a3444c983420fa1e1_1a4b509b9169919a3a3444c983420fa1e1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>T&amp;<sp/><ref refid="d3/dfe/a00025_a4b509b9169919a3a3444c983420fa1e1_1a4b509b9169919a3a3444c983420fa1e1" kindref="member">operator()</ref>(<ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x,<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>content[x<sp/>-<sp/>1][y<sp/>-<sp/>1];</highlight></codeline>
-<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="250"><highlight class="normal"></highlight></codeline>
-<codeline lineno="260" refid="d3/dfe/a00025_a9e7fd35339c2afb9a2adc90727d86d56_1a9e7fd35339c2afb9a2adc90727d86d56" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;T, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a9e7fd35339c2afb9a2adc90727d86d56_1a9e7fd35339c2afb9a2adc90727d86d56" kindref="member">operator+</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;T, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>&lt;=<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;When<sp/>doing<sp/>Matrix<sp/>by<sp/>Vector<sp/>math,<sp/>the<sp/>Matrix&apos;s<sp/>width<sp/>must<sp/>not<sp/>be<sp/>larger<sp/>than<sp/>the<sp/>height.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[H];</highlight></codeline>
-<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x]<sp/>=<sp/>T();</highlight><highlight class="comment">//we<sp/>must<sp/>initialize<sp/>the<sp/>value<sp/>first,<sp/>or<sp/>else<sp/>it<sp/>will<sp/>be<sp/>undefined</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[y]<sp/>+=<sp/></highlight><highlight class="keyword">static_cast&lt;</highlight><highlight class="normal">T</highlight><highlight class="keyword">&gt;</highlight><highlight class="normal">(content[x][y])<sp/>+<sp/>static_cast&lt;T&gt;(right[x]);</highlight></codeline>
-<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="271"><highlight class="normal"></highlight></codeline>
-<codeline lineno="280" refid="d3/dfe/a00025_a64e92871d5001d50398a9150d6813345_1a64e92871d5001d50398a9150d6813345" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;T, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a64e92871d5001d50398a9150d6813345_1a64e92871d5001d50398a9150d6813345" kindref="member">operator-</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;T, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>&lt;=<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;When<sp/>doing<sp/>Matrix<sp/>by<sp/>Vector<sp/>math,<sp/>the<sp/>Matrix&apos;s<sp/>width<sp/>must<sp/>not<sp/>be<sp/>larger<sp/>than<sp/>the<sp/>height.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[H];</highlight></codeline>
-<codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x]<sp/>=<sp/>T();</highlight><highlight class="comment">//we<sp/>must<sp/>initialize<sp/>the<sp/>value<sp/>first,<sp/>or<sp/>else<sp/>it<sp/>will<sp/>be<sp/>undefined</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[y]<sp/>+=<sp/></highlight><highlight class="keyword">static_cast&lt;</highlight><highlight class="normal">T</highlight><highlight class="keyword">&gt;</highlight><highlight class="normal">(content[x][y])<sp/>-<sp/>static_cast&lt;T&gt;(right[x]);</highlight></codeline>
-<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="291"><highlight class="normal"></highlight></codeline>
-<codeline lineno="301" refid="d3/dfe/a00025_a4a490e8b0e57efa77c3356e62ebd8143_1a4a490e8b0e57efa77c3356e62ebd8143" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;T, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a4a490e8b0e57efa77c3356e62ebd8143_1a4a490e8b0e57efa77c3356e62ebd8143" kindref="member">operator*</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dd/d32/a00041" kindref="compound">Vector&lt;T, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>&lt;=<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;When<sp/>doing<sp/>Matrix<sp/>by<sp/>Vector<sp/>math,<sp/>the<sp/>Matrix&apos;s<sp/>width<sp/>must<sp/>not<sp/>be<sp/>larger<sp/>than<sp/>the<sp/>height.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[H];</highlight></codeline>
-<codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x]<sp/>=<sp/>T();</highlight><highlight class="comment">//we<sp/>must<sp/>initialize<sp/>the<sp/>value<sp/>first,<sp/>or<sp/>else<sp/>it<sp/>will<sp/>be<sp/>undefined</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="307"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[y]<sp/>+=<sp/></highlight><highlight class="keyword">static_cast&lt;</highlight><highlight class="normal">T</highlight><highlight class="keyword">&gt;</highlight><highlight class="normal">(content[x][y])<sp/>*<sp/>static_cast&lt;T&gt;(right[x]);</highlight></codeline>
-<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="310"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="311"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="312"><highlight class="normal"></highlight></codeline>
-<codeline lineno="320" refid="d3/dfe/a00025_a3dfb12bc62658bbfd16e2f4a45a7252a_1a3dfb12bc62658bbfd16e2f4a45a7252a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a3dfb12bc62658bbfd16e2f4a45a7252a_1a3dfb12bc62658bbfd16e2f4a45a7252a" kindref="member">operator+</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="321"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>==<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>order<sp/>to<sp/>do<sp/>Matrix<sp/>math,<sp/>the<sp/>width<sp/>and<sp/>height<sp/>of<sp/>both<sp/>Matrices<sp/>have<sp/>to<sp/>be<sp/>be<sp/>equal.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[W][H];</highlight></codeline>
-<codeline lineno="323"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="324"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="325"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x][y]<sp/>=<sp/>content[x][y]<sp/>+<sp/>right[x][y];</highlight></codeline>
-<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="327"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="328"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="329"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="330"><highlight class="normal"></highlight></codeline>
-<codeline lineno="338" refid="d3/dfe/a00025_ac37b3c2166ec4c9c7febab5254163cdc_1ac37b3c2166ec4c9c7febab5254163cdc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_ac37b3c2166ec4c9c7febab5254163cdc_1ac37b3c2166ec4c9c7febab5254163cdc" kindref="member">operator-</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>==<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>order<sp/>to<sp/>do<sp/>Matrix<sp/>math,<sp/>the<sp/>width<sp/>and<sp/>height<sp/>of<sp/>both<sp/>Matrices<sp/>have<sp/>to<sp/>be<sp/>be<sp/>equal.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[W][H];</highlight></codeline>
-<codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x][y]<sp/>=<sp/>content[x][y]<sp/>-<sp/>right[x][y];</highlight></codeline>
-<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="348"><highlight class="normal"></highlight></codeline>
-<codeline lineno="357" refid="d3/dfe/a00025_a0fe2af05b2e86b25d0e7b5f62152c381_1a0fe2af05b2e86b25d0e7b5f62152c381" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a0fe2af05b2e86b25d0e7b5f62152c381_1a0fe2af05b2e86b25d0e7b5f62152c381" kindref="member">operator*</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>==<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>order<sp/>to<sp/>multiply<sp/>matrices,<sp/>the<sp/>width<sp/>must<sp/>equal<sp/>to<sp/>the<sp/>height.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="359"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[W][H];</highlight></codeline>
-<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="361"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="362"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x][y]<sp/>=<sp/>T();</highlight></codeline>
-<codeline lineno="363"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x1<sp/>=<sp/>0;<sp/>x1<sp/>&lt;<sp/>W;<sp/>x1++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="364"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x][y]<sp/>+=<sp/>content[x][x1]<sp/>*<sp/>right[x1][y];</highlight></codeline>
-<codeline lineno="365"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="366"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="368"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="369"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="370"><highlight class="normal"></highlight></codeline>
-<codeline lineno="379" refid="d3/dfe/a00025_a6d206a993884942362f9d9dded6a0cc5_1a6d206a993884942362f9d9dded6a0cc5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a6d206a993884942362f9d9dded6a0cc5_1a6d206a993884942362f9d9dded6a0cc5" kindref="member">operator*</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>T&amp;<sp/>scalar)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="380"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>arr[W][H];</highlight></codeline>
-<codeline lineno="381"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="382"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="383"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[x][y]<sp/>=<sp/>content[x][y]<sp/>*<sp/>scalar;</highlight></codeline>
-<codeline lineno="384"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="385"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="386"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
-<codeline lineno="387"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="388"><highlight class="normal"></highlight></codeline>
-<codeline lineno="397" refid="d3/dfe/a00025_a87fe1c6c8e7a36b12680322055ec5c7d_1a87fe1c6c8e7a36b12680322055ec5c7d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref><sp/><ref refid="d3/dfe/a00025_a87fe1c6c8e7a36b12680322055ec5c7d_1a87fe1c6c8e7a36b12680322055ec5c7d" kindref="member">operator/</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="398"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(W<sp/>==<sp/>H,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>order<sp/>to<sp/>divide<sp/>matrices,<sp/>the<sp/>width<sp/>must<sp/>equal<sp/>to<sp/>the<sp/>height.&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="399"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">*<ref refid="d2/db1/a00070_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" kindref="member">math::inverse</ref>(right);</highlight></codeline>
-<codeline lineno="400"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="401"><highlight class="normal"></highlight></codeline>
-<codeline lineno="409" refid="d3/dfe/a00025_a48516701df81c8aaa305e4833b1f4f41_1a48516701df81c8aaa305e4833b1f4f41" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025_a48516701df81c8aaa305e4833b1f4f41_1a48516701df81c8aaa305e4833b1f4f41" kindref="member">operator+=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)<sp/>{</highlight></codeline>
-<codeline lineno="410"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setContents((*</highlight><highlight class="keyword">this</highlight><highlight class="normal"><sp/>+<sp/>right).getContents());</highlight></codeline>
-<codeline lineno="411"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="412"><highlight class="normal"></highlight></codeline>
-<codeline lineno="420" refid="d3/dfe/a00025_a678986df493820d6b2c987a0cdd72a5e_1a678986df493820d6b2c987a0cdd72a5e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025_a678986df493820d6b2c987a0cdd72a5e_1a678986df493820d6b2c987a0cdd72a5e" kindref="member">operator-=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)<sp/>{</highlight></codeline>
-<codeline lineno="421"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setContents((*</highlight><highlight class="keyword">this</highlight><highlight class="normal"><sp/>-<sp/>right).getContents());</highlight></codeline>
-<codeline lineno="422"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="423"><highlight class="normal"></highlight></codeline>
-<codeline lineno="431" refid="d3/dfe/a00025_ac1fddbc0d4a240507a0771bd3efca033_1ac1fddbc0d4a240507a0771bd3efca033" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025_ac1fddbc0d4a240507a0771bd3efca033_1ac1fddbc0d4a240507a0771bd3efca033" kindref="member">operator*=</ref>(<ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)<sp/>{</highlight></codeline>
-<codeline lineno="432"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setContents((*</highlight><highlight class="keyword">this</highlight><highlight class="normal">*right).getContents());</highlight></codeline>
-<codeline lineno="433"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="434"><highlight class="normal"></highlight></codeline>
-<codeline lineno="442" refid="d3/dfe/a00025_a60fe89aa719d9b5ca49bf32d5d1477ee_1a60fe89aa719d9b5ca49bf32d5d1477ee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025_a60fe89aa719d9b5ca49bf32d5d1477ee_1a60fe89aa719d9b5ca49bf32d5d1477ee" kindref="member">operator*=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>T&amp;<sp/>scalar)<sp/>{</highlight></codeline>
-<codeline lineno="443"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setContents((*</highlight><highlight class="keyword">this</highlight><highlight class="normal">*scalar).getContents());</highlight></codeline>
-<codeline lineno="444"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="445"><highlight class="normal"></highlight></codeline>
-<codeline lineno="453" refid="d3/dfe/a00025_aff842b10e29717c04468212b740b8ec7_1aff842b10e29717c04468212b740b8ec7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025_aff842b10e29717c04468212b740b8ec7_1aff842b10e29717c04468212b740b8ec7" kindref="member">operator/=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>right)<sp/>{</highlight></codeline>
-<codeline lineno="454"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setContents((*</highlight><highlight class="keyword">this</highlight><highlight class="normal"><sp/>/<sp/>right).getContents());</highlight></codeline>
-<codeline lineno="455"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="456"><highlight class="normal"></highlight></codeline>
-<codeline lineno="466" refid="d3/dfe/a00025_abeba5847e15460ac6b995627fad01293_1abeba5847e15460ac6b995627fad01293" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">friend</highlight><highlight class="normal"><sp/>std::ostream<sp/>&amp;<ref refid="d3/dfe/a00025_abeba5847e15460ac6b995627fad01293_1abeba5847e15460ac6b995627fad01293" kindref="member">operator&lt;&lt;</ref>(std::ostream<sp/>&amp;output,</highlight></codeline>
-<codeline lineno="467"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref><sp/>&amp;m)<sp/>{</highlight></codeline>
-<codeline lineno="468"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="469"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>x<sp/>==<sp/>0<sp/>)output<sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;[&apos;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;<sp/>&apos;</highlight><highlight class="normal">;</highlight><highlight class="comment">//why<sp/>this<sp/>and<sp/>not<sp/>&quot;[<sp/>&quot;?<sp/>that<sp/>requires<sp/>#include<sp/>&lt;string&gt;<sp/>and<sp/>thats<sp/>more<sp/>compilition<sp/>time.<sp/>this<sp/>way<sp/>doesnt<sp/>have<sp/>any<sp/>difference<sp/>in<sp/>output<sp/>and<sp/>doesnt<sp/>need<sp/>to<sp/>incldue<sp/>that</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="470"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>output<sp/>&lt;&lt;<sp/>std::endl<sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;<sp/>&apos;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;<sp/>&apos;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="471"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="472"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>output<sp/>&lt;&lt;<sp/>m[x][y];</highlight></codeline>
-<codeline lineno="473"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>y<sp/>&lt;<sp/>H<sp/>-<sp/>1<sp/>)output<sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;,&apos;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;<sp/>&apos;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="474"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="475"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="476"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>output<sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;<sp/>&apos;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="charliteral">&apos;]&apos;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="477"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>output;</highlight></codeline>
-<codeline lineno="478"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="479"><highlight class="normal"></highlight></codeline>
-<codeline lineno="480"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Matrix</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="481"><highlight class="normal"></highlight></codeline>
-<codeline lineno="482"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">math<sp/>{</highlight></codeline>
-<codeline lineno="491"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>W,<sp/>Size<sp/>H&gt;</highlight></codeline>
-<codeline lineno="492" refid="d2/db1/a00070_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, H, W&gt;</ref><sp/><ref refid="d2/db1/a00070_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" kindref="member">transpose</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, W, H&gt;</ref>&amp;<sp/>matrix)<sp/>{</highlight></codeline>
-<codeline lineno="493"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, H, W&gt;</ref><sp/>out<sp/>=<sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, H, W&gt;</ref>();</highlight></codeline>
-<codeline lineno="494"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>W;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="495"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>H;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="496"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out[y][x]<sp/>=<sp/>matrix[x][y];</highlight></codeline>
-<codeline lineno="497"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="498"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="499"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>out;</highlight></codeline>
-<codeline lineno="500"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="501"><highlight class="normal"></highlight></codeline>
-<codeline lineno="508"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T&gt;</highlight></codeline>
-<codeline lineno="509" refid="d2/db1/a00070_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/><ref refid="d2/db1/a00070_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" kindref="member">det</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, 2, 2&gt;</ref>&amp;<sp/>matrix)<sp/>{</highlight></codeline>
-<codeline lineno="510"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(matrix[0][0]<sp/>*<sp/>matrix[1][1])<sp/>-<sp/>(matrix[0][1]<sp/>*<sp/>matrix[1][0]);</highlight></codeline>
-<codeline lineno="511"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="512"><highlight class="normal"></highlight></codeline>
-<codeline lineno="521"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>N&gt;</highlight></codeline>
-<codeline lineno="522" refid="d2/db1/a00070_ad0b604c0b56449aa4e2cb9c231e7d7ec_1ad0b604c0b56449aa4e2cb9c231e7d7ec" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/><ref refid="d2/db1/a00070_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" kindref="member">det</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref>&amp;<sp/>matrix)<sp/>{</highlight></codeline>
-<codeline lineno="523"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(N<sp/>&gt;=<sp/>2,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>order<sp/>to<sp/>retrieve<sp/>the<sp/>determinate<sp/>of<sp/>a<sp/>Matrix,<sp/>its<sp/>size<sp/>must<sp/>be<sp/>bigger<sp/>than<sp/>1&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="524"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>sum<sp/>=<sp/>T();</highlight></codeline>
-<codeline lineno="525"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>counter<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="526"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>N;<sp/>i++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="527"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>newMatrixSize<sp/>=<sp/>N<sp/>-<sp/>1;</highlight></codeline>
-<codeline lineno="528"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, newMatrixSize, newMatrixSize&gt;</ref><sp/>m<sp/>=<sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, newMatrixSize, newMatrixSize&gt;</ref>();</highlight></codeline>
-<codeline lineno="529"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>counterX<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="530"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>counterY<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="531"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>N;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="532"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>1;<sp/>y<sp/>&lt;<sp/>N;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="533"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>x<sp/>!=<sp/>i<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="534"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>m[counterX][counterY]<sp/>=<sp/>matrix[x][y];</highlight></codeline>
-<codeline lineno="535"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counterX++;</highlight></codeline>
-<codeline lineno="536"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="537"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counterY++;</highlight></codeline>
-<codeline lineno="538"><highlight class="normal"></highlight></codeline>
-<codeline lineno="539"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="540"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counterY<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="541"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="542"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>tempSum<sp/>=<sp/>((counter<sp/>%<sp/>2<sp/>==<sp/>0<sp/>?<sp/>-1<sp/>:<sp/>1)<sp/>*<sp/>matrix[i][0]);</highlight></codeline>
-<codeline lineno="543"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>N<sp/>-<sp/>1<sp/>==<sp/>2<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="544"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tempSum<sp/>*=<sp/>det&lt;T&gt;(matrix);</highlight></codeline>
-<codeline lineno="545"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="546"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tempSum<sp/>*=<sp/>det&lt;T,<sp/>N&gt;(matrix);</highlight></codeline>
-<codeline lineno="547"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="548"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sum<sp/>+=<sp/>tempSum;</highlight></codeline>
-<codeline lineno="549"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>counter++;</highlight></codeline>
-<codeline lineno="550"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="551"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>sum;</highlight></codeline>
-<codeline lineno="552"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="553"><highlight class="normal"></highlight></codeline>
-<codeline lineno="566"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>N&gt;</highlight></codeline>
-<codeline lineno="567" refid="d2/db1/a00070_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/><ref refid="d2/db1/a00070_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" kindref="member">tr</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref>&amp;<sp/>m)<sp/>{</highlight></codeline>
-<codeline lineno="568"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>T<sp/>out<sp/>=<sp/>T();</highlight></codeline>
-<codeline lineno="569"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//done<sp/>without<sp/>a<sp/>trace!</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="570"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>N;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="571"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out<sp/>+=<sp/>m[x][x];</highlight></codeline>
-<codeline lineno="572"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="573"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>out;</highlight></codeline>
-<codeline lineno="574"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="575"><highlight class="normal"></highlight></codeline>
-<codeline lineno="582"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>N&gt;</highlight></codeline>
-<codeline lineno="583" refid="d2/db1/a00070_a80edefaa133d7673d8023b612a5925a2_1a80edefaa133d7673d8023b612a5925a2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref><sp/><ref refid="d2/db1/a00070_a80edefaa133d7673d8023b612a5925a2_1a80edefaa133d7673d8023b612a5925a2" kindref="member">identity</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="584"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref><sp/>out<sp/>=<sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref>();</highlight></codeline>
-<codeline lineno="585"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>N;<sp/>x++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="586"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(<sp/><ref refid="d1/d51/a00079_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>y<sp/>=<sp/>0;<sp/>y<sp/>&lt;<sp/>N;<sp/>y++<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="587"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>x<sp/>==<sp/>y<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="588"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out[x][y]<sp/>=<sp/>1;</highlight></codeline>
-<codeline lineno="589"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="590"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out[x][y]<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="591"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="592"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="593"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="594"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>out;</highlight></codeline>
-<codeline lineno="595"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="596"><highlight class="normal"></highlight></codeline>
-<codeline lineno="611"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T,<sp/>Size<sp/>N&gt;</highlight></codeline>
-<codeline lineno="612" refid="d2/db1/a00070_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref><sp/><ref refid="d2/db1/a00070_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" kindref="member">inverse</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d3/dfe/a00025" kindref="compound">Matrix&lt;T, N, N&gt;</ref>&amp;<sp/>matrix)<sp/>{</highlight></codeline>
-<codeline lineno="613"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>static_assert(N<sp/>&gt;=<sp/>2,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>order<sp/>to<sp/>inverse<sp/>a<sp/>matrix,<sp/>it&apos;s<sp/>size<sp/>must<sp/>be<sp/>greater<sp/>than<sp/>1!&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="614"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//honestly,<sp/>this<sp/>next<sp/>line<sp/>really<sp/>seems<sp/>magical<sp/>to<sp/>me.<sp/>matrices<sp/>really<sp/>seem<sp/>magical<sp/>in<sp/>general.<sp/>But</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="615"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//this<sp/>especialy.<sp/>matrices<sp/>are<sp/>really<sp/>something,<sp/>aren&apos;t<sp/>they?</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="616"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><sp/>(((identity&lt;T,<sp/>N&gt;()*<ref refid="d2/db1/a00070_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" kindref="member">tr</ref>(matrix))<sp/>-<sp/>matrix)<sp/>*<sp/>(1<sp/>/<sp/><ref refid="d2/db1/a00070_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" kindref="member">det</ref>(matrix)));</highlight><highlight class="comment">//calculate<sp/>via<sp/>the<sp/>caley-hamilton<sp/>method</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="617"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="618"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//math</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="619"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="620"><highlight class="normal"></highlight></codeline>
-<codeline lineno="621"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-    </programlisting>
-    <location file="include/MACE/Utility/Matrix.h"/>
+<para>Namespace that contains mathmathetics with vectors and functions relevant in graphics programming. </para>    </detaileddescription>
+    <location file="include/MACE/Utility/Math.h" line="20" column="1"/>
   </compounddef>
 </doxygen>

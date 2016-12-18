@@ -7,12 +7,26 @@
     <templateparamlist>
     </templateparamlist>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="de/d8c/a00036_1a0b89e976b890c3f3491925d9344bc916" prot="private" static="no" mutable="no">
-        <type><ref refid="d1/dc6/a00037" kindref="compound">ShaderProgram</ref></type>
-        <definition>ShaderProgram mc::gfx::RenderProtocol&lt; Entity2D &gt;::shaders2D</definition>
+      <memberdef kind="variable" id="de/d8c/a00036_1aca2594cccc6d9fdb1bd6404c2905ffc5" prot="private" static="no" mutable="no">
+        <type><ref refid="d8/d41/a00038" kindref="compound">ogl::ShaderProgram</ref></type>
+        <definition>ogl::ShaderProgram mc::gfx::RenderProtocol&lt; Entity2D &gt;::shaders2D</definition>
         <argsstring></argsstring>
         <name>shaders2D</name>
-        <initializer>= <ref refid="d1/dc6/a00037" kindref="compound">ShaderProgram</ref>()</initializer>
+        <initializer>= <ref refid="d8/d41/a00038" kindref="compound">ogl::ShaderProgram</ref>()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="57" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="de/d8c/a00036_1a8ce65a69df6c4bbdd47ce59ef60d5fb2" prot="private" static="no" mutable="no">
+        <type><ref refid="d6/d42/a00043" kindref="compound">ogl::VertexArray</ref></type>
+        <definition>ogl::VertexArray mc::gfx::RenderProtocol&lt; Entity2D &gt;::square</definition>
+        <argsstring></argsstring>
+        <name>square</name>
+        <initializer>= <ref refid="d6/d42/a00043" kindref="compound">ogl::VertexArray</ref>()</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -20,20 +34,6 @@
         <inbodydescription>
         </inbodydescription>
         <location file="include/MACE/Graphics/Entity2D.h" line="58" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="58" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="de/d8c/a00036_1af8166f52dd796e0d40cbbe3d07006471" prot="private" static="no" mutable="no">
-        <type><ref refid="d5/db6/a00042" kindref="compound">VertexArray</ref></type>
-        <definition>VertexArray mc::gfx::RenderProtocol&lt; Entity2D &gt;::square</definition>
-        <argsstring></argsstring>
-        <name>square</name>
-        <initializer>= <ref refid="d5/db6/a00042" kindref="compound">VertexArray</ref>()</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="59" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="59" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
@@ -44,11 +44,11 @@
         <name>resize</name>
         <reimplements refid="db/df3/a00034_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c">resize</reimplements>
         <param>
-          <type>const <ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>width</declname>
         </param>
         <param>
-          <type>const <ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>height</declname>
         </param>
         <briefdescription>
@@ -67,7 +67,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="45" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="44" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d8c/a00036_a2f738b2b7177dd79de63011ea246c25d_1a2f738b2b7177dd79de63011ea246c25d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -76,11 +76,11 @@
         <name>init</name>
         <reimplements refid="db/df3/a00034_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1">init</reimplements>
         <param>
-          <type>const <ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>originalWidth</declname>
         </param>
         <param>
-          <type>const <ref refid="d1/d51/a00079_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>originalHeight</declname>
         </param>
         <briefdescription>
@@ -99,7 +99,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="47" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="46" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d8c/a00036_a2fb5afde4608667dac429efcd2d07438_1a2fb5afde4608667dac429efcd2d07438" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -108,11 +108,11 @@
         <name>setUp</name>
         <reimplements refid="db/df3/a00034_a13d3c43299a124a1b95d113c902e9476_1a13d3c43299a124a1b95d113c902e9476">setUp</reimplements>
         <param>
-          <type><ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref> *</type>
+          <type><ref refid="d6/d97/a00045" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+          <type><ref refid="d1/d51/a00079_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
           <declname>queue</declname>
         </param>
         <briefdescription>
@@ -131,7 +131,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="49" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="48" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d8c/a00036_a2aa8c704dc99ff2589d10869a694a400_1a2aa8c704dc99ff2589d10869a694a400" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -140,7 +140,7 @@
         <name>render</name>
         <reimplements refid="db/df3/a00034_a06a982c8b438aaa052e1fa1d1fc995ae_1a06a982c8b438aaa052e1fa1d1fc995ae">render</reimplements>
         <param>
-          <type><ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref> *</type>
+          <type><ref refid="d6/d97/a00045" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
@@ -163,7 +163,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="51" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="50" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d8c/a00036_ade7012f8089ee90e548370ccdfb41008_1ade7012f8089ee90e548370ccdfb41008" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -172,11 +172,11 @@
         <name>tearDown</name>
         <reimplements refid="db/df3/a00034_ac1b569053de9c46379c954f71e64659b_1ac1b569053de9c46379c954f71e64659b">tearDown</reimplements>
         <param>
-          <type><ref refid="d5/df9/a00044" kindref="compound">os::WindowModule</ref> *</type>
+          <type><ref refid="d6/d97/a00045" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="da/dec/a00080_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+          <type><ref refid="d1/d51/a00079_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
           <declname>queue</declname>
         </param>
         <briefdescription>
@@ -195,7 +195,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="53" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="52" column="1"/>
       </memberdef>
       <memberdef kind="function" id="de/d8c/a00036_a5d1a4c0291ceb2bba79f81e88c9d1bb2_1a5d1a4c0291ceb2bba79f81e88c9d1bb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -219,7 +219,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="55" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="54" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -237,30 +237,30 @@
 </parameterlist>
 </para>    </detaileddescription>
     <inheritancegraph>
-      <node id="487">
+      <node id="497">
         <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
         <link refid="de/d8c/a00036"/>
-        <childnode refid="488" relation="public-inheritance">
+        <childnode refid="498" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="488">
+      <node id="498">
         <label>mc::gfx::RenderImpl</label>
         <link refid="db/df3/a00034"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="489">
+      <node id="499">
         <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
         <link refid="de/d8c/a00036"/>
-        <childnode refid="490" relation="public-inheritance">
+        <childnode refid="500" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="490">
+      <node id="500">
         <label>mc::gfx::RenderImpl</label>
         <link refid="db/df3/a00034"/>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/Entity2D.h" line="43" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="43" bodyend="60"/>
+    <location file="include/MACE/Graphics/Entity2D.h" line="42" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="42" bodyend="59"/>
     <listofallmembers>
       <member refid="de/d8c/a00036_a5d1a4c0291ceb2bba79f81e88c9d1bb2_1a5d1a4c0291ceb2bba79f81e88c9d1bb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>destroy</name></member>
       <member refid="de/d8c/a00036_a2f738b2b7177dd79de63011ea246c25d_1a2f738b2b7177dd79de63011ea246c25d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>init</name></member>
@@ -268,8 +268,8 @@
       <member refid="db/df3/a00034_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>RenderImpl</name></member>
       <member refid="de/d8c/a00036_a7e9d118a4f81190d9ebabf970afd7213_1a7e9d118a4f81190d9ebabf970afd7213" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>resize</name></member>
       <member refid="de/d8c/a00036_a2fb5afde4608667dac429efcd2d07438_1a2fb5afde4608667dac429efcd2d07438" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>setUp</name></member>
-      <member refid="de/d8c/a00036_1a0b89e976b890c3f3491925d9344bc916" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>shaders2D</name></member>
-      <member refid="de/d8c/a00036_1af8166f52dd796e0d40cbbe3d07006471" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>square</name></member>
+      <member refid="de/d8c/a00036_1aca2594cccc6d9fdb1bd6404c2905ffc5" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>shaders2D</name></member>
+      <member refid="de/d8c/a00036_1a8ce65a69df6c4bbdd47ce59ef60d5fb2" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>square</name></member>
       <member refid="de/d8c/a00036_ade7012f8089ee90e548370ccdfb41008_1ade7012f8089ee90e548370ccdfb41008" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>tearDown</name></member>
       <member refid="db/df3/a00034_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Entity2D &gt;</scope><name>~RenderImpl</name></member>
     </listofallmembers>

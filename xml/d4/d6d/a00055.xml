@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d4/d6d/a00055" kind="file" language="C++">
-    <compoundname>ssl.glsl</compoundname>
+    <compoundname>ssl_color.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
@@ -9,12 +9,29 @@
     <programlisting>
 <codeline><highlight class="normal">R&quot;(</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_position&gt;</highlight></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_color&gt;</highlight></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_window&gt;</highlight></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_COLOR_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_COLOR_LIBRARY_</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">layout(location<sp/>=<sp/>1)<sp/>out<sp/>uint<sp/>ssl_ID;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">layout(std140)<sp/>uniform<sp/>ssl_PaintData{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_Paint;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_Opacity;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_EntityID;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vec4<sp/>sslGetEntityColor(vec4<sp/>ssl_Tex){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_EntityColor=<sp/>mix(vec4(ssl_Paint.rgb,1.0),ssl_Tex,ssl_Paint.a);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_EntityColor.a=ssl_Opacity;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_ID<sp/>=<sp/>uint(ssl_EntityID);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>ssl_EntityColor;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#endif</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/include/ssl.glsl"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_color.glsl"/>
   </compounddef>
 </doxygen>

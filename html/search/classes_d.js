@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uniformbuffer',['UniformBuffer',['../db/d3a/a00040.html',1,'mc::gfx']]]
+  ['uniformbuffer',['UniformBuffer',['../dd/d32/a00041.html',1,'mc::gfx::ogl']]]
 ];
