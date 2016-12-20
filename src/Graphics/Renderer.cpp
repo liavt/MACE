@@ -91,7 +91,7 @@ namespace mc {
 
 			ssl::destroy();
 		}//destroy()
-		
+
 		void Renderer::clearBuffers() {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -131,13 +131,8 @@ namespace mc {
 //which binding location the windowData uniform buffer should be bound to
 #define MACE_WINDOW_DATA_LOCATION 0
 
-//how many floats in the paintData uniform buffer
-#define MACE_PAINT_DATA_BUFFER_SIZE 6
-//which binding location the paintdata uniform buffer should be bound to
-#define MACE_PAINT_DATA_LOCATION 1
-
 //how many floats in the entityData uniform buffer. Needs to be multiplied by sizeof(GLfloat)
-#define MACE_ENTITY_DATA_BUFFER_SIZE 52
+#define MACE_ENTITY_DATA_BUFFER_SIZE 32
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 2
 
@@ -146,29 +141,28 @@ namespace mc {
 			namespace {
 				Preprocessor sslPreprocessor = Preprocessor("");
 
-				mc::IncludeString vertexLibrary = mc::IncludeString({
+				IncludeString vertexLibrary = IncludeString({
 				#	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
 				}, "ssl_vertex");
 
-				mc::IncludeString fragmentLibrary = mc::IncludeString({
+				IncludeString fragmentLibrary = IncludeString({
 				#	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
 				}, "ssl_frag");
-				mc::IncludeString colorLibrary = mc::IncludeString({
+				IncludeString colorLibrary = IncludeString({
 				#	include <MACE/Graphics/Shaders/include/ssl_color.glsl>
 				}, "ssl_color");
-				mc::IncludeString positionLibrary = mc::IncludeString({
+				IncludeString positionLibrary = IncludeString({
 				#	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
 				}, "ssl_position");
-				mc::IncludeString mouseLibrary = mc::IncludeString({
+				IncludeString mouseLibrary = IncludeString({
 				#	include <MACE/Graphics/Shaders/include/ssl_window.glsl>
 				}, "ssl_window");
-				mc::IncludeString sslLibrary = mc::IncludeString({
+				IncludeString sslLibrary = IncludeString({
 				#	include <MACE/Graphics/Shaders/include/ssl.glsl>
 				}, "ssl");
 
 				//ssl buffer objects
 				ogl::UniformBuffer windowData = ogl::UniformBuffer();
-				ogl::UniformBuffer paintData = ogl::UniformBuffer();
 
 				//fbo resources
 				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
@@ -213,20 +207,13 @@ namespace mc {
 
 
 			void init(const Size &, const Size &) {
-				paintData.init();
 				windowData.init();
 
 				windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
 				windowData.bind();
 				float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = { static_cast<float>(originalWidth), static_cast<float>(originalHeight),static_cast<float>(originalWidth),static_cast<float>(originalHeight) };
-				windowData.setData(sizeof(GLfloat)*MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
+				windowData.setData(sizeof(float)*MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
 				windowData.unbind();
-
-				paintData.setLocation(MACE_PAINT_DATA_LOCATION);
-				paintData.bind();
-				//we set it to null, because during the actual rendering we set the data
-				paintData.setData(sizeof(GLfloat)*MACE_PAINT_DATA_BUFFER_SIZE, nullptr, GL_STREAM_DRAW);
-				paintData.unbind();
 
 				sceneTexture.init();
 				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -276,7 +263,6 @@ namespace mc {
 
 			void destroy() {
 				windowData.destroy();
-				paintData.destroy();
 
 				depthBuffer.destroy();
 				frameBuffer.destroy();
@@ -288,14 +274,6 @@ namespace mc {
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
-				const ogl::Texture& tex = entity->getTexture();
-
-				paintData.bind();
-				const Color& paint = tex.getPaint();
-				const float data[6] = { paint.r,paint.g,paint.b,paint.a,tex.getOpacity(), static_cast<float>(entityIndex + 1) };
-				paintData.setData(sizeof(data), data, GL_STATIC_DRAW);
-				paintData.bindForRender();
-
 				//if we use the non const version, it will make it dirty again. we dont want this function to make it dirty.
 				ogl::UniformBuffer& entityData = const_cast<ogl::UniformBuffer&>(entity->getBuffer());
 
@@ -306,12 +284,14 @@ namespace mc {
 
 				windowData.bindForRender();
 
-				tex.bind();
+				entity->getTexture().bind();
+
+				prog.setUniform("ssl_EntityID", static_cast<float>(entityIndex + 1));
 			}//bindEntity
 
 			void bindShaderProgram(ogl::ShaderProgram & prog) {
 				windowData.bindToUniformBlock(prog.getID(), "ssl_WindowData");
-				paintData.bindToUniformBlock(prog.getID(), "ssl_PaintData");
+				prog.createUniform("ssl_EntityID");
 			}//bindShaderProgram
 
 			void resize(const Size & width, const Size & height) {
@@ -352,19 +332,18 @@ namespace mc {
 				buf.unbind();
 			}
 
-			void fillBuffer(ogl::UniformBuffer & buf, const Entity * entity) {
+			void fillBuffer(GraphicsEntity * entity) {
 				if( !entity->getProperty(Entity::INIT) ) {
 					throw InitializationError("Internal error: Entity is not initializd.");
 				}
 
-				//setting all of these values is quite slow, need to change it
+				ogl::UniformBuffer& buf = entity->getBuffer();
 				const TransformMatrix& transform = entity->getTransformation();
-
-				//setting uniform costs quite a bit of performance when done constantly. We cache the current setting and only change it if its different
+				const ogl::Texture& tex = entity->getTexture();
 
 				Vector<float, 3> inheritedTranslation = { 0,0,0 };
 				Vector<float, 3> inheritedScale = { 1,1,1 };
-				Matrix<float, 4, 4> inheritedRotation = math::identity<float, 4>();
+				Vector<float, 3> inheritedRotation = { 0,0,0 };
 
 				if( entity->hasParent() ) {
 					const Entity* const parent = entity->getParent();
@@ -372,11 +351,15 @@ namespace mc {
 
 					inheritedTranslation = parentTransform.translation;
 					inheritedScale = parentTransform.scaler;
-					inheritedRotation = math::rotate(parentTransform.rotation);
+					inheritedRotation = parentTransform.rotation;
+
 				}
 
 				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
 				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
+				const float opacity = tex.getOpacity();
+
+				const Color& paint = tex.getPaint();
 
 				//the following are containers for the flatten() call
 				float flattenedData[16];
@@ -384,7 +367,7 @@ namespace mc {
 				//now we set the uniform buffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, sizeof(GLfloat)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
+				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
 				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
@@ -393,13 +376,17 @@ namespace mc {
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, (math::rotate(transform.rotation)).flatten(flattenedData), sizeof(Matrix<float, 4, 4>));
-				mappedEntityData += 16;
+				std::memcpy(mappedEntityData, transform.rotation.flatten(flattenedData), sizeof(Vector<float, 3>));
+				mappedEntityData += 3;
+				std::memcpy(mappedEntityData, &opacity, sizeof(opacity));
+				++mappedEntityData;
+				std::memcpy(mappedEntityData, &paint, sizeof(paint));
+				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Matrix<float, 4, 4>));
+				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Vector<float, 3>));
 
 				buf.unmap();
 			}

@@ -17,7 +17,7 @@ uniform lowp sampler2D tex;
 
 void main (void)  
 {     
-	color = sslGetEntityColor(texture(tex,textureCoord));
+	color = sslGetEntityColor(texture(tex,textureCoord));//
 }       
 
 )"

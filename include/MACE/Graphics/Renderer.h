@@ -75,7 +75,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void fillBuffer(ogl::UniformBuffer& buf, const Entity* en);
+			void fillBuffer(GraphicsEntity* en);
 
 			/**
 			@internal

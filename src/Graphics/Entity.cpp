@@ -608,7 +608,7 @@ namespace mc {
 		}
 
 		void GraphicsEntity::onClean() {
-			ssl::fillBuffer(buffer, this);
+			ssl::fillBuffer(this);
 		}
 
 		Color & GraphicsEntity::getPaint() {

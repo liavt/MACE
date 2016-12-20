@@ -38,14 +38,15 @@ namespace mc {
 
 		Matrix<float, 4, 4> out = m;
 		out[0][0] = cosZ*cosY;
+		out[1][1] = cosZ*cosX;
+		out[2][2] = cosX*cosY;
+
 		out[0][1] = sinZ;
 		out[0][2] = -sinY;
 		out[1][0] = -sinZ;
-		out[1][1] = cosZ*cosX;
 		out[1][2] = sinX;
 		out[2][0] = sinY;
 		out[2][1] = -sinX;
-		out[2][2] = cosX*cosY;
 		return out;
 	}
 

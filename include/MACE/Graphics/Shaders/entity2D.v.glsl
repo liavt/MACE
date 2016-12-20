@@ -14,9 +14,8 @@ layout(location = 1) in vec2 texCoord;
 out lowp vec2 textureCoord;
 
 void main(void){
-	
 	gl_Position = sslGetEntityPosition();
-	
+		
 	textureCoord=texCoord;
 }
 
