@@ -24,7 +24,35 @@ namespace mc {
 					s.compile();
 					return s;
 				}
-			}
+
+				void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
+					if( type == 0 || type == GL_PROGRAM ) {
+						throw ShaderError("Error generating shader program with message \"" + message + "\"");
+					} else {
+						std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
+						glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
+						std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
+						if( type == GL_VERTEX_SHADER ) {
+							friendlyType = "VERTEX";
+						} else if( type == GL_FRAGMENT_SHADER ) {
+							friendlyType = "FRAGMENT";
+						} else if( type == GL_COMPUTE_SHADER ) {
+							friendlyType = "COMPUTE";
+						} else if( type == GL_GEOMETRY_SHADER ) {
+							friendlyType = "GEOMETERY";
+						} else if( type == GL_TESS_CONTROL_SHADER ) {
+							friendlyType = "TESSELATION CONTROL";
+						} else if( type == GL_TESS_EVALUATION_SHADER ) {
+							friendlyType = "TESSELATION EVALUATION";
+						}
+						throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
+					}
+				}
+
+				void throwShaderError(const Index shaderId, const Enum type) {
+					throwShaderError(shaderId, type, "No message was specified");
+				}
+			}//anon namespace
 
 			void checkGLError() {
 #ifdef MACE_ERROR_CHECK
@@ -58,32 +86,6 @@ namespace mc {
 					}
 				}
 #endif
-			}
-			void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
-				if( type == 0 || type == GL_PROGRAM ) {
-					throw ShaderError("Error generating shader program with message \"" + message + "\"");
-				} else {
-					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
-					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
-					std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
-					if( type == GL_VERTEX_SHADER ) {
-						friendlyType = "VERTEX";
-					} else if( type == GL_FRAGMENT_SHADER ) {
-						friendlyType = "FRAGMENT";
-					} else if( type == GL_COMPUTE_SHADER ) {
-						friendlyType = "COMPUTE";
-					} else if( type == GL_GEOMETRY_SHADER ) {
-						friendlyType = "GEOMETERY";
-					} else if( type == GL_TESS_CONTROL_SHADER ) {
-						friendlyType = "TESSELATION CONTROL";
-					} else if( type == GL_TESS_EVALUATION_SHADER ) {
-						friendlyType = "TESSELATION EVALUATION";
-					}
-					throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
-				}
-			}
-			void throwShaderError(const Index shaderId, const Enum type) {
-				throwShaderError(shaderId, type, "No message was specified");
 			}
 
 			void VertexArray::init() {
@@ -353,12 +355,30 @@ namespace mc {
 				return !operator==(other);
 			}
 
+			Texture::Texture() noexcept {}
+
+			Texture::Texture(const Texture & other, const Color & color) : opacity(other.opacity), target(other.target), paint(color) {
+				this->id = other.id;
+			}
+
+			Texture::Texture(const char * file) {
+				init();
+				loadFile(file);
+			}
+
+			Texture::Texture(const std::string & file) : Texture(file.c_str()) {}
+
 			void Texture::init() {
-				glGenTextures(1, &id);
+				if( !isCreated() ) {
+					glGenTextures(1, &id);
+				}
 			}
 
 			void Texture::destroy() {
-				glDeleteTextures(1, &id);
+				if( isCreated() ) {
+
+					glDeleteTextures(1, &id);
+				}
 			}
 
 			void Texture::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
@@ -376,6 +396,13 @@ namespace mc {
 				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 
 				stbi_image_free(image);
+
+				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			}
+
+			void Texture::loadFile(const std::string & file) {
+				loadFile(file.c_str());
 			}
 
 			void Texture::setTarget(Enum targ) {

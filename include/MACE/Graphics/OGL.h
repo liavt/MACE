@@ -52,14 +52,6 @@ namespace mc {
 			@opengl
 			*/
 			void checkGLError();
-			/**
-			@opengl
-			*/
-			void throwShaderError[[noreturn]](const Index shaderId, const Enum type, const std::string& message);
-			/**
-			@opengl
-			*/
-			void throwShaderError[[noreturn]](const Index shaderId, const Enum type);
 
 			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
@@ -460,6 +452,21 @@ namespace mc {
 			*/
 			class Texture: public Object {
 			public:
+				Texture() noexcept;
+				/**
+				@opengl
+				*/
+				Texture(const Color& col);
+				Texture(const Texture& other, const Color& color);
+				/**
+				@opengl
+				*/
+				Texture(const char* file);
+				/**
+				@opengl
+				*/
+				Texture(const std::string& file);
+
 				void init() override;
 				void destroy() override;
 
@@ -473,6 +480,10 @@ namespace mc {
 				@opengl
 				*/
 				void loadFile(const char* file);
+				/**
+				@copydoc loadFile(const char*)
+				*/
+				void loadFile(const std::string& file);
 
 				void setTarget(const Enum target);
 				Enum getTarget();

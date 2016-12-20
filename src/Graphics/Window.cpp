@@ -69,7 +69,7 @@ namespace mc {
 			if( !GL_VERSION_3_0 ) {
 				throw InitializationError("OpenGL 3+ is not available!");
 			} else if( !GL_VERSION_3_3 ) {
-				std::cout << "OpenGL 3.3 not found, falling back to OpenGL 3.0.";
+				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0.";
 			}
 
 			gfx::ogl::checkGLError();

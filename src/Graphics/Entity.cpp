@@ -14,7 +14,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Renderer.h>
 #include <string>
-#include <iostream>
 
 namespace mc {
 	namespace gfx {

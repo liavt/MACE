@@ -13,7 +13,8 @@ include(FindPackageHandleStandardArgs)
 include(CheckCXXCompilerFlag)
 include(DownloadLibrary)
 
-option(MACE_UNIT_TESTING "Whether to build the unit tests under MACE/Testing." OFF)
+option(MACE_UNIT_TESTING "Whether to build the unit tests under tests." OFF)
+option(MACE_DEMOS "Whether to build the demo programs under demos" OFF)
 option(MACE_DOWNLOAD_DEPENDENCIES "Whether to download and extract dependencies that are not found. If turned off, will instead error." ON)
 mark_as_advanced(MACE_DOWNLOAD_DEPENDENCIES)
 
@@ -125,6 +126,25 @@ if(${MACE_UNIT_TESTING})
 	add_executable(MACE-Testing ${TESTS_SRC})
 	
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
+	
+	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC")
+endif()
+
+if(${MACE_DEMOS})
+	file(GLOB_RECURSE DEMOS_SRC "demos/*.cpp")
+	foreach(FILE ${DEMOS_SRC})
+		get_filename_component(FILE_NAME ${FILE} NAME_WE)
+		
+		set(PROJECT_NAME MACE-${FILE_NAME})
+		
+		add_executable(${PROJECT_NAME} ${FILE})
+	
+		target_link_libraries(${PROJECT_NAME} LINK_PUBLIC MACE)
+		
+		target_compile_definitions(${PROJECT_NAME} PRIVATE MACE_DEMO_ASSETS="${PROJECT_SOURCE_DIR}/demos/assets/")
+		
+		set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "MC/Demos")
+	endforeach()
 endif()
 
 #verify that we are using C++ 11
@@ -194,3 +214,5 @@ target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
+
+set_target_properties(MACE PROPERTIES FOLDER "MC")

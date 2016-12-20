@@ -40,33 +40,14 @@ namespace mc {
 	*/
 	struct Color {
 	public:
-
-		/**
-		Converts a `Color` component represented as a `float` to a `Byte`
-		@param color A `float` from 0.0 to 1.0
-		@return  An equal `Byte` from 0 to 255
-		@see convertRGBAToFloat(Byte)
-		*/
-		static Byte convertFloatToRGBA(const float& color);
-		/**
-		Converts a `Color` component represented as a `Byte` to a `float`
-		@return An equal `float` from 0.0 to 1.0
-		@param color A`Byte` from 0 to 255
-		@see convertRGBAToFloat(Byte)
-		*/
-		static float convertRGBAToFloat(const Byte& color);
-
-		/**
-		Checks the bounds of a `float` making sure that it is not greater than 1,0 or less than 0.0
-		<p>
-		If the inputted `float` is more than 1, `trimFloat()` returns 1.
-		<p>
-		If the inputted `float` is less than 0, `trimFloat()` returns 0.
-
-		@param color `float` to trim
-		@return A `float` guaranteed to be between 0 and 1.
-		*/
-		static float trimFloat(const float& color);
+		static const Color RED, GREEN,
+			DARK_BLUE, CYAN,
+			LIGHT_BLUE, DARK_RED,
+			DARK_GREEN, PURPLE,
+			MAGENTA, WHITE,
+			BLACK, YELLOW,
+			DARK_GRAY, GRAY, LIGHT_GRAY,
+			DARK_ORANGE, ORANGE, LIGHT_ORANGE;
 
 		/**
 		Color component, represented as a `float`. It is from 0.0 to 1.0, where 1.0 is the brightest it can get.
@@ -81,7 +62,7 @@ namespace mc {
 		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
 		@see Color(std::array<float,4>)
 		*/
-		Color(const float& red, const float& green, const float& blue, const float& alpha = 1.0f);
+		Color(const float& red, const float& green, const float& blue, const float& alpha = 1.0f) noexcept;
 		/**
 		Creates a `Color` from an array of `floats`.
 		@param values An array where the first element is red, the second is green, etc
@@ -94,7 +75,7 @@ namespace mc {
 		Clones a `Color`, coying it's color values into a new one.
 		@param copy A `Color` to copy
 		*/
-		Color(const Color& copy);
+		Color(const Color& copy) noexcept;
 		/**
 		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
 		*/

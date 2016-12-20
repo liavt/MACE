@@ -9,105 +9,119 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Utility/Color.h>
 
-mc::Byte mc::Color::getRed() const {
-	return mc::Color::convertFloatToRGBA(this->r);
-}
+namespace mc {
+	namespace {
+		float trimFloat(const float& color) {
+			return color < 0.0f ? 0.0f : (color>1.0f ? 1.0f : color);
+		}
 
-mc::Byte mc::Color::getGreen() const {
-	return mc::Color::convertFloatToRGBA(this->g);
-}
+		Byte convertFloatToRGBA(const float& color) {
+			return (mc::Byte)(trimFloat(color)*254.0f);
+		}
 
-mc::Byte mc::Color::getBlue() const {
-	return mc::Color::convertFloatToRGBA(this->b);
-}
+		float convertRGBAToFloat(const Byte& color) {
+			return color / 254.0f;
 
-mc::Byte mc::Color::getAlpha() const {
-	return mc::Color::convertFloatToRGBA(this->a);
-}
+		}
+	}//anon namespace
 
-void mc::Color::setRed(const mc::Byte& red) {
-	this->r = mc::Color::convertRGBAToFloat(red);
-}
+	const Color Color::RED = Color(255, 0, 0), Color::GREEN = Color(0, 255, 0),
+		Color::DARK_BLUE = Color(0, 0, 255), Color::CYAN = Color(0, 255, 255),
+		Color::LIGHT_BLUE = Color(50, 200, 255), Color::DARK_RED = Color(150, 0, 0),
+		Color::DARK_GREEN = Color(0, 150, 0), Color::PURPLE = Color(100, 0, 255),
+		Color::MAGENTA = Color(255, 0, 255), Color::WHITE = Color(255, 255, 255),
+		Color::BLACK = Color(0, 0, 0), Color::YELLOW = Color(255, 255, 0),
+		Color::DARK_GRAY = Color(100, 100, 100), Color::LIGHT_GRAY = Color(200, 200, 200),
+		Color::ORANGE = Color(255, 125, 0), Color::GRAY = Color(150,150,150),
+		Color::DARK_ORANGE = Color(255, 100, 0), Color::LIGHT_ORANGE = Color(255, 150, 0);
 
-void mc::Color::setGreen(const mc::Byte& green) {
-	this->g = mc::Color::convertRGBAToFloat(green);
+	Byte Color::getRed() const {
+		return convertFloatToRGBA(this->r);
+	}
 
-}
+	Byte Color::getGreen() const {
+		return convertFloatToRGBA(this->g);
+	}
 
-void mc::Color::setBlue(const mc::Byte& blue) {
-	this->b = mc::Color::convertRGBAToFloat(blue);
+	Byte Color::getBlue() const {
+		return convertFloatToRGBA(this->b);
+	}
 
-}
+	Byte Color::getAlpha() const {
+		return convertFloatToRGBA(this->a);
+	}
 
-void mc::Color::setAlpha(const mc::Byte& alpha) {
-	this->a = mc::Color::convertRGBAToFloat(alpha);
-}
+	void Color::setRed(const Byte& red) {
+		this->r = convertRGBAToFloat(red);
+	}
+
+	void Color::setGreen(const Byte& green) {
+		this->g = convertRGBAToFloat(green);
+
+	}
+
+	void Color::setBlue(const Byte& blue) {
+		this->b = convertRGBAToFloat(blue);
+
+	}
+
+	void Color::setAlpha(const Byte& alpha) {
+		this->a = convertRGBAToFloat(alpha);
+	}
 
 
-mc::Color::Color(const float& red, const float& green, const float& blue, const float& alpha) : r(red), g(green), b(blue), a(alpha) {}
+	Color::Color(const float& red, const float& green, const float& blue, const float& alpha) noexcept : r(red), g(green), b(blue), a(alpha) {}
 
-mc::Color::Color(const std::array<float, 4>& rgba) {
-	this->setValues(rgba);
-}
+	Color::Color(const std::array<float, 4>& rgba) {
+		this->setValues(rgba);
+	}
 
-mc::Color::Color(const Color & copy) : r(copy.r), g(copy.g), b(copy.b), a(copy.a) {}
+	Color::Color(const Color & copy) noexcept : Color(copy.r, copy.g, copy.b, copy.a) {}
 
-mc::Color::Color() noexcept : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
+	Color::Color() noexcept : Color(0, 0, 0, 1) {}
 
-bool mc::Color::operator==(const Color & other) const {
-	return r == other.r&&g == other.g&&b == other.b&&a == other.a;
-}
+	bool Color::operator==(const Color & other) const {
+		return r == other.r&&g == other.g&&b == other.b&&a == other.a;
+	}
 
-bool mc::Color::operator!=(const Color & other) const {
-	return !operator==(other);
-}
+	bool Color::operator!=(const Color & other) const {
+		return !operator==(other);
+	}
 
-mc::Byte mc::Color::convertFloatToRGBA(const float& color) {
-	return (mc::Byte)(trimFloat(color)*254.0f);
-}
+	void Color::setValues(const std::array<float, 3>& rgb) {
+		this->r = rgb[0];
+		this->g = rgb[1];
+		this->b = rgb[2];
+	}
 
-float mc::Color::convertRGBAToFloat(const mc::Byte& color) {
-	return color / 254.0f;
-}
+	void Color::setValues(const std::array<float, 4>& rgba) {
+		this->r = rgba[0];
+		this->g = rgba[1];
+		this->b = rgba[2];
+		this->a = rgba[3];
+	}
 
-float mc::Color::trimFloat(const float& color) {
-	return color < 0.0f ? 0.0f : (color>1.0f ? 1.0f : color);
-}
+	std::array<float, 4> Color::getValues() const {
+		std::array<float, 4> output = { r,g,b,a };
+		return output;
+	}
 
-void mc::Color::setValues(const std::array<float, 3>& rgb) {
-	this->r = rgb[0];
-	this->g = rgb[1];
-	this->b = rgb[2];
-}
+	bool Color::operator<(const Color& other) const {
+		//the real g right here
+		return other.r < r && other.g < g && other.b < b && other.a < a;
+	}
 
-void mc::Color::setValues(const std::array<float, 4>& rgba) {
-	this->r = rgba[0];
-	this->g = rgba[1];
-	this->b = rgba[2];
-	this->a = rgba[3];
-}
+	bool Color::operator<=(const Color& other) const {
+		return operator<(other) || operator==(other);
+	}
 
-std::array<float, 4> mc::Color::getValues() const {
-	std::array<float, 4> output = { r,g,b,a };
-	return output;
-}
+	bool Color::operator>(const Color& other) const {
+		//the real g right here
+		return !operator<=(other);
+	}
 
-bool mc::Color::operator<(const mc::Color& other) const {
-	//the real g right here
-	return other.r < r && other.g < g && other.b < b && other.a < a;
-}
-
-bool mc::Color::operator<=(const mc::Color& other) const {
-	//the real g right here
-	return other.r <= r && other.g <= g && other.b <= b && other.a <= a;
-}
-
-bool mc::Color::operator>(const mc::Color& other) const {
-	//the real g right here
-	return other.r > r && other.g > g && other.b > b && other.a > a;
-}
-
-bool mc::Color::operator>=(const mc::Color& other) const {
-	//the real g right here
-	return other.r >= r && other.g >= g && other.b >= b && other.a >= a;
-}
+	bool Color::operator>=(const Color& other) const {
+		//the real g right here
+		return !operator<(other);
+	}
+}//mc

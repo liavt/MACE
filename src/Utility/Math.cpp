@@ -10,7 +10,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Math.h>
 
 namespace mc {
-
 	namespace math {
 		long double pi() {
 			return 3.14159265358979323846264338327950288419716939937510l;
@@ -90,9 +89,7 @@ namespace mc {
 
 		double sqr(const double value) {
 			return value*value;
-
 		}
-
 
 		double cube(const double value) {
 			return value*value*value;
@@ -105,6 +102,5 @@ namespace mc {
 		double toDegrees(const double radians) {
 			return radians*(180.0 / static_cast<double>(pi()));
 		}
-
-	}
-}
+	}//math
+}//mc
