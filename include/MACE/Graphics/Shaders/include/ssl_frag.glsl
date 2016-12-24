@@ -5,7 +5,7 @@ R"(
 layout(location = 0) out lowp vec4 color;
 layout(location = 1) out uint ssl_ID;
 
-uniform float ssl_EntityID;
+uniform uint ssl_EntityID;
 
 vec4 ssl_frag_main(void);
 
@@ -16,7 +16,7 @@ void main(void){
 		discard;
 	}
 	
-	ssl_ID = uint(ssl_EntityID);
+	ssl_ID = ssl_EntityID;
 }
 
 #endif

@@ -43,6 +43,10 @@ namespace mc {
 				protocols[i]->setUp(win, &renderQueue);
 			}
 		}//setUp
+		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
+			if( e == nullptr )throw NullPointerException("Input pointer to an entity must not be null in queue()");
+			pushEntity(protocol, e);
+		}//queue
 		void Renderer::resize(const Size width, const Size height) {
 			glViewport(0, 0, width, height);
 
@@ -125,13 +129,13 @@ namespace mc {
 		namespace ssl {
 			//constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-			//how many floats in the windowData uniform buffer
+			//how many floats in the windowData uniform buffer. needs to be multiplied by sizeof(float)
 #define MACE_WINDOW_DATA_BUFFER_SIZE 4
 //which binding location the windowData uniform buffer should be bound to
 #define MACE_WINDOW_DATA_LOCATION 14
 
-//how many floats in the entityData uniform buffer. Needs to be multiplied by sizeof(GLfloat)
-#define MACE_ENTITY_DATA_BUFFER_SIZE 24
+//how many floats in the entityData uniform buffer.
+#define MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*24
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 15
 
@@ -271,21 +275,15 @@ namespace mc {
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
-				//if we use the non const version, it will make it dirty again. we dont want this function to make it dirty.
 				const ogl::UniformBuffer& entityData = entity->buffer;
-				/**
-				@todo Move setLocation to somewhere else. it only needs otbe called once
-				*/
+
 				entityData.bind();
 				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
 				entityData.bindForRender();
 
 				windowData.bindForRender();
 
-				/**
-				@todo Replace entityIndex with float or make it uint in shaders
-				*/
-				prog.setUniform("ssl_EntityID", static_cast<float>(entityIndex + 1));
+				prog.setUniform("ssl_EntityID", entityIndex + 1);
 			}//bindEntity
 
 			void bindShaderProgram(ogl::ShaderProgram & prog) {
@@ -295,16 +293,11 @@ namespace mc {
 
 			void resize(const Size & width, const Size & height) {
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we dont do anything
-				/**
-				@todo replace != 0 with > 0
-				*/
-				if( width != 0 && height != 0 ) {
+
+				if( width > 0 && height > 0 ) {
 					windowData.bind();
 					float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
-					/**
-					@todo replace with sizeof(newSize)
-					*/
-					windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
+					windowData.setDataRange(sizeof(newSize), sizeof(newSize), newSize);
 					windowData.unbind();
 
 					depthBuffer.destroy();
@@ -333,13 +326,13 @@ namespace mc {
 			void bindBuffer(ogl::UniformBuffer & buf) {
 				buf.bind();
 				//we set it to null, because during the actual rendering we set the data
-				buf.setData(sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
+				buf.setData(MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
 				buf.unbind();
 			}//bindBuffer
 
 			void fillBuffer(GraphicsEntity * entity) {
 				if( !entity->getProperty(Entity::INIT) ) {
-					throw InitializationError("Internal error: Entity is not initializd.");
+					throw InitializationError("Entity is not initializd.");
 				}
 
 				ogl::UniformBuffer& buf = entity->buffer;
@@ -363,12 +356,12 @@ namespace mc {
 				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
 
 				//the following are containers for the flatten() call
-				float flattenedData[16];
+				float flattenedData[3];
 
 				//now we set the uniform buffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;//pointer arithmetic!
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));

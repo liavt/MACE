@@ -186,11 +186,7 @@ namespace mc {
 			*/
 			static void setUp(os::WindowModule* win);
 
-			template<typename T>
-			static void queue(T* e, const Index protocol) {
-				if( e == nullptr || e == NULL )throw NullPointerException("Input pointer to an entity must not be null in queue()");
-				pushEntity(protocol, e);
-			};
+			static void queue(GraphicsEntity* e, const Index protocol);
 
 			static Size numberOfProtocols();
 

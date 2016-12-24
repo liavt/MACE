@@ -37,9 +37,6 @@ namespace mc {
 		color.r = 0.5f;//set the red component to be 0.5f
 		color.setRed(127); //set the red component to be 0.5f as a Byte from 0 to 255
 	}
-
-	@todo create setRed(float), setGreen(float), and so forth
-	@todo darken() and lighten() functions
 	*/
 	struct Color {
 	public:
@@ -75,6 +72,27 @@ namespace mc {
 		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
 		*/
 		Color() noexcept;
+
+		/**
+		Creates a new `Color` that is slightly darker.
+		<p>
+		Due to rounding, `color.darken() != color.darken().lighten()`
+		<p>
+		The alpha is not affected
+		@return A darker `Color`
+		@see Color::lighten() const
+		*/
+		Color darken() const;
+		/**
+		Creates a new `Color` that is slightly lighter.
+		<p>
+		Due to rounding, `color.lighten() != color.lighten().darken()`
+		<p>
+		The alpha is not affected
+		@return A lighter `Color`
+		@see Color::darken() const
+		*/
+		Color lighten() const;
 
 		/**
 		Retrieves the red component of this `Color`

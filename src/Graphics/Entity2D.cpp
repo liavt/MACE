@@ -54,14 +54,15 @@ namespace mc {
 			//tell it how much data to allocate
 			textureData.setData(sizeof(float)*MACE_TEXTURE_DATA_BUFFER_SIZE, nullptr);
 			textureData.unbind();
+
+			if( Image::protocol < 0 ) {
+				Image::protocol = Renderer::registerProtocol<Image>();
+			}
 		}
 
 		void Image::onUpdate() {}
 
 		void Image::onRender() {
-			if( Image::protocol < 0 ) {
-				Image::protocol = Renderer::registerProtocol<Image>();
-			}
 			Renderer::queue(this, Image::protocol);
 		}
 

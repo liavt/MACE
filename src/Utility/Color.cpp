@@ -1,3 +1,5 @@
+#include "..\..\include\MACE\Utility\Color.h"
+#include "..\..\include\MACE\Utility\Color.h"
 /*
 The MIT License (MIT)
 
@@ -24,6 +26,10 @@ namespace mc {
 
 		}
 	}//anon namespace
+
+	Color Color::lighten() const {
+		return Color(trimFloat(r + 0.05f), trimFloat(g + 0.05f), trimFloat(b + 0.05f), a);
+	}
 
 	Byte Color::getRed() const {
 		return convertFloatToRGBA(this->r);
@@ -69,6 +75,10 @@ namespace mc {
 	Color::Color(const Color & copy) noexcept : Color(copy.r, copy.g, copy.b, copy.a) {}
 
 	Color::Color() noexcept : Color(0, 0, 0, 1) {}
+
+	Color Color::darken() const {
+		return Color(trimFloat(r - 0.05f), trimFloat(g - 0.05f), trimFloat(b - 0.05f), a);
+	}
 
 	bool Color::operator==(const Color & other) const {
 		return r == other.r&&g == other.g&&b == other.b&&a == other.a;
