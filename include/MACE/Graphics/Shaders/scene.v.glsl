@@ -5,18 +5,17 @@ R"(
 
 #version 330 core
 
-#include <ssl_vertex>
-
 precision mediump float; // Defines precision for float and float-derived (vector/matrix) types.
 
+layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 texCoord;
 
 out lowp vec2 textureCoord;
 
 void main(void){
-	gl_Position = sslGetEntityPosition();
-		
 	textureCoord=texCoord;
+
+	gl_Position = vec4(vertexPosition, 1);
 }
 
 )"

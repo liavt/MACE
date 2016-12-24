@@ -25,59 +25,84 @@ class FPSEntity: public gfx::Entity {
 
 };
 
-class TestEntity: public gfx::Entity2D {
+class TestComponent: public gfx::Component {
+	
+	void init(gfx::Entity* en) override {}
 
-	void onUpdate() override {
-	};
-	void onRender() override {
-		std::cout << getTexture().getID();
-		gfx::Renderer::queue(this);
-	};
-	void onInit() override {
-	};
-	void onDestroy() override {};
+	bool update(gfx::Entity* en) override {
+		if( en->getProperty(gfx::Entity::HOVERED) && os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+			en->makeDirty();
+		}
+		return false;
+	}
+	
+	void destroy(gfx::Entity* en) override {}
 
-	void onClean() override {
-		setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
-	};
+	void clean(gfx::Entity* en) override {
+		dynamic_cast<gfx::Image*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+	}
 };
 
+TestComponent component = TestComponent();
 gfx::Group group = gfx::Group();
+
+gfx::Image left = gfx::Image();
+gfx::Image leftBot = gfx::Image();
+gfx::Image rightTop = gfx::Image();
+gfx::Image rightBot = gfx::Image();
 
 void initGL() {
 	srand((unsigned) time(0));
 
 	const Size elementNum = 10;
 
-	star = gfx::ogl::Texture(MACE_DEMO_ASSETS + std::string("star.png"));
+	star = gfx::ogl::Texture(Colors::RED);
 
-	for( Index x = 0; x < elementNum; x++ ) {
-		for( Index y = 0; y < elementNum; y++ ) {
-			TestEntity* entity = new TestEntity();
+	left.setTexture(star);
+	leftBot.setTexture(star);
 
-			entity->setTexture(star);
+	rightTop.setTexture(star);
+	rightBot.setTexture(star);
 
-			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum) * 2)));
-			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum) * 2)));
+	left.setHeight(0.9f);
+	left.setWidth(0.45f);
 
-			entity->setWidth((1.0f / elementNum) * 2);
-			entity->setHeight((1.0f / elementNum) * 2);
+	leftBot.setX(0.025f);
+	leftBot.setY(0.5f);
+	leftBot.setWidth(0.95f);
+	leftBot.setHeight(0.45f);
 
-			entity->setProperty(gfx::Entity::STRETCH_X, false);
-			entity->setProperty(gfx::Entity::STRETCH_Y, false);
+	left.addChild(leftBot);
 
-			group.addChild(*entity);
-		}
-	}
+	rightTop.setX(0.5f);
+	rightTop.setHeight(0.4f);
+	rightTop.setWidth(0.4f);
+
+	rightBot.setHeight(0.4f);
+	rightBot.setWidth(0.4f);
+	rightBot.setX(0.5f);
+	rightBot.setY(0.5f);
+
+	left.addComponent(component);
+	leftBot.addComponent(component);
+	rightTop.addComponent(component);
+	rightBot.addComponent(component);
 
 
+	group.addChild(left);
+	group.addChild(rightTop);
+	group.addChild(rightBot);
 }
 
 int main(int argc, char* argv) {
 	try {
 
-		os::WindowModule module = os::WindowModule(500, 500, "Cleaning Demo");
+		os::WindowModule module = os::WindowModule(600, 500, "Cleaning Demo");
 
+		module.setWidth(1.0f);
+		module.setHeight(1.0f);
+		module.setX(0);
+		module.setY(0);
 		module.setFPS(30);
 		module.setVSync(false);
 
@@ -85,6 +110,8 @@ int main(int argc, char* argv) {
 
 		group.setWidth(1.0f);
 		group.setHeight(1.0f);
+		group.setX(0.0f);
+		group.setY(0.0f);
 
 		module.addChild(group);
 

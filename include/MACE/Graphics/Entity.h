@@ -22,12 +22,20 @@ namespace mc {
 
 		//forward-defining dependencies
 		class Entity;
+		class GraphicsEntity;
+
+		namespace ssl {
+			void fillBuffer(GraphicsEntity*);
+			void bindBuffer(ogl::UniformBuffer&);
+			void bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
+		};
 
 		class Component {
 		public:
 			virtual void init(Entity* e) = 0;
 			virtual bool update(Entity* e) = 0;
 			virtual void destroy(Entity* e) = 0;
+			virtual void clean(Entity* e);
 		};//Component
 
 		/**
@@ -542,41 +550,13 @@ namespace mc {
 		};//CallbackEntity
 
 		class GraphicsEntity: public Entity {
+			friend void ssl::bindBuffer(ogl::UniformBuffer&);
+			friend void ssl::bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
+			friend void ssl::fillBuffer(GraphicsEntity*);
 		public:
 			GraphicsEntity() noexcept;
 
-			GraphicsEntity(ogl::Texture& t) noexcept;
 			virtual ~GraphicsEntity() noexcept;
-
-			/**
-			@dirty
-			*/
-			Color& getPaint();
-			const Color& getPaint() const;
-			/**
-			@dirty
-			*/
-			void setPaint(const Color& c);
-
-			/**
-			@dirty
-			*/
-			float getOpacity();
-			const float getOpacity() const;
-			/**
-			@dirty
-			*/
-			void setOpacity(const float f);
-
-			/**
-			@dirty
-			*/
-			void setTexture(ogl::Texture& tex);
-			/**
-			@dirty
-			*/
-			ogl::Texture& getTexture();
-			const ogl::Texture& getTexture() const;
 
 			/**
 			@dirty
@@ -588,17 +568,15 @@ namespace mc {
 			*/
 			void setBuffer(const ogl::UniformBuffer& newBuffer);
 
+			void clean() final;
+
 			void init() final;
 
 			void destroy() final;
 
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
-
-			void onClean() override;
 		private:
-			ogl::Texture texture;
-
 			ogl::UniformBuffer buffer = ogl::UniformBuffer();
 		};//GraphicsEntity
 

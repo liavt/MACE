@@ -24,21 +24,20 @@ namespace mc {
 		namespace {
 			std::unordered_map< short int, BitField > keys = std::unordered_map< short int, BitField >();
 
-			void pushKeyEvent(const short int& key, const BitField action) {
-				keys[key] = action;
-			}
-
 			int mouseX = -1;
 			int mouseY = -1;
 
 			double scrollX = 0;
 			double scrollY = 0;
-		}
+
+			void pushKeyEvent(const short int& key, const BitField action) {
+				keys[key] = action;
+			}
+		}//anon namespace
 
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void WindowModule::create() {
-
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -54,7 +53,7 @@ namespace mc {
 				throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
 			}
 
-			if( GL_VERSION_1_1 ) {
+			if( GL_VERSION_3_0 ) {
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 				std::cout << "OpenGL has been created succesfully!" << std::endl;
 				std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
@@ -62,14 +61,10 @@ namespace mc {
 				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-			} else {
-				throw InitializationError("Error retrieving GLEW version!");
-			}
-
-			if( !GL_VERSION_3_0 ) {
-				throw InitializationError("OpenGL 3+ is not available!");
 			} else if( !GL_VERSION_3_3 ) {
-				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0.";
+				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
+			} else {
+				throw mc::InitializationError("OpenGL 3.0+ not found");
 			}
 
 			gfx::ogl::checkGLError();
@@ -317,7 +312,7 @@ namespace mc {
 			}
 
 			bool isKeyDown(const short int key) {
-				return keys[key].getBit(Input::PRESSED);
+				return keys[key].getBit(Input::PRESSED)||keys[key].getBit(Input::REPEATED);
 			}
 
 			bool isKeyRepeated(const short int key) {

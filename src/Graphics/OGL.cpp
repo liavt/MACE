@@ -17,6 +17,9 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			namespace {
+				//this is the ID for a texture where it is one pixel and its white. used when you want a solid color
+				Index whiteTexture = 0;
+
 				Shader createShader(const Enum type, const char* source) {
 					Shader s = Shader(type);
 					s.init();
@@ -54,34 +57,34 @@ namespace mc {
 				}
 			}//anon namespace
 
-			void checkGLError() {
+			void checkGLError(const Index line, const char* file) {
 #ifdef MACE_ERROR_CHECK
 				Enum result = GL_NO_ERROR;
 				while( (result = glGetError()) != GL_NO_ERROR ) {
 					switch( result ) {
 					case GL_INVALID_ENUM:
-						throw GLError("GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
 						break;
 					case GL_INVALID_VALUE:
-						throw GLError("GL_INVALID_VALUE! A numeric argument is out of range!");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_VALUE! A numeric argument is out of range!");
 						break;
 					case GL_INVALID_OPERATION:
-						throw GLError("GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
 						break;
 					case GL_INVALID_FRAMEBUFFER_OPERATION:
-						throw GLError("GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
 						break;
 					case GL_STACK_OVERFLOW:
-						throw GLError("GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
 						break;
 					case GL_STACK_UNDERFLOW:
-						throw GLError("GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
 						break;
 					case GL_OUT_OF_MEMORY:
-						throw GLError("GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
 						break;
 					default:
-						throw GLError("OpenGL has errored with an error code of " + std::to_string(result));
+						throw GLError("Line " + std::to_string(line) + " in " + file + ": OpenGL has errored with an error code of " + std::to_string(result));
 						break;
 					}
 				}
@@ -133,7 +136,7 @@ namespace mc {
 
 				addBuffer(buffer);
 
-				checkGLError();
+				checkGLError(__LINE__, __FILE__);
 			}
 
 			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
@@ -357,6 +360,20 @@ namespace mc {
 
 			Texture::Texture() noexcept {}
 
+			Texture::Texture(const Color & col) : paint(col) {
+				id = whiteTexture;
+				if( !isCreated() ) {
+					init();
+
+					float data[] = { 1,1,1,1 };
+
+					setData(data, 1, 1, GL_FLOAT, GL_RGBA);
+
+					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				}
+			}
+
 			Texture::Texture(const Texture & other, const Color & color) : opacity(other.opacity), target(other.target), paint(color) {
 				this->id = other.id;
 			}
@@ -385,7 +402,7 @@ namespace mc {
 				bind();
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 
-				checkGLError();
+				checkGLError(__LINE__, __FILE__);
 			}
 
 			void Texture::loadFile(const char * file) {
@@ -398,11 +415,16 @@ namespace mc {
 				stbi_image_free(image);
 
 				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			}
 
 			void Texture::loadFile(const std::string & file) {
 				loadFile(file.c_str());
+			}
+
+			void Texture::generateMipmap() {
+				bind();
+				glGenerateMipmap(target);
 			}
 
 			void Texture::setTarget(Enum targ) {
@@ -688,7 +710,7 @@ namespace mc {
 					throwShaderError(id, type, "The shader failed to compile with error: " + std::to_string(success));
 				}
 
-				checkGLError();
+				checkGLError(__LINE__, __FILE__);
 			}
 
 			bool Shader::isCreated() const {
@@ -725,7 +747,7 @@ namespace mc {
 
 			void ShaderProgram::init() {
 				id = glCreateProgram();
-				checkGLError();
+				checkGLError(__LINE__, __FILE__);
 				if( id == 0 ) {
 					throwShaderError(id, GL_PROGRAM, "Failed to retrieve program ID");
 				}
@@ -740,7 +762,7 @@ namespace mc {
 					}
 					glDeleteProgram(id);
 				}
-				checkGLError();
+				checkGLError(__LINE__, __FILE__);
 			}
 			void ShaderProgram::link() {
 				glLinkProgram(id);
@@ -764,7 +786,7 @@ namespace mc {
 					}
 				}
 
-				checkGLError();
+				checkGLError(__LINE__, __FILE__);
 			}
 			bool ShaderProgram::isCreated() const {
 				return glIsProgram(id) == 1;
@@ -944,6 +966,9 @@ namespace mc {
 
 			std::unordered_map<std::string, int>& ShaderProgram::getUniforms() {
 				return uniforms;
+			}
+			void checkGLError(const Index line, const std::string & file) {
+				checkGLError(line, file.c_str());
 			}
 		}//ogl
 	}//gfx

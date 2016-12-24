@@ -26,23 +26,24 @@ class FPSEntity: public gfx::Entity {
 	};
 	void onInit() override {};
 	void onDestroy() override {};
-
 };
 
-class TestEntity: public gfx::Entity2D {
+class TestComponent: public gfx::Component {
 
-	void onUpdate() override {
-		if( getProperty(gfx::Entity::HOVERED) && os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
-			rotate(0.0f, 0.0f, 0.01f);
+	void init(gfx::Entity* en) override {
+		dynamic_cast<gfx::Image*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+	}
+
+	bool update(gfx::Entity* en) override {
+		if( en->getProperty(gfx::Entity::HOVERED) && os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+			en->rotate(0.0f, 0.0f, 0.01f);
 		}
-	};
-	void onRender() override {
-		gfx::Renderer::queue(this);
-	};
-	void onInit() override {
-		setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
-	};
-	void onDestroy() override {};
+		return false;
+	}
+
+	void destroy(gfx::Entity* en) override {}
+
+	void clean(gfx::Entity* en) override {}
 };
 
 class RotationComponent: public gfx::Component {
@@ -57,6 +58,7 @@ class RotationComponent: public gfx::Component {
 };
 
 RotationComponent r = RotationComponent();
+TestComponent testComponent = TestComponent();
 
 
 void initGL() {
@@ -71,7 +73,7 @@ void initGL() {
 
 	for( Index x = 0; x < elementNum; x++ ) {
 		for( Index y = 0; y < elementNum; y++ ) {
-			TestEntity* entity = new TestEntity();
+			gfx::Image* entity = new gfx::Image();
 
 			entity->setTexture(star);
 
@@ -83,6 +85,8 @@ void initGL() {
 
 			entity->setProperty(gfx::Entity::STRETCH_X, false);
 			entity->setProperty(gfx::Entity::STRETCH_Y, false);
+
+			entity->addComponent(testComponent);
 
 			if( x >= elementNum / 2 ) {
 				if( y >= elementNum / 2 ) {

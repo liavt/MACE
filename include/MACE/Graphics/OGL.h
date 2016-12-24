@@ -51,7 +51,11 @@ namespace mc {
 			/**
 			@opengl
 			*/
-			void checkGLError();
+			void checkGLError(const Index line = 0, const char* file = "Unknown file");
+			/**
+			@copydoc ogl::checkGLError(const Index, const char*)
+			*/
+			void checkGLError(const Index line, const std::string& file);
 
 			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
@@ -71,6 +75,7 @@ namespace mc {
 			@see Buffer
 			@see https://www.opengl.org/wiki/OpenGL_Object
 			@todo create an RAII wrapper which calls init() and destroy() automatically
+			@todo store what object is currently bound. static Object getBoundObject(), bool isBound()
 			*/
 			class Object {
 			public:
@@ -309,6 +314,7 @@ namespace mc {
 			@see https://www.opengl.org/wiki/Framebuffer_Object
 			@see RenderBuffer
 			@see Texture
+			@todo target variable which is GL_FRAMEBUFFER by default. and update documentation accordingly
 			*/
 			class FrameBuffer: public Object {
 			public:
@@ -484,6 +490,8 @@ namespace mc {
 				@copydoc loadFile(const char*)
 				*/
 				void loadFile(const std::string& file);
+
+				void generateMipmap();
 
 				void setTarget(const Enum target);
 				Enum getTarget();

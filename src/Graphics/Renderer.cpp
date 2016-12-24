@@ -14,11 +14,10 @@ The above copyright notice and this permission notice shall be included in all c
 //we need to include cstring for memcpy
 #include <cstring>
 
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
-
-		int RenderImpl::index = -1;
-
 
 		namespace {
 			RenderQueue renderQueue = RenderQueue();
@@ -129,37 +128,16 @@ namespace mc {
 			//how many floats in the windowData uniform buffer
 #define MACE_WINDOW_DATA_BUFFER_SIZE 4
 //which binding location the windowData uniform buffer should be bound to
-#define MACE_WINDOW_DATA_LOCATION 0
+#define MACE_WINDOW_DATA_LOCATION 14
 
 //how many floats in the entityData uniform buffer. Needs to be multiplied by sizeof(GLfloat)
-#define MACE_ENTITY_DATA_BUFFER_SIZE 32
+#define MACE_ENTITY_DATA_BUFFER_SIZE 24
 //which binding location the paintdata uniform buffer should be bound to
-#define MACE_ENTITY_DATA_LOCATION 2
+#define MACE_ENTITY_DATA_LOCATION 15
 
-//ssl resources
-//preprocessor
 			namespace {
+				//ssl resources
 				Preprocessor sslPreprocessor = Preprocessor("");
-
-				IncludeString vertexLibrary = IncludeString({
-				#	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
-				}, "ssl_vertex");
-
-				IncludeString fragmentLibrary = IncludeString({
-				#	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
-				}, "ssl_frag");
-				IncludeString colorLibrary = IncludeString({
-				#	include <MACE/Graphics/Shaders/include/ssl_color.glsl>
-				}, "ssl_color");
-				IncludeString positionLibrary = IncludeString({
-				#	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
-				}, "ssl_position");
-				IncludeString mouseLibrary = IncludeString({
-				#	include <MACE/Graphics/Shaders/include/ssl_window.glsl>
-				}, "ssl_window");
-				IncludeString sslLibrary = IncludeString({
-				#	include <MACE/Graphics/Shaders/include/ssl.glsl>
-				}, "ssl");
 
 				//ssl buffer objects
 				ogl::UniformBuffer windowData = ogl::UniformBuffer();
@@ -171,34 +149,49 @@ namespace mc {
 				ogl::Texture sceneTexture = ogl::Texture();
 				ogl::Texture idTexture = ogl::Texture();
 
-				Index protocol;
-				Image scene = Image();
+				SimpleQuadRenderer renderer = SimpleQuadRenderer(false);
+
+				IncludeString vertexLibrary = IncludeString({
+#	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
+				}, "ssl_vertex");
+				/**
+				@todo Remove discard from shader
+				*/
+				IncludeString fragmentLibrary = IncludeString({
+#	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
+				}, "ssl_frag");
+				IncludeString positionLibrary = IncludeString({
+#	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
+				}, "ssl_position");
+				IncludeString mouseLibrary = IncludeString({
+#	include <MACE/Graphics/Shaders/include/ssl_window.glsl>
+				}, "ssl_window");
 
 				//this function goes into the anonymous namespace because it technically doesn't belong in the ssl namespace. it should remain to this source file
 				void generateFramebuffer(const Size& width, const Size& height) {
 
-					sceneTexture.setData(NULL, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+					sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 
-					idTexture.setData(NULL, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+					idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 
 					depthBuffer.init();
 					depthBuffer.bind();
 					depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
 
-					//for our custom FBO
+					//for our custom FBO. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
 					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
 					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-					GLenum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+					Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 					frameBuffer.setDrawBuffers(2, buffers);
 
 					if( frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE ) {
 						throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
 					}
 
-					ogl::checkGLError();
+					ogl::checkGLError(__LINE__, __FILE__);
 
 					glViewport(0, 0, width, height);
 				}//generateFrambuffer
@@ -223,40 +216,44 @@ namespace mc {
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-				//better to access originalWidth and originalHeigh directly than via a parameter.
+				//better to access originalWidth and originalHeight directly than via a parameter.
 				generateFramebuffer(originalWidth, originalHeight);
 
-				scene.setHeight(1);
-				scene.setWidth(1);
-				scene.setX(0.5f);
-				scene.setY(0.5f);
-				scene.setProperty(Entity::STRETCH_X, true);
-				scene.setProperty(Entity::STRETCH_Y, true);
-				scene.setTexture(sceneTexture);
+				ogl::checkGLError(__LINE__, __FILE__);
 
-				Renderer::registerProtocol<Entity2D>();
-				protocol = RenderProtocol<Entity2D>::index;
+				const char* vertexShader2D = {
+#	include <MACE/Graphics/Shaders/scene.v.glsl>
+				};
+				const char* fragmentShader2D = {
+#	include <MACE/Graphics/Shaders/scene.f.glsl>
+				};
 
-				scene.init();
+				renderer.init(vertexShader2D, fragmentShader2D);
+
+				ogl::checkGLError(__LINE__, __FILE__);
 
 				//gl states
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-				ogl::checkGLError();
 			}//init
 
 			void setUp(os::WindowModule *) {
 				frameBuffer.bind();
+				sceneTexture.bind();
+				idTexture.bind();
+
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			}//setUp
 
 			void tearDown(os::WindowModule * win) {
 				frameBuffer.unbind();
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				scene.clean();
+				sceneTexture.bind();
 
-				protocols[protocol]->render(win, &scene);
+				renderer.draw();
+
+				ogl::checkGLError(__LINE__, __FILE__);
 
 				glfwSwapBuffers(win->getGLFWWindow());
 			}//tearDown
@@ -270,22 +267,24 @@ namespace mc {
 				sceneTexture.destroy();
 				idTexture.destroy();
 
-				scene.destroy();
+				renderer.destroy();
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
 				//if we use the non const version, it will make it dirty again. we dont want this function to make it dirty.
-				ogl::UniformBuffer& entityData = const_cast<ogl::UniformBuffer&>(entity->getBuffer());
-
-				entityData.setLocation(MACE_ENTITY_DATA_LOCATION);
+				const ogl::UniformBuffer& entityData = entity->buffer;
+				/**
+				@todo Move setLocation to somewhere else. it only needs otbe called once
+				*/
 				entityData.bind();
 				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
 				entityData.bindForRender();
 
 				windowData.bindForRender();
 
-				entity->getTexture().bind();
-
+				/**
+				@todo Replace entityIndex with float or make it uint in shaders
+				*/
 				prog.setUniform("ssl_EntityID", static_cast<float>(entityIndex + 1));
 			}//bindEntity
 
@@ -296,9 +295,15 @@ namespace mc {
 
 			void resize(const Size & width, const Size & height) {
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we dont do anything
+				/**
+				@todo replace != 0 with > 0
+				*/
 				if( width != 0 && height != 0 ) {
 					windowData.bind();
 					float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
+					/**
+					@todo replace with sizeof(newSize)
+					*/
 					windowData.setDataRange(sizeof(float) * 2, sizeof(float) * 2, newSize);
 					windowData.unbind();
 
@@ -323,23 +328,22 @@ namespace mc {
 				}
 
 				frameBuffer.unbind();
-			}//resize
+			}//checkInput
 
 			void bindBuffer(ogl::UniformBuffer & buf) {
 				buf.bind();
 				//we set it to null, because during the actual rendering we set the data
 				buf.setData(sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
 				buf.unbind();
-			}
+			}//bindBuffer
 
 			void fillBuffer(GraphicsEntity * entity) {
 				if( !entity->getProperty(Entity::INIT) ) {
 					throw InitializationError("Internal error: Entity is not initializd.");
 				}
 
-				ogl::UniformBuffer& buf = entity->getBuffer();
-				const TransformMatrix& transform = entity->getTransformation();
-				const ogl::Texture& tex = entity->getTexture();
+				ogl::UniformBuffer& buf = entity->buffer;
+				const TransformMatrix& transform = entity->transformation;
 
 				Vector<float, 3> inheritedTranslation = { 0,0,0 };
 				Vector<float, 3> inheritedScale = { 1,1,1 };
@@ -352,14 +356,11 @@ namespace mc {
 					inheritedTranslation = parentTransform.translation;
 					inheritedScale = parentTransform.scaler;
 					inheritedRotation = parentTransform.rotation;
-
 				}
 
+				//GLSL expects the boolean values as a float, because memory is stored in increments of a float.
 				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
 				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
-				const float opacity = tex.getOpacity();
-
-				const Color& paint = tex.getPaint();
 
 				//the following are containers for the flatten() call
 				float flattenedData[16];
@@ -367,9 +368,9 @@ namespace mc {
 				//now we set the uniform buffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));//we need to cast it to a Byte* so we can do pointer arithmetic on it	
+				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, sizeof(float)*MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float, 3>));
-				mappedEntityData += 3;
+				mappedEntityData += 3;//pointer arithmetic!
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
 				++mappedEntityData;
 				std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector<float, 3>));
@@ -377,10 +378,6 @@ namespace mc {
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
 				std::memcpy(mappedEntityData, transform.rotation.flatten(flattenedData), sizeof(Vector<float, 3>));
-				mappedEntityData += 3;
-				std::memcpy(mappedEntityData, &opacity, sizeof(opacity));
-				++mappedEntityData;
-				std::memcpy(mappedEntityData, &paint, sizeof(paint));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 4;
@@ -389,7 +386,9 @@ namespace mc {
 				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Vector<float, 3>));
 
 				buf.unmap();
-			}
+
+				buf.setLocation(MACE_ENTITY_DATA_LOCATION);
+			}//fillBuffer
 
 			std::string processShader(const std::string & shader, const GLenum& type) {
 				Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
@@ -407,12 +406,116 @@ namespace mc {
 
 					sslPreprocessor.defineMacro(mc::Macro("__SSL__", "1"));
 
+					//C-style casts are unsafe. Problem is that this is a C API. You must use a C-style cast in order to do this correctly.
+					sslPreprocessor.defineMacro(mc::Macro("GL_VENDOR", (const char*) (glGetString(GL_VENDOR))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*) (glGetString(GL_RENDERER))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*) (glGetString(GL_VERSION))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*) (glGetString(GL_SHADING_LANGUAGE_VERSION))));
+
+					/*
+					in order to define a bunch of opengl macros, we need to check if they exist, just in case this system doesnt support
+					a certain macro. the following is a special macro which only defines a macro in sslPreprocessor if it is defined in
+					reality
+					*/
+
+					//indirection is the only way to expand macros in other macros
+#define MACE_NAME_STRINGIFY(name) "" #name
+#define MACE_STRINGIFY(name) #name
+					//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
+#define MACE_DEFINE_MACRO(name) if(std::strcmp("" #name ,MACE_NAME_STRINGIFY(name))){sslPreprocessor.defineMacro( Macro( #name , MACE_STRINGIFY( name ) ));}
+					/*Shader macros*/
+					MACE_DEFINE_MACRO(GL_VERTEX_SHADER);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_ATTRIBUTES);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_INPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_OUTPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_IMAGE_UNIFORMS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
+
+					MACE_DEFINE_MACRO(GL_FRAGMENT_SHADER);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_ATTRIBUTES);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_INPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_OUTPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
+
+					MACE_DEFINE_MACRO(GL_GEOMETRY_SHADER);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_ATTRIBUTES);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_INPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_IMAGE_UNIFORMS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS);
+
+					MACE_DEFINE_MACRO(GL_TESS_CONTROL_SHADER);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATTRIBUTES);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_INPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS);
+
+					MACE_DEFINE_MACRO(GL_TESS_EVALUATION_SHADER);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATTRIBUTES);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS);
+
+					MACE_DEFINE_MACRO(GL_COMPUTE_SHADER);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_ATTRIBUTES);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_INPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_OUTPUT_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_IMAGE_UNIFORMS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS);
+
+					MACE_DEFINE_MACRO(GL_MAX_UNIFORM_BUFFER_BINDINGS);
+					MACE_DEFINE_MACRO(GL_MAX_COMBINED_UNIFORM_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS);
+					MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS);
+					MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS);
+					MACE_DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS);
+					MACE_DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTERS);
+					MACE_DEFINE_MACRO(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
+					MACE_DEFINE_MACRO(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
+					MACE_DEFINE_MACRO(GL_MAX_IMAGE_UNITS);
+					MACE_DEFINE_MACRO(GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
+
+					MACE_DEFINE_MACRO(GL_FALSE);
+					MACE_DEFINE_MACRO(GL_TRUE);
+					MACE_DEFINE_MACRO(NULL);
+#undef MACE_NAME_STRINGIFY
+#undef MACE_STRINGIFY
+#undef MACE_DEFINE_MACRO
+
 					sslPreprocessor.addInclude(vertexLibrary);
 					sslPreprocessor.addInclude(fragmentLibrary);
-					sslPreprocessor.addInclude(colorLibrary);
 					sslPreprocessor.addInclude(positionLibrary);
 					sslPreprocessor.addInclude(mouseLibrary);
-					sslPreprocessor.addInclude(sslLibrary);
 				}
 				return sslPreprocessor;
 			}//getSSLPreprocessor
@@ -425,6 +528,123 @@ namespace mc {
 #undef MACE_ENTITY_DATA_LOCATION
 
 		}//ssl
+
+		SimpleQuadRenderer::SimpleQuadRenderer(const bool ssl) : useSSL(ssl) {}
+
+		void SimpleQuadRenderer::init(const char * vertexShader, const char * fragShader) {
+			const float squareTextureCoordinates[8] = {
+				0.0f,1.0f,
+				0.0f,0.0f,
+				1.0f,0.0f,
+				1.0f,1.0f,
+			};
+
+			const unsigned int squareIndices[6] = {
+				0,1,3,
+				1,2,3
+			};
+
+			shaders2D.init();
+			square.init();
+
+			//vao loading
+			if( useSSL ) {
+				const float squareVertices[12] = {
+					-0.5f,-0.5f,0.0f,
+					-0.5f,0.5f,0.0f,
+					0.5f,0.5f,0.0f,
+					0.5f,-0.5f,0.0f
+				};
+
+				square.loadVertices(4, squareVertices, 15, 3);
+			} else {
+				const float squareVertices[12] = {
+					-1.0f,-1.0f,0.0f,
+					-1.0f,1.0f,0.0f,
+					1.0f,1.0f,0.0f,
+					1.0f,-1.0f,0.0f
+				};
+
+				square.loadVertices(4, squareVertices, 0, 3);
+			}
+			square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
+
+			square.loadIndices(6, squareIndices);
+
+			//shader stuff
+			shaders2D.createVertex(useSSL ? ssl::processShader(vertexShader, GL_VERTEX_SHADER) : vertexShader);
+			shaders2D.createFragment(useSSL ? ssl::processShader(fragShader, GL_FRAGMENT_SHADER) : fragShader);
+
+			shaders2D.link();
+
+			if( useSSL ) {
+				ssl::bindShaderProgram(shaders2D);
+			}
+
+			ogl::checkGLError(__LINE__, __FILE__);
+		}
+
+		void SimpleQuadRenderer::init(const char * vertexShader, const std::string & fragShader) {
+			init(vertexShader, fragShader.c_str());
+		}
+
+		void SimpleQuadRenderer::init(const std::string & vertexShader, const char * fragShader) {
+			init(vertexShader.c_str(), fragShader);
+		}
+
+		void SimpleQuadRenderer::init(const std::string & vertexShader, const std::string & fragShader) {
+			init(vertexShader.c_str(), fragShader.c_str());
+		}
+
+		void SimpleQuadRenderer::destroy() {
+			shaders2D.destroy();
+			square.destroy();
+		}
+
+		void SimpleQuadRenderer::draw(const GraphicsEntity * en) {
+			square.bind();
+			shaders2D.bind();
+
+			if( useSSL ) {
+				ssl::bindEntity(en, shaders2D);
+			}
+
+			square.draw();
+
+			ogl::checkGLError(__LINE__, __FILE__);
+		}
+
+		void SimpleQuadRenderer::setShader(const ogl::ShaderProgram & shader) {
+			shaders2D = shader;
+		}
+
+		ogl::ShaderProgram & SimpleQuadRenderer::getShader() {
+			return shaders2D;
+		}
+
+		const ogl::ShaderProgram & SimpleQuadRenderer::getShader() const {
+			return shaders2D;
+		}
+
+		void SimpleQuadRenderer::setVertexArray(const ogl::VertexArray & vertices) {
+			square = vertices;
+		}
+
+		ogl::VertexArray & SimpleQuadRenderer::getVertexArray() {
+			return square;
+		}
+
+		const ogl::VertexArray & SimpleQuadRenderer::getVertexArray() const {
+			return square;
+		}
+
+		bool SimpleQuadRenderer::operator==(const SimpleQuadRenderer & other) const {
+			return shaders2D == other.shaders2D&&square == other.square;
+		}
+
+		bool SimpleQuadRenderer::operator!=(const SimpleQuadRenderer & other) const {
+			return !operator==(other);
+		}
 
 	}//gfx
 }//mc

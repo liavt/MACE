@@ -37,17 +37,12 @@ namespace mc {
 		color.r = 0.5f;//set the red component to be 0.5f
 		color.setRed(127); //set the red component to be 0.5f as a Byte from 0 to 255
 	}
+
+	@todo create setRed(float), setGreen(float), and so forth
+	@todo darken() and lighten() functions
 	*/
 	struct Color {
 	public:
-		static const Color RED, GREEN,
-			DARK_BLUE, CYAN,
-			LIGHT_BLUE, DARK_RED,
-			DARK_GREEN, PURPLE,
-			MAGENTA, WHITE,
-			BLACK, YELLOW,
-			DARK_GRAY, GRAY, LIGHT_GRAY,
-			DARK_ORANGE, ORANGE, LIGHT_ORANGE;
 
 		/**
 		Color component, represented as a `float`. It is from 0.0 to 1.0, where 1.0 is the brightest it can get.
@@ -210,6 +205,24 @@ namespace mc {
 		*/
 		bool operator<=(const Color& other) const;
 	};//Color
+
+	/**
+	Contains various `Color` constants for common colors.
+	*/
+	namespace Colors {
+		/**
+		Constant `Color` value for easy access to common colors
+		*/
+		const Color RED = Color(255, 0, 0), GREEN = Color(0, 255, 0),
+			DARK_BLUE = Color(0, 0, 255), CYAN = Color(0, 255, 255),
+			LIGHT_BLUE = Color(50, 200, 255), DARK_RED = Color(150, 0, 0),
+			DARK_GREEN = Color(0, 150, 0), PURPLE = Color(100, 0, 255),
+			MAGENTA = Color(255, 0, 255), WHITE = Color(255, 255, 255),
+			BLACK = Color(0, 0, 0), YELLOW = Color(255, 255, 0),
+			DARK_GRAY = Color(100, 100, 100), LIGHT_GRAY = Color(200, 200, 200),
+			ORANGE = Color(255, 125, 0), GRAY = Color(150, 150, 150),
+			DARK_ORANGE = Color(255, 100, 0), LIGHT_ORANGE = Color(255, 150, 0);
+	};
 }//mc
 
 #endif

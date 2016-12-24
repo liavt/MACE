@@ -56,11 +56,20 @@ namespace mc {
 			"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__",
 			"__MACE__","__IF_SCOPE__","__CURRENT_IF_SCOPE__","__VA_ARGS__"
 		};
-
+		
+		//a punctuator according to the standard is something that seperates tokens. 
+		/**
+		1 character long punctuators. The reason that 2 character long and 1 characer long punctuators are seperate arrays
+		is because something like == has 1 punctuator, but !! has 2 punctuators.
+		*/
 		const std::array< char, 23 > punctuators1c = {
 			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
 		};
-
+		
+		/**
+		2 character long punctuators
+		@todo Make this constexpr. Right now, it is allocated at runtime, not compile time. std::string is not constexpr so an alternative is needed
+		*/
 		const std::array< std::string , 20 > punctuators2c = {
 			">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
 		};
@@ -1165,7 +1174,7 @@ namespace mc {
 		MACE_PREDEFINE_MACRO(__MEDIUM__);
 		MACE_PREDEFINE_MACRO(__COMPACT__);
 		MACE_PREDEFINE_MACRO(__LARGE__);
-	}
+	}//defineStandardMacros
 
 	void Preprocessor::defineOSMacros() {
 		/*

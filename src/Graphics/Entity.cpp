@@ -107,8 +107,12 @@ namespace mc {
 					}
 				}
 
+				for( Index i = 0; i < components.size(); i++ ) {
+					components[i]->clean(this);
+				}
+
 				setProperty(Entity::DIRTY, false);
-			}else{
+			} else {
 				for( Size i = 0; i < children.size(); i++ ) {
 					if( children[i]->getProperty(Entity::INIT) ) {
 						children[i]->clean();
@@ -426,7 +430,7 @@ namespace mc {
 			return transformation.scaler[0];
 		}
 		void Entity::setWidth(const float & s) {
-			if( transformation.scaler[1] != s ) {
+			if( transformation.scaler[0] != s ) {
 				makeDirty();
 
 				transformation.scaler[0] = s;
@@ -561,29 +565,7 @@ namespace mc {
 
 		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
 
-		GraphicsEntity::GraphicsEntity(ogl::Texture & t) noexcept : Entity() {
-			texture = t;
-		}
-
 		GraphicsEntity::~GraphicsEntity() noexcept {}
-
-		void GraphicsEntity::setTexture(ogl::Texture & tex) {
-			if( tex != texture ) {
-				makeDirty();
-
-				texture = tex;
-			}
-		}
-
-		ogl::Texture & GraphicsEntity::getTexture() {
-			makeDirty();
-
-			return texture;
-		}
-
-		const ogl::Texture & GraphicsEntity::getTexture() const {
-			return texture;
-		}
 
 		void GraphicsEntity::init() {
 			if( !buffer.isCreated() ) {
@@ -599,52 +581,21 @@ namespace mc {
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return texture == other.texture&&buffer == other.buffer&&Entity::operator==(other);
+			return buffer == other.buffer&&Entity::operator==(other);
 		}
 
 		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
 			return !(operator==(other));
 		}
 
-		void GraphicsEntity::onClean() {
-			ssl::fillBuffer(this);
-		}
-
-		Color & GraphicsEntity::getPaint() {
-			makeDirty();
-
-			return texture.getPaint();
-		}
-
-		const Color & GraphicsEntity::getPaint() const {
-			return texture.getPaint();
-		}
-
-		void GraphicsEntity::setPaint(const Color & c) {
-			if( texture.getPaint() != c ) {
-				makeDirty();
-
-				texture.setPaint(c);
+		void GraphicsEntity::clean() {
+			if( getProperty(Entity::DIRTY) ) {
+				ssl::fillBuffer(this);
 			}
+			Entity::clean();
 		}
 
-		float GraphicsEntity::getOpacity() {
-			makeDirty();
+		void Component::clean(Entity * e) {}
 
-			return texture.getOpacity();
-		}
-
-		const float GraphicsEntity::getOpacity() const {
-			return texture.getOpacity();
-		}
-
-		void GraphicsEntity::setOpacity(const float f) {
-			if( texture.getOpacity() != f ) {
-				makeDirty();
-
-				texture.setOpacity(f);
-			}
-		}
-
-	}//gfx
+}//gfx
 }//mc

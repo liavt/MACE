@@ -10,19 +10,14 @@ struct ssl_EntityDataStruct{
 	vec3 ssl_Scale;
 	float ssl_StretchY;
 	vec3 ssl_Rotation;
-	float ssl_Opacity;
-	vec4 ssl_Paint;
 };
-
-layout(location = 15) in vec3 ssl_VertexPosition;
 
 layout(std140) uniform ssl_BaseEntityBuffer{
 	ssl_EntityDataStruct ssl_BaseEntity;
 	ssl_EntityDataStruct ssl_ParentEntity;
 };
 
-out float ssl_Opacity;
-out vec4 ssl_Paint;
+layout(location = 15) in vec3 ssl_VertexPosition;
 
 mat4 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 	float ssl_CosZ = cos(ssl_RotationInput.z), ssl_SinZ = sin(ssl_RotationInput.z),
@@ -70,16 +65,14 @@ vec4 sslGetEntityPosition(){
 		ssl_Position.y*=ssl_SizeModifier.y;
 	}
 	
-	ssl_Opacity = ssl_BaseEntity.ssl_Opacity;
-	ssl_Paint = ssl_BaseEntity.ssl_Paint;
 	/*
 	For those who didn't get the MAD joke:
 	MAD means multipy, add, then divide. Doing math in that sequence will be done in 1 gpu cycle instead of 3, which saves a lot of processing power.  Thats what we are doing up there.
+	That is also the reason it all has to go on one line. It is hard to understand, but that is simply the way it works.
 	*/
 	
 	return ssl_Position;
 }
 
 #endif
-
 )"

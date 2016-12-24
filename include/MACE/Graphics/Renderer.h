@@ -142,7 +142,7 @@ namespace mc {
 			*/
 			virtual void destroy() = 0;
 		private:
-			static int index;
+			int index = -1;
 		};
 
 		/**
@@ -164,7 +164,7 @@ namespace mc {
 		};
 
 
-		class Renderer final{
+		class Renderer final {
 			//needs to access registerProtocol
 			friend void ssl::init(const Size&, const Size&);
 		public:
@@ -187,10 +187,9 @@ namespace mc {
 			static void setUp(os::WindowModule* win);
 
 			template<typename T>
-			static void queue(T* e) {
+			static void queue(T* e, const Index protocol) {
 				if( e == nullptr || e == NULL )throw NullPointerException("Input pointer to an entity must not be null in queue()");
-				if( RenderProtocol<T>::index == -1 )registerProtocol<T>();
-				pushEntity(RenderProtocol<T>::index, e);
+				pushEntity(protocol, e);
 			};
 
 			static Size numberOfProtocols();
@@ -233,6 +232,18 @@ namespace mc {
 			@opengl
 			*/
 			static void setRefreshColor(const Color& c);
+			
+			template<typename T>
+			static Index registerProtocol() {
+				//in destroy(), this memory is deleted
+				RenderImpl* protocol = new RenderProtocol<T>();
+				if( protocol == nullptr ) {
+					throw NullPointerException("Error creating RenderProtocol");
+				}
+				protocol->init(getOriginalWidth(), getOriginalHeight());
+				pushProtocol(protocol);
+				return numberOfProtocols() - 1;
+			}
 
 			static Size getOriginalWidth();
 			static Size getOriginalHeight();
@@ -242,16 +253,54 @@ namespace mc {
 
 			static void pushEntity(Index protocol, GraphicsEntity*  entity);
 			static void pushProtocol(RenderImpl* protocol);
-
-			template<typename T>
-			static void registerProtocol() {
-				//in destroy(), this memory is deleted
-				RenderImpl* protocol = new RenderProtocol<T>();
-				protocol->init(getOriginalWidth(), getOriginalHeight());
-				pushProtocol(protocol);
-				RenderProtocol<T>::index = numberOfProtocols() - 1;
-			}
 		};//Renderer
+
+		class SimpleQuadRenderer {
+		public:
+			SimpleQuadRenderer(const bool ssl = true);
+
+			/**
+			@opengl
+			*/
+			void init(const char* vertexShader, const char* fragShader);
+			/**
+			@copydoc SimpleQuadRenderer::init(const char*, const char*)
+			*/
+			void init(const char* vertexShader, const std::string& fragShader);
+			/**
+			@copydoc SimpleQuadRenderer::init(const char*, const char*)
+			*/
+			void init(const std::string& vertexShader, const char* fragShader);
+			/**
+			@copydoc SimpleQuadRenderer::init(const char*, const char*)
+			*/
+			void init(const std::string& vertexShader, const std::string& fragShader);
+			/**
+			@opengl
+			*/
+			void destroy();
+
+			/**
+			@opengl
+			*/
+			void draw(const GraphicsEntity* en = nullptr);
+
+			void setShader(const ogl::ShaderProgram& shader);
+			ogl::ShaderProgram& getShader();
+			const ogl::ShaderProgram& getShader() const;
+
+			void setVertexArray(const ogl::VertexArray& vertices);
+			ogl::VertexArray& getVertexArray();
+			const ogl::VertexArray& getVertexArray() const;
+
+			bool operator==(const SimpleQuadRenderer& other) const;
+			bool operator!=(const SimpleQuadRenderer& other) const;
+		private:
+			ogl::ShaderProgram shaders2D = ogl::ShaderProgram();
+			ogl::VertexArray square = ogl::VertexArray();
+
+			const bool useSSL;
+		};
 
 	}//gfx
 }//mc

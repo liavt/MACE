@@ -23,22 +23,17 @@ namespace mc {
 		public:
 			Entity2D();
 		protected:
+
 		};//Entity2D
 
-		class Image: public Entity2D {
-		protected:
-			void onInit() override;
-			void onUpdate() override;
-			void onRender() override;
-			void onDestroy() override;
-		};
+		class Image;
 
 		/**
 		@internal
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Entity2D>: public RenderImpl {
+		class RenderProtocol<Image>: public RenderImpl {
 		public:
 			void resize(const Size width, const Size height) override;
 
@@ -52,11 +47,75 @@ namespace mc {
 
 			void destroy() override;
 		private:
-
-			ogl::ShaderProgram shaders2D = ogl::ShaderProgram();
-			ogl::VertexArray square = ogl::VertexArray();
+			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};
 
+		class Image: public Entity2D {
+			friend class RenderProtocol<Image>;
+		public:
+			static int protocol;
+
+			Image() noexcept;
+			Image(const ogl::Texture& tex);
+			~Image() = default;
+
+			/**
+			@dirty
+			*/
+			void setTextureData(const ogl::UniformBuffer& buf);
+			/**
+			@copydoc Image::getTextureData() const
+			@dirty
+			*/
+			ogl::UniformBuffer& getTextureData();
+			/**
+
+			*/
+			const ogl::UniformBuffer& getTextureData() const;
+
+			/**
+			@dirty
+			*/
+			Color& getPaint();
+			const Color& getPaint() const;
+			/**
+			@dirty
+			*/
+			void setPaint(const Color& c);
+
+			/**
+			@dirty
+			*/
+			float getOpacity();
+			const float getOpacity() const;
+			/**
+			@dirty
+			*/
+			void setOpacity(const float f);
+
+			/**
+			@dirty
+			*/
+			void setTexture(ogl::Texture& tex);
+			/**
+			@dirty
+			*/
+			ogl::Texture& getTexture();
+			const ogl::Texture& getTexture() const;
+
+			bool operator==(const Image& other) const;
+			bool operator!=(const Image& other) const;
+		protected:
+			void onInit() override final;
+			void onUpdate() override final;
+			void onRender() override final;
+			void onDestroy() override final;
+			void onClean() override final;
+		private:
+			ogl::Texture texture;
+
+			ogl::UniformBuffer textureData = ogl::UniformBuffer();
+		};
 	}//gfx
 }//mc
 

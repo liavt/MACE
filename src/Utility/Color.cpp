@@ -25,16 +25,6 @@ namespace mc {
 		}
 	}//anon namespace
 
-	const Color Color::RED = Color(255, 0, 0), Color::GREEN = Color(0, 255, 0),
-		Color::DARK_BLUE = Color(0, 0, 255), Color::CYAN = Color(0, 255, 255),
-		Color::LIGHT_BLUE = Color(50, 200, 255), Color::DARK_RED = Color(150, 0, 0),
-		Color::DARK_GREEN = Color(0, 150, 0), Color::PURPLE = Color(100, 0, 255),
-		Color::MAGENTA = Color(255, 0, 255), Color::WHITE = Color(255, 255, 255),
-		Color::BLACK = Color(0, 0, 0), Color::YELLOW = Color(255, 255, 0),
-		Color::DARK_GRAY = Color(100, 100, 100), Color::LIGHT_GRAY = Color(200, 200, 200),
-		Color::ORANGE = Color(255, 125, 0), Color::GRAY = Color(150,150,150),
-		Color::DARK_ORANGE = Color(255, 100, 0), Color::LIGHT_ORANGE = Color(255, 150, 0);
-
 	Byte Color::getRed() const {
 		return convertFloatToRGBA(this->r);
 	}

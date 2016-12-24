@@ -26,6 +26,8 @@ namespace mc {
 
 	/**
 	Namespace with classes related to the operating system like keyboard input, mouse, and windows.
+	@todo Move this to a seperate header
+	@todo Add functions for cross-platform time and pausing the console
 	*/
 	namespace os {
 		class WindowModule: public Module, public gfx::Entity {
@@ -83,7 +85,11 @@ namespace mc {
 		};//WindowModule
 
 		namespace Input {
-			//the reason we are using not-strong enums is because we want it to expand to a number for GLFW
+			/*
+			the reason we are using not-strong enums is because we want it to expand to a number for GLFW
+			Normally, this should be a macro, but those don't follow scope. Weak enums are very similar to macros
+			but they follow scope (even though they don't create one themselves)
+			*/
 			//it is a Byte (unsigned char) to save memory.
 			enum Action: Byte {
 				PRESSED = 0,
@@ -124,7 +130,10 @@ namespace mc {
 				MOUSE_LAST = MOUSE_8,
 
 				MOUSE_FIRST = MOUSE_1,
+				
+				//the values for the following keys are equal to their values in GLFW
 
+				//The first keys are direct ASCII mappings
 				SPACE = 32,
 
 				APOSTROPHE = 39, /* ' */
@@ -224,6 +233,8 @@ namespace mc {
 				WORLD_1 = 161, /* non-US #1 */
 
 				WORLD_2 = 162, /* non-US #2 */
+
+				//non-ASCII characters have values above 255 and are defined as following
 
 				ESCAPE = 256,
 
@@ -364,6 +375,8 @@ namespace mc {
 				RIGHT_SUPER = 347,
 
 				MENU = 348,
+
+				//LAST and FIRST allows you to iterate through the keys because FIRST is the first value and LAST is the second value
 
 				LAST = MENU,
 
