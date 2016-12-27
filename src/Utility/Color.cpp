@@ -1,5 +1,3 @@
-#include "..\..\include\MACE\Utility\Color.h"
-#include "..\..\include\MACE\Utility\Color.h"
 /*
 The MIT License (MIT)
 

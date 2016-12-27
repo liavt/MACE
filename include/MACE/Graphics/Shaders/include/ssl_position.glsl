@@ -51,10 +51,10 @@ vec4 sslGetEntityPosition(){
 	//applying the parent properties now
 	ssl_Position = (vec4(ssl_ParentEntity.ssl_Translation,1.0)+((sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation)*(ssl_Position * vec4(ssl_ParentEntity.ssl_Scale,0.0)))));//what a MAD man!
 		
+	ssl_Position.xy += 0.5;
 	ssl_Position.xy *= 2;
-	ssl_Position.xy -= 0.5;
 	
-	ssl_Position += vec4(ssl_BaseEntity.ssl_Scale/2,0.0f);
+	//ssl_Position += vec4((ssl_BaseEntity.ssl_Scale)/2,0.0f);
 	
 	vec2 ssl_SizeModifier = ssl_OriginalSize/ssl_CurrentSize;
 	

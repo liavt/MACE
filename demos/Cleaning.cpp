@@ -67,10 +67,7 @@ void initGL() {
 	left.setHeight(0.9f);
 	left.setWidth(0.45f);
 
-	leftBot.setX(0.025f);
-	leftBot.setY(0.5f);
-	leftBot.setWidth(0.95f);
-	leftBot.setHeight(0.45f);
+	leftBot.setX(1.2f);
 
 	left.addChild(leftBot);
 
@@ -90,8 +87,8 @@ void initGL() {
 
 
 	group.addChild(left);
-	group.addChild(rightTop);
-	group.addChild(rightBot);
+//	group.addChild(rightTop);
+	//group.addChild(rightBot);
 }
 
 int main(int argc, char* argv) {
@@ -99,19 +96,10 @@ int main(int argc, char* argv) {
 
 		os::WindowModule module = os::WindowModule(600, 500, "Cleaning Demo");
 
-		module.setWidth(1.0f);
-		module.setHeight(1.0f);
-		module.setX(0);
-		module.setY(0);
 		module.setFPS(30);
 		module.setVSync(false);
 
 		System::addModule(module);
-
-		group.setWidth(1.0f);
-		group.setHeight(1.0f);
-		group.setX(0.0f);
-		group.setY(0.0f);
 
 		module.addChild(group);
 

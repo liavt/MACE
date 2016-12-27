@@ -77,11 +77,11 @@ void initGL() {
 
 			entity->setTexture(star);
 
-			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum) * 2)));
-			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum) * 2)));
+			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum) * 4)));
+			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum) * 4)));
 
-			entity->setWidth((1.0f / elementNum) * 2);
-			entity->setHeight((1.0f / elementNum) * 2);
+			entity->setWidth((1.0f / elementNum)*2);
+			entity->setHeight((1.0f / elementNum)*2);
 
 			entity->setProperty(gfx::Entity::STRETCH_X, false);
 			entity->setProperty(gfx::Entity::STRETCH_Y, false);

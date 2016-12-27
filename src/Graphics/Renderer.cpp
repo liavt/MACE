@@ -343,12 +343,29 @@ namespace mc {
 				Vector<float, 3> inheritedRotation = { 0,0,0 };
 
 				if( entity->hasParent() ) {
-					const Entity* const parent = entity->getParent();
-					const TransformMatrix& parentTransform = parent->getTransformation();
+
+					const Entity* par = entity->getParent();
+					const TransformMatrix& parentTransform = par->getTransformation();
+
 
 					inheritedTranslation = parentTransform.translation;
 					inheritedScale = parentTransform.scaler;
 					inheritedRotation = parentTransform.rotation;
+
+					//iterate through every parent
+					while( par->hasParent() ) {
+						const TransformMatrix& parTransform = par->getTransformation();
+
+						
+						inheritedTranslation += parTransform.translation;
+						inheritedScale *= parTransform.scaler;
+						inheritedRotation += parTransform.rotation;
+						
+
+						par = par->getParent();
+					}
+
+
 				}
 
 				//GLSL expects the boolean values as a float, because memory is stored in increments of a float.

@@ -311,9 +311,8 @@ namespace mc {
 			SECTION("Multiplying") {
 				Vector3i v1 = { 1,0,3 };
 				Vector3i v2 = { -1,4,2 };
-				Vector3i result = { -12,-5,4 };
+				Vector3i result = { -1,0,6 };
 				REQUIRE(v1*v2 == result);
-				REQUIRE(math::cross(v1, v2) == result);
 			}
 			SECTION("Dot product") {
 				Vector3i v1 = { 1,0,3 };

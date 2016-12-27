@@ -260,75 +260,80 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		*/
 		Vector operator+(const Vector<T, N>& right) const {
-			std::array<T, N> out = std::array<T, N>();
-			for( unsigned int i = 0; i < N; i++ ) {
-				out[i] = ((T) (this->get(i) + right.get(i)));
-			}
-			return mc::Vector<T, N>(out);
+			Vector<T, N> out = Vector<T, N>(*this);
+			out += right;
+			return out;
 		};
 		/**
 		Subtracts 2 `Vectors` together.
 		<p>
-		This is done in o(N) time
+		This is done in O(N) time
 
 		@param right Another `Vector`
 		@return A `Vector` that was created by subtracting 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
 		Vector operator-(const Vector<T, N>& right) const {
-			std::array<T, N> out = std::array<T, N>();
-			for( unsigned int i = 0; i < N; i++ ) {
-				out[i] = ((T) (this->get(i) - right.get(i)));
-			}
-			return mc::Vector<T, N>(out);
-		};
-		/**
-		Calculates the cross product of 2 `Vectors`
-
-		@param right Another `Vector`
-		@return The cross product
-		@see Vector for an explanation of `Vector` math
-		@see cross(const Vector&, const Vector&)
-		@see operator*(const T)
-		@see operator%(const Vector&)
-		*/
-		Vector operator*(const Vector<T, 3>& right) const {
-			//i though of more than one pun for this one, so here is a list:
-
-			//the cross of jesus or the cross of cris? these are important questions
-			//i wont double cross you!
-			//the bible is a cross product
-			//so is a swiss army knife
-			//railroad crossing; the train is carying important product
-			//i should just cross this off the list of unproductive things i have done
-
-			Vector<T, 3> out = Vector<T, 3>();
-			//whew math
-			out[0] = (this->operator[](1) * right[2]) - (this->operator[](2) * right[1]);
-			out[1] = (this->operator[](2) * right[0]) - (this->operator[](0) * right[2]);
-			out[2] = (this->operator[](0) * right[1]) - (this->operator[](1) * right[0]);
-
+			Vector<T, N> out = Vector<T, N>(*this);
+			out -= right;
 			return out;
 		};
 
 		/**
-		Calculates the dot product of 2 `Vectors`
+		Multiplies 2 `Vectors` together.
 		<p>
-		This is done in o(N) time
+		This is done in O(N) time
 
 		@param right Another `Vector`
-		@return The dot product
+		@return The product of the multiplication
 		@see Vector for an explanation of `Vector` math
-		@see cross(const Vector&, const Vector&)
-		@see operator*(const T)
-		@see operator*(const Vector&)
 		*/
-		T operator%(const Vector<T, 3>& right) const {
+		Vector operator*(const Vector<T, 3>& right) const {
+			Vector<T, N> out = Vector<T, N>(*this);
+			out *= right;
+			return out;
+		}
 
-			T out = 0;
-			for( Index i = 0; i < N; i++ ) {
-				out += static_cast<T>(this->operator[](i) * right[i]);
-			}
+		/**
+		Divides 2 `Vectors` together.
+		<p>
+		This is done in O(N) time
+
+		@param right Another `Vector`
+		@return The quotient of 2 `Vectors`
+		@see Vector for an explanation of `Vector` math
+		*/
+		Vector operator/(const Vector<T, 3>& right) const {
+			Vector<T, N> out = Vector<T, N>(*this);
+			out /= right;
+			return out;
+		}
+
+		/**
+		Translates a `Vector` with a scalar.
+		<p>
+		This is done in O(N) time
+		@param scalar What to translate this `Vector` by
+		@return A `Vector` translated.
+		@see operator*(const Vector&) const
+		*/
+		Vector operator+(const T scalar) const {
+			Vector<T, N> out = Vector<T, N>(*this);
+			out += scalar;
+			return out;
+		}
+
+		/**
+		Translates a `Vector` with a scalar.
+		<p>
+		This is done in O(N) time
+		@param scalar What to translate this `Vector` by
+		@return A `Vector` translated.
+		@see operator*(const Vector&) const
+		*/
+		Vector operator-(const T scalar) const {
+			Vector<T, N> out = Vector<T, N>(*this);
+			out -= scalar;
 			return out;
 		}
 
@@ -341,10 +346,8 @@ namespace mc {
 		@see operator*(const Vector&) const
 		*/
 		Vector operator*(const T scalar) const {
-			Vector<T, N> out = *this;
-			for( Index i = 0; i < N; i++ ) {
-				out[i] *= scalar;
-			}
+			Vector<T, N> out = Vector<T, N>(*this);
+			out *= scalar;
 			return out;
 		}
 
@@ -357,10 +360,8 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		Vector operator/(const T scalar) const {
-			Vector<T, N> out = *this;
-			for( Index i = 0; i < N; i++ ) {
-				out[i] /= scalar;
-			}
+			Vector<T, N> out = Vector<T, N>(*this);
+			out /= scalar;
 			return out;
 		}
 
@@ -370,7 +371,9 @@ namespace mc {
 		@see operator+(const Vector<T,N>&) const
 		*/
 		void operator+= (const Vector<T, N>& right) {
-			setContents((*this - right).getContents());
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) += right[i];
+			}
 		}
 
 		/**
@@ -379,7 +382,9 @@ namespace mc {
 		@see operator-(const Vector<T,N>&) const
 		*/
 		void operator-= (const Vector<T, N>& right) {
-			setContents((*this - right).getContents());
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) -= right[i];
+			}
 		}
 
 		/**
@@ -388,7 +393,9 @@ namespace mc {
 		@see operator+(const Vector<T,N>&) const
 		*/
 		void operator*= (const Vector<T, N>& right) {
-			setContents((*this * right).getContents());
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) *= right[i];
+			}
 		}
 
 		/**
@@ -397,16 +404,58 @@ namespace mc {
 		@see operator+(const Vector<T,N>&) const
 		*/
 		void operator/= (const Vector<T, N>& right) {
-			setContents((*this / right).getContents());
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) /= right[i];
+			}
 		}
+
+
+		/**
+		Translates this `Vector`
+		@param scalar How much to translate by
+		@see operator*(const Vector<T,3>&) const
+		@see operator*(const T&) const
+		*/
+		void operator+= (const T& scalar) {
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) += scalar;
+			}
+		}
+
+		/**
+		Translates this `Vector`
+		@param scalar How much to translate by
+		@see operator*(const Vector<T,3>&) const
+		@see operator*(const T&) const
+		*/
+		void operator-= (const T& scalar) {
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) -= scalar;
+			}
+		}
+
 		/**
 		Scales this `Vector`
 		@param scalar How much to scale
 		@see operator*(const Vector<T,3>&) const
-		@see operator*(const T) const
+		@see operator*(const T&) const
 		*/
 		void operator*= (const T& scalar) {
-			setContents((*this * scalar).getContents());
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) *= scalar;
+			}
+		}
+
+		/**
+		Divides this `Vector`
+		@param scalar How much to divide by
+		@see operator*(const Vector<T,3>&) const
+		@see operator*(const T&) const
+		*/
+		void operator/= (const T& scalar) {
+			for( Index i = 0; i < N; ++i ) {
+				operator[](i) /= scalar;
+			}
 		}
 
 		/**
@@ -422,8 +471,8 @@ namespace mc {
 		@see operator>(const Vector&) const
 		*/
 		bool operator==(const Vector<T, N>& other) const {
-			for( Index i = 0; i < N; i++ ) {
-				if( this->operator[](i) != other[i] ) {
+			for( Index i = 0; i < N; ++i ) {
+				if( operator[](i) != other[i] ) {
 					return false;
 				}
 			}
@@ -443,7 +492,7 @@ namespace mc {
 		@see operator>(const Vector&) const
 		*/
 		bool operator!=(const Vector<T, N>& other) const {
-			return !(*this == other);
+			return !operator==(other);
 		};
 
 		/**
@@ -459,8 +508,8 @@ namespace mc {
 		@see operator!=(const Vector&) const
 		*/
 		bool operator>(const Vector<T, N>& other) const {
-			for( Index i = 0; i < N; i++ ) {
-				if( this->operator[](i) <= other[i] ) {
+			for( Index i = 0; i < N; ++i ) {
+				if( operator[](i) <= other[i] ) {
 					return false;
 				}
 			}
@@ -480,7 +529,7 @@ namespace mc {
 		@see operator!=(const Vector&) const
 		*/
 		bool operator>=(const Vector<T, N>& other) const {
-			return *this > other || *this == other;
+			return operator>(other) || operator==(other);
 		}
 
 		/**
@@ -496,7 +545,7 @@ namespace mc {
 		@see operator!=(const Vector&) const
 		*/
 		bool operator<(const Vector<T, N>& other) const {
-			return !(*this >= other);
+			return !operator>=(other);
 		}
 
 		/**
@@ -510,7 +559,7 @@ namespace mc {
 		@see operator!=(const Vector&) const
 		*/
 		bool operator<=(const Vector<T, N>& other) const {
-			return !(*this>other);
+			return !operator>(other);
 		}
 
 		/**
@@ -550,8 +599,22 @@ namespace mc {
 		*/
 		template<typename T>
 		Vector<T, 3> cross(const Vector<T, 3>& a, const  Vector<T, 3>& b) {
+			//i though of more than one pun for this one, so here is a list:
 
-			return a* b;
+			//the cross of jesus or the cross of cris? these are important questions
+			//i wont double cross you!
+			//the bible is a cross product
+			//so is a swiss army knife
+			//railroad crossing; the train is carying important product
+			//i should just cross this off the list of unproductive things i have done
+
+			Vector<T, 3> out = Vector<T, 3>();
+			//whew math
+			out[0] = (a[1] * b[2]) - (a[2] * b[1]);
+			out[1] = (a[2] * b[0]) - (a[0] * b[2]);
+			out[2] = (a[0] * b[1]) - (a[1] * b[0]);
+
+			return out;
 		};
 
 		/**
@@ -566,7 +629,11 @@ namespace mc {
 		*/
 		template<typename T, Size N>
 		T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
-			return a % b;
+			T out = 0;
+			for( Index i = 0; i < N; i++ ) {
+				out += static_cast<T>(a[i] * b[i]);
+			}
+			return out;
 		}
 
 		/**
