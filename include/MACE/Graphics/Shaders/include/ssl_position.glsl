@@ -41,18 +41,17 @@ mat4 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 }
 
 vec4 sslGetEntityPosition(){
-	//we do ssl_Scale first, then rotate, then translate.
-	vec4 ssl_Position = (vec4(ssl_BaseEntity.ssl_Translation,1.0));//MAD operations right here!
+
+	vec4 ssl_Position = vec4(ssl_VertexPosition,1.0);
 	
-	ssl_Position += (sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation)*(vec4(ssl_BaseEntity.ssl_Scale*ssl_VertexPosition,0.0)));
-	
-	ssl_Position.xy -= 0.5f;//because we moved the origin to be the bottom left, we need to move it back to the center for ssl_Rotation
-	
-	//applying the parent properties now
-	ssl_Position = (vec4(ssl_ParentEntity.ssl_Translation,1.0)+((sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation)*(ssl_Position * vec4(ssl_ParentEntity.ssl_Scale,0.0)))));//what a MAD man!
-		
-	ssl_Position.xy += 0.5;
 	ssl_Position.xy *= 2;
+	ssl_Position.xy -= 0.5f;//the origin needs to be moved to the center
+	
+	ssl_Position *= ssl_ParentEntity.ssl_Scale*ssl_BaseEntity.ssl_Scale;
+	
+	ssl_Position *= sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation);
+	
+	ssl_Position.xy += 0.5;
 	
 	//ssl_Position += vec4((ssl_BaseEntity.ssl_Scale)/2,0.0f);
 	
@@ -64,12 +63,6 @@ vec4 sslGetEntityPosition(){
 	if(ssl_BaseEntity.ssl_StretchY==0){
 		ssl_Position.y*=ssl_SizeModifier.y;
 	}
-	
-	/*
-	For those who didn't get the MAD joke:
-	MAD means multipy, add, then divide. Doing math in that sequence will be done in 1 gpu cycle instead of 3, which saves a lot of processing power.  Thats what we are doing up there.
-	That is also the reason it all has to go on one line. It is hard to understand, but that is simply the way it works.
-	*/
 	
 	return ssl_Position;
 }
