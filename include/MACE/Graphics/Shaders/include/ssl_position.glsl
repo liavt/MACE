@@ -29,6 +29,7 @@ mat4 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 	ssl_OutMatrix[0][0] = ssl_CosZ*ssl_CosY;
 	ssl_OutMatrix[1][1] = ssl_CosZ*ssl_CosX;
 	ssl_OutMatrix[2][2] = ssl_CosX*ssl_CosY;
+	ssl_OutMatrix[3][3] = 1;
 
 	ssl_OutMatrix[0][1] = ssl_SinZ;
 	ssl_OutMatrix[0][2] = -ssl_SinY;
@@ -42,28 +43,29 @@ mat4 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 
 vec4 sslGetEntityPosition(){
 
-	vec4 ssl_Position = vec4(ssl_VertexPosition,1.0);
+	vec4 ssl_Position = vec4(ssl_VertexPosition, 1.0);
 	
-	ssl_Position.xy *= 2;
-	ssl_Position.xy -= 0.5f;//the origin needs to be moved to the center
-	
-	ssl_Position *= ssl_ParentEntity.ssl_Scale*ssl_BaseEntity.ssl_Scale;
-	
+	ssl_Position.xyz *= ssl_ParentEntity.ssl_Scale;
+	ssl_Position.xyz *= ssl_BaseEntity.ssl_Scale;
+
 	ssl_Position *= sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation);
 	
-	ssl_Position.xy += 0.5;
+	ssl_Position.xyz += ssl_ParentEntity.ssl_Translation;
 	
-	//ssl_Position += vec4((ssl_BaseEntity.ssl_Scale)/2,0.0f);
+	ssl_Position *= sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation);
+	
+	ssl_Position.xyz += ssl_BaseEntity.ssl_Translation*ssl_ParentEntity.ssl_Scale;
+	
 	
 	vec2 ssl_SizeModifier = ssl_OriginalSize/ssl_CurrentSize;
 	
-	if(ssl_BaseEntity.ssl_StretchX==0){
+	if(ssl_BaseEntity.ssl_StretchX == 0){
 		ssl_Position.x*=ssl_SizeModifier.x;
 	}
-	if(ssl_BaseEntity.ssl_StretchY==0){
+	if(ssl_BaseEntity.ssl_StretchY == 0){
 		ssl_Position.y*=ssl_SizeModifier.y;
 	}
-	
+		
 	return ssl_Position;
 }
 

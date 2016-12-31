@@ -338,6 +338,9 @@ namespace mc {
 				ogl::UniformBuffer& buf = entity->buffer;
 				const TransformMatrix& transform = entity->transformation;
 
+				Vector<float, 3> translation = transform.translation;
+				Vector<float, 3> scale = transform.scaler;
+				Vector<float, 3> rotation = transform.rotation;
 				Vector<float, 3> inheritedTranslation = { 0,0,0 };
 				Vector<float, 3> inheritedScale = { 1,1,1 };
 				Vector<float, 3> inheritedRotation = { 0,0,0 };
@@ -345,28 +348,24 @@ namespace mc {
 				if( entity->hasParent() ) {
 
 					const Entity* par = entity->getParent();
-					const TransformMatrix& parentTransform = par->getTransformation();
-
-
-					inheritedTranslation = parentTransform.translation;
-					inheritedScale = parentTransform.scaler;
-					inheritedRotation = parentTransform.rotation;
 
 					//iterate through every parent
 					while( par->hasParent() ) {
 						const TransformMatrix& parTransform = par->getTransformation();
 
-						
+
 						inheritedTranslation += parTransform.translation;
 						inheritedScale *= parTransform.scaler;
 						inheritedRotation += parTransform.rotation;
-						
+
 
 						par = par->getParent();
 					}
-
-
 				}
+
+				//we want {-1, -1} to be the bottom left, not the top left that OpenGL normally has. inverting the Y does this for us
+				inheritedTranslation[1] *= -1;
+				translation[1] *= -1;
 
 				//GLSL expects the boolean values as a float, because memory is stored in increments of a float.
 				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
@@ -379,21 +378,21 @@ namespace mc {
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				std::memcpy((mappedEntityData), transform.translation.flatten(flattenedData), sizeof(Vector<float, 3>));
+				std::memcpy((mappedEntityData), translation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;//pointer arithmetic!
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, transform.scaler.flatten(flattenedData), sizeof(Vector<float, 3>));
+				std::memcpy(mappedEntityData, scale.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, transform.rotation.flatten(flattenedData), sizeof(Vector<float, 3>));
+				std::memcpy(mappedEntityData, rotation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(Vector<float, 3>));
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, (inheritedRotation).flatten(flattenedData), sizeof(Vector<float, 3>));
+				std::memcpy(mappedEntityData, inheritedRotation.flatten(flattenedData), sizeof(Vector<float, 3>));
 
 				buf.unmap();
 
@@ -554,27 +553,20 @@ namespace mc {
 				1,2,3
 			};
 
+			const float squareVertices[12] = {
+				-1.0f,-1.0f,0.0f,
+				-1.0f,1.0f,0.0f,
+				1.0f,1.0f,0.0f,
+				1.0f,-1.0f,0.0f
+			};
+
 			shaders2D.init();
 			square.init();
 
 			//vao loading
 			if( useSSL ) {
-				const float squareVertices[12] = {
-					-0.5f,-0.5f,0.0f,
-					-0.5f,0.5f,0.0f,
-					0.5f,0.5f,0.0f,
-					0.5f,-0.5f,0.0f
-				};
-
 				square.loadVertices(4, squareVertices, 15, 3);
 			} else {
-				const float squareVertices[12] = {
-					-1.0f,-1.0f,0.0f,
-					-1.0f,1.0f,0.0f,
-					1.0f,1.0f,0.0f,
-					1.0f,-1.0f,0.0f
-				};
-
 				square.loadVertices(4, squareVertices, 0, 3);
 			}
 			square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);

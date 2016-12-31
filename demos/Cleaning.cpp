@@ -5,7 +5,7 @@
 
 using namespace mc;
 
-gfx::ogl::Texture star = gfx::ogl::Texture();
+gfx::ogl::Texture tex = gfx::ogl::Texture();
 
 class FPSEntity: public gfx::Entity {
 	Index nbFrames;
@@ -27,7 +27,10 @@ class FPSEntity: public gfx::Entity {
 
 class TestComponent: public gfx::Component {
 	
-	void init(gfx::Entity* en) override {}
+	void init(gfx::Entity* en) override {
+		en->setProperty(gfx::Entity::STRETCH_X, true);
+		en->setProperty(gfx::Entity::STRETCH_Y, true);
+	}
 
 	bool update(gfx::Entity* en) override {
 		if( en->getProperty(gfx::Entity::HOVERED) && os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
@@ -56,39 +59,44 @@ void initGL() {
 
 	const Size elementNum = 10;
 
-	star = gfx::ogl::Texture(Colors::RED);
+	tex = gfx::ogl::Texture(Colors::RED);
 
-	left.setTexture(star);
-	leftBot.setTexture(star);
+	left.setTexture(tex);
+	leftBot.setTexture(tex);
 
-	rightTop.setTexture(star);
-	rightBot.setTexture(star);
+	rightTop.setTexture(tex);
+	rightBot.setTexture(tex);
 
+	left.setY(0.0f);
+	left.setX(-0.5f);
 	left.setHeight(0.9f);
 	left.setWidth(0.45f);
 
-	leftBot.setX(1.2f);
+	leftBot.setX(0.0f);
+	leftBot.setY(-0.5f);
+	leftBot.setWidth(0.7f);
+	leftBot.setHeight(0.4f);
 
 	left.addChild(leftBot);
 
 	rightTop.setX(0.5f);
+	rightTop.setY(0.5f);
 	rightTop.setHeight(0.4f);
 	rightTop.setWidth(0.4f);
 
 	rightBot.setHeight(0.4f);
 	rightBot.setWidth(0.4f);
 	rightBot.setX(0.5f);
-	rightBot.setY(0.5f);
+	rightBot.setY(-0.5f);
 
 	left.addComponent(component);
 	leftBot.addComponent(component);
 	rightTop.addComponent(component);
 	rightBot.addComponent(component);
 
-
 	group.addChild(left);
-//	group.addChild(rightTop);
-	//group.addChild(rightBot);
+	group.addChild(rightTop);
+	group.addChild(rightBot);
 }
 
 int main(int argc, char* argv) {

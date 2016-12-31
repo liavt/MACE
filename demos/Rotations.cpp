@@ -77,11 +77,11 @@ void initGL() {
 
 			entity->setTexture(star);
 
-			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum) * 4)));
-			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum) * 4)));
+			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
+			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
 
-			entity->setWidth((1.0f / elementNum)*2);
-			entity->setHeight((1.0f / elementNum)*2);
+			entity->setWidth((1.0f / elementNum) * 2);
+			entity->setHeight((1.0f / elementNum) * 2);
 
 			entity->setProperty(gfx::Entity::STRETCH_X, false);
 			entity->setProperty(gfx::Entity::STRETCH_Y, false);
@@ -129,12 +129,17 @@ int main(int argc, char* argv) {
 		topLeft.setHeight(0.5f);
 		topRight.setHeight(0.5f);
 
-		botRight.setY(0.5f);
+		botRight.setX(0.5f);
+		botRight.setY(-0.5f);
 
-		topLeft.setX(0.5f);
+		topLeft.setX(-0.5f);
+		topLeft.setY(0.5f);
 
-		botLeft.setX(0.5f);
-		botLeft.setY(0.5f);
+		botLeft.setX(-0.5f);
+		botLeft.setY(-0.5f);
+
+		topRight.setX(0.5f);
+		topRight.setY(0.5f);
 
 		botLeft.addComponent(r);
 		botRight.addComponent(r);
