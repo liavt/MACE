@@ -85,9 +85,12 @@
 mc::gfx::Component Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::Component}
 {\xe \v mc::gfx::Component}
-{\bkmkstart AAAAAAABCF}
-{\bkmkend AAAAAAABCF}
+{\bkmkstart AAAAAAABDI}
+{\bkmkend AAAAAAABDI}
 \par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Can be plugged into an {\f2 {\b Entity}}  to allow for additional functionality by listening to events. }}\par
 {
 {\f2 #include <Entity.h>}}\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -97,56 +100,167 @@ Public Member Functions\par
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 virtual void {\b init} ({\b Entity} *e)=0\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when this {\f2 {\b Component}}  is added to the {\f2 {\b Entity}}  via {\b Entity::addComponent(Component&)}. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 virtual bool {\b update} ({\b Entity} *e)=0\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::update()} is called. }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 virtual void {\b destroy} ({\b Entity} *e)=0\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::destroy()} is called or the {\f2 {\b Component}}  is removed via {\b Component::update(Entity*)}, whichever comes first. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b clean} ({\b Entity} *e)\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::clean()} is called and it was dirty. }{
+}\par
+}}
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 28 of file Entity.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Can be plugged into an {\f2 {\b Entity}}  to allow for additional functionality by listening to events. \par
+}
+
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Instead of extending an existing {\f2 {\b Entity}}  subclass, you should prefer using a {\f2 {\b Component}}  to not interfere with custom {\b Entity::onRender()} and similar functions. \par
+Similarly to all objects in MACE, {\b Component::init(Entity*)} is always called and {\b Component::destroy(Entity*)} is also always called. \par
+Contains virtual functions for every event in an {\f2 {\b Entity}}  which each have 1 parameter - the {\f2 {\b Entity}}  being acted on. \par
+You are required to implement {\b Component::init(Entity*)}, {\b Component::update(Entity*)}, and {\b Component::destroy(Entity*)}. There are additional functions which are optional to implement. \par
+There is no function to remove a {\f2 {\b Component}}  from an {\f2 {\b Entity}} . Instead, the {\f2 {\b Component}}  decides when to be removed from {\b Component::update(Entity*)}. This makes sure that the {\f2 {\b Component}}  completes whatever task it was trying to do. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::addComponent(Component&)} \par
+}}{
+Definition at line 49 of file Entity.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
+{\xe \v clean\:mc::gfx::Component}
+{\xe \v mc::gfx::Component\:clean}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Component::clean ({\b Entity} *  {\i e}){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABDJ}
+{\bkmkend AAAAAAABDJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::clean()} is called and it was dirty. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This is not required for inheritance. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
+}
+}}
 {\xe \v destroy\:mc::gfx::Component}
 {\xe \v mc::gfx::Component\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 virtual void mc::gfx::Component::destroy ({\b Entity} *  {\i e}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABCG}
-{\bkmkend AAAAAAABCG}
+{\bkmkstart AAAAAAABDK}
+{\bkmkend AAAAAAABDK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::destroy()} is called or the {\f2 {\b Component}}  is removed via {\b Component::update(Entity*)}, whichever comes first. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Once {\b Component::destroy(Entity*)} is called, it is immediately removed from the {\f2 {\b Entity}} . Required function. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
 }
+}}
 {\xe \v init\:mc::gfx::Component}
 {\xe \v mc::gfx::Component\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 virtual void mc::gfx::Component::init ({\b Entity} *  {\i e}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABCH}
-{\bkmkend AAAAAAABCH}
+{\bkmkstart AAAAAAABDL}
+{\bkmkend AAAAAAABDL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when this {\f2 {\b Component}}  is added to the {\f2 {\b Entity}}  via {\b Entity::addComponent(Component&)}. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Required function. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
 }
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This is not called at {\b Entity::init()}, instead it is called when the component is added to the {\f2 {\b Entity}} . Keep that in mind. \par
+}}}
 {\xe \v update\:mc::gfx::Component}
 {\xe \v mc::gfx::Component\:update}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 virtual bool mc::gfx::Component::update ({\b Entity} *  {\i e}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABCI}
-{\bkmkend AAAAAAABCI}
+{\bkmkstart AAAAAAABDM}
+{\bkmkend AAAAAAABDM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::update()} is called. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Required function. \par
+There is no function to remove a {\f2 {\b Component}}  so this is the only way for a {\f2 {\b Component}}  to be removed from an {\f2 {\b Entity}}  \par
+{\b Component::destroy(Entity*)} will be called afterwards. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
 }
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether this {\f2 {\b Component}}  should be deleted or not. \par
+}}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 

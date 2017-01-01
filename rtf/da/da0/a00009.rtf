@@ -85,8 +85,8 @@
 mc::Color Struct Reference\par \pard\plain 
 {\tc\tcl2 \v mc::Color}
 {\xe \v mc::Color}
-{\bkmkstart AAAAAAAASF}
-{\bkmkend AAAAAAAASF}
+{\bkmkstart AAAAAAAASK}
+{\bkmkend AAAAAAAASK}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -99,7 +99,7 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Color} (const float &red, const float &green, const float &blue, const float &alpha=1.0f)\par
+{\b Color} (const float &red, const float &green, const float &blue, const float &alpha=1.0f) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Creates a {\f2 {\b Color}}  from specified values. }{
@@ -113,7 +113,7 @@ Creates a {\f2 {\b Color}}  from an array of {\f2 floats} . }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Color} (const {\b Color} &copy)\par
+{\b Color} (const {\b Color} &copy) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Clones a {\f2 {\b Color}} , coying it's color values into a new one. }{
@@ -124,6 +124,20 @@ Clones a {\f2 {\b Color}} , coying it's color values into a new one. }{
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Default constructor. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Color} {\b darken} () const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Creates a new {\f2 {\b Color}}  that is slightly darker. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Color} {\b lighten} () const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Creates a new {\f2 {\b Color}}  that is slightly lighter. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -204,72 +218,52 @@ Retrieves the RGBA values in {\f2 std::array}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const float * {\b flatten} (float arr[4]) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Creates an array with the data of this {\f2 {\b Color}} , in O(N) time. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b Color} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 {\f2 Colors}  }{
+Compares the color values of 2 {\f2 {\b Colors}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator!=} (const {\b Color} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 {\f2 Colors}  }{
+Compares the color values of 2 {\f2 {\b Colors}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator>} (const {\b Color} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }{
+Compares the color values of 2 '{\b Colors}'. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator>=} (const {\b Color} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }{
+Compares the color values of 2 '{\b Colors}'. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator<} (const {\b Color} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }{
+Compares the color values of 2 '{\b Colors}'. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator<=} (const {\b Color} &other) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }{
-}\par
-}}
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Static Public Member Functions\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-static {\b Byte} {\b convertFloatToRGBA} (const float &color)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Converts a {\f2 {\b Color}}  component represented as a {\f2 float}  to a {\f2 Byte}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-static float {\b convertRGBAToFloat} (const {\b Byte} &color)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Converts a {\f2 {\b Color}}  component represented as a {\f2 Byte}  to a {\f2 float}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-static float {\b trimFloat} (const float &color)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks the bounds of a {\f2 float}  making sure that it is not greater than 1,0 or less than 0.0. }{
+Compares the color values of 2 '{\b Colors}'. }{
 }\par
 }}
 }
@@ -333,10 +327,10 @@ Constructor & Destructor Documentation\par
 {\xe \v mc::Color\:Color}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::Color::Color (const float &  {\i red}, const float &  {\i green}, const float &  {\i blue}, const float &  {\i alpha} = {\f2 1.0f})}}
+mc::Color::Color (const float &  {\i red}, const float &  {\i green}, const float &  {\i blue}, const float &  {\i alpha} = {\f2 1.0f}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAASG}
-{\bkmkend AAAAAAAASG}
+{\bkmkstart AAAAAAAASL}
+{\bkmkend AAAAAAAASL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -381,8 +375,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Color(
 {\b 
 mc::Color::Color (const std::array< float, 4 > &  {\i values})}}
 \par
-{\bkmkstart AAAAAAAASH}
-{\bkmkend AAAAAAAASH}
+{\bkmkstart AAAAAAAASM}
+{\bkmkend AAAAAAAASM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -409,10 +403,10 @@ Color(float,float,float,float) \par
 {\xe \v mc::Color\:Color}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::Color::Color (const {\b Color} &  {\i copy})}}
+mc::Color::Color (const {\b Color} &  {\i copy}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAASI}
-{\bkmkend AAAAAAAASI}
+{\bkmkstart AAAAAAAASN}
+{\bkmkend AAAAAAAASN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -437,8 +431,8 @@ Parameters:\par}
 {\b 
 mc::Color::Color (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAAASJ}
-{\bkmkend AAAAAAAASJ}
+{\bkmkstart AAAAAAAASO}
+{\bkmkend AAAAAAAASO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -452,74 +446,66 @@ Constructs a {\f2 {\b Color}}  with all of it's color values as {\f2 0} , or bla
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v convertFloatToRGBA\:mc::Color}
-{\xe \v mc::Color\:convertFloatToRGBA}
+{\xe \v darken\:mc::Color}
+{\xe \v mc::Color\:darken}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-static {\b Byte} mc::Color::convertFloatToRGBA (const float &  {\i color}){\f2 [static]}}}
+{\b Color} mc::Color::darken () const}}
 \par
-{\bkmkstart AAAAAAAASK}
-{\bkmkend AAAAAAAASK}
+{\bkmkstart AAAAAAAASP}
+{\bkmkend AAAAAAAASP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Converts a {\f2 {\b Color}}  component represented as a {\f2 float}  to a {\f2 Byte}  }}\par
+Creates a new {\f2 {\b Color}}  that is slightly darker. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i color} \cell }{A {\f2 float}  from 0.0 to 1.0 \cell }
-{\row }
-}
+Due to rounding, {\f2 color.darken() != color.darken().{\b lighten()}}  \par
+The alpha is not affected \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid An equal {\f2 Byte}  from 0 to 255 \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A darker {\f2 {\b Color}}  \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid convertRGBAToFloat(Byte) \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Color::lighten() const} \par
 }}}
-{\xe \v convertRGBAToFloat\:mc::Color}
-{\xe \v mc::Color\:convertRGBAToFloat}
+{\xe \v flatten\:mc::Color}
+{\xe \v mc::Color\:flatten}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-static float mc::Color::convertRGBAToFloat (const {\b Byte} &  {\i color}){\f2 [static]}}}
+const float* mc::Color::flatten (float  {\i arr}[4]) const{\f2 [inline]}}}
 \par
-{\bkmkstart AAAAAAAASL}
-{\bkmkend AAAAAAAASL}
+{\bkmkstart AAAAAAAASQ}
+{\bkmkend AAAAAAAASQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Converts a {\f2 {\b Color}}  component represented as a {\f2 Byte}  to a {\f2 float}  }}\par
+Creates an array with the data of this {\f2 {\b Color}} , in O(N) time. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid An equal {\f2 float}  from 0.0 to 1.0 \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Pointer to {\f2 arr}  \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i color} \cell }{A{\f2 Byte}  from 0 to 255 \cell }
+{{\i arr} \cell }{The array to fill \cell }
 {\row }
 }
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid convertRGBAToFloat(Byte) \par
-}}}
+}{
+Definition at line 191 of file Color.h.}\par
+}
 {\xe \v getAlpha\:mc::Color}
 {\xe \v mc::Color\:getAlpha}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 {\b Byte} mc::Color::getAlpha () const}}
 \par
-{\bkmkstart AAAAAAAASM}
-{\bkmkend AAAAAAAASM}
+{\bkmkstart AAAAAAAASR}
+{\bkmkend AAAAAAAASR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -541,8 +527,8 @@ convertRGBAToFloat(Byte) \par
 {\b 
 {\b Byte} mc::Color::getBlue () const}}
 \par
-{\bkmkstart AAAAAAAASN}
-{\bkmkend AAAAAAAASN}
+{\bkmkstart AAAAAAAASS}
+{\bkmkend AAAAAAAASS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -564,8 +550,8 @@ convertRGBAToFloat(Byte) \par
 {\b 
 {\b Byte} mc::Color::getGreen () const}}
 \par
-{\bkmkstart AAAAAAAASO}
-{\bkmkend AAAAAAAASO}
+{\bkmkstart AAAAAAAAST}
+{\bkmkend AAAAAAAAST}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -587,8 +573,8 @@ convertRGBAToFloat(Byte) \par
 {\b 
 {\b Byte} mc::Color::getRed () const}}
 \par
-{\bkmkstart AAAAAAAASP}
-{\bkmkend AAAAAAAASP}
+{\bkmkstart AAAAAAAASU}
+{\bkmkend AAAAAAAASU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -610,8 +596,8 @@ convertRGBAToFloat(Byte) \par
 {\b 
 std::array<float, 4> mc::Color::getValues () const}}
 \par
-{\bkmkstart AAAAAAAASQ}
-{\bkmkend AAAAAAAASQ}
+{\bkmkstart AAAAAAAASV}
+{\bkmkend AAAAAAAASV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -623,20 +609,42 @@ Retrieves the RGBA values in {\f2 std::array}  }}\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid An array where the first element is red, the second value is green, etc \par
 }}}
+{\xe \v lighten\:mc::Color}
+{\xe \v mc::Color\:lighten}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Color} mc::Color::lighten () const}}
+\par
+{\bkmkstart AAAAAAAASW}
+{\bkmkend AAAAAAAASW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Creates a new {\f2 {\b Color}}  that is slightly lighter. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Due to rounding, {\f2 color.lighten() != color.lighten().{\b darken()}}  \par
+The alpha is not affected \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A lighter {\f2 {\b Color}}  \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Color::darken() const} \par
+}}}
 {\xe \v operator!=\:mc::Color}
 {\xe \v mc::Color\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 bool mc::Color::operator!= (const {\b Color} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAASR}
-{\bkmkend AAAAAAAASR}
+{\bkmkstart AAAAAAAASX}
+{\bkmkend AAAAAAAASX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 {\f2 Colors}  }}\par
+Compares the color values of 2 {\f2 {\b Colors}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -649,7 +657,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether the 2 {\f2 Colors}  don't have the same RGBA \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether the 2 {\f2 {\b Colors}}  don't have the same RGBA \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid operator==(Color&) const \par
 }}}
@@ -659,14 +667,14 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid operat
 {\b 
 bool mc::Color::operator< (const {\b Color} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAASS}
-{\bkmkend AAAAAAAASS}
+{\bkmkstart AAAAAAAASY}
+{\bkmkend AAAAAAAASY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }}\par
+Compares the color values of 2 '{\b Colors}'. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -679,7 +687,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 Colors}  r, g, b, and a values. \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 {\b Colors}}  r, g, b, and a values. \par
 }}}
 {\xe \v operator<=\:mc::Color}
 {\xe \v mc::Color\:operator<=}
@@ -687,14 +695,14 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The res
 {\b 
 bool mc::Color::operator<= (const {\b Color} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAAST}
-{\bkmkend AAAAAAAAST}
+{\bkmkstart AAAAAAAASZ}
+{\bkmkend AAAAAAAASZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }}\par
+Compares the color values of 2 '{\b Colors}'. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -707,7 +715,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 Colors}  r, g, b, and a values. \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 {\b Colors}}  r, g, b, and a values. \par
 }}}
 {\xe \v operator==\:mc::Color}
 {\xe \v mc::Color\:operator==}
@@ -715,14 +723,14 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The res
 {\b 
 bool mc::Color::operator== (const {\b Color} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAASU}
-{\bkmkend AAAAAAAASU}
+{\bkmkstart AAAAAAAATA}
+{\bkmkend AAAAAAAATA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 {\f2 Colors}  }}\par
+Compares the color values of 2 {\f2 {\b Colors}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -735,7 +743,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether the 2 {\f2 Colors}  have the same RGBA \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether the 2 {\f2 {\b Colors}}  have the same RGBA \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid operator!=(Color&) const \par
 }}}
@@ -745,14 +753,14 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid operat
 {\b 
 bool mc::Color::operator> (const {\b Color} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAASV}
-{\bkmkend AAAAAAAASV}
+{\bkmkstart AAAAAAAATB}
+{\bkmkend AAAAAAAATB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }}\par
+Compares the color values of 2 '{\b Colors}'. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -765,7 +773,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 Colors}  r, g, b, and a values. \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 {\b Colors}}  r, g, b, and a values. \par
 }}}
 {\xe \v operator>=\:mc::Color}
 {\xe \v mc::Color\:operator>=}
@@ -773,14 +781,14 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The res
 {\b 
 bool mc::Color::operator>= (const {\b Color} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAAASW}
-{\bkmkend AAAAAAAASW}
+{\bkmkstart AAAAAAAATC}
+{\bkmkend AAAAAAAATC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares the color values of 2 'Colors'. }}\par
+Compares the color values of 2 '{\b Colors}'. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -793,7 +801,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 Colors}  r, g, b, and a values. \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The result of the operation on both {\f2 {\b Colors}}  r, g, b, and a values. \par
 }}}
 {\xe \v setAlpha\:mc::Color}
 {\xe \v mc::Color\:setAlpha}
@@ -801,8 +809,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The res
 {\b 
 void mc::Color::setAlpha (const {\b Byte} &  {\i a})}}
 \par
-{\bkmkstart AAAAAAAASX}
-{\bkmkend AAAAAAAASX}
+{\bkmkstart AAAAAAAATD}
+{\bkmkend AAAAAAAATD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -831,8 +839,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid conver
 {\b 
 void mc::Color::setBlue (const {\b Byte} &  {\i b})}}
 \par
-{\bkmkstart AAAAAAAASY}
-{\bkmkend AAAAAAAASY}
+{\bkmkstart AAAAAAAATE}
+{\bkmkend AAAAAAAATE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -861,8 +869,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid conver
 {\b 
 void mc::Color::setGreen (const {\b Byte} &  {\i g})}}
 \par
-{\bkmkstart AAAAAAAASZ}
-{\bkmkend AAAAAAAASZ}
+{\bkmkstart AAAAAAAATF}
+{\bkmkend AAAAAAAATF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -891,8 +899,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid conver
 {\b 
 void mc::Color::setRed (const {\b Byte} &  {\i r})}}
 \par
-{\bkmkstart AAAAAAAATA}
-{\bkmkend AAAAAAAATA}
+{\bkmkstart AAAAAAAATG}
+{\bkmkend AAAAAAAATG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -921,8 +929,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid conver
 {\b 
 void mc::Color::setValues (const std::array< float, 4 > &  {\i rgba})}}
 \par
-{\bkmkstart AAAAAAAATB}
-{\bkmkend AAAAAAAATB}
+{\bkmkstart AAAAAAAATH}
+{\bkmkend AAAAAAAATH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -952,8 +960,8 @@ setValues(std::array<float,4>) \par
 {\b 
 void mc::Color::setValues (const std::array< float, 3 > &  {\i rgb})}}
 \par
-{\bkmkstart AAAAAAAATC}
-{\bkmkend AAAAAAAATC}
+{\bkmkstart AAAAAAAATI}
+{\bkmkend AAAAAAAATI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -977,35 +985,6 @@ Color(std::array<Byte,4>) \par
 Color(float,float,float,float) \par
 setValues(std::array<float,3>) \par
 }}}
-{\xe \v trimFloat\:mc::Color}
-{\xe \v mc::Color\:trimFloat}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-static float mc::Color::trimFloat (const float &  {\i color}){\f2 [static]}}}
-\par
-{\bkmkstart AAAAAAAATD}
-{\bkmkend AAAAAAAATD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks the bounds of a {\f2 float}  making sure that it is not greater than 1,0 or less than 0.0. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If the inputted {\f2 float}  is more than 1, {\f2 {\b trimFloat()}}  returns 1. \par
-If the inputted {\f2 float}  is less than 0, {\f2 {\b trimFloat()}}  returns 0.\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i color} \cell }{{\f2 float}  to trim \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 float}  guaranteed to be between 0 and 1. \par
-}}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
@@ -1016,13 +995,13 @@ Member Data Documentation\par
 {\b 
 float mc::Color::a}}
 \par
-{\bkmkstart AAAAAAAATE}
-{\bkmkend AAAAAAAATE}
+{\bkmkstart AAAAAAAATJ}
+{\bkmkend AAAAAAAATJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
-Definition at line 74 of file Color.h.}\par
+Definition at line 47 of file Color.h.}\par
 }
 {\xe \v b\:mc::Color}
 {\xe \v mc::Color\:b}
@@ -1030,13 +1009,13 @@ Definition at line 74 of file Color.h.}\par
 {\b 
 float mc::Color::b}}
 \par
-{\bkmkstart AAAAAAAATF}
-{\bkmkend AAAAAAAATF}
+{\bkmkstart AAAAAAAATK}
+{\bkmkend AAAAAAAATK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
-Definition at line 74 of file Color.h.}\par
+Definition at line 47 of file Color.h.}\par
 }
 {\xe \v g\:mc::Color}
 {\xe \v mc::Color\:g}
@@ -1044,13 +1023,13 @@ Definition at line 74 of file Color.h.}\par
 {\b 
 float mc::Color::g}}
 \par
-{\bkmkstart AAAAAAAATG}
-{\bkmkend AAAAAAAATG}
+{\bkmkstart AAAAAAAATL}
+{\bkmkend AAAAAAAATL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
-Definition at line 74 of file Color.h.}\par
+Definition at line 47 of file Color.h.}\par
 }
 {\xe \v r\:mc::Color}
 {\xe \v mc::Color\:r}
@@ -1058,8 +1037,8 @@ Definition at line 74 of file Color.h.}\par
 {\b 
 float mc::Color::r}}
 \par
-{\bkmkstart AAAAAAAATH}
-{\bkmkend AAAAAAAATH}
+{\bkmkstart AAAAAAAATM}
+{\bkmkend AAAAAAAATM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1069,7 +1048,7 @@ float mc::Color::r}}
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 It is from 0.0 to 1.0, where 1.0 is the brightest it can get. \par
 }{
-Definition at line 74 of file Color.h.}\par
+Definition at line 47 of file Color.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this struct was generated from the following file:{\par

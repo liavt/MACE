@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::Texture" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::Texture" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,6 +14,15 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 
 .in +1c
 .ti -1c
+.RI "\fBTexture\fP () noexcept"
+.br
+.ti -1c
+.RI "\fBTexture\fP (const char *file)"
+.br
+.ti -1c
+.RI "\fBTexture\fP (const std::string &file)"
+.br
+.ti -1c
 .RI "void \fBinit\fP () override"
 .br
 .RI "\fICalls the corresponding glCreate* function and assigns an ID\&. \fP"
@@ -22,41 +31,29 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
-.RI "void \fBsetData\fP (const void *data, \fBSize\fP width, \fBSize\fP height, GLenum type=GL_FLOAT, GLenum format=GL_RGB, GLenum internalFormat=GL_RGB, \fBIndex\fP mipmapLevel=0)"
+.RI "void \fBsetData\fP (const void *data, const \fBSize\fP width, const \fBSize\fP height, const \fBEnum\fP type=GL_FLOAT, const \fBEnum\fP format=GL_RGB, const \fBEnum\fP internalFormat=GL_RGB, const \fBIndex\fP mipmapLevel=0)"
 .br
 .ti -1c
 .RI "void \fBloadFile\fP (const char *file)"
 .br
 .ti -1c
-.RI "void \fBsetTarget\fP (const GLenum target)"
+.RI "void \fBloadFile\fP (const std::string &file)"
 .br
 .ti -1c
-.RI "GLenum \fBgetTarget\fP ()"
+.RI "void \fBgenerateMipmap\fP ()"
 .br
 .ti -1c
-.RI "\fBColor\fP & \fBgetPaint\fP ()"
+.RI "void \fBsetTarget\fP (const \fBEnum\fP target)"
 .br
 .ti -1c
-.RI "const \fBColor\fP & \fBgetPaint\fP () const "
-.br
-.ti -1c
-.RI "void \fBsetPaint\fP (const \fBColor\fP &c)"
-.br
-.ti -1c
-.RI "float \fBgetOpacity\fP ()"
-.br
-.ti -1c
-.RI "const float \fBgetOpacity\fP () const "
-.br
-.ti -1c
-.RI "void \fBsetOpacity\fP (const float f)"
+.RI "\fBEnum\fP \fBgetTarget\fP ()"
 .br
 .ti -1c
 .RI "bool \fBisCreated\fP () const  override"
 .br
 .RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
-.RI "void \fBsetParameter\fP (const GLenum &name, const GLint &value)"
+.RI "void \fBsetParameter\fP (const \fBEnum\fP name, const int value)"
 .br
 .ti -1c
 .RI "bool \fBoperator==\fP (const \fBTexture\fP &other) const "
@@ -106,7 +103,39 @@ https://www.opengl.org/wiki/Texture
 .PP
 
 .PP
-Definition at line 463 of file OGL\&.h\&.
+Definition at line 459 of file OGL\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::gfx::ogl::Texture::Texture ()\fC [noexcept]\fP"
+
+.SS "mc::gfx::ogl::Texture::Texture (const char * file)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "mc::gfx::ogl::Texture::Texture (const std::string & file)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SH "Member Function Documentation"
 .PP 
 .SS "virtual void mc::gfx::ogl::Object::bind () const\fC [virtual]\fP, \fC [inherited]\fP"
@@ -169,6 +198,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "void mc::gfx::ogl::Texture::generateMipmap ()"
+
 .SS "\fBIndex\fP mc::gfx::ogl::Object::getID () const\fC [inherited]\fP"
 
 .PP
@@ -184,15 +215,7 @@ The ID represented by this \fC\fBObject\fP\fP
 .RE
 .PP
 
-.SS "float mc::gfx::ogl::Texture::getOpacity ()"
-
-.SS "const float mc::gfx::ogl::Texture::getOpacity () const"
-
-.SS "\fBColor\fP& mc::gfx::ogl::Texture::getPaint ()"
-
-.SS "const \fBColor\fP& mc::gfx::ogl::Texture::getPaint () const"
-
-.SS "GLenum mc::gfx::ogl::Texture::getTarget ()"
+.SS "\fBEnum\fP mc::gfx::ogl::Texture::getTarget ()"
 
 .SS "void mc::gfx::ogl::Texture::init ()\fC [override]\fP, \fC [virtual]\fP"
 
@@ -254,6 +277,22 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
 .SS "void mc::gfx::ogl::Texture::loadFile (const char * file)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::Texture::loadFile (const std::string & file)"
+
+.PP
 
 .PP
 \fBAttention:\fP
@@ -359,7 +398,7 @@ Whether \fCthis\fP and \fCother\fP are the same
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Texture::setData (const void * data, \fBSize\fP width, \fBSize\fP height, GLenum type = \fCGL_FLOAT\fP, GLenum format = \fCGL_RGB\fP, GLenum internalFormat = \fCGL_RGB\fP, \fBIndex\fP mipmapLevel = \fC0\fP)"
+.SS "void mc::gfx::ogl::Texture::setData (const void * data, const \fBSize\fP width, const \fBSize\fP height, const \fBEnum\fP type = \fCGL_FLOAT\fP, const \fBEnum\fP format = \fCGL_RGB\fP, const \fBEnum\fP internalFormat = \fCGL_RGB\fP, const \fBIndex\fP mipmapLevel = \fC0\fP)"
 
 .PP
 \fBSee also:\fP
@@ -378,11 +417,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Texture::setOpacity (const float f)"
-
-.SS "void mc::gfx::ogl::Texture::setPaint (const \fBColor\fP & c)"
-
-.SS "void mc::gfx::ogl::Texture::setParameter (const GLenum & name, const GLint & value)"
+.SS "void mc::gfx::ogl::Texture::setParameter (const \fBEnum\fP name, const int value)"
 
 .PP
 \fBSee also:\fP
@@ -401,7 +436,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Texture::setTarget (const GLenum target)"
+.SS "void mc::gfx::ogl::Texture::setTarget (const \fBEnum\fP target)"
 
 .SS "virtual void mc::gfx::ogl::Object::unbind () const\fC [virtual]\fP, \fC [inherited]\fP"
 
@@ -433,7 +468,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 169 of file OGL\&.h\&.
+Definition at line 164 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

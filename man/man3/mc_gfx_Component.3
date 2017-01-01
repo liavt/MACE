@@ -1,8 +1,9 @@
-.TH "mc::gfx::Component" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Component" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc::gfx::Component \- 
+mc::gfx::Component \- Can be plugged into an \fC\fBEntity\fP\fP to allow for additional functionality by listening to events\&.  
+
 .SH SYNOPSIS
 .br
 .PP
@@ -14,23 +15,101 @@ mc::gfx::Component \-
 .ti -1c
 .RI "virtual void \fBinit\fP (\fBEntity\fP *e)=0"
 .br
+.RI "\fICalled when this \fC\fBComponent\fP\fP is added to the \fC\fBEntity\fP\fP via \fBEntity::addComponent(Component&)\fP\&. \fP"
 .ti -1c
 .RI "virtual bool \fBupdate\fP (\fBEntity\fP *e)=0"
 .br
+.RI "\fICalled when \fBEntity::update()\fP is called\&. \fP"
 .ti -1c
 .RI "virtual void \fBdestroy\fP (\fBEntity\fP *e)=0"
 .br
+.RI "\fICalled when \fBEntity::destroy()\fP is called or the \fC\fBComponent\fP\fP is removed via \fBComponent::update(Entity*)\fP, whichever comes first\&. \fP"
+.ti -1c
+.RI "virtual void \fBclean\fP (\fBEntity\fP *e)"
+.br
+.RI "\fICalled when \fBEntity::clean()\fP is called and it was dirty\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 28 of file Entity\&.h\&.
+Can be plugged into an \fC\fBEntity\fP\fP to allow for additional functionality by listening to events\&. 
+
+Instead of extending an existing \fC\fBEntity\fP\fP subclass, you should prefer using a \fC\fBComponent\fP\fP to not interfere with custom \fBEntity::onRender()\fP and similar functions\&. 
+.PP
+Similarly to all objects in MACE, \fBComponent::init(Entity*)\fP is always called and \fBComponent::destroy(Entity*)\fP is also always called\&. 
+.PP
+Contains virtual functions for every event in an \fC\fBEntity\fP\fP which each have 1 parameter - the \fC\fBEntity\fP\fP being acted on\&. 
+.PP
+You are required to implement \fBComponent::init(Entity*)\fP, \fBComponent::update(Entity*)\fP, and \fBComponent::destroy(Entity*)\fP\&. There are additional functions which are optional to implement\&. 
+.PP
+There is no function to remove a \fC\fBComponent\fP\fP from an \fC\fBEntity\fP\fP\&. Instead, the \fC\fBComponent\fP\fP decides when to be removed from \fBComponent::update(Entity*)\fP\&. This makes sure that the \fC\fBComponent\fP\fP completes whatever task it was trying to do\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::addComponent(Component&)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 49 of file Entity\&.h\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "virtual void mc::gfx::Component::clean (\fBEntity\fP * e)\fC [virtual]\fP"
+
+.PP
+Called when \fBEntity::clean()\fP is called and it was dirty\&. This is not required for inheritance\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+
 .SS "virtual void mc::gfx::Component::destroy (\fBEntity\fP * e)\fC [pure virtual]\fP"
+
+.PP
+Called when \fBEntity::destroy()\fP is called or the \fC\fBComponent\fP\fP is removed via \fBComponent::update(Entity*)\fP, whichever comes first\&. Once \fBComponent::destroy(Entity*)\fP is called, it is immediately removed from the \fC\fBEntity\fP\fP\&. Required function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
 
 .SS "virtual void mc::gfx::Component::init (\fBEntity\fP * e)\fC [pure virtual]\fP"
 
+.PP
+Called when this \fC\fBComponent\fP\fP is added to the \fC\fBEntity\fP\fP via \fBEntity::addComponent(Component&)\fP\&. Required function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This is not called at \fBEntity::init()\fP, instead it is called when the component is added to the \fC\fBEntity\fP\fP\&. Keep that in mind\&. 
+.RE
+.PP
+
 .SS "virtual bool mc::gfx::Component::update (\fBEntity\fP * e)\fC [pure virtual]\fP"
+
+.PP
+Called when \fBEntity::update()\fP is called\&. Required function\&. 
+.PP
+There is no function to remove a \fC\fBComponent\fP\fP so this is the only way for a \fC\fBComponent\fP\fP to be removed from an \fC\fBEntity\fP\fP 
+.PP
+\fBComponent::destroy(Entity*)\fP will be called afterwards\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBComponent\fP\fP should be deleted or not\&. 
+.RE
+.PP
 
 
 .SH "Author"

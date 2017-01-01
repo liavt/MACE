@@ -1,4 +1,4 @@
-.TH "mc::math" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::math" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -244,7 +244,7 @@ A vector calculated from the cross product of \fCa\fP and \fCb\fP
 .PP
 
 .PP
-Definition at line 552 of file Vector\&.h\&.
+Definition at line 620 of file Vector\&.h\&.
 .SS "double mc::math::cube (const double value)"
 
 .PP
@@ -290,7 +290,7 @@ The determinate of \fCmatrix\fP
 .PP
 
 .PP
-Definition at line 509 of file Matrix\&.h\&.
+Definition at line 536 of file Matrix\&.h\&.
 .SS "template<typename T , Size N> T mc::math::det (const \fBMatrix\fP< T, N, N > & matrix)"
 
 .PP
@@ -318,9 +318,14 @@ Array subscript out of range with matrices bigger than 2x2
 \fIN\fP Size of the \fC\fBMatrix\fP\fP 
 .RE
 .PP
+\fBPrecondition:\fP
+.RS 4
+The size of the \fC\fBMatrix\fP\fP must be larger than 1 
+.RE
+.PP
 
 .PP
-Definition at line 522 of file Matrix\&.h\&.
+Definition at line 550 of file Matrix\&.h\&.
 .SS "template<typename T , Size N> T mc::math::dot (const \fBVector\fP< T, N > & a, const \fBVector\fP< T, N > & b)"
 
 .PP
@@ -354,7 +359,7 @@ cross(const Vector&, const Vector&)
 .PP
 
 .PP
-Definition at line 568 of file Vector\&.h\&.
+Definition at line 650 of file Vector\&.h\&.
 .SS "long double mc::math::e ()"
 
 .PP
@@ -417,7 +422,7 @@ An indentity \fC\fBMatrix\fP\fP whose diagonal elements are \fC1\fP
 .PP
 
 .PP
-Definition at line 583 of file Matrix\&.h\&.
+Definition at line 613 of file Matrix\&.h\&.
 .SS "template<typename T , Size N> \fBMatrix\fP< T, N, N > mc::math::inverse (const \fBMatrix\fP< T, N, N > & matrix)"
 
 .PP
@@ -446,6 +451,11 @@ The inverse of \fCmatrix\fP
 \fIN\fP Order of the \fC\fBMatrix\fP\fP 
 .RE
 .PP
+\fBPrecondition:\fP
+.RS 4
+The size of the \fC\fBMatrix\fP\fP must be greater than 1 
+.RE
+.PP
 \fBBug\fP
 .RS 4
 Matrices bigger then 2x2 dont work 
@@ -453,7 +463,7 @@ Matrices bigger then 2x2 dont work
 .PP
 
 .PP
-Definition at line 612 of file Matrix\&.h\&.
+Definition at line 643 of file Matrix\&.h\&.
 .SS "bool mc::math::isEven (const int value)"
 
 .PP
@@ -543,7 +553,7 @@ cross(const Vector&, const Vector&)
 .PP
 
 .PP
-Definition at line 582 of file Vector\&.h\&.
+Definition at line 668 of file Vector\&.h\&.
 .SS "template<typename T , Size N> \fBVector\fP<T, N> mc::math::normalize (\fBVector\fP< T, N > & vector)"
 
 .PP
@@ -577,7 +587,7 @@ cross(const Vector&, const Vector&)
 .PP
 
 .PP
-Definition at line 602 of file Vector\&.h\&.
+Definition at line 688 of file Vector\&.h\&.
 .SS "\fBMatrix\fP<float, 4, 4> mc::math::ortho (const float left, const float right, const float bottom, const float top, const float near, const float far)"
 
 .PP
@@ -945,7 +955,7 @@ The sum of the diagonal elements of \fCm\fP
 .PP
 
 .PP
-Definition at line 567 of file Matrix\&.h\&.
+Definition at line 597 of file Matrix\&.h\&.
 .SS "\fBMatrix\fP<float, 4, 4> mc::math::translate (const float x, const float y, const float z)"
 
 .PP
@@ -1014,7 +1024,7 @@ A reflected \fCmatrix\fP
 .PP
 
 .PP
-Definition at line 492 of file Matrix\&.h\&.
+Definition at line 519 of file Matrix\&.h\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

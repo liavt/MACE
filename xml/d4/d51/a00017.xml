@@ -3,7 +3,7 @@
   <compounddef id="d4/d51/a00017" kind="class" language="C++" prot="public">
     <compoundname>mc::gfx::ogl::FrameBuffer</compoundname>
     <basecompoundref refid="d0/d33/a00027" prot="public" virt="non-virtual">mc::gfx::ogl::Object</basecompoundref>
-    <includes refid="d5/de0/a00050" local="no">OGL.h</includes>
+    <includes refid="d2/d79/a00051" local="no">OGL.h</includes>
       <sectiondef kind="public-func">
       <memberdef kind="function" id="d4/d51/a00017_a2dac9a86c52fb504b4e16cb7a2e47897_1a2dac9a86c52fb504b4e16cb7a2e47897" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -30,7 +30,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="325" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="321" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d4/d51/a00017_a576cec8bb74e6279568759b0c43c4183_1a576cec8bb74e6279568759b0c43c4183" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -65,27 +65,27 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="326" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="322" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a20c720f7c7faf71ff944cd0d2c2ad752_1a20c720f7c7faf71ff944cd0d2c2ad752" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a434fab868b01413a58d5eabd81384f56_1a434fab868b01413a58d5eabd81384f56" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::attachTexture</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLuint &amp;textureID, const GLint &amp;level=0)</argsstring>
+        <argsstring>(const Enum target, const Enum attachment, const unsigned int textureID, const int level=0)</argsstring>
         <name>attachTexture</name>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>target</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>attachment</declname>
         </param>
         <param>
-          <type>const GLuint &amp;</type>
+          <type>const unsigned int</type>
           <declname>textureID</declname>
         </param>
         <param>
-          <type>const GLint &amp;</type>
+          <type>const int</type>
           <declname>level</declname>
           <defval>0</defval>
         </param>
@@ -111,7 +111,7 @@
 <parametername>textureID</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>ID for the <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+<para>ID for the <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
@@ -122,8 +122,8 @@
 </parameteritem>
 </parameterlist>
 <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a88fa6cdf699f35182fe3c60b474c2f3b_1a88fa6cdf699f35182fe3c60b474c2f3b" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
-<xrefsect id="d8/d84/a00001_1_todo000003"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="d3/de7/a00039" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a2eaf8f3ddc6f4886dc369a3108e47fae_1a2eaf8f3ddc6f4886dc369a3108e47fae" kindref="member">setDrawBuffers(const Size, const Enum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000006"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="db/d3a/a00040" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -135,31 +135,31 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="339" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="335" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a6789ab4c712e73212c056390a577cf3c_1a6789ab4c712e73212c056390a577cf3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a5ecb9d1dddfaeb1fb607fe3b43fd443f_1a5ecb9d1dddfaeb1fb607fe3b43fd443f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::attachTexture1D</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level=0)</argsstring>
+        <argsstring>(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level=0)</argsstring>
         <name>attachTexture1D</name>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>target</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>attachment</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>texTarget</declname>
         </param>
         <param>
-          <type>const GLuint &amp;</type>
+          <type>const unsigned int</type>
           <declname>textureID</declname>
         </param>
         <param>
-          <type>const GLint &amp;</type>
+          <type>const int</type>
           <declname>level</declname>
           <defval>0</defval>
         </param>
@@ -185,7 +185,7 @@
 <parametername>textureID</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>ID for the <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+<para>ID for the <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
@@ -196,8 +196,90 @@
 </parameteritem>
 </parameterlist>
 <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a88fa6cdf699f35182fe3c60b474c2f3b_1a88fa6cdf699f35182fe3c60b474c2f3b" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
-<xrefsect id="d8/d84/a00001_1_todo000003"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="d3/de7/a00039" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a2eaf8f3ddc6f4886dc369a3108e47fae_1a2eaf8f3ddc6f4886dc369a3108e47fae" kindref="member">setDrawBuffers(const Size, const Enum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000006"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="db/d3a/a00040" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>texTarget</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="340" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d51/a00017_a24796b3b380a0ee511f4093c5c2d097a_1a24796b3b380a0ee511f4093c5c2d097a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::FrameBuffer::attachTexture2D</definition>
+        <argsstring>(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level=0)</argsstring>
+        <name>attachTexture2D</name>
+        <param>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+          <declname>target</declname>
+        </param>
+        <param>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+          <declname>attachment</declname>
+        </param>
+        <param>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+          <declname>texTarget</declname>
+        </param>
+        <param>
+          <type>const unsigned int</type>
+          <declname>textureID</declname>
+        </param>
+        <param>
+          <type>const int</type>
+          <declname>level</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Attaches a texture to this <computeroutput><ref refid="d4/d51/a00017" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>target</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>attachment</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which attachment port to use. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>textureID</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID for the <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a2eaf8f3ddc6f4886dc369a3108e47fae_1a2eaf8f3ddc6f4886dc369a3108e47fae" kindref="member">setDrawBuffers(const Size, const Enum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000006"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="db/d3a/a00040" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -219,116 +301,34 @@
         </inbodydescription>
         <location file="include/MACE/Graphics/OGL.h" line="344" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a792299ef727b0de9ca0182e653104bc6_1a792299ef727b0de9ca0182e653104bc6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::FrameBuffer::attachTexture2D</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level=0)</argsstring>
-        <name>attachTexture2D</name>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>target</declname>
-        </param>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>attachment</declname>
-        </param>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>texTarget</declname>
-        </param>
-        <param>
-          <type>const GLuint &amp;</type>
-          <declname>textureID</declname>
-        </param>
-        <param>
-          <type>const GLint &amp;</type>
-          <declname>level</declname>
-          <defval>0</defval>
-        </param>
-        <briefdescription>
-<para>Attaches a texture to this <computeroutput><ref refid="d4/d51/a00017" kindref="compound">FrameBuffer</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>target</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The framebuffer target. Must be <computeroutput>GL_DRAW_FRAMEBUFFER</computeroutput>, <computeroutput>GL_READ_FRAMEBUFFER</computeroutput> or <computeroutput>GL_FRAMEBUFFER</computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>attachment</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Which attachment port to use. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>textureID</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>ID for the <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>level</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Mipmap level to attach. Is 0 by default. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a88fa6cdf699f35182fe3c60b474c2f3b_1a88fa6cdf699f35182fe3c60b474c2f3b" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
-<xrefsect id="d8/d84/a00001_1_todo000003"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="d3/de7/a00039" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>texTarget</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="348" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a38b5e079b121542ddbb5b72f89e05dea_1a38b5e079b121542ddbb5b72f89e05dea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a3e9af417b669679d0293ba4245231b24_1a3e9af417b669679d0293ba4245231b24" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::attachTexture3D</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLenum &amp;texTarget, const GLuint &amp;textureID, const GLint &amp;level=0, const GLint &amp;layer=0)</argsstring>
+        <argsstring>(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level=0, const int layer=0)</argsstring>
         <name>attachTexture3D</name>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>target</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>attachment</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>texTarget</declname>
         </param>
         <param>
-          <type>const GLuint &amp;</type>
+          <type>const unsigned int</type>
           <declname>textureID</declname>
         </param>
         <param>
-          <type>const GLint &amp;</type>
+          <type>const int</type>
           <declname>level</declname>
           <defval>0</defval>
         </param>
         <param>
-          <type>const GLint &amp;</type>
+          <type>const int</type>
           <declname>layer</declname>
           <defval>0</defval>
         </param>
@@ -354,7 +354,7 @@
 <parametername>textureID</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>ID for the <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+<para>ID for the <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
@@ -365,8 +365,8 @@
 </parameteritem>
 </parameterlist>
 <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a88fa6cdf699f35182fe3c60b474c2f3b_1a88fa6cdf699f35182fe3c60b474c2f3b" kindref="member">setDrawBuffers(const Size&amp;, const GLenum*)</ref> </para></simplesect>
-<xrefsect id="d8/d84/a00001_1_todo000003"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="d3/de7/a00039" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a2eaf8f3ddc6f4886dc369a3108e47fae_1a2eaf8f3ddc6f4886dc369a3108e47fae" kindref="member">setDrawBuffers(const Size, const Enum*)</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000006"><xreftitle>Todo</xreftitle><xrefdescription><para>Replace this with the actual <ref refid="db/d3a/a00040" kindref="compound">Texture</ref> class </para></xrefdescription></xrefsect><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -393,32 +393,32 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="353" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="349" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a5c8e7b19ac97ae2c01223860807cd87a_1a5c8e7b19ac97ae2c01223860807cd87a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a89239a43627858bfb25e9c9c6918cf55_1a89239a43627858bfb25e9c9c6918cf55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::attachTextureLayer</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const GLuint &amp;texture, const GLint &amp;level=0, const GLint &amp;layer=0)</argsstring>
+        <argsstring>(const Enum target, const Enum attachment, const unsigned int texture, const int level=0, const int layer=0)</argsstring>
         <name>attachTextureLayer</name>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>target</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>attachment</declname>
         </param>
         <param>
-          <type>const GLuint &amp;</type>
+          <type>const unsigned int</type>
           <declname>texture</declname>
         </param>
         <param>
-          <type>const GLint &amp;</type>
+          <type>const int</type>
           <declname>level</declname>
           <defval>0</defval>
         </param>
         <param>
-          <type>const GLint &amp;</type>
+          <type>const int</type>
           <declname>layer</declname>
           <defval>0</defval>
         </param>
@@ -444,7 +444,7 @@
 <parametername>texture</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>ID for the <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
+<para>ID for the <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> to attach. See <ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Texture::getID() const</ref> </para></parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
@@ -474,19 +474,19 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="365" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="361" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a0562a290ff0cc617a6d03859f59e513f_1a0562a290ff0cc617a6d03859f59e513f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a41e075742c583f0b9ebd3eceee54fafc_1a41e075742c583f0b9ebd3eceee54fafc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::attachRenderbuffer</definition>
-        <argsstring>(const GLenum &amp;target, const GLenum &amp;attachment, const RenderBuffer &amp;buffer)</argsstring>
+        <argsstring>(const Enum target, const Enum attachment, const RenderBuffer &amp;buffer)</argsstring>
         <name>attachRenderbuffer</name>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>target</declname>
         </param>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>attachment</declname>
         </param>
         <param>
@@ -522,25 +522,25 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="374" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="370" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a88fa6cdf699f35182fe3c60b474c2f3b_1a88fa6cdf699f35182fe3c60b474c2f3b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a2eaf8f3ddc6f4886dc369a3108e47fae_1a2eaf8f3ddc6f4886dc369a3108e47fae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::setDrawBuffers</definition>
-        <argsstring>(const Size &amp;arrSize, const GLenum *buffers)</argsstring>
+        <argsstring>(const Size arrSize, const Enum *buffers)</argsstring>
         <name>setDrawBuffers</name>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>arrSize</declname>
         </param>
         <param>
-          <type>const GLenum *</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> *</type>
           <declname>buffers</declname>
         </param>
         <briefdescription>
 <para>Specifies what buffers to render to. </para>        </briefdescription>
         <detaileddescription>
-<para>Takes in an array of attachments. A <computeroutput><ref refid="dc/d87/a00032" kindref="compound">RenderBuffer</ref></computeroutput> or <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> can be attached to act as a draw buffer. <parameterlist kind="param"><parameteritem>
+<para>Takes in an array of attachments. A <computeroutput><ref refid="dc/d87/a00032" kindref="compound">RenderBuffer</ref></computeroutput> or <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> can be attached to act as a draw buffer. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>arrSize</parametername>
 </parameternamelist>
@@ -556,12 +556,12 @@
 </parameteritem>
 </parameterlist>
 <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glDrawBuffers">https://www.opengl.org/wiki/GLAPI/glDrawBuffers</ulink> </para></simplesect>
-<simplesect kind="see"><para>FrameBuffer::attachTexture(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a6789ab4c712e73212c056390a577cf3c_1a6789ab4c712e73212c056390a577cf3c" kindref="member">FrameBuffer::attachTexture1D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a792299ef727b0de9ca0182e653104bc6_1a792299ef727b0de9ca0182e653104bc6" kindref="member">FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para>FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;, const GLint&amp;) </para></simplesect>
-<simplesect kind="see"><para>FrameBuffer::attachTextureLayer(const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a0562a290ff0cc617a6d03859f59e513f_1a0562a290ff0cc617a6d03859f59e513f" kindref="member">FrameBuffer::attachRenderbuffer(const GLenum&amp;, const GLenum&amp;, const RenderBuffer&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a5ecb9d1dddfaeb1fb607fe3b43fd443f_1a5ecb9d1dddfaeb1fb607fe3b43fd443f" kindref="member">FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a24796b3b380a0ee511f4093c5c2d097a_1a24796b3b380a0ee511f4093c5c2d097a" kindref="member">FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)</ref> </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int) </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a41e075742c583f0b9ebd3eceee54fafc_1a41e075742c583f0b9ebd3eceee54fafc" kindref="member">FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&amp;)</ref> </para></simplesect>
 <simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
@@ -574,19 +574,19 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="390" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="386" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a8fb1b0db38d083e190141a4656df6b75_1a8fb1b0db38d083e190141a4656df6b75" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a3ae47d110ce854306a4c0eed6d1b9f89_1a3ae47d110ce854306a4c0eed6d1b9f89" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::setReadBuffer</definition>
-        <argsstring>(const Enum &amp;mode)</argsstring>
+        <argsstring>(const Enum mode)</argsstring>
         <name>setReadBuffer</name>
         <param>
-          <type>const <ref refid="d9/da4/a00078_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>mode</declname>
         </param>
         <briefdescription>
-<para>Select which color buffer to use for reading via <ref refid="d4/d51/a00017_afbe663120995ec0da6db5a94d57046ce_1afbe663120995ec0da6db5a94d57046ce" kindref="member">FrameBuffer::readPixels(const int&amp;, const int&amp;, const Size&amp;, const Size&amp;, const Enum&amp;, const Enum&amp;, void*) const</ref>. </para>        </briefdescription>
+<para>Select which color buffer to use for reading via <ref refid="d4/d51/a00017_a2e32587f020b28e2033d424902601ce8_1a2e32587f020b28e2033d424902601ce8" kindref="member">FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const</ref>. </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
@@ -596,14 +596,14 @@
 <para>Which attachment to use </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_ab04d57357ee836e1ae0ea2f24821a38b_1ab04d57357ee836e1ae0ea2f24821a38b" kindref="member">FrameBuffer::setPixelStore(const Enum&amp;, const float&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a1073179923bc9b8878af2855419e0d0d_1a1073179923bc9b8878af2855419e0d0d" kindref="member">FrameBuffer::setPixelStore(const Enum, const float)</ref> </para></simplesect>
 <simplesect kind="see"><para><ulink url="https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml">https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml</ulink> </para></simplesect>
-<simplesect kind="see"><para>FrameBuffer::attachTexture(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a6789ab4c712e73212c056390a577cf3c_1a6789ab4c712e73212c056390a577cf3c" kindref="member">FrameBuffer::attachTexture1D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a792299ef727b0de9ca0182e653104bc6_1a792299ef727b0de9ca0182e653104bc6" kindref="member">FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para>FrameBuffer::attachTexture2D(const GLenum&amp;, const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;, const GLint&amp;) </para></simplesect>
-<simplesect kind="see"><para>FrameBuffer::attachTextureLayer(const GLenum&amp;, const GLenum&amp;, const GLuint&amp;, const GLint&amp;) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a0562a290ff0cc617a6d03859f59e513f_1a0562a290ff0cc617a6d03859f59e513f" kindref="member">FrameBuffer::attachRenderbuffer(const GLenum&amp;, const GLenum&amp;, const RenderBuffer&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a5ecb9d1dddfaeb1fb607fe3b43fd443f_1a5ecb9d1dddfaeb1fb607fe3b43fd443f" kindref="member">FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a24796b3b380a0ee511f4093c5c2d097a_1a24796b3b380a0ee511f4093c5c2d097a" kindref="member">FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)</ref> </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int) </para></simplesect>
+<simplesect kind="see"><para>FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a41e075742c583f0b9ebd3eceee54fafc_1a41e075742c583f0b9ebd3eceee54fafc" kindref="member">FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&amp;)</ref> </para></simplesect>
 <simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
@@ -616,35 +616,35 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="407" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="403" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_afbe663120995ec0da6db5a94d57046ce_1afbe663120995ec0da6db5a94d57046ce" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a2e32587f020b28e2033d424902601ce8_1a2e32587f020b28e2033d424902601ce8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::readPixels</definition>
-        <argsstring>(const int &amp;x, const int &amp;y, const Size &amp;width, const Size &amp;height, const Enum &amp;format, const Enum &amp;type, void *data) const </argsstring>
+        <argsstring>(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void *data) const </argsstring>
         <name>readPixels</name>
         <param>
-          <type>const int &amp;</type>
+          <type>const int</type>
           <declname>x</declname>
         </param>
         <param>
-          <type>const int &amp;</type>
+          <type>const int</type>
           <declname>y</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>width</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>height</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>format</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>type</declname>
         </param>
         <param>
@@ -705,8 +705,8 @@
 </parameteritem>
 </parameterlist>
 <simplesect kind="see"><para><ulink url="https://www.opengl.org/sdk/docs/man/html/glReadPixels.xhtml">https://www.opengl.org/sdk/docs/man/html/glReadPixels.xhtml</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_ab04d57357ee836e1ae0ea2f24821a38b_1ab04d57357ee836e1ae0ea2f24821a38b" kindref="member">FrameBuffer::setPixelStore(const Enum&amp;, const float&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017_a8fb1b0db38d083e190141a4656df6b75_1a8fb1b0db38d083e190141a4656df6b75" kindref="member">FrameBuffer::setReadBuffer(const Enum&amp;)</ref>; </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a1073179923bc9b8878af2855419e0d0d_1a1073179923bc9b8878af2855419e0d0d" kindref="member">FrameBuffer::setPixelStore(const Enum, const float)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d51/a00017_a3ae47d110ce854306a4c0eed6d1b9f89_1a3ae47d110ce854306a4c0eed6d1b9f89" kindref="member">FrameBuffer::setReadBuffer(const Enum)</ref>; </para></simplesect>
 <simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
@@ -719,23 +719,70 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="424" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="420" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_ab04d57357ee836e1ae0ea2f24821a38b_1ab04d57357ee836e1ae0ea2f24821a38b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/d51/a00017_a1073179923bc9b8878af2855419e0d0d_1a1073179923bc9b8878af2855419e0d0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::setPixelStore</definition>
-        <argsstring>(const Enum &amp;name, const float &amp;param)</argsstring>
+        <argsstring>(const Enum name, const float param)</argsstring>
         <name>setPixelStore</name>
         <param>
-          <type>const <ref refid="d9/da4/a00078_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>name</declname>
         </param>
         <param>
-          <type>const float &amp;</type>
+          <type>const float</type>
           <declname>param</declname>
         </param>
         <briefdescription>
-<para>Set the pixel storage mode for this <computeroutput><ref refid="d4/d51/a00017" kindref="compound">FrameBuffer</ref></computeroutput> for use in <ref refid="d4/d51/a00017_afbe663120995ec0da6db5a94d57046ce_1afbe663120995ec0da6db5a94d57046ce" kindref="member">FrameBuffer::readPixels(const int&amp;, const int&amp;, const Size&amp;, const Size&amp;, const Enum&amp;, const Enum&amp;, void*) const</ref>. </para>        </briefdescription>
+<para>Set the pixel storage mode for this <computeroutput><ref refid="d4/d51/a00017" kindref="compound">FrameBuffer</ref></computeroutput> for use in <ref refid="d4/d51/a00017_a2e32587f020b28e2033d424902601ce8_1a2e32587f020b28e2033d424902601ce8" kindref="member">FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The parameter to change </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>param</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to change it to </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml">https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml</ulink> </para></simplesect>
+<simplesect kind="see"><para></para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="432" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d51/a00017_a02876d7b479f9e98be5003c397444d6f_1a02876d7b479f9e98be5003c397444d6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::FrameBuffer::setPixelStore</definition>
+        <argsstring>(const Enum name, const int param)</argsstring>
+        <name>setPixelStore</name>
+        <param>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const int</type>
+          <declname>param</declname>
+        </param>
+        <briefdescription>
+<para>Set the pixel storage mode for this <computeroutput><ref refid="d4/d51/a00017" kindref="compound">FrameBuffer</ref></computeroutput> for use in <ref refid="d4/d51/a00017_a2e32587f020b28e2033d424902601ce8_1a2e32587f020b28e2033d424902601ce8" kindref="member">FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const</ref>. </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
@@ -768,53 +815,6 @@
         </inbodydescription>
         <location file="include/MACE/Graphics/OGL.h" line="436" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a1217ac8b855acfb2fb951477c7ae952b_1a1217ac8b855acfb2fb951477c7ae952b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::FrameBuffer::setPixelStore</definition>
-        <argsstring>(const Enum &amp;name, const int &amp;param)</argsstring>
-        <name>setPixelStore</name>
-        <param>
-          <type>const <ref refid="d9/da4/a00078_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const int &amp;</type>
-          <declname>param</declname>
-        </param>
-        <briefdescription>
-<para>Set the pixel storage mode for this <computeroutput><ref refid="d4/d51/a00017" kindref="compound">FrameBuffer</ref></computeroutput> for use in <ref refid="d4/d51/a00017_afbe663120995ec0da6db5a94d57046ce_1afbe663120995ec0da6db5a94d57046ce" kindref="member">FrameBuffer::readPixels(const int&amp;, const int&amp;, const Size&amp;, const Size&amp;, const Enum&amp;, const Enum&amp;, void*) const</ref>. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>name</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The parameter to change </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>param</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to change it to </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml">https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml</ulink> </para></simplesect>
-<simplesect kind="see"><para></para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="440" column="1"/>
-      </memberdef>
       <memberdef kind="function" id="d4/d51/a00017_a5ffa98720ae5b547992c7fbe9e7fdcf5_1a5ffa98720ae5b547992c7fbe9e7fdcf5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>bool</type>
         <definition>bool mc::gfx::ogl::FrameBuffer::isCreated</definition>
@@ -839,15 +839,15 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="442" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="438" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/d51/a00017_a2171bce4d7a88a6b15c7c7130f88149f_1a2171bce4d7a88a6b15c7c7130f88149f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>GLenum</type>
-        <definition>GLenum mc::gfx::ogl::FrameBuffer::checkStatus</definition>
-        <argsstring>(const GLenum &amp;target)</argsstring>
+      <memberdef kind="function" id="d4/d51/a00017_abbed319d7c2e9a89582ef8a3d8e93e3e_1abbed319d7c2e9a89582ef8a3d8e93e3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+        <definition>Enum mc::gfx::ogl::FrameBuffer::checkStatus</definition>
+        <argsstring>(const Enum target)</argsstring>
         <name>checkStatus</name>
         <param>
-          <type>const GLenum &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
           <declname>target</declname>
         </param>
         <briefdescription>
@@ -875,7 +875,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="452" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="448" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d0/d33/a00027_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -908,7 +908,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="118" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="113" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d0/d33/a00027_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>void</type>
@@ -933,10 +933,10 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="124" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="119" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/da4/a00078_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <type><ref refid="da/dec/a00080_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::ogl::Object::getID</definition>
         <argsstring>() const </argsstring>
         <name>getID</name>
@@ -947,7 +947,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="145" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="140" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d0/d33/a00027_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>bool</type>
@@ -975,7 +975,7 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="154" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="149" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d0/d33/a00027_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>bool</type>
@@ -1003,18 +1003,18 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="162" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="157" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="private-func">
-      <memberdef kind="function" id="d4/d51/a00017_1a86bbd6f17e49054aa0ba5da203fe8f3a" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="d4/d51/a00017_1a384f35270a5efb34394525593714c306" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::gfx::ogl::FrameBuffer::bindIndex</definition>
-        <argsstring>(const Index &amp;id) const  override</argsstring>
+        <argsstring>(const Index id) const  override</argsstring>
         <name>bindIndex</name>
-        <reimplements refid="d0/d33/a00027_a969d8bf457ee31a5cbca56c64f054e15_1a969d8bf457ee31a5cbca56c64f054e15">bindIndex</reimplements>
+        <reimplements refid="d0/d33/a00027_a5f9f3150ac508ecf142eff4f1bc9f424_1a5f9f3150ac508ecf142eff4f1bc9f424">bindIndex</reimplements>
         <param>
-          <type>const <ref refid="d9/da4/a00078_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
           <declname>id</declname>
         </param>
         <briefdescription>
@@ -1041,12 +1041,12 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="457" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="453" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="protected-attrib">
       <memberdef kind="variable" id="d0/d33/a00027_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" static="no" mutable="no">
-        <type><ref refid="d9/da4/a00078_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <type><ref refid="da/dec/a00080_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::ogl::Object::id</definition>
         <argsstring></argsstring>
         <name>id</name>
@@ -1057,29 +1057,17 @@
 <para>` Should be set in <ref refid="d0/d33/a00027_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> and become 0 in <ref refid="d0/d33/a00027_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para><para><ref refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="169" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="169" bodyend="-1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="164" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="164" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
 <para>Represents an OpenGL Framebuffer <ref refid="d0/d33/a00027" kindref="compound">Object</ref> which allows rendering to a non-screen location. </para>    </briefdescription>
     <detaileddescription>
-<para>This also allows rendering to a <computeroutput><ref refid="d3/de7/a00039" kindref="compound">Texture</ref></computeroutput> or <computeroutput><ref refid="dc/d87/a00032" kindref="compound">RenderBuffer</ref></computeroutput> object. </para><para>This is not a subclass of the <computeroutput><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref></computeroutput> object as this is technically not an OpenGL buffer. The name is misleading.</para><para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Framebuffer_Object">https://www.opengl.org/wiki/Framebuffer_Object</ulink> </para></simplesect>
+<para>This also allows rendering to a <computeroutput><ref refid="db/d3a/a00040" kindref="compound">Texture</ref></computeroutput> or <computeroutput><ref refid="dc/d87/a00032" kindref="compound">RenderBuffer</ref></computeroutput> object. </para><para>This is not a subclass of the <computeroutput><ref refid="de/d5e/a00007" kindref="compound">Buffer</ref></computeroutput> object as this is technically not an OpenGL buffer. The name is misleading.</para><para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Framebuffer_Object">https://www.opengl.org/wiki/Framebuffer_Object</ulink> </para></simplesect>
 <simplesect kind="see"><para><ref refid="dc/d87/a00032" kindref="compound">RenderBuffer</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d3/de7/a00039" kindref="compound">Texture</ref> </para></simplesect>
-</para>    </detaileddescription>
+<simplesect kind="see"><para><ref refid="db/d3a/a00040" kindref="compound">Texture</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000005"><xreftitle>Todo</xreftitle><xrefdescription><para>target variable which is GL_FRAMEBUFFER by default. and update documentation accordingly </para></xrefdescription></xrefsect></para>    </detaileddescription>
     <inheritancegraph>
-      <node id="368">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="d0/d33/a00027"/>
-      </node>
-      <node id="367">
-        <label>mc::gfx::ogl::FrameBuffer</label>
-        <link refid="d4/d51/a00017"/>
-        <childnode refid="368" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
       <node id="370">
         <label>mc::gfx::ogl::Object</label>
         <link refid="d0/d33/a00027"/>
@@ -1090,18 +1078,30 @@
         <childnode refid="370" relation="public-inheritance">
         </childnode>
       </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="372">
+        <label>mc::gfx::ogl::Object</label>
+        <link refid="d0/d33/a00027"/>
+      </node>
+      <node id="371">
+        <label>mc::gfx::ogl::FrameBuffer</label>
+        <link refid="d4/d51/a00017"/>
+        <childnode refid="372" relation="public-inheritance">
+        </childnode>
+      </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/OGL.h" line="323" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="323" bodyend="458"/>
+    <location file="include/MACE/Graphics/OGL.h" line="319" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="319" bodyend="454"/>
     <listofallmembers>
-      <member refid="d4/d51/a00017_a0562a290ff0cc617a6d03859f59e513f_1a0562a290ff0cc617a6d03859f59e513f" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachRenderbuffer</name></member>
-      <member refid="d4/d51/a00017_a20c720f7c7faf71ff944cd0d2c2ad752_1a20c720f7c7faf71ff944cd0d2c2ad752" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture</name></member>
-      <member refid="d4/d51/a00017_a6789ab4c712e73212c056390a577cf3c_1a6789ab4c712e73212c056390a577cf3c" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture1D</name></member>
-      <member refid="d4/d51/a00017_a792299ef727b0de9ca0182e653104bc6_1a792299ef727b0de9ca0182e653104bc6" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture2D</name></member>
-      <member refid="d4/d51/a00017_a38b5e079b121542ddbb5b72f89e05dea_1a38b5e079b121542ddbb5b72f89e05dea" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture3D</name></member>
-      <member refid="d4/d51/a00017_a5c8e7b19ac97ae2c01223860807cd87a_1a5c8e7b19ac97ae2c01223860807cd87a" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTextureLayer</name></member>
+      <member refid="d4/d51/a00017_a41e075742c583f0b9ebd3eceee54fafc_1a41e075742c583f0b9ebd3eceee54fafc" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachRenderbuffer</name></member>
+      <member refid="d4/d51/a00017_a434fab868b01413a58d5eabd81384f56_1a434fab868b01413a58d5eabd81384f56" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture</name></member>
+      <member refid="d4/d51/a00017_a5ecb9d1dddfaeb1fb607fe3b43fd443f_1a5ecb9d1dddfaeb1fb607fe3b43fd443f" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture1D</name></member>
+      <member refid="d4/d51/a00017_a24796b3b380a0ee511f4093c5c2d097a_1a24796b3b380a0ee511f4093c5c2d097a" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture2D</name></member>
+      <member refid="d4/d51/a00017_a3e9af417b669679d0293ba4245231b24_1a3e9af417b669679d0293ba4245231b24" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTexture3D</name></member>
+      <member refid="d4/d51/a00017_a89239a43627858bfb25e9c9c6918cf55_1a89239a43627858bfb25e9c9c6918cf55" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>attachTextureLayer</name></member>
       <member refid="d0/d33/a00027_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>bind</name></member>
-      <member refid="d4/d51/a00017_1a86bbd6f17e49054aa0ba5da203fe8f3a" prot="private" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>bindIndex</name></member>
-      <member refid="d4/d51/a00017_a2171bce4d7a88a6b15c7c7130f88149f_1a2171bce4d7a88a6b15c7c7130f88149f" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>checkStatus</name></member>
+      <member refid="d4/d51/a00017_1a384f35270a5efb34394525593714c306" prot="private" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>bindIndex</name></member>
+      <member refid="d4/d51/a00017_abbed319d7c2e9a89582ef8a3d8e93e3e_1abbed319d7c2e9a89582ef8a3d8e93e3e" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>checkStatus</name></member>
       <member refid="d4/d51/a00017_a576cec8bb74e6279568759b0c43c4183_1a576cec8bb74e6279568759b0c43c4183" prot="public" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>destroy</name></member>
       <member refid="d0/d33/a00027_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>getID</name></member>
       <member refid="d0/d33/a00027_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>id</name></member>
@@ -1109,11 +1109,11 @@
       <member refid="d4/d51/a00017_a5ffa98720ae5b547992c7fbe9e7fdcf5_1a5ffa98720ae5b547992c7fbe9e7fdcf5" prot="public" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>isCreated</name></member>
       <member refid="d0/d33/a00027_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>operator!=</name></member>
       <member refid="d0/d33/a00027_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>operator==</name></member>
-      <member refid="d4/d51/a00017_afbe663120995ec0da6db5a94d57046ce_1afbe663120995ec0da6db5a94d57046ce" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>readPixels</name></member>
-      <member refid="d4/d51/a00017_a88fa6cdf699f35182fe3c60b474c2f3b_1a88fa6cdf699f35182fe3c60b474c2f3b" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setDrawBuffers</name></member>
-      <member refid="d4/d51/a00017_ab04d57357ee836e1ae0ea2f24821a38b_1ab04d57357ee836e1ae0ea2f24821a38b" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setPixelStore</name></member>
-      <member refid="d4/d51/a00017_a1217ac8b855acfb2fb951477c7ae952b_1a1217ac8b855acfb2fb951477c7ae952b" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setPixelStore</name></member>
-      <member refid="d4/d51/a00017_a8fb1b0db38d083e190141a4656df6b75_1a8fb1b0db38d083e190141a4656df6b75" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setReadBuffer</name></member>
+      <member refid="d4/d51/a00017_a2e32587f020b28e2033d424902601ce8_1a2e32587f020b28e2033d424902601ce8" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>readPixels</name></member>
+      <member refid="d4/d51/a00017_a2eaf8f3ddc6f4886dc369a3108e47fae_1a2eaf8f3ddc6f4886dc369a3108e47fae" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setDrawBuffers</name></member>
+      <member refid="d4/d51/a00017_a1073179923bc9b8878af2855419e0d0d_1a1073179923bc9b8878af2855419e0d0d" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setPixelStore</name></member>
+      <member refid="d4/d51/a00017_a02876d7b479f9e98be5003c397444d6f_1a02876d7b479f9e98be5003c397444d6f" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setPixelStore</name></member>
+      <member refid="d4/d51/a00017_a3ae47d110ce854306a4c0eed6d1b9f89_1a3ae47d110ce854306a4c0eed6d1b9f89" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>setReadBuffer</name></member>
       <member refid="d0/d33/a00027_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>unbind</name></member>
       <member refid="d0/d33/a00027_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" virt="virtual"><scope>mc::gfx::ogl::FrameBuffer</scope><name>~Object</name></member>
     </listofallmembers>

@@ -1,4 +1,4 @@
-.TH "mc::gfx::ssl" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ssl" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,6 +10,15 @@ mc::gfx::ssl \- Holds resources for the Standard Shader Library (SSL\&.) SSL mak
 .SS "Functions"
 
 .in +1c
+.ti -1c
+.RI "void \fBfillBuffer\fP (\fBGraphicsEntity\fP *en)"
+.br
+.ti -1c
+.RI "void \fBbindBuffer\fP (\fBogl::UniformBuffer\fP &buf)"
+.br
+.ti -1c
+.RI "void \fBbindEntity\fP (const \fBGraphicsEntity\fP *en, \fBogl::ShaderProgram\fP &prog)"
+.br
 .ti -1c
 .RI "void \fBinit\fP (const \fBSize\fP &originalWidth, const \fBSize\fP &originalHeight)"
 .br
@@ -27,15 +36,6 @@ mc::gfx::ssl \- Holds resources for the Standard Shader Library (SSL\&.) SSL mak
 .br
 .ti -1c
 .RI "void \fBcheckInput\fP ()"
-.br
-.ti -1c
-.RI "void \fBbindBuffer\fP (\fBogl::UniformBuffer\fP &buf)"
-.br
-.ti -1c
-.RI "void \fBfillBuffer\fP (\fBogl::UniformBuffer\fP &buf, const \fBEntity\fP *en)"
-.br
-.ti -1c
-.RI "void \fBbindEntity\fP (const \fBGraphicsEntity\fP *en, \fBogl::ShaderProgram\fP &prog)"
 .br
 .ti -1c
 .RI "void \fBbindShaderProgram\fP (\fBogl::ShaderProgram\fP &prog)"
@@ -156,7 +156,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ssl::fillBuffer (\fBogl::UniformBuffer\fP & buf, const \fBEntity\fP * en)"
+.SS "void mc::gfx::ssl::fillBuffer (\fBGraphicsEntity\fP * en)"
 
 .PP
 \fBWarning:\fP

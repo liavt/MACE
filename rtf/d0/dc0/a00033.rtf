@@ -85,8 +85,8 @@
 mc::gfx::Renderer Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::Renderer}
 {\xe \v mc::gfx::Renderer}
-{\bkmkstart AAAAAAABDR}
-{\bkmkend AAAAAAABDR}
+{\bkmkstart AAAAAAABFE}
+{\bkmkend AAAAAAABFE}
 \par
 {
 {\f2 #include <Renderer.h>}}\par
@@ -102,7 +102,7 @@ static void {\b init} (const {\b Size} originalWidth, const {\b Size} originalHe
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 static void {\b setUp} ({\b os::WindowModule} *win)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-template<typename T > static void {\b queue} (T *e)\par
+static void {\b queue} ({\b GraphicsEntity} *e, const {\b Index} protocol)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 static {\b Size} {\b numberOfProtocols} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -119,6 +119,8 @@ static void {\b clearBuffers} ()\par
 static void {\b setRefreshColor} (const float r, const float g, const float b, const float a=1.0f)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 static void {\b setRefreshColor} (const {\b Color} &c)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+template<typename T > static {\b Index} {\b registerProtocol} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 static {\b Size} {\b getOriginalWidth} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -150,8 +152,8 @@ Member Function Documentation\par
 {\b 
 static void mc::gfx::Renderer::checkInput (){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDS}
-{\bkmkend AAAAAAABDS}
+{\bkmkstart AAAAAAABFF}
+{\bkmkend AAAAAAABFF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -176,8 +178,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::clearBuffers (){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDT}
-{\bkmkend AAAAAAABDT}
+{\bkmkstart AAAAAAABFG}
+{\bkmkend AAAAAAABFG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -202,8 +204,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::destroy (){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDU}
-{\bkmkend AAAAAAABDU}
+{\bkmkstart AAAAAAABFH}
+{\bkmkend AAAAAAABFH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -228,8 +230,8 @@ Exceptions:\par}
 {\b 
 static {\b Size} mc::gfx::Renderer::getOriginalHeight (){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDV}
-{\bkmkend AAAAAAABDV}
+{\bkmkstart AAAAAAABFI}
+{\bkmkend AAAAAAABFI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -239,8 +241,8 @@ static {\b Size} mc::gfx::Renderer::getOriginalHeight (){\f2 [static]}}}
 {\b 
 static {\b Size} mc::gfx::Renderer::getOriginalWidth (){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDW}
-{\bkmkend AAAAAAABDW}
+{\bkmkstart AAAAAAABFJ}
+{\bkmkend AAAAAAABFJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -250,8 +252,8 @@ static {\b Size} mc::gfx::Renderer::getOriginalWidth (){\f2 [static]}}}
 {\b 
 static void mc::gfx::Renderer::init (const {\b Size}  {\i originalWidth}, const {\b Size}  {\i originalHeight}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDX}
-{\bkmkend AAAAAAABDX}
+{\bkmkstart AAAAAAABFK}
+{\bkmkend AAAAAAABFK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -276,8 +278,8 @@ Exceptions:\par}
 {\b 
 static {\b Size} mc::gfx::Renderer::numberOfProtocols (){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDY}
-{\bkmkend AAAAAAABDY}
+{\bkmkstart AAAAAAABFL}
+{\bkmkend AAAAAAABFL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -285,15 +287,26 @@ static {\b Size} mc::gfx::Renderer::numberOfProtocols (){\f2 [static]}}}
 {\xe \v mc::gfx::Renderer\:queue}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-template<typename T > static void mc::gfx::Renderer::queue (T *  {\i e}){\f2 [inline]}, {\f2 [static]}}}
+static void mc::gfx::Renderer::queue ({\b GraphicsEntity} *  {\i e}, const {\b Index}  {\i protocol}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABDZ}
-{\bkmkend AAAAAAABDZ}
+{\bkmkstart AAAAAAABFM}
+{\bkmkend AAAAAAABFM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v registerProtocol\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:registerProtocol}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+template<typename T > static {\b Index} mc::gfx::Renderer::registerProtocol (){\f2 [inline]}, {\f2 [static]}}}
+\par
+{\bkmkstart AAAAAAABFN}
+{\bkmkend AAAAAAABFN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
-Definition at line 190 of file Renderer.h.}\par
+Definition at line 233 of file Renderer.h.}\par
 }
 {\xe \v renderFrame\:mc::gfx::Renderer}
 {\xe \v mc::gfx::Renderer\:renderFrame}
@@ -301,8 +314,8 @@ Definition at line 190 of file Renderer.h.}\par
 {\b 
 static void mc::gfx::Renderer::renderFrame ({\b os::WindowModule} *  {\i win}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABEA}
-{\bkmkend AAAAAAABEA}
+{\bkmkstart AAAAAAABFO}
+{\bkmkend AAAAAAABFO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -327,8 +340,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::resize (const {\b Size}  {\i width}, const {\b Size}  {\i hieght}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABEB}
-{\bkmkend AAAAAAABEB}
+{\bkmkstart AAAAAAABFP}
+{\bkmkend AAAAAAABFP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -353,8 +366,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::setRefreshColor (const float  {\i r}, const float  {\i g}, const float  {\i b}, const float  {\i a} = {\f2 1.0f}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABEC}
-{\bkmkend AAAAAAABEC}
+{\bkmkstart AAAAAAABFQ}
+{\bkmkend AAAAAAABFQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -377,8 +390,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::setRefreshColor (const {\b Color} &  {\i c}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABED}
-{\bkmkend AAAAAAABED}
+{\bkmkstart AAAAAAABFR}
+{\bkmkend AAAAAAABFR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -401,8 +414,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::setUp ({\b os::WindowModule} *  {\i win}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABEE}
-{\bkmkend AAAAAAABEE}
+{\bkmkstart AAAAAAABFS}
+{\bkmkend AAAAAAABFS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -427,8 +440,8 @@ Exceptions:\par}
 {\b 
 static void mc::gfx::Renderer::tearDown ({\b os::WindowModule} *  {\i win}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABEF}
-{\bkmkend AAAAAAABEF}
+{\bkmkstart AAAAAAABFT}
+{\bkmkend AAAAAAABFT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -457,8 +470,8 @@ Friends And Related Function Documentation\par
 {\b 
 void {\b ssl::init} (const {\b Size} & , const {\b Size} & ){\f2 [friend]}}}
 \par
-{\bkmkstart AAAAAAABEG}
-{\bkmkend AAAAAAABEG}
+{\bkmkstart AAAAAAABFU}
+{\bkmkend AAAAAAABFU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }

@@ -1,222 +1,1482 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d0/d89/a00071" kind="file" language="C++">
-    <compoundname>Preprocessor.h</compoundname>
-    <includes local="no">vector</includes>
-    <includes local="no">string</includes>
-    <includes local="no">map</includes>
-    <includes refid="df/d03/a00062" local="no">MACE/System/Constants.h</includes>
-    <includedby refid="d1/d6e/a00073" local="no">include/MACE/Utility/Utility.h</includedby>
-    <incdepgraph>
-      <node id="341">
-        <label>cstdint</label>
-      </node>
-      <node id="342">
-        <label>stdexcept</label>
-      </node>
-      <node id="340">
-        <label>MACE/System/Constants.h</label>
-        <link refid="df/d03/a00062_source"/>
-        <childnode refid="341" relation="include">
-        </childnode>
-        <childnode refid="342" relation="include">
-        </childnode>
-      </node>
-      <node id="338">
-        <label>string</label>
-      </node>
-      <node id="339">
-        <label>map</label>
-      </node>
-      <node id="337">
-        <label>vector</label>
-      </node>
-      <node id="336">
-        <label>include/MACE/Utility/Preprocessor.h</label>
-        <link refid="Preprocessor.h"/>
-        <childnode refid="337" relation="include">
-        </childnode>
-        <childnode refid="338" relation="include">
-        </childnode>
-        <childnode refid="339" relation="include">
-        </childnode>
-        <childnode refid="340" relation="include">
-        </childnode>
-      </node>
-    </incdepgraph>
-    <invincdepgraph>
-      <node id="344">
-        <label>include/MACE/Utility/Utility.h</label>
-        <link refid="d1/d6e/a00073_source"/>
-        <childnode refid="345" relation="include">
-        </childnode>
-      </node>
-      <node id="345">
-        <label>include/MACE/MACE.h</label>
-        <link refid="d4/de8/a00061_source"/>
-      </node>
-      <node id="343">
-        <label>include/MACE/Utility/Preprocessor.h</label>
-        <link refid="Preprocessor.h"/>
-        <childnode refid="344" relation="include">
-        </childnode>
-      </node>
-    </invincdepgraph>
-    <innerclass refid="dc/de2/a00024" prot="public">mc::Macro</innerclass>
-    <innerclass refid="de/d11/a00021" prot="public">mc::Include</innerclass>
-    <innerclass refid="d3/d52/a00023" prot="public">mc::IncludeString</innerclass>
-    <innerclass refid="d7/de0/a00022" prot="public">mc::IncludeDirectory</innerclass>
-    <innerclass refid="d5/d79/a00030" prot="public">mc::Preprocessor</innerclass>
-    <innernamespace refid="d9/da4/a00078">mc</innernamespace>
-      <sectiondef kind="define">
-      <memberdef kind="define" id="d0/d89/a00071_a39b50c301f1bc11b3db117924282725b_1a39b50c301f1bc11b3db117924282725b" prot="public" static="no">
-        <name>MACE_UTILITY_PREPROCESSOR_H</name>
+  <compounddef id="d0/d89/a00071" kind="namespace" language="C++">
+    <compoundname>mc::math</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="d0/d89/a00071_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::pi</definition>
+        <argsstring>()</argsstring>
+        <name>pi</name>
         <briefdescription>
-        </briefdescription>
+<para>Calculates the mathmatical constant <computeroutput>pi</computeroutput>. </para>        </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><computeroutput>Pi</computeroutput> is the ratio of a circle&apos;s circumfernce to it&apos;s diameter, always coming out to equal roughly 3.14, no matter the size of the circle. </para><para>It is located here as a <computeroutput>long double</computeroutput> to have the most possible digits. <simplesect kind="return"><para>Pi </para></simplesect>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="12" column="9" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="12" bodyend="-1"/>
+        <location file="include/MACE/Utility/Math.h" line="27" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_aa14a0de605cdb48db7525a542bcbac64_1aa14a0de605cdb48db7525a542bcbac64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::tau</definition>
+        <argsstring>()</argsstring>
+        <name>tau</name>
+        <briefdescription>
+<para>Calculates the mathmatical constant <computeroutput>tau</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>Tau</computeroutput> is known as <computeroutput>2pi</computeroutput> and represents the full turn of a circle. It also represents 6.28 radians, a full circle, equal to 360 degrees. <simplesect kind="return"><para>Tau </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" kindref="member">toRadians()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="34" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a4ed92aa582855134db34180b30b4626b_1a4ed92aa582855134db34180b30b4626b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::gamma</definition>
+        <argsstring>()</argsstring>
+        <name>gamma</name>
+        <briefdescription>
+<para>Calculates the mathmatical constant represented by <computeroutput>gamma</computeroutput>, or the `Euler–Mascheroni constant. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>Gamma is used in number theory and analysis. @return The</computeroutput>Euler–Mascheroni constant` </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="40" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a5befd79b41cbf0e5e5b08f452e56aac2_1a5befd79b41cbf0e5e5b08f452e56aac2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::e</definition>
+        <argsstring>()</argsstring>
+        <name>e</name>
+        <briefdescription>
+<para>Calculates the mathmatical constant known as <computeroutput>Eulers Number,</computeroutput> or <computeroutput>e</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><computeroutput>E</computeroutput> is used as the base for the natural logarithim. <simplesect kind="return"><para><computeroutput>Eulers Number</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>logn(double); </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="47" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a3012b8cabf72e8a9c7587d6e7cbf2933_1a3012b8cabf72e8a9c7587d6e7cbf2933" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::root2</definition>
+        <argsstring>()</argsstring>
+        <name>root2</name>
+        <briefdescription>
+<para>Calculates the square root of 2, also known as the <computeroutput>principal square root of 2</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>This number when multiplied by itself returns 2. It is used in trigonometry. <simplesect kind="return"><para>Square root of 2 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="53" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a403cc4a12c80482af028d90cdec8284c_1a403cc4a12c80482af028d90cdec8284c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::root3</definition>
+        <argsstring>()</argsstring>
+        <name>root3</name>
+        <briefdescription>
+<para>Calculates the square root of 3, also known as the <computeroutput>principal square root of 3</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>This number when multiplied by itself returns 3. It is used in geometery and trigonometry. <simplesect kind="return"><para>Square root of 3 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="59" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a8b04d5f2c0675d6678d9e5e2ff84ad42_1a8b04d5f2c0675d6678d9e5e2ff84ad42" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::root5</definition>
+        <argsstring>()</argsstring>
+        <name>root5</name>
+        <briefdescription>
+<para>Calculates the square root of 5, also known as the <computeroutput>principal square root of 5</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>This number when multiplied by itself returns 5. It is used in geometery and trigonometry. <simplesect kind="return"><para>Square root of 5 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="65" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a94fbffd48dac845ff382ae7de18b0306_1a94fbffd48dac845ff382ae7de18b0306" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long double</type>
+        <definition>long double mc::math::phi</definition>
+        <argsstring>()</argsstring>
+        <name>phi</name>
+        <briefdescription>
+<para>Calculates the golden ratio, also represented by <computeroutput>phi</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="70" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a504106941c2d9d5309889b12a48722c0_1a504106941c2d9d5309889b12a48722c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::abs</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>abs</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Gets the absolute value of a number. </para>        </briefdescription>
+        <detaileddescription>
+<para>The absolute value is the unsigned version of a number. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number that is either negative or positive </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>|value|</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="77" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::math::ceil</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>ceil</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>&quot;Ceils&quot; a number, or rounds it up. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to ceil </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value,</computeroutput> but rounded up. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" kindref="member">floor(const double)</ref> </para></simplesect>
+<simplesect kind="see"><para>round(const double) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="86" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::math::floor</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>floor</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>&quot;Floors&quot; a number, or rounds it down. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to floor </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value,</computeroutput> but rounded down. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" kindref="member">ceil(const double)</ref> </para></simplesect>
+<simplesect kind="see"><para>round(const double) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="96" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a61ac68996d847d2c8b01865714480a59_1a61ac68996d847d2c8b01865714480a59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::math::isPrime</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>isPrime</name>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Verifies whether a number is prime. </para>        </briefdescription>
+        <detaileddescription>
+<para>A prime number is one that&apos;s only factors are one and itself. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to check if prime </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the number is prime, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="103" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::math::isEven</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>isEven</name>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Checks if a number is even. </para>        </briefdescription>
+        <detaileddescription>
+<para>An even number is one that is divisable by 2. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to check if even </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput>value</computeroutput> is divisable by 2, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" kindref="member">isOdd(const int)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="111" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::math::isOdd</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>isOdd</name>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Checks if a number is odd. </para>        </briefdescription>
+        <detaileddescription>
+<para>An odd number is one that is not divisable by 2. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to check if odd </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput>value</computeroutput> is not divisable by 2, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" kindref="member">isEven(const int)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="118" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a45b58ebbe8267f90c859e692e253af23_1a45b58ebbe8267f90c859e692e253af23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::pow</definition>
+        <argsstring>(const double value, const int power)</argsstring>
+        <name>pow</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>const int</type>
+          <declname>power</declname>
+        </param>
+        <briefdescription>
+<para>Calculates a number to an exponenet, or <computeroutput>value^power</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Base number </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>power</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The exponent </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value^power</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr(const double)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube(const double)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="128" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::sqr</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>sqr</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Squares a number. </para>        </briefdescription>
+        <detaileddescription>
+<para>Squaring a number equals a number times iteslf. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to square </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value^2</computeroutput> or <computeroutput>value*value</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>pow(const double, const double) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube(const double)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="137" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::cube</definition>
+        <argsstring>(const double value)</argsstring>
+        <name>cube</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Cubes a number. </para>        </briefdescription>
+        <detaileddescription>
+<para>Cubing a number is equal to itself to the power of 3. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number to cube </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><computeroutput>value^3</computeroutput> or <computeroutput>value*value*value</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>pow(const double, const double) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr(const double)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="146" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::toRadians</definition>
+        <argsstring>(const double degrees)</argsstring>
+        <name>toRadians</name>
+        <param>
+          <type>const double</type>
+          <declname>degrees</declname>
+        </param>
+        <briefdescription>
+<para>Conversion of degreees to radians. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>degrees</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An angle in degrees </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The same number represented as radians </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="154" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_aac7930263e025b720ac6033de95f7711_1aac7930263e025b720ac6033de95f7711" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::math::toDegrees</definition>
+        <argsstring>(const double radians)</argsstring>
+        <name>toDegrees</name>
+        <param>
+          <type>const double</type>
+          <declname>radians</declname>
+        </param>
+        <briefdescription>
+<para>Conversion of radians to degrees. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>radians</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An angle in radians </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The same number represented as degrees </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Math.h" line="162" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt;</type>
+        <definition>Matrix&lt; T, N, N &gt; mc::math::inverse</definition>
+        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;matrix)</argsstring>
+        <name>inverse</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
+          <defname>matrix</defname>
+        </param>
+        <briefdescription>
+<para>Inverses a <computeroutput>N</computeroutput> by <computeroutput>N</computeroutput> <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>An inversed <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> times a normal <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> equals the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para><para>Not to be confused with <computeroutput><ref refid="d0/d89/a00071_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" kindref="member">tr()</ref></computeroutput> </para><para>If <computeroutput>T</computeroutput> is not a floating point type, the output may not work, as it will round. </para><para>The output is calculated via the Caley-Hamilton theorum (<ulink url="https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem">https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem</ulink>) <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to invert </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The inverse of <computeroutput>matrix</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Order of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="pre"><para>The size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> must be greater than 1 </para></simplesect>
+<xrefsect id="d7/d46/a00002_1_bug000005"><xreftitle>Bug</xreftitle><xrefdescription><para>Matrices bigger then 2x2 dont work </para></xrefdescription></xrefsect></para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="31" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="643" bodyend="648"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>W</declname>
+            <defname>W</defname>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>H</declname>
+            <defname>H</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, H, W &gt;</type>
+        <definition>Matrix&lt;T, H, W&gt; mc::math::transpose</definition>
+        <argsstring>(const Matrix&lt; T, W, H &gt; &amp;matrix)</argsstring>
+        <name>transpose</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, W, H &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+<para>Transposes a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>Transposing a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> creates a reflection of it, where every row is a column. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to transpose </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A reflected <computeroutput>matrix</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>W</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Width of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>H</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Height of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="519" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="519" bodyend="527"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::det</definition>
+        <argsstring>(const Matrix&lt; T, 2, 2 &gt; &amp;matrix)</argsstring>
+        <name>det</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, 2, 2 &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the determinate of a 2x2 <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A square 2x2 <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to find the determinate of </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The determinate of <computeroutput>matrix</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="536" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="536" bodyend="538"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_ad0b604c0b56449aa4e2cb9c231e7d7ec_1ad0b604c0b56449aa4e2cb9c231e7d7ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::det</definition>
+        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;matrix)</argsstring>
+        <name>det</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
+          <declname>matrix</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the determinate of a any sized <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>matrix</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A square <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to find the determinate of </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The determinate of <computeroutput>matrix</computeroutput> </para></simplesect>
+<xrefsect id="d7/d46/a00002_1_bug000004"><xreftitle>Bug</xreftitle><xrefdescription><para>Array subscript out of range with matrices bigger than 2x2 </para></xrefdescription></xrefsect><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="pre"><para>The size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> must be larger than 1 </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="550" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="550" bodyend="580"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::tr</definition>
+        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;m)</argsstring>
+        <name>tr</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the trace of a <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The trace is the sum of all of the diagonal elements of a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para><para>The trace is related to the derivative of a <ref refid="d0/d89/a00071_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" kindref="member">determinate.</ref> </para><para>Not to be confused with <computeroutput><ref refid="d0/d89/a00071_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" kindref="member">transpose(const Matrix&amp;)</ref>)</computeroutput> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to calculate the trace of </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The sum of the diagonal elements of <computeroutput>m</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" kindref="member">inverse(const Matrix&lt;T,N,N&gt;&amp;)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="597" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="597" bodyend="604"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a80edefaa133d7673d8023b612a5925a2_1a80edefaa133d7673d8023b612a5925a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt;</type>
+        <definition>Matrix&lt;T, N, N&gt; mc::math::identity</definition>
+        <argsstring>()</argsstring>
+        <name>identity</name>
+        <briefdescription>
+<para>Creates an indentity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> of a certain size. </para>        </briefdescription>
+        <detaileddescription>
+<para>An identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> times another <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> equals the same <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> <simplesect kind="return"><para>An indentity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> whose diagonal elements are <computeroutput>1</computeroutput> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Matrix.h" line="613" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="613" bodyend="625"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float,4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const float x, const float y, const float z)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a rotation matrix, which when multiplied by a <computeroutput>Vector4f</computeroutput>, rotates it. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the X axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Y axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Z axis </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotation <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="28" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a51931dc3e83f5ecdc7262b3974ef6fc5_1a51931dc3e83f5ecdc7262b3974ef6fc5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const Vector&lt; float, 3 &gt; &amp;v)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; float, 3 &gt; &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Creates a rotation matrix, which when multiplied by a <computeroutput>Vector4f</computeroutput>, rotates it. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>v</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A quaternion representing a rotation </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="36" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a9d5c92e8301c849af62f6b721eee13e9_1a9d5c92e8301c849af62f6b721eee13e9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const Vector&lt; float, 3 &gt; &amp;v)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; float, 3 &gt; &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Rotates an existing <computeroutput>Matrix4f</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>v</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A quaternion representing a rotation </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>Matrix4f</computeroutput> base to rotate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="43" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a6acf4ae84e8f65be0237c23d4bb07b72_1a6acf4ae84e8f65be0237c23d4bb07b72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
+        <name>rotate</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Rotates an existing <computeroutput>Matrix4f</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>Matrix4f</computeroutput> to rotate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the X axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Y axis </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Rotation in radians around the Z axis </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="52" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_abd992f7c72bfd0f63282550deace7a6d_1abd992f7c72bfd0f63282550deace7a6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::scale</definition>
+        <argsstring>(const float x, const float y, const float z)</argsstring>
+        <name>scale</name>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is scaled based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="63" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_ad022fe23efde75d0dc744534635cbda0_1ad022fe23efde75d0dc744534635cbda0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::scale</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
+        <name>scale</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Scales an existing transformation matrix. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> to get scaled </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is scaled based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="72" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a65116d02abed05f10cd80a9d89496a18_1a65116d02abed05f10cd80a9d89496a18" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::translate</definition>
+        <argsstring>(const float x, const float y, const float z)</argsstring>
+        <name>translate</name>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values. </para>        </briefdescription>
+        <detaileddescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is translated based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="83" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_aeb201f7e27dce203cb52d274ca27262b_1aeb201f7e27dce203cb52d274ca27262b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::translate</definition>
+        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
+        <name>translate</name>
+        <param>
+          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
+          <declname>m</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Translates an existing transformation matrix. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>m</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base <computeroutput>Matrix4f</computeroutput> to get translated </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the X coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Y coordinate </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate the Z coordinate </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is translated based on the supplied values </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="92" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::projection</definition>
+        <argsstring>(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio)</argsstring>
+        <name>projection</name>
+        <param>
+          <type>const float</type>
+          <declname>FOV</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>NEAR_PLANE</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>FAR_PLANE</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>aspectRatio</declname>
+        </param>
+        <briefdescription>
+<para>Generates a projection matrix based on values. </para>        </briefdescription>
+        <detaileddescription>
+<para>Each time the window changes size, you need to regenerate your projection matrix </para><para>Projection matrices are used in 3D graphics. Vectors multiplied by a projection matrix are transformed to &quot;look&quot; 3-dimensional. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>FOV</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The field of vision, in degrees </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>NEAR_PLANE</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>float</computeroutput> representing the near clipping plane. Z values lower than this are not visible to the viewer </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>FAR_PLANE</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>float</computeroutput> representing the far clipping plane. Z values higher than this are not visible to the viewer </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>aspectRatio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The aspect ratio of the screen. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A projection matrix made from the specified settings </para></simplesect>
+<simplesect kind="see"><para>ortho(const float, const float, const float, const float, const float) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="105" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a6d5b57499cae06fda4e86d95258b1c2c_1a6d5b57499cae06fda4e86d95258b1c2c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
+        <definition>Matrix&lt;float, 4, 4&gt; mc::math::ortho</definition>
+        <argsstring>(const float left, const float right, const float bottom, const float top, const float near, const float far)</argsstring>
+        <name>ortho</name>
+        <param>
+          <type>const float</type>
+          <declname>left</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>right</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>bottom</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>top</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>near</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>far</declname>
+        </param>
+        <briefdescription>
+<para>Generates an orthographic projection matrix. </para>        </briefdescription>
+        <detaileddescription>
+<para>As opposed to a standard projection matrix, vectors in an orthographic projection don&apos;t become smaller the farther away they are. When combined with a rotational matrix, it can create an isometric view, which is used extensively in games like Simcity. Isometric views are also used heavily in 3D modeling software to represent the dimensions of an object.In a 2D environment, an orthographic projection matrix can be used to scale the screen. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>left</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The left plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The right plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bottom</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The bottom plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>top</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The top plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>near</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The near plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>far</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The far plane of the orthographic projection </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>An ortographic projection matrix generated from the values. </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" kindref="member">projection(const float, const float, const float, const float)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Transform.h" line="117" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a2afa253e79730670dfb6298d282236b5_1a2afa253e79730670dfb6298d282236b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, 3 &gt;</type>
+        <definition>Vector&lt;T, 3&gt; mc::math::cross</definition>
+        <argsstring>(const Vector&lt; T, 3 &gt; &amp;a, const Vector&lt; T, 3 &gt; &amp;b)</argsstring>
+        <name>cross</name>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the cross product of 2 <computeroutput>Vectors</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> must be 3-dimensional. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Second <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A vector calculated from the cross product of <computeroutput>a</computeroutput> and <computeroutput>b</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="620" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="620" bodyend="637"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::dot</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;a, const Vector&lt; T, N &gt; &amp;b)</argsstring>
+        <name>dot</name>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the dot product of 2 <computeroutput>Vectors</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> to use </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Second <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> to use </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A scalar calculated from the dot product of <computeroutput>a</computeroutput> and <computeroutput>b</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="650" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="650" bodyend="656"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T mc::math::magnitude</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;a)</argsstring>
+        <name>magnitude</name>
+        <param>
+          <type>const <ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Calculates the magnitude of a <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput>, or how long it is. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> to calculate from </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The magnitude of <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref> a</computeroutput> </para></simplesect>
+<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="668" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="668" bodyend="675"/>
+      </memberdef>
+      <memberdef kind="function" id="d0/d89/a00071_ad11a3dbb6a8527a40a6fdd83fc654490_1ad11a3dbb6a8527a40a6fdd83fc654490" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+          <param>
+            <type>Size</type>
+            <declname>N</declname>
+            <defname>N</defname>
+          </param>
+        </templateparamlist>
+        <type><ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, N &gt;</type>
+        <definition>Vector&lt;T, N&gt; mc::math::normalize</definition>
+        <argsstring>(Vector&lt; T, N &gt; &amp;vector)</argsstring>
+        <name>normalize</name>
+        <param>
+          <type><ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>vector</declname>
+        </param>
+        <briefdescription>
+<para>Normalize a <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>A normalized <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> has a length of 1, and is also known as a unit vector. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>vector</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> to normalize </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A unit <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> with a norm of ` </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d89/a00071_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
+<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Type of <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the <computeroutput><ref refid="d6/d42/a00043" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="688" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="688" bodyend="690"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>Namespace with various mathmatical functions. </para>    </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"></highlight></codeline>
-<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"></highlight></codeline>
-<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_PREPROCESSOR_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_PREPROCESSOR_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;vector&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;map&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/System/Constants.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight></codeline>
-<codeline lineno="19"><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d9/da4/a00078" kindref="compound">mc</ref><sp/>{</highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight></codeline>
-<codeline lineno="25" refid="d9/da4/a00078_a4f8aea91b600429305a5ae1ab033c392_1a4f8aea91b600429305a5ae1ab033c392" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d7/d7a/a00016" kindref="compound">PreprocessorException</ref><sp/>=<sp/><ref refid="d7/d7a/a00016" kindref="compound">Exception</ref>;</highlight></codeline>
-<codeline lineno="26"><highlight class="normal"></highlight></codeline>
-<codeline lineno="31" refid="dc/de2/a00024" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="dc/de2/a00024" kindref="compound">Macro</ref><sp/>{</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/de2/a00024_a8d1f55595da57d5f8d24939a5b5d9d89_1a8d1f55595da57d5f8d24939a5b5d9d89" kindref="member">Macro</ref>(std::string<sp/><ref refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref>,<sp/>std::string<sp/><ref refid="dc/de2/a00024_ac61bcdc639d34b41e44fea3de9f437c0_1ac61bcdc639d34b41e44fea3de9f437c0" kindref="member">definition</ref>,<sp/>std::vector<sp/>&lt;<sp/>std::string<sp/>&gt;<sp/><ref refid="dc/de2/a00024_ababe583a76390d17524bd3278bd247e5_1ababe583a76390d17524bd3278bd247e5" kindref="member">parameters</ref>,<sp/>std::string<sp/><ref refid="dc/de2/a00024_a8c3739b5fc3dc6bc401294585c50e1d7_1a8c3739b5fc3dc6bc401294585c50e1d7" kindref="member">parameterString</ref>);</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/de2/a00024_a8d1f55595da57d5f8d24939a5b5d9d89_1a8d1f55595da57d5f8d24939a5b5d9d89" kindref="member">Macro</ref>(std::string<sp/>name,<sp/>std::string<sp/>definition);</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight></codeline>
-<codeline lineno="52" refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/><ref refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref>;</highlight></codeline>
-<codeline lineno="57" refid="dc/de2/a00024_ac61bcdc639d34b41e44fea3de9f437c0_1ac61bcdc639d34b41e44fea3de9f437c0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/><ref refid="dc/de2/a00024_ac61bcdc639d34b41e44fea3de9f437c0_1ac61bcdc639d34b41e44fea3de9f437c0" kindref="member">definition</ref>;</highlight></codeline>
-<codeline lineno="62" refid="dc/de2/a00024_ababe583a76390d17524bd3278bd247e5_1ababe583a76390d17524bd3278bd247e5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector<sp/>&lt;<sp/>std::string<sp/>&gt;<sp/><ref refid="dc/de2/a00024_ababe583a76390d17524bd3278bd247e5_1ababe583a76390d17524bd3278bd247e5" kindref="member">parameters</ref>;</highlight></codeline>
-<codeline lineno="66" refid="dc/de2/a00024_a8c3739b5fc3dc6bc401294585c50e1d7_1a8c3739b5fc3dc6bc401294585c50e1d7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/><ref refid="dc/de2/a00024_a8c3739b5fc3dc6bc401294585c50e1d7_1a8c3739b5fc3dc6bc401294585c50e1d7" kindref="member">parameterString</ref>;</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75" refid="de/d11/a00021" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="de/d11/a00021" kindref="compound">Include</ref><sp/>{</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hasFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/><ref refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/>std::string<sp/>getFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight></codeline>
-<codeline lineno="92" refid="d3/d52/a00023" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d3/d52/a00023" kindref="compound">IncludeString</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="de/d11/a00021" kindref="compound">Include</ref><sp/>{</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d3/d52/a00023" kindref="compound">IncludeString</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>content,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/><ref refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref>);</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"></highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hasFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>getFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"></highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>content<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>name<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"></highlight></codeline>
-<codeline lineno="114" refid="d7/de0/a00022" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d7/de0/a00022" kindref="compound">IncludeDirectory</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="de/d11/a00021" kindref="compound">Include</ref><sp/>{</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/de0/a00022" kindref="compound">IncludeDirectory</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>dir);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"></highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hasFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/><ref refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>getFile(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"></highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"></highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>directory<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight></codeline>
-<codeline lineno="161" refid="d5/d79/a00030" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d5/d79/a00030" kindref="compound">Preprocessor</ref><sp/>{</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d5/d79/a00030" kindref="compound">Preprocessor</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>input,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>filename<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;Unknown<sp/>file&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">explicit</highlight><highlight class="normal"><sp/><ref refid="d5/d79/a00030" kindref="compound">Preprocessor</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>input,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d5/d79/a00030" kindref="compound">Preprocessor</ref>&amp;<sp/>clone);</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"></highlight></codeline>
-<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;<sp/>std::string<sp/>&gt;<sp/>preprocessTokens();</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>preprocess();</highlight></codeline>
-<codeline lineno="194"><highlight class="normal"></highlight></codeline>
-<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>addInclude(<ref refid="de/d11/a00021" kindref="compound">Include</ref>&amp;<sp/>incl);</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"></highlight></codeline>
-<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;<sp/>Include*<sp/>&gt;<sp/>getIncludes();</highlight></codeline>
-<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::vector&lt;<sp/>Include*<sp/>&gt;<sp/>getIncludes()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setIncludes(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::vector&lt;<sp/>Include*<sp/>&gt;<sp/>includes);</highlight></codeline>
-<codeline lineno="221"><highlight class="normal"></highlight></codeline>
-<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>getInput()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="228"><highlight class="normal"></highlight></codeline>
-<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>getFilename();</highlight></codeline>
-<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>getFilename()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setFilename(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>filename);</highlight></codeline>
-<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>getLine();</highlight></codeline>
-<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>getLine()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setLine(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>line);</highlight></codeline>
-<codeline lineno="264"><highlight class="normal"></highlight></codeline>
-<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>defineMacro(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Macro</ref>&amp;<sp/>macro);</highlight></codeline>
-<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isMacroDefined(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/><ref refid="dc/de2/a00024_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>undefineMacro(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name);</highlight></codeline>
-<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>macroNumber()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="292"><highlight class="normal"></highlight></codeline>
-<codeline lineno="320"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>defineStandardMacros();</highlight></codeline>
-<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>defineOSMacros();</highlight></codeline>
-<codeline lineno="327"><highlight class="normal"></highlight></codeline>
-<codeline lineno="334"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Macro</ref>&amp;<sp/>getMacro(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="335"><highlight class="normal"></highlight></codeline>
-<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>getLocation()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="345"><highlight class="normal"></highlight></codeline>
-<codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>input;</highlight></codeline>
-<codeline lineno="348"><highlight class="normal"></highlight></codeline>
-<codeline lineno="349"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>line<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="350"><highlight class="normal"></highlight></codeline>
-<codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>filename<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="352"><highlight class="normal"></highlight></codeline>
-<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;<sp/>Include*<sp/>&gt;<sp/>includes;</highlight></codeline>
-<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;<sp/>Macro<sp/>&gt;<sp/>macros;</highlight></codeline>
-<codeline lineno="355"><highlight class="normal"></highlight></codeline>
-<codeline lineno="356"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;<sp/>std::string<sp/>&gt;<sp/>parse();</highlight></codeline>
-<codeline lineno="357"><highlight class="normal"></highlight></codeline>
-<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;<sp/>std::string<sp/>&gt;<sp/>executeDirective(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal">&amp;<sp/>outputValue,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>command,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>params);</highlight></codeline>
-<codeline lineno="359"><highlight class="normal"></highlight></codeline>
-<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>getMacroLocation(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="361"><highlight class="normal"></highlight></codeline>
-<codeline lineno="362"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>expandMacro(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>input)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="363"><highlight class="normal"></highlight></codeline>
-<codeline lineno="364"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>getIfScopeLocation();</highlight></codeline>
-<codeline lineno="365"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>getCurrentIfScopeLocation();</highlight></codeline>
-<codeline lineno="366"><highlight class="normal"></highlight></codeline>
-<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>calculateIfScope(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal">&amp;<sp/>outputValue,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>statementPassed);</highlight></codeline>
-<codeline lineno="368"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>parseIfStatement(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>statement);</highlight></codeline>
-<codeline lineno="369"><highlight class="normal"></highlight></codeline>
-<codeline lineno="370"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/de2/a00024" kindref="compound">Macro</ref><sp/>parseMacroName(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="371"><highlight class="normal"></highlight></codeline>
-<codeline lineno="375"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setMacro(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="dc/de2/a00024" kindref="compound">Macro</ref>&amp;<sp/>m);</highlight></codeline>
-<codeline lineno="376"><highlight class="normal"></highlight></codeline>
-<codeline lineno="377"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Preprocessor</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="378"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="379"><highlight class="normal"></highlight></codeline>
-<codeline lineno="380"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-    </programlisting>
-    <location file="include/MACE/Utility/Preprocessor.h"/>
+<para>Namespace that contains mathmathetics with vectors and functions relevant in graphics programming. </para>    </detaileddescription>
+    <location file="include/MACE/Utility/Math.h" line="20" column="1"/>
   </compounddef>
 </doxygen>

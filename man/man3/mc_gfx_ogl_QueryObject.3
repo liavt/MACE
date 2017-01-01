@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::QueryObject" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::QueryObject" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,27 +15,27 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 
 .in +1c
 .ti -1c
-.RI "void \fBbegin\fP (const \fBEnum\fP &target)"
+.RI "void \fBbegin\fP (const \fBEnum\fP target)"
 .br
 .RI "\fIThis \fC\fBQueryObject\fP\fP will begin querying data for a specified target\&. \fP"
 .ti -1c
-.RI "void \fBend\fP (const \fBEnum\fP &target)"
+.RI "void \fBend\fP (const \fBEnum\fP target)"
 .br
 .RI "\fIStops querying data for a certain target\&. \fP"
 .ti -1c
-.RI "void \fBget\fP (const \fBEnum\fP &name, int *data) const "
+.RI "void \fBget\fP (const \fBEnum\fP name, int *data) const "
 .br
 .RI "\fIRetrieves data from a begin/end pair\&. \fP"
 .ti -1c
-.RI "void \fBget\fP (const \fBEnum\fP &name, unsigned int *data) const "
+.RI "void \fBget\fP (const \fBEnum\fP name, unsigned int *data) const "
 .br
 .RI "\fIRetrieves data from a begin/end pair\&. \fP"
 .ti -1c
-.RI "void \fBget\fP (const \fBEnum\fP &name, int64_t *data) const "
+.RI "void \fBget\fP (const \fBEnum\fP name, int64_t *data) const "
 .br
 .RI "\fIRetrieves data from a begin/end pair\&. \fP"
 .ti -1c
-.RI "void \fBget\fP (const \fBEnum\fP &name, uint64_t *data) const "
+.RI "void \fBget\fP (const \fBEnum\fP name, uint64_t *data) const "
 .br
 .RI "\fIRetrieves data from a begin/end pair\&. \fP"
 .ti -1c
@@ -79,7 +79,7 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .PP 
 Special object that is used for asynchronous queries of information from the GPU\&. 
 
-Even though it extends \fC\fBObject\fP\fP it does not implement the \fBObject::bind() const \fPor \fCunbind()\fP functions\&. Instead, the \fC\fBQueryObject\fP\fP uses the \fBQueryObject::begin(const Enum&)\fP and \fBQueryObject::end(const Enum&)\fP functions\&. 
+Even though it extends \fC\fBObject\fP\fP it does not implement the \fBObject::bind() const \fPor \fCunbind()\fP functions\&. Instead, the \fC\fBQueryObject\fP\fP uses the \fBQueryObject::begin(const Enum)\fP and \fBQueryObject::end(const Enum)\fP functions\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -88,10 +88,10 @@ https://www.opengl.org/wiki/Query_Object
 .PP
 
 .PP
-Definition at line 188 of file OGL\&.h\&.
+Definition at line 183 of file OGL\&.h\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "void mc::gfx::ogl::QueryObject::begin (const \fBEnum\fP & target)"
+.SS "void mc::gfx::ogl::QueryObject::begin (const \fBEnum\fP target)"
 
 .PP
 This \fC\fBQueryObject\fP\fP will begin querying data for a specified target\&. Replacement for the \fBObject::bind() const \fPfunction\&. 
@@ -112,7 +112,7 @@ https://www.opengl.org/wiki/GLAPI/glBeginQuery
 .PP
 \fBAttention:\fP
 .RS 4
-When you use this function make sure to also call \fBQueryObject::end(const Enum&)\fP eventually 
+When you use this function make sure to also call \fBQueryObject::end(const Enum)\fP eventually 
 .PP
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
 .RE
@@ -128,13 +128,13 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 Records the current GPU time into this `QueryObject\&. ` This returns immediately\&. 
 .PP
-Can be used in conjunction with \fBQueryObject::begin(const Enum&)\fP with a target of \fCGL_TIME_ELAPSED\fP 
+Can be used in conjunction with \fBQueryObject::begin(const Enum)\fP with a target of \fCGL_TIME_ELAPSED\fP 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBQueryObject::end(const Enum&)\fP 
+\fBQueryObject::end(const Enum)\fP 
 .PP
-\fBQueryObject::get(const Enum&, uint64_t*) const\fP 
+\fBQueryObject::get(const Enum, uint64_t*) const\fP 
 .PP
 https://www.opengl.org/wiki/GLAPI/glQueryCounter 
 .RE
@@ -184,7 +184,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
-.SS "void mc::gfx::ogl::QueryObject::end (const \fBEnum\fP & target)"
+.SS "void mc::gfx::ogl::QueryObject::end (const \fBEnum\fP target)"
 
 .PP
 Stops querying data for a certain target\&. Replacement for the \fBObject::unbind() const \fPfunction 
@@ -203,7 +203,7 @@ https://www.opengl.org/wiki/GLAPI/glBeginQuery
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIGL_INVALID_OPERATION\fP If QueryObject::begin(const Enum& was never called) 
+\fIGL_INVALID_OPERATION\fP If QueryObject::begin(const Enum was never called) 
 .RE
 .PP
 \fBAttention:\fP
@@ -217,7 +217,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP & name, int * data) const"
+.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP name, int * data) const"
 
 .PP
 Retrieves data from a begin/end pair\&. 
@@ -231,9 +231,9 @@ Retrieves data from a begin/end pair\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBQueryObject::begin(const Enum&)\fP 
+\fBQueryObject::begin(const Enum)\fP 
 .PP
-\fBQueryObject::end(const Enum&)\fP 
+\fBQueryObject::end(const Enum)\fP 
 .PP
 \fBQueryObject::counter()\fP 
 .PP
@@ -251,7 +251,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP & name, unsigned int * data) const"
+.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP name, unsigned int * data) const"
 
 .PP
 Retrieves data from a begin/end pair\&. 
@@ -265,9 +265,9 @@ Retrieves data from a begin/end pair\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBQueryObject::begin(const Enum&)\fP 
+\fBQueryObject::begin(const Enum)\fP 
 .PP
-\fBQueryObject::end(const Enum&)\fP 
+\fBQueryObject::end(const Enum)\fP 
 .PP
 \fBQueryObject::counter()\fP 
 .PP
@@ -285,7 +285,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP & name, int64_t * data) const"
+.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP name, int64_t * data) const"
 
 .PP
 Retrieves data from a begin/end pair\&. 
@@ -299,9 +299,9 @@ Retrieves data from a begin/end pair\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBQueryObject::begin(const Enum&)\fP 
+\fBQueryObject::begin(const Enum)\fP 
 .PP
-\fBQueryObject::end(const Enum&)\fP 
+\fBQueryObject::end(const Enum)\fP 
 .PP
 \fBQueryObject::counter()\fP 
 .PP
@@ -319,7 +319,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP & name, uint64_t * data) const"
+.SS "void mc::gfx::ogl::QueryObject::get (const \fBEnum\fP name, uint64_t * data) const"
 
 .PP
 Retrieves data from a begin/end pair\&. 
@@ -333,9 +333,9 @@ Retrieves data from a begin/end pair\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBQueryObject::begin(const Enum&)\fP 
+\fBQueryObject::begin(const Enum)\fP 
 .PP
-\fBQueryObject::end(const Enum&)\fP 
+\fBQueryObject::end(const Enum)\fP 
 .PP
 \fBQueryObject::counter()\fP 
 .PP
@@ -482,7 +482,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 169 of file OGL\&.h\&.
+Definition at line 164 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

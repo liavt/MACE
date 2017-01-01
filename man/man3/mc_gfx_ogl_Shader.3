@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::Shader" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::Shader" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -19,7 +19,7 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fIDefault constructor which sets \fCtype\fP to \fCGL_FALSE\fP\&. \fP"
 .ti -1c
-.RI "\fBShader\fP (const \fBEnum\fP &type) noexcept"
+.RI "\fBShader\fP (const \fBEnum\fP type) noexcept"
 .br
 .RI "\fIConstructor which sets the type of the \fC\fBShader\fP\fP\&. \fP"
 .ti -1c
@@ -31,13 +31,31 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
-.RI "void \fBsetSource\fP (const \fBSize\fP &count, const char *strings[], const int lengths[])"
+.RI "void \fBsetSource\fP (const \fBSize\fP count, const char *strings[], const int lengths[])"
 .br
 .ti -1c
-.RI "void \fBsetSource\fP (const char string[], const int &length)"
+.RI "void \fBsetSource\fP (const char string[], const int length)"
 .br
 .ti -1c
 .RI "void \fBsetSource\fP (const std::string &string)"
+.br
+.ti -1c
+.RI "char * \fBgetSource\fP (const \fBSize\fP length, char *characters, int amount=0) const "
+.br
+.ti -1c
+.RI "int \fBgetParameter\fP (const \fBEnum\fP param) const "
+.br
+.ti -1c
+.RI "int \fBgetInfoLogLength\fP () const "
+.br
+.ti -1c
+.RI "int \fBgetSourceLength\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisDeleted\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisCompiled\fP () const "
 .br
 .ti -1c
 .RI "void \fBcompile\fP ()"
@@ -47,13 +65,13 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
-.RI "void \fBsetType\fP (const \fBEnum\fP &newType)"
+.RI "void \fBsetType\fP (const \fBEnum\fP newType)"
 .br
 .ti -1c
-.RI "\fBEnum\fP & \fBgetType\fP ()"
+.RI "\fBEnum\fP \fBgetType\fP ()"
 .br
 .ti -1c
-.RI "const \fBEnum\fP & \fBgetType\fP () const "
+.RI "const \fBEnum\fP \fBgetType\fP () const "
 .br
 .ti -1c
 .RI "bool \fBoperator==\fP (const \fBShader\fP &other) const "
@@ -90,7 +108,7 @@ A shader is a special program that gets executed during different parts of rende
 .PP
 The \fC\fBShader\fP\fP class must be used with the \fC\fBShaderProgram\fP\fP class\&. 
 .PP
-In order to work correctly, \fBShader::setType(const Enum&)\fP or \fBShader::Shader(const Enum&)\fP noexcept must be called and a type must be set\&. 
+In order to work correctly, \fBShader::setType(const Enum)\fP or \fBShader::Shader(const Enum)\fP noexcept must be called and a type must be set\&. 
 .PP
 Unlike other \fCObjects\fP, the default constructor of \fC\fBShader\fP\fP should not be used\&. It is only implemented for compatibility reasons\&. The \fCtype\fP of the shader must be set before most functions are called\&. If \fCtype\fP is equal to \fCGL_FALSE\fP an error is thrown\&. 
 .PP
@@ -113,17 +131,17 @@ Definition at line 997 of file OGL\&.h\&.
 .PP
 Default constructor which sets \fCtype\fP to \fCGL_FALSE\fP\&. If a function that requires \fCtype\fP to be set is called, an error is thrown\&. 
 .PP
-If this constructor is used, the \fBShader::setType(const Enum&)\fP function should be used later to set a type\&. 
+If this constructor is used, the \fBShader::setType(const Enum)\fP function should be used later to set a type\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBShader::Shader(const Enum&)\fP noexcept 
+\fBShader::Shader(const Enum)\fP noexcept 
 .PP
 \fBShader\fP 
 .RE
 .PP
 
-.SS "mc::gfx::ogl::Shader::Shader (const \fBEnum\fP & type)\fC [noexcept]\fP"
+.SS "mc::gfx::ogl::Shader::Shader (const \fBEnum\fP type)\fC [noexcept]\fP"
 
 .PP
 Constructor which sets the type of the \fC\fBShader\fP\fP\&. Should be used instead of \fC\fBShader::Shader()\fP noexcept\fP 
@@ -137,7 +155,7 @@ The \fCtype\fP must be a valid OpenGL constant representing a type of shader\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBShader::setType(const Enum&)\fP 
+\fBShader::setType(const Enum)\fP 
 .PP
 \fBShader\fP 
 .RE
@@ -203,9 +221,65 @@ The ID represented by this \fC\fBObject\fP\fP
 .RE
 .PP
 
-.SS "\fBEnum\fP& mc::gfx::ogl::Shader::getType ()"
+.SS "int mc::gfx::ogl::Shader::getInfoLogLength () const"
 
-.SS "const \fBEnum\fP& mc::gfx::ogl::Shader::getType () const"
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "int mc::gfx::ogl::Shader::getParameter (const \fBEnum\fP param) const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "char* mc::gfx::ogl::Shader::getSource (const \fBSize\fP length, char * characters, int amount = \fC0\fP) const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "int mc::gfx::ogl::Shader::getSourceLength () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "\fBEnum\fP mc::gfx::ogl::Shader::getType ()"
+
+.SS "const \fBEnum\fP mc::gfx::ogl::Shader::getType () const"
 
 .SS "void mc::gfx::ogl::Shader::init ()\fC [override]\fP, \fC [virtual]\fP"
 
@@ -236,6 +310,20 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "bool mc::gfx::ogl::Shader::isCompiled () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "bool mc::gfx::ogl::Shader::isCreated () const\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
@@ -266,6 +354,20 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "bool mc::gfx::ogl::Shader::isDeleted () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "bool mc::gfx::ogl::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
 
 .PP
@@ -316,7 +418,7 @@ Whether \fCthis\fP and \fCother\fP are the same
 
 .SS "bool mc::gfx::ogl::Shader::operator== (const \fBShader\fP & other) const"
 
-.SS "void mc::gfx::ogl::Shader::setSource (const \fBSize\fP & count, const char * strings[], const int lengths[])"
+.SS "void mc::gfx::ogl::Shader::setSource (const \fBSize\fP count, const char * strings[], const int lengths[])"
 
 .PP
 \fBSee also:\fP
@@ -335,11 +437,11 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Shader::setSource (const char string[], const int & length)"
+.SS "void mc::gfx::ogl::Shader::setSource (const char string[], const int length)"
 
 .SS "void mc::gfx::ogl::Shader::setSource (const std::string & string)"
 
-.SS "void mc::gfx::ogl::Shader::setType (const \fBEnum\fP & newType)"
+.SS "void mc::gfx::ogl::Shader::setType (const \fBEnum\fP newType)"
 
 .SH "Member Data Documentation"
 .PP 
@@ -350,7 +452,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 169 of file OGL\&.h\&.
+Definition at line 164 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

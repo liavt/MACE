@@ -1,4 +1,4 @@
-.TH "mc::gfx::Entity2D" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Entity2D" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -26,6 +26,26 @@ Inherited by \fBmc::gfx::Image\fP\&.
 .RI "\fBEntity2D\fP ()"
 .br
 .ti -1c
+.RI "\fBogl::UniformBuffer\fP & \fBgetBuffer\fP ()"
+.br
+.ti -1c
+.RI "const \fBogl::UniformBuffer\fP & \fBgetBuffer\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetBuffer\fP (const \fBogl::UniformBuffer\fP &newBuffer)"
+.br
+.ti -1c
+.RI "void \fBclean\fP () final"
+.br
+.ti -1c
+.RI "void \fBinit\fP () final"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP () final"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. \fP"
+.ti -1c
 .RI "\fBColor\fP & \fBgetPaint\fP ()"
 .br
 .ti -1c
@@ -44,32 +64,6 @@ Inherited by \fBmc::gfx::Image\fP\&.
 .RI "void \fBsetOpacity\fP (const float f)"
 .br
 .ti -1c
-.RI "void \fBsetTexture\fP (\fBogl::Texture\fP &tex)"
-.br
-.ti -1c
-.RI "\fBogl::Texture\fP & \fBgetTexture\fP ()"
-.br
-.ti -1c
-.RI "const \fBogl::Texture\fP & \fBgetTexture\fP () const "
-.br
-.ti -1c
-.RI "\fBogl::UniformBuffer\fP & \fBgetBuffer\fP ()"
-.br
-.ti -1c
-.RI "const \fBogl::UniformBuffer\fP & \fBgetBuffer\fP () const "
-.br
-.ti -1c
-.RI "void \fBsetBuffer\fP (const \fBogl::UniformBuffer\fP &newBuffer)"
-.br
-.ti -1c
-.RI "void \fBinit\fP () override"
-.br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. \fP"
-.ti -1c
-.RI "void \fBdestroy\fP () override"
-.br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. \fP"
-.ti -1c
 .RI "bool \fBoperator==\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
 .br
 .ti -1c
@@ -83,17 +77,6 @@ Inherited by \fBmc::gfx::Image\fP\&.
 .RI "bool \fBoperator!=\fP (const \fBEntity\fP &other) const  noexcept"
 .br
 .RI "\fICompares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. \fP"
-.ti -1c
-.RI "void \fBclean\fP () override"
-.br
-.ti -1c
-.RI "void \fBupdate\fP ()"
-.br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. \fP"
-.ti -1c
-.RI "void \fBrender\fP ()"
-.br
-.RI "\fIShould be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. \fP"
 .ti -1c
 .RI "const std::vector< \fBEntity\fP * > & \fBgetChildren\fP () const "
 .br
@@ -114,9 +97,6 @@ Inherited by \fBmc::gfx::Image\fP\&.
 .RI "void \fBclearChildren\fP ()"
 .br
 .RI "\fIRemoves EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP \fP"
-.ti -1c
-.RI "void \fBclearComponents\fP ()"
-.br
 .ti -1c
 .RI "\fBEntity\fP & \fBoperator[]\fP (\fBIndex\fP i)"
 .br
@@ -202,10 +182,6 @@ Inherited by \fBmc::gfx::Image\fP\&.
 .RI "void \fBaddChild\fP (\fBEntity\fP &e)"
 .br
 .ti -1c
-.RI "void \fBkill\fP ()"
-.br
-.RI "\fIAutomatically called when \fCEntity::PROPERTY_DEAD\fP is true\&. \fP"
-.ti -1c
 .RI "void \fBaddComponent\fP (\fBComponent\fP &action)"
 .br
 .ti -1c
@@ -265,21 +241,32 @@ Inherited by \fBmc::gfx::Image\fP\&.
 
 .in +1c
 .ti -1c
-.RI "virtual void \fBcustomUpdate\fP ()=0"
+.RI "virtual void \fBupdate\fP ()"
 .br
-.RI "\fIWhen \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is called on all of it's children\&. \fP"
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. \fP"
 .ti -1c
-.RI "virtual void \fBcustomInit\fP ()=0"
+.RI "virtual void \fBrender\fP ()"
 .br
-.RI "\fIWhen \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called on all of it's children\&. \fP"
+.RI "\fIShould be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. \fP"
 .ti -1c
-.RI "virtual void \fBcustomDestroy\fP ()=0"
+.RI "virtual void \fBonUpdate\fP ()=0"
 .br
-.RI "\fIWhen \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBcustomDestroy()\fP\fP is called on all of it's children\&. \fP"
+.RI "\fIWhen \fC\fBEntity\&.update()\fP\fP is called, \fC\fBonUpdate()\fP\fP is called on all of it's children\&. \fP"
 .ti -1c
-.RI "virtual void \fBcustomRender\fP ()=0"
+.RI "virtual void \fBonInit\fP ()=0"
 .br
-.RI "\fIWhen \fC\fBEntity\&.render()\fP\fP is called, \fC\fBcustomRender()\fP\fP is called on all of it's children\&. \fP"
+.RI "\fIWhen \fC\fBEntity\&.init()\fP\fP is called, \fC\fBonInit()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "virtual void \fBonDestroy\fP ()=0"
+.br
+.RI "\fIWhen \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBonDestroy()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "virtual void \fBonRender\fP ()=0"
+.br
+.RI "\fIWhen \fC\fBEntity\&.render()\fP\fP is called, \fC\fBonRender()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "virtual void \fBonClean\fP ()"
+.br
 .in -1c
 .SS "Protected Attributes"
 
@@ -304,7 +291,7 @@ Definition at line 22 of file Entity2D\&.h\&.
 .in +1c
 .TP
 \fB\fIDEAD \fP\fP
-Bit location representing whether an \fC\fBEntity\fP\fP is dead\&. If \fCtrue,\fP any \fBEntity\fP holding it will remove it and call \fC\fBkill()\fP\fP 
+Bit location representing whether an \fC\fBEntity\fP\fP is dead\&. If \fCtrue,\fP any \fBEntity\fP holding it will remove it and call \fCkill()\fP 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -391,7 +378,7 @@ Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily 
 .PP
 Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
 .PP
-Definition at line 42 of file Entity\&.h\&.
+Definition at line 94 of file Entity\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::Entity2D::Entity2D ()"
@@ -432,7 +419,7 @@ Iterator of the first \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "void mc::gfx::GraphicsEntity::clean ()\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+.SS "void mc::gfx::GraphicsEntity::clean ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 \fBWarning:\fP
@@ -475,111 +462,12 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::gfx::Entity::clearComponents ()\fC [inherited]\fP"
-
-.SS "virtual void mc::gfx::Entity::customDestroy ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
+.SS "void mc::gfx::GraphicsEntity::destroy ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-When \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBcustomDestroy()\fP\fP is called on all of it's children\&. 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. Calls \fC\fBonDestroy()\fP\fP\&. Sets \fC\fBEntity::INIT\fP\fP to be false 
 .PP
-\fBSee also:\fP
-.RS 4
-\fBSystem::destroy()\fP 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.PP
-Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
-.SS "virtual void mc::gfx::Entity::customInit ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
-
-.PP
-When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBcustomInit()\fP\fP is called on all of it's children\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBSystem::init()\fP 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.PP
-Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
-.SS "virtual void mc::gfx::Entity::customRender ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
-
-.PP
-When \fC\fBEntity\&.render()\fP\fP is called, \fC\fBcustomRender()\fP\fP is called on all of it's children\&. 
-.PP
-\fBWarning:\fP
-.RS 4
-This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.PP
-Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
-.SS "virtual void mc::gfx::Entity::customUpdate ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
-
-.PP
-When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBcustomUpdate()\fP\fP is called on all of it's children\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBSystem::update()\fP 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
-.RE
-.PP
-
-.PP
-Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
-.SS "void mc::gfx::GraphicsEntity::destroy ()\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
-
-.PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. Calls \fC\fBcustomDestroy()\fP\fP\&. Sets \fC\fBEntity::INIT\fP\fP to be false 
-.PP
-Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomDestroy()\fP\fP 
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonDestroy()\fP\fP 
 .PP
 \fBNote:\fP
 .RS 4
@@ -877,22 +765,6 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 
 .SS "const \fBEntity\fP* mc::gfx::Entity::getRootParent () const\fC [inherited]\fP"
 
-.SS "\fBogl::Texture\fP& mc::gfx::GraphicsEntity::getTexture ()\fC [inherited]\fP"
-
-.PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
-.PP
-
-.SS "const \fBogl::Texture\fP& mc::gfx::GraphicsEntity::getTexture () const\fC [inherited]\fP"
-
 .SS "\fBTransformMatrix\fP& mc::gfx::Entity::getTransformation ()\fC [inherited]\fP"
 
 .PP
@@ -1003,12 +875,12 @@ Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "void mc::gfx::GraphicsEntity::init ()\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+.SS "void mc::gfx::GraphicsEntity::init ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. Calls \fC\fBcustomInit()\fP\fP 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. Calls \fC\fBonInit()\fP\fP 
 .PP
-Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomInit()\fP\fP 
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonInit()\fP\fP 
 .PP
 \fBNote:\fP
 .RS 4
@@ -1035,24 +907,6 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Reimplemented from \fBmc::gfx::Entity\fP\&.
-.SS "void mc::gfx::Entity::kill ()\fC [inherited]\fP"
-
-.PP
-Automatically called when \fCEntity::PROPERTY_DEAD\fP is true\&. Removes this entity from it's parent, and calls it's \fC\fBdestroy()\fP\fP method\&. 
-.PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.PP
-\fBgetParent()\fP 
-.RE
-.PP
-
 .SS "void mc::gfx::Entity::makeDirty ()\fC [inherited]\fP"
 
 .PP
@@ -1069,6 +923,122 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
+.SS "virtual void mc::gfx::Entity::onClean ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::Entity::onDestroy ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
+
+.PP
+When \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBonDestroy()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSystem::destroy()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
+.SS "virtual void mc::gfx::Entity::onInit ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
+
+.PP
+When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBonInit()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSystem::init()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
+.SS "virtual void mc::gfx::Entity::onRender ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
+
+.PP
+When \fC\fBEntity\&.render()\fP\fP is called, \fC\fBonRender()\fP\fP is called on all of it's children\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
+.SS "virtual void mc::gfx::Entity::onUpdate ()\fC [protected]\fP, \fC [pure virtual]\fP, \fC [inherited]\fP"
+
+.PP
+When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBonUpdate()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSystem::update()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Implemented in \fBmc::gfx::CallbackEntity\fP, \fBmc::gfx::Group\fP, and \fBmc::gfx::Image\fP\&.
 .SS "bool mc::gfx::Entity::operator!= (const \fBEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1237,10 +1207,10 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::gfx::Entity::render ()\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Entity::render ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomRender()\fP\fP 
+Should be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonRender()\fP\fP 
 .PP
 \fBAttention:\fP
 .RS 4
@@ -1418,20 +1388,6 @@ setProperties(ByteField&)
 .RE
 .PP
 
-.SS "void mc::gfx::GraphicsEntity::setTexture (\fBogl::Texture\fP & tex)\fC [inherited]\fP"
-
-.PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
-.PP
-
 .SS "void mc::gfx::Entity::setTransformation (\fBTransformMatrix\fP & trans)\fC [inherited]\fP"
 
 .PP
@@ -1513,12 +1469,12 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::gfx::Entity::update ()\fC [inherited]\fP"
+.SS "virtual void mc::gfx::Entity::update ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. Calls \fC\fBcustomUpdate()\fP\fP\&. 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. Calls \fC\fBonUpdate()\fP\fP\&. 
 .PP
-Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBcustomUpdate()\fP\fP 
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonUpdate()\fP\fP 
 .PP
 \fBExceptions:\fP
 .RS 4
@@ -1526,6 +1482,8 @@ Overriding this function is dangerous\&. Only do it if you know what you are doi
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::os::WindowModule\fP\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
@@ -1540,7 +1498,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 488 of file Entity\&.h\&.
+Definition at line 537 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1551,7 +1509,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 493 of file Entity\&.h\&.
+Definition at line 542 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

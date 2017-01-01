@@ -82,388 +82,85 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::ogl::Texture Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture}
-{\bkmkstart AAAAAAABMX}
-{\bkmkend AAAAAAABMX}
+mc::gfx::SimpleQuadRenderer Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer}
+{\bkmkstart AAAAAAABGU}
+{\bkmkend AAAAAAABGU}
 \par
 {
-{\f2 #include <OGL.h>}}\par
-Inheritance diagram for mc::gfx::ogl::Texture:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d25/a00182.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::gfx::ogl::Texture:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d52/a00183.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
+{\f2 #include <Renderer.h>}}\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls the corresponding glCreate* function and assigns an ID. }{
-}\par
-}}
+{\b SimpleQuadRenderer} (const bool ssl=true)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls the corresponding glDestroy* function and deletes the ID. }{
-}\par
-}}
+void {\b init} (const char *vertexShader, const char *fragShader)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setData} (const void *data, {\b Size} width, {\b Size} height, GLenum type=GL_FLOAT, GLenum format=GL_RGB, GLenum internalFormat=GL_RGB, {\b Index} mipmapLevel=0)\par
+void {\b init} (const char *vertexShader, const std::string &fragShader)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b loadFile} (const char *file)\par
+void {\b init} (const std::string &vertexShader, const char *fragShader)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setTarget} (const GLenum target)\par
+void {\b init} (const std::string &vertexShader, const std::string &fragShader)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-GLenum {\b getTarget} ()\par
+void {\b destroy} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Color} & {\b getPaint} ()\par
+void {\b draw} (const {\b GraphicsEntity} *en=nullptr)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Color} & {\b getPaint} () const \par
+void {\b setShader} (const {\b ogl::ShaderProgram} &shader)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setPaint} (const {\b Color} &c)\par
+{\b ogl::ShaderProgram} & {\b getShader} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float {\b getOpacity} ()\par
+const {\b ogl::ShaderProgram} & {\b getShader} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float {\b getOpacity} () const \par
+void {\b setVertexArray} (const {\b ogl::VertexArray} &vertices)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setOpacity} (const float f)\par
+{\b ogl::VertexArray} & {\b getVertexArray} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b isCreated} () const  override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Queries OpenGL whether this {\b Object}'s ID is a valid object. }{
-}\par
-}}
+const {\b ogl::VertexArray} & {\b getVertexArray} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setParameter} (const GLenum &name, const GLint &value)\par
+bool {\b operator==} (const {\b SimpleQuadRenderer} &other) const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Texture} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Texture} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b bind} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Binds this {\f2 {\b Object}}  to be used in an OpenGL function. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b unbind} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unbinds this {\f2 {\b Object}}  which is equivalent to binding ID 0. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b getID} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the current ID that this {\f2 {\b Object}}  represents. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Object} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Object} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }{
-}\par
-}}
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Protected Attributes\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b id} = 0\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The ID of this `Object. }{
-}\par
-}}
+bool {\b operator!=} (const {\b SimpleQuadRenderer} &other) const \par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
+Definition at line 254 of file Renderer.h.}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Constructor & Destructor Documentation\par
+\pard\plain 
+{\xe \v SimpleQuadRenderer\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:SimpleQuadRenderer}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::SimpleQuadRenderer::SimpleQuadRenderer (const bool  {\i ssl} = {\f2 true})}}
 \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/Texture} \par
-}}{
-Definition at line 463 of file OGL.h.}\par
+{\bkmkstart AAAAAAABGV}
+{\bkmkend AAAAAAABGV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v bind\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:bind}
+{\xe \v destroy\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::SimpleQuadRenderer::destroy ()}}
 \par
-{\bkmkstart AAAAAAABFP}
-{\bkmkend AAAAAAABFP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Binds this {\f2 {\b Object}}  to be used in an OpenGL function. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::unbind() const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If this {\f2 {\b Object}}  has not been created yet \cell }
-{\row }
-}
-}}
-{\xe \v destroy\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:destroy}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::destroy (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABHS}
-{\bkmkend AAAAAAABHS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls the corresponding glDestroy* function and deletes the ID. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::init()} \par
-{\b Object::bind() const} \par
-{\b Object::unbind} const \par
-{\b Object::isCreated() const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If this {\f2 {\b Object}}  has not been created yet ({\b Object::init()} has not been called) \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v getID\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:getID}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFU}
-{\bkmkend AAAAAAABFU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the current ID that this {\f2 {\b Object}}  represents. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when {\b Object::init()} is called. \par
-If it is 0, the {\f2 {\b Object}}  is considered uncreated. \par
-When using {\b Object::bind() const }it will bind to this ID. {\b Object::unbind() const }will bind to ID 0, which is the equivelant of a null pointer. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID represented by this {\f2 {\b Object}}  \par
-}}}
-{\xe \v getOpacity\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:getOpacity}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float mc::gfx::ogl::Texture::getOpacity ()}}
-\par
-{\bkmkstart AAAAAAABMY}
-{\bkmkend AAAAAAABMY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getOpacity\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:getOpacity}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float mc::gfx::ogl::Texture::getOpacity () const}}
-\par
-{\bkmkstart AAAAAAABMZ}
-{\bkmkend AAAAAAABMZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getPaint\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:getPaint}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Color}& mc::gfx::ogl::Texture::getPaint ()}}
-\par
-{\bkmkstart AAAAAAABNA}
-{\bkmkend AAAAAAABNA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getPaint\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:getPaint}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Color}& mc::gfx::ogl::Texture::getPaint () const}}
-\par
-{\bkmkstart AAAAAAABNB}
-{\bkmkend AAAAAAABNB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getTarget\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:getTarget}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-GLenum mc::gfx::ogl::Texture::getTarget ()}}
-\par
-{\bkmkstart AAAAAAABNC}
-{\bkmkend AAAAAAABNC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v init\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:init}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::init (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABHY}
-{\bkmkend AAAAAAABHY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls the corresponding glCreate* function and assigns an ID. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::destroy()} \par
-{\b Object::bind() const} \par
-{\b Object::unbind} const \par
-{\b Object::isCreated() const} \par
-}}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v isCreated\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:isCreated}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Texture::isCreated () const{\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABIE}
-{\bkmkend AAAAAAABIE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Queries OpenGL whether this {\b Object}'s ID is a valid object. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether this {\f2 {\b Object}}  represents memory \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::bind() const} \par
-{\b Object::init()} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v loadFile\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:loadFile}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::loadFile (const char *  {\i file})}}
-\par
-{\bkmkstart AAAAAAABND}
-{\bkmkend AAAAAAABND}
+{\bkmkstart AAAAAAABGW}
+{\bkmkend AAAAAAABGW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -480,229 +177,16 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:operator!=}
+{\xe \v draw\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:draw}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
+void mc::gfx::SimpleQuadRenderer::draw (const {\b GraphicsEntity} *  {\i en} = {\f2 nullptr})}}
 \par
-{\bkmkstart AAAAAAABGB}
-{\bkmkend AAAAAAABGB}
+{\bkmkstart AAAAAAABGX}
+{\bkmkend AAAAAAABGX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
-{\b Object::operator==(const Object&) const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are different \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{What to compare with \cell }
-{\row }
-}
-}}
-{\xe \v operator!=\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:operator!=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Texture::operator!= (const {\b Texture} &  {\i other}) const}}
-\par
-{\bkmkstart AAAAAAABNE}
-{\bkmkend AAAAAAABNE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
-{\b Object::operator==(const Object&) const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are different \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{What to compare with \cell }
-{\row }
-}
-}}
-{\xe \v operator==\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGD}
-{\bkmkend AAAAAAABGD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
-{\b Object::operator!=(const Object&) const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are the same \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{What to compare with \cell }
-{\row }
-}
-}}
-{\xe \v operator==\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Texture::operator== (const {\b Texture} &  {\i other}) const}}
-\par
-{\bkmkstart AAAAAAABNF}
-{\bkmkend AAAAAAABNF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
-{\b Object::operator!=(const Object&) const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are the same \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{What to compare with \cell }
-{\row }
-}
-}}
-{\xe \v setData\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:setData}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::setData (const void *  {\i data}, {\b Size}  {\i width}, {\b Size}  {\i height}, GLenum  {\i type} = {\f2 GL_FLOAT}, GLenum  {\i format} = {\f2 GL_RGB}, GLenum  {\i internalFormat} = {\f2 GL_RGB}, {\b Index}  {\i mipmapLevel} = {\f2 0})}}
-\par
-{\bkmkstart AAAAAAABNG}
-{\bkmkend AAAAAAABNG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glTexImage2D} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v setOpacity\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:setOpacity}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::setOpacity (const float  {\i f})}}
-\par
-{\bkmkstart AAAAAAABNH}
-{\bkmkend AAAAAAABNH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setPaint\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:setPaint}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::setPaint (const {\b Color} &  {\i c})}}
-\par
-{\bkmkstart AAAAAAABNI}
-{\bkmkend AAAAAAABNI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setParameter\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:setParameter}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::setParameter (const GLenum &  {\i name}, const GLint &  {\i value})}}
-\par
-{\bkmkstart AAAAAAABNJ}
-{\bkmkend AAAAAAABNJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glTexParameter} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v setTarget\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:setTarget}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Texture::setTarget (const GLenum  {\i target})}}
-\par
-{\bkmkstart AAAAAAABNK}
-{\bkmkend AAAAAAABNK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v unbind\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:unbind}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGH}
-{\bkmkend AAAAAAABGH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unbinds this {\f2 {\b Object}}  which is equivalent to binding ID 0. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -716,35 +200,205 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::bind() const} \par
-}}}
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Data Documentation\par
-\pard\plain 
-{\xe \v id\:mc::gfx::ogl::Texture}
-{\xe \v mc::gfx::ogl::Texture\:id}
+}}
+{\xe \v getShader\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:getShader}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
+{\b ogl::ShaderProgram}& mc::gfx::SimpleQuadRenderer::getShader ()}}
 \par
-{\bkmkstart AAAAAAABGJ}
-{\bkmkend AAAAAAABGJ}
+{\bkmkstart AAAAAAABGY}
+{\bkmkend AAAAAAABGY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getShader\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:getShader}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b ogl::ShaderProgram}& mc::gfx::SimpleQuadRenderer::getShader () const}}
+\par
+{\bkmkstart AAAAAAABGZ}
+{\bkmkend AAAAAAABGZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getVertexArray\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:getVertexArray}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b ogl::VertexArray}& mc::gfx::SimpleQuadRenderer::getVertexArray ()}}
+\par
+{\bkmkstart AAAAAAABHA}
+{\bkmkend AAAAAAABHA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getVertexArray\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:getVertexArray}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b ogl::VertexArray}& mc::gfx::SimpleQuadRenderer::getVertexArray () const}}
+\par
+{\bkmkstart AAAAAAABHB}
+{\bkmkend AAAAAAABHB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v init\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::SimpleQuadRenderer::init (const char *  {\i vertexShader}, const char *  {\i fragShader})}}
+\par
+{\bkmkstart AAAAAAABHC}
+{\bkmkend AAAAAAABHC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v init\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::SimpleQuadRenderer::init (const char *  {\i vertexShader}, const std::string &  {\i fragShader})}}
+\par
+{\bkmkstart AAAAAAABHD}
+{\bkmkend AAAAAAABHD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The ID of this `Object. }}\par
+}}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
-{\b Object::getID() const }returns this. \par
-}{
-Definition at line 169 of file OGL.h.}\par
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v init\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::SimpleQuadRenderer::init (const std::string &  {\i vertexShader}, const char *  {\i fragShader})}}
+\par
+{\bkmkstart AAAAAAABHE}
+{\bkmkend AAAAAAABHE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+}}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v init\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::SimpleQuadRenderer::init (const std::string &  {\i vertexShader}, const std::string &  {\i fragShader})}}
+\par
+{\bkmkstart AAAAAAABHF}
+{\bkmkend AAAAAAABHF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+}}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v operator!=\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:operator!=}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::SimpleQuadRenderer::operator!= (const {\b SimpleQuadRenderer} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABHG}
+{\bkmkend AAAAAAABHG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator==\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:operator==}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::SimpleQuadRenderer::operator== (const {\b SimpleQuadRenderer} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABHH}
+{\bkmkend AAAAAAABHH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setShader\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:setShader}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::SimpleQuadRenderer::setShader (const {\b ogl::ShaderProgram} &  {\i shader})}}
+\par
+{\bkmkstart AAAAAAABHI}
+{\bkmkend AAAAAAABHI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setVertexArray\:mc::gfx::SimpleQuadRenderer}
+{\xe \v mc::gfx::SimpleQuadRenderer\:setVertexArray}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::SimpleQuadRenderer::setVertexArray (const {\b ogl::VertexArray} &  {\i vertices})}}
+\par
+{\bkmkstart AAAAAAABHJ}
+{\bkmkend AAAAAAABHJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/OGL.h\par
+include/MACE/Graphics/Renderer.h\par
 }}

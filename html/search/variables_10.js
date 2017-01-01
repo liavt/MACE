@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unprintablestring',['unprintableString',['../d9/d7d/a00150_a466775f4eec29ffef29ab334cd885136.html#a466775f4eec29ffef29ab334cd885136',1,'Catch::Detail']]]
+  ['yellow',['YELLOW',['../d8/d53/a00081_a1ff67c17e02faaa7cbe95886d464f1e8.html#a1ff67c17e02faaa7cbe95886d464f1e8',1,'mc::Colors']]]
 ];

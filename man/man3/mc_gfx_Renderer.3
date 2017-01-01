@@ -1,4 +1,4 @@
-.TH "mc::gfx::Renderer" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Renderer" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -21,7 +21,7 @@ mc::gfx::Renderer \-
 .RI "static void \fBsetUp\fP (\fBos::WindowModule\fP *win)"
 .br
 .ti -1c
-.RI "template<typename T > static void \fBqueue\fP (T *e)"
+.RI "static void \fBqueue\fP (\fBGraphicsEntity\fP *e, const \fBIndex\fP protocol)"
 .br
 .ti -1c
 .RI "static \fBSize\fP \fBnumberOfProtocols\fP ()"
@@ -46,6 +46,9 @@ mc::gfx::Renderer \-
 .br
 .ti -1c
 .RI "static void \fBsetRefreshColor\fP (const \fBColor\fP &c)"
+.br
+.ti -1c
+.RI "template<typename T > static \fBIndex\fP \fBregisterProtocol\fP ()"
 .br
 .ti -1c
 .RI "static \fBSize\fP \fBgetOriginalWidth\fP ()"
@@ -148,10 +151,12 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .SS "static \fBSize\fP mc::gfx::Renderer::numberOfProtocols ()\fC [static]\fP"
 
-.SS "template<typename T > static void mc::gfx::Renderer::queue (T * e)\fC [inline]\fP, \fC [static]\fP"
+.SS "static void mc::gfx::Renderer::queue (\fBGraphicsEntity\fP * e, const \fBIndex\fP protocol)\fC [static]\fP"
+
+.SS "template<typename T > static \fBIndex\fP mc::gfx::Renderer::registerProtocol ()\fC [inline]\fP, \fC [static]\fP"
 
 .PP
-Definition at line 190 of file Renderer\&.h\&.
+Definition at line 233 of file Renderer\&.h\&.
 .SS "static void mc::gfx::Renderer::renderFrame (\fBos::WindowModule\fP * win)\fC [static]\fP"
 
 .PP

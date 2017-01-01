@@ -1,13 +1,68 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d4/d63/a00082" kind="namespace" language="C++">
-    <compoundname>mc::os</compoundname>
-    <innerclass refid="d6/d97/a00045" prot="public">mc::os::WindowModule</innerclass>
-    <innernamespace refid="d2/d1f/a00083">mc::os::Input</innernamespace>
+    <compoundname>mc::gfx</compoundname>
+    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
+    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
+    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::Entity</innerclass>
+    <innerclass refid="dd/d1b/a00015" prot="public">mc::gfx::Entity2D</innerclass>
+    <innerclass refid="d1/d2b/a00018" prot="public">mc::gfx::GraphicsEntity</innerclass>
+    <innerclass refid="dd/da2/a00019" prot="public">mc::gfx::Group</innerclass>
+    <innerclass refid="db/db2/a00020" prot="public">mc::gfx::Image</innerclass>
+    <innerclass refid="d0/dc0/a00033" prot="public">mc::gfx::Renderer</innerclass>
+    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::RenderImpl</innerclass>
+    <innerclass refid="d4/d8c/a00035" prot="public">mc::gfx::RenderProtocol</innerclass>
+    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::RenderProtocol&lt; Image &gt;</innerclass>
+    <innerclass refid="d3/de7/a00039" prot="public">mc::gfx::SimpleQuadRenderer</innerclass>
+    <innernamespace refid="d2/d1f/a00083">mc::gfx::ogl</innernamespace>
+    <innernamespace refid="df/d5d/a00084">mc::gfx::ssl</innernamespace>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="d4/d63/a00082_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" prot="public" static="no">
+        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
+        <definition>using mc::gfx::EntityProperties = typedef BitField</definition>
+        <argsstring></argsstring>
+        <name>EntityProperties</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="21" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="d4/d63/a00082_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" prot="public" static="no">
+        <type>std::deque&lt; std::pair&lt; <ref refid="da/dec/a00080_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>, <ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref> * &gt;&gt;</type>
+        <definition>using mc::gfx::RenderQueue = typedef std::deque&lt;std::pair&lt;Index, GraphicsEntity*&gt;&gt;</definition>
+        <argsstring></argsstring>
+        <name>RenderQueue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="27" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="d4/d63/a00082_a2b765ca8981771b96825444c204f4973_1a2b765ca8981771b96825444c204f4973" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::gfx::getImageProtocol</definition>
+        <argsstring>()</argsstring>
+        <name>getImageProtocol</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="53" column="1"/>
+      </memberdef>
+      </sectiondef>
     <briefdescription>
-<para>Namespace with classes related to the operating system like keyboard input, mouse, and windows. </para>    </briefdescription>
+<para>Namespace containing classes used for Graphics in MACE. </para>    </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <location file="include/MACE/Graphics/Window.h" line="30" column="1"/>
+<para><xrefsect id="d7/d46/a00002_1_bug000001"><xreftitle>Bug</xreftitle><xrefdescription><para>Crashes after some time on NVIDIA gpus </para></xrefdescription></xrefsect></para>    </detaileddescription>
+    <location file="include/MACE/Graphics/Components.h" line="17" column="1"/>
   </compounddef>
 </doxygen>

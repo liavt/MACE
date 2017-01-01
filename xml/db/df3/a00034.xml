@@ -3,8 +3,8 @@
   <compounddef id="db/df3/a00034" kind="class" language="C++" prot="public" abstract="yes">
     <compoundname>mc::gfx::RenderImpl</compoundname>
     <derivedcompoundref refid="d4/d8c/a00035" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; T &gt;</derivedcompoundref>
-    <derivedcompoundref refid="de/d8c/a00036" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; Entity2D &gt;</derivedcompoundref>
-    <includes refid="d2/d79/a00051" local="no">Renderer.h</includes>
+    <derivedcompoundref refid="de/d8c/a00036" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; Image &gt;</derivedcompoundref>
+    <includes refid="d1/d84/a00052" local="no">Renderer.h</includes>
       <sectiondef kind="friend">
       <memberdef kind="friend" id="db/df3/a00034_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>friend class</type>
@@ -25,10 +25,10 @@
         <argsstring>(const Size &amp;, const Size &amp;)</argsstring>
         <name>ssl::init</name>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -39,12 +39,13 @@
         <location file="include/MACE/Graphics/Renderer.h" line="108" column="1"/>
       </memberdef>
       </sectiondef>
-      <sectiondef kind="private-static-attrib">
-      <memberdef kind="variable" id="db/df3/a00034_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" static="yes" mutable="no">
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="db/df3/a00034_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" static="no" mutable="no">
         <type>int</type>
         <definition>int mc::gfx::RenderImpl::index</definition>
         <argsstring></argsstring>
         <name>index</name>
+        <initializer>= -1</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -86,14 +87,14 @@
         <definition>virtual void mc::gfx::RenderImpl::resize</definition>
         <argsstring>(const Size width, const Size height)=0</argsstring>
         <name>resize</name>
-        <reimplementedby refid="de/d8c/a00036_a7e9d118a4f81190d9ebabf970afd7213_1a7e9d118a4f81190d9ebabf970afd7213">resize</reimplementedby>
+        <reimplementedby refid="de/d8c/a00036_a28f8a2b44b5a3697aa1f0ce9d53c0443_1a28f8a2b44b5a3697aa1f0ce9d53c0443">resize</reimplementedby>
         <reimplementedby refid="d4/d8c/a00035_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1">resize</reimplementedby>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>width</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>height</declname>
         </param>
         <briefdescription>
@@ -119,14 +120,14 @@
         <definition>virtual void mc::gfx::RenderImpl::init</definition>
         <argsstring>(const Size originalWidth, const Size originalHeight)=0</argsstring>
         <name>init</name>
-        <reimplementedby refid="de/d8c/a00036_a2f738b2b7177dd79de63011ea246c25d_1a2f738b2b7177dd79de63011ea246c25d">init</reimplementedby>
+        <reimplementedby refid="de/d8c/a00036_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b">init</reimplementedby>
         <reimplementedby refid="d4/d8c/a00035_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54">init</reimplementedby>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>originalWidth</declname>
         </param>
         <param>
-          <type>const <ref refid="d9/da4/a00078_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
           <declname>originalHeight</declname>
         </param>
         <briefdescription>
@@ -152,14 +153,14 @@
         <definition>virtual void mc::gfx::RenderImpl::setUp</definition>
         <argsstring>(os::WindowModule *win, RenderQueue *queue)=0</argsstring>
         <name>setUp</name>
-        <reimplementedby refid="de/d8c/a00036_a2fb5afde4608667dac429efcd2d07438_1a2fb5afde4608667dac429efcd2d07438">setUp</reimplementedby>
+        <reimplementedby refid="de/d8c/a00036_a0d629966c9769ae5385528c54785fec2_1a0d629966c9769ae5385528c54785fec2">setUp</reimplementedby>
         <reimplementedby refid="d4/d8c/a00035_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba">setUp</reimplementedby>
         <param>
-          <type><ref refid="d6/d97/a00045" kindref="compound">os::WindowModule</ref> *</type>
+          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="d1/d51/a00079_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+          <type><ref refid="d4/d63/a00082_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
           <declname>queue</declname>
         </param>
         <briefdescription>
@@ -185,10 +186,10 @@
         <definition>virtual void mc::gfx::RenderImpl::render</definition>
         <argsstring>(os::WindowModule *win, GraphicsEntity *entity)=0</argsstring>
         <name>render</name>
-        <reimplementedby refid="de/d8c/a00036_a2aa8c704dc99ff2589d10869a694a400_1a2aa8c704dc99ff2589d10869a694a400">render</reimplementedby>
+        <reimplementedby refid="de/d8c/a00036_a4c4fbc2599a3ba8c83ff7f8ada3f4e4b_1a4c4fbc2599a3ba8c83ff7f8ada3f4e4b">render</reimplementedby>
         <reimplementedby refid="d4/d8c/a00035_a9d43b72296acfbba53ba52d562a01030_1a9d43b72296acfbba53ba52d562a01030">render</reimplementedby>
         <param>
-          <type><ref refid="d6/d97/a00045" kindref="compound">os::WindowModule</ref> *</type>
+          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
@@ -218,14 +219,14 @@
         <definition>virtual void mc::gfx::RenderImpl::tearDown</definition>
         <argsstring>(os::WindowModule *win, RenderQueue *queue)=0</argsstring>
         <name>tearDown</name>
-        <reimplementedby refid="de/d8c/a00036_ade7012f8089ee90e548370ccdfb41008_1ade7012f8089ee90e548370ccdfb41008">tearDown</reimplementedby>
+        <reimplementedby refid="de/d8c/a00036_a0a82be6395851c77079746396e99d918_1a0a82be6395851c77079746396e99d918">tearDown</reimplementedby>
         <reimplementedby refid="d4/d8c/a00035_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538">tearDown</reimplementedby>
         <param>
-          <type><ref refid="d6/d97/a00045" kindref="compound">os::WindowModule</ref> *</type>
+          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
           <declname>win</declname>
         </param>
         <param>
-          <type><ref refid="d1/d51/a00079_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+          <type><ref refid="d4/d63/a00082_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
           <declname>queue</declname>
         </param>
         <briefdescription>
@@ -251,7 +252,7 @@
         <definition>virtual void mc::gfx::RenderImpl::destroy</definition>
         <argsstring>()=0</argsstring>
         <name>destroy</name>
-        <reimplementedby refid="de/d8c/a00036_a5d1a4c0291ceb2bba79f81e88c9d1bb2_1a5d1a4c0291ceb2bba79f81e88c9d1bb2">destroy</reimplementedby>
+        <reimplementedby refid="de/d8c/a00036_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb">destroy</reimplementedby>
         <reimplementedby refid="d4/d8c/a00035_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8">destroy</reimplementedby>
         <briefdescription>
         </briefdescription>
@@ -278,20 +279,20 @@
 <para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
 </para>    </detaileddescription>
     <inheritancegraph>
-      <node id="491">
-        <label>mc::gfx::RenderProtocol&lt; Entity2D &gt;</label>
+      <node id="493">
+        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
         <link refid="de/d8c/a00036"/>
-        <childnode refid="489" relation="public-inheritance">
+        <childnode refid="491" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="489">
+      <node id="491">
         <label>mc::gfx::RenderImpl</label>
         <link refid="db/df3/a00034"/>
       </node>
-      <node id="490">
+      <node id="492">
         <label>mc::gfx::RenderProtocol&lt; T &gt;</label>
         <link refid="d4/d8c/a00035"/>
-        <childnode refid="489" relation="public-inheritance">
+        <childnode refid="491" relation="public-inheritance">
         </childnode>
       </node>
     </inheritancegraph>

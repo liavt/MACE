@@ -1,4 +1,4 @@
-.TH "mc::gfx" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -28,6 +28,7 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI "class \fBComponent\fP"
 .br
+.RI "\fICan be plugged into an \fC\fBEntity\fP\fP to allow for additional functionality by listening to events\&. \fP"
 .ti -1c
 .RI "class \fBEntity\fP"
 .br
@@ -54,7 +55,10 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "class \fBRenderProtocol\fP"
 .br
 .ti -1c
-.RI "class \fBRenderProtocol< Entity2D >\fP"
+.RI "class \fBRenderProtocol< Image >\fP"
+.br
+.ti -1c
+.RI "class \fBSimpleQuadRenderer\fP"
 .br
 .in -1c
 .SS "Typedefs"
@@ -67,15 +71,22 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "using \fBRenderQueue\fP = std::deque< std::pair< \fBIndex\fP, \fBGraphicsEntity\fP * >>"
 .br
 .in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBgetImageProtocol\fP ()"
+.br
+.in -1c
 .SH "Detailed Description"
 .PP 
 Namespace containing classes used for Graphics in MACE\&. 
 
 
 .PP
-\fBTodo\fP
+\fBBug\fP
 .RS 4
-create a ReadableBuffer class with functions like glReadPixels 
+Crashes after some time on NVIDIA gpus 
 .RE
 .PP
 
@@ -84,11 +95,15 @@ create a ReadableBuffer class with functions like glReadPixels
 .SS "using \fBmc::gfx::EntityProperties\fP = typedef \fBBitField\fP"
 
 .PP
-Definition at line 22 of file Entity\&.h\&.
+Definition at line 21 of file Entity\&.h\&.
 .SS "using \fBmc::gfx::RenderQueue\fP = typedef std::deque<std::pair<\fBIndex\fP, \fBGraphicsEntity\fP*>>"
 
 .PP
 Definition at line 27 of file Renderer\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int mc::gfx::getImageProtocol ()"
+
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

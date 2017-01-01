@@ -85,8 +85,8 @@
 mc::gfx::ogl::Object Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::ogl::Object}
 {\xe \v mc::gfx::ogl::Object}
-{\bkmkstart AAAAAAABHM}
-{\bkmkend AAAAAAABHM}
+{\bkmkstart AAAAAAABJP}
+{\bkmkend AAAAAAABJP}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -95,7 +95,7 @@ Represents a OpenGL object in memory. }}\par
 {\f2 #include <OGL.h>}}\par
 Inheritance diagram for mc::gfx::ogl::Object:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "db/d44/a00162.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d38/a00166.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -173,7 +173,7 @@ Protected Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b bindIndex} (const {\b Index} &{\b id}) const  =0\par
+virtual void {\b bindIndex} (const {\b Index} {\b id}) const  =0\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Intended to be overloaded to bind to a certain index. }{
@@ -226,9 +226,10 @@ See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b Bu
 {\f2 https://www.opengl.org/wiki/OpenGL_Object} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid create an RAII wrapper which calls {\b init()} and {\b destroy()} automatically \par
+store what object is currently bound. static {\b Object} getBoundObject(), bool isBound() \par
 }
 }{
-Definition at line 85 of file OGL.h.}\par
+Definition at line 80 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -240,8 +241,8 @@ Constructor & Destructor Documentation\par
 {\b 
 virtual mc::gfx::ogl::Object::~Object (){\f2 [virtual]}, {\f2 [default]}}}
 \par
-{\bkmkstart AAAAAAABHN}
-{\bkmkend AAAAAAABHN}
+{\bkmkstart AAAAAAABJQ}
+{\bkmkend AAAAAAABJQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -259,8 +260,8 @@ Member Function Documentation\par
 {\b 
 virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABFP}
-{\bkmkend AAAAAAABFP}
+{\bkmkstart AAAAAAABHS}
+{\bkmkend AAAAAAABHS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -296,10 +297,10 @@ Exceptions:\par}
 {\xe \v mc::gfx::ogl::Object\:bindIndex}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::ogl::Object::bindIndex (const {\b Index} &  {\i id}) const{\f2 [protected]}, {\f2 [pure virtual]}}}
+virtual void mc::gfx::ogl::Object::bindIndex (const {\b Index}  {\i id}) const{\f2 [protected]}, {\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABHO}
-{\bkmkend AAAAAAABHO}
+{\bkmkstart AAAAAAABJR}
+{\bkmkend AAAAAAABJR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -337,8 +338,8 @@ Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This sh
 {\b 
 virtual void mc::gfx::ogl::Object::destroy (){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABFS}
-{\bkmkend AAAAAAABFS}
+{\bkmkstart AAAAAAABHV}
+{\bkmkend AAAAAAABHV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -373,7 +374,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHP \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHQ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHR \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFR \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHS \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHE \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHT \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHU \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJS \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJT \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJU \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHU \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJV \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJH \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJW \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJX \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v getID\:mc::gfx::ogl::Object}
 {\xe \v mc::gfx::ogl::Object\:getID}
@@ -381,8 +382,8 @@ Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldin
 {\b 
 {\b Index} mc::gfx::ogl::Object::getID () const}}
 \par
-{\bkmkstart AAAAAAABFU}
-{\bkmkend AAAAAAABFU}
+{\bkmkstart AAAAAAABHX}
+{\bkmkend AAAAAAABHX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -402,8 +403,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID 
 {\b 
 virtual void mc::gfx::ogl::Object::init (){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABFW}
-{\bkmkend AAAAAAABFW}
+{\bkmkstart AAAAAAABHZ}
+{\bkmkend AAAAAAABHZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -429,7 +430,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHV \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHW \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHX \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFV \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHY \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHF \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHZ \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIA \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJY \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJZ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKA \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHY \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKB \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJI \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKC \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKD \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v isCreated\:mc::gfx::ogl::Object}
 {\xe \v mc::gfx::ogl::Object\:isCreated}
@@ -437,8 +438,8 @@ Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldin
 {\b 
 virtual bool mc::gfx::ogl::Object::isCreated () const{\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABFY}
-{\bkmkend AAAAAAABFY}
+{\bkmkstart AAAAAAABIB}
+{\bkmkend AAAAAAABIB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -464,7 +465,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIB \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIC \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABID \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFX \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIE \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHG \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIF \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIG \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKE \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKF \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKG \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIA \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKH \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABJJ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKI \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABKJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v operator!=\:mc::gfx::ogl::Object}
 {\xe \v mc::gfx::ogl::Object\:operator!=}
@@ -472,8 +473,8 @@ Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldin
 {\b 
 bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABGB}
-{\bkmkend AAAAAAABGB}
+{\bkmkstart AAAAAAABIE}
+{\bkmkend AAAAAAABIE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -503,8 +504,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABGD}
-{\bkmkend AAAAAAABGD}
+{\bkmkstart AAAAAAABIG}
+{\bkmkend AAAAAAABIG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -534,8 +535,8 @@ Parameters:\par}
 {\b 
 virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABGH}
-{\bkmkend AAAAAAABGH}
+{\bkmkstart AAAAAAABIK}
+{\bkmkend AAAAAAABIK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -568,8 +569,8 @@ Member Data Documentation\par
 {\b 
 {\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}}}
 \par
-{\bkmkstart AAAAAAABGJ}
-{\bkmkend AAAAAAABGJ}
+{\bkmkstart AAAAAAABIM}
+{\bkmkend AAAAAAABIM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -580,7 +581,7 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 169 of file OGL.h.}\par
+Definition at line 164 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

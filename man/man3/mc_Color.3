@@ -1,4 +1,4 @@
-.TH "mc::Color" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Color" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,7 +13,7 @@ mc::Color \- Represents a color in the RGBA space\&.
 
 .in +1c
 .ti -1c
-.RI "\fBColor\fP (const float &red, const float &green, const float &blue, const float &alpha=1\&.0f)"
+.RI "\fBColor\fP (const float &red, const float &green, const float &blue, const float &alpha=1\&.0f) noexcept"
 .br
 .RI "\fICreates a \fC\fBColor\fP\fP from specified values\&. \fP"
 .ti -1c
@@ -21,13 +21,21 @@ mc::Color \- Represents a color in the RGBA space\&.
 .br
 .RI "\fICreates a \fC\fBColor\fP\fP from an array of \fCfloats\fP\&. \fP"
 .ti -1c
-.RI "\fBColor\fP (const \fBColor\fP &copy)"
+.RI "\fBColor\fP (const \fBColor\fP &copy) noexcept"
 .br
 .RI "\fIClones a \fC\fBColor\fP\fP, coying it's color values into a new one\&. \fP"
 .ti -1c
 .RI "\fBColor\fP () noexcept"
 .br
 .RI "\fIDefault constructor\&. \fP"
+.ti -1c
+.RI "\fBColor\fP \fBdarken\fP () const "
+.br
+.RI "\fICreates a new \fC\fBColor\fP\fP that is slightly darker\&. \fP"
+.ti -1c
+.RI "\fBColor\fP \fBlighten\fP () const "
+.br
+.RI "\fICreates a new \fC\fBColor\fP\fP that is slightly lighter\&. \fP"
 .ti -1c
 .RI "\fBByte\fP \fBgetRed\fP () const "
 .br
@@ -73,45 +81,33 @@ mc::Color \- Represents a color in the RGBA space\&.
 .br
 .RI "\fIRetrieves the RGBA values in \fCstd::array\fP \fP"
 .ti -1c
+.RI "const float * \fBflatten\fP (float arr[4]) const "
+.br
+.RI "\fICreates an array with the data of this \fC\fBColor\fP\fP, in O(N) time\&. \fP"
+.ti -1c
 .RI "bool \fBoperator==\fP (const \fBColor\fP &other) const "
 .br
-.RI "\fICompares the color values of 2 \fCColors\fP \fP"
+.RI "\fICompares the color values of 2 \fC\fBColors\fP\fP \fP"
 .ti -1c
 .RI "bool \fBoperator!=\fP (const \fBColor\fP &other) const "
 .br
-.RI "\fICompares the color values of 2 \fCColors\fP \fP"
+.RI "\fICompares the color values of 2 \fC\fBColors\fP\fP \fP"
 .ti -1c
 .RI "bool \fBoperator>\fP (const \fBColor\fP &other) const "
 .br
-.RI "\fICompares the color values of 2 'Colors'\&. \fP"
+.RI "\fICompares the color values of 2 '\fBColors\fP'\&. \fP"
 .ti -1c
 .RI "bool \fBoperator>=\fP (const \fBColor\fP &other) const "
 .br
-.RI "\fICompares the color values of 2 'Colors'\&. \fP"
+.RI "\fICompares the color values of 2 '\fBColors\fP'\&. \fP"
 .ti -1c
 .RI "bool \fBoperator<\fP (const \fBColor\fP &other) const "
 .br
-.RI "\fICompares the color values of 2 'Colors'\&. \fP"
+.RI "\fICompares the color values of 2 '\fBColors\fP'\&. \fP"
 .ti -1c
 .RI "bool \fBoperator<=\fP (const \fBColor\fP &other) const "
 .br
-.RI "\fICompares the color values of 2 'Colors'\&. \fP"
-.in -1c
-.SS "Static Public Member Functions"
-
-.in +1c
-.ti -1c
-.RI "static \fBByte\fP \fBconvertFloatToRGBA\fP (const float &color)"
-.br
-.RI "\fIConverts a \fC\fBColor\fP\fP component represented as a \fCfloat\fP to a \fCByte\fP \fP"
-.ti -1c
-.RI "static float \fBconvertRGBAToFloat\fP (const \fBByte\fP &color)"
-.br
-.RI "\fIConverts a \fC\fBColor\fP\fP component represented as a \fCByte\fP to a \fCfloat\fP \fP"
-.ti -1c
-.RI "static float \fBtrimFloat\fP (const float &color)"
-.br
-.RI "\fIChecks the bounds of a \fCfloat\fP making sure that it is not greater than 1,0 or less than 0\&.0\&. \fP"
+.RI "\fICompares the color values of 2 '\fBColors\fP'\&. \fP"
 .in -1c
 .SS "Public Attributes"
 
@@ -163,7 +159,7 @@ color\&.setRed(127); //set the red component to be 0\&.5f as a Byte from 0 to 25
 Definition at line 41 of file Color\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "mc::Color::Color (const float & red, const float & green, const float & blue, const float & alpha = \fC1\&.0f\fP)"
+.SS "mc::Color::Color (const float & red, const float & green, const float & blue, const float & alpha = \fC1\&.0f\fP)\fC [noexcept]\fP"
 
 .PP
 Creates a \fC\fBColor\fP\fP from specified values\&. 
@@ -205,7 +201,7 @@ Color(float,float,float,float)
 .RE
 .PP
 
-.SS "mc::Color::Color (const \fBColor\fP & copy)"
+.SS "mc::Color::Color (const \fBColor\fP & copy)\fC [noexcept]\fP"
 
 .PP
 Clones a \fC\fBColor\fP\fP, coying it's color values into a new one\&. 
@@ -222,48 +218,42 @@ Clones a \fC\fBColor\fP\fP, coying it's color values into a new one\&.
 Default constructor\&. Constructs a \fC\fBColor\fP\fP with all of it's color values as \fC0\fP, or black\&. 
 .SH "Member Function Documentation"
 .PP 
-.SS "static \fBByte\fP mc::Color::convertFloatToRGBA (const float & color)\fC [static]\fP"
+.SS "\fBColor\fP mc::Color::darken () const"
 
 .PP
-Converts a \fC\fBColor\fP\fP component represented as a \fCfloat\fP to a \fCByte\fP 
+Creates a new \fC\fBColor\fP\fP that is slightly darker\&. Due to rounding, \fCcolor\&.darken() != color\&.darken()\&.\fBlighten()\fP\fP 
 .PP
-\fBParameters:\fP
-.RS 4
-\fIcolor\fP A \fCfloat\fP from 0\&.0 to 1\&.0 
-.RE
+The alpha is not affected 
 .PP
 \fBReturns:\fP
 .RS 4
-An equal \fCByte\fP from 0 to 255 
+A darker \fC\fBColor\fP\fP 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-convertRGBAToFloat(Byte) 
+\fBColor::lighten() const\fP 
 .RE
 .PP
 
-.SS "static float mc::Color::convertRGBAToFloat (const \fBByte\fP & color)\fC [static]\fP"
+.SS "const float* mc::Color::flatten (float arr[4]) const\fC [inline]\fP"
 
 .PP
-Converts a \fC\fBColor\fP\fP component represented as a \fCByte\fP to a \fCfloat\fP 
+Creates an array with the data of this \fC\fBColor\fP\fP, in O(N) time\&. 
 .PP
 \fBReturns:\fP
 .RS 4
-An equal \fCfloat\fP from 0\&.0 to 1\&.0 
+Pointer to \fCarr\fP 
 .RE
 .PP
 \fBParameters:\fP
 .RS 4
-\fIcolor\fP A\fCByte\fP from 0 to 255 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-convertRGBAToFloat(Byte) 
+\fIarr\fP The array to fill 
 .RE
 .PP
 
+.PP
+Definition at line 191 of file Color\&.h\&.
 .SS "\fBByte\fP mc::Color::getAlpha () const"
 
 .PP
@@ -355,10 +345,28 @@ An array where the first element is red, the second value is green, etc
 .RE
 .PP
 
+.SS "\fBColor\fP mc::Color::lighten () const"
+
+.PP
+Creates a new \fC\fBColor\fP\fP that is slightly lighter\&. Due to rounding, \fCcolor\&.lighten() != color\&.lighten()\&.\fBdarken()\fP\fP 
+.PP
+The alpha is not affected 
+.PP
+\fBReturns:\fP
+.RS 4
+A lighter \fC\fBColor\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBColor::darken() const\fP 
+.RE
+.PP
+
 .SS "bool mc::Color::operator!= (const \fBColor\fP & other) const"
 
 .PP
-Compares the color values of 2 \fCColors\fP 
+Compares the color values of 2 \fC\fBColors\fP\fP 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -367,7 +375,7 @@ Compares the color values of 2 \fCColors\fP
 .PP
 \fBReturns:\fP
 .RS 4
-Whether the 2 \fCColors\fP don't have the same RGBA 
+Whether the 2 \fC\fBColors\fP\fP don't have the same RGBA 
 .RE
 .PP
 \fBSee also:\fP
@@ -379,7 +387,7 @@ operator==(Color&) const
 .SS "bool mc::Color::operator< (const \fBColor\fP & other) const"
 
 .PP
-Compares the color values of 2 'Colors'\&. 
+Compares the color values of 2 '\fBColors\fP'\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -388,14 +396,14 @@ Compares the color values of 2 'Colors'\&.
 .PP
 \fBReturns:\fP
 .RS 4
-The result of the operation on both \fCColors\fP r, g, b, and a values\&. 
+The result of the operation on both \fC\fBColors\fP\fP r, g, b, and a values\&. 
 .RE
 .PP
 
 .SS "bool mc::Color::operator<= (const \fBColor\fP & other) const"
 
 .PP
-Compares the color values of 2 'Colors'\&. 
+Compares the color values of 2 '\fBColors\fP'\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -404,14 +412,14 @@ Compares the color values of 2 'Colors'\&.
 .PP
 \fBReturns:\fP
 .RS 4
-The result of the operation on both \fCColors\fP r, g, b, and a values\&. 
+The result of the operation on both \fC\fBColors\fP\fP r, g, b, and a values\&. 
 .RE
 .PP
 
 .SS "bool mc::Color::operator== (const \fBColor\fP & other) const"
 
 .PP
-Compares the color values of 2 \fCColors\fP 
+Compares the color values of 2 \fC\fBColors\fP\fP 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -420,7 +428,7 @@ Compares the color values of 2 \fCColors\fP
 .PP
 \fBReturns:\fP
 .RS 4
-Whether the 2 \fCColors\fP have the same RGBA 
+Whether the 2 \fC\fBColors\fP\fP have the same RGBA 
 .RE
 .PP
 \fBSee also:\fP
@@ -432,7 +440,7 @@ operator!=(Color&) const
 .SS "bool mc::Color::operator> (const \fBColor\fP & other) const"
 
 .PP
-Compares the color values of 2 'Colors'\&. 
+Compares the color values of 2 '\fBColors\fP'\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -441,14 +449,14 @@ Compares the color values of 2 'Colors'\&.
 .PP
 \fBReturns:\fP
 .RS 4
-The result of the operation on both \fCColors\fP r, g, b, and a values\&. 
+The result of the operation on both \fC\fBColors\fP\fP r, g, b, and a values\&. 
 .RE
 .PP
 
 .SS "bool mc::Color::operator>= (const \fBColor\fP & other) const"
 
 .PP
-Compares the color values of 2 'Colors'\&. 
+Compares the color values of 2 '\fBColors\fP'\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -457,7 +465,7 @@ Compares the color values of 2 'Colors'\&.
 .PP
 \fBReturns:\fP
 .RS 4
-The result of the operation on both \fCColors\fP r, g, b, and a values\&. 
+The result of the operation on both \fC\fBColors\fP\fP r, g, b, and a values\&. 
 .RE
 .PP
 
@@ -585,44 +593,26 @@ setValues(std::array<float,3>)
 .RE
 .PP
 
-.SS "static float mc::Color::trimFloat (const float & color)\fC [static]\fP"
-
-.PP
-Checks the bounds of a \fCfloat\fP making sure that it is not greater than 1,0 or less than 0\&.0\&. If the inputted \fCfloat\fP is more than 1, \fC\fBtrimFloat()\fP\fP returns 1\&. 
-.PP
-If the inputted \fCfloat\fP is less than 0, \fC\fBtrimFloat()\fP\fP returns 0\&.
-.PP
-\fBParameters:\fP
-.RS 4
-\fIcolor\fP \fCfloat\fP to trim 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-A \fCfloat\fP guaranteed to be between 0 and 1\&. 
-.RE
-.PP
-
 .SH "Member Data Documentation"
 .PP 
 .SS "float mc::Color::a"
 
 .PP
-Definition at line 74 of file Color\&.h\&.
+Definition at line 47 of file Color\&.h\&.
 .SS "float mc::Color::b"
 
 .PP
-Definition at line 74 of file Color\&.h\&.
+Definition at line 47 of file Color\&.h\&.
 .SS "float mc::Color::g"
 
 .PP
-Definition at line 74 of file Color\&.h\&.
+Definition at line 47 of file Color\&.h\&.
 .SS "float mc::Color::r"
 
 .PP
 \fBColor\fP component, represented as a \fCfloat\fP\&. It is from 0\&.0 to 1\&.0, where 1\&.0 is the brightest it can get\&. 
 .PP
-Definition at line 74 of file Color\&.h\&.
+Definition at line 47 of file Color\&.h\&.
 
 .SH "Author"
 .PP 

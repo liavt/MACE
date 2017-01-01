@@ -9,8 +9,35 @@
     <programlisting>
 <codeline><highlight class="normal">R&quot;(</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_color&gt;</highlight></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_FRAGMENT_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_FRAGMENT_LIBRARY_</highlight></codeline>
 <codeline></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;ssl_entity&gt;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">layout(location<sp/>=<sp/>0)<sp/>out<sp/>lowp<sp/>vec4<sp/>ssl_OutColor;</highlight></codeline>
+<codeline><highlight class="normal">layout(location<sp/>=<sp/>1)<sp/>out<sp/>uint<sp/>ssl_OutID;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">uniform<sp/>uint<sp/>ssl_EntityID;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vec4<sp/>ssl_frag_main(void);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">void<sp/>main(void){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_Color<sp/>=<sp/>ssl_frag_main();</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Color.a<sp/>*=<sp/>ssl_EntityOpacity;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(ssl_Color.a<sp/>==<sp/>0.0){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>discard;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Color.rgb<sp/>=<sp/>mix(ssl_EntityPaint.rgb,<sp/>ssl_Color.rgb,<sp/>1.0<sp/>-<sp/>ssl_EntityPaint.a);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutColor<sp/>=<sp/>ssl_Color;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutID<sp/>=<sp/>ssl_EntityID;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#endif</highlight></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
     <location file="include/MACE/Graphics/Shaders/include/ssl_frag.glsl"/>

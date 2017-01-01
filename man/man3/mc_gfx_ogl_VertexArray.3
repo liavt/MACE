@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::VertexArray" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::VertexArray" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -26,28 +26,28 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
-.RI "void \fBdraw\fP (const GLenum type=GL_TRIANGLES) const "
+.RI "void \fBdraw\fP (const \fBEnum\fP type=GL_TRIANGLES) const "
 .br
 .ti -1c
-.RI "void \fBloadVertices\fP (const \fBSize\fP &&verticeSize, const GLfloat vertices[], const \fBIndex\fP &&location=15, const \fBSize\fP &&attributeSize=3)"
+.RI "void \fBloadVertices\fP (const \fBSize\fP verticeSize, const float vertices[], const \fBIndex\fP location=15, const \fBByte\fP attributeSize=3)"
 .br
 .ti -1c
-.RI "void \fBloadIndices\fP (const \fBSize\fP &indiceNum, const unsigned int *indiceData)"
+.RI "void \fBloadIndices\fP (const \fBSize\fP indiceNum, const unsigned int *indiceData)"
 .br
 .ti -1c
-.RI "void \fBstoreDataInAttributeList\fP (const \fBSize\fP &&dataSize, const GLvoid *data, const \fBIndex\fP &&location=0, const \fBSize\fP &&attributeSize=3)"
+.RI "void \fBstoreDataInAttributeList\fP (const \fBSize\fP dataSize, const GLvoid *data, const \fBIndex\fP location=0, const \fBByte\fP attributeSize=3)"
 .br
 .ti -1c
 .RI "void \fBaddBuffer\fP (const \fBVertexBuffer\fP &newBuffer)"
 .br
 .ti -1c
-.RI "void \fBsetVertexNumber\fP (const \fBSize\fP &vertexNum)"
+.RI "void \fBsetVertexNumber\fP (const \fBSize\fP vertexNum)"
 .br
 .ti -1c
-.RI "\fBSize\fP & \fBgetVertexNumber\fP ()"
+.RI "\fBSize\fP \fBgetVertexNumber\fP ()"
 .br
 .ti -1c
-.RI "const \fBSize\fP & \fBgetVertexNumber\fP () const "
+.RI "const \fBSize\fP \fBgetVertexNumber\fP () const "
 .br
 .ti -1c
 .RI "void \fBsetIndices\fP (const \fBElementBuffer\fP &buffer)"
@@ -194,7 +194,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
-.SS "void mc::gfx::ogl::VertexArray::draw (const GLenum type = \fCGL_TRIANGLES\fP) const"
+.SS "void mc::gfx::ogl::VertexArray::draw (const \fBEnum\fP type = \fCGL_TRIANGLES\fP) const"
 
 .PP
 \fBSee also:\fP
@@ -236,9 +236,9 @@ The ID represented by this \fC\fBObject\fP\fP
 
 .SS "const \fBElementBuffer\fP& mc::gfx::ogl::VertexArray::getIndices () const"
 
-.SS "\fBSize\fP& mc::gfx::ogl::VertexArray::getVertexNumber ()"
+.SS "\fBSize\fP mc::gfx::ogl::VertexArray::getVertexNumber ()"
 
-.SS "const \fBSize\fP& mc::gfx::ogl::VertexArray::getVertexNumber () const"
+.SS "const \fBSize\fP mc::gfx::ogl::VertexArray::getVertexNumber () const"
 
 .SS "void mc::gfx::ogl::VertexArray::init ()\fC [override]\fP, \fC [virtual]\fP"
 
@@ -299,7 +299,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
-.SS "void mc::gfx::ogl::VertexArray::loadIndices (const \fBSize\fP & indiceNum, const unsigned int * indiceData)"
+.SS "void mc::gfx::ogl::VertexArray::loadIndices (const \fBSize\fP indiceNum, const unsigned int * indiceData)"
 
 .PP
 \fBAttention:\fP
@@ -318,7 +318,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::VertexArray::loadVertices (const \fBSize\fP && verticeSize, const GLfloat vertices[], const \fBIndex\fP && location = \fC15\fP, const \fBSize\fP && attributeSize = \fC3\fP)"
+.SS "void mc::gfx::ogl::VertexArray::loadVertices (const \fBSize\fP verticeSize, const float vertices[], const \fBIndex\fP location = \fC15\fP, const \fBByte\fP attributeSize = \fC3\fP)"
 
 .PP
 \fBAttention:\fP
@@ -433,9 +433,9 @@ Whether \fCthis\fP and \fCother\fP are the same
 
 .SS "void mc::gfx::ogl::VertexArray::setIndices (const \fBElementBuffer\fP & buffer)"
 
-.SS "void mc::gfx::ogl::VertexArray::setVertexNumber (const \fBSize\fP & vertexNum)"
+.SS "void mc::gfx::ogl::VertexArray::setVertexNumber (const \fBSize\fP vertexNum)"
 
-.SS "void mc::gfx::ogl::VertexArray::storeDataInAttributeList (const \fBSize\fP && dataSize, const GLvoid * data, const \fBIndex\fP && location = \fC0\fP, const \fBSize\fP && attributeSize = \fC3\fP)"
+.SS "void mc::gfx::ogl::VertexArray::storeDataInAttributeList (const \fBSize\fP dataSize, const GLvoid * data, const \fBIndex\fP location = \fC0\fP, const \fBByte\fP attributeSize = \fC3\fP)"
 
 .PP
 \fBAttention:\fP
@@ -484,7 +484,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 169 of file OGL\&.h\&.
+Definition at line 164 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

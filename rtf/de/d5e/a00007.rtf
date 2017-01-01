@@ -85,8 +85,8 @@
 mc::gfx::ogl::Buffer Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer}
-{\bkmkstart AAAAAAABFM}
-{\bkmkend AAAAAAABFM}
+{\bkmkstart AAAAAAABHP}
+{\bkmkend AAAAAAABHP}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -95,12 +95,12 @@ Represents a buffer of memory in the GPU. }}\par
 {\f2 #include <OGL.h>}}\par
 Inheritance diagram for mc::gfx::ogl::Buffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d0/d4a/a00147.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dd/db2/a00151.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 Collaboration diagram for mc::gfx::ogl::Buffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "db/d48/a00148.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d9a/a00152.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -111,7 +111,7 @@ Public Member Functions\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 virtual {\b ~Buffer} ()=default\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Buffer} (const {\b Enum} &bufferType) noexcept\par
+{\b Buffer} (const {\b Enum} bufferType) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Creates the buffer with the specified buffer type. }{
@@ -139,35 +139,35 @@ Calls the corresponding glDestroy* function and deletes the ID. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setData} (const GLsizeiptr &dataSize, const void *data, const {\b Enum} &drawType=GL_DYNAMIC_DRAW)\par
+void {\b setData} (const ptrdiff_t &dataSize, const void *data, const {\b Enum} drawType=GL_DYNAMIC_DRAW)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Creates and initalizes the data store for this {\f2 {\b Buffer}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setDataRange} (const {\b Index} &offset, const GLsizeiptr &dataSize, const void *data)\par
+void {\b setDataRange} (const {\b Index} offset, const ptrdiff_t &dataSize, const void *data)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Sets data in a range of the buffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b copyData} ({\b Buffer} &other, const GLsizeiptr &size, const {\b Index} &readOffset=0, const {\b Index} &writeOffset=0)\par
+void {\b copyData} ({\b Buffer} &other, const ptrdiff_t &size, const {\b Index} readOffset=0, const {\b Index} writeOffset=0)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Copy part of the data store of this {\f2 {\b Buffer}}  into another {\f2 {\b Buffer}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void * {\b map} (const {\b Enum} &access=GL_READ_WRITE)\par
+void * {\b map} (const {\b Enum} access=GL_READ_WRITE)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Maps the data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void * {\b mapRange} (const {\b Index} &offset, const {\b Size} &length, const unsigned int &access)\par
+void * {\b mapRange} (const {\b Index} offset, const {\b Size} length, const unsigned int access)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Maps a range of data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }{
@@ -181,7 +181,7 @@ Unmaps the buffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Enum} & {\b getBufferType} () const \par
+const {\b Enum} {\b getBufferType} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Retrieves the buffer type for this buffer. }{
@@ -280,8 +280,8 @@ Constructor & Destructor Documentation\par
 {\b 
 virtual mc::gfx::ogl::Buffer::~Buffer (){\f2 [virtual]}, {\f2 [default]}}}
 \par
-{\bkmkstart AAAAAAABFN}
-{\bkmkend AAAAAAABFN}
+{\bkmkstart AAAAAAABHQ}
+{\bkmkend AAAAAAABHQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -289,10 +289,10 @@ virtual mc::gfx::ogl::Buffer::~Buffer (){\f2 [virtual]}, {\f2 [default]}}}
 {\xe \v mc::gfx::ogl::Buffer\:Buffer}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::ogl::Buffer::Buffer (const {\b Enum} &  {\i bufferType}){\f2 [noexcept]}}}
+mc::gfx::ogl::Buffer::Buffer (const {\b Enum}  {\i bufferType}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABFO}
-{\bkmkend AAAAAAABFO}
+{\bkmkstart AAAAAAABHR}
+{\bkmkend AAAAAAABHR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -330,8 +330,8 @@ Member Function Documentation\par
 {\b 
 virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABFP}
-{\bkmkend AAAAAAABFP}
+{\bkmkstart AAAAAAABHS}
+{\bkmkend AAAAAAABHS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -367,10 +367,10 @@ Exceptions:\par}
 {\xe \v mc::gfx::ogl::Buffer\:copyData}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::copyData ({\b Buffer} &  {\i other}, const GLsizeiptr &  {\i size}, const {\b Index} &  {\i readOffset} = {\f2 0}, const {\b Index} &  {\i writeOffset} = {\f2 0})}}
+void mc::gfx::ogl::Buffer::copyData ({\b Buffer} &  {\i other}, const ptrdiff_t &  {\i size}, const {\b Index}  {\i readOffset} = {\f2 0}, const {\b Index}  {\i writeOffset} = {\f2 0})}}
 \par
-{\bkmkstart AAAAAAABFQ}
-{\bkmkend AAAAAAABFQ}
+{\bkmkstart AAAAAAABHT}
+{\bkmkend AAAAAAABHT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -407,7 +407,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer::setData(const GLsizeiptr&, const void*, const Enum&)} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer::setData(const ptrdiff_t&, const void*, const Enum)} \par
 {\f2 https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData} \par
 {\b CopyReadBuffer} \par
 {\b CopyWriteBuffer} \par
@@ -429,8 +429,8 @@ Exceptions:\par}
 {\b 
 void mc::gfx::ogl::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABFR}
-{\bkmkend AAAAAAABFR}
+{\bkmkstart AAAAAAABHU}
+{\bkmkend AAAAAAABHU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -465,16 +465,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHV \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v getBufferType\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:getBufferType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b Enum}& mc::gfx::ogl::Buffer::getBufferType () const}}
+const {\b Enum} mc::gfx::ogl::Buffer::getBufferType () const}}
 \par
-{\bkmkstart AAAAAAABFT}
-{\bkmkend AAAAAAABFT}
+{\bkmkstart AAAAAAABHW}
+{\bkmkend AAAAAAABHW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -492,8 +492,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The buf
 {\b 
 {\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABFU}
-{\bkmkend AAAAAAABFU}
+{\bkmkstart AAAAAAABHX}
+{\bkmkend AAAAAAABHX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -513,8 +513,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID 
 {\b 
 void mc::gfx::ogl::Buffer::init (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABFV}
-{\bkmkend AAAAAAABFV}
+{\bkmkstart AAAAAAABHY}
+{\bkmkend AAAAAAABHY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -540,7 +540,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHZ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v isCreated\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:isCreated}
@@ -548,8 +548,8 @@ Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF 
 {\b 
 bool mc::gfx::ogl::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABFX}
-{\bkmkend AAAAAAABFX}
+{\bkmkstart AAAAAAABIA}
+{\bkmkend AAAAAAABIA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -575,16 +575,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v map\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:map}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::ogl::Buffer::map (const {\b Enum} &  {\i access} = {\f2 GL_READ_WRITE})}}
+void* mc::gfx::ogl::Buffer::map (const {\b Enum}  {\i access} = {\f2 GL_READ_WRITE})}}
 \par
-{\bkmkstart AAAAAAABFZ}
-{\bkmkend AAAAAAABFZ}
+{\bkmkstart AAAAAAABIC}
+{\bkmkend AAAAAAABIC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -604,7 +604,7 @@ Parameters:\par}
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glMapBuffer} \par
-{\b Buffer::mapRange(const Index&, const Size&, const unsigned int&)} \par
+{\b Buffer::mapRange(const Index, const Size, const unsigned int)} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. \par
 After {\b Buffer::unmap()} is called, the pointer returned may be unsafe. Using it will be undefined. \par
@@ -625,10 +625,10 @@ Exceptions:\par}
 {\xe \v mc::gfx::ogl::Buffer\:mapRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::ogl::Buffer::mapRange (const {\b Index} &  {\i offset}, const {\b Size} &  {\i length}, const unsigned int &  {\i access})}}
+void* mc::gfx::ogl::Buffer::mapRange (const {\b Index}  {\i offset}, const {\b Size}  {\i length}, const unsigned int  {\i access})}}
 \par
-{\bkmkstart AAAAAAABGA}
-{\bkmkend AAAAAAABGA}
+{\bkmkstart AAAAAAABID}
+{\bkmkend AAAAAAABID}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -660,7 +660,7 @@ Parameters:\par}
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glMapBufferRange} \par
-{\b Buffer::map(const Enum&)} \par
+{\b Buffer::map(const Enum)} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. \par
 After {\b Buffer::unmap()} is called, the pointer returned may be unsafe. Using it will be undefined. \par
@@ -683,8 +683,8 @@ Exceptions:\par}
 {\b 
 bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGB}
-{\bkmkend AAAAAAABGB}
+{\bkmkstart AAAAAAABIE}
+{\bkmkend AAAAAAABIE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -714,8 +714,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Buffer::operator!= (const {\b Buffer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABGC}
-{\bkmkend AAAAAAABGC}
+{\bkmkstart AAAAAAABIF}
+{\bkmkend AAAAAAABIF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -745,8 +745,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGD}
-{\bkmkend AAAAAAABGD}
+{\bkmkstart AAAAAAABIG}
+{\bkmkend AAAAAAABIG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -776,8 +776,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Buffer::operator== (const {\b Buffer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABGE}
-{\bkmkend AAAAAAABGE}
+{\bkmkstart AAAAAAABIH}
+{\bkmkend AAAAAAABIH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -805,10 +805,10 @@ Parameters:\par}
 {\xe \v mc::gfx::ogl::Buffer\:setData}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::setData (const GLsizeiptr &  {\i dataSize}, const void *  {\i data}, const {\b Enum} &  {\i drawType} = {\f2 GL_DYNAMIC_DRAW})}}
+void mc::gfx::ogl::Buffer::setData (const ptrdiff_t &  {\i dataSize}, const void *  {\i data}, const {\b Enum}  {\i drawType} = {\f2 GL_DYNAMIC_DRAW})}}
 \par
-{\bkmkstart AAAAAAABGF}
-{\bkmkend AAAAAAABGF}
+{\bkmkstart AAAAAAABII}
+{\bkmkend AAAAAAABII}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -839,8 +839,8 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Buffer::setDataRange(const Index, const GLsizeiptr, const void*) \par
-{\b Buffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Buffer::setDataRange(const Index, const ptrdiff_t, const void*) \par
+{\b Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)} \par
 {\f2 https://www.opengl.org/wiki/GLAPI/glBufferData} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
@@ -858,10 +858,10 @@ Exceptions:\par}
 {\xe \v mc::gfx::ogl::Buffer\:setDataRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::setDataRange (const {\b Index} &  {\i offset}, const GLsizeiptr &  {\i dataSize}, const void *  {\i data})}}
+void mc::gfx::ogl::Buffer::setDataRange (const {\b Index}  {\i offset}, const ptrdiff_t &  {\i dataSize}, const void *  {\i data})}}
 \par
-{\bkmkstart AAAAAAABGG}
-{\bkmkend AAAAAAABGG}
+{\bkmkstart AAAAAAABIJ}
+{\bkmkend AAAAAAABIJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -869,7 +869,7 @@ void mc::gfx::ogl::Buffer::setDataRange (const {\b Index} &  {\i offset}, const 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Sets data in a range of the buffer. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Does not initialize data. {\b Buffer}:{\b setData(const GLsizeiptr&, const void*, const Enum&)} must be called first. {\par
+Does not initialize data. {\b Buffer}:{\b setData(const ptrdiff_t&, const void*, const Enum)} must be called first. {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -893,7 +893,7 @@ Parameters:\par}
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glBufferSubData} \par
-{\b Buffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)} \par
+{\b Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -912,8 +912,8 @@ Exceptions:\par}
 {\b 
 virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGH}
-{\bkmkend AAAAAAABGH}
+{\bkmkstart AAAAAAABIK}
+{\bkmkend AAAAAAABIK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -942,8 +942,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b 
 bool mc::gfx::ogl::Buffer::unmap ()}}
 \par
-{\bkmkstart AAAAAAABGI}
-{\bkmkend AAAAAAABGI}
+{\bkmkstart AAAAAAABIL}
+{\bkmkend AAAAAAABIL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -955,8 +955,8 @@ Any mapped points will be deleted and using them will be undefined.\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether the data was corrupted during reading. This will be very rare but when it does happen you must reinitialize the data. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer::map(const Enum&)} \par
-{\b Buffer::mapRange(const Index&, const Size&, const unsigned int&)} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer::map(const Enum)} \par
+{\b Buffer::mapRange(const Index, const Size, const unsigned int)} \par
 {\f2 https://www.opengl.org/wiki/GLAPI/glMapBuffer} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Using a pointer after it was unmapped will be undefined \par
@@ -982,8 +982,8 @@ Member Data Documentation\par
 {\b 
 {\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGJ}
-{\bkmkend AAAAAAABGJ}
+{\bkmkstart AAAAAAABIM}
+{\bkmkend AAAAAAABIM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -994,7 +994,7 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 169 of file OGL.h.}\par
+Definition at line 164 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::UniformBuffer" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::UniformBuffer" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -22,15 +22,15 @@ Inherits \fBmc::gfx::ogl::Buffer\fP\&.
 .br
 .RI "\fIModify the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. \fP"
 .ti -1c
-.RI "\fBIndex\fP & \fBgetLocation\fP ()"
+.RI "\fBIndex\fP \fBgetLocation\fP ()"
 .br
 .RI "\fIRetrieves the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. \fP"
 .ti -1c
-.RI "const \fBIndex\fP & \fBgetLocation\fP () const "
+.RI "const \fBIndex\fP \fBgetLocation\fP () const "
 .br
 .RI "\fIRetrieves the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. \fP"
 .ti -1c
-.RI "void \fBbindForRender\fP (const \fBIndex\fP offset=0, const GLsizeiptr size=\-1) const "
+.RI "void \fBbindForRender\fP (const \fBIndex\fP offset=0, const ptrdiff_t size=\-1) const "
 .br
 .RI "\fIBinds this \fC\fBUniformBuffer\fP\fP for rendering\&. \fP"
 .ti -1c
@@ -58,23 +58,23 @@ Inherits \fBmc::gfx::ogl::Buffer\fP\&.
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
-.RI "void \fBsetData\fP (const GLsizeiptr &dataSize, const void *data, const \fBEnum\fP &drawType=GL_DYNAMIC_DRAW)"
+.RI "void \fBsetData\fP (const ptrdiff_t &dataSize, const void *data, const \fBEnum\fP drawType=GL_DYNAMIC_DRAW)"
 .br
 .RI "\fICreates and initalizes the data store for this \fC\fBBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBsetDataRange\fP (const \fBIndex\fP &offset, const GLsizeiptr &dataSize, const void *data)"
+.RI "void \fBsetDataRange\fP (const \fBIndex\fP offset, const ptrdiff_t &dataSize, const void *data)"
 .br
 .RI "\fISets data in a range of the buffer\&. \fP"
 .ti -1c
-.RI "void \fBcopyData\fP (\fBBuffer\fP &other, const GLsizeiptr &size, const \fBIndex\fP &readOffset=0, const \fBIndex\fP &writeOffset=0)"
+.RI "void \fBcopyData\fP (\fBBuffer\fP &other, const ptrdiff_t &size, const \fBIndex\fP readOffset=0, const \fBIndex\fP writeOffset=0)"
 .br
 .RI "\fICopy part of the data store of this \fC\fBBuffer\fP\fP into another \fC\fBBuffer\fP\fP \fP"
 .ti -1c
-.RI "void * \fBmap\fP (const \fBEnum\fP &access=GL_READ_WRITE)"
+.RI "void * \fBmap\fP (const \fBEnum\fP access=GL_READ_WRITE)"
 .br
 .RI "\fIMaps the data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. \fP"
 .ti -1c
-.RI "void * \fBmapRange\fP (const \fBIndex\fP &offset, const \fBSize\fP &length, const unsigned int &access)"
+.RI "void * \fBmapRange\fP (const \fBIndex\fP offset, const \fBSize\fP length, const unsigned int access)"
 .br
 .RI "\fIMaps a range of data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. \fP"
 .ti -1c
@@ -82,7 +82,7 @@ Inherits \fBmc::gfx::ogl::Buffer\fP\&.
 .br
 .RI "\fIUnmaps the buffer\&. \fP"
 .ti -1c
-.RI "const \fBEnum\fP & \fBgetBufferType\fP () const "
+.RI "const \fBEnum\fP \fBgetBufferType\fP () const "
 .br
 .RI "\fIRetrieves the buffer type for this buffer\&. \fP"
 .ti -1c
@@ -170,7 +170,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::UniformBuffer::bindForRender (const \fBIndex\fP offset = \fC0\fP, const GLsizeiptr size = \fC\-1\fP) const"
+.SS "void mc::gfx::ogl::UniformBuffer::bindForRender (const \fBIndex\fP offset = \fC0\fP, const ptrdiff_t size = \fC\-1\fP) const"
 
 .PP
 Binds this \fC\fBUniformBuffer\fP\fP for rendering\&. Must be called before a rendering call is used\&. 
@@ -230,7 +230,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Buffer::copyData (\fBBuffer\fP & other, const GLsizeiptr & size, const \fBIndex\fP & readOffset = \fC0\fP, const \fBIndex\fP & writeOffset = \fC0\fP)\fC [inherited]\fP"
+.SS "void mc::gfx::ogl::Buffer::copyData (\fBBuffer\fP & other, const ptrdiff_t & size, const \fBIndex\fP readOffset = \fC0\fP, const \fBIndex\fP writeOffset = \fC0\fP)\fC [inherited]\fP"
 
 .PP
 Copy part of the data store of this \fC\fBBuffer\fP\fP into another \fC\fBBuffer\fP\fP 
@@ -248,7 +248,7 @@ Copy part of the data store of this \fC\fBBuffer\fP\fP into another \fC\fBBuffer
 .PP
 \fBSee also:\fP
 .RS 4
-\fBBuffer::setData(const GLsizeiptr&, const void*, const Enum&)\fP 
+\fBBuffer::setData(const ptrdiff_t&, const void*, const Enum)\fP 
 .PP
 https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData 
 .PP
@@ -302,7 +302,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
-.SS "const \fBEnum\fP& mc::gfx::ogl::Buffer::getBufferType () const\fC [inherited]\fP"
+.SS "const \fBEnum\fP mc::gfx::ogl::Buffer::getBufferType () const\fC [inherited]\fP"
 
 .PP
 Retrieves the buffer type for this buffer\&. This is based on the class\&. 
@@ -328,7 +328,7 @@ The ID represented by this \fC\fBObject\fP\fP
 .RE
 .PP
 
-.SS "\fBIndex\fP& mc::gfx::ogl::UniformBuffer::getLocation ()"
+.SS "\fBIndex\fP mc::gfx::ogl::UniformBuffer::getLocation ()"
 
 .PP
 Retrieves the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. 
@@ -344,7 +344,7 @@ The location
 .RE
 .PP
 
-.SS "const \fBIndex\fP& mc::gfx::ogl::UniformBuffer::getLocation () const"
+.SS "const \fBIndex\fP mc::gfx::ogl::UniformBuffer::getLocation () const"
 
 .PP
 Retrieves the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. 
@@ -419,7 +419,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
-.SS "void* mc::gfx::ogl::Buffer::map (const \fBEnum\fP & access = \fCGL_READ_WRITE\fP)\fC [inherited]\fP"
+.SS "void* mc::gfx::ogl::Buffer::map (const \fBEnum\fP access = \fCGL_READ_WRITE\fP)\fC [inherited]\fP"
 
 .PP
 Maps the data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. May be slow\&.
@@ -433,7 +433,7 @@ Maps the data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. May be 
 .RS 4
 https://www.opengl.org/wiki/GLAPI/glMapBuffer 
 .PP
-\fBBuffer::mapRange(const Index&, const Size&, const unsigned int&)\fP 
+\fBBuffer::mapRange(const Index, const Size, const unsigned int)\fP 
 .RE
 .PP
 \fBWarning:\fP
@@ -456,7 +456,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void* mc::gfx::ogl::Buffer::mapRange (const \fBIndex\fP & offset, const \fBSize\fP & length, const unsigned int & access)\fC [inherited]\fP"
+.SS "void* mc::gfx::ogl::Buffer::mapRange (const \fBIndex\fP offset, const \fBSize\fP length, const unsigned int access)\fC [inherited]\fP"
 
 .PP
 Maps a range of data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&. 
@@ -474,7 +474,7 @@ Maps a range of data in this \fC\fBBuffer\fP\fP to a pointer on the CPU side\&.
 .RS 4
 https://www.opengl.org/wiki/GLAPI/glMapBufferRange 
 .PP
-\fBBuffer::map(const Enum&)\fP 
+\fBBuffer::map(const Enum)\fP 
 .RE
 .PP
 \fBWarning:\fP
@@ -635,7 +635,7 @@ Whether \fCthis\fP and \fCother\fP are the same
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Buffer::setData (const GLsizeiptr & dataSize, const void * data, const \fBEnum\fP & drawType = \fCGL_DYNAMIC_DRAW\fP)\fC [inherited]\fP"
+.SS "void mc::gfx::ogl::Buffer::setData (const ptrdiff_t & dataSize, const void * data, const \fBEnum\fP drawType = \fCGL_DYNAMIC_DRAW\fP)\fC [inherited]\fP"
 
 .PP
 Creates and initalizes the data store for this \fC\fBBuffer\fP\fP 
@@ -651,9 +651,9 @@ Creates and initalizes the data store for this \fC\fBBuffer\fP\fP
 .PP
 \fBSee also:\fP
 .RS 4
-Buffer::setDataRange(const Index, const GLsizeiptr, const void*) 
+Buffer::setDataRange(const Index, const ptrdiff_t, const void*) 
 .PP
-\fBBuffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)\fP 
+\fBBuffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)\fP 
 .PP
 https://www.opengl.org/wiki/GLAPI/glBufferData 
 .RE
@@ -669,10 +669,10 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Buffer::setDataRange (const \fBIndex\fP & offset, const GLsizeiptr & dataSize, const void * data)\fC [inherited]\fP"
+.SS "void mc::gfx::ogl::Buffer::setDataRange (const \fBIndex\fP offset, const ptrdiff_t & dataSize, const void * data)\fC [inherited]\fP"
 
 .PP
-Sets data in a range of the buffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const GLsizeiptr&, const void*, const Enum&)\fP must be called first\&. 
+Sets data in a range of the buffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const ptrdiff_t&, const void*, const Enum)\fP must be called first\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -687,7 +687,7 @@ Sets data in a range of the buffer\&. Does not initialize data\&. \fBBuffer\fP:\
 .RS 4
 https://www.opengl.org/wiki/GLAPI/glBufferSubData 
 .PP
-\fBBuffer::copyData(Buffer&, const GLsizeiptr&, const Index&, const Index&)\fP 
+\fBBuffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)\fP 
 .RE
 .PP
 \fBAttention:\fP
@@ -704,7 +704,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "void mc::gfx::ogl::UniformBuffer::setLocation (const \fBIndex\fP location)"
 
 .PP
-Modify the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. The location is used in the \fBUniformBuffer::bindForRender(const Index, const GLsizeiptr) const\fP and \fBUniformBuffer::bindToUniformBlock(const Index, const char*) const \fPfunctions, as well as in the shaders\&. 
+Modify the location that this \fC\fBUniformBuffer\fP\fP is currently bound to\&. The location is used in the \fBUniformBuffer::bindForRender(const Index, const ptrdiff_t) const\fP and \fBUniformBuffer::bindToUniformBlock(const Index, const char*) const \fPfunctions, as well as in the shaders\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -745,9 +745,9 @@ Whether the data was corrupted during reading\&. This will be very rare but when
 .PP
 \fBSee also:\fP
 .RS 4
-\fBBuffer::map(const Enum&)\fP 
+\fBBuffer::map(const Enum)\fP 
 .PP
-\fBBuffer::mapRange(const Index&, const Size&, const unsigned int&)\fP 
+\fBBuffer::mapRange(const Index, const Size, const unsigned int)\fP 
 .PP
 https://www.opengl.org/wiki/GLAPI/glMapBuffer 
 .RE
@@ -777,7 +777,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 169 of file OGL\&.h\&.
+Definition at line 164 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

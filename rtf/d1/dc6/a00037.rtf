@@ -85,8 +85,8 @@
 mc::gfx::ogl::Shader Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::ogl::Shader}
 {\xe \v mc::gfx::ogl::Shader}
-{\bkmkstart AAAAAAABIW}
-{\bkmkend AAAAAAABIW}
+{\bkmkstart AAAAAAABKZ}
+{\bkmkend AAAAAAABKZ}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -95,12 +95,12 @@ Represents a shader object in OpenGL. }}\par
 {\f2 #include <OGL.h>}}\par
 Inheritance diagram for mc::gfx::ogl::Shader:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d5/de9/a00176.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d0/d81/a00180.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 Collaboration diagram for mc::gfx::ogl::Shader:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dd/d4c/a00177.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/d64/a00181.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -116,7 +116,7 @@ Default constructor which sets {\f2 type}  to {\f2 GL_FALSE} . }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Shader} (const {\b Enum} &type) noexcept\par
+{\b Shader} (const {\b Enum} type) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Constructor which sets the type of the {\f2 {\b Shader}} . }{
@@ -137,11 +137,23 @@ Calls the corresponding glDestroy* function and deletes the ID. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setSource} (const {\b Size} &count, const char *strings[], const int lengths[])\par
+void {\b setSource} (const {\b Size} count, const char *strings[], const int lengths[])\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setSource} (const char string[], const int &length)\par
+void {\b setSource} (const char string[], const int length)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b setSource} (const std::string &string)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+char * {\b getSource} (const {\b Size} length, char *characters, int amount=0) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getParameter} (const {\b Enum} param) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getInfoLogLength} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getSourceLength} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b isDeleted} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b isCompiled} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b compile} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -152,11 +164,11 @@ Queries OpenGL whether this {\b Object}'s ID is a valid object. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setType} (const {\b Enum} &newType)\par
+void {\b setType} (const {\b Enum} newType)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Enum} & {\b getType} ()\par
+{\b Enum} {\b getType} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Enum} & {\b getType} () const \par
+const {\b Enum} {\b getType} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b Shader} &other) const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -208,7 +220,7 @@ Represents a shader object in OpenGL. \par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 A shader is a special program that gets executed during different parts of rendering. \par
 The {\f2 {\b Shader}}  class must be used with the {\f2 {\b ShaderProgram}}  class. \par
-In order to work correctly, {\b Shader::setType(const Enum&)} or {\b Shader::Shader(const Enum&)} noexcept must be called and a type must be set. \par
+In order to work correctly, {\b Shader::setType(const Enum)} or {\b Shader::Shader(const Enum)} noexcept must be called and a type must be set. \par
 Unlike other {\f2 Objects} , the default constructor of {\f2 {\b Shader}}  should not be used. It is only implemented for compatibility reasons. The {\f2 type}  of the shader must be set before most functions are called. If {\f2 type}  is equal to {\f2 GL_FALSE}  an error is thrown. \par
 Even though it extends {\f2 {\b Object}}  it does not implement the {\b Object::bind() const }or {\f2 unbind()}  functions. Instead, add the shader to a {\f2 {\b ShaderProgram}}  and it will link from there. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -227,8 +239,8 @@ Constructor & Destructor Documentation\par
 {\b 
 mc::gfx::ogl::Shader::Shader (){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABIX}
-{\bkmkend AAAAAAABIX}
+{\bkmkstart AAAAAAABLA}
+{\bkmkend AAAAAAABLA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -237,19 +249,19 @@ mc::gfx::ogl::Shader::Shader (){\f2 [noexcept]}}}
 Default constructor which sets {\f2 type}  to {\f2 GL_FALSE} . }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 If a function that requires {\f2 type}  to be set is called, an error is thrown. \par
-If this constructor is used, the {\b Shader::setType(const Enum&)} function should be used later to set a type. \par
+If this constructor is used, the {\b Shader::setType(const Enum)} function should be used later to set a type. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Shader::Shader(const Enum&)} noexcept \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Shader::Shader(const Enum)} noexcept \par
 {\b Shader} \par
 }}}
 {\xe \v Shader\:mc::gfx::ogl::Shader}
 {\xe \v mc::gfx::ogl::Shader\:Shader}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::ogl::Shader::Shader (const {\b Enum} &  {\i type}){\f2 [noexcept]}}}
+mc::gfx::ogl::Shader::Shader (const {\b Enum}  {\i type}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABIY}
-{\bkmkend AAAAAAABIY}
+{\bkmkstart AAAAAAABLB}
+{\bkmkend AAAAAAABLB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -269,7 +281,7 @@ Parameters:\par}
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Shader::setType(const Enum&)} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Shader::setType(const Enum)} \par
 {\b Shader} \par
 }}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
@@ -282,8 +294,8 @@ Member Function Documentation\par
 {\b 
 void mc::gfx::ogl::Shader::compile ()}}
 \par
-{\bkmkstart AAAAAAABIZ}
-{\bkmkend AAAAAAABIZ}
+{\bkmkstart AAAAAAABLC}
+{\bkmkend AAAAAAABLC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -297,8 +309,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 h
 {\b 
 void mc::gfx::ogl::Shader::destroy (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABHQ}
-{\bkmkend AAAAAAABHQ}
+{\bkmkstart AAAAAAABJT}
+{\bkmkend AAAAAAABJT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -333,7 +345,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHV \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v getID\:mc::gfx::ogl::Shader}
 {\xe \v mc::gfx::ogl::Shader\:getID}
@@ -341,8 +353,8 @@ Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF 
 {\b 
 {\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABFU}
-{\bkmkend AAAAAAABFU}
+{\bkmkstart AAAAAAABHX}
+{\bkmkend AAAAAAABHX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -356,14 +368,110 @@ When using {\b Object::bind() const }it will bind to this ID. {\b Object::unbind
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID represented by this {\f2 {\b Object}}  \par
 }}}
+{\xe \v getInfoLogLength\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getInfoLogLength}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+int mc::gfx::ogl::Shader::getInfoLogLength () const}}
+\par
+{\bkmkstart AAAAAAABLD}
+{\bkmkend AAAAAAABLD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v getParameter\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getParameter}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+int mc::gfx::ogl::Shader::getParameter (const {\b Enum}  {\i param}) const}}
+\par
+{\bkmkstart AAAAAAABLE}
+{\bkmkend AAAAAAABLE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v getSource\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getSource}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+char* mc::gfx::ogl::Shader::getSource (const {\b Size}  {\i length}, char *  {\i characters}, int  {\i amount} = {\f2 0}) const}}
+\par
+{\bkmkstart AAAAAAABLF}
+{\bkmkend AAAAAAABLF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v getSourceLength\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getSourceLength}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+int mc::gfx::ogl::Shader::getSourceLength () const}}
+\par
+{\bkmkstart AAAAAAABLG}
+{\bkmkend AAAAAAABLG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
 {\xe \v getType\:mc::gfx::ogl::Shader}
 {\xe \v mc::gfx::ogl::Shader\:getType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Enum}& mc::gfx::ogl::Shader::getType ()}}
+{\b Enum} mc::gfx::ogl::Shader::getType ()}}
 \par
-{\bkmkstart AAAAAAABJA}
-{\bkmkend AAAAAAABJA}
+{\bkmkstart AAAAAAABLH}
+{\bkmkend AAAAAAABLH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -371,10 +479,10 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID 
 {\xe \v mc::gfx::ogl::Shader\:getType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b Enum}& mc::gfx::ogl::Shader::getType () const}}
+const {\b Enum} mc::gfx::ogl::Shader::getType () const}}
 \par
-{\bkmkstart AAAAAAABJB}
-{\bkmkend AAAAAAABJB}
+{\bkmkstart AAAAAAABLI}
+{\bkmkend AAAAAAABLI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -384,8 +492,8 @@ const {\b Enum}& mc::gfx::ogl::Shader::getType () const}}
 {\b 
 void mc::gfx::ogl::Shader::init (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABHW}
-{\bkmkend AAAAAAABHW}
+{\bkmkstart AAAAAAABJZ}
+{\bkmkend AAAAAAABJZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -411,16 +519,40 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABHZ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
+{\xe \v isCompiled\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:isCompiled}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::ogl::Shader::isCompiled () const}}
+\par
+{\bkmkstart AAAAAAABLJ}
+{\bkmkend AAAAAAABLJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
 {\xe \v isCreated\:mc::gfx::ogl::Shader}
 {\xe \v mc::gfx::ogl::Shader\:isCreated}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 bool mc::gfx::ogl::Shader::isCreated () const{\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABIC}
-{\bkmkend AAAAAAABIC}
+{\bkmkstart AAAAAAABKF}
+{\bkmkend AAAAAAABKF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -446,16 +578,40 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABIB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
+{\xe \v isDeleted\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:isDeleted}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::ogl::Shader::isDeleted () const}}
+\par
+{\bkmkstart AAAAAAABLK}
+{\bkmkend AAAAAAABLK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
 {\xe \v operator!=\:mc::gfx::ogl::Shader}
 {\xe \v mc::gfx::ogl::Shader\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGB}
-{\bkmkend AAAAAAABGB}
+{\bkmkstart AAAAAAABIE}
+{\bkmkend AAAAAAABIE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -485,8 +641,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Shader::operator!= (const {\b Shader} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABJC}
-{\bkmkend AAAAAAABJC}
+{\bkmkstart AAAAAAABLL}
+{\bkmkend AAAAAAABLL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -496,8 +652,8 @@ bool mc::gfx::ogl::Shader::operator!= (const {\b Shader} &  {\i other}) const}}
 {\b 
 bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGD}
-{\bkmkend AAAAAAABGD}
+{\bkmkstart AAAAAAABIG}
+{\bkmkend AAAAAAABIG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -527,8 +683,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Shader::operator== (const {\b Shader} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABJD}
-{\bkmkend AAAAAAABJD}
+{\bkmkstart AAAAAAABLM}
+{\bkmkend AAAAAAABLM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -536,10 +692,10 @@ bool mc::gfx::ogl::Shader::operator== (const {\b Shader} &  {\i other}) const}}
 {\xe \v mc::gfx::ogl::Shader\:setSource}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Shader::setSource (const {\b Size} &  {\i count}, const char *  {\i strings}[], const int  {\i lengths}[])}}
+void mc::gfx::ogl::Shader::setSource (const {\b Size}  {\i count}, const char *  {\i strings}[], const int  {\i lengths}[])}}
 \par
-{\bkmkstart AAAAAAABJE}
-{\bkmkend AAAAAAABJE}
+{\bkmkstart AAAAAAABLN}
+{\bkmkend AAAAAAABLN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -562,10 +718,10 @@ Exceptions:\par}
 {\xe \v mc::gfx::ogl::Shader\:setSource}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Shader::setSource (const char  {\i string}[], const int &  {\i length})}}
+void mc::gfx::ogl::Shader::setSource (const char  {\i string}[], const int  {\i length})}}
 \par
-{\bkmkstart AAAAAAABJF}
-{\bkmkend AAAAAAABJF}
+{\bkmkstart AAAAAAABLO}
+{\bkmkend AAAAAAABLO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -575,8 +731,8 @@ void mc::gfx::ogl::Shader::setSource (const char  {\i string}[], const int &  {\
 {\b 
 void mc::gfx::ogl::Shader::setSource (const std::string &  {\i string})}}
 \par
-{\bkmkstart AAAAAAABJG}
-{\bkmkend AAAAAAABJG}
+{\bkmkstart AAAAAAABLP}
+{\bkmkend AAAAAAABLP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -584,10 +740,10 @@ void mc::gfx::ogl::Shader::setSource (const std::string &  {\i string})}}
 {\xe \v mc::gfx::ogl::Shader\:setType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Shader::setType (const {\b Enum} &  {\i newType})}}
+void mc::gfx::ogl::Shader::setType (const {\b Enum}  {\i newType})}}
 \par
-{\bkmkstart AAAAAAABJH}
-{\bkmkend AAAAAAABJH}
+{\bkmkstart AAAAAAABLQ}
+{\bkmkend AAAAAAABLQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -601,8 +757,8 @@ Member Data Documentation\par
 {\b 
 {\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGJ}
-{\bkmkend AAAAAAABGJ}
+{\bkmkstart AAAAAAABIM}
+{\bkmkend AAAAAAABIM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -613,7 +769,7 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 169 of file OGL.h.}\par
+Definition at line 164 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

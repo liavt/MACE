@@ -85,19 +85,19 @@
 mc::gfx::Image Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::Image}
 {\xe \v mc::gfx::Image}
-{\bkmkstart AAAAAAABDQ}
-{\bkmkend AAAAAAABDQ}
+{\bkmkstart AAAAAAABET}
+{\bkmkend AAAAAAABET}
 \par
 {
 {\f2 #include <Entity2D.h>}}\par
 Inheritance diagram for mc::gfx::Image:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d5/d5b/a00135.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d4/ddd/a00138.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 Collaboration diagram for mc::gfx::Image:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d0/d5e/a00136.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "de/d14/a00139.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -122,6 +122,46 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Image} () noexcept\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Image} (const {\b ogl::Texture} &tex)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Image} (const {\b Color} &col)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b ~Image} ()=default\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setTexture} ({\b ogl::Texture} &tex)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b ogl::Texture} & {\b getTexture} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b ogl::Texture} & {\b getTexture} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator==} (const {\b Image} &other) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator!=} (const {\b Image} &other) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b ogl::UniformBuffer} & {\b getBuffer} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b ogl::UniformBuffer} & {\b getBuffer} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setBuffer} (const {\b ogl::UniformBuffer} &newBuffer)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b clean} () final\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b init} () final\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.init()}}  is called. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b destroy} () final\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.destroy()}}  is called. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b Color} & {\b getPaint} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 const {\b Color} & {\b getPaint} () const \par
@@ -133,32 +173,6 @@ float {\b getOpacity} ()\par
 const float {\b getOpacity} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b setOpacity} (const float f)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setTexture} ({\b ogl::Texture} &tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::Texture} & {\b getTexture} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::Texture} & {\b getTexture} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::UniformBuffer} & {\b getBuffer} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::UniformBuffer} & {\b getBuffer} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setBuffer} (const {\b ogl::UniformBuffer} &newBuffer)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.init()}}  is called. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () override\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.destroy()}}  is called. }{
-}\par
-}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b operator==} (const {\b GraphicsEntity} &other) const  noexcept\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -175,22 +189,6 @@ bool {\b operator!=} (const {\b Entity} &other) const  noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Compares if 2 {\f2 Entities}  don't have the same children, parent, and properties. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clean} () override\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b update} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.update()}}  is called. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b render} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -228,8 +226,6 @@ void {\b clearChildren} ()\par
 Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }{
 }\par
 }}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clearComponents} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b Entity} & {\b operator[]} ({\b Index} i)\par
 {
@@ -352,13 +348,6 @@ bool {\b hasParent} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b addChild} ({\b Entity} &e)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b kill} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Automatically called when {\f2 Entity::PROPERTY_DEAD}  is true. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b addComponent} ({\b Component} &action)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 std::vector< {\b Component} * > {\b getComponents} ()\par
@@ -406,33 +395,49 @@ Protected Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b customInit} () override\par
+void {\b onInit} () override final\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.init()}}  is called, {\f2 {\b customInit()}}  is called on all of it's children. }{
+When {\f2 {\b Entity.init()}}  is called, {\f2 {\b onInit()}}  is called on all of it's children. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b customUpdate} () override\par
+void {\b onUpdate} () override final\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.update()}}  is called, {\f2 {\b customUpdate()}}  is called on all of it's children. }{
+When {\f2 {\b Entity.update()}}  is called, {\f2 {\b onUpdate()}}  is called on all of it's children. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b customRender} () override\par
+void {\b onRender} () override final\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.render()}}  is called, {\f2 {\b customRender()}}  is called on all of it's children. }{
+When {\f2 {\b Entity.render()}}  is called, {\f2 {\b onRender()}}  is called on all of it's children. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b customDestroy} () override\par
+void {\b onDestroy} () override final\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b customDestroy()}}  is called on all of it's children. }{
+When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b onDestroy()}}  is called on all of it's children. }{
 }\par
 }}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b update} ()\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.update()}}  is called. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b render} ()\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b onClean} ()\par
 }
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Protected Attributes\par
@@ -449,13 +454,26 @@ std::vector< {\b Entity} * > {\b children} = std::vector<{\b Entity}*>()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b TransformMatrix} {\b transformation}\par
 }
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Friends\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+class {\b RenderProtocol< Image >}\par
+}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 28 of file Entity2D.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid figure out a way to make the protocol globally accessible \par
+}
+}{
+Definition at line 58 of file Entity2D.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -467,26 +485,26 @@ Member Enumeration Documentation\par
 {\b 
 enum {\b mc::gfx::Entity::EntityProperty} : {\b Byte}{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAYU}
-{\bkmkend AAAAAAAAYU}
+{\bkmkstart AAAAAAAAZY}
+{\bkmkend AAAAAAAAZY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {{{\b \par
 Enumerator}}\par
 \pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\xe \v DEAD\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:DEAD}
-{\b {\i DEAD{\bkmkstart AAAAAAAAYV}
-{\bkmkend AAAAAAAAYV}
+{\b {\i DEAD{\bkmkstart AAAAAAAAZZ}
+{\bkmkend AAAAAAAAZZ}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Bit location representing whether an {\f2 {\b Entity}}  is dead. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If {\f2 true,}  any {\b Entity} holding it will remove it and call {\f2 {\b kill()}}  \par
+If {\f2 true,}  any {\b Entity} holding it will remove it and call {\f2 kill()}  \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
 }}{\xe \v UPDATE_DISABLED\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:UPDATE_DISABLED}
-{\b {\i UPDATE_DISABLED{\bkmkstart AAAAAAAAYW}
-{\bkmkend AAAAAAAAYW}
+{\b {\i UPDATE_DISABLED{\bkmkstart AAAAAAABAA}
+{\bkmkend AAAAAAABAA}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Property defining if an {\f2 {\b Entity}}  can be updated. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -495,8 +513,8 @@ If this is {\f2 true} , {\f2 {\b update()}}  will be called by it's parent. \par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
 }}{\xe \v RENDER_DISABLED\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:RENDER_DISABLED}
-{\b {\i RENDER_DISABLED{\bkmkstart AAAAAAAAYX}
-{\bkmkend AAAAAAAAYX}
+{\b {\i RENDER_DISABLED{\bkmkstart AAAAAAABAB}
+{\bkmkend AAAAAAABAB}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Property defining if an {\f2 {\b Entity}}  can be rendered. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -505,8 +523,8 @@ If this is {\f2 true} , {\f2 {\b render()}}  will be called by it's parent. \par
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
 }}{\xe \v INIT\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:INIT}
-{\b {\i INIT{\bkmkstart AAAAAAAAYY}
-{\bkmkend AAAAAAAAYY}
+{\b {\i INIT{\bkmkstart AAAAAAABAC}
+{\bkmkend AAAAAAABAC}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Flag representing whether an {\b Entity}'s {\b init()} function has been called. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -516,8 +534,8 @@ If {\b init()} is called and this is {\f2 true} , an {\f2 InitializationError}  
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
 }}{\xe \v STRETCH_X\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:STRETCH_X}
-{\b {\i STRETCH_X{\bkmkstart AAAAAAAAYZ}
-{\bkmkend AAAAAAAAYZ}
+{\b {\i STRETCH_X{\bkmkstart AAAAAAABAD}
+{\bkmkend AAAAAAABAD}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -526,8 +544,8 @@ Flag representing whether an {\b Entity}'s X position should move when it's pare
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_Y} \par
 }}{\xe \v STRETCH_Y\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:STRETCH_Y}
-{\b {\i STRETCH_Y{\bkmkstart AAAAAAAAZA}
-{\bkmkend AAAAAAAAZA}
+{\b {\i STRETCH_Y{\bkmkstart AAAAAAABAE}
+{\bkmkend AAAAAAABAE}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -536,8 +554,8 @@ Flag representing whether an {\b Entity}'s X position should move when it's pare
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_X} \par
 }}{\xe \v HOVERED\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:HOVERED}
-{\b {\i HOVERED{\bkmkstart AAAAAAAAZB}
-{\bkmkend AAAAAAAAZB}
+{\b {\i HOVERED{\bkmkstart AAAAAAABAF}
+{\bkmkend AAAAAAABAF}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Flag representing whether this {\f2 {\b Entity}}  has been hovered over. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -546,8 +564,8 @@ The {\f2 {\b RenderProtocol}}  used to render the {\f2 {\b Entity}}  must set th
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid ssl::bindEntity(Entity*) \par
 }}{\xe \v DIRTY\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:DIRTY}
-{\b {\i DIRTY{\bkmkstart AAAAAAAAZC}
-{\bkmkend AAAAAAAAZC}
+{\b {\i DIRTY{\bkmkstart AAAAAAABAG}
+{\bkmkend AAAAAAABAG}
 }}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Flag representing whether this {\f2 {\b Entity}}  is dirty and it's positions needs to be recalculated. \par
 }{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -563,7 +581,55 @@ Certain {\f2 GraphicsContexts}  may only render when something is dirty, heavily
 Additionally, an {\f2 {\b Entity}}  that is considered dirty will have it's buffer updated on the GPU side. \par
 }\par
 }{
-Definition at line 42 of file Entity.h.}\par
+Definition at line 94 of file Entity.h.}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Constructor & Destructor Documentation\par
+\pard\plain 
+{\xe \v Image\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:Image}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::Image::Image (){\f2 [noexcept]}}}
+\par
+{\bkmkstart AAAAAAABEU}
+{\bkmkend AAAAAAABEU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v Image\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:Image}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::Image::Image (const {\b ogl::Texture} &  {\i tex})}}
+\par
+{\bkmkstart AAAAAAABEV}
+{\bkmkend AAAAAAABEV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v Image\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:Image}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::Image::Image (const {\b Color} &  {\i col})}}
+\par
+{\bkmkstart AAAAAAABEW}
+{\bkmkend AAAAAAABEW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v ~Image\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:~Image}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::Image::~Image (){\f2 [default]}}}
+\par
+{\bkmkstart AAAAAAABEX}
+{\bkmkend AAAAAAABEX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -575,8 +641,8 @@ Member Function Documentation\par
 {\b 
 void mc::gfx::Entity::addChild ({\b Entity} &  {\i e}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZD}
-{\bkmkend AAAAAAAAZD}
+{\bkmkstart AAAAAAABAH}
+{\bkmkend AAAAAAABAH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -592,8 +658,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::addComponent ({\b Component} &  {\i action}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZE}
-{\bkmkend AAAAAAAAZE}
+{\bkmkstart AAAAAAABAI}
+{\bkmkend AAAAAAABAI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -603,8 +669,8 @@ void mc::gfx::Entity::addComponent ({\b Component} &  {\i action}){\f2 [inherite
 {\b 
 std::vector<{\b Entity}*>::iterator mc::gfx::Entity::begin (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZF}
-{\bkmkend AAAAAAAAZF}
+{\bkmkstart AAAAAAABAJ}
+{\bkmkend AAAAAAABAJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -623,10 +689,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b en
 {\xe \v mc::gfx::Image\:clean}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::GraphicsEntity::clean (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::GraphicsEntity::clean (){\f2 [final]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZH}
-{\bkmkend AAAAAAAAZH}
+{\bkmkstart AAAAAAABAL}
+{\bkmkend AAAAAAABAL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -645,7 +711,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZG \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v clearChildren\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:clearChildren}
@@ -653,8 +719,8 @@ Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGER
 {\b 
 void mc::gfx::Entity::clearChildren (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZI}
-{\bkmkend AAAAAAAAZI}
+{\bkmkstart AAAAAAABAM}
+{\bkmkend AAAAAAABAM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -671,148 +737,14 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b removeChild(Index)} \par
 {\b removeChild(const Entity&)} \par
 }}}
-{\xe \v clearComponents\:mc::gfx::Image}
-{\xe \v mc::gfx::Image\:clearComponents}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::clearComponents (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAAAZJ}
-{\bkmkend AAAAAAAAZJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v customDestroy\:mc::gfx::Image}
-{\xe \v mc::gfx::Image\:customDestroy}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Image::customDestroy (){\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCO}
-{\bkmkend AAAAAAABCO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b customDestroy()}}  is called on all of it's children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::destroy()} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZL \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v customInit\:mc::gfx::Image}
-{\xe \v mc::gfx::Image\:customInit}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Image::customInit (){\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCQ}
-{\bkmkend AAAAAAABCQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.init()}}  is called, {\f2 {\b customInit()}}  is called on all of it's children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::init()} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZN \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v customRender\:mc::gfx::Image}
-{\xe \v mc::gfx::Image\:customRender}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Image::customRender (){\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCS}
-{\bkmkend AAAAAAABCS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.render()}}  is called, {\f2 {\b customRender()}}  is called on all of it's children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZP \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v customUpdate\:mc::gfx::Image}
-{\xe \v mc::gfx::Image\:customUpdate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Image::customUpdate (){\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCU}
-{\bkmkend AAAAAAABCU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.update()}}  is called, {\f2 {\b customUpdate()}}  is called on all of it's children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::update()} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZR \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
 {\xe \v destroy\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::GraphicsEntity::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::GraphicsEntity::destroy (){\f2 [final]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZT}
-{\bkmkend AAAAAAAAZT}
+{\bkmkstart AAAAAAABAO}
+{\bkmkend AAAAAAABAO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -820,8 +752,8 @@ void mc::gfx::GraphicsEntity::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.destroy()}}  is called. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b customDestroy()}} . Sets {\f2 {\b Entity::INIT}}  to be false \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customDestroy()}}  \par
+Calls {\f2 {\b onDestroy()}} . Sets {\f2 {\b Entity::INIT}}  to be false \par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onDestroy()}}  \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -844,7 +776,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAZS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABAN \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v end\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:end}
@@ -852,8 +784,8 @@ Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGER
 {\b 
 std::vector<{\b Entity}*>::iterator mc::gfx::Entity::end (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZU}
-{\bkmkend AAAAAAAAZU}
+{\bkmkstart AAAAAAABAP}
+{\bkmkend AAAAAAABAP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -874,8 +806,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b be
 {\b 
 {\b ogl::UniformBuffer}& mc::gfx::GraphicsEntity::getBuffer (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCX}
-{\bkmkend AAAAAAABCX}
+{\bkmkstart AAAAAAABEB}
+{\bkmkend AAAAAAABEB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -891,8 +823,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const {\b ogl::UniformBuffer}& mc::gfx::GraphicsEntity::getBuffer () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCY}
-{\bkmkend AAAAAAABCY}
+{\bkmkstart AAAAAAABEC}
+{\bkmkend AAAAAAABEC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -902,8 +834,8 @@ const {\b ogl::UniformBuffer}& mc::gfx::GraphicsEntity::getBuffer () const{\f2 [
 {\b 
 {\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZV}
-{\bkmkend AAAAAAAAZV}
+{\bkmkstart AAAAAAABAQ}
+{\bkmkend AAAAAAABAQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -942,8 +874,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b op
 {\b 
 const {\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZW}
-{\bkmkend AAAAAAAAZW}
+{\bkmkstart AAAAAAABAR}
+{\bkmkend AAAAAAABAR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -982,8 +914,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b op
 {\b 
 const std::vector<{\b Entity}*>& mc::gfx::Entity::getChildren () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZX}
-{\bkmkend AAAAAAAAZX}
+{\bkmkstart AAAAAAABAS}
+{\bkmkend AAAAAAABAS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1001,8 +933,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid an {\f2
 {\b 
 std::vector<{\b Component}*> mc::gfx::Entity::getComponents (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAZY}
-{\bkmkend AAAAAAAAZY}
+{\bkmkstart AAAAAAABAT}
+{\bkmkend AAAAAAABAT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1012,8 +944,8 @@ std::vector<{\b Component}*> mc::gfx::Entity::getComponents (){\f2 [inherited]}}
 {\b 
 float& mc::gfx::Entity::getHeight (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAB}
-{\bkmkend AAAAAAABAB}
+{\bkmkstart AAAAAAABAW}
+{\bkmkend AAAAAAABAW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1029,8 +961,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const float& mc::gfx::Entity::getHeight () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAC}
-{\bkmkend AAAAAAABAC}
+{\bkmkstart AAAAAAABAX}
+{\bkmkend AAAAAAABAX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1040,8 +972,8 @@ const float& mc::gfx::Entity::getHeight () const{\f2 [inherited]}}}
 {\b 
 float mc::gfx::GraphicsEntity::getOpacity (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCZ}
-{\bkmkend AAAAAAABCZ}
+{\bkmkstart AAAAAAABED}
+{\bkmkend AAAAAAABED}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1057,8 +989,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const float mc::gfx::GraphicsEntity::getOpacity () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDA}
-{\bkmkend AAAAAAABDA}
+{\bkmkstart AAAAAAABEE}
+{\bkmkend AAAAAAABEE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1068,8 +1000,8 @@ const float mc::gfx::GraphicsEntity::getOpacity () const{\f2 [inherited]}}}
 {\b 
 {\b Color}& mc::gfx::GraphicsEntity::getPaint (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDB}
-{\bkmkend AAAAAAABDB}
+{\bkmkstart AAAAAAABEF}
+{\bkmkend AAAAAAABEF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1085,8 +1017,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const {\b Color}& mc::gfx::GraphicsEntity::getPaint () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDC}
-{\bkmkend AAAAAAABDC}
+{\bkmkstart AAAAAAABEG}
+{\bkmkend AAAAAAABEG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1096,8 +1028,8 @@ const {\b Color}& mc::gfx::GraphicsEntity::getPaint () const{\f2 [inherited]}}}
 {\b 
 {\b Entity}* const mc::gfx::Entity::getParent (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAF}
-{\bkmkend AAAAAAABAF}
+{\bkmkstart AAAAAAABBA}
+{\bkmkend AAAAAAABBA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1115,8 +1047,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity
 {\b 
 const {\b Entity}* const mc::gfx::Entity::getParent () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAG}
-{\bkmkend AAAAAAABAG}
+{\bkmkstart AAAAAAABBB}
+{\bkmkend AAAAAAABBB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1136,8 +1068,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity
 {\b 
 {\b EntityProperties}& mc::gfx::Entity::getProperties (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAH}
-{\bkmkend AAAAAAABAH}
+{\bkmkstart AAAAAAABBC}
+{\bkmkend AAAAAAABBC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1164,8 +1096,8 @@ setProperty(Index, bool) \par
 {\b 
 const {\b EntityProperties}& mc::gfx::Entity::getProperties () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAI}
-{\bkmkend AAAAAAABAI}
+{\bkmkstart AAAAAAABBD}
+{\bkmkend AAAAAAABBD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1187,8 +1119,8 @@ setProperty(Index, bool) \par
 {\b 
 bool mc::gfx::Entity::getProperty (const {\b Byte}  {\i position}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAJ}
-{\bkmkend AAAAAAABAJ}
+{\bkmkstart AAAAAAABBE}
+{\bkmkend AAAAAAABBE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1219,8 +1151,8 @@ setProperties(ByteField&) \par
 {\b 
 {\b Entity}* mc::gfx::Entity::getRootParent (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAM}
-{\bkmkend AAAAAAABAM}
+{\bkmkstart AAAAAAABBH}
+{\bkmkend AAAAAAABBH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1236,8 +1168,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const {\b Entity}* mc::gfx::Entity::getRootParent () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAN}
-{\bkmkend AAAAAAABAN}
+{\bkmkstart AAAAAAABBI}
+{\bkmkend AAAAAAABBI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1245,10 +1177,10 @@ const {\b Entity}* mc::gfx::Entity::getRootParent () const{\f2 [inherited]}}}
 {\xe \v mc::gfx::Image\:getTexture}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b ogl::Texture}& mc::gfx::GraphicsEntity::getTexture (){\f2 [inherited]}}}
+{\b ogl::Texture}& mc::gfx::Image::getTexture ()}}
 \par
-{\bkmkstart AAAAAAABDD}
-{\bkmkend AAAAAAABDD}
+{\bkmkstart AAAAAAABEY}
+{\bkmkend AAAAAAABEY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1262,10 +1194,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\xe \v mc::gfx::Image\:getTexture}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b ogl::Texture}& mc::gfx::GraphicsEntity::getTexture () const{\f2 [inherited]}}}
+const {\b ogl::Texture}& mc::gfx::Image::getTexture () const}}
 \par
-{\bkmkstart AAAAAAABDE}
-{\bkmkend AAAAAAABDE}
+{\bkmkstart AAAAAAABEZ}
+{\bkmkend AAAAAAABEZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1275,8 +1207,8 @@ const {\b ogl::Texture}& mc::gfx::GraphicsEntity::getTexture () const{\f2 [inher
 {\b 
 {\b TransformMatrix}& mc::gfx::Entity::getTransformation (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAO}
-{\bkmkend AAAAAAABAO}
+{\bkmkstart AAAAAAABBJ}
+{\bkmkend AAAAAAABBJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1292,8 +1224,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const {\b TransformMatrix}& mc::gfx::Entity::getTransformation () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAP}
-{\bkmkend AAAAAAABAP}
+{\bkmkstart AAAAAAABBK}
+{\bkmkend AAAAAAABBK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1303,8 +1235,8 @@ const {\b TransformMatrix}& mc::gfx::Entity::getTransformation () const{\f2 [inh
 {\b 
 float& mc::gfx::Entity::getWidth (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAS}
-{\bkmkend AAAAAAABAS}
+{\bkmkstart AAAAAAABBN}
+{\bkmkend AAAAAAABBN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1320,8 +1252,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const float& mc::gfx::Entity::getWidth () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAT}
-{\bkmkend AAAAAAABAT}
+{\bkmkstart AAAAAAABBO}
+{\bkmkend AAAAAAABBO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1331,8 +1263,8 @@ const float& mc::gfx::Entity::getWidth () const{\f2 [inherited]}}}
 {\b 
 float& mc::gfx::Entity::getX (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAU}
-{\bkmkend AAAAAAABAU}
+{\bkmkstart AAAAAAABBP}
+{\bkmkend AAAAAAABBP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1348,8 +1280,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const float& mc::gfx::Entity::getX () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAV}
-{\bkmkend AAAAAAABAV}
+{\bkmkstart AAAAAAABBQ}
+{\bkmkend AAAAAAABBQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1359,8 +1291,8 @@ const float& mc::gfx::Entity::getX () const{\f2 [inherited]}}}
 {\b 
 float& mc::gfx::Entity::getY (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAW}
-{\bkmkend AAAAAAABAW}
+{\bkmkstart AAAAAAABBR}
+{\bkmkend AAAAAAABBR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1376,8 +1308,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 const float& mc::gfx::Entity::getY () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAX}
-{\bkmkend AAAAAAABAX}
+{\bkmkstart AAAAAAABBS}
+{\bkmkend AAAAAAABBS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1387,8 +1319,8 @@ const float& mc::gfx::Entity::getY () const{\f2 [inherited]}}}
 {\b 
 bool mc::gfx::Entity::hasChild ({\b Entity} &  {\i e}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAY}
-{\bkmkend AAAAAAABAY}
+{\bkmkstart AAAAAAABBT}
+{\bkmkend AAAAAAABBT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1417,8 +1349,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b in
 {\b 
 bool mc::gfx::Entity::hasParent () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABAZ}
-{\bkmkend AAAAAAABAZ}
+{\bkmkstart AAAAAAABBU}
+{\bkmkend AAAAAAABBU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1428,8 +1360,8 @@ bool mc::gfx::Entity::hasParent () const{\f2 [inherited]}}}
 {\b 
 int mc::gfx::Entity::indexOf (const {\b Entity} &  {\i e}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBA}
-{\bkmkend AAAAAAABBA}
+{\bkmkstart AAAAAAABBV}
+{\bkmkend AAAAAAABBV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1457,10 +1389,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b op
 {\xe \v mc::gfx::Image\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::GraphicsEntity::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::GraphicsEntity::init (){\f2 [final]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBC}
-{\bkmkend AAAAAAABBC}
+{\bkmkstart AAAAAAABBX}
+{\bkmkend AAAAAAABBX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1468,8 +1400,8 @@ void mc::gfx::GraphicsEntity::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [in
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.init()}}  is called. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b customInit()}}  \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customInit()}}  \par
+Calls {\f2 {\b onInit()}}  \par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onInit()}}  \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -1492,38 +1424,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v kill\:mc::gfx::Image}
-{\xe \v mc::gfx::Image\:kill}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::kill (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABBD}
-{\bkmkend AAAAAAABBD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Automatically called when {\f2 Entity::PROPERTY_DEAD}  is true. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes this entity from it's parent, and calls it's {\f2 {\b destroy()}}  method. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-{\b getParent()} \par
-}}}
 {\xe \v makeDirty\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:makeDirty}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 void mc::gfx::Entity::makeDirty (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBE}
-{\bkmkend AAAAAAABBE}
+{\bkmkstart AAAAAAABBY}
+{\bkmkend AAAAAAABBY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1537,14 +1447,174 @@ Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will 
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
 }}}
+{\xe \v onClean\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:onClean}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Entity::onClean (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABBZ}
+{\bkmkend AAAAAAABBZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v onDestroy\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:onDestroy}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Image::onDestroy (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABDS}
+{\bkmkend AAAAAAABDS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b onDestroy()}}  is called on all of it's children. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::destroy()} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v onInit\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:onInit}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Image::onInit (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABDU}
+{\bkmkend AAAAAAABDU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+When {\f2 {\b Entity.init()}}  is called, {\f2 {\b onInit()}}  is called on all of it's children. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::init()} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCD \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v onRender\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:onRender}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Image::onRender (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABDW}
+{\bkmkend AAAAAAABDW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+When {\f2 {\b Entity.render()}}  is called, {\f2 {\b onRender()}}  is called on all of it's children. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v onUpdate\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:onUpdate}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Image::onUpdate (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABDY}
+{\bkmkend AAAAAAABDY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+When {\f2 {\b Entity.update()}}  is called, {\f2 {\b onUpdate()}}  is called on all of it's children. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b System::update()} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}}{
+Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v operator!=\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:operator!=}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Image::operator!= (const {\b Image} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABFA}
+{\bkmkend AAAAAAABFA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
 {\xe \v operator!=\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 bool mc::gfx::Entity::operator!= (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBF}
-{\bkmkend AAAAAAABBF}
+{\bkmkstart AAAAAAABCI}
+{\bkmkend AAAAAAABCI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1576,8 +1646,19 @@ operator== \par
 {\b 
 bool mc::gfx::GraphicsEntity::operator!= (const {\b GraphicsEntity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDF}
-{\bkmkend AAAAAAABDF}
+{\bkmkstart AAAAAAABEH}
+{\bkmkend AAAAAAABEH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator==\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:operator==}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Image::operator== (const {\b Image} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABFB}
+{\bkmkend AAAAAAABFB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1587,8 +1668,8 @@ bool mc::gfx::GraphicsEntity::operator!= (const {\b GraphicsEntity} &  {\i other
 {\b 
 bool mc::gfx::Entity::operator== (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBG}
-{\bkmkend AAAAAAABBG}
+{\bkmkstart AAAAAAABCJ}
+{\bkmkend AAAAAAABCJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1620,8 +1701,8 @@ operator!= \par
 {\b 
 bool mc::gfx::GraphicsEntity::operator== (const {\b GraphicsEntity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDG}
-{\bkmkend AAAAAAABDG}
+{\bkmkstart AAAAAAABEI}
+{\bkmkend AAAAAAABEI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -1631,8 +1712,8 @@ bool mc::gfx::GraphicsEntity::operator== (const {\b GraphicsEntity} &  {\i other
 {\b 
 {\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBH}
-{\bkmkend AAAAAAABBH}
+{\bkmkstart AAAAAAABCK}
+{\bkmkend AAAAAAABCK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1662,8 +1743,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ge
 {\b 
 const {\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBI}
-{\bkmkend AAAAAAABBI}
+{\bkmkstart AAAAAAABCL}
+{\bkmkend AAAAAAABCL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1693,8 +1774,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b ge
 {\b 
 void mc::gfx::Entity::removeChild (const {\b Entity} &  {\i e}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBJ}
-{\bkmkend AAAAAAABBJ}
+{\bkmkstart AAAAAAABCM}
+{\bkmkend AAAAAAABCM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1734,8 +1815,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b re
 {\b 
 void mc::gfx::Entity::removeChild ({\b Index}  {\i index}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBK}
-{\bkmkend AAAAAAABBK}
+{\bkmkstart AAAAAAABCN}
+{\bkmkend AAAAAAABCN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1774,10 +1855,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b in
 {\xe \v mc::gfx::Image\:render}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::render (){\f2 [inherited]}}}
+virtual void mc::gfx::Entity::render (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBL}
-{\bkmkend AAAAAAABBL}
+{\bkmkstart AAAAAAABCO}
+{\bkmkend AAAAAAABCO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1785,7 +1866,7 @@ void mc::gfx::Entity::render (){\f2 [inherited]}}}
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customRender()}}  \par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onRender()}}  \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -1806,8 +1887,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::reset (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBM}
-{\bkmkend AAAAAAABBM}
+{\bkmkstart AAAAAAABCP}
+{\bkmkend AAAAAAABCP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1823,8 +1904,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 {\b Entity}& mc::gfx::Entity::rotate (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBN}
-{\bkmkend AAAAAAABBN}
+{\bkmkstart AAAAAAABCQ}
+{\bkmkend AAAAAAABCQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1840,8 +1921,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 {\b Entity}& mc::gfx::Entity::scale (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBO}
-{\bkmkend AAAAAAABBO}
+{\bkmkstart AAAAAAABCR}
+{\bkmkend AAAAAAABCR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1857,8 +1938,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::GraphicsEntity::setBuffer (const {\b ogl::UniformBuffer} &  {\i newBuffer}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDH}
-{\bkmkend AAAAAAABDH}
+{\bkmkstart AAAAAAABEJ}
+{\bkmkend AAAAAAABEJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1874,8 +1955,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::setHeight (const float &  {\i s}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBQ}
-{\bkmkend AAAAAAABBQ}
+{\bkmkstart AAAAAAABCT}
+{\bkmkend AAAAAAABCT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1891,8 +1972,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::GraphicsEntity::setOpacity (const float  {\i f}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDI}
-{\bkmkend AAAAAAABDI}
+{\bkmkstart AAAAAAABEK}
+{\bkmkend AAAAAAABEK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1908,8 +1989,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::GraphicsEntity::setPaint (const {\b Color} &  {\i c}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABDJ}
-{\bkmkend AAAAAAABDJ}
+{\bkmkstart AAAAAAABEL}
+{\bkmkend AAAAAAABEL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -1925,8 +2006,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::setProperties ({\b EntityProperties} &  {\i b}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBS}
-{\bkmkend AAAAAAABBS}
+{\bkmkstart AAAAAAABCV}
+{\bkmkend AAAAAAABCV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1959,8 +2040,8 @@ setProperty(Index, bool) \par
 {\b 
 void mc::gfx::Entity::setProperty (const {\b Byte}  {\i position}, const bool  {\i value}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBT}
-{\bkmkend AAAAAAABBT}
+{\bkmkstart AAAAAAABCW}
+{\bkmkend AAAAAAABCW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1997,10 +2078,10 @@ setProperties(ByteField&) \par
 {\xe \v mc::gfx::Image\:setTexture}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::GraphicsEntity::setTexture ({\b ogl::Texture} &  {\i tex}){\f2 [inherited]}}}
+void mc::gfx::Image::setTexture ({\b ogl::Texture} &  {\i tex})}}
 \par
-{\bkmkstart AAAAAAABDK}
-{\bkmkend AAAAAAABDK}
+{\bkmkstart AAAAAAABFC}
+{\bkmkend AAAAAAABFC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2016,8 +2097,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::setTransformation ({\b TransformMatrix} &  {\i trans}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBV}
-{\bkmkend AAAAAAABBV}
+{\bkmkstart AAAAAAABCY}
+{\bkmkend AAAAAAABCY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2033,8 +2114,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::setWidth (const float &  {\i s}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBX}
-{\bkmkend AAAAAAABBX}
+{\bkmkstart AAAAAAABDA}
+{\bkmkend AAAAAAABDA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2050,8 +2131,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::setX (const float &  {\i newX}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBY}
-{\bkmkend AAAAAAABBY}
+{\bkmkstart AAAAAAABDB}
+{\bkmkend AAAAAAABDB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2067,8 +2148,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 void mc::gfx::Entity::setY (const float &  {\i newY}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABBZ}
-{\bkmkend AAAAAAABBZ}
+{\bkmkstart AAAAAAABDC}
+{\bkmkend AAAAAAABDC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2084,8 +2165,8 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\b 
 {\b Size} mc::gfx::Entity::size () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCA}
-{\bkmkend AAAAAAABCA}
+{\bkmkstart AAAAAAABDD}
+{\bkmkend AAAAAAABDD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -2103,8 +2184,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Size of
 {\b 
 {\b Entity}& mc::gfx::Entity::translate (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCB}
-{\bkmkend AAAAAAABCB}
+{\bkmkstart AAAAAAABDE}
+{\bkmkend AAAAAAABDE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2118,10 +2199,10 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b En
 {\xe \v mc::gfx::Image\:update}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::update (){\f2 [inherited]}}}
+virtual void mc::gfx::Entity::update (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCC}
-{\bkmkend AAAAAAABCC}
+{\bkmkstart AAAAAAABDF}
+{\bkmkend AAAAAAABDF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -2129,8 +2210,8 @@ void mc::gfx::Entity::update (){\f2 [inherited]}}}
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Should be called a by {\f2 {\b Entity}}  when {\f2 {\b System.update()}}  is called. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b customUpdate()}} . \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b customUpdate()}}  {\par
+Calls {\f2 {\b onUpdate()}} . \par
+Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onUpdate()}}  {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
@@ -2140,7 +2221,27 @@ Exceptions:\par}
 {{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
 {\row }
 }
-}}
+}{
+Reimplemented in {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAXD \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Friends And Related Function Documentation\par
+\pard\plain 
+{\xe \v RenderProtocol< Image >\:mc::gfx::Image}
+{\xe \v mc::gfx::Image\:RenderProtocol< Image >}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+friend class {\b RenderProtocol}< {\b Image} >{\f2 [friend]}}}
+\par
+{\bkmkstart AAAAAAABFD}
+{\bkmkend AAAAAAABFD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 59 of file Entity2D.h.}\par
+}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
@@ -2151,8 +2252,8 @@ Member Data Documentation\par
 {\b 
 std::vector<{\b Entity}*> mc::gfx::Entity::children = std::vector<{\b Entity}*>(){\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCD}
-{\bkmkend AAAAAAABCD}
+{\bkmkstart AAAAAAABDG}
+{\bkmkend AAAAAAABDG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -2164,7 +2265,7 @@ Use of this variable directly is unrecommended. Use {\f2 {\b addChild()}}  or {\
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
 }}{
-Definition at line 488 of file Entity.h.}\par
+Definition at line 537 of file Entity.h.}\par
 }
 {\xe \v transformation\:mc::gfx::Image}
 {\xe \v mc::gfx::Image\:transformation}
@@ -2172,8 +2273,8 @@ Definition at line 488 of file Entity.h.}\par
 {\b 
 {\b TransformMatrix} mc::gfx::Entity::transformation{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABCE}
-{\bkmkend AAAAAAABCE}
+{\bkmkstart AAAAAAABDH}
+{\bkmkend AAAAAAABDH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -2181,7 +2282,7 @@ Definition at line 488 of file Entity.h.}\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
 }}{
-Definition at line 493 of file Entity.h.}\par
+Definition at line 542 of file Entity.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

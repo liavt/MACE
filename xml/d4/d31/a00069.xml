@@ -1,1480 +1,247 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d4/d31/a00069" kind="namespace" language="C++">
-    <compoundname>mc::math</compoundname>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="d4/d31/a00069_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::pi</definition>
-        <argsstring>()</argsstring>
-        <name>pi</name>
+  <compounddef id="d4/d31/a00069" kind="file" language="C++">
+    <compoundname>Math.h</compoundname>
+    <includes refid="db/df8/a00076" local="no">MACE/Utility/Vector.h</includes>
+    <includedby refid="db/df8/a00076" local="no">include/MACE/Utility/Vector.h</includedby>
+    <includedby refid="d9/da5/a00075" local="no">include/MACE/Utility/Utility.h</includedby>
+    <incdepgraph>
+      <node id="285">
+        <label>cstdint</label>
+      </node>
+      <node id="286">
+        <label>stdexcept</label>
+      </node>
+      <node id="284">
+        <label>MACE/System/Constants.h</label>
+        <link refid="df/d5f/a00064_source"/>
+        <childnode refid="285" relation="include">
+        </childnode>
+        <childnode refid="286" relation="include">
+        </childnode>
+      </node>
+      <node id="288">
+        <label>ostream</label>
+      </node>
+      <node id="283">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="db/df8/a00076_source"/>
+        <childnode refid="284" relation="include">
+        </childnode>
+        <childnode refid="282" relation="include">
+        </childnode>
+        <childnode refid="287" relation="include">
+        </childnode>
+        <childnode refid="288" relation="include">
+        </childnode>
+        <childnode refid="289" relation="include">
+        </childnode>
+      </node>
+      <node id="287">
+        <label>array</label>
+      </node>
+      <node id="282">
+        <label>include/MACE/Utility/Math.h</label>
+        <link refid="Math.h"/>
+        <childnode refid="283" relation="include">
+        </childnode>
+      </node>
+      <node id="289">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="301">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="d9/da5/a00075_source"/>
+        <childnode refid="297" relation="include">
+        </childnode>
+      </node>
+      <node id="300">
+        <label>include/MACE/Graphics/Window.h</label>
+        <link refid="df/d03/a00062_source"/>
+        <childnode refid="296" relation="include">
+        </childnode>
+        <childnode refid="299" relation="include">
+        </childnode>
+      </node>
+      <node id="297">
+        <label>include/MACE/MACE.h</label>
+        <link refid="d1/d6f/a00063_source"/>
+      </node>
+      <node id="299">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="d1/d84/a00052_source"/>
+        <childnode refid="298" relation="include">
+        </childnode>
+        <childnode refid="296" relation="include">
+        </childnode>
+      </node>
+      <node id="292">
+        <label>include/MACE/Utility/Matrix.h</label>
+        <link refid="d2/db1/a00070_source"/>
+        <childnode refid="293" relation="include">
+        </childnode>
+        <childnode refid="302" relation="include">
+        </childnode>
+        <childnode refid="303" relation="include">
+        </childnode>
+      </node>
+      <node id="296">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="d5/de0/a00050_source"/>
+        <childnode refid="297" relation="include">
+        </childnode>
+      </node>
+      <node id="303">
+        <label>include/MACE/Utility/MatrixAliases.h</label>
+        <link refid="d6/d2c/a00072_source"/>
+        <childnode refid="301" relation="include">
+        </childnode>
+      </node>
+      <node id="291">
+        <label>include/MACE/Utility/Vector.h</label>
+        <link refid="db/df8/a00076_source"/>
+        <childnode refid="292" relation="include">
+        </childnode>
+        <childnode refid="290" relation="include">
+        </childnode>
+        <childnode refid="302" relation="include">
+        </childnode>
+        <childnode refid="301" relation="include">
+        </childnode>
+        <childnode refid="303" relation="include">
+        </childnode>
+      </node>
+      <node id="295">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="d6/d2d/a00047_source"/>
+        <childnode refid="296" relation="include">
+        </childnode>
+      </node>
+      <node id="290">
+        <label>include/MACE/Utility/Math.h</label>
+        <link refid="Math.h"/>
+        <childnode refid="291" relation="include">
+        </childnode>
+        <childnode refid="301" relation="include">
+        </childnode>
+      </node>
+      <node id="298">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="d2/dee/a00049_source"/>
+        <childnode refid="296" relation="include">
+        </childnode>
+      </node>
+      <node id="293">
+        <label>include/MACE/Utility/Transform.h</label>
+        <link refid="db/db6/a00074_source"/>
+        <childnode refid="294" relation="include">
+        </childnode>
+        <childnode refid="301" relation="include">
+        </childnode>
+      </node>
+      <node id="302">
+        <label>include/MACE/Graphics/OGL.h</label>
+        <link refid="d2/d79/a00051_source"/>
+        <childnode refid="299" relation="include">
+        </childnode>
+        <childnode refid="296" relation="include">
+        </childnode>
+      </node>
+      <node id="294">
+        <label>include/MACE/Graphics/Entity.h</label>
+        <link refid="d4/dca/a00048_source"/>
+        <childnode refid="295" relation="include">
+        </childnode>
+        <childnode refid="298" relation="include">
+        </childnode>
+        <childnode refid="299" relation="include">
+        </childnode>
+        <childnode refid="296" relation="include">
+        </childnode>
+        <childnode refid="300" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="da/dec/a00080">mc</innernamespace>
+    <innernamespace refid="d0/d89/a00071">mc::math</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d4/d31/a00069_a66eae58710e11b47f2194588a50567f7_1a66eae58710e11b47f2194588a50567f7" prot="public" static="no">
+        <name>MACE_UTILITY_MATH_H</name>
         <briefdescription>
-<para>Calculates the mathmatical constant <computeroutput>pi</computeroutput>. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><computeroutput>Pi</computeroutput> is the ratio of a circle&apos;s circumfernce to it&apos;s diameter, always coming out to equal roughly 3.14, no matter the size of the circle. </para><para>It is located here as a <computeroutput>long double</computeroutput> to have the most possible digits. <simplesect kind="return"><para>Pi </para></simplesect>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="27" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_aa14a0de605cdb48db7525a542bcbac64_1aa14a0de605cdb48db7525a542bcbac64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::tau</definition>
-        <argsstring>()</argsstring>
-        <name>tau</name>
-        <briefdescription>
-<para>Calculates the mathmatical constant <computeroutput>tau</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para><computeroutput>Tau</computeroutput> is known as <computeroutput>2pi</computeroutput> and represents the full turn of a circle. It also represents 6.28 radians, a full circle, equal to 360 degrees. <simplesect kind="return"><para>Tau </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" kindref="member">toRadians()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="34" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a4ed92aa582855134db34180b30b4626b_1a4ed92aa582855134db34180b30b4626b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::gamma</definition>
-        <argsstring>()</argsstring>
-        <name>gamma</name>
-        <briefdescription>
-<para>Calculates the mathmatical constant represented by <computeroutput>gamma</computeroutput>, or the `Euler–Mascheroni constant. </para>        </briefdescription>
-        <detaileddescription>
-<para><computeroutput>Gamma is used in number theory and analysis. @return The</computeroutput>Euler–Mascheroni constant` </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="40" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a5befd79b41cbf0e5e5b08f452e56aac2_1a5befd79b41cbf0e5e5b08f452e56aac2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::e</definition>
-        <argsstring>()</argsstring>
-        <name>e</name>
-        <briefdescription>
-<para>Calculates the mathmatical constant known as <computeroutput>Eulers Number,</computeroutput> or <computeroutput>e</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para><computeroutput>E</computeroutput> is used as the base for the natural logarithim. <simplesect kind="return"><para><computeroutput>Eulers Number</computeroutput> </para></simplesect>
-<simplesect kind="see"><para>logn(double); </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="47" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a3012b8cabf72e8a9c7587d6e7cbf2933_1a3012b8cabf72e8a9c7587d6e7cbf2933" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::root2</definition>
-        <argsstring>()</argsstring>
-        <name>root2</name>
-        <briefdescription>
-<para>Calculates the square root of 2, also known as the <computeroutput>principal square root of 2</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>This number when multiplied by itself returns 2. It is used in trigonometry. <simplesect kind="return"><para>Square root of 2 </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="53" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a403cc4a12c80482af028d90cdec8284c_1a403cc4a12c80482af028d90cdec8284c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::root3</definition>
-        <argsstring>()</argsstring>
-        <name>root3</name>
-        <briefdescription>
-<para>Calculates the square root of 3, also known as the <computeroutput>principal square root of 3</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>This number when multiplied by itself returns 3. It is used in geometery and trigonometry. <simplesect kind="return"><para>Square root of 3 </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="59" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a8b04d5f2c0675d6678d9e5e2ff84ad42_1a8b04d5f2c0675d6678d9e5e2ff84ad42" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::root5</definition>
-        <argsstring>()</argsstring>
-        <name>root5</name>
-        <briefdescription>
-<para>Calculates the square root of 5, also known as the <computeroutput>principal square root of 5</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>This number when multiplied by itself returns 5. It is used in geometery and trigonometry. <simplesect kind="return"><para>Square root of 5 </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="65" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a94fbffd48dac845ff382ae7de18b0306_1a94fbffd48dac845ff382ae7de18b0306" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long double</type>
-        <definition>long double mc::math::phi</definition>
-        <argsstring>()</argsstring>
-        <name>phi</name>
-        <briefdescription>
-<para>Calculates the golden ratio, also represented by <computeroutput>phi</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="70" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a504106941c2d9d5309889b12a48722c0_1a504106941c2d9d5309889b12a48722c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>double</type>
-        <definition>double mc::math::abs</definition>
-        <argsstring>(const double value)</argsstring>
-        <name>abs</name>
-        <param>
-          <type>const double</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Gets the absolute value of a number. </para>        </briefdescription>
-        <detaileddescription>
-<para>The absolute value is the unsigned version of a number. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number that is either negative or positive </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>|value|</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="77" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::math::ceil</definition>
-        <argsstring>(const double value)</argsstring>
-        <name>ceil</name>
-        <param>
-          <type>const double</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>&quot;Ceils&quot; a number, or rounds it up. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to ceil </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>value,</computeroutput> but rounded up. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" kindref="member">floor(const double)</ref> </para></simplesect>
-<simplesect kind="see"><para>round(const double) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="86" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::math::floor</definition>
-        <argsstring>(const double value)</argsstring>
-        <name>floor</name>
-        <param>
-          <type>const double</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>&quot;Floors&quot; a number, or rounds it down. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to floor </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>value,</computeroutput> but rounded down. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" kindref="member">ceil(const double)</ref> </para></simplesect>
-<simplesect kind="see"><para>round(const double) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="96" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a61ac68996d847d2c8b01865714480a59_1a61ac68996d847d2c8b01865714480a59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::math::isPrime</definition>
-        <argsstring>(const int value)</argsstring>
-        <name>isPrime</name>
-        <param>
-          <type>const int</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Verifies whether a number is prime. </para>        </briefdescription>
-        <detaileddescription>
-<para>A prime number is one that&apos;s only factors are one and itself. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to check if prime </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if the number is prime, <computeroutput>false</computeroutput> otherwise </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="103" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::math::isEven</definition>
-        <argsstring>(const int value)</argsstring>
-        <name>isEven</name>
-        <param>
-          <type>const int</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Checks if a number is even. </para>        </briefdescription>
-        <detaileddescription>
-<para>An even number is one that is divisable by 2. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to check if even </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput>value</computeroutput> is divisable by 2, <computeroutput>false</computeroutput> otherwise </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" kindref="member">isOdd(const int)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="111" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::math::isOdd</definition>
-        <argsstring>(const int value)</argsstring>
-        <name>isOdd</name>
-        <param>
-          <type>const int</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Checks if a number is odd. </para>        </briefdescription>
-        <detaileddescription>
-<para>An odd number is one that is not divisable by 2. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to check if odd </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput>value</computeroutput> is not divisable by 2, <computeroutput>false</computeroutput> otherwise </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" kindref="member">isEven(const int)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="118" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a45b58ebbe8267f90c859e692e253af23_1a45b58ebbe8267f90c859e692e253af23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>double</type>
-        <definition>double mc::math::pow</definition>
-        <argsstring>(const double value, const int power)</argsstring>
-        <name>pow</name>
-        <param>
-          <type>const double</type>
-          <declname>value</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>power</declname>
-        </param>
-        <briefdescription>
-<para>Calculates a number to an exponenet, or <computeroutput>value^power</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Base number </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>power</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The exponent </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>value^power</computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr(const double)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube(const double)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="128" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>double</type>
-        <definition>double mc::math::sqr</definition>
-        <argsstring>(const double value)</argsstring>
-        <name>sqr</name>
-        <param>
-          <type>const double</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Squares a number. </para>        </briefdescription>
-        <detaileddescription>
-<para>Squaring a number equals a number times iteslf. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to square </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>value^2</computeroutput> or <computeroutput>value*value</computeroutput> </para></simplesect>
-<simplesect kind="see"><para>pow(const double, const double) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube(const double)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="137" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>double</type>
-        <definition>double mc::math::cube</definition>
-        <argsstring>(const double value)</argsstring>
-        <name>cube</name>
-        <param>
-          <type>const double</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Cubes a number. </para>        </briefdescription>
-        <detaileddescription>
-<para>Cubing a number is equal to itself to the power of 3. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Number to cube </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>value^3</computeroutput> or <computeroutput>value*value*value</computeroutput> </para></simplesect>
-<simplesect kind="see"><para>pow(const double, const double) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr(const double)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="146" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>double</type>
-        <definition>double mc::math::toRadians</definition>
-        <argsstring>(const double degrees)</argsstring>
-        <name>toRadians</name>
-        <param>
-          <type>const double</type>
-          <declname>degrees</declname>
-        </param>
-        <briefdescription>
-<para>Conversion of degreees to radians. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>degrees</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>An angle in degrees </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The same number represented as radians </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="154" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_aac7930263e025b720ac6033de95f7711_1aac7930263e025b720ac6033de95f7711" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>double</type>
-        <definition>double mc::math::toDegrees</definition>
-        <argsstring>(const double radians)</argsstring>
-        <name>toDegrees</name>
-        <param>
-          <type>const double</type>
-          <declname>radians</declname>
-        </param>
-        <briefdescription>
-<para>Conversion of radians to degrees. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>radians</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>An angle in radians </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The same number represented as degrees </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Math.h" line="162" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt;</type>
-        <definition>Matrix&lt; T, N, N &gt; mc::math::inverse</definition>
-        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;matrix)</argsstring>
-        <name>inverse</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
-          <defname>matrix</defname>
-        </param>
-        <briefdescription>
-<para>Inverses a <computeroutput>N</computeroutput> by <computeroutput>N</computeroutput> <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>An inversed <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> times a normal <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> equals the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para><para>Not to be confused with <computeroutput><ref refid="d4/d31/a00069_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" kindref="member">tr()</ref></computeroutput> </para><para>If <computeroutput>T</computeroutput> is not a floating point type, the output may not work, as it will round. </para><para>The output is calculated via the Caley-Hamilton theorum (<ulink url="https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem">https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem</ulink>) <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>matrix</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to invert </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The inverse of <computeroutput>matrix</computeroutput> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Order of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<xrefsect id="d7/d46/a00002_1_bug000004"><xreftitle>Bug</xreftitle><xrefdescription><para>Matrices bigger then 2x2 dont work </para></xrefdescription></xrefsect></para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="31" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="612" bodyend="617"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>W</declname>
-            <defname>W</defname>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>H</declname>
-            <defname>H</defname>
-          </param>
-        </templateparamlist>
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, H, W &gt;</type>
-        <definition>Matrix&lt;T, H, W&gt; mc::math::transpose</definition>
-        <argsstring>(const Matrix&lt; T, W, H &gt; &amp;matrix)</argsstring>
-        <name>transpose</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, W, H &gt; &amp;</type>
-          <declname>matrix</declname>
-        </param>
-        <briefdescription>
-<para>Transposes a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>Transposing a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> creates a reflection of it, where every row is a column. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>matrix</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to transpose </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A reflected <computeroutput>matrix</computeroutput> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>W</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Width of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>H</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Height of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="492" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="492" bodyend="500"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-        </templateparamlist>
-        <type>T</type>
-        <definition>T mc::math::det</definition>
-        <argsstring>(const Matrix&lt; T, 2, 2 &gt; &amp;matrix)</argsstring>
-        <name>det</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, 2, 2 &gt; &amp;</type>
-          <declname>matrix</declname>
-        </param>
-        <briefdescription>
-<para>Calculates the determinate of a 2x2 <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>matrix</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A square 2x2 <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to find the determinate of </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The determinate of <computeroutput>matrix</computeroutput> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="509" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="509" bodyend="511"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_ad0b604c0b56449aa4e2cb9c231e7d7ec_1ad0b604c0b56449aa4e2cb9c231e7d7ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type>T</type>
-        <definition>T mc::math::det</definition>
-        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;matrix)</argsstring>
-        <name>det</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
-          <declname>matrix</declname>
-        </param>
-        <briefdescription>
-<para>Calculates the determinate of a any sized <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>matrix</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A square <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to find the determinate of </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The determinate of <computeroutput>matrix</computeroutput> </para></simplesect>
-<xrefsect id="d7/d46/a00002_1_bug000003"><xreftitle>Bug</xreftitle><xrefdescription><para>Array subscript out of range with matrices bigger than 2x2 </para></xrefdescription></xrefsect><parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="522" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="522" bodyend="552"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a9fee5fdc1337ff82c34f77e518906d41_1a9fee5fdc1337ff82c34f77e518906d41" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type>T</type>
-        <definition>T mc::math::tr</definition>
-        <argsstring>(const Matrix&lt; T, N, N &gt; &amp;m)</argsstring>
-        <name>tr</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <briefdescription>
-<para>Calculates the trace of a <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>. </para>        </briefdescription>
-        <detaileddescription>
-<para>The trace is the sum of all of the diagonal elements of a <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput>. </para><para>The trace is related to the derivative of a <ref refid="d4/d31/a00069_afaa8e2c785ad0a435935b894dd101375_1afaa8e2c785ad0a435935b894dd101375" kindref="member">determinate.</ref> </para><para>Not to be confused with <computeroutput><ref refid="d4/d31/a00069_a14f6c091b327dcf9f031bd21c550de5b_1a14f6c091b327dcf9f031bd21c550de5b" kindref="member">transpose(const Matrix&amp;)</ref>)</computeroutput> <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> to calculate the trace of </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The sum of the diagonal elements of <computeroutput>m</computeroutput> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_ad9cfc6fbc58467d9a9522d4c8f9d7220_1ad9cfc6fbc58467d9a9522d4c8f9d7220" kindref="member">inverse(const Matrix&lt;T,N,N&gt;&amp;)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="567" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="567" bodyend="574"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a80edefaa133d7673d8023b612a5925a2_1a80edefaa133d7673d8023b612a5925a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; T, N, N &gt;</type>
-        <definition>Matrix&lt;T, N, N&gt; mc::math::identity</definition>
-        <argsstring>()</argsstring>
-        <name>identity</name>
-        <briefdescription>
-<para>Creates an indentity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> of a certain size. </para>        </briefdescription>
-        <detaileddescription>
-<para>An identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> times another <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> equals the same <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> <simplesect kind="return"><para>An indentity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> whose diagonal elements are <computeroutput>1</computeroutput> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the identity <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Matrix.h" line="583" column="1" bodyfile="include/MACE/Utility/Matrix.h" bodystart="583" bodyend="595"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a2cf39b1a5b7554e6d140a9c3c3041212_1a2cf39b1a5b7554e6d140a9c3c3041212" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float,4, 4&gt; mc::math::rotate</definition>
-        <argsstring>(const float x, const float y, const float z)</argsstring>
-        <name>rotate</name>
-        <param>
-          <type>const float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
-        </param>
-        <briefdescription>
-<para>Creates a rotation matrix, which when multiplied by a <computeroutput>Vector4f</computeroutput>, rotates it. </para>        </briefdescription>
-        <detaileddescription>
-<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>x</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Rotation in radians around the X axis </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Rotation in radians around the Y axis </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Rotation in radians around the Z axis </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A rotation <computeroutput>Matrix4f</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="28" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a51931dc3e83f5ecdc7262b3974ef6fc5_1a51931dc3e83f5ecdc7262b3974ef6fc5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
-        <argsstring>(const Vector&lt; float, 3 &gt; &amp;v)</argsstring>
-        <name>rotate</name>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; float, 3 &gt; &amp;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-<para>Creates a rotation matrix, which when multiplied by a <computeroutput>Vector4f</computeroutput>, rotates it. </para>        </briefdescription>
-        <detaileddescription>
-<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>v</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A quaternion representing a rotation </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="36" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a9d5c92e8301c849af62f6b721eee13e9_1a9d5c92e8301c849af62f6b721eee13e9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
-        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const Vector&lt; float, 3 &gt; &amp;v)</argsstring>
-        <name>rotate</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; float, 3 &gt; &amp;</type>
-          <declname>v</declname>
-        </param>
-        <briefdescription>
-<para>Rotates an existing <computeroutput>Matrix4f</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>v</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A quaternion representing a rotation </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><computeroutput>Matrix4f</computeroutput> base to rotate </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="43" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a6acf4ae84e8f65be0237c23d4bb07b72_1a6acf4ae84e8f65be0237c23d4bb07b72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::rotate</definition>
-        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
-        <name>rotate</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
-        </param>
-        <briefdescription>
-<para>Rotates an existing <computeroutput>Matrix4f</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A <computeroutput>Matrix4f</computeroutput> to rotate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>x</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Rotation in radians around the X axis </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Rotation in radians around the Y axis </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Rotation in radians around the Z axis </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A rotated <computeroutput>Matrix4f</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="52" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_abd992f7c72bfd0f63282550deace7a6d_1abd992f7c72bfd0f63282550deace7a6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::scale</definition>
-        <argsstring>(const float x, const float y, const float z)</argsstring>
-        <name>scale</name>
-        <param>
-          <type>const float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
-        </param>
-        <briefdescription>
-<para>Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values. </para>        </briefdescription>
-        <detaileddescription>
-<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>x</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale the X coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale the Y coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale the Z coordinate </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is scaled based on the supplied values </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="63" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_ad022fe23efde75d0dc744534635cbda0_1ad022fe23efde75d0dc744534635cbda0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::scale</definition>
-        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
-        <name>scale</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
-        </param>
-        <briefdescription>
-<para>Scales an existing transformation matrix. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The base <computeroutput>Matrix4f</computeroutput> to get scaled </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>x</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale the X coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale the Y coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale the Z coordinate </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is scaled based on the supplied values </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="72" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a65116d02abed05f10cd80a9d89496a18_1a65116d02abed05f10cd80a9d89496a18" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::translate</definition>
-        <argsstring>(const float x, const float y, const float z)</argsstring>
-        <name>translate</name>
-        <param>
-          <type>const float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
-        </param>
-        <briefdescription>
-<para>Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values. </para>        </briefdescription>
-        <detaileddescription>
-<para>The base <computeroutput>Matrix4f</computeroutput> is an identity matrix <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>x</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate the X coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate the Y coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate the Z coordinate </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is translated based on the supplied values </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="83" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_aeb201f7e27dce203cb52d274ca27262b_1aeb201f7e27dce203cb52d274ca27262b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::translate</definition>
-        <argsstring>(const Matrix&lt; float, 4, 4 &gt; &amp;m, const float x, const float y, const float z)</argsstring>
-        <name>translate</name>
-        <param>
-          <type>const <ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt; &amp;</type>
-          <declname>m</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
-        </param>
-        <briefdescription>
-<para>Translates an existing transformation matrix. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>m</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The base <computeroutput>Matrix4f</computeroutput> to get translated </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>x</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate the X coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate the Y coordinate </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate the Z coordinate </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A <computeroutput>Matrix4f</computeroutput> that is translated based on the supplied values </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="92" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::projection</definition>
-        <argsstring>(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio)</argsstring>
-        <name>projection</name>
-        <param>
-          <type>const float</type>
-          <declname>FOV</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>NEAR_PLANE</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>FAR_PLANE</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>aspectRatio</declname>
-        </param>
-        <briefdescription>
-<para>Generates a projection matrix based on values. </para>        </briefdescription>
-        <detaileddescription>
-<para>Each time the window changes size, you need to regenerate your projection matrix </para><para>Projection matrices are used in 3D graphics. Vectors multiplied by a projection matrix are transformed to &quot;look&quot; 3-dimensional. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>FOV</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The field of vision, in degrees </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>NEAR_PLANE</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A <computeroutput>float</computeroutput> representing the near clipping plane. Z values lower than this are not visible to the viewer </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>FAR_PLANE</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A <computeroutput>float</computeroutput> representing the far clipping plane. Z values higher than this are not visible to the viewer </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>aspectRatio</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The aspect ratio of the screen. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A projection matrix made from the specified settings </para></simplesect>
-<simplesect kind="see"><para>ortho(const float, const float, const float, const float, const float) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="105" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a6d5b57499cae06fda4e86d95258b1c2c_1a6d5b57499cae06fda4e86d95258b1c2c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::math::ortho</definition>
-        <argsstring>(const float left, const float right, const float bottom, const float top, const float near, const float far)</argsstring>
-        <name>ortho</name>
-        <param>
-          <type>const float</type>
-          <declname>left</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>right</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>bottom</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>top</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>near</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>far</declname>
-        </param>
-        <briefdescription>
-<para>Generates an orthographic projection matrix. </para>        </briefdescription>
-        <detaileddescription>
-<para>As opposed to a standard projection matrix, vectors in an orthographic projection don&apos;t become smaller the farther away they are. When combined with a rotational matrix, it can create an isometric view, which is used extensively in games like Simcity. Isometric views are also used heavily in 3D modeling software to represent the dimensions of an object.In a 2D environment, an orthographic projection matrix can be used to scale the screen. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>left</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The left plane of the orthographic projection </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>right</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The right plane of the orthographic projection </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>bottom</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The bottom plane of the orthographic projection </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>top</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The top plane of the orthographic projection </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>near</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The near plane of the orthographic projection </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>far</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The far plane of the orthographic projection </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>An ortographic projection matrix generated from the values. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_afd08f8712921d537bd4942efae45a14f_1afd08f8712921d537bd4942efae45a14f" kindref="member">projection(const float, const float, const float, const float)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="117" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a2afa253e79730670dfb6298d282236b5_1a2afa253e79730670dfb6298d282236b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-        </templateparamlist>
-        <type><ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, 3 &gt;</type>
-        <definition>Vector&lt;T, 3&gt; mc::math::cross</definition>
-        <argsstring>(const Vector&lt; T, 3 &gt; &amp;a, const Vector&lt; T, 3 &gt; &amp;b)</argsstring>
-        <name>cross</name>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-<para>Calculates the cross product of 2 <computeroutput>Vectors</computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>The <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> must be 3-dimensional. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>a</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>First <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>b</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Second <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A vector calculated from the cross product of <computeroutput>a</computeroutput> and <computeroutput>b</computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Vector.h" line="552" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="552" bodyend="555"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type>T</type>
-        <definition>T mc::math::dot</definition>
-        <argsstring>(const Vector&lt; T, N &gt; &amp;a, const Vector&lt; T, N &gt; &amp;b)</argsstring>
-        <name>dot</name>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
-          <declname>a</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-<para>Calculates the dot product of 2 <computeroutput>Vectors</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>a</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>First <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to use </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>b</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Second <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to use </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A scalar calculated from the dot product of <computeroutput>a</computeroutput> and <computeroutput>b</computeroutput> </para></simplesect>
-<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Vector.h" line="568" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="568" bodyend="570"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type>T</type>
-        <definition>T mc::math::magnitude</definition>
-        <argsstring>(const Vector&lt; T, N &gt; &amp;a)</argsstring>
-        <name>magnitude</name>
-        <param>
-          <type>const <ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
-          <declname>a</declname>
-        </param>
-        <briefdescription>
-<para>Calculates the magnitude of a <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput>, or how long it is. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>a</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to calculate from </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>The magnitude of <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref> a</computeroutput> </para></simplesect>
-<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the <computeroutput>Vectors</computeroutput> being calculated. This does not need to be explicitely set. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Vector.h" line="582" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="582" bodyend="589"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/d31/a00069_ad11a3dbb6a8527a40a6fdd83fc654490_1ad11a3dbb6a8527a40a6fdd83fc654490" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-          <param>
-            <type>Size</type>
-            <declname>N</declname>
-            <defname>N</defname>
-          </param>
-        </templateparamlist>
-        <type><ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt;</type>
-        <definition>Vector&lt;T, N&gt; mc::math::normalize</definition>
-        <argsstring>(Vector&lt; T, N &gt; &amp;vector)</argsstring>
-        <name>normalize</name>
-        <param>
-          <type><ref refid="d5/db6/a00042" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
-          <declname>vector</declname>
-        </param>
-        <briefdescription>
-<para>Normalize a <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>A normalized <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> has a length of 1, and is also known as a unit vector. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>vector</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> to normalize </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>A unit <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> with a norm of ` </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a7958bca152122020b061e41db09dacad_1a7958bca152122020b061e41db09dacad" kindref="member">magnitude(const Vector&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d31/a00069_a0c07c85e6b00cfd2a26759979161fc1c_1a0c07c85e6b00cfd2a26759979161fc1c" kindref="member">dot(const Vector&amp;, const Vector&amp;)</ref> </para></simplesect>
-<simplesect kind="see"><para>cross(const Vector&amp;, const Vector&amp;) </para></simplesect>
-<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>T</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Type of <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>N</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the <computeroutput><ref refid="d5/db6/a00042" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Vector.h" line="602" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="602" bodyend="604"/>
+        <location file="include/MACE/Utility/Math.h" line="12" column="9" bodyfile="include/MACE/Utility/Math.h" bodystart="12" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Namespace with various mathmatical functions. </para>    </briefdescription>
+    </briefdescription>
     <detaileddescription>
-<para>Namespace that contains mathmathetics with vectors and functions relevant in graphics programming. </para>    </detaileddescription>
-    <location file="include/MACE/Utility/Math.h" line="20" column="1"/>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_MATH_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_MATH_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/Vector.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="da/dec/a00080" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="20" refid="d0/d89/a00071" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">math<sp/>{</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a90777166907d62f2eef89eb363e2cd9f_1a90777166907d62f2eef89eb363e2cd9f" kindref="member">pi</ref>();</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_aa14a0de605cdb48db7525a542bcbac64_1aa14a0de605cdb48db7525a542bcbac64" kindref="member">tau</ref>();</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a4ed92aa582855134db34180b30b4626b_1a4ed92aa582855134db34180b30b4626b" kindref="member">gamma</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a5befd79b41cbf0e5e5b08f452e56aac2_1a5befd79b41cbf0e5e5b08f452e56aac2" kindref="member">e</ref>();</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a3012b8cabf72e8a9c7587d6e7cbf2933_1a3012b8cabf72e8a9c7587d6e7cbf2933" kindref="member">root2</ref>();</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a403cc4a12c80482af028d90cdec8284c_1a403cc4a12c80482af028d90cdec8284c" kindref="member">root3</ref>();</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a8b04d5f2c0675d6678d9e5e2ff84ad42_1a8b04d5f2c0675d6678d9e5e2ff84ad42" kindref="member">root5</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a94fbffd48dac845ff382ae7de18b0306_1a94fbffd48dac845ff382ae7de18b0306" kindref="member">phi</ref>();</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a504106941c2d9d5309889b12a48722c0_1a504106941c2d9d5309889b12a48722c0" kindref="member">abs</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a0062e47b504ec817027bd87b8fa1ece8_1a0062e47b504ec817027bd87b8fa1ece8" kindref="member">ceil</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//let<sp/>the<sp/>bodies<sp/>hit<sp/>the<sp/>floor</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"></highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a40c6692bfb64bfae9701b02b6e493339_1a40c6692bfb64bfae9701b02b6e493339" kindref="member">floor</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a61ac68996d847d2c8b01865714480a59_1a61ac68996d847d2c8b01865714480a59" kindref="member">isPrime</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a38c9c0248a4a27d723542321769c79d1_1a38c9c0248a4a27d723542321769c79d1" kindref="member">isEven</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_af1144e2cf474e3f1c021c7dc5c473a49_1af1144e2cf474e3f1c021c7dc5c473a49" kindref="member">isOdd</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a45b58ebbe8267f90c859e692e253af23_1a45b58ebbe8267f90c859e692e253af23" kindref="member">pow</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>value,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>power);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_ab0bb1980b03f7b6994e80b0b8e732579_1ab0bb1980b03f7b6994e80b0b8e732579" kindref="member">sqr</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_aa21da7c0ee40c62553ba292dde1bfffa_1aa21da7c0ee40c62553ba292dde1bfffa" kindref="member">cube</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_a94f58db443a3889b2940c8090223cd1f_1a94f58db443a3889b2940c8090223cd1f" kindref="member">toRadians</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>degrees);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="d0/d89/a00071_aac7930263e025b720ac6033de95f7711_1aac7930263e025b720ac6033de95f7711" kindref="member">toDegrees</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>radians);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//math</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Utility/Math.h"/>
   </compounddef>
 </doxygen>

@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::ShaderProgram" 3 "Sat Dec 17 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::ShaderProgram" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -29,6 +29,33 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fIQueries OpenGL whether this \fBObject\fP's ID is a valid object\&. \fP"
 .ti -1c
+.RI "int \fBgetParameter\fP (const \fBEnum\fP param) const "
+.br
+.ti -1c
+.RI "int \fBgetInfoLogLength\fP () const "
+.br
+.ti -1c
+.RI "int \fBgetAttachedShaders\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisDeleted\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisLinked\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisValidated\fP () const "
+.br
+.ti -1c
+.RI "void \fBdetachShader\fP (const \fBIndex\fP \fBid\fP)"
+.br
+.ti -1c
+.RI "void \fBdetachShader\fP (const \fBShader\fP &sh)"
+.br
+.ti -1c
+.RI "void \fBvalidate\fP ()"
+.br
+.ti -1c
 .RI "void \fBattachShader\fP (const \fBShader\fP shader)"
 .br
 .ti -1c
@@ -42,12 +69,6 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .ti -1c
 .RI "void \fBcreateVertex\fP (const std::string &shader)"
-.br
-.ti -1c
-.RI "void \fBcreateGeometry\fP (const char shader[])"
-.br
-.ti -1c
-.RI "void \fBcreateGeometry\fP (const std::string &shader)"
 .br
 .ti -1c
 .RI "void \fBcreateUniform\fP (const std::string &name)"
@@ -345,7 +366,7 @@ https://www.opengl.org/wiki/GLSL_Object#Program_objects
 .PP
 
 .PP
-Definition at line 1058 of file OGL\&.h\&.
+Definition at line 1084 of file OGL\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::ogl::ShaderProgram::attachShader (const \fBShader\fP shader)"
@@ -403,34 +424,6 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .SS "void mc::gfx::ogl::ShaderProgram::createFragment (const std::string & shader)"
-
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.SS "void mc::gfx::ogl::ShaderProgram::createGeometry (const char shader[])"
-
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-
-.SS "void mc::gfx::ogl::ShaderProgram::createGeometry (const std::string & shader)"
 
 .PP
 \fBAttention:\fP
@@ -534,6 +527,50 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "void mc::gfx::ogl::ShaderProgram::detachShader (const \fBIndex\fP id)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::ShaderProgram::detachShader (const \fBShader\fP & sh)"
+
+.PP
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "int mc::gfx::ogl::ShaderProgram::getAttachedShaders () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "\fBIndex\fP mc::gfx::ogl::Object::getID () const\fC [inherited]\fP"
 
 .PP
@@ -546,6 +583,34 @@ When using \fBObject::bind() const \fPit will bind to this ID\&. \fBObject::unbi
 \fBReturns:\fP
 .RS 4
 The ID represented by this \fC\fBObject\fP\fP 
+.RE
+.PP
+
+.SS "int mc::gfx::ogl::ShaderProgram::getInfoLogLength () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "int mc::gfx::ogl::ShaderProgram::getParameter (const \fBEnum\fP param) const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
 .RE
 .PP
 
@@ -620,6 +685,48 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "bool mc::gfx::ogl::ShaderProgram::isDeleted () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "bool mc::gfx::ogl::ShaderProgram::isLinked () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "bool mc::gfx::ogl::ShaderProgram::isValidated () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::ogl::ShaderProgram::link ()"
 
 .PP
@@ -865,6 +972,20 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.SS "void mc::gfx::ogl::ShaderProgram::validate ()"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SH "Member Data Documentation"
 .PP 
 .SS "\fBIndex\fP mc::gfx::ogl::Object::id = 0\fC [protected]\fP, \fC [inherited]\fP"
@@ -874,7 +995,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 169 of file OGL\&.h\&.
+Definition at line 164 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 
