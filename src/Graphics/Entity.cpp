@@ -624,7 +624,7 @@ namespace mc {
 			if( opacity != f ) {
 				makeDirty();
 
-				opacity;
+				opacity = f;
 			}
 		}
 

@@ -55,7 +55,7 @@ namespace mc {
 			void update() override;
 			void destroy() override;
 
-			std::string getName() const;
+			std::string getName() const override;
 
 			void setVSync(const bool& sync);
 			bool isVSync() const;
