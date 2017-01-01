@@ -17,9 +17,6 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			namespace {
-				//this is the ID for a texture where it is one pixel and its white. used when you want a solid color
-				Index whiteTexture = 0;
-
 				Shader createShader(const Enum type, const char* source) {
 					Shader s = Shader(type);
 					s.init();
@@ -29,27 +26,26 @@ namespace mc {
 				}
 
 				void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
-					if( type == 0 || type == GL_PROGRAM ) {
-						throw ShaderError("Error generating shader program with message \"" + message + "\"");
-					} else {
-						std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
-						glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
-						std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
-						if( type == GL_VERTEX_SHADER ) {
-							friendlyType = "VERTEX";
-						} else if( type == GL_FRAGMENT_SHADER ) {
-							friendlyType = "FRAGMENT";
-						} else if( type == GL_COMPUTE_SHADER ) {
-							friendlyType = "COMPUTE";
-						} else if( type == GL_GEOMETRY_SHADER ) {
-							friendlyType = "GEOMETERY";
-						} else if( type == GL_TESS_CONTROL_SHADER ) {
-							friendlyType = "TESSELATION CONTROL";
-						} else if( type == GL_TESS_EVALUATION_SHADER ) {
-							friendlyType = "TESSELATION EVALUATION";
-						}
-						throw ShaderError("Error generating shader of type " + friendlyType + " with message \"" + message + "\" and GLSL error " + log_string.get());
+					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
+					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
+					std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
+					if( type == GL_VERTEX_SHADER ) {
+						friendlyType = "VERTEX SHADER";
+					} else if( type == GL_FRAGMENT_SHADER ) {
+						friendlyType = "FRAGMENT SHADER";
+					} else if( type == GL_COMPUTE_SHADER ) {
+						friendlyType = "COMPUTE SHADER";
+					} else if( type == GL_GEOMETRY_SHADER ) {
+						friendlyType = "GEOMETERY SHADER";
+					} else if( type == GL_TESS_CONTROL_SHADER ) {
+						friendlyType = "TESSELATION CONTROL SHADER";
+					} else if( type == GL_TESS_EVALUATION_SHADER ) {
+						friendlyType = "TESSELATION EVALUATION SHADER";
+					} else if( type == GL_PROGRAM ) {
+						friendlyType = "SHADER PROGRAM";
+						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
+					throw ShaderError("Error generating " + friendlyType + ".\nMessage: \"" + message + "\"\nGLSL error: \"" + log_string.get() + "\"");
 				}
 
 				void throwShaderError(const Index shaderId, const Enum type) {
@@ -117,14 +113,14 @@ namespace mc {
 				glDrawElements(type, indices.getIndiceNumber(), GL_UNSIGNED_INT, 0);
 			}
 
-			void VertexArray::loadVertices(const Size& verticeSize, const GLfloat vertices[], const Index& location, const Size& attributeSize) {
+			void VertexArray::loadVertices(const Size verticeSize, const float vertices[], const Index location, const Byte attributeSize) {
 				vertexNumber = verticeSize;
 
 				bind();
 				storeDataInAttributeList(std::move(vertexNumber), vertices, std::move(location), std::move(attributeSize));
 			}
 
-			void VertexArray::storeDataInAttributeList(const Size& dataSize, const GLvoid* data, const Index& location, const Size& attributeSize) {
+			void VertexArray::storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location, const Byte attributeSize) {
 				bind();
 
 				VertexBuffer buffer = VertexBuffer();
@@ -360,24 +356,6 @@ namespace mc {
 
 			Texture::Texture() noexcept {}
 
-			Texture::Texture(const Color & col) : paint(col) {
-				id = whiteTexture;
-				if( !isCreated() ) {
-					init();
-
-					float data[] = { 1,1,1,1 };
-
-					setData(data, 1, 1, GL_FLOAT, GL_RGBA);
-
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				}
-			}
-
-			Texture::Texture(const Texture & other, const Color & color) : opacity(other.opacity), target(other.target), paint(color) {
-				this->id = other.id;
-			}
-
 			Texture::Texture(const char * file) {
 				init();
 				loadFile(file);
@@ -435,30 +413,6 @@ namespace mc {
 				return target;
 			}
 
-			Color & Texture::getPaint() {
-				return paint;
-			}
-
-			const Color & Texture::getPaint() const {
-				return paint;
-			}
-
-			void Texture::setPaint(const Color & c) {
-				paint = c;
-			}
-
-			float Texture::getOpacity() {
-				return opacity;
-			}
-
-			const float Texture::getOpacity() const {
-				return opacity;
-			}
-
-			void Texture::setOpacity(const float f) {
-				opacity = f;
-			}
-
 			bool Texture::isCreated() const {
 				return glIsTexture(id) == 1;
 			}
@@ -469,7 +423,7 @@ namespace mc {
 			}
 
 			bool Texture::operator==(const Texture & other) const {
-				return target == other.target&&paint == other.paint&&opacity == other.opacity&&Object::operator==(other);
+				return target == other.target&&Object::operator==(other);
 			}
 
 			bool Texture::operator!=(const Texture & other) const {
@@ -535,7 +489,7 @@ namespace mc {
 
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
-			void VertexBuffer::setAttributePointer(const Byte & attribSize, const Enum type, const bool & normalized, const Index stride, const void * pointer) {
+			void VertexBuffer::setAttributePointer(const Byte attribSize, const Enum type, const bool normalized, const Index stride, const void * pointer) {
 				bind();
 				if( !normalized && (
 					type == GL_BYTE ||
@@ -659,7 +613,7 @@ namespace mc {
 
 			void QueryObject::unbind() const {}
 
-			void QueryObject::bindIndex(const Index id) const {}
+			void QueryObject::bindIndex(const Index) const {}
 
 			PixelUnpackBuffer::PixelUnpackBuffer() noexcept : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
 
@@ -698,16 +652,42 @@ namespace mc {
 				setSource(string.c_str(), string.length());
 			}
 
+			char * Shader::getSource(const Size length, char * characters, int amount) const {
+				glGetShaderSource(id, length, &amount, characters);
+				return characters;
+			}
+
+			int Shader::getParameter(const Enum param) const {
+				int result;
+				glGetShaderiv(id, param, &result);
+				return result;
+			}
+
+			int Shader::getInfoLogLength() const {
+				return getParameter(GL_INFO_LOG_LENGTH);
+			}
+
+			int Shader::getSourceLength() const {
+				return getParameter(GL_SHADER_SOURCE_LENGTH);
+			}
+
+			bool Shader::isDeleted() const {
+				return getParameter(GL_DELETE_STATUS) == GL_TRUE;
+			}
+
+			bool Shader::isCompiled() const {
+				return getParameter(GL_COMPILE_STATUS) == GL_TRUE;
+			}
+
+
 			void Shader::compile() {
 				if( type == GL_FALSE ) {
 					throw ShaderError("Shader must have a type before compile() is called");
 				}
 				glCompileShader(id);
 
-				int success = 0;
-				glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-				if( success == GL_FALSE ) {
-					throwShaderError(id, type, "The shader failed to compile with error: " + std::to_string(success));
+				if( !isCompiled() ) {
+					throwShaderError(id, type, "The shader failed to compile");
 				}
 
 				checkGLError(__LINE__, __FILE__);
@@ -739,7 +719,7 @@ namespace mc {
 
 			void Shader::bind() const {}
 			void Shader::unbind() const {}
-			void Shader::bindIndex(const Index id) const {}
+			void Shader::bindIndex(const Index) const {}
 
 			void ShaderProgram::bindIndex(const Index ID) const {
 				glUseProgram(ID);
@@ -767,22 +747,19 @@ namespace mc {
 			void ShaderProgram::link() {
 				glLinkProgram(id);
 
-				int result = -1;
-				glGetProgramiv(id, GL_LINK_STATUS, &result);
-				if( result == 0 ) {
-					throwShaderError(id, GL_PROGRAM, "The shader program was unable to link with result " + std::to_string(result));
+				if( !isLinked() ) {
+					throwShaderError(id, GL_PROGRAM, "The shader program was unable to link");
 				}
 
-				glValidateProgram(id);
+				validate();
 
-				glGetProgramiv(id, GL_VALIDATE_STATUS, &result);
-				if( result == 0 ) {
-					throwShaderError(id, GL_PROGRAM, "The shader program failed validation." + std::to_string(result));
+				if( !isValidated() ) {
+					throwShaderError(id, GL_PROGRAM, "The shader program failed to validate");
 				}
 
 				for( auto s : shaders ) {
 					if( s.second.isCreated() ) {
-						glDetachShader(id, s.second.getID());
+						detachShader(s.second);
 					}
 				}
 
@@ -791,6 +768,38 @@ namespace mc {
 			bool ShaderProgram::isCreated() const {
 				return glIsProgram(id) == 1;
 			}
+			int ShaderProgram::getParameter(const Enum param) const {
+				int result;
+				glGetProgramiv(id, param, &result);
+				return result;
+			}
+			int ShaderProgram::getInfoLogLength() const {
+				return getParameter(GL_INFO_LOG_LENGTH);
+			}
+			int ShaderProgram::getAttachedShaders() const {
+				return getParameter(GL_ATTACHED_SHADERS);
+			}
+			bool ShaderProgram::isDeleted() const {
+				return getParameter(GL_DELETE_STATUS) == GL_TRUE;
+			}
+			bool ShaderProgram::isLinked() const {
+				return getParameter(GL_LINK_STATUS) == GL_TRUE;
+			}
+			bool ShaderProgram::isValidated() const {
+				return getParameter(GL_VALIDATE_STATUS) == GL_TRUE;
+			}
+			void ShaderProgram::detachShader(const Index shaderId) {
+				glDetachShader(id, shaderId);
+			}
+
+			void ShaderProgram::detachShader(const Shader & sh) {
+				detachShader(sh.getID());
+			}
+
+			void ShaderProgram::validate() {
+				glValidateProgram(id);
+			}
+
 			void ShaderProgram::attachShader(const Shader shader) {
 				glAttachShader(id, shader.getID());
 				shaders[shader.getType()] = shader;
@@ -809,7 +818,7 @@ namespace mc {
 			void ShaderProgram::createVertex(const std::string & shader) {
 				createVertex(shader.c_str());
 			}
-
+#ifdef GL_GEOMETRY_SHADER
 			void ShaderProgram::createGeometry(const char shader[]) {
 				attachShader(createShader(GL_GEOMETRY_SHADER, shader));
 			}
@@ -817,6 +826,7 @@ namespace mc {
 			void ShaderProgram::createGeometry(const std::string & shader) {
 				createGeometry(shader.c_str());
 			}
+#endif//GL_GEOMETRY_SHADER
 
 			void ShaderProgram::createUniform(const std::string& name) {
 				int location = glGetUniformLocation(id, name.data());

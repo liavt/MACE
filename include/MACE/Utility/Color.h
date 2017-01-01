@@ -184,6 +184,20 @@ namespace mc {
 		std::array<float, 4> getValues() const;
 
 		/**
+		Creates an array with the data of this `Color`, in O(N) time
+		@return Pointer to `arr`
+		@param arr The array to fill
+		*/
+		const float* flatten(float arr[4]) const {
+			arr[0] = r;
+			arr[1] = g;
+			arr[2] = b;
+			arr[3] = a;
+
+			return arr;
+		}
+
+		/**
 		Compares the color values of 2 `Colors`
 		@param other Another `Color` object
 		@return Whether the 2 `Colors` have the same RGBA

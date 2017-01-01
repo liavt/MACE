@@ -574,10 +574,34 @@ namespace mc {
 
 			void destroy() final;
 
+			/**
+			@dirty
+			*/
+			Color& getPaint();
+			const Color& getPaint() const;
+			/**
+			@dirty
+			*/
+			void setPaint(const Color& c);
+
+			/**
+			@dirty
+			*/
+			float getOpacity();
+			const float getOpacity() const;
+			/**
+			@dirty
+			*/
+			void setOpacity(const float f);
+
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
 		private:
 			ogl::UniformBuffer buffer = ogl::UniformBuffer();
+
+			Color paint = Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+			float opacity = 1.0f;
 		};//GraphicsEntity
 
 	}//gfx

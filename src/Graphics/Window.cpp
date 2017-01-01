@@ -81,7 +81,7 @@ namespace mc {
 			};
 			glfwSetWindowCloseCallback(window, closeCallback);
 
-			auto keyDown = [] (GLFWwindow* window, int key, int, int action, int mods) {
+			auto keyDown = [] (GLFWwindow*, int key, int, int action, int mods) {
 				BitField actions = BitField(0);
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);

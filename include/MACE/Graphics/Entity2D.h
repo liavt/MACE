@@ -50,48 +50,18 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};
 
+		int getImageProtocol();
+
+		/**
+		@todo figure out a way to make the protocol globally accessible
+		*/
 		class Image: public Entity2D {
 			friend class RenderProtocol<Image>;
 		public:
-			static int protocol;
-
 			Image() noexcept;
 			Image(const ogl::Texture& tex);
+			Image(const Color& col);
 			~Image() = default;
-
-			/**
-			@dirty
-			*/
-			void setTextureData(const ogl::UniformBuffer& buf);
-			/**
-			@copydoc Image::getTextureData() const
-			@dirty
-			*/
-			ogl::UniformBuffer& getTextureData();
-			/**
-
-			*/
-			const ogl::UniformBuffer& getTextureData() const;
-
-			/**
-			@dirty
-			*/
-			Color& getPaint();
-			const Color& getPaint() const;
-			/**
-			@dirty
-			*/
-			void setPaint(const Color& c);
-
-			/**
-			@dirty
-			*/
-			float getOpacity();
-			const float getOpacity() const;
-			/**
-			@dirty
-			*/
-			void setOpacity(const float f);
 
 			/**
 			@dirty
@@ -110,11 +80,8 @@ namespace mc {
 			void onUpdate() override final;
 			void onRender() override final;
 			void onDestroy() override final;
-			void onClean() override final;
 		private:
 			ogl::Texture texture;
-
-			ogl::UniformBuffer textureData = ogl::UniformBuffer();
 		};
 	}//gfx
 }//mc

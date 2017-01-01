@@ -58,10 +58,22 @@ namespace mc {
 
 	matrix.size();//Get how many values the Matrix is holding
 	}
+	<p>
+	There are various type aliases in place to prevent using the template parameters. They all use the following syntax:
+	`Matrix[size][prefix]` or `Matrix[width]x[height][prefix]`
+	<p>
+	Prefixes exist for every primitive type and are the first letter of the primitive name. For example, the prefix
+	for a `float` would be `f` and the prefix for an `int` would be `i`. Primitives with modifiers simply add the
+	letter. The prefixed for an `unsigned char` would be `uc` and the prefix for a `long long int` would be `lli`
+	<p>
+	Sizes exist for matrices up to 5x5
+	<p>
+	For example, to create a `Matrix` that consists of floats and is 4 by 4 in size, you would use `Matrix4f`. For a 3 by 2
+	`Matrix` of unsigned ints, you would use `Matrix3x2ui`
 	@see Vector
-	@tparam T What the `Matrix` should consist of
-	@tparam W The width of the `Matrix`
-	@tparam H The height of the `Matrix`
+	@tparam T What the `Matrix` should consist of. Can be any type.
+	@tparam W The width of the `Matrix` which must be greater than 0
+	@tparam H The height of the `Matrix` which must be greater than 0
 	*/
 	template<typename T, Size W, Size H>
 	struct Matrix: public Vector<MatrixRow<T, H>, W> {
@@ -91,7 +103,16 @@ namespace mc {
 			}
 		}
 
-
+		/**
+		Creates a `Matrix` from an `std::initializer_list.` Allows for an aggregate-style creation.
+		<p>
+		Example:
+		{@code
+			Matrix2i mat = {{1,2}, {3, 4}};
+		}
+		@param args What to create this `Matrix` with
+		@throws IndexOutOfBoundsException If the amount of arguments provided is not the same size as the `Matrix`
+		*/
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix()//this is for aggregate initializaition
 		{
 			if( args.size() != W )throw IndexOutOfBoundsException("The width of the argument must be equal to to the height of the Matrix!");
@@ -148,8 +169,8 @@ namespace mc {
 		@param x X-coordinate of the requested data
 		@param y Y-coordinate of the requested data
 		@return A reference to the data at `X,Y`
-		@throw IndexOutOfBounds if `x>=width()`
-		@throw IndexOutOfBounds if `y>=height()`
+		@throw IndexOutOfBoundsException if `x>=width()`
+		@throw IndexOutOfBoundsException if `y>=height()`
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
@@ -164,8 +185,8 @@ namespace mc {
 		@param x X-coordinate of the requested data
 		@param y Y-coordinate of the requested data
 		@return A reference to the `const` data at `X,Y`
-		@throw IndexOutOfBounds if `x>=width()`
-		@throw IndexOutOfBounds if `y>=height()`
+		@throw IndexOutOfBoundExceptions if `x>=width()`
+		@throw IndexOutOfBoundsException if `y>=height()`
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
@@ -179,9 +200,9 @@ namespace mc {
 		Writes data at certain coordinates to a new value.
 		@param x X-coordinate of the new data
 		@param y Y-coordinate of the new data
-		@param value New datat to write to `X,Y`
-		@throw IndexOutOfBounds if `x>=width()`
-		@throw IndexOutOfBounds if `y>=height()`
+		@param value New data to write to `X,Y`
+		@throw IndexOutOfBoundsException if `x>=width()`
+		@throw IndexOutOfBoundsException if `y>=height()`
 		@see #operator[]
 		@see #get(Index, Index)
 		*/
@@ -253,9 +274,9 @@ namespace mc {
 
 		@param right A `Vector` of equal width
 		@return A `Vector` that was created by adding a `Vector` and a `Matrix` together
-		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
+		@pre The Matrix's width must not be larger than the height
 		*/
 		Vector<T, H> operator+(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
@@ -276,6 +297,7 @@ namespace mc {
 		@return A `Vector` that was created by subtracting a `Vector` and a `Matrix` together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
+		@pre The Matrix's width must not be larger than the height
 		*/
 		Vector<T, H> operator-(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
@@ -294,9 +316,9 @@ namespace mc {
 
 		@param right A `Vector` of equal width
 		@return A `Vector` that was created by multiplying a `Vector` and a `Matrix` together
-		@throw ArithmeticError If `width()` is greater than `height()`
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Vector` and `Matrix` math
+		@pre The Matrix's width must not be larger than the height
 		*/
 		Vector<T, H> operator*(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
@@ -316,6 +338,7 @@ namespace mc {
 		@return A `Matrix` whose contents is 2 `Matrix` added together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
+		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
@@ -334,6 +357,7 @@ namespace mc {
 		@return A `Matrix` whose contents is 2 `Matrix` subtracted together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
+		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
@@ -353,6 +377,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		@see operator*(const T&) const
+		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to multiply matrices, the width must equal to the height.");
@@ -375,6 +400,7 @@ namespace mc {
 		@see operator*(const Matrix&) const
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
+		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator*(const T& scalar) const {
 			T arr[W][H];
@@ -392,6 +418,7 @@ namespace mc {
 		@return A `Matrix` whose contents is 2 `Matrix` divide together
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
+		@pre Both Matrices' width and height must be equal to each other
 		@bug Not finished
 		*/
 		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
@@ -517,6 +544,7 @@ namespace mc {
 		@bug Array subscript out of range with matrices bigger than 2x2
 		@tparam T Type of the `Matrix`
 		@tparam N Size of the `Matrix`
+		@pre The size of the `Matrix` must be larger than 1
 		*/
 		template<typename T, Size N>
 		T det(const Matrix<T, N, N>& matrix) {
@@ -524,7 +552,7 @@ namespace mc {
 			T sum = T();
 			Index counter = 0;
 			for( Index i = 0; i < N; i++ ) {
-				const Size newMatrixSize = N - 1;
+				constexpr Size newMatrixSize = N - 1;
 				Matrix<T, newMatrixSize, newMatrixSize> m = Matrix<T, newMatrixSize, newMatrixSize>();
 				Index counterX = 0;
 				Index counterY = 0;
@@ -540,7 +568,7 @@ namespace mc {
 					counterY = 0;
 				}
 				T tempSum = ((counter % 2 == 0 ? -1 : 1) * matrix[i][0]);
-				if( N - 1 == 2 ) {
+				if( newMatrixSize == 2 ) {
 					tempSum *= det<T>(matrix);
 				} else {
 					tempSum *= det<T, N>(matrix);
@@ -550,6 +578,8 @@ namespace mc {
 			}
 			return sum;
 		}
+
+
 
 		/**
 		Calculates the trace of a Matrix. The trace is the sum of all of the diagonal elements of a `Matrix`.
@@ -606,6 +636,7 @@ namespace mc {
 		@return The inverse of `matrix`
 		@tparam T Type of the `Matrix`
 		@tparam N Order of the `Matrix`
+		@pre The size of the `Matrix` must be greater than 1
 		@bug Matrices bigger then 2x2 dont work
 		*/
 		template<typename T, Size N>

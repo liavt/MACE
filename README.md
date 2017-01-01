@@ -2,7 +2,18 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/dovlvxm1xrg5bewc?svg=true)](https://ci.appveyor.com/project/liavt/mace)
 
 # MACE
-MACE stands for MACE is A C++ Engine
+MACE stands for MACE is A C++ Engine, Modular Abstract Components Engine, Many Amazing Classes Everywhere, Many Acronyms Can Exist, or the medievel weapon. Choose whichever one you like best.
+
+##What is it?
+It is a many things:
+* Graphics and UI engine
+* Utility library
+* Audio player (soon!)
+* Module loader
+
+You can implement your own modules to make MACE whatever you want!
+
+However, it has a graphics engine built int and various utility classes.
 
 ##Compatibility
 The graphics capabilities target hardware with OpenGL 3.3 compatibility
@@ -28,3 +39,7 @@ Documentation is located [here.](https://liavt.github.io/MACE/html/index.html)
 To generate documentation on your own, download Doxygen. Then, run Doxygen with `Doxyfile` located in the root folder.
 
 A new folder called *Docs* should have been created. Subfolders contain the different documentation types, like html or xml.
+
+##Important Notes
+* MACE will never delete any pointer you give it and you are never expected to delete a pointer it gives you.
+* MACE has varying levels on abstraciton, and gives you the power to change most of these levels. You can completely change how MACE works without touching the source code. Doing this may be dangerous if you don't know what you are doing

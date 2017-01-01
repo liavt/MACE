@@ -68,9 +68,21 @@ namespace mc {
 			int value = vector[i];
 		}
 	}
+	<p>
+	There are various type aliases in place to prevent using the template parameters. They all use the following syntax:
+	`Vector[size][prefix]`
+	<p>
+	Prefixes exist for every primitive type and are the first letter of the primitive name. For example, the prefix
+	for a `float` would be `f` and the prefix for an `int` would be `i`. Primitives with modifiers simply add the
+	letter. The prefixed for an `unsigned char` would be `uc` and the prefix for a `long long int` would be `lli`
+	<p>
+	Sizes exist for vertices up to 5 objects
+	<p>
+	For example, to create a `Vector` that is made up of 4 floats, you would use `Vector4f`. For a `Vector` of 2
+	unsigned ints, you would use `Vector2ui`
 	@see Matrix
-	@tparam T what the `Vector` is made of and calculates with.
-	@tparam N width of the `Vector`
+	@tparam T what the `Vector` is made of and calculates with. Can be any type/
+	@tparam N amount of elements in the `Vector` which must be greater than 0.
 	*/
 	template <typename T, Size N>
 	struct Vector {
@@ -88,7 +100,6 @@ namespace mc {
 		*/
 		Vector(const T arr[N]) : content()//we need to initialize the array first, or else we will try to access an empty memory location
 		{
-			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
 
@@ -97,11 +108,19 @@ namespace mc {
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
 		Vector(const std::array<T, N>& contents) : content(contents) {
-			static_assert(N != 0, "A Vector's size must be greater than 0!");
 		};
 
+		/**
+		Creates a `Vector` from an `std::initializer_list.` Allows for an aggregate-style creation.
+		<p>
+		Example:
+		{@code
+		Vector3i mat = {1, 2, 3};
+		}
+		@param args What to create this `Vector` with
+		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
+		*/
 		Vector(const std::initializer_list<T> args) : content() {//this is for aggregate initializaition
-			static_assert(N != 0, "A Vector's size must be greater than 0!");
 			if( args.size() != N )throw IndexOutOfBoundsException("The number of arguments MUST be equal to the size of the array.");
 			Index counter = 0;
 			for( auto elem : args ) {

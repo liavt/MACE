@@ -13,112 +13,57 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		namespace {
+			int IMAGE_PROTOCOL = -1;
 
-
-		int Image::protocol = -1;
+			ogl::Texture whiteTexture;
+		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
 
 		Image::Image() noexcept {}
 
-		Image::Image(const ogl::Texture & tex) {
+		Image::Image(const ogl::Texture & tex) : Image() {
 			texture = tex;
 		}
 
-		void Image::setTextureData(const ogl::UniformBuffer & buf) {
-			if( textureData != buf ) {
-				makeDirty();
-				textureData = buf;
+		Image::Image(const Color & col) : Image(whiteTexture){
+			if( !texture.isCreated() ) {
+				texture.init();
+
+				float data[] = { 1,1,1,1 };
+
+				texture.setData(data, 1, 1, GL_FLOAT, GL_RGBA);
+
+				texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			}
+
+			setPaint(col);
 		}
-
-		ogl::UniformBuffer & Image::getTextureData() {
-			makeDirty();
-
-			return textureData;
-		}
-
-		const ogl::UniformBuffer & Image::getTextureData() const {
-			return textureData;
-		}
-
-#define MACE_TEXTURE_DATA_BUFFER_SIZE 5
-#define MACE_TEXTURE_DATA_BUFFER_LOCATION 0
 
 		void Image::onInit() {
-			textureData.init();
+			if( !texture.isCreated() ) {
+				texture.destroy();
+			}
 
-			textureData.setLocation(MACE_TEXTURE_DATA_BUFFER_LOCATION);
-
-			textureData.bind();
-			//tell it how much data to allocate
-			textureData.setData(sizeof(float)*MACE_TEXTURE_DATA_BUFFER_SIZE, nullptr);
-			textureData.unbind();
-
-			if( Image::protocol < 0 ) {
-				Image::protocol = Renderer::registerProtocol<Image>();
+			if( IMAGE_PROTOCOL < 0 ) {
+				IMAGE_PROTOCOL = Renderer::registerProtocol<Image>();
 			}
 		}
 
 		void Image::onUpdate() {}
 
 		void Image::onRender() {
-			Renderer::queue(this, Image::protocol);
+			Renderer::queue(this, IMAGE_PROTOCOL);
 		}
 
 		void Image::onDestroy() {
-			textureData.destroy();
-		}
-
-
-		void Image::onClean() {
-			const Color& paint = texture.getPaint();
-			const float& opacity = texture.getOpacity();
-
-			textureData.bind();
-			//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
-			float* mappedTextureData = static_cast<float*>(textureData.mapRange(0, sizeof(float)*MACE_TEXTURE_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-			std::memcpy(mappedTextureData, &paint, sizeof(paint));
-			mappedTextureData += 4;
-			std::memcpy(mappedTextureData, &opacity, sizeof(opacity));
-			textureData.unmap();
-		}
-
-		Color & Image::getPaint() {
-			makeDirty();
-
-			return texture.getPaint();
-		}
-
-		const Color & Image::getPaint() const {
-			return texture.getPaint();
-		}
-
-		void Image::setPaint(const Color & c) {
-			if( texture.getPaint() != c ) {
-				makeDirty();
-
-				texture.setPaint(c);
+			if( texture.isCreated() ) {
+				texture.destroy();
 			}
 		}
 
-		float Image::getOpacity() {
-			makeDirty();
-
-			return texture.getOpacity();
-		}
-
-		const float Image::getOpacity() const {
-			return texture.getOpacity();
-		}
-
-		void Image::setOpacity(const float f) {
-			if( texture.getOpacity() != f ) {
-				makeDirty();
-
-				texture.setOpacity(f);
-			}
-		}
 
 		void Image::setTexture(ogl::Texture & tex) {
 			if( tex != texture ) {
@@ -139,7 +84,7 @@ namespace mc {
 		}
 
 		bool Image::operator==(const Image & other) const {
-			return Entity2D::operator==(other) && texture == other.texture&&textureData == other.textureData;
+			return Entity2D::operator==(other) && texture == other.texture;
 		}
 
 		bool Image::operator!=(const Image & other) const {
@@ -170,12 +115,7 @@ namespace mc {
 				throw NullPointerException("You must provide an Image for RenderProtocol<Image>");
 			}
 
-			entity->getTexture().bind();
-
-			ogl::UniformBuffer& textureData = entity->textureData;
-			textureData.bind();
-			textureData.bindToUniformBlock(renderer.getShader().getID(), "textureData");
-			textureData.bindForRender();
+			entity->texture.bind();
 
 			renderer.draw(e);
 		}//render
@@ -187,5 +127,8 @@ namespace mc {
 		}//destroy
 #undef MACE_TEXTURE_DATA_BUFFER_SIZE
 #undef MACE_TEXTURE_DATA_BUFFER_LOCATION
+		int getImageProtocol() {
+			return IMAGE_PROTOCOL;
+		}//getImageProtocol
 	}//gfx
 }//mc

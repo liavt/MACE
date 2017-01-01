@@ -462,11 +462,6 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				Texture(const Color& col);
-				Texture(const Texture& other, const Color& color);
-				/**
-				@opengl
-				*/
 				Texture(const char* file);
 				/**
 				@opengl
@@ -496,14 +491,6 @@ namespace mc {
 				void setTarget(const Enum target);
 				Enum getTarget();
 
-				Color& getPaint();
-				const Color& getPaint() const;
-				void setPaint(const Color& c);
-
-				float getOpacity();
-				const float getOpacity() const;
-				void setOpacity(const float f);
-
 				bool isCreated() const override;
 
 				/**
@@ -523,10 +510,6 @@ namespace mc {
 
 			private:
 				Enum target = GL_TEXTURE_2D;
-
-				Color paint = Color(1.0f, 1.0f, 1.0f, 1.0f);
-
-				float opacity = 1.0f;
 
 				void bindIndex(const Index id) const override;
 			};//Texture
@@ -720,7 +703,7 @@ namespace mc {
 				@see VertexArray
 				@opengl
 				*/
-				void setAttributePointer(const Byte& attribSize, const Enum type, const bool& normalized = 0, const Index stride = 0, const void* pointer = nullptr);
+				void setAttributePointer(const Byte attribSize, const Enum type, const bool normalized = 0, const Index stride = 0, const void* pointer = nullptr);
 
 				/**
 				Modify the rate at which vertex attribute advance during instancing. If instanced rendering is not being used,
@@ -855,7 +838,7 @@ namespace mc {
 				@opengl
 				@see VertexBuffer
 				*/
-				void loadVertices(const Size& verticeSize, const GLfloat vertices[], const Index& location = 15, const Size& attributeSize = 3);
+				void loadVertices(const Size verticeSize, const float vertices[], const Index location = 15, const Byte attributeSize = 3);
 				/**
 				@opengl
 				@see VertexBuffer
@@ -866,7 +849,7 @@ namespace mc {
 				@opengl
 				@see VertexBuffer
 				*/
-				void storeDataInAttributeList(const Size& dataSize, const GLvoid* data, const Index& location = 0, const Size& attributeSize = 3);
+				void storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location = 0, const Byte attributeSize = 3);
 
 				/**
 				@opengl
@@ -1045,6 +1028,32 @@ namespace mc {
 				void setSource(const std::string& string);
 
 				/**
+				@opengl
+				*/
+				char* getSource(const Size length, char* characters, int amount = 0) const;
+				
+				/**
+				@opengl
+				*/
+				int getParameter(const Enum param) const;
+				/**
+				@opengl
+				*/
+				int getInfoLogLength() const;
+				/**
+				@opengl
+				*/
+				int getSourceLength() const;
+				/**
+				@opengl
+				*/
+				bool isDeleted() const;
+				/**
+				@opengl
+				*/
+				bool isCompiled() const;
+
+				/**
 				@see https://www.opengl.org/wiki/GLAPI/glCompileShader
 				*/
 				void compile();
@@ -1087,6 +1096,47 @@ namespace mc {
 				/**
 				@opengl
 				*/
+				int getParameter(const Enum param) const;
+
+				/**
+				@opengl
+				*/
+				int getInfoLogLength() const;
+				/**
+				@opengl
+				*/
+				int getAttachedShaders() const;
+
+				/**
+				@opengl
+				*/
+				bool isDeleted() const;
+				/**
+				@opengl
+				*/
+				bool isLinked() const;
+				/**
+				@opengl
+				*/
+				bool isValidated() const;
+
+				/**
+				@opengl
+				*/
+				void detachShader(const Index id);
+				/**
+				@copydoc ShaderProgram::detachShader(const Index)
+				*/
+				void detachShader(const Shader& sh);
+
+				/**
+				@opengl
+				*/
+				void validate();
+
+				/**
+				@opengl
+				*/
 				void attachShader(const Shader shader);
 
 				/**
@@ -1105,6 +1155,7 @@ namespace mc {
 				@opengl
 				*/
 				void createVertex(const std::string& shader);
+#ifdef GL_GEOMETRY_SHADER
 				/**
 				@opengl
 				*/
@@ -1113,6 +1164,7 @@ namespace mc {
 				@opengl
 				*/
 				void createGeometry(const std::string& shader);
+#endif//GL_GEOMETRY_SHADER
 
 				/**
 				@opengl

@@ -5,8 +5,6 @@
 
 using namespace mc;
 
-gfx::ogl::Texture tex = gfx::ogl::Texture();
-
 class FPSEntity: public gfx::Entity {
 	Index nbFrames;
 	time_t lastTime = time(0);
@@ -30,6 +28,7 @@ class TestComponent: public gfx::Component {
 	void init(gfx::Entity* en) override {
 		en->setProperty(gfx::Entity::STRETCH_X, true);
 		en->setProperty(gfx::Entity::STRETCH_Y, true);
+		dynamic_cast<gfx::GraphicsEntity*>(en)->setPaint(Colors::RED);
 	}
 
 	bool update(gfx::Entity* en) override {
@@ -42,30 +41,28 @@ class TestComponent: public gfx::Component {
 	void destroy(gfx::Entity* en) override {}
 
 	void clean(gfx::Entity* en) override {
-		dynamic_cast<gfx::Image*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+		dynamic_cast<gfx::GraphicsEntity*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 };
 
 TestComponent component = TestComponent();
 gfx::Group group = gfx::Group();
 
-gfx::Image left = gfx::Image();
-gfx::Image leftBot = gfx::Image();
-gfx::Image rightTop = gfx::Image();
-gfx::Image rightBot = gfx::Image();
+gfx::Image left;
+gfx::Image leftBot;
+gfx::Image rightTop;
+gfx::Image rightBot;
 
 void initGL() {
 	srand((unsigned) time(0));
 
 	const Size elementNum = 10;
 
-	tex = gfx::ogl::Texture(Colors::RED);
+	left = gfx::Image(Colors::RED);
+	leftBot = gfx::Image(Colors::RED);
+	rightTop = gfx::Image(Colors::RED);
+	rightBot = gfx::Image(Colors::RED);
 
-	left.setTexture(tex);
-	leftBot.setTexture(tex);
-
-	rightTop.setTexture(tex);
-	rightBot.setTexture(tex);
 
 	left.setY(0.0f);
 	left.setX(-0.5f);

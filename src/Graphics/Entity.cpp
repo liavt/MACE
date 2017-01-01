@@ -581,7 +581,7 @@ namespace mc {
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return buffer == other.buffer&&Entity::operator==(other);
+			return buffer == other.buffer&&paint==other.paint&&opacity==other.opacity&&Entity::operator==(other);
 		}
 
 		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
@@ -595,7 +595,43 @@ namespace mc {
 			Entity::clean();
 		}
 
-		void Component::clean(Entity * e) {}
+		Color & GraphicsEntity::getPaint() {
+			makeDirty();
+
+			return paint;
+		}
+
+		const Color & GraphicsEntity::getPaint() const {
+			return paint;
+		}
+
+		void GraphicsEntity::setPaint(const Color & c) {
+			if( paint != c ) {
+				makeDirty();
+
+				paint = c;
+			}
+		}
+
+		float GraphicsEntity::getOpacity() {
+			makeDirty();
+
+			return opacity;
+		}
+
+		const float GraphicsEntity::getOpacity() const {
+			return opacity;
+		}
+
+		void GraphicsEntity::setOpacity(const float f) {
+			if( opacity != f ) {
+				makeDirty();
+
+				opacity;
+			}
+		}
+
+		void Component::clean(Entity *) {}
 
 }//gfx
 }//mc
