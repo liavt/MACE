@@ -107,7 +107,7 @@ void initGL() {
 
 }
 
-int main(int argc, char* argv) {
+int main(int argc, char** argv) {
 	try {
 		std::cout << "Click on a star to rotate it individually! It is pixel perfect! Holding down space will rotate all the stars in big chunks. It will only swap frames when something changes for maximum performance.\n";
 		std::cout << "Also try resizing the screen and watch how it reacts!\n";

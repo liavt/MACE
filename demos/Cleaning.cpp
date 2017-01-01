@@ -96,7 +96,7 @@ void initGL() {
 	group.addChild(rightBot);
 }
 
-int main(int argc, char* argv) {
+int main(int argc, char** argv) {
 	try {
 
 		os::WindowModule module = os::WindowModule(600, 500, "Cleaning Demo");
