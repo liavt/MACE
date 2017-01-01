@@ -53,8 +53,8 @@ namespace mc {
 				}
 			}//anon namespace
 
-			void checkGLError(const Index line, const char* file) {
 #ifdef MACE_ERROR_CHECK
+			void checkGLError(const Index line, const char* file) {
 				Enum result = GL_NO_ERROR;
 				while( (result = glGetError()) != GL_NO_ERROR ) {
 					switch( result ) {
@@ -84,8 +84,11 @@ namespace mc {
 						break;
 					}
 				}
+#else
+			void checkGLError(const Index, const char*){
 #endif
 			}
+
 
 			void VertexArray::init() {
 				glGenVertexArrays(1, &id);
@@ -649,7 +652,8 @@ namespace mc {
 			}
 
 			void Shader::setSource(const std::string & string) {
-				setSource(string.c_str(), string.length());
+				//length() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
+				setSource(string.c_str(), static_cast<int>(string.length()));
 			}
 
 			char * Shader::getSource(const Size length, char * characters, int amount) const {

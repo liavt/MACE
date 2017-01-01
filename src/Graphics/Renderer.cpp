@@ -55,7 +55,8 @@ namespace mc {
 			}
 		}
 		Size Renderer::numberOfProtocols() {
-			return protocols.size();
+			//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
+			return static_cast<Size>(protocols.size());
 		}
 		//tearDown
 		void Renderer::tearDown(os::WindowModule* win) {
@@ -72,7 +73,7 @@ namespace mc {
 				GraphicsEntity* en = pair->second;
 				en->setProperty(Entity::HOVERED, false);
 
-				entityIndex = pair - renderQueue.begin();
+				entityIndex = static_cast<Index>(pair - renderQueue.begin());
 				protocols[pair->first]->render(win, en);
 			}
 			ogl::checkGLError(__LINE__, __FILE__);
@@ -129,12 +130,12 @@ namespace mc {
 			//constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
 			//how many floats in the windowData uniform buffer. needs to be multiplied by sizeof(float)
-#define MACE_WINDOW_DATA_BUFFER_SIZE 4
+#define MACE_WINDOW_DATA_BUFFER_SIZE sizeof(float)*2
 //which binding location the windowData uniform buffer should be bound to
 #define MACE_WINDOW_DATA_LOCATION 14
 
 //how many floats in the entityData uniform buffer.
-#define MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*32
+#define MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 15
 
@@ -210,8 +211,8 @@ namespace mc {
 
 				windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
 				windowData.bind();
-				float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = { static_cast<float>(originalWidth), static_cast<float>(originalHeight),static_cast<float>(originalWidth),static_cast<float>(originalHeight) };
-				windowData.setData(sizeof(float)*MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
+				float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = { 1,1 };
+				windowData.setData(MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
 				windowData.unbind();
 
 				sceneTexture.init();
@@ -298,8 +299,8 @@ namespace mc {
 
 				if( width > 0 && height > 0 ) {
 					windowData.bind();
-					float newSize[2] = { static_cast<float>(width),static_cast<float>(height) };
-					windowData.setDataRange(sizeof(newSize), sizeof(newSize), newSize);
+					float newSize[2] = { static_cast<float>(originalWidth)/width,static_cast<float>(originalHeight)/height };
+					windowData.setDataRange(0, sizeof(newSize), newSize);
 					windowData.unbind();
 
 					depthBuffer.destroy();
@@ -318,8 +319,7 @@ namespace mc {
 
 				if( pixel > 0 ) {
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex
-					--pixel;
-					renderQueue[pixel].second->setProperty(Entity::HOVERED, true);
+					renderQueue[--pixel].second->setProperty(Entity::HOVERED, true);
 				}
 
 				frameBuffer.unbind();
@@ -369,6 +369,10 @@ namespace mc {
 				inheritedTranslation[1] *= -1;
 				translation[1] *= -1;
 
+				translation *= inheritedScale;
+
+				scale *= inheritedScale;
+
 				//GLSL expects the boolean values as a float, because memory is stored in increments of a float.
 				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
 				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
@@ -384,20 +388,18 @@ namespace mc {
 				mappedEntityData += 3;//pointer arithmetic!
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, scale.flatten(flattenedData), sizeof(flattenedData));
+				std::memcpy(mappedEntityData, rotation.flatten(flattenedData), sizeof(flattenedData));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, rotation.flatten(flattenedData), sizeof(flattenedData));
-				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(flattenedData));
-				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, inheritedScale.flatten(flattenedData), sizeof(flattenedData));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedRotation.flatten(flattenedData), sizeof(flattenedData));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, &entity->paint, sizeof(entity->paint));
 				mappedEntityData += 4;
+				std::memcpy(mappedEntityData, scale.flatten(flattenedData), sizeof(flattenedData));
+				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &entity->opacity, sizeof(entity->opacity));
 				buf.unmap();
 

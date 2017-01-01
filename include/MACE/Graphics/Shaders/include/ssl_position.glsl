@@ -30,29 +30,19 @@ mat3 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 
 vec4 sslGetEntityPosition(){
 
-	vec4 ssl_Position = vec4(ssl_VertexPosition, 1.0);
-	
-	ssl_Position.xyz *= ssl_ParentEntity.ssl_Scale;
-	ssl_Position.xyz *= ssl_BaseEntity.ssl_Scale;
-
-	ssl_Position.xyz *= sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation);
+	//putting it all in one line allows for the compiler to optimize it into a single MAD operation
+	vec3 ssl_Position = ssl_VertexPosition * ssl_Scale * sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation)
+							  + ssl_BaseEntity.ssl_Translation * sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation)
+							  + ssl_ParentEntity.ssl_Translation;
 		
-	ssl_Position.xyz += ssl_BaseEntity.ssl_Translation*ssl_ParentEntity.ssl_Scale;
-		
-	ssl_Position.xyz *= sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation);
-	
-	ssl_Position.xyz += ssl_ParentEntity.ssl_Translation;
-	
-	vec2 ssl_SizeModifier = ssl_OriginalSize/ssl_CurrentSize;
-	
 	if(ssl_BaseEntity.ssl_StretchX == 0){
-		ssl_Position.x*=ssl_SizeModifier.x;
+		ssl_Position.x*=ssl_WindowRatios.x;
 	}
 	if(ssl_BaseEntity.ssl_StretchY == 0){
-		ssl_Position.y*=ssl_SizeModifier.y;
+		ssl_Position.y*=ssl_WindowRatios.y;
 	}
 		
-	return ssl_Position;
+	return vec4(ssl_Position, 1.0);
 }
 
 #endif

@@ -737,7 +737,7 @@ namespace mc {
 	int Preprocessor::getIfScopeLocation() {
 		int ifScope = getMacroLocation("__IF_SCOPE__");
 		if( ifScope < 0 ) {
-			ifScope = macros.size();
+			ifScope = static_cast<int>(macros.size());
 			setMacro(Macro("__IF_SCOPE__", "0"));
 		}
 
@@ -748,7 +748,7 @@ namespace mc {
 
 		int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
 		if( currentIfScope < 0 ) {
-			currentIfScope = macros.size();
+			currentIfScope = static_cast<int>(macros.size());
 			setMacro(Macro("__CURRENT_IF_SCOPE__", "0"));
 		}
 
@@ -883,7 +883,8 @@ namespace mc {
 	}
 
 	Size Preprocessor::macroNumber() const {
-		return macros.size();;
+		//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
+		return static_cast<Size>(macros.size());
 	}
 
 	void Preprocessor::defineStandardMacros() {

@@ -36,13 +36,6 @@ namespace mc {
 			}
 		}
 
-		void Entity::clearComponents() {
-			for( Index i = 0; i < components.size(); i++ ) {
-				components[i]->destroy(this);
-			}
-			components.clear();
-		}
-
 		const std::vector<Entity*>& Entity::getChildren() const {
 			return this->children;
 		}
@@ -51,7 +44,7 @@ namespace mc {
 		void Entity::removeChild(const Entity& e) {
 			makeDirty();
 
-			for( Size i = 0; i < children.size(); i++ ) {
+			for( Index i = 0; i < children.size(); i++ ) {
 				if( &e == children[i] ) {
 					removeChild(i);
 					return;
@@ -150,11 +143,14 @@ namespace mc {
 		}
 
 		void Entity::reset() {
-
 			clearChildren();
 			properties = 0;
 			transformation.reset();
-			clearComponents();
+
+			for( Index i = 0; i < components.size(); i++ ) {
+				components[i]->destroy(this);
+			}
+			components.clear();
 		}
 
 		void Entity::makeDirty() {
@@ -228,7 +224,8 @@ namespace mc {
 		}
 
 		Size Entity::size() const {
-			return children.size();
+			//size() returns size_t which could be larger than unsigned int on some systems, meaning static_cast is necessary
+			return static_cast<Size>(children.size());
 		}
 
 		void Entity::kill() {

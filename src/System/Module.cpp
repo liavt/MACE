@@ -59,7 +59,8 @@ namespace mc {
 		return indexOf(*module) >= 0;
 	}
 	Size System::numberOfModules() {
-		return modules.size();
+		//size() returns size_t which could be larger than unsigned int on some systems, causing problems. static_cast will fix it
+		return static_cast<Size>(modules.size());
 	}
 	void System::assertModule(const std::string module, const std::string errorMessage) {
 		if( !moduleExists(module) ) {

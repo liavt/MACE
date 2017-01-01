@@ -30,16 +30,59 @@ namespace mc {
 			void bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
 		};
 
+		/**
+		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
+		`Entity` subclass, you should prefer using a `Component` to not interfere with custom Entity::onRender() and similar functions.
+		<p>
+		Similarly to all objects in MACE, Component::init(Entity*) is always called and Component::destroy(Entity*) is also always called.
+		<p>
+		Contains virtual functions for every event in an `Entity` which each have 1 parameter - the
+		`Entity` being acted on.
+		<p>
+		You are required to implement Component::init(Entity*), Component::update(Entity*), and Component::destroy(Entity*).
+		There are additional functions which are optional to implement.
+		<p>
+		There is no function to remove a `Component` from an `Entity`. Instead, the `Component` decides when to be removed
+		from Component::update(Entity*). This makes sure that the `Component` completes whatever task it was trying to do.
+		@see Entity::addComponent(Component&)
+		*/
 		class Component {
 		public:
+			/**
+			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
+			Required function.
+			@param e The parent `Entity`
+			@note This is not called at Entity::init(), instead it is called when the component is added to the `Entity`. Keep that in mind.
+			*/
 			virtual void init(Entity* e) = 0;
+			/**
+			Called when Entity::update() is called. Required function.
+			<p>
+			There is no function to remove a `Component` so this is the only way for a `Component` to be removed from an `Entity`
+			<p>
+			Component::destroy(Entity*) will be called afterwards.
+			@param e The parent `Entity`
+			@return Whether this `Component` should be deleted or not.
+			*/
 			virtual bool update(Entity* e) = 0;
+			/**
+			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
+			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
+			the `Entity`. Required function.
+			@param e The parent `Entity`
+			*/
 			virtual void destroy(Entity* e) = 0;
+			/**
+			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
+			@param e The parent `Entity`
+			*/
 			virtual void clean(Entity* e);
 		};//Component
 
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
+		<p>
+		Prefer using `Component` instead of extending this class for one-time functionality.
 		@see GraphicsEntity
 		@see Entity2D
 		@see Component
@@ -167,8 +210,6 @@ namespace mc {
 			@see #removeChild(const Entity&)
 			*/
 			void clearChildren();
-
-			void clearComponents();
 
 			/**
 			Access an `Entity`.
@@ -483,6 +524,10 @@ namespace mc {
 			*/
 			virtual void onRender() = 0;
 
+			/**
+			@internal
+			@opengl
+			*/
 			virtual void onClean();
 
 			/**
