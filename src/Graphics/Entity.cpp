@@ -89,6 +89,13 @@ namespace mc {
 
 		}
 
+		void Entity::hover() {
+			onHover();
+			for( Index i = 0; i < components.size(); i++ ) {
+				components[i]->hover(this);
+			}
+		}
+
 		void Entity::clean() {
 			if( getProperty(Entity::DIRTY) ) {
 				onClean();
@@ -164,6 +171,8 @@ namespace mc {
 		}
 
 		void Entity::onClean() {}
+
+		void Entity::onHover() {}
 
 		void Entity::setParent(Entity * par) {
 			makeDirty();
@@ -340,7 +349,7 @@ namespace mc {
 			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
 #endif
 			if( properties.getBit(position) != value ) {
-				if( position != Entity::DIRTY && position != Entity::HOVERED ) {
+				if( position != Entity::DIRTY ) {
 					properties.setBit(Entity::DIRTY, true);
 				}
 				properties.setBit(position, value);
@@ -629,6 +638,8 @@ namespace mc {
 		}
 
 		void Component::clean(Entity *) {}
+
+		void Component::hover(Entity * e) {}
 
 }//gfx
 }//mc

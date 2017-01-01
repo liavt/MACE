@@ -28,6 +28,7 @@ namespace mc {
 			void fillBuffer(GraphicsEntity*);
 			void bindBuffer(ogl::UniformBuffer&);
 			void bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
+			void checkInput();
 		};
 
 		/**
@@ -53,6 +54,7 @@ namespace mc {
 			Required function.
 			@param e The parent `Entity`
 			@note This is not called at Entity::init(), instead it is called when the component is added to the `Entity`. Keep that in mind.
+			@opengl
 			*/
 			virtual void init(Entity* e) = 0;
 			/**
@@ -63,6 +65,7 @@ namespace mc {
 			Component::destroy(Entity*) will be called afterwards.
 			@param e The parent `Entity`
 			@return Whether this `Component` should be deleted or not.
+			@opengl
 			*/
 			virtual bool update(Entity* e) = 0;
 			/**
@@ -70,13 +73,20 @@ namespace mc {
 			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
 			the `Entity`. Required function.
 			@param e The parent `Entity`
+			@opengl
 			*/
 			virtual void destroy(Entity* e) = 0;
 			/**
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
 			@param e The parent `Entity`
+			@opengl
 			*/
 			virtual void clean(Entity* e);
+
+			/**
+			@opengl
+			*/
+			virtual void hover(Entity* e);
 		};//Component
 
 		/**
@@ -100,12 +110,12 @@ namespace mc {
 				*/
 				DEAD = 0,
 				/**
-				Property defining if an `Entity` can be updated. If this is `true`, `update()` will be called by it's parent.
+				Property defining if an `Entity` can be updated. If this is `FALSE`, `update()` will be called by it's parent.
 				@see Entity#getProperty(unsigned int)
 				*/
 				UPDATE_DISABLED = 1,
 				/**
-				Property defining if an `Entity` can be rendered. If this is `true`, `render()` will be called by it's parent.
+				Property defining if an `Entity` can be rendered. If this is `false`, `render()` will be called by it's parent.
 				@see Entity#getProperty(unsigned int)
 				*/
 				RENDER_DISABLED = 2,
@@ -127,17 +137,10 @@ namespace mc {
 				STRETCH_X = 4,
 
 				/**
-				Flag representing whether an Entity's X position should move when it's parent is resized.
+				Flag representing whether an Entity's Y position should move when it's parent is resized.
 				@see Entity::STRETCH_X
 				*/
 				STRETCH_Y = 5,
-
-				/**
-				Flag representing whether this `Entity` has been hovered over. The `RenderProtocol` used to render the `Entity` must set this.
-				@see ssl::bindEntity(Entity*)
-				*/
-				HOVERED = 6,
-
 				/**
 				Flag representing whether this `Entity` is dirty and it's positions needs to be recalculated.
 				<p>
@@ -153,7 +156,7 @@ namespace mc {
 				<p>
 				Additionally, an `Entity` that is considered dirty will have it's buffer updated on the GPU side.
 				*/
-				DIRTY = 7
+				DIRTY = 6
 			};
 
 			/**
@@ -497,6 +500,12 @@ namespace mc {
 			virtual void render();
 
 			/**
+			@internal
+			@opengl
+			*/
+			virtual void hover();
+
+			/**
 			When `Entity.update()` is called, `onUpdate()` is called on all of it's children.
 			@see System#update()
 			@internal
@@ -529,6 +538,12 @@ namespace mc {
 			@opengl
 			*/
 			virtual void onClean();
+
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void onHover();
 
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
@@ -598,6 +613,7 @@ namespace mc {
 			friend void ssl::bindBuffer(ogl::UniformBuffer&);
 			friend void ssl::bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
 			friend void ssl::fillBuffer(GraphicsEntity*);
+			friend void ssl::checkInput();
 		public:
 			GraphicsEntity() noexcept;
 

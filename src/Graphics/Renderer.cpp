@@ -66,12 +66,10 @@ namespace mc {
 
 			ssl::tearDown(win);
 		}//tearDown
-		//resize
 		void Renderer::renderFrame(os::WindowModule* win) {
 			setUp(win);
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
 				GraphicsEntity* en = pair->second;
-				en->setProperty(Entity::HOVERED, false);
 
 				entityIndex = static_cast<Index>(pair - renderQueue.begin());
 				protocols[pair->first]->render(win, en);
@@ -319,7 +317,7 @@ namespace mc {
 
 				if( pixel > 0 ) {
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex
-					renderQueue[--pixel].second->setProperty(Entity::HOVERED, true);
+					renderQueue[--pixel].second->hover();
 				}
 
 				frameBuffer.unbind();

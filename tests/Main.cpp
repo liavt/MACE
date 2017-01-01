@@ -10,20 +10,9 @@ The above copyright notice and this permission notice shall be included in all c
 #define CATCH_CONFIG_RUNNER
 #include <Catch.h>
 
-#ifdef MACE_TEST_DEMOS
-#include <iostream>
-MACE_DECLARE_DEMO_FUNCTIONS;
-#endif
-
 int main(int argc, char* const argv[]) {
 	//constant? get it?
 	const int result = Catch::Session().run(argc, argv);
-
-
-#ifdef MACE_TEST_DEMOS
-	std::cout << "Running demos..." << std::endl;
-	MACE_RUN_DEMOS;
-#endif
 
 	return result;
 }

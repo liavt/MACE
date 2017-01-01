@@ -1,117 +1,115 @@
-#define MACE_DEMO_NAME Rotations
 
 #include <MACE/MACE.h>
 #include <random>
 #include <ctime>
 #include <iostream>
 
-namespace {
-	using namespace mc;
+using namespace mc;
 
-	gfx::ogl::Texture star = gfx::ogl::Texture();
+gfx::ogl::Texture star = gfx::ogl::Texture();
 
-	bool rotating = false;
+bool rotating = false;
 
-	gfx::Group botLeft, botRight, topLeft, topRight;
+gfx::Group botLeft, botRight, topLeft, topRight;
 
-	class FPSEntity: public gfx::Entity {
-		Index nbFrames;
-		time_t lastTime = time(0);
+class FPSEntity: public gfx::Entity {
+	Index nbFrames;
+	time_t lastTime = time(0);
 
-		void onUpdate() override {};
-		void onRender() override {
-			nbFrames++;
-			if( time(0) - lastTime >= 1.0 ) {
-				std::cout << "FPS: " << nbFrames << " Frame Time: " << float(1000.0f) / nbFrames << std::endl;
-				nbFrames = 0;
-				lastTime += 1;
-			}
-		};
-		void onInit() override {};
-		void onDestroy() override {};
-	};
-
-	class TestComponent: public gfx::Component {
-
-		void init(gfx::Entity* en) override {
-			dynamic_cast<gfx::Image*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+	void onUpdate() override {};
+	void onRender() override {
+		nbFrames++;
+		if( time(0) - lastTime >= 1.0 ) {
+			std::cout << "FPS: " << nbFrames << " Frame Time: " << float(1000.0f) / nbFrames << std::endl;
+			nbFrames = 0;
+			lastTime += 1;
 		}
+	};
+	void onInit() override {};
+	void onDestroy() override {};
+};
 
-		bool update(gfx::Entity* en) override {
-			if( en->getProperty(gfx::Entity::HOVERED) && os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
-				en->rotate(0.0f, 0.0f, 0.01f);
-			}
-			return false;
+class TestComponent: public gfx::Component {
+
+	void init(gfx::Entity* en) override {
+		dynamic_cast<gfx::Image*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+	}
+
+	bool update(gfx::Entity* en) override {
+		return false;
+	}
+
+	void hover(gfx::Entity* en) override {
+		if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+			en->rotate(0.0f, 0.0f, 0.01f);
 		}
+	}
 
-		void destroy(gfx::Entity* en) override {}
+	void destroy(gfx::Entity* en) override {}
 
-		void clean(gfx::Entity* en) override {}
+	void clean(gfx::Entity* en) override {}
+};
+
+class RotationComponent: public gfx::Component {
+	void init(gfx::Entity* e) {};
+	bool update(gfx::Entity* e) {
+		if( rotating ) {
+			e->rotate(0.0f, 0.0f, 0.01f);
+		}
+		return false;
 	};
+	void destroy(gfx::Entity* e) {};
+};
 
-	class RotationComponent: public gfx::Component {
-		void init(gfx::Entity* e) {};
-		bool update(gfx::Entity* e) {
-			if( rotating ) {
-				e->rotate(0.0f, 0.0f, 0.01f);
-			}
-			return false;
-		};
-		void destroy(gfx::Entity* e) {};
-	};
-
-	RotationComponent r = RotationComponent();
-	TestComponent testComponent = TestComponent();
+RotationComponent r = RotationComponent();
+TestComponent testComponent = TestComponent();
 
 
-	void initGL() {
+void initGL() {
 
 
 
-		srand((unsigned) time(0));
+	srand((unsigned) time(0));
 
-		const Size elementNum = 10;
+	const Size elementNum = 10;
 
-		star = gfx::ogl::Texture(MACE_DEMO_ASSETS + std::string("star.png"));
+	star = gfx::ogl::Texture(MACE_DEMO_ASSETS + std::string("star.png"));
 
-		for( Index x = 0; x < elementNum; x++ ) {
-			for( Index y = 0; y < elementNum; y++ ) {
-				gfx::Image* entity = new gfx::Image();
+	for( Index x = 0; x < elementNum; x++ ) {
+		for( Index y = 0; y < elementNum; y++ ) {
+			gfx::Image* entity = new gfx::Image();
 
-				entity->setTexture(star);
+			entity->setTexture(star);
 
-				entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
-				entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
+			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
+			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
 
-				entity->setWidth((1.0f / elementNum) * 2);
-				entity->setHeight((1.0f / elementNum) * 2);
+			entity->setWidth((1.0f / elementNum) * 2);
+			entity->setHeight((1.0f / elementNum) * 2);
 
-				entity->setProperty(gfx::Entity::STRETCH_X, false);
-				entity->setProperty(gfx::Entity::STRETCH_Y, false);
+			entity->setProperty(gfx::Entity::STRETCH_X, false);
+			entity->setProperty(gfx::Entity::STRETCH_Y, false);
 
-				entity->addComponent(testComponent);
+			entity->addComponent(testComponent);
 
-				if( x >= elementNum / 2 ) {
-					if( y >= elementNum / 2 ) {
-						topRight.addChild(*entity);
-					} else {
-						botRight.addChild(*entity);
-					}
+			if( x >= elementNum / 2 ) {
+				if( y >= elementNum / 2 ) {
+					topRight.addChild(*entity);
 				} else {
-					if( y >= elementNum / 2 ) {
-						topLeft.addChild(*entity);
-					} else {
-						botLeft.addChild(*entity);
-					}
+					botRight.addChild(*entity);
+				}
+			} else {
+				if( y >= elementNum / 2 ) {
+					topLeft.addChild(*entity);
+				} else {
+					botLeft.addChild(*entity);
 				}
 			}
 		}
-
-
 	}
-}//anon namespace
+}
 
-int MACE_DEMO_MAIN() {
+int main() {
 	try {
 		std::cout << "Click on a star to rotate it individually! It is pixel perfect! Holding down space will rotate all the stars in big chunks. It will only swap frames when something changes for maximum performance.\n";
 		std::cout << "Also try resizing the screen and watch how it reacts!\n";
@@ -172,11 +170,8 @@ int MACE_DEMO_MAIN() {
 			} else {
 				rotating = false;
 			}
-#ifdef MACE_TEST_DEMOS
-			mc::System::requestStop();
-#else
+
 			std::this_thread::sleep_for(std::chrono::milliseconds(33));
-#endif
 		}
 
 		mc::System::destroy();
