@@ -123,9 +123,32 @@ add_library(MACE ${HEADERS} ${SRC})
 
 if(${MACE_UNIT_TESTING})
 	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
-	add_executable(MACE-Testing ${TESTS_SRC})
+	if(${MACE_DEMOS})
+		file(GLOB_RECURSE DEMOS_SRC "demos/*.cpp")
+		add_executable(MACE-Testing ${TESTS_SRC} ${DEMOS_SRC})
+		
+		target_compile_definitions(MACE-Testing PUBLIC MACE_TEST_DEMOS=1 MACE_DEMO_ASSETS="${PROJECT_SOURCE_DIR}/demos/assets/" MACE_DEMO_MAIN=MACE_DEMO_NAME)
+		
+		set(DEMOS_DECLARATIONS "")
+		set(DEMOS_FUNCTIONS "")
+		
+		foreach(FILE ${DEMOS_SRC})
+			get_filename_component(DEMO_NAME ${FILE} NAME_WE)
+			
+			set(DEMOS_DECLARATIONS "${DEMOS_DECLARATIONS}int ${DEMO_NAME}()$<SEMICOLON>")
+			set(DEMOS_FUNCTIONS "${DEMOS_FUNCTIONS}${DEMO_NAME}()$<SEMICOLON>")
+		endforeach()
+		
+		message(${DEMOS_DECLARATIONS})
+		
+		target_compile_definitions(MACE-Testing PUBLIC MACE_DECLARE_DEMO_FUNCTIONS=$<1:${DEMOS_DECLARATIONS}>)
+		target_compile_definitions(MACE-Testing PUBLIC MACE_RUN_DEMOS=$<1:${DEMOS_FUNCTIONS}>)
+	else()
+		add_executable(MACE-Testing ${TESTS_SRC})
+	endif()
 	
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
+	target_include_directories(MACE-Testing PUBLIC ${MACE_INCLUDES})
 	
 	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC")
 endif()
@@ -141,7 +164,8 @@ if(${MACE_DEMOS})
 	
 		target_link_libraries(${PROJECT_NAME} LINK_PUBLIC MACE)
 		
-		target_compile_definitions(${PROJECT_NAME} PRIVATE MACE_DEMO_ASSETS="${PROJECT_SOURCE_DIR}/demos/assets/")
+		target_compile_definitions(${PROJECT_NAME} PUBLIC MACE_DEMO_ASSETS="${PROJECT_SOURCE_DIR}/demos/assets/")
+		target_compile_definitions(${PROJECT_NAME} PRIVATE MACE_DEMO_MAIN=main)
 		
 		set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "MC/Demos")
 	endforeach()
