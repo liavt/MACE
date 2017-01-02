@@ -138,6 +138,8 @@ namespace mc {
 			glfwGetFramebufferSize(window, &width, &height);
 
 			gfx::Renderer::init(width, height);
+
+			creationCallback();
 		}//create
 
 		GLFWwindow* WindowModule::getGLFWWindow() {
@@ -293,6 +295,18 @@ namespace mc {
 		bool WindowModule::isVSync() const {
 			return vsync;
 		}//isVSync
+
+		void WindowModule::setCreationCallback(const VoidFunctionPtr callback) {
+			creationCallback = callback;
+		}//setCreationCallback
+
+		const VoidFunctionPtr WindowModule::getCreationCallback() const {
+			return creationCallback;
+		}//getCreationCallback
+
+		VoidFunctionPtr WindowModule::getCreationCallback() {
+			return creationCallback;
+		}//getCreationCallback
 
 		void WindowModule::onInit() {}
 

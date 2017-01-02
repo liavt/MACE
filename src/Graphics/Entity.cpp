@@ -85,6 +85,10 @@ namespace mc {
 				for( Index i = 0; i < children.size(); ++i ) {
 					children[i]->render();
 				}
+
+				for( Index i = 0; i < components.size(); i++ ) {
+					components[i]->render(this);
+				}
 			}
 
 		}
@@ -499,74 +503,6 @@ namespace mc {
 				makeDirty();
 				buffer = newBuffer;
 			}
-		}
-
-		void CallbackEntity::onInit() {
-			initCallback();
-		}
-
-		void CallbackEntity::onUpdate() {
-			updateCallback();
-		}
-
-		void CallbackEntity::onRender() {
-			renderCallback();
-		}
-
-		void CallbackEntity::onDestroy() {
-			destroyCallback();
-		}
-
-		void CallbackEntity::setInitCallback(const VoidFunctionPtr func) {
-			if( func == 0 || func == nullptr )throw NullPointerException("Init callback must be a valid pointer, and not null!");
-			initCallback = func;
-		}
-
-		VoidFunctionPtr CallbackEntity::getInitCallback() {
-			return initCallback;
-		}
-
-		const VoidFunctionPtr CallbackEntity::getInitCallback() const {
-			return initCallback;
-		}
-
-		void CallbackEntity::setUpdateCallback(const VoidFunctionPtr func) {
-			if( func == 0 || func == nullptr )throw NullPointerException("Update callback must be a valid pointer, and not null!");
-			updateCallback = func;
-		}
-
-		VoidFunctionPtr CallbackEntity::getUpdateCallback() {
-			return updateCallback;
-		}
-
-		const VoidFunctionPtr CallbackEntity::getUpdateCallback() const {
-			return updateCallback;
-		}
-
-		void CallbackEntity::setRenderCallback(const VoidFunctionPtr func) {
-			if( func == 0 || func == nullptr )throw NullPointerException("Render callback must be a valid pointer, and not null!");
-			renderCallback = func;
-		}
-
-		VoidFunctionPtr CallbackEntity::getRenderCallback() {
-			return renderCallback;
-		}
-
-		const VoidFunctionPtr CallbackEntity::getRenderCallback() const {
-			return renderCallback;
-		}
-
-		void CallbackEntity::setDestroyCallback(const VoidFunctionPtr func) {
-			if( func == 0 || func == nullptr )throw NullPointerException("Destroy callback must be a valid pointer, and not null!");
-			destroyCallback = func;
-		}
-
-		VoidFunctionPtr CallbackEntity::getDestroyCallback() {
-			return destroyCallback;
-		}
-
-		const VoidFunctionPtr CallbackEntity::getDestroyCallback() const {
-			return destroyCallback;
 		}
 
 		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}

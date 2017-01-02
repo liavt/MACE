@@ -371,6 +371,8 @@ namespace mc {
 
 				scale *= inheritedScale;
 
+				rotation += inheritedRotation;
+
 				//GLSL expects the boolean values as a float, because memory is stored in increments of a float.
 				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
 				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;

@@ -5,24 +5,6 @@
 
 using namespace mc;
 
-class FPSEntity: public gfx::Entity {
-	Index nbFrames;
-	time_t lastTime = time(0);
-
-	void onUpdate() override {};
-	void onRender() override {
-		nbFrames++;
-		if( time(0) - lastTime >= 1.0 ) {
-			std::cout << "FPS: " << nbFrames << " Frame Time: " << float(1000.0f) / nbFrames << std::endl;
-			nbFrames = 0;
-			lastTime += 1;
-		}
-	};
-	void onInit() override {};
-	void onDestroy() override {};
-
-};
-
 class TestComponent: public gfx::Component {
 
 	void init(gfx::Entity* en) override {
@@ -34,6 +16,8 @@ class TestComponent: public gfx::Component {
 	bool update(gfx::Entity* en) override {
 		return false;
 	}
+
+	void render(gfx::Entity* en) override {}
 
 	void hover(gfx::Entity* en) override {
 		if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
@@ -56,7 +40,7 @@ gfx::Image leftBot;
 gfx::Image rightTop;
 gfx::Image rightBot;
 
-void initGL() {
+void create() {
 	srand((unsigned) time(0));
 
 	const Size elementNum = 10;
@@ -111,12 +95,13 @@ int main() {
 
 		module.addChild(group);
 
-		FPSEntity f = FPSEntity();
-		module.addChild(f);
+		gfx::FPSComponent f = gfx::FPSComponent();
+		f.setTickCallback([] (gfx::FPSComponent* com, gfx::Entity*) {
+			std::cout<<"UPS: "<< com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
+		});
+		module.addComponent(f);
 
-		gfx::CallbackEntity callback;
-		callback.setInitCallback(&initGL);
-		module.addChild(callback);
+		module.setCreationCallback(&create);
 
 		mc::System::init();
 

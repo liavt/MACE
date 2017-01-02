@@ -59,7 +59,13 @@ namespace mc {
 
 			void setVSync(const bool& sync);
 			bool isVSync() const;
+
+			void setCreationCallback(const VoidFunctionPtr callback);
+			const VoidFunctionPtr getCreationCallback() const;
+			VoidFunctionPtr getCreationCallback();
 		private:
+			VoidFunctionPtr creationCallback = [] {};
+
 			bool destroyed = false;
 
 			std::thread windowThread;

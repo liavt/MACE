@@ -48,7 +48,8 @@ namespace mc {
 		@see Entity::addComponent(Component&)
 		*/
 		class Component {
-		public:
+			friend class Entity;
+		protected:
 			/**
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
 			Required function.
@@ -76,6 +77,8 @@ namespace mc {
 			@opengl
 			*/
 			virtual void destroy(Entity* e) = 0;
+
+			virtual void render(Entity* e) = 0;
 			/**
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
 			@param e The parent `Entity`
@@ -582,32 +585,6 @@ namespace mc {
 			void onDestroy() override;
 
 		};//Group
-
-		class CallbackEntity: public Entity {
-		public:
-			void setInitCallback(const VoidFunctionPtr func);
-			VoidFunctionPtr getInitCallback();
-			const VoidFunctionPtr getInitCallback() const;
-
-			void setUpdateCallback(const VoidFunctionPtr func);
-			VoidFunctionPtr getUpdateCallback();
-			const VoidFunctionPtr getUpdateCallback() const;
-
-			void setRenderCallback(const VoidFunctionPtr func);
-			VoidFunctionPtr getRenderCallback();
-			const VoidFunctionPtr getRenderCallback() const;
-
-			void setDestroyCallback(const VoidFunctionPtr func);
-			VoidFunctionPtr getDestroyCallback();
-			const VoidFunctionPtr getDestroyCallback() const;
-		protected:
-			void onInit() final;
-			void onUpdate() final;
-			void onRender() final;
-			void onDestroy() final;
-		private:
-			VoidFunctionPtr destroyCallback = [] {}, updateCallback = [] {}, renderCallback = [] {}, initCallback = [] {};
-		};//CallbackEntity
 
 		class GraphicsEntity: public Entity {
 			friend void ssl::bindBuffer(ogl::UniformBuffer&);
