@@ -91,25 +91,29 @@ namespace mc {
 			using Entity::destroy;
 		};
 
-		class DummyAction: public mc::gfx::Component {
+		class DummyComponent: public mc::gfx::Component {
 		public:
 			int updates;
 			bool destroySelf = false;
 			bool isInit = false;
 			bool destroyed = false;
 
-			void init(Entity* e) {
+			void init(Entity* e) override {
 				isInit = true;
 			}
 
-			bool update(Entity* e) {
+			bool update(Entity* e) override {
 				updates++;
 				if( destroySelf )return true;
 				else return false;
 			}
 
-			void destroy(Entity* e) {
+			void destroy(Entity* e) override {
 				destroyed = true;
+			}
+
+			void render(Entity* e) override {
+			
 			}
 		};
 
@@ -237,7 +241,7 @@ namespace mc {
 		}
 
 		TEST_CASE("Testing actions", "[entity][graphics]") {
-			DummyAction a = DummyAction();
+			DummyComponent a = DummyComponent();
 			DummyEntity e = DummyEntity();
 
 			SECTION("Testing default values") {

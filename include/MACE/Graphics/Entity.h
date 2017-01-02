@@ -46,6 +46,7 @@ namespace mc {
 		There is no function to remove a `Component` from an `Entity`. Instead, the `Component` decides when to be removed
 		from Component::update(Entity*). This makes sure that the `Component` completes whatever task it was trying to do.
 		@see Entity::addComponent(Component&)
+		@todo unit testing for clean() render() and hover()
 		*/
 		class Component {
 			friend class Entity;
