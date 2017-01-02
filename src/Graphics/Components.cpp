@@ -110,7 +110,7 @@ namespace mc {
 			return tickCallback;
 		}
 
-		void FPSComponent::init(Entity * e) {
+		void FPSComponent::init(Entity *) {
 			lastTime = time(0);
 		}
 
@@ -134,17 +134,17 @@ namespace mc {
 			return false;
 		}
 
-		void FPSComponent::render(Entity * e) {
+		void FPSComponent::render(Entity *) {
 			++nbFrames;
 		}
 
-		void FPSComponent::clean(Entity * e) {
+		void FPSComponent::clean(Entity *) {
 			++nbCleans;
 		}
 
-		void FPSComponent::hover(Entity * e) {
+		void FPSComponent::hover(Entity *) {
 			++nbHovers;
 		}
-		void FPSComponent::destroy(Entity * e) {}
+		void FPSComponent::destroy(Entity *) {}
 	}
 }//mc

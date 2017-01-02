@@ -380,7 +380,15 @@ namespace mc {
 			@dirty
 			*/
 			void addChild(Entity& e);
+			/**
+			@copydoc Entity::addChild(Entity&)
+			*/
+			void addChild(Entity* e);
 
+			void addComponent(Component* action);
+			/**
+			@copydoc Entity::addComponent(Component*)
+			*/
 			void addComponent(Component& action);
 			std::vector<Component*> getComponents();
 

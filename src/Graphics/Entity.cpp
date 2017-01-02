@@ -196,13 +196,6 @@ namespace mc {
 			return parent != 0 || parent != nullptr;
 		}
 
-		void Entity::addChild(Entity & e) {
-			makeDirty();
-
-			children.push_back(&e);
-			e.setParent(this);
-		}
-
 		Entity& Entity::operator[](Index i) {
 			return *children[i];
 		}
@@ -245,9 +238,24 @@ namespace mc {
 			destroy();
 		}
 
-		void Entity::addComponent(Component & action) {
-			components.push_back(&action);
-			action.init(this);
+		void Entity::addChild(Entity * e) {
+			makeDirty();
+
+			children.push_back(e);
+			e->setParent(this);
+		}
+
+		void Entity::addChild(Entity & e) {
+			addChild(&e);
+		}
+
+		void Entity::addComponent(Component * component) {
+			components.push_back(component);
+			component->init(this);
+		}
+
+		void Entity::addComponent(Component & component) {
+			addComponent(&component);
 		}
 
 		std::vector<Component*> Entity::getComponents() {
@@ -575,7 +583,7 @@ namespace mc {
 
 		void Component::clean(Entity *) {}
 
-		void Component::hover(Entity * e) {}
+		void Component::hover(Entity *) {}
 
 }//gfx
 }//mc

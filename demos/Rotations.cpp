@@ -76,15 +76,15 @@ void create() {
 
 			if( x >= elementNum / 2 ) {
 				if( y >= elementNum / 2 ) {
-					topRight.addChild(*entity);
+					topRight.addChild(entity);
 				} else {
-					botRight.addChild(*entity);
+					botRight.addChild(entity);
 				}
 			} else {
 				if( y >= elementNum / 2 ) {
-					topLeft.addChild(*entity);
+					topLeft.addChild(entity);
 				} else {
-					botLeft.addChild(*entity);
+					botLeft.addChild(entity);
 				}
 			}
 		}
