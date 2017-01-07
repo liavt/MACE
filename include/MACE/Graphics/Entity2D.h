@@ -35,6 +35,7 @@ namespace mc {
 		template<>
 		class RenderProtocol<Image>: public RenderImpl {
 		public:
+
 			void resize(const Size width, const Size height) override;
 
 			void init(const Size originalWidth, const Size originalHeight) override;
@@ -48,9 +49,7 @@ namespace mc {
 			void destroy() override;
 		private:
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
-		};
-
-		int getImageProtocol();
+		};//RenderProtocol<Image>
 
 		/**
 		@todo figure out a way to make the protocol globally accessible
@@ -58,6 +57,8 @@ namespace mc {
 		class Image: public Entity2D {
 			friend class RenderProtocol<Image>;
 		public:
+			static int getProtocol();
+
 			Image() noexcept;
 			Image(const ogl::Texture& tex);
 			Image(const Color& col);
@@ -66,7 +67,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setTexture(ogl::Texture& tex);
+			void setTexture(const ogl::Texture& tex);
 			/**
 			@dirty
 			*/
@@ -82,7 +83,117 @@ namespace mc {
 			void onDestroy() override final;
 		private:
 			ogl::Texture texture;
-		};
+		};//Image
+
+		class ProgressBar;
+
+		/**
+		@internal
+		@opengl
+		*/
+		template<>
+		class RenderProtocol<ProgressBar>: public RenderImpl {
+		public:
+			void resize(const Size width, const Size height) override;
+
+			void init(const Size originalWidth, const Size originalHeight) override;
+
+			void setUp(os::WindowModule* win, RenderQueue* queue) override;
+
+			void render(os::WindowModule* win, GraphicsEntity* entity) override;
+
+			void tearDown(os::WindowModule* win, RenderQueue* queue) override;
+
+			void destroy() override;
+		private:
+			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
+		};//RenderProtocol<ProgressBar>
+
+		class ProgressBar: public Entity2D {
+			friend class RenderProtocol<ProgressBar>;
+		public:
+			static int getProtocol();
+
+			ProgressBar() noexcept;
+			ProgressBar(const float minimum, const float maximum, const float progress = 0) noexcept;
+			~ProgressBar() = default;
+
+			/**
+			@dirty
+			*/
+			void setBackgroundTexture(const ogl::Texture& tex);
+			/**
+			@dirty
+			*/
+			ogl::Texture& getBackgroundTexture();
+			const ogl::Texture& getBackgroundTexture() const;
+
+			/**
+			@dirty
+			*/
+			void setForegroundTexture(const ogl::Texture& tex);
+			/**
+			@dirty
+			*/
+			ogl::Texture& getForegroundTexture();
+			const ogl::Texture& getForegroundTexture() const;
+
+			/**
+			@dirty
+			*/
+			void setSelectionTexture(const ogl::Texture& tex);
+			/**
+			@dirty
+			*/
+			ogl::Texture& getSelectionTexture();
+			const ogl::Texture& getSelectionTexture() const;
+
+			/**
+			@dirty
+			*/
+			void setMinimum(const float tex);
+			/**
+			@dirty
+			*/
+			float& getMinimum();
+			const float& getMinimum() const;
+
+
+			/**
+			@dirty
+			*/
+			void setMaximum(const float tex);
+			/**
+			@dirty
+			*/
+			float& getMaximum();
+			const float& getMaximum() const;
+
+
+			/**
+			@dirty
+			*/
+			void setProgress(const float tex);
+			/**
+			@dirty
+			*/
+			float& getProgress();
+			const float& getProgress() const;
+
+			bool operator==(const ProgressBar& other) const;
+			bool operator!=(const ProgressBar& other) const;
+		protected:
+			void onInit() override final;
+			void onUpdate() override final;
+			void onRender() override final;
+			void onDestroy() override final;
+		private:
+			float max = 0, min = 0, progress = 0;
+
+			ogl::Texture backgroundTexture;
+			ogl::Texture foregroundTexture;
+			ogl::Texture selectionTexture;
+		};//ProgressBar
 	}//gfx
 }//mc
 

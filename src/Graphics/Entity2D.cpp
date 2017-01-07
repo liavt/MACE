@@ -15,11 +15,18 @@ namespace mc {
 	namespace gfx {
 		namespace {
 			int IMAGE_PROTOCOL = -1;
+			int PROGRESS_BAR_PROTOCOL = -1;
 
 			ogl::Texture whiteTexture;
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
+
+		//IMAGE
+
+		int Image::getProtocol() {
+			return IMAGE_PROTOCOL;
+		}
 
 		Image::Image() noexcept {}
 
@@ -27,7 +34,7 @@ namespace mc {
 			texture = tex;
 		}
 
-		Image::Image(const Color & col) : Image(whiteTexture){
+		Image::Image(const Color & col) : Image(whiteTexture) {
 			if( !texture.isCreated() ) {
 				texture.init();
 
@@ -44,7 +51,7 @@ namespace mc {
 
 		void Image::onInit() {
 			if( !texture.isCreated() ) {
-				texture.destroy();
+				texture.init();
 			}
 
 			if( IMAGE_PROTOCOL < 0 ) {
@@ -65,7 +72,7 @@ namespace mc {
 		}
 
 
-		void Image::setTexture(ogl::Texture & tex) {
+		void Image::setTexture(const ogl::Texture & tex) {
 			if( tex != texture ) {
 				makeDirty();
 
@@ -125,10 +132,225 @@ namespace mc {
 		void RenderProtocol<Image>::destroy() {
 			renderer.destroy();
 		}//destroy
-#undef MACE_TEXTURE_DATA_BUFFER_SIZE
-#undef MACE_TEXTURE_DATA_BUFFER_LOCATION
-		int getImageProtocol() {
-			return IMAGE_PROTOCOL;
-		}//getImageProtocol
+
+		//PROGRESS BAR
+
+		int ProgressBar::getProtocol() {
+			return PROGRESS_BAR_PROTOCOL;
+		}
+
+		ProgressBar::ProgressBar() noexcept: ProgressBar(0, 0, 0) {}
+
+		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : min(minimum), max(maximum), progress(prog) {}
+
+		void ProgressBar::setBackgroundTexture(const ogl::Texture & tex) {
+			if( backgroundTexture != tex ) {
+				makeDirty();
+
+				backgroundTexture = tex;
+			}
+		}
+
+		ogl::Texture & ProgressBar::getBackgroundTexture() {
+			makeDirty();
+
+			return backgroundTexture;
+		}
+
+		const ogl::Texture & ProgressBar::getBackgroundTexture() const {
+			return backgroundTexture;
+		}
+
+		void ProgressBar::setForegroundTexture(const ogl::Texture & tex) {
+			if( foregroundTexture != tex ) {
+				makeDirty();
+
+				foregroundTexture = tex;
+			}
+		}
+
+		ogl::Texture & ProgressBar::getForegroundTexture() {
+			makeDirty();
+
+			return foregroundTexture;
+		}
+
+		const ogl::Texture & ProgressBar::getForegroundTexture() const {
+			return foregroundTexture;
+		}
+
+		void ProgressBar::setSelectionTexture(const ogl::Texture & tex) {
+			if( selectionTexture != tex ) {
+				makeDirty();
+
+				selectionTexture = tex;
+			}
+		}
+
+		ogl::Texture & ProgressBar::getSelectionTexture() {
+			makeDirty();
+
+			return selectionTexture;
+		}
+
+		const ogl::Texture & ProgressBar::getSelectionTexture() const {
+			return selectionTexture;
+		}
+
+
+		void ProgressBar::setMinimum(const float minimum) {
+			if( min != minimum ) {
+				makeDirty();
+
+				min = minimum;
+			}
+		}
+
+		float & ProgressBar::getMinimum() {
+			makeDirty();
+
+			return min;
+		}
+
+		const float & ProgressBar::getMinimum() const {
+			return min;
+		}
+
+		void ProgressBar::setMaximum(const float maximum) {
+			if( max != maximum ) {
+				makeDirty();
+
+				max = maximum;
+			}
+		}
+
+		float & ProgressBar::getMaximum() {
+			makeDirty();
+
+			return max;
+		}
+
+		const float & ProgressBar::getMaximum() const {
+			return max;
+		}
+
+		void ProgressBar::setProgress(const float prog) {
+			if( progress != prog ) {
+				makeDirty();
+
+				progress = prog;
+			}
+		}
+
+		float & ProgressBar::getProgress() {
+			makeDirty();
+
+			return progress;
+		}
+
+		const float & ProgressBar::getProgress() const {
+			return progress;
+		}
+
+
+		bool ProgressBar::operator==(const ProgressBar & other) const {
+			return Entity2D::operator==(other) && max == other.max&&min == other.min&&progress == other.progress&&backgroundTexture == other.backgroundTexture&&foregroundTexture == other.foregroundTexture&&selectionTexture == other.selectionTexture;
+		}
+
+		bool ProgressBar::operator!=(const ProgressBar & other) const {
+			return !operator==(other);
+		}
+
+		void ProgressBar::onInit() {
+			if( !backgroundTexture.isCreated() ) {
+				backgroundTexture.init();
+			}
+
+			if( !foregroundTexture.isCreated() ) {
+				foregroundTexture.init();
+			}
+
+			if( !selectionTexture.isCreated() ) {
+				selectionTexture.init();
+			}
+
+			if( PROGRESS_BAR_PROTOCOL < 0 ) {
+				PROGRESS_BAR_PROTOCOL = Renderer::registerProtocol<ProgressBar>();
+			}
+		}
+
+		void ProgressBar::onUpdate() {}
+
+		void ProgressBar::onRender() {
+			Renderer::queue(this, PROGRESS_BAR_PROTOCOL);
+		}
+
+		void ProgressBar::onDestroy() {
+			if( backgroundTexture.isCreated() ) {
+				backgroundTexture.destroy();
+			}
+
+			if( foregroundTexture.isCreated() ) {
+				foregroundTexture.destroy();
+			}
+
+			if( selectionTexture.isCreated() ) {
+				selectionTexture.destroy();
+			}
+		}
+
+		void RenderProtocol<ProgressBar>::resize(const Size, const Size) {}
+
+		void RenderProtocol<ProgressBar>::init(const Size, const Size) {
+
+			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
+			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
+			const char* vertexShader2D = {
+#	include <MACE/Graphics/Shaders/progressbar.v.glsl>
+			};
+			const char* fragmentShader2D = {
+#	include <MACE/Graphics/Shaders/progressbar.f.glsl>
+			};
+
+			renderer.init(vertexShader2D, fragmentShader2D);
+
+			ogl::ShaderProgram& prog = renderer.getShader();
+			prog.bind();
+			prog.createUniform("backgroundTexture");
+			prog.createUniform("foregroundTexture");
+			prog.createUniform("selectionTexture");
+
+			prog.createUniform("progress");
+
+			prog.setUniform("backgroundTexture", 0);
+			prog.setUniform("foregroundTexture", 1);
+			prog.setUniform("selectionTexture", 2);
+		}//init
+
+		void RenderProtocol<ProgressBar>::setUp(os::WindowModule*, RenderQueue*) {};
+
+		void RenderProtocol<ProgressBar>::render(os::WindowModule*, GraphicsEntity* e) {
+			ProgressBar* entity = dynamic_cast<ProgressBar*>(e);
+			if( entity == nullptr ) {
+				throw NullPointerException("You must provide an ProgressBar for RenderProtocol<ProgressBar>");
+			}
+
+			entity->backgroundTexture.bindToLocation(0);
+			entity->foregroundTexture.bindToLocation(1);
+			entity->selectionTexture.bindToLocation(2);
+
+			renderer.getShader().bind();
+			renderer.getShader().setUniform("progress", (entity->progress - entity->min) / (entity->max - entity->min));
+
+			ogl::checkGLError(__LINE__, __FILE__);
+
+			renderer.draw(e);
+		}//render
+
+		void RenderProtocol<ProgressBar>::tearDown(os::WindowModule*, RenderQueue*) {}
+
+		void RenderProtocol<ProgressBar>::destroy() {
+			renderer.destroy();
+		}//destroy
 	}//gfx
 }//mc

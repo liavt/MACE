@@ -244,7 +244,7 @@ namespace mc {
 
 			void setUp(os::WindowModule *) {
 				frameBuffer.bind();
-				sceneTexture.bind();
+				sceneTexture.bindToLocation(0);
 				idTexture.bind();
 
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -254,7 +254,7 @@ namespace mc {
 				frameBuffer.unbind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				sceneTexture.bind();
+				sceneTexture.bindToLocation(0);
 
 				renderer.draw();
 

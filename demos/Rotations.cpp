@@ -1,4 +1,3 @@
-
 #include <MACE/MACE.h>
 #include <random>
 #include <iostream>

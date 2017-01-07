@@ -471,6 +471,8 @@ namespace mc {
 				void init() override;
 				void destroy() override;
 
+				void bindToLocation(const Index location) const;
+
 				/**
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				@opengl
@@ -479,8 +481,10 @@ namespace mc {
 
 				/**
 				@opengl
+				@bug Loads upside down
 				*/
 				void loadFile(const char* file);
+
 				/**
 				@copydoc loadFile(const char*)
 				*/

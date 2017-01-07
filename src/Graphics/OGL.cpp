@@ -85,7 +85,7 @@ namespace mc {
 					}
 				}
 #else
-			void checkGLError(const Index, const char*){
+			void checkGLError(const Index, const char*) {
 #endif
 			}
 
@@ -377,6 +377,11 @@ namespace mc {
 
 					glDeleteTextures(1, &id);
 				}
+			}
+
+			void Texture::bindToLocation(const Index location) const {
+				glActiveTexture(GL_TEXTURE0 + location);
+				bind();
 			}
 
 			void Texture::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {

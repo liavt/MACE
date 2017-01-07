@@ -646,7 +646,7 @@ namespace mc {
 		private:
 			ogl::UniformBuffer buffer = ogl::UniformBuffer();
 
-			Color paint = Color(1.0f, 1.0f, 1.0f, 1.0f);
+			Color paint = Color(1.0f, 1.0f, 1.0f, 0.0f);
 
 			float opacity = 1.0f;
 		};//GraphicsEntity
