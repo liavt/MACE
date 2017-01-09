@@ -124,6 +124,8 @@ namespace mc {
 				QUINTIC,
 				//Circular acceleration from zero
 				SQUARE_ROOT,
+				//Even faster acceleration at start, and slow down at end
+				CUBE_ROOT,
 				LINEAR
 			};
 

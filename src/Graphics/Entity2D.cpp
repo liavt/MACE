@@ -298,6 +298,8 @@ namespace mc {
 						percentDone = difference*difference*difference*difference*difference;
 					} else if( func == EaseFunction::SQUARE_ROOT ) {
 						percentDone = std::sqrt(difference);
+					} else if( func == EaseFunction::SQUARE_ROOT ) {
+						percentDone = std::cbrt(difference);
 					} else {
 						//linear as a fallback
 						percentDone = difference;
