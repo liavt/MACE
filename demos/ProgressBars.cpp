@@ -5,14 +5,15 @@ using namespace mc;
 gfx::Group group;
 
 gfx::ProgressBar circleBar;
+gfx::ProgressBar rectangleBar;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
 	bool update(gfx::Entity* e) {
 		if( os::Input::isKeyDown(os::Input::UP) ) {
-			dynamic_cast<gfx::ProgressBar*>(e)->setProgress(++circleBar.getProgress());
-		}else if( os::Input::isKeyDown(os::Input::DOWN) ) {
-			dynamic_cast<gfx::ProgressBar*>(e)->setProgress(--circleBar.getProgress());
+			dynamic_cast<gfx::ProgressBar*>(e)->addProgress(1);
+		} else if( os::Input::isKeyDown(os::Input::DOWN) ) {
+			dynamic_cast<gfx::ProgressBar*>(e)->addProgress(-1);
 		}
 		return false;
 	};
@@ -23,22 +24,43 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create() {
-	gfx::ogl::Texture background = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-background.png");
+	gfx::ogl::Texture background = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circlebackground.png");
 	gfx::ogl::Texture foreground = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-foreground.png");
-	gfx::ogl::Texture circle = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS)+"/progressbar-circle.png");
+	gfx::ogl::Texture selection = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
-	circleBar = gfx::ProgressBar(0, 100, 20);
+	circleBar = gfx::ProgressBar(0, 255, 20);
 	circleBar.setBackgroundTexture(background);
 	circleBar.setForegroundTexture(foreground);
-	circleBar.setSelectionTexture(circle);
+	circleBar.setSelectionTexture(selection);
+	circleBar.setWidth(0.25f);
+	circleBar.setHeight(0.25f);
+	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
 
+	circleBar.easeTo(250, 100, gfx::ProgressBar::EaseFunction::SQUARE_ROOT);
+
 	group.addChild(circleBar);
+
+	selection = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png");
+	background = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-background.png");
+
+	rectangleBar = gfx::ProgressBar(0, 255, 100);
+	rectangleBar.setBackgroundTexture(background);
+	rectangleBar.setForegroundTexture(foreground);
+	rectangleBar.setSelectionTexture(selection);
+	rectangleBar.setWidth(0.1f);
+	rectangleBar.setHeight(0.25f);
+	rectangleBar.setX(0.5f);
+	rectangleBar.addComponent(r);
+
+	rectangleBar.easeTo(250, 100, gfx::ProgressBar::EaseFunction::SINUSOIDAL);
+
+	group.addChild(rectangleBar);
 }
 
 int main() {
 	try {
-		os::WindowModule module = os::WindowModule(500, 500, "Rotations Demo");
+		os::WindowModule module = os::WindowModule(500, 500, "Progress Bars Demo");
 
 		module.setFPS(30);
 		module.setVSync(false);

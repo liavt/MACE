@@ -91,7 +91,6 @@ namespace mc {
 
 			time_t lastTime = 0;
 		};//FPSComponent
-
 	}//gfx
 }//mc
 

@@ -22,8 +22,8 @@ vec4 ssl_frag_main()
 	vec4 selection = texture(selectionTexture, textureCoord);
 	vec4 foreground = texture(foregroundTexture, textureCoord);
 	
-	if(foreground.a != 0 && selection.a != 0 && progress > selection.r ){
-		return foreground;
+	if( progress >= selection.r ){
+		return vec4(foreground.rgb, foreground.a * selection.a);
 	}
 	
 	return texture(backgroundTexture, textureCoord);

@@ -35,7 +35,6 @@ namespace mc {
 		template<>
 		class RenderProtocol<Image>: public RenderImpl {
 		public:
-
 			void resize(const Size width, const Size height) override;
 
 			void init(const Size originalWidth, const Size originalHeight) override;
@@ -112,6 +111,22 @@ namespace mc {
 		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
 		public:
+			typedef void(*EaseDoneCallback)(ProgressBar*);
+
+			enum class EaseFunction: Byte {
+				//Starts fast, decelerates at end
+				SINUSOIDAL,
+				//Starts slow, accelerates at end
+				COSINE,
+				CUBIC,
+				QUADRATIC,
+				QUARTIC,
+				QUINTIC,
+				//Circular acceleration from zero
+				SQUARE_ROOT,
+				LINEAR
+			};
+
 			static int getProtocol();
 
 			ProgressBar() noexcept;
@@ -177,8 +192,18 @@ namespace mc {
 			/**
 			@dirty
 			*/
+			void addProgress(const float prog);
+
+			/**
+			@dirty
+			*/
 			float& getProgress();
 			const float& getProgress() const;
+
+			/**
+			@dirty
+			*/
+			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunction::SINUSOIDAL, const EaseDoneCallback callback = [](ProgressBar*){});
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;

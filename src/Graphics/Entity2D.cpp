@@ -8,8 +8,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity2D.h>
-//for memcpy
-#include <cstring>
 
 namespace mc {
 	namespace gfx {
@@ -242,6 +240,14 @@ namespace mc {
 			}
 		}
 
+		void ProgressBar::addProgress(const float prog) {
+			if( prog != 0 ) {
+				makeDirty();
+
+				progress += prog;
+			}
+		}
+
 		float & ProgressBar::getProgress() {
 			makeDirty();
 
@@ -252,6 +258,81 @@ namespace mc {
 			return progress;
 		}
 
+
+		void ProgressBar::easeTo(const float progress, const float time, const EaseFunction function, const EaseDoneCallback callback) {
+			class EaseComponent: public Component {
+			public:
+				EaseComponent(const float p, const float t, const float sp, const EaseFunction f, const EaseDoneCallback cb) : Component(), startProg(sp), prog(p), time(t), func(f), start(0), done(cb) {};
+
+				const float prog;
+				const float startProg;
+				float start;
+				const float time;
+				const EaseDoneCallback done;
+				const EaseFunction func;
+			protected:
+				void init(Entity* e) override {}
+				bool update(Entity* e) override {
+					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
+					if( bar == nullptr ) {
+						//should never happen, as this class is only ever defined and used here, but just in caes
+						throw NullPointerException("Internal error: EaseComponent did not receive a progress bar in update()");
+					}
+
+					//combine 2 operations into 1
+					float difference = start++ / time;
+					float percentDone;
+
+					if( func == EaseFunction::SINUSOIDAL ) {
+						percentDone = static_cast<float>(std::sin(difference * (math::pi() / 2)));
+					} else if( func == EaseFunction::COSINE ) {
+						percentDone = 1.0f - static_cast<float>(std::cos(difference * (math::pi() / 2)));
+					} else if( func == EaseFunction::QUADRATIC ) {
+						percentDone = difference*difference;
+					} else if( func == EaseFunction::CUBIC ) {
+						percentDone = difference*difference*difference;
+					}else if( func == EaseFunction::QUARTIC ) {
+						percentDone = difference*difference*difference*difference;
+					} else if( func == EaseFunction::QUINTIC ) {
+						percentDone = difference*difference*difference*difference*difference;
+					} else if( func == EaseFunction::SQUARE_ROOT ) {
+						percentDone = std::sqrt(difference);
+					} else {
+						//linear as a fallback
+						percentDone = difference;
+					}
+
+					//meaning that we are easing backwards
+					if( startProg > prog ) {
+						bar->setProgress(startProg - (startProg - prog)*(percentDone));
+					} else {
+						bar->setProgress(startProg + (prog - startProg)*(percentDone));
+					}
+
+					//if we got there or time has run out
+					if( bar->getProgress() == prog || difference >= 1.0f ) {
+						return true;
+					}
+					return false;
+				}
+				void render(Entity* e) override {}
+				void destroy(Entity* e) override {
+					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
+					if( bar == nullptr ) {
+						throw NullPointerException("Internal error: EaseComponent did not receive a progress bar in destroy()");
+					}
+					done(bar);
+
+					delete this;
+				}
+			};
+
+			//it deletes itself in destroy();
+			EaseComponent* com = new EaseComponent(progress, time, this->progress, function, callback);
+			addComponent(com);
+
+			makeDirty();
+		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {
 			return Entity2D::operator==(other) && max == other.max&&min == other.min&&progress == other.progress&&backgroundTexture == other.backgroundTexture&&foregroundTexture == other.foregroundTexture&&selectionTexture == other.selectionTexture;
