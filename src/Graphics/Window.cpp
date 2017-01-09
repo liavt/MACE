@@ -48,6 +48,7 @@ namespace mc {
 			//first we set up glew and opengl
 			glfwMakeContextCurrent(window);
 
+            glewExperimental = true;
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
 				throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
@@ -182,10 +183,11 @@ namespace mc {
 			//this stores how many milliseconds it takes for the frame to swap. it is 1 by default so it doesnt create an infinite loop
 			float windowDelay = 0;
 
+
 			try {
 				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-				create();
+                create();
 
 				Entity::init();
 
@@ -225,7 +227,6 @@ namespace mc {
 						}
 
 					}
-
 					now = time(0);
 
 					const time_t delta = now - lastFrame;
@@ -260,6 +261,7 @@ namespace mc {
 					System::requestStop();
 				}
 			}
+
 		}//threadCallback
 
 		void WindowModule::init() {

@@ -24,7 +24,7 @@ set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-set(GLFW_SOURCE_VERSION "3.2")
+set(GLFW_SOURCE_VERSION "3.1.2")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "heanet.dl.sourceforge.net/project/glfw/glfw/${GLFW_SOURCE_VERSION}/${GLFW_SOURCE_NAME}.tar.gz")
 
@@ -44,7 +44,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW)
-find_package(GLFW)
+find_package(GLFW 3.0.0)
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})

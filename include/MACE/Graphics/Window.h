@@ -136,7 +136,7 @@ namespace mc {
 				MOUSE_LAST = MOUSE_8,
 
 				MOUSE_FIRST = MOUSE_1,
-				
+
 				//the values for the following keys are equal to their values in GLFW
 
 				//The first keys are direct ASCII mappings

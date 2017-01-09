@@ -294,6 +294,7 @@ namespace mc {
 		}
 
 		void Entity::init() {
+
 			if( getProperty(Entity::INIT) ) {
 				throw InitializationError("Entity can not have init() called twice.");
 			}
@@ -303,6 +304,7 @@ namespace mc {
 			}
 			onInit();
 			setProperty(Entity::INIT, true);
+
 		}
 
 		void Entity::destroy() {

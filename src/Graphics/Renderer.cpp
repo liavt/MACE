@@ -185,16 +185,21 @@ namespace mc {
 
 					//for our custom FBO. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
+
+                    ogl::checkGLError(__LINE__,__FILE__);
+
 					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
 					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-					Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-					frameBuffer.setDrawBuffers(2, buffers);
-
 					if( frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE ) {
 						throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
 					}
+
+					Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+					frameBuffer.setDrawBuffers(2, buffers);
+
+
 
 					ogl::checkGLError(__LINE__, __FILE__);
 
