@@ -60,7 +60,7 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
-find_package(OpenAL REQUIRED)
+find_package(OpenAL)
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
