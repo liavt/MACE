@@ -30,9 +30,13 @@ set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-set(GLFW_SOURCE_VERSION "3.1.2")
+set(GLFW_SOURCE_VERSION "3.0.4")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")
+
+set(OPENAL_SOURCE_VERSION "1.17.2")
+set(OPENAL_SOURCE_NAME "openal-soft-${GLFW_SOURCE_VERSION}")
+set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/${OPENAL_SOURCE_NAME}.tar.gz")
 
 set(GLEW_SOURCE_VERSION "2.0.0")
 set(GLEW_SOURCE_NAME "glew-${GLEW_SOURCE_VERSION}")
@@ -56,6 +60,7 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
+find_package(OpenAL REQUIRED)
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
@@ -238,6 +243,9 @@ target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
 target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
+
+target_include_directories(MACE PUBLIC ${OPENAL_INCLUDE_DIR})
+target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
 
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
