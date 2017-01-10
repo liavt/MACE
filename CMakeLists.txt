@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 project(MACE CXX)
 
+cmake_policy(PUSH)
+cmake_policy(VERSION 2.8.12)
+if(POLICY CMP0017)
+	cmake_policy(SET CMP0017 NEW)
+endif()
+
 message("MACE project added")
 
 #On unix systems this language is requied to compile GLFW and GLEW
@@ -26,11 +32,15 @@ set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
 set(GLFW_SOURCE_VERSION "3.1.2")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
-set(GLFW_URL "heanet.dl.sourceforge.net/project/glfw/glfw/${GLFW_SOURCE_VERSION}/${GLFW_SOURCE_NAME}.tar.gz")
+set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")
 
 set(GLEW_SOURCE_VERSION "2.0.0")
 set(GLEW_SOURCE_NAME "glew-${GLEW_SOURCE_VERSION}")
-set(GLEW_URL "kent.dl.sourceforge.net/project/glew/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz")
+set(GLEW_URL "https://kent.dl.sourceforge.net/project/glew/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz")
+
+set(FREETYPE_SOURCE_VERSION "2.6.1")
+set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
+set(FREETYPE_URL "http://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
 
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
@@ -43,8 +53,9 @@ set(STB_IMAGE_DOWNLOAD_PATH "${MACE_INCLUDES}/stb_image.h")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(OpenGL REQUIRED)
-find_package(GLEW)
-find_package(GLFW 3.0.0)
+find_package(GLEW ${GLEW_SOURCE_VERSION})
+find_package(GLFW ${GLFW_SOURCE_VERSION})
+find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 
 #Catch is for unit testing.
 if(${MACE_UNIT_TESTING})
@@ -204,7 +215,19 @@ if(NOT ${GLEW_FOUND})
 	endif()
 endif()
 
-
+if(NOT ${FREETYPE_FOUND})
+	if(NOT MACE_DOWNLOAD_DEPENDENCIES)
+		message(FATAL_ERROR "Freetype not found!")
+	else()
+		download_library(${FREETYPE_SOURCE_NAME} ${FREETYPE_URL})
+		add_subdirectory(${PROJECT_SOURCE_DIR}/${FREETYPE_SOURCE_NAME})
+		
+		set(FREETYPE_LIBRARY freetype)
+		
+		set(FREETYPE_INCLUDE_DIR_ft2build ${PROJECT_SOURCE_DIR}/${FREETYPE_SOURCE_NAME}/ft2build.h)
+		set(FREETYPE_INCLUDE_DIR_freetype2 ${PROJECT_SOURCE_DIR}/${FREETYPE_SOURCE_NAME}/freetype)
+	endif()
+endif()
 
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
@@ -212,8 +235,14 @@ target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 
+target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
+target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
+target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
+
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 
 set_target_properties(MACE PROPERTIES FOLDER "MC")
+
+cmake_policy(POP)
