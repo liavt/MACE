@@ -224,8 +224,7 @@ if(NOT ${FREETYPE_FOUND})
 		
 		set(FREETYPE_LIBRARY freetype)
 		
-		set(FREETYPE_INCLUDE_DIR_ft2build ${PROJECT_SOURCE_DIR}/${FREETYPE_SOURCE_NAME}/ft2build.h)
-		set(FREETYPE_INCLUDE_DIR_freetype2 ${PROJECT_SOURCE_DIR}/${FREETYPE_SOURCE_NAME}/freetype)
+		set(FREETYPE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${FREETYPE_SOURCE_NAME}/include)
 	endif()
 endif()
 
@@ -235,8 +234,7 @@ target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 
-target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
-target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
+target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
 
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})

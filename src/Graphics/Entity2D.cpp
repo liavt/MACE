@@ -8,6 +8,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity2D.h>
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include <cmath>
 
 namespace mc {
@@ -17,6 +21,10 @@ namespace mc {
 			int PROGRESS_BAR_PROTOCOL = -1;
 
 			ogl::Texture whiteTexture;
+
+			FT_Library freetype;
+			//error if freetype init failed or -1 if it hasnt been created
+			int freetypeStatus = -1;
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
@@ -435,17 +443,36 @@ namespace mc {
 
 		void RenderProtocol<ProgressBar>::destroy() {
 			renderer.destroy();
+		}//destroy
+
+		bool Text::operator==(const Text & other) const {
+			return Entity2D::operator==(other) && letters == other.letters;
 		}
+
+		bool Text::operator!=(const Text & other) const {
+			return !operator==(other);
+		}
+
 		void Text::onInit() {
+			if( freetypeStatus < 0 ) {
+				freetypeStatus = FT_Init_FreeType(&freetype);
+				
+				if( freetypeStatus != FT_Err_Ok ) {
+					throw InitializationError("Freetype failed to initailize with error code "+freetypeStatus);
+				}
+			}
+
 			if( !hasChild(letters) ) {
 				addChild(letters);
 			}
 		}
-		void Text::onDestroy() {
-			if( hasChild(letters) ) {
-				removeChild(letters);
-			}
-		}
-		//destroy
+
+		void Text::onUpdate() {}
+
+		void Text::onRender() {}
+
+		void Text::onDestroy() {}
+
+		void Text::onClean() {}
 	}//gfx
 }//mc
