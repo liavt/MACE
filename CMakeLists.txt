@@ -2,15 +2,17 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 project(MACE CXX)
 
-cmake_policy(PUSH)
-cmake_policy(VERSION 2.8.12)
-if(POLICY CMP0017)
-	cmake_policy(SET CMP0017 NEW)
+if(COMMAND cmake_Policy)
+	cmake_policy(PUSH)
+	cmake_policy(VERSION 2.8.12)
+	if(POLICY CMP0017)
+		cmake_policy(SET CMP0017 NEW)
+	endif()
 endif()
 
 message("MACE project added")
 
-#On unix systems this language is requied to compile GLFW and GLEW
+#On unix systems this line is requied to compile GLFW and GLEW
 enable_language(C)
 
 set(CMAKE_MODULE_PATH ${CMAKE_ROOT}/Modules "${PROJECT_SOURCE_DIR}/cmake-modules")
@@ -234,6 +236,19 @@ if(NOT ${FREETYPE_FOUND})
 	endif()
 endif()
 
+if(NOT ${OPENAL_FOUND})
+	if(NOT MACE_DOWNLOAD_DEPENDENCIES)
+		message(FATAL_ERROR "OpenAL not found!")
+	else()
+		download_library(${OpenAL_SOURCE_NAME} ${OPENAL_URL})
+		add_subdirectory(${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME})
+		
+		set(OPENAL_LIBRARY OpenAL)
+		
+		set(OPENAL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME}/include)
+	endif()
+endif()
+
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 
@@ -253,4 +268,6 @@ target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 
 set_target_properties(MACE PROPERTIES FOLDER "MC")
 
-cmake_policy(POP)
+if(COMMAND cmake_policy)
+	cmake_policy(POP)
+endif()
