@@ -334,6 +334,7 @@ namespace mc {
 					}
 					done(bar);
 
+                    //honorable suicide
 					delete this;
 				}
 			};
@@ -456,7 +457,7 @@ namespace mc {
 		void Text::onInit() {
 			if( freetypeStatus < 0 ) {
 				freetypeStatus = FT_Init_FreeType(&freetype);
-				
+
 				if( freetypeStatus != FT_Err_Ok ) {
 					throw InitializationError("Freetype failed to initailize with error code "+freetypeStatus);
 				}

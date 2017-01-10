@@ -37,7 +37,7 @@ set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")
 
 set(OPENAL_SOURCE_VERSION "1.17.2")
-set(OPENAL_SOURCE_NAME "openal-soft-${GLFW_SOURCE_VERSION}")
+set(OPENAL_SOURCE_NAME "openal-soft-${OPENAL_SOURCE_VERSION}")
 set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/${OPENAL_SOURCE_NAME}.tar.gz")
 
 set(GLEW_SOURCE_VERSION "2.0.0")
