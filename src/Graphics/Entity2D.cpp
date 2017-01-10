@@ -292,7 +292,7 @@ namespace mc {
 						percentDone = difference*difference;
 					} else if( func == EaseFunction::CUBIC ) {
 						percentDone = difference*difference*difference;
-					}else if( func == EaseFunction::QUARTIC ) {
+					} else if( func == EaseFunction::QUARTIC ) {
 						percentDone = difference*difference*difference*difference;
 					} else if( func == EaseFunction::QUINTIC ) {
 						percentDone = difference*difference*difference*difference*difference;
@@ -435,6 +435,17 @@ namespace mc {
 
 		void RenderProtocol<ProgressBar>::destroy() {
 			renderer.destroy();
-		}//destroy
+		}
+		void Text::onInit() {
+			if( !hasChild(letters) ) {
+				addChild(letters);
+			}
+		}
+		void Text::onDestroy() {
+			if( hasChild(letters) ) {
+				removeChild(letters);
+			}
+		}
+		//destroy
 	}//gfx
 }//mc

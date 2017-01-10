@@ -221,6 +221,20 @@ namespace mc {
 			ogl::Texture foregroundTexture;
 			ogl::Texture selectionTexture;
 		};//ProgressBar
+
+		class Text: public Entity2D {
+		public:
+			bool operator==(const Text& other) const;
+			bool operator!=(const Text& other) const;
+		protected:
+			void onInit() override final;
+			void onUpdate() override final;
+			void onRender() override final;
+			void onDestroy() override final;
+			void onClean() override final;
+		private:
+			Group letters = Group();
+		};//Text
 	}//gfx
 }//mc
 
