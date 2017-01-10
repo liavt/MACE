@@ -240,7 +240,7 @@ if(NOT ${OPENAL_FOUND})
 	if(NOT MACE_DOWNLOAD_DEPENDENCIES)
 		message(FATAL_ERROR "OpenAL not found!")
 	else()
-		download_library(${OpenAL_SOURCE_NAME} ${OPENAL_URL})
+		download_library(${OPENAL_SOURCE_NAME} ${OPENAL_URL})
 		add_subdirectory(${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME})
 		
 		set(OPENAL_LIBRARY OpenAL)
