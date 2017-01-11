@@ -50,9 +50,6 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Image>
 
-		/**
-		@todo figure out a way to make the protocol globally accessible
-		*/
 		class Image: public Entity2D {
 			friend class RenderProtocol<Image>;
 		public:
@@ -221,6 +218,54 @@ namespace mc {
 			ogl::Texture foregroundTexture;
 			ogl::Texture selectionTexture;
 		};//ProgressBar
+
+		class Font{
+        public:
+            struct Character{
+                ogl::Texture texture;
+                Size width;
+                Size height;
+                Index bearingX;
+                Index bearingY;
+                Index advance;
+            };
+
+            static Font loadFont(const std::string& name);
+            static Font loadFont(const char* name);
+
+            Character getCharacter(const char character);
+
+            void setSize(const Size height);
+            Size& getSize();
+            const Size& getSize() const;
+        private:
+            Font(const Index id);
+
+            const Index id;
+            Size height;
+		};//Font
+
+
+		class Letter: public Entity2D {
+			friend class RenderProtocol<Letter>;
+		public:
+			static int getProtocol();
+
+			Letter(const ogl::Texture& tex);
+            ~Letter() = default;
+
+			const ogl::Texture& getTexture() const;
+
+			bool operator==(const Letter& other) const;
+			bool operator!=(const Letter& other) const;
+		protected:
+			void onInit() override final;
+			void onUpdate() override final;
+			void onRender() override final;
+			void onDestroy() override final;
+		private:
+			ogl::Texture texture;
+		};//Letter
 
 		class Text: public Entity2D {
 		public:

@@ -23,7 +23,7 @@ namespace mc {
 
 	namespace gfx {
 
-		//if the container we use is ever going to be changed, we typedef 
+		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<std::pair<Index, GraphicsEntity*>>;
 
 		//forward define for friends
@@ -228,7 +228,7 @@ namespace mc {
 			@opengl
 			*/
 			static void setRefreshColor(const Color& c);
-			
+
 			template<typename T>
 			static Index registerProtocol() {
 				//in destroy(), this memory is deleted
@@ -275,6 +275,11 @@ namespace mc {
 			@opengl
 			*/
 			void destroy();
+
+            /**
+            @opengl
+            */
+            void bind() const;
 
 			/**
 			@opengl

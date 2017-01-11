@@ -616,9 +616,13 @@ namespace mc {
 			square.destroy();
 		}
 
-		void SimpleQuadRenderer::draw(const GraphicsEntity * en) {
-			square.bind();
+		void SimpleQuadRenderer::bind() const {
+            square.bind();
 			shaders2D.bind();
+		}
+
+		void SimpleQuadRenderer::draw(const GraphicsEntity * en) {
+			bind();
 
 			if( useSSL ) {
 				ssl::bindEntity(en, shaders2D);

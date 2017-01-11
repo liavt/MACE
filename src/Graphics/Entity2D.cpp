@@ -13,18 +13,22 @@ The above copyright notice and this permission notice shall be included in all c
 #include FT_FREETYPE_H
 
 #include <cmath>
+#include <vector>
 
 namespace mc {
 	namespace gfx {
 		namespace {
 			int IMAGE_PROTOCOL = -1;
 			int PROGRESS_BAR_PROTOCOL = -1;
+			int LETTER_PROTOCOL = -1;
 
 			ogl::Texture whiteTexture;
 
 			FT_Library freetype;
 			//error if freetype init failed or -1 if it hasnt been created
 			int freetypeStatus = -1;
+
+			std::vector<FT_Face> fonts = std::vector<FT_Face>();
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
@@ -130,6 +134,8 @@ namespace mc {
 			}
 
 			entity->texture.bind();
+
+			renderer.bind();
 
 			renderer.draw(e);
 		}//render
@@ -432,7 +438,7 @@ namespace mc {
 			entity->foregroundTexture.bindToLocation(1);
 			entity->selectionTexture.bindToLocation(2);
 
-			renderer.getShader().bind();
+			renderer.bind();
 			renderer.getShader().setUniform("progress", (entity->progress - entity->min) / (entity->max - entity->min));
 
 			ogl::checkGLError(__LINE__, __FILE__);
@@ -446,6 +452,112 @@ namespace mc {
 			renderer.destroy();
 		}//destroy
 
+		Font Font::loadFont(const std::string& name){
+            loadFont(name.c_str());
+		}
+
+		Font Font::loadFont(const char* name){
+            if( freetypeStatus < 0 ) {
+				if( freetypeStatus = FT_Init_FreeType(&freetype) ) {
+					throw InitializationError("Freetype failed to initailize with error code "+freetypeStatus);
+				}
+			}
+
+            Index id = fonts.size();
+
+            fonts.push_back(FT_Face());
+            if(int result = FT_New_Face(freetype, name, 0, &fonts[id])){
+                throw InitializationError("Freetype failed to initialize font with result "+std::to_string(result));
+            }
+
+            return Font(id);
+		}
+
+		void Font::setSize(const Size h){
+            this->height = h;
+            FT_Set_Pixel_Sizes(fonts[id], 0, h);
+        }
+
+        Size& Font::getSize(){
+            return height;
+        }
+
+        const Size& Font::getSize() const{
+            return height;
+        }
+
+		Font::Character Font::getCharacter(const char c){
+            if(int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER)){
+                throw InitializationError("Failed to load glyph with error code "+std::to_string(result));
+            }
+
+            Character character = Character();
+            character.width = fonts[id]->glyph->bitmap.width;
+            character.height = fonts[id]->glyph->bitmap.rows;
+            character.bearingX = fonts[id]->glyph->bitmap_left;
+            character.bearingY = fonts[id]->glyph->bitmap_top;
+            character.advance = fonts[id]->glyph->advance.x;
+
+            //because the buffer is 1 byte long
+            character.texture = ogl::Texture();
+            character.texture.init();
+            character.texture.bind();
+
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+            character.texture.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
+            character.texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            character.texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            character.texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            character.texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            return character;
+		}
+
+		Font::Font(const Index fontID): id(fontID){}
+
+        int Letter::getProtocol() {
+			return LETTER_PROTOCOL;
+		}
+
+		Letter::Letter(const ogl::Texture& tex): texture(tex) {}
+
+		const ogl::Texture& Letter::getTexture() const{
+            return texture;
+		}
+
+        bool Letter::operator==(const Letter& other) const{
+            return Entity2D::operator==(other)&&texture==other.texture;
+        }
+
+        bool Letter::operator!=(const Letter& other) const{
+            return !operator==(other);
+        }
+
+        void Letter::onInit(){
+            if( !texture.isCreated() ) {
+				texture.init();
+			}
+
+			if( LETTER_PROTOCOL < 0 ) {
+				LETTER_PROTOCOL = Renderer::registerProtocol<Letter>();
+			}
+        }
+
+        void Letter::onUpdate(){
+
+        }
+
+        void Letter::onRender(){
+            Renderer::queue(this, LETTER_PROTOCOL);
+        }
+
+        void Letter::onDestroy(){
+            if(texture.isCreated()){
+                texture.destroy();
+            }
+        }
+
 		bool Text::operator==(const Text & other) const {
 			return Entity2D::operator==(other) && letters == other.letters;
 		}
@@ -455,14 +567,6 @@ namespace mc {
 		}
 
 		void Text::onInit() {
-			if( freetypeStatus < 0 ) {
-				freetypeStatus = FT_Init_FreeType(&freetype);
-
-				if( freetypeStatus != FT_Err_Ok ) {
-					throw InitializationError("Freetype failed to initailize with error code "+freetypeStatus);
-				}
-			}
-
 			if( !hasChild(letters) ) {
 				addChild(letters);
 			}

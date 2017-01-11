@@ -1,11 +1,15 @@
 #include <MACE/MACE.h>
 
+#include <iostream>
+
 using namespace mc;
 
 gfx::Group group;
 
 gfx::ProgressBar circleBar;
 gfx::ProgressBar rectangleBar;
+
+gfx::Image img;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
@@ -56,6 +60,14 @@ void create() {
 	rectangleBar.easeTo(250, 100, gfx::ProgressBar::EaseFunction::SINUSOIDAL);
 
 	group.addChild(rectangleBar);
+
+	gfx::Font font = gfx::Font::loadFont("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+	font.setSize(12);
+	gfx::Font::Character c = font.getCharacter('t');
+	img = gfx::Image();
+	img.setTexture(c.texture);
+    std::cout << c.width << std::endl;
+	group.addChild(img);
 }
 
 int main() {
