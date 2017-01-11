@@ -470,7 +470,17 @@ namespace mc {
                 throw InitializationError("Freetype failed to initialize font with result "+std::to_string(result));
             }
 
+            if(int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE)){
+                throw InitializationError("Freetype failed to change charmap "+std::to_string(result));
+            }
+
             return Font(id);
+		}
+
+		void Font::destroy(){
+            if(int result = FT_Done_Face(fonts[id])){
+                throw InitializationError("Freetype failed to delete font with result "+std::to_string(result));
+            }
 		}
 
 		void Font::setSize(const Size h){
@@ -486,20 +496,19 @@ namespace mc {
             return height;
         }
 
-		Font::Character Font::getCharacter(const char c){
+		Letter Font::getCharacter(const wchar_t c) const {
             if(int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER)){
                 throw InitializationError("Failed to load glyph with error code "+std::to_string(result));
             }
 
-            Character character = Character();
+            Letter character = Letter();
             character.width = fonts[id]->glyph->bitmap.width;
             character.height = fonts[id]->glyph->bitmap.rows;
             character.bearingX = fonts[id]->glyph->bitmap_left;
             character.bearingY = fonts[id]->glyph->bitmap_top;
-            character.advance = fonts[id]->glyph->advance.x;
+            character.advanceX = fonts[id]->glyph->advance.x;
+            character.advanceY = fonts[id]->glyph->advance.y;
 
-            //because the buffer is 1 byte long
-            character.texture = ogl::Texture();
             character.texture.init();
             character.texture.bind();
 
@@ -508,11 +517,19 @@ namespace mc {
             character.texture.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
             character.texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             character.texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            character.texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             character.texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            character.texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             return character;
 		}
+
+        bool Font::operator==(const Font& other) const{
+            return id==other.id&&height==other.height;
+        }
+
+        bool Font::operator!=(const Font& other) const{
+            return !operator==(other);
+        }
 
 		Font::Font(const Index fontID): id(fontID){}
 
@@ -520,14 +537,75 @@ namespace mc {
 			return LETTER_PROTOCOL;
 		}
 
+        void RenderProtocol<Letter>::resize(const Size, const Size) {}
+
+		void RenderProtocol<Letter>::init(const Size, const Size) {
+
+			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
+			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
+			const char* vertexShader2D = {
+		#	include <MACE/Graphics/Shaders/letter.v.glsl>
+			};
+			const char* fragmentShader2D = {
+		#	include <MACE/Graphics/Shaders/letter.f.glsl>
+			};
+
+			renderer.init(vertexShader2D, fragmentShader2D);
+		}//init
+
+		void RenderProtocol<Letter>::setUp(os::WindowModule*, RenderQueue*) {};
+
+		void RenderProtocol<Letter>::render(os::WindowModule*, GraphicsEntity* e) {
+			Letter* entity = dynamic_cast<Letter*>(e);
+			if( entity == nullptr ) {
+				throw NullPointerException("You must provide an Letter for RenderProtocol<Letter>");
+			}
+
+			entity->texture.bindToLocation(0);
+
+			renderer.bind();
+
+			renderer.draw(e);
+		}//render
+
+		void RenderProtocol<Letter>::tearDown(os::WindowModule*, RenderQueue*) {}
+
+		void RenderProtocol<Letter>::destroy() {
+			renderer.destroy();
+		}//destroy
+
 		Letter::Letter(const ogl::Texture& tex): texture(tex) {}
 
 		const ogl::Texture& Letter::getTexture() const{
             return texture;
 		}
 
+		const Size& Letter::getCharacterWidth() const{
+            return width;
+		}
+
+		const Size& Letter::getCharacterHeight() const{
+            return height;
+		}
+
+		const Index& Letter::getXBearing() const{
+            return bearingX;
+		}
+
+		const Index& Letter::getYBearing() const{
+            return bearingY;
+		}
+
+		const Index& Letter::getXAdvance() const{
+            return advanceX;
+		}
+
+		const Index& Letter::getYAdvance() const{
+            return advanceY;
+		}
+
         bool Letter::operator==(const Letter& other) const{
-            return Entity2D::operator==(other)&&texture==other.texture;
+            return Entity2D::operator==(other)&&texture==other.texture&&width==other.width&&height==other.height&&bearingX==other.bearingX&&bearingY==other.bearingY&&advanceX==other.advanceX&&advanceY==other.advanceY;
         }
 
         bool Letter::operator!=(const Letter& other) const{

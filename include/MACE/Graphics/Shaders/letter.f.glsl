@@ -11,22 +11,11 @@ precision highp float; // Defines precision for float and float-derived (vector/
 
 in lowp vec2 textureCoord;
 
-uniform lowp sampler2D backgroundTexture;
-uniform lowp sampler2D foregroundTexture;
-uniform lowp sampler2D selectionTexture;
-
-uniform float progress;
+uniform lowp sampler2D tex;
 
 vec4 ssl_frag_main()  
-{  	
-	vec4 selection = texture(selectionTexture, textureCoord);
-	vec4 foreground = texture(foregroundTexture, textureCoord);
-	
-	if( progress >= selection.r ){
-		return vec4(foreground.rgb, foreground.a * selection.a);
-	}
-	
-	return texture(backgroundTexture, textureCoord);
+{    
+	return vec4(1.0, 1.0, 1.0, texture(tex, textureCoord).r);
 }       
 
 )"

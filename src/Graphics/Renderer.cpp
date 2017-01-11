@@ -375,6 +375,7 @@ namespace mc {
 				translation *= inheritedScale;
 
 				scale *= inheritedScale;
+				scale[1] *= -1;
 
 				rotation += inheritedRotation;
 

@@ -9,7 +9,7 @@ gfx::Group group;
 gfx::ProgressBar circleBar;
 gfx::ProgressBar rectangleBar;
 
-gfx::Image img;
+gfx::Letter img;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
@@ -61,12 +61,11 @@ void create() {
 
 	group.addChild(rectangleBar);
 
-	gfx::Font font = gfx::Font::loadFont("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
-	font.setSize(12);
-	gfx::Font::Character c = font.getCharacter('t');
-	img = gfx::Image();
-	img.setTexture(c.texture);
-    std::cout << c.width << std::endl;
+	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS+std::string("/arial.ttf"));
+	font.setSize(250);
+	img = font.getCharacter(L'❤');
+    img.setWidth(0.5f);
+	img.setHeight(0.5f);
 	group.addChild(img);
 }
 
