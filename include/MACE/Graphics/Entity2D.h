@@ -219,25 +219,26 @@ namespace mc {
 			ogl::Texture selectionTexture;
 		};//ProgressBar
 
+        //TEXT IS UP AHEAD
+
+        class Letter;
+        class Text;
+
 		class Font{
         public:
-            struct Character{
-                ogl::Texture texture;
-                Size width;
-                Size height;
-                Index bearingX;
-                Index bearingY;
-                Index advance;
-            };
-
             static Font loadFont(const std::string& name);
             static Font loadFont(const char* name);
 
-            Character getCharacter(const char character);
+            void destroy();
+
+            Letter getCharacter(const wchar_t character) const;
 
             void setSize(const Size height);
             Size& getSize();
             const Size& getSize() const;
+
+            bool operator==(const Font& other) const;
+            bool operator!=(const Font& other) const;
         private:
             Font(const Index id);
 
@@ -245,16 +246,48 @@ namespace mc {
             Size height;
 		};//Font
 
+        /**
+		@internal
+		@opengl
+		*/
+		template<>
+		class RenderProtocol<Letter>: public RenderImpl {
+		public:
+			void resize(const Size width, const Size height) override;
+
+			void init(const Size originalWidth, const Size originalHeight) override;
+
+			void setUp(os::WindowModule* win, RenderQueue* queue) override;
+
+			void render(os::WindowModule* win, GraphicsEntity* entity) override;
+
+			void tearDown(os::WindowModule* win, RenderQueue* queue) override;
+
+			void destroy() override;
+		private:
+			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
+		};//RenderProtocol<Letter>
 
 		class Letter: public Entity2D {
 			friend class RenderProtocol<Letter>;
+			friend class Font;
+			friend class Text;
 		public:
 			static int getProtocol();
 
-			Letter(const ogl::Texture& tex);
+			Letter(const ogl::Texture& tex = ogl::Texture());
             ~Letter() = default;
 
 			const ogl::Texture& getTexture() const;
+
+			const Size& getCharacterWidth() const;
+			const Size& getCharacterHeight() const;
+
+			const Index& getXBearing() const;
+			const Index& getYBearing() const;
+
+			const Index& getXAdvance() const;
+			const Index& getYAdvance() const;
 
 			bool operator==(const Letter& other) const;
 			bool operator!=(const Letter& other) const;
@@ -265,6 +298,13 @@ namespace mc {
 			void onDestroy() override final;
 		private:
 			ogl::Texture texture;
+
+			Size width;
+            Size height;
+            Index bearingX;
+            Index bearingY;
+            Index advanceX;
+            Index advanceY;
 		};//Letter
 
 		class Text: public Entity2D {
