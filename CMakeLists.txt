@@ -243,7 +243,7 @@ if(NOT ${OPENAL_FOUND})
 		download_library(${OPENAL_SOURCE_NAME} ${OPENAL_URL})
 		add_subdirectory(${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME})
 		
-		set(OPENAL_LIBRARY OpenAL)
+		set(OPENAL_LIBRARY OpenAL32)
 		
 		set(OPENAL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME}/include)
 	endif()

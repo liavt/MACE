@@ -274,7 +274,7 @@ namespace mc {
 		}
 
 
-		void ProgressBar::easeTo(const float progress, const float time, const EaseFunction function, const EaseDoneCallback callback) {
+		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const EaseDoneCallback callback) {
 			class EaseComponent: public Component {
 			public:
 				EaseComponent(const float p, const float t, const float sp, const EaseFunction f, const EaseDoneCallback cb) : Component(), startProg(sp), prog(p), time(t), func(f), start(0), done(cb) {};
@@ -286,7 +286,7 @@ namespace mc {
 				const EaseDoneCallback done;
 				const EaseFunction func;
 			protected:
-				void init(Entity* e) override {}
+				void init(Entity*) override {}
 				bool update(Entity* e) override {
 					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 					if( bar == nullptr ) {
@@ -332,7 +332,7 @@ namespace mc {
 					}
 					return false;
 				}
-				void render(Entity* e) override {}
+				void render(Entity*) override {}
 				void destroy(Entity* e) override {
 					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 					if( bar == nullptr ) {
@@ -340,13 +340,13 @@ namespace mc {
 					}
 					done(bar);
 
-                    //honorable suicide
+					//honorable suicide
 					delete this;
 				}
 			};
 
 			//it deletes itself in destroy();
-			EaseComponent* com = new EaseComponent(progress, time, this->progress, function, callback);
+			EaseComponent* com = new EaseComponent(destination, time, this->progress, function, callback);
 			addComponent(com);
 
 			makeDirty();
@@ -452,111 +452,111 @@ namespace mc {
 			renderer.destroy();
 		}//destroy
 
-		Font Font::loadFont(const std::string& name){
-            loadFont(name.c_str());
+		Font Font::loadFont(const std::string& name) {
+			return loadFont(name.c_str());
 		}
 
-		Font Font::loadFont(const char* name){
-            if( freetypeStatus < 0 ) {
-				if( freetypeStatus = FT_Init_FreeType(&freetype) ) {
-					throw InitializationError("Freetype failed to initailize with error code "+freetypeStatus);
+		Font Font::loadFont(const char* name) {
+			if( freetypeStatus < 0 ) {
+				if( (freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
+					throw InitializationError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
 				}
 			}
 
-            Index id = fonts.size();
+			Index id = fonts.size();
 
-            fonts.push_back(FT_Face());
-            if(int result = FT_New_Face(freetype, name, 0, &fonts[id])){
-                throw InitializationError("Freetype failed to initialize font with result "+std::to_string(result));
-            }
+			fonts.push_back(FT_Face());
+			if( int result = FT_New_Face(freetype, name, 0, &fonts[id]) ) {
+				throw InitializationError("Freetype failed to initialize font with result " + std::to_string(result));
+			}
 
-            return Font(id);
+			return Font(id);
 		}
 
-		void Font::setSize(const Size h){
-            this->height = h;
-            FT_Set_Pixel_Sizes(fonts[id], 0, h);
-        }
-
-        Size& Font::getSize(){
-            return height;
-        }
-
-        const Size& Font::getSize() const{
-            return height;
-        }
-
-		Font::Character Font::getCharacter(const char c){
-            if(int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER)){
-                throw InitializationError("Failed to load glyph with error code "+std::to_string(result));
-            }
-
-            Character character = Character();
-            character.width = fonts[id]->glyph->bitmap.width;
-            character.height = fonts[id]->glyph->bitmap.rows;
-            character.bearingX = fonts[id]->glyph->bitmap_left;
-            character.bearingY = fonts[id]->glyph->bitmap_top;
-            character.advance = fonts[id]->glyph->advance.x;
-
-            //because the buffer is 1 byte long
-            character.texture = ogl::Texture();
-            character.texture.init();
-            character.texture.bind();
-
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-            character.texture.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
-            character.texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            character.texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            character.texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            character.texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            return character;
+		void Font::setSize(const Size h) {
+			this->height = h;
+			FT_Set_Pixel_Sizes(fonts[id], 0, h);
 		}
 
-		Font::Font(const Index fontID): id(fontID){}
+		Size& Font::getSize() {
+			return height;
+		}
 
-        int Letter::getProtocol() {
+		const Size& Font::getSize() const {
+			return height;
+		}
+
+		Font::Character Font::getCharacter(const char c) {
+			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER) ) {
+				throw InitializationError("Failed to load glyph with error code " + std::to_string(result));
+			}
+
+			Character character = Character();
+			character.width = fonts[id]->glyph->bitmap.width;
+			character.height = fonts[id]->glyph->bitmap.rows;
+			character.bearingX = fonts[id]->glyph->bitmap_left;
+			character.bearingY = fonts[id]->glyph->bitmap_top;
+			character.advance = fonts[id]->glyph->advance.x;
+
+			//because the buffer is 1 byte long
+			character.texture = ogl::Texture();
+			character.texture.init();
+			character.texture.bind();
+
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+			character.texture.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
+			character.texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			character.texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			character.texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			character.texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			return character;
+		}
+
+		Font::Font(const Index fontID) : id(fontID) {}
+
+		int Letter::getProtocol() {
 			return LETTER_PROTOCOL;
 		}
 
-		Letter::Letter(const ogl::Texture& tex): texture(tex) {}
+		Letter::Letter(const ogl::Texture& tex) : texture(tex) {}
 
-		const ogl::Texture& Letter::getTexture() const{
-            return texture;
+		const ogl::Texture& Letter::getTexture() const {
+			return texture;
 		}
 
-        bool Letter::operator==(const Letter& other) const{
-            return Entity2D::operator==(other)&&texture==other.texture;
-        }
+		bool Letter::operator==(const Letter& other) const {
+			return Entity2D::operator==(other) && texture == other.texture;
+		}
 
-        bool Letter::operator!=(const Letter& other) const{
-            return !operator==(other);
-        }
+		bool Letter::operator!=(const Letter& other) const {
+			return !operator==(other);
+		}
 
-        void Letter::onInit(){
-            if( !texture.isCreated() ) {
+		void Letter::onInit() {
+			if( !texture.isCreated() ) {
 				texture.init();
 			}
 
 			if( LETTER_PROTOCOL < 0 ) {
 				LETTER_PROTOCOL = Renderer::registerProtocol<Letter>();
 			}
-        }
+		}
 
-        void Letter::onUpdate(){
+		void Letter::onUpdate() {
 
-        }
+		}
 
-        void Letter::onRender(){
-            Renderer::queue(this, LETTER_PROTOCOL);
-        }
+		void Letter::onRender() {
+			Renderer::queue(this, LETTER_PROTOCOL);
+		}
 
-        void Letter::onDestroy(){
-            if(texture.isCreated()){
-                texture.destroy();
-            }
-        }
+		void Letter::onDestroy() {
+			if( texture.isCreated() ) {
+				texture.destroy();
+			}
+		}
 
 		bool Text::operator==(const Text & other) const {
 			return Entity2D::operator==(other) && letters == other.letters;

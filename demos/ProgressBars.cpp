@@ -61,7 +61,7 @@ void create() {
 
 	group.addChild(rectangleBar);
 
-	gfx::Font font = gfx::Font::loadFont("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS+std::string("/arial.ttf"));
 	font.setSize(12);
 	gfx::Font::Character c = font.getCharacter('t');
 	img = gfx::Image();
