@@ -229,20 +229,26 @@ namespace mc {
             static Font loadFont(const std::string& name);
             static Font loadFont(const char* name);
 
+			Font(const Font& f);
+			Font(const Index id = 0, const Size h = 0);
+
             void destroy();
 
-            Letter getCharacter(const wchar_t character) const;
+			/**
+			@todo find a way to dynamically allocate letters without passing in a pointer
+			*/
+            void getCharacter(const wchar_t character, Letter* let) const;
 
             void setSize(const Size height);
             Size& getSize();
             const Size& getSize() const;
 
+			Index getID() const;
+
             bool operator==(const Font& other) const;
             bool operator!=(const Font& other) const;
         private:
-            Font(const Index id);
-
-            const Index id;
+            Index id;
             Size height;
 		};//Font
 
@@ -309,6 +315,32 @@ namespace mc {
 
 		class Text: public Entity2D {
 		public:
+			Text(const std::string& t, const Font& f = Font());
+			Text(const std::wstring& t = L"", const Font& f = Font());
+			~Text() = default;
+
+			/**
+			@dirty
+			*/
+			void setText(const std::wstring& newText);
+			/**
+			@dirty
+			*/
+			std::wstring& getText();
+			const std::wstring& getText() const;
+
+			/**
+			@dirty
+			*/
+			void setFont(const Font& f);
+			/**
+			@dirty
+			*/
+			Font& getFont();
+			const Font& getFont() const;
+
+			const Group getLetters() const;
+
 			bool operator==(const Text& other) const;
 			bool operator!=(const Text& other) const;
 		protected:
@@ -319,6 +351,10 @@ namespace mc {
 			void onClean() override final;
 		private:
 			Group letters = Group();
+
+			std::wstring text;
+
+			Font font;
 		};//Text
 	}//gfx
 }//mc

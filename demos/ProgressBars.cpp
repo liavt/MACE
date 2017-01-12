@@ -9,7 +9,7 @@ gfx::Group group;
 gfx::ProgressBar circleBar;
 gfx::ProgressBar rectangleBar;
 
-gfx::Letter img;
+gfx::Text text;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
@@ -62,11 +62,10 @@ void create() {
 	group.addChild(rectangleBar);
 
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
-	font.setSize(250);
-	img = font.getCharacter(L'K');
-	img.setWidth(0.5f);
-	img.setHeight(0.5f);
-	group.addChild(img);
+	font.setSize(64);
+	text = gfx::Text("You like jazz?", font);
+	text.setFont(font);
+	group.addChild(text);
 }
 
 int main() {

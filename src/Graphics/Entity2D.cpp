@@ -14,6 +14,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <cmath>
 #include <vector>
+#include <codecvt>
+
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -467,11 +470,11 @@ namespace mc {
 
 			fonts.push_back(FT_Face());
 			if( int result = FT_New_Face(freetype, name, 0, &fonts[id]) ) {
-				throw InitializationError("Freetype failed to initialize font with result " + std::to_string(result));
+				throw InitializationError("Freetype failed to create font with result " + std::to_string(result));
 			}
 
 			if( int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE) ) {
-				throw InitializationError("Freetype failed to change charmap " + std::to_string(result));
+				throw InitializationError("Freetype failed to change charmap with result " + std::to_string(result));
 			}
 
 			return Font(id);
@@ -496,31 +499,36 @@ namespace mc {
 			return height;
 		}
 
-		Letter Font::getCharacter(const wchar_t c) const {
+		Index Font::getID() const {
+			return id;
+		}
+
+		void Font::getCharacter(const wchar_t c, Letter* character) const {
+			if( height <= 0 ) {
+				throw IndexOutOfBoundsException("The height of the font cannot be 0 - you must set it!");
+			}
+
 			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER) ) {
 				throw InitializationError("Failed to load glyph with error code " + std::to_string(result));
 			}
 
-			Letter character = Letter();
-			character.width = fonts[id]->glyph->bitmap.width;
-			character.height = fonts[id]->glyph->bitmap.rows;
-			character.bearingX = fonts[id]->glyph->bitmap_left;
-			character.bearingY = fonts[id]->glyph->bitmap_top;
-			character.advanceX = fonts[id]->glyph->advance.x;
-			character.advanceY = fonts[id]->glyph->advance.y;
+			character->width = fonts[id]->glyph->bitmap.width;
+			character->height = fonts[id]->glyph->bitmap.rows;
+			character->bearingX = fonts[id]->glyph->bitmap_left;
+			character->bearingY = fonts[id]->glyph->bitmap_top;
+			character->advanceX = fonts[id]->glyph->advance.x;
+			character->advanceY = fonts[id]->glyph->advance.y;
 
-			character.texture.init();
-			character.texture.bind();
+			character->texture.init();
+			character->texture.bind();
 
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-			character.texture.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
-			character.texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			character.texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			character.texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			character.texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-			return character;
+			character->texture.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
+			character->texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			character->texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			character->texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			character->texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
 		bool Font::operator==(const Font& other) const {
@@ -531,7 +539,9 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Font::Font(const Index fontID) : id(fontID) {}
+		Font::Font(const Index fontID, const Size h) : id(fontID), height(h) {}
+
+		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
 		int Letter::getProtocol() {
 			return LETTER_PROTOCOL;
@@ -635,26 +645,95 @@ namespace mc {
 			}
 		}
 
+		Text::Text(const std::string & s, const Font & f) : Text(std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>>().from_bytes(s), f) {}
+
+		Text::Text(const std::wstring & t, const Font& f) : Entity2D(), text(t), font(f) {}
+
+		void Text::setText(const std::wstring & newText) {
+			if( text != newText ) {
+				makeDirty();
+
+				text = newText;
+			}
+		}
+
+		std::wstring & Text::getText() {
+			makeDirty();
+
+			return text;
+		}
+
+		const std::wstring & Text::getText() const {
+			return text;
+		}
+
+		void Text::setFont(const Font& f) {
+			if( font != f ) {
+				makeDirty();
+
+				font = f;
+			}
+		}
+
+		Font & Text::getFont() {
+			makeDirty();
+
+			return font;
+		}
+
+		const Font & Text::getFont() const {
+			return font;
+		}
+
+		const Group Text::getLetters() const {
+			return letters;
+		}
+
 		bool Text::operator==(const Text & other) const {
-			return Entity2D::operator==(other) && letters == other.letters;
+			return Entity2D::operator==(other) && letters == other.letters && text == other.text;
 		}
 
 		bool Text::operator!=(const Text & other) const {
 			return !operator==(other);
 		}
 
-		void Text::onInit() {
+		void Text::onInit() {}
+
+		void Text::onUpdate() {
 			if( !hasChild(letters) ) {
 				addChild(letters);
 			}
 		}
 
-		void Text::onUpdate() {}
-
 		void Text::onRender() {}
 
 		void Text::onDestroy() {}
 
-		void Text::onClean() {}
+		void Text::onClean() {
+			for( Index i = 0; i < letters.size(); ++i ) {
+				delete &letters[i];
+				letters.removeChild(i);
+			}
+
+			float x = 0, y = 0;
+
+			for( Index i = 0; i < text.length(); ++i ) {
+				Letter* let = new Letter();
+				font.getCharacter(text[i], let);
+
+				//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
+				let->setWidth(static_cast<float>(let->getCharacterWidth()) / Renderer::getOriginalWidth());
+				let->setHeight(static_cast<float>(let->getCharacterHeight()) / Renderer::getOriginalHeight());
+
+				let->setX(x + (static_cast<float>(let->getXBearing()) / Renderer::getOriginalWidth()));
+				let->setY(y + (static_cast<float>(let->getHeight() - let->getYBearing()) / Renderer::getOriginalHeight()));
+
+				//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
+				x += static_cast<float>(let->advanceX >> 6) / Renderer::getOriginalWidth() + (let->getWidth());
+				y += static_cast<float>(let->advanceY >> 6) / Renderer::getOriginalHeight();
+
+				letters.addChild(let);
+			}
+		}
 	}//gfx
 }//mc

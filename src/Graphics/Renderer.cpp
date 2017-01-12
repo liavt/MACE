@@ -347,7 +347,7 @@ namespace mc {
 				Vector<float, 3> scale = transform.scaler;
 				Vector<float, 3> rotation = transform.rotation;
 				Vector<float, 3> inheritedTranslation = { 0,0,0 };
-				Vector<float, 3> inheritedScale = { 1,1,1 };
+				Vector<float, 3> inheritedScale = { 1,-1,1 };
 				Vector<float, 3> inheritedRotation = { 0,0,0 };
 
 				if( entity->hasParent() ) {
@@ -375,7 +375,6 @@ namespace mc {
 				translation *= inheritedScale;
 
 				scale *= inheritedScale;
-				scale[1] *= -1;
 
 				rotation += inheritedRotation;
 

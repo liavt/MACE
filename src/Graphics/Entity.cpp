@@ -243,6 +243,10 @@ namespace mc {
 
 			children.push_back(e);
 			e->setParent(this);
+
+			if( getProperty(Entity::INIT) && !e->getProperty(Entity::INIT) ) {
+				e->init();
+			}
 		}
 
 		void Entity::addChild(Entity & e) {
