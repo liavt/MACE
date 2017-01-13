@@ -330,10 +330,10 @@ namespace mc {
 				*/
 				void setData(const void * data, const Size width, const Size height, const Enum type = GL_FLOAT, const Enum format = GL_RGB, const Enum internalFormat = GL_RGB, const Index mipmapLevel = 0);
 
-                /**
-                @opengl
-                */
-                void setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples = true);
+				/**
+				@opengl
+				*/
+				void setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples = true);
 
 				/**
 				@opengl

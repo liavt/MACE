@@ -135,7 +135,7 @@ namespace mc {
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 15
 
-#define MACE_SAMPLE_SIZE -10
+#define MACE_SAMPLE_SIZE 8
 
 			namespace {
 				//ssl resources
@@ -185,41 +185,41 @@ namespace mc {
 					//for our custom FBO. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
 
-                    ogl::checkGLError(__LINE__,__FILE__);
+					ogl::checkGLError(__LINE__, __FILE__);
 
-					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture, 0);
-					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture, 0);
+					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture, 0);
+					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture, 0);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-                    ogl::checkGLError(__LINE__,__FILE__);
+					ogl::checkGLError(__LINE__, __FILE__);
 
-                    Enum status;
+					Enum status;
 					if( (status = frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE ) {
-						switch(status){
-                        case GL_FRAMEBUFFER_UNDEFINED:
-                            throw InitializationError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
-                            break;
-                        case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
-                            break;
-                        case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
-                            break;
-                        case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
-                            break;
-                        case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
-                            break;
-                        case GL_FRAMEBUFFER_UNSUPPORTED:
-                            throw InitializationError("GL_FRAMEBUFFER_UNSUPPORTeD: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
-                            break;
-                        case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
-                            break;
-                        case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-                            throw InitializationError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
-                            break;
+						switch( status ) {
+						case GL_FRAMEBUFFER_UNDEFINED:
+							throw InitializationError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+							break;
+						case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+							throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+							break;
+						case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+							throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+							break;
+						case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+							throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+							break;
+						case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+							throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+							break;
+						case GL_FRAMEBUFFER_UNSUPPORTED:
+							throw InitializationError("GL_FRAMEBUFFER_UNSUPPORTeD: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+							break;
+						case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+							throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+							break;
+						case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+							throw InitializationError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+							break;
 						}
 					}
 
@@ -243,12 +243,12 @@ namespace mc {
 				windowData.setData(MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
 				windowData.unbind();
 
-                sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
+				sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				sceneTexture.init();
 				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-                idTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
+				idTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				idTexture.init();
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -273,7 +273,7 @@ namespace mc {
 
 				glEnable(GL_MULTISAMPLE);
 
-                ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__);
 			}//init
 
 			void setUp(os::WindowModule *) {
@@ -283,25 +283,25 @@ namespace mc {
 
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__);
 			}//setUp
 
 			void tearDown(os::WindowModule * win) {
 				frameBuffer.unbind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-                glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-                glDrawBuffer(GL_BACK);
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+				glDrawBuffer(GL_BACK);
 
-                int width, height;
-                glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
+				int width, height;
+				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
-                glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
 				glfwSwapBuffers(win->getGLFWWindow());
 
-                ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__);
 			}//tearDown
 
 			void destroy() {
@@ -338,7 +338,7 @@ namespace mc {
 
 				if( width > 0 && height > 0 ) {
 					windowData.bind();
-					float newSize[2] = { static_cast<float>(originalWidth)/width,static_cast<float>(originalHeight)/height };
+					float newSize[2] = { static_cast<float>(originalWidth) / width,static_cast<float>(originalHeight) / height };
 					windowData.setDataRange(0, sizeof(newSize), newSize);
 					windowData.unbind();
 
@@ -363,7 +363,7 @@ namespace mc {
 
 				frameBuffer.unbind();
 
-                ogl::checkGLError(__LINE__,__FILE__);
+				ogl::checkGLError(__LINE__, __FILE__);
 			}//checkInput
 
 			void bindBuffer(ogl::UniformBuffer & buf) {
@@ -655,7 +655,7 @@ namespace mc {
 		}
 
 		void SimpleQuadRenderer::bind() const {
-            square.bind();
+			square.bind();
 			shaders2D.bind();
 		}
 

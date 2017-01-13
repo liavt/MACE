@@ -202,7 +202,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunction::SINUSOIDAL, const EaseDoneCallback callback = [](ProgressBar*){});
+			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunction::SINUSOIDAL, const EaseDoneCallback callback = [] (ProgressBar*) {});
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;
@@ -219,40 +219,40 @@ namespace mc {
 			ogl::Texture selectionTexture;
 		};//ProgressBar
 
-        //TEXT IS UP AHEAD
+		//TEXT IS UP AHEAD
 
-        class Letter;
-        class Text;
+		class Letter;
+		class Text;
 
-		class Font{
-        public:
-            static Font loadFont(const std::string& name);
-            static Font loadFont(const char* name);
+		class Font {
+		public:
+			static Font loadFont(const std::string& name);
+			static Font loadFont(const char* name);
 
 			Font(const Font& f);
 			Font(const Index id = 0, const Size h = 0);
 
-            void destroy();
+			void destroy();
 
 			/**
 			@todo find a way to dynamically allocate letters without passing in a pointer
 			*/
-            void getCharacter(const wchar_t character, Letter* let) const;
+			void getCharacter(const wchar_t character, Letter* let) const;
 
-            void setSize(const Size height);
-            Size& getSize();
-            const Size& getSize() const;
+			void setSize(const Size height);
+			Size& getSize();
+			const Size& getSize() const;
 
 			Index getID() const;
 
-            bool operator==(const Font& other) const;
-            bool operator!=(const Font& other) const;
-        private:
-            Index id;
-            Size height;
+			bool operator==(const Font& other) const;
+			bool operator!=(const Font& other) const;
+		private:
+			Index id;
+			Size height;
 		};//Font
 
-        /**
+		/**
 		@internal
 		@opengl
 		*/
@@ -282,7 +282,7 @@ namespace mc {
 			static int getProtocol();
 
 			Letter(const ogl::Texture& tex = ogl::Texture());
-            ~Letter() = default;
+			~Letter() = default;
 
 			const ogl::Texture& getTexture() const;
 
@@ -306,11 +306,11 @@ namespace mc {
 			ogl::Texture texture;
 
 			Size width;
-            Size height;
-            Index bearingX;
-            Index bearingY;
-            Index advanceX;
-            Index advanceY;
+			Size height;
+			Index bearingX;
+			Index bearingY;
+			Index advanceX;
+			Index advanceY;
 		};//Letter
 
 		class Text: public Entity2D {

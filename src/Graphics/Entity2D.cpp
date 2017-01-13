@@ -32,28 +32,26 @@ namespace mc {
 
 			std::vector<FT_Face> fonts = std::vector<FT_Face>();
 
-            //thanks stack overflow for this function. the c++ library has no portable way to do this normally.
-            std::wstring toWideString(const std::string & s){
-              const char * cs = s.c_str();
-              const size_t wn = std::mbsrtowcs(NULL, &cs, 0, NULL);
+			//thanks stack overflow for this function. the c++ library has no portable way to do this normally.
+			std::wstring toWideString(const std::string & s) {
+				const char * cs = s.c_str();
+				const size_t wn = std::mbsrtowcs(NULL, &cs, 0, NULL);
 
-              if (wn == size_t(-1))
-              {
-                std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
-                return L"";
-              }
+				if( wn == size_t(-1) ) {
+					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
+					return L"";
+				}
 
-              std::vector<wchar_t> buf(wn + 1);
-              const size_t wn_again = std::mbsrtowcs(buf.data(), &cs, wn + 1, NULL);
+				std::vector<wchar_t> buf(wn + 1);
+				const size_t wn_again = std::mbsrtowcs(buf.data(), &cs, wn + 1, NULL);
 
-              if (wn_again == size_t(-1))
-              {
-                std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
-                return L"";
-              }
+				if( wn_again == size_t(-1) ) {
+					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
+					return L"";
+				}
 
-              return std::wstring(buf.data(), wn);
-            }
+				return std::wstring(buf.data(), wn);
+			}
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
@@ -530,7 +528,7 @@ namespace mc {
 				throw IndexOutOfBoundsException("The height of the font cannot be 0 - you must set it!");
 			}
 
-			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER) ) {
+			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT) ) {
 				throw InitializationError("Failed to load glyph with error code " + std::to_string(result));
 			}
 
@@ -538,8 +536,8 @@ namespace mc {
 			character->height = fonts[id]->glyph->bitmap.rows;
 			character->bearingX = fonts[id]->glyph->bitmap_left;
 			character->bearingY = fonts[id]->glyph->bitmap_top;
-			character->advanceX = fonts[id]->glyph->advance.x;
-			character->advanceY = fonts[id]->glyph->advance.y;
+			character->advanceX = fonts[id]->glyph->advance.x >> 6;
+			character->advanceY = fonts[id]->glyph->advance.y >> 6;
 
 			character->texture.init();
 			character->texture.bind();
@@ -740,29 +738,29 @@ namespace mc {
 			float x = 0, y = 0;
 
 			for( Index i = 0; i < text.length(); ++i ) {
-                if(text[i]=='\n'){
-                    y += static_cast<float>(font.getSize() * 2) / Renderer::getOriginalHeight();
-                    x = 0;
-                }else{
-                    Letter* let = new Letter();
-                    font.getCharacter(text[i], let);
+				if( text[i] == '\n' ) {
+					y += static_cast<float>(font.getSize() << 1) / Renderer::getOriginalHeight();
+					x = 0;
+				} else {
+					Letter* let = new Letter();
+					font.getCharacter(text[i], let);
 
-                    //freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-                    let->setWidth(static_cast<float>(let->width) / Renderer::getOriginalWidth());
-                    let->setHeight(static_cast<float>(let->height) / Renderer::getOriginalHeight());
+					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
+					let->setWidth(static_cast<float>(let->width) / Renderer::getOriginalWidth());
+					let->setHeight(static_cast<float>(let->height) / Renderer::getOriginalHeight());
 
-                    //i cant bear this
-                    let->setX(x + (static_cast<float>(let->bearingX) / Renderer::getOriginalWidth()));
-                    let->setY(y + (static_cast<float>(let->getHeight() - (let->bearingY)) / Renderer::getOriginalHeight()));
+					//i cant bear this
+					let->setX(x + (static_cast<float>(let->bearingX) / Renderer::getOriginalWidth()));
+					let->setY(y + (static_cast<float>(let->getHeight() - (let->bearingY)) / Renderer::getOriginalHeight()));
 
-                    //it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
-                    x += static_cast<float>((let->advanceX >> 6) + let->width) / Renderer::getOriginalWidth();
-                    y += static_cast<float>(let->advanceY >> 6) / Renderer::getOriginalHeight();
+					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
+					x += static_cast<float>((let->advanceX) + let->width) / Renderer::getOriginalWidth();
+					y += static_cast<float>(let->advanceY) / Renderer::getOriginalHeight();
 
-                    if(text[i]=='j')std::cout<<let->bearingX<<std::endl;
+					//if( text[i] == 'j' )std::cout << let->bearingX << std::endl;
 
-                    letters.addChild(let);
-                }
+					letters.addChild(let);
+				}
 			}
 		}
 	}//gfx
