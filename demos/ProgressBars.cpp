@@ -61,10 +61,11 @@ void create() {
 
 	group.addChild(rectangleBar);
 
-	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
+	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/consola.ttf"));
 	font.setSize(64);
 	text = gfx::Text("Hello world!\nJust cause.", font);
 	text.setFont(font);
+	text.setHorizontalAlign(gfx::Text::HorizontalAlign::LEFT);
 	group.addChild(text);
 }
 

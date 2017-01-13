@@ -315,6 +315,18 @@ namespace mc {
 
 		class Text: public Entity2D {
 		public:
+            enum class VerticalAlign: Byte{
+                TOP,
+                CENTER,
+                BOTTOM
+            };
+
+            enum class HorizontalAlign: Byte{
+                LEFT,
+                CENTER,
+                RIGHT
+            };
+
 			Text(const std::string& t, const Font& f = Font());
 			Text(const std::wstring& t = L"", const Font& f = Font());
 			~Text() = default;
@@ -339,7 +351,19 @@ namespace mc {
 			Font& getFont();
 			const Font& getFont() const;
 
-			const Group getLetters() const;
+			const Group& getLetters() const;
+
+            /**
+            @dirty
+            */
+			void setVerticalAlign(const VerticalAlign align);
+			const VerticalAlign getVerticalAlign() const;
+
+			/**
+			@dirty
+			*/
+			void setHorizontalAlign(HorizontalAlign align);
+			const HorizontalAlign getHorizontalAlign() const;
 
 			bool operator==(const Text& other) const;
 			bool operator!=(const Text& other) const;
@@ -353,6 +377,9 @@ namespace mc {
 			Group letters = Group();
 
 			std::wstring text;
+
+			VerticalAlign vertAlign = VerticalAlign::CENTER;
+			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
 
 			Font font;
 		};//Text

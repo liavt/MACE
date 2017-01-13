@@ -705,8 +705,32 @@ namespace mc {
 			return font;
 		}
 
-		const Group Text::getLetters() const {
+		const Group& Text::getLetters() const {
 			return letters;
+		}
+
+		void Text::setVerticalAlign(const VerticalAlign align){
+            if(vertAlign != align){
+                makeDirty();
+
+                vertAlign = align;
+            }
+		}
+
+		const Text::VerticalAlign Text::getVerticalAlign() const{
+            return vertAlign;
+		}
+
+		void Text::setHorizontalAlign(const HorizontalAlign align){
+            if(horzAlign != align){
+                makeDirty();
+
+                horzAlign = align;
+            }
+		}
+
+		const Text::HorizontalAlign Text::getHorizontalAlign() const{
+            return horzAlign;
 		}
 
 		bool Text::operator==(const Text & other) const {
@@ -737,8 +761,17 @@ namespace mc {
 
 			float x = 0, y = 0;
 
+			float width = 0, height = 0;
+
 			for( Index i = 0; i < text.length(); ++i ) {
 				if( text[i] == '\n' ) {
+                    if(x > width){
+                        width = x;
+                    }
+                    if(y > height){
+                        height = y;
+                    }
+
 					y += static_cast<float>(font.getSize() << 1) / Renderer::getOriginalHeight();
 					x = 0;
 				} else {
@@ -762,6 +795,25 @@ namespace mc {
 					letters.addChild(let);
 				}
 			}
+
+			if(x > width){
+                width = x;
+            }
+            if(y > height){
+                height = y;
+            }
+
+            switch(horzAlign){
+            case HorizontalAlign::CENTER:
+                letters.setX(-width/2);
+                break;
+            case HorizontalAlign::RIGHT:
+                letters.setX(-1 + width/2);
+                break;
+            case HorizontalAlign::LEFT:
+                letters.setX((-0.5f - width/2));
+                break;
+            }
 		}
 	}//gfx
 }//mc
