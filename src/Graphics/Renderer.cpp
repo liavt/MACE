@@ -63,7 +63,6 @@ namespace mc {
 			for( Index i = 0; i < protocols.size(); ++i ) {
 				protocols[i]->tearDown(win, &renderQueue);
 			}
-
 			ssl::tearDown(win);
 		}//tearDown
 		void Renderer::renderFrame(os::WindowModule* win) {
@@ -74,7 +73,6 @@ namespace mc {
 				entityIndex = static_cast<Index>(pair - renderQueue.begin());
 				protocols[pair->first]->render(win, en);
 			}
-			ogl::checkGLError(__LINE__, __FILE__);
 			tearDown(win);
 		}//renderFrame
 
@@ -137,6 +135,8 @@ namespace mc {
 //which binding location the paintdata uniform buffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 15
 
+#define MACE_SAMPLE_SIZE -10
+
 			namespace {
 				//ssl resources
 				Preprocessor sslPreprocessor = Preprocessor("");
@@ -175,31 +175,56 @@ namespace mc {
 				//this function goes into the anonymous namespace because it technically doesn't belong in the ssl namespace. it should remain to this source file
 				void generateFramebuffer(const Size& width, const Size& height) {
 
-					sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-
-					idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+					sceneTexture.setMultisampledData(MACE_SAMPLE_SIZE, width, height, GL_RGBA8);
+					idTexture.setMultisampledData(MACE_SAMPLE_SIZE, width, height, GL_R32UI);
 
 					depthBuffer.init();
 					depthBuffer.bind();
-					depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+					depthBuffer.setStorageMultisampled(MACE_SAMPLE_SIZE, GL_DEPTH_COMPONENT, width, height);
 
 					//for our custom FBO. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
 
                     ogl::checkGLError(__LINE__,__FILE__);
 
-					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture.getID(), 0);
-					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture.getID(), 0);
+					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture, 0);
+					frameBuffer.attachTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture, 0);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-					if( frameBuffer.checkStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE ) {
-						throw InitializationError("Error initializing framebuffer! This GPU may be unsupported!");
+                    ogl::checkGLError(__LINE__,__FILE__);
+
+                    Enum status;
+					if( (status = frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE ) {
+						switch(status){
+                        case GL_FRAMEBUFFER_UNDEFINED:
+                            throw InitializationError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+                            break;
+                        case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+                            break;
+                        case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+                            break;
+                        case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+                            break;
+                        case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+                            break;
+                        case GL_FRAMEBUFFER_UNSUPPORTED:
+                            throw InitializationError("GL_FRAMEBUFFER_UNSUPPORTeD: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+                            break;
+                        case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+                            throw InitializationError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+                            break;
+                        case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+                            throw InitializationError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+                            break;
+						}
 					}
 
 					Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 					frameBuffer.setDrawBuffers(2, buffers);
-
-
 
 					ogl::checkGLError(__LINE__, __FILE__);
 
@@ -218,10 +243,12 @@ namespace mc {
 				windowData.setData(MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
 				windowData.unbind();
 
+                sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				sceneTexture.init();
-				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+                idTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				idTexture.init();
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -240,11 +267,13 @@ namespace mc {
 
 				renderer.init(vertexShader2D, fragmentShader2D);
 
-				ogl::checkGLError(__LINE__, __FILE__);
-
 				//gl states
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+				glEnable(GL_MULTISAMPLE);
+
+                ogl::checkGLError(__LINE__, __FILE__);
 			}//init
 
 			void setUp(os::WindowModule *) {
@@ -253,19 +282,26 @@ namespace mc {
 				idTexture.bind();
 
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+                ogl::checkGLError(__LINE__, __FILE__);
 			}//setUp
 
 			void tearDown(os::WindowModule * win) {
 				frameBuffer.unbind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				sceneTexture.bindToLocation(0);
+                glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+                glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+                glDrawBuffer(GL_BACK);
 
-				renderer.draw();
+                int width, height;
+                glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+                glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
 				glfwSwapBuffers(win->getGLFWWindow());
+
+                ogl::checkGLError(__LINE__, __FILE__);
 			}//tearDown
 
 			void destroy() {
@@ -326,6 +362,8 @@ namespace mc {
 				}
 
 				frameBuffer.unbind();
+
+                ogl::checkGLError(__LINE__,__FILE__);
 			}//checkInput
 
 			void bindBuffer(ogl::UniformBuffer & buf) {
@@ -347,7 +385,7 @@ namespace mc {
 				Vector<float, 3> scale = transform.scaler;
 				Vector<float, 3> rotation = transform.rotation;
 				Vector<float, 3> inheritedTranslation = { 0,0,0 };
-				Vector<float, 3> inheritedScale = { 1,-1,1 };
+				Vector<float, 3> inheritedScale = { 1,1,1 };
 				Vector<float, 3> inheritedRotation = { 0,0,0 };
 
 				if( entity->hasParent() ) {

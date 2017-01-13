@@ -48,11 +48,19 @@ namespace mc {
 			//first we set up glew and opengl
 			glfwMakeContextCurrent(window);
 
+			gfx::ogl::checkGLError(__LINE__, __FILE__);
+
             glewExperimental = true;
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
 				throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
 			}
+
+            try{
+                gfx::ogl::checkGLError(__LINE__, __FILE__);
+            }catch(...){
+                //glew sometimes throws errors that can be ignored
+            }
 
 			if( GL_VERSION_3_0 ) {
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
@@ -68,7 +76,7 @@ namespace mc {
 				throw mc::InitializationError("OpenGL 3.0+ not found");
 			}
 
-			gfx::ogl::checkGLError();
+			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
 			if( vsync )glfwSwapInterval(1);
 			else glfwSwapInterval(0);
@@ -220,7 +228,7 @@ namespace mc {
 							gfx::Renderer::renderFrame(this);
 						}
 
-						gfx::Renderer::checkInput();
+					//	gfx::Renderer::checkInput();
 
 						if( !System::isRunning() ) {
 							break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it

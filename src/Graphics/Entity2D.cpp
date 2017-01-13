@@ -14,8 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <cmath>
 #include <vector>
-#include <codecvt>
-
+#include <clocale>
 #include <iostream>
 
 namespace mc {
@@ -32,6 +31,29 @@ namespace mc {
 			int freetypeStatus = -1;
 
 			std::vector<FT_Face> fonts = std::vector<FT_Face>();
+
+            //thanks stack overflow for this function. the c++ library has no portable way to do this normally.
+            std::wstring toWideString(const std::string & s){
+              const char * cs = s.c_str();
+              const size_t wn = std::mbsrtowcs(NULL, &cs, 0, NULL);
+
+              if (wn == size_t(-1))
+              {
+                std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
+                return L"";
+              }
+
+              std::vector<wchar_t> buf(wn + 1);
+              const size_t wn_again = std::mbsrtowcs(buf.data(), &cs, wn + 1, NULL);
+
+              if (wn_again == size_t(-1))
+              {
+                std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
+                return L"";
+              }
+
+              return std::wstring(buf.data(), wn);
+            }
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
@@ -527,7 +549,7 @@ namespace mc {
 			character->texture.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
 			character->texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			character->texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			character->texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			character->texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			character->texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
@@ -645,7 +667,7 @@ namespace mc {
 			}
 		}
 
-		Text::Text(const std::string & s, const Font & f) : Text(std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>>().from_bytes(s), f) {}
+		Text::Text(const std::string & s, const Font & f) : Text(toWideString(s), f) {}
 
 		Text::Text(const std::wstring & t, const Font& f) : Entity2D(), text(t), font(f) {}
 
@@ -718,21 +740,29 @@ namespace mc {
 			float x = 0, y = 0;
 
 			for( Index i = 0; i < text.length(); ++i ) {
-				Letter* let = new Letter();
-				font.getCharacter(text[i], let);
+                if(text[i]=='\n'){
+                    y += static_cast<float>(font.getSize() * 2) / Renderer::getOriginalHeight();
+                    x = 0;
+                }else{
+                    Letter* let = new Letter();
+                    font.getCharacter(text[i], let);
 
-				//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-				let->setWidth(static_cast<float>(let->getCharacterWidth()) / Renderer::getOriginalWidth());
-				let->setHeight(static_cast<float>(let->getCharacterHeight()) / Renderer::getOriginalHeight());
+                    //freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
+                    let->setWidth(static_cast<float>(let->width) / Renderer::getOriginalWidth());
+                    let->setHeight(static_cast<float>(let->height) / Renderer::getOriginalHeight());
 
-				let->setX(x + (static_cast<float>(let->getXBearing()) / Renderer::getOriginalWidth()));
-				let->setY(y + (static_cast<float>(let->getHeight() - let->getYBearing()) / Renderer::getOriginalHeight()));
+                    //i cant bear this
+                    let->setX(x + (static_cast<float>(let->bearingX) / Renderer::getOriginalWidth()));
+                    let->setY(y + (static_cast<float>(let->getHeight() - (let->bearingY)) / Renderer::getOriginalHeight()));
 
-				//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
-				x += static_cast<float>(let->advanceX >> 6) / Renderer::getOriginalWidth() + (let->getWidth());
-				y += static_cast<float>(let->advanceY >> 6) / Renderer::getOriginalHeight();
+                    //it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
+                    x += static_cast<float>((let->advanceX >> 6) + let->width) / Renderer::getOriginalWidth();
+                    y += static_cast<float>(let->advanceY >> 6) / Renderer::getOriginalHeight();
 
-				letters.addChild(let);
+                    if(text[i]=='j')std::cout<<let->bearingX<<std::endl;
+
+                    letters.addChild(let);
+                }
 			}
 		}
 	}//gfx

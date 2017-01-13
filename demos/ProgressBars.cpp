@@ -61,9 +61,10 @@ void create() {
 
 	group.addChild(rectangleBar);
 
-	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
-	font.setSize(64);
-	text = gfx::Text("You like jazz?", font);
+//MACE_DEMO_ASSETS + std::string("/arial.ttf")
+	gfx::Font font = gfx::Font::loadFont("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+	font.setSize(24);
+	text = gfx::Text("You like jazz?\nTheLegend27.", font);
 	text.setFont(font);
 	group.addChild(text);
 }

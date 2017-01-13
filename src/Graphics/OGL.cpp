@@ -244,29 +244,29 @@ namespace mc {
 				id = 0;
 			}
 
-			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const unsigned int textureID, const int level) {
+			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture& tex, const int level) {
 				bind();
-				glFramebufferTexture(target, attachment, textureID, level);
+				glFramebufferTexture(target, attachment, tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level) {
+			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Texture& tex, const int level) {
 				bind();
-				glFramebufferTexture1D(target, attachment, texTarget, textureID, level);
+				glFramebufferTexture1D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level) {
+			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Texture& tex, const int level) {
 				bind();
-				glFramebufferTexture2D(target, attachment, texTarget, textureID, level);
+				glFramebufferTexture2D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level, const int layer) {
+			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Texture& tex, const int level, const int layer) {
 				bind();
-				glFramebufferTexture3D(target, attachment, texTarget, textureID, level, layer);
+				glFramebufferTexture3D(target, attachment, tex.getTarget(), tex.getID(), level, layer);
 			}
 
-			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const unsigned int texture, const int level, const int layer) {
+			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture& texture, const int level, const int layer) {
 				bind();
-				glFramebufferTextureLayer(target, attachment, level, texture, layer);
+				glFramebufferTextureLayer(target, attachment, level, texture.getID(), layer);
 			}
 
 			void FrameBuffer::attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer & buffer) {
@@ -387,8 +387,11 @@ namespace mc {
 			void Texture::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
 				bind();
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
+			}
 
-				checkGLError(__LINE__, __FILE__);
+			void Texture::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples){
+                bind();
+                glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
 			void Texture::loadFile(const char * file) {
@@ -417,7 +420,11 @@ namespace mc {
 				this->target = targ;
 			}
 
-			Enum Texture::getTarget() {
+			Enum& Texture::getTarget() {
+				return target;
+			}
+
+            const Enum& Texture::getTarget() const{
 				return target;
 			}
 

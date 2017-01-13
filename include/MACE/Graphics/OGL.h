@@ -30,8 +30,8 @@ namespace mc {
 		<p>
 		OpenGL abstractions will only implement functionality from OpenGL 3.3, as that is what MACE supports.
 		<p>
-		Most of the abstractions have very minimal extra work. Most of the time they are direct bindings to the 
-		actual OpenGL function. However, some classes like `ShaderProgram` do a lot of bookkeeping to make it easier 
+		Most of the abstractions have very minimal extra work. Most of the time they are direct bindings to the
+		actual OpenGL function. However, some classes like `ShaderProgram` do a lot of bookkeeping to make it easier
 		to use.
 		<p>
 		The documentation for classes in the `ogl` namespace assumes that you understand the underlying OpenGL concepts.
@@ -305,6 +305,77 @@ namespace mc {
 			};//RenderBuffer
 
 			/**
+			@see https://www.opengl.org/wiki/Texture
+			*/
+			class Texture: public Object {
+			public:
+				Texture() noexcept;
+				/**
+				@opengl
+				*/
+				Texture(const char* file);
+				/**
+				@opengl
+				*/
+				Texture(const std::string& file);
+
+				void init() override;
+				void destroy() override;
+
+				void bindToLocation(const Index location) const;
+
+				/**
+				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
+				@opengl
+				*/
+				void setData(const void * data, const Size width, const Size height, const Enum type = GL_FLOAT, const Enum format = GL_RGB, const Enum internalFormat = GL_RGB, const Index mipmapLevel = 0);
+
+                /**
+                @opengl
+                */
+                void setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples = true);
+
+				/**
+				@opengl
+				@bug Loads upside down
+				*/
+				void loadFile(const char* file);
+
+				/**
+				@copydoc loadFile(const char*)
+				*/
+				void loadFile(const std::string& file);
+
+				void generateMipmap();
+
+				void setTarget(const Enum target);
+				Enum& getTarget();
+				const Enum& getTarget() const;
+
+				bool isCreated() const override;
+
+				/**
+				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
+				@opengl
+				*/
+				void setParameter(const Enum name, const int value);
+
+				/**
+				@copydoc Object::operator==(const Object&) const
+				*/
+				bool operator==(const Texture& other) const;
+				/**
+				@copydoc Object::operator!=(const Object&) const
+				*/
+				bool operator!=(const Texture& other) const;
+
+			private:
+				Enum target = GL_TEXTURE_2D;
+
+				void bindIndex(const Index id) const override;
+			};//Texture
+
+			/**
 			Represents an OpenGL Framebuffer Object which allows rendering to a non-screen location. This also allows
 			rendering to a `Texture` or `RenderBuffer` object.
 			<p>
@@ -332,21 +403,21 @@ namespace mc {
 				@todo Replace this with the actual Texture class
 				@opengl
 				*/
-				void attachTexture(const Enum target, const Enum attachment, const unsigned int textureID, const int level = 0);
+				void attachTexture(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);
 				/**
 				@copydoc FrameBuffer::attachTexture(const Enum, const Enum, const unsigned int, const int)
 				@param texTarget Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link.
 				*/
-				void attachTexture1D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level = 0);
+				void attachTexture1D(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);
 				/**
 				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
 				*/
-				void attachTexture2D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level = 0);
+				void attachTexture2D(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);
 				/**
 				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
 				@param layer Which layer of the 3-dimensional image to use. It is 0 by default.
 				*/
-				void attachTexture3D(const Enum target, const Enum attachment, const Enum texTarget, const unsigned int textureID, const int level = 0, const int layer = 0);
+				void attachTexture3D(const Enum target, const Enum attachment, const Texture& tex, const int level = 0, const int layer = 0);
 
 				/**
 				Attaches a single layer from a texture to this `FrameBuffer`
@@ -358,7 +429,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer
 				@opengl
 				*/
-				void attachTextureLayer(const Enum target, const Enum attachment, const unsigned int texture, const int level = 0, const int layer = 0);
+				void attachTextureLayer(const Enum target, const Enum attachment, const Texture& tex, const int level = 0, const int layer = 0);
 
 				/**
 				Attaches a `RenderBuffer` to this `FrameBuffer` for rendering.
@@ -452,71 +523,6 @@ namespace mc {
 			private:
 				void bindIndex(const Index id) const override;
 			};//FrameBuffer
-
-			/**
-			@see https://www.opengl.org/wiki/Texture
-			*/
-			class Texture: public Object {
-			public:
-				Texture() noexcept;
-				/**
-				@opengl
-				*/
-				Texture(const char* file);
-				/**
-				@opengl
-				*/
-				Texture(const std::string& file);
-
-				void init() override;
-				void destroy() override;
-
-				void bindToLocation(const Index location) const;
-
-				/**
-				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
-				@opengl
-				*/
-				void setData(const void * data, const Size width, const Size height, const Enum type = GL_FLOAT, const Enum format = GL_RGB, const Enum internalFormat = GL_RGB, const Index mipmapLevel = 0);
-
-				/**
-				@opengl
-				@bug Loads upside down
-				*/
-				void loadFile(const char* file);
-
-				/**
-				@copydoc loadFile(const char*)
-				*/
-				void loadFile(const std::string& file);
-
-				void generateMipmap();
-
-				void setTarget(const Enum target);
-				Enum getTarget();
-
-				bool isCreated() const override;
-
-				/**
-				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
-				@opengl
-				*/
-				void setParameter(const Enum name, const int value);
-
-				/**
-				@copydoc Object::operator==(const Object&) const
-				*/
-				bool operator==(const Texture& other) const;
-				/**
-				@copydoc Object::operator!=(const Object&) const
-				*/
-				bool operator!=(const Texture& other) const;
-
-			private:
-				Enum target = GL_TEXTURE_2D;
-
-				void bindIndex(const Index id) const override;
-			};//Texture
 
 			/**
 			Represents a buffer of memory in the GPU. This class should not be used directly. Instead,
@@ -1035,7 +1041,7 @@ namespace mc {
 				@opengl
 				*/
 				char* getSource(const Size length, char* characters, int amount = 0) const;
-				
+
 				/**
 				@opengl
 				*/
