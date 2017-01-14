@@ -18,7 +18,7 @@ namespace mc {
 			if( errno_t status = localtime_s(pointer, time) ) {
 				throw AssertionError("localtime_s errored with code " + std::to_string(status));
 			}
-#elif MACE_POSIX
+#elif defined(MACE_POSIX)
 			localtime_r(time, pointer);
 #else
 			//fallback to the built in localtime, which isn't thread safe
@@ -35,7 +35,7 @@ namespace mc {
 			if( errno_t status = gmtime_s(pointer, time) ) {
 				throw AssertionError("gmtime_s errored with code " + std::to_string(status));
 			}
-#elif MACE_POSIX
+#elif defined(MACE_POSIX)
 			gmtime_r(time, pointer);
 
 			if( pointer == nullptr ) {
@@ -55,7 +55,7 @@ namespace mc {
 			if( errno_t status = ctime_s(buffer, bufSize, time) ) {
 				throw AssertionError("ctime_s errored with code " + std::to_string(status));
 			}
-#elif MACE_POSIX
+#elif defined(MACE_POSIX)
 			*buffer = ctime_r(buffer, time);
 
 			if( buffer == nullptr ) {
@@ -74,7 +74,7 @@ namespace mc {
 			if( errno_t status = asctime_s(buffer, bufSize, time) ) {
 				throw AssertionError("asctime_s errored with code " + std::to_string(status));
 			}
-#elif MACE_POSIX
+#elif defined(MACE_POSIX)
 			*buffer = asctime_r(time, buffer);
 
 			if( buffer == nullptr ) {
