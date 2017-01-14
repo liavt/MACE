@@ -14,6 +14,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <ctime>
+#include <cstddef>
+
 #include <string>
 
 namespace mc {
