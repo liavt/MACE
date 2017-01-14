@@ -1,18 +1,9 @@
 var a00041 =
 [
-    [ "TransformMatrix", "dd/d32/a00041_ad660cc05460555676f372334d8fe9aed.html#ad660cc05460555676f372334d8fe9aed", null ],
-    [ "get", "dd/d32/a00041_afc3e42106cadda5984594ee18506dcfd.html#afc3e42106cadda5984594ee18506dcfd", null ],
-    [ "operator!=", "dd/d32/a00041_ac4bf06657f3dcd69ef435f02a51edc77.html#ac4bf06657f3dcd69ef435f02a51edc77", null ],
-    [ "operator<", "dd/d32/a00041_a1dbe80e02969059a1ab9cc4c167343e6.html#a1dbe80e02969059a1ab9cc4c167343e6", null ],
-    [ "operator<=", "dd/d32/a00041_a71515ed6991421571635bd3068437757.html#a71515ed6991421571635bd3068437757", null ],
-    [ "operator==", "dd/d32/a00041_ab284df8bcb89201ccd09403ad21f28ad.html#ab284df8bcb89201ccd09403ad21f28ad", null ],
-    [ "operator>", "dd/d32/a00041_a95cc17d73620c338c6cf7e39d88c66f0.html#a95cc17d73620c338c6cf7e39d88c66f0", null ],
-    [ "operator>=", "dd/d32/a00041_ac4d1110fb2283ee53782f0423e6948b0.html#ac4d1110fb2283ee53782f0423e6948b0", null ],
-    [ "reset", "dd/d32/a00041_add25f797b317967ba0484db1b1b8827a.html#add25f797b317967ba0484db1b1b8827a", null ],
-    [ "rotate", "dd/d32/a00041_a6958ca81511314aada5e5754852751b0.html#a6958ca81511314aada5e5754852751b0", null ],
-    [ "scale", "dd/d32/a00041_aabce39444cb0bb61b0f11048df0bcddc.html#aabce39444cb0bb61b0f11048df0bcddc", null ],
-    [ "translate", "dd/d32/a00041_a30bf729eeb4b48a9e47d4970867eeabe.html#a30bf729eeb4b48a9e47d4970867eeabe", null ],
-    [ "rotation", "dd/d32/a00041_a3ed9fc5756560490b92f7e13893e9dc4.html#a3ed9fc5756560490b92f7e13893e9dc4", null ],
-    [ "scaler", "dd/d32/a00041_a4f2f6d4592045082c076e46058d6e74d.html#a4f2f6d4592045082c076e46058d6e74d", null ],
-    [ "translation", "dd/d32/a00041_ab1d6d109dbc3524efa2aba9f8dddea37.html#ab1d6d109dbc3524efa2aba9f8dddea37", null ]
+    [ "destroy", "dd/d32/a00041_a26ab7664a9de12c637b17d2376d888fb.html#a26ab7664a9de12c637b17d2376d888fb", null ],
+    [ "init", "dd/d32/a00041_acc26605ca1ee6d85de2b5da64573e72b.html#acc26605ca1ee6d85de2b5da64573e72b", null ],
+    [ "render", "dd/d32/a00041_a4c4fbc2599a3ba8c83ff7f8ada3f4e4b.html#a4c4fbc2599a3ba8c83ff7f8ada3f4e4b", null ],
+    [ "resize", "dd/d32/a00041_a28f8a2b44b5a3697aa1f0ce9d53c0443.html#a28f8a2b44b5a3697aa1f0ce9d53c0443", null ],
+    [ "setUp", "dd/d32/a00041_a0d629966c9769ae5385528c54785fec2.html#a0d629966c9769ae5385528c54785fec2", null ],
+    [ "tearDown", "dd/d32/a00041_a0a82be6395851c77079746396e99d918.html#a0a82be6395851c77079746396e99d918", null ]
 ];

@@ -1,4 +1,4 @@
-.TH "mc::os::WindowModule" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::os::WindowModule" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,7 +14,7 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 
 .in +1c
 .ti -1c
-.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBHOVERED\fP = 6, \fBDIRTY\fP = 7 }"
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBDIRTY\fP = 6 }"
 .br
 .in -1c
 .SS "Public Member Functions"
@@ -53,17 +53,17 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .ti -1c
 .RI "void \fBinit\fP () override"
 .br
-.RI "\fIShould be called a by \fCEntity\fP when \fC\fBSystem\&.init()\fP\fP is called\&. \fP"
+.RI "\fICalled when \fBMACE#init\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
 .ti -1c
 .RI "void \fBupdate\fP () override"
 .br
-.RI "\fIShould be called a by \fCEntity\fP when \fC\fBSystem\&.update()\fP\fP is called\&. \fP"
+.RI "\fICalled when \fBMACE#update\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
 .ti -1c
 .RI "void \fBdestroy\fP () override"
 .br
-.RI "\fIShould be called a by \fCEntity\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. \fP"
+.RI "\fICalled when \fBMACE#destroy\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
 .ti -1c
-.RI "std::string \fBgetName\fP () const "
+.RI "std::string \fBgetName\fP () const  override"
 .br
 .RI "\fIOverride this function and return a UNIQUE name for this \fC\fBModule\fP\fP \fP"
 .ti -1c
@@ -71,6 +71,15 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .br
 .ti -1c
 .RI "bool \fBisVSync\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetCreationCallback\fP (const \fBVoidFunctionPtr\fP callback)"
+.br
+.ti -1c
+.RI "const \fBVoidFunctionPtr\fP \fBgetCreationCallback\fP () const "
+.br
+.ti -1c
+.RI "\fBVoidFunctionPtr\fP \fBgetCreationCallback\fP ()"
 .br
 .ti -1c
 .RI "const std::vector< \fBEntity\fP * > & \fBgetChildren\fP () const "
@@ -177,6 +186,12 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .RI "void \fBaddChild\fP (\fBEntity\fP &e)"
 .br
 .ti -1c
+.RI "void \fBaddChild\fP (\fBEntity\fP *e)"
+.br
+.ti -1c
+.RI "void \fBaddComponent\fP (Component *action)"
+.br
+.ti -1c
 .RI "void \fBaddComponent\fP (Component &action)"
 .br
 .ti -1c
@@ -248,7 +263,13 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .br
 .RI "\fIShould be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. \fP"
 .ti -1c
+.RI "virtual void \fBhover\fP ()"
+.br
+.ti -1c
 .RI "virtual void \fBonClean\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBonHover\fP ()"
 .br
 .in -1c
 .SS "Protected Attributes"
@@ -264,7 +285,7 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 33 of file Window\&.h\&.
+Definition at line 35 of file Window\&.h\&.
 .SH "Member Enumeration Documentation"
 .PP 
 .SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
@@ -284,7 +305,7 @@ Entity::getProperty(unsigned int)
 
 .TP
 \fB\fIUPDATE_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCtrue\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
+Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCFALSE\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -294,7 +315,7 @@ Entity::getProperty(unsigned int)
 
 .TP
 \fB\fIRENDER_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCtrue\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
+Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCfalse\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -326,21 +347,11 @@ Flag representing whether an \fBEntity\fP's X position should move when it's par
 
 .TP
 \fB\fISTRETCH_Y \fP\fP
-Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
+Flag representing whether an \fBEntity\fP's Y position should move when it's parent is resized\&. 
 .PP
 \fBSee also:\fP
 .RS 4
 \fBEntity::STRETCH_X\fP 
-.RE
-.PP
-
-.TP
-\fB\fIHOVERED \fP\fP
-Flag representing whether this \fC\fBEntity\fP\fP has been hovered over\&. The \fC\fBRenderProtocol\fP\fP used to render the \fC\fBEntity\fP\fP must set this\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-ssl::bindEntity(Entity*) 
 .RE
 .PP
 
@@ -361,7 +372,7 @@ Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily 
 .PP
 Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
 .PP
-Definition at line 94 of file Entity\&.h\&.
+Definition at line 107 of file Entity\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::os::WindowModule::WindowModule (const int width, const int height, const char * title)"
@@ -382,7 +393,27 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
+.SS "void mc::gfx::Entity::addChild (\fBEntity\fP * e)\fC [inherited]\fP"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::addComponent (\fBComponent\fP * action)\fC [inherited]\fP"
+
 .SS "void mc::gfx::Entity::addComponent (\fBComponent\fP & action)\fC [inherited]\fP"
+
+.PP
 
 .SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::begin ()\fC [inherited]\fP"
 
@@ -429,35 +460,11 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "void mc::os::WindowModule::destroy ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
-Should be called a by \fCEntity\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. Calls \fConDestroy()\fP\&. Sets \fCEntity::INIT\fP to be false 
+Called when \fBMACE#destroy\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to clear memory, close streams, or clean up anything that needs to be cleaned up\&. 
 .PP
-Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fConDestroy()\fP 
+Should only be called before the program is closed\&. 
 .PP
-\fBNote:\fP
-.RS 4
-This will make this \fCEntity\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::DIRTY 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.br
-\fIInitializationError\fP If the property \fCEntity::INIT\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
-.RE
-.PP
-
-.PP
-Reimplemented from \fBmc::gfx::Entity\fP\&.
+Implements \fBmc::Module\fP\&.
 .SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::end ()\fC [inherited]\fP"
 
 .PP
@@ -545,6 +552,10 @@ an \fCstd::vector\fP with all children of this \fC\fBEntity\fP\fP
 
 .SS "std::vector<Component*> mc::gfx::Entity::getComponents ()\fC [inherited]\fP"
 
+.SS "const \fBVoidFunctionPtr\fP mc::os::WindowModule::getCreationCallback () const"
+
+.SS "\fBVoidFunctionPtr\fP mc::os::WindowModule::getCreationCallback ()"
+
 .SS "const unsigned int& mc::os::WindowModule::getFPS () const"
 
 .SS "GLFWwindow* mc::os::WindowModule::getGLFWWindow ()"
@@ -572,7 +583,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 
 .SS "const float& mc::gfx::Entity::getHeight () const\fC [inherited]\fP"
 
-.SS "std::string mc::os::WindowModule::getName () const\fC [virtual]\fP"
+.SS "std::string mc::os::WindowModule::getName () const\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Override this function and return a UNIQUE name for this \fC\fBModule\fP\fP The name for your \fC\fBModule\fP\fP is used in comparison, so make sure it is as unique as possible\&. 
@@ -795,6 +806,25 @@ Checks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP
 
 .SS "bool mc::gfx::Entity::hasParent () const\fC [inherited]\fP"
 
+.SS "virtual void mc::gfx::Entity::hover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "int mc::gfx::Entity::indexOf (const \fBEntity\fP & e) const\fC [inherited]\fP"
 
 .PP
@@ -821,35 +851,11 @@ Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP
 .SS "void mc::os::WindowModule::init ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
-Should be called a by \fCEntity\fP when \fC\fBSystem\&.init()\fP\fP is called\&. Calls \fConInit()\fP 
+Called when \fBMACE#init\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to initialize variables, start streams, or launch a context\&. 
 .PP
-Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fConInit()\fP 
+Should only be called once\&. 
 .PP
-\fBNote:\fP
-.RS 4
-This will make this \fCEntity\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::DIRTY 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.br
-\fIInitializationError\fP If the property \fCEntity::INIT\fP is true, meaning \fC\fBinit()\fP\fP has already been called\&. 
-.RE
-.PP
-
-.PP
-Reimplemented from \fBmc::gfx::Entity\fP\&.
+Implements \fBmc::Module\fP\&.
 .SS "bool mc::os::WindowModule::isVSync () const"
 
 .SS "void mc::gfx::Entity::makeDirty ()\fC [inherited]\fP"
@@ -869,6 +875,27 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 
 .SS "virtual void mc::gfx::Entity::onClean ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::gfx::Text\fP\&.
+.SS "virtual void mc::gfx::Entity::onHover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 \fBWarning:\fP
@@ -1114,6 +1141,8 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
+.SS "void mc::os::WindowModule::setCreationCallback (const \fBVoidFunctionPtr\fP callback)"
+
 .SS "void mc::os::WindowModule::setFPS (const unsigned int & FPS)"
 
 .SS "void mc::gfx::Entity::setHeight (const float & s)\fC [inherited]\fP"
@@ -1280,18 +1309,9 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "void mc::os::WindowModule::update ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
-Should be called a by \fCEntity\fP when \fC\fBSystem\&.update()\fP\fP is called\&. Calls \fConUpdate()\fP\&. 
+Called when \fBMACE#update\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked\&. 
 .PP
-Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fConUpdate()\fP 
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIInitializationError\fP If the property \fCEntity::INIT\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
-.RE
-.PP
-
-.PP
-Reimplemented from \fBmc::gfx::Entity\fP\&.
+Implements \fBmc::Module\fP\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
@@ -1306,7 +1326,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 537 of file Entity\&.h\&.
+Definition at line 563 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1317,7 +1337,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 542 of file Entity\&.h\&.
+Definition at line 568 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

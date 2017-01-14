@@ -1,34 +1,234 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d4/de8/a00061" kind="file" language="C++">
-    <compoundname>scene.v.glsl</compoundname>
+    <compoundname>Components.h</compoundname>
+    <includes refid="df/d03/a00062" local="no">MACE/Graphics/Entity.h</includes>
+    <includedby refid="d9/d73/a00060" local="no">include/MACE/Graphics/Components.cpp</includedby>
+    <includedby refid="df/d5f/a00064" local="no">include/MACE/Graphics/Graphics.h</includedby>
+    <incdepgraph>
+      <node id="70">
+        <label>cstdint</label>
+      </node>
+      <node id="71">
+        <label>stdexcept</label>
+      </node>
+      <node id="74">
+        <label>MACE/Utility/Matrix.h</label>
+        <link refid="da/d2a/a00086_source"/>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>MACE/Utility/BitField.h</label>
+        <link refid="d2/d1f/a00083_source"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+      </node>
+      <node id="72">
+        <label>ostream</label>
+      </node>
+      <node id="75">
+        <label>MACE/Utility/Vector.h</label>
+        <link refid="d1/dc1/a00092_source"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+      </node>
+      <node id="66">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="Components.h"/>
+        <childnode refid="67" relation="include">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>array</label>
+      </node>
+      <node id="76">
+        <label>MACE/Utility/Math.h</label>
+        <link refid="df/d13/a00085_source"/>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>MACE/Utility/Transform.h</label>
+        <link refid="d9/dec/a00090_source"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+      </node>
+      <node id="69">
+        <label>MACE/Core/Constants.h</label>
+        <link refid="d9/d2e/a00056_source"/>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>MACE/Graphics/Entity.h</label>
+        <link refid="df/d03/a00062_source"/>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+      </node>
+      <node id="78">
+        <label>initializer_list</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="80">
+        <label>include/MACE/Graphics/Components.cpp</label>
+        <link refid="d9/d73/a00060_source"/>
+      </node>
+      <node id="82">
+        <label>include/MACE/MACE.h</label>
+        <link refid="d8/d53/a00081_source"/>
+      </node>
+      <node id="81">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="df/d5f/a00064_source"/>
+        <childnode refid="82" relation="include">
+        </childnode>
+      </node>
+      <node id="79">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="Components.h"/>
+        <childnode refid="80" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="da/da0/a00009" prot="public">mc::gfx::CallbackComponent</innerclass>
+    <innerclass refid="dd/da2/a00019" prot="public">mc::gfx::FPSComponent</innerclass>
+    <innernamespace refid="d9/df8/a00096">mc</innernamespace>
+    <innernamespace refid="d1/d44/a00098">mc::gfx</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d4/de8/a00061_a7295e4863b900b0dbc33a85023e8580c_1a7295e4863b900b0dbc33a85023e8580c" prot="public" static="no">
+        <name>MACE_GRAPHICS_COMPONENTS_H</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Components.h" line="12" column="9" bodyfile="include/MACE/Graphics/Components.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">//when<sp/>the<sp/>preprocessor<sp/>copy<sp/>and<sp/>pastes<sp/>this<sp/>file,<sp/>the<sp/>newlines<sp/>will<sp/>be<sp/>syntax<sp/>errors.<sp/>we<sp/>need<sp/>to<sp/>specify<sp/>that<sp/>this<sp/>is<sp/>a<sp/>multiline<sp/>string.<sp/>if<sp/>you<sp/>want<sp/>syntax<sp/>highlighting,<sp/>make<sp/>sure<sp/>to<sp/>configure<sp/>your<sp/>editor<sp/>to<sp/>ignore<sp/>this<sp/>line</highlight></codeline>
-<codeline><highlight class="normal">R&quot;(</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">//VERTEX<sp/>SHADER</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#version<sp/>330<sp/>core</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">precision<sp/>mediump<sp/>float;<sp/>//<sp/>Defines<sp/>precision<sp/>for<sp/>float<sp/>and<sp/>float-derived<sp/>(vector/matrix)<sp/>types.</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">layout(location<sp/>=<sp/>0)<sp/>in<sp/>vec3<sp/>vertexPosition;</highlight></codeline>
-<codeline><highlight class="normal">layout(location<sp/>=<sp/>1)<sp/>in<sp/>vec2<sp/>texCoord;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">out<sp/>lowp<sp/>vec2<sp/>textureCoord;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">void<sp/>main(void){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>textureCoord=texCoord;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>gl_Position<sp/>=<sp/>vec4(vertexPosition,<sp/>1);</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">)&quot;</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_GRAPHICS_COMPONENTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_GRAPHICS_COMPONENTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Graphics/Entity.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d9/df8/a00096" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">gfx<sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="da/da0/a00009" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="da/da0/a00009" kindref="compound">CallbackComponent</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="da/d45/a00011" kindref="compound">Component</ref><sp/>{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="21" refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void(*<ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref>)(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*);</highlight></codeline>
+<codeline lineno="22" refid="da/da0/a00009_a1d867336c398703717ca24ddd0ad749c_1a1d867336c398703717ca24ddd0ad749c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>bool(*<ref refid="da/da0/a00009_a1d867336c398703717ca24ddd0ad749c_1a1d867336c398703717ca24ddd0ad749c" kindref="member">UpdatePtr</ref>)(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_aadd2a9a3f394a0f08c3cb59613b89fa6_1aadd2a9a3f394a0f08c3cb59613b89fa6" kindref="member">setInitCallback</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_af639355d03b108849a22942b0e095496_1af639355d03b108849a22942b0e095496" kindref="member">getInitCallback</ref>();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_af639355d03b108849a22942b0e095496_1af639355d03b108849a22942b0e095496" kindref="member">getInitCallback</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_adef789d9fe8ce00950081fc4ed006a59_1adef789d9fe8ce00950081fc4ed006a59" kindref="member">setUpdateCallback</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a1d867336c398703717ca24ddd0ad749c_1a1d867336c398703717ca24ddd0ad749c" kindref="member">UpdatePtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a1d867336c398703717ca24ddd0ad749c_1a1d867336c398703717ca24ddd0ad749c" kindref="member">UpdatePtr</ref><sp/><ref refid="da/da0/a00009_a2c95494fb822174f0fd6936ad1ed7ae9_1a2c95494fb822174f0fd6936ad1ed7ae9" kindref="member">getUpdateCallback</ref>();</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a1d867336c398703717ca24ddd0ad749c_1a1d867336c398703717ca24ddd0ad749c" kindref="member">UpdatePtr</ref><sp/><ref refid="da/da0/a00009_a2c95494fb822174f0fd6936ad1ed7ae9_1a2c95494fb822174f0fd6936ad1ed7ae9" kindref="member">getUpdateCallback</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a5612994a97e439cf4f4498b0318cc8f1_1a5612994a97e439cf4f4498b0318cc8f1" kindref="member">setRenderCallback</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_a61642fb83e0aa49f1a9cb794c29a8a5e_1a61642fb83e0aa49f1a9cb794c29a8a5e" kindref="member">getRenderCallback</ref>();</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_a61642fb83e0aa49f1a9cb794c29a8a5e_1a61642fb83e0aa49f1a9cb794c29a8a5e" kindref="member">getRenderCallback</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a03b89eaf946ea5b1096a058bdcd97a25_1a03b89eaf946ea5b1096a058bdcd97a25" kindref="member">setDestroyCallback</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_a20d0bbe1f3bde208edf7c8cc3610c2a0_1a20d0bbe1f3bde208edf7c8cc3610c2a0" kindref="member">getDestroyCallback</ref>();</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_a20d0bbe1f3bde208edf7c8cc3610c2a0_1a20d0bbe1f3bde208edf7c8cc3610c2a0" kindref="member">getDestroyCallback</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a9e9569f714fa3443d92be0cc66ba54e5_1a9e9569f714fa3443d92be0cc66ba54e5" kindref="member">setHoverCallback</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_a3c65768a8311895983c2855496ceb25d_1a3c65768a8311895983c2855496ceb25d" kindref="member">getHoverCallback</ref>();</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_a3c65768a8311895983c2855496ceb25d_1a3c65768a8311895983c2855496ceb25d" kindref="member">getHoverCallback</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_afcc7ea389969acc8d46da681d65aaf5d_1afcc7ea389969acc8d46da681d65aaf5d" kindref="member">setCleanCallback</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/>func);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_aa6f8a6d23e72c233bc35800e6dd6efbf_1aa6f8a6d23e72c233bc35800e6dd6efbf" kindref="member">getCleanCallback</ref>();</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/><ref refid="da/da0/a00009_aa6f8a6d23e72c233bc35800e6dd6efbf_1aa6f8a6d23e72c233bc35800e6dd6efbf" kindref="member">getCleanCallback</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a189b8279d1eab734cb93951af25ca42b_1a189b8279d1eab734cb93951af25ca42b" kindref="member">init</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_ad85853b9fe3a1bf2057151ece1bbf799_1ad85853b9fe3a1bf2057151ece1bbf799" kindref="member">update</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_afc742e1326ae43d6098bcd41b2d4bc2f_1afc742e1326ae43d6098bcd41b2d4bc2f" kindref="member">render</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_aae900faa32473bcde4c8a0cae9ba8319_1aae900faa32473bcde4c8a0cae9ba8319" kindref="member">destroy</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a4dea256750298e7f701793c06c34cf6c_1a4dea256750298e7f701793c06c34cf6c" kindref="member">hover</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_aaa703cf2aca24eee27060cc64bcf69ba_1aaa703cf2aca24eee27060cc64bcf69ba" kindref="member">clean</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a7d6d718bbc43db88d76251085d3064d5_1a7d6d718bbc43db88d76251085d3064d5" kindref="member">CallbackPtr</ref><sp/>destroyCallback<sp/>=<sp/>[]<sp/>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>{},</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>renderCallback<sp/>=<sp/>[]<sp/>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>{},</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>initCallback<sp/>=<sp/>[]<sp/>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>{},</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>hoverCallback<sp/>=<sp/>[]<sp/>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>{},</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cleanCallback<sp/>=<sp/>[]<sp/>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>{};</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/da0/a00009_a1d867336c398703717ca24ddd0ad749c_1a1d867336c398703717ca24ddd0ad749c" kindref="member">UpdatePtr</ref><sp/>updateCallback<sp/>=<sp/>[]<sp/>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>-&gt;<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//CallbackEntity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="dd/da2/a00019" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="dd/da2/a00019" kindref="compound">FPSComponent</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="da/d45/a00011" kindref="compound">Component</ref><sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="67" refid="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void(*TickCallbackPtr)(<ref refid="dd/da2/a00019" kindref="compound">FPSComponent</ref>*,<sp/><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>getUpdatesPerSecond()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>getFramesPerSecond()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>getCleansPerSecond()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>getHoversPerSecond()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setTickCallback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>TickCallbackPtr<sp/>callback);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>TickCallbackPtr<sp/>getTickCallback();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>TickCallbackPtr<sp/>getTickCallback()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a189b8279d1eab734cb93951af25ca42b_1a189b8279d1eab734cb93951af25ca42b" kindref="member">init</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_ad85853b9fe3a1bf2057151ece1bbf799_1ad85853b9fe3a1bf2057151ece1bbf799" kindref="member">update</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_afc742e1326ae43d6098bcd41b2d4bc2f_1afc742e1326ae43d6098bcd41b2d4bc2f" kindref="member">render</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_aaa703cf2aca24eee27060cc64bcf69ba_1aaa703cf2aca24eee27060cc64bcf69ba" kindref="member">clean</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_a4dea256750298e7f701793c06c34cf6c_1a4dea256750298e7f701793c06c34cf6c" kindref="member">hover</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="da/da0/a00009_aae900faa32473bcde4c8a0cae9ba8319_1aae900faa32473bcde4c8a0cae9ba8319" kindref="member">destroy</ref>(<ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*<sp/>e)<sp/></highlight><highlight class="keyword">final</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>updatesPerSecond<sp/>=<sp/>0,<sp/>nbUpdates<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>framesPerSecond<sp/>=<sp/>0,<sp/>nbFrames<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>cleansPerSecond<sp/>=<sp/>0,<sp/>nbCleans<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>hoversPerSecond<sp/>=<sp/>0,<sp/>nbHovers<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>TickCallbackPtr<sp/>tickCallback<sp/>=<sp/>[]<sp/>(FPSComponent*,<sp/><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*)<sp/>{};</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>time_t<sp/>lastTime<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//FPSComponent</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//gfx</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/scene.v.glsl"/>
+    <location file="include/MACE/Graphics/Components.h"/>
   </compounddef>
 </doxygen>

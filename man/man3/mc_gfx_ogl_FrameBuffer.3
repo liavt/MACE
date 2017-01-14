@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::FrameBuffer" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::FrameBuffer" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -23,23 +23,20 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
-.RI "void \fBattachTexture\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const unsigned int textureID, const int level=0)"
+.RI "void \fBattachTexture\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP &tex, const int level=0)"
 .br
 .RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTexture1D\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBEnum\fP texTarget, const unsigned int textureID, const int level=0)"
+.RI "void \fBattachTexture1D\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP &tex, const int level=0)"
 .br
-.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTexture2D\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBEnum\fP texTarget, const unsigned int textureID, const int level=0)"
+.RI "void \fBattachTexture2D\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP &tex, const int level=0)"
 .br
-.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTexture3D\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBEnum\fP texTarget, const unsigned int textureID, const int level=0, const int layer=0)"
+.RI "void \fBattachTexture3D\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP &tex, const int level=0, const int layer=0)"
 .br
-.RI "\fIAttaches a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBattachTextureLayer\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const unsigned int texture, const int level=0, const int layer=0)"
+.RI "void \fBattachTextureLayer\fP (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP &tex, const int level=0, const int layer=0)"
 .br
 .RI "\fIAttaches a single layer from a texture to this \fC\fBFrameBuffer\fP\fP \fP"
 .ti -1c
@@ -127,7 +124,7 @@ target variable which is GL_FRAMEBUFFER by default\&. and update documentation a
 .PP
 
 .PP
-Definition at line 319 of file OGL\&.h\&.
+Definition at line 389 of file OGL\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::ogl::FrameBuffer::attachRenderbuffer (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBRenderBuffer\fP & buffer)"
@@ -150,7 +147,7 @@ https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::FrameBuffer::attachTexture (const \fBEnum\fP target, const \fBEnum\fP attachment, const unsigned int textureID, const int level = \fC0\fP)"
+.SS "void mc::gfx::ogl::FrameBuffer::attachTexture (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP & tex, const int level = \fC0\fP)"
 
 .PP
 Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
@@ -173,11 +170,6 @@ https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 \fBsetDrawBuffers(const Size, const Enum*)\fP 
 .RE
 .PP
-\fBTodo\fP
-.RS 4
-Replace this with the actual \fBTexture\fP class 
-.RE
-.PP
 \fBAttention:\fP
 .RS 4
 This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
@@ -189,43 +181,10 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::FrameBuffer::attachTexture1D (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBEnum\fP texTarget, const unsigned int textureID, const int level = \fC0\fP)"
+.SS "void mc::gfx::ogl::FrameBuffer::attachTexture1D (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP & tex, const int level = \fC0\fP)"
 
 .PP
-Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
-.PP
-\fBParameters:\fP
-.RS 4
-\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
-.br
-\fIattachment\fP Which attachment port to use\&. 
-.br
-\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
-.br
-\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
-.PP
-\fBsetDrawBuffers(const Size, const Enum*)\fP 
-.RE
-.PP
-\fBTodo\fP
-.RS 4
-Replace this with the actual \fBTexture\fP class 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
+
 .PP
 \fBParameters:\fP
 .RS 4
@@ -233,97 +192,22 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::FrameBuffer::attachTexture2D (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBEnum\fP texTarget, const unsigned int textureID, const int level = \fC0\fP)"
+.SS "void mc::gfx::ogl::FrameBuffer::attachTexture2D (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP & tex, const int level = \fC0\fP)"
 
 .PP
-Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
-.PP
-\fBParameters:\fP
-.RS 4
-\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
-.br
-\fIattachment\fP Which attachment port to use\&. 
-.br
-\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
-.br
-\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
-.PP
-\fBsetDrawBuffers(const Size, const Enum*)\fP 
-.RE
-.PP
-\fBTodo\fP
-.RS 4
-Replace this with the actual \fBTexture\fP class 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-\fBParameters:\fP
-.RS 4
-\fItexTarget\fP Target for the texture\&. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link\&. 
-.RE
-.PP
 
-.SS "void mc::gfx::ogl::FrameBuffer::attachTexture3D (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBEnum\fP texTarget, const unsigned int textureID, const int level = \fC0\fP, const int layer = \fC0\fP)"
+.SS "void mc::gfx::ogl::FrameBuffer::attachTexture3D (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP & tex, const int level = \fC0\fP, const int layer = \fC0\fP)"
 
 .PP
-Attaches a texture to this \fC\fBFrameBuffer\fP\fP 
+
 .PP
 \fBParameters:\fP
 .RS 4
-\fItarget\fP The framebuffer target\&. Must be \fCGL_DRAW_FRAMEBUFFER\fP, \fCGL_READ_FRAMEBUFFER\fP or \fCGL_FRAMEBUFFER\fP 
-.br
-\fIattachment\fP Which attachment port to use\&. 
-.br
-\fItextureID\fP ID for the \fC\fBTexture\fP\fP to attach\&. See \fBTexture::getID() const\fP 
-.br
-\fIlevel\fP Mipmap level to attach\&. Is 0 by default\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-https://www.opengl.org/wiki/GLAPI/glFramebufferTexture 
-.PP
-\fBsetDrawBuffers(const Size, const Enum*)\fP 
-.RE
-.PP
-\fBTodo\fP
-.RS 4
-Replace this with the actual \fBTexture\fP class 
-.RE
-.PP
-\fBAttention:\fP
-.RS 4
-This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
-.RE
-.PP
-\fBExceptions:\fP
-.RS 4
-\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
-.RE
-.PP
-\fBParameters:\fP
-.RS 4
-\fItexTarget\fP Target for the texture\&. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link\&. 
-.br
 \fIlayer\fP Which layer of the 3-dimensional image to use\&. It is 0 by default\&. 
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::FrameBuffer::attachTextureLayer (const \fBEnum\fP target, const \fBEnum\fP attachment, const unsigned int texture, const int level = \fC0\fP, const int layer = \fC0\fP)"
+.SS "void mc::gfx::ogl::FrameBuffer::attachTextureLayer (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBTexture\fP & tex, const int level = \fC0\fP, const int layer = \fC0\fP)"
 
 .PP
 Attaches a single layer from a texture to this \fC\fBFrameBuffer\fP\fP 
@@ -628,9 +512,9 @@ https://www.opengl.org/wiki/GLAPI/glDrawBuffers
 .PP
 FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int) 
 .PP
-\fBFrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)\fP 
+FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int) 
 .PP
-\fBFrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)\fP 
+FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int) 
 .PP
 FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int) 
 .PP
@@ -726,9 +610,9 @@ https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml
 .PP
 FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int) 
 .PP
-\fBFrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)\fP 
+FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int) 
 .PP
-\fBFrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)\fP 
+FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int) 
 .PP
 FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int) 
 .PP

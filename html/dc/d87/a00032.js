@@ -1,14 +1,22 @@
 var a00032 =
 [
+    [ "PixelPackBuffer", "dc/d87/a00032_acb8340155d4efebcad24831a245d3190.html#acb8340155d4efebcad24831a245d3190", null ],
     [ "bind", "dc/d87/a00032.html#a3f02451ab4df9d4d732d79ed2941dfb1", null ],
-    [ "destroy", "dc/d87/a00032_ad93b1def47f9e0bb49c16dad476bc981.html#ad93b1def47f9e0bb49c16dad476bc981", null ],
+    [ "copyData", "dc/d87/a00032.html#ab5b3d28ddc269895c8f77f513f9c1fd0", null ],
+    [ "destroy", "dc/d87/a00032.html#ac4e88a83c70a133c24667545832a6f0d", null ],
+    [ "getBufferType", "dc/d87/a00032.html#a396693ef6c22c043c5bf0115d3d4aa4a", null ],
     [ "getID", "dc/d87/a00032.html#a717ff2f0b9420b4ce0939ff51ed9d545", null ],
-    [ "init", "dc/d87/a00032_aec584f1f39db5c931f0ed507345d1287.html#aec584f1f39db5c931f0ed507345d1287", null ],
-    [ "isCreated", "dc/d87/a00032_a48633a707ce546f97193752a11c90c00.html#a48633a707ce546f97193752a11c90c00", null ],
+    [ "init", "dc/d87/a00032.html#aea6e64228bbfa092e1448ea9d851fb94", null ],
+    [ "isCreated", "dc/d87/a00032.html#a4042320270935513c6fbfbd101986a83", null ],
+    [ "map", "dc/d87/a00032.html#a5212bb7bc1308bfde2ecd7ae73a064ac", null ],
+    [ "mapRange", "dc/d87/a00032.html#aaaf5780cc43099de399e57ef773a9ee0", null ],
     [ "operator!=", "dc/d87/a00032.html#a5ff3ea4d06441e968ab9f3933329a828", null ],
+    [ "operator!=", "dc/d87/a00032.html#a8c9f33cca265609a823432dd4a4c03a8", null ],
     [ "operator==", "dc/d87/a00032.html#a75cf124fcf3b2ce36c402d9ff8b9447d", null ],
-    [ "setStorage", "dc/d87/a00032_a0ae0eec32a3e55e218cdf30570957ab3.html#a0ae0eec32a3e55e218cdf30570957ab3", null ],
-    [ "setStorageMultisampled", "dc/d87/a00032_a177cef751fff5b42587c618e30c12491.html#a177cef751fff5b42587c618e30c12491", null ],
+    [ "operator==", "dc/d87/a00032.html#a41aadf11e2d1d51951e59c649cc66ccf", null ],
+    [ "setData", "dc/d87/a00032.html#aaf268a39626aa530a4b9facc4950f724", null ],
+    [ "setDataRange", "dc/d87/a00032.html#a174abcec3c5dd8f00a44c4ffb23b95fc", null ],
     [ "unbind", "dc/d87/a00032.html#ae357cedf8793a3ccd358c0174d645a63", null ],
+    [ "unmap", "dc/d87/a00032.html#ad94233be26bd43680d3830cf1a2174c8", null ],
     [ "id", "dc/d87/a00032.html#aa6f2acefb1ac01ff347ff593738eab46", null ]
 ];

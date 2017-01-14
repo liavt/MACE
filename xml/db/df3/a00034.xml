@@ -1,314 +1,824 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="db/df3/a00034" kind="class" language="C++" prot="public" abstract="yes">
-    <compoundname>mc::gfx::RenderImpl</compoundname>
-    <derivedcompoundref refid="d4/d8c/a00035" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; T &gt;</derivedcompoundref>
-    <derivedcompoundref refid="de/d8c/a00036" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; Image &gt;</derivedcompoundref>
-    <includes refid="d1/d84/a00052" local="no">Renderer.h</includes>
-      <sectiondef kind="friend">
-      <memberdef kind="friend" id="db/df3/a00034_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>friend class</type>
-        <definition>friend class Renderer</definition>
-        <argsstring></argsstring>
-        <name>Renderer</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="106" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="106" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="friend" id="db/df3/a00034_ae5cf0daa36c2ea61af27de6a4474f733_1ae5cf0daa36c2ea61af27de6a4474f733" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>friend void</type>
-        <definition>void ssl::init</definition>
-        <argsstring>(const Size &amp;, const Size &amp;)</argsstring>
-        <name>ssl::init</name>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-        </param>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="108" column="1"/>
-      </memberdef>
-      </sectiondef>
+  <compounddef id="db/df3/a00034" kind="class" language="C++" prot="public">
+    <compoundname>mc::Preprocessor</compoundname>
+    <includes refid="db/dab/a00089" local="no">Preprocessor.h</includes>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="db/df3/a00034_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::gfx::RenderImpl::index</definition>
+      <memberdef kind="variable" id="db/df3/a00034_1acec9c188b76afadd546b0c3a9a4076b1" prot="private" static="no" mutable="no">
+        <type>const std::string</type>
+        <definition>const std::string mc::Preprocessor::input</definition>
         <argsstring></argsstring>
-        <name>index</name>
-        <initializer>= -1</initializer>
+        <name>input</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="145" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="145" bodyend="-1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="347" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="347" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/df3/a00034_1a45bd30d388ed92363495b61e91b04aa5" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int mc::Preprocessor::line</definition>
+        <argsstring></argsstring>
+        <name>line</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="349" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="349" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/df3/a00034_1a58a454f40c8152a480cd673f917befd3" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string mc::Preprocessor::filename</definition>
+        <argsstring></argsstring>
+        <name>filename</name>
+        <initializer>= &quot;&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="351" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/df3/a00034_1ae7586caaf77b6dc497189e0d83a36281" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="dc/de2/a00024" kindref="compound">Include</ref> * &gt;</type>
+        <definition>std::vector&lt; Include* &gt; mc::Preprocessor::includes</definition>
+        <argsstring></argsstring>
+        <name>includes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="353" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="353" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="db/df3/a00034_1afb27ec71d972fe1741356a257f69bc57" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> &gt;</type>
+        <definition>std::vector&lt; Macro &gt; mc::Preprocessor::macros</definition>
+        <argsstring></argsstring>
+        <name>macros</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="354" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="354" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="db/df3/a00034_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="db/df3/a00034_ac43fdd213c4324179c4ee8896a80cb7f_1ac43fdd213c4324179c4ee8896a80cb7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
-        <definition>mc::gfx::RenderImpl::RenderImpl</definition>
-        <argsstring>() noexcept=default</argsstring>
-        <name>RenderImpl</name>
+        <definition>mc::Preprocessor::Preprocessor</definition>
+        <argsstring>(const std::string &amp;input, const std::string &amp;filename=&quot;Unknown file&quot;)</argsstring>
+        <name>Preprocessor</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>input</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>filename</declname>
+          <defval>&quot;Unknown file&quot;</defval>
+        </param>
+        <briefdescription>
+<para>Creates a <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>input</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to process. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>filename</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of the file that it is processing. This is used when an error happens. If not provided, &quot;Unknown file&quot; is used instead. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="168" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a84bd8e06ca5da4bf7a6f7344fceeda45_1a84bd8e06ca5da4bf7a6f7344fceeda45" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::Preprocessor::Preprocessor</definition>
+        <argsstring>(const std::string &amp;input, const Preprocessor &amp;clone)</argsstring>
+        <name>Preprocessor</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>input</declname>
+        </param>
+        <param>
+          <type>const <ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref> &amp;</type>
+          <declname>clone</declname>
+        </param>
+        <briefdescription>
+<para>Clones another <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> and gives it a new input. </para>        </briefdescription>
+        <detaileddescription>
+<para>Macros and includes are all cloned. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>input</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>New string that should be processed. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>clone</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> whose features should be cloned. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="174" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a534c6bf1111788f2805f9d6d57b3e54c_1a534c6bf1111788f2805f9d6d57b3e54c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; std::string &gt;</type>
+        <definition>std::vector&lt; std::string &gt; mc::Preprocessor::preprocessTokens</definition>
+        <argsstring>()</argsstring>
+        <name>preprocessTokens</name>
+        <briefdescription>
+<para>Processeses the <computeroutput>input</computeroutput> specified in the constructor according to the ANSI C standard. </para>        </briefdescription>
+        <detaileddescription>
+<para>Macros are expanded, comments are stripped, and directives are executed. </para><para>Processing is done in O(N) time, where N is the amount of characters in the input. The entire process is done in 1 loop. This is accomplished via a complex finite state machine. <simplesect kind="return"><para>A <computeroutput>std::vector</computeroutput> with the processed output. Each element is a token as specified by the standard. </para></simplesect>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a87bd4ff92013fdce5d147458730e08c8_1a87bd4ff92013fdce5d147458730e08c8" kindref="member">preprocess()</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>PreprocessorException</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>input</computeroutput> is not valid ANSI C code. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="184" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a87bd4ff92013fdce5d147458730e08c8_1a87bd4ff92013fdce5d147458730e08c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string mc::Preprocessor::preprocess</definition>
+        <argsstring>()</argsstring>
+        <name>preprocess</name>
+        <briefdescription>
+<para>Processeses the <computeroutput>input</computeroutput> specified in the constructor according to the ANSI C standard. </para>        </briefdescription>
+        <detaileddescription>
+<para>Macros are expanded, comments are stripped, and directives are executed. </para><para>This is the same as using <computeroutput><ref refid="db/df3/a00034_a534c6bf1111788f2805f9d6d57b3e54c_1a534c6bf1111788f2805f9d6d57b3e54c" kindref="member">preprocessTokens()</ref></computeroutput> with every element combined. <simplesect kind="return"><para>The processed input. </para></simplesect>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a534c6bf1111788f2805f9d6d57b3e54c_1a534c6bf1111788f2805f9d6d57b3e54c" kindref="member">preprocessTokens()</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>PreprocessorException</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>input</computeroutput> is not valid ANSI C code. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="193" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a9366afeeeb173c9ac6573f29b5920909_1a9366afeeeb173c9ac6573f29b5920909" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::addInclude</definition>
+        <argsstring>(Include &amp;incl)</argsstring>
+        <name>addInclude</name>
+        <param>
+          <type><ref refid="dc/de2/a00024" kindref="compound">Include</ref> &amp;</type>
+          <declname>incl</declname>
+        </param>
+        <briefdescription>
+<para>Adds an <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Include</ref></computeroutput> to this preprocessor. </para>        </briefdescription>
+        <detaileddescription>
+<para>Any <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Include</ref></computeroutput>&apos;s in this <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> will be used when #include is encountered. </para><para>Because this function takes in a reference, the <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Include</ref></computeroutput> provided must remain owned by the program when <computeroutput><ref refid="db/df3/a00034_a87bd4ff92013fdce5d147458730e08c8_1a87bd4ff92013fdce5d147458730e08c8" kindref="member">preprocess()</ref></computeroutput> or <computeroutput><ref refid="db/df3/a00034_a534c6bf1111788f2805f9d6d57b3e54c_1a534c6bf1111788f2805f9d6d57b3e54c" kindref="member">preprocessTokens()</ref></computeroutput> is called. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>incl</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Reference to an <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Include</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a87bd4ff92013fdce5d147458730e08c8_1a87bd4ff92013fdce5d147458730e08c8" kindref="member">preprocess()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d3/dfe/a00025" kindref="compound">IncludeDirectory</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d6/d5b/a00026" kindref="compound">IncludeString</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="204" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a17928e075a877c674b4af30a3c8ed308_1a17928e075a877c674b4af30a3c8ed308" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; <ref refid="dc/de2/a00024" kindref="compound">Include</ref> * &gt;</type>
+        <definition>std::vector&lt; Include* &gt; mc::Preprocessor::getIncludes</definition>
+        <argsstring>()</argsstring>
+        <name>getIncludes</name>
+        <briefdescription>
+<para>Retrieves all pointers to an <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Include</ref></computeroutput> added via <computeroutput><ref refid="db/df3/a00034_a9366afeeeb173c9ac6573f29b5920909_1a9366afeeeb173c9ac6573f29b5920909" kindref="member">addInclude()</ref></computeroutput> or <computeroutput><ref refid="db/df3/a00034_aac714d1d87e45ab6c7a769dec4653dbd_1aac714d1d87e45ab6c7a769dec4653dbd" kindref="member">setIncludes()</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>std::vector</computeroutput> containing all <computeroutput>Includes</computeroutput> in this <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="210" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a8ace95019de58b3a70ea28c4157c40c8_1a8ace95019de58b3a70ea28c4157c40c8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const std::vector&lt; <ref refid="dc/de2/a00024" kindref="compound">Include</ref> * &gt;</type>
+        <definition>const std::vector&lt; Include* &gt; mc::Preprocessor::getIncludes</definition>
+        <argsstring>() const </argsstring>
+        <name>getIncludes</name>
+        <briefdescription>
+<para>Retrieves all pointers to an <computeroutput><ref refid="dc/de2/a00024" kindref="compound">Include</ref></computeroutput> added via <computeroutput><ref refid="db/df3/a00034_a9366afeeeb173c9ac6573f29b5920909_1a9366afeeeb173c9ac6573f29b5920909" kindref="member">addInclude()</ref></computeroutput> or <computeroutput><ref refid="db/df3/a00034_aac714d1d87e45ab6c7a769dec4653dbd_1aac714d1d87e45ab6c7a769dec4653dbd" kindref="member">setIncludes()</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>std::vector</computeroutput> containing all <computeroutput>Includes</computeroutput> in this <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="214" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_aac714d1d87e45ab6c7a769dec4653dbd_1aac714d1d87e45ab6c7a769dec4653dbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::setIncludes</definition>
+        <argsstring>(const std::vector&lt; Include * &gt; includes)</argsstring>
+        <name>setIncludes</name>
+        <param>
+          <type>const std::vector&lt; <ref refid="dc/de2/a00024" kindref="compound">Include</ref> * &gt;</type>
+          <declname>includes</declname>
+        </param>
+        <briefdescription>
+<para>Sets all of the <computeroutput>Includes</computeroutput> in this <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>includes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The new <computeroutput>Includes</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a9366afeeeb173c9ac6573f29b5920909_1a9366afeeeb173c9ac6573f29b5920909" kindref="member">addInclude(Include&amp;)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="220" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a4b6efb64844b57f41f3e78359f4eebe8_1a4b6efb64844b57f41f3e78359f4eebe8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const std::string</type>
+        <definition>const std::string mc::Preprocessor::getInput</definition>
+        <argsstring>() const </argsstring>
+        <name>getInput</name>
+        <briefdescription>
+<para>Retrieves what this <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> is processing. </para>        </briefdescription>
+        <detaileddescription>
+<para>Cannot be changed. Set by the constructor. <simplesect kind="return"><para>A <computeroutput>const std::string</computeroutput> with the input. This will never change. </para></simplesect>
+<simplesect kind="see"><para>Preprocessor(std::string, std::string) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="227" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_acf6b80e40b0eb17d56368e41935e12ff_1acf6b80e40b0eb17d56368e41935e12ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string mc::Preprocessor::getFilename</definition>
+        <argsstring>()</argsstring>
+        <name>getFilename</name>
+        <briefdescription>
+<para>Gets the filename of the file this is processing. </para>        </briefdescription>
+        <detaileddescription>
+<para>The filename is determined by the constructor, <computeroutput>#line</computeroutput>, or #include. </para><para>The <computeroutput>__FILE__</computeroutput> macro is equal to whatever this function returns. <simplesect kind="return"><para>The name of the file being processed. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="235" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_ad87ac6539e622f370463dfcf3fbba803_1ad87ac6539e622f370463dfcf3fbba803" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const std::string</type>
+        <definition>const std::string mc::Preprocessor::getFilename</definition>
+        <argsstring>() const </argsstring>
+        <name>getFilename</name>
+        <briefdescription>
+<para>Gets the filename of the file this is processing. </para>        </briefdescription>
+        <detaileddescription>
+<para>The filename is determined by the constructor, <computeroutput>#line</computeroutput>, or #include. </para><para>The <computeroutput>__FILE__</computeroutput> macro is equal to whatever this function returns. <simplesect kind="return"><para>The name of the file being processed. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="239" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_af8ac683a7a582fad68a65e487620d5b8_1af8ac683a7a582fad68a65e487620d5b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::setFilename</definition>
+        <argsstring>(const std::string &amp;filename)</argsstring>
+        <name>setFilename</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+<para>Changes the filename. </para>        </briefdescription>
+        <detaileddescription>
+<para>When <computeroutput>#line</computeroutput> is called with 2 arguments in the <computeroutput>input</computeroutput>, calls this function <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>filename</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to change the internal filename to. <computeroutput>__FILE__</computeroutput> will be updated to reflect the change. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a3e879d335cda1e38faeb7013dae0c75c_1a3e879d335cda1e38faeb7013dae0c75c" kindref="member">Preprocessor::getLine()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="245" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a3e879d335cda1e38faeb7013dae0c75c_1a3e879d335cda1e38faeb7013dae0c75c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned int</type>
+        <definition>unsigned int mc::Preprocessor::getLine</definition>
+        <argsstring>()</argsstring>
+        <name>getLine</name>
+        <briefdescription>
+<para>Gets the current line number. </para>        </briefdescription>
+        <detaileddescription>
+<para>The <computeroutput>__LINE__</computeroutput> macro&apos;s value is always equal to this function and <computeroutput>#line</computeroutput> can change the line number. </para><para>If the processing is done, this is equal to the amount of lines the input had. <simplesect kind="return"><para>The current line that is being processed. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="253" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_abd1c489d702d06a23c608032b2ef6203_1abd1c489d702d06a23c608032b2ef6203" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const unsigned int</type>
+        <definition>const unsigned int mc::Preprocessor::getLine</definition>
+        <argsstring>() const </argsstring>
+        <name>getLine</name>
+        <briefdescription>
+<para>Gets the current line number. </para>        </briefdescription>
+        <detaileddescription>
+<para>The <computeroutput>__LINE__</computeroutput> macro&apos;s value is always equal to this function and <computeroutput>#line</computeroutput> can change the line number. </para><para>If the processing is done, this is equal to the amount of lines the input had. <simplesect kind="return"><para>The current line that is being processed. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="257" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_ace98971e05bfbd664cbc20305fc4242a_1ace98971e05bfbd664cbc20305fc4242a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::setLine</definition>
+        <argsstring>(const unsigned int line)</argsstring>
+        <name>setLine</name>
+        <param>
+          <type>const unsigned int</type>
+          <declname>line</declname>
+        </param>
+        <briefdescription>
+<para>Sets the line number. </para>        </briefdescription>
+        <detaileddescription>
+<para>This does not affect processing. This function is called when the <computeroutput>#line</computeroutput> directive is encountered in the <computeroutput>input</computeroutput> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>line</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The new line number </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a3e879d335cda1e38faeb7013dae0c75c_1a3e879d335cda1e38faeb7013dae0c75c" kindref="member">getLine()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="263" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_ae6ae9816ea3978e28f914147b54c38b7_1ae6ae9816ea3978e28f914147b54c38b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::defineMacro</definition>
+        <argsstring>(const Macro &amp;macro)</argsstring>
+        <name>defineMacro</name>
+        <param>
+          <type>const <ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> &amp;</type>
+          <declname>macro</declname>
+        </param>
+        <briefdescription>
+<para>Defines a <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para>Called when #define is found in the <computeroutput>input</computeroutput> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>macro</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to define. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a862e5f1452e8082f7936ee958ff6f1ad_1a862e5f1452e8082f7936ee958ff6f1ad" kindref="member">undefineMacro(const std::string&amp;)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="273" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_ab968f61b1200ec9da97b6e624f24e859_1ab968f61b1200ec9da97b6e624f24e859" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Preprocessor::isMacroDefined</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>isMacroDefined</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Checks if a <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> with a certain name is defined. </para>        </briefdescription>
+        <detaileddescription>
+<para>Called when <computeroutput>#if</computeroutput>def is encountered in the <computeroutput>input</computeroutput> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of the <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> to search for </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Whether it is defined. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="279" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a862e5f1452e8082f7936ee958ff6f1ad_1a862e5f1452e8082f7936ee958ff6f1ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::undefineMacro</definition>
+        <argsstring>(const std::string &amp;name)</argsstring>
+        <name>undefineMacro</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Removes a <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> with the specified name. </para>        </briefdescription>
+        <detaileddescription>
+<para>Called when #undef is encountered in the <computeroutput>input</computeroutput> </para><para>Because the standard requires #undef to silently do nothing if the macro does not exist, this function does the same. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of the <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> to undefine </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="286" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a6ca7822be8797c7c5b490b30cdf73f33_1a6ca7822be8797c7c5b490b30cdf73f33" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned int</type>
+        <definition>unsigned int mc::Preprocessor::macroNumber</definition>
+        <argsstring>() const </argsstring>
+        <name>macroNumber</name>
+        <briefdescription>
+<para>Calculates the amount of <computeroutput>Macros</computeroutput> in this <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Size of the internal <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> array. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="291" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::defineStandardMacros</definition>
+        <argsstring>()</argsstring>
+        <name>defineStandardMacros</name>
+        <briefdescription>
+<para>Defines macros required by ANSI C and various compiler-specific macros. </para>        </briefdescription>
+        <detaileddescription>
+<para>However, it will not define compiler-defining macros such as <computeroutput>__GCC__</computeroutput>. </para><para>Compiler-specific macros are from the following compilers:<itemizedlist>
+<listitem><para>GCC</para></listitem><listitem><para>VC++</para></listitem><listitem><para>Clang</para></listitem><listitem><para>Intel</para></listitem><listitem><para>Borland</para></listitem><listitem><para>Oracle </para></listitem></itemizedlist>
+</para><para>These function will only define macros that have values at the time that <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> is compiled. For example, if you compiler does not define <computeroutput>__STDC__</computeroutput>, this function will not define <computeroutput>__STDC__</computeroutput>. Additionally, only standard macros documented in the compiler&apos;s manual will be defined here. Custom macros that you define in the <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> compilation will not be defined by this function. For that, use the <computeroutput>defineMacro(Macro)</computeroutput> function. </para><para>Table of standard, non compiler specific macros: <table rows="9" cols="2"><row>
+<entry thead="yes"><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> name </para></entry><entry thead="yes"><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> definition  </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__FILE__</computeroutput> </para></entry><entry thead="no"><para>The current filename as specified by the constructor, #include, or,<computeroutput>#line</computeroutput> directive. If <computeroutput>#line</computeroutput> is called, this macro is defined even if <computeroutput><ref refid="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" kindref="member">defineStandardMacros()</ref></computeroutput> was not called. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__LINE__</computeroutput> </para></entry><entry thead="no"><para>The current line number in the file. Can be changed via <computeroutput>#line</computeroutput>. If <computeroutput>#line</computeroutput> is called, this macro is defined even if <computeroutput><ref refid="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" kindref="member">defineStandardMacros()</ref></computeroutput> was not called. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__DATE__</computeroutput> </para></entry><entry thead="no"><para>Equal to the date at which the <computeroutput>input</computeroutput> was processed with the format MNN DD YYYY. Only updates when <computeroutput><ref refid="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" kindref="member">defineStandardMacros()</ref></computeroutput> is called. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__TIME__</computeroutput> </para></entry><entry thead="no"><para>Equal to the time at which the <computeroutput>input</computeroutput> was processed with the format HH:MM:SS. Only updates when <computeroutput><ref refid="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" kindref="member">defineStandardMacros()</ref></computeroutput> is called. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__BASE_FILE__</computeroutput> </para></entry><entry thead="no"><para>The filename from which the processing starts. #include does not affect this macro, but #line does. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__STDC__</computeroutput> </para></entry><entry thead="no"><para>Whether the preprocessor follows standard. The value of this macro is dependent on the value of <bold>STDC</bold> when <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> was compiled. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__STDC_HOSTED__</computeroutput> </para></entry><entry thead="no"><para>Whether this supports a hosted implementation. The value of this macro is equal to it&apos;s value when <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> was compiled. The standard requires this, so it is 1 most of the time. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__cpluplus</computeroutput> </para></entry><entry thead="no"><para>What version of C++ is being used. This is equal to the version used to compile <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref>. </para></entry></row>
+</table>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_ab07055c830319dcd3e857d1824b46493_1ab07055c830319dcd3e857d1824b46493" kindref="member">defineOSMacros()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="320" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_ab07055c830319dcd3e857d1824b46493_1ab07055c830319dcd3e857d1824b46493" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Preprocessor::defineOSMacros</definition>
+        <argsstring>()</argsstring>
+        <name>defineOSMacros</name>
+        <briefdescription>
+<para>Defines macros that determine what OS you are on. </para>        </briefdescription>
+        <detaileddescription>
+<para>The values of these macros are determined at compile time based on your compiler <simplesect kind="see"><para><ref refid="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" kindref="member">defineStandardMacros()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="326" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a75cca6cbfad23ca6a4b933e22bc3160f_1a75cca6cbfad23ca6a4b933e22bc3160f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> &amp;</type>
+        <definition>const Macro&amp; mc::Preprocessor::getMacro</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>getMacro</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Finds a <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> with the given name. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to look for </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> with the specified name </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>PreprocessorException</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></computeroutput> with the name is not found. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="334" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_a9b42924336f697ecdd85500eab2b7328_1a9b42924336f697ecdd85500eab2b7328" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string mc::Preprocessor::getLocation</definition>
+        <argsstring>() const </argsstring>
+        <name>getLocation</name>
+        <briefdescription>
+<para>Generates a string with the current line number and file name. </para>        </briefdescription>
+        <detaileddescription>
+<para>For example, a <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> which is at line 30 in file foo will return &quot;Line 30 in foo&quot; from <ref refid="db/df3/a00034_a9b42924336f697ecdd85500eab2b7328_1a9b42924336f697ecdd85500eab2b7328" kindref="member">getLocation()</ref> <simplesect kind="return"><para>The current location in the file </para></simplesect>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_a3e879d335cda1e38faeb7013dae0c75c_1a3e879d335cda1e38faeb7013dae0c75c" kindref="member">getLine()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="db/df3/a00034_acf6b80e40b0eb17d56368e41935e12ff_1acf6b80e40b0eb17d56368e41935e12ff" kindref="member">getFilename()</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="344" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="db/df3/a00034_1af57a31cde0d335695ebf65cfd106dd23" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; std::string &gt;</type>
+        <definition>std::vector&lt; std::string &gt; mc::Preprocessor::parse</definition>
+        <argsstring>()</argsstring>
+        <name>parse</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="110" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="356" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type></type>
-        <definition>virtual mc::gfx::RenderImpl::~RenderImpl</definition>
-        <argsstring>() noexcept=default</argsstring>
-        <name>~RenderImpl</name>
+      <memberdef kind="function" id="db/df3/a00034_1a59b8747ae825a4985802fd5efcfc8ba0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; std::string &gt;</type>
+        <definition>std::vector&lt; std::string &gt; mc::Preprocessor::executeDirective</definition>
+        <argsstring>(bool &amp;outputValue, const std::string &amp;command, const std::string &amp;params)</argsstring>
+        <name>executeDirective</name>
+        <param>
+          <type>bool &amp;</type>
+          <declname>outputValue</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>command</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>params</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="111" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="358" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::resize</definition>
-        <argsstring>(const Size width, const Size height)=0</argsstring>
-        <name>resize</name>
-        <reimplementedby refid="de/d8c/a00036_a28f8a2b44b5a3697aa1f0ce9d53c0443_1a28f8a2b44b5a3697aa1f0ce9d53c0443">resize</reimplementedby>
-        <reimplementedby refid="d4/d8c/a00035_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1">resize</reimplementedby>
+      <memberdef kind="function" id="db/df3/a00034_1a0584146f86e47c165556333e7a62ec5b" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::Preprocessor::getMacroLocation</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>getMacroLocation</name>
         <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>width</declname>
-        </param>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>height</declname>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="117" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="360" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::init</definition>
-        <argsstring>(const Size originalWidth, const Size originalHeight)=0</argsstring>
-        <name>init</name>
-        <reimplementedby refid="de/d8c/a00036_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b">init</reimplementedby>
-        <reimplementedby refid="d4/d8c/a00035_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54">init</reimplementedby>
+      <memberdef kind="function" id="db/df3/a00034_1abdb64f965d298eecda5f2a53b53c1d29" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string mc::Preprocessor::expandMacro</definition>
+        <argsstring>(const std::string input) const </argsstring>
+        <name>expandMacro</name>
         <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>originalWidth</declname>
-        </param>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>originalHeight</declname>
+          <type>const std::string</type>
+          <declname>input</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="123" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="362" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_a13d3c43299a124a1b95d113c902e9476_1a13d3c43299a124a1b95d113c902e9476" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="db/df3/a00034_1a6c20dabe9b21d2e9101d88b31f9d34a5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::Preprocessor::getIfScopeLocation</definition>
+        <argsstring>()</argsstring>
+        <name>getIfScopeLocation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="364" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_1adabf71b34281e63362b36ea63be9f25a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::Preprocessor::getCurrentIfScopeLocation</definition>
+        <argsstring>()</argsstring>
+        <name>getCurrentIfScopeLocation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="365" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/df3/a00034_1a607c5f4458ff74d063a389d19f129e72" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::setUp</definition>
-        <argsstring>(os::WindowModule *win, RenderQueue *queue)=0</argsstring>
-        <name>setUp</name>
-        <reimplementedby refid="de/d8c/a00036_a0d629966c9769ae5385528c54785fec2_1a0d629966c9769ae5385528c54785fec2">setUp</reimplementedby>
-        <reimplementedby refid="d4/d8c/a00035_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba">setUp</reimplementedby>
+        <definition>void mc::Preprocessor::calculateIfScope</definition>
+        <argsstring>(bool &amp;outputValue, const bool statementPassed)</argsstring>
+        <name>calculateIfScope</name>
         <param>
-          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
+          <type>bool &amp;</type>
+          <declname>outputValue</declname>
         </param>
         <param>
-          <type><ref refid="d4/d63/a00082_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
-          <declname>queue</declname>
+          <type>const bool</type>
+          <declname>statementPassed</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="128" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="367" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_a06a982c8b438aaa052e1fa1d1fc995ae_1a06a982c8b438aaa052e1fa1d1fc995ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::render</definition>
-        <argsstring>(os::WindowModule *win, GraphicsEntity *entity)=0</argsstring>
-        <name>render</name>
-        <reimplementedby refid="de/d8c/a00036_a4c4fbc2599a3ba8c83ff7f8ada3f4e4b_1a4c4fbc2599a3ba8c83ff7f8ada3f4e4b">render</reimplementedby>
-        <reimplementedby refid="d4/d8c/a00035_a9d43b72296acfbba53ba52d562a01030_1a9d43b72296acfbba53ba52d562a01030">render</reimplementedby>
+      <memberdef kind="function" id="db/df3/a00034_1a21f2e4c90066c596624a734b280c064e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Preprocessor::parseIfStatement</definition>
+        <argsstring>(const std::string statement)</argsstring>
+        <name>parseIfStatement</name>
         <param>
-          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <param>
-          <type><ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref> *</type>
-          <declname>entity</declname>
+          <type>const std::string</type>
+          <declname>statement</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="133" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="368" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_ac1b569053de9c46379c954f71e64659b_1ac1b569053de9c46379c954f71e64659b" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::tearDown</definition>
-        <argsstring>(os::WindowModule *win, RenderQueue *queue)=0</argsstring>
-        <name>tearDown</name>
-        <reimplementedby refid="de/d8c/a00036_a0a82be6395851c77079746396e99d918_1a0a82be6395851c77079746396e99d918">tearDown</reimplementedby>
-        <reimplementedby refid="d4/d8c/a00035_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538">tearDown</reimplementedby>
+      <memberdef kind="function" id="db/df3/a00034_1a30c7d80887555aedc4cc14ef0dec66bf" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref></type>
+        <definition>Macro mc::Preprocessor::parseMacroName</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>parseMacroName</name>
         <param>
-          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <param>
-          <type><ref refid="d4/d63/a00082_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
-          <declname>queue</declname>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="138" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="370" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/df3/a00034_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="db/df3/a00034_1a0dab865f28e41f9322a8a35ca9833491" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>virtual void mc::gfx::RenderImpl::destroy</definition>
-        <argsstring>()=0</argsstring>
-        <name>destroy</name>
-        <reimplementedby refid="de/d8c/a00036_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb">destroy</reimplementedby>
-        <reimplementedby refid="d4/d8c/a00035_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8">destroy</reimplementedby>
+        <definition>void mc::Preprocessor::setMacro</definition>
+        <argsstring>(const Macro &amp;m)</argsstring>
+        <name>setMacro</name>
+        <param>
+          <type>const <ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> &amp;</type>
+          <declname>m</declname>
+        </param>
         <briefdescription>
-        </briefdescription>
+<para>This function doesnt check for reserved keywords, as opposed to defineMacro which does. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+<para>defineMacro also uses this function </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="143" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="375" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>Customizable string preprocessor which follows ANSI-C preprocessor standard. </para>    </briefdescription>
     <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>    </detaileddescription>
-    <inheritancegraph>
-      <node id="493">
-        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
-        <link refid="de/d8c/a00036"/>
-        <childnode refid="491" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="491">
-        <label>mc::gfx::RenderImpl</label>
-        <link refid="db/df3/a00034"/>
-      </node>
-      <node id="492">
-        <label>mc::gfx::RenderProtocol&lt; T &gt;</label>
-        <link refid="d4/d8c/a00035"/>
-        <childnode refid="491" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <location file="include/MACE/Graphics/Renderer.h" line="105" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="105" bodyend="146"/>
+<para>It can define all standard and operating system macros with special functions. Additionally, the following macros are always defined: <table rows="5" cols="2"><row>
+<entry thead="yes"><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> name </para></entry><entry thead="yes"><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> definition  </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__MACE__</computeroutput> </para></entry><entry thead="no"><para>Always defined </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__INCLUDE_LEVEL__</computeroutput> </para></entry><entry thead="no"><para>Incremented by 1 when a file is included, and decremented when the included file ends. Identical to the GCC macro of the same name </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__IF_SCOPE__</computeroutput> </para></entry><entry thead="no"><para>The depth of the current preprocessor conditional. Shouldn&apos;t be used. </para></entry></row>
+<row>
+<entry thead="no"><para><computeroutput>__CURRENT_IF_SCOPE__</computeroutput> </para></entry><entry thead="no"><para>The level at which a conditional directive returned false. Shouldn&apos;t be used. </para></entry></row>
+</table>
+Even if they are not defined, you can never defined or undefine a standard macro as denoted by the ANSI-C standard. You also can&apos;t define or undefine keywords </para><para>Every directive in the ANSI-C standard is supported except for <computeroutput>#if</computeroutput>, <computeroutput>#elif</computeroutput>, and <computeroutput>#pragma</computeroutput>. <computeroutput>#warning</computeroutput> outputs a message to console. Additionally, <computeroutput>#version</computeroutput> is silenty ignored instead of being an error for GLSL support. </para><para>Each <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> object stores a single string called the <computeroutput>input</computeroutput>. The only way to change the <computeroutput>input</computeroutput> is by cloning it via a special constructor. </para><para><computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> can also &apos;fake&apos; include files through the <computeroutput><ref refid="d6/d5b/a00026" kindref="compound">IncludeString</ref></computeroutput> class, allowing it to preprocess the same at every runtime invocation. </para><para>The <computeroutput>ssl</computeroutput> uses the <computeroutput><ref refid="db/df3/a00034" kindref="compound">Preprocessor</ref></computeroutput> class to handle shader files.</para><para><simplesect kind="see"><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/de2/a00024" kindref="compound">Include</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d0/d61/a00100" kindref="compound">gfx::ssl</ref> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000007"><xreftitle>Todo</xreftitle><xrefdescription><para>Digraphs (see 6.4.6 of standard) </para><para>Variable arguments </para><para><ref refid="dc/d3c/a00028" kindref="compound">Macro</ref> concat </para><para><computeroutput>#if and</computeroutput>#elif` </para><para><computeroutput>#pragma</computeroutput> (if STDC follows, do no macro replacement) </para></xrefdescription></xrefsect></para>    </detaileddescription>
+    <location file="include/MACE/Utility/Preprocessor.h" line="161" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="161" bodyend="377"/>
     <listofallmembers>
-      <member refid="db/df3/a00034_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>destroy</name></member>
-      <member refid="db/df3/a00034_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>index</name></member>
-      <member refid="db/df3/a00034_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>init</name></member>
-      <member refid="db/df3/a00034_a06a982c8b438aaa052e1fa1d1fc995ae_1a06a982c8b438aaa052e1fa1d1fc995ae" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>render</name></member>
-      <member refid="db/df3/a00034_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>Renderer</name></member>
-      <member refid="db/df3/a00034_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>RenderImpl</name></member>
-      <member refid="db/df3/a00034_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>resize</name></member>
-      <member refid="db/df3/a00034_a13d3c43299a124a1b95d113c902e9476_1a13d3c43299a124a1b95d113c902e9476" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>setUp</name></member>
-      <member refid="db/df3/a00034_ae5cf0daa36c2ea61af27de6a4474f733_1ae5cf0daa36c2ea61af27de6a4474f733" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>ssl::init</name></member>
-      <member refid="db/df3/a00034_ac1b569053de9c46379c954f71e64659b_1ac1b569053de9c46379c954f71e64659b" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>tearDown</name></member>
-      <member refid="db/df3/a00034_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>~RenderImpl</name></member>
+      <member refid="db/df3/a00034_a9366afeeeb173c9ac6573f29b5920909_1a9366afeeeb173c9ac6573f29b5920909" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>addInclude</name></member>
+      <member refid="db/df3/a00034_1a607c5f4458ff74d063a389d19f129e72" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>calculateIfScope</name></member>
+      <member refid="db/df3/a00034_ae6ae9816ea3978e28f914147b54c38b7_1ae6ae9816ea3978e28f914147b54c38b7" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>defineMacro</name></member>
+      <member refid="db/df3/a00034_ab07055c830319dcd3e857d1824b46493_1ab07055c830319dcd3e857d1824b46493" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>defineOSMacros</name></member>
+      <member refid="db/df3/a00034_a2a4911e26bd8958abd949c398744da40_1a2a4911e26bd8958abd949c398744da40" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>defineStandardMacros</name></member>
+      <member refid="db/df3/a00034_1a59b8747ae825a4985802fd5efcfc8ba0" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>executeDirective</name></member>
+      <member refid="db/df3/a00034_1abdb64f965d298eecda5f2a53b53c1d29" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>expandMacro</name></member>
+      <member refid="db/df3/a00034_1a58a454f40c8152a480cd673f917befd3" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>filename</name></member>
+      <member refid="db/df3/a00034_1adabf71b34281e63362b36ea63be9f25a" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getCurrentIfScopeLocation</name></member>
+      <member refid="db/df3/a00034_acf6b80e40b0eb17d56368e41935e12ff_1acf6b80e40b0eb17d56368e41935e12ff" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getFilename</name></member>
+      <member refid="db/df3/a00034_ad87ac6539e622f370463dfcf3fbba803_1ad87ac6539e622f370463dfcf3fbba803" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getFilename</name></member>
+      <member refid="db/df3/a00034_1a6c20dabe9b21d2e9101d88b31f9d34a5" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getIfScopeLocation</name></member>
+      <member refid="db/df3/a00034_a17928e075a877c674b4af30a3c8ed308_1a17928e075a877c674b4af30a3c8ed308" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getIncludes</name></member>
+      <member refid="db/df3/a00034_a8ace95019de58b3a70ea28c4157c40c8_1a8ace95019de58b3a70ea28c4157c40c8" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getIncludes</name></member>
+      <member refid="db/df3/a00034_a4b6efb64844b57f41f3e78359f4eebe8_1a4b6efb64844b57f41f3e78359f4eebe8" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getInput</name></member>
+      <member refid="db/df3/a00034_a3e879d335cda1e38faeb7013dae0c75c_1a3e879d335cda1e38faeb7013dae0c75c" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getLine</name></member>
+      <member refid="db/df3/a00034_abd1c489d702d06a23c608032b2ef6203_1abd1c489d702d06a23c608032b2ef6203" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getLine</name></member>
+      <member refid="db/df3/a00034_a9b42924336f697ecdd85500eab2b7328_1a9b42924336f697ecdd85500eab2b7328" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getLocation</name></member>
+      <member refid="db/df3/a00034_a75cca6cbfad23ca6a4b933e22bc3160f_1a75cca6cbfad23ca6a4b933e22bc3160f" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getMacro</name></member>
+      <member refid="db/df3/a00034_1a0584146f86e47c165556333e7a62ec5b" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>getMacroLocation</name></member>
+      <member refid="db/df3/a00034_1ae7586caaf77b6dc497189e0d83a36281" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>includes</name></member>
+      <member refid="db/df3/a00034_1acec9c188b76afadd546b0c3a9a4076b1" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>input</name></member>
+      <member refid="db/df3/a00034_ab968f61b1200ec9da97b6e624f24e859_1ab968f61b1200ec9da97b6e624f24e859" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>isMacroDefined</name></member>
+      <member refid="db/df3/a00034_1a45bd30d388ed92363495b61e91b04aa5" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>line</name></member>
+      <member refid="db/df3/a00034_a6ca7822be8797c7c5b490b30cdf73f33_1a6ca7822be8797c7c5b490b30cdf73f33" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>macroNumber</name></member>
+      <member refid="db/df3/a00034_1afb27ec71d972fe1741356a257f69bc57" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>macros</name></member>
+      <member refid="db/df3/a00034_1af57a31cde0d335695ebf65cfd106dd23" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>parse</name></member>
+      <member refid="db/df3/a00034_1a21f2e4c90066c596624a734b280c064e" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>parseIfStatement</name></member>
+      <member refid="db/df3/a00034_1a30c7d80887555aedc4cc14ef0dec66bf" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>parseMacroName</name></member>
+      <member refid="db/df3/a00034_a87bd4ff92013fdce5d147458730e08c8_1a87bd4ff92013fdce5d147458730e08c8" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>preprocess</name></member>
+      <member refid="db/df3/a00034_ac43fdd213c4324179c4ee8896a80cb7f_1ac43fdd213c4324179c4ee8896a80cb7f" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>Preprocessor</name></member>
+      <member refid="db/df3/a00034_a84bd8e06ca5da4bf7a6f7344fceeda45_1a84bd8e06ca5da4bf7a6f7344fceeda45" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>Preprocessor</name></member>
+      <member refid="db/df3/a00034_a534c6bf1111788f2805f9d6d57b3e54c_1a534c6bf1111788f2805f9d6d57b3e54c" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>preprocessTokens</name></member>
+      <member refid="db/df3/a00034_af8ac683a7a582fad68a65e487620d5b8_1af8ac683a7a582fad68a65e487620d5b8" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>setFilename</name></member>
+      <member refid="db/df3/a00034_aac714d1d87e45ab6c7a769dec4653dbd_1aac714d1d87e45ab6c7a769dec4653dbd" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>setIncludes</name></member>
+      <member refid="db/df3/a00034_ace98971e05bfbd664cbc20305fc4242a_1ace98971e05bfbd664cbc20305fc4242a" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>setLine</name></member>
+      <member refid="db/df3/a00034_1a0dab865f28e41f9322a8a35ca9833491" prot="private" virt="non-virtual"><scope>mc::Preprocessor</scope><name>setMacro</name></member>
+      <member refid="db/df3/a00034_a862e5f1452e8082f7936ee958ff6f1ad_1a862e5f1452e8082f7936ee958ff6f1ad" prot="public" virt="non-virtual"><scope>mc::Preprocessor</scope><name>undefineMacro</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

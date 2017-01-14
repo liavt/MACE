@@ -82,20 +82,25 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::Module Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::Module}
-{\xe \v mc::Module}
-{\bkmkstart AAAAAAAAWV}
-{\bkmkend AAAAAAAAWV}
+mc::IncludeString Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::IncludeString}
+{\xe \v mc::IncludeString}
+{\bkmkstart AAAAAAAAUB}
+{\bkmkend AAAAAAAAUB}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Abstract class used for doing a task in MACE. }}\par
+Represents a fake file, in which you can add include files that don't exist on the filesystem. }}\par
 {
-{\f2 #include <Module.h>}}\par
-Inheritance diagram for mc::Module:{
+{\f2 #include <Preprocessor.h>}}\par
+Inheritance diagram for mc::IncludeString:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/d17/a00114.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/dfa/a00121.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+\par
+Collaboration diagram for mc::IncludeString:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/dc8/a00122.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -104,31 +109,24 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b init} ()=0\par
+{\b IncludeString} (const std::string &content, const std::string name)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#init} is called and this {\f2 {\b Module}}  is registered. }{
+Creates an {\f2 {\b IncludeString}}  with the specified info. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b update} ()=0\par
+bool {\b hasFile} (const std::string &name) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#update} is called and this {\f2 {\b Module}}  is registered. }{
+Checks whether this include has the specified file. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b destroy} ()=0\par
+std::string {\b getFile} (const std::string &name) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#destroy} is called and this {\f2 {\b Module}}  is registered. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual std::string {\b getName} () const  =0\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Override this function and return a UNIQUE name for this {\f2 {\b Module}}  }{
+Retrieves a file with a certain name. }{
 }\par
 }}
 }
@@ -138,99 +136,95 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Abstract class used for doing a task in MACE. \par
+Represents a fake file, in which you can add include files that don't exist on the filesystem. \par
 }
 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Plugged into {\b System} via {\b addModule().} \par
-}{
-Definition at line 22 of file Module.h.}\par
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b IncludeDirectory} \par
+{\b Preprocessor} \par
+}}{
+Definition at line 92 of file Preprocessor.h.}\par
 }
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Constructor & Destructor Documentation\par
+\pard\plain 
+{\xe \v IncludeString\:mc::IncludeString}
+{\xe \v mc::IncludeString\:IncludeString}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::IncludeString::IncludeString (const std::string &  {\i content}, const std::string  {\i name})}}
+\par
+{\bkmkstart AAAAAAAAUC}
+{\bkmkend AAAAAAAAUC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Creates an {\f2 {\b IncludeString}}  with the specified info. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+{\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i content} \cell }{What the {\f2 {\b IncludeString}}  returns when included \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i name} \cell }{The name of the {\f2 {\b IncludeString}}  which is used by #include \cell }
+{\row }
+}
+}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v destroy\:mc::Module}
-{\xe \v mc::Module\:destroy}
+{\xe \v getFile\:mc::IncludeString}
+{\xe \v mc::IncludeString\:getFile}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::Module::destroy (){\f2 [pure virtual]}}}
+std::string mc::IncludeString::getFile (const std::string &  {\i name}) const{\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAAAWW}
-{\bkmkend AAAAAAAAWW}
+{\bkmkstart AAAAAAAATV}
+{\bkmkend AAAAAAAATV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#destroy} is called and this {\f2 {\b Module}}  is registered. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. \par
-Should only be called before the program is closed. \par
-}{
-Implemented in {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAWX \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Retrieves a file with a certain name. }}\par
+{
+Implements {\b mc::Include} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAATT \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getName\:mc::Module}
-{\xe \v mc::Module\:getName}
+{\xe \v hasFile\:mc::IncludeString}
+{\xe \v mc::IncludeString\:hasFile}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual std::string mc::Module::getName () const{\f2 [pure virtual]}}}
+bool mc::IncludeString::hasFile (const std::string &  {\i name}) const{\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAAAWY}
-{\bkmkend AAAAAAAAWY}
+{\bkmkstart AAAAAAAATY}
+{\bkmkend AAAAAAAATY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Override this function and return a UNIQUE name for this {\f2 {\b Module}}  }}\par
+Checks whether this include has the specified file. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The name for your {\f2 {\b Module}}  is used in comparison, so make sure it is as unique as possible. \par
-It is akin to a hashcode. \par
+If there isn't an {\f2 {\b Include}}  with the file, then a {\f2 PreprocessorException}  is thrown. \par
 }{
-Implemented in {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAWZ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v init\:mc::Module}
-{\xe \v mc::Module\:init}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::Module::init (){\f2 [pure virtual]}}}
-\par
-{\bkmkstart AAAAAAAAXA}
-{\bkmkend AAAAAAAAXA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#init} is called and this {\f2 {\b Module}}  is registered. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this to initialize variables, start streams, or launch a context. \par
-Should only be called once. \par
-}{
-Implemented in {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAXB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v update\:mc::Module}
-{\xe \v mc::Module\:update}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::Module::update (){\f2 [pure virtual]}}}
-\par
-{\bkmkstart AAAAAAAAXC}
-{\bkmkend AAAAAAAAXC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b System#update} is called and this {\f2 {\b Module}}  is registered. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. \par
-}{
-Implemented in {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAXD \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::Include} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAATW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/System/Module.h\par
+include/MACE/Utility/Preprocessor.h\par
 }}

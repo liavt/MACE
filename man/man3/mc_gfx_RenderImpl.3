@@ -1,4 +1,4 @@
-.TH "mc::gfx::RenderImpl" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::RenderImpl" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -9,7 +9,7 @@ mc::gfx::RenderImpl \-
 .PP
 \fC#include <Renderer\&.h>\fP
 .PP
-Inherited by \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Inherited by \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< Image >\fP, \fBmc::gfx::RenderProtocol< Letter >\fP, and \fBmc::gfx::RenderProtocol< ProgressBar >\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -88,7 +88,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [pure virtual]\fP"
 
 .PP
@@ -109,7 +109,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::render (\fBos::WindowModule\fP * win, \fBGraphicsEntity\fP * entity)\fC [pure virtual]\fP"
 
 .PP
@@ -130,7 +130,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::resize (const \fBSize\fP width, const \fBSize\fP height)\fC [pure virtual]\fP"
 
 .PP
@@ -151,7 +151,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::setUp (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
 
 .PP
@@ -172,7 +172,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
 .SS "virtual void mc::gfx::RenderImpl::tearDown (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
 
 .PP
@@ -193,7 +193,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< T >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
 .SH "Friends And Related Function Documentation"
 .PP 
 .SS "friend class \fBRenderer\fP\fC [friend]\fP"

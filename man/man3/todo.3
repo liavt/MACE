@@ -1,27 +1,23 @@
-.TH "todo" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "todo" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 todo \- Todo List 
 
-.IP "\fBClass \fBmc::gfx::Entity\fP \fP" 1c
-Events for hover for both \fBEntity\fP and \fBComponent\fP  
-.IP "\fBClass \fBmc::gfx::Image\fP \fP" 1c
-figure out a way to make the protocol globally accessible  
+.IP "\fBClass \fBmc::gfx::Component\fP \fP" 1c
+unit testing for \fBclean()\fP \fBrender()\fP and \fBhover()\fP  
+.IP "\fBMember \fBmc::gfx::Font::getCharacter\fP (const wchar_t character, \fBLetter\fP *let) const \fP" 1c
+find a way to dynamically allocate letters without passing in a pointer  
 .IP "\fBNamespace \fBmc::gfx::ogl\fP \fP" 1c
 create a ReadableBuffer class with functions like glReadPixels  
 .IP "\fBClass \fBmc::gfx::ogl::FrameBuffer\fP \fP" 1c
 target variable which is GL_FRAMEBUFFER by default\&. and update documentation accordingly  
-.IP "\fBMember \fBmc::gfx::ogl::FrameBuffer::attachTexture\fP (const Enum target, const Enum attachment, const unsigned int textureID, const int level=0)\fP" 1c
-Replace this with the actual \fBTexture\fP class  
 .IP "\fBClass \fBmc::gfx::ogl::Object\fP \fP" 1c
 create an RAII wrapper which calls \fBinit()\fP and \fBdestroy()\fP automatically 
 .PP
 store what object is currently bound\&. static \fBObject\fP getBoundObject(), bool isBound()  
 .IP "\fBNamespace \fBmc::os\fP \fP" 1c
-Move this to a seperate header 
-.PP
-Add functions for cross-platform time and pausing the console  
+Add function for pausing the console  
 .IP "\fBClass \fBmc::Preprocessor\fP \fP" 1c
 Digraphs (see 6\&.4\&.6 of standard) 
 .PP

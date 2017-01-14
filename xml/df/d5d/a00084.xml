@@ -1,324 +1,182 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="df/d5d/a00084" kind="namespace" language="C++">
-    <compoundname>mc::gfx::ssl</compoundname>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="df/d5d/a00084_ae2999aca05bdfbaa2df60e5dc6cd4dce_1ae2999aca05bdfbaa2df60e5dc6cd4dce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::fillBuffer</definition>
-        <argsstring>(GraphicsEntity *en)</argsstring>
-        <name>fillBuffer</name>
-        <param>
-          <type><ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref> *</type>
-          <declname>en</declname>
-        </param>
+  <compounddef id="df/d5d/a00084" kind="file" language="C++">
+    <compoundname>Color.h</compoundname>
+    <includes refid="d9/d2e/a00056" local="no">MACE/Core/Constants.h</includes>
+    <includes local="no">array</includes>
+    <includedby refid="de/de1/a00065" local="no">include/MACE/Graphics/OGL.h</includedby>
+    <includedby refid="da/d82/a00091" local="no">include/MACE/Utility/Utility.h</includedby>
+    <incdepgraph>
+      <node id="315">
+        <label>include/MACE/Utility/Color.h</label>
+        <link refid="Color.h"/>
+        <childnode refid="316" relation="include">
+        </childnode>
+        <childnode refid="319" relation="include">
+        </childnode>
+      </node>
+      <node id="317">
+        <label>cstdint</label>
+      </node>
+      <node id="318">
+        <label>stdexcept</label>
+      </node>
+      <node id="319">
+        <label>array</label>
+      </node>
+      <node id="316">
+        <label>MACE/Core/Constants.h</label>
+        <link refid="d9/d2e/a00056_source"/>
+        <childnode refid="317" relation="include">
+        </childnode>
+        <childnode refid="318" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="326">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="da/d82/a00091_source"/>
+        <childnode refid="325" relation="include">
+        </childnode>
+      </node>
+      <node id="320">
+        <label>include/MACE/Utility/Color.h</label>
+        <link refid="Color.h"/>
+        <childnode refid="321" relation="include">
+        </childnode>
+        <childnode refid="326" relation="include">
+        </childnode>
+      </node>
+      <node id="325">
+        <label>include/MACE/MACE.h</label>
+        <link refid="d8/d53/a00081_source"/>
+      </node>
+      <node id="322">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="d9/db3/a00066_source"/>
+        <childnode refid="323" relation="include">
+        </childnode>
+        <childnode refid="324" relation="include">
+        </childnode>
+      </node>
+      <node id="324">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="df/d5f/a00064_source"/>
+        <childnode refid="325" relation="include">
+        </childnode>
+      </node>
+      <node id="323">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="d1/d6f/a00063_source"/>
+        <childnode refid="324" relation="include">
+        </childnode>
+      </node>
+      <node id="321">
+        <label>include/MACE/Graphics/OGL.h</label>
+        <link refid="de/de1/a00065_source"/>
+        <childnode refid="322" relation="include">
+        </childnode>
+        <childnode refid="324" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="d7/dec/a00010" prot="public">mc::Color</innerclass>
+    <innernamespace refid="d9/df8/a00096">mc</innernamespace>
+    <innernamespace refid="d1/d84/a00097">mc::Colors</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="df/d5d/a00084_a6e64700c09a035e5709dfcbd127d132d_1a6e64700c09a035e5709dfcbd127d132d" prot="public" static="no">
+        <name>MACE_UTILITY_COLOR_H</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="28" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_ac8889aa0a75f2263746534e74b9fa7e8_1ac8889aa0a75f2263746534e74b9fa7e8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::bindBuffer</definition>
-        <argsstring>(ogl::UniformBuffer &amp;buf)</argsstring>
-        <name>bindBuffer</name>
-        <param>
-          <type><ref refid="d5/db6/a00042" kindref="compound">ogl::UniformBuffer</ref> &amp;</type>
-          <declname>buf</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="29" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a6b97e92f98d0ef6623956b1cf532faed_1a6b97e92f98d0ef6623956b1cf532faed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::bindEntity</definition>
-        <argsstring>(const GraphicsEntity *en, ogl::ShaderProgram &amp;prog)</argsstring>
-        <name>bindEntity</name>
-        <param>
-          <type>const <ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref> *</type>
-          <declname>en</declname>
-        </param>
-        <param>
-          <type><ref refid="d8/d41/a00038" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
-          <declname>prog</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="30" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a4a682d4cdb2aade98ded09dced71db8c_1a4a682d4cdb2aade98ded09dced71db8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::init</definition>
-        <argsstring>(const Size &amp;originalWidth, const Size &amp;originalHeight)</argsstring>
-        <name>init</name>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>originalWidth</declname>
-        </param>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>originalHeight</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="41" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a329c6799b3cebe722f7bcbdc476c4f55_1a329c6799b3cebe722f7bcbdc476c4f55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::setUp</definition>
-        <argsstring>(os::WindowModule *win)</argsstring>
-        <name>setUp</name>
-        <param>
-          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="46" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_ae97c934f1995505f7d4c1827df2ad6b5_1ae97c934f1995505f7d4c1827df2ad6b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::tearDown</definition>
-        <argsstring>(os::WindowModule *win)</argsstring>
-        <name>tearDown</name>
-        <param>
-          <type><ref refid="d3/dea/a00046" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="51" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a5c2e736611e0deaed33a5d5d4c8244f1_1a5c2e736611e0deaed33a5d5d4c8244f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::destroy</definition>
-        <argsstring>()</argsstring>
-        <name>destroy</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="56" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a18ef93d8629fab4c9285965c12c0a3eb_1a18ef93d8629fab4c9285965c12c0a3eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::resize</definition>
-        <argsstring>(const Size &amp;width, const Size &amp;height)</argsstring>
-        <name>resize</name>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>width</declname>
-        </param>
-        <param>
-          <type>const <ref refid="da/dec/a00080_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
-          <declname>height</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="61" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_ab1f194595341e95398a607e9d9014550_1ab1f194595341e95398a607e9d9014550" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::checkInput</definition>
-        <argsstring>()</argsstring>
-        <name>checkInput</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="67" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a2da0394fce43c536ac3f7565b0281053_1a2da0394fce43c536ac3f7565b0281053" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ssl::bindShaderProgram</definition>
-        <argsstring>(ogl::ShaderProgram &amp;prog)</argsstring>
-        <name>bindShaderProgram</name>
-        <param>
-          <type><ref refid="d8/d41/a00038" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
-          <declname>prog</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="89" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a277a469dd85e47913f76caac8b4ea08c_1a277a469dd85e47913f76caac8b4ea08c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::string</type>
-        <definition>std::string mc::gfx::ssl::processShader</definition>
-        <argsstring>(const std::string &amp;shader, const GLenum &amp;type)</argsstring>
-        <name>processShader</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>shader</declname>
-        </param>
-        <param>
-          <type>const GLenum &amp;</type>
-          <declname>type</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="94" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d5d/a00084_a3841d4e7123805769222ac714deafe5c_1a3841d4e7123805769222ac714deafe5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d5/d79/a00030" kindref="compound">mc::Preprocessor</ref> &amp;</type>
-        <definition>const mc::Preprocessor&amp; mc::gfx::ssl::getSSLPreprocessor</definition>
-        <argsstring>()</argsstring>
-        <name>getSSLPreprocessor</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="98" column="1"/>
+        <location file="include/MACE/Utility/Color.h" line="12" column="9" bodyfile="include/MACE/Utility/Color.h" bodystart="12" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files. </para>    </briefdescription>
+    </briefdescription>
     <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>    </detaileddescription>
-    <location file="include/MACE/Graphics/Entity.h" line="27" column="1"/>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_COLOR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_COLOR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Core/Constants.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;array&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d9/df8/a00096" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="41" refid="d7/dec/a00010" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="d7/dec/a00010" kindref="compound">Color</ref><sp/>{</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" kindref="member">r</ref>,<sp/><ref refid="d7/dec/a00010_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" kindref="member">g</ref>,<sp/><ref refid="d7/dec/a00010_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" kindref="member">b</ref>,<sp/><ref refid="d7/dec/a00010_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" kindref="member">a</ref>;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>red,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>green,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>blue,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">&amp;<sp/>alpha<sp/>=<sp/>1.0f)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>(const<sp/><ref refid="d0/dc2/a00104" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>4&gt;&amp;<sp/>values);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>(const<sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>copy)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>()<sp/>noexcept;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref><sp/><ref refid="d7/dec/a00010_af0db284b5868c6bb6d449c277dad7d36_1af0db284b5868c6bb6d449c277dad7d36" kindref="member">darken</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref><sp/><ref refid="d7/dec/a00010_ac10a06d41c34ed11ad76e214f0f1cfc5_1ac10a06d41c34ed11ad76e214f0f1cfc5" kindref="member">lighten</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="d7/dec/a00010_a17499a7e18ab38fc8ebedd3aec808e69_1a17499a7e18ab38fc8ebedd3aec808e69" kindref="member">getRed</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="d7/dec/a00010_a41884a44e13eddd57c14095547e64c41_1a41884a44e13eddd57c14095547e64c41" kindref="member">getGreen</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="d7/dec/a00010_aee855a9b5145e1e479d470276a405ef5_1aee855a9b5145e1e479d470276a405ef5" kindref="member">getBlue</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="d7/dec/a00010_a48f56fc575c026028eb2b0ba86a2e5c0_1a48f56fc575c026028eb2b0ba86a2e5c0" kindref="member">getAlpha</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_af4ec1e1b4ae8575cd76ee0ce21802cfd_1af4ec1e1b4ae8575cd76ee0ce21802cfd" kindref="member">setRed</ref>(const<sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>r);</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a8f4992ffded20025bfe69e9513f53f92_1a8f4992ffded20025bfe69e9513f53f92" kindref="member">setGreen</ref>(const<sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>g);</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_ab1351780822e03e813afa0dc6344ecb2_1ab1351780822e03e813afa0dc6344ecb2" kindref="member">setBlue</ref>(const<sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>b);</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_af1cad290fe847c6870bfe5cc51402f48_1af1cad290fe847c6870bfe5cc51402f48" kindref="member">setAlpha</ref>(const<sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>a);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" kindref="member">setValues</ref>(const<sp/><ref refid="d0/dc2/a00104" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>4&gt;&amp;<sp/>rgba);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" kindref="member">setValues</ref>(const<sp/><ref refid="d0/dc2/a00104" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>3&gt;&amp;<sp/>rgb);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d0/dc2/a00104" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>4&gt;<sp/><ref refid="d7/dec/a00010_abdfddcdc4a6d3a415bd5c690b9c7e703_1abdfddcdc4a6d3a415bd5c690b9c7e703" kindref="member">getValues</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191" refid="d7/dec/a00010_a29c3b4b9c645d963c57f9febab56c652_1a29c3b4b9c645d963c57f9febab56c652" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">*<sp/><ref refid="d7/dec/a00010_a29c3b4b9c645d963c57f9febab56c652_1a29c3b4b9c645d963c57f9febab56c652" kindref="member">flatten</ref>(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>arr[4])</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[0]<sp/>=<sp/><ref refid="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" kindref="member">r</ref>;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[1]<sp/>=<sp/><ref refid="d7/dec/a00010_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" kindref="member">g</ref>;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[2]<sp/>=<sp/><ref refid="d7/dec/a00010_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" kindref="member">b</ref>;</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>arr[3]<sp/>=<sp/><ref refid="d7/dec/a00010_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" kindref="member">a</ref>;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>arr;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_ad5352afe6a77e440f2f6b96282da9283_1ad5352afe6a77e440f2f6b96282da9283" kindref="member">operator==</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a4dbf26330da887dd0fd6a3657ee6b4a1_1a4dbf26330da887dd0fd6a3657ee6b4a1" kindref="member">operator!=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_acf6a1a0175957b7ee2be0272fac2a47d_1acf6a1a0175957b7ee2be0272fac2a47d" kindref="member">operator&gt;</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_af19275deb60cfd00c4dac9e367031789_1af19275deb60cfd00c4dac9e367031789" kindref="member">operator&gt;=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_aa7e49c564fdd7c217d649c9924d13337_1aa7e49c564fdd7c217d649c9924d13337" kindref="member">operator&lt;</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010_a2f8bf278208cdcab94c9dd3d7c4a7c5c_1a2f8bf278208cdcab94c9dd3d7c4a7c5c" kindref="member">operator&lt;=</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref>&amp;<sp/>other)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Color</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight></codeline>
+<codeline lineno="244" refid="d1/d84/a00097" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">Colors<sp/>{</highlight></codeline>
+<codeline lineno="248" refid="d1/d84/a00097_a8ccbcb1d89192f8d7636898d250ea12f_1a8ccbcb1d89192f8d7636898d250ea12f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d7/dec/a00010" kindref="compound">Color</ref><sp/><ref refid="d1/d84/a00097_a8ccbcb1d89192f8d7636898d250ea12f_1a8ccbcb1d89192f8d7636898d250ea12f" kindref="member">RED</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>0,<sp/>0),<sp/><ref refid="d1/d84/a00097_ab1fc193a861495d8aa3a36793c5a8ab6_1ab1fc193a861495d8aa3a36793c5a8ab6" kindref="member">GREEN</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>255,<sp/>0),</highlight></codeline>
+<codeline lineno="249" refid="d1/d84/a00097_a8dd93f22126d8e713f2619509abf216c_1a8dd93f22126d8e713f2619509abf216c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_a8dd93f22126d8e713f2619509abf216c_1a8dd93f22126d8e713f2619509abf216c" kindref="member">DARK_BLUE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>0,<sp/>255),<sp/><ref refid="d1/d84/a00097_aca1d0b3ccc5ada137fb4bf6a51346c3e_1aca1d0b3ccc5ada137fb4bf6a51346c3e" kindref="member">CYAN</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>255,<sp/>255),</highlight></codeline>
+<codeline lineno="250" refid="d1/d84/a00097_ace301ab105d87437d87d31fda125c0d9_1ace301ab105d87437d87d31fda125c0d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_ace301ab105d87437d87d31fda125c0d9_1ace301ab105d87437d87d31fda125c0d9" kindref="member">LIGHT_BLUE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(50,<sp/>200,<sp/>255),<sp/><ref refid="d1/d84/a00097_a7cd13ad15a9305dbafe7072f85a0837f_1a7cd13ad15a9305dbafe7072f85a0837f" kindref="member">DARK_RED</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(150,<sp/>0,<sp/>0),</highlight></codeline>
+<codeline lineno="251" refid="d1/d84/a00097_ab257dd55413c9ea0aa5e227335db546c_1ab257dd55413c9ea0aa5e227335db546c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_ac2733fa9c122dfb454eb8915a049f3fc_1ac2733fa9c122dfb454eb8915a049f3fc" kindref="member">DARK_GREEN</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>150,<sp/>0),<sp/><ref refid="d1/d84/a00097_ab257dd55413c9ea0aa5e227335db546c_1ab257dd55413c9ea0aa5e227335db546c" kindref="member">PURPLE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(100,<sp/>0,<sp/>255),</highlight></codeline>
+<codeline lineno="252" refid="d1/d84/a00097_a1a23f35130d83b50bc880ec9d79bcd3e_1a1a23f35130d83b50bc880ec9d79bcd3e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_aec88fae5d2dec42d7e223a34a59ec22e_1aec88fae5d2dec42d7e223a34a59ec22e" kindref="member">MAGENTA</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>0,<sp/>255),<sp/><ref refid="d1/d84/a00097_a1a23f35130d83b50bc880ec9d79bcd3e_1a1a23f35130d83b50bc880ec9d79bcd3e" kindref="member">WHITE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>255,<sp/>255),</highlight></codeline>
+<codeline lineno="253" refid="d1/d84/a00097_a1ff67c17e02faaa7cbe95886d464f1e8_1a1ff67c17e02faaa7cbe95886d464f1e8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_aaa9b7c535022d1b76a84e336837719b7_1aaa9b7c535022d1b76a84e336837719b7" kindref="member">BLACK</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>0,<sp/>0),<sp/><ref refid="d1/d84/a00097_a1ff67c17e02faaa7cbe95886d464f1e8_1a1ff67c17e02faaa7cbe95886d464f1e8" kindref="member">YELLOW</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>255,<sp/>0),</highlight></codeline>
+<codeline lineno="254" refid="d1/d84/a00097_add1252332e37da04dc2db76fd3b13ad5_1add1252332e37da04dc2db76fd3b13ad5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_a2acbe5afe445eab38e1aed5881bd1867_1a2acbe5afe445eab38e1aed5881bd1867" kindref="member">DARK_GRAY</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(100,<sp/>100,<sp/>100),<sp/><ref refid="d1/d84/a00097_add1252332e37da04dc2db76fd3b13ad5_1add1252332e37da04dc2db76fd3b13ad5" kindref="member">LIGHT_GRAY</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(200,<sp/>200,<sp/>200),</highlight></codeline>
+<codeline lineno="255" refid="d1/d84/a00097_a199d3203b387ed3854a6fe95fbcfe2bd_1a199d3203b387ed3854a6fe95fbcfe2bd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_a199d3203b387ed3854a6fe95fbcfe2bd_1a199d3203b387ed3854a6fe95fbcfe2bd" kindref="member">ORANGE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>125,<sp/>0),<sp/><ref refid="d1/d84/a00097_a59362e60b1cb125667e76b7cd88b010c_1a59362e60b1cb125667e76b7cd88b010c" kindref="member">GRAY</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(150,<sp/>150,<sp/>150),</highlight></codeline>
+<codeline lineno="256" refid="d1/d84/a00097_a4bf8e02ed16ca442c7aea4f22ed75f44_1a4bf8e02ed16ca442c7aea4f22ed75f44" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d1/d84/a00097_a5885c228e9017e4fcfe6dadbe98d7fa3_1a5885c228e9017e4fcfe6dadbe98d7fa3" kindref="member">DARK_ORANGE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>100,<sp/>0),<sp/><ref refid="d1/d84/a00097_a4bf8e02ed16ca442c7aea4f22ed75f44_1a4bf8e02ed16ca442c7aea4f22ed75f44" kindref="member">LIGHT_ORANGE</ref><sp/>=<sp/><ref refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>150,<sp/>0);</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="258"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Utility/Color.h"/>
   </compounddef>
 </doxygen>

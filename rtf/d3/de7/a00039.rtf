@@ -82,70 +82,86 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::SimpleQuadRenderer Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer}
-{\bkmkstart AAAAAAABGU}
-{\bkmkend AAAAAAABGU}
+mc::gfx::RenderImpl Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl}
+{\bkmkstart AAAAAAABKZ}
+{\bkmkend AAAAAAABKZ}
 \par
 {
 {\f2 #include <Renderer.h>}}\par
+Inheritance diagram for mc::gfx::RenderImpl:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d3f/a00173.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b SimpleQuadRenderer} (const bool ssl=true)\par
+{\b RenderImpl} () noexcept=default\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} (const char *vertexShader, const char *fragShader)\par
+virtual {\b ~RenderImpl} () noexcept=default\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} (const char *vertexShader, const std::string &fragShader)\par
+virtual void {\b resize} (const {\b Size} width, const {\b Size} height)=0\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} (const std::string &vertexShader, const char *fragShader)\par
+virtual void {\b init} (const {\b Size} originalWidth, const {\b Size} originalHeight)=0\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} (const std::string &vertexShader, const std::string &fragShader)\par
+virtual void {\b setUp} ({\b os::WindowModule} *win, {\b RenderQueue} *queue)=0\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} ()\par
+virtual void {\b render} ({\b os::WindowModule} *win, {\b GraphicsEntity} *entity)=0\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b draw} (const {\b GraphicsEntity} *en=nullptr)\par
+virtual void {\b tearDown} ({\b os::WindowModule} *win, {\b RenderQueue} *queue)=0\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setShader} (const {\b ogl::ShaderProgram} &shader)\par
+virtual void {\b destroy} ()=0\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Friends\par
+\pard\plain 
+
+{
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::ShaderProgram} & {\b getShader} ()\par
+class {\b Renderer}\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::ShaderProgram} & {\b getShader} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setVertexArray} (const {\b ogl::VertexArray} &vertices)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::VertexArray} & {\b getVertexArray} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::VertexArray} & {\b getVertexArray} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b SimpleQuadRenderer} &other) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b SimpleQuadRenderer} &other) const \par
+void {\b ssl::init} (const {\b Size} &, const {\b Size} &)\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 254 of file Renderer.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}}{
+Definition at line 105 of file Renderer.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v SimpleQuadRenderer\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:SimpleQuadRenderer}
+{\xe \v RenderImpl\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:RenderImpl}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::SimpleQuadRenderer::SimpleQuadRenderer (const bool  {\i ssl} = {\f2 true})}}
+mc::gfx::RenderImpl::RenderImpl (){\f2 [default]}, {\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABGV}
-{\bkmkend AAAAAAABGV}
+{\bkmkstart AAAAAAABLA}
+{\bkmkend AAAAAAABLA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v ~RenderImpl\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:~RenderImpl}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual mc::gfx::RenderImpl::~RenderImpl (){\f2 [virtual]}, {\f2 [default]}, {\f2 [noexcept]}}}
+\par
+{\bkmkstart AAAAAAABLB}
+{\bkmkend AAAAAAABLB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -153,19 +169,21 @@ mc::gfx::SimpleQuadRenderer::SimpleQuadRenderer (const bool  {\i ssl} = {\f2 tru
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v destroy\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:destroy}
+{\xe \v destroy\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::SimpleQuadRenderer::destroy ()}}
+virtual void mc::gfx::RenderImpl::destroy (){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABGW}
-{\bkmkend AAAAAAABGW}
+{\bkmkstart AAAAAAABLC}
+{\bkmkend AAAAAAABLC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -176,20 +194,24 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v draw\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:draw}
+}{
+Implemented in {\b mc::gfx::RenderProtocol< Letter >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLD \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLE \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< ProgressBar >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLF \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::RenderProtocol< Image >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLG \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v init\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::SimpleQuadRenderer::draw (const {\b GraphicsEntity} *  {\i en} = {\f2 nullptr})}}
+virtual void mc::gfx::RenderImpl::init (const {\b Size}  {\i originalWidth}, const {\b Size}  {\i originalHeight}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABGX}
-{\bkmkend AAAAAAABGX}
+{\bkmkstart AAAAAAABLH}
+{\bkmkend AAAAAAABLH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -200,64 +222,24 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v getShader\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:getShader}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b ogl::ShaderProgram}& mc::gfx::SimpleQuadRenderer::getShader ()}}
-\par
-{\bkmkstart AAAAAAABGY}
-{\bkmkend AAAAAAABGY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}{
+Implemented in {\b mc::gfx::RenderProtocol< Letter >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLI \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLJ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< ProgressBar >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLK \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::RenderProtocol< Image >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLL \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getShader\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:getShader}
+{\xe \v render\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:render}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b ogl::ShaderProgram}& mc::gfx::SimpleQuadRenderer::getShader () const}}
+virtual void mc::gfx::RenderImpl::render ({\b os::WindowModule} *  {\i win}, {\b GraphicsEntity} *  {\i entity}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABGZ}
-{\bkmkend AAAAAAABGZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getVertexArray\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:getVertexArray}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b ogl::VertexArray}& mc::gfx::SimpleQuadRenderer::getVertexArray ()}}
-\par
-{\bkmkstart AAAAAAABHA}
-{\bkmkend AAAAAAABHA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getVertexArray\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:getVertexArray}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b ogl::VertexArray}& mc::gfx::SimpleQuadRenderer::getVertexArray () const}}
-\par
-{\bkmkstart AAAAAAABHB}
-{\bkmkend AAAAAAABHB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v init\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:init}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::SimpleQuadRenderer::init (const char *  {\i vertexShader}, const char *  {\i fragShader})}}
-\par
-{\bkmkstart AAAAAAABHC}
-{\bkmkend AAAAAAABHC}
+{\bkmkstart AAAAAAABLM}
+{\bkmkend AAAAAAABLM}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -268,24 +250,24 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v init\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+}{
+Implemented in {\b mc::gfx::RenderProtocol< Letter >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLN \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLO \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< ProgressBar >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLP \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::RenderProtocol< Image >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLQ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v resize\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:resize}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::SimpleQuadRenderer::init (const char *  {\i vertexShader}, const std::string &  {\i fragShader})}}
+virtual void mc::gfx::RenderImpl::resize (const {\b Size}  {\i width}, const {\b Size}  {\i height}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABHD}
-{\bkmkend AAAAAAABHD}
+{\bkmkstart AAAAAAABLR}
+{\bkmkend AAAAAAABLR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-}}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -296,24 +278,24 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v init\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+}{
+Implemented in {\b mc::gfx::RenderProtocol< Letter >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLS \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLT \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< ProgressBar >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLU \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::RenderProtocol< Image >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLV \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v setUp\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:setUp}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::SimpleQuadRenderer::init (const std::string &  {\i vertexShader}, const char *  {\i fragShader})}}
+virtual void mc::gfx::RenderImpl::setUp ({\b os::WindowModule} *  {\i win}, {\b RenderQueue} *  {\i queue}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABHE}
-{\bkmkend AAAAAAABHE}
+{\bkmkstart AAAAAAABLW}
+{\bkmkend AAAAAAABLW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-}}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -324,24 +306,24 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v init\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:init}
+}{
+Implemented in {\b mc::gfx::RenderProtocol< Letter >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLX \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLY \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< ProgressBar >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABLZ \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::RenderProtocol< Image >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABMA \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v tearDown\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:tearDown}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::SimpleQuadRenderer::init (const std::string &  {\i vertexShader}, const std::string &  {\i fragShader})}}
+virtual void mc::gfx::RenderImpl::tearDown ({\b os::WindowModule} *  {\i win}, {\b RenderQueue} *  {\i queue}){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABHF}
-{\bkmkend AAAAAAABHF}
+{\bkmkstart AAAAAAABMB}
+{\bkmkend AAAAAAABMB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-}}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -352,48 +334,35 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v operator!=\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:operator!=}
+}{
+Implemented in {\b mc::gfx::RenderProtocol< Letter >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABMC \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABMD \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::RenderProtocol< ProgressBar >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABME \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::RenderProtocol< Image >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABMF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Friends And Related Function Documentation\par
+\pard\plain 
+{\xe \v Renderer\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:Renderer}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::SimpleQuadRenderer::operator!= (const {\b SimpleQuadRenderer} &  {\i other}) const}}
+friend class {\b Renderer}{\f2 [friend]}}}
 \par
-{\bkmkstart AAAAAAABHG}
-{\bkmkend AAAAAAABHG}
+{\bkmkstart AAAAAAABMG}
+{\bkmkend AAAAAAABMG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator==\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::SimpleQuadRenderer::operator== (const {\b SimpleQuadRenderer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABHH}
-{\bkmkend AAAAAAABHH}
 {
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+Definition at line 106 of file Renderer.h.}\par
 }
-{\xe \v setShader\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:setShader}
+{\xe \v ssl::init\:mc::gfx::RenderImpl}
+{\xe \v mc::gfx::RenderImpl\:ssl::init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::SimpleQuadRenderer::setShader (const {\b ogl::ShaderProgram} &  {\i shader})}}
+void {\b ssl::init} (const {\b Size} & , const {\b Size} & ){\f2 [friend]}}}
 \par
-{\bkmkstart AAAAAAABHI}
-{\bkmkend AAAAAAABHI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setVertexArray\:mc::gfx::SimpleQuadRenderer}
-{\xe \v mc::gfx::SimpleQuadRenderer\:setVertexArray}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::SimpleQuadRenderer::setVertexArray (const {\b ogl::VertexArray} &  {\i vertices})}}
-\par
-{\bkmkstart AAAAAAABHJ}
-{\bkmkend AAAAAAABHJ}
+{\bkmkstart AAAAAAABMH}
+{\bkmkend AAAAAAABMH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }

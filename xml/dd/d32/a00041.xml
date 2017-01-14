@@ -1,475 +1,262 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="dd/d32/a00041" kind="struct" language="C++" prot="public">
-    <compoundname>mc::TransformMatrix</compoundname>
-    <includes refid="db/db6/a00074" local="no">Transform.h</includes>
-      <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="dd/d32/a00041_ab1d6d109dbc3524efa2aba9f8dddea37_1ab1d6d109dbc3524efa2aba9f8dddea37" prot="public" static="no" mutable="no">
-        <type><ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; float, 3 &gt;</type>
-        <definition>Vector&lt;float, 3&gt; mc::TransformMatrix::translation</definition>
+  <compounddef id="dd/d32/a00041" kind="class" language="C++" prot="public">
+    <compoundname>mc::gfx::RenderProtocol&lt; Image &gt;</compoundname>
+    <basecompoundref refid="d3/de7/a00039" prot="public" virt="non-virtual">mc::gfx::RenderImpl</basecompoundref>
+    <includes refid="d1/d6f/a00063" local="no">Entity2D.h</includes>
+    <templateparamlist>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="dd/d32/a00041_1a15833712ca49e8b05e71badd45dc670c" prot="private" static="no" mutable="no">
+        <type><ref refid="d3/dea/a00046" kindref="compound">SimpleQuadRenderer</ref></type>
+        <definition>SimpleQuadRenderer mc::gfx::RenderProtocol&lt; Image &gt;::renderer</definition>
         <argsstring></argsstring>
-        <name>translation</name>
+        <name>renderer</name>
+        <initializer>= <ref refid="d3/dea/a00046" kindref="compound">SimpleQuadRenderer</ref>(true)</initializer>
         <briefdescription>
-<para>Represents this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput>&apos;s translation. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dd/d32/a00041_a30bf729eeb4b48a9e47d4970867eeabe_1a30bf729eeb4b48a9e47d4970867eeabe" kindref="member">translate(const float, const float, const float)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dd/d32/a00041_afc3e42106cadda5984594ee18506dcfd_1afc3e42106cadda5984594ee18506dcfd" kindref="member">get()</ref> </para></simplesect>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="214" column="1" bodyfile="include/MACE/Utility/Transform.h" bodystart="214" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/d32/a00041_a3ed9fc5756560490b92f7e13893e9dc4_1a3ed9fc5756560490b92f7e13893e9dc4" prot="public" static="no" mutable="no">
-        <type><ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; float, 3 &gt;</type>
-        <definition>Vector&lt;float, 3&gt; mc::TransformMatrix::rotation</definition>
-        <argsstring></argsstring>
-        <name>rotation</name>
-        <briefdescription>
-<para>Represents this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput>&apos;s rotation. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dd/d32/a00041_a6958ca81511314aada5e5754852751b0_1a6958ca81511314aada5e5754852751b0" kindref="member">rotate(const float, const float, const float)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dd/d32/a00041_afc3e42106cadda5984594ee18506dcfd_1afc3e42106cadda5984594ee18506dcfd" kindref="member">get()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="220" column="1" bodyfile="include/MACE/Utility/Transform.h" bodystart="220" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/d32/a00041_a4f2f6d4592045082c076e46058d6e74d_1a4f2f6d4592045082c076e46058d6e74d" prot="public" static="no" mutable="no">
-        <type><ref refid="d6/d42/a00043" kindref="compound">Vector</ref>&lt; float, 3 &gt;</type>
-        <definition>Vector&lt;float, 3&gt; mc::TransformMatrix::scaler</definition>
-        <argsstring></argsstring>
-        <name>scaler</name>
-        <briefdescription>
-<para>Represents this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput>&apos;s scale. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dd/d32/a00041_aabce39444cb0bb61b0f11048df0bcddc_1aabce39444cb0bb61b0f11048df0bcddc" kindref="member">scale(const float, const float, const float)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dd/d32/a00041_afc3e42106cadda5984594ee18506dcfd_1afc3e42106cadda5984594ee18506dcfd" kindref="member">get()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="226" column="1" bodyfile="include/MACE/Utility/Transform.h" bodystart="226" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="78" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="78" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="dd/d32/a00041_ad660cc05460555676f372334d8fe9aed_1ad660cc05460555676f372334d8fe9aed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::TransformMatrix::TransformMatrix</definition>
-        <argsstring>()</argsstring>
-        <name>TransformMatrix</name>
-        <briefdescription>
-<para>Default constructor. </para>        </briefdescription>
-        <detaileddescription>
-<para>Generates a <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> as an identity matrix. <simplesect kind="see"><para><ref refid="dd/d32/a00041_add25f797b317967ba0484db1b1b8827a_1add25f797b317967ba0484db1b1b8827a" kindref="member">reset()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="131" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_a30bf729eeb4b48a9e47d4970867eeabe_1a30bf729eeb4b48a9e47d4970867eeabe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-        <definition>TransformMatrix&amp; mc::TransformMatrix::translate</definition>
-        <argsstring>(const float x, const float y, const float z)</argsstring>
-        <name>translate</name>
+      <memberdef kind="function" id="dd/d32/a00041_a28f8a2b44b5a3697aa1f0ce9d53c0443_1a28f8a2b44b5a3697aa1f0ce9d53c0443" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::resize</definition>
+        <argsstring>(const Size width, const Size height) override</argsstring>
+        <name>resize</name>
+        <reimplements refid="d3/de7/a00039_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c">resize</reimplements>
         <param>
-          <type>const float</type>
-          <declname>x</declname>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>width</declname>
         </param>
         <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>height</declname>
         </param>
         <briefdescription>
-<para>Translates this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> in any 3 directions. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>x</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>How much to translate in the X plane. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate in the Y plane. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to translate in the Z plane. </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Itself for chaining </para></simplesect>
-<simplesect kind="see"><para>translate(const Matrix4f&amp;, const float, const float, const float) </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="141" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="66" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_a6958ca81511314aada5e5754852751b0_1a6958ca81511314aada5e5754852751b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-        <definition>TransformMatrix&amp; mc::TransformMatrix::rotate</definition>
-        <argsstring>(const float x, const float y, const float z)</argsstring>
-        <name>rotate</name>
+      <memberdef kind="function" id="dd/d32/a00041_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::init</definition>
+        <argsstring>(const Size originalWidth, const Size originalHeight) override</argsstring>
+        <name>init</name>
+        <reimplements refid="d3/de7/a00039_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1">init</reimplements>
         <param>
-          <type>const float</type>
-          <declname>x</declname>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>originalWidth</declname>
         </param>
         <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>originalHeight</declname>
         </param>
         <briefdescription>
-<para>Rotates this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> in any 3 directions. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>x</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>How much to rotate in the X plane. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to rotate in the Y plane. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to rotate in the Z plane. </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Itself for chaining </para></simplesect>
-<simplesect kind="see"><para>rotate(const Matrix4f&amp;, const float, const float, const float) </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="150" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="68" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_aabce39444cb0bb61b0f11048df0bcddc_1aabce39444cb0bb61b0f11048df0bcddc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-        <definition>TransformMatrix&amp; mc::TransformMatrix::scale</definition>
-        <argsstring>(const float x, const float y, const float z)</argsstring>
-        <name>scale</name>
+      <memberdef kind="function" id="dd/d32/a00041_a0d629966c9769ae5385528c54785fec2_1a0d629966c9769ae5385528c54785fec2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::setUp</definition>
+        <argsstring>(os::WindowModule *win, RenderQueue *queue) override</argsstring>
+        <name>setUp</name>
+        <reimplements refid="d3/de7/a00039_a13d3c43299a124a1b95d113c902e9476_1a13d3c43299a124a1b95d113c902e9476">setUp</reimplements>
         <param>
-          <type>const float</type>
-          <declname>x</declname>
+          <type><ref refid="d4/d6d/a00055" kindref="compound">os::WindowModule</ref> *</type>
+          <declname>win</declname>
         </param>
         <param>
-          <type>const float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>z</declname>
+          <type><ref refid="d1/d44/a00098_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+          <declname>queue</declname>
         </param>
         <briefdescription>
-<para>Scales this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> in any 3 directions. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>x</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>How much to scale in the X plane. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>y</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale in the Y plane. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>z</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much to scale in the Z plane. </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Itself for chaining </para></simplesect>
-<simplesect kind="see"><para>scale(const Matrix4f&amp;, const float, const float, const float) </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="159" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="70" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_add25f797b317967ba0484db1b1b8827a_1add25f797b317967ba0484db1b1b8827a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-        <definition>TransformMatrix&amp; mc::TransformMatrix::reset</definition>
-        <argsstring>()</argsstring>
-        <name>reset</name>
-        <briefdescription>
-<para>Deletes any transformations on this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput>, effectively making it an identity matrix. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Itself for chaining </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="164" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_afc3e42106cadda5984594ee18506dcfd_1afc3e42106cadda5984594ee18506dcfd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref>&lt; float, 4, 4 &gt;</type>
-        <definition>Matrix&lt;float, 4, 4&gt; mc::TransformMatrix::get</definition>
-        <argsstring>() const </argsstring>
-        <name>get</name>
-        <briefdescription>
-<para>Converts this <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> into a <computeroutput>Matrix4f</computeroutput> based on the stored transformations. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>The transformation matrix represented by the values stored via <computeroutput><ref refid="dd/d32/a00041_a6958ca81511314aada5e5754852751b0_1a6958ca81511314aada5e5754852751b0" kindref="member">rotate()</ref></computeroutput>, <computeroutput><ref refid="dd/d32/a00041_aabce39444cb0bb61b0f11048df0bcddc_1aabce39444cb0bb61b0f11048df0bcddc" kindref="member">scale()</ref></computeroutput>, and <computeroutput><ref refid="dd/d32/a00041_a30bf729eeb4b48a9e47d4970867eeabe_1a30bf729eeb4b48a9e47d4970867eeabe" kindref="member">translate()</ref></computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="170" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_ab284df8bcb89201ccd09403ad21f28ad_1ab284df8bcb89201ccd09403ad21f28ad" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::TransformMatrix::operator==</definition>
-        <argsstring>(const TransformMatrix &amp;other) const </argsstring>
-        <name>operator==</name>
+      <memberdef kind="function" id="dd/d32/a00041_a4c4fbc2599a3ba8c83ff7f8ada3f4e4b_1a4c4fbc2599a3ba8c83ff7f8ada3f4e4b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::render</definition>
+        <argsstring>(os::WindowModule *win, GraphicsEntity *entity) override</argsstring>
+        <name>render</name>
+        <reimplements refid="d3/de7/a00039_a06a982c8b438aaa052e1fa1d1fc995ae_1a06a982c8b438aaa052e1fa1d1fc995ae">render</reimplements>
         <param>
-          <type>const <ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>other</declname>
+          <type><ref refid="d4/d6d/a00055" kindref="compound">os::WindowModule</ref> *</type>
+          <declname>win</declname>
+        </param>
+        <param>
+          <type><ref refid="de/d11/a00021" kindref="compound">GraphicsEntity</ref> *</type>
+          <declname>entity</declname>
         </param>
         <briefdescription>
-<para>Checks if the values represented by 2 <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> are the same. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>other</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare to </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are equal </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="177" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="72" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_ac4bf06657f3dcd69ef435f02a51edc77_1ac4bf06657f3dcd69ef435f02a51edc77" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::TransformMatrix::operator!=</definition>
-        <argsstring>(const TransformMatrix &amp;other) const </argsstring>
-        <name>operator!=</name>
+      <memberdef kind="function" id="dd/d32/a00041_a0a82be6395851c77079746396e99d918_1a0a82be6395851c77079746396e99d918" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::tearDown</definition>
+        <argsstring>(os::WindowModule *win, RenderQueue *queue) override</argsstring>
+        <name>tearDown</name>
+        <reimplements refid="d3/de7/a00039_ac1b569053de9c46379c954f71e64659b_1ac1b569053de9c46379c954f71e64659b">tearDown</reimplements>
         <param>
-          <type>const <ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>other</declname>
+          <type><ref refid="d4/d6d/a00055" kindref="compound">os::WindowModule</ref> *</type>
+          <declname>win</declname>
+        </param>
+        <param>
+          <type><ref refid="d1/d44/a00098_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+          <declname>queue</declname>
         </param>
         <briefdescription>
-<para>Checks if the values represented by 2 <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> are not the same. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>other</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare to </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="183" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="74" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_a95cc17d73620c338c6cf7e39d88c66f0_1a95cc17d73620c338c6cf7e39d88c66f0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::TransformMatrix::operator&gt;</definition>
-        <argsstring>(const TransformMatrix &amp;other) const </argsstring>
-        <name>operator&gt;</name>
-        <param>
-          <type>const <ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
+      <memberdef kind="function" id="dd/d32/a00041_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::destroy</definition>
+        <argsstring>() override</argsstring>
+        <name>destroy</name>
+        <reimplements refid="d3/de7/a00039_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee">destroy</reimplements>
         <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> is larger than another. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
 <parameternamelist>
-<parametername>other</parametername>
+<parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare to </para></parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>whether <computeroutput>this</computeroutput> is larger than <computeroutput>other</computeroutput>, based on <computeroutput>translation</computeroutput>, <computeroutput>rotation</computeroutput>, and <computeroutput>scaler</computeroutput> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="189" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_ac4d1110fb2283ee53782f0423e6948b0_1ac4d1110fb2283ee53782f0423e6948b0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::TransformMatrix::operator&gt;=</definition>
-        <argsstring>(const TransformMatrix &amp;other) const </argsstring>
-        <name>operator&gt;=</name>
-        <param>
-          <type>const <ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> is larger than or equal to another. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare to </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>whether <computeroutput>this</computeroutput> is larger than or equal to <computeroutput>other</computeroutput>, based on <computeroutput>translation</computeroutput>, <computeroutput>rotation</computeroutput>, and <computeroutput>scaler</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="195" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_a1dbe80e02969059a1ab9cc4c167343e6_1a1dbe80e02969059a1ab9cc4c167343e6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::TransformMatrix::operator&lt;</definition>
-        <argsstring>(const TransformMatrix &amp;other) const </argsstring>
-        <name>operator&lt;</name>
-        <param>
-          <type>const <ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> is smaller than another. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare to </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>whether <computeroutput>this</computeroutput> is smaller than <computeroutput>other</computeroutput>, based on <computeroutput>translation</computeroutput>, <computeroutput>rotation</computeroutput>, and <computeroutput>scaler</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="201" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/d32/a00041_a71515ed6991421571635bd3068437757_1a71515ed6991421571635bd3068437757" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::TransformMatrix::operator&lt;=</definition>
-        <argsstring>(const TransformMatrix &amp;other) const </argsstring>
-        <name>operator&lt;=</name>
-        <param>
-          <type>const <ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="dd/d32/a00041" kindref="compound">TransformMatrix</ref></computeroutput> is small than or equal to another. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare to </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>whether <computeroutput>this</computeroutput> is smaller than or equal to <computeroutput>other</computeroutput>, based on <computeroutput>translation</computeroutput>, <computeroutput>rotation</computeroutput>, and <computeroutput>scaler</computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Transform.h" line="207" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="76" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Matrix-based class that allows for the easy creation and management of transformation matrices. </para>    </briefdescription>
+    </briefdescription>
     <detaileddescription>
-<para>Transformation matrices can scale, rotate, and translate any vector. </para><para>This should not be confused with the <computeroutput><ref refid="d3/dfe/a00025" kindref="compound">Matrix</ref></computeroutput> class, which allows for the arbitrary storage of data in a matrix-like fashion </para>    </detaileddescription>
-    <collaborationgraph>
-      <node id="522">
-        <label>T</label>
-      </node>
-      <node id="521">
-        <label>std::array&lt; T &gt;</label>
-        <childnode refid="522" relation="usage">
-          <edgelabel>elements</edgelabel>
-        </childnode>
-      </node>
-      <node id="519">
-        <label>mc::Vector&lt; float, 3 &gt;</label>
-        <link refid="d6/d42/a00043"/>
-        <childnode refid="520" relation="usage">
-          <edgelabel>content</edgelabel>
-        </childnode>
-        <childnode refid="523" relation="template-instance">
-          <edgelabel>&lt; float, 3 &gt;</edgelabel>
-        </childnode>
-      </node>
-      <node id="524">
-        <label>std::array&lt; T, N &gt;</label>
-        <childnode refid="522" relation="usage">
-          <edgelabel>elements</edgelabel>
-        </childnode>
-        <childnode refid="521" relation="template-instance">
-          <edgelabel>&lt; T, N &gt;</edgelabel>
-        </childnode>
-      </node>
-      <node id="518">
-        <label>mc::TransformMatrix</label>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="622">
+        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
         <link refid="dd/d32/a00041"/>
-        <childnode refid="519" relation="usage">
-          <edgelabel>rotation</edgelabel>
-          <edgelabel>scaler</edgelabel>
-          <edgelabel>translation</edgelabel>
+        <childnode refid="623" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="523">
-        <label>mc::Vector&lt; T, N &gt;</label>
-        <link refid="d6/d42/a00043"/>
-        <childnode refid="524" relation="usage">
-          <edgelabel>content</edgelabel>
+      <node id="623">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="d3/de7/a00039"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="624">
+        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
+        <link refid="dd/d32/a00041"/>
+        <childnode refid="625" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="520">
-        <label>std::array&lt; float, N &gt;</label>
-        <childnode refid="521" relation="template-instance">
-          <edgelabel>&lt; float, N &gt;</edgelabel>
-        </childnode>
+      <node id="625">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="d3/de7/a00039"/>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Utility/Transform.h" line="126" column="1" bodyfile="include/MACE/Utility/Transform.h" bodystart="126" bodyend="227"/>
+    <location file="include/MACE/Graphics/Entity2D.h" line="64" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="64" bodyend="79"/>
     <listofallmembers>
-      <member refid="dd/d32/a00041_afc3e42106cadda5984594ee18506dcfd_1afc3e42106cadda5984594ee18506dcfd" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>get</name></member>
-      <member refid="dd/d32/a00041_ac4bf06657f3dcd69ef435f02a51edc77_1ac4bf06657f3dcd69ef435f02a51edc77" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>operator!=</name></member>
-      <member refid="dd/d32/a00041_a1dbe80e02969059a1ab9cc4c167343e6_1a1dbe80e02969059a1ab9cc4c167343e6" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>operator&lt;</name></member>
-      <member refid="dd/d32/a00041_a71515ed6991421571635bd3068437757_1a71515ed6991421571635bd3068437757" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>operator&lt;=</name></member>
-      <member refid="dd/d32/a00041_ab284df8bcb89201ccd09403ad21f28ad_1ab284df8bcb89201ccd09403ad21f28ad" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>operator==</name></member>
-      <member refid="dd/d32/a00041_a95cc17d73620c338c6cf7e39d88c66f0_1a95cc17d73620c338c6cf7e39d88c66f0" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>operator&gt;</name></member>
-      <member refid="dd/d32/a00041_ac4d1110fb2283ee53782f0423e6948b0_1ac4d1110fb2283ee53782f0423e6948b0" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>operator&gt;=</name></member>
-      <member refid="dd/d32/a00041_add25f797b317967ba0484db1b1b8827a_1add25f797b317967ba0484db1b1b8827a" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>reset</name></member>
-      <member refid="dd/d32/a00041_a6958ca81511314aada5e5754852751b0_1a6958ca81511314aada5e5754852751b0" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>rotate</name></member>
-      <member refid="dd/d32/a00041_a3ed9fc5756560490b92f7e13893e9dc4_1a3ed9fc5756560490b92f7e13893e9dc4" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>rotation</name></member>
-      <member refid="dd/d32/a00041_aabce39444cb0bb61b0f11048df0bcddc_1aabce39444cb0bb61b0f11048df0bcddc" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>scale</name></member>
-      <member refid="dd/d32/a00041_a4f2f6d4592045082c076e46058d6e74d_1a4f2f6d4592045082c076e46058d6e74d" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>scaler</name></member>
-      <member refid="dd/d32/a00041_ad660cc05460555676f372334d8fe9aed_1ad660cc05460555676f372334d8fe9aed" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>TransformMatrix</name></member>
-      <member refid="dd/d32/a00041_a30bf729eeb4b48a9e47d4970867eeabe_1a30bf729eeb4b48a9e47d4970867eeabe" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>translate</name></member>
-      <member refid="dd/d32/a00041_ab1d6d109dbc3524efa2aba9f8dddea37_1ab1d6d109dbc3524efa2aba9f8dddea37" prot="public" virt="non-virtual"><scope>mc::TransformMatrix</scope><name>translation</name></member>
+      <member refid="dd/d32/a00041_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>destroy</name></member>
+      <member refid="dd/d32/a00041_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>init</name></member>
+      <member refid="dd/d32/a00041_a4c4fbc2599a3ba8c83ff7f8ada3f4e4b_1a4c4fbc2599a3ba8c83ff7f8ada3f4e4b" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>render</name></member>
+      <member refid="dd/d32/a00041_1a15833712ca49e8b05e71badd45dc670c" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>renderer</name></member>
+      <member refid="d3/de7/a00039_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>RenderImpl</name></member>
+      <member refid="dd/d32/a00041_a28f8a2b44b5a3697aa1f0ce9d53c0443_1a28f8a2b44b5a3697aa1f0ce9d53c0443" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>resize</name></member>
+      <member refid="dd/d32/a00041_a0d629966c9769ae5385528c54785fec2_1a0d629966c9769ae5385528c54785fec2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>setUp</name></member>
+      <member refid="dd/d32/a00041_a0a82be6395851c77079746396e99d918_1a0a82be6395851c77079746396e99d918" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>tearDown</name></member>
+      <member refid="d3/de7/a00039_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>~RenderImpl</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

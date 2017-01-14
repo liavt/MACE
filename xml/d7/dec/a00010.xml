@@ -1,123 +1,705 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d7/dec/a00010" kind="class" language="C++" prot="public" abstract="yes">
-    <compoundname>mc::gfx::Component</compoundname>
-    <includes refid="d4/dca/a00048" local="no">Entity.h</includes>
+  <compounddef id="d7/dec/a00010" kind="struct" language="C++" prot="public">
+    <compoundname>mc::Color</compoundname>
+    <includes refid="df/d5d/a00084" local="no">Color.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float mc::Color::r</definition>
+        <argsstring></argsstring>
+        <name>r</name>
+        <briefdescription>
+<para><ref refid="d7/dec/a00010" kindref="compound">Color</ref> component, represented as a <computeroutput>float</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>It is from 0.0 to 1.0, where 1.0 is the brightest it can get. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="47" column="1" bodyfile="include/MACE/Utility/Color.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d7/dec/a00010_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float mc::Color::g</definition>
+        <argsstring></argsstring>
+        <name>g</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="47" column="1" bodyfile="include/MACE/Utility/Color.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d7/dec/a00010_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float mc::Color::b</definition>
+        <argsstring></argsstring>
+        <name>b</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="47" column="1" bodyfile="include/MACE/Utility/Color.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d7/dec/a00010_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float mc::Color::a</definition>
+        <argsstring></argsstring>
+        <name>a</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="47" column="1" bodyfile="include/MACE/Utility/Color.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Component::init</definition>
-        <argsstring>(Entity *e)=0</argsstring>
-        <name>init</name>
+      <memberdef kind="function" id="d7/dec/a00010_a03305f478005ed77ce442abb80c4a620_1a03305f478005ed77ce442abb80c4a620" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::Color::Color</definition>
+        <argsstring>(const float &amp;red, const float &amp;green, const float &amp;blue, const float &amp;alpha=1.0f) noexcept</argsstring>
+        <name>Color</name>
         <param>
-          <type><ref refid="d2/de7/a00014" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
+          <type>const float &amp;</type>
+          <declname>red</declname>
+        </param>
+        <param>
+          <type>const float &amp;</type>
+          <declname>green</declname>
+        </param>
+        <param>
+          <type>const float &amp;</type>
+          <declname>blue</declname>
+        </param>
+        <param>
+          <type>const float &amp;</type>
+          <declname>alpha</declname>
+          <defval>1.0f</defval>
         </param>
         <briefdescription>
-<para>Called when this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> is added to the <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> via <ref refid="d2/de7/a00014_a6aa74436ab9806d75212629acc58a736_1a6aa74436ab9806d75212629acc58a736" kindref="member">Entity::addComponent(Component&amp;)</ref>. </para>        </briefdescription>
+<para>Creates a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from specified values. </para>        </briefdescription>
         <detaileddescription>
-<para>Required function. <parameterlist kind="param"><parameteritem>
+<para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>e</parametername>
+<parametername>red</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>The parent <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
+<para>The red component from 0.0 to 1.0, where 1.0 is the most red. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>green</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component from 0.0 to 1.0, where 1.0 is the most red. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>blue</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component from 0.0 to 1.0, where 1.0 is the most red. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>alpha</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0 </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="note"><para>This is not called at <ref refid="d2/de7/a00014_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">Entity::init()</ref>, instead it is called when the component is added to the <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput>. Keep that in mind. </para></simplesect>
+<simplesect kind="see"><para>Color(std::array&lt;float,4&gt;) </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="57" column="1"/>
+        <location file="include/MACE/Utility/Color.h" line="57" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+      <memberdef kind="function" id="d7/dec/a00010_aec257d54c111fae86bff3f37f669ea28_1aec257d54c111fae86bff3f37f669ea28" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::Color::Color</definition>
+        <argsstring>(const std::array&lt; float, 4 &gt; &amp;values)</argsstring>
+        <name>Color</name>
+        <param>
+          <type>const std::array&lt; float, 4 &gt; &amp;</type>
+          <declname>values</declname>
+        </param>
+        <briefdescription>
+<para>Creates a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from an array of <computeroutput>floats</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>values</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An array where the first element is red, the second is green, etc </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>Color(std::array&lt;Byte,4&gt;) </para></simplesect>
+<simplesect kind="see"><para>Color(float,float,float,float) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" kindref="member">setValues</ref>(std::array&lt;float,4&gt; </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="65" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_ae634a7ef0ff71dd340fb07c53984ba1e_1ae634a7ef0ff71dd340fb07c53984ba1e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::Color::Color</definition>
+        <argsstring>(const Color &amp;copy) noexcept</argsstring>
+        <name>Color</name>
+        <param>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>copy</declname>
+        </param>
+        <briefdescription>
+<para>Clones a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput>, coying it&apos;s color values into a new one. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>copy</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> to copy </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="70" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::Color::Color</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>Color</name>
+        <briefdescription>
+<para>Default constructor. </para>        </briefdescription>
+        <detaileddescription>
+<para>Constructs a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> with all of it&apos;s color values as <computeroutput>0</computeroutput>, or black. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="74" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_af0db284b5868c6bb6d449c277dad7d36_1af0db284b5868c6bb6d449c277dad7d36" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d7/dec/a00010" kindref="compound">Color</ref></type>
+        <definition>Color mc::Color::darken</definition>
+        <argsstring>() const </argsstring>
+        <name>darken</name>
+        <briefdescription>
+<para>Creates a new <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> that is slightly darker. </para>        </briefdescription>
+        <detaileddescription>
+<para>Due to rounding, <computeroutput>color.darken() != color.darken().<ref refid="d7/dec/a00010_ac10a06d41c34ed11ad76e214f0f1cfc5_1ac10a06d41c34ed11ad76e214f0f1cfc5" kindref="member">lighten()</ref></computeroutput> </para><para>The alpha is not affected <simplesect kind="return"><para>A darker <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_ac10a06d41c34ed11ad76e214f0f1cfc5_1ac10a06d41c34ed11ad76e214f0f1cfc5" kindref="member">Color::lighten() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="85" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_ac10a06d41c34ed11ad76e214f0f1cfc5_1ac10a06d41c34ed11ad76e214f0f1cfc5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d7/dec/a00010" kindref="compound">Color</ref></type>
+        <definition>Color mc::Color::lighten</definition>
+        <argsstring>() const </argsstring>
+        <name>lighten</name>
+        <briefdescription>
+<para>Creates a new <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> that is slightly lighter. </para>        </briefdescription>
+        <detaileddescription>
+<para>Due to rounding, <computeroutput>color.lighten() != color.lighten().<ref refid="d7/dec/a00010_af0db284b5868c6bb6d449c277dad7d36_1af0db284b5868c6bb6d449c277dad7d36" kindref="member">darken()</ref></computeroutput> </para><para>The alpha is not affected <simplesect kind="return"><para>A lighter <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_af0db284b5868c6bb6d449c277dad7d36_1af0db284b5868c6bb6d449c277dad7d36" kindref="member">Color::darken() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="95" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a17499a7e18ab38fc8ebedd3aec808e69_1a17499a7e18ab38fc8ebedd3aec808e69" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+        <definition>Byte mc::Color::getRed</definition>
+        <argsstring>() const </argsstring>
+        <name>getRed</name>
+        <briefdescription>
+<para>Retrieves the red component of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is the brightest </para></simplesect>
+<simplesect kind="see"><para>convertFloatToRGBA(float) </para></simplesect>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" kindref="member">r</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="104" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a41884a44e13eddd57c14095547e64c41_1a41884a44e13eddd57c14095547e64c41" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+        <definition>Byte mc::Color::getGreen</definition>
+        <argsstring>() const </argsstring>
+        <name>getGreen</name>
+        <briefdescription>
+<para>Retrieves the green component of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is the brightest </para></simplesect>
+<simplesect kind="see"><para>convertFloatToRGBA(float) </para></simplesect>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" kindref="member">g</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="112" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_aee855a9b5145e1e479d470276a405ef5_1aee855a9b5145e1e479d470276a405ef5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+        <definition>Byte mc::Color::getBlue</definition>
+        <argsstring>() const </argsstring>
+        <name>getBlue</name>
+        <briefdescription>
+<para>Retrieves the blue component of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is the brightest </para></simplesect>
+<simplesect kind="see"><para>convertFloatToRGBA(float) </para></simplesect>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" kindref="member">b</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="120" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a48f56fc575c026028eb2b0ba86a2e5c0_1a48f56fc575c026028eb2b0ba86a2e5c0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
+        <definition>Byte mc::Color::getAlpha</definition>
+        <argsstring>() const </argsstring>
+        <name>getAlpha</name>
+        <briefdescription>
+<para>Retrieves the alpha component of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is fully opaque, and 0 is transparent </para></simplesect>
+<simplesect kind="see"><para>convertFloatToRGBA(float) </para></simplesect>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" kindref="member">a</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="128" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_af4ec1e1b4ae8575cd76ee0ce21802cfd_1af4ec1e1b4ae8575cd76ee0ce21802cfd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Color::setRed</definition>
+        <argsstring>(const Byte &amp;r)</argsstring>
+        <name>setRed</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref> &amp;</type>
+          <declname>r</declname>
+        </param>
+        <briefdescription>
+<para>Set the red value of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from a <computeroutput>Byte</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>It will automatically be converted to <computeroutput>float</computeroutput> internally. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is the brightest </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a17499a7e18ab38fc8ebedd3aec808e69_1a17499a7e18ab38fc8ebedd3aec808e69" kindref="member">getRed()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" kindref="member">r</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="137" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a8f4992ffded20025bfe69e9513f53f92_1a8f4992ffded20025bfe69e9513f53f92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Color::setGreen</definition>
+        <argsstring>(const Byte &amp;g)</argsstring>
+        <name>setGreen</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref> &amp;</type>
+          <declname>g</declname>
+        </param>
+        <briefdescription>
+<para>Set the green value of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from a <computeroutput>Byte</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>It will automatically be converted to <computeroutput>float</computeroutput> internally. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is the brightest </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a41884a44e13eddd57c14095547e64c41_1a41884a44e13eddd57c14095547e64c41" kindref="member">getGreen()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" kindref="member">g</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="145" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_ab1351780822e03e813afa0dc6344ecb2_1ab1351780822e03e813afa0dc6344ecb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Color::setBlue</definition>
+        <argsstring>(const Byte &amp;b)</argsstring>
+        <name>setBlue</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref> &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Set the blue value of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from a <computeroutput>Byte</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>It will automatically be converted to <computeroutput>float</computeroutput> internally. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is the brightest </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_aee855a9b5145e1e479d470276a405ef5_1aee855a9b5145e1e479d470276a405ef5" kindref="member">getBlue()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" kindref="member">b</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="153" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_af1cad290fe847c6870bfe5cc51402f48_1af1cad290fe847c6870bfe5cc51402f48" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Color::setAlpha</definition>
+        <argsstring>(const Byte &amp;a)</argsstring>
+        <name>setAlpha</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Set the alpha value of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from a <computeroutput>Byte</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>It will automatically be converted to <computeroutput>float</computeroutput> internally. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput>Byte</computeroutput> from 0 to 255, where 255 is opaque </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>convertRGBAToFloat(Byte) </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a48f56fc575c026028eb2b0ba86a2e5c0_1a48f56fc575c026028eb2b0ba86a2e5c0" kindref="member">getAlpha()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/dec/a00010_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" kindref="member">a</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="161" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Color::setValues</definition>
+        <argsstring>(const std::array&lt; float, 4 &gt; &amp;rgba)</argsstring>
+        <name>setValues</name>
+        <param>
+          <type>const std::array&lt; float, 4 &gt; &amp;</type>
+          <declname>rgba</declname>
+        </param>
+        <briefdescription>
+<para>Sets the RGB values of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from an array of <computeroutput>floats</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para>The alpha is unchanged <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rgba</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An array where the first element is red, the second is green, etc </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>Color(std::array&lt;Byte,4&gt;) </para></simplesect>
+<simplesect kind="see"><para>Color(std::array&lt;float,4&gt;) </para></simplesect>
+<simplesect kind="see"><para>Color(float,float,float,float) </para></simplesect>
+<simplesect kind="see"><para>setValues(std::array&lt;float,4&gt;) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="170" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a807faf5dd4851a9dcd12f675c4781d9c_1a807faf5dd4851a9dcd12f675c4781d9c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Color::setValues</definition>
+        <argsstring>(const std::array&lt; float, 3 &gt; &amp;rgb)</argsstring>
+        <name>setValues</name>
+        <param>
+          <type>const std::array&lt; float, 3 &gt; &amp;</type>
+          <declname>rgb</declname>
+        </param>
+        <briefdescription>
+<para>Sets the values of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> from an array of <computeroutput>floats</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rgb</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An array where the first element is red, the second is green, etc </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>Color(std::array&lt;Byte,4&gt;) </para></simplesect>
+<simplesect kind="see"><para>Color(std::array&lt;Byte,4&gt;) </para></simplesect>
+<simplesect kind="see"><para>Color(float,float,float,float) </para></simplesect>
+<simplesect kind="see"><para>setValues(std::array&lt;float,3&gt;) </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="179" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_abdfddcdc4a6d3a415bd5c690b9c7e703_1abdfddcdc4a6d3a415bd5c690b9c7e703" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::array&lt; float, 4 &gt;</type>
+        <definition>std::array&lt;float, 4&gt; mc::Color::getValues</definition>
+        <argsstring>() const </argsstring>
+        <name>getValues</name>
+        <briefdescription>
+<para>Retrieves the RGBA values in <computeroutput>std::array</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>An array where the first element is red, the second value is green, etc </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="184" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a29c3b4b9c645d963c57f9febab56c652_1a29c3b4b9c645d963c57f9febab56c652" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const float *</type>
+        <definition>const float* mc::Color::flatten</definition>
+        <argsstring>(float arr[4]) const </argsstring>
+        <name>flatten</name>
+        <param>
+          <type>float</type>
+          <declname>arr</declname>
+          <array>[4]</array>
+        </param>
+        <briefdescription>
+<para>Creates an array with the data of this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput>, in O(N) time. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Pointer to <computeroutput>arr</computeroutput> </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The array to fill </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="191" column="1" bodyfile="include/MACE/Utility/Color.h" bodystart="191" bodyend="198"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_ad5352afe6a77e440f2f6b96282da9283_1ad5352afe6a77e440f2f6b96282da9283" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>bool</type>
-        <definition>virtual bool mc::gfx::Component::update</definition>
-        <argsstring>(Entity *e)=0</argsstring>
-        <name>update</name>
+        <definition>bool mc::Color::operator==</definition>
+        <argsstring>(const Color &amp;other) const </argsstring>
+        <name>operator==</name>
         <param>
-          <type><ref refid="d2/de7/a00014" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>other</declname>
         </param>
         <briefdescription>
-<para>Called when <ref refid="d2/de7/a00014_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">Entity::update()</ref> is called. </para>        </briefdescription>
+<para>Compares the color values of 2 <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-<para>Required function. </para><para>There is no function to remove a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> so this is the only way for a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> to be removed from an <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> </para><para><ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">Component::destroy(Entity*)</ref> will be called afterwards. <parameterlist kind="param"><parameteritem>
+<para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>e</parametername>
+<parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>The parent <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
+<para>Another <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> object </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Whether this <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> should be deleted or not. </para></simplesect>
+<simplesect kind="return"><para>Whether the 2 <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> have the same RGBA </para></simplesect>
+<simplesect kind="see"><para>operator!=(Color&amp;) const </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="67" column="1"/>
+        <location file="include/MACE/Utility/Color.h" line="206" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Component::destroy</definition>
-        <argsstring>(Entity *e)=0</argsstring>
-        <name>destroy</name>
+      <memberdef kind="function" id="d7/dec/a00010_a4dbf26330da887dd0fd6a3657ee6b4a1_1a4dbf26330da887dd0fd6a3657ee6b4a1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Color::operator!=</definition>
+        <argsstring>(const Color &amp;other) const </argsstring>
+        <name>operator!=</name>
         <param>
-          <type><ref refid="d2/de7/a00014" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>other</declname>
         </param>
         <briefdescription>
-<para>Called when <ref refid="d2/de7/a00014_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" kindref="member">Entity::destroy()</ref> is called or the <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> is removed via <ref refid="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" kindref="member">Component::update(Entity*)</ref>, whichever comes first. </para>        </briefdescription>
+<para>Compares the color values of 2 <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-<para>Once <ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">Component::destroy(Entity*)</ref> is called, it is immediately removed from the <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput>. Required function. <parameterlist kind="param"><parameteritem>
+<para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>e</parametername>
+<parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>The parent <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
+<para>Another <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> object </para></parameterdescription>
 </parameteritem>
 </parameterlist>
+<simplesect kind="return"><para>Whether the 2 <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> don&apos;t have the same RGBA </para></simplesect>
+<simplesect kind="see"><para>operator==(Color&amp;) const </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="74" column="1"/>
+        <location file="include/MACE/Utility/Color.h" line="213" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d7/dec/a00010_aca617afee4ec19457718c9cecdbad9fe_1aca617afee4ec19457718c9cecdbad9fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Component::clean</definition>
-        <argsstring>(Entity *e)</argsstring>
-        <name>clean</name>
+      <memberdef kind="function" id="d7/dec/a00010_acf6a1a0175957b7ee2be0272fac2a47d_1acf6a1a0175957b7ee2be0272fac2a47d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Color::operator&gt;</definition>
+        <argsstring>(const Color &amp;other) const </argsstring>
+        <name>operator&gt;</name>
         <param>
-          <type><ref refid="d2/de7/a00014" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>other</declname>
         </param>
         <briefdescription>
-<para>Called when <ref refid="d2/de7/a00014_acad662b2fc7163c6c36f4db9f194982e_1acad662b2fc7163c6c36f4db9f194982e" kindref="member">Entity::clean()</ref> is called and it was dirty. </para>        </briefdescription>
+<para>Compares the color values of 2 &apos;<ref refid="d1/d84/a00097" kindref="compound">Colors</ref>&apos;. </para>        </briefdescription>
         <detaileddescription>
-<para>This is not required for inheritance. <parameterlist kind="param"><parameteritem>
+<para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>e</parametername>
+<parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>The parent <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
+<para>Another <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> object </para></parameterdescription>
 </parameteritem>
 </parameterlist>
+<simplesect kind="return"><para>The result of the operation on both <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> r, g, b, and a values. </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="79" column="1"/>
+        <location file="include/MACE/Utility/Color.h" line="220" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_af19275deb60cfd00c4dac9e367031789_1af19275deb60cfd00c4dac9e367031789" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Color::operator&gt;=</definition>
+        <argsstring>(const Color &amp;other) const </argsstring>
+        <name>operator&gt;=</name>
+        <param>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares the color values of 2 &apos;<ref refid="d1/d84/a00097" kindref="compound">Colors</ref>&apos;. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> object </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the operation on both <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> r, g, b, and a values. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="226" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_aa7e49c564fdd7c217d649c9924d13337_1aa7e49c564fdd7c217d649c9924d13337" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Color::operator&lt;</definition>
+        <argsstring>(const Color &amp;other) const </argsstring>
+        <name>operator&lt;</name>
+        <param>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares the color values of 2 &apos;<ref refid="d1/d84/a00097" kindref="compound">Colors</ref>&apos;. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> object </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the operation on both <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> r, g, b, and a values. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="232" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/dec/a00010_a2f8bf278208cdcab94c9dd3d7c4a7c5c_1a2f8bf278208cdcab94c9dd3d7c4a7c5c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Color::operator&lt;=</definition>
+        <argsstring>(const Color &amp;other) const </argsstring>
+        <name>operator&lt;=</name>
+        <param>
+          <type>const <ref refid="d7/dec/a00010" kindref="compound">Color</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares the color values of 2 &apos;<ref refid="d1/d84/a00097" kindref="compound">Colors</ref>&apos;. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Color</ref></computeroutput> object </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the operation on both <computeroutput><ref refid="d1/d84/a00097" kindref="compound">Colors</ref></computeroutput> r, g, b, and a values. </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="238" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Can be plugged into an <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> to allow for additional functionality by listening to events. </para>    </briefdescription>
+<para>Represents a color in the RGBA space. </para>    </briefdescription>
     <detaileddescription>
-<para>Instead of extending an existing <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> subclass, you should prefer using a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> to not interfere with custom <ref refid="d2/de7/a00014_a14defaca92f04c32b892cbc08263d3ac_1a14defaca92f04c32b892cbc08263d3ac" kindref="member">Entity::onRender()</ref> and similar functions. </para><para>Similarly to all objects in MACE, <ref refid="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" kindref="member">Component::init(Entity*)</ref> is always called and <ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">Component::destroy(Entity*)</ref> is also always called. </para><para>Contains virtual functions for every event in an <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> which each have 1 parameter - the <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput> being acted on. </para><para>You are required to implement <ref refid="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" kindref="member">Component::init(Entity*)</ref>, <ref refid="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" kindref="member">Component::update(Entity*)</ref>, and <ref refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">Component::destroy(Entity*)</ref>. There are additional functions which are optional to implement. </para><para>There is no function to remove a <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> from an <computeroutput><ref refid="d2/de7/a00014" kindref="compound">Entity</ref></computeroutput>. Instead, the <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> decides when to be removed from <ref refid="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" kindref="member">Component::update(Entity*)</ref>. This makes sure that the <computeroutput><ref refid="d7/dec/a00010" kindref="compound">Component</ref></computeroutput> completes whatever task it was trying to do. <simplesect kind="see"><para><ref refid="d2/de7/a00014_a6aa74436ab9806d75212629acc58a736_1a6aa74436ab9806d75212629acc58a736" kindref="member">Entity::addComponent(Component&amp;)</ref> </para></simplesect>
-</para>    </detaileddescription>
-    <location file="include/MACE/Graphics/Entity.h" line="49" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="49" bodyend="80"/>
+<para>Values are stored as a <computeroutput>float</computeroutput> between 0 and 1, where 1 is the brightest. Values can optionally be added as a <computeroutput>Byte</computeroutput> from 0 to 255. </para><para>Note that conversion from a <computeroutput>Byte</computeroutput> to a <computeroutput>float</computeroutput> (and vice-versa) is not 100% accurate and may produce slightly different results on different processors. </para><para>Examples: <programlisting><codeline><highlight class="normal">Color<sp/>color<sp/>=<sp/>{1.0f,1.0f,1.0f,1.0f};//create<sp/>the<sp/>color<sp/>white</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">float<sp/>red<sp/>=<sp/>color.r;//retrive<sp/>the<sp/>red<sp/>componenet,<sp/>as<sp/>a<sp/>float<sp/>from<sp/>0.0<sp/>to<sp/>1.0</highlight></codeline>
+<codeline><highlight class="normal">float<sp/>green<sp/>=<sp/>color.g;//retrive<sp/>the<sp/>green<sp/>componenet,<sp/>as<sp/>a<sp/>float<sp/>from<sp/>0.0<sp/>to<sp/>1.0</highlight></codeline>
+<codeline><highlight class="normal">float<sp/>blue<sp/>=<sp/>color.b;//retrive<sp/>the<sp/>blue<sp/>componenet,<sp/>as<sp/>a<sp/>float<sp/>from<sp/>0.0<sp/>to<sp/>1.0</highlight></codeline>
+<codeline><highlight class="normal">float<sp/>alpha<sp/>=<sp/>color.a;//retrive<sp/>the<sp/>alpha<sp/>componenet,<sp/>as<sp/>a<sp/>float<sp/>from<sp/>0.0<sp/>to<sp/>1.0</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">red<sp/>=<sp/>color.getRed();//retrieve<sp/>the<sp/>red<sp/>component<sp/>as<sp/>a<sp/>byte<sp/>from<sp/>0<sp/>to<sp/>255</highlight></codeline>
+<codeline><highlight class="normal">green<sp/>=<sp/>color.getGreen();//retrieve<sp/>the<sp/>red<sp/>component<sp/>as<sp/>a<sp/>byte<sp/>from<sp/>0<sp/>to<sp/>255</highlight></codeline>
+<codeline><highlight class="normal">blue<sp/>=<sp/>color.getBlue();//retrieve<sp/>the<sp/>red<sp/>component<sp/>as<sp/>a<sp/>byte<sp/>from<sp/>0<sp/>to<sp/>255</highlight></codeline>
+<codeline><highlight class="normal">alpha<sp/>=<sp/>color.getAlpha();//retrieve<sp/>the<sp/>red<sp/>component<sp/>as<sp/>a<sp/>byte<sp/>from<sp/>0<sp/>to<sp/>255</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">color.r<sp/>=<sp/>0.5f;//set<sp/>the<sp/>red<sp/>component<sp/>to<sp/>be<sp/>0.5f</highlight></codeline>
+<codeline><highlight class="normal">color.setRed(127);<sp/>//set<sp/>the<sp/>red<sp/>component<sp/>to<sp/>be<sp/>0.5f<sp/>as<sp/>a<sp/>Byte<sp/>from<sp/>0<sp/>to<sp/>255</highlight></codeline>
+</programlisting> </para>    </detaileddescription>
+    <location file="include/MACE/Utility/Color.h" line="41" column="1" bodyfile="include/MACE/Utility/Color.h" bodystart="41" bodyend="239"/>
     <listofallmembers>
-      <member refid="d7/dec/a00010_aca617afee4ec19457718c9cecdbad9fe_1aca617afee4ec19457718c9cecdbad9fe" prot="public" virt="virtual"><scope>mc::gfx::Component</scope><name>clean</name></member>
-      <member refid="d7/dec/a00010_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" prot="public" virt="pure-virtual"><scope>mc::gfx::Component</scope><name>destroy</name></member>
-      <member refid="d7/dec/a00010_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78" prot="public" virt="pure-virtual"><scope>mc::gfx::Component</scope><name>init</name></member>
-      <member refid="d7/dec/a00010_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" prot="public" virt="pure-virtual"><scope>mc::gfx::Component</scope><name>update</name></member>
+      <member refid="d7/dec/a00010_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>a</name></member>
+      <member refid="d7/dec/a00010_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>b</name></member>
+      <member refid="d7/dec/a00010_a03305f478005ed77ce442abb80c4a620_1a03305f478005ed77ce442abb80c4a620" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>Color</name></member>
+      <member refid="d7/dec/a00010_aec257d54c111fae86bff3f37f669ea28_1aec257d54c111fae86bff3f37f669ea28" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>Color</name></member>
+      <member refid="d7/dec/a00010_ae634a7ef0ff71dd340fb07c53984ba1e_1ae634a7ef0ff71dd340fb07c53984ba1e" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>Color</name></member>
+      <member refid="d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>Color</name></member>
+      <member refid="d7/dec/a00010_af0db284b5868c6bb6d449c277dad7d36_1af0db284b5868c6bb6d449c277dad7d36" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>darken</name></member>
+      <member refid="d7/dec/a00010_a29c3b4b9c645d963c57f9febab56c652_1a29c3b4b9c645d963c57f9febab56c652" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>flatten</name></member>
+      <member refid="d7/dec/a00010_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>g</name></member>
+      <member refid="d7/dec/a00010_a48f56fc575c026028eb2b0ba86a2e5c0_1a48f56fc575c026028eb2b0ba86a2e5c0" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>getAlpha</name></member>
+      <member refid="d7/dec/a00010_aee855a9b5145e1e479d470276a405ef5_1aee855a9b5145e1e479d470276a405ef5" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>getBlue</name></member>
+      <member refid="d7/dec/a00010_a41884a44e13eddd57c14095547e64c41_1a41884a44e13eddd57c14095547e64c41" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>getGreen</name></member>
+      <member refid="d7/dec/a00010_a17499a7e18ab38fc8ebedd3aec808e69_1a17499a7e18ab38fc8ebedd3aec808e69" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>getRed</name></member>
+      <member refid="d7/dec/a00010_abdfddcdc4a6d3a415bd5c690b9c7e703_1abdfddcdc4a6d3a415bd5c690b9c7e703" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>getValues</name></member>
+      <member refid="d7/dec/a00010_ac10a06d41c34ed11ad76e214f0f1cfc5_1ac10a06d41c34ed11ad76e214f0f1cfc5" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>lighten</name></member>
+      <member refid="d7/dec/a00010_a4dbf26330da887dd0fd6a3657ee6b4a1_1a4dbf26330da887dd0fd6a3657ee6b4a1" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>operator!=</name></member>
+      <member refid="d7/dec/a00010_aa7e49c564fdd7c217d649c9924d13337_1aa7e49c564fdd7c217d649c9924d13337" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>operator&lt;</name></member>
+      <member refid="d7/dec/a00010_a2f8bf278208cdcab94c9dd3d7c4a7c5c_1a2f8bf278208cdcab94c9dd3d7c4a7c5c" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>operator&lt;=</name></member>
+      <member refid="d7/dec/a00010_ad5352afe6a77e440f2f6b96282da9283_1ad5352afe6a77e440f2f6b96282da9283" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>operator==</name></member>
+      <member refid="d7/dec/a00010_acf6a1a0175957b7ee2be0272fac2a47d_1acf6a1a0175957b7ee2be0272fac2a47d" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>operator&gt;</name></member>
+      <member refid="d7/dec/a00010_af19275deb60cfd00c4dac9e367031789_1af19275deb60cfd00c4dac9e367031789" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>operator&gt;=</name></member>
+      <member refid="d7/dec/a00010_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>r</name></member>
+      <member refid="d7/dec/a00010_af1cad290fe847c6870bfe5cc51402f48_1af1cad290fe847c6870bfe5cc51402f48" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>setAlpha</name></member>
+      <member refid="d7/dec/a00010_ab1351780822e03e813afa0dc6344ecb2_1ab1351780822e03e813afa0dc6344ecb2" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>setBlue</name></member>
+      <member refid="d7/dec/a00010_a8f4992ffded20025bfe69e9513f53f92_1a8f4992ffded20025bfe69e9513f53f92" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>setGreen</name></member>
+      <member refid="d7/dec/a00010_af4ec1e1b4ae8575cd76ee0ce21802cfd_1af4ec1e1b4ae8575cd76ee0ce21802cfd" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>setRed</name></member>
+      <member refid="d7/dec/a00010_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>setValues</name></member>
+      <member refid="d7/dec/a00010_a807faf5dd4851a9dcd12f675c4781d9c_1a807faf5dd4851a9dcd12f675c4781d9c" prot="public" virt="non-virtual"><scope>mc::Color</scope><name>setValues</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

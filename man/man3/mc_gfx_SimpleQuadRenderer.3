@@ -1,4 +1,4 @@
-.TH "mc::gfx::SimpleQuadRenderer" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::SimpleQuadRenderer" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -28,6 +28,9 @@ mc::gfx::SimpleQuadRenderer \-
 .br
 .ti -1c
 .RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBbind\fP () const "
 .br
 .ti -1c
 .RI "void \fBdraw\fP (const \fBGraphicsEntity\fP *en=nullptr)"
@@ -66,6 +69,20 @@ Definition at line 254 of file Renderer\&.h\&.
 
 .SH "Member Function Documentation"
 .PP 
+.SS "void mc::gfx::SimpleQuadRenderer::bind () const"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::SimpleQuadRenderer::destroy ()"
 
 .PP

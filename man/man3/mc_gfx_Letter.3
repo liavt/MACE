@@ -1,0 +1,1662 @@
+.TH "mc::gfx::Letter" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::Letter \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Entity2D\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Entity2D\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBDIRTY\fP = 6 }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBLetter\fP (const \fBogl::Texture\fP &tex=\fBogl::Texture\fP())"
+.br
+.ti -1c
+.RI "\fB~Letter\fP ()=default"
+.br
+.ti -1c
+.RI "const \fBogl::Texture\fP & \fBgetTexture\fP () const "
+.br
+.ti -1c
+.RI "const \fBSize\fP & \fBgetCharacterWidth\fP () const "
+.br
+.ti -1c
+.RI "const \fBSize\fP & \fBgetCharacterHeight\fP () const "
+.br
+.ti -1c
+.RI "const \fBIndex\fP & \fBgetXBearing\fP () const "
+.br
+.ti -1c
+.RI "const \fBIndex\fP & \fBgetYBearing\fP () const "
+.br
+.ti -1c
+.RI "const \fBIndex\fP & \fBgetXAdvance\fP () const "
+.br
+.ti -1c
+.RI "const \fBIndex\fP & \fBgetYAdvance\fP () const "
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBLetter\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBLetter\fP &other) const "
+.br
+.ti -1c
+.RI "\fBogl::UniformBuffer\fP & \fBgetBuffer\fP ()"
+.br
+.ti -1c
+.RI "const \fBogl::UniformBuffer\fP & \fBgetBuffer\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetBuffer\fP (const \fBogl::UniformBuffer\fP &newBuffer)"
+.br
+.ti -1c
+.RI "void \fBclean\fP () final"
+.br
+.ti -1c
+.RI "void \fBinit\fP () final"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.init()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP () final"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.destroy()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "\fBColor\fP & \fBgetPaint\fP ()"
+.br
+.ti -1c
+.RI "const \fBColor\fP & \fBgetPaint\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetPaint\fP (const \fBColor\fP &c)"
+.br
+.ti -1c
+.RI "float \fBgetOpacity\fP ()"
+.br
+.ti -1c
+.RI "const float \fBgetOpacity\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetOpacity\fP (const float f)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBEntity\fP &other) const  noexcept"
+.br
+.RI "\fICompares if 2 \fCEntities\fP have the same children, parent, and properties\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBEntity\fP &other) const  noexcept"
+.br
+.RI "\fICompares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. \fP"
+.ti -1c
+.RI "const std::vector< \fBEntity\fP * > & \fBgetChildren\fP () const "
+.br
+.RI "\fIGets all of this \fC\fBEntity\fP's\fP children\&. \fP"
+.ti -1c
+.RI "void \fBremoveChild\fP (const \fBEntity\fP &e)"
+.br
+.RI "\fIRemoves a child by reference\&. \fP"
+.ti -1c
+.RI "void \fBremoveChild\fP (\fBIndex\fP index)"
+.br
+.RI "\fIRemoves a child via location\&. \fP"
+.ti -1c
+.RI "bool \fBhasChild\fP (\fBEntity\fP &e) const "
+.br
+.RI "\fIChecks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "void \fBclearChildren\fP ()"
+.br
+.RI "\fIRemoves EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "\fBEntity\fP & \fBoperator[]\fP (\fBIndex\fP i)"
+.br
+.RI "\fIAccess an \fC\fBEntity\fP\fP\&. \fP"
+.ti -1c
+.RI "const \fBEntity\fP & \fBoperator[]\fP (\fBIndex\fP i) const "
+.br
+.RI "\fI\fCconst\fP version of \fBoperator[](Index i)\fP \fP"
+.ti -1c
+.RI "\fBEntity\fP & \fBgetChild\fP (\fBIndex\fP i)"
+.br
+.RI "\fIRetrieves a child at a certain index\&. \fP"
+.ti -1c
+.RI "const \fBEntity\fP & \fBgetChild\fP (\fBIndex\fP i) const "
+.br
+.RI "\fI\fCconst\fP version of \fBgetChild(Index)\fP \fP"
+.ti -1c
+.RI "int \fBindexOf\fP (const \fBEntity\fP &e) const "
+.br
+.RI "\fIFinds the location of an \fC\fBEntity\fP\fP in this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "std::vector< \fBEntity\fP * >::iterator \fBbegin\fP ()"
+.br
+.RI "\fIGets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. \fP"
+.ti -1c
+.RI "std::vector< \fBEntity\fP * >::iterator \fBend\fP ()"
+.br
+.RI "\fIGets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. \fP"
+.ti -1c
+.RI "\fBSize\fP \fBsize\fP () const "
+.br
+.RI "\fICalculates the amount of children this \fC\fBEntity\fP\fP has\&. \fP"
+.ti -1c
+.RI "\fBEntityProperties\fP & \fBgetProperties\fP ()"
+.br
+.RI "\fIRetrieves the \fC\fBEntity\fP's\fP properties as a \fCByteField\fP \fP"
+.ti -1c
+.RI "const \fBEntityProperties\fP & \fBgetProperties\fP () const "
+.br
+.RI "\fI\fCconst\fP version of \fC\fBgetProperties()\fP\fP \fP"
+.ti -1c
+.RI "void \fBsetProperties\fP (\fBEntityProperties\fP &b)"
+.br
+.RI "\fISet the properties for this \fC\fBEntity\fP\fP \fP"
+.ti -1c
+.RI "bool \fBgetProperty\fP (const \fBByte\fP position) const "
+.br
+.RI "\fIRetrieve the value of a property\&. \fP"
+.ti -1c
+.RI "void \fBsetProperty\fP (const \fBByte\fP position, const bool value)"
+.br
+.RI "\fISet a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fC\fBEntity\fP::\fP \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP & \fBgetTransformation\fP ()"
+.br
+.ti -1c
+.RI "const \fBTransformMatrix\fP & \fBgetTransformation\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetTransformation\fP (\fBTransformMatrix\fP &trans)"
+.br
+.ti -1c
+.RI "\fBEntity\fP & \fBtranslate\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "\fBEntity\fP & \fBrotate\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "\fBEntity\fP & \fBscale\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "\fBEntity\fP *const \fBgetParent\fP ()"
+.br
+.RI "\fIRetrieve this \fCEntitys\fP parent `Entity\&. \fP"
+.ti -1c
+.RI "const \fBEntity\fP *const \fBgetParent\fP () const "
+.br
+.RI "\fI\fCconst\fP version of \fC\fBgetParent()\fP\fP \fP"
+.ti -1c
+.RI "bool \fBhasParent\fP () const "
+.br
+.ti -1c
+.RI "void \fBaddChild\fP (\fBEntity\fP &e)"
+.br
+.ti -1c
+.RI "void \fBaddChild\fP (\fBEntity\fP *e)"
+.br
+.ti -1c
+.RI "void \fBaddComponent\fP (\fBComponent\fP *action)"
+.br
+.ti -1c
+.RI "void \fBaddComponent\fP (\fBComponent\fP &action)"
+.br
+.ti -1c
+.RI "std::vector< \fBComponent\fP * > \fBgetComponents\fP ()"
+.br
+.ti -1c
+.RI "float & \fBgetWidth\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetWidth\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetWidth\fP (const float &s)"
+.br
+.ti -1c
+.RI "float & \fBgetHeight\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetHeight\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetHeight\fP (const float &s)"
+.br
+.ti -1c
+.RI "float & \fBgetX\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetX\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetX\fP (const float &newX)"
+.br
+.ti -1c
+.RI "float & \fBgetY\fP ()"
+.br
+.ti -1c
+.RI "const float & \fBgetY\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetY\fP (const float &newY)"
+.br
+.ti -1c
+.RI "\fBEntity\fP * \fBgetRootParent\fP ()"
+.br
+.ti -1c
+.RI "const \fBEntity\fP * \fBgetRootParent\fP () const "
+.br
+.ti -1c
+.RI "void \fBreset\fP ()"
+.br
+.ti -1c
+.RI "void \fBmakeDirty\fP ()"
+.br
+.RI "\fIMakes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBgetProtocol\fP ()"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBonInit\fP () override final"
+.br
+.RI "\fIWhen \fC\fBEntity\&.init()\fP\fP is called, \fC\fBonInit()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "void \fBonUpdate\fP () override final"
+.br
+.RI "\fIWhen \fC\fBEntity\&.update()\fP\fP is called, \fC\fBonUpdate()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "void \fBonRender\fP () override final"
+.br
+.RI "\fIWhen \fC\fBEntity\&.render()\fP\fP is called, \fC\fBonRender()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "void \fBonDestroy\fP () override final"
+.br
+.RI "\fIWhen \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBonDestroy()\fP\fP is called on all of it's children\&. \fP"
+.ti -1c
+.RI "virtual void \fBupdate\fP ()"
+.br
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.update()\fP\fP is called\&. \fP"
+.ti -1c
+.RI "virtual void \fBrender\fP ()"
+.br
+.RI "\fIShould be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. \fP"
+.ti -1c
+.RI "virtual void \fBhover\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBonClean\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBonHover\fP ()"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::vector< \fBEntity\fP * > \fBchildren\fP = std::vector<\fBEntity\fP*>()"
+.br
+.RI "\fI\fCstd::vector\fP of this \fC\fBEntity\fP\\'s\fP children\&. \fP"
+.ti -1c
+.RI "\fBTransformMatrix\fP \fBtransformation\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBRenderProtocol< Letter >\fP"
+.br
+.ti -1c
+.RI "class \fBFont\fP"
+.br
+.ti -1c
+.RI "class \fBText\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 289 of file Entity2D\&.h\&.
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIDEAD \fP\fP
+Bit location representing whether an \fC\fBEntity\fP\fP is dead\&. If \fCtrue,\fP any \fBEntity\fP holding it will remove it and call \fCkill()\fP 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fIUPDATE_DISABLED \fP\fP
+Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCFALSE\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fIRENDER_DISABLED \fP\fP
+Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCfalse\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fIINIT \fP\fP
+Flag representing whether an \fBEntity\fP's \fBinit()\fP function has been called\&. If \fBdestroy()\fP or \fBupdate()\fP is called and this is \fCfalse\fP, an \fCInitializationError\fP is thrown\&. 
+.PP
+If \fBinit()\fP is called and this is \fCtrue\fP, an \fCInitializationError\fP is thrown\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::getProperty(unsigned int) 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_X \fP\fP
+Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_Y\fP 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_Y \fP\fP
+Flag representing whether an \fBEntity\fP's Y position should move when it's parent is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.RE
+.PP
+
+.TP
+\fB\fIDIRTY \fP\fP
+Flag representing whether this \fC\fBEntity\fP\fP is dirty and it's positions needs to be recalculated\&. This will become true under the following conditions:
+.IP "\(bu" 2
+The \fC\fBEntity\fP\fP has been changed\&. Assume that any non-const function other than \fBrender()\fP and \fBupdate()\fP will trigger this condition\&.
+.IP "\(bu" 2
+The window is resized, moved, or created 
+.PP
+.PP
+Other classes that inherit \fC\fBEntity\fP\fP can also set this to true via \fBEntity::setProperty(Byte, bool)\fP 
+.PP
+When an \fC\fBEntity\fP\fP becomes dirty, it will propogate up the tree\&. It's parent will become dirty, it's parent will become dirty, etc\&. This will continue until it reaches the highest level \fC\fBEntity\fP\fP, which is usually the \fCGraphicsContext\fP\&. From there, it will decide what to do based on it's \fC\fBEntity::DIRTY\fP\fP flag\&. 
+.PP
+Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily increasing performance in applications with little moving objects\&. 
+.PP
+Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
+.PP
+Definition at line 107 of file Entity\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::gfx::Letter::Letter (const \fBogl::Texture\fP & tex = \fC\fBogl::Texture\fP()\fP)"
+
+.SS "mc::gfx::Letter::~Letter ()\fC [default]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::Entity::addChild (\fBEntity\fP & e)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::addChild (\fBEntity\fP * e)\fC [inherited]\fP"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::addComponent (\fBComponent\fP * action)\fC [inherited]\fP"
+
+.SS "void mc::gfx::Entity::addComponent (\fBComponent\fP & action)\fC [inherited]\fP"
+
+.PP
+
+.SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::begin ()\fC [inherited]\fP"
+
+.PP
+Gets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Iterator of the first \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBend()\fP 
+.PP
+\fBsize()\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::GraphicsEntity::clean ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Entity::clearChildren ()\fC [inherited]\fP"
+
+.PP
+Removes EVERY \fC\fBEntity\fP\fP from this \fC\fBEntity\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.PP
+\fBsize()\fP 
+.PP
+\fBremoveChild(Index)\fP 
+.PP
+\fBremoveChild(const Entity&)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::GraphicsEntity::destroy ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.destroy()\fP\fP is called\&. Calls \fC\fBonDestroy()\fP\fP\&. Sets \fC\fBEntity::INIT\fP\fP to be false 
+.PP
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonDestroy()\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.br
+\fIInitializationError\fP If the property \fC\fBEntity::INIT\fP\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBmc::gfx::Entity\fP\&.
+.SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::end ()\fC [inherited]\fP"
+
+.PP
+Gets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Iterator of the last \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBbegin()\fP 
+.PP
+\fBsize()\fP 
+.RE
+.PP
+
+.SS "\fBogl::UniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBogl::UniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer () const\fC [inherited]\fP"
+
+.SS "const \fBSize\fP& mc::gfx::Letter::getCharacterHeight () const"
+
+.SS "const \fBSize\fP& mc::gfx::Letter::getCharacterWidth () const"
+
+.SS "\fBEntity\fP& mc::gfx::Entity::getChild (\fBIndex\fP i)\fC [inherited]\fP"
+
+.PP
+Retrieves a child at a certain index\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Index of the \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCi\fP is less than \fC0\fP or greater than \fBsize()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "const \fBEntity\fP& mc::gfx::Entity::getChild (\fBIndex\fP i) const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fBgetChild(Index)\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP \fCIndex\fP of the \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if \fCi\fP is less than \fC0\fP or greater than \fBsize()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "const std::vector<\fBEntity\fP*>& mc::gfx::Entity::getChildren () const\fC [inherited]\fP"
+
+.PP
+Gets all of this \fC\fBEntity\fP's\fP children\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+an \fCstd::vector\fP with all children of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+
+.SS "std::vector<\fBComponent\fP*> mc::gfx::Entity::getComponents ()\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getHeight ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getHeight () const\fC [inherited]\fP"
+
+.SS "float mc::gfx::GraphicsEntity::getOpacity ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const float mc::gfx::GraphicsEntity::getOpacity () const\fC [inherited]\fP"
+
+.SS "\fBColor\fP& mc::gfx::GraphicsEntity::getPaint ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBColor\fP& mc::gfx::GraphicsEntity::getPaint () const\fC [inherited]\fP"
+
+.SS "\fBEntity\fP* const mc::gfx::Entity::getParent ()\fC [inherited]\fP"
+
+.PP
+Retrieve this \fCEntitys\fP parent `Entity\&. \fC @return A\fP\fBEntity\fP\fCwhich contains\fPthis` 
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::hasChild(const Entity&) const; 
+.RE
+.PP
+
+.SS "const \fBEntity\fP* const mc::gfx::Entity::getParent () const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBgetParent()\fP\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+A \fC\fBEntity\fP\fP which contains \fCthis\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+Entity::hasChild(const Entity&) const; 
+.RE
+.PP
+
+.SS "\fBEntityProperties\fP& mc::gfx::Entity::getProperties ()\fC [inherited]\fP"
+
+.PP
+Retrieves the \fC\fBEntity\fP's\fP properties as a \fCByteField\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The current properties belonging to this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties() const\fP 
+.PP
+setProperties(ByteField&) 
+.PP
+getProperty(Index) const 
+.PP
+setProperty(Index, bool) 
+.RE
+.PP
+
+.SS "const \fBEntityProperties\fP& mc::gfx::Entity::getProperties () const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fC\fBgetProperties()\fP\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+The current properties belonging to this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+setProperties(ByteField&) 
+.PP
+getProperty(Index) const 
+.PP
+setProperty(Index, bool) 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::getProperty (const \fBByte\fP position) const\fC [inherited]\fP"
+
+.PP
+Retrieve the value of a property\&. Property consants start with \fC\fBEntity\fP::\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Location of the property based on a constant 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP or \fCfalse\fP based on the postition 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+setProperty(Index, bool) 
+.PP
+\fBgetProperties()\fP 
+.PP
+setProperties(ByteField&) 
+.RE
+.PP
+
+.SS "static int mc::gfx::Letter::getProtocol ()\fC [static]\fP"
+
+.SS "\fBEntity\fP* mc::gfx::Entity::getRootParent ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBEntity\fP* mc::gfx::Entity::getRootParent () const\fC [inherited]\fP"
+
+.SS "const \fBogl::Texture\fP& mc::gfx::Letter::getTexture () const"
+
+.SS "\fBTransformMatrix\fP& mc::gfx::Entity::getTransformation ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBTransformMatrix\fP& mc::gfx::Entity::getTransformation () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getWidth ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getWidth () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getX ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getX () const\fC [inherited]\fP"
+
+.SS "const \fBIndex\fP& mc::gfx::Letter::getXAdvance () const"
+
+.SS "const \fBIndex\fP& mc::gfx::Letter::getXBearing () const"
+
+.SS "float& mc::gfx::Entity::getY ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getY () const\fC [inherited]\fP"
+
+.SS "const \fBIndex\fP& mc::gfx::Letter::getYAdvance () const"
+
+.SS "const \fBIndex\fP& mc::gfx::Letter::getYBearing () const"
+
+.SS "bool mc::gfx::Entity::hasChild (\fBEntity\fP & e) const\fC [inherited]\fP"
+
+.PP
+Checks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP Reference to an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCfalse\fP if this \fC\fBEntity\fP\fP doesn't contain the referenced \fC\fBEntity\fP\fP, \fCtrue\fP otherwise 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBindexOf(const Entity& ) const\fP 
+.RE
+.PP
+
+.SS "bool mc::gfx::Entity::hasParent () const\fC [inherited]\fP"
+
+.SS "virtual void mc::gfx::Entity::hover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "int mc::gfx::Entity::indexOf (const \fBEntity\fP & e) const\fC [inherited]\fP"
+
+.PP
+Finds the location of an \fC\fBEntity\fP\fP in this \fC\fBEntity\fP\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP Reference to an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]\fP 
+.PP
+\fBgetChild(Index)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::GraphicsEntity::init ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.init()\fP\fP is called\&. Calls \fC\fBonInit()\fP\fP 
+.PP
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonInit()\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.br
+\fIInitializationError\fP If the property \fC\fBEntity::INIT\fP\fP is true, meaning \fC\fBinit()\fP\fP has already been called\&. 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Entity::makeDirty ()\fC [inherited]\fP"
+
+.PP
+Makes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. Should be used over \fCsetProperty(Entity::DIRTY,true)\fP as it updaets the root parent\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::Entity::onClean ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::gfx::Text\fP\&.
+.SS "void mc::gfx::Letter::onDestroy ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBonDestroy()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBMACE::destroy()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "virtual void mc::gfx::Entity::onHover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::Letter::onInit ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBonInit()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBMACE::init()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Letter::onRender ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.render()\fP\fP is called, \fC\fBonRender()\fP\fP is called on all of it's children\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "void mc::gfx::Letter::onUpdate ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBonUpdate()\fP\fP is called on all of it's children\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBMACE::update()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Entity\fP\&.
+.SS "bool mc::gfx::Letter::operator!= (const \fBLetter\fP & other) const"
+
+.SS "bool mc::gfx::Entity::operator!= (const \fBEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP An \fC\fBEntity\fP\fP compare this one to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCfalse\fP if they are equal 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties() const\fP 
+.PP
+\fBgetParent() const\fP 
+.PP
+\fBgetChildren() const\fP 
+.PP
+operator== 
+.RE
+.PP
+
+.SS "bool mc::gfx::GraphicsEntity::operator!= (const \fBGraphicsEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
+
+.SS "bool mc::gfx::Letter::operator== (const \fBLetter\fP & other) const"
+
+.SS "bool mc::gfx::Entity::operator== (const \fBEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
+
+.PP
+Compares if 2 \fCEntities\fP have the same children, parent, and properties\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIother\fP An \fC\fBEntity\fP\fP compare this one to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if they are equal 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties() const\fP 
+.PP
+\fBgetParent() const\fP 
+.PP
+\fBgetChildren() const\fP 
+.PP
+operator!= 
+.RE
+.PP
+
+.SS "bool mc::gfx::GraphicsEntity::operator== (const \fBGraphicsEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
+
+.SS "\fBEntity\fP& mc::gfx::Entity::operator[] (\fBIndex\fP i)\fC [inherited]\fP"
+
+.PP
+Access an \fC\fBEntity\fP\fP\&. This is different than \fC\fBgetChild()\fP\fP because \fCoperator[]\fP doesn't do bounds checking\&. Accessing an invalid location will result in a memory error\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Location of an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetChild(Index)\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "const \fBEntity\fP& mc::gfx::Entity::operator[] (\fBIndex\fP i) const\fC [inherited]\fP"
+
+.PP
+\fCconst\fP version of \fBoperator[](Index i)\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP Location of an \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Reference to the \fC\fBEntity\fP\fP located at \fCi\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetChild(Index) const\fP 
+.PP
+\fBindexOf(const Entity&) const\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::removeChild (const \fBEntity\fP & e)\fC [inherited]\fP"
+
+.PP
+Removes a child by reference\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIObjectNotFoundInArray\fP if \fBhasChild(Entity&) const\fP returns \fCfalse\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP Reference to a child 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBremoveChild(Index)\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::removeChild (\fBIndex\fP index)\fC [inherited]\fP"
+
+.PP
+Removes a child via location\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIIndexOutOfBounds\fP if the index is less than 0 or greater than \fBsize()\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIindex\fP Index of the \fC\fBEntity\fP\fP to be removed 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBindexOf(const Entity&) const\fP 
+.PP
+\fBremoveChild(const Entity&)\fP 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::Entity::render ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Should be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonRender()\fP\fP 
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::update()\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::reset ()\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::scale (float x, float y, float z)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::GraphicsEntity::setBuffer (const \fBogl::UniformBuffer\fP & newBuffer)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setHeight (const float & s)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::GraphicsEntity::setOpacity (const float f)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::GraphicsEntity::setPaint (const \fBColor\fP & c)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setProperties (\fBEntityProperties\fP & b)\fC [inherited]\fP"
+
+.PP
+Set the properties for this \fC\fBEntity\fP\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIb\fP New \fC\fBEntity\fP\fP properties 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBgetProperties()\fP 
+.PP
+getProperty(Index) const 
+.PP
+setProperty(Index, bool) 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setProperty (const \fBByte\fP position, const bool value)\fC [inherited]\fP"
+
+.PP
+Set a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fC\fBEntity\fP::\fP 
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposition\fP Location of the property based on a constant 
+.br
+\fIvalue\fP Whether it is \fCtrue\fP or \fCfalse\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+getProperty(Index) const 
+.PP
+\fBgetProperties()\fP 
+.PP
+setProperties(ByteField&) 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setTransformation (\fBTransformMatrix\fP & trans)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setWidth (const float & s)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setX (const float & newX)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setY (const float & newY)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "\fBSize\fP mc::gfx::Entity::size () const\fC [inherited]\fP"
+
+.PP
+Calculates the amount of children this \fC\fBEntity\fP\fP has\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Size of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+
+.SS "\fBEntity\fP& mc::gfx::Entity::translate (float x, float y, float z)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "virtual void mc::gfx::Entity::update ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.update()\fP\fP is called\&. Calls \fC\fBonUpdate()\fP\fP\&. 
+.PP
+Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonUpdate()\fP\fP 
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIInitializationError\fP If the property \fC\fBEntity::INIT\fP\fP is false, meaning \fC\fBinit()\fP\fP was not called\&. 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::os::WindowModule\fP\&.
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "friend class \fBFont\fP\fC [friend]\fP"
+
+.PP
+Definition at line 291 of file Entity2D\&.h\&.
+.SS "friend class \fBRenderProtocol\fP< \fBLetter\fP >\fC [friend]\fP"
+
+.PP
+Definition at line 290 of file Entity2D\&.h\&.
+.SS "friend class \fBText\fP\fC [friend]\fP"
+
+.PP
+Definition at line 292 of file Entity2D\&.h\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+\fCstd::vector\fP of this \fC\fBEntity\fP\\'s\fP children\&. Use of this variable directly is unrecommended\&. Use \fC\fBaddChild()\fP\fP or \fC\fBremoveChild()\fP\fP instead\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Definition at line 563 of file Entity\&.h\&.
+.SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+
+.PP
+Definition at line 568 of file Entity\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

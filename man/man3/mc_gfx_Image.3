@@ -1,4 +1,4 @@
-.TH "mc::gfx::Image" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Image" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,7 +14,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 
 .in +1c
 .ti -1c
-.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBHOVERED\fP = 6, \fBDIRTY\fP = 7 }"
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBDIRTY\fP = 6 }"
 .br
 .in -1c
 .SS "Public Member Functions"
@@ -33,7 +33,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "\fB~Image\fP ()=default"
 .br
 .ti -1c
-.RI "void \fBsetTexture\fP (\fBogl::Texture\fP &tex)"
+.RI "void \fBsetTexture\fP (const \fBogl::Texture\fP &tex)"
 .br
 .ti -1c
 .RI "\fBogl::Texture\fP & \fBgetTexture\fP ()"
@@ -62,11 +62,11 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .ti -1c
 .RI "void \fBinit\fP () final"
 .br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. \fP"
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.init()\fP\fP is called\&. \fP"
 .ti -1c
 .RI "void \fBdestroy\fP () final"
 .br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. \fP"
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.destroy()\fP\fP is called\&. \fP"
 .ti -1c
 .RI "\fBColor\fP & \fBgetPaint\fP ()"
 .br
@@ -204,6 +204,12 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "void \fBaddChild\fP (\fBEntity\fP &e)"
 .br
 .ti -1c
+.RI "void \fBaddChild\fP (\fBEntity\fP *e)"
+.br
+.ti -1c
+.RI "void \fBaddComponent\fP (\fBComponent\fP *action)"
+.br
+.ti -1c
 .RI "void \fBaddComponent\fP (\fBComponent\fP &action)"
 .br
 .ti -1c
@@ -259,6 +265,13 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .br
 .RI "\fIMakes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. \fP"
 .in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBgetProtocol\fP ()"
+.br
+.in -1c
 .SS "Protected Member Functions"
 
 .in +1c
@@ -281,13 +294,19 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .ti -1c
 .RI "virtual void \fBupdate\fP ()"
 .br
-.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. \fP"
+.RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.update()\fP\fP is called\&. \fP"
 .ti -1c
 .RI "virtual void \fBrender\fP ()"
 .br
 .RI "\fIShould be called by a \fC\fBEntity\fP\fP when the graphical \fCWindow\fP clears the frame\&. \fP"
 .ti -1c
+.RI "virtual void \fBhover\fP ()"
+.br
+.ti -1c
 .RI "virtual void \fBonClean\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBonHover\fP ()"
 .br
 .in -1c
 .SS "Protected Attributes"
@@ -310,16 +329,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-
-.PP
-\fBTodo\fP
-.RS 4
-figure out a way to make the protocol globally accessible 
-.RE
-.PP
-
-.PP
-Definition at line 58 of file Entity2D\&.h\&.
+Definition at line 81 of file Entity2D\&.h\&.
 .SH "Member Enumeration Documentation"
 .PP 
 .SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
@@ -339,7 +349,7 @@ Entity::getProperty(unsigned int)
 
 .TP
 \fB\fIUPDATE_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCtrue\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
+Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCFALSE\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -349,7 +359,7 @@ Entity::getProperty(unsigned int)
 
 .TP
 \fB\fIRENDER_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCtrue\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
+Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCfalse\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -381,21 +391,11 @@ Flag representing whether an \fBEntity\fP's X position should move when it's par
 
 .TP
 \fB\fISTRETCH_Y \fP\fP
-Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
+Flag representing whether an \fBEntity\fP's Y position should move when it's parent is resized\&. 
 .PP
 \fBSee also:\fP
 .RS 4
 \fBEntity::STRETCH_X\fP 
-.RE
-.PP
-
-.TP
-\fB\fIHOVERED \fP\fP
-Flag representing whether this \fC\fBEntity\fP\fP has been hovered over\&. The \fC\fBRenderProtocol\fP\fP used to render the \fC\fBEntity\fP\fP must set this\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-ssl::bindEntity(Entity*) 
 .RE
 .PP
 
@@ -416,7 +416,7 @@ Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily 
 .PP
 Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
 .PP
-Definition at line 94 of file Entity\&.h\&.
+Definition at line 107 of file Entity\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::Image::Image ()\fC [noexcept]\fP"
@@ -443,7 +443,27 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
+.SS "void mc::gfx::Entity::addChild (\fBEntity\fP * e)\fC [inherited]\fP"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::addComponent (\fBComponent\fP * action)\fC [inherited]\fP"
+
 .SS "void mc::gfx::Entity::addComponent (\fBComponent\fP & action)\fC [inherited]\fP"
+
+.PP
 
 .SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::begin ()\fC [inherited]\fP"
 
@@ -509,7 +529,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "void mc::gfx::GraphicsEntity::destroy ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.destroy()\fP\fP is called\&. Calls \fC\fBonDestroy()\fP\fP\&. Sets \fC\fBEntity::INIT\fP\fP to be false 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.destroy()\fP\fP is called\&. Calls \fC\fBonDestroy()\fP\fP\&. Sets \fC\fBEntity::INIT\fP\fP to be false 
 .PP
 Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonDestroy()\fP\fP 
 .PP
@@ -793,6 +813,8 @@ setProperties(ByteField&)
 .RE
 .PP
 
+.SS "static int mc::gfx::Image::getProtocol ()\fC [static]\fP"
+
 .SS "\fBEntity\fP* mc::gfx::Entity::getRootParent ()\fC [inherited]\fP"
 
 .PP
@@ -912,6 +934,25 @@ Checks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP
 
 .SS "bool mc::gfx::Entity::hasParent () const\fC [inherited]\fP"
 
+.SS "virtual void mc::gfx::Entity::hover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "int mc::gfx::Entity::indexOf (const \fBEntity\fP & e) const\fC [inherited]\fP"
 
 .PP
@@ -938,7 +979,7 @@ Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP
 .SS "void mc::gfx::GraphicsEntity::init ()\fC [final]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.init()\fP\fP is called\&. Calls \fC\fBonInit()\fP\fP 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.init()\fP\fP is called\&. Calls \fC\fBonInit()\fP\fP 
 .PP
 Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonInit()\fP\fP 
 .PP
@@ -1002,6 +1043,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::gfx::Text\fP\&.
 .SS "void mc::gfx::Image::onDestroy ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
@@ -1009,7 +1052,7 @@ When \fC\fBEntity\&.destroy()\fP\fP is called, \fC\fBonDestroy()\fP\fP is called
 .PP
 \fBSee also:\fP
 .RS 4
-\fBSystem::destroy()\fP 
+\fBMACE::destroy()\fP 
 .RE
 .PP
 \fBWarning:\fP
@@ -1030,6 +1073,25 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::Entity\fP\&.
+.SS "virtual void mc::gfx::Entity::onHover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::Image::onInit ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
@@ -1037,7 +1099,7 @@ When \fC\fBEntity\&.init()\fP\fP is called, \fC\fBonInit()\fP\fP is called on al
 .PP
 \fBSee also:\fP
 .RS 4
-\fBSystem::init()\fP 
+\fBMACE::init()\fP 
 .RE
 .PP
 \fBWarning:\fP
@@ -1088,7 +1150,7 @@ When \fC\fBEntity\&.update()\fP\fP is called, \fC\fBonUpdate()\fP\fP is called o
 .PP
 \fBSee also:\fP
 .RS 4
-\fBSystem::update()\fP 
+\fBMACE::update()\fP 
 .RE
 .PP
 \fBWarning:\fP
@@ -1452,7 +1514,7 @@ setProperties(ByteField&)
 .RE
 .PP
 
-.SS "void mc::gfx::Image::setTexture (\fBogl::Texture\fP & tex)"
+.SS "void mc::gfx::Image::setTexture (const \fBogl::Texture\fP & tex)"
 
 .PP
 \fBNote:\fP
@@ -1550,7 +1612,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "virtual void mc::gfx::Entity::update ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Should be called a by \fC\fBEntity\fP\fP when \fC\fBSystem\&.update()\fP\fP is called\&. Calls \fC\fBonUpdate()\fP\fP\&. 
+Should be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.update()\fP\fP is called\&. Calls \fC\fBonUpdate()\fP\fP\&. 
 .PP
 Overriding this function is dangerous\&. Only do it if you know what you are doing\&. Instead, override \fC\fBonUpdate()\fP\fP 
 .PP
@@ -1567,7 +1629,7 @@ Reimplemented in \fBmc::os::WindowModule\fP\&.
 .SS "friend class \fBRenderProtocol\fP< \fBImage\fP >\fC [friend]\fP"
 
 .PP
-Definition at line 59 of file Entity2D\&.h\&.
+Definition at line 82 of file Entity2D\&.h\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
@@ -1582,7 +1644,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 537 of file Entity\&.h\&.
+Definition at line 563 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1593,7 +1655,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 542 of file Entity\&.h\&.
+Definition at line 568 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

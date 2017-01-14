@@ -1,0 +1,225 @@
+.TH "mc::gfx::FPSComponent" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::gfx::FPSComponent \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Components\&.h>\fP
+.PP
+Inherits \fBmc::gfx::Component\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef void(* \fBTickCallbackPtr\fP) (\fBFPSComponent\fP *, \fBEntity\fP *)"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIndex\fP \fBgetUpdatesPerSecond\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetFramesPerSecond\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetCleansPerSecond\fP () const "
+.br
+.ti -1c
+.RI "\fBIndex\fP \fBgetHoversPerSecond\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetTickCallback\fP (const \fBTickCallbackPtr\fP callback)"
+.br
+.ti -1c
+.RI "\fBTickCallbackPtr\fP \fBgetTickCallback\fP ()"
+.br
+.ti -1c
+.RI "const \fBTickCallbackPtr\fP \fBgetTickCallback\fP () const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP (\fBEntity\fP *e) final"
+.br
+.RI "\fICalled when this \fC\fBComponent\fP\fP is added to the \fC\fBEntity\fP\fP via \fBEntity::addComponent(Component&)\fP\&. \fP"
+.ti -1c
+.RI "bool \fBupdate\fP (\fBEntity\fP *e) final"
+.br
+.RI "\fICalled when \fBEntity::update()\fP is called\&. \fP"
+.ti -1c
+.RI "void \fBrender\fP (\fBEntity\fP *e) final"
+.br
+.ti -1c
+.RI "void \fBclean\fP (\fBEntity\fP *e) final"
+.br
+.RI "\fICalled when \fBEntity::clean()\fP is called and it was dirty\&. \fP"
+.ti -1c
+.RI "void \fBhover\fP (\fBEntity\fP *e) final"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP (\fBEntity\fP *e) final"
+.br
+.RI "\fICalled when \fBEntity::destroy()\fP is called or the \fC\fBComponent\fP\fP is removed via \fBComponent::update(Entity*)\fP, whichever comes first\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 65 of file Components\&.h\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef void(* mc::gfx::FPSComponent::TickCallbackPtr) (\fBFPSComponent\fP *, \fBEntity\fP *)"
+
+.PP
+Definition at line 67 of file Components\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::gfx::FPSComponent::clean (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Called when \fBEntity::clean()\fP is called and it was dirty\&. This is not required for inheritance\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBmc::gfx::Component\fP\&.
+.SS "void mc::gfx::FPSComponent::destroy (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Called when \fBEntity::destroy()\fP is called or the \fC\fBComponent\fP\fP is removed via \fBComponent::update(Entity*)\fP, whichever comes first\&. Once \fBComponent::destroy(Entity*)\fP is called, it is immediately removed from the \fC\fBEntity\fP\fP\&. Required function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Component\fP\&.
+.SS "\fBIndex\fP mc::gfx::FPSComponent::getCleansPerSecond () const"
+
+.SS "\fBIndex\fP mc::gfx::FPSComponent::getFramesPerSecond () const"
+
+.SS "\fBIndex\fP mc::gfx::FPSComponent::getHoversPerSecond () const"
+
+.SS "\fBTickCallbackPtr\fP mc::gfx::FPSComponent::getTickCallback ()"
+
+.SS "const \fBTickCallbackPtr\fP mc::gfx::FPSComponent::getTickCallback () const"
+
+.SS "\fBIndex\fP mc::gfx::FPSComponent::getUpdatesPerSecond () const"
+
+.SS "void mc::gfx::FPSComponent::hover (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBmc::gfx::Component\fP\&.
+.SS "void mc::gfx::FPSComponent::init (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Called when this \fC\fBComponent\fP\fP is added to the \fC\fBEntity\fP\fP via \fBEntity::addComponent(Component&)\fP\&. Required function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This is not called at \fBEntity::init()\fP, instead it is called when the component is added to the \fC\fBEntity\fP\fP\&. Keep that in mind\&. 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Component\fP\&.
+.SS "void mc::gfx::FPSComponent::render (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBmc::gfx::Component\fP\&.
+.SS "void mc::gfx::FPSComponent::setTickCallback (const \fBTickCallbackPtr\fP callback)"
+
+.SS "bool mc::gfx::FPSComponent::update (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Called when \fBEntity::update()\fP is called\&. Required function\&. 
+.PP
+There is no function to remove a \fC\fBComponent\fP\fP so this is the only way for a \fC\fBComponent\fP\fP to be removed from an \fC\fBEntity\fP\fP 
+.PP
+\fBComponent::destroy(Entity*)\fP will be called afterwards\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP The parent \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Whether this \fC\fBComponent\fP\fP should be deleted or not\&. 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Implements \fBmc::gfx::Component\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

@@ -1,8 +1,8 @@
-.TH "mc" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc \- Namespace for everything in MACE\&.  
+mc \- Namespace for everything in \fBMACE\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -17,7 +17,11 @@ mc \- Namespace for everything in MACE\&.
 .ti -1c
 .RI " \fBgfx\fP"
 .br
-.RI "\fINamespace containing classes used for Graphics in MACE\&. \fP"
+.RI "\fINamespace containing classes used for Graphics in \fBMACE\fP\&. \fP"
+.ti -1c
+.RI " \fBMACE\fP"
+.br
+.RI "\fICore class of \fBMACE\fP, managing \fCModules\fP\&. \fP"
 .ti -1c
 .RI " \fBmath\fP"
 .br
@@ -25,15 +29,14 @@ mc \- Namespace for everything in MACE\&.
 .ti -1c
 .RI " \fBos\fP"
 .br
-.RI "\fINamespace with classes related to the operating system like keyboard input, mouse, and windows\&. \fP"
-.ti -1c
-.RI " \fBSystem\fP"
-.br
-.RI "\fICore class of MACE, managing \fCModules\fP\&. \fP"
+.RI "\fINamespace with functions related to the operating system like keyboard input, mouse, and windows\&. \fP"
 .in -1c
 .SS "Classes"
 
 .in +1c
+.ti -1c
+.RI "class \fBAudioModule\fP"
+.br
 .ti -1c
 .RI "struct \fBBitField\fP"
 .br
@@ -45,7 +48,7 @@ mc \- Namespace for everything in MACE\&.
 .ti -1c
 .RI "class \fBException\fP"
 .br
-.RI "\fISuperclass that all exceptions in MACE extend\&. \fP"
+.RI "\fISuperclass that all exceptions in \fBMACE\fP extend\&. \fP"
 .ti -1c
 .RI "class \fBInclude\fP"
 .br
@@ -69,11 +72,14 @@ mc \- Namespace for everything in MACE\&.
 .ti -1c
 .RI "class \fBModule\fP"
 .br
-.RI "\fIAbstract class used for doing a task in MACE\&. \fP"
+.RI "\fIAbstract class used for doing a task in \fBMACE\fP\&. \fP"
 .ti -1c
 .RI "class \fBPreprocessor\fP"
 .br
 .RI "\fICustomizable string preprocessor which follows ANSI-C preprocessor standard\&. \fP"
+.ti -1c
+.RI "class \fBSound\fP"
+.br
 .ti -1c
 .RI "struct \fBTransformMatrix\fP"
 .br
@@ -1329,11 +1335,11 @@ mc \- Namespace for everything in MACE\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Namespace for everything in MACE\&. 
+Namespace for everything in \fBMACE\fP\&. 
 
 This includes constants, typedefs, tests, classes, and variables\&. 
 .PP
-Preproccessor definitions will start with \fCMACE_\fP and \fCMACE_INCLUDED\fP will be defined to equal \fCtrue\fP if MACE is included\&. 
+Preproccessor definitions will start with \fCMACE_\fP and \fCMACE_INCLUDED\fP will be defined to equal \fCtrue\fP if \fBMACE\fP is included\&. 
 .SH "Typedef Documentation"
 .PP 
 .SS "using \fBmc::ArithmeticException\fP = typedef \fBException\fP"
@@ -1341,7 +1347,7 @@ Preproccessor definitions will start with \fCMACE_\fP and \fCMACE_INCLUDED\fP wi
 .PP
 Thrown when something goes wrong while doing math, like dividing by zero\&. 
 .PP
-Definition at line 147 of file Constants\&.h\&.
+Definition at line 155 of file Constants\&.h\&.
 .SS "using \fBmc::AssertionError\fP = typedef \fBException\fP"
 
 .PP
@@ -1349,12 +1355,12 @@ Thrown when an assertion fails\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBSystem::assertModule(std::string)\fP 
+\fBMACE::assertModule(std::string)\fP 
 .RE
 .PP
 
 .PP
-Definition at line 129 of file Constants\&.h\&.
+Definition at line 137 of file Constants\&.h\&.
 .SS "using \fBmc::Byte\fP = typedef std::uint8_t"
 
 .PP
@@ -1373,7 +1379,7 @@ Primitive type guaranteed to be equal to 8 bits (1 byte)\&. The definition here 
 .PP
 
 .PP
-Definition at line 39 of file Constants\&.h\&.
+Definition at line 47 of file Constants\&.h\&.
 .SS "using \fBmc::Enum\fP = typedef unsigned int"
 
 .PP
@@ -1390,7 +1396,7 @@ Type representing an int-based enum (such as GL_* constants)
 .PP
 
 .PP
-Definition at line 88 of file Constants\&.h\&.
+Definition at line 96 of file Constants\&.h\&.
 .SS "using \fBmc::Index\fP = typedef unsigned int"
 
 .PP
@@ -1429,19 +1435,19 @@ getObject(Index)
 .PP
 
 .PP
-Definition at line 81 of file Constants\&.h\&.
+Definition at line 89 of file Constants\&.h\&.
 .SS "using \fBmc::IndexOutOfBoundsException\fP = typedef \fBException\fP"
 
 .PP
 Thrown when an index is provided for an array, but it is outside the valid bounds of the array\&. 
 .PP
-Definition at line 143 of file Constants\&.h\&.
+Definition at line 151 of file Constants\&.h\&.
 .SS "using \fBmc::InitializationError\fP = typedef \fBException\fP"
 
 .PP
 Thrown when an object wasn't initializaed or initializtion failed\&. 
 .PP
-Definition at line 134 of file Constants\&.h\&.
+Definition at line 142 of file Constants\&.h\&.
 .SS "using \fBmc::Matrix1c\fP = typedef \fBMatrix\fP< char, 1, 1 >"
 
 .PP
@@ -2691,13 +2697,13 @@ Definition at line 24 of file Matrix\&.h\&.
 .PP
 Thrown when a pointer is equal to NULL\&. 
 .PP
-Definition at line 122 of file Constants\&.h\&.
+Definition at line 130 of file Constants\&.h\&.
 .SS "using \fBmc::ObjectNotFoundInArrayException\fP = typedef \fBException\fP"
 
 .PP
 Thrown when a function looks for an object, but doesn't find it\&. 
 .PP
-Definition at line 139 of file Constants\&.h\&.
+Definition at line 147 of file Constants\&.h\&.
 .SS "using \fBmc::PreprocessorException\fP = typedef \fBException\fP"
 
 .PP
@@ -2734,7 +2740,7 @@ Size getSize()
 .PP
 
 .PP
-Definition at line 57 of file Constants\&.h\&.
+Definition at line 65 of file Constants\&.h\&.
 .SS "using \fBmc::Vector1c\fP = typedef \fBVector\fP< char, 1 >"
 
 .PP
@@ -3111,7 +3117,7 @@ Type representing a function that returns void and has no arguments\&. Created f
 .PP
 
 .PP
-Definition at line 98 of file Constants\&.h\&.
+Definition at line 106 of file Constants\&.h\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

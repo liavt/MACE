@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::Texture" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::Texture" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -31,7 +31,13 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fICalls the corresponding glDestroy* function and deletes the ID\&. \fP"
 .ti -1c
+.RI "void \fBbindToLocation\fP (const \fBIndex\fP location) const "
+.br
+.ti -1c
 .RI "void \fBsetData\fP (const void *data, const \fBSize\fP width, const \fBSize\fP height, const \fBEnum\fP type=GL_FLOAT, const \fBEnum\fP format=GL_RGB, const \fBEnum\fP internalFormat=GL_RGB, const \fBIndex\fP mipmapLevel=0)"
+.br
+.ti -1c
+.RI "void \fBsetMultisampledData\fP (const \fBSize\fP samples, const \fBSize\fP width, const \fBSize\fP height, const \fBEnum\fP internalFormat, const bool fixedSamples=true)"
 .br
 .ti -1c
 .RI "void \fBloadFile\fP (const char *file)"
@@ -46,7 +52,10 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .RI "void \fBsetTarget\fP (const \fBEnum\fP target)"
 .br
 .ti -1c
-.RI "\fBEnum\fP \fBgetTarget\fP ()"
+.RI "\fBEnum\fP & \fBgetTarget\fP ()"
+.br
+.ti -1c
+.RI "const \fBEnum\fP & \fBgetTarget\fP () const "
 .br
 .ti -1c
 .RI "bool \fBisCreated\fP () const  override"
@@ -103,7 +112,7 @@ https://www.opengl.org/wiki/Texture
 .PP
 
 .PP
-Definition at line 459 of file OGL\&.h\&.
+Definition at line 310 of file OGL\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::ogl::Texture::Texture ()\fC [noexcept]\fP"
@@ -164,6 +173,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.SS "void mc::gfx::ogl::Texture::bindToLocation (const \fBIndex\fP location) const"
+
 .SS "void mc::gfx::ogl::Texture::destroy ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
@@ -215,7 +226,9 @@ The ID represented by this \fC\fBObject\fP\fP
 .RE
 .PP
 
-.SS "\fBEnum\fP mc::gfx::ogl::Texture::getTarget ()"
+.SS "\fBEnum\fP& mc::gfx::ogl::Texture::getTarget ()"
+
+.SS "const \fBEnum\fP& mc::gfx::ogl::Texture::getTarget () const"
 
 .SS "void mc::gfx::ogl::Texture::init ()\fC [override]\fP, \fC [virtual]\fP"
 
@@ -405,6 +418,20 @@ Whether \fCthis\fP and \fCother\fP are the same
 .RS 4
 https://www.opengl.org/wiki/GLAPI/glTexImage2D 
 .RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::Texture::setMultisampledData (const \fBSize\fP samples, const \fBSize\fP width, const \fBSize\fP height, const \fBEnum\fP internalFormat, const bool fixedSamples = \fCtrue\fP)"
+
 .PP
 \fBAttention:\fP
 .RS 4

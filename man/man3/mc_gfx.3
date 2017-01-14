@@ -1,8 +1,8 @@
-.TH "mc::gfx" 3 "Sat Dec 31 2016" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc::gfx \- Namespace containing classes used for Graphics in MACE\&.  
+mc::gfx \- Namespace containing classes used for Graphics in \fBMACE\fP\&.  
 
 .SH SYNOPSIS
 .br
@@ -17,13 +17,13 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .ti -1c
 .RI " \fBssl\fP"
 .br
-.RI "\fIHolds resources for the Standard Shader Library (SSL\&.) SSL makes it easy to interact with MACE entities from shaders through special header files\&. \fP"
+.RI "\fIHolds resources for the Standard Shader Library (SSL\&.) SSL makes it easy to interact with \fBMACE\fP entities from shaders through special header files\&. \fP"
 .in -1c
 .SS "Classes"
 
 .in +1c
 .ti -1c
-.RI "class \fBCallbackEntity\fP"
+.RI "class \fBCallbackComponent\fP"
 .br
 .ti -1c
 .RI "class \fBComponent\fP"
@@ -37,6 +37,12 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "class \fBEntity2D\fP"
 .br
 .ti -1c
+.RI "class \fBFont\fP"
+.br
+.ti -1c
+.RI "class \fBFPSComponent\fP"
+.br
+.ti -1c
 .RI "class \fBGraphicsEntity\fP"
 .br
 .ti -1c
@@ -44,6 +50,12 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .br
 .ti -1c
 .RI "class \fBImage\fP"
+.br
+.ti -1c
+.RI "class \fBLetter\fP"
+.br
+.ti -1c
+.RI "class \fBProgressBar\fP"
 .br
 .ti -1c
 .RI "class \fBRenderer\fP"
@@ -58,7 +70,16 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "class \fBRenderProtocol< Image >\fP"
 .br
 .ti -1c
+.RI "class \fBRenderProtocol< Letter >\fP"
+.br
+.ti -1c
+.RI "class \fBRenderProtocol< ProgressBar >\fP"
+.br
+.ti -1c
 .RI "class \fBSimpleQuadRenderer\fP"
+.br
+.ti -1c
+.RI "class \fBText\fP"
 .br
 .in -1c
 .SS "Typedefs"
@@ -71,16 +92,22 @@ mc::gfx \- Namespace containing classes used for Graphics in MACE\&.
 .RI "using \fBRenderQueue\fP = std::deque< std::pair< \fBIndex\fP, \fBGraphicsEntity\fP * >>"
 .br
 .in -1c
-.SS "Functions"
+.SS "Enumerations"
 
 .in +1c
 .ti -1c
-.RI "int \fBgetImageProtocol\fP ()"
+.RI "enum \fBVerticalAlign\fP : Byte { \fBVerticalAlign::TOP\fP, \fBVerticalAlign::CENTER\fP, \fBVerticalAlign::BOTTOM\fP }"
+.br
+.ti -1c
+.RI "enum \fBHorizontalAlign\fP : Byte { \fBHorizontalAlign::LEFT\fP, \fBHorizontalAlign::CENTER\fP, \fBHorizontalAlign::RIGHT\fP }"
+.br
+.ti -1c
+.RI "enum \fBEaseFunction\fP : Byte { \fBEaseFunction::SINUSOIDAL\fP, \fBEaseFunction::COSINE\fP, \fBEaseFunction::CUBIC\fP, \fBEaseFunction::QUADRATIC\fP, \fBEaseFunction::QUARTIC\fP, \fBEaseFunction::QUINTIC\fP, \fBEaseFunction::SQUARE_ROOT\fP, \fBEaseFunction::CUBE_ROOT\fP, \fBEaseFunction::LINEAR\fP }"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Namespace containing classes used for Graphics in MACE\&. 
+Namespace containing classes used for Graphics in \fBMACE\fP\&. 
 
 
 .PP
@@ -100,10 +127,59 @@ Definition at line 21 of file Entity\&.h\&.
 
 .PP
 Definition at line 27 of file Renderer\&.h\&.
-.SH "Function Documentation"
+.SH "Enumeration Type Documentation"
 .PP 
-.SS "int mc::gfx::getImageProtocol ()"
+.SS "enum \fBmc::gfx::EaseFunction\fP : \fBByte\fP\fC [strong]\fP"
 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISINUSOIDAL \fP\fP
+.TP
+\fB\fICOSINE \fP\fP
+.TP
+\fB\fICUBIC \fP\fP
+.TP
+\fB\fIQUADRATIC \fP\fP
+.TP
+\fB\fIQUARTIC \fP\fP
+.TP
+\fB\fIQUINTIC \fP\fP
+.TP
+\fB\fISQUARE_ROOT \fP\fP
+.TP
+\fB\fICUBE_ROOT \fP\fP
+.TP
+\fB\fILINEAR \fP\fP
+.PP
+Definition at line 34 of file Entity2D\&.h\&.
+.SS "enum \fBmc::gfx::HorizontalAlign\fP : \fBByte\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fILEFT \fP\fP
+.TP
+\fB\fICENTER \fP\fP
+.TP
+\fB\fIRIGHT \fP\fP
+.PP
+Definition at line 28 of file Entity2D\&.h\&.
+.SS "enum \fBmc::gfx::VerticalAlign\fP : \fBByte\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fITOP \fP\fP
+.TP
+\fB\fICENTER \fP\fP
+.TP
+\fB\fIBOTTOM \fP\fP
+.PP
+Definition at line 22 of file Entity2D\&.h\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

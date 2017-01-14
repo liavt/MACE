@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>MACE: LICENSE.md Source File</title>
+<title>MACE: include/MACE/Graphics/Shaders/scene.f.glsl Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('d9/da4/a00078.html','../../');});
+$(document).ready(function(){initNavTree('d9/da4/a00078_source.html','../../');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -99,10 +99,10 @@ $(document).ready(function(){initNavTree('d9/da4/a00078.html','../../');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LICENSE.md</div>  </div>
+<div class="title">scene.f.glsl</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;The MIT License (MIT)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Copyright (c) 2016 Liav Turkia</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;Permission is hereby granted, free of charge, to any person obtaining a copy</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;of this software and associated documentation files (the &quot;Software&quot;), to deal</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;in the Software without restriction, including without limitation the rights</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;copies of the Software, and to permit persons to whom the Software is</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;furnished to do so, subject to the following conditions:</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;The above copyright notice and this permission notice shall be included in all</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;copies or substantial portions of the Software.</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;SOFTWARE.</div></div><!-- fragment --></div><!-- contents -->
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;//when the preprocessor copy and pastes this file, the newlines will be syntax errors. we need to specify that this is a multiline string. if you want syntax highlighting, make sure to configure your editor to ignore this line</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;R&quot;(</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;//FRAGMENT SHADER</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;#version 330 core</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;out vec4 fragColor;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;in lowp vec2 textureCoord;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;uniform lowp sampler2D tex;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;void main(){</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;   fragColor = texture(tex, textureCoord);</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;)&quot;</div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="navpath">
     <!-- id is needed for treeview function! -->

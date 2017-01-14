@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('d7/dec/a00010_a54725c3c089320813539927
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -128,6 +128,15 @@ $(document).ready(function(){initNavTree('d7/dec/a00010_a54725c3c089320813539927
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This is not called at <a class="el" href="../../d2/de7/a00014_a62ce605be3c0681f7f7d1a9b8f60d91c.html#a62ce605be3c0681f7f7d1a9b8f60d91c" title="Should be called a by Entity when System.init() is called. ">Entity::init()</a>, instead it is called when the component is added to the <code><a class="el" href="../../d2/de7/a00014.html" title="Abstract superclass for all graphical objects. ">Entity</a></code>. Keep that in mind. </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If the current thread does not have an OpenGL context </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../d1/d2b/a00018_a7f0c3b9d25af123b7385bc49bd2e7bdd.html#a7f0c3b9d25af123b7385bc49bd2e7bdd">mc::gfx::FPSComponent</a>, and <a class="el" href="../../d4/dee/a00008_a189b8279d1eab734cb93951af25ca42b.html#a189b8279d1eab734cb93951af25ca42b">mc::gfx::CallbackComponent</a>.</p>
 
 </div>
 </div>

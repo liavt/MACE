@@ -1,45 +1,332 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d9/d2e/a00056" kind="file" language="C++">
-    <compoundname>ssl_frag.glsl</compoundname>
+    <compoundname>Constants.h</compoundname>
+    <includes local="no">cstdint</includes>
+    <includes local="no">stdexcept</includes>
+    <includedby refid="d7/df7/a00058" local="no">include/MACE/Core/Module.h</includedby>
+    <includedby refid="d2/d1f/a00083" local="no">include/MACE/Utility/BitField.h</includedby>
+    <includedby refid="d9/dec/a00090" local="no">include/MACE/Utility/Transform.h</includedby>
+    <includedby refid="d1/dc1/a00092" local="no">include/MACE/Utility/Vector.h</includedby>
+    <includedby refid="de/de1/a00065" local="no">include/MACE/Graphics/OGL.h</includedby>
+    <includedby refid="df/d5d/a00084" local="no">include/MACE/Utility/Color.h</includedby>
+    <includedby refid="da/dec/a00080" local="no">include/MACE/Graphics/Window.h</includedby>
+    <includedby refid="db/dab/a00089" local="no">include/MACE/Utility/Preprocessor.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>cstdint</label>
+      </node>
+      <node id="2">
+        <label>stdexcept</label>
+      </node>
+      <node id="0">
+        <label>include/MACE/Core/Constants.h</label>
+        <link refid="Constants.h"/>
+        <childnode refid="1" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="16">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="da/d82/a00091_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>include/MACE/Utility/Audio.h</label>
+        <link refid="d4/d63/a00082_source"/>
+      </node>
+      <node id="23">
+        <label>include/MACE/Utility/Color.h</label>
+        <link refid="df/d5d/a00084_source"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>include/MACE/Core/Module.h</label>
+        <link refid="d7/df7/a00058_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>include/MACE/Graphics/Components.cpp</label>
+        <link refid="d9/d73/a00060_source"/>
+      </node>
+      <node id="7">
+        <label>include/MACE/Graphics/Window.h</label>
+        <link refid="da/dec/a00080_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>include/MACE/MACE.h</label>
+        <link refid="d8/d53/a00081_source"/>
+      </node>
+      <node id="9">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="d9/db3/a00066_source"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>include/MACE/Utility/Matrix.h</label>
+        <link refid="da/d2a/a00086_source"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>include/MACE/Utility/BitField.h</label>
+        <link refid="d2/d1f/a00083_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="df/d5f/a00064_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>include/MACE/Utility/MatrixAliases.h</label>
+        <link refid="db/ddf/a00088_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>include/MACE/Utility/Vector.h</label>
+        <link refid="d1/dc1/a00092_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>include/MACE/Graphics/Components.h</label>
+        <link refid="d4/de8/a00061_source"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>include/MACE/Utility/Preprocessor.h</label>
+        <link refid="db/dab/a00089_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>include/MACE/Utility/Math.h</label>
+        <link refid="df/d13/a00085_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="d1/d6f/a00063_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>include/MACE/Utility/Transform.h</label>
+        <link refid="d9/dec/a00090_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>include/MACE/Core/Constants.h</label>
+        <link refid="Constants.h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>include/MACE/Graphics/OGL.h</label>
+        <link refid="de/de1/a00065_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>include/MACE/Graphics/Entity.h</label>
+        <link refid="df/d03/a00062_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>include/MACE/Core/Core.h</label>
+        <link refid="d1/d22/a00057_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="d4/d51/a00017" prot="public">mc::Exception</innerclass>
+    <innernamespace refid="d9/df8/a00096">mc</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d9/d2e/a00056_a4aa5a353071cad27073125b936c9fa04_1a4aa5a353071cad27073125b936c9fa04" prot="public" static="no">
+        <name>MACE_CORE_CONSTANTS_H</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Core/Constants.h" line="12" column="9" bodyfile="include/MACE/Core/Constants.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="d9/d2e/a00056_a6571a50011ad9f7a55579f6549c3ad9a_1a6571a50011ad9f7a55579f6549c3ad9a" prot="public" static="no">
+        <name>MACE_INCLUDED</name>
+        <initializer>true</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Core/Constants.h" line="14" column="9" bodyfile="include/MACE/Core/Constants.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="d9/d2e/a00056_a6183b5725938b38163f60ec3932dbe32_1a6183b5725938b38163f60ec3932dbe32" prot="public" static="no">
+        <name>MACE_ERROR_CHECK</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Core/Constants.h" line="24" column="10" bodyfile="include/MACE/Core/Constants.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">R&quot;(</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#ifndef<sp/>_SSL_FRAGMENT_LIBRARY_</highlight></codeline>
-<codeline><highlight class="normal">#define<sp/>_SSL_FRAGMENT_LIBRARY_</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_entity&gt;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">layout(location<sp/>=<sp/>0)<sp/>out<sp/>lowp<sp/>vec4<sp/>ssl_OutColor;</highlight></codeline>
-<codeline><highlight class="normal">layout(location<sp/>=<sp/>1)<sp/>out<sp/>uint<sp/>ssl_OutID;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">uniform<sp/>uint<sp/>ssl_EntityID;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">vec4<sp/>ssl_frag_main(void);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">void<sp/>main(void){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>ssl_Color<sp/>=<sp/>ssl_frag_main();</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Color.a<sp/>*=<sp/>ssl_EntityOpacity;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(ssl_Color.a<sp/>==<sp/>0.0){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>discard;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_Color.rgb<sp/>=<sp/>mix(ssl_EntityPaint.rgb,<sp/>ssl_Color.rgb,<sp/>1.0<sp/>-<sp/>ssl_EntityPaint.a);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutColor<sp/>=<sp/>ssl_Color;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutID<sp/>=<sp/>ssl_EntityID;</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">#endif</highlight></codeline>
-<codeline><highlight class="normal">)&quot;</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_CORE_CONSTANTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_CORE_CONSTANTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_INCLUDED<sp/>true<sp/>//this<sp/>will<sp/>be<sp/>true<sp/>if<sp/>MACE<sp/>is<sp/>included</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/><sp/>error<sp/>A<sp/>C++<sp/>compiler<sp/>is<sp/>required!</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!(defined(_WIN32)<sp/>||<sp/>defined(__APPLE__)<sp/>||<sp/>defined(__linux__)<sp/>||<sp/>defined(__unix__)<sp/>||<sp/>defined(_POSIX_VERSION))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(defined(DEBUG))<sp/>||<sp/>(defined(_DEBUG))<sp/>||<sp/>!defined(NDEBUG)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/><sp/>define<sp/>MACE_ERROR_CHECK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(WIN32)<sp/>||<sp/>defined(_WIN32)<sp/>||<sp/>defined(__WIN32)<sp/>&amp;&amp;<sp/>!defined(__CYGWIN__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/><sp/>define<sp/>MACE_WINDOWS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>defined(__linux__)<sp/>||<sp/>defined(_POSIX_SOURCE)<sp/>||<sp/>defined(_POSIX_VERSION)||defined<sp/>(__unix__)<sp/>||<sp/>(defined<sp/>(__APPLE__)<sp/>&amp;&amp;<sp/>defined<sp/>(__MACH__))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/><sp/>define<sp/>MACE_POSIX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/><sp/>warning<sp/>&quot;This<sp/>is<sp/>a<sp/>system<sp/>on<sp/>which<sp/>MACE<sp/>has<sp/>not<sp/>been<sp/>tested<sp/>with.<sp/>MACE<sp/>may<sp/>have<sp/>undefined<sp/>behavior.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;cstdint&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdexcept&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="d9/df8/a00096" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d9/df8/a00096" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="47" refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>=<sp/>std::uint8_t;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref><sp/>=<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref><sp/>=<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int;</highlight></codeline>
+<codeline lineno="96" refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref><sp/>=<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="d9/df8/a00096_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void(*<ref refid="d9/df8/a00096_a6ed6da0ffc775a7b70db23f7079e1e5e_1a6ed6da0ffc775a7b70db23f7079e1e5e" kindref="member">VoidFunctionPtr</ref>)();</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*Exceptions*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="d4/d51/a00017" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d4/d51/a00017" kindref="compound">Exception</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>std::runtime_error<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017_ade8f6ad6be35a21eb897ee7675ae2ace_1ade8f6ad6be35a21eb897ee7675ae2ace" kindref="member">handleException</ref>[[noreturn]](</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::exception&amp;<sp/>e);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/>std::runtime_error::runtime_error;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>()<sp/>noexcept<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d4/d51/a00017_a6d82cc2d8f2acd711796aba34b18349f_1a6d82cc2d8f2acd711796aba34b18349f" kindref="member">~Exception</ref>()<sp/>noexcept<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130" refid="d9/df8/a00096_a4a3cdc4c9ec7d01a918b7870ef055ba4_1a4a3cdc4c9ec7d01a918b7870ef055ba4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017" kindref="compound">NullPointerException</ref><sp/>=<sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="d9/df8/a00096_a7cfecb906ccc653e3771bdb0e04ed08e_1a7cfecb906ccc653e3771bdb0e04ed08e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017" kindref="compound">AssertionError</ref><sp/>=<sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142" refid="d9/df8/a00096_a62745eb304126405d8b1a2f4bd3e199c_1a62745eb304126405d8b1a2f4bd3e199c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017" kindref="compound">InitializationError</ref><sp/>=<sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147" refid="d9/df8/a00096_a424b3a7325c16292feebad2ec20cc340_1a424b3a7325c16292feebad2ec20cc340" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017" kindref="compound">ObjectNotFoundInArrayException</ref><sp/>=<sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>;</highlight></codeline>
+<codeline lineno="151" refid="d9/df8/a00096_abfc1b9ed65cb5e87bb8ec2b189f324c2_1abfc1b9ed65cb5e87bb8ec2b189f324c2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017" kindref="compound">IndexOutOfBoundsException</ref><sp/>=<sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>;</highlight></codeline>
+<codeline lineno="155" refid="d9/df8/a00096_a4b9f139d40a1cc9af7379b6ce1e7b85e_1a4b9f139d40a1cc9af7379b6ce1e7b85e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="d4/d51/a00017" kindref="compound">ArithmeticException</ref><sp/>=<sp/><ref refid="d4/d51/a00017_a46875e8529fc254de8e737bd4fef1561_1a46875e8529fc254de8e737bd4fef1561" kindref="member">Exception</ref>;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/include/ssl_frag.glsl"/>
+    <location file="include/MACE/Core/Constants.h"/>
   </compounddef>
 </doxygen>

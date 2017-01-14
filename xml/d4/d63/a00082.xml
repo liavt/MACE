@@ -1,68 +1,127 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d4/d63/a00082" kind="namespace" language="C++">
-    <compoundname>mc::gfx</compoundname>
-    <innerclass refid="d4/dee/a00008" prot="public">mc::gfx::CallbackEntity</innerclass>
-    <innerclass refid="d7/dec/a00010" prot="public">mc::gfx::Component</innerclass>
-    <innerclass refid="d2/de7/a00014" prot="public">mc::gfx::Entity</innerclass>
-    <innerclass refid="dd/d1b/a00015" prot="public">mc::gfx::Entity2D</innerclass>
-    <innerclass refid="d1/d2b/a00018" prot="public">mc::gfx::GraphicsEntity</innerclass>
-    <innerclass refid="dd/da2/a00019" prot="public">mc::gfx::Group</innerclass>
-    <innerclass refid="db/db2/a00020" prot="public">mc::gfx::Image</innerclass>
-    <innerclass refid="d0/dc0/a00033" prot="public">mc::gfx::Renderer</innerclass>
-    <innerclass refid="db/df3/a00034" prot="public">mc::gfx::RenderImpl</innerclass>
-    <innerclass refid="d4/d8c/a00035" prot="public">mc::gfx::RenderProtocol</innerclass>
-    <innerclass refid="de/d8c/a00036" prot="public">mc::gfx::RenderProtocol&lt; Image &gt;</innerclass>
-    <innerclass refid="d3/de7/a00039" prot="public">mc::gfx::SimpleQuadRenderer</innerclass>
-    <innernamespace refid="d2/d1f/a00083">mc::gfx::ogl</innernamespace>
-    <innernamespace refid="df/d5d/a00084">mc::gfx::ssl</innernamespace>
-      <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="d4/d63/a00082_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" prot="public" static="no">
-        <type><ref refid="de/d21/a00006" kindref="compound">BitField</ref></type>
-        <definition>using mc::gfx::EntityProperties = typedef BitField</definition>
-        <argsstring></argsstring>
-        <name>EntityProperties</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="21" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="21" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="d4/d63/a00082_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" prot="public" static="no">
-        <type>std::deque&lt; std::pair&lt; <ref refid="da/dec/a00080_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref>, <ref refid="d1/d2b/a00018" kindref="compound">GraphicsEntity</ref> * &gt;&gt;</type>
-        <definition>using mc::gfx::RenderQueue = typedef std::deque&lt;std::pair&lt;Index, GraphicsEntity*&gt;&gt;</definition>
-        <argsstring></argsstring>
-        <name>RenderQueue</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="27" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="27" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="d4/d63/a00082_a2b765ca8981771b96825444c204f4973_1a2b765ca8981771b96825444c204f4973" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::getImageProtocol</definition>
-        <argsstring>()</argsstring>
-        <name>getImageProtocol</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity2D.h" line="53" column="1"/>
-      </memberdef>
-      </sectiondef>
+  <compounddef id="d4/d63/a00082" kind="file" language="C++">
+    <compoundname>Audio.h</compoundname>
+    <includes refid="d7/df7/a00058" local="no">MACE/Core/Module.h</includes>
+    <includes refid="d2/d1f/a00083" local="no">MACE/Utility/BitField.h</includes>
+    <includes local="no">vector</includes>
+    <incdepgraph>
+      <node id="289">
+        <label>include/MACE/Utility/Audio.h</label>
+        <link refid="Audio.h"/>
+        <childnode refid="290" relation="include">
+        </childnode>
+        <childnode refid="295" relation="include">
+        </childnode>
+        <childnode refid="297" relation="include">
+        </childnode>
+      </node>
+      <node id="292">
+        <label>cstdint</label>
+      </node>
+      <node id="290">
+        <label>MACE/Core/Module.h</label>
+        <link refid="d7/df7/a00058_source"/>
+        <childnode refid="291" relation="include">
+        </childnode>
+        <childnode refid="294" relation="include">
+        </childnode>
+      </node>
+      <node id="293">
+        <label>stdexcept</label>
+      </node>
+      <node id="294">
+        <label>string</label>
+      </node>
+      <node id="295">
+        <label>MACE/Utility/BitField.h</label>
+        <link refid="d2/d1f/a00083_source"/>
+        <childnode refid="291" relation="include">
+        </childnode>
+        <childnode refid="296" relation="include">
+        </childnode>
+      </node>
+      <node id="296">
+        <label>ostream</label>
+      </node>
+      <node id="297">
+        <label>vector</label>
+      </node>
+      <node id="291">
+        <label>MACE/Core/Constants.h</label>
+        <link refid="d9/d2e/a00056_source"/>
+        <childnode refid="292" relation="include">
+        </childnode>
+        <childnode refid="293" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="d6/d2d/a00047" prot="public">mc::Sound</innerclass>
+    <innerclass refid="de/d21/a00006" prot="public">mc::AudioModule</innerclass>
+    <innernamespace refid="d9/df8/a00096">mc</innernamespace>
     <briefdescription>
-<para>Namespace containing classes used for Graphics in MACE. </para>    </briefdescription>
+    </briefdescription>
     <detaileddescription>
-<para><xrefsect id="d7/d46/a00002_1_bug000001"><xreftitle>Bug</xreftitle><xrefdescription><para>Crashes after some time on NVIDIA gpus </para></xrefdescription></xrefsect></para>    </detaileddescription>
-    <location file="include/MACE/Graphics/Components.h" line="17" column="1"/>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia<sp/>and<sp/>Shahar<sp/>Sandhaus</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_AUDIO_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_AUDIO_H<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Core/Module.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Utility/BitField.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;vector&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d9/df8/a00096" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="20" refid="d6/d2d/a00047" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="d6/d2d/a00047" kindref="compound">Sound</ref><sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="22" refid="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11" kindref="member">Properties</ref>:<sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>{</highlight></codeline>
+<codeline lineno="23" refid="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d" kindref="member">LOOPING</ref></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_af33d4338287d9d32de4afed352fbf4ae_1af33d4338287d9d32de4afed352fbf4ae" kindref="member">init</ref>();</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a595bb512e1176165389897728366769c_1a595bb512e1176165389897728366769c" kindref="member">destroy</ref>();</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a905a92f2df21a6144e8ff3fce340f0be_1a905a92f2df21a6144e8ff3fce340f0be" kindref="member">getProperty</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>param)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_afb381c80dda4973445cefefa59746a5c_1afb381c80dda4973445cefefa59746a5c" kindref="member">setProperty</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>param,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a708f0a746ff19ec7d548dae3056a30b2_1a708f0a746ff19ec7d548dae3056a30b2" kindref="member">setLooping</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>val);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a71120a75bdd0f0f0c257bf8d02bd1891_1a71120a75bdd0f0f0c257bf8d02bd1891" kindref="member">isLooping</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a042bbb3fe90c6e62c757daa48f5adef3_1a042bbb3fe90c6e62c757daa48f5adef3" kindref="member">setProperties</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="de/d5e/a00007" kindref="compound">BitField</ref>&amp;<sp/>b);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="de/d5e/a00007" kindref="compound">BitField</ref>&amp;<sp/><ref refid="d6/d2d/a00047_a3b8ee4aa8d3b86a3746480dbba30e408_1a3b8ee4aa8d3b86a3746480dbba30e408" kindref="member">getProperties</ref>();</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="de/d5e/a00007" kindref="compound">BitField</ref>&amp;<sp/><ref refid="d6/d2d/a00047_a3b8ee4aa8d3b86a3746480dbba30e408_1a3b8ee4aa8d3b86a3746480dbba30e408" kindref="member">getProperties</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="de/d5e/a00007" kindref="compound">BitField</ref><sp/>properties;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Sound</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="de/d21/a00006" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="de/d21/a00006" kindref="compound">AudioModule</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="d5/d79/a00030" kindref="compound">Module</ref><sp/>{</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_af33d4338287d9d32de4afed352fbf4ae_1af33d4338287d9d32de4afed352fbf4ae" kindref="member">init</ref>()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>update()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d6/d2d/a00047_a595bb512e1176165389897728366769c_1a595bb512e1176165389897728366769c" kindref="member">destroy</ref>()<sp/></highlight><highlight class="keyword">override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::string<sp/>getName()<sp/></highlight><highlight class="keyword">const<sp/>override</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>addSound(<ref refid="d6/d2d/a00047" kindref="compound">Sound</ref>&amp;<sp/>s);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::vector&lt;Sound&gt;&amp;<sp/>getSounds()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::vector&lt;Sound&gt;<sp/>sounds<sp/>=<sp/>std::vector&lt;Sound&gt;();</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//AudioModule</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal">};</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#endif//MACE_ULITITY_AUDIO_H</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Utility/Audio.h"/>
   </compounddef>
 </doxygen>
