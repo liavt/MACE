@@ -37,7 +37,7 @@ namespace mc {
 			std::wstring toWideString(const std::string & s) {
 				const char * cs = s.c_str();
 				std::size_t wn;
-				mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
+				wn = *mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
 				if( wn == std::size_t(-1) ) {
 					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
@@ -46,7 +46,7 @@ namespace mc {
 
 				std::vector<wchar_t> buf(wn + 1);
 				std::size_t wn_again;
-				mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
+				wn = *mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
 
 				if( wn_again == std::size_t(-1) ) {
 					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;

@@ -13,93 +13,78 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace os {
-		void localtime(std::tm * pointer, const std::time_t * time) {
+		std::tm* localtime(std::tm * pointer, const std::time_t * time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = localtime_s(pointer, time) ) {
 				throw AssertionError("localtime_s errored with code " + std::to_string(status));
 			}
+
+			return pointer;
 #elif defined(MACE_POSIX)
 			localtime_r(time, pointer);
 #else
 			//fallback to the built in localtime, which isn't thread safe
-			*pointer = *std::localtime(time);
-
-			if( pointer == nullptr ) {
-				throw NullPointerException("localtime returned a nullptr");
-			}
+			return std::localtime(time);
 #endif
 		}
 
-		void gmtime(std::tm * pointer, const std::time_t * time) {
+		std::tm* gmtime(std::tm * pointer, const std::time_t * time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = gmtime_s(pointer, time) ) {
 				throw AssertionError("gmtime_s errored with code " + std::to_string(status));
 			}
+
+			return pointer;
 #elif defined(MACE_POSIX)
 			gmtime_r(time, pointer);
 
 			if( pointer == nullptr ) {
 				throw NullPointerException("gmtime_r returned a nullptr");
 			}
-#else
-			*pointer = *std::gmtime(time);
 
-			if( pointer == nullptr ) {
-				throw NullPointerException("gmtime returned a nullptr");
-			}
+			return pointer;
+#else
+			return std::gmtime(time);
 #endif
 		}
 
-		void ctime(char* buffer, rsize_t bufSize, const std::time_t* time) {
+		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = ctime_s(buffer, bufSize, time) ) {
 				throw AssertionError("ctime_s errored with code " + std::to_string(status));
 			}
+
+			return buffer;
 #elif defined(MACE_POSIX)
-			*buffer = ctime_r(buffer, time);
-
-			if( buffer == nullptr ) {
-				throw NullPointerException("ctime_r returned a nullptr");
-			}
+			return ctime_r(time, buffer);
 #else
-			*buffer = *std::ctime(time);
-
-			if( buffer == nullptr ) {
-				throw NullPointerException("ctime returned a nullptr");
-			}
+			return std::ctime(time);
 #endif
 		}
-		void asctime(char* buffer, std::size_t bufSize, const std::tm* time) {
+
+		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = asctime_s(buffer, bufSize, time) ) {
 				throw AssertionError("asctime_s errored with code " + std::to_string(status));
 			}
+
+			return buffer;
 #elif defined(MACE_POSIX)
-			*buffer = asctime_r(time, buffer);
-
-			if( buffer == nullptr ) {
-				throw NullPointerException("asctime_r returned a nullptr");
-			}
+			return asctime_r(time, buffer);
 #else
-			*buffer = *std::asctime(time);
-
-			if( buffer == nullptr ) {
-				throw NullPointerException("asctime returned a nullptr");
-			}
+			return std::asctime(time);
 #endif
 		}
 
-		void mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
+		std::size_t* mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate) ) {
 				throw AssertionError("asctime_s errored with code " + std::to_string(status));
 			}
-#else
-			*returnValue = std::mbsrtowcs(wcstr, mbstr, count, mbstate);
 
-			if( returnValue == nullptr ) {
-				throw NullPointerException("mbsrtowcs returned a nullptr");
-			}
+			return returnValue;
+#else
+			return std::mbsrtowcs(wcstr, mbstr, count, mbstate);
 #endif
 		}
 		void assert(const bool cond, const std::string & message) {

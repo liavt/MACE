@@ -892,7 +892,7 @@ namespace mc {
 			std::time_t time = std::time(0);
 			std::tm timeStruct;
 
-			os::localtime(&timeStruct, &time);
+			timeStruct = *os::localtime(&timeStruct, &time);
 
 			char buffer[20];
 

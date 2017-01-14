@@ -25,12 +25,12 @@ namespace mc {
 	@todo Add function for pausing the console
 	*/
 	namespace os {
-		void localtime(std::tm* result, const std::time_t* time);
-		void gmtime(std::tm* result, const std::time_t* time);
-		void ctime(char* buffer, rsize_t bufSize, const std::time_t* time);
-		void asctime(char* buffer, std::size_t bufSize, const std::tm* time);
+		std::tm* localtime(std::tm* result, const std::time_t* time);
+		std::tm* gmtime(std::tm* result, const std::time_t* time);
+		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time);
+		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time);
 
-		void mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
+		std::size_t* mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
 
 		void assert(const bool cond, const std::string& message);
 		void assert(const bool cond, const char* message = "Assertion failed");

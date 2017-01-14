@@ -26,7 +26,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #	define MACE_WINDOWS
-#elif defined(__linux__) || defined(_POSIX_VERSION)||defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+#elif defined(__linux__) || defined(_POSIX_SOURCE) || (defined(_POSIX_VERSION)||defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
 #	define MACE_POSIX
 #else
 #	warning "This is a system on which MACE has not been tested with. MACE may have undefined behavior."
