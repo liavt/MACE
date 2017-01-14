@@ -132,7 +132,7 @@ namespace mc {
 
 	/**
 	Thrown when an assertion fails.
-	@see System#assertModule(std::string)
+	@see MACE#assertModule(std::string)
 	*/
 	using AssertionError = Exception;
 

@@ -69,19 +69,19 @@ int main() {
 
 		module.addChild(group);
 
-		System::addModule(module);
+		MACE::addModule(module);
 
 		module.setCreationCallback(&create);
 
-		mc::System::init();
+		mc::MACE::init();
 
-		while( mc::System::isRunning() ) {
-			mc::System::update();
+		while( mc::MACE::isRunning() ) {
+			mc::MACE::update();
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(33));
 		}
 
-		mc::System::destroy();
+		mc::MACE::destroy();
 	} catch( const std::exception& e ) {
 		Exception::handleException(e);
 		return -1;

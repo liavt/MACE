@@ -762,6 +762,9 @@ namespace mc {
 				addChild(letters);
 			}
 
+			const float origWidth = static_cast<const float>(Renderer::getOriginalWidth()),
+						origHeight = static_cast<const float>(Renderer::getOriginalHeight());
+
 			float x = 0, y = 0;
 
 			float width = 0, height = 0;
@@ -772,7 +775,7 @@ namespace mc {
 						width = x;
 					}
 
-					y += static_cast<float>(font.getSize() << 1) / Renderer::getOriginalHeight();
+					y += static_cast<float>(font.getSize() << 1) / origHeight;
 
 					if( y > height ) {
 						height = y;
@@ -784,22 +787,22 @@ namespace mc {
 					font.getCharacter(text[i], let);
 
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-					let->setWidth(static_cast<float>(let->width) / Renderer::getOriginalWidth());
-					let->setHeight(static_cast<float>(let->height) / Renderer::getOriginalHeight());
+					let->setWidth(static_cast<float>(let->width) / origWidth);
+					let->setHeight(static_cast<float>(let->height) / origHeight);
 
 					//i cant bear this
-					let->setX(x + (static_cast<float>(let->bearingX) / Renderer::getOriginalWidth()));
-					let->setY(y + (static_cast<float>(let->getHeight() - (let->bearingY)) / Renderer::getOriginalHeight()));
+					let->setX(x + (static_cast<float>(let->bearingX) / origWidth));
+					let->setY(y + (static_cast<float>((let->getHeight()) - (let->bearingY)) / origHeight));
 
 					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
-					x += static_cast<float>((let->advanceX) + let->width) / Renderer::getOriginalWidth();
-					y += static_cast<float>(let->advanceY) / Renderer::getOriginalHeight();
+					x += static_cast<float>((let->advanceX) + let->width) / origWidth;
+					y += static_cast<float>(let->advanceY) / origHeight;
 
 					letters.addChild(let);
 				}
 			}
 
-			y += static_cast<float>(font.getSize() << 1) / Renderer::getOriginalHeight();
+			y += static_cast<float>(font.getSize() << 1) / origHeight;
 
 			width = x;
 			height = y;

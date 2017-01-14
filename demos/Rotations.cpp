@@ -100,7 +100,7 @@ int main() {
 		module.setFPS(30);
 		module.setVSync(false);
 
-		System::addModule(module);
+		MACE::addModule(module);
 
 		botLeft.setWidth(0.5f);
 		botRight.setWidth(0.5f);
@@ -142,10 +142,10 @@ int main() {
 
 		module.setCreationCallback(&create);
 
-		mc::System::init();
+		mc::MACE::init();
 
-		while( mc::System::isRunning() ) {
-			mc::System::update();
+		while( mc::MACE::isRunning() ) {
+			mc::MACE::update();
 
 			if( os::Input::isKeyDown(os::Input::SPACE) || os::Input::isKeyRepeated(os::Input::SPACE) ) {
 				rotating = true;
@@ -156,7 +156,7 @@ int main() {
 			std::this_thread::sleep_for(std::chrono::milliseconds(33));
 		}
 
-		mc::System::destroy();
+		mc::MACE::destroy();
 	} catch( const std::exception& e ) {
 		Exception::handleException(e);
 		return -1;

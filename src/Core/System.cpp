@@ -84,11 +84,13 @@ namespace mc {
 
 			return returnValue;
 #else
-			return std::mbsrtowcs(wcstr, mbstr, count, mbstate);
+			return &std::mbsrtowcs(wcstr, mbstr, count, mbstate);
 #endif
 		}
 		void assert(const bool cond, const std::string & message) {
+#ifdef MACE_ERROR_CHECK
 			assert(cond, message.c_str());
+#endif
 		}
 		void assert(const bool cond, const char * message) {
 #ifdef MACE_ERROR_CHECK

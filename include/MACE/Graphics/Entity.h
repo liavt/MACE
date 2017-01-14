@@ -100,7 +100,6 @@ namespace mc {
 		@see GraphicsEntity
 		@see Entity2D
 		@see Component
-		@todo Events for hover for both Entity and Component
 		*/
 		class Entity {
 		public:
@@ -477,14 +476,14 @@ namespace mc {
 			void makeDirty();
 		protected:
 			/**
-			Should be called a by `Entity` when `System.update()` is called. Calls `onUpdate()`.
+			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onUpdate()`
 			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
 			*/
 			virtual void update();
 			/**
-			Should be called a by `Entity` when `System.init()` is called. Calls `onInit()`
+			Should be called a by `Entity` when `MACE.init()` is called. Calls `onInit()`
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onInit()`
 			@dirty
@@ -493,7 +492,7 @@ namespace mc {
 			*/
 			virtual void init();
 			/**
-			Should be called a by `Entity` when `System.destroy()` is called. Calls `onDestroy()`. Sets `Entity::INIT` to be false
+			Should be called a by `Entity` when `MACE.destroy()` is called. Calls `onDestroy()`. Sets `Entity::INIT` to be false
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onDestroy()`
 			@dirty
@@ -519,20 +518,20 @@ namespace mc {
 
 			/**
 			When `Entity.update()` is called, `onUpdate()` is called on all of it's children.
-			@see System#update()
+			@see MACE#update()
 			@internal
 			*/
 			virtual void onUpdate() = 0;
 			/**
 			When `Entity.init()` is called, `onInit()` is called on all of it's children.
-			@see System#init()
+			@see MACE#init()
 			@internal
 			@opengl
 			*/
 			virtual void onInit() = 0;
 			/**
 			When `Entity.destroy()` is called, `onDestroy()` is called on all of it's children.
-			@see System#destroy()
+			@see MACE#destroy()
 			@internal
 			@opengl
 			*/

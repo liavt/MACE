@@ -91,7 +91,7 @@ namespace mc {
 			auto closeCallback = [] (GLFWwindow* window) {
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 
-				mc::System::requestStop();
+				mc::MACE::requestStop();
 			};
 			glfwSetWindowCloseCallback(window, closeCallback);
 
@@ -211,11 +211,11 @@ namespace mc {
 				Exception::handleException(e);
 			} catch( ... ) {
 				std::cerr << "An error has occured";
-				System::requestStop();
+				MACE::requestStop();
 			}
 
 			//this is the main rendering loop.
-			//we loop infinitely until break is called. break is called when an exception is thrown or System::isRunning is false
+			//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
 			for( ;;) {//( ;_;)
 				try {
 
@@ -235,8 +235,8 @@ namespace mc {
 
 						//	gfx::Renderer::checkInput();
 
-						if( !System::isRunning() ) {
-							break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
+						if( !MACE::isRunning() ) {
+							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 						}
 
 					}
@@ -254,7 +254,7 @@ namespace mc {
 					break;
 				} catch( ... ) {
 					std::cerr << "An error has occured";
-					System::requestStop();
+					MACE::requestStop();
 					break;
 				}
 			}
@@ -271,7 +271,7 @@ namespace mc {
 					Exception::handleException(e);
 				} catch( ... ) {
 					std::cerr << "An error has occured";
-					System::requestStop();
+					MACE::requestStop();
 				}
 			}
 

@@ -17,12 +17,12 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	/**
-	Abstract class used for doing a task in MACE. Plugged into {@link System} via {@link System#addModule(Module&) addModule().}
+	Abstract class used for doing a task in MACE. Plugged into {@link MACE} via {@link MACE#addModule(Module&) addModule().}
 	*/
 	class Module {
 	public:
 		/**
-		Called when {@link System#init} is called and this `Module` is registered.
+		Called when {@link MACE#init} is called and this `Module` is registered.
 		<p>
 		Use this to initialize variables, start streams, or launch a context.
 		<p>
@@ -30,13 +30,13 @@ namespace mc {
 		*/
 		virtual void init() = 0;
 		/**
-		Called when {@link System#update} is called and this `Module` is registered.
+		Called when {@link MACE#update} is called and this `Module` is registered.
 		<p>
 		Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked.
 		*/
 		virtual void update() = 0;
 		/**
-		Called when {@link System#destroy} is called and this `Module` is registered.
+		Called when {@link MACE#destroy} is called and this `Module` is registered.
 		<p>
 		Use this to clear memory, close streams, or clean up anything that needs to be cleaned up.
 		<p>
@@ -65,28 +65,28 @@ namespace mc {
 
 	//add modules that you need
 
-	mc::System::init();
+	mc::MACE::init();
 
-	while(mc::System::isRunning()){
-		mc::System::update();
+	while(mc::MACE::isRunning()){
+		mc::MACE::update();
 	}
 
-	mc::System::destroy();
+	mc::MACE::destroy();
 
 	}
 	*/
-	namespace System {
+	namespace MACE {
 		enum Flags: Byte{
 			/**
-			Parameter for `System.getFlag(const Byte)`. Is `true` if `System.init()` has been called.
+			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.init()` has been called.
 			*/
 			INIT = 0,
 			/**
-			Parameter for `System.getFlag(const Byte)`. Is `true` if `System.destroy()` has been called.
+			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.destroy()` has been called.
 			*/
 			DESTROYED = 1,
 			/**
-			Parameter for `System.getFlag(const Byte)`. Is `true` if `System.requestStop()` has been called.
+			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.requestStop()` has been called.
 			*/
 			STOP_REQUESTED = 2
 		};
@@ -94,7 +94,7 @@ namespace mc {
 		/**
 		Register a {@link Module}.
 		<p>
-		Registered `Modules` will have `update(), init(),` and `destroy()` are respectivaly called when `System.update(), System.init(),` and `System.destroy()` are called.
+		Registered `Modules` will have `update(), init(),` and `destroy()` are respectivaly called when `MACE.update(), MACE.init(),` and `MACE.destroy()` are called.
 		@param m Reference to a `Module.` If the `Module` referenced leaves scope or gets deallocated, a `read access violation will occur.`
 		@return Location of the `Module` in the buffer. This index can be used in various other methods.
 		*/
@@ -150,7 +150,7 @@ namespace mc {
 		*/
 		bool moduleExists(const Module* module);
 		/**
-		Retrieves the amount of `Module` currently being updated by `System`
+		Retrieves the amount of `Module` currently being updated by `MACE`
 		@return `Size` of the internal `Module` buffer
 		*/
 		Size numberOfModules();
@@ -194,7 +194,7 @@ namespace mc {
 		<p>
 		Should be called at the start of the program.
 		@see #addModule(Module&)
-		@see System for an optimal main loop
+		@see MACE for an optimal main loop
 		*/
 		void init();
 		/**
@@ -204,38 +204,38 @@ namespace mc {
 		@return `true` if it updated succesfully. `false` if an error occurred, or a close has been requested from a `Module`. When this returns `false`, you should end the main loop and call `destroy()`
 		@throw InitializationError if `init()` has not been called yet or `destroy()` has been called.
 		@see #addModule(Module&)
-		@see System for an optimal main loop
+		@see MACE for an optimal main loop
 		*/
 		void update();
 		/**
 		Destroys MACE and calls {@link Module#destroy() destroy()} on all registered `Modules.`
 		<p>
-		Should be called at the end of the program after `System.isRunning()` is `false`
+		Should be called at the end of the program after `MACE.isRunning()` is `false`
 		@throw InitializationError if `init()` has not been called yet
 		@see #addModule(Module&)
-		@see System for an optimal main loop
+		@see MACE for an optimal main loop
 		*/
 		void destroy();
 
 		/**
-		Checks whether the `System` is ready to be updated. `init()` must have been called and `destroy()` must not have been called. Additionally, if `shouldStop()` is `true`, this function also returns `false`.
+		Checks whether the `MACE` is ready to be updated. `init()` must have been called and `destroy()` must not have been called. Additionally, if `shouldStop()` is `true`, this function also returns `false`.
 		@return If `update()` should be called. If this returns `false`, you should exit the main loop and call `destroy()`
 		@see requestStop()
-		@see System for an optimal main loop
+		@see MACE for an optimal main loop
 		*/
 		bool isRunning();
 
 		/**
-		Tell the `System` to destroy. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
-		@see System for an optimal main loop
+		Tell the `MACE` to destroy. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
+		@see MACE for an optimal main loop
 		*/
 		void requestStop();
 
 		/**
-		Retrieve an internal flag about the current state of the `System`.
+		Retrieve an internal flag about the current state of the `MACE`.
 		<p>
 		Example usage:{@code
-			mc::System::getFlag(SYSTEM_FLAG_INIT);//get whether init() has been called
+			mc::MACE::getFlag(SYSTEM_FLAG_INIT);//get whether init() has been called
 		}
 		@param flag Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
 		@return Whether the specified flag is `true`
@@ -243,7 +243,7 @@ namespace mc {
 		bool getFlag(const Byte flag);
 
 		/**
-		"Resets" the `System` to its default state. `Modules` are cleared, and all flags are set to 0.
+		"Resets" the `MACE` to its default state. `Modules` are cleared, and all flags are set to 0.
 		*/
 		void reset();
 	};

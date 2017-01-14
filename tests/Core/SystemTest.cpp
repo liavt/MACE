@@ -35,53 +35,53 @@ namespace mc {
 	};
 
 	TEST_CASE("Testing reset() and numberOfModules()") {
-		System::reset();
+		MACE::reset();
 
 
-		REQUIRE(System::numberOfModules() == 0);
+		REQUIRE(MACE::numberOfModules() == 0);
 
 		TestModule m = TestModule();
 		TestModule m1 = TestModule();
 		TestModule m2 = TestModule();
 
-		System::addModule(m);
+		MACE::addModule(m);
 
 		SECTION("Testing with 1 module") {
-			REQUIRE(System::moduleExists(&m));
-			REQUIRE_FALSE(System::moduleExists(&m1));
-			REQUIRE_FALSE(System::moduleExists(&m2));
-			REQUIRE(System::numberOfModules() == 1);
+			REQUIRE(MACE::moduleExists(&m));
+			REQUIRE_FALSE(MACE::moduleExists(&m1));
+			REQUIRE_FALSE(MACE::moduleExists(&m2));
+			REQUIRE(MACE::numberOfModules() == 1);
 		}
 
-		System::addModule(m1);
+		MACE::addModule(m1);
 
 		SECTION("Testing with 2 modules") {
-			REQUIRE(System::moduleExists(&m));
-			REQUIRE(System::moduleExists(&m1));
-			REQUIRE_FALSE(System::moduleExists(&m2));
-			REQUIRE(System::numberOfModules() == 2);
+			REQUIRE(MACE::moduleExists(&m));
+			REQUIRE(MACE::moduleExists(&m1));
+			REQUIRE_FALSE(MACE::moduleExists(&m2));
+			REQUIRE(MACE::numberOfModules() == 2);
 		}
 
-		System::addModule(m2);
+		MACE::addModule(m2);
 
 		SECTION("Testing with 3 modules") {
-			REQUIRE(System::moduleExists(&m));
-			REQUIRE(System::moduleExists(&m1));
-			REQUIRE(System::moduleExists(&m2));
-			REQUIRE(System::numberOfModules() == 3);
+			REQUIRE(MACE::moduleExists(&m));
+			REQUIRE(MACE::moduleExists(&m1));
+			REQUIRE(MACE::moduleExists(&m2));
+			REQUIRE(MACE::numberOfModules() == 3);
 		}
 
-		System::reset();
+		MACE::reset();
 
 		SECTION("Testing reset()") {
-			REQUIRE(System::numberOfModules() == 0);
-			REQUIRE_FALSE(System::moduleExists(&m));
-			REQUIRE_FALSE(System::moduleExists(&m1));
-			REQUIRE_FALSE(System::moduleExists(&m2));
+			REQUIRE(MACE::numberOfModules() == 0);
+			REQUIRE_FALSE(MACE::moduleExists(&m));
+			REQUIRE_FALSE(MACE::moduleExists(&m1));
+			REQUIRE_FALSE(MACE::moduleExists(&m2));
 
 			//testing flags. 8 because it is a byte.
 			for( Index i = 0; i < 8; i++ ) {
-				REQUIRE_FALSE(System::getFlag(i));
+				REQUIRE_FALSE(MACE::getFlag(i));
 			}
 		}
 
@@ -91,90 +91,90 @@ namespace mc {
 		TestModule m = TestModule();
 		TestModule m2 = TestModule();
 
-		System::reset();
+		MACE::reset();
 
-		mc::System::addModule(m2);
+		mc::MACE::addModule(m2);
 
 		SECTION("Testing moduleExists()") {
-			REQUIRE(System::moduleExists(&m2));
-			REQUIRE_FALSE(System::moduleExists(&m));
+			REQUIRE(MACE::moduleExists(&m2));
+			REQUIRE_FALSE(MACE::moduleExists(&m));
 		}
 
-		mc::System::addModule(m);
+		mc::MACE::addModule(m);
 
 		SECTION("Testing init() and update() with modules") {
-			REQUIRE(mc::System::moduleExists(m.getName()));
-			REQUIRE(mc::System::moduleExists(&m));
-			REQUIRE(System::moduleExists(&m2));
-			REQUIRE(System::moduleExists(m2.getName()));
+			REQUIRE(mc::MACE::moduleExists(m.getName()));
+			REQUIRE(mc::MACE::moduleExists(&m));
+			REQUIRE(MACE::moduleExists(&m2));
+			REQUIRE(MACE::moduleExists(m2.getName()));
 
-			mc::System::init();
+			mc::MACE::init();
 
-			REQUIRE(mc::System::moduleExists(m2.getName()));
-			REQUIRE(mc::System::moduleExists(&m2));
-			mc::System::update();
+			REQUIRE(mc::MACE::moduleExists(m2.getName()));
+			REQUIRE(mc::MACE::moduleExists(&m2));
+			mc::MACE::update();
 		}
 
-		mc::System::removeModule(m);
+		mc::MACE::removeModule(m);
 
 		SECTION("Testing moduleExists()") {
-			REQUIRE_FALSE(mc::System::moduleExists(&m));
-			REQUIRE(mc::System::moduleExists(&m2));
+			REQUIRE_FALSE(mc::MACE::moduleExists(&m));
+			REQUIRE(mc::MACE::moduleExists(&m2));
 		}
 
-		mc::System::removeModule(m2);
+		mc::MACE::removeModule(m2);
 
 
 	}
 
 	TEST_CASE("Testing flags") {
-		System::reset();
+		MACE::reset();
 
 		TestModule m = TestModule();
 
-		System::addModule(m);
+		MACE::addModule(m);
 		SECTION("Testing with module") {
 			SECTION("Testing init() and update()") {
-				System::init();
+				MACE::init();
 
-				REQUIRE(System::getFlag(System::INIT));
-				REQUIRE_FALSE(System::getFlag(System::DESTROYED));
-				REQUIRE_FALSE(System::getFlag(System::STOP_REQUESTED));
+				REQUIRE(MACE::getFlag(MACE::INIT));
+				REQUIRE_FALSE(MACE::getFlag(MACE::DESTROYED));
+				REQUIRE_FALSE(MACE::getFlag(MACE::STOP_REQUESTED));
 
 
 				for( Index i = 0; i < 10; i++ ) {
 					REQUIRE(m.updates == i);
-					mc::System::update();
-					REQUIRE(System::isRunning());
-					REQUIRE_FALSE(System::getFlag(System::STOP_REQUESTED));
+					mc::MACE::update();
+					REQUIRE(MACE::isRunning());
+					REQUIRE_FALSE(MACE::getFlag(MACE::STOP_REQUESTED));
 				}
 
-				System::requestStop();
+				MACE::requestStop();
 
-				REQUIRE(System::getFlag(System::STOP_REQUESTED));
-				REQUIRE(!System::isRunning());
+				REQUIRE(MACE::getFlag(MACE::STOP_REQUESTED));
+				REQUIRE(!MACE::isRunning());
 
-				System::destroy();
+				MACE::destroy();
 
-				REQUIRE(System::getFlag(System::DESTROYED));
-				REQUIRE_FALSE(System::getFlag(System::INIT));
-				REQUIRE_FALSE(System::getFlag(System::STOP_REQUESTED));
+				REQUIRE(MACE::getFlag(MACE::DESTROYED));
+				REQUIRE_FALSE(MACE::getFlag(MACE::INIT));
+				REQUIRE_FALSE(MACE::getFlag(MACE::STOP_REQUESTED));
 
 			}
 		}
 
-		System::removeModule(m);
+		MACE::removeModule(m);
 	}
 
 	TEST_CASE("Modules getting updated", "[module][system]") {
-		System::reset();
+		MACE::reset();
 
 		TestModule m = TestModule();
 
 
-		REQUIRE(System::numberOfModules() == 0);
+		REQUIRE(MACE::numberOfModules() == 0);
 
-		mc::System::addModule(m);
+		mc::MACE::addModule(m);
 
 		SECTION("Testing with module") {
 			SECTION("Testing init() and update()") {
@@ -182,17 +182,17 @@ namespace mc {
 				REQUIRE_FALSE(m.isInit);
 				REQUIRE(m.updates == 0);
 
-				mc::System::init();
+				mc::MACE::init();
 
 				REQUIRE(m.isInit);
 				REQUIRE(m.updates == 0);
 
 				for( Index i = 0; i < 10; i++ ) {
 					REQUIRE(m.updates == i);
-					mc::System::update();
+					mc::MACE::update();
 				}
 
-				mc::System::destroy();
+				mc::MACE::destroy();
 
 				REQUIRE(m.updates == 10);
 				REQUIRE_FALSE(m.isInit);
@@ -200,7 +200,7 @@ namespace mc {
 			}
 		}
 
-		mc::System::removeModule(m);
+		mc::MACE::removeModule(m);
 
 	}
 }

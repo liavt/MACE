@@ -337,7 +337,6 @@ namespace mc {
 
 				/**
 				@opengl
-				@bug Loads upside down
 				*/
 				void loadFile(const char* file);
 
@@ -400,7 +399,6 @@ namespace mc {
 				@param level Mipmap level to attach. Is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 				@see setDrawBuffers(const Size, const Enum*)
-				@todo Replace this with the actual Texture class
 				@opengl
 				*/
 				void attachTexture(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);

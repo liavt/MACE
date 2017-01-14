@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	void Exception::handleException(const std::exception & e) {
-		System::requestStop();
+		MACE::requestStop();
 		std::cerr << "Error occured: " << e.what() << std::endl;
 		throw e;
 	}

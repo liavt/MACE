@@ -91,7 +91,7 @@ int main() {
 		module.setFPS(30);
 		module.setVSync(false);
 
-		System::addModule(module);
+		MACE::addModule(module);
 
 		module.addChild(group);
 
@@ -103,15 +103,15 @@ int main() {
 
 		module.setCreationCallback(&create);
 
-		mc::System::init();
+		mc::MACE::init();
 
-		while( mc::System::isRunning() ) {
-			mc::System::update();
+		while( mc::MACE::isRunning() ) {
+			mc::MACE::update();
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(33));
 		}
 
-		mc::System::destroy();
+		mc::MACE::destroy();
 
 
 
