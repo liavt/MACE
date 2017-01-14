@@ -9,10 +9,10 @@ The above copyright notice and this permission notice shall be included in all c
 */
 
 #pragma once
-#ifndef MACE_SYSTEM_MODULE_H
-#define MACE_SYSTEM_MODULE_H
+#ifndef MACE_CORE_MODULE_H
+#define MACE_CORE_MODULE_H
 
-#include <MACE/System/Constants.h>
+#include <MACE/Core/Constants.h>
 #include <string>
 
 namespace mc {

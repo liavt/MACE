@@ -7,16 +7,21 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+#include <MACE/Core/Constants.h>
+
 #include <MACE/Graphics/Window.h>
-#include <MACE/System/Constants.h>
 #include <MACE/Graphics/Renderer.h>
+
 #include <MACE/Utility/BitField.h>
+
 #include <mutex>
 #include <ctime>
 #include <chrono>
 #include <iostream>
 #include <unordered_map>
+
 #include <GLFW/glfw3.h>
+
 #include <GL/glew.h>
 
 namespace mc {
@@ -50,17 +55,17 @@ namespace mc {
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
-            glewExperimental = true;
+			glewExperimental = true;
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
 				throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
 			}
 
-            try{
-                gfx::ogl::checkGLError(__LINE__, __FILE__);
-            }catch(...){
-                //glew sometimes throws errors that can be ignored
-            }
+			try {
+				gfx::ogl::checkGLError(__LINE__, __FILE__);
+			} catch( ... ) {
+				//glew sometimes throws errors that can be ignored
+			}
 
 			if( GL_VERSION_3_0 ) {
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
@@ -195,7 +200,7 @@ namespace mc {
 			try {
 				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-                create();
+				create();
 
 				Entity::init();
 
@@ -228,7 +233,7 @@ namespace mc {
 							gfx::Renderer::renderFrame(this);
 						}
 
-					//	gfx::Renderer::checkInput();
+						//	gfx::Renderer::checkInput();
 
 						if( !System::isRunning() ) {
 							break; // while (!System::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
@@ -336,7 +341,7 @@ namespace mc {
 			}
 
 			bool isKeyDown(const short int key) {
-				return keys[key].getBit(Input::PRESSED)||keys[key].getBit(Input::REPEATED);
+				return keys[key].getBit(Input::PRESSED) || keys[key].getBit(Input::REPEATED);
 			}
 
 			bool isKeyRepeated(const short int key) {

@@ -8,7 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity.h>
-#include <MACE/System/Constants.h>
+#include <MACE/Core/Constants.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/BitField.h>
 #include <MACE/Graphics/OGL.h>
@@ -537,7 +537,7 @@ namespace mc {
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return buffer == other.buffer&&paint==other.paint&&opacity==other.opacity&&Entity::operator==(other);
+			return buffer == other.buffer&&paint == other.paint&&opacity == other.opacity&&Entity::operator==(other);
 		}
 
 		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
@@ -591,5 +591,5 @@ namespace mc {
 
 		void Component::hover(Entity *) {}
 
-}//gfx
+	}//gfx
 }//mc

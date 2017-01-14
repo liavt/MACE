@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_GRAPHICS_OGL_H
 #define MACE_GRAPHICS_OGL_H
 
-#include <MACE/System/Constants.h>
+#include <MACE/Core/Constants.h>
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/Color.h>

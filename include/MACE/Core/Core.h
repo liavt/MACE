@@ -1,6 +1,6 @@
 #pragma once
-#ifndef MACE_SYSTEM_SYSTEM_H
-#define MACE_SYSTEM_SYSTEM_H
+#ifndef MACE_CORE_CORE_H
+#define MACE_CORE_CORE_H
 
 /**
 Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.
@@ -9,7 +9,8 @@ Preproccessor definitions will start with `MACE_` and `MACE_INCLUDED` will be de
 */
 namespace mc {}
 
-#include <MACE/System/Module.h>
-#include <MACE/System/Constants.h>
+#include <MACE/Core/Module.h>
+#include <MACE/Core/Constants.h>
+#include <MACE/Core/System.h>
 
 #endif

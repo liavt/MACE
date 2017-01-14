@@ -8,6 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity2D.h>
+#include <MACE/Core/System.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -35,17 +36,19 @@ namespace mc {
 			//thanks stack overflow for this function. the c++ library has no portable way to do this normally.
 			std::wstring toWideString(const std::string & s) {
 				const char * cs = s.c_str();
-				const size_t wn = std::mbsrtowcs(NULL, &cs, 0, NULL);
+				std::size_t wn;
+				mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
-				if( wn == size_t(-1) ) {
+				if( wn == std::size_t(-1) ) {
 					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
 					return L"";
 				}
 
 				std::vector<wchar_t> buf(wn + 1);
-				const size_t wn_again = std::mbsrtowcs(buf.data(), &cs, wn + 1, NULL);
+				std::size_t wn_again;
+				mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
 
-				if( wn_again == size_t(-1) ) {
+				if( wn_again == std::size_t(-1) ) {
 					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
 					return L"";
 				}
@@ -709,28 +712,28 @@ namespace mc {
 			return letters;
 		}
 
-		void Text::setVerticalAlign(const VerticalAlign align){
-            if(vertAlign != align){
-                makeDirty();
+		void Text::setVerticalAlign(const VerticalAlign align) {
+			if( vertAlign != align ) {
+				makeDirty();
 
-                vertAlign = align;
-            }
+				vertAlign = align;
+			}
 		}
 
-		const Text::VerticalAlign Text::getVerticalAlign() const{
-            return vertAlign;
+		const VerticalAlign Text::getVerticalAlign() const {
+			return vertAlign;
 		}
 
-		void Text::setHorizontalAlign(const HorizontalAlign align){
-            if(horzAlign != align){
-                makeDirty();
+		void Text::setHorizontalAlign(const HorizontalAlign align) {
+			if( horzAlign != align ) {
+				makeDirty();
 
-                horzAlign = align;
-            }
+				horzAlign = align;
+			}
 		}
 
-		const Text::HorizontalAlign Text::getHorizontalAlign() const{
-            return horzAlign;
+		const HorizontalAlign Text::getHorizontalAlign() const {
+			return horzAlign;
 		}
 
 		bool Text::operator==(const Text & other) const {
@@ -743,11 +746,7 @@ namespace mc {
 
 		void Text::onInit() {}
 
-		void Text::onUpdate() {
-			if( !hasChild(letters) ) {
-				addChild(letters);
-			}
-		}
+		void Text::onUpdate() {}
 
 		void Text::onRender() {}
 
@@ -759,20 +758,26 @@ namespace mc {
 				letters.removeChild(i);
 			}
 
+			if( !hasChild(letters) ) {
+				addChild(letters);
+			}
+
 			float x = 0, y = 0;
 
 			float width = 0, height = 0;
 
 			for( Index i = 0; i < text.length(); ++i ) {
 				if( text[i] == '\n' ) {
-                    if(x > width){
-                        width = x;
-                    }
-                    if(y > height){
-                        height = y;
-                    }
+					if( x > width ) {
+						width = x;
+					}
 
 					y += static_cast<float>(font.getSize() << 1) / Renderer::getOriginalHeight();
+
+					if( y > height ) {
+						height = y;
+					}
+
 					x = 0;
 				} else {
 					Letter* let = new Letter();
@@ -790,30 +795,42 @@ namespace mc {
 					x += static_cast<float>((let->advanceX) + let->width) / Renderer::getOriginalWidth();
 					y += static_cast<float>(let->advanceY) / Renderer::getOriginalHeight();
 
-					//if( text[i] == 'j' )std::cout << let->bearingX << std::endl;
-
 					letters.addChild(let);
 				}
 			}
 
-			if(x > width){
-                width = x;
-            }
-            if(y > height){
-                height = y;
-            }
+			y += static_cast<float>(font.getSize() << 1) / Renderer::getOriginalHeight();
 
-            switch(horzAlign){
-            case HorizontalAlign::CENTER:
-                letters.setX(-width/2);
-                break;
-            case HorizontalAlign::RIGHT:
-                letters.setX(-1 + width/2);
-                break;
-            case HorizontalAlign::LEFT:
-                letters.setX((-0.5f - width/2));
-                break;
-            }
+			width = x;
+			height = y;
+
+			std::cout << height;
+
+			switch( horzAlign ) {
+			default:
+			case HorizontalAlign::CENTER:
+				letters.setX((-width / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				break;
+			case HorizontalAlign::RIGHT:
+				letters.setX((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				break;
+			case HorizontalAlign::LEFT:
+				letters.setX(-1.0f + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				break;
+			}
+
+			switch( vertAlign ) {
+			default:
+			case VerticalAlign::CENTER:
+				letters.setY((-height / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalHeight());
+				break;
+			case VerticalAlign::TOP:
+				letters.setY((-1.0f + height / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalHeight());
+				break;
+			case VerticalAlign::BOTTOM:
+				letters.setY(1.0f);
+				break;
+			}
 		}
 	}//gfx
 }//mc

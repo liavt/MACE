@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_UTILITY_COLOR_H
 #define MACE_UTILITY_COLOR_H
 
-#include <MACE/System/Constants.h>
+#include <MACE/Core/Constants.h>
 #include <array>
 
 namespace mc {

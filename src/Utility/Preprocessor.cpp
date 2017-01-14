@@ -8,7 +8,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Utility/Preprocessor.h>
-#include <MACE/System/Constants.h>
+
+#include <MACE/Core/Constants.h>
+#include <MACE/Core/System.h>
+
 #include <iostream>
 #include <cctype>
 #include <ctime>
@@ -17,15 +20,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <memory>
 #include <fstream>
 #include <array>
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-#	define MACE_LOCALTIME(pointer,time) localtime_s(pointer,time)
-#elif defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
-#	define MACE_LOCALTIME(pointer,time) localtime_r(time,pointer)
-#else
-//fallback to the built in localtime, which isn't thread safe
-#	define MACE_LOCALTIME(pointer,time) *pointer = *localtime(&now);
-#endif
 
 //indirection is the only way to expand macros in other macros
 #define MACE_NAME_STRINGIFY(name) "" #name
@@ -898,7 +892,7 @@ namespace mc {
 			std::time_t time = std::time(0);
 			std::tm timeStruct;
 
-			MACE_LOCALTIME(&timeStruct, &time);
+			os::localtime(&timeStruct, &time);
 
 			char buffer[20];
 

@@ -19,6 +19,34 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
+		enum class VerticalAlign: Byte {
+			TOP,
+			CENTER,
+			BOTTOM
+		};
+
+		enum class HorizontalAlign: Byte {
+			LEFT,
+			CENTER,
+			RIGHT
+		};
+
+		enum class EaseFunction: Byte {
+			//Starts fast, decelerates at end
+			SINUSOIDAL,
+			//Starts slow, accelerates at end
+			COSINE,
+			CUBIC,
+			QUADRATIC,
+			QUARTIC,
+			QUINTIC,
+			//Circular acceleration from zero
+			SQUARE_ROOT,
+			//Even faster acceleration at start, and slow down at end
+			CUBE_ROOT,
+			LINEAR
+		};
+
 		class Entity2D: public GraphicsEntity {
 		public:
 			Entity2D();
@@ -109,22 +137,6 @@ namespace mc {
 			friend class RenderProtocol<ProgressBar>;
 		public:
 			typedef void(*EaseDoneCallback)(ProgressBar*);
-
-			enum class EaseFunction: Byte {
-				//Starts fast, decelerates at end
-				SINUSOIDAL,
-				//Starts slow, accelerates at end
-				COSINE,
-				CUBIC,
-				QUADRATIC,
-				QUARTIC,
-				QUINTIC,
-				//Circular acceleration from zero
-				SQUARE_ROOT,
-				//Even faster acceleration at start, and slow down at end
-				CUBE_ROOT,
-				LINEAR
-			};
 
 			static int getProtocol();
 
@@ -313,20 +325,11 @@ namespace mc {
 			Index advanceY;
 		};//Letter
 
+		/**
+		@bug newline with vertical align doesnt really work
+		*/
 		class Text: public Entity2D {
 		public:
-            enum class VerticalAlign: Byte{
-                TOP,
-                CENTER,
-                BOTTOM
-            };
-
-            enum class HorizontalAlign: Byte{
-                LEFT,
-                CENTER,
-                RIGHT
-            };
-
 			Text(const std::string& t, const Font& f = Font());
 			Text(const std::wstring& t = L"", const Font& f = Font());
 			~Text() = default;
@@ -353,9 +356,9 @@ namespace mc {
 
 			const Group& getLetters() const;
 
-            /**
-            @dirty
-            */
+			/**
+			@dirty
+			*/
 			void setVerticalAlign(const VerticalAlign align);
 			const VerticalAlign getVerticalAlign() const;
 

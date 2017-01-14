@@ -9,8 +9,6 @@ gfx::Group group;
 gfx::ProgressBar circleBar;
 gfx::ProgressBar rectangleBar;
 
-gfx::Text text;
-
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
 	bool update(gfx::Entity* e) {
@@ -41,7 +39,7 @@ void create() {
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
 
-	circleBar.easeTo(250, 100, gfx::ProgressBar::EaseFunction::SQUARE_ROOT);
+	circleBar.easeTo(250, 100, gfx::EaseFunction::SQUARE_ROOT);
 
 	group.addChild(circleBar);
 
@@ -57,16 +55,9 @@ void create() {
 	rectangleBar.setX(0.5f);
 	rectangleBar.addComponent(r);
 
-	rectangleBar.easeTo(250, 100, gfx::ProgressBar::EaseFunction::SINUSOIDAL);
+	rectangleBar.easeTo(250, 100, gfx::EaseFunction::SINUSOIDAL);
 
 	group.addChild(rectangleBar);
-
-	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/consola.ttf"));
-	font.setSize(64);
-	text = gfx::Text("Hello world!\nJust cause.", font);
-	text.setFont(font);
-	text.setHorizontalAlign(gfx::Text::HorizontalAlign::LEFT);
-	group.addChild(text);
 }
 
 int main() {

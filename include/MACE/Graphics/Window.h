@@ -14,21 +14,23 @@ The above copyright notice and this permission notice shall be included in all c
 //so we can use glew
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include <MACE/System/Module.h>
+
+#include <MACE/Core/Module.h>
+#include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
-#include <MACE/System/Constants.h>
-#include <thread>
+
+#ifndef __STDC_NO_THREADS__
+#	include <thread>
+#else
+#	error "Threads are required for windows"
+#endif//__STDC_NO_THREADS_
+
 #include <string>
 
 namespace mc {
 	//forward declaration for the input namespace
 	struct BitField;
 
-	/**
-	Namespace with classes related to the operating system like keyboard input, mouse, and windows.
-	@todo Move this to a seperate header
-	@todo Add functions for cross-platform time and pausing the console
-	*/
 	namespace os {
 		class WindowModule: public Module, public gfx::Entity {
 		public:

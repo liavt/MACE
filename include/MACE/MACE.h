@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_H
 #define MACE_H
 
-#include <MACE/System/System.h>
+#include <MACE/Core/Core.h>
 #include <MACE/Utility/Utility.h>
 #include <MACE/Graphics/Graphics.h>
 
