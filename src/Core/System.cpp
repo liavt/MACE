@@ -76,15 +76,15 @@ namespace mc {
 #endif
 		}
 
-		std::size_t* mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
+		std::size_t mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate) ) {
 				throw AssertionError("asctime_s errored with code " + std::to_string(status));
 			}
 
-			return returnValue;
+			return *returnValue;
 #else
-			return &std::mbsrtowcs(wcstr, mbstr, count, mbstate);
+			return std::mbsrtowcs(wcstr, mbstr, count, mbstate);
 #endif
 		}
 		void assert(const bool cond, const std::string & message) {
