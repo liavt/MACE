@@ -19,12 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
 
-#ifndef __STDC_NO_THREADS__
-#	include <thread>
-#else
-#	error "Threads are required for windows"
-#endif//__STDC_NO_THREADS_
-
+#include <thread>
 #include <string>
 
 namespace mc {
