@@ -15,21 +15,25 @@ The above copyright notice and this permission notice shall be included in all c
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!
-#endif
-
-#if !(defined(_WIN32) || defined(__APPLE__) || defined(__linux__) || defined(__unix__) || defined(_POSIX_VERSION))
-#endif
+#endif//__cplusplus
 
 #if (defined(DEBUG)) || (defined(_DEBUG)) || !defined(NDEBUG)
-#	define MACE_ERROR_CHECK
-#endif
+#	define MACE_ERROR_CHECK 1
+#endif//debug
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-#	define MACE_WINDOWS
-#elif defined(__linux__) || defined(_POSIX_SOURCE) || defined(_POSIX_VERSION)||defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
-#	define MACE_POSIX
+#	define MACE_WINDOWS 1
+#elif defined(__APPLE__) && defined(__MACH__)
+#	define MACE_OSX 1
+#elif defined(__linux__) || defined(__unix__)
+#	define MACE_LINUX 1
 #else
 #	warning "This is a system on which MACE has not been tested with. MACE may have undefined behavior."
+#endif
+
+
+#if defined(_POSIX_SOURCE) || defined(_POSIX_VERSION) && (defined(MACE_LINUX) || defined(MACE_OSX))
+#	define MACE_POSIX 1
 #endif
 
 

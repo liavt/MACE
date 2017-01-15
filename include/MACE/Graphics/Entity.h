@@ -175,7 +175,7 @@ namespace mc {
 			@see ~Entity()
 			*/
 			virtual ~Entity() noexcept;
-			
+
 			/**
 			Gets all of this `Entity's` children.
 			@return an `std::vector` with all children of this `Entity`
@@ -349,15 +349,15 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			Entity& translate(float x, float y, float z);
+			Entity& translate(float x, float y, float z = 0.0f);
 			/**
 			@dirty
 			*/
-			Entity& rotate(float x, float y, float z);
+			Entity& rotate(float x, float y, float z = 0.0f);
 			/**
 			@dirty
 			*/
-			Entity& scale(float x, float y, float z);
+			Entity& scale(float x, float y, float z = 1.0f);
 
 
 			/**

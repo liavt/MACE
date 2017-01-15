@@ -13,6 +13,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Preprocessor.h>
 //we need to include cstring for memcpy
 #include <cstring>
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -146,12 +147,15 @@ namespace mc {
 
 				//fbo resources
 				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
+				//because we are rendering multisampled, our z-buffer needs to be readable without multisampling.
+				//we can blit the z buffers onto the proxyBuffers to resolve the mutlisampling operation and
+				//allowing for us to read.
+				ogl::FrameBuffer proxyBuffer = ogl::FrameBuffer();
 				ogl::RenderBuffer depthBuffer = ogl::RenderBuffer();
 
 				ogl::Texture sceneTexture = ogl::Texture();
 				ogl::Texture idTexture = ogl::Texture();
-
-				SimpleQuadRenderer renderer = SimpleQuadRenderer(false);
+				ogl::Texture proxyIDTexture = ogl::Texture();
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -177,24 +181,28 @@ namespace mc {
 
 					sceneTexture.setMultisampledData(MACE_SAMPLE_SIZE, width, height, GL_RGBA8);
 					idTexture.setMultisampledData(MACE_SAMPLE_SIZE, width, height, GL_R32UI);
+					proxyIDTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 
 					depthBuffer.init();
 					depthBuffer.bind();
 					depthBuffer.setStorageMultisampled(MACE_SAMPLE_SIZE, GL_DEPTH_COMPONENT, width, height);
 
-					//for our custom FBO. we render using a z-buffer to figure out which entity is clicked on
+					//for our custom FBOs. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
+					proxyBuffer.init();
 
 					ogl::checkGLError(__LINE__, __FILE__);
 
-					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture, 0);
-					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture, 0);
+					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture);
+					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
+
+					proxyBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, proxyIDTexture);
 
 					ogl::checkGLError(__LINE__, __FILE__);
 
 					Enum status;
-					if( (status = frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE ) {
+					if( (status = frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE && (status = proxyBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE ) {
 						switch( status ) {
 						case GL_FRAMEBUFFER_UNDEFINED:
 							throw InitializationError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
@@ -226,6 +234,9 @@ namespace mc {
 					Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 					frameBuffer.setDrawBuffers(2, buffers);
 
+					Enum buffer = GL_COLOR_ATTACHMENT0;
+					proxyBuffer.setDrawBuffers(1, &buffer);
+
 					ogl::checkGLError(__LINE__, __FILE__);
 
 					glViewport(0, 0, width, height);
@@ -253,19 +264,14 @@ namespace mc {
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+				proxyIDTexture.init();
+				proxyIDTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				proxyIDTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
 				//better to access originalWidth and originalHeight directly than via a parameter.
 				generateFramebuffer(originalWidth, originalHeight);
 
 				ogl::checkGLError(__LINE__, __FILE__);
-
-				const char* vertexShader2D = {
-#	include <MACE/Graphics/Shaders/scene.v.glsl>
-				};
-				const char* fragmentShader2D = {
-#	include <MACE/Graphics/Shaders/scene.f.glsl>
-				};
-
-				renderer.init(vertexShader2D, fragmentShader2D);
 
 				//gl states
 				glEnable(GL_BLEND);
@@ -290,30 +296,41 @@ namespace mc {
 				frameBuffer.unbind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-				glDrawBuffer(GL_BACK);
-
 				int width, height;
 				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
-				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+				glReadBuffer(GL_COLOR_ATTACHMENT0);
+				glDrawBuffer(GL_BACK);
+
+				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+				ogl::checkGLError(__LINE__, __FILE__);
 
 				glfwSwapBuffers(win->getGLFWWindow());
 
+				proxyBuffer.bind();
+
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, proxyBuffer.getID());
+				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+				glReadBuffer(GL_COLOR_ATTACHMENT1);
+				glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				ogl::checkGLError(__LINE__, __FILE__);
+
 			}//tearDown
 
 			void destroy() {
 				windowData.destroy();
 
 				depthBuffer.destroy();
+
 				frameBuffer.destroy();
+				proxyBuffer.destroy();
 
 				sceneTexture.destroy();
 				idTexture.destroy();
-
-				renderer.destroy();
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
@@ -343,18 +360,20 @@ namespace mc {
 					windowData.unbind();
 
 					depthBuffer.destroy();
+
 					frameBuffer.destroy();
+					proxyBuffer.destroy();
 
 					generateFramebuffer(width, height);
 				}
 			}//resize
 
 			void checkInput() {
-				frameBuffer.bind();
+				proxyBuffer.bind();
 
 				Index pixel = 0;
-				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT1);
-				frameBuffer.readPixels(os::Input::getMouseX(), os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
+				proxyBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0);
+				proxyBuffer.readPixels(os::Input::getMouseX(), os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
 				if( pixel > 0 ) {
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual inex

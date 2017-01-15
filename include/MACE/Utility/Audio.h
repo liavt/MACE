@@ -14,18 +14,21 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Module.h>
 #include <MACE/Utility/BitField.h>
 
-#include <AL/al.h>
-#include <AL/alc.h>
+#ifdef MACE_OSX
+#	include <OpenAL/al.h>
+#	include <OpenAL/alc.h>
+#else
+#	include <AL/al.h>
+#	include <AL/alc.h>
+#endif
 
-#include <string>
 #include <vector>
-#include <iostream>
 
 namespace mc {
 	class Sound {
 	public:
 		enum Properties: Byte {
-			LOOPING
+			LOOPING = 0
 		};
 
 		Sound(std::string path);
@@ -51,10 +54,10 @@ namespace mc {
 		const BitField& getProperties() const;
 	private:
 		BitField properties;
-		ALuint source, buffer;
-		ALuint frequency;
-		ALsizei size;
-		ALenum format;
+		unsigned int source, buffer;
+		unsigned int frequency;
+		int size;
+		Enum format;
 		unsigned char *buf;
 		std::string path;
 		float volume;
