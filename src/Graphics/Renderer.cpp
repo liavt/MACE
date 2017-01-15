@@ -146,12 +146,14 @@ namespace mc {
 
 				//fbo resources
 				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
+				//because we are rendering multisampled, our z-buffer needs to be readable without multisampling.
+				//we can blit the z buffers onto the proxyBuffers to resolve the mutlisampling operation and
+				//allowing for us to read.
+				ogl::FrameBuffer proxyBuffer = ogl::FrameBuffer();
 				ogl::RenderBuffer depthBuffer = ogl::RenderBuffer();
 
 				ogl::Texture sceneTexture = ogl::Texture();
 				ogl::Texture idTexture = ogl::Texture();
-
-				SimpleQuadRenderer renderer = SimpleQuadRenderer(false);
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -182,14 +184,17 @@ namespace mc {
 					depthBuffer.bind();
 					depthBuffer.setStorageMultisampled(MACE_SAMPLE_SIZE, GL_DEPTH_COMPONENT, width, height);
 
-					//for our custom FBO. we render using a z-buffer to figure out which entity is clicked on
+					//for our custom FBOs. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
+					proxyBuffer.init();
 
 					ogl::checkGLError(__LINE__, __FILE__);
 
-					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture, 0);
-					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture, 0);
+					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture);
+					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
+
+					proxyBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, idTexture);
 
 					ogl::checkGLError(__LINE__, __FILE__);
 
@@ -226,6 +231,9 @@ namespace mc {
 					Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 					frameBuffer.setDrawBuffers(2, buffers);
 
+					Enum buffer = GL_COLOR_ATTACHMENT0;
+					proxyBuffer.setDrawBuffers(1, &buffer);
+
 					ogl::checkGLError(__LINE__, __FILE__);
 
 					glViewport(0, 0, width, height);
@@ -257,15 +265,6 @@ namespace mc {
 				generateFramebuffer(originalWidth, originalHeight);
 
 				ogl::checkGLError(__LINE__, __FILE__);
-
-				const char* vertexShader2D = {
-#	include <MACE/Graphics/Shaders/scene.v.glsl>
-				};
-				const char* fragmentShader2D = {
-#	include <MACE/Graphics/Shaders/scene.f.glsl>
-				};
-
-				renderer.init(vertexShader2D, fragmentShader2D);
 
 				//gl states
 				glEnable(GL_BLEND);
@@ -308,12 +307,12 @@ namespace mc {
 				windowData.destroy();
 
 				depthBuffer.destroy();
+
 				frameBuffer.destroy();
+                proxyBuffer.destroy();
 
 				sceneTexture.destroy();
 				idTexture.destroy();
-
-				renderer.destroy();
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
@@ -343,7 +342,9 @@ namespace mc {
 					windowData.unbind();
 
 					depthBuffer.destroy();
+
 					frameBuffer.destroy();
+					proxyBuffer.destroy();
 
 					generateFramebuffer(width, height);
 				}

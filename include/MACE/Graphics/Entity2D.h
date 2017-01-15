@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL.h>
+#include <MACE/Utility/Vector.h>
 
 namespace mc {
 	namespace gfx {
@@ -236,6 +237,9 @@ namespace mc {
 		class Letter;
 		class Text;
 
+        /**
+        @bug non-monospaced fonts dont have correct spacing
+        */
 		class Font {
 		public:
 			static Font loadFont(const std::string& name);
@@ -254,6 +258,10 @@ namespace mc {
 			void setSize(const Size height);
 			Size& getSize();
 			const Size& getSize() const;
+
+			bool hasKerning() const;
+
+            Vector<unsigned int, 2> getKerning(const wchar_t prev, const wchar_t current) const;
 
 			Index getID() const;
 

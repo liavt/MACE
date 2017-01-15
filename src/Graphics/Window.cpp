@@ -233,7 +233,7 @@ namespace mc {
 							gfx::Renderer::renderFrame(this);
 						}
 
-						//	gfx::Renderer::checkInput();
+                        //gfx::Renderer::checkInput();
 
 						if( !MACE::isRunning() ) {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it

@@ -29,5 +29,6 @@ namespace mc {
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Preprocessor.h>
 #include <MACE/Utility/MatrixAliases.h>
+#include <MACE/Utility/Audio.h>
 
 #endif

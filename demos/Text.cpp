@@ -1,5 +1,4 @@
-﻿
-#include <MACE/MACE.h>
+﻿#include <MACE/MACE.h>
 
 #include <iostream>
 
