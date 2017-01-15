@@ -14,7 +14,12 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Module.h>
 #include <MACE/Utility/BitField.h>
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
+#include <string>
 #include <vector>
+#include <iostream>
 
 namespace mc {
 	class Sound {
@@ -23,6 +28,11 @@ namespace mc {
 			LOOPING
 		};
 
+		Sound(std::string path);
+
+		void play();
+		void stop();
+		
 		void init();
 		void destroy();
 
@@ -37,6 +47,12 @@ namespace mc {
 		const BitField& getProperties() const;
 	private:
 		BitField properties;
+		ALuint source, buffer;
+		ALuint frequency;
+		ALsizei size;
+		ALenum format;
+		unsigned char *buf;
+		std::string path;
 	};//Sound
 
 	class AudioModule: public Module {
@@ -46,11 +62,13 @@ namespace mc {
 
 		std::string getName() const override;
 
-		void addSound(Sound& s);
-
 		const std::vector<Sound>& getSounds() const;
+	public:
+		void addSound(Sound& s);
 	private:
 		std::vector<Sound> sounds = std::vector<Sound>();
+		ALCdevice* device;
+		ALCcontext* context;
 	};//AudioModule
 };//mc
 
