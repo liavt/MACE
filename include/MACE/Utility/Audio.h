@@ -31,7 +31,11 @@ namespace mc {
 		Sound(std::string path);
 
 		void play();
+		void pause();
 		void stop();
+
+		void setVolume(float volume);
+		float getVolume() { return volume; }
 		
 		void init();
 		void destroy();
@@ -53,9 +57,12 @@ namespace mc {
 		ALenum format;
 		unsigned char *buf;
 		std::string path;
+		float volume;
+		float x, y, z;
 	};//Sound
 
 	class AudioModule: public Module {
+	public:
 		void init() override;
 		void update() override;
 		void destroy() override;
@@ -63,8 +70,10 @@ namespace mc {
 		std::string getName() const override;
 
 		const std::vector<Sound>& getSounds() const;
-	public:
+	
 		void addSound(Sound& s);
+
+		AudioModule();
 	private:
 		std::vector<Sound> sounds = std::vector<Sound>();
 		ALCdevice* device;

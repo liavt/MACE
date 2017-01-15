@@ -10,10 +10,15 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Audio.h>
 
 namespace mc {
-	void AudioModule::init() {
+
+	AudioModule::AudioModule() {
 		device = alcOpenDevice(NULL);
 		context = alcCreateContext(device, NULL);
 		alcMakeContextCurrent(context);
+	}
+
+	void AudioModule::init() {
+		
 	}
 
 	void AudioModule::update() {
@@ -163,11 +168,17 @@ namespace mc {
 		alSourcePlay(source);
 	}
 
+	void Sound::pause() {
+		alSourcePause(source);
+	}
+
 	void Sound::stop() {
 		alSourceStop(source);
 	}
 
 	void Sound::destroy() {
+		stop();
+
 		alDeleteSources(1, &source);
 		alDeleteBuffers(1, &buffer);
 	}
@@ -180,8 +191,19 @@ namespace mc {
 		properties.setBit(param, value);
 	}
 
+	void Sound::setVolume(float vol) {
+		volume = vol;
+		alSourcef(source, AL_GAIN, volume);
+	}
+
 	void Sound::setLooping(const bool val) {
 		properties.setBit(LOOPING, val);
+
+		if (val) {
+			alSourcei(source, AL_LOOPING, AL_TRUE);
+		} else {
+			alSourcei(source, AL_LOOPING, AL_FALSE);
+		}
 	}
 
 	bool Sound::isLooping() const {
@@ -191,9 +213,11 @@ namespace mc {
 	void Sound::setProperties(const BitField & b) {
 		properties = b;
 	}
+
 	BitField & Sound::getProperties() {
 		return properties;
 	}
+	
 	const BitField & Sound::getProperties() const {
 		return properties;
 	}
