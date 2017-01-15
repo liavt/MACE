@@ -58,6 +58,25 @@ namespace mc {
 			void checkGLError(const Index line, const std::string& file);
 
 			/**
+			@opengl
+			*/
+			void enable(const Enum param);
+			/**
+			@opengl
+			*/
+			void disable(const Enum param);
+
+			/**
+			@opengl
+			*/
+			void setBlending(const Enum sfactor, const Enum dfactor);
+
+			/**
+			@opengl
+			*/
+			void setViewport(const Index x, const Index y, const Size width, const Size height);
+
+			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
 			<p>
 			Due to how the OpenGL model works, using an OpenGL function outside of a thread with a context will throw an error. Thus,
@@ -322,7 +341,7 @@ namespace mc {
 				void init() override;
 				void destroy() override;
 
-				void bindToLocation(const Index location) const;
+				void bind(const Index location = 0) const;
 
 				/**
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
@@ -341,10 +360,23 @@ namespace mc {
 				void loadFile(const char* file);
 
 				/**
+				@opengl
+				*/
+				void setPixelStore(const Enum alignment, const int number);
+
+				/**
+				@opengl
+				*/
+				void setPixelStore(const Enum alignment, const float number);
+
+				/**
 				@copydoc loadFile(const char*)
 				*/
 				void loadFile(const std::string& file);
 
+				/**
+				@opengl
+				*/
 				void generateMipmap();
 
 				void setTarget(const Enum target);
@@ -388,6 +420,40 @@ namespace mc {
 			*/
 			class FrameBuffer: public Object {
 			public:
+				/**
+				Select which color buffer to use for reading via
+				FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const
+
+				@param mode Which attachment to use
+				@see FrameBuffer::setPixelStore(const Enum, const float)
+				@see https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml
+				@see FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int)
+				@see FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int)
+				@see FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int)
+				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
+				@opengl
+				*/
+				static void setReadBuffer(const Enum mode);
+
+				/**
+				@opengl
+				*/
+				static void setDrawBuffer(const Enum mode);
+
+				static FrameBuffer getDefaultFramebuffer();
+
+				/**
+				@opengl
+				*/
+				static void clear(const int field);
+
+				/**
+				@opengl
+				*/
+				static void setClearColor(const float r, const float g, const float b, const float a);
+
 				void init() override;
 				void destroy() override;
 
@@ -435,8 +501,10 @@ namespace mc {
 				@param attachment Which attachment port to use
 				@param buffer The `RenderBuffer` to use.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer
+				@opengl
 				*/
 				void attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer& buffer);
+
 
 				/**
 				Specifies what buffers to render to. Takes in an array of attachments. A `RenderBuffer` or `Texture` can be attached to act
@@ -453,23 +521,6 @@ namespace mc {
 				@opengl
 				*/
 				void setDrawBuffers(const Size arrSize, const Enum* buffers);
-
-				/**
-				Select which color buffer to use for reading via
-				FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const
-
-				@param mode Which attachment to use
-				@see FrameBuffer::setPixelStore(const Enum, const float)
-				@see https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml
-				@see FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int)
-				@see FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
-				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int)
-				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int)
-				@see FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int)
-				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
-				@opengl
-				*/
-				void setReadBuffer(const Enum mode);
 
 				/**
 				Read pixels from this `FrameBuffer`

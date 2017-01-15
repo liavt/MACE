@@ -9,6 +9,8 @@ gfx::Group group;
 gfx::Text topLeft, center, topRight, botLeft, botRight;
 
 void create() {
+	gfx::Renderer::setRefreshColor(Colors::DARK_GREEN);
+
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/consola.ttf"));
 	font.setSize(48);
 

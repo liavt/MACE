@@ -163,7 +163,9 @@ namespace mc {
 			void destroy() override {};
 		};
 
-
+		/**
+		@todo add function to change how many samples msaa uses
+		*/
 		class Renderer final {
 			//needs to access registerProtocol
 			friend void ssl::init(const Size&, const Size&);

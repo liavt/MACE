@@ -63,8 +63,16 @@ namespace mc {
 		this->a = convertRGBAToFloat(alpha);
 	}
 
+	Color::Color(const int red, const int green, const int blue, const int alpha) noexcept: Color(static_cast<Byte>(red), static_cast<Byte>(green), static_cast<Byte>(blue), static_cast<Byte>(alpha)) {}
 
-	Color::Color(const float& red, const float& green, const float& blue, const float& alpha) noexcept : r(red), g(green), b(blue), a(alpha) {}
+	Color::Color(const Byte red, const Byte green, const Byte blue, const Byte alpha) noexcept {
+		setRed(red);
+		setGreen(green);
+		setBlue(blue);
+		setAlpha(alpha);
+	}
+
+	Color::Color(const float red, const float green, const float blue, const float alpha) noexcept:  r(red), g(green), b(blue), a(alpha) {}
 
 	Color::Color(const std::array<float, 4>& rgba) {
 		this->setValues(rgba);
@@ -72,7 +80,7 @@ namespace mc {
 
 	Color::Color(const Color & copy) noexcept : Color(copy.r, copy.g, copy.b, copy.a) {}
 
-	Color::Color() noexcept : Color(0, 0, 0, 1) {}
+	Color::Color() noexcept : Color(0.0f, 0.0f, 0.0f, 1.0f) {}
 
 	Color Color::darken() const {
 		return Color(trimFloat(r - 0.05f), trimFloat(g - 0.05f), trimFloat(b - 0.05f), a);

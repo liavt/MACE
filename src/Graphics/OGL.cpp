@@ -234,6 +234,10 @@ namespace mc {
 				return !(*this == other);
 			}
 
+			void FrameBuffer::setClearColor(const float r, const float g, const float b, const float a) {
+				glClearColor(r, g, b, a);
+			}
+
 			void FrameBuffer::init() {
 				glGenFramebuffers(1, &id);
 			}
@@ -279,8 +283,21 @@ namespace mc {
 			}
 
 			void FrameBuffer::setReadBuffer(const Enum mode) {
-				bind();
 				glReadBuffer(mode);
+			}
+
+			void FrameBuffer::setDrawBuffer(const Enum mode) {
+				glDrawBuffer(mode);
+			}
+
+			FrameBuffer FrameBuffer::getDefaultFramebuffer() {
+				FrameBuffer def = FrameBuffer();
+				def.id = 0;
+				return def;
+			}
+
+			void FrameBuffer::clear(const int field) {
+				glClear(field);
 			}
 
 			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void * data) const {
@@ -379,9 +396,9 @@ namespace mc {
 				}
 			}
 
-			void Texture::bindToLocation(const Index location) const {
+			void Texture::bind(const Index location) const {
 				glActiveTexture(GL_TEXTURE0 + location);
-				bind();
+				Object::bind();
 			}
 
 			void Texture::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
@@ -389,9 +406,9 @@ namespace mc {
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 			}
 
-			void Texture::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples){
-                bind();
-                glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
+			void Texture::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples) {
+				bind();
+				glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
 			void Texture::loadFile(const char * file) {
@@ -405,6 +422,16 @@ namespace mc {
 
 				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			}
+
+			void Texture::setPixelStore(const Enum alignment, const int number) {
+				bind();
+				glPixelStorei(alignment, number);
+			}
+
+			void Texture::setPixelStore(const Enum alignment, const float number) {
+				bind();
+				glPixelStoref(alignment, number);
 			}
 
 			void Texture::loadFile(const std::string & file) {
@@ -424,7 +451,7 @@ namespace mc {
 				return target;
 			}
 
-            const Enum& Texture::getTarget() const{
+			const Enum& Texture::getTarget() const {
 				return target;
 			}
 
@@ -993,8 +1020,25 @@ namespace mc {
 			std::unordered_map<std::string, int>& ShaderProgram::getUniforms() {
 				return uniforms;
 			}
+
 			void checkGLError(const Index line, const std::string & file) {
 				checkGLError(line, file.c_str());
+			}
+
+			void enable(const Enum param) {
+				glEnable(param);
+			}
+
+			void disable(const Enum param) {
+				glDisable(param);
+			}
+
+			void setBlending(const Enum sfactor, const Enum dfactor) {
+				glBlendFunc(sfactor, dfactor);
+			}
+
+			void setViewport(const Index x, const Index y, const Size width, const Size height) {
+				glViewport(x, y, width, height);
 			}
 		}//ogl
 	}//gfx

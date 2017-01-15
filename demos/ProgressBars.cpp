@@ -26,6 +26,8 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create() {
+	gfx::Renderer::setRefreshColor(Colors::LIGHT_GRAY);
+
 	gfx::ogl::Texture background = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circlebackground.png");
 	gfx::ogl::Texture foreground = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-foreground.png");
 	gfx::ogl::Texture selection = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");

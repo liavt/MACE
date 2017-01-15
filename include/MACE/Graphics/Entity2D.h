@@ -242,6 +242,8 @@ namespace mc {
 
         /**
         @bug non-monospaced fonts dont have correct spacing
+		@todo Make a default font system so people dont have to create new font classes each time they use text
+		@todo instead of using an id system add FT_Face
         */
 		class Font {
 		public:
@@ -255,6 +257,7 @@ namespace mc {
 
 			/**
 			@todo find a way to dynamically allocate letters without passing in a pointer
+			@todo cache characters
 			*/
 			void getCharacter(const wchar_t character, Letter* let) const;
 

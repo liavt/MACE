@@ -46,6 +46,10 @@ namespace mc {
 		*/
 		float r, g, b, a;
 
+		explicit Color(const int red, const int green, const int blue, const int alpha = 255) noexcept;
+
+		explicit Color(const Byte red, const Byte green, const Byte blue, const Byte alpha = 255) noexcept;
+
 		/**
 		Creates a `Color` from specified values.
 		@param red The red component from 0.0 to 1.0, where 1.0 is the most red.
@@ -54,7 +58,7 @@ namespace mc {
 		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
 		@see Color(std::array<float,4>)
 		*/
-		Color(const float& red, const float& green, const float& blue, const float& alpha = 1.0f) noexcept;
+		explicit Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
 		/**
 		Creates a `Color` from an array of `floats`.
 		@param values An array where the first element is red, the second is green, etc
@@ -245,10 +249,11 @@ namespace mc {
 		/**
 		Constant `Color` value for easy access to common colors
 		*/
-		const Color RED = Color(255, 0, 0), GREEN = Color(0, 255, 0),
+		const Color RED = Color(255, 0, 0),
 			DARK_BLUE = Color(0, 0, 255), CYAN = Color(0, 255, 255),
 			LIGHT_BLUE = Color(50, 200, 255), DARK_RED = Color(150, 0, 0),
-			DARK_GREEN = Color(0, 150, 0), PURPLE = Color(100, 0, 255),
+			DARK_GREEN = Color(0, 50, 0), GREEN = Color(0, 150, 0),
+			LIGHT_GREEN = Color(0, 250, 0), PURPLE = Color(100, 0, 255),
 			MAGENTA = Color(255, 0, 255), WHITE = Color(255, 255, 255),
 			BLACK = Color(0, 0, 0), YELLOW = Color(255, 255, 0),
 			DARK_GRAY = Color(100, 100, 100), LIGHT_GRAY = Color(200, 200, 200),

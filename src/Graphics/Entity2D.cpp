@@ -460,9 +460,9 @@ namespace mc {
 				throw NullPointerException("You must provide an ProgressBar for RenderProtocol<ProgressBar>");
 			}
 
-			entity->backgroundTexture.bindToLocation(0);
-			entity->foregroundTexture.bindToLocation(1);
-			entity->selectionTexture.bindToLocation(2);
+			entity->backgroundTexture.bind(0);
+			entity->foregroundTexture.bind(1);
+			entity->selectionTexture.bind(2);
 
 			renderer.bind();
 			renderer.getShader().setUniform("progress", (entity->progress - entity->min) / (entity->max - entity->min));
@@ -549,7 +549,7 @@ namespace mc {
 			character->texture.init();
 			character->texture.bind();
 
-			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			character->texture.setPixelStore(GL_UNPACK_ALIGNMENT, 1);
 
 			character->texture.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
 			character->texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -606,7 +606,7 @@ namespace mc {
 				throw NullPointerException("You must provide an Letter for RenderProtocol<Letter>");
 			}
 
-			entity->texture.bindToLocation(0);
+			entity->texture.bind(0);
 
 			renderer.bind();
 
