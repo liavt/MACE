@@ -112,6 +112,15 @@ namespace mc {
 		return output;
 	}
 
+	const float * Color::flatten(float arr[4]) const {
+		arr[0] = r;
+		arr[1] = g;
+		arr[2] = b;
+		arr[3] = a;
+
+		return arr;
+	};
+
 	bool Color::operator<(const Color& other) const {
 		//the real g right here
 		return other.r < r && other.g < g && other.b < b && other.a < a;

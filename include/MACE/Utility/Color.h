@@ -58,7 +58,7 @@ namespace mc {
 		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
 		@see Color(std::array<float,4>)
 		*/
-		explicit Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
+		Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
 		/**
 		Creates a `Color` from an array of `floats`.
 		@param values An array where the first element is red, the second is green, etc
@@ -192,14 +192,7 @@ namespace mc {
 		@return Pointer to `arr`
 		@param arr The array to fill
 		*/
-		const float* flatten(float arr[4]) const {
-			arr[0] = r;
-			arr[1] = g;
-			arr[2] = b;
-			arr[3] = a;
-
-			return arr;
-		}
+		const float* flatten(float arr[4]) const;
 
 		/**
 		Compares the color values of 2 `Colors`
