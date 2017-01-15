@@ -76,6 +76,16 @@ namespace mc {
 #endif
 		}
 
+		FILE * fopen(FILE ** result, const char * filename, const char * mode) {
+#if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
+			mc::os::assert(fopen_s(result, filename, mode) != 0, "fopen_s failed");
+
+			return *result;
+#else
+			return std::fopen(filename, mode);
+#endif
+		}
+
 		std::size_t mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate) ) {

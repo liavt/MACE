@@ -32,6 +32,8 @@ namespace mc {
 		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time);
 		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time);
 
+		FILE* fopen(FILE** result, const char* filename, const char* mode);
+
 		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
 
 		void assert(const bool cond, const std::string& message);

@@ -523,7 +523,7 @@ namespace mc {
 		}
 
 		bool Font::hasKerning() const{
-            return FT_HAS_KERNING(fonts[id]);
+            return FT_HAS_KERNING(fonts[id]) == 1;
 		}
 
 		Index Font::getID() const {

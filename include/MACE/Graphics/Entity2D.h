@@ -134,6 +134,9 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<ProgressBar>
 
+		/**
+		@bug some weird artifacting because of anti-aliasing
+		*/
 		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
 		public:

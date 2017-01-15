@@ -8,6 +8,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Utility/Audio.h>
+#include <MACE/Core/System.h>
+
+#include <iostream>
 
 namespace mc {
 	void AudioModule::init() {
@@ -80,7 +83,7 @@ namespace mc {
 		WAVE_Data wave_data;
 
 		try {
-			soundFile = fopen(path.c_str(), "rb");
+			soundFile = mc::os::fopen(&soundFile, path.c_str(), "rb");
 			if (!soundFile)
 				throw (path);
 

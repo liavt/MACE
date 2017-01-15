@@ -20,9 +20,10 @@ uniform float progress;
 vec4 ssl_frag_main()  
 {  	
 	vec4 selection = texture(selectionTexture, textureCoord);
-	vec4 foreground = texture(foregroundTexture, textureCoord);
 	
 	if( progress >= selection.r ){
+		vec4 foreground = texture(foregroundTexture, textureCoord);
+	
 		return vec4(foreground.rgb, foreground.a * selection.a);
 	}
 	
