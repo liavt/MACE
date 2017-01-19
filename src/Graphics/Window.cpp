@@ -19,6 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <chrono>
 #include <iostream>
 #include <unordered_map>
+#include <sstream>
 
 #include <GLFW/glfw3.h>
 
@@ -58,7 +59,12 @@ namespace mc {
 			glewExperimental = true;
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
-				throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
+				std::ostringstream errorMessage;
+				errorMessage << "GLEW failed to initialize: ";
+				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
+				//+ operater in std::string can not handle this conversion.
+				errorMessage << glewGetErrorString(result);
+				throw mc::InitializationError(errorMessage.str());
 			}
 
 			try {
@@ -233,7 +239,7 @@ namespace mc {
 							gfx::Renderer::renderFrame(this);
 						}
 
-                        gfx::Renderer::checkInput();
+						gfx::Renderer::checkInput();
 
 						if( !MACE::isRunning() ) {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
