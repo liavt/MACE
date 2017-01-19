@@ -44,11 +44,6 @@ namespace mc {
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void WindowModule::create() {
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 			window = glfwCreateWindow(originalWidth, originalHeight, title.c_str(), NULL, NULL);
 
 			//first we set up glew and opengl
@@ -70,10 +65,14 @@ namespace mc {
 			try {
 				gfx::ogl::checkGLError(__LINE__, __FILE__);
 			} catch( ... ) {
-				//glew sometimes throws errors that can be ignored
+				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 			}
 
-			if( GL_VERSION_3_0 ) {
+			if( !GLEW_VERSION_3_0 ) {
+				throw mc::InitializationError("OpenGL 3.0+ not found");
+			} else if( !GLEW_VERSION_3_3 ) {
+				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
+			} else {
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 				std::cout << "OpenGL has been created succesfully!" << std::endl;
 				std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
@@ -81,10 +80,6 @@ namespace mc {
 				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-			} else if( !GL_VERSION_3_3 ) {
-				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
-			} else {
-				throw mc::InitializationError("OpenGL 3.0+ not found");
 			}
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
