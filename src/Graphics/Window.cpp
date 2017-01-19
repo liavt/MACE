@@ -69,7 +69,13 @@ namespace mc {
 			}
 
 			if( !GLEW_VERSION_3_0 ) {
-				throw mc::InitializationError("OpenGL 3.0+ not found");
+				std::ostringstream errorMessage;
+				errorMessage << "OpenGL 3.0+ not found. " << std::endl;
+				errorMessage << glGetString(GL_VERSION) << " was found instead." << std::endl;
+				errorMessage << "This graphics card is not supported." << std::endl;
+				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
+				//+ operater in std::string can not handle this conversion.
+				throw mc::InitializationError(errorMessage.str());
 			} else if( !GLEW_VERSION_3_3 ) {
 				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
 			} else {
