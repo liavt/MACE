@@ -243,11 +243,17 @@ if(NOT ${OPENAL_FOUND})
 		download_library(${OPENAL_SOURCE_NAME} ${OPENAL_URL})
 		add_subdirectory(${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME})
 		
-		set(OPENAL_LIBRARY OpenAL32)
+		if(WIN32)
+			set(OPENAL_LIBRARY OpenAL32)
+		else()
+			set(OPENAL_LIBRARY openal)
+		endif()
 		
 		set(OPENAL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/${OPENAL_SOURCE_NAME}/include)
 	endif()
 endif()
+
+target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
@@ -263,8 +269,6 @@ target_include_directories(MACE PUBLIC ${OPENAL_INCLUDE_DIR})
 target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
 
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
-
-target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 
 set_target_properties(MACE PROPERTIES FOLDER "MC")
 
