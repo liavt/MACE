@@ -50,8 +50,8 @@ namespace mc {
 			"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__",
 			"__MACE__","__IF_SCOPE__","__CURRENT_IF_SCOPE__","__VA_ARGS__"
 		};
-		
-		//a punctuator according to the standard is something that seperates tokens. 
+
+		//a punctuator according to the standard is something that seperates tokens.
 		/**
 		1 character long punctuators. The reason that 2 character long and 1 characer long punctuators are seperate arrays
 		is because something like == has 1 punctuator, but !! has 2 punctuators.
@@ -59,7 +59,7 @@ namespace mc {
 		const std::array< char, 23 > punctuators1c = {
 			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
 		};
-		
+
 		/**
 		2 character long punctuators
 		@todo Make this constexpr. Right now, it is allocated at runtime, not compile time. std::string is not constexpr so an alternative is needed
@@ -606,7 +606,8 @@ namespace mc {
 				}
 
 				return std::vector< std::string >();
-			} else if( command == "version" ) {
+				//glsl commands
+			} else if( command == "version" || command == "extension" ) {
 				//this is for shaders
 				std::vector < std::string > output;
 				output.push_back("#" + command + " " + params);
@@ -1388,11 +1389,11 @@ namespace mc {
 
 	bool IncludeDirectory::hasFile(const std::string & name) const {
 
-#if defined(WIN32) || defined(_WIN32) 
+#if defined(WIN32) || defined(_WIN32)
 		std::ifstream f(directory + '\\' + name);
-#else 
+#else
 		std::ifstream f(directory + '/' + name);
-#endif 		
+#endif
 		return f.good();
 	}
 
@@ -1400,11 +1401,11 @@ namespace mc {
 
 		std::string fileName = directory;
 
-#if defined(WIN32) || defined(_WIN32) 
+#if defined(WIN32) || defined(_WIN32)
 		fileName += '\\';
-#else 
+#else
 		fileName += '/';
-#endif 		
+#endif
 		fileName += name;
 
 		std::ifstream f(fileName);

@@ -151,7 +151,7 @@ namespace mc {
 				ogl::Texture idTexture = ogl::Texture();
 				ogl::Texture proxyIDTexture = ogl::Texture();
 
-				Size samples = 4;
+				Size samples = 0;
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -487,6 +487,9 @@ namespace mc {
 					sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*) (glGetString(GL_RENDERER))));
 					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*) (glGetString(GL_VERSION))));
 					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*) (glGetString(GL_SHADING_LANGUAGE_VERSION))));
+
+                    sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 330 core"));
+                    sslPreprocessor.defineMacro(mc::Macro("SSL_EXTENSIONS", ""));
 
 					/*
 					in order to define a bunch of opengl macros, we need to check if they exist, just in case this system doesnt support

@@ -3,8 +3,6 @@ R"(
 
 //VERTEX SHADER
 
-#version 330 core
-
 #include <ssl_vertex>
 
 precision mediump float; // Defines precision for float and float-derived (vector/matrix) types.

@@ -3,8 +3,6 @@ R"(
 
 //FRAGMENT SHADER
 
-#version 330 core
-
 #include <ssl_frag>
 
 precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
