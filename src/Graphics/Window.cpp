@@ -19,6 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <chrono>
 #include <iostream>
 #include <unordered_map>
+#include <sstream>
 
 #include <GLFW/glfw3.h>
 
@@ -79,16 +80,31 @@ namespace mc {
 			glewExperimental = true;
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
-				throw mc::InitializationError("GLEW failed to initialize with result " + std::to_string(result));
+				std::ostringstream errorMessage;
+				errorMessage << "GLEW failed to initialize: ";
+				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
+				//+ operater in std::string can not handle this conversion.
+				errorMessage << glewGetErrorString(result);
+				throw mc::InitializationError(errorMessage.str());
 			}
 
 			try {
 				gfx::ogl::checkGLError(__LINE__, __FILE__);
 			} catch( ... ) {
-				//glew sometimes throws errors that can be ignored
+				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 			}
 
-			if( GL_VERSION_3_0 ) {
+			if( !GLEW_VERSION_3_0 ) {
+				std::ostringstream errorMessage;
+				errorMessage << "OpenGL 3.0+ not found. " << std::endl;
+				errorMessage << glGetString(GL_VERSION) << " was found instead." << std::endl;
+				errorMessage << "This graphics card is not supported." << std::endl;
+				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
+				//+ operater in std::string can not handle this conversion.
+				throw mc::InitializationError(errorMessage.str());
+			} else if( !GLEW_VERSION_3_3 ) {
+				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
+			} else {
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 				std::cout << "OpenGL has been created succesfully!" << std::endl;
 				std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
@@ -96,10 +112,6 @@ namespace mc {
 				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-			} else if( !GL_VERSION_3_3 ) {
-				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
-			} else {
-				throw mc::InitializationError("OpenGL 3.0+ not found");
 			}
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
@@ -254,7 +266,7 @@ namespace mc {
 							gfx::Renderer::renderFrame(this);
 						}
 
-                        gfx::Renderer::checkInput();
+						gfx::Renderer::checkInput();
 
 						if( !MACE::isRunning() ) {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
