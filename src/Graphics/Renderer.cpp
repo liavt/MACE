@@ -151,7 +151,7 @@ namespace mc {
 				ogl::Texture idTexture = ogl::Texture();
 				ogl::Texture proxyIDTexture = ogl::Texture();
 
-				Size samples = 0;
+				Size samples = 1;
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
