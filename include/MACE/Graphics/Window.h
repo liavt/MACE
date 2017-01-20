@@ -29,6 +29,13 @@ namespace mc {
 	namespace os {
 		class WindowModule: public Module, public gfx::Entity {
 		public:
+            enum Properties: Byte{
+                VSYNC = 0,
+                FULLSCREEN = 1,
+                UNDECORATED = 2,
+                RESIZABLE = 3,
+            };
+
 			WindowModule(const int width, const int height, const char* title);
 
 			/**
@@ -54,8 +61,17 @@ namespace mc {
 
 			std::string getName() const override;
 
-			void setVSync(const bool& sync);
+			void setVSync(const bool sync);
 			bool isVSync() const;
+
+			void setFullscreen(const bool full);
+			bool isFullscreen() const;
+
+			void setResizable(const bool re);
+			bool isResizable() const;
+
+			void setUndecorated(const bool un);
+			bool isUndecorated() const;
 
 			void setCreationCallback(const VoidFunctionPtr callback);
 			const VoidFunctionPtr getCreationCallback() const;
@@ -74,7 +90,7 @@ namespace mc {
 			int originalHeight;
 			std::string title;
 
-			bool vsync = false;
+			BitField properties;
 
 			void clean() final;
 

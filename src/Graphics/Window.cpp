@@ -43,13 +43,34 @@ namespace mc {
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void WindowModule::create() {
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-			window = glfwCreateWindow(originalWidth, originalHeight, title.c_str(), NULL, NULL);
+            glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
+            glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
 
+#ifdef MACE_ERROR_CHECK
+            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif
+
+            GLFWmonitor* mon = nullptr;
+            if(properties.getBit(WindowModule::FULLSCREEN)){
+                mon = glfwGetPrimaryMonitor();
+
+                const GLFWvidmode* mode = glfwGetVideoMode(mon);
+                glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+                glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+                glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+                glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+                window = glfwCreateWindow(mode->width, mode->height, title.c_str(), mon, nullptr);
+            }else{
+                window = glfwCreateWindow(originalWidth, originalHeight, title.c_str(), nullptr, nullptr);
+			}
 			//first we set up glew and opengl
 			glfwMakeContextCurrent(window);
 
@@ -83,7 +104,7 @@ namespace mc {
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
-			if( vsync )glfwSwapInterval(1);
+			if( properties.getBit(WindowModule::VSYNC) )glfwSwapInterval(1);
 			else glfwSwapInterval(0);
 
 			glfwSetWindowUserPointer(window, this);
@@ -303,13 +324,37 @@ namespace mc {
 			return "MACE/Window";
 		}//getName()
 
-		void WindowModule::setVSync(const bool & sync) {
-			vsync = sync;
+		void WindowModule::setVSync(const bool sync) {
+			properties.setBit(WindowModule::VSYNC, sync);
 		}//setVSync
 
 		bool WindowModule::isVSync() const {
-			return vsync;
+			return properties.getBit(WindowModule::VSYNC);
 		}//isVSync
+
+		void WindowModule::setFullscreen(const bool full) {
+			properties.setBit(WindowModule::FULLSCREEN, full);
+		}//setFullscreen
+
+		bool WindowModule::isFullscreen() const {
+			return properties.getBit(WindowModule::FULLSCREEN);
+		}//isFullscreen
+
+		void WindowModule::setUndecorated(const bool un) {
+			properties.setBit(WindowModule::UNDECORATED, un);
+		}//setUndecorated
+
+		bool WindowModule::isUndecorated() const {
+			return properties.getBit(WindowModule::UNDECORATED);
+		}//isUndecorated
+
+		void WindowModule::setResizable(const bool re) {
+			properties.setBit(WindowModule::RESIZABLE, re);
+		}//setResizable
+
+		bool WindowModule::isResizable() const {
+			return properties.getBit(WindowModule::RESIZABLE);
+		}//isResizable
 
 		void WindowModule::setCreationCallback(const VoidFunctionPtr callback) {
 			creationCallback = callback;

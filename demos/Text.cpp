@@ -44,7 +44,6 @@ int main() {
 		os::WindowModule module = os::WindowModule(600, 600, "Text Demo");
 
 		module.setFPS(30);
-		module.setVSync(false);
 
 		module.addChild(group);
 
