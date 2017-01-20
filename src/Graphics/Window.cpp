@@ -46,10 +46,25 @@ namespace mc {
 		void WindowModule::create() {
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#if GL_VERSION_3_3
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#elif GL_VERSION_3_2
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#elif GL_VERSION_3_1
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+#elif GL_VERSION_3_0
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+#else
+#           error "OpenGL 3.0+ not found"
+#endif
 
             glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
             glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
