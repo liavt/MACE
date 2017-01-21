@@ -413,7 +413,6 @@ namespace mc {
 					while( par->hasParent() ) {
 						const TransformMatrix& parTransform = par->getTransformation();
 
-
 						inheritedTranslation += parTransform.translation * inheritedScale;
 						inheritedScale *= parTransform.scaler * inheritedScale;
 						inheritedRotation += parTransform.rotation;
@@ -422,10 +421,6 @@ namespace mc {
 						par = par->getParent();
 					}
 				}
-
-				//we want {-1, -1} to be the bottom left, not the top left that OpenGL normally has. inverting the Y does this for us
-				inheritedTranslation[1] *= -1;
-				translation[1] *= -1;
 
 				translation *= inheritedScale;
 
