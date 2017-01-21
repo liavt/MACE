@@ -815,7 +815,7 @@ namespace mc {
                     }
 
                     position[0] += (static_cast<float>(let->bearingX) / origWidth);
-                    position[1] += (static_cast<float>((let->getHeight()) - (let->bearingY)) / origHeight);
+                    position[1] += (static_cast<float>((let->getHeight()) - (font.getSize() - (let->bearingY >> 1))) / origHeight);
 
 					//i cant bear this
 					let->setX(position[0]);
@@ -852,10 +852,10 @@ namespace mc {
 			case VerticalAlign::CENTER:
 				letters.setY((-height / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalHeight());
 				break;
-			case VerticalAlign::TOP:
+			case VerticalAlign::BOTTOM:
 				letters.setY((-1.0f + height / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalHeight());
 				break;
-			case VerticalAlign::BOTTOM:
+			case VerticalAlign::TOP:
 				letters.setY(1.0f);
 				break;
 			}
