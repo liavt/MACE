@@ -767,8 +767,9 @@ namespace mc {
 		void Text::onClean() {
 			for( Index i = 0; i < letters.size(); ++i ) {
 				delete &letters[i];
-				letters.removeChild(i);
 			}
+
+			letters.clearChildren();
 
 			if( !hasChild(letters) ) {
 				addChild(letters);
