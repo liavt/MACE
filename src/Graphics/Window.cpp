@@ -39,6 +39,23 @@ namespace mc {
 			void pushKeyEvent(const short int& key, const BitField action) {
 				keys[key] = action;
 			}
+
+			GLFWwindow* createWindow(const bool fullscreen, const Size width, const Size height, const std::string& title){
+                GLFWmonitor* mon = nullptr;
+                if(fullscreen){
+                    mon = glfwGetPrimaryMonitor();
+
+                    const GLFWvidmode* mode = glfwGetVideoMode(mon);
+                    glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+                    glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+                    glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+                    glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+                    return glfwCreateWindow(mode->width, mode->height, title.c_str(), mon, nullptr);
+                }else{
+                    return glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+                }
+			}
 		}//anon namespace
 
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
@@ -46,49 +63,46 @@ namespace mc {
 		void WindowModule::create() {
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
-#if GL_VERSION_3_3
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#elif GL_VERSION_3_2
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#elif GL_VERSION_3_1
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-#elif GL_VERSION_3_0
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-#else
-#           error "OpenGL 3.0+ not found"
-#endif
 
             glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
             glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
+
+            //we are going to create multiple contexts if it fails initially. to prevent window spazzing, we make it invisible until we have a context that we know works.
+            glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
 
 #ifdef MACE_ERROR_CHECK
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-            GLFWmonitor* mon = nullptr;
-            if(properties.getBit(WindowModule::FULLSCREEN)){
-                mon = glfwGetPrimaryMonitor();
+            window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
 
-                const GLFWvidmode* mode = glfwGetVideoMode(mon);
-                glfwWindowHint(GLFW_RED_BITS, mode->redBits);
-                glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
-                glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
-                glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+            Index versionMajor = 3;
 
-                window = glfwCreateWindow(mode->width, mode->height, title.c_str(), mon, nullptr);
-            }else{
-                window = glfwCreateWindow(originalWidth, originalHeight, title.c_str(), nullptr, nullptr);
-			}
-			//first we set up glew and opengl
+            //this checks every available context until 1.0. the window is hidden so it won't cause spazzing
+            for(int versionMinor = 3; versionMinor>=0 && !window;--versionMinor){
+                std::cout << "Trying OpenGL "<<versionMajor<<"."<<versionMinor << std::endl;
+                glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
+                glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
+
+                glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+
+                window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
+                if(versionMinor==0&&versionMajor>1&&!window){
+                    versionMinor = 3;
+                    --versionMajor;
+                }
+            }
+
+            if(!window){
+                throw mc::InitializationError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
+            }
+
 			glfwMakeContextCurrent(window);
+            glfwShowWindow(window);
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
@@ -96,10 +110,14 @@ namespace mc {
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
 				std::ostringstream errorMessage;
-				errorMessage << "GLEW failed to initialize: ";
+                errorMessage << "GLEW failed to initialize: ";
 				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
 				//+ operater in std::string can not handle this conversion.
 				errorMessage << glewGetErrorString(result);
+
+				if(result == GLEW_ERROR_NO_GL_VERSION){
+                    errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
+				}
 				throw mc::InitializationError(errorMessage.str());
 			}
 
@@ -109,16 +127,8 @@ namespace mc {
 				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 			}
 
-			if( !GLEW_VERSION_3_0 ) {
-				std::ostringstream errorMessage;
-				errorMessage << "OpenGL 3.0+ not found. " << std::endl;
-				errorMessage << glGetString(GL_VERSION) << " was found instead." << std::endl;
-				errorMessage << "This graphics card is not supported." << std::endl;
-				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
-				//+ operater in std::string can not handle this conversion.
-				throw mc::InitializationError(errorMessage.str());
-			} else if( !GLEW_VERSION_3_3 ) {
-				std::cerr << "OpenGL 3.3 not found, falling back to OpenGL 3.0, which may cause undefined results. Try updating your graphics driver to fix this.";
+            if( !GLEW_VERSION_3_3 ) {
+				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this.";
 			} else {
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 				std::cout << "OpenGL has been created succesfully!" << std::endl;
