@@ -413,8 +413,8 @@ namespace mc {
 					while( par->hasParent() ) {
 						const TransformMatrix& parTransform = par->getTransformation();
 
-						inheritedTranslation += parTransform.translation * inheritedScale;
 						inheritedScale *= parTransform.scaler * inheritedScale;
+						inheritedTranslation += parTransform.translation * inheritedScale;
 						inheritedRotation += parTransform.rotation;
 
 
