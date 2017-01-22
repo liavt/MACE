@@ -485,6 +485,7 @@ namespace mc {
 
 					if( GLEW_VERSION_1_1 ) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
 					}
 					if( GLEW_VERSION_1_2 ) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2", "1"));
