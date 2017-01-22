@@ -61,22 +61,13 @@ namespace mc {
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void WindowModule::create() {
-			auto errorCallback = [] (int id, const char* desc) {
-				std::cout << "GLFW errored with an ID of " << id << " and a description of \'" << desc << '\'';
-			};
-			glfwSetErrorCallback(errorCallback);
-
-			if( !glfwInit() ) {
-				throw InitializationError("GLFW failed to intiailize");
-			}
-
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-
+/*
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+*/
 			glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
 			glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
 
@@ -110,6 +101,10 @@ namespace mc {
 
 			glfwMakeContextCurrent(window);
 
+			auto errorCallback = [] (int id, const char* desc) {
+				std::cout << "GLFW errored with an ID of " << id << " and a description of \'" << desc << '\'';
+			};
+			glfwSetErrorCallback(errorCallback);
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
@@ -147,6 +142,8 @@ namespace mc {
 			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
+
+std::cout<<"hi"<<std::endl;
 
 			if( properties.getBit(WindowModule::VSYNC) )glfwSwapInterval(1);
 			else glfwSwapInterval(0);
