@@ -61,25 +61,31 @@ namespace mc {
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void WindowModule::create() {
-			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+		if(!glfwInit()){
+			throw InitializationError("GLFW failed to intiailize");		
+		}
+		auto errorCallback = [] (int id, const char* desc){
+			std::cout << "GLFW errored with an ID of "<<id<<" and a description of \'"<<desc<<'\'';
+		};
+		glfwSetErrorCallback(errorCallback);
 
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+/*
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+*/
+
+			//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
             glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
             glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
-
-            //we are going to create multiple contexts if it fails initially. to prevent window spazzing, we make it invisible until we have a context that we know works.
-            glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
 
 #ifdef MACE_ERROR_CHECK
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
             window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
-
+/*
             Index versionMajor = 3;
 
             //this checks every available context until 1.0. the window is hidden so it won't cause spazzing
@@ -92,17 +98,18 @@ namespace mc {
 
                 window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
                 if(versionMinor==0&&versionMajor>1&&!window){
-                    versionMinor = 3;
+       		    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
+	            versionMinor = 3;
                     --versionMajor;
                 }
-            }
+            }*/
 
             if(!window){
                 throw mc::InitializationError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
             }
 
 			glfwMakeContextCurrent(window);
-            glfwShowWindow(window);
+
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
@@ -129,7 +136,8 @@ namespace mc {
 
             if( !GLEW_VERSION_3_3 ) {
 				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this.";
-			} else {
+		}
+
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 				std::cout << "OpenGL has been created succesfully!" << std::endl;
 				std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
@@ -137,7 +145,6 @@ namespace mc {
 				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-			}
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
