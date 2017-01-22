@@ -45,11 +45,10 @@ void create() {
 
 	const Size elementNum = 10;
 
-	left = gfx::Image(Colors::RED);
-	leftBot = gfx::Image(Colors::RED);
-	rightTop = gfx::Image(Colors::RED);
-	rightBot = gfx::Image(Colors::RED);
-
+	left = gfx::Image(gfx::ColorAttachment(Colors::GREEN));
+	leftBot = gfx::Image(gfx::ColorAttachment(Colors::GRAY));
+	rightTop = gfx::Image(gfx::ColorAttachment(Colors::YELLOW));
+	rightBot = gfx::Image(gfx::ColorAttachment(Colors::ORANGE));
 
 	left.setY(0.0f);
 	left.setX(-0.5f);

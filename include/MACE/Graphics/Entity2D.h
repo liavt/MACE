@@ -85,19 +85,18 @@ namespace mc {
 			static int getProtocol();
 
 			Image() noexcept;
-			Image(const ogl::Texture& tex);
-			Image(const Color& col);
+			Image(const ColorAttachment& col);
 			~Image() = default;
 
 			/**
 			@dirty
 			*/
-			void setTexture(const ogl::Texture& tex);
+			void setTexture(const ColorAttachment& tex);
 			/**
 			@dirty
 			*/
-			ogl::Texture& getTexture();
-			const ogl::Texture& getTexture() const;
+			ColorAttachment& getTexture();
+			const ColorAttachment& getTexture() const;
 
 			bool operator==(const Image& other) const;
 			bool operator!=(const Image& other) const;
@@ -107,7 +106,7 @@ namespace mc {
 			void onRender() override final;
 			void onDestroy() override final;
 		private:
-			ogl::Texture texture;
+			ColorAttachment texture;
 		};//Image
 
 		class ProgressBar;

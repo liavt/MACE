@@ -65,26 +65,9 @@ namespace mc {
 			return IMAGE_PROTOCOL;
 		}
 
-		Image::Image() noexcept {}
+		Image::Image() noexcept : texture() {}
 
-		Image::Image(const ogl::Texture & tex) : Image() {
-			texture = tex;
-		}
-
-		Image::Image(const Color & col) : Image(whiteTexture) {
-			if( !texture.isCreated() ) {
-				texture.init();
-
-				float data[] = { 1,1,1,1 };
-
-				texture.setData(data, 1, 1, GL_FLOAT, GL_RGBA);
-
-				texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			}
-
-			setPaint(col);
-		}
+		Image::Image(const ColorAttachment& tex) : texture(tex) {}
 
 		void Image::onInit() {
 			if( !texture.isCreated() ) {
@@ -109,7 +92,7 @@ namespace mc {
 		}
 
 
-		void Image::setTexture(const ogl::Texture & tex) {
+		void Image::setTexture(const ColorAttachment & tex) {
 			if( tex != texture ) {
 				makeDirty();
 
@@ -117,13 +100,13 @@ namespace mc {
 			}
 		}
 
-		ogl::Texture & Image::getTexture() {
+		ColorAttachment & Image::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		const ogl::Texture & Image::getTexture() const {
+		const ColorAttachment & Image::getTexture() const {
 			return texture;
 		}
 

@@ -93,6 +93,22 @@ namespace mc {
 			virtual void hover(Entity* e);
 		};//Component
 
+        class ColorAttachment: public ogl::Texture{
+        public:
+            ColorAttachment();
+            ColorAttachment(const Color& col);
+            ColorAttachment(const ogl::Texture& tex, const Color& col = Color());
+
+            Color& getPaint();
+            const Color& getPaint() const;
+            void setPaint(const Color& col);
+
+            bool operator==(const ColorAttachment& other) const;
+            bool operator!=(const ColorAttachment& other) const;
+        private:
+            Color paint;
+        };//ColorAttachment
+
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
 		<p>

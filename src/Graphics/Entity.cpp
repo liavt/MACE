@@ -18,6 +18,45 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 
+        ColorAttachment::ColorAttachment(): Texture(), paint() {}
+
+        ColorAttachment::ColorAttachment(const ogl::Texture& tex, const Color& col) : Texture(tex), paint(col) {}
+
+        ColorAttachment::ColorAttachment(const Color& col): ColorAttachment(){
+            if( !isCreated() ) {
+				init();
+
+				float data[] = { 1, 1, 1, 1 };
+
+				setData(data, 1, 1, GL_FLOAT, GL_RGBA);
+
+				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			}
+
+			setPaint(col);
+        }
+
+        Color& ColorAttachment::getPaint(){
+            return paint;
+        }
+
+        const Color& ColorAttachment::getPaint() const{
+            return paint;
+        }
+
+        void ColorAttachment::setPaint(const Color& col){
+            paint = col;
+        }
+
+        bool ColorAttachment::operator==(const ColorAttachment& other) const{
+            return paint == other.paint && Texture::operator==(other);
+        }
+
+        bool ColorAttachment::operator!=(const ColorAttachment& other) const{
+            return !operator==(other);
+        }
+
 		bool Entity::hasChild(Entity & e) const {
 			for( Size i = 0; i < children.size(); ++i ) {
 				if( children[i] == &e ) {
