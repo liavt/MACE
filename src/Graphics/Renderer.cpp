@@ -178,13 +178,24 @@ namespace mc {
 				//this function goes into the anonymous namespace because it technically doesn't belong in the ssl namespace. it should remain to this source file
 				void generateFramebuffer(const Size& width, const Size& height) {
 
-					sceneTexture.setMultisampledData(samples, width, height, GL_RGBA8);
-					idTexture.setMultisampledData(samples, width, height, GL_R32UI);
-					proxyIDTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
-
 					depthBuffer.init();
 					depthBuffer.bind();
-					depthBuffer.setStorageMultisampled(samples, GL_DEPTH_COMPONENT, width, height);
+
+					ogl::checkGLError(__LINE__, __FILE__);
+					
+					if(samples > 1){
+						sceneTexture.setMultisampledData(samples, width, height, GL_RGBA8);
+						idTexture.setMultisampledData(samples, width, height, GL_R32UI);
+						depthBuffer.setStorageMultisampled(samples, GL_DEPTH_COMPONENT, width, height);
+					}else{
+						sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+						idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+						depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+					}
+
+					ogl::checkGLError(__LINE__, __FILE__);
+					
+					proxyIDTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 
 					//for our custom FBOs. we render using a z-buffer to figure out which entity is clicked on
 					frameBuffer.init();
@@ -253,19 +264,31 @@ namespace mc {
 				windowData.setData(MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
 				windowData.unbind();
 
-				sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
+				ogl::checkGLError(__LINE__, __FILE__);
+
+				if(samples > 1){
+					sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
+				}
 				sceneTexture.init();
 				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-				idTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
+				ogl::checkGLError(__LINE__, __FILE__);
+
+				if(samples > 1){
+					idTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
+				}
 				idTexture.init();
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+				ogl::checkGLError(__LINE__, __FILE__);
+
 				proxyIDTexture.init();
 				proxyIDTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				proxyIDTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+				ogl::checkGLError(__LINE__, __FILE__);
 
 				//better to access originalWidth and originalHeight directly than via a parameter.
 				generateFramebuffer(originalWidth, originalHeight);
