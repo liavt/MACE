@@ -253,24 +253,26 @@ if(NOT ${OPENAL_FOUND})
 	endif()
 endif()
 
-target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
+set_target_properties(MACE PROPERTIES FOLDER "MC")
 
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
-target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
-
 target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})
-target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
-
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
-target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
-
 target_include_directories(MACE PUBLIC ${OPENAL_INCLUDE_DIR})
-target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
-
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 
-set_target_properties(MACE PROPERTIES FOLDER "MC")
+target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
+
+if(UNIX AND NOT APPLE){
+	#glfw requires this
+	find_package(X11 REQUIRED)
+	target_link_libraries( my_program ${X11_LIBRARIES} )
+}
 
 if(COMMAND cmake_policy)
 	cmake_policy(POP)

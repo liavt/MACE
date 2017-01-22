@@ -10,7 +10,6 @@ class TestComponent: public gfx::Component {
 	void init(gfx::Entity* en) override {
 		en->setProperty(gfx::Entity::STRETCH_X, true);
 		en->setProperty(gfx::Entity::STRETCH_Y, true);
-		dynamic_cast<gfx::GraphicsEntity*>(en)->setPaint(Colors::RED);
 	}
 
 	bool update(gfx::Entity* en) override {

@@ -26,15 +26,11 @@ namespace mc {
             if( !isCreated() ) {
 				init();
 
-				float data[] = { 1, 1, 1, 1 };
-
-				setData(data, 1, 1, GL_FLOAT, GL_RGBA);
+				setData(&col, 1, 1, GL_FLOAT, GL_RGBA);
 
 				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			}
-
-			setPaint(col);
         }
 
         Color& ColorAttachment::getPaint(){
