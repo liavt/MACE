@@ -40,73 +40,73 @@ namespace mc {
 				keys[key] = action;
 			}
 
-			GLFWwindow* createWindow(const bool fullscreen, const Size width, const Size height, const std::string& title){
-                GLFWmonitor* mon = nullptr;
-                if(fullscreen){
-                    mon = glfwGetPrimaryMonitor();
+			GLFWwindow* createWindow(const bool fullscreen, const Size width, const Size height, const std::string& title) {
+				GLFWmonitor* mon = nullptr;
+				if( fullscreen ) {
+					mon = glfwGetPrimaryMonitor();
 
-                    const GLFWvidmode* mode = glfwGetVideoMode(mon);
-                    glfwWindowHint(GLFW_RED_BITS, mode->redBits);
-                    glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
-                    glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
-                    glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+					const GLFWvidmode* mode = glfwGetVideoMode(mon);
+					glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+					glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+					glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+					glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-                    return glfwCreateWindow(mode->width, mode->height, title.c_str(), mon, nullptr);
-                }else{
-                    return glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-                }
+					return glfwCreateWindow(mode->width, mode->height, title.c_str(), mon, nullptr);
+				} else {
+					return glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+				}
 			}
 		}//anon namespace
 
 		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
 
 		void WindowModule::create() {
-		if(!glfwInit()){
-			throw InitializationError("GLFW failed to intiailize");		
-		}
-		auto errorCallback = [] (int id, const char* desc){
-			std::cout << "GLFW errored with an ID of "<<id<<" and a description of \'"<<desc<<'\'';
-		};
-		glfwSetErrorCallback(errorCallback);
+			auto errorCallback = [] (int id, const char* desc) {
+				std::cout << "GLFW errored with an ID of " << id << " and a description of \'" << desc << '\'';
+			};
+			glfwSetErrorCallback(errorCallback);
+
+			if( !glfwInit() ) {
+				throw InitializationError("GLFW failed to intiailize");
+			}
 
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-/*
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-*/
 
-			//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-            glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
-            glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+			glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
+			glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
 
 #ifdef MACE_ERROR_CHECK
-            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-            window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
-/*
-            Index versionMajor = 3;
+			window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
 
-            //this checks every available context until 1.0. the window is hidden so it won't cause spazzing
-            for(int versionMinor = 3; versionMinor>=0 && !window;--versionMinor){
-                std::cout << "Trying OpenGL "<<versionMajor<<"."<<versionMinor << std::endl;
-                glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
-                glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
+			Index versionMajor = 3;
 
-                glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+			//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
+			for( int versionMinor = 3; versionMinor >= 0 && !window; --versionMinor ) {
+				std::cout << "Trying OpenGL " << versionMajor << "." << versionMinor << std::endl;
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
 
-                window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
-                if(versionMinor==0&&versionMajor>1&&!window){
-       		    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
-	            versionMinor = 3;
-                    --versionMajor;
-                }
-            }*/
+				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 
-            if(!window){
-                throw mc::InitializationError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
-            }
+				window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
+				if( versionMinor == 0 && versionMajor > 1 && !window ) {
+					glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
+					versionMinor = 3;
+					--versionMajor;
+				}
+			}
+
+			if( !window ) {
+				throw mc::InitializationError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
+			}
 
 			glfwMakeContextCurrent(window);
 
@@ -117,13 +117,13 @@ namespace mc {
 			GLenum result = glewInit();
 			if( result != GLEW_OK ) {
 				std::ostringstream errorMessage;
-                errorMessage << "GLEW failed to initialize: ";
+				errorMessage << "GLEW failed to initialize: ";
 				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
 				//+ operater in std::string can not handle this conversion.
 				errorMessage << glewGetErrorString(result);
 
-				if(result == GLEW_ERROR_NO_GL_VERSION){
-                    errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
+				if( result == GLEW_ERROR_NO_GL_VERSION ) {
+					errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
 				}
 				throw mc::InitializationError(errorMessage.str());
 			}
@@ -134,17 +134,17 @@ namespace mc {
 				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 			}
 
-            if( !GLEW_VERSION_3_3 ) {
+			if( !GLEW_VERSION_3_3 ) {
 				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this.";
-		}
+			}
 
-				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-				std::cout << "OpenGL has been created succesfully!" << std::endl;
-				std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
-				std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
-				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
-				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
-				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+			std::cout << "OpenGL has been created succesfully!" << std::endl;
+			std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
+			std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
+			std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
+			std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 

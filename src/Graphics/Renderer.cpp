@@ -171,6 +171,9 @@ namespace mc {
 				IncludeString entityLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_entity.glsl>
 				}, "ssl_entity");
+				IncludeString coreLibrary = IncludeString({
+#	include <MACE/Graphics/Shaders/include/ssl_core.glsl>
+				}, "ssl_core");
 
 				//this function goes into the anonymous namespace because it technically doesn't belong in the ssl namespace. it should remain to this source file
 				void generateFramebuffer(const Size& width, const Size& height) {
@@ -414,7 +417,7 @@ namespace mc {
 						const TransformMatrix& parTransform = par->getTransformation();
 
 						inheritedTranslation += parTransform.translation * inheritedScale;
-                        inheritedScale *= parTransform.scaler * inheritedScale;
+						inheritedScale *= parTransform.scaler * inheritedScale;
 						inheritedRotation += parTransform.rotation;
 
 						par = par->getParent();
@@ -464,9 +467,7 @@ namespace mc {
 				Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
 				shaderPreprocessor.defineMacro(mc::Macro("__SHADER_TYPE__", std::to_string(type)));
 
-				const std::string processedShader = shaderPreprocessor.preprocess();
-
-				return processedShader;
+				return shaderPreprocessor.preprocess();
 			}//processShader
 
 			const mc::Preprocessor& getSSLPreprocessor() {
@@ -482,8 +483,50 @@ namespace mc {
 					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*) (glGetString(GL_VERSION))));
 					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*) (glGetString(GL_SHADING_LANGUAGE_VERSION))));
 
-                    sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 330 core"));
-                    sslPreprocessor.defineMacro(mc::Macro("SSL_EXTENSIONS", ""));
+					if( GLEW_VERSION_1_1 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_1", "1"));
+					}
+					if( GLEW_VERSION_1_2 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2", "1"));
+					}
+					if( GLEW_VERSION_1_2_1 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2_1", "1"));
+					}
+					if( GLEW_VERSION_1_3 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_3", "1"));
+					}
+					if( GLEW_VERSION_1_4 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_4", "1"));
+					}
+					if( GLEW_VERSION_1_5 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_5", "1"));
+					}
+
+					if( GLEW_VERSION_2_0 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
+					}
+					if( GLEW_VERSION_2_1 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
+					}
+
+					if( GLEW_VERSION_3_0 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 130 core"));
+					}
+					if( GLEW_VERSION_3_1 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
+					}
+					if( GLEW_VERSION_3_2 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
+					}
+					if( GLEW_VERSION_3_3 ) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_3", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 330 core"));
+					}
 
 					/*
 					in order to define a bunch of opengl macros, we need to check if they exist, just in case this system doesnt support
@@ -590,6 +633,7 @@ namespace mc {
 					sslPreprocessor.addInclude(positionLibrary);
 					sslPreprocessor.addInclude(windowLibrary);
 					sslPreprocessor.addInclude(entityLibrary);
+					sslPreprocessor.addInclude(coreLibrary);
 				}
 				return sslPreprocessor;
 			}//getSSLPreprocessor

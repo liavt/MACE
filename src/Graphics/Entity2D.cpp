@@ -505,8 +505,8 @@ namespace mc {
 			return height;
 		}
 
-		bool Font::hasKerning() const{
-            return FT_HAS_KERNING(fonts[id]) == 1;
+		bool Font::hasKerning() const {
+			return FT_HAS_KERNING(fonts[id]) == 1;
 		}
 
 		Index Font::getID() const {
@@ -541,13 +541,13 @@ namespace mc {
 			character->texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
-        Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const{
-            FT_Vector vec;
+		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
+			FT_Vector vec;
 
-            FT_Get_Kerning(fonts[id], prev, current, FT_KERNING_DEFAULT, &vec);
+			FT_Get_Kerning(fonts[id], prev, current, FT_KERNING_DEFAULT, &vec);
 
-            return { static_cast<unsigned int>(vec.x >> 6), static_cast<unsigned int>(vec.y >> 6) };
-        }
+			return{ static_cast<unsigned int>(vec.x >> 6), static_cast<unsigned int>(vec.y >> 6) };
+		}
 
 		bool Font::operator==(const Font& other) const {
 			return id == other.id&&height == other.height;
@@ -759,9 +759,9 @@ namespace mc {
 			}
 
 			const float origWidth = static_cast<const float>(Renderer::getOriginalWidth()),
-						origHeight = static_cast<const float>(Renderer::getOriginalHeight());
+				origHeight = static_cast<const float>(Renderer::getOriginalHeight());
 
-            const bool useKerning = font.hasKerning();
+			const bool useKerning = font.hasKerning();
 
 			float x = 0, y = 0;
 
@@ -788,17 +788,17 @@ namespace mc {
 					let->setWidth(static_cast<float>(let->width) / origWidth);
 					let->setHeight(static_cast<float>(let->height) / origHeight);
 
-                    Vector<float, 2> position = { x, y };
+					Vector<float, 2> position = { x, y };
 
-                    if( i > 0 && useKerning){
-                        Vector<unsigned int, 2> delta = font.getKerning(text[i-1], text[i]);
+					if( i > 0 && useKerning ) {
+						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
-                        position[0] += static_cast<float>(delta[0]) / origWidth;
-                        position[1] += static_cast<float>(delta[1]) / origHeight;
-                    }
+						position[0] += static_cast<float>(delta[0]) / origWidth;
+						position[1] += static_cast<float>(delta[1]) / origHeight;
+					}
 
-                    position[0] += (static_cast<float>(let->bearingX) / origWidth);
-                    position[1] += (static_cast<float>((let->getHeight()) - (font.getSize() - (let->bearingY >> 1))) / origHeight);
+					position[0] += (static_cast<float>(let->bearingX) / origWidth);
+					position[1] += (static_cast<float>((let->getHeight()) - (font.getSize() - (let->bearingY >> 1))) / origHeight);
 
 					//i cant bear this
 					let->setX(position[0]);

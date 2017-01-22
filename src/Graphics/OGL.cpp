@@ -1040,6 +1040,6 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-		}//ogl
-	}//gfx
-}//mc
+			}//ogl
+		}//gfx
+	}//mc

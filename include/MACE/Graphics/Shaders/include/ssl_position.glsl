@@ -1,7 +1,8 @@
 R"(
 #ifndef _SSL_POSITION_LIBRARY_
-#define _SSL_POSITION_LIBRARY_
+#define _SSL_POSITION_LIBRARY_ 1
 
+#include <ssl_core>
 #include <ssl_window>
 #include <ssl_entity>
 

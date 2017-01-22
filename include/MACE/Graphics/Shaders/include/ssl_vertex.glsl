@@ -1,11 +1,9 @@
 R"(
 
 #ifndef _SSL_VERTEX_LIBRARY_
-#define _SSL_VERTEX_LIBRARY_
+#define _SSL_VERTEX_LIBRARY_ 1
 
-SSL_VERSION
-SSL_EXTENSIONS
-
+#include <ssl_core>
 #include <ssl_position>
 
 vec4 ssl_vert_main(vec4);

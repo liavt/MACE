@@ -1,6 +1,8 @@
 R"(
 #ifndef _SSL_ENTITY_LIBRARY_
-#define _SSL_ENTITY_LIBRARY_
+#define _SSL_ENTITY_LIBRARY_ 1
+
+#include <ssl_core>
 
 struct ssl_EntityDataStruct{
 	vec3 ssl_Translation;

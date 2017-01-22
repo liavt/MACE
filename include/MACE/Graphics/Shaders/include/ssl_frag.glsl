@@ -1,11 +1,9 @@
 R"(
 
 #ifndef _SSL_FRAGMENT_LIBRARY_
-#define _SSL_FRAGMENT_LIBRARY_
+#define _SSL_FRAGMENT_LIBRARY_ 1
 
-SSL_VERSION
-SSL_EXTENSIONS
-
+#include <ssl_core>
 #include <ssl_entity>
 
 layout(location = 0) out lowp vec4 ssl_OutColor;
