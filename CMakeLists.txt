@@ -271,7 +271,7 @@ target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 if(UNIX AND NOT APPLE)
 	#glfw requires this
 	find_package(X11 REQUIRED)
-	target_link_libraries(MACE ${X11_LIBRARIES} )
+	target_link_libraries(MACE LINK_PUBLIC ${X11_LIBRARIES} )
 endif()
 
 if(COMMAND cmake_policy)
