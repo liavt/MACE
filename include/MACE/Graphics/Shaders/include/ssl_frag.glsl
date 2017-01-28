@@ -21,14 +21,10 @@ void main(void){
 	if(ssl_Color.a == 0.0){
 		discard;
 	}
-	
-//	ssl_Color.rgb = mix(ssl_EntityPaint.rgb, ssl_Color.rgb, 1.0 - ssl_EntityPaint.a);
-	
+		
 	ssl_OutColor = ssl_Color;
 	
 	ssl_OutID = ssl_EntityID;
-	
-	ssl_OutColor.r = ssl_OutID / 1000;
 }
 
 #endif
