@@ -22,7 +22,7 @@ void main(void){
 		discard;
 	}
 	
-	ssl_Color.rgb = mix(ssl_EntityPaint.rgb, ssl_Color.rgb, 1.0 - ssl_EntityPaint.a);
+//	ssl_Color.rgb = mix(ssl_EntityPaint.rgb, ssl_Color.rgb, 1.0 - ssl_EntityPaint.a);
 	
 	ssl_OutColor = ssl_Color;
 	

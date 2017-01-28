@@ -15,22 +15,54 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <string>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 namespace mc {
 	namespace gfx {
+		namespace {
+			//when you request for a solid color ColorAttachment, it will use the same texture to save memory
+			ogl::Texture solidColor = ogl::Texture();
+		};
 
-		ColorAttachment::ColorAttachment() : Texture(), paint() {}
+		ColorAttachment::ColorAttachment() : Texture(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
 
 		ColorAttachment::ColorAttachment(const ogl::Texture& tex, const Color& col) : Texture(tex), paint(col) {}
 
-		ColorAttachment::ColorAttachment(const Color& col) : ColorAttachment() {
-			if( !isCreated() ) {
-				init();
+		ColorAttachment::ColorAttachment(const char * file) : ColorAttachment() {
+			init();
+			setDataFromFile(file);
+		}
 
-				setData(&col, 1, 1, GL_FLOAT, GL_RGBA);
+		ColorAttachment::ColorAttachment(const std::string & file) : ColorAttachment(file.c_str()) {}
 
-				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		ColorAttachment::ColorAttachment(const Color& col) : ColorAttachment(solidColor, col) {
+			if( !solidColor.isCreated() ) {
+				solidColor.init();
+
+				const float data[] = { 1,1,1,1 };
+				solidColor.setData(data, 1, 1, GL_FLOAT, GL_RGBA);
+
+				solidColor.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				solidColor.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			}
+		}
+
+		void ColorAttachment::setDataFromFile(const char * file) {
+			int width, height, componentSize;
+
+			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
+
+			setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+
+			stbi_image_free(image);
+
+			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+
+		void ColorAttachment::setDataFromFile(const std::string & file) {
+			setDataFromFile(file.c_str());
 		}
 
 		Color& ColorAttachment::getPaint() {
@@ -540,39 +572,26 @@ namespace mc {
 				transformation.translation[1] = newY;
 			}
 		}
-		ogl::UniformBuffer & GraphicsEntity::getBuffer() {
-			makeDirty();
-			return buffer;
-		}
-		const ogl::UniformBuffer & GraphicsEntity::getBuffer() const {
-			return buffer;
-		}
-		void GraphicsEntity::setBuffer(const ogl::UniformBuffer & newBuffer) {
-			if( newBuffer != buffer ) {
-				makeDirty();
-				buffer = newBuffer;
-			}
-		}
 
 		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
 
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::init() {
-			if( !buffer.isCreated() ) {
-				buffer.init();
+			if( !sslBuffer.isCreated() ) {
+				sslBuffer.init();
 			}
-			ssl::bindBuffer(buffer);
+			ssl::bindBuffer(sslBuffer);
 			Entity::init();
 		}
 
 		void GraphicsEntity::destroy() {
 			Entity::destroy();
-			buffer.destroy();
+			sslBuffer.destroy();
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return buffer == other.buffer&&paint == other.paint&&opacity == other.opacity&&Entity::operator==(other);
+			return sslBuffer == other.sslBuffer&&opacity == other.opacity&&Entity::operator==(other);
 		}
 
 		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
@@ -584,24 +603,6 @@ namespace mc {
 				ssl::fillBuffer(this);
 			}
 			Entity::clean();
-		}
-
-		Color & GraphicsEntity::getPaint() {
-			makeDirty();
-
-			return paint;
-		}
-
-		const Color & GraphicsEntity::getPaint() const {
-			return paint;
-		}
-
-		void GraphicsEntity::setPaint(const Color & c) {
-			if( paint != c ) {
-				makeDirty();
-
-				paint = c;
-			}
 		}
 
 		float GraphicsEntity::getOpacity() {

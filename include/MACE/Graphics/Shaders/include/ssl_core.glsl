@@ -28,6 +28,16 @@ SSL_GL_VERSION_DECLARATION
 #extension GL_EXT_texture_array : require
 #endif //GL_VERSION_3_0
 
+struct sslAttachmentData{
+	vec4 paint;
+};
+
+vec4 sslAttachmentBlend(sslAttachmentData data, vec4 color){
+	return vec4(mix(data.paint.rgb, color.rgb, (1.0f - data.paint.a)), color.a);
+}
+
+#define sslUniformBuffer layout(std140) uniform
+
 #endif //_SSL_CORE_LIBRARY_
 
 )"

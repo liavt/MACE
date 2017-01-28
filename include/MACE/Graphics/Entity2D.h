@@ -51,8 +51,26 @@ namespace mc {
 		class Entity2D: public GraphicsEntity {
 		public:
 			Entity2D();
-		protected:
 
+			/**
+			@copydoc Entity2D::getBuffer() const
+			@dirty
+			*/
+			ogl::UniformBuffer& getBuffer();
+			/**
+			@internal
+			*/
+			const ogl::UniformBuffer& getBuffer() const;
+			/**
+			@internal
+			@dirty
+			*/
+			void setBuffer(const ogl::UniformBuffer& newBuffer);
+
+			bool operator==(const Entity2D& other) const;
+			bool operator!=(const Entity2D& other) const;
+		protected:
+			ogl::UniformBuffer buffer = ogl::UniformBuffer();
 		};//Entity2D
 
 		class Image;
@@ -64,15 +82,10 @@ namespace mc {
 		template<>
 		class RenderProtocol<Image>: public RenderImpl {
 		public:
-			void resize(const Size width, const Size height) override;
-
 			void init(const Size originalWidth, const Size originalHeight) override;
+			void initEntity(GraphicsEntity* en) override;
 
-			void setUp(os::WindowModule* win, RenderQueue* queue) override;
-
-			void render(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void tearDown(os::WindowModule* win, RenderQueue* queue) override;
+			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
 
 			void destroy() override;
 		private:
@@ -93,6 +106,7 @@ namespace mc {
 			*/
 			void setTexture(const ColorAttachment& tex);
 			/**
+			@copydoc Image::getTexture() const
 			@dirty
 			*/
 			ColorAttachment& getTexture();
@@ -105,6 +119,7 @@ namespace mc {
 			void onUpdate() override final;
 			void onRender() override final;
 			void onDestroy() override final;
+			void onClean() override final;
 		private:
 			ColorAttachment texture;
 		};//Image
@@ -118,15 +133,10 @@ namespace mc {
 		template<>
 		class RenderProtocol<ProgressBar>: public RenderImpl {
 		public:
-			void resize(const Size width, const Size height) override;
-
 			void init(const Size originalWidth, const Size originalHeight) override;
+			void initEntity(GraphicsEntity* en) override;
 
-			void setUp(os::WindowModule* win, RenderQueue* queue) override;
-
-			void render(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void tearDown(os::WindowModule* win, RenderQueue* queue) override;
+			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
 
 			void destroy() override;
 		private:
@@ -150,32 +160,32 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setBackgroundTexture(const ogl::Texture& tex);
+			void setBackgroundTexture(const ColorAttachment& tex);
 			/**
 			@dirty
 			*/
-			ogl::Texture& getBackgroundTexture();
-			const ogl::Texture& getBackgroundTexture() const;
+			ColorAttachment& getBackgroundTexture();
+			const ColorAttachment& getBackgroundTexture() const;
 
 			/**
 			@dirty
 			*/
-			void setForegroundTexture(const ogl::Texture& tex);
+			void setForegroundTexture(const ColorAttachment& tex);
 			/**
 			@dirty
 			*/
-			ogl::Texture& getForegroundTexture();
-			const ogl::Texture& getForegroundTexture() const;
+			ColorAttachment& getForegroundTexture();
+			const ColorAttachment& getForegroundTexture() const;
 
 			/**
 			@dirty
 			*/
-			void setSelectionTexture(const ogl::Texture& tex);
+			void setSelectionTexture(const ColorAttachment& tex);
 			/**
 			@dirty
 			*/
-			ogl::Texture& getSelectionTexture();
-			const ogl::Texture& getSelectionTexture() const;
+			ColorAttachment& getSelectionTexture();
+			const ColorAttachment& getSelectionTexture() const;
 
 			/**
 			@dirty
@@ -225,13 +235,14 @@ namespace mc {
 			void onInit() override final;
 			void onUpdate() override final;
 			void onRender() override final;
+			void onClean() override final;
 			void onDestroy() override final;
 		private:
 			float max = 0, min = 0, progress = 0;
 
-			ogl::Texture backgroundTexture;
-			ogl::Texture foregroundTexture;
-			ogl::Texture selectionTexture;
+			ColorAttachment backgroundTexture;
+			ColorAttachment foregroundTexture;
+			ColorAttachment selectionTexture;
 		};//ProgressBar
 
 		//TEXT IS UP AHEAD
@@ -239,11 +250,11 @@ namespace mc {
 		class Letter;
 		class Text;
 
-        /**
-        @bug non-monospaced fonts dont have correct spacing
+		/**
+		@bug non-monospaced fonts dont have correct spacing
 		@todo Make a default font system so people dont have to create new font classes each time they use text
 		@todo instead of using an id system add FT_Face
-        */
+		*/
 		class Font {
 		public:
 			static Font loadFont(const std::string& name);
@@ -266,7 +277,7 @@ namespace mc {
 
 			bool hasKerning() const;
 
-            Vector<unsigned int, 2> getKerning(const wchar_t prev, const wchar_t current) const;
+			Vector<unsigned int, 2> getKerning(const wchar_t prev, const wchar_t current) const;
 
 			Index getID() const;
 
@@ -284,15 +295,10 @@ namespace mc {
 		template<>
 		class RenderProtocol<Letter>: public RenderImpl {
 		public:
-			void resize(const Size width, const Size height) override;
-
 			void init(const Size originalWidth, const Size originalHeight) override;
+			void initEntity(GraphicsEntity* en) override;
 
-			void setUp(os::WindowModule* win, RenderQueue* queue) override;
-
-			void render(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void tearDown(os::WindowModule* win, RenderQueue* queue) override;
+			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
 
 			void destroy() override;
 		private:
@@ -306,10 +312,12 @@ namespace mc {
 		public:
 			static int getProtocol();
 
-			Letter(const ogl::Texture& tex = ogl::Texture());
+			Letter(const ogl::Texture& mask = ogl::Texture());
 			~Letter() = default;
 
-			const ogl::Texture& getTexture() const;
+			const ogl::Texture& getMask() const;
+
+			const ColorAttachment& getTexture() const;
 
 			const Size& getCharacterWidth() const;
 			const Size& getCharacterHeight() const;
@@ -327,8 +335,11 @@ namespace mc {
 			void onUpdate() override final;
 			void onRender() override final;
 			void onDestroy() override final;
+			void onClean() override final;
 		private:
-			ogl::Texture texture;
+			ogl::Texture mask;
+
+			ColorAttachment texture = ColorAttachment();
 
 			Size width;
 			Size height;
@@ -381,6 +392,17 @@ namespace mc {
 			void setHorizontalAlign(HorizontalAlign align);
 			const HorizontalAlign getHorizontalAlign() const;
 
+			/**
+			@dirty
+			*/
+			void setTexture(const ColorAttachment& tex);
+			/**
+			@copydoc Image::getTexture() const
+			@dirty
+			*/
+			ColorAttachment& getTexture();
+			const ColorAttachment& getTexture() const;
+
 			bool operator==(const Text& other) const;
 			bool operator!=(const Text& other) const;
 		protected:
@@ -398,6 +420,8 @@ namespace mc {
 			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
 
 			Font font;
+
+			ColorAttachment texture;
 		};//Text
 	}//gfx
 }//mc

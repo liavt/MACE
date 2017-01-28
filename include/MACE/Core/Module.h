@@ -96,12 +96,12 @@ namespace mc {
 		<p>
 		Registered `Modules` will have `update(), init(),` and `destroy()` are respectivaly called when `MACE.update(), MACE.init(),` and `MACE.destroy()` are called.
 		@param m Reference to a `Module.` If the `Module` referenced leaves scope or gets deallocated, a `read access violation will occur.`
-		@return Location of the `Module` in the buffer. This index can be used in various other methods.
+		@return Location of the `Module` in the sslBuffer. This index can be used in various other methods.
 		*/
 		Index addModule(Module& m);
 		/**
 		Remove a `Module` by reference. This is generally more safe than `removeModule(std::string)` as this checks by reference, not by name.
-		@param m Reference to Module in the buffer.
+		@param m Reference to Module in the sslBuffer.
 		@throws ObjectNotFoundInArray if the referenced `Module` doesn't exist.
 		*/
 		void removeModule(const Module& m);
@@ -151,11 +151,11 @@ namespace mc {
 		bool moduleExists(const Module* module);
 		/**
 		Retrieves the amount of `Module` currently being updated by `MACE`
-		@return `Size` of the internal `Module` buffer
+		@return `Size` of the internal `Module` sslBuffer
 		*/
 		Size numberOfModules();
 		/**
-		Retrieves the location of a `Module` in the buffer.
+		Retrieves the location of a `Module` in the sslBuffer.
 		<p>
 		Equivalent to calling {@code
 			indexOf(m.getName());

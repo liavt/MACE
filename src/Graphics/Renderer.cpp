@@ -35,6 +35,11 @@ namespace mc {
 
 			ssl::init(width, height);
 		}//init
+
+		void Renderer::initEntity(GraphicsEntity * en, const Index protocol) {
+			protocols[protocol]->initEntity(en);
+		}
+
 		void Renderer::setUp(os::WindowModule* win) {
 			ssl::setUp(win);
 
@@ -42,42 +47,51 @@ namespace mc {
 				protocols[i]->setUp(win, &renderQueue);
 			}
 		}//setUp
+
 		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
 			if( e == nullptr )throw NullPointerException("Input pointer to an entity must not be null in queue()");
 			pushEntity(protocol, e);
 		}//queue
+
 		void Renderer::resize(const Size width, const Size height) {
 			ssl::resize(width, height);
 
 			for( Index i = 0; i < protocols.size(); ++i ) {
 				protocols[i]->resize(width, height);
 			}
-		}
+		}//resize
+
 		Size Renderer::numberOfProtocols() {
 			//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
 			return static_cast<Size>(protocols.size());
-		}
-		//tearDown
+		}//numberOfProtocols
+
 		void Renderer::tearDown(os::WindowModule* win) {
 			for( Index i = 0; i < protocols.size(); ++i ) {
 				protocols[i]->tearDown(win, &renderQueue);
 			}
+
 			ssl::tearDown(win);
+
+			ogl::checkGLError(__LINE__, __FILE__);
 		}//tearDown
+
 		void Renderer::renderFrame(os::WindowModule* win) {
 			setUp(win);
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
-				GraphicsEntity* en = pair->second;
-
 				entityIndex = static_cast<Index>(pair - renderQueue.begin());
-				protocols[pair->first]->render(win, en);
+				protocols[pair->first]->renderEntity(win, pair->second);
 			}
 			tearDown(win);
 		}//renderFrame
 
 		void Renderer::checkInput() {
 			ssl::checkInput();
-		}//update
+		}//checkInput
+
+		void Renderer::cleanEntity(GraphicsEntity * en, const Index protocol) {
+			protocols[protocol]->cleanEntity(en);
+		}
 
 		void Renderer::destroy() {
 			while( !protocols.empty() ) {
@@ -89,6 +103,10 @@ namespace mc {
 
 			ssl::destroy();
 		}//destroy()
+
+		void Renderer::destroyEntity(GraphicsEntity * en, const Index protocol) {
+			protocols[protocol]->destroyEntity(en);
+		}
 
 		void Renderer::clearBuffers() {
 			renderQueue.clear();
@@ -122,26 +140,26 @@ namespace mc {
 		namespace ssl {
 			//constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-			//how many floats in the windowData uniform buffer. needs to be multiplied by sizeof(float)
+			//how many floats in the windowData uniform sslBuffer. needs to be multiplied by sizeof(float)
 #define MACE_WINDOW_DATA_BUFFER_SIZE sizeof(float)*2
-//which binding location the windowData uniform buffer should be bound to
+//which binding location the windowData uniform sslBuffer should be bound to
 #define MACE_WINDOW_DATA_LOCATION 14
 
-//how many floats in the entityData uniform buffer.
+//how many floats in the entityData uniform sslBuffer.
 #define MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
-//which binding location the paintdata uniform buffer should be bound to
+//which binding location the paintdata uniform sslBuffer should be bound to
 #define MACE_ENTITY_DATA_LOCATION 15
 
 			namespace {
 				//ssl resources
 				Preprocessor sslPreprocessor = Preprocessor("");
 
-				//ssl buffer objects
+				//ssl sslBuffer objects
 				ogl::UniformBuffer windowData = ogl::UniformBuffer();
 
 				//fbo resources
 				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
-				//because we are rendering multisampled, our z-buffer needs to be readable without multisampling.
+				//because we are rendering multisampled, our z-sslBuffer needs to be readable without multisampling.
 				//we can blit the z buffers onto the proxyBuffers to resolve the mutlisampling operation and
 				//allowing for us to read.
 				ogl::FrameBuffer proxyBuffer = ogl::FrameBuffer();
@@ -182,22 +200,22 @@ namespace mc {
 					depthBuffer.bind();
 
 					ogl::checkGLError(__LINE__, __FILE__);
-					
-					if(samples > 1){
+
+					if( samples > 1 ) {
 						sceneTexture.setMultisampledData(samples, width, height, GL_RGBA8);
 						idTexture.setMultisampledData(samples, width, height, GL_R32UI);
 						depthBuffer.setStorageMultisampled(samples, GL_DEPTH_COMPONENT, width, height);
-					}else{
+					} else {
 						sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 						idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 						depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
 					}
 
 					ogl::checkGLError(__LINE__, __FILE__);
-					
+
 					proxyIDTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 
-					//for our custom FBOs. we render using a z-buffer to figure out which entity is clicked on
+					//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
 					frameBuffer.init();
 					proxyBuffer.init();
 
@@ -266,7 +284,7 @@ namespace mc {
 
 				ogl::checkGLError(__LINE__, __FILE__);
 
-				if(samples > 1){
+				if( samples > 1 ) {
 					sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				}
 				sceneTexture.init();
@@ -275,7 +293,7 @@ namespace mc {
 
 				ogl::checkGLError(__LINE__, __FILE__);
 
-				if(samples > 1){
+				if( samples > 1 ) {
 					idTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				}
 				idTexture.init();
@@ -356,7 +374,7 @@ namespace mc {
 			}//destroy
 
 			void bindEntity(const GraphicsEntity * entity, ogl::ShaderProgram& prog) {
-				const ogl::UniformBuffer& entityData = entity->buffer;
+				const ogl::UniformBuffer& entityData = entity->sslBuffer;
 
 				entityData.bind();
 				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
@@ -380,7 +398,7 @@ namespace mc {
 
 					windowData.bind();
 					float newSize[2] = { static_cast<float>(originalWidth) / width, static_cast<float>(originalHeight) / height };
-					windowData.setDataRange(0, sizeof(newSize), newSize);
+					windowData.setDataRange(sizeof(newSize), newSize, 0);
 					windowData.unbind();
 
 					depthBuffer.destroy();
@@ -421,7 +439,7 @@ namespace mc {
 					throw InitializationError("Entity is not initializd.");
 				}
 
-				ogl::UniformBuffer& buf = entity->buffer;
+				ogl::UniformBuffer& buf = entity->sslBuffer;
 				const TransformMatrix& transform = entity->transformation;
 
 				Vector<float, 3> translation = transform.translation;
@@ -460,9 +478,9 @@ namespace mc {
 				//the following are containers for the flatten() call
 				float flattenedData[3];
 
-				//now we set the uniform buffer defining the transformations of the entity
+				//now we set the uniform sslBuffer defining the transformations of the entity
 				buf.bind();
-				//holy crap thats a lot of flags. this is the fastest way to map the buffer. the difference is MASSIVE. try it.
+				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 				std::memcpy((mappedEntityData), translation.flatten(flattenedData), sizeof(flattenedData));
 				mappedEntityData += 3;//pointer arithmetic!
@@ -475,8 +493,6 @@ namespace mc {
 				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(flattenedData));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedRotation.flatten(flattenedData), sizeof(flattenedData));
-				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, &entity->paint, sizeof(entity->paint));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, scale.flatten(flattenedData), sizeof(flattenedData));
 				mappedEntityData += 3;

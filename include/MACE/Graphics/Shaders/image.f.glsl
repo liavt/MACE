@@ -11,9 +11,13 @@ in lowp vec2 textureCoord;
 
 uniform lowp sampler2D tex;
 
+sslUniformBuffer textureData{
+	sslAttachmentData image;
+};
+
 vec4 ssl_frag_main()  
 {    
-	return texture(tex, textureCoord);
+	return sslAttachmentBlend(image, texture(tex, textureCoord));
 }       
 
 )"

@@ -28,14 +28,12 @@ TestComponent r = TestComponent();
 void create() {
 	gfx::Renderer::setRefreshColor(Colors::LIGHT_GRAY);
 
-	gfx::ogl::Texture background = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circlebackground.png");
-	gfx::ogl::Texture foreground = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-foreground.png");
-	gfx::ogl::Texture selection = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
+	gfx::ColorAttachment circle = gfx::ColorAttachment(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
 	circleBar = gfx::ProgressBar(0, 255, 20);
-	circleBar.setBackgroundTexture(background);
-	circleBar.setForegroundTexture(foreground);
-	circleBar.setSelectionTexture(selection);
+	circleBar.setBackgroundTexture(gfx::ColorAttachment(circle, Colors::RED));
+	circleBar.setForegroundTexture(gfx::ColorAttachment(Colors::GREEN));
+	circleBar.setSelectionTexture(circle);
 	circleBar.setWidth(0.25f);
 	circleBar.setHeight(0.25f);
 	circleBar.setX(-0.5f);
@@ -45,13 +43,10 @@ void create() {
 
 	group.addChild(circleBar);
 
-	selection = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png");
-	background = gfx::ogl::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-background.png");
-
 	rectangleBar = gfx::ProgressBar(0, 255, 100);
-	rectangleBar.setBackgroundTexture(background);
-	rectangleBar.setForegroundTexture(foreground);
-	rectangleBar.setSelectionTexture(selection);
+	rectangleBar.setBackgroundTexture(Colors::RED);
+	rectangleBar.setForegroundTexture(Colors::GREEN);
+	rectangleBar.setSelectionTexture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png");
 	rectangleBar.setWidth(0.1f);
 	rectangleBar.setHeight(0.25f);
 	rectangleBar.setX(0.5f);

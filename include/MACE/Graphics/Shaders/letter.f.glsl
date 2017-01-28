@@ -9,11 +9,17 @@ precision highp float; // Defines precision for float and float-derived (vector/
 
 in lowp vec2 textureCoord;
 
+uniform lowp sampler2D mask;
 uniform lowp sampler2D tex;
 
+sslUniformBuffer textureData{
+	sslAttachmentData texData;
+};
+
 vec4 ssl_frag_main()  
-{    
-	return vec4(1.0, 1.0, 1.0, texture(tex, textureCoord).r);
+{ 
+	vec4 texturePixel = sslAttachmentBlend(texData, texture(tex, textureCoord));
+	return vec4(texturePixel.rgb, texture(mask, textureCoord).r * texturePixel.a);
 }       
 
 )"

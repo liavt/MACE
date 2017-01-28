@@ -4,7 +4,7 @@
 
 using namespace mc;
 
-gfx::ogl::Texture star = gfx::ogl::Texture();
+gfx::ColorAttachment star = gfx::ColorAttachment();
 
 bool rotating = false;
 
@@ -13,7 +13,7 @@ gfx::Group botLeft, botRight, topLeft, topRight;
 class TestComponent: public gfx::Component {
 
 	void init(gfx::Entity* en) override {
-		dynamic_cast<gfx::Image*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+		dynamic_cast<gfx::Image*>(en)->getTexture().setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 
 	bool update(gfx::Entity* en) override {
@@ -54,7 +54,7 @@ void create() {
 
 	const Size elementNum = 10;
 
-	star = gfx::ogl::Texture(MACE_DEMO_ASSETS + std::string("star.png"));
+	star = gfx::ColorAttachment(MACE_DEMO_ASSETS + std::string("star.png"));
 
 	for( Index x = 0; x < elementNum; x++ ) {
 		for( Index y = 0; y < elementNum; y++ ) {

@@ -27,7 +27,7 @@ class TestComponent: public gfx::Component {
 	void destroy(gfx::Entity* en) override {}
 
 	void clean(gfx::Entity* en) override {
-		dynamic_cast<gfx::GraphicsEntity*>(en)->setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+		dynamic_cast<gfx::Image*>(en)->getTexture().setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 };
 
@@ -95,7 +95,7 @@ int main() {
 
 		gfx::FPSComponent f = gfx::FPSComponent();
 		f.setTickCallback([] (gfx::FPSComponent* com, gfx::Entity*) {
-			std::cout<<"UPS: "<< com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
+			std::cout << "UPS: " << com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
 		});
 		module.addComponent(f);
 

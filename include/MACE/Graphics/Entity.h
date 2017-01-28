@@ -93,21 +93,26 @@ namespace mc {
 			virtual void hover(Entity* e);
 		};//Component
 
-        class ColorAttachment: public ogl::Texture{
-        public:
-            ColorAttachment();
-            ColorAttachment(const Color& col);
-            ColorAttachment(const ogl::Texture& tex, const Color& col = Color());
+		class ColorAttachment: public ogl::Texture {
+		public:
+			ColorAttachment();
+			ColorAttachment(const Color& col);
+			ColorAttachment(const ogl::Texture& tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+			ColorAttachment(const char* file);
+			ColorAttachment(const std::string& file);
 
-            Color& getPaint();
-            const Color& getPaint() const;
-            void setPaint(const Color& col);
+			void setDataFromFile(const char* file);
+			void setDataFromFile(const std::string& file);
 
-            bool operator==(const ColorAttachment& other) const;
-            bool operator!=(const ColorAttachment& other) const;
-        private:
-            Color paint;
-        };//ColorAttachment
+			Color& getPaint();
+			const Color& getPaint() const;
+			void setPaint(const Color& col);
+
+			bool operator==(const ColorAttachment& other) const;
+			bool operator!=(const ColorAttachment& other) const;
+		private:
+			Color paint;
+		};//ColorAttachment
 
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
@@ -173,7 +178,7 @@ namespace mc {
 				<p>
 				Certain `GraphicsContexts` may only render when something is dirty, heavily increasing performance in applications with little moving objects.
 				<p>
-				Additionally, an `Entity` that is considered dirty will have it's buffer updated on the GPU side.
+				Additionally, an `Entity` that is considered dirty will have it's sslBuffer updated on the GPU side.
 				*/
 				DIRTY = 6
 			};
@@ -620,31 +625,11 @@ namespace mc {
 
 			virtual ~GraphicsEntity() noexcept;
 
-			/**
-			@dirty
-			*/
-			ogl::UniformBuffer& getBuffer();
-			const ogl::UniformBuffer& getBuffer() const;
-			/**
-			@dirty
-			*/
-			void setBuffer(const ogl::UniformBuffer& newBuffer);
-
 			void clean() final;
 
 			void init() final;
 
 			void destroy() final;
-
-			/**
-			@dirty
-			*/
-			Color& getPaint();
-			const Color& getPaint() const;
-			/**
-			@dirty
-			*/
-			void setPaint(const Color& c);
 
 			/**
 			@dirty
@@ -659,9 +644,7 @@ namespace mc {
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
 		private:
-			ogl::UniformBuffer buffer = ogl::UniformBuffer();
-
-			Color paint = Color(1.0f, 1.0f, 1.0f, 0.0f);
+			ogl::UniformBuffer sslBuffer = ogl::UniformBuffer();
 
 			float opacity = 1.0f;
 		};//GraphicsEntity

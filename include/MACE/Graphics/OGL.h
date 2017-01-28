@@ -281,7 +281,7 @@ namespace mc {
 			};//QueryObject
 
 			/**
-			Represents a render buffer for use with a `FrameBuffer.` Instead of using a `Texture` target, you can attach a `RenderBuffer` instead
+			Represents a render sslBuffer for use with a `FrameBuffer.` Instead of using a `Texture` target, you can attach a `RenderBuffer` instead
 			and accomplish a similar effect. A `RenderBuffer` supports anti-aliasing natively but you can not access or modify it's data. It also
 			represents a single image, similar to a texture.
 			@see FrameBuffer
@@ -295,8 +295,8 @@ namespace mc {
 				/**
 				Sets the flags for the storage of this `RenderBuffer.`
 				@param format A valied OpenGL image format such as GL_RGBA8
-				@param width The width of the buffer
-				@param height The height of the buffer
+				@param width The width of the sslBuffer
+				@param height The height of the sslBuffer
 				@see RenderBuffer::setStorageMultisampled(const Size, const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorage
 				@opengl
@@ -306,8 +306,8 @@ namespace mc {
 				Sets the flags for the storage of this `RenderBuffer.` This version can have anti-aliasing.
 				@param samples How many samples to use for MSAA
 				@param format A valied OpenGL image format such as GL_RGBA8
-				@param width The width of the buffer
-				@param height The height of the buffer
+				@param width The width of the sslBuffer
+				@param height The height of the sslBuffer
 				@see RenderBuffer::setStorage(const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorageMultisample
 				@opengl
@@ -328,14 +328,6 @@ namespace mc {
 			class Texture: public Object {
 			public:
 				Texture() noexcept;
-				/**
-				@opengl
-				*/
-				Texture(const char* file);
-				/**
-				@opengl
-				*/
-				Texture(const std::string& file);
 
 				void init() override;
 				void destroy() override;
@@ -367,11 +359,6 @@ namespace mc {
 				@opengl
 				*/
 				void setPixelStore(const Enum alignment, const float number);
-
-				/**
-				@copydoc loadFile(const char*)
-				*/
-				void loadFile(const std::string& file);
 
 				/**
 				@opengl
@@ -409,7 +396,7 @@ namespace mc {
 			Represents an OpenGL Framebuffer Object which allows rendering to a non-screen location. This also allows
 			rendering to a `Texture` or `RenderBuffer` object.
 			<p>
-			This is not a subclass of the `Buffer` object as this is technically not an OpenGL buffer. The name is
+			This is not a subclass of the `Buffer` object as this is technically not an OpenGL sslBuffer. The name is
 			misleading.
 
 			@see https://www.opengl.org/wiki/Framebuffer_Object
@@ -420,7 +407,7 @@ namespace mc {
 			class FrameBuffer: public Object {
 			public:
 				/**
-				Select which color buffer to use for reading via
+				Select which color sslBuffer to use for reading via
 				FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const
 
 				@param mode Which attachment to use
@@ -498,7 +485,7 @@ namespace mc {
 				Attaches a `RenderBuffer` to this `FrameBuffer` for rendering.
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@param attachment Which attachment port to use
-				@param buffer The `RenderBuffer` to use.
+				@param sslBuffer The `RenderBuffer` to use.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer
 				@opengl
 				*/
@@ -507,7 +494,7 @@ namespace mc {
 
 				/**
 				Specifies what buffers to render to. Takes in an array of attachments. A `RenderBuffer` or `Texture` can be attached to act
-				as a draw buffer.
+				as a draw sslBuffer.
 				@param arrSize Size of the array of render buffers
 				@param buffers Pointer to the first element of the array
 				@see https://www.opengl.org/wiki/GLAPI/glDrawBuffers
@@ -573,8 +560,8 @@ namespace mc {
 			};//FrameBuffer
 
 			/**
-			Represents a buffer of memory in the GPU. This class should not be used directly. Instead,
-			use special subclasses which provide additional functionality for the specific buffer type.
+			Represents a sslBuffer of memory in the GPU. This class should not be used directly. Instead,
+			use special subclasses which provide additional functionality for the specific sslBuffer type.
 
 			@see RenderBuffer
 			@see FrameBuffer
@@ -587,8 +574,8 @@ namespace mc {
 				virtual ~Buffer() = default;
 
 				/**
-				Creates the buffer with the specified buffer type. You should not usually use this directly.
-				Instead, use a subclass which has extra functions for the buffer type.
+				Creates the sslBuffer with the specified sslBuffer type. You should not usually use this directly.
+				Instead, use a subclass which has extra functions for the sslBuffer type.
 				<p>
 				For example, instead of creating a `Buffer` with the type of `GL_ARRAY_BUFFER`, use the
 				`VertexBuffer` class.
@@ -611,8 +598,8 @@ namespace mc {
 				/**
 				Creates and initalizes the data store for this `Buffer`
 
-				@param dataSize Size of the buffer, measured in bytes.
-				@param data Pointer to the actual data. Using `nullptr` or `NULL` will create an empty buffer.
+				@param dataSize Size of the sslBuffer, measured in bytes.
+				@param data Pointer to the actual data. Using `nullptr` or `NULL` will create an empty sslBuffer.
 				@param drawType Expected usage pattern for the data. GL_DYNAMIC_DRAW by default
 				@see Buffer::setDataRange(const Index, const ptrdiff_t, const void*)
 				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
@@ -621,17 +608,17 @@ namespace mc {
 				*/
 				void setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType = GL_DYNAMIC_DRAW);
 				/**
-				Sets data in a range of the buffer.
+				Sets data in a range of the sslBuffer.
 				<p>
 				Does not initialize data. Buffer:setData(const ptrdiff_t&, const void*, const Enum) must be called first.
-				@param offset Offset into the buffer to set the data, measured in bytes
+				@param offset Offset into the sslBuffer to set the data, measured in bytes
 				@param dataSize How large the region being inserted is, measured in bytes
 				@param data Pointer to the data being inserted
 				@see https://www.opengl.org/wiki/GLAPI/glBufferSubData
 				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
 				@opengl
 				*/
-				void setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data);
+				void setDataRange(const ptrdiff_t& dataSize, const void* data, const Index offset);
 
 				/**
 				Copy part of the data store of this `Buffer` into another `Buffer`
@@ -677,7 +664,7 @@ namespace mc {
 				void* mapRange(const Index offset, const Size length, const unsigned int access);
 
 				/**
-				Unmaps the buffer. Any mapped points will be deleted and using them will be undefined.
+				Unmaps the sslBuffer. Any mapped points will be deleted and using them will be undefined.
 
 				@return Whether the data was corrupted during reading. This will be very rare but when it does happen you must reinitialize the data.
 				@see Buffer::map(const Enum)
@@ -689,8 +676,8 @@ namespace mc {
 				bool unmap();
 
 				/**
-				Retrieves the buffer type for this buffer. This is based on the class.
-				@return The buffer type
+				Retrieves the sslBuffer type for this sslBuffer. This is based on the class.
+				@return The sslBuffer type
 				*/
 				const Enum getBufferType() const;
 
@@ -709,7 +696,7 @@ namespace mc {
 			};//Buffer
 
 			/**
-			Special buffer that excels at asynchronous pixel transfer operations. The `PixelUnpackBuffer` is fast at reading
+			Special sslBuffer that excels at asynchronous pixel transfer operations. The `PixelUnpackBuffer` is fast at reading
 			pixels while the `PixelPackBuffer` is fast at writing pixels.
 			<p>
 			Not to be confused with a `FrameBuffer` or `Texture.`
@@ -944,8 +931,8 @@ namespace mc {
 			};//VertexArray
 
 			/**
-			Special buffer with no extra semantics to be used as a proxy in copying. Instead of using an existing buffer with data to copy data,
-			this buffer can be used easily.
+			Special sslBuffer with no extra semantics to be used as a proxy in copying. Instead of using an existing sslBuffer with data to copy data,
+			this sslBuffer can be used easily.
 
 			@see https://www.opengl.org/wiki/Buffer_Object::Copying
 			@see Buffer::copyData(Buffer, ptrdiff_t, Index, Index);
@@ -971,70 +958,6 @@ namespace mc {
 				using Buffer::operator==;
 				using Buffer::operator!=;
 			};//CopyWriteBuffer
-
-			/**
-			Stores uniform data for a shader in the form of a buffer. Can be used to share data between multiple shaders or quickly change between
-			sets of uniforms in one program.
-			@see https://www.opengl.org/wiki/Uniform_Buffer_Object
-			@see VertexBuffer
-			*/
-			class UniformBuffer: public Buffer {
-			public:
-				UniformBuffer() noexcept;
-
-				/**
-				Modify the location that this `UniformBuffer` is currently bound to.
-				<p>
-				The location is used in the UniformBuffer::bindForRender(const Index, const ptrdiff_t) const
-				and UniformBuffer::bindToUniformBlock(const Index, const char*) const functions, as well as
-				in the shaders.
-				@param location The new location for this `UniformBuffer` object.
-				*/
-				void setLocation(const Index location);
-				/**
-				Retrieves the location that this `UniformBuffer` is currently bound to.
-				@return The location
-				@see UniformBuffer::setLocation(const Index)
-				*/
-				Index getLocation();
-				/**
-				@copydoc UniformBuffer::getLocation()
-				*/
-				const Index getLocation() const;
-
-				/**
-				Binds this `UniformBuffer` for rendering. Must be called before a rendering call is used.
-				<p>
-				Not to be confused with Object::bind() const
-				@param offset How many components to start at in rendering. 0 by default
-				@param size How many components to use in rendering
-				@see https://www.opengl.org/wiki/GLAPI/glBindBufferBase
-				@see https://www.opengl.org/wiki/GLAPI/glBindBufferRange
-				@opengl
-				*/
-				void bindForRender(const Index offset = 0, const ptrdiff_t size = -1) const;
-
-				/**
-				Binds this `UniformBuffer` to a `ShaderProgram.` Must be used or else the shader won't be
-				able to access the buffer data.
-				@param programID The ID of the `ShaderProgram`
-				@param blockName The name of the uniform block in the shader to bind to. Must be case sensitive.
-				@see https://www.opengl.org/wiki/GLAPI/glUniformBlockBinding
-				@opengl
-				*/
-				void bindToUniformBlock(const Index programID, const char* blockName) const;
-
-				/**
-				@copydoc Object::operator==(const Object&) const
-				*/
-				bool operator==(const UniformBuffer& other) const;
-				/**
-				@copydoc Object::operator!=(const Object&) const
-				*/
-				bool operator!=(const UniformBuffer& other) const;
-			private:
-				Index location = 0;
-			};//UniformBuffer
 
 			/**
 			Represents a shader object in OpenGL. A shader is a special program that gets executed during different parts of rendering.
@@ -1337,6 +1260,74 @@ namespace mc {
 
 				void bindIndex(const Index id) const override;
 			};//ShaderProgram
+
+			  /**
+			  Stores uniform data for a shader in the form of a sslBuffer. Can be used to share data between multiple shaders or quickly change between
+			  sets of uniforms in one program.
+			  @see https://www.opengl.org/wiki/Uniform_Buffer_Object
+			  @see VertexBuffer
+			  */
+			class UniformBuffer: public Buffer {
+			public:
+				UniformBuffer() noexcept;
+
+				/**
+				Modify the location that this `UniformBuffer` is currently bound to.
+				<p>
+				The location is used in the UniformBuffer::bindForRender(const Index, const ptrdiff_t) const
+				and UniformBuffer::bindToUniformBlock(const Index, const char*) const functions, as well as
+				in the shaders.
+				@param location The new location for this `UniformBuffer` object.
+				*/
+				void setLocation(const Index location);
+				/**
+				Retrieves the location that this `UniformBuffer` is currently bound to.
+				@return The location
+				@see UniformBuffer::setLocation(const Index)
+				*/
+				Index getLocation();
+				/**
+				@copydoc UniformBuffer::getLocation()
+				*/
+				const Index getLocation() const;
+
+				/**
+				Binds this `UniformBuffer` for rendering. Must be called before a rendering call is used.
+				<p>
+				Not to be confused with Object::bind() const
+				@param offset How many components to start at in rendering. 0 by default
+				@param size How many components to use in rendering
+				@see https://www.opengl.org/wiki/GLAPI/glBindBufferBase
+				@see https://www.opengl.org/wiki/GLAPI/glBindBufferRange
+				@opengl
+				*/
+				void bindForRender(const Index offset = 0, const ptrdiff_t size = -1) const;
+
+				/**
+				Binds this `UniformBuffer` to a `ShaderProgram.` Must be used or else the shader won't be
+				able to access the sslBuffer data.
+				@param program The Shader
+				@param blockName The name of the uniform block in the shader to bind to. Must be case sensitive.
+				@see https://www.opengl.org/wiki/GLAPI/glUniformBlockBinding
+				@opengl
+				*/
+				void bindToUniformBlock(const Index program, const char* blockName) const;
+				/**
+				@copydoc UniformBuffer::bindToUniformBlocks(const Index program, const char* blockname) const
+				*/
+				void bindToUniformBlock(const ShaderProgram& program, const char* blockname) const;
+
+				/**
+				@copydoc Object::operator==(const Object&) const
+				*/
+				bool operator==(const UniformBuffer& other) const;
+				/**
+				@copydoc Object::operator!=(const Object&) const
+				*/
+				bool operator!=(const UniformBuffer& other) const;
+			private:
+				Index location = 0;
+			};//UniformBuffer
 		}
 	}//gfx
 }//mc

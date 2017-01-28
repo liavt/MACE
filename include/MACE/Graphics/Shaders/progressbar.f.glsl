@@ -13,19 +13,24 @@ uniform lowp sampler2D backgroundTexture;
 uniform lowp sampler2D foregroundTexture;
 uniform lowp sampler2D selectionTexture;
 
-uniform float progress;
+sslUniformBuffer textureData{
+	sslAttachmentData selectionData;
+	sslAttachmentData foregroundData;
+	sslAttachmentData backgroundData;
+	float progress;
+};
 
 vec4 ssl_frag_main()  
 {  	
-	vec4 selection = texture(selectionTexture, textureCoord);
+	vec4 selection =  sslAttachmentBlend(selectionData, texture(selectionTexture, textureCoord));
 	
 	if( progress >= selection.r ){
-		vec4 foreground = texture(foregroundTexture, textureCoord);
+		vec4 foreground = sslAttachmentBlend(foregroundData, texture(foregroundTexture, textureCoord));
 	
 		return vec4(foreground.rgb, foreground.a * selection.a);
 	}
 	
-	return texture(backgroundTexture, textureCoord);
+	return sslAttachmentBlend(backgroundData, texture(backgroundTexture, textureCoord));
 }       
 
 )"

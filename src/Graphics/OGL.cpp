@@ -8,8 +8,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/OGL.h>
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 #include <memory>
 #include <string>
 
@@ -226,6 +224,10 @@ namespace mc {
 				glUniformBlockBinding(programID, glGetUniformBlockIndex(programID, blockName), location);
 			}
 
+			void UniformBuffer::bindToUniformBlock(const ShaderProgram & program, const char * blockname) const {
+				bindToUniformBlock(program.getID(), blockname);
+			}
+
 			bool UniformBuffer::operator==(const UniformBuffer & other) const {
 				return location == other.location&&Buffer::operator==(other);
 			}
@@ -376,13 +378,6 @@ namespace mc {
 
 			Texture::Texture() noexcept {}
 
-			Texture::Texture(const char * file) {
-				init();
-				loadFile(file);
-			}
-
-			Texture::Texture(const std::string & file) : Texture(file.c_str()) {}
-
 			void Texture::init() {
 				if( !isCreated() ) {
 					glGenTextures(1, &id);
@@ -411,19 +406,6 @@ namespace mc {
 				glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
-			void Texture::loadFile(const char * file) {
-				int width, height, componentSize;
-
-				Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
-
-				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-
-				stbi_image_free(image);
-
-				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			}
-
 			void Texture::setPixelStore(const Enum alignment, const int number) {
 				bind();
 				glPixelStorei(alignment, number);
@@ -432,10 +414,6 @@ namespace mc {
 			void Texture::setPixelStore(const Enum alignment, const float number) {
 				bind();
 				glPixelStoref(alignment, number);
-			}
-
-			void Texture::loadFile(const std::string & file) {
-				loadFile(file.c_str());
 			}
 
 			void Texture::generateMipmap() {
@@ -493,7 +471,7 @@ namespace mc {
 				bind();
 				glBufferData(bufferType, dataSize, data, drawType);
 			};
-			void Buffer::setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data) {
+			void Buffer::setDataRange(const ptrdiff_t& dataSize, const void* data, const Index offset) {
 				bind();
 				glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
 			};
@@ -1040,6 +1018,6 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-			}//ogl
-		}//gfx
-	}//mc
+		}//ogl
+	}//gfx
+}//mc

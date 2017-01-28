@@ -11,10 +11,9 @@ struct ssl_EntityDataStruct{
 	float ssl_StretchY;
 };
 
-layout(std140) uniform ssl_BaseEntityBuffer{
+sslUniformBuffer ssl_BaseEntityBuffer{
 	ssl_EntityDataStruct ssl_BaseEntity;
 	ssl_EntityDataStruct ssl_ParentEntity;
-	vec4 ssl_EntityPaint;
 	vec3 ssl_Scale;
 	float ssl_EntityOpacity;
 };

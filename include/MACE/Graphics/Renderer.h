@@ -114,7 +114,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			virtual void resize(const Size width, const Size height) = 0;
+			virtual void resize(const Size width, const Size height) {};
 
 			/**
 			@internal
@@ -125,22 +125,40 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			virtual void setUp(os::WindowModule* win, RenderQueue* queue) = 0;
+			virtual void initEntity(GraphicsEntity* entity) {};
+
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void render(os::WindowModule* win, GraphicsEntity* entity) = 0;
+			virtual void setUp(os::WindowModule* win, RenderQueue* queue) {};
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void tearDown(os::WindowModule* win, RenderQueue* queue) = 0;
+			virtual void renderEntity(os::WindowModule* win, GraphicsEntity* entity) = 0;
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void tearDown(os::WindowModule* win, RenderQueue* queue) {};
+
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void cleanEntity(GraphicsEntity* entity) {};
+
 			/**
 			@internal
 			@opengl
 			*/
 			virtual void destroy() = 0;
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void destroyEntity(GraphicsEntity* entity) {};
 		private:
 			int index = -1;
 		};
@@ -157,10 +175,16 @@ namespace mc {
 			void resize(const Size, const Size) override {};
 
 			void init(const Size, const Size) override {}
+			void initEntity(GraphicsEntity*) override {};
+
 			void setUp(os::WindowModule*, RenderQueue*) override {};
-			void render(os::WindowModule*, GraphicsEntity*) override {};
+			void renderEntity(os::WindowModule*, GraphicsEntity*) override {};
 			void tearDown(os::WindowModule*, RenderQueue*) override {};
+
+			void cleanEntity(GraphicsEntity*) override {};
+
 			void destroy() override {};
+			void destroyEntity(GraphicsEntity*) override {};
 		};
 
 		/**
@@ -181,6 +205,12 @@ namespace mc {
 			@opengl
 			*/
 			static void init(const Size originalWidth, const Size originalHeight);
+
+			/**
+			@internal
+			@opengl
+			*/
+			static void initEntity(GraphicsEntity* en, const Index protocol);
 
 			/**
 			@internal
@@ -214,7 +244,18 @@ namespace mc {
 			@internal
 			@opengl
 			*/
+			static void cleanEntity(GraphicsEntity* en, const Index protocol);
+
+			/**
+			@internal
+			@opengl
+			*/
 			static void destroy();
+			/**
+			@internal
+			@opengl
+			*/
+			static void destroyEntity(GraphicsEntity* en, const Index protocol);
 
 			/**
 			@internal
@@ -278,10 +319,10 @@ namespace mc {
 			*/
 			void destroy();
 
-            /**
-            @opengl
-            */
-            void bind() const;
+			/**
+			@opengl
+			*/
+			void bind() const;
 
 			/**
 			@opengl

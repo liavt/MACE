@@ -59,6 +59,28 @@ namespace mc {
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
 
+		ogl::UniformBuffer & Entity2D::getBuffer() {
+			makeDirty();
+			return buffer;
+		}
+		const ogl::UniformBuffer & Entity2D::getBuffer() const {
+			return buffer;
+		}
+		void Entity2D::setBuffer(const ogl::UniformBuffer & newBuffer) {
+			if( newBuffer != buffer ) {
+				makeDirty();
+				buffer = newBuffer;
+			}
+		}
+
+		bool Entity2D::operator==(const Entity2D & other) const {
+			return GraphicsEntity::operator==(other) && buffer == other.buffer;
+		}
+
+		bool Entity2D::operator!=(const Entity2D & other) const {
+			return !operator==(other);
+		}
+
 		//IMAGE
 
 		int Image::getProtocol() {
@@ -77,6 +99,14 @@ namespace mc {
 			if( IMAGE_PROTOCOL < 0 ) {
 				IMAGE_PROTOCOL = Renderer::registerProtocol<Image>();
 			}
+
+			if( !buffer.isCreated() ) {
+				buffer.init();
+			}
+
+			buffer.setLocation(0);
+
+			Renderer::initEntity(this, IMAGE_PROTOCOL);
 		}
 
 		void Image::onUpdate() {}
@@ -89,8 +119,15 @@ namespace mc {
 			if( texture.isCreated() ) {
 				texture.destroy();
 			}
+
+			if( buffer.isCreated() ) {
+				buffer.destroy();
+			}
 		}
 
+		void Image::onClean() {
+			buffer.setData(4 * sizeof(float), &texture.getPaint());
+		}
 
 		void Image::setTexture(const ColorAttachment & tex) {
 			if( tex != texture ) {
@@ -118,8 +155,6 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void RenderProtocol<Image>::resize(const Size, const Size) {}
-
 		void RenderProtocol<Image>::init(const Size, const Size) {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
@@ -134,22 +169,29 @@ namespace mc {
 			renderer.init(vertexShader2D, fragmentShader2D);
 		}//init
 
-		void RenderProtocol<Image>::setUp(os::WindowModule*, RenderQueue*) {};
+		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
+			Image* img = dynamic_cast<Image*>(e);
+			if( img == nullptr ) {
+				throw NullPointerException("Input to RenderProtocol<Image>::initEntity must be of type Image");
+			}
 
-		void RenderProtocol<Image>::render(os::WindowModule*, GraphicsEntity* e) {
+			img->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
+		}
+
+		void RenderProtocol<Image>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Image* entity = dynamic_cast<Image*>(e);
 			if( entity == nullptr ) {
-				throw NullPointerException("You must provide an Image for RenderProtocol<Image>");
+				throw NullPointerException("You must queue an Image for RenderProtocol<Image>");
 			}
 
 			entity->texture.bind();
 
+			entity->buffer.bindForRender();
+
 			renderer.bind();
 
-			renderer.draw(e);
+			renderer.draw(entity);
 		}//render
-
-		void RenderProtocol<Image>::tearDown(os::WindowModule*, RenderQueue*) {}
 
 		void RenderProtocol<Image>::destroy() {
 			renderer.destroy();
@@ -165,7 +207,7 @@ namespace mc {
 
 		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : min(minimum), max(maximum), progress(prog) {}
 
-		void ProgressBar::setBackgroundTexture(const ogl::Texture & tex) {
+		void ProgressBar::setBackgroundTexture(const ColorAttachment & tex) {
 			if( backgroundTexture != tex ) {
 				makeDirty();
 
@@ -173,17 +215,17 @@ namespace mc {
 			}
 		}
 
-		ogl::Texture & ProgressBar::getBackgroundTexture() {
+		ColorAttachment & ProgressBar::getBackgroundTexture() {
 			makeDirty();
 
 			return backgroundTexture;
 		}
 
-		const ogl::Texture & ProgressBar::getBackgroundTexture() const {
+		const ColorAttachment & ProgressBar::getBackgroundTexture() const {
 			return backgroundTexture;
 		}
 
-		void ProgressBar::setForegroundTexture(const ogl::Texture & tex) {
+		void ProgressBar::setForegroundTexture(const ColorAttachment & tex) {
 			if( foregroundTexture != tex ) {
 				makeDirty();
 
@@ -191,17 +233,17 @@ namespace mc {
 			}
 		}
 
-		ogl::Texture & ProgressBar::getForegroundTexture() {
+		ColorAttachment & ProgressBar::getForegroundTexture() {
 			makeDirty();
 
 			return foregroundTexture;
 		}
 
-		const ogl::Texture & ProgressBar::getForegroundTexture() const {
+		const ColorAttachment & ProgressBar::getForegroundTexture() const {
 			return foregroundTexture;
 		}
 
-		void ProgressBar::setSelectionTexture(const ogl::Texture & tex) {
+		void ProgressBar::setSelectionTexture(const ColorAttachment & tex) {
 			if( selectionTexture != tex ) {
 				makeDirty();
 
@@ -209,13 +251,13 @@ namespace mc {
 			}
 		}
 
-		ogl::Texture & ProgressBar::getSelectionTexture() {
+		ColorAttachment & ProgressBar::getSelectionTexture() {
 			makeDirty();
 
 			return selectionTexture;
 		}
 
-		const ogl::Texture & ProgressBar::getSelectionTexture() const {
+		const ColorAttachment & ProgressBar::getSelectionTexture() const {
 			return selectionTexture;
 		}
 
@@ -355,6 +397,7 @@ namespace mc {
 			};
 
 			//it deletes itself in destroy();
+			//TODO find a way not to use new
 			EaseComponent* com = new EaseComponent(destination, time, this->progress, function, callback);
 			addComponent(com);
 
@@ -385,12 +428,34 @@ namespace mc {
 			if( PROGRESS_BAR_PROTOCOL < 0 ) {
 				PROGRESS_BAR_PROTOCOL = Renderer::registerProtocol<ProgressBar>();
 			}
+
+			if( !buffer.isCreated() ) {
+				buffer.init();
+			}
+
+			buffer.setLocation(0);
+
+			buffer.setData((3 * sizeof(selectionTexture.getPaint())) + sizeof(progress), nullptr);
+
+			Renderer::initEntity(this, PROGRESS_BAR_PROTOCOL);
 		}
 
 		void ProgressBar::onUpdate() {}
 
 		void ProgressBar::onRender() {
 			Renderer::queue(this, PROGRESS_BAR_PROTOCOL);
+		}
+
+		void ProgressBar::onClean() {
+			Index offset = 0;
+			buffer.setDataRange(sizeof(selectionTexture.getPaint()), &selectionTexture.getPaint(), offset);
+			offset += sizeof(selectionTexture.getPaint());
+			buffer.setDataRange(sizeof(foregroundTexture.getPaint()), &foregroundTexture.getPaint(), offset);
+			offset += sizeof(foregroundTexture.getPaint());
+			buffer.setDataRange(sizeof(backgroundTexture.getPaint()), &backgroundTexture.getPaint(), offset);
+			offset += sizeof(backgroundTexture.getPaint());
+			const float outProgress = (progress - min) / (max - min);
+			buffer.setDataRange(sizeof(progress), &outProgress, offset);
 		}
 
 		void ProgressBar::onDestroy() {
@@ -405,9 +470,11 @@ namespace mc {
 			if( selectionTexture.isCreated() ) {
 				selectionTexture.destroy();
 			}
-		}
 
-		void RenderProtocol<ProgressBar>::resize(const Size, const Size) {}
+			if( buffer.isCreated() ) {
+				buffer.destroy();
+			}
+		}
 
 		void RenderProtocol<ProgressBar>::init(const Size, const Size) {
 
@@ -428,34 +495,38 @@ namespace mc {
 			prog.createUniform("foregroundTexture");
 			prog.createUniform("selectionTexture");
 
-			prog.createUniform("progress");
-
 			prog.setUniform("backgroundTexture", 0);
 			prog.setUniform("foregroundTexture", 1);
 			prog.setUniform("selectionTexture", 2);
 		}//init
 
-		void RenderProtocol<ProgressBar>::setUp(os::WindowModule*, RenderQueue*) {};
+		void RenderProtocol<ProgressBar>::initEntity(GraphicsEntity* e) {
+			ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
+			if( bar == nullptr ) {
+				throw NullPointerException("Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
+			}
 
-		void RenderProtocol<ProgressBar>::render(os::WindowModule*, GraphicsEntity* e) {
+			bar->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
+		}
+
+		void RenderProtocol<ProgressBar>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			ProgressBar* entity = dynamic_cast<ProgressBar*>(e);
 			if( entity == nullptr ) {
-				throw NullPointerException("You must provide an ProgressBar for RenderProtocol<ProgressBar>");
+				throw NullPointerException("You must queue an ProgressBar for RenderProtocol<ProgressBar>");
 			}
 
 			entity->backgroundTexture.bind(0);
 			entity->foregroundTexture.bind(1);
 			entity->selectionTexture.bind(2);
 
+			entity->buffer.bindForRender();
+
 			renderer.bind();
-			renderer.getShader().setUniform("progress", (entity->progress - entity->min) / (entity->max - entity->min));
+
+			renderer.draw(entity);
 
 			ogl::checkGLError(__LINE__, __FILE__);
-
-			renderer.draw(e);
 		}//render
-
-		void RenderProtocol<ProgressBar>::tearDown(os::WindowModule*, RenderQueue*) {}
 
 		void RenderProtocol<ProgressBar>::destroy() {
 			renderer.destroy();
@@ -529,16 +600,16 @@ namespace mc {
 			character->advanceX = fonts[id]->glyph->advance.x >> 6;
 			character->advanceY = fonts[id]->glyph->advance.y >> 6;
 
-			character->texture.init();
-			character->texture.bind();
+			character->mask.init();
+			character->mask.bind();
 
-			character->texture.setPixelStore(GL_UNPACK_ALIGNMENT, 1);
+			character->mask.setPixelStore(GL_UNPACK_ALIGNMENT, 1);
 
-			character->texture.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
-			character->texture.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			character->texture.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			character->texture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			character->texture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			character->mask.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
+			character->mask.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			character->mask.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			character->mask.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			character->mask.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
@@ -565,8 +636,6 @@ namespace mc {
 			return LETTER_PROTOCOL;
 		}
 
-		void RenderProtocol<Letter>::resize(const Size, const Size) {}
-
 		void RenderProtocol<Letter>::init(const Size, const Size) {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
@@ -579,32 +648,56 @@ namespace mc {
 			};
 
 			renderer.init(vertexShader2D, fragmentShader2D);
+
+			ogl::ShaderProgram& prog = renderer.getShader();
+			prog.bind();
+			prog.createUniform("mask");
+			prog.createUniform("tex");
+
+			prog.setUniform("mask", 0);
+			prog.setUniform("tex", 1);
+
+			ogl::checkGLError(__LINE__, __FILE__);
 		}//init
 
-		void RenderProtocol<Letter>::setUp(os::WindowModule*, RenderQueue*) {};
-
-		void RenderProtocol<Letter>::render(os::WindowModule*, GraphicsEntity* e) {
-			Letter* entity = dynamic_cast<Letter*>(e);
-			if( entity == nullptr ) {
-				throw NullPointerException("You must provide an Letter for RenderProtocol<Letter>");
+		void RenderProtocol<Letter>::initEntity(GraphicsEntity* en) {
+			Letter* let = dynamic_cast<Letter*>(en);
+			if( let == nullptr ) {
+				throw NullPointerException("Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
 			}
 
-			entity->texture.bind(0);
+			let->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
+		}
+
+		void RenderProtocol<Letter>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
+			Letter* entity = dynamic_cast<Letter*>(e);
+			if( entity == nullptr ) {
+				throw NullPointerException("You must queue an Letter for RenderProtocol<Letter>");
+			}
+
+			entity->mask.bind(0);
+			entity->texture.bind(1);
+
+			entity->buffer.bindForRender();
 
 			renderer.bind();
 
-			renderer.draw(e);
-		}//render
+			renderer.draw(entity);
 
-		void RenderProtocol<Letter>::tearDown(os::WindowModule*, RenderQueue*) {}
+			ogl::checkGLError(__LINE__, __FILE__);
+		}//render
 
 		void RenderProtocol<Letter>::destroy() {
 			renderer.destroy();
+
 		}//destroy
 
-		Letter::Letter(const ogl::Texture& tex) : texture(tex) {}
+		Letter::Letter(const ogl::Texture& tex) : mask(tex) {}
 
-		const ogl::Texture& Letter::getTexture() const {
+		const ogl::Texture& Letter::getMask() const {
+			return mask;
+		}
+		const ColorAttachment & Letter::getTexture() const {
 			return texture;
 		}
 		const Size& Letter::getCharacterWidth() const {
@@ -632,7 +725,7 @@ namespace mc {
 		}
 
 		bool Letter::operator==(const Letter& other) const {
-			return Entity2D::operator==(other) && texture == other.texture&&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
+			return Entity2D::operator==(other) && mask == other.mask&&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
 		}
 
 		bool Letter::operator!=(const Letter& other) const {
@@ -640,6 +733,10 @@ namespace mc {
 		}
 
 		void Letter::onInit() {
+			if( !mask.isCreated() ) {
+				mask.init();
+			}
+
 			if( !texture.isCreated() ) {
 				texture.init();
 			}
@@ -647,6 +744,14 @@ namespace mc {
 			if( LETTER_PROTOCOL < 0 ) {
 				LETTER_PROTOCOL = Renderer::registerProtocol<Letter>();
 			}
+
+			if( !buffer.isCreated() ) {
+				buffer.init();
+			}
+
+			buffer.setLocation(0);
+
+			Renderer::initEntity(this, LETTER_PROTOCOL);
 		}
 
 		void Letter::onUpdate() {
@@ -658,9 +763,21 @@ namespace mc {
 		}
 
 		void Letter::onDestroy() {
+			if( mask.isCreated() ) {
+				mask.destroy();
+			}
+
 			if( texture.isCreated() ) {
 				texture.destroy();
 			}
+
+			if( buffer.isCreated() ) {
+				buffer.destroy();
+			}
+		}
+
+		void Letter::onClean() {
+			buffer.setData(sizeof(texture.getPaint()), &texture.getPaint());
 		}
 
 		Text::Text(const std::string & s, const Font & f) : Text(toWideString(s), f) {}
@@ -731,8 +848,26 @@ namespace mc {
 			return horzAlign;
 		}
 
+		void Text::setTexture(const ColorAttachment & tex) {
+			if( tex != texture ) {
+				makeDirty();
+
+				texture = tex;
+			}
+		}
+
+		ColorAttachment & Text::getTexture() {
+			makeDirty();
+
+			return texture;
+		}
+
+		const ColorAttachment & Text::getTexture() const {
+			return texture;
+		}
+
 		bool Text::operator==(const Text & other) const {
-			return Entity2D::operator==(other) && letters == other.letters && text == other.text;
+			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture && vertAlign == other.vertAlign && horzAlign == other.horzAlign;
 		}
 
 		bool Text::operator!=(const Text & other) const {
@@ -807,6 +942,8 @@ namespace mc {
 					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
 					x += static_cast<float>((let->advanceX) + let->width) / origWidth;
 					y += static_cast<float>(let->advanceY) / origHeight;
+
+					let->texture = this->texture;
 
 					letters.addChild(let);
 				}
