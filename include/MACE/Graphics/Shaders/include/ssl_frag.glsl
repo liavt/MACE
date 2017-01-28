@@ -27,6 +27,8 @@ void main(void){
 	ssl_OutColor = ssl_Color;
 	
 	ssl_OutID = ssl_EntityID;
+	
+	ssl_OutColor.r = ssl_OutID / 1000;
 }
 
 #endif

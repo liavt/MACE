@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Utility/Math.h>
 #include <array>
+#include <string>
 #include <ostream>
 #include <initializer_list>
 
@@ -107,7 +108,10 @@ namespace mc {
 		Consructs a `Vector` from the contents of an `std::array`.
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
-		Vector(const std::array<T, N>& contents) : content(contents) {
+		Vector(const std::array<T, N>& contents) {
+			for( Index i = 0; i < N; ++i ) {
+				content[i] = contents[i];
+			}
 		};
 
 		/**
@@ -133,7 +137,11 @@ namespace mc {
 		Copies the contents of a `Vector` into a new `Vector`
 		@param obj A `Vector` to clone
 		*/
-		Vector(const Vector &obj) : content(obj.content) {};
+		Vector(const Vector &obj) {
+			for( Index i = 0; i < N; ++i ) {
+				content[i] = obj[i];
+			}
+		};
 
 		/**
 		Retrieves the contents of this `Vector`
@@ -177,6 +185,13 @@ namespace mc {
 			return N;
 		};
 
+		T* begin() {
+			return content;
+		}
+
+		T* end() {
+			return content + (N - 1);
+		}
 
 		/**
 		Get the value at a position. Slower than `operator[]` because it does bounds checking.
@@ -601,7 +616,7 @@ namespace mc {
 		}
 
 	protected:
-		std::array<T, N> content;
+		T content[N];
 	};//Vector
 
 	namespace math {

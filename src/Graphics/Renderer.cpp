@@ -78,9 +78,10 @@ namespace mc {
 
 		void Renderer::renderFrame(os::WindowModule* win) {
 			setUp(win);
+			entityIndex = 0;
 			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
-				entityIndex = static_cast<Index>(pair - renderQueue.begin());
 				protocols[pair->first]->renderEntity(win, pair->second);
+				++entityIndex;
 			}
 			tearDown(win);
 		}//renderFrame
@@ -475,26 +476,23 @@ namespace mc {
 				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
 				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
 
-				//the following are containers for the flatten() call
-				float flattenedData[3];
-
 				//now we set the uniform sslBuffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				std::memcpy((mappedEntityData), translation.flatten(flattenedData), sizeof(flattenedData));
+				std::memcpy((mappedEntityData), translation.begin(), sizeof(translation));
 				mappedEntityData += 3;//pointer arithmetic!
 				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, rotation.flatten(flattenedData), sizeof(flattenedData));
+				std::memcpy(mappedEntityData, rotation.begin(), sizeof(rotation));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
 				++mappedEntityData;
-				std::memcpy(mappedEntityData, inheritedTranslation.flatten(flattenedData), sizeof(flattenedData));
+				std::memcpy(mappedEntityData, inheritedTranslation.begin(), sizeof(inheritedTranslation));
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, inheritedRotation.flatten(flattenedData), sizeof(flattenedData));
+				std::memcpy(mappedEntityData, inheritedRotation.begin(), sizeof(inheritedRotation));
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, scale.flatten(flattenedData), sizeof(flattenedData));
+				std::memcpy(mappedEntityData, scale.begin(), sizeof(scale));
 				mappedEntityData += 3;
 				std::memcpy(mappedEntityData, &entity->opacity, sizeof(entity->opacity));
 				buf.unmap();

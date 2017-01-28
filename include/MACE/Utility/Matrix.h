@@ -86,7 +86,7 @@ namespace mc {
 		{
 			static_assert(W != 0, "A Matrix's width must be greater than 0!");
 			static_assert(H != 0, "A Matrix's height must be greater than 0!");
-			for( Index i = 0; i < content.size(); i++ ) {
+			for( Index i = 0; i < W; i++ ) {
 				content[i] = MatrixRow<T, H>();
 			}
 		};
