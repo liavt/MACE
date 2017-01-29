@@ -565,7 +565,6 @@ namespace mc {
 
 		void Font::setSize(const Size h) {
 			this->height = h;
-			FT_Set_Pixel_Sizes(fonts[id], 0, h);
 		}
 
 		Size& Font::getSize() {
@@ -588,6 +587,8 @@ namespace mc {
 			if( height <= 0 ) {
 				throw IndexOutOfBoundsException("The height of the font cannot be 0 - you must set it!");
 			}
+
+			FT_Set_Pixel_Sizes(fonts[id], 0, height);
 
 			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT) ) {
 				throw InitializationError("Failed to load glyph with error code " + std::to_string(result));
@@ -893,6 +894,27 @@ namespace mc {
 				addChild(letters);
 			}
 
+			Vector<float, 3> scale = transformation.scaler;
+			Vector<float, 3> inheritedScale = { 1,1,1 };
+
+			if( hasParent() ) {
+
+				const Entity* par = getParent();
+
+				//iterate through every parent
+				while( par->hasParent() ) {
+					const TransformMatrix& parTransform = par->getTransformation();
+
+					inheritedScale *= parTransform.scaler * inheritedScale;
+
+					par = par->getParent();
+				}
+			}
+
+			scale *= inheritedScale;
+
+			const float widthScale = 1.0f / scale[0], heightScale = 1.0f / scale[1];
+
 			const float origWidth = static_cast<const float>(Renderer::getOriginalWidth()),
 				origHeight = static_cast<const float>(Renderer::getOriginalHeight());
 
@@ -920,8 +942,8 @@ namespace mc {
 					font.getCharacter(text[i], let);
 
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-					let->setWidth(static_cast<float>(let->width) / origWidth);
-					let->setHeight(static_cast<float>(let->height) / origHeight);
+					let->setWidth((static_cast<float>(let->width) / origWidth) * widthScale);
+					let->setHeight((static_cast<float>(let->height) / origHeight) * heightScale);
 
 					Vector<float, 2> position = { x, y };
 
@@ -936,8 +958,8 @@ namespace mc {
 					position[1] += (static_cast<float>((let->getHeight()) - (font.getSize() - (let->bearingY >> 1))) / origHeight);
 
 					//i cant bear this
-					let->setX(position[0]);
-					let->setY(position[1]);
+					let->setX(position[0] * widthScale);
+					let->setY(position[1] * heightScale);
 
 					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
 					x += static_cast<float>((let->advanceX) + let->width) / origWidth;
