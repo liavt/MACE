@@ -20,6 +20,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_ROOT}/Modules "${PROJECT_SOURCE_DIR}/cmake-modules
 include(FindPackageHandleStandardArgs)
 include(CheckCXXCompilerFlag)
 include(DownloadLibrary)
+include(CheckIncludeFiles)
 
 option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
 option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
@@ -65,7 +66,7 @@ find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
 
 #Catch is for unit testing.
-if(${MACE_UNIT_TESTING})
+if(${MACE_TESTS})
 	if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
 		if(${MACE_DOWNLOAD_DEPENDENCIES})
 			#Catch is one header file, so its easy to fix. Just download it!
@@ -166,6 +167,19 @@ if(${MACE_DEMOS})
 	endforeach()
 endif()
 
+#HEADER FILE CHECKS
+check_include_files("string" HAVE_STRING)
+if(NOT ${HAVE_STRING})
+	message(FATAL_ERROR "<string> not found! This is required for MACE")
+endif()
+
+check_include_files("vector" HAVE_VECTOR)
+if(NOT HAVE_VECTOR)
+	message(FATAL_ERROR "<vector> not found! This is required for MACE")
+endif()
+
+#COMPILER CHECKS
+
 #verify that we are using C++ 11
 check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
 check_cxx_compiler_flag("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -177,6 +191,16 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 	target_compile_options(MACE PUBLIC -std=c++0x)
 else()
 	message("The compiler ${CMAKE_CXX_COMPILER} has no standard C++ 11 support. C++ 11 must be manually set on this compiler, or it doesn't support it.")
+endif()
+
+check_cxx_compiler_flag("-Wall" COMPILER_SUPPORTS_ALL_WARNINGS)
+if(COMPILER_SUPPORTS_ALL_WARNINGS)
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+endif()
+
+check_cxx_compiler_flag("-DMACE_DEBUG=1" COMPILER_SUPPORTS_DEBUG_DEFINITION)
+if(COMPILER_SUPPORTS_DEBUG_DEFINITION)
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMACE_DEBUG=1")
 endif()
 
 if(NOT ${GLFW_FOUND})
