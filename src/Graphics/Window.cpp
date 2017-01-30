@@ -71,7 +71,7 @@ namespace mc {
 			glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
 			glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
 
-#ifdef MACE_ERROR_CHECK
+#ifdef MACE_DEBUG
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
@@ -143,8 +143,6 @@ namespace mc {
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
-std::cout<<"hi"<<std::endl;
-
 			if( properties.getBit(WindowModule::VSYNC) )glfwSwapInterval(1);
 			else glfwSwapInterval(0);
 
@@ -215,7 +213,9 @@ std::cout<<"hi"<<std::endl;
 
 			glfwGetFramebufferSize(window, &width, &height);
 
-			gfx::Renderer::resize(width, height);
+			if( width != originalWidth || height != originalHeight ) {
+				gfx::Renderer::resize(width, height);
+			}
 
 			creationCallback();
 		}//create

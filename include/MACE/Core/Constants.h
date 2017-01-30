@@ -11,18 +11,23 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_CORE_CONSTANTS_H
 #define MACE_CORE_CONSTANTS_H
 
-#define MACE_INCLUDED true //this will be true if MACE is included
+#define MACE true //this will be true if MACE is included
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!
 #endif//__cplusplus
 
-#if (defined(DEBUG)) || (defined(_DEBUG)) || !defined(NDEBUG)
-#	define MACE_ERROR_CHECK 1
-#endif//debug
+#ifdef MACE_DEBUG
+#	if MACE_DEBUG != 1
+#		undef MACE_DEBUG
+#	endif//MACE_DEBUG == 0
+#elif defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG)
+#	define MACE_DEBUG 1
+#endif//elif
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #	define MACE_WINDOWS 1
+#	define MACE_WIN32
 #elif defined(__APPLE__) && defined(__MACH__)
 #	define MACE_OSX 1
 #elif defined(__linux__) || defined(__unix__)
@@ -32,7 +37,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif
 
 
-#if defined(_POSIX_SOURCE) || defined(_POSIX_VERSION) && (defined(MACE_LINUX) || defined(MACE_OSX))
+#if !defined(MACE_WIN32) && defined(_POSIX_SOURCE) || defined(_POSIX_VERSION) && (defined(MACE_LINUX) || defined(MACE_OSX))
 #	define MACE_POSIX 1
 #endif
 
@@ -136,7 +141,7 @@ namespace mc {
 
 	/**
 	Thrown when an assertion fails.
-	@see MACE#assertModule(std::string)
+	@see MACE::assertModule(std::string)
 	*/
 	using AssertionError = Exception;
 

@@ -51,7 +51,7 @@ namespace mc {
 				}
 			}//anon namespace
 
-#ifdef MACE_ERROR_CHECK
+#ifdef MACE_DEBUG
 			void checkGLError(const Index line, const char* file) {
 				Enum result = GL_NO_ERROR;
 				while( (result = glGetError()) != GL_NO_ERROR ) {

@@ -98,12 +98,12 @@ namespace mc {
 #endif
 		}
 		void assert(const bool cond, const std::string & message) {
-#ifdef MACE_ERROR_CHECK
+#ifdef MACE_DEBUG
 			assert(cond, message.c_str());
 #endif
 		}
 		void assert(const bool cond, const char * message) {
-#ifdef MACE_ERROR_CHECK
+#ifdef MACE_DEBUG
 			if( cond ) {
 				throw AssertionError(message);
 			}

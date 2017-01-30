@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 project(MACE CXX)
 
-if(COMMAND cmake_Policy)
+if(COMMAND cmake_policy)
 	cmake_policy(PUSH)
 	cmake_policy(VERSION 2.8.12)
 	if(POLICY CMP0017)
@@ -21,8 +21,8 @@ include(FindPackageHandleStandardArgs)
 include(CheckCXXCompilerFlag)
 include(DownloadLibrary)
 
-option(MACE_UNIT_TESTING "Whether to build the unit tests under tests." OFF)
-option(MACE_DEMOS "Whether to build the demo programs under demos" OFF)
+option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
+option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
 option(MACE_DOWNLOAD_DEPENDENCIES "Whether to download and extract dependencies that are not found. If turned off, will instead error." ON)
 mark_as_advanced(MACE_DOWNLOAD_DEPENDENCIES)
 
@@ -253,7 +253,9 @@ if(NOT ${OPENAL_FOUND})
 	endif()
 endif()
 
-set_target_properties(MACE PROPERTIES FOLDER "MC")
+if(${MACE_UNIT_TESTING} OR ${MACE_DEMOS})
+	set_target_properties(MACE PROPERTIES FOLDER "MC")
+endif()
 
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
 target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})

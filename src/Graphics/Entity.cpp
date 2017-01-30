@@ -53,6 +53,11 @@ namespace mc {
 
 			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
 
+			if( image == nullptr || width == 0 || height == 0 ) {
+				stbi_image_free(image);
+				throw NullPointerException("Unable to read image: " + std::string(file));
+			}
+
 			setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 
 			stbi_image_free(image);
@@ -421,7 +426,7 @@ namespace mc {
 		}
 
 		bool Entity::getProperty(const Byte position) const {
-#ifdef MACE_ERROR_CHECK
+#ifdef MACE_DEBUG
 			if( position > 8 )throw IndexOutOfBoundsException("Input position is greater than 8");
 			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
 #endif
@@ -429,7 +434,7 @@ namespace mc {
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
-#ifdef MACE_ERROR_CHECK
+#ifdef MACE_DEBUG
 			if( position > 8 )throw IndexOutOfBoundsException("Input position is greater than 8");
 			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
 #endif
