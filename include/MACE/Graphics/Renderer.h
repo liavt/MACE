@@ -114,40 +114,40 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			virtual void resize(const Size width, const Size height) {};
+			virtual void resize(const Size, const Size) {};
 
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void init(const Size originalWidth, const Size originalHeight) = 0;
+			virtual void init(const Size, const Size) = 0;
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void initEntity(GraphicsEntity* entity) {};
+			virtual void initEntity(GraphicsEntity*) {};
 
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void setUp(os::WindowModule* win, RenderQueue* queue) {};
+			virtual void setUp(os::WindowModule*, RenderQueue*) {};
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void renderEntity(os::WindowModule* win, GraphicsEntity* entity) = 0;
+			virtual void renderEntity(os::WindowModule*, GraphicsEntity* entity) = 0;
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void tearDown(os::WindowModule* win, RenderQueue* queue) {};
+			virtual void tearDown(os::WindowModule*, RenderQueue*) {};
 
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void cleanEntity(GraphicsEntity* entity) {};
+			virtual void cleanEntity(GraphicsEntity*) {};
 
 			/**
 			@internal
@@ -158,7 +158,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			virtual void destroyEntity(GraphicsEntity* entity) {};
+			virtual void destroyEntity(GraphicsEntity*) {};
 		private:
 			int index = -1;
 		};
