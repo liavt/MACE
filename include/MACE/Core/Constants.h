@@ -18,7 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//__cplusplus
 
 #ifdef MACE_DEBUG
-#	if MACE_DEBUG != 1
+#	if MACE_DEBUG == 0
 #		undef MACE_DEBUG
 #	endif//MACE_DEBUG == 0
 #elif defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG)

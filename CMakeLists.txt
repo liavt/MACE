@@ -253,7 +253,7 @@ if(NOT ${OPENAL_FOUND})
 	endif()
 endif()
 
-if(${MACE_UNIT_TESTING} OR ${MACE_DEMOS})
+if(MACE_TESTS OR MACE_DEMOS)
 	set_target_properties(MACE PROPERTIES FOLDER "MC")
 endif()
 
