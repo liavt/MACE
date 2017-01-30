@@ -139,7 +139,7 @@ endforeach()
 
 add_library(MACE ${HEADERS} ${SRC})
 
-if(${MACE_UNIT_TESTING})
+if(${MACE_TESTS})
 	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
 	add_executable(MACE-Testing ${TESTS_SRC})
 		
