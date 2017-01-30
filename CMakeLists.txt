@@ -167,17 +167,6 @@ if(${MACE_DEMOS})
 	endforeach()
 endif()
 
-#HEADER FILE CHECKS
-check_include_files("string" HAVE_STRING)
-if(NOT ${HAVE_STRING})
-	message(FATAL_ERROR "<string> not found! This is required for MACE")
-endif()
-
-check_include_files("vector" HAVE_VECTOR)
-if(NOT HAVE_VECTOR)
-	message(FATAL_ERROR "<vector> not found! This is required for MACE")
-endif()
-
 #COMPILER CHECKS
 
 #verify that we are using C++ 11
