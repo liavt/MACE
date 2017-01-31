@@ -286,6 +286,8 @@ namespace mc {
 
 			static Size getOriginalWidth();
 			static Size getOriginalHeight();
+
+			static Size getSamples();
 		private:
 			Renderer() = delete;
 			~Renderer() = delete;

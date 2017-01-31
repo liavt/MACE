@@ -218,9 +218,9 @@ namespace mc {
 		void destroy();
 
 		/**
-		Checks whether the `MACE` is ready to be updated. `init()` must have been called and `destroy()` must not have been called. Additionally, if `shouldStop()` is `true`, this function also returns `false`.
+		Checks whether the `MACE` is ready to be updated. Will return true if `MACE::init()` has been called, and `MACE::destroy()` and `MACE::requestStop()` have not been called.
 		@return If `update()` should be called. If this returns `false`, you should exit the main loop and call `destroy()`
-		@see requestStop()
+		@see MACE::requestStop()
 		@see MACE for an optimal main loop
 		*/
 		bool isRunning();

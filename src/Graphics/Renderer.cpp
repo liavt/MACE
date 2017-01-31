@@ -25,6 +25,8 @@ namespace mc {
 			Size originalWidth = 0;
 			Size originalHeight = 0;
 
+			Size samples = 1;
+
 			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
 			Index entityIndex = 0;
 		}//anon namespace
@@ -129,6 +131,10 @@ namespace mc {
 			return originalHeight;
 		}//getOriginalHeight()
 
+		Size Renderer::getSamples() {
+			return samples;
+		}//getSamples()
+
 		void Renderer::pushEntity(Index protocol, GraphicsEntity * entity) {
 			renderQueue.push_back(std::pair<Index, GraphicsEntity*>(protocol, entity));
 		}//pushEntity(protocol, entity)
@@ -141,11 +147,6 @@ namespace mc {
 		namespace ssl {
 			//constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-			//how many floats in the windowData uniform sslBuffer. needs to be multiplied by sizeof(float)
-#define MACE_WINDOW_DATA_BUFFER_SIZE sizeof(float)*2
-//which binding location the windowData uniform sslBuffer should be bound to
-#define MACE_WINDOW_DATA_LOCATION 14
-
 //how many floats in the entityData uniform sslBuffer.
 #define MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
 //which binding location the paintdata uniform sslBuffer should be bound to
@@ -154,9 +155,6 @@ namespace mc {
 			namespace {
 				//ssl resources
 				Preprocessor sslPreprocessor = Preprocessor("");
-
-				//ssl sslBuffer objects
-				ogl::UniformBuffer windowData = ogl::UniformBuffer();
 
 				//fbo resources
 				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
@@ -170,7 +168,7 @@ namespace mc {
 				ogl::Texture idTexture = ogl::Texture();
 				ogl::Texture proxyIDTexture = ogl::Texture();
 
-				Size samples = 1;
+				Vector<float, 2> windowRatios;
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -184,9 +182,6 @@ namespace mc {
 				IncludeString positionLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
 				}, "ssl_position");
-				IncludeString windowLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/ssl_window.glsl>
-				}, "ssl_window");
 				IncludeString entityLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_entity.glsl>
 				}, "ssl_entity");
@@ -269,22 +264,15 @@ namespace mc {
 					ogl::checkGLError(__LINE__, __FILE__);
 
 					glViewport(0, 0, width, height);
+
+					windowRatios[0] = static_cast<float>(originalWidth) / static_cast<float>(width);
+					windowRatios[1] = static_cast<float>(originalHeight) / static_cast<float>(height);
 				}//generateFrambuffer
 			}//anon namespace
 
 
 
 			void init(const Size &, const Size &) {
-				windowData.init();
-
-				windowData.setLocation(MACE_WINDOW_DATA_LOCATION);
-				windowData.bind();
-				float defaultWindowData[MACE_WINDOW_DATA_BUFFER_SIZE] = { 1,1 };
-				windowData.setData(MACE_WINDOW_DATA_BUFFER_SIZE, defaultWindowData);
-				windowData.unbind();
-
-				ogl::checkGLError(__LINE__, __FILE__);
-
 				if( samples > 1 ) {
 					sceneTexture.setTarget(GL_TEXTURE_2D_MULTISAMPLE);
 				}
@@ -363,8 +351,6 @@ namespace mc {
 			}//tearDown
 
 			void destroy() {
-				windowData.destroy();
-
 				depthBuffer.destroy();
 
 				frameBuffer.destroy();
@@ -381,13 +367,10 @@ namespace mc {
 				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
 				entityData.bindForRender();
 
-				windowData.bindForRender();
-
 				prog.setUniform("ssl_EntityID", entityIndex + 1);
 			}//bindEntity
 
 			void bindShaderProgram(ogl::ShaderProgram & prog) {
-				windowData.bindToUniformBlock(prog.getID(), "ssl_WindowData");
 				prog.createUniform("ssl_EntityID");
 			}//bindShaderProgram
 
@@ -396,11 +379,6 @@ namespace mc {
 
 				if( width > 0 && height > 0 ) {
 					ogl::setViewport(0, 0, width, height);
-
-					windowData.bind();
-					float newSize[2] = { static_cast<float>(originalWidth) / width, static_cast<float>(originalHeight) / height };
-					windowData.setDataRange(sizeof(newSize), newSize, 0);
-					windowData.unbind();
 
 					depthBuffer.destroy();
 
@@ -472,22 +450,31 @@ namespace mc {
 
 				rotation += inheritedRotation;
 
-				//GLSL expects the boolean values as a float, because memory is stored in increments of a float.
-				const float stretch_x = entity->getProperty(Entity::STRETCH_X) ? 1.0f : 0.0f;
-				const float stretch_y = entity->getProperty(Entity::STRETCH_Y) ? 1.0f : 0.0f;
+				if( !entity->getProperty(Entity::STRETCH_X) ) {
+					translation[0] *= windowRatios[0];
+					inheritedTranslation[0] *= windowRatios[0];
+				}
+				if( !entity->getProperty(Entity::STRETCH_Y) ) {
+					translation[1] *= windowRatios[1];
+					inheritedTranslation[1] *= windowRatios[1];
+				}
+				if( !entity->getProperty(Entity::STRETCH_WIDTH) ) {
+					scale[0] *= windowRatios[0];
+					inheritedScale[0] *= windowRatios[0];
+				}
+				if( !entity->getProperty(Entity::STRETCH_HEIGHT) ) {
+					scale[1] *= windowRatios[1];
+					inheritedScale[1] *= windowRatios[1];
+				}
 
 				//now we set the uniform sslBuffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 				std::memcpy((mappedEntityData), translation.begin(), sizeof(translation));
-				mappedEntityData += 3;//pointer arithmetic!
-				std::memcpy(mappedEntityData, &stretch_x, sizeof(stretch_x));
-				++mappedEntityData;
+				mappedEntityData += 4;//pointer arithmetic!
 				std::memcpy(mappedEntityData, rotation.begin(), sizeof(rotation));
-				mappedEntityData += 3;
-				std::memcpy(mappedEntityData, &stretch_y, sizeof(stretch_y));
-				++mappedEntityData;
+				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedTranslation.begin(), sizeof(inheritedTranslation));
 				mappedEntityData += 4;
 				std::memcpy(mappedEntityData, inheritedRotation.begin(), sizeof(inheritedRotation));
@@ -669,7 +656,6 @@ namespace mc {
 					sslPreprocessor.addInclude(vertexLibrary);
 					sslPreprocessor.addInclude(fragmentLibrary);
 					sslPreprocessor.addInclude(positionLibrary);
-					sslPreprocessor.addInclude(windowLibrary);
 					sslPreprocessor.addInclude(entityLibrary);
 					sslPreprocessor.addInclude(coreLibrary);
 				}

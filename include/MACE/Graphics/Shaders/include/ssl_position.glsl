@@ -3,7 +3,6 @@ R"(
 #define _SSL_POSITION_LIBRARY_ 1
 
 #include <ssl_core>
-#include <ssl_window>
 #include <ssl_entity>
 
 layout(location = 15) in vec3 ssl_VertexPosition;
@@ -31,19 +30,10 @@ mat3 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 
 vec4 sslGetEntityPosition(){
 
-	//putting it all in one line allows for the compiler to optimize it into a single MAD operation
-	vec3 ssl_Position = ssl_VertexPosition * ssl_Scale * sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation)
+	//putting it all in one line allows for the compiler to optimize it into a single MAD operation		
+	return vec4(ssl_VertexPosition * ssl_Scale * sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation)
 							  + ssl_BaseEntity.ssl_Translation * sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation)
-							  + ssl_ParentEntity.ssl_Translation;
-		
-	if(ssl_BaseEntity.ssl_StretchX == 0){
-		ssl_Position.x*=ssl_WindowRatios.x;
-	}
-	if(ssl_BaseEntity.ssl_StretchY == 0){
-		ssl_Position.y*=ssl_WindowRatios.y;
-	}
-		
-	return vec4(ssl_Position, 1.0);
+							  + ssl_ParentEntity.ssl_Translation, 1.0);
 }
 
 #endif

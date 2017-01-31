@@ -122,10 +122,12 @@ namespace mc {
 		Vector3i mat = {1, 2, 3};
 		}
 		@param args What to create this `Vector` with
+		@todo Make this constexpr
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		Vector(const std::initializer_list<T> args) : content() {//this is for aggregate initializaition
 			if( args.size() != N )throw IndexOutOfBoundsException("The number of arguments MUST be equal to the size of the array.");
+			
 			Index counter = 0;
 			for( auto elem : args ) {
 				content[counter] = elem;

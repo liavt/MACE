@@ -185,9 +185,9 @@ namespace mc {
 			c.addChild(e);
 
 			SECTION("Updating an entity") {
-				REQUIRE(!e.getProperty(Entity::UPDATE_DISABLED));
+				REQUIRE(!e.getProperty(Entity::DISABLED));
 				e.isUpdated = false;
-				e.setProperty(Entity::UPDATE_DISABLED, true);
+				e.setProperty(Entity::DISABLED, true);
 
 				c.update();
 
@@ -195,9 +195,9 @@ namespace mc {
 			}
 
 			SECTION("Rendering an entity") {
-				REQUIRE(!e.getProperty(Entity::RENDER_DISABLED));
+				REQUIRE(!e.getProperty(Entity::DISABLED));
 				e.isRendered = false;
-				e.setProperty(Entity::RENDER_DISABLED, true);
+				e.setProperty(Entity::DISABLED, true);
 
 				c.render();
 
@@ -305,9 +305,9 @@ namespace mc {
 
 			REQUIRE(e.getProperty(Entity::DEAD));
 
-			REQUIRE(!e.getProperty(Entity::UPDATE_DISABLED));
-			e.setProperty(Entity::UPDATE_DISABLED, true);
-			REQUIRE(e.getProperty(Entity::UPDATE_DISABLED));
+			REQUIRE(!e.getProperty(Entity::DISABLED));
+			e.setProperty(Entity::DISABLED, true);
+			REQUIRE(e.getProperty(Entity::DISABLED));
 			REQUIRE(e.getProperty(Entity::DEAD));
 		}
 

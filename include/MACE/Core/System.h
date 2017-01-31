@@ -25,6 +25,7 @@ namespace mc {
 	safer versions of many std functions.
 
 	@todo Add function for pausing the console
+	@todo Add memory functions like memcpy and memmove
 	*/
 	namespace os {
 		std::tm* localtime(std::tm* result, const std::time_t* time);

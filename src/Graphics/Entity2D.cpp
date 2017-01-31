@@ -248,6 +248,8 @@ namespace mc {
 				makeDirty();
 
 				selectionTexture = tex;
+
+				selectionTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 			}
 		}
 

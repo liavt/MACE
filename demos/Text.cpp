@@ -46,7 +46,7 @@ void create() {
 int main() {
 	try {
 		os::WindowModule module = os::WindowModule(600, 600, "Text Demo");
-
+		module.setResizable(true);
 		module.setFPS(30);
 
 		module.addChild(group);

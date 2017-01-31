@@ -27,10 +27,13 @@ vec4 ssl_frag_main()
 	if( progress >= selection.r ){
 		vec4 foreground = sslAttachmentBlend(foregroundData, texture(foregroundTexture, textureCoord));
 	
-		return vec4(foreground.rgb, foreground.a * selection.a);
+		//return vec4(foreground.rgb, foreground.a * selection.a);
 	}
+	vec4 background = sslAttachmentBlend(backgroundData, texture(backgroundTexture, textureCoord));
 	
-	return sslAttachmentBlend(backgroundData, texture(backgroundTexture, textureCoord));
+	return selection;
+	
+	//return sslAttachmentBlend(backgroundData, texture(backgroundTexture, textureCoord));
 }       
 
 )"

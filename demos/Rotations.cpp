@@ -68,9 +68,6 @@ void create() {
 			entity->setWidth((1.0f / elementNum) * 2);
 			entity->setHeight((1.0f / elementNum) * 2);
 
-			entity->setProperty(gfx::Entity::STRETCH_X, false);
-			entity->setProperty(gfx::Entity::STRETCH_Y, false);
-
 			entity->addComponent(testComponent);
 
 			if( x >= elementNum / 2 ) {

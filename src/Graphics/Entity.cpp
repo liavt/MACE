@@ -62,8 +62,10 @@ namespace mc {
 
 			stbi_image_free(image);
 
+			generateMipmap();
+
+			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
 		void ColorAttachment::setDataFromFile(const std::string & file) {
@@ -150,7 +152,7 @@ namespace mc {
 			}
 
 			//check if we can render
-			if( !getProperty(Entity::RENDER_DISABLED) ) {
+			if( !getProperty(Entity::DISABLED) ) {
 				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
 				onRender();
 
@@ -242,6 +244,10 @@ namespace mc {
 				setProperty(Entity::DIRTY, true);
 				if( hasParent() ) {
 					getRootParent()->setProperty(Entity::DIRTY, true);
+				}
+
+				for( Entity* child : children ) {
+					child->makeDirty();
 				}
 			}
 		}
@@ -340,7 +346,7 @@ namespace mc {
 
 		void Entity::update() {
 			//check if we can update
-			if( !getProperty(Entity::UPDATE_DISABLED) ) {
+			if( !getProperty(Entity::DISABLED) ) {
 
 				//update the components of this entity
 				for( Index i = 0; i < components.size(); i++ ) {

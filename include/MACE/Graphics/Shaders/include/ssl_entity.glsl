@@ -6,9 +6,7 @@ R"(
 
 struct ssl_EntityDataStruct{
 	vec3 ssl_Translation;
-	float ssl_StretchX;
 	vec3 ssl_Rotation;
-	float ssl_StretchY;
 };
 
 sslUniformBuffer ssl_BaseEntityBuffer{

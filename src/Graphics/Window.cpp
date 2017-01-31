@@ -357,7 +357,7 @@ namespace mc {
 		}//update
 
 		void WindowModule::destroy() {
-			destroyed = true;
+			setProperty(WindowModule::DESTROYED, true);
 			windowThread.join();
 
 			glfwTerminate();
@@ -390,6 +390,10 @@ namespace mc {
 		bool WindowModule::isUndecorated() const {
 			return properties.getBit(WindowModule::UNDECORATED);
 		}//isUndecorated
+
+		bool WindowModule::isDestroyed() const {
+			return properties.getBit(WindowModule::DESTROYED);
+		}//isDestroyed
 
 		void WindowModule::setResizable(const bool re) {
 			properties.setBit(WindowModule::RESIZABLE, re);

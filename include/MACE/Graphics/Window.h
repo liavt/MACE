@@ -34,6 +34,7 @@ namespace mc {
                 FULLSCREEN = 1,
                 UNDECORATED = 2,
                 RESIZABLE = 3,
+				DESTROYED = 4,
             };
 
 			WindowModule(const int width, const int height, const char* title);
@@ -73,13 +74,13 @@ namespace mc {
 			void setUndecorated(const bool un);
 			bool isUndecorated() const;
 
+			bool isDestroyed() const;
+
 			void setCreationCallback(const VoidFunctionPtr callback);
 			const VoidFunctionPtr getCreationCallback() const;
 			VoidFunctionPtr getCreationCallback();
 		private:
 			VoidFunctionPtr creationCallback = [] {};
-
-			bool destroyed = false;
 
 			std::thread windowThread;
 

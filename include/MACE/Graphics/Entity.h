@@ -134,15 +134,10 @@ namespace mc {
 				*/
 				DEAD = 0,
 				/**
-				Property defining if an `Entity` can be updated. If this is `FALSE`, `update()` will be called by it's parent.
+				Property defining if an `Entity` can be updated and rendered. If this is `true`, `Entity::update()` and `Entity::render()` will not be called by it's parent.
 				@see Entity#getProperty(unsigned int)
 				*/
-				UPDATE_DISABLED = 1,
-				/**
-				Property defining if an `Entity` can be rendered. If this is `false`, `render()` will be called by it's parent.
-				@see Entity#getProperty(unsigned int)
-				*/
-				RENDER_DISABLED = 2,
+				DISABLED = 1,
 
 				/**
 				Flag representing whether an Entity's init() function has been called.
@@ -152,19 +147,8 @@ namespace mc {
 				If init() is called and this is `true`, an `InitializationError` is thrown.
 				@see Entity#getProperty(unsigned int)
 				*/
-				INIT = 3,
+				INIT = 2,
 
-				/**
-				Flag representing whether an Entity's X position should move when it's parent is resized.
-				@see Entity::STRETCH_Y
-				*/
-				STRETCH_X = 4,
-
-				/**
-				Flag representing whether an Entity's Y position should move when it's parent is resized.
-				@see Entity::STRETCH_X
-				*/
-				STRETCH_Y = 5,
 				/**
 				Flag representing whether this `Entity` is dirty and it's positions needs to be recalculated.
 				<p>
@@ -180,7 +164,43 @@ namespace mc {
 				<p>
 				Additionally, an `Entity` that is considered dirty will have it's sslBuffer updated on the GPU side.
 				*/
-				DIRTY = 6
+				DIRTY = 3,
+
+				/**
+				Flag representing whether an Entity's X position should be stretched when window is resized.
+				@see Entity::STRETCH_Y
+				@see Entity::STRETCH_WIDTH
+				@see Entity::STRETCH_HEIGHT
+				*/
+				STRETCH_X = 4,
+
+				/**
+				Flag representing whether an Entity's Y position should be stretched when window is resized.
+				@see Entity::STRETCH_X
+				@see Entity::STRETCH_WIDTH
+				@see Entity::STRETCH_HEIGHT
+				@see WindowModule::setResizable(bool)
+				*/
+				STRETCH_Y = 5,
+
+				/**
+				Flag representing whether an Entity's width should be stretched when window is resized.
+				@see Entity::STRETCH_X
+				@see Entity::STRETCH_Y
+				@see Entity::STRETCH_HEIGHT
+				@see WindowModule::setResizable(bool)
+				*/
+				STRETCH_WIDTH = 6,
+				/**
+				Flag representing whether an Entity's height should be stretched when window is resized.
+				@see Entity::STRETCH_X
+				@see Entity::STRETCH_Y
+				@see Entity::STRETCH_WIDTH
+				@see WindowModule::setResizable(bool)
+				*/
+				STRETCH_HEIGHT = 7,
+
+				DEFAULT_PROPERTIES = 0x00000000
 			};
 
 			/**
@@ -591,7 +611,7 @@ namespace mc {
 		private:
 			std::vector<Component*> components = std::vector<Component*>();
 
-			EntityProperties properties = 0;
+			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 
 
 			Entity* parent = nullptr;
