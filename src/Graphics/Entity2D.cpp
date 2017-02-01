@@ -963,6 +963,8 @@ namespace mc {
 					let->setX(position[0] * widthScale);
 					let->setY(position[1] * heightScale);
 
+					let->setOpacity(getOpacity());
+
 					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
 					x += static_cast<float>((let->advanceX) + let->width) / origWidth;
 					y += static_cast<float>(let->advanceY) / origHeight;
