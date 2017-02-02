@@ -82,25 +82,20 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::IncludeDirectory Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::IncludeDirectory}
-{\xe \v mc::IncludeDirectory}
-{\bkmkstart AAAAAAAATZ}
-{\bkmkend AAAAAAAATZ}
+mc::Include Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::Include}
+{\xe \v mc::Include}
+{\bkmkstart AAAAAAAAUM}
+{\bkmkend AAAAAAAAUM}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Represents a directory on the disk from which you can include files from. }}\par
+Superclass for classes that represent items that can be included via #include. }}\par
 {
 {\f2 #include <Preprocessor.h>}}\par
-Inheritance diagram for mc::IncludeDirectory:{
+Inheritance diagram for mc::Include:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/d87/a00118.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::IncludeDirectory:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/d6a/a00119.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d4/d3e/a00116.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -109,21 +104,14 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b IncludeDirectory} (const std::string &dir)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates an {\f2 {\b IncludeDirectory}}  representing a directory on the filesystem. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b hasFile} (const std::string &name) const \par
+virtual bool {\b hasFile} (const std::string &name) const  =0\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Checks whether this include has the specified file. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::string {\b getFile} (const std::string &name) const \par
+virtual std::string {\b getFile} (const std::string &name) const  =0\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Retrieves a file with a certain name. }{
@@ -136,59 +124,30 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Represents a directory on the disk from which you can include files from. \par
+Superclass for classes that represent items that can be included via #include. \par
 }
 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b IncludeString} \par
+{\b IncludeDirectory} \par
 {\b Preprocessor} \par
 }}{
-Definition at line 114 of file Preprocessor.h.}\par
+Definition at line 75 of file Preprocessor.h.}\par
 }
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Constructor & Destructor Documentation\par
-\pard\plain 
-{\xe \v IncludeDirectory\:mc::IncludeDirectory}
-{\xe \v mc::IncludeDirectory\:IncludeDirectory}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-mc::IncludeDirectory::IncludeDirectory (const std::string &  {\i dir})}}
-\par
-{\bkmkstart AAAAAAAAUA}
-{\bkmkend AAAAAAAAUA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates an {\f2 {\b IncludeDirectory}}  representing a directory on the filesystem. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i dir} \cell }{Path to a directory \cell }
-{\row }
-}
-}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v getFile\:mc::IncludeDirectory}
-{\xe \v mc::IncludeDirectory\:getFile}
+{\xe \v getFile\:mc::Include}
+{\xe \v mc::Include\:getFile}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::string mc::IncludeDirectory::getFile (const std::string &  {\i name}) const{\f2 [virtual]}}}
+virtual std::string mc::Include::getFile (const std::string &  {\i name}) const{\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAAATU}
-{\bkmkend AAAAAAAATU}
+{\bkmkstart AAAAAAAAUN}
+{\bkmkend AAAAAAAAUN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -196,16 +155,16 @@ std::string mc::IncludeDirectory::getFile (const std::string &  {\i name}) const
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Retrieves a file with a certain name. }}\par
 {
-Implements {\b mc::Include} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAATT \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::IncludeDirectory} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAUO \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::IncludeString} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAUP \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v hasFile\:mc::IncludeDirectory}
-{\xe \v mc::IncludeDirectory\:hasFile}
+{\xe \v hasFile\:mc::Include}
+{\xe \v mc::Include\:hasFile}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::IncludeDirectory::hasFile (const std::string &  {\i name}) const{\f2 [virtual]}}}
+virtual bool mc::Include::hasFile (const std::string &  {\i name}) const{\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAAATX}
-{\bkmkend AAAAAAAATX}
+{\bkmkstart AAAAAAAAUQ}
+{\bkmkend AAAAAAAAUQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -215,7 +174,7 @@ Checks whether this include has the specified file. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 If there isn't an {\f2 {\b Include}}  with the file, then a {\f2 PreprocessorException}  is thrown. \par
 }{
-Implements {\b mc::Include} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAATW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::IncludeDirectory} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAUR \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::IncludeString} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAUS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

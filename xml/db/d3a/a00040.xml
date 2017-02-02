@@ -1,28 +1,100 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="db/d3a/a00040" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::RenderProtocol</compoundname>
-    <basecompoundref refid="d3/de7/a00039" prot="public" virt="non-virtual">mc::gfx::RenderImpl</basecompoundref>
+  <compounddef id="db/d3a/a00040" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>mc::gfx::RenderImpl</compoundname>
+    <derivedcompoundref refid="dd/d32/a00041" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="d5/db6/a00042" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; Image &gt;</derivedcompoundref>
+    <derivedcompoundref refid="d6/d42/a00043" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; Letter &gt;</derivedcompoundref>
+    <derivedcompoundref refid="d5/df9/a00044" prot="public" virt="non-virtual">mc::gfx::RenderProtocol&lt; ProgressBar &gt;</derivedcompoundref>
     <includes refid="d9/db3/a00066" local="no">Renderer.h</includes>
-    <templateparamlist>
-      <param>
-        <type>typename T</type>
-      </param>
-    </templateparamlist>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="db/d3a/a00040_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend class</type>
+        <definition>friend class Renderer</definition>
+        <argsstring></argsstring>
+        <name>Renderer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="106" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="db/d3a/a00040_ae5cf0daa36c2ea61af27de6a4474f733_1ae5cf0daa36c2ea61af27de6a4474f733" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend void</type>
+        <definition>void ssl::init</definition>
+        <argsstring>(const Size &amp;, const Size &amp;)</argsstring>
+        <name>ssl::init</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+        </param>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="108" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="db/d3a/a00040_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mc::gfx::RenderImpl::index</definition>
+        <argsstring></argsstring>
+        <name>index</name>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="163" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="db/d3a/a00040_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+      <memberdef kind="function" id="db/d3a/a00040_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::gfx::RenderImpl::RenderImpl</definition>
+        <argsstring>() noexcept=default</argsstring>
+        <name>RenderImpl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="110" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual mc::gfx::RenderImpl::~RenderImpl</definition>
+        <argsstring>() noexcept=default</argsstring>
+        <name>~RenderImpl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="111" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a6bd329f3d60c5ea961bda5f29c3231a8_1a6bd329f3d60c5ea961bda5f29c3231a8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; T &gt;::resize</definition>
-        <argsstring>(const Size, const Size) override</argsstring>
+        <definition>virtual void mc::gfx::RenderImpl::resize</definition>
+        <argsstring>(const Size, const Size)</argsstring>
         <name>resize</name>
-        <reimplements refid="d3/de7/a00039_ab941c45df034626848ed216b7199d40c_1ab941c45df034626848ed216b7199d40c">resize</reimplements>
+        <reimplementedby refid="dd/d32/a00041_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1">resize</reimplementedby>
         <param>
           <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>width</declname>
         </param>
         <param>
           <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>height</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -40,21 +112,22 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="157" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="157" bodyend="157"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="117" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="117" bodyend="117"/>
       </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+      <memberdef kind="function" id="db/d3a/a00040_a4fd8e0a36eb1e0e32b2966c68a9d1f2f_1a4fd8e0a36eb1e0e32b2966c68a9d1f2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; T &gt;::init</definition>
-        <argsstring>(const Size, const Size) override</argsstring>
+        <definition>virtual void mc::gfx::RenderImpl::init</definition>
+        <argsstring>(const Size, const Size)=0</argsstring>
         <name>init</name>
-        <reimplements refid="d3/de7/a00039_a1de407db695c2148bf71c67883ffedb1_1a1de407db695c2148bf71c67883ffedb1">init</reimplements>
+        <reimplementedby refid="d5/db6/a00042_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b">init</reimplementedby>
+        <reimplementedby refid="d5/df9/a00044_a9b96a7c4453cb5de382e8866ad9bd859_1a9b96a7c4453cb5de382e8866ad9bd859">init</reimplementedby>
+        <reimplementedby refid="dd/d32/a00041_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54">init</reimplementedby>
+        <reimplementedby refid="d6/d42/a00043_a22a95178025b8c055d05a13e31d2062d_1a22a95178025b8c055d05a13e31d2062d">init</reimplementedby>
         <param>
           <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>originalWidth</declname>
         </param>
         <param>
           <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>originalHeight</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -72,21 +145,49 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="159" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="159" bodyend="159"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="123" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+      <memberdef kind="function" id="db/d3a/a00040_aa4cc0dfa80d8fa019a2dfc673c1b5747_1aa4cc0dfa80d8fa019a2dfc673c1b5747" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; T &gt;::setUp</definition>
-        <argsstring>(os::WindowModule *, RenderQueue *) override</argsstring>
-        <name>setUp</name>
-        <reimplements refid="d3/de7/a00039_a13d3c43299a124a1b95d113c902e9476_1a13d3c43299a124a1b95d113c902e9476">setUp</reimplements>
+        <definition>virtual void mc::gfx::RenderImpl::initEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>initEntity</name>
+        <reimplementedby refid="d5/db6/a00042_a9a2f187614ae80d6f474f96ccf47d953_1a9a2f187614ae80d6f474f96ccf47d953">initEntity</reimplementedby>
+        <reimplementedby refid="d5/df9/a00044_a1ae0521551f81e8288b67e1bb26ea4de_1a1ae0521551f81e8288b67e1bb26ea4de">initEntity</reimplementedby>
+        <reimplementedby refid="dd/d32/a00041_af3478fe346e01afb2908d6f7e34e5674_1af3478fe346e01afb2908d6f7e34e5674">initEntity</reimplementedby>
+        <reimplementedby refid="d6/d42/a00043_af47726dc3b0fda74a20bc7f58ef7a2e2_1af47726dc3b0fda74a20bc7f58ef7a2e2">initEntity</reimplementedby>
         <param>
-          <type><ref refid="d4/d6d/a00055" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
+          <type><ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="128" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="128" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a09de296a552820e6739bc9227e57b56d_1a09de296a552820e6739bc9227e57b56d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::setUp</definition>
+        <argsstring>(os::WindowModule *, RenderQueue *)</argsstring>
+        <name>setUp</name>
+        <reimplementedby refid="dd/d32/a00041_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba">setUp</reimplementedby>
+        <param>
+          <type><ref refid="d9/d2e/a00056" kindref="compound">os::WindowModule</ref> *</type>
         </param>
         <param>
           <type><ref refid="d1/d44/a00098_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
-          <declname>queue</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -104,21 +205,134 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="160" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="160" bodyend="160"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="134" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="134" bodyend="134"/>
       </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a9d43b72296acfbba53ba52d562a01030_1a9d43b72296acfbba53ba52d562a01030" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+      <memberdef kind="function" id="db/d3a/a00040_a9f00ce6cfcc7306ad6b69b182ab2928f_1a9f00ce6cfcc7306ad6b69b182ab2928f" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
         <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; T &gt;::render</definition>
-        <argsstring>(os::WindowModule *, GraphicsEntity *) override</argsstring>
-        <name>render</name>
-        <reimplements refid="d3/de7/a00039_a06a982c8b438aaa052e1fa1d1fc995ae_1a06a982c8b438aaa052e1fa1d1fc995ae">render</reimplements>
+        <definition>virtual void mc::gfx::RenderImpl::renderEntity</definition>
+        <argsstring>(os::WindowModule *, GraphicsEntity *entity)=0</argsstring>
+        <name>renderEntity</name>
+        <reimplementedby refid="d5/db6/a00042_aae61236b4817699d57605efa8b413a39_1aae61236b4817699d57605efa8b413a39">renderEntity</reimplementedby>
+        <reimplementedby refid="d5/df9/a00044_ab68ebc5cb956cc6819fed09bd162143b_1ab68ebc5cb956cc6819fed09bd162143b">renderEntity</reimplementedby>
+        <reimplementedby refid="dd/d32/a00041_ae710e7f3e338567c02efb264f6cbd5dd_1ae710e7f3e338567c02efb264f6cbd5dd">renderEntity</reimplementedby>
+        <reimplementedby refid="d6/d42/a00043_a73ecd2f827d24cddee82fd57ccaaa82c_1a73ecd2f827d24cddee82fd57ccaaa82c">renderEntity</reimplementedby>
         <param>
-          <type><ref refid="d4/d6d/a00055" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
+          <type><ref refid="d9/d2e/a00056" kindref="compound">os::WindowModule</ref> *</type>
         </param>
         <param>
-          <type><ref refid="de/d11/a00021" kindref="compound">GraphicsEntity</ref> *</type>
+          <type><ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> *</type>
           <declname>entity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="139" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_acbce840815446695a44776cb15537b2e_1acbce840815446695a44776cb15537b2e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::tearDown</definition>
+        <argsstring>(os::WindowModule *, RenderQueue *)</argsstring>
+        <name>tearDown</name>
+        <reimplementedby refid="dd/d32/a00041_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538">tearDown</reimplementedby>
+        <param>
+          <type><ref refid="d9/d2e/a00056" kindref="compound">os::WindowModule</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="d1/d44/a00098_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="144" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="144" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a992cd784efc111151a4bb6c699821e37_1a992cd784efc111151a4bb6c699821e37" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::cleanEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>cleanEntity</name>
+        <reimplementedby refid="dd/d32/a00041_a2e9c06972639b6e5f6182302acc259ec_1a2e9c06972639b6e5f6182302acc259ec">cleanEntity</reimplementedby>
+        <param>
+          <type><ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="150" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="150" bodyend="150"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::destroy</definition>
+        <argsstring>()=0</argsstring>
+        <name>destroy</name>
+        <reimplementedby refid="d5/db6/a00042_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb">destroy</reimplementedby>
+        <reimplementedby refid="d5/df9/a00044_a681ef8c8a89befa77f0e98c35556fe09_1a681ef8c8a89befa77f0e98c35556fe09">destroy</reimplementedby>
+        <reimplementedby refid="dd/d32/a00041_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8">destroy</reimplementedby>
+        <reimplementedby refid="d6/d42/a00043_ab0414b1d55e9c95325453448084f5d18_1ab0414b1d55e9c95325453448084f5d18">destroy</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="156" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="db/d3a/a00040_a8865aa2228ff0bc7479dfd0126a1d3b9_1a8865aa2228ff0bc7479dfd0126a1d3b9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::destroyEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>destroyEntity</name>
+        <reimplementedby refid="dd/d32/a00041_a15a1ba89268e1a29266e9c75d719f75e_1a15a1ba89268e1a29266e9c75d719f75e">destroyEntity</reimplementedby>
+        <param>
+          <type><ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -138,111 +352,58 @@
         </inbodydescription>
         <location file="include/MACE/Graphics/Renderer.h" line="161" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="161" bodyend="161"/>
       </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; T &gt;::tearDown</definition>
-        <argsstring>(os::WindowModule *, RenderQueue *) override</argsstring>
-        <name>tearDown</name>
-        <reimplements refid="d3/de7/a00039_ac1b569053de9c46379c954f71e64659b_1ac1b569053de9c46379c954f71e64659b">tearDown</reimplements>
-        <param>
-          <type><ref refid="d4/d6d/a00055" kindref="compound">os::WindowModule</ref> *</type>
-          <declname>win</declname>
-        </param>
-        <param>
-          <type><ref refid="d1/d44/a00098_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
-          <declname>queue</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="162" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="162" bodyend="162"/>
-      </memberdef>
-      <memberdef kind="function" id="db/d3a/a00040_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::RenderProtocol&lt; T &gt;::destroy</definition>
-        <argsstring>() override</argsstring>
-        <name>destroy</name>
-        <reimplements refid="d3/de7/a00039_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee">destroy</reimplements>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="163" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="163" bodyend="163"/>
-      </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
 <para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
 </para>    </detaileddescription>
     <inheritancegraph>
-      <node id="619">
-        <label>mc::gfx::RenderImpl</label>
-        <link refid="d3/de7/a00039"/>
+      <node id="597">
+        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
+        <link refid="d5/db6/a00042"/>
+        <childnode refid="595" relation="public-inheritance">
+        </childnode>
       </node>
-      <node id="618">
-        <label>mc::gfx::RenderProtocol&lt; T &gt;</label>
+      <node id="599">
+        <label>mc::gfx::RenderProtocol&lt; ProgressBar &gt;</label>
+        <link refid="d5/df9/a00044"/>
+        <childnode refid="595" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="595">
+        <label>mc::gfx::RenderImpl</label>
         <link refid="db/d3a/a00040"/>
-        <childnode refid="619" relation="public-inheritance">
+      </node>
+      <node id="598">
+        <label>mc::gfx::RenderProtocol&lt; Letter &gt;</label>
+        <link refid="d6/d42/a00043"/>
+        <childnode refid="595" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="596">
+        <label>mc::gfx::RenderProtocol&lt; T &gt;</label>
+        <link refid="dd/d32/a00041"/>
+        <childnode refid="595" relation="public-inheritance">
         </childnode>
       </node>
     </inheritancegraph>
-    <collaborationgraph>
-      <node id="621">
-        <label>mc::gfx::RenderImpl</label>
-        <link refid="d3/de7/a00039"/>
-      </node>
-      <node id="620">
-        <label>mc::gfx::RenderProtocol&lt; T &gt;</label>
-        <link refid="db/d3a/a00040"/>
-        <childnode refid="621" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="include/MACE/Graphics/Renderer.h" line="153" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="153" bodyend="164"/>
+    <location file="include/MACE/Graphics/Renderer.h" line="105" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="105" bodyend="164"/>
     <listofallmembers>
-      <member refid="db/d3a/a00040_a341f82638122be6c2a693ecdf5c3e6c8_1a341f82638122be6c2a693ecdf5c3e6c8" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>destroy</name></member>
-      <member refid="db/d3a/a00040_af4126f9f608c452128d5ae4d310cba54_1af4126f9f608c452128d5ae4d310cba54" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>init</name></member>
-      <member refid="db/d3a/a00040_a9d43b72296acfbba53ba52d562a01030_1a9d43b72296acfbba53ba52d562a01030" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>render</name></member>
-      <member refid="d3/de7/a00039_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol</scope><name>RenderImpl</name></member>
-      <member refid="db/d3a/a00040_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>resize</name></member>
-      <member refid="db/d3a/a00040_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>setUp</name></member>
-      <member refid="db/d3a/a00040_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>tearDown</name></member>
-      <member refid="d3/de7/a00039_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol</scope><name>~RenderImpl</name></member>
+      <member refid="db/d3a/a00040_a992cd784efc111151a4bb6c699821e37_1a992cd784efc111151a4bb6c699821e37" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>cleanEntity</name></member>
+      <member refid="db/d3a/a00040_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>destroy</name></member>
+      <member refid="db/d3a/a00040_a8865aa2228ff0bc7479dfd0126a1d3b9_1a8865aa2228ff0bc7479dfd0126a1d3b9" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>destroyEntity</name></member>
+      <member refid="db/d3a/a00040_1a451f2ec396e2221c54f3f7f44f84e36c" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>index</name></member>
+      <member refid="db/d3a/a00040_a4fd8e0a36eb1e0e32b2966c68a9d1f2f_1a4fd8e0a36eb1e0e32b2966c68a9d1f2f" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>init</name></member>
+      <member refid="db/d3a/a00040_aa4cc0dfa80d8fa019a2dfc673c1b5747_1aa4cc0dfa80d8fa019a2dfc673c1b5747" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>initEntity</name></member>
+      <member refid="db/d3a/a00040_a9f00ce6cfcc7306ad6b69b182ab2928f_1a9f00ce6cfcc7306ad6b69b182ab2928f" prot="public" virt="pure-virtual"><scope>mc::gfx::RenderImpl</scope><name>renderEntity</name></member>
+      <member refid="db/d3a/a00040_a70538530bc36e033e360880ef311df61_1a70538530bc36e033e360880ef311df61" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>Renderer</name></member>
+      <member refid="db/d3a/a00040_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>RenderImpl</name></member>
+      <member refid="db/d3a/a00040_a6bd329f3d60c5ea961bda5f29c3231a8_1a6bd329f3d60c5ea961bda5f29c3231a8" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>resize</name></member>
+      <member refid="db/d3a/a00040_a09de296a552820e6739bc9227e57b56d_1a09de296a552820e6739bc9227e57b56d" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>setUp</name></member>
+      <member refid="db/d3a/a00040_ae5cf0daa36c2ea61af27de6a4474f733_1ae5cf0daa36c2ea61af27de6a4474f733" prot="private" virt="non-virtual"><scope>mc::gfx::RenderImpl</scope><name>ssl::init</name></member>
+      <member refid="db/d3a/a00040_acbce840815446695a44776cb15537b2e_1acbce840815446695a44776cb15537b2e" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>tearDown</name></member>
+      <member refid="db/d3a/a00040_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderImpl</scope><name>~RenderImpl</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

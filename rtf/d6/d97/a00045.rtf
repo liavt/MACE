@@ -82,22 +82,25 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::ogl::ShaderProgram Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram}
-{\bkmkstart AAAAAAABSB}
-{\bkmkend AAAAAAABSB}
+mc::gfx::ogl::Shader Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader}
+{\bkmkstart AAAAAAABUO}
+{\bkmkend AAAAAAABUO}
 \par
 {
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Represents a shader object in OpenGL. }}\par
+{
 {\f2 #include <OGL.h>}}\par
-Inheritance diagram for mc::gfx::ogl::ShaderProgram:{
+Inheritance diagram for mc::gfx::ogl::Shader:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d28/a00223.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d0/d24/a00222.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
-Collaboration diagram for mc::gfx::ogl::ShaderProgram:{
+Collaboration diagram for mc::gfx::ogl::Shader:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d5/ddf/a00224.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d28/a00223.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -105,6 +108,20 @@ Public Member Functions\par
 \pard\plain 
 
 {
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Shader} () noexcept\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Default constructor which sets {\f2 type}  to {\f2 GL_FALSE} . }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Shader} (const {\b Enum} type) noexcept\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Constructor which sets the type of the {\f2 {\b Shader}} . }{
+}\par
+}}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b init} () override\par
 {
@@ -120,7 +137,25 @@ Calls the corresponding glDestroy* function and deletes the ID. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b link} ()\par
+void {\b setSource} (const {\b Size} count, const char *strings[], const int lengths[])\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setSource} (const char string[], const int length)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setSource} (const std::string &string)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+char * {\b getSource} (const {\b Size} length, char *characters, int amount=0) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getParameter} (const {\b Enum} param) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getInfoLogLength} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+int {\b getSourceLength} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b isDeleted} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b isCompiled} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b compile} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 bool {\b isCreated} () const  override\par
 {
@@ -129,215 +164,15 @@ Queries OpenGL whether this {\b Object}'s ID is a valid object. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b getParameter} (const {\b Enum} param) const \par
+void {\b setType} (const {\b Enum} newType)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b getInfoLogLength} () const \par
+{\b Enum} {\b getType} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b getAttachedShaders} () const \par
+const {\b Enum} {\b getType} () const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b isDeleted} () const \par
+bool {\b operator==} (const {\b Shader} &other) const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b isLinked} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b isValidated} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b detachShader} (const {\b Index} {\b id})\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b detachShader} (const {\b Shader} &sh)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b validate} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b attachShader} (const {\b Shader} shader)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b createFragment} (const char shader[])\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b createFragment} (const std::string &shader)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b createVertex} (const char shader[])\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b createVertex} (const std::string &shader)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b createUniform} (const std::string &name)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b createUniform} (const char *name)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b getUniformLocation} (const std::string &name) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b getUniformLocation} (const char *name) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 2, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 2, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 3, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 3, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 4, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 4, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 2, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 2, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 3, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 3, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 2, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 2, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 3, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 3, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< float, 4, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< float, 4, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 2, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 2, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 3, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 3, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 4, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 4, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 2, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 2, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 3, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 3, 2 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 2, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 2, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 3, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 3, 4 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const bool transpose, const {\b mc::Matrix}< double, 4, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Matrix}< double, 4, 3 > &m)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const float a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const float a, const float b)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const float a, const float b, const float c)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const float a, const float b, const float c, const float d)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} arraySize, const float *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} componentSize, const {\b Size} arraySize, const float *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< float, 1 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< float, 2 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< float, 3 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< float, 4 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const double a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const double a, const double b)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const double a, const double b, const double c)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const double a, const double b, const double c, const double d)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} arraySize, const double *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} componentSize, const {\b Size} arraySize, const double *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< double, 1 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< double, 2 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< double, 3 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< double, 4 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const int a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const int a, const int b)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const int a, const int b, const int c)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const int a, const int b, const int c, const int d)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} arraySize, const int *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} componentSize, const {\b Size} arraySize, const int *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< int, 1 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< int, 2 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< int, 3 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< int, 4 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const unsigned int a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const unsigned int a, const unsigned int b)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const unsigned int a, const unsigned int b, const unsigned int c)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} arraySize, const unsigned int *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b Size} componentSize, const {\b Size} arraySize, const unsigned int *a)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< unsigned int, 1 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< unsigned int, 2 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< unsigned int, 3 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniform} (const char *name, const {\b mc::Vector}< unsigned int, 4 > v)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setShaders} (const std::unordered_map< {\b Enum}, {\b Shader} > &newShaders)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const std::unordered_map< {\b Enum}, {\b Shader} > & {\b getShaders} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::unordered_map< {\b Enum}, {\b Shader} > & {\b getShaders} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setUniforms} (const std::unordered_map< std::string, int > &newUniforms)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const std::unordered_map< std::string, int > & {\b getUniforms} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::unordered_map< std::string, int > & {\b getUniforms} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b ShaderProgram} &other) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b ShaderProgram} &other) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b bind} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Binds this {\f2 {\b Object}}  to be used in an OpenGL function. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b unbind} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unbinds this {\f2 {\b Object}}  which is equivalent to binding ID 0. }{
-}\par
-}}
+bool {\b operator!=} (const {\b Shader} &other) const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b Index} {\b getID} () const \par
 {
@@ -379,233 +214,103 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
+Represents a shader object in OpenGL. \par
+}
+
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+A shader is a special program that gets executed during different parts of rendering. \par
+The {\f2 {\b Shader}}  class must be used with the {\f2 {\b ShaderProgram}}  class. \par
+In order to work correctly, {\b Shader::setType(const Enum)} or {\b Shader::Shader(const Enum)} noexcept must be called and a type must be set. \par
+Unlike other {\f2 Objects} , the default constructor of {\f2 {\b Shader}}  should not be used. It is only implemented for compatibility reasons. The {\f2 type}  of the shader must be set before most functions are called. If {\f2 type}  is equal to {\f2 GL_FALSE}  an error is thrown. \par
+Even though it extends {\f2 {\b Object}}  it does not implement the {\b Object::bind() const }or {\f2 unbind()}  functions. Instead, add the shader to a {\f2 {\b ShaderProgram}}  and it will link from there. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/Shader} \par
 {\f2 https://www.opengl.org/wiki/GLSL_Object#Program_objects} \par
-{\b Shader} \par
 }}{
-Definition at line 1092 of file OGL.h.}\par
+Definition at line 978 of file OGL.h.}\par
 }
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Constructor & Destructor Documentation\par
+\pard\plain 
+{\xe \v Shader\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:Shader}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::ogl::Shader::Shader (){\f2 [noexcept]}}}
+\par
+{\bkmkstart AAAAAAABUP}
+{\bkmkend AAAAAAABUP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Default constructor which sets {\f2 type}  to {\f2 GL_FALSE} . }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+If a function that requires {\f2 type}  to be set is called, an error is thrown. \par
+If this constructor is used, the {\b Shader::setType(const Enum)} function should be used later to set a type. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Shader::Shader(const Enum)} noexcept \par
+{\b Shader} \par
+}}}
+{\xe \v Shader\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:Shader}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::ogl::Shader::Shader (const {\b Enum}  {\i type}){\f2 [noexcept]}}}
+\par
+{\bkmkstart AAAAAAABUQ}
+{\bkmkend AAAAAAABUQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Constructor which sets the type of the {\f2 {\b Shader}} . }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Should be used instead of {\f2 {\b Shader::Shader()} noexcept}  \par
+The {\f2 type}  must be a valid OpenGL constant representing a type of shader. If it is incorrect, an {\f2 OpenGLError}  is thrown. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i type} \cell }{The type of {\f2 {\b Shader}} . Must be {\f2 GL_VERTEX_SHADER} , {\f2 GL_FRAGMENT_SHADER} , {\f2 GL_GEOMETRY_SHADER} , or the following if available: {\f2 GL_TESS_CONTROL_SHADER} , {\f2 GL_TESS_EVALUATION_SHADER} , and {\f2 GL_COMPUTE_SHADER}  \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Shader::setType(const Enum)} \par
+{\b Shader} \par
+}}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v attachShader\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:attachShader}
+{\xe \v compile\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:compile}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::ShaderProgram::attachShader (const {\b Shader}  {\i shader})}}
+void mc::gfx::ogl::Shader::compile ()}}
 \par
-{\bkmkstart AAAAAAABSC}
-{\bkmkend AAAAAAABSC}
+{\bkmkstart AAAAAAABUR}
+{\bkmkend AAAAAAABUR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v bind\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:bind}
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glCompileShader} \par
+}}}
+{\xe \v destroy\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::gfx::ogl::Shader::destroy (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOC}
-{\bkmkend AAAAAAABOC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Binds this {\f2 {\b Object}}  to be used in an OpenGL function. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::unbind() const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If this {\f2 {\b Object}}  has not been created yet \cell }
-{\row }
-}
-}}
-{\xe \v createFragment\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:createFragment}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::createFragment (const char  {\i shader}[])}}
-\par
-{\bkmkstart AAAAAAABSD}
-{\bkmkend AAAAAAABSD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v createFragment\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:createFragment}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::createFragment (const std::string &  {\i shader})}}
-\par
-{\bkmkstart AAAAAAABSE}
-{\bkmkend AAAAAAABSE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v createUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:createUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::createUniform (const std::string &  {\i name})}}
-\par
-{\bkmkstart AAAAAAABSF}
-{\bkmkend AAAAAAABSF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v createUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:createUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::createUniform (const char *  {\i name})}}
-\par
-{\bkmkstart AAAAAAABSG}
-{\bkmkend AAAAAAABSG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v createVertex\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:createVertex}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::createVertex (const char  {\i shader}[])}}
-\par
-{\bkmkstart AAAAAAABSH}
-{\bkmkend AAAAAAABSH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v createVertex\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:createVertex}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::createVertex (const std::string &  {\i shader})}}
-\par
-{\bkmkstart AAAAAAABSI}
-{\bkmkend AAAAAAABSI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v destroy\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:destroy}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::destroy (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABQC}
-{\bkmkend AAAAAAABQC}
+{\bkmkstart AAAAAAABTL}
+{\bkmkend AAAAAAABTL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -640,92 +345,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEA \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v detachShader\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:detachShader}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::detachShader (const {\b Index}  {\i id})}}
-\par
-{\bkmkstart AAAAAAABSJ}
-{\bkmkend AAAAAAABSJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v detachShader\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:detachShader}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::detachShader (const {\b Shader} &  {\i sh})}}
-\par
-{\bkmkstart AAAAAAABSK}
-{\bkmkend AAAAAAABSK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-}}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v getAttachedShaders\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getAttachedShaders}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-int mc::gfx::ogl::ShaderProgram::getAttachedShaders () const}}
-\par
-{\bkmkstart AAAAAAABSL}
-{\bkmkend AAAAAAABSL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v getID\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getID}
+{\xe \v getID\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getID}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 {\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOH}
-{\bkmkend AAAAAAABOH}
+{\bkmkstart AAAAAAABEC}
+{\bkmkend AAAAAAABEC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -739,14 +368,14 @@ When using {\b Object::bind() const }it will bind to this ID. {\b Object::unbind
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID represented by this {\f2 {\b Object}}  \par
 }}}
-{\xe \v getInfoLogLength\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getInfoLogLength}
+{\xe \v getInfoLogLength\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getInfoLogLength}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-int mc::gfx::ogl::ShaderProgram::getInfoLogLength () const}}
+int mc::gfx::ogl::Shader::getInfoLogLength () const}}
 \par
-{\bkmkstart AAAAAAABSM}
-{\bkmkend AAAAAAABSM}
+{\bkmkstart AAAAAAABUS}
+{\bkmkend AAAAAAABUS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -763,14 +392,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v getParameter\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getParameter}
+{\xe \v getParameter\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getParameter}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-int mc::gfx::ogl::ShaderProgram::getParameter (const {\b Enum}  {\i param}) const}}
+int mc::gfx::ogl::Shader::getParameter (const {\b Enum}  {\i param}) const}}
 \par
-{\bkmkstart AAAAAAABSN}
-{\bkmkend AAAAAAABSN}
+{\bkmkstart AAAAAAABUT}
+{\bkmkend AAAAAAABUT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -787,80 +416,84 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v getShaders\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getShaders}
+{\xe \v getSource\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getSource}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const std::unordered_map<{\b Enum}, {\b Shader}>& mc::gfx::ogl::ShaderProgram::getShaders () const}}
+char* mc::gfx::ogl::Shader::getSource (const {\b Size}  {\i length}, char *  {\i characters}, int  {\i amount} = {\f2 0}) const}}
 \par
-{\bkmkstart AAAAAAABSO}
-{\bkmkend AAAAAAABSO}
+{\bkmkstart AAAAAAABUU}
+{\bkmkend AAAAAAABUU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v getSourceLength\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getSourceLength}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+int mc::gfx::ogl::Shader::getSourceLength () const}}
+\par
+{\bkmkstart AAAAAAABUV}
+{\bkmkend AAAAAAABUV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v getType\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getType}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Enum} mc::gfx::ogl::Shader::getType ()}}
+\par
+{\bkmkstart AAAAAAABUW}
+{\bkmkend AAAAAAABUW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getShaders\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getShaders}
+{\xe \v getType\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:getType}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::unordered_map<{\b Enum}, {\b Shader}>& mc::gfx::ogl::ShaderProgram::getShaders ()}}
+const {\b Enum} mc::gfx::ogl::Shader::getType () const}}
 \par
-{\bkmkstart AAAAAAABSP}
-{\bkmkend AAAAAAABSP}
+{\bkmkstart AAAAAAABUX}
+{\bkmkend AAAAAAABUX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getUniformLocation\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getUniformLocation}
+{\xe \v init\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-int mc::gfx::ogl::ShaderProgram::getUniformLocation (const std::string &  {\i name}) const}}
+void mc::gfx::ogl::Shader::init (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABSQ}
-{\bkmkend AAAAAAABSQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getUniformLocation\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getUniformLocation}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-int mc::gfx::ogl::ShaderProgram::getUniformLocation (const char *  {\i name}) const}}
-\par
-{\bkmkstart AAAAAAABSR}
-{\bkmkend AAAAAAABSR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getUniforms\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getUniforms}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const std::unordered_map<std::string, int>& mc::gfx::ogl::ShaderProgram::getUniforms () const}}
-\par
-{\bkmkstart AAAAAAABSS}
-{\bkmkend AAAAAAABSS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getUniforms\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:getUniforms}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-std::unordered_map<std::string, int>& mc::gfx::ogl::ShaderProgram::getUniforms ()}}
-\par
-{\bkmkstart AAAAAAABST}
-{\bkmkend AAAAAAABST}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v init\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:init}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::init (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABQI}
-{\bkmkend AAAAAAABQI}
+{\bkmkstart AAAAAAABTQ}
+{\bkmkend AAAAAAABTQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -886,16 +519,40 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEI \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v isCreated\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:isCreated}
+{\xe \v isCompiled\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:isCompiled}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::ShaderProgram::isCreated () const{\f2 [override]}, {\f2 [virtual]}}}
+bool mc::gfx::ogl::Shader::isCompiled () const}}
 \par
-{\bkmkstart AAAAAAABQO}
-{\bkmkend AAAAAAABQO}
+{\bkmkstart AAAAAAABUY}
+{\bkmkend AAAAAAABUY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v isCreated\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:isCreated}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::ogl::Shader::isCreated () const{\f2 [override]}, {\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABTV}
+{\bkmkend AAAAAAABTV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -921,16 +578,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOL \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v isDeleted\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:isDeleted}
+{\xe \v isDeleted\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:isDeleted}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::ShaderProgram::isDeleted () const}}
+bool mc::gfx::ogl::Shader::isDeleted () const}}
 \par
-{\bkmkstart AAAAAAABSU}
-{\bkmkend AAAAAAABSU}
+{\bkmkstart AAAAAAABUZ}
+{\bkmkend AAAAAAABUZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -947,86 +604,14 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v isLinked\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:isLinked}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::ShaderProgram::isLinked () const}}
-\par
-{\bkmkstart AAAAAAABSV}
-{\bkmkend AAAAAAABSV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v isValidated\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:isValidated}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::ShaderProgram::isValidated () const}}
-\par
-{\bkmkstart AAAAAAABSW}
-{\bkmkend AAAAAAABSW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v link\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:link}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::link ()}}
-\par
-{\bkmkstart AAAAAAABSX}
-{\bkmkend AAAAAAABSX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v operator!=\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:operator!=}
+{\xe \v operator!=\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOO}
-{\bkmkend AAAAAAABOO}
+{\bkmkstart AAAAAAABEN}
+{\bkmkend AAAAAAABEN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1050,25 +635,25 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:operator!=}
+{\xe \v operator!=\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::ShaderProgram::operator!= (const {\b ShaderProgram} &  {\i other}) const}}
+bool mc::gfx::ogl::Shader::operator!= (const {\b Shader} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABSY}
-{\bkmkend AAAAAAABSY}
+{\bkmkstart AAAAAAABVA}
+{\bkmkend AAAAAAABVA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v operator==\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:operator==}
+{\xe \v operator==\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOQ}
-{\bkmkend AAAAAAABOQ}
+{\bkmkstart AAAAAAABEQ}
+{\bkmkend AAAAAAABEQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -1092,887 +677,32 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator==\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:operator==}
+{\xe \v operator==\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::ShaderProgram::operator== (const {\b ShaderProgram} &  {\i other}) const}}
-\par
-{\bkmkstart AAAAAAABSZ}
-{\bkmkend AAAAAAABSZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setShaders\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setShaders}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setShaders (const std::unordered_map< {\b Enum}, {\b Shader} > &  {\i newShaders})}}
-\par
-{\bkmkstart AAAAAAABTA}
-{\bkmkend AAAAAAABTA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 2, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTB}
-{\bkmkend AAAAAAABTB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 2, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTC}
-{\bkmkend AAAAAAABTC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 3, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTD}
-{\bkmkend AAAAAAABTD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 3, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTE}
-{\bkmkend AAAAAAABTE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 4, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTF}
-{\bkmkend AAAAAAABTF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 4, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTG}
-{\bkmkend AAAAAAABTG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 2, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTH}
-{\bkmkend AAAAAAABTH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 2, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTI}
-{\bkmkend AAAAAAABTI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 3, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTJ}
-{\bkmkend AAAAAAABTJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 3, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTK}
-{\bkmkend AAAAAAABTK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 2, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTL}
-{\bkmkend AAAAAAABTL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 2, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTM}
-{\bkmkend AAAAAAABTM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 3, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTN}
-{\bkmkend AAAAAAABTN}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 3, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTO}
-{\bkmkend AAAAAAABTO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< float, 4, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTP}
-{\bkmkend AAAAAAABTP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< float, 4, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTQ}
-{\bkmkend AAAAAAABTQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 2, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTR}
-{\bkmkend AAAAAAABTR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 2, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTS}
-{\bkmkend AAAAAAABTS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 3, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTT}
-{\bkmkend AAAAAAABTT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 3, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTU}
-{\bkmkend AAAAAAABTU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 4, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTV}
-{\bkmkend AAAAAAABTV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 4, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTW}
-{\bkmkend AAAAAAABTW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 2, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTX}
-{\bkmkend AAAAAAABTX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 2, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTY}
-{\bkmkend AAAAAAABTY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 3, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABTZ}
-{\bkmkend AAAAAAABTZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 3, 2 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUA}
-{\bkmkend AAAAAAABUA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 2, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUB}
-{\bkmkend AAAAAAABUB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 2, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUC}
-{\bkmkend AAAAAAABUC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 3, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUD}
-{\bkmkend AAAAAAABUD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 3, 4 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUE}
-{\bkmkend AAAAAAABUE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const bool  {\i transpose}, const {\b mc::Matrix}< double, 4, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUF}
-{\bkmkend AAAAAAABUF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Matrix}< double, 4, 3 > &  {\i m})}}
-\par
-{\bkmkstart AAAAAAABUG}
-{\bkmkend AAAAAAABUG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const float  {\i a})}}
-\par
-{\bkmkstart AAAAAAABUH}
-{\bkmkend AAAAAAABUH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const float  {\i a}, const float  {\i b})}}
-\par
-{\bkmkstart AAAAAAABUI}
-{\bkmkend AAAAAAABUI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const float  {\i a}, const float  {\i b}, const float  {\i c})}}
-\par
-{\bkmkstart AAAAAAABUJ}
-{\bkmkend AAAAAAABUJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const float  {\i a}, const float  {\i b}, const float  {\i c}, const float  {\i d})}}
-\par
-{\bkmkstart AAAAAAABUK}
-{\bkmkend AAAAAAABUK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i arraySize}, const float *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABUL}
-{\bkmkend AAAAAAABUL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const float *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABUM}
-{\bkmkend AAAAAAABUM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< float, 1 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUN}
-{\bkmkend AAAAAAABUN}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< float, 2 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUO}
-{\bkmkend AAAAAAABUO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< float, 3 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUP}
-{\bkmkend AAAAAAABUP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< float, 4 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUQ}
-{\bkmkend AAAAAAABUQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const double  {\i a})}}
-\par
-{\bkmkstart AAAAAAABUR}
-{\bkmkend AAAAAAABUR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const double  {\i a}, const double  {\i b})}}
-\par
-{\bkmkstart AAAAAAABUS}
-{\bkmkend AAAAAAABUS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const double  {\i a}, const double  {\i b}, const double  {\i c})}}
-\par
-{\bkmkstart AAAAAAABUT}
-{\bkmkend AAAAAAABUT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const double  {\i a}, const double  {\i b}, const double  {\i c}, const double  {\i d})}}
-\par
-{\bkmkstart AAAAAAABUU}
-{\bkmkend AAAAAAABUU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i arraySize}, const double *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABUV}
-{\bkmkend AAAAAAABUV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const double *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABUW}
-{\bkmkend AAAAAAABUW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< double, 1 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUX}
-{\bkmkend AAAAAAABUX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< double, 2 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUY}
-{\bkmkend AAAAAAABUY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< double, 3 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABUZ}
-{\bkmkend AAAAAAABUZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< double, 4 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVA}
-{\bkmkend AAAAAAABVA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const int  {\i a})}}
+bool mc::gfx::ogl::Shader::operator== (const {\b Shader} &  {\i other}) const}}
 \par
 {\bkmkstart AAAAAAABVB}
 {\bkmkend AAAAAAABVB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
+{\xe \v setSource\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:setSource}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const int  {\i a}, const int  {\i b})}}
+void mc::gfx::ogl::Shader::setSource (const {\b Size}  {\i count}, const char *  {\i strings}[], const int  {\i lengths}[])}}
 \par
 {\bkmkstart AAAAAAABVC}
 {\bkmkend AAAAAAABVC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const int  {\i a}, const int  {\i b}, const int  {\i c})}}
-\par
-{\bkmkstart AAAAAAABVD}
-{\bkmkend AAAAAAABVD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const int  {\i a}, const int  {\i b}, const int  {\i c}, const int  {\i d})}}
-\par
-{\bkmkstart AAAAAAABVE}
-{\bkmkend AAAAAAABVE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i arraySize}, const int *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABVF}
-{\bkmkend AAAAAAABVF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const int *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABVG}
-{\bkmkend AAAAAAABVG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< int, 1 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVH}
-{\bkmkend AAAAAAABVH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< int, 2 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVI}
-{\bkmkend AAAAAAABVI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< int, 3 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVJ}
-{\bkmkend AAAAAAABVJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< int, 4 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVK}
-{\bkmkend AAAAAAABVK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const unsigned int  {\i a})}}
-\par
-{\bkmkstart AAAAAAABVL}
-{\bkmkend AAAAAAABVL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const unsigned int  {\i a}, const unsigned int  {\i b})}}
-\par
-{\bkmkstart AAAAAAABVM}
-{\bkmkend AAAAAAABVM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const unsigned int  {\i a}, const unsigned int  {\i b}, const unsigned int  {\i c})}}
-\par
-{\bkmkstart AAAAAAABVN}
-{\bkmkend AAAAAAABVN}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const unsigned int  {\i a}, const unsigned int  {\i b}, const unsigned int  {\i c}, const unsigned int  {\i d})}}
-\par
-{\bkmkstart AAAAAAABVO}
-{\bkmkend AAAAAAABVO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i arraySize}, const unsigned int *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABVP}
-{\bkmkend AAAAAAABVP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b Size}  {\i componentSize}, const {\b Size}  {\i arraySize}, const unsigned int *  {\i a})}}
-\par
-{\bkmkstart AAAAAAABVQ}
-{\bkmkend AAAAAAABVQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< unsigned int, 1 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVR}
-{\bkmkend AAAAAAABVR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< unsigned int, 2 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVS}
-{\bkmkend AAAAAAABVS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< unsigned int, 3 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVT}
-{\bkmkend AAAAAAABVT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniform\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniform}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniform (const char *  {\i name}, const {\b mc::Vector}< unsigned int, 4 >  {\i v})}}
-\par
-{\bkmkstart AAAAAAABVU}
-{\bkmkend AAAAAAABVU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setUniforms\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:setUniforms}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::setUniforms (const std::unordered_map< std::string, int > &  {\i newUniforms})}}
-\par
-{\bkmkstart AAAAAAABVV}
-{\bkmkend AAAAAAABVV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v unbind\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:unbind}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOU}
-{\bkmkend AAAAAAABOU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unbinds this {\f2 {\b Object}}  which is equivalent to binding ID 0. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glShaderSource} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::bind() const} \par
-}}}
-{\xe \v validate\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:validate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::ShaderProgram::validate ()}}
-\par
-{\bkmkstart AAAAAAABVW}
-{\bkmkend AAAAAAABVW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -1984,18 +714,51 @@ Exceptions:\par}
 {\row }
 }
 }}
+{\xe \v setSource\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:setSource}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ogl::Shader::setSource (const char  {\i string}[], const int  {\i length})}}
+\par
+{\bkmkstart AAAAAAABVD}
+{\bkmkend AAAAAAABVD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setSource\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:setSource}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ogl::Shader::setSource (const std::string &  {\i string})}}
+\par
+{\bkmkstart AAAAAAABVE}
+{\bkmkend AAAAAAABVE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setType\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:setType}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::ogl::Shader::setType (const {\b Enum}  {\i newType})}}
+\par
+{\bkmkstart AAAAAAABVF}
+{\bkmkend AAAAAAABVF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
 \pard\plain 
-{\xe \v id\:mc::gfx::ogl::ShaderProgram}
-{\xe \v mc::gfx::ogl::ShaderProgram\:id}
+{\xe \v id\:mc::gfx::ogl::Shader}
+{\xe \v mc::gfx::ogl::Shader\:id}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
 {\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOW}
-{\bkmkend AAAAAAABOW}
+{\bkmkstart AAAAAAABFC}
+{\bkmkend AAAAAAABFC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -2006,7 +769,7 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 164 of file OGL.h.}\par
+Definition at line 182 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

@@ -1,4 +1,4 @@
-.TH "mc::Vector< T, N >" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Vector< T, N >" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -29,6 +29,10 @@ mc::Vector< T, N > \- 1-dimensional vector class that supports mathmatical opera
 .br
 .RI "\fICreates a \fC\fBVector\fP\fP from an `std::initializer_list\&. \fP"
 .ti -1c
+.RI "\fBVector\fP (const \fBVector\fP< T, N\-1 > &v, const T &last)"
+.br
+.RI "\fIO(N) time\&. \fP"
+.ti -1c
 .RI "\fBVector\fP (const \fBVector\fP &obj)"
 .br
 .RI "\fICopies the contents of a \fC\fBVector\fP\fP into a new \fC\fBVector\fP\fP \fP"
@@ -53,6 +57,12 @@ mc::Vector< T, N > \- 1-dimensional vector class that supports mathmatical opera
 .br
 .RI "\fIRetrieves how many elements this \fC\fBVector\fP\fP holds\&. \fP"
 .ti -1c
+.RI "T * \fBbegin\fP ()"
+.br
+.ti -1c
+.RI "T * \fBend\fP ()"
+.br
+.ti -1c
 .RI "T & \fBget\fP (\fBIndex\fP i)"
 .br
 .RI "\fIGet the value at a position\&. \fP"
@@ -68,6 +78,27 @@ mc::Vector< T, N > \- 1-dimensional vector class that supports mathmatical opera
 .RI "const T * \fBflatten\fP (T arr[N]) const "
 .br
 .RI "\fICreates an array with the data of this \fC\fBVector\fP\fP, in O(N) time\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< T, 1 > \fBx\fP () const "
+.br
+.ti -1c
+.RI "\fBVector\fP< T, 1 > \fBy\fP () const "
+.br
+.ti -1c
+.RI "\fBVector\fP< T, 1 > \fBz\fP () const "
+.br
+.ti -1c
+.RI "\fBVector\fP< T, 1 > \fBw\fP () const "
+.br
+.ti -1c
+.RI "\fBVector\fP< T, 2 > \fBxy\fP () const "
+.br
+.ti -1c
+.RI "\fBVector\fP< T, 3 > \fBxyz\fP () const "
+.br
+.ti -1c
+.RI "\fBVector\fP< T, 4 > \fBxyzw\fP () const "
+.br
 .ti -1c
 .RI "T & \fBoperator[]\fP (\fBIndex\fP i)"
 .br
@@ -177,7 +208,7 @@ mc::Vector< T, N > \- 1-dimensional vector class that supports mathmatical opera
 
 .in +1c
 .ti -1c
-.RI "std::array< T, N > \fBcontent\fP"
+.RI "T \fBcontent\fP [N]"
 .br
 .in -1c
 .SS "Friends"
@@ -272,7 +303,7 @@ For example, to create a \fC\fBVector\fP\fP that is made up of 4 floats, you wou
 .PP
 
 .PP
-Definition at line 88 of file Vector\&.h\&.
+Definition at line 89 of file Vector\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "template<typename T, Size N> \fBmc::Vector\fP< T, N >::\fBVector\fP ()\fC [inline]\fP"
@@ -280,7 +311,7 @@ Definition at line 88 of file Vector\&.h\&.
 .PP
 Default constructor\&. Constructs an empty \fC\fBVector\fP\fP 
 .PP
-Definition at line 93 of file Vector\&.h\&.
+Definition at line 94 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBmc::Vector\fP< T, N >::\fBVector\fP (const T arr[N])\fC [inline]\fP"
 
 .PP
@@ -293,7 +324,7 @@ Consructs a \fC\fBVector\fP\fP from the contents of an array\&.
 .PP
 
 .PP
-Definition at line 101 of file Vector\&.h\&.
+Definition at line 102 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBmc::Vector\fP< T, N >::\fBVector\fP (const std::array< T, N > & contents)\fC [inline]\fP"
 
 .PP
@@ -306,7 +337,7 @@ Consructs a \fC\fBVector\fP\fP from the contents of an \fCstd::array\fP\&.
 .PP
 
 .PP
-Definition at line 110 of file Vector\&.h\&.
+Definition at line 111 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBmc::Vector\fP< T, N >::\fBVector\fP (const std::initializer_list< T > args)\fC [inline]\fP"
 
 .PP
@@ -326,6 +357,11 @@ Vector3i mat = {1, 2, 3};
 \fIargs\fP What to create this \fC\fBVector\fP\fP with 
 .RE
 .PP
+\fBTodo\fP
+.RS 4
+Make this constexpr 
+.RE
+.PP
 \fBExceptions:\fP
 .RS 4
 \fIIndexOutOfBoundsException\fP If the amount of arguments in the initializer is not equal to the amount of objects this \fC\fBVector\fP\fP holds 
@@ -333,7 +369,13 @@ Vector3i mat = {1, 2, 3};
 .PP
 
 .PP
-Definition at line 123 of file Vector\&.h\&.
+Definition at line 128 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBmc::Vector\fP< T, N >::\fBVector\fP (const \fBVector\fP< T, N\-1 > & v, const T & last)\fC [inline]\fP"
+
+.PP
+O(N) time\&. 
+.PP
+Definition at line 141 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBmc::Vector\fP< T, N >::\fBVector\fP (const \fBVector\fP< T, N > & obj)\fC [inline]\fP"
 
 .PP
@@ -346,9 +388,17 @@ Copies the contents of a \fC\fBVector\fP\fP into a new \fC\fBVector\fP\fP
 .PP
 
 .PP
-Definition at line 136 of file Vector\&.h\&.
+Definition at line 152 of file Vector\&.h\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "template<typename T, Size N> T* \fBmc::Vector\fP< T, N >::begin ()\fC [inline]\fP"
+
+.PP
+Definition at line 200 of file Vector\&.h\&.
+.SS "template<typename T, Size N> T* \fBmc::Vector\fP< T, N >::end ()\fC [inline]\fP"
+
+.PP
+Definition at line 204 of file Vector\&.h\&.
 .SS "template<typename T, Size N> const T* \fBmc::Vector\fP< T, N >::flatten (T arr[N]) const\fC [inline]\fP"
 
 .PP
@@ -366,7 +416,7 @@ Pointer to \fCarr\fP
 .PP
 
 .PP
-Definition at line 223 of file Vector\&.h\&.
+Definition at line 250 of file Vector\&.h\&.
 .SS "template<typename T, Size N> T& \fBmc::Vector\fP< T, N >::get (\fBIndex\fP i)\fC [inline]\fP"
 
 .PP
@@ -396,7 +446,7 @@ The value located at \fCi\fP
 .PP
 
 .PP
-Definition at line 189 of file Vector\&.h\&.
+Definition at line 216 of file Vector\&.h\&.
 .SS "template<typename T, Size N> const T& \fBmc::Vector\fP< T, N >::get (\fBIndex\fP i) const\fC [inline]\fP"
 
 .PP
@@ -426,7 +476,7 @@ The \fCconst\fP value located at \fCi\fP
 .PP
 
 .PP
-Definition at line 201 of file Vector\&.h\&.
+Definition at line 228 of file Vector\&.h\&.
 .SS "template<typename T, Size N> std::array< T, N>& \fBmc::Vector\fP< T, N >::getContents ()\fC [inline]\fP"
 
 .PP
@@ -444,7 +494,7 @@ An \fCstd::array\fP of this \fC\fBVector\fP\fP contents
 .PP
 
 .PP
-Definition at line 143 of file Vector\&.h\&.
+Definition at line 163 of file Vector\&.h\&.
 .SS "template<typename T, Size N> const std::array< T, N>& \fBmc::Vector\fP< T, N >::getContents () const\fC [inline]\fP"
 
 .PP
@@ -462,7 +512,7 @@ A \fCconst std::array\fP of this \fCconst \fBVector\fP\fP contents
 .PP
 
 .PP
-Definition at line 152 of file Vector\&.h\&.
+Definition at line 172 of file Vector\&.h\&.
 .SS "template<typename T, Size N> bool \fBmc::Vector\fP< T, N >::operator!= (const \fBVector\fP< T, N > & other) const\fC [inline]\fP"
 
 .PP
@@ -493,7 +543,7 @@ operator==(const Vector<T,N>) const
 .PP
 
 .PP
-Definition at line 513 of file Vector\&.h\&.
+Definition at line 574 of file Vector\&.h\&.
 .SS "template<typename T, Size N> virtual T& \fBmc::Vector\fP< T, N >::operator() (\fBIndex\fP i)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
@@ -523,7 +573,7 @@ Value at \fCi-1\fP
 .PP
 
 .PP
-Definition at line 259 of file Vector\&.h\&.
+Definition at line 320 of file Vector\&.h\&.
 .SS "template<typename T, Size N> const T& \fBmc::Vector\fP< T, N >::operator() (\fBIndex\fP i) const\fC [inline]\fP"
 
 .PP
@@ -541,7 +591,7 @@ Value at \fCi-1\fP
 .PP
 
 .PP
-Definition at line 268 of file Vector\&.h\&.
+Definition at line 329 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator* (const \fBVector\fP< T, 3 > & right) const\fC [inline]\fP"
 
 .PP
@@ -564,7 +614,7 @@ The product of the multiplication
 .PP
 
 .PP
-Definition at line 310 of file Vector\&.h\&.
+Definition at line 371 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator* (const T scalar) const\fC [inline]\fP"
 
 .PP
@@ -587,7 +637,7 @@ operator*(const Vector&) const
 .PP
 
 .PP
-Definition at line 367 of file Vector\&.h\&.
+Definition at line 428 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator*= (const \fBVector\fP< T, N > & right)\fC [inline]\fP"
 
 .PP
@@ -605,7 +655,7 @@ Multiplies a \fC\fBVector\fP\fP by this one\&.
 .PP
 
 .PP
-Definition at line 414 of file Vector\&.h\&.
+Definition at line 475 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator*= (const T & scalar)\fC [inline]\fP"
 
 .PP
@@ -625,7 +675,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 462 of file Vector\&.h\&.
+Definition at line 523 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator+ (const \fBVector\fP< T, N > & right) const\fC [inline]\fP"
 
 .PP
@@ -648,7 +698,7 @@ A \fC\fBVector\fP\fP that was created by adding 2 \fCVectors\fP together
 .PP
 
 .PP
-Definition at line 281 of file Vector\&.h\&.
+Definition at line 342 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator+ (const T scalar) const\fC [inline]\fP"
 
 .PP
@@ -671,7 +721,7 @@ operator*(const Vector&) const
 .PP
 
 .PP
-Definition at line 339 of file Vector\&.h\&.
+Definition at line 400 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator+= (const \fBVector\fP< T, N > & right)\fC [inline]\fP"
 
 .PP
@@ -689,7 +739,7 @@ Adds a \fC\fBVector\fP\fP to this one\&.
 .PP
 
 .PP
-Definition at line 392 of file Vector\&.h\&.
+Definition at line 453 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator+= (const T & scalar)\fC [inline]\fP"
 
 .PP
@@ -709,7 +759,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 438 of file Vector\&.h\&.
+Definition at line 499 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator\- (const \fBVector\fP< T, N > & right) const\fC [inline]\fP"
 
 .PP
@@ -732,7 +782,7 @@ A \fC\fBVector\fP\fP that was created by subtracting 2 \fCVectors\fP together
 .PP
 
 .PP
-Definition at line 295 of file Vector\&.h\&.
+Definition at line 356 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator\- (const T scalar) const\fC [inline]\fP"
 
 .PP
@@ -755,7 +805,7 @@ operator*(const Vector&) const
 .PP
 
 .PP
-Definition at line 353 of file Vector\&.h\&.
+Definition at line 414 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator\-= (const \fBVector\fP< T, N > & right)\fC [inline]\fP"
 
 .PP
@@ -773,7 +823,7 @@ Subtracts a \fC\fBVector\fP\fP from this one\&.
 .PP
 
 .PP
-Definition at line 403 of file Vector\&.h\&.
+Definition at line 464 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator\-= (const T & scalar)\fC [inline]\fP"
 
 .PP
@@ -793,7 +843,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 450 of file Vector\&.h\&.
+Definition at line 511 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator/ (const \fBVector\fP< T, 3 > & right) const\fC [inline]\fP"
 
 .PP
@@ -816,7 +866,7 @@ The quotient of 2 \fCVectors\fP
 .PP
 
 .PP
-Definition at line 325 of file Vector\&.h\&.
+Definition at line 386 of file Vector\&.h\&.
 .SS "template<typename T, Size N> \fBVector\fP \fBmc::Vector\fP< T, N >::operator/ (const T scalar) const\fC [inline]\fP"
 
 .PP
@@ -839,7 +889,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 381 of file Vector\&.h\&.
+Definition at line 442 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator/= (const \fBVector\fP< T, N > & right)\fC [inline]\fP"
 
 .PP
@@ -857,7 +907,7 @@ Divides a \fC\fBVector\fP\fP by this one\&.
 .PP
 
 .PP
-Definition at line 425 of file Vector\&.h\&.
+Definition at line 486 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::operator/= (const T & scalar)\fC [inline]\fP"
 
 .PP
@@ -877,7 +927,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 474 of file Vector\&.h\&.
+Definition at line 535 of file Vector\&.h\&.
 .SS "template<typename T, Size N> bool \fBmc::Vector\fP< T, N >::operator< (const \fBVector\fP< T, N > & other) const\fC [inline]\fP"
 
 .PP
@@ -908,7 +958,7 @@ The result of the \fC<\fP operator on each element
 .PP
 
 .PP
-Definition at line 566 of file Vector\&.h\&.
+Definition at line 627 of file Vector\&.h\&.
 .SS "template<typename T, Size N> bool \fBmc::Vector\fP< T, N >::operator<= (const \fBVector\fP< T, N > & other) const\fC [inline]\fP"
 
 .PP
@@ -939,7 +989,7 @@ The result of the \fC<=\fP operator on each element
 .PP
 
 .PP
-Definition at line 580 of file Vector\&.h\&.
+Definition at line 641 of file Vector\&.h\&.
 .SS "template<typename T, Size N> bool \fBmc::Vector\fP< T, N >::operator== (const \fBVector\fP< T, N > & other) const\fC [inline]\fP"
 
 .PP
@@ -970,7 +1020,7 @@ operator!=(const Vector<T,N>) const
 .PP
 
 .PP
-Definition at line 492 of file Vector\&.h\&.
+Definition at line 553 of file Vector\&.h\&.
 .SS "template<typename T, Size N> bool \fBmc::Vector\fP< T, N >::operator> (const \fBVector\fP< T, N > & other) const\fC [inline]\fP"
 
 .PP
@@ -1001,7 +1051,7 @@ The result of the \fC>\fP operator on each element
 .PP
 
 .PP
-Definition at line 529 of file Vector\&.h\&.
+Definition at line 590 of file Vector\&.h\&.
 .SS "template<typename T, Size N> bool \fBmc::Vector\fP< T, N >::operator>= (const \fBVector\fP< T, N > & other) const\fC [inline]\fP"
 
 .PP
@@ -1032,7 +1082,7 @@ The result of the \fC>=\fP operator on each element
 .PP
 
 .PP
-Definition at line 550 of file Vector\&.h\&.
+Definition at line 611 of file Vector\&.h\&.
 .SS "template<typename T, Size N> T& \fBmc::Vector\fP< T, N >::operator[] (\fBIndex\fP i)\fC [inline]\fP"
 
 .PP
@@ -1055,7 +1105,7 @@ The data at \fCi\fP
 .PP
 
 .PP
-Definition at line 236 of file Vector\&.h\&.
+Definition at line 297 of file Vector\&.h\&.
 .SS "template<typename T, Size N> const T& \fBmc::Vector\fP< T, N >::operator[] (\fBIndex\fP i) const\fC [inline]\fP"
 
 .PP
@@ -1078,7 +1128,7 @@ The data at \fCi\fP
 .PP
 
 .PP
-Definition at line 245 of file Vector\&.h\&.
+Definition at line 306 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::set (\fBIndex\fP position, T value)\fC [inline]\fP"
 
 .PP
@@ -1105,7 +1155,7 @@ Set data at a certain position to equal a new value\&. Slower than \fCoperator[]
 .PP
 
 .PP
-Definition at line 213 of file Vector\&.h\&.
+Definition at line 240 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::setContents (const std::array< T, N > contents)\fC [inline]\fP"
 
 .PP
@@ -1118,7 +1168,7 @@ Copies the contents of an \fCstd::array\fP into this \fC\fBVector\fP\fP
 .PP
 
 .PP
-Definition at line 159 of file Vector\&.h\&.
+Definition at line 179 of file Vector\&.h\&.
 .SS "template<typename T, Size N> void \fBmc::Vector\fP< T, N >::setContents (const T arr[N])\fC [inline]\fP"
 
 .PP
@@ -1131,7 +1181,7 @@ Copies the contents of an array into this \fC\fBVector\fP\fP
 .PP
 
 .PP
-Definition at line 166 of file Vector\&.h\&.
+Definition at line 186 of file Vector\&.h\&.
 .SS "template<typename T, Size N> constexpr \fBSize\fP \fBmc::Vector\fP< T, N >::size () const\fC [inline]\fP, \fC [noexcept]\fP"
 
 .PP
@@ -1144,7 +1194,35 @@ How large this \fC\fBVector\fP\fP is
 .PP
 
 .PP
-Definition at line 176 of file Vector\&.h\&.
+Definition at line 196 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 1> \fBmc::Vector\fP< T, N >::w () const\fC [inline]\fP"
+
+.PP
+Definition at line 271 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 1> \fBmc::Vector\fP< T, N >::x () const\fC [inline]\fP"
+
+.PP
+Definition at line 257 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 2> \fBmc::Vector\fP< T, N >::xy () const\fC [inline]\fP"
+
+.PP
+Definition at line 276 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 3> \fBmc::Vector\fP< T, N >::xyz () const\fC [inline]\fP"
+
+.PP
+Definition at line 281 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 4> \fBmc::Vector\fP< T, N >::xyzw () const\fC [inline]\fP"
+
+.PP
+Definition at line 286 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 1> \fBmc::Vector\fP< T, N >::y () const\fC [inline]\fP"
+
+.PP
+Definition at line 261 of file Vector\&.h\&.
+.SS "template<typename T, Size N> \fBVector\fP<T, 1> \fBmc::Vector\fP< T, N >::z () const\fC [inline]\fP"
+
+.PP
+Definition at line 266 of file Vector\&.h\&.
 .SH "Friends And Related Function Documentation"
 .PP 
 .SS "template<typename T, Size N> std::ostream& operator<< (std::ostream & output, const \fBVector\fP< T, N > & v)\fC [friend]\fP"
@@ -1166,13 +1244,13 @@ Operator used to output to \fCstd::cout\fP\&. This is done in O(N) time
 .PP
 
 .PP
-Definition at line 592 of file Vector\&.h\&.
+Definition at line 653 of file Vector\&.h\&.
 .SH "Member Data Documentation"
 .PP 
-.SS "template<typename T, Size N> std::array<T, N> \fBmc::Vector\fP< T, N >::content\fC [protected]\fP"
+.SS "template<typename T, Size N> T \fBmc::Vector\fP< T, N >::content[N]\fC [protected]\fP"
 
 .PP
-Definition at line 604 of file Vector\&.h\&.
+Definition at line 665 of file Vector\&.h\&.
 
 .SH "Author"
 .PP 

@@ -1,4 +1,4 @@
-.TH "mc::AudioModule" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::AudioModule" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,9 +10,78 @@ mc::AudioModule \-
 \fC#include <Audio\&.h>\fP
 .PP
 Inherits \fBmc::Module\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP () override"
+.br
+.RI "\fICalled when \fBMACE#init\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.ti -1c
+.RI "void \fBupdate\fP () override"
+.br
+.RI "\fICalled when \fBMACE#update\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.ti -1c
+.RI "void \fBdestroy\fP () override"
+.br
+.RI "\fICalled when \fBMACE#destroy\fP is called and this \fC\fBModule\fP\fP is registered\&. \fP"
+.ti -1c
+.RI "std::string \fBgetName\fP () const  override"
+.br
+.RI "\fIOverride this function and return a UNIQUE name for this \fC\fBModule\fP\fP \fP"
+.ti -1c
+.RI "const std::vector< \fBSound\fP > & \fBgetSounds\fP () const "
+.br
+.ti -1c
+.RI "void \fBaddSound\fP (\fBSound\fP &s)"
+.br
+.ti -1c
+.RI "\fBAudioModule\fP ()"
+.br
+.in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 42 of file Audio\&.h\&.
+Definition at line 67 of file Audio\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::AudioModule::AudioModule ()"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::AudioModule::addSound (\fBSound\fP & s)"
+
+.SS "void mc::AudioModule::destroy ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Called when \fBMACE#destroy\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to clear memory, close streams, or clean up anything that needs to be cleaned up\&. 
+.PP
+Should only be called before the program is closed\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+.SS "std::string mc::AudioModule::getName () const\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Override this function and return a UNIQUE name for this \fC\fBModule\fP\fP The name for your \fC\fBModule\fP\fP is used in comparison, so make sure it is as unique as possible\&. 
+.PP
+It is akin to a hashcode\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+.SS "const std::vector<\fBSound\fP>& mc::AudioModule::getSounds () const"
+
+.SS "void mc::AudioModule::init ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Called when \fBMACE#init\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this to initialize variables, start streams, or launch a context\&. 
+.PP
+Should only be called once\&. 
+.PP
+Implements \fBmc::Module\fP\&.
+.SS "void mc::AudioModule::update ()\fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Called when \fBMACE#update\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked\&. 
+.PP
+Implements \fBmc::Module\fP\&.
 
 .SH "Author"
 .PP 

@@ -1,4 +1,4 @@
-.TH "mc::gfx::Text" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Text" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,7 +14,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 
 .in +1c
 .ti -1c
-.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBDIRTY\fP = 6 }"
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBDISABLED\fP = 1, \fBINIT\fP = 2, \fBDIRTY\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBSTRETCH_WIDTH\fP = 6, \fBSTRETCH_HEIGHT\fP = 7, \fBDEFAULT_PROPERTIES\fP = 0x00000000 }"
 .br
 .in -1c
 .SS "Public Member Functions"
@@ -63,6 +63,15 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "const \fBHorizontalAlign\fP \fBgetHorizontalAlign\fP () const "
 .br
 .ti -1c
+.RI "void \fBsetTexture\fP (const \fBColorAttachment\fP &tex)"
+.br
+.ti -1c
+.RI "\fBColorAttachment\fP & \fBgetTexture\fP ()"
+.br
+.ti -1c
+.RI "const \fBColorAttachment\fP & \fBgetTexture\fP () const "
+.br
+.ti -1c
 .RI "bool \fBoperator==\fP (const \fBText\fP &other) const "
 .br
 .ti -1c
@@ -78,6 +87,26 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "void \fBsetBuffer\fP (const \fBogl::UniformBuffer\fP &newBuffer)"
 .br
 .ti -1c
+.RI "bool \fBoperator==\fP (const \fBEntity2D\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBEntity\fP &other) const  noexcept"
+.br
+.RI "\fICompares if 2 \fCEntities\fP have the same children, parent, and properties\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBEntity2D\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBEntity\fP &other) const  noexcept"
+.br
+.RI "\fICompares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. \fP"
+.ti -1c
 .RI "void \fBclean\fP () final"
 .br
 .ti -1c
@@ -89,15 +118,6 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .br
 .RI "\fIShould be called a by \fC\fBEntity\fP\fP when \fC\fBMACE\&.destroy()\fP\fP is called\&. \fP"
 .ti -1c
-.RI "\fBColor\fP & \fBgetPaint\fP ()"
-.br
-.ti -1c
-.RI "const \fBColor\fP & \fBgetPaint\fP () const "
-.br
-.ti -1c
-.RI "void \fBsetPaint\fP (const \fBColor\fP &c)"
-.br
-.ti -1c
 .RI "float \fBgetOpacity\fP ()"
 .br
 .ti -1c
@@ -106,20 +126,6 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .ti -1c
 .RI "void \fBsetOpacity\fP (const float f)"
 .br
-.ti -1c
-.RI "bool \fBoperator==\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
-.br
-.ti -1c
-.RI "bool \fBoperator==\fP (const \fBEntity\fP &other) const  noexcept"
-.br
-.RI "\fICompares if 2 \fCEntities\fP have the same children, parent, and properties\&. \fP"
-.ti -1c
-.RI "bool \fBoperator!=\fP (const \fBGraphicsEntity\fP &other) const  noexcept"
-.br
-.ti -1c
-.RI "bool \fBoperator!=\fP (const \fBEntity\fP &other) const  noexcept"
-.br
-.RI "\fICompares if 2 \fCEntities\fP don't have the same children, parent, and properties\&. \fP"
 .ti -1c
 .RI "const std::vector< \fBEntity\fP * > & \fBgetChildren\fP () const "
 .br
@@ -202,13 +208,13 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "void \fBsetTransformation\fP (\fBTransformMatrix\fP &trans)"
 .br
 .ti -1c
-.RI "\fBEntity\fP & \fBtranslate\fP (float x, float y, float z)"
+.RI "\fBEntity\fP & \fBtranslate\fP (float x, float y, float z=0\&.0f)"
 .br
 .ti -1c
-.RI "\fBEntity\fP & \fBrotate\fP (float x, float y, float z)"
+.RI "\fBEntity\fP & \fBrotate\fP (float x, float y, float z=0\&.0f)"
 .br
 .ti -1c
-.RI "\fBEntity\fP & \fBscale\fP (float x, float y, float z)"
+.RI "\fBEntity\fP & \fBscale\fP (float x, float y, float z=1\&.0f)"
 .br
 .ti -1c
 .RI "\fBEntity\fP *const \fBgetParent\fP ()"
@@ -327,6 +333,9 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 
 .in +1c
 .ti -1c
+.RI "\fBogl::UniformBuffer\fP \fBbuffer\fP = \fBogl::UniformBuffer\fP()"
+.br
+.ti -1c
 .RI "std::vector< \fBEntity\fP * > \fBchildren\fP = std::vector<\fBEntity\fP*>()"
 .br
 .RI "\fI\fCstd::vector\fP of this \fC\fBEntity\fP\\'s\fP children\&. \fP"
@@ -345,7 +354,7 @@ newline with vertical align doesnt really work
 .PP
 
 .PP
-Definition at line 331 of file Entity2D\&.h\&.
+Definition at line 355 of file Entity2D\&.h\&.
 .SH "Member Enumeration Documentation"
 .PP 
 .SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
@@ -364,18 +373,8 @@ Entity::getProperty(unsigned int)
 .PP
 
 .TP
-\fB\fIUPDATE_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCFALSE\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::getProperty(unsigned int) 
-.RE
-.PP
-
-.TP
-\fB\fIRENDER_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCfalse\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
+\fB\fIDISABLED \fP\fP
+Property defining if an \fC\fBEntity\fP\fP can be updated and rendered\&. If this is \fCtrue\fP, \fC\fBEntity::update()\fP\fP and \fC\fBEntity::render()\fP\fP will not be called by it's parent\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -396,26 +395,6 @@ Entity::getProperty(unsigned int)
 .PP
 
 .TP
-\fB\fISTRETCH_X \fP\fP
-Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::STRETCH_Y\fP 
-.RE
-.PP
-
-.TP
-\fB\fISTRETCH_Y \fP\fP
-Flag representing whether an \fBEntity\fP's Y position should move when it's parent is resized\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::STRETCH_X\fP 
-.RE
-.PP
-
-.TP
 \fB\fIDIRTY \fP\fP
 Flag representing whether this \fC\fBEntity\fP\fP is dirty and it's positions needs to be recalculated\&. This will become true under the following conditions:
 .IP "\(bu" 2
@@ -430,9 +409,73 @@ When an \fC\fBEntity\fP\fP becomes dirty, it will propogate up the tree\&. It's 
 .PP
 Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily increasing performance in applications with little moving objects\&. 
 .PP
-Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
+Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's sslBuffer updated on the GPU side\&. 
+.TP
+\fB\fISTRETCH_X \fP\fP
+Flag representing whether an \fBEntity\fP's X position should be stretched when window is resized\&. 
 .PP
-Definition at line 107 of file Entity\&.h\&.
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_Y\fP 
+.PP
+\fBEntity::STRETCH_WIDTH\fP 
+.PP
+\fBEntity::STRETCH_HEIGHT\fP 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_Y \fP\fP
+Flag representing whether an \fBEntity\fP's Y position should be stretched when window is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.PP
+\fBEntity::STRETCH_WIDTH\fP 
+.PP
+\fBEntity::STRETCH_HEIGHT\fP 
+.PP
+WindowModule::setResizable(bool) 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_WIDTH \fP\fP
+Flag representing whether an \fBEntity\fP's width should be stretched when window is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.PP
+\fBEntity::STRETCH_Y\fP 
+.PP
+\fBEntity::STRETCH_HEIGHT\fP 
+.PP
+WindowModule::setResizable(bool) 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_HEIGHT \fP\fP
+Flag representing whether an \fBEntity\fP's height should be stretched when window is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.PP
+\fBEntity::STRETCH_Y\fP 
+.PP
+\fBEntity::STRETCH_WIDTH\fP 
+.PP
+WindowModule::setResizable(bool) 
+.RE
+.PP
+
+.TP
+\fB\fIDEFAULT_PROPERTIES \fP\fP
+.PP
+Definition at line 128 of file Entity\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::Text::Text (const std::string & t, const \fBFont\fP & f = \fC\fBFont\fP()\fP)"
@@ -590,8 +633,15 @@ Iterator of the last \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "\fBogl::UniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer ()\fC [inherited]\fP"
+.SS "\fBogl::UniformBuffer\fP& mc::gfx::Entity2D::getBuffer ()\fC [inherited]\fP"
 
+.PP
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
 .PP
 \fBNote:\fP
 .RS 4
@@ -604,7 +654,14 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "const \fBogl::UniformBuffer\fP& mc::gfx::GraphicsEntity::getBuffer () const\fC [inherited]\fP"
+.SS "const \fBogl::UniformBuffer\fP& mc::gfx::Entity2D::getBuffer () const\fC [inherited]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
 
 .SS "\fBEntity\fP& mc::gfx::Entity::getChild (\fBIndex\fP i)\fC [inherited]\fP"
 
@@ -726,22 +783,6 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 
 .SS "const float mc::gfx::GraphicsEntity::getOpacity () const\fC [inherited]\fP"
-
-.SS "\fBColor\fP& mc::gfx::GraphicsEntity::getPaint ()\fC [inherited]\fP"
-
-.PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
-.PP
-
-.SS "const \fBColor\fP& mc::gfx::GraphicsEntity::getPaint () const\fC [inherited]\fP"
 
 .SS "\fBEntity\fP* const mc::gfx::Entity::getParent ()\fC [inherited]\fP"
 
@@ -878,6 +919,24 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 
 .SS "const std::wstring& mc::gfx::Text::getText () const"
+
+.SS "\fBColorAttachment\fP& mc::gfx::Text::getTexture ()"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "const \fBColorAttachment\fP& mc::gfx::Text::getTexture () const"
 
 .SS "\fBTransformMatrix\fP& mc::gfx::Entity::getTransformation ()\fC [inherited]\fP"
 
@@ -1195,6 +1254,8 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 
 .PP
 Implements \fBmc::gfx::Entity\fP\&.
+.SS "bool mc::gfx::Entity2D::operator!= (const \fBEntity2D\fP & other) const\fC [inherited]\fP"
+
 .SS "bool mc::gfx::Text::operator!= (const \fBText\fP & other) const"
 
 .SS "bool mc::gfx::Entity::operator!= (const \fBEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
@@ -1225,6 +1286,8 @@ operator==
 .PP
 
 .SS "bool mc::gfx::GraphicsEntity::operator!= (const \fBGraphicsEntity\fP & other) const\fC [noexcept]\fP, \fC [inherited]\fP"
+
+.SS "bool mc::gfx::Entity2D::operator== (const \fBEntity2D\fP & other) const\fC [inherited]\fP"
 
 .SS "bool mc::gfx::Text::operator== (const \fBText\fP & other) const"
 
@@ -1402,7 +1465,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z)\fC [inherited]\fP"
+.SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z = \fC0\&.0f\fP)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1416,7 +1479,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "\fBEntity\fP& mc::gfx::Entity::scale (float x, float y, float z)\fC [inherited]\fP"
+.SS "\fBEntity\fP& mc::gfx::Entity::scale (float x, float y, float z = \fC1\&.0f\fP)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1430,8 +1493,13 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::gfx::GraphicsEntity::setBuffer (const \fBogl::UniformBuffer\fP & newBuffer)\fC [inherited]\fP"
+.SS "void mc::gfx::Entity2D::setBuffer (const \fBogl::UniformBuffer\fP & newBuffer)\fC [inherited]\fP"
 
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
 .PP
 \fBNote:\fP
 .RS 4
@@ -1487,20 +1555,6 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 
 .SS "void mc::gfx::GraphicsEntity::setOpacity (const float f)\fC [inherited]\fP"
-
-.PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
-.PP
-
-.SS "void mc::gfx::GraphicsEntity::setPaint (const \fBColor\fP & c)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1577,6 +1631,20 @@ setProperties(ByteField&)
 .PP
 
 .SS "void mc::gfx::Text::setText (const std::wstring & newText)"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Text::setTexture (const \fBColorAttachment\fP & tex)"
 
 .PP
 \fBNote:\fP
@@ -1671,7 +1739,7 @@ Size of this \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "\fBEntity\fP& mc::gfx::Entity::translate (float x, float y, float z)\fC [inherited]\fP"
+.SS "\fBEntity\fP& mc::gfx::Entity::translate (float x, float y, float z = \fC0\&.0f\fP)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1702,6 +1770,10 @@ Overriding this function is dangerous\&. Only do it if you know what you are doi
 Reimplemented in \fBmc::os::WindowModule\fP\&.
 .SH "Member Data Documentation"
 .PP 
+.SS "\fBogl::UniformBuffer\fP mc::gfx::Entity2D::buffer = \fBogl::UniformBuffer\fP()\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 73 of file Entity2D\&.h\&.
 .SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1714,7 +1786,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 563 of file Entity\&.h\&.
+Definition at line 603 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1725,7 +1797,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 568 of file Entity\&.h\&.
+Definition at line 608 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

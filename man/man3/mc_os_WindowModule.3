@@ -1,4 +1,4 @@
-.TH "mc::os::WindowModule" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::os::WindowModule" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,7 +14,10 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 
 .in +1c
 .ti -1c
-.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBUPDATE_DISABLED\fP = 1, \fBRENDER_DISABLED\fP = 2, \fBINIT\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBDIRTY\fP = 6 }"
+.RI "enum \fBProperties\fP : Byte { \fBVSYNC\fP = 0, \fBFULLSCREEN\fP = 1, \fBUNDECORATED\fP = 2, \fBRESIZABLE\fP = 3, \fBDESTROYED\fP = 4 }"
+.br
+.ti -1c
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBDISABLED\fP = 1, \fBINIT\fP = 2, \fBDIRTY\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBSTRETCH_WIDTH\fP = 6, \fBSTRETCH_HEIGHT\fP = 7, \fBDEFAULT_PROPERTIES\fP = 0x00000000 }"
 .br
 .in -1c
 .SS "Public Member Functions"
@@ -67,10 +70,31 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .br
 .RI "\fIOverride this function and return a UNIQUE name for this \fC\fBModule\fP\fP \fP"
 .ti -1c
-.RI "void \fBsetVSync\fP (const bool &sync)"
+.RI "void \fBsetVSync\fP (const bool sync)"
 .br
 .ti -1c
 .RI "bool \fBisVSync\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetFullscreen\fP (const bool full)"
+.br
+.ti -1c
+.RI "bool \fBisFullscreen\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetResizable\fP (const bool re)"
+.br
+.ti -1c
+.RI "bool \fBisResizable\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetUndecorated\fP (const bool un)"
+.br
+.ti -1c
+.RI "bool \fBisUndecorated\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisDestroyed\fP () const "
 .br
 .ti -1c
 .RI "void \fBsetCreationCallback\fP (const \fBVoidFunctionPtr\fP callback)"
@@ -163,13 +187,13 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .RI "void \fBsetTransformation\fP (\fBTransformMatrix\fP &trans)"
 .br
 .ti -1c
-.RI "\fBEntity\fP & \fBtranslate\fP (float x, float y, float z)"
+.RI "\fBEntity\fP & \fBtranslate\fP (float x, float y, float z=0\&.0f)"
 .br
 .ti -1c
-.RI "\fBEntity\fP & \fBrotate\fP (float x, float y, float z)"
+.RI "\fBEntity\fP & \fBrotate\fP (float x, float y, float z=0\&.0f)"
 .br
 .ti -1c
-.RI "\fBEntity\fP & \fBscale\fP (float x, float y, float z)"
+.RI "\fBEntity\fP & \fBscale\fP (float x, float y, float z=1\&.0f)"
 .br
 .ti -1c
 .RI "\fBEntity\fP *const \fBgetParent\fP ()"
@@ -285,7 +309,7 @@ Inherits \fBmc::Module\fP, and \fBmc::gfx::Entity\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 35 of file Window\&.h\&.
+Definition at line 30 of file Window\&.h\&.
 .SH "Member Enumeration Documentation"
 .PP 
 .SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
@@ -304,18 +328,8 @@ Entity::getProperty(unsigned int)
 .PP
 
 .TP
-\fB\fIUPDATE_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be updated\&. If this is \fCFALSE\fP, \fC\fBupdate()\fP\fP will be called by it's parent\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-Entity::getProperty(unsigned int) 
-.RE
-.PP
-
-.TP
-\fB\fIRENDER_DISABLED \fP\fP
-Property defining if an \fC\fBEntity\fP\fP can be rendered\&. If this is \fCfalse\fP, \fC\fBrender()\fP\fP will be called by it's parent\&. 
+\fB\fIDISABLED \fP\fP
+Property defining if an \fC\fBEntity\fP\fP can be updated and rendered\&. If this is \fCtrue\fP, \fC\fBEntity::update()\fP\fP and \fC\fBEntity::render()\fP\fP will not be called by it's parent\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -336,26 +350,6 @@ Entity::getProperty(unsigned int)
 .PP
 
 .TP
-\fB\fISTRETCH_X \fP\fP
-Flag representing whether an \fBEntity\fP's X position should move when it's parent is resized\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::STRETCH_Y\fP 
-.RE
-.PP
-
-.TP
-\fB\fISTRETCH_Y \fP\fP
-Flag representing whether an \fBEntity\fP's Y position should move when it's parent is resized\&. 
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::STRETCH_X\fP 
-.RE
-.PP
-
-.TP
 \fB\fIDIRTY \fP\fP
 Flag representing whether this \fC\fBEntity\fP\fP is dirty and it's positions needs to be recalculated\&. This will become true under the following conditions:
 .IP "\(bu" 2
@@ -370,9 +364,90 @@ When an \fC\fBEntity\fP\fP becomes dirty, it will propogate up the tree\&. It's 
 .PP
 Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily increasing performance in applications with little moving objects\&. 
 .PP
-Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's buffer updated on the GPU side\&. 
+Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's sslBuffer updated on the GPU side\&. 
+.TP
+\fB\fISTRETCH_X \fP\fP
+Flag representing whether an \fBEntity\fP's X position should be stretched when window is resized\&. 
 .PP
-Definition at line 107 of file Entity\&.h\&.
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_Y\fP 
+.PP
+\fBEntity::STRETCH_WIDTH\fP 
+.PP
+\fBEntity::STRETCH_HEIGHT\fP 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_Y \fP\fP
+Flag representing whether an \fBEntity\fP's Y position should be stretched when window is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.PP
+\fBEntity::STRETCH_WIDTH\fP 
+.PP
+\fBEntity::STRETCH_HEIGHT\fP 
+.PP
+WindowModule::setResizable(bool) 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_WIDTH \fP\fP
+Flag representing whether an \fBEntity\fP's width should be stretched when window is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.PP
+\fBEntity::STRETCH_Y\fP 
+.PP
+\fBEntity::STRETCH_HEIGHT\fP 
+.PP
+WindowModule::setResizable(bool) 
+.RE
+.PP
+
+.TP
+\fB\fISTRETCH_HEIGHT \fP\fP
+Flag representing whether an \fBEntity\fP's height should be stretched when window is resized\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::STRETCH_X\fP 
+.PP
+\fBEntity::STRETCH_Y\fP 
+.PP
+\fBEntity::STRETCH_WIDTH\fP 
+.PP
+WindowModule::setResizable(bool) 
+.RE
+.PP
+
+.TP
+\fB\fIDEFAULT_PROPERTIES \fP\fP
+.PP
+Definition at line 128 of file Entity\&.h\&.
+.SS "enum \fBmc::os::WindowModule::Properties\fP : \fBByte\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIVSYNC \fP\fP
+.TP
+\fB\fIFULLSCREEN \fP\fP
+.TP
+\fB\fIUNDECORATED \fP\fP
+.TP
+\fB\fIRESIZABLE \fP\fP
+.TP
+\fB\fIDESTROYED \fP\fP
+.PP
+Definition at line 32 of file Window\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::os::WindowModule::WindowModule (const int width, const int height, const char * title)"
@@ -856,6 +931,14 @@ Called when \fBMACE#init\fP is called and this \fC\fBModule\fP\fP is registered\
 Should only be called once\&. 
 .PP
 Implements \fBmc::Module\fP\&.
+.SS "bool mc::os::WindowModule::isDestroyed () const"
+
+.SS "bool mc::os::WindowModule::isFullscreen () const"
+
+.SS "bool mc::os::WindowModule::isResizable () const"
+
+.SS "bool mc::os::WindowModule::isUndecorated () const"
+
 .SS "bool mc::os::WindowModule::isVSync () const"
 
 .SS "void mc::gfx::Entity::makeDirty ()\fC [inherited]\fP"
@@ -894,7 +977,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Reimplemented in \fBmc::gfx::Text\fP\&.
+Reimplemented in \fBmc::gfx::Text\fP, \fBmc::gfx::Letter\fP, \fBmc::gfx::ProgressBar\fP, and \fBmc::gfx::Image\fP\&.
 .SS "virtual void mc::gfx::Entity::onHover ()\fC [protected]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1113,7 +1196,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z)\fC [inherited]\fP"
+.SS "\fBEntity\fP& mc::gfx::Entity::rotate (float x, float y, float z = \fC0\&.0f\fP)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1127,7 +1210,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "\fBEntity\fP& mc::gfx::Entity::scale (float x, float y, float z)\fC [inherited]\fP"
+.SS "\fBEntity\fP& mc::gfx::Entity::scale (float x, float y, float z = \fC1\&.0f\fP)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1144,6 +1227,8 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "void mc::os::WindowModule::setCreationCallback (const \fBVoidFunctionPtr\fP callback)"
 
 .SS "void mc::os::WindowModule::setFPS (const unsigned int & FPS)"
+
+.SS "void mc::os::WindowModule::setFullscreen (const bool full)"
 
 .SS "void mc::gfx::Entity::setHeight (const float & s)\fC [inherited]\fP"
 
@@ -1221,6 +1306,8 @@ setProperties(ByteField&)
 .RE
 .PP
 
+.SS "void mc::os::WindowModule::setResizable (const bool re)"
+
 .SS "void mc::os::WindowModule::setTitle (const std::string & newTitle)"
 
 .SS "void mc::gfx::Entity::setTransformation (\fBTransformMatrix\fP & trans)\fC [inherited]\fP"
@@ -1237,7 +1324,9 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "void mc::os::WindowModule::setVSync (const bool & sync)"
+.SS "void mc::os::WindowModule::setUndecorated (const bool un)"
+
+.SS "void mc::os::WindowModule::setVSync (const bool sync)"
 
 .SS "void mc::gfx::Entity::setWidth (const float & s)\fC [inherited]\fP"
 
@@ -1292,7 +1381,7 @@ Size of this \fC\fBEntity\fP\fP
 .RE
 .PP
 
-.SS "\fBEntity\fP& mc::gfx::Entity::translate (float x, float y, float z)\fC [inherited]\fP"
+.SS "\fBEntity\fP& mc::gfx::Entity::translate (float x, float y, float z = \fC0\&.0f\fP)\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -1326,7 +1415,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 563 of file Entity\&.h\&.
+Definition at line 603 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1337,7 +1426,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 568 of file Entity\&.h\&.
+Definition at line 608 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

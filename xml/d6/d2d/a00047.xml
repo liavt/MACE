@@ -1,145 +1,269 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d6/d2d/a00047" kind="class" language="C++" prot="public">
-    <compoundname>mc::Sound</compoundname>
-    <includes refid="d4/d63/a00082" local="no">Audio.h</includes>
-      <sectiondef kind="public-type">
-      <memberdef kind="enum" id="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11" prot="public" static="no">
-        <name>Properties</name>
-        <enumvalue id="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d" prot="public">
-          <name>LOOPING</name>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="22" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="22" bodyend="24"/>
-      </memberdef>
-      </sectiondef>
+    <compoundname>mc::gfx::SimpleQuadRenderer</compoundname>
+    <includes refid="d9/db3/a00066" local="no">Renderer.h</includes>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="d6/d2d/a00047_1a33db8736bf37c5fed511e41d0431e6d7" prot="private" static="no" mutable="no">
-        <type><ref refid="de/d5e/a00007" kindref="compound">BitField</ref></type>
-        <definition>BitField mc::Sound::properties</definition>
+      <memberdef kind="variable" id="d6/d2d/a00047_1a08ed4bc1ad2afb4944d7d783ffe04a03" prot="private" static="no" mutable="no">
+        <type><ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref></type>
+        <definition>ogl::ShaderProgram mc::gfx::SimpleQuadRenderer::shaders2D</definition>
         <argsstring></argsstring>
-        <name>properties</name>
+        <name>shaders2D</name>
+        <initializer>= <ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref>()</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="39" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="39" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="345" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="345" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d6/d2d/a00047_1ae55c7a31a3fc4d7f6cb7c422ebd45878" prot="private" static="no" mutable="no">
+        <type><ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref></type>
+        <definition>ogl::VertexArray mc::gfx::SimpleQuadRenderer::square</definition>
+        <argsstring></argsstring>
+        <name>square</name>
+        <initializer>= <ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref>()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="346" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="346" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="d6/d2d/a00047_1ae3d6ae729a69af08720a7e92e726b21c" prot="private" static="no" mutable="no">
+        <type>const bool</type>
+        <definition>const bool mc::gfx::SimpleQuadRenderer::useSSL</definition>
+        <argsstring></argsstring>
+        <name>useSSL</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="348" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="348" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d6/d2d/a00047_af33d4338287d9d32de4afed352fbf4ae_1af33d4338287d9d32de4afed352fbf4ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::Sound::init</definition>
-        <argsstring>()</argsstring>
-        <name>init</name>
+      <memberdef kind="function" id="d6/d2d/a00047_a6f20bf748b4714cf20d6ea66bb89f218_1a6f20bf748b4714cf20d6ea66bb89f218" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::gfx::SimpleQuadRenderer::SimpleQuadRenderer</definition>
+        <argsstring>(const bool ssl=true)</argsstring>
+        <name>SimpleQuadRenderer</name>
+        <param>
+          <type>const bool</type>
+          <declname>ssl</declname>
+          <defval>true</defval>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="26" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="301" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a595bb512e1176165389897728366769c_1a595bb512e1176165389897728366769c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_a40d6af559377d10b97709685f4ed7c70_1a40d6af559377d10b97709685f4ed7c70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::Sound::destroy</definition>
+        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
+        <argsstring>(const char *vertexShader, const char *fragShader)</argsstring>
+        <name>init</name>
+        <param>
+          <type>const char *</type>
+          <declname>vertexShader</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>fragShader</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="306" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_ad11c108e4a34cac15d683f9e2fae4fd7_1ad11c108e4a34cac15d683f9e2fae4fd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
+        <argsstring>(const char *vertexShader, const std::string &amp;fragShader)</argsstring>
+        <name>init</name>
+        <param>
+          <type>const char *</type>
+          <declname>vertexShader</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>fragShader</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="310" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a4a4c6b52d025aa2128c9cf4e67696ac5_1a4a4c6b52d025aa2128c9cf4e67696ac5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
+        <argsstring>(const std::string &amp;vertexShader, const char *fragShader)</argsstring>
+        <name>init</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>vertexShader</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>fragShader</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="314" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_ac149c3748f0592279b8c09ce0e089a1e_1ac149c3748f0592279b8c09ce0e089a1e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
+        <argsstring>(const std::string &amp;vertexShader, const std::string &amp;fragShader)</argsstring>
+        <name>init</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>vertexShader</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>fragShader</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="318" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a440110f763db19efbda7425eba97ed63_1a440110f763db19efbda7425eba97ed63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::SimpleQuadRenderer::destroy</definition>
         <argsstring>()</argsstring>
         <name>destroy</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="27" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="322" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a905a92f2df21a6144e8ff3fce340f0be_1a905a92f2df21a6144e8ff3fce340f0be" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::Sound::getProperty</definition>
-        <argsstring>(const Byte param) const </argsstring>
-        <name>getProperty</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>param</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="29" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_afb381c80dda4973445cefefa59746a5c_1afb381c80dda4973445cefefa59746a5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_aef26719f0319c297f5134d21c4438028_1aef26719f0319c297f5134d21c4438028" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::Sound::setProperty</definition>
-        <argsstring>(const Byte param, const bool value)</argsstring>
-        <name>setProperty</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>param</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="30" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a708f0a746ff19ec7d548dae3056a30b2_1a708f0a746ff19ec7d548dae3056a30b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::Sound::setLooping</definition>
-        <argsstring>(const bool val)</argsstring>
-        <name>setLooping</name>
-        <param>
-          <type>const bool</type>
-          <declname>val</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="32" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a71120a75bdd0f0f0c257bf8d02bd1891_1a71120a75bdd0f0f0c257bf8d02bd1891" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::Sound::isLooping</definition>
+        <definition>void mc::gfx::SimpleQuadRenderer::bind</definition>
         <argsstring>() const </argsstring>
-        <name>isLooping</name>
+        <name>bind</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="33" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="327" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a042bbb3fe90c6e62c757daa48f5adef3_1a042bbb3fe90c6e62c757daa48f5adef3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_a48aad346e44b0044e1a748569ed9ad1b_1a48aad346e44b0044e1a748569ed9ad1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void mc::Sound::setProperties</definition>
-        <argsstring>(const BitField &amp;b)</argsstring>
-        <name>setProperties</name>
+        <definition>void mc::gfx::SimpleQuadRenderer::draw</definition>
+        <argsstring>(const GraphicsEntity *en=nullptr)</argsstring>
+        <name>draw</name>
         <param>
-          <type>const <ref refid="de/d5e/a00007" kindref="compound">BitField</ref> &amp;</type>
-          <declname>b</declname>
+          <type>const <ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> *</type>
+          <declname>en</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="332" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a62f7e69bc0837b4daa66915d5957152e_1a62f7e69bc0837b4daa66915d5957152e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::SimpleQuadRenderer::setShader</definition>
+        <argsstring>(const ogl::ShaderProgram &amp;shader)</argsstring>
+        <name>setShader</name>
+        <param>
+          <type>const <ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
+          <declname>shader</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -147,53 +271,137 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="35" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="334" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a3b8ee4aa8d3b86a3746480dbba30e408_1a3b8ee4aa8d3b86a3746480dbba30e408" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="de/d5e/a00007" kindref="compound">BitField</ref> &amp;</type>
-        <definition>BitField&amp; mc::Sound::getProperties</definition>
+      <memberdef kind="function" id="d6/d2d/a00047_ac4a4fc92880084844683f5b365e55b62_1ac4a4fc92880084844683f5b365e55b62" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
+        <definition>ogl::ShaderProgram&amp; mc::gfx::SimpleQuadRenderer::getShader</definition>
         <argsstring>()</argsstring>
-        <name>getProperties</name>
+        <name>getShader</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="36" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="335" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_adbdb57e74228f65794f94d7a9f789498_1adbdb57e74228f65794f94d7a9f789498" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="de/d5e/a00007" kindref="compound">BitField</ref> &amp;</type>
-        <definition>const BitField&amp; mc::Sound::getProperties</definition>
+      <memberdef kind="function" id="d6/d2d/a00047_a0f129a8356d59239c80730091a0d3e85_1a0f129a8356d59239c80730091a0d3e85" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
+        <definition>const ogl::ShaderProgram&amp; mc::gfx::SimpleQuadRenderer::getShader</definition>
         <argsstring>() const </argsstring>
-        <name>getProperties</name>
+        <name>getShader</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="37" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="336" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a667fa583612f7b4ea34653ab6e6d7480_1a667fa583612f7b4ea34653ab6e6d7480" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::SimpleQuadRenderer::setVertexArray</definition>
+        <argsstring>(const ogl::VertexArray &amp;vertices)</argsstring>
+        <name>setVertexArray</name>
+        <param>
+          <type>const <ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref> &amp;</type>
+          <declname>vertices</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="338" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a5742d8c595ed77eeb0155759d61f2add_1a5742d8c595ed77eeb0155759d61f2add" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref> &amp;</type>
+        <definition>ogl::VertexArray&amp; mc::gfx::SimpleQuadRenderer::getVertexArray</definition>
+        <argsstring>()</argsstring>
+        <name>getVertexArray</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="339" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a735aee6065eb403dd61d5d03ec38a5ae_1a735aee6065eb403dd61d5d03ec38a5ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref> &amp;</type>
+        <definition>const ogl::VertexArray&amp; mc::gfx::SimpleQuadRenderer::getVertexArray</definition>
+        <argsstring>() const </argsstring>
+        <name>getVertexArray</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="340" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_a61d5e3e6acbea808eee553f8e41796c0_1a61d5e3e6acbea808eee553f8e41796c0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::SimpleQuadRenderer::operator==</definition>
+        <argsstring>(const SimpleQuadRenderer &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="d6/d2d/a00047" kindref="compound">SimpleQuadRenderer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="342" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d6/d2d/a00047_af921ab242875f66b3ba376d6148e6062_1af921ab242875f66b3ba376d6148e6062" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::SimpleQuadRenderer::operator!=</definition>
+        <argsstring>(const SimpleQuadRenderer &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="d6/d2d/a00047" kindref="compound">SimpleQuadRenderer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Renderer.h" line="343" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="include/MACE/Utility/Audio.h" line="20" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="20" bodyend="40"/>
+    <location file="include/MACE/Graphics/Renderer.h" line="299" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="299" bodyend="349"/>
     <listofallmembers>
-      <member refid="d6/d2d/a00047_a595bb512e1176165389897728366769c_1a595bb512e1176165389897728366769c" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>destroy</name></member>
-      <member refid="d6/d2d/a00047_a3b8ee4aa8d3b86a3746480dbba30e408_1a3b8ee4aa8d3b86a3746480dbba30e408" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getProperties</name></member>
-      <member refid="d6/d2d/a00047_adbdb57e74228f65794f94d7a9f789498_1adbdb57e74228f65794f94d7a9f789498" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getProperties</name></member>
-      <member refid="d6/d2d/a00047_a905a92f2df21a6144e8ff3fce340f0be_1a905a92f2df21a6144e8ff3fce340f0be" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getProperty</name></member>
-      <member refid="d6/d2d/a00047_af33d4338287d9d32de4afed352fbf4ae_1af33d4338287d9d32de4afed352fbf4ae" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>init</name></member>
-      <member refid="d6/d2d/a00047_a71120a75bdd0f0f0c257bf8d02bd1891_1a71120a75bdd0f0f0c257bf8d02bd1891" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>isLooping</name></member>
-      <member refid="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>LOOPING</name></member>
-      <member refid="d6/d2d/a00047_1a33db8736bf37c5fed511e41d0431e6d7" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>properties</name></member>
-      <member refid="d6/d2d/a00047_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>Properties</name></member>
-      <member refid="d6/d2d/a00047_a708f0a746ff19ec7d548dae3056a30b2_1a708f0a746ff19ec7d548dae3056a30b2" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setLooping</name></member>
-      <member refid="d6/d2d/a00047_a042bbb3fe90c6e62c757daa48f5adef3_1a042bbb3fe90c6e62c757daa48f5adef3" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setProperties</name></member>
-      <member refid="d6/d2d/a00047_afb381c80dda4973445cefefa59746a5c_1afb381c80dda4973445cefefa59746a5c" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setProperty</name></member>
+      <member refid="d6/d2d/a00047_aef26719f0319c297f5134d21c4438028_1aef26719f0319c297f5134d21c4438028" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>bind</name></member>
+      <member refid="d6/d2d/a00047_a440110f763db19efbda7425eba97ed63_1a440110f763db19efbda7425eba97ed63" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>destroy</name></member>
+      <member refid="d6/d2d/a00047_a48aad346e44b0044e1a748569ed9ad1b_1a48aad346e44b0044e1a748569ed9ad1b" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>draw</name></member>
+      <member refid="d6/d2d/a00047_ac4a4fc92880084844683f5b365e55b62_1ac4a4fc92880084844683f5b365e55b62" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getShader</name></member>
+      <member refid="d6/d2d/a00047_a0f129a8356d59239c80730091a0d3e85_1a0f129a8356d59239c80730091a0d3e85" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getShader</name></member>
+      <member refid="d6/d2d/a00047_a5742d8c595ed77eeb0155759d61f2add_1a5742d8c595ed77eeb0155759d61f2add" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getVertexArray</name></member>
+      <member refid="d6/d2d/a00047_a735aee6065eb403dd61d5d03ec38a5ae_1a735aee6065eb403dd61d5d03ec38a5ae" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getVertexArray</name></member>
+      <member refid="d6/d2d/a00047_a40d6af559377d10b97709685f4ed7c70_1a40d6af559377d10b97709685f4ed7c70" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
+      <member refid="d6/d2d/a00047_ad11c108e4a34cac15d683f9e2fae4fd7_1ad11c108e4a34cac15d683f9e2fae4fd7" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
+      <member refid="d6/d2d/a00047_a4a4c6b52d025aa2128c9cf4e67696ac5_1a4a4c6b52d025aa2128c9cf4e67696ac5" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
+      <member refid="d6/d2d/a00047_ac149c3748f0592279b8c09ce0e089a1e_1ac149c3748f0592279b8c09ce0e089a1e" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
+      <member refid="d6/d2d/a00047_af921ab242875f66b3ba376d6148e6062_1af921ab242875f66b3ba376d6148e6062" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>operator!=</name></member>
+      <member refid="d6/d2d/a00047_a61d5e3e6acbea808eee553f8e41796c0_1a61d5e3e6acbea808eee553f8e41796c0" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>operator==</name></member>
+      <member refid="d6/d2d/a00047_a62f7e69bc0837b4daa66915d5957152e_1a62f7e69bc0837b4daa66915d5957152e" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>setShader</name></member>
+      <member refid="d6/d2d/a00047_a667fa583612f7b4ea34653ab6e6d7480_1a667fa583612f7b4ea34653ab6e6d7480" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>setVertexArray</name></member>
+      <member refid="d6/d2d/a00047_1a08ed4bc1ad2afb4944d7d783ffe04a03" prot="private" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>shaders2D</name></member>
+      <member refid="d6/d2d/a00047_a6f20bf748b4714cf20d6ea66bb89f218_1a6f20bf748b4714cf20d6ea66bb89f218" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>SimpleQuadRenderer</name></member>
+      <member refid="d6/d2d/a00047_1ae55c7a31a3fc4d7f6cb7c422ebd45878" prot="private" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>square</name></member>
+      <member refid="d6/d2d/a00047_1ae3d6ae729a69af08720a7e92e726b21c" prot="private" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>useSSL</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

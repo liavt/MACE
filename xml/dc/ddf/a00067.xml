@@ -12,8 +12,6 @@
 <codeline></codeline>
 <codeline><highlight class="normal">//FRAGMENT<sp/>SHADER</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#version<sp/>330<sp/>core</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal">#include<sp/>&lt;ssl_frag&gt;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">precision<sp/>highp<sp/>float;<sp/>//<sp/>Defines<sp/>precision<sp/>for<sp/>float<sp/>and<sp/>float-derived<sp/>(vector/matrix)<sp/>types.</highlight></codeline>
@@ -22,9 +20,13 @@
 <codeline></codeline>
 <codeline><highlight class="normal">uniform<sp/>lowp<sp/>sampler2D<sp/>tex;</highlight></codeline>
 <codeline></codeline>
+<codeline><highlight class="normal">sslUniformBuffer<sp/>textureData{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sslAttachmentData<sp/>image;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">vec4<sp/>ssl_frag_main()<sp/><sp/></highlight></codeline>
 <codeline><highlight class="normal">{<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>texture(tex,<sp/>textureCoord);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>sslAttachmentBlend(image,<sp/>texture(tex,<sp/>textureCoord));</highlight></codeline>
 <codeline><highlight class="normal">}<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>

@@ -82,907 +82,677 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::ProgressBar Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar}
-{\bkmkstart AAAAAAABJF}
-{\bkmkend AAAAAAABJF}
+mc::Preprocessor Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::Preprocessor}
+{\xe \v mc::Preprocessor}
+{\bkmkstart AAAAAAAAYE}
+{\bkmkend AAAAAAAAYE}
 \par
 {
-{\f2 #include <Entity2D.h>}}\par
-Inheritance diagram for mc::gfx::ProgressBar:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "de/d53/a00169.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::gfx::ProgressBar:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d5/dcb/a00170.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Public Types\par
-\pard\plain 
-
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Customizable string preprocessor which follows ANSI-C preprocessor standard. }}\par
 {
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-typedef void(* {\b EaseDoneCallback}) ({\b ProgressBar} *)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-enum {\b EntityProperty} : Byte \{ {\b DEAD} = 0, 
-{\b UPDATE_DISABLED} = 1, 
-{\b RENDER_DISABLED} = 2, 
-{\b INIT} = 3, 
-{\b STRETCH_X} = 4, 
-{\b STRETCH_Y} = 5, 
-{\b DIRTY} = 6
- \}\par
-}
+{\f2 #include <Preprocessor.h>}}\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ProgressBar} () noexcept\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ProgressBar} (const float minimum, const float maximum, const float progress=0) noexcept\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ~ProgressBar} ()=default\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setBackgroundTexture} (const {\b ogl::Texture} &tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::Texture} & {\b getBackgroundTexture} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::Texture} & {\b getBackgroundTexture} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setForegroundTexture} (const {\b ogl::Texture} &tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::Texture} & {\b getForegroundTexture} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::Texture} & {\b getForegroundTexture} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setSelectionTexture} (const {\b ogl::Texture} &tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::Texture} & {\b getSelectionTexture} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::Texture} & {\b getSelectionTexture} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setMinimum} (const float tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getMinimum} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getMinimum} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setMaximum} (const float tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getMaximum} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getMaximum} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setProgress} (const float tex)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addProgress} (const float prog)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getProgress} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getProgress} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b easeTo} (const float progress, const float time=1000, const {\b EaseFunction} func={\b EaseFunction::SINUSOIDAL}, const {\b EaseDoneCallback} callback=[]({\b ProgressBar} *)\{\})\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b ProgressBar} &other) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b ProgressBar} &other) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b ogl::UniformBuffer} & {\b getBuffer} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b ogl::UniformBuffer} & {\b getBuffer} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setBuffer} (const {\b ogl::UniformBuffer} &newBuffer)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clean} () final\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} () final\par
+{\b Preprocessor} (const std::string &input, const std::string &filename="Unknown file")\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b MACE.init()}}  is called. }{
+Creates a {\f2 {\b Preprocessor}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () final\par
+{\b Preprocessor} (const std::string &input, const {\b Preprocessor} &clone)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b MACE.destroy()}}  is called. }{
+Clones another {\f2 {\b Preprocessor}}  and gives it a new input. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Color} & {\b getPaint} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Color} & {\b getPaint} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setPaint} (const {\b Color} &c)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float {\b getOpacity} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float {\b getOpacity} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setOpacity} (const float f)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b GraphicsEntity} &other) const  noexcept\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Entity} &other) const  noexcept\par
+std::vector< std::string > {\b preprocessTokens} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  have the same children, parent, and properties. }{
+Processeses the {\f2 input}  specified in the constructor according to the ANSI C standard. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b GraphicsEntity} &other) const  noexcept\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Entity} &other) const  noexcept\par
+std::string {\b preprocess} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  don't have the same children, parent, and properties. }{
+Processeses the {\f2 input}  specified in the constructor according to the ANSI C standard. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const std::vector< {\b Entity} * > & {\b getChildren} () const \par
+void {\b addInclude} ({\b Include} &incl)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets all of this {\f2 {\b Entity}'s}  children. }{
+Adds an {\f2 {\b Include}}  to this preprocessor. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b removeChild} (const {\b Entity} &e)\par
+std::vector< {\b Include} * > {\b getIncludes} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child by reference. }{
+Retrieves all pointers to an {\f2 {\b Include}}  added via {\f2 {\b addInclude()}}  or {\f2 {\b setIncludes()}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b removeChild} ({\b Index} index)\par
+const std::vector< {\b Include} * > {\b getIncludes} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child via location. }{
+Retrieves all pointers to an {\f2 {\b Include}}  added via {\f2 {\b addInclude()}}  or {\f2 {\b setIncludes()}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b hasChild} ({\b Entity} &e) const \par
+void {\b setIncludes} (const std::vector< {\b Include} * > includes)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks to see if this {\f2 {\b Entity}}  contains an {\f2 {\b Entity}}  }{
+Sets all of the {\f2 Includes}  in this {\f2 {\b Preprocessor}} . }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clearChildren} ()\par
+const std::string {\b getInput} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }{
+Retrieves what this {\f2 {\b Preprocessor}}  is processing. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b operator[]} ({\b Index} i)\par
+std::string {\b getFilename} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Access an {\f2 {\b Entity}} . }{
+Gets the filename of the file this is processing. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} & {\b operator[]} ({\b Index} i) const \par
+const std::string {\b getFilename} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b operator[](Index i)} }{
+Gets the filename of the file this is processing. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b getChild} ({\b Index} i)\par
+void {\b setFilename} (const std::string &filename)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves a child at a certain index. }{
+Changes the filename. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} & {\b getChild} ({\b Index} i) const \par
+unsigned int {\b getLine} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b getChild(Index)} }{
+Gets the current line number. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-int {\b indexOf} (const {\b Entity} &e) const \par
+const unsigned int {\b getLine} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Finds the location of an {\f2 {\b Entity}}  in this {\f2 {\b Entity}}  }{
+Gets the current line number. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Entity} * >::iterator {\b begin} ()\par
+void {\b setLine} (const unsigned int line)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }{
+Sets the line number. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Entity} * >::iterator {\b end} ()\par
+void {\b defineMacro} (const {\b Macro} &macro)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }{
+Defines a {\f2 {\b Macro}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Size} {\b size} () const \par
+bool {\b isMacroDefined} (const std::string &name) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calculates the amount of children this {\f2 {\b Entity}}  has. }{
+Checks if a {\f2 {\b Macro}}  with a certain name is defined. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b EntityProperties} & {\b getProperties} ()\par
+void {\b undefineMacro} (const std::string &name)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the {\f2 {\b Entity}'s}  properties as a {\f2 ByteField}  }{
+Removes a {\f2 {\b Macro}}  with the specified name. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b EntityProperties} & {\b getProperties} () const \par
+unsigned int {\b macroNumber} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getProperties()}}  }{
+Calculates the amount of {\f2 Macros}  in this {\f2 {\b Preprocessor}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setProperties} ({\b EntityProperties} &b)\par
+void {\b defineStandardMacros} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set the properties for this {\f2 {\b Entity}}  }{
+Defines macros required by ANSI C and various compiler-specific macros. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b getProperty} (const {\b Byte} position) const \par
+void {\b defineOSMacros} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve the value of a property. }{
+Defines macros that determine what OS you are on. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setProperty} (const {\b Byte} position, const bool value)\par
+const {\b Macro} & {\b getMacro} (const std::string &name) const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 {\b Entity}::}  }{
+Finds a {\f2 {\b Macro}}  with the given name. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b TransformMatrix} & {\b getTransformation} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b TransformMatrix} & {\b getTransformation} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setTransformation} ({\b TransformMatrix} &trans)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b translate} (float x, float y, float z)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b rotate} (float x, float y, float z)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} & {\b scale} (float x, float y, float z)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} *const {\b getParent} ()\par
+std::string {\b getLocation} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve this {\f2 Entitys}  parent `Entity. }{
+Generates a string with the current line number and file name. }{
 }\par
 }}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} *const {\b getParent} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getParent()}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b hasParent} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addChild} ({\b Entity} &e)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addChild} ({\b Entity} *e)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addComponent} ({\b Component} *action)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addComponent} ({\b Component} &action)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Component} * > {\b getComponents} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getWidth} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getWidth} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setWidth} (const float &s)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getHeight} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getHeight} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setHeight} (const float &s)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getX} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getX} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setX} (const float &newX)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-float & {\b getY} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const float & {\b getY} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setY} (const float &newY)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Entity} * {\b getRootParent} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Entity} * {\b getRootParent} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b reset} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b makeDirty} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Makes this {\f2 {\b Entity}}  dirty and the root level parent dirty. }{
-}\par
-}}
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Static Public Member Functions\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-static int {\b getProtocol} ()\par
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Protected Member Functions\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b onInit} () override final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.init()}}  is called, {\f2 {\b onInit()}}  is called on all of it's children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b onUpdate} () override final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.update()}}  is called, {\f2 {\b onUpdate()}}  is called on all of it's children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b onRender} () override final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.render()}}  is called, {\f2 {\b onRender()}}  is called on all of it's children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b onDestroy} () override final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b onDestroy()}}  is called on all of it's children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b update} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b MACE.update()}}  is called. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b render} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b hover} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b onClean} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b onHover} ()\par
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Protected Attributes\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::vector< {\b Entity} * > {\b children} = std::vector<{\b Entity}*>()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 std::vector}  of this {\f2 {\b Entity}\\'s}  children. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b TransformMatrix} {\b transformation}\par
-}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Friends\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-class {\b RenderProtocol< ProgressBar >}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 136 of file Entity2D.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Customizable string preprocessor which follows ANSI-C preprocessor standard. \par
 }
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Typedef Documentation\par
-\pard\plain 
-{\xe \v EaseDoneCallback\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:EaseDoneCallback}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-typedef void(* mc::gfx::ProgressBar::EaseDoneCallback) ({\b ProgressBar} *)}}
+
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+It can define all standard and operating system macros with special functions. Additionally, the following macros are always defined: \par
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clcbpat16\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clcbpat16\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\b Macro} name \cell }{{\b Macro} definition  \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __MACE__}  \cell }{Always defined \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __INCLUDE_LEVEL__}  \cell }{Incremented by 1 when a file is included, and decremented when the included file ends. Identical to the GCC macro of the same name \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __IF_SCOPE__}  \cell }{The depth of the current preprocessor conditional. Shouldn't be used. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __CURRENT_IF_SCOPE__}  \cell }{The level at which a conditional directive returned false. Shouldn't be used. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\pard\plain
 \par
-{\bkmkstart AAAAAAABJG}
-{\bkmkend AAAAAAABJG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-Definition at line 139 of file Entity2D.h.}\par
+Even if they are not defined, you can never defined or undefine a standard macro as denoted by the ANSI-C standard. You also can't define or undefine keywords \par
+Every directive in the ANSI-C standard is supported except for {\f2 #if} , {\f2 #elif} , and {\f2 #pragma} . {\f2 #warning}  outputs a message to console. Additionally, {\f2 #version}  is silenty ignored instead of being an error for GLSL support. \par
+Each {\f2 {\b Preprocessor}}  object stores a single string called the {\f2 input} . The only way to change the {\f2 input}  is by cloning it via a special constructor. \par
+{\f2 {\b Preprocessor}}  can also 'fake' include files through the {\f2 {\b IncludeString}}  class, allowing it to preprocess the same at every runtime invocation. \par
+The {\f2 ssl}  uses the {\f2 {\b Preprocessor}}  class to handle shader files.\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b Macro} \par
+{\b Include} \par
+{\b gfx::ssl} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid Digraphs (see 6.4.6 of standard) \par
+Variable arguments \par
+{\b Macro} concat \par
+{\f2 #if and} #elif` \par
+{\f2 #pragma}  (if STDC follows, do no macro replacement) \par
 }
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Enumeration Documentation\par
-\pard\plain 
-{\xe \v EntityProperty\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:EntityProperty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-enum {\b mc::gfx::Entity::EntityProperty} : {\b Byte}{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABCR}
-{\bkmkend AAAAAAABCR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{{{\b \par
-Enumerator}}\par
-\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\xe \v DEAD\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:DEAD}
-{\b {\i DEAD{\bkmkstart AAAAAAABCS}
-{\bkmkend AAAAAAABCS}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Bit location representing whether an {\f2 {\b Entity}}  is dead. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If {\f2 true,}  any {\b Entity} holding it will remove it and call {\f2 kill()}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v UPDATE_DISABLED\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:UPDATE_DISABLED}
-{\b {\i UPDATE_DISABLED{\bkmkstart AAAAAAABCT}
-{\bkmkend AAAAAAABCT}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property defining if an {\f2 {\b Entity}}  can be updated. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If this is {\f2 FALSE} , {\f2 {\b update()}}  will be called by it's parent. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v RENDER_DISABLED\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:RENDER_DISABLED}
-{\b {\i RENDER_DISABLED{\bkmkstart AAAAAAABCU}
-{\bkmkend AAAAAAABCU}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property defining if an {\f2 {\b Entity}}  can be rendered. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If this is {\f2 false} , {\f2 {\b render()}}  will be called by it's parent. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v INIT\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:INIT}
-{\b {\i INIT{\bkmkstart AAAAAAABCV}
-{\bkmkend AAAAAAABCV}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether an {\b Entity}'s {\b init()} function has been called. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-If {\b destroy()} or {\b update()} is called and this is {\f2 false} , an {\f2 InitializationError}  is thrown. \par
-If {\b init()} is called and this is {\f2 true} , an {\f2 InitializationError}  is thrown. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::getProperty(unsigned int) \par
-}}{\xe \v STRETCH_X\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:STRETCH_X}
-{\b {\i STRETCH_X{\bkmkstart AAAAAAABCW}
-{\bkmkend AAAAAAABCW}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether an {\b Entity}'s X position should move when it's parent is resized. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_Y} \par
-}}{\xe \v STRETCH_Y\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:STRETCH_Y}
-{\b {\i STRETCH_Y{\bkmkstart AAAAAAABCX}
-{\bkmkend AAAAAAABCX}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether an {\b Entity}'s Y position should move when it's parent is resized. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::STRETCH_X} \par
-}}{\xe \v DIRTY\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:DIRTY}
-{\b {\i DIRTY{\bkmkstart AAAAAAABCY}
-{\bkmkend AAAAAAABCY}
-}}  {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Flag representing whether this {\f2 {\b Entity}}  is dirty and it's positions needs to be recalculated. \par
-}{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This will become true under the following conditions:{
-\par
-\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-The {\f2 {\b Entity}}  has been changed. Assume that any non-const function other than {\b render()} and {\b update()} will trigger this condition.\par
-\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-The window is resized, moved, or created \par}
-Other classes that inherit {\f2 {\b Entity}}  can also set this to true via {\b Entity::setProperty(Byte, bool)} \par
-When an {\f2 {\b Entity}}  becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level {\f2 {\b Entity}} , which is usually the {\f2 GraphicsContext} . From there, it will decide what to do based on it's {\f2 {\b Entity::DIRTY}}  flag. \par
-Certain {\f2 GraphicsContexts}  may only render when something is dirty, heavily increasing performance in applications with little moving objects. \par
-Additionally, an {\f2 {\b Entity}}  that is considered dirty will have it's buffer updated on the GPU side. \par
-}\par
 }{
-Definition at line 107 of file Entity.h.}\par
+Definition at line 161 of file Preprocessor.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v ProgressBar\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:ProgressBar}
+{\xe \v Preprocessor\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:Preprocessor}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::ProgressBar::ProgressBar (){\f2 [noexcept]}}}
+mc::Preprocessor::Preprocessor (const std::string &  {\i input}, const std::string &  {\i filename} = {\f2 "Unknown\~ file"})}}
 \par
-{\bkmkstart AAAAAAABJH}
-{\bkmkend AAAAAAABJH}
+{\bkmkstart AAAAAAAAYF}
+{\bkmkend AAAAAAAAYF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Creates a {\f2 {\b Preprocessor}}  }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+{\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i input} \cell }{What to process. \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i filename} \cell }{Name of the file that it is processing. This is used when an error happens. If not provided, "Unknown file" is used instead. \cell }
+{\row }
 }
-{\xe \v ProgressBar\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:ProgressBar}
+}}
+{\xe \v Preprocessor\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:Preprocessor}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::ProgressBar::ProgressBar (const float  {\i minimum}, const float  {\i maximum}, const float  {\i progress} = {\f2 0}){\f2 [noexcept]}}}
+mc::Preprocessor::Preprocessor (const std::string &  {\i input}, const {\b Preprocessor} &  {\i clone}){\f2 [explicit]}}}
 \par
-{\bkmkstart AAAAAAABJI}
-{\bkmkend AAAAAAABJI}
+{\bkmkstart AAAAAAAAYG}
+{\bkmkend AAAAAAAAYG}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v ~ProgressBar\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:~ProgressBar}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-mc::gfx::ProgressBar::~ProgressBar (){\f2 [default]}}}
 \par
-{\bkmkstart AAAAAAABJJ}
-{\bkmkend AAAAAAABJJ}
 {
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Clones another {\f2 {\b Preprocessor}}  and gives it a new input. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Macros and includes are all cloned. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i input} \cell }{New string that should be processed. \cell }
+{\row }
+\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i clone} \cell }{Another {\f2 {\b Preprocessor}}  whose features should be cloned. \cell }
+{\row }
 }
+}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v addChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:addChild}
+{\xe \v addInclude\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:addInclude}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Entity::addChild ({\b Entity} &  {\i e}){\f2 [inherited]}}}
+void mc::Preprocessor::addInclude ({\b Include} &  {\i incl})}}
 \par
-{\bkmkstart AAAAAAABDC}
-{\bkmkend AAAAAAABDC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v addChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:addChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::addChild ({\b Entity} *  {\i e}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDD}
-{\bkmkend AAAAAAABDD}
+{\bkmkstart AAAAAAAAYH}
+{\bkmkend AAAAAAAAYH}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-}}\par
+Adds an {\f2 {\b Include}}  to this preprocessor. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v addComponent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:addComponent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::addComponent ({\b Component} *  {\i action}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDE}
-{\bkmkend AAAAAAABDE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v addComponent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:addComponent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::addComponent ({\b Component} &  {\i action}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDF}
-{\bkmkend AAAAAAABDF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-}}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-}}
-{\xe \v addProgress\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:addProgress}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::addProgress (const float  {\i prog})}}
-\par
-{\bkmkstart AAAAAAABJK}
-{\bkmkend AAAAAAABJK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v begin\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:begin}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-std::vector<{\b Entity}*>::iterator mc::gfx::Entity::begin (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDG}
-{\bkmkend AAAAAAABDG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Iterator of the first {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b end()} \par
-{\b size()} \par
-}}}
-{\xe \v clean\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:clean}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::GraphicsEntity::clean (){\f2 [final]}, {\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDI}
-{\bkmkend AAAAAAABDI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
+Any {\f2 {\b Include}} 's in this {\f2 {\b Preprocessor}}  will be used when #include is encountered. \par
+Because this function takes in a reference, the {\f2 {\b Include}}  provided must remain owned by the program when {\f2 {\b preprocess()}}  or {\f2 {\b preprocessTokens()}}  is called. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{{\i incl} \cell }{Reference to an {\f2 {\b Include}}  \cell }
 {\row }
 }
-}{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v clearChildren\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:clearChildren}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::clearChildren (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDJ}
-{\bkmkend AAAAAAABDJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes EVERY {\f2 {\b Entity}}  from this {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-{\b size()} \par
-{\b removeChild(Index)} \par
-{\b removeChild(const Entity&)} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b preprocess()} \par
+{\b IncludeDirectory} \par
+{\b IncludeString} \par
 }}}
-{\xe \v destroy\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:destroy}
+{\xe \v defineMacro\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:defineMacro}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::GraphicsEntity::destroy (){\f2 [final]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+void mc::Preprocessor::defineMacro (const {\b Macro} &  {\i macro})}}
 \par
-{\bkmkstart AAAAAAABDL}
-{\bkmkend AAAAAAABDL}
+{\bkmkstart AAAAAAAAYI}
+{\bkmkend AAAAAAAAYI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b MACE.destroy()}}  is called. }}\par
+Defines a {\f2 {\b Macro}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b onDestroy()}} . Sets {\f2 {\b Entity::INIT}}  to be false \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onDestroy()}}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
+Called when #define is found in the {\f2 input}  {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{{\i macro} \cell }{What to define. \cell }
 {\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Macro} \par
+{\b undefineMacro(const std::string&)} \par
+}}}
+{\xe \v defineOSMacros\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:defineOSMacros}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::Preprocessor::defineOSMacros ()}}
+\par
+{\bkmkstart AAAAAAAAYJ}
+{\bkmkend AAAAAAAAYJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Defines macros that determine what OS you are on. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The values of these macros are determined at compile time based on your compiler \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b defineStandardMacros()} \par
+}}}
+{\xe \v defineStandardMacros\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:defineStandardMacros}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::Preprocessor::defineStandardMacros ()}}
+\par
+{\bkmkstart AAAAAAAAYK}
+{\bkmkend AAAAAAAAYK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Defines macros required by ANSI C and various compiler-specific macros. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+However, it will not define compiler-defining macros such as {\f2 __GCC__} . \par
+Compiler-specific macros are from the following compilers:{
+\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+GCC\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+VC++\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Clang\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Intel\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Borland\par
+\pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
+Oracle \par}
+These function will only define macros that have values at the time that {\b MACE} is compiled. For example, if you compiler does not define {\f2 __STDC__} , this function will not define {\f2 __STDC__} . Additionally, only standard macros documented in the compiler's manual will be defined here. Custom macros that you define in the {\b MACE} compilation will not be defined by this function. For that, use the {\f2 defineMacro(Macro)}  function. \par
+Table of standard, non compiler specific macros: \par
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clcbpat16\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clcbpat16\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
+{{\b Macro} name \cell }{{\b Macro} definition  \cell }
+\pard \widctlpar\intbl\adjustright
 {\row }
-}
-}{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v easeTo\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:easeTo}
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __FILE__}  \cell }{The current filename as specified by the constructor, #include, or,{\f2 #line}  directive. If {\f2 #line}  is called, this macro is defined even if {\f2 {\b defineStandardMacros()}}  was not called. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __LINE__}  \cell }{The current line number in the file. Can be changed via {\f2 #line} . If {\f2 #line}  is called, this macro is defined even if {\f2 {\b defineStandardMacros()}}  was not called. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __DATE__}  \cell }{Equal to the date at which the {\f2 input}  was processed with the format MNN DD YYYY. Only updates when {\f2 {\b defineStandardMacros()}}  is called. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __TIME__}  \cell }{Equal to the time at which the {\f2 input}  was processed with the format HH:MM:SS. Only updates when {\f2 {\b defineStandardMacros()}}  is called. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __BASE_FILE__}  \cell }{The filename from which the processing starts. #include does not affect this macro, but #line does. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __STDC__}  \cell }{Whether the preprocessor follows standard. The value of this macro is dependent on the value of {\b STDC}  when {\b MACE} was compiled. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __STDC_HOSTED__}  \cell }{Whether this supports a hosted implementation. The value of this macro is equal to it's value when {\b MACE} was compiled. The standard requires this, so it is 1 most of the time. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw10 \trbrdrl\brdrs\brdrw10 \trbrdrb\brdrs\brdrw10 \trbrdrr\brdrs\brdrw10 \trbrdrh\brdrs\brdrw10 \trbrdrv\brdrs\brdrw10 
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx4374
+\clvertalt\clbrdrt\brdrs\brdrw10 \clbrdrl\brdrs\brdrw10 \clbrdrb\brdrs\brdrw10 \clbrdrr \brdrs\brdrw10 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\f2 __cpluplus}  \cell }{What version of C++ is being used. This is equal to the version used to compile {\b MACE}. \cell }
+\pard \widctlpar\intbl\adjustright
+{\row }
+\pard\plain
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b defineOSMacros()} \par
+}}}
+{\xe \v getFilename\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getFilename}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ProgressBar::easeTo (const float  {\i progress}, const float  {\i time} = {\f2 1000}, const {\b EaseFunction}  {\i func} = {\f2 {\b EaseFunction::SINUSOIDAL}}, const {\b EaseDoneCallback}  {\i callback} = {\f2 []({\b ProgressBar}\~ *)\{\}})}}
+std::string mc::Preprocessor::getFilename ()}}
 \par
-{\bkmkstart AAAAAAABJL}
-{\bkmkend AAAAAAABJL}
+{\bkmkstart AAAAAAAAYL}
+{\bkmkend AAAAAAAAYL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Gets the filename of the file this is processing. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The filename is determined by the constructor, {\f2 #line} , or #include. \par
+The {\f2 __FILE__}  macro is equal to whatever this function returns. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The name of the file being processed. \par
+}}}
+{\xe \v getFilename\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getFilename}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const std::string mc::Preprocessor::getFilename () const}}
+\par
+{\bkmkstart AAAAAAAAYM}
+{\bkmkend AAAAAAAAYM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Gets the filename of the file this is processing. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The filename is determined by the constructor, {\f2 #line} , or #include. \par
+The {\f2 __FILE__}  macro is equal to whatever this function returns. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The name of the file being processed. \par
+}}}
+{\xe \v getIncludes\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getIncludes}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+std::vector< {\b Include}* > mc::Preprocessor::getIncludes ()}}
+\par
+{\bkmkstart AAAAAAAAYN}
+{\bkmkend AAAAAAAAYN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves all pointers to an {\f2 {\b Include}}  added via {\f2 {\b addInclude()}}  or {\f2 {\b setIncludes()}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 std::vector}  containing all {\f2 Includes}  in this {\f2 {\b Preprocessor}}  \par
 }}}
-{\xe \v end\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:end}
+{\xe \v getIncludes\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getIncludes}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::vector<{\b Entity}*>::iterator mc::gfx::Entity::end (){\f2 [inherited]}}}
+const std::vector< {\b Include}* > mc::Preprocessor::getIncludes () const}}
 \par
-{\bkmkstart AAAAAAABDM}
-{\bkmkend AAAAAAABDM}
+{\bkmkstart AAAAAAAAYO}
+{\bkmkend AAAAAAAAYO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets an iterator over this {\f2 {\b Entity}}  for enchanced for loops. }}\par
+Retrieves all pointers to an {\f2 {\b Include}}  added via {\f2 {\b addInclude()}}  or {\f2 {\b setIncludes()}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Iterator of the last {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b begin()} \par
-{\b size()} \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 std::vector}  containing all {\f2 Includes}  in this {\f2 {\b Preprocessor}}  \par
 }}}
-{\xe \v getBackgroundTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getBackgroundTexture}
+{\xe \v getInput\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getInput}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b ogl::Texture}& mc::gfx::ProgressBar::getBackgroundTexture ()}}
+const std::string mc::Preprocessor::getInput () const}}
 \par
-{\bkmkstart AAAAAAABJM}
-{\bkmkend AAAAAAABJM}
+{\bkmkstart AAAAAAAAYP}
+{\bkmkend AAAAAAAAYP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Retrieves what this {\f2 {\b Preprocessor}}  is processing. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Cannot be changed. Set by the constructor. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 const std::string}  with the input. This will never change. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Preprocessor(std::string, std::string) \par
 }}}
-{\xe \v getBackgroundTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getBackgroundTexture}
+{\xe \v getLine\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getLine}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b ogl::Texture}& mc::gfx::ProgressBar::getBackgroundTexture () const}}
+unsigned int mc::Preprocessor::getLine ()}}
 \par
-{\bkmkstart AAAAAAABJN}
-{\bkmkend AAAAAAABJN}
+{\bkmkstart AAAAAAAAYQ}
+{\bkmkend AAAAAAAAYQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getBuffer\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getBuffer}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b ogl::UniformBuffer}& mc::gfx::GraphicsEntity::getBuffer (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABGO}
-{\bkmkend AAAAAAABGO}
 {
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
+Gets the current line number. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\f2 __LINE__}  macro's value is always equal to this function and {\f2 #line}  can change the line number. \par
+If the processing is done, this is equal to the amount of lines the input had. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current line that is being processed. \par
 }}}
-{\xe \v getBuffer\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getBuffer}
+{\xe \v getLine\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getLine}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b ogl::UniformBuffer}& mc::gfx::GraphicsEntity::getBuffer () const{\f2 [inherited]}}}
+const unsigned int mc::Preprocessor::getLine () const}}
 \par
-{\bkmkstart AAAAAAABGP}
-{\bkmkend AAAAAAABGP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDN}
-{\bkmkend AAAAAAABDN}
+{\bkmkstart AAAAAAAAYR}
+{\bkmkend AAAAAAAAYR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves a child at a certain index. }}\par
+Gets the current line number. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+The {\f2 __LINE__}  macro's value is always equal to this function and {\f2 #line}  can change the line number. \par
+If the processing is done, this is equal to the amount of lines the input had. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current line that is being processed. \par
+}}}
+{\xe \v getLocation\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getLocation}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+std::string mc::Preprocessor::getLocation () const}}
+\par
+{\bkmkstart AAAAAAAAYS}
+{\bkmkend AAAAAAAAYS}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Generates a string with the current line number and file name. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+For example, a {\f2 {\b Preprocessor}}  which is at line 30 in file foo will return "Line 30 in foo" from {\b getLocation()} \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current location in the file \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getLine()} \par
+{\b getFilename()} \par
+}}}
+{\xe \v getMacro\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:getMacro}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b Macro}& mc::Preprocessor::getMacro (const std::string &  {\i name}) const}}
+\par
+{\bkmkstart AAAAAAAAYT}
+{\bkmkend AAAAAAAAYT}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Finds a {\f2 {\b Macro}}  with the given name. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -991,954 +761,172 @@ Parameters:\par}
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{Index of the {\f2 {\b Entity}}  \cell }
+{{\i name} \cell }{What to look for \cell }
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 {\b Macro}}  with the specified name \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i IndexOutOfBounds} \cell }{if {\f2 i}  is less than {\f2 0}  or greater than {\b size()} \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b operator[]} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v getChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}& mc::gfx::Entity::getChild ({\b Index}  {\i i}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDO}
-{\bkmkend AAAAAAABDO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b getChild(Index)} }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{{\f2 Index}  of the {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i IndexOutOfBounds} \cell }{if {\f2 i}  is less than {\f2 0}  or greater than {\b size()} \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b operator[]} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v getChildren\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getChildren}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const std::vector<{\b Entity}*>& mc::gfx::Entity::getChildren () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDP}
-{\bkmkend AAAAAAABDP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Gets all of this {\f2 {\b Entity}'s}  children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid an {\f2 std::vector}  with all children of this {\f2 {\b Entity}}  \par
-}}}
-{\xe \v getComponents\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getComponents}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-std::vector<{\b Component}*> mc::gfx::Entity::getComponents (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDQ}
-{\bkmkend AAAAAAABDQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getForegroundTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getForegroundTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b ogl::Texture}& mc::gfx::ProgressBar::getForegroundTexture ()}}
-\par
-{\bkmkstart AAAAAAABJO}
-{\bkmkend AAAAAAABJO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getForegroundTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getForegroundTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b ogl::Texture}& mc::gfx::ProgressBar::getForegroundTexture () const}}
-\par
-{\bkmkstart AAAAAAABJP}
-{\bkmkend AAAAAAABJP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getHeight\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getHeight}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::Entity::getHeight (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDR}
-{\bkmkend AAAAAAABDR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getHeight\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getHeight}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getHeight () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDS}
-{\bkmkend AAAAAAABDS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getMaximum\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getMaximum}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::ProgressBar::getMaximum ()}}
-\par
-{\bkmkstart AAAAAAABJQ}
-{\bkmkend AAAAAAABJQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getMaximum\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getMaximum}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::ProgressBar::getMaximum () const}}
-\par
-{\bkmkstart AAAAAAABJR}
-{\bkmkend AAAAAAABJR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getMinimum\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getMinimum}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::ProgressBar::getMinimum ()}}
-\par
-{\bkmkstart AAAAAAABJS}
-{\bkmkend AAAAAAABJS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getMinimum\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getMinimum}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::ProgressBar::getMinimum () const}}
-\par
-{\bkmkstart AAAAAAABJT}
-{\bkmkend AAAAAAABJT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getOpacity\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getOpacity}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float mc::gfx::GraphicsEntity::getOpacity (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGQ}
-{\bkmkend AAAAAAABGQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getOpacity\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getOpacity}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float mc::gfx::GraphicsEntity::getOpacity () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGR}
-{\bkmkend AAAAAAABGR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getPaint\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getPaint}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Color}& mc::gfx::GraphicsEntity::getPaint (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGS}
-{\bkmkend AAAAAAABGS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getPaint\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getPaint}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Color}& mc::gfx::GraphicsEntity::getPaint () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGT}
-{\bkmkend AAAAAAABGT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getParent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}* const mc::gfx::Entity::getParent (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDT}
-{\bkmkend AAAAAAABDT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve this {\f2 Entitys}  parent `Entity. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2  @return A} {\b Entity}{\f2 which contains} this` \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::hasChild(const Entity&) const; \par
-}}}
-{\xe \v getParent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}* const mc::gfx::Entity::getParent () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDU}
-{\bkmkend AAAAAAABDU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getParent()}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 {\b Entity}}  which contains {\f2 this}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Entity::hasChild(const Entity&) const; \par
-}}}
-{\xe \v getProgress\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getProgress}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::ProgressBar::getProgress ()}}
-\par
-{\bkmkstart AAAAAAABJU}
-{\bkmkend AAAAAAABJU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getProgress\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getProgress}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::ProgressBar::getProgress () const}}
-\par
-{\bkmkstart AAAAAAABJV}
-{\bkmkend AAAAAAABJV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getProperties\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getProperties}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b EntityProperties}& mc::gfx::Entity::getProperties (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDV}
-{\bkmkend AAAAAAABDV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the {\f2 {\b Entity}'s}  properties as a {\f2 ByteField}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current properties belonging to this {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties() const} \par
-setProperties(ByteField&) \par
-getProperty(Index) const \par
-setProperty(Index, bool) \par
-}}}
-{\xe \v getProperties\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getProperties}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b EntityProperties}& mc::gfx::Entity::getProperties () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDW}
-{\bkmkend AAAAAAABDW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\f2 {\b getProperties()}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The current properties belonging to this {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid setProperties(ByteField&) \par
-getProperty(Index) const \par
-setProperty(Index, bool) \par
-}}}
-{\xe \v getProperty\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getProperty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::getProperty (const {\b Byte}  {\i position}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDX}
-{\bkmkend AAAAAAABDX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieve the value of a property. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Property consants start with {\f2 {\b Entity}::}  {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i position} \cell }{Location of the property based on a constant \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 true}  or {\f2 false}  based on the postition \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid setProperty(Index, bool) \par
-{\b getProperties()} \par
-setProperties(ByteField&) \par
-}}}
-{\xe \v getProtocol\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getProtocol}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-static int mc::gfx::ProgressBar::getProtocol (){\f2 [static]}}}
-\par
-{\bkmkstart AAAAAAABJW}
-{\bkmkend AAAAAAABJW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getRootParent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getRootParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}* mc::gfx::Entity::getRootParent (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDY}
-{\bkmkend AAAAAAABDY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getRootParent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getRootParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}* mc::gfx::Entity::getRootParent () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABDZ}
-{\bkmkend AAAAAAABDZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getSelectionTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getSelectionTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b ogl::Texture}& mc::gfx::ProgressBar::getSelectionTexture ()}}
-\par
-{\bkmkstart AAAAAAABJX}
-{\bkmkend AAAAAAABJX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getSelectionTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getSelectionTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b ogl::Texture}& mc::gfx::ProgressBar::getSelectionTexture () const}}
-\par
-{\bkmkstart AAAAAAABJY}
-{\bkmkend AAAAAAABJY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getTransformation\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getTransformation}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b TransformMatrix}& mc::gfx::Entity::getTransformation (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEA}
-{\bkmkend AAAAAAABEA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getTransformation\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getTransformation}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b TransformMatrix}& mc::gfx::Entity::getTransformation () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEB}
-{\bkmkend AAAAAAABEB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getWidth\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getWidth}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::Entity::getWidth (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEC}
-{\bkmkend AAAAAAABEC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getWidth\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getWidth}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getWidth () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABED}
-{\bkmkend AAAAAAABED}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getX\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getX}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::Entity::getX (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEE}
-{\bkmkend AAAAAAABEE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getX\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getX}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getX () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEF}
-{\bkmkend AAAAAAABEF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getY\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getY}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-float& mc::gfx::Entity::getY (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEG}
-{\bkmkend AAAAAAABEG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v getY\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:getY}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const float& mc::gfx::Entity::getY () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEH}
-{\bkmkend AAAAAAABEH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v hasChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:hasChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::hasChild ({\b Entity} &  {\i e}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEI}
-{\bkmkend AAAAAAABEI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Checks to see if this {\f2 {\b Entity}}  contains an {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{Reference to an {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 false}  if this {\f2 {\b Entity}}  doesn't contain the referenced {\f2 {\b Entity}} , {\f2 true}  otherwise \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b indexOf(const Entity& ) const} \par
-}}}
-{\xe \v hasParent\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:hasParent}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::hasParent () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEJ}
-{\bkmkend AAAAAAABEJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v hover\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:hover}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::Entity::hover (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEK}
-{\bkmkend AAAAAAABEK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{{\i PreprocessorException} \cell }{If the {\f2 {\b Macro}}  with the name is not found. \cell }
 {\row }
 }
 }}
-{\xe \v indexOf\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:indexOf}
+{\xe \v isMacroDefined\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:isMacroDefined}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-int mc::gfx::Entity::indexOf (const {\b Entity} &  {\i e}) const{\f2 [inherited]}}}
+bool mc::Preprocessor::isMacroDefined (const std::string &  {\i name}) const}}
 \par
-{\bkmkstart AAAAAAABEL}
-{\bkmkend AAAAAAABEL}
+{\bkmkstart AAAAAAAAYU}
+{\bkmkend AAAAAAAAYU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Finds the location of an {\f2 {\b Entity}}  in this {\f2 {\b Entity}}  }}\par
+Checks if a {\f2 {\b Macro}}  with a certain name is defined. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
+Called when {\f2 #if} def is encountered in the {\f2 input}  {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{Reference to an {\f2 {\b Entity}}  \cell }
+{{\i name} \cell }{Name of the {\f2 {\b Macro}}  to search for \cell }
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Location of {\f2 e,}  or -1 if {\f2 e}  is not a child of this {\f2 {\b Entity}}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b operator[]} \par
-{\b getChild(Index)} \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether it is defined. \par
 }}}
-{\xe \v init\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:init}
+{\xe \v macroNumber\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:macroNumber}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::GraphicsEntity::init (){\f2 [final]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+unsigned int mc::Preprocessor::macroNumber () const}}
 \par
-{\bkmkstart AAAAAAABEN}
-{\bkmkend AAAAAAABEN}
+{\bkmkstart AAAAAAAAYV}
+{\bkmkend AAAAAAAAYV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b MACE.init()}}  is called. }}\par
+Calculates the amount of {\f2 Macros}  in this {\f2 {\b Preprocessor}}  }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b onInit()}}  \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onInit()}}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is true, meaning {\f2 {\b init()}}  has already been called. \cell }
-{\row }
-}
-}{
-Reimplemented from {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEM \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v makeDirty\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:makeDirty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::makeDirty (){\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABEO}
-{\bkmkend AAAAAAABEO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Makes this {\f2 {\b Entity}}  dirty and the root level parent dirty. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be used over {\f2 setProperty(Entity::DIRTY,true)}  as it updaets the root parent. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Size of the internal {\f2 {\b Macro}}  array. \par
 }}}
-{\xe \v onClean\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:onClean}
+{\xe \v preprocess\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:preprocess}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::Entity::onClean (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+std::string mc::Preprocessor::preprocess ()}}
 \par
-{\bkmkstart AAAAAAABEP}
-{\bkmkend AAAAAAABEP}
+{\bkmkstart AAAAAAAAYW}
+{\bkmkend AAAAAAAAYW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Processeses the {\f2 input}  specified in the constructor according to the ANSI C standard. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Macros are expanded, comments are stripped, and directives are executed. \par
+This is the same as using {\f2 {\b preprocessTokens()}}  with every element combined. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The processed input. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b preprocessTokens()} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Reimplemented in {\b mc::gfx::Text} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEQ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v onDestroy\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:onDestroy}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::onDestroy (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABEV}
-{\bkmkend AAAAAAABEV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.destroy()}}  is called, {\f2 {\b onDestroy()}}  is called on all of it's children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b MACE::destroy()} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABER \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v onHover\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:onHover}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::Entity::onHover (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABEX}
-{\bkmkend AAAAAAABEX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{{\i PreprocessorException} \cell }{If {\f2 input}  is not valid ANSI C code. \cell }
 {\row }
 }
 }}
-{\xe \v onInit\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:onInit}
+{\xe \v preprocessTokens\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:preprocessTokens}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ProgressBar::onInit (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
+std::vector< std::string > mc::Preprocessor::preprocessTokens ()}}
 \par
-{\bkmkstart AAAAAAABFC}
-{\bkmkend AAAAAAABFC}
+{\bkmkstart AAAAAAAAYX}
+{\bkmkend AAAAAAAAYX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.init()}}  is called, {\f2 {\b onInit()}}  is called on all of it's children. }}\par
+Processeses the {\f2 input}  specified in the constructor according to the ANSI C standard. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
+Macros are expanded, comments are stripped, and directives are executed. \par
+Processing is done in O(N) time, where N is the amount of characters in the input. The entire process is done in 1 loop. This is accomplished via a complex finite state machine. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b MACE::init()} \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid A {\f2 std::vector}  with the processed output. Each element is a token as specified by the standard. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b preprocess()} \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{{\i PreprocessorException} \cell }{If {\f2 input}  is not valid ANSI C code. \cell }
 {\row }
 }
-}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v onRender\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:onRender}
+}}
+{\xe \v setFilename\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:setFilename}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ProgressBar::onRender (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
+void mc::Preprocessor::setFilename (const std::string &  {\i filename})}}
 \par
-{\bkmkstart AAAAAAABFI}
-{\bkmkend AAAAAAABFI}
+{\bkmkstart AAAAAAAAYY}
+{\bkmkend AAAAAAAAYY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.render()}}  is called, {\f2 {\b onRender()}}  is called on all of it's children. }}\par
+Changes the filename. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
+When {\f2 #line}  is called with 2 arguments in the {\f2 input} , calls this function {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{{\i filename} \cell }{What to change the internal filename to. {\f2 __FILE__}  will be updated to reflect the change. \cell }
 {\row }
 }
-}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFE \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v onUpdate\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:onUpdate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::onUpdate (){\f2 [final]}, {\f2 [override]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABFO}
-{\bkmkend AAAAAAABFO}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-When {\f2 {\b Entity.update()}}  is called, {\f2 {\b onUpdate()}}  is called on all of it's children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b MACE::update()} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}{
-Implements {\b mc::gfx::Entity} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABFK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v operator!=\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator!=}
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Preprocessor::getLine()} \par
+}}}
+{\xe \v setIncludes\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:setIncludes}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ProgressBar::operator!= (const {\b ProgressBar} &  {\i other}) const}}
+void mc::Preprocessor::setIncludes (const std::vector< {\b Include} * >  {\i includes})}}
 \par
-{\bkmkstart AAAAAAABJZ}
-{\bkmkend AAAAAAABJZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator!=\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator!=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::operator!= (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFQ}
-{\bkmkend AAAAAAABFQ}
+{\bkmkstart AAAAAAAAYZ}
+{\bkmkend AAAAAAAAYZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  don't have the same children, parent, and properties. }}\par
+Sets all of the {\f2 Includes}  in this {\f2 {\b Preprocessor}} . }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -1947,748 +935,69 @@ Parameters:\par}
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{An {\f2 {\b Entity}}  compare this one to \cell }
+{{\i includes} \cell }{The new {\f2 Includes}  \cell }
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 false}  if they are equal \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties() const} \par
-{\b getParent() const} \par
-{\b getChildren() const} \par
-operator== \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b addInclude(Include&)} \par
 }}}
-{\xe \v operator!=\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator!=}
+{\xe \v setLine\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:setLine}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::GraphicsEntity::operator!= (const {\b GraphicsEntity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
+void mc::Preprocessor::setLine (const unsigned int  {\i line})}}
 \par
-{\bkmkstart AAAAAAABGU}
-{\bkmkend AAAAAAABGU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator==\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ProgressBar::operator== (const {\b ProgressBar} &  {\i other}) const}}
-\par
-{\bkmkstart AAAAAAABKA}
-{\bkmkend AAAAAAABKA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator==\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Entity::operator== (const {\b Entity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFR}
-{\bkmkend AAAAAAABFR}
+{\bkmkstart AAAAAAAAZA}
+{\bkmkend AAAAAAAAZA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Entities}  have the same children, parent, and properties. }}\par
+Sets the line number. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
+This does not affect processing. This function is called when the {\f2 #line}  directive is encountered in the {\f2 input}  {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{An {\f2 {\b Entity}}  compare this one to \cell }
+{{\i line} \cell }{The new line number \cell }
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 true}  if they are equal \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties() const} \par
-{\b getParent() const} \par
-{\b getChildren() const} \par
-operator!= \par
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getLine()} \par
 }}}
-{\xe \v operator==\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator==}
+{\xe \v undefineMacro\:mc::Preprocessor}
+{\xe \v mc::Preprocessor\:undefineMacro}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::GraphicsEntity::operator== (const {\b GraphicsEntity} &  {\i other}) const{\f2 [noexcept]}, {\f2 [inherited]}}}
+void mc::Preprocessor::undefineMacro (const std::string &  {\i name})}}
 \par
-{\bkmkstart AAAAAAABGV}
-{\bkmkend AAAAAAABGV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator[]\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator[]}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFS}
-{\bkmkend AAAAAAABFS}
+{\bkmkstart AAAAAAAAZB}
+{\bkmkend AAAAAAAAZB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Access an {\f2 {\b Entity}} . }}\par
+Removes a {\f2 {\b Macro}}  with the specified name. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This is different than {\f2 {\b getChild()}}  because {\f2 operator[]}  doesn't do bounds checking. Accessing an invalid location will result in a memory error. {\par
+Called when #undef is encountered in the {\f2 input}  \par
+Because the standard requires #undef to silently do nothing if the macro does not exist, this function does the same. {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{Location of an {\f2 {\b Entity}}  \cell }
+{{\i name} \cell }{Name of the {\f2 {\b Macro}}  to undefine \cell }
 {\row }
 }
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getChild(Index)} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v operator[]\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:operator[]}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Entity}& mc::gfx::Entity::operator[] ({\b Index}  {\i i}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFT}
-{\bkmkend AAAAAAABFT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 const}  version of {\b operator[](Index i)} }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i i} \cell }{Location of an {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Reference to the {\f2 {\b Entity}}  located at {\f2 i}  \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getChild(Index) const} \par
-{\b indexOf(const Entity&) const} \par
-}}}
-{\xe \v removeChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:removeChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::removeChild (const {\b Entity} &  {\i e}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFU}
-{\bkmkend AAAAAAABFU}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child by reference. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i ObjectNotFoundInArray} \cell }{if {\b hasChild(Entity&) const} returns {\f2 false}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{Reference to a child \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b removeChild(Index)} \par
-}}}
-{\xe \v removeChild\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:removeChild}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::removeChild ({\b Index}  {\i index}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFV}
-{\bkmkend AAAAAAABFV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Removes a child via location. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i IndexOutOfBounds} \cell }{if the index is less than 0 or greater than {\b size()} \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i index} \cell }{Index of the {\f2 {\b Entity}}  to be removed \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b indexOf(const Entity&) const} \par
-{\b removeChild(const Entity&)} \par
-}}}
-{\xe \v render\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:render}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::Entity::render (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFW}
-{\bkmkend AAAAAAABFW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called by a {\f2 {\b Entity}}  when the graphical {\f2 Window}  clears the frame. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onRender()}}  \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::update()} \par
-}}}
-{\xe \v reset\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:reset}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::reset (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFX}
-{\bkmkend AAAAAAABFX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v rotate\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:rotate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::rotate (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFY}
-{\bkmkend AAAAAAABFY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v scale\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:scale}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::scale (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABFZ}
-{\bkmkend AAAAAAABFZ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setBackgroundTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setBackgroundTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::setBackgroundTexture (const {\b ogl::Texture} &  {\i tex})}}
-\par
-{\bkmkstart AAAAAAABKB}
-{\bkmkend AAAAAAABKB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setBuffer\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setBuffer}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::GraphicsEntity::setBuffer (const {\b ogl::UniformBuffer} &  {\i newBuffer}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGW}
-{\bkmkend AAAAAAABGW}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setForegroundTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setForegroundTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::setForegroundTexture (const {\b ogl::Texture} &  {\i tex})}}
-\par
-{\bkmkstart AAAAAAABKC}
-{\bkmkend AAAAAAABKC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setHeight\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setHeight}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setHeight (const float &  {\i s}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGA}
-{\bkmkend AAAAAAABGA}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setMaximum\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setMaximum}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::setMaximum (const float  {\i tex})}}
-\par
-{\bkmkstart AAAAAAABKD}
-{\bkmkend AAAAAAABKD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setMinimum\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setMinimum}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::setMinimum (const float  {\i tex})}}
-\par
-{\bkmkstart AAAAAAABKE}
-{\bkmkend AAAAAAABKE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setOpacity\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setOpacity}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::GraphicsEntity::setOpacity (const float  {\i f}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGX}
-{\bkmkend AAAAAAABGX}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setPaint\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setPaint}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::GraphicsEntity::setPaint (const {\b Color} &  {\i c}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGY}
-{\bkmkend AAAAAAABGY}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setProgress\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setProgress}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::setProgress (const float  {\i tex})}}
-\par
-{\bkmkstart AAAAAAABKF}
-{\bkmkend AAAAAAABKF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setProperties\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setProperties}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setProperties ({\b EntityProperties} &  {\i b}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGB}
-{\bkmkend AAAAAAABGB}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set the properties for this {\f2 {\b Entity}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i b} \cell }{New {\f2 {\b Entity}}  properties \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b getProperties()} \par
-getProperty(Index) const \par
-setProperty(Index, bool) \par
-}}}
-{\xe \v setProperty\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setProperty}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setProperty (const {\b Byte}  {\i position}, const bool  {\i value}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGC}
-{\bkmkend AAAAAAABGC}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Set a property to be {\f2 true}  or {\f2 false} .Property consants start with {\f2 {\b Entity}::}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i position} \cell }{Location of the property based on a constant \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i value} \cell }{Whether it is {\f2 true}  or {\f2 false}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid getProperty(Index) const \par
-{\b getProperties()} \par
-setProperties(ByteField&) \par
-}}}
-{\xe \v setSelectionTexture\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setSelectionTexture}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ProgressBar::setSelectionTexture (const {\b ogl::Texture} &  {\i tex})}}
-\par
-{\bkmkstart AAAAAAABKG}
-{\bkmkend AAAAAAABKG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setTransformation\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setTransformation}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setTransformation ({\b TransformMatrix} &  {\i trans}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGD}
-{\bkmkend AAAAAAABGD}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setWidth\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setWidth}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setWidth (const float &  {\i s}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGE}
-{\bkmkend AAAAAAABGE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setX\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setX}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setX (const float &  {\i newX}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGF}
-{\bkmkend AAAAAAABGF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v setY\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:setY}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Entity::setY (const float &  {\i newY}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGG}
-{\bkmkend AAAAAAABGG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v size\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:size}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Size} mc::gfx::Entity::size () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGH}
-{\bkmkend AAAAAAABGH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calculates the amount of children this {\f2 {\b Entity}}  has. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Size of this {\f2 {\b Entity}}  \par
-}}}
-{\xe \v translate\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:translate}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Entity}& mc::gfx::Entity::translate (float  {\i x}, float  {\i y}, float  {\i z}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGI}
-{\bkmkend AAAAAAABGI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
-}}}
-{\xe \v update\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:update}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::Entity::update (){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGJ}
-{\bkmkend AAAAAAABGJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Should be called a by {\f2 {\b Entity}}  when {\f2 {\b MACE.update()}}  is called. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Calls {\f2 {\b onUpdate()}} . \par
-Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override {\f2 {\b onUpdate()}}  {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i InitializationError} \cell }{If the property {\f2 {\b Entity::INIT}}  is false, meaning {\f2 {\b init()}}  was not called. \cell }
-{\row }
-}
-}{
-Reimplemented in {\b mc::os::WindowModule} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAXE \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Friends And Related Function Documentation\par
-\pard\plain 
-{\xe \v RenderProtocol< ProgressBar >\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:RenderProtocol< ProgressBar >}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-friend class {\b RenderProtocol}< {\b ProgressBar} >{\f2 [friend]}}}
-\par
-{\bkmkstart AAAAAAABKH}
-{\bkmkend AAAAAAABKH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-Definition at line 137 of file Entity2D.h.}\par
-}
-{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Data Documentation\par
-\pard\plain 
-{\xe \v children\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:children}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-std::vector<{\b Entity}*> mc::gfx::Entity::children = std::vector<{\b Entity}*>(){\f2 [protected]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGK}
-{\bkmkend AAAAAAABGK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\f2 std::vector}  of this {\f2 {\b Entity}\\'s}  children. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use of this variable directly is unrecommended. Use {\f2 {\b addChild()}}  or {\f2 {\b removeChild()}}  instead. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}{
-Definition at line 563 of file Entity.h.}\par
-}
-{\xe \v transformation\:mc::gfx::ProgressBar}
-{\xe \v mc::gfx::ProgressBar\:transformation}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b TransformMatrix} mc::gfx::Entity::transformation{\f2 [protected]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABGL}
-{\bkmkend AAAAAAABGL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}}{
-Definition at line 568 of file Entity.h.}\par
-}
+}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Entity2D.h\par
+include/MACE/Utility/Preprocessor.h\par
 }}

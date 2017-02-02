@@ -2,100 +2,109 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="de/d21/a00006" kind="class" language="C++" prot="public">
     <compoundname>mc::AudioModule</compoundname>
-    <basecompoundref refid="d5/d79/a00030" prot="public" virt="non-virtual">mc::Module</basecompoundref>
+    <basecompoundref refid="df/d61/a00031" prot="public" virt="non-virtual">mc::Module</basecompoundref>
     <includes refid="d4/d63/a00082" local="no">Audio.h</includes>
       <sectiondef kind="private-attrib">
       <memberdef kind="variable" id="de/d21/a00006_1add03055ce8dfb2113433f3fbe7ee1908" prot="private" static="no" mutable="no">
-        <type>std::vector&lt; <ref refid="d6/d2d/a00047" kindref="compound">Sound</ref> &gt;</type>
+        <type>std::vector&lt; <ref refid="d4/dca/a00048" kindref="compound">Sound</ref> &gt;</type>
         <definition>std::vector&lt;Sound&gt; mc::AudioModule::sounds</definition>
         <argsstring></argsstring>
         <name>sounds</name>
-        <initializer>= std::vector&lt;<ref refid="d6/d2d/a00047" kindref="compound">Sound</ref>&gt;()</initializer>
+        <initializer>= std::vector&lt;<ref refid="d4/dca/a00048" kindref="compound">Sound</ref>&gt;()</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="53" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="53" bodyend="-1"/>
+        <location file="include/MACE/Utility/Audio.h" line="81" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="de/d21/a00006_1acc8362f04aedc7c220b06d95c23befd3" prot="private" static="no" mutable="no">
+        <type>ALCdevice *</type>
+        <definition>ALCdevice* mc::AudioModule::device</definition>
+        <argsstring></argsstring>
+        <name>device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Audio.h" line="82" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="de/d21/a00006_1a6fa93b30952b00902f5c0264691e6721" prot="private" static="no" mutable="no">
+        <type>ALCcontext *</type>
+        <definition>ALCcontext* mc::AudioModule::context</definition>
+        <argsstring></argsstring>
+        <name>context</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Audio.h" line="83" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="83" bodyend="-1"/>
       </memberdef>
       </sectiondef>
-      <sectiondef kind="private-func">
-      <memberdef kind="function" id="de/d21/a00006_1a8fccff7e7f936471effc9e389e250619" prot="private" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="de/d21/a00006_a8fccff7e7f936471effc9e389e250619_1a8fccff7e7f936471effc9e389e250619" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::AudioModule::init</definition>
         <argsstring>() override</argsstring>
         <name>init</name>
-        <reimplements refid="d5/d79/a00030_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6">init</reimplements>
+        <reimplements refid="df/d61/a00031_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6">init</reimplements>
         <briefdescription>
-<para>Called when <ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">MACE#init</ref> is called and this <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+<para>Called when <ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">MACE#init</ref> is called and this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
         <detaileddescription>
 <para>Use this to initialize variables, start streams, or launch a context. </para><para>Should only be called once. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="43" column="1"/>
+        <location file="include/MACE/Utility/Audio.h" line="69" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="de/d21/a00006_1a993917a0ded345f43b774afe60d8bf35" prot="private" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="de/d21/a00006_a993917a0ded345f43b774afe60d8bf35_1a993917a0ded345f43b774afe60d8bf35" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::AudioModule::update</definition>
         <argsstring>() override</argsstring>
         <name>update</name>
-        <reimplements refid="d5/d79/a00030_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c">update</reimplements>
+        <reimplements refid="df/d61/a00031_a6417f3db90ae235fb1be01ed6a3d612c_1a6417f3db90ae235fb1be01ed6a3d612c">update</reimplements>
         <briefdescription>
-<para>Called when <ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">MACE#update</ref> is called and this <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+<para>Called when <ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">MACE#update</ref> is called and this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
         <detaileddescription>
 <para>Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="44" column="1"/>
+        <location file="include/MACE/Utility/Audio.h" line="70" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="de/d21/a00006_1a3776d2be58b18d774e8ce9a965b65a06" prot="private" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="de/d21/a00006_a3776d2be58b18d774e8ce9a965b65a06_1a3776d2be58b18d774e8ce9a965b65a06" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>void mc::AudioModule::destroy</definition>
         <argsstring>() override</argsstring>
         <name>destroy</name>
-        <reimplements refid="d5/d79/a00030_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2">destroy</reimplements>
+        <reimplements refid="df/d61/a00031_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2">destroy</reimplements>
         <briefdescription>
-<para>Called when <ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">MACE#destroy</ref> is called and this <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
+<para>Called when <ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">MACE#destroy</ref> is called and this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> is registered. </para>        </briefdescription>
         <detaileddescription>
 <para>Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. </para><para>Should only be called before the program is closed. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="45" column="1"/>
+        <location file="include/MACE/Utility/Audio.h" line="71" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="de/d21/a00006_1aa0e7e1192438c1e97b328a329dc0f430" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="de/d21/a00006_aa0e7e1192438c1e97b328a329dc0f430_1aa0e7e1192438c1e97b328a329dc0f430" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>std::string</type>
         <definition>std::string mc::AudioModule::getName</definition>
         <argsstring>() const  override</argsstring>
         <name>getName</name>
-        <reimplements refid="d5/d79/a00030_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49">getName</reimplements>
+        <reimplements refid="df/d61/a00031_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49">getName</reimplements>
         <briefdescription>
-<para>Override this function and return a UNIQUE name for this <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> </para>        </briefdescription>
+<para>Override this function and return a UNIQUE name for this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-<para>The name for your <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> is used in comparison, so make sure it is as unique as possible. </para><para>It is akin to a hashcode. </para>        </detaileddescription>
+<para>The name for your <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> is used in comparison, so make sure it is as unique as possible. </para><para>It is akin to a hashcode. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="47" column="1"/>
+        <location file="include/MACE/Utility/Audio.h" line="73" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="de/d21/a00006_1aec41621f8c015f96101c8eafe059e6f7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::AudioModule::addSound</definition>
-        <argsstring>(Sound &amp;s)</argsstring>
-        <name>addSound</name>
-        <param>
-          <type><ref refid="d6/d2d/a00047" kindref="compound">Sound</ref> &amp;</type>
-          <declname>s</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="49" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="de/d21/a00006_1a7b64faabfcf76d969fc4e2c19c7189f1" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const std::vector&lt; <ref refid="d6/d2d/a00047" kindref="compound">Sound</ref> &gt; &amp;</type>
+      <memberdef kind="function" id="de/d21/a00006_a7b64faabfcf76d969fc4e2c19c7189f1_1a7b64faabfcf76d969fc4e2c19c7189f1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const std::vector&lt; <ref refid="d4/dca/a00048" kindref="compound">Sound</ref> &gt; &amp;</type>
         <definition>const std::vector&lt;Sound&gt;&amp; mc::AudioModule::getSounds</definition>
         <argsstring>() const </argsstring>
         <name>getSounds</name>
@@ -105,7 +114,37 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="51" column="1"/>
+        <location file="include/MACE/Utility/Audio.h" line="75" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_aec41621f8c015f96101c8eafe059e6f7_1aec41621f8c015f96101c8eafe059e6f7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::AudioModule::addSound</definition>
+        <argsstring>(Sound &amp;s)</argsstring>
+        <name>addSound</name>
+        <param>
+          <type><ref refid="d4/dca/a00048" kindref="compound">Sound</ref> &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Audio.h" line="77" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d21/a00006_a34efc1c732e0f0ed879a5aa1b3672ac6_1a34efc1c732e0f0ed879a5aa1b3672ac6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::AudioModule::AudioModule</definition>
+        <argsstring>()</argsstring>
+        <name>AudioModule</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Audio.h" line="79" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -113,38 +152,41 @@
     <detaileddescription>
     </detaileddescription>
     <inheritancegraph>
-      <node id="357">
+      <node id="345">
         <label>mc::AudioModule</label>
         <link refid="de/d21/a00006"/>
-        <childnode refid="358" relation="public-inheritance">
+        <childnode refid="346" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="358">
+      <node id="346">
         <label>mc::Module</label>
-        <link refid="d5/d79/a00030"/>
+        <link refid="df/d61/a00031"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="359">
+      <node id="347">
         <label>mc::AudioModule</label>
         <link refid="de/d21/a00006"/>
-        <childnode refid="360" relation="public-inheritance">
+        <childnode refid="348" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="360">
+      <node id="348">
         <label>mc::Module</label>
-        <link refid="d5/d79/a00030"/>
+        <link refid="df/d61/a00031"/>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Utility/Audio.h" line="42" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="42" bodyend="54"/>
+    <location file="include/MACE/Utility/Audio.h" line="67" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="67" bodyend="84"/>
     <listofallmembers>
-      <member refid="de/d21/a00006_1aec41621f8c015f96101c8eafe059e6f7" prot="private" virt="non-virtual"><scope>mc::AudioModule</scope><name>addSound</name></member>
-      <member refid="de/d21/a00006_1a3776d2be58b18d774e8ce9a965b65a06" prot="private" virt="virtual"><scope>mc::AudioModule</scope><name>destroy</name></member>
-      <member refid="de/d21/a00006_1aa0e7e1192438c1e97b328a329dc0f430" prot="private" virt="virtual"><scope>mc::AudioModule</scope><name>getName</name></member>
-      <member refid="de/d21/a00006_1a7b64faabfcf76d969fc4e2c19c7189f1" prot="private" virt="non-virtual"><scope>mc::AudioModule</scope><name>getSounds</name></member>
-      <member refid="de/d21/a00006_1a8fccff7e7f936471effc9e389e250619" prot="private" virt="virtual"><scope>mc::AudioModule</scope><name>init</name></member>
+      <member refid="de/d21/a00006_aec41621f8c015f96101c8eafe059e6f7_1aec41621f8c015f96101c8eafe059e6f7" prot="public" virt="non-virtual"><scope>mc::AudioModule</scope><name>addSound</name></member>
+      <member refid="de/d21/a00006_a34efc1c732e0f0ed879a5aa1b3672ac6_1a34efc1c732e0f0ed879a5aa1b3672ac6" prot="public" virt="non-virtual"><scope>mc::AudioModule</scope><name>AudioModule</name></member>
+      <member refid="de/d21/a00006_1a6fa93b30952b00902f5c0264691e6721" prot="private" virt="non-virtual"><scope>mc::AudioModule</scope><name>context</name></member>
+      <member refid="de/d21/a00006_a3776d2be58b18d774e8ce9a965b65a06_1a3776d2be58b18d774e8ce9a965b65a06" prot="public" virt="virtual"><scope>mc::AudioModule</scope><name>destroy</name></member>
+      <member refid="de/d21/a00006_1acc8362f04aedc7c220b06d95c23befd3" prot="private" virt="non-virtual"><scope>mc::AudioModule</scope><name>device</name></member>
+      <member refid="de/d21/a00006_aa0e7e1192438c1e97b328a329dc0f430_1aa0e7e1192438c1e97b328a329dc0f430" prot="public" virt="virtual"><scope>mc::AudioModule</scope><name>getName</name></member>
+      <member refid="de/d21/a00006_a7b64faabfcf76d969fc4e2c19c7189f1_1a7b64faabfcf76d969fc4e2c19c7189f1" prot="public" virt="non-virtual"><scope>mc::AudioModule</scope><name>getSounds</name></member>
+      <member refid="de/d21/a00006_a8fccff7e7f936471effc9e389e250619_1a8fccff7e7f936471effc9e389e250619" prot="public" virt="virtual"><scope>mc::AudioModule</scope><name>init</name></member>
       <member refid="de/d21/a00006_1add03055ce8dfb2113433f3fbe7ee1908" prot="private" virt="non-virtual"><scope>mc::AudioModule</scope><name>sounds</name></member>
-      <member refid="de/d21/a00006_1a993917a0ded345f43b774afe60d8bf35" prot="private" virt="virtual"><scope>mc::AudioModule</scope><name>update</name></member>
+      <member refid="de/d21/a00006_a993917a0ded345f43b774afe60d8bf35_1a993917a0ded345f43b774afe60d8bf35" prot="public" virt="virtual"><scope>mc::AudioModule</scope><name>update</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

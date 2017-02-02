@@ -82,39 +82,36 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::Font Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::Font}
-{\xe \v mc::gfx::Font}
-{\bkmkstart AAAAAAABGZ}
-{\bkmkend AAAAAAABGZ}
+mc::Exception Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::Exception}
+{\xe \v mc::Exception}
+{\bkmkstart AAAAAAAAUI}
+{\bkmkend AAAAAAAAUI}
 \par
 {
-{\f2 #include <Entity2D.h>}}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Superclass that all exceptions in {\b MACE} extend. }}\par
+{
+{\f2 #include <Constants.h>}}\par
+Inheritance diagram for mc::Exception:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d3/d00/a00113.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+\par
+Collaboration diagram for mc::Exception:{
+\pard\plain 
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d8/d17/a00114.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+}
+\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Font} (const {\b Font} &f)\par
+{\b Exception} () noexcept=default\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Font} (const {\b Index} id=0, const {\b Size} h=0)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b getCharacter} (const wchar_t character, {\b Letter} *let) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setSize} (const {\b Size} height)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Size} & {\b getSize} ()\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Size} & {\b getSize} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b getID} () const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Font} &other) const \par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Font} &other) const \par
+{\b ~Exception} () noexcept=default\par
 }
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Static Public Member Functions\par
@@ -122,41 +119,46 @@ Static Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-static {\b Font} {\b loadFont} (const std::string &name)\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-static {\b Font} {\b loadFont} (const char *name)\par
+static void {\b handleException} (const std::exception &e)\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Stops {\b MACE} and prints an exception to console accordingly. }{
+}\par
+}}
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 239 of file Entity2D.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Superclass that all exceptions in {\b MACE} extend. \par
+}{
+Definition at line 121 of file Constants.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v Font\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:Font}
+{\xe \v Exception\:mc::Exception}
+{\xe \v mc::Exception\:Exception}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::Font::Font (const {\b Font} &  {\i f})}}
+mc::Exception::Exception (){\f2 [default]}, {\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABHA}
-{\bkmkend AAAAAAABHA}
+{\bkmkstart AAAAAAAAUJ}
+{\bkmkend AAAAAAAAUJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v Font\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:Font}
+{\xe \v ~Exception\:mc::Exception}
+{\xe \v mc::Exception\:~Exception}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::Font::Font (const {\b Index}  {\i id} = {\f2 0}, const {\b Size}  {\i h} = {\f2 0})}}
+mc::Exception::~Exception (){\f2 [default]}, {\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABHB}
-{\bkmkend AAAAAAABHB}
+{\bkmkstart AAAAAAAAUK}
+{\bkmkend AAAAAAAAUK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -164,123 +166,25 @@ mc::gfx::Font::Font (const {\b Index}  {\i id} = {\f2 0}, const {\b Size}  {\i h
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v destroy\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:destroy}
+{\xe \v handleException\:mc::Exception}
+{\xe \v mc::Exception\:handleException}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::Font::destroy ()}}
+static void mc::Exception::handleException (const std::exception &  {\i e}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABHC}
-{\bkmkend AAAAAAABHC}
+{\bkmkstart AAAAAAAAUL}
+{\bkmkend AAAAAAAAUL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getCharacter\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:getCharacter}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Font::getCharacter (const wchar_t  {\i character}, {\b Letter} *  {\i let}) const}}
 \par
-{\bkmkstart AAAAAAABHD}
-{\bkmkend AAAAAAABHD}
 {
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Todo:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid find a way to dynamically allocate letters without passing in a pointer \par
-}
+Stops {\b MACE} and prints an exception to console accordingly. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This should be used every time a fatal exception is thrown. \par
 }}
-{\xe \v getID\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:getID}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Index} mc::gfx::Font::getID () const}}
-\par
-{\bkmkstart AAAAAAABHE}
-{\bkmkend AAAAAAABHE}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getSize\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:getSize}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Size}& mc::gfx::Font::getSize ()}}
-\par
-{\bkmkstart AAAAAAABHF}
-{\bkmkend AAAAAAABHF}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getSize\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:getSize}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b Size}& mc::gfx::Font::getSize () const}}
-\par
-{\bkmkstart AAAAAAABHG}
-{\bkmkend AAAAAAABHG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v loadFont\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:loadFont}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-static {\b Font} mc::gfx::Font::loadFont (const std::string &  {\i name}){\f2 [static]}}}
-\par
-{\bkmkstart AAAAAAABHH}
-{\bkmkend AAAAAAABHH}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v loadFont\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:loadFont}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-static {\b Font} mc::gfx::Font::loadFont (const char *  {\i name}){\f2 [static]}}}
-\par
-{\bkmkstart AAAAAAABHI}
-{\bkmkend AAAAAAABHI}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator!=\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:operator!=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Font::operator!= (const {\b Font} &  {\i other}) const}}
-\par
-{\bkmkstart AAAAAAABHJ}
-{\bkmkend AAAAAAABHJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v operator==\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::Font::operator== (const {\b Font} &  {\i other}) const}}
-\par
-{\bkmkstart AAAAAAABHK}
-{\bkmkend AAAAAAABHK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v setSize\:mc::gfx::Font}
-{\xe \v mc::gfx::Font\:setSize}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::Font::setSize (const {\b Size}  {\i height})}}
-\par
-{\bkmkstart AAAAAAABHL}
-{\bkmkend AAAAAAABHL}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Entity2D.h\par
+include/MACE/Core/Constants.h\par
 }}

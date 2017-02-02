@@ -1,738 +1,1453 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="dc/dee/a00053" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::ogl::VertexArray</compoundname>
-    <basecompoundref refid="df/d61/a00031" prot="public" virt="non-virtual">mc::gfx::ogl::Object</basecompoundref>
-    <includes refid="de/de1/a00065" local="no">OGL.h</includes>
-      <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="dc/dee/a00053_1a24ebdbf6aac09e9a5ec4611a2638942f" prot="private" static="no" mutable="no">
-        <type><ref refid="d2/de7/a00014" kindref="compound">ElementBuffer</ref></type>
-        <definition>ElementBuffer mc::gfx::ogl::VertexArray::indices</definition>
-        <argsstring></argsstring>
-        <name>indices</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="890" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="890" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dc/dee/a00053_1a5519c5413dfc866a346b9003ceecb813" prot="private" static="no" mutable="no">
-        <type>std::vector&lt; <ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> &gt;</type>
-        <definition>std::vector&lt;VertexBuffer&gt; mc::gfx::ogl::VertexArray::buffers</definition>
-        <argsstring></argsstring>
-        <name>buffers</name>
-        <initializer>= std::vector&lt;<ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref>&gt;()</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="891" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="891" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dc/dee/a00053_1a79617a44429a00205ac254a6812d53f4" prot="private" static="no" mutable="no">
+  <compounddef id="dc/dee/a00053" kind="struct" language="C++" prot="public">
+    <compoundname>mc::Vector</compoundname>
+    <includes refid="d1/dc1/a00092" local="no">Vector.h</includes>
+    <templateparamlist>
+      <param>
+        <type>typename</type>
+        <declname>T</declname>
+        <defname>T</defname>
+      </param>
+      <param>
         <type><ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-        <definition>Size mc::gfx::ogl::VertexArray::vertexNumber</definition>
-        <argsstring></argsstring>
-        <name>vertexNumber</name>
+        <declname>N</declname>
+        <defname>N</defname>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="dc/dee/a00053_ac5913b24ed4cb38173a1492d05cb5ff2_1ac5913b24ed4cb38173a1492d05cb5ff2" prot="protected" static="no" mutable="no">
+        <type>T</type>
+        <definition>T mc::Vector&lt; T, N &gt;::content[N]</definition>
+        <argsstring>[N]</argsstring>
+        <name>content</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="893" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="893" bodyend="-1"/>
+        <location file="include/MACE/Utility/Vector.h" line="665" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="665" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="dc/dee/a00053_a2e5f1ca422d96bc7861e29116b1bfb81_1a2e5f1ca422d96bc7861e29116b1bfb81" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::init</definition>
-        <argsstring>() override</argsstring>
-        <name>init</name>
-        <reimplements refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c">init</reimplements>
+      <memberdef kind="function" id="dc/dee/a00053_a7c2fa3ae75ebb6d155aa3e3aa140ce09_1a7c2fa3ae75ebb6d155aa3e3aa140ce09" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>mc::Vector&lt; T, N &gt;::Vector</definition>
+        <argsstring>()</argsstring>
+        <name>Vector</name>
         <briefdescription>
-<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
+<para>Default constructor. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
-</para>        </detaileddescription>
+<para>Constructs an empty <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="834" column="1"/>
+        <location file="include/MACE/Utility/Vector.h" line="94" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="94" bodyend="96"/>
       </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a1ea8420821e8d076d3b39ac39456537b_1a1ea8420821e8d076d3b39ac39456537b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::destroy</definition>
-        <argsstring>() override</argsstring>
-        <name>destroy</name>
-        <reimplements refid="df/d61/a00031_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d">destroy</reimplements>
+      <memberdef kind="function" id="dc/dee/a00053_a417fb70d18a6f7c59b42c451dd396189_1a417fb70d18a6f7c59b42c451dd396189" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>mc::Vector&lt; T, N &gt;::Vector</definition>
+        <argsstring>(const T arr[N])</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>const T</type>
+          <declname>arr</declname>
+          <array>[N]</array>
+        </param>
         <briefdescription>
-<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
+<para>Consructs a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> from the contents of an array. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
+<para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
+<parametername>arr</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
+<para>An equally-sized array whose contents will be filled into a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="835" column="1"/>
+        <location file="include/MACE/Utility/Vector.h" line="102" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="102" bodyend="105"/>
       </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_ab19cf7b7a163b0585b2f8b8c6550251b_1ab19cf7b7a163b0585b2f8b8c6550251b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/dee/a00053_a417ea1abf7c631482d80c04b05003bb2_1a417ea1abf7c631482d80c04b05003bb2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>mc::Vector&lt; T, N &gt;::Vector</definition>
+        <argsstring>(const std::array&lt; T, N &gt; &amp;contents)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>const std::array&lt; T, N &gt; &amp;</type>
+          <declname>contents</declname>
+        </param>
+        <briefdescription>
+<para>Consructs a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> from the contents of an <computeroutput>std::array</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>contents</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An equally-sized <computeroutput>std::array</computeroutput> whose contents will be filled into a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="111" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="111" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ad81a516cd25fe7e71ae9a1a01c8e74c5_1ad81a516cd25fe7e71ae9a1a01c8e74c5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>mc::Vector&lt; T, N &gt;::Vector</definition>
+        <argsstring>(const std::initializer_list&lt; T &gt; args)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>const std::initializer_list&lt; T &gt;</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+<para>Creates a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> from an `std::initializer_list. </para>        </briefdescription>
+        <detaileddescription>
+<para>` Allows for an aggregate-style creation. </para><para>Example: <programlisting><codeline><highlight class="normal">Vector3i<sp/>mat<sp/>=<sp/>{1,<sp/>2,<sp/>3};</highlight></codeline>
+</programlisting> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>args</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to create this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="d8/d84/a00001_1_todo000010"><xreftitle>Todo</xreftitle><xrefdescription><para>Make this constexpr </para></xrefdescription></xrefsect><parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBoundsException</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the amount of arguments in the initializer is not equal to the amount of objects this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> holds </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="128" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="128" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a9f2fe50f9873007c05fe0bee3f5def76_1a9f2fe50f9873007c05fe0bee3f5def76" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>mc::Vector&lt; T, N &gt;::Vector</definition>
+        <argsstring>(const Vector&lt; T, N-1 &gt; &amp;v, const T &amp;last)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N-1 &gt; &amp;</type>
+          <declname>v</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>last</declname>
+        </param>
+        <briefdescription>
+<para>O(N) time. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="141" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="141" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a9cd50db0b1a697ff4368a1072e99182d_1a9cd50db0b1a697ff4368a1072e99182d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>mc::Vector&lt; T, N &gt;::Vector</definition>
+        <argsstring>(const Vector &amp;obj)</argsstring>
+        <name>Vector</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref> &amp;</type>
+          <declname>obj</declname>
+        </param>
+        <briefdescription>
+<para>Copies the contents of a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> into a new <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>obj</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to clone </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="152" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="152" bodyend="156"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ad8649fb50d1cebdc4f7e2886f445560a_1ad8649fb50d1cebdc4f7e2886f445560a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::array&lt; T, N &gt; &amp;</type>
+        <definition>std::array&lt; T, N&gt;&amp; mc::Vector&lt; T, N &gt;::getContents</definition>
+        <argsstring>()</argsstring>
+        <name>getContents</name>
+        <briefdescription>
+<para>Retrieves the contents of this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>An <computeroutput>std::array</computeroutput> of this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> contents </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a2e674c851be8cf10808c86895e9ca86f_1a2e674c851be8cf10808c86895e9ca86f" kindref="member">setContents(std::array&lt;T,N&gt;)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="163" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="163" bodyend="165"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_aac3af5465ade1ef1c7b41b579fb6099e_1aac3af5465ade1ef1c7b41b579fb6099e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const std::array&lt; T, N &gt; &amp;</type>
+        <definition>const std::array&lt; T, N&gt;&amp; mc::Vector&lt; T, N &gt;::getContents</definition>
+        <argsstring>() const </argsstring>
+        <name>getContents</name>
+        <briefdescription>
+<para><computeroutput>const</computeroutput> version of <computeroutput><ref refid="dc/dee/a00053_ad8649fb50d1cebdc4f7e2886f445560a_1ad8649fb50d1cebdc4f7e2886f445560a" kindref="member">getContents()</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>A <computeroutput>const std::array</computeroutput> of this <computeroutput>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> contents </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a2e674c851be8cf10808c86895e9ca86f_1a2e674c851be8cf10808c86895e9ca86f" kindref="member">setContents(std::array&lt;T,N&gt;)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="172" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="172" bodyend="174"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a2e674c851be8cf10808c86895e9ca86f_1a2e674c851be8cf10808c86895e9ca86f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::setContents</definition>
+        <argsstring>(const std::array&lt; T, N &gt; contents)</argsstring>
+        <name>setContents</name>
+        <param>
+          <type>const std::array&lt; T, N &gt;</type>
+          <declname>contents</declname>
+        </param>
+        <briefdescription>
+<para>Copies the contents of an <computeroutput>std::array</computeroutput> into this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>contents</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An <computeroutput>std::array</computeroutput> whose data will be dumped into this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="179" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="179" bodyend="181"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a57b55a629453b1d1e80d81c56269e833_1a57b55a629453b1d1e80d81c56269e833" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::setContents</definition>
+        <argsstring>(const T arr[N])</argsstring>
+        <name>setContents</name>
+        <param>
+          <type>const T</type>
+          <declname>arr</declname>
+          <array>[N]</array>
+        </param>
+        <briefdescription>
+<para>Copies the contents of an array into this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An equally sized array whose contents will cloned in this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="186" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="186" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a6f08e4cabe236a4f317bc2b0f8f3d96c_1a6f08e4cabe236a4f317bc2b0f8f3d96c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>constexpr <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        <definition>constexpr Size mc::Vector&lt; T, N &gt;::size</definition>
+        <argsstring>() const  noexcept</argsstring>
+        <name>size</name>
+        <briefdescription>
+<para>Retrieves how many elements this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> holds. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>How large this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> is </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="196" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="196" bodyend="198"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a1cb61e23c56abeb0b1d4c1a8b569e831_1a1cb61e23c56abeb0b1d4c1a8b569e831" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T *</type>
+        <definition>T* mc::Vector&lt; T, N &gt;::begin</definition>
+        <argsstring>()</argsstring>
+        <name>begin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="200" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="200" bodyend="202"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a728eef3a0e46669e5c7be8792a8b7b26_1a728eef3a0e46669e5c7be8792a8b7b26" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T *</type>
+        <definition>T* mc::Vector&lt; T, N &gt;::end</definition>
+        <argsstring>()</argsstring>
+        <name>end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="204" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="204" bodyend="206"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a699b2e331ade356257fb185280019b87_1a699b2e331ade356257fb185280019b87" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T&amp; mc::Vector&lt; T, N &gt;::get</definition>
+        <argsstring>(Index i)</argsstring>
+        <name>get</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Get the value at a position. </para>        </briefdescription>
+        <detaileddescription>
+<para>Slower than <computeroutput>operator[]</computeroutput> because it does bounds checking. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>Index</computeroutput> of the requested data, zero-indexed </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The value located at <computeroutput>i</computeroutput> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>i</computeroutput> is greater than <computeroutput><ref refid="dc/dee/a00053_a6f08e4cabe236a4f317bc2b0f8f3d96c_1a6f08e4cabe236a4f317bc2b0f8f3d96c" kindref="member">size()</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>i</computeroutput> is less than 0 </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" kindref="member">operator[](Index)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="216" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="216" bodyend="219"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a7595892f896b87fbb58d2c36be3389a8_1a7595892f896b87fbb58d2c36be3389a8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T&amp; mc::Vector&lt; T, N &gt;::get</definition>
+        <argsstring>(Index i) const </argsstring>
+        <name>get</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para><computeroutput>const</computeroutput> version of <computeroutput><ref refid="dc/dee/a00053_a699b2e331ade356257fb185280019b87_1a699b2e331ade356257fb185280019b87" kindref="member">get(Index)</ref>,</computeroutput> in case a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> is declared <computeroutput>const</computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>Index</computeroutput> of the requested data, zero-indexed </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The <computeroutput>const</computeroutput> value located at <computeroutput>i</computeroutput> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>i</computeroutput> is greater than <computeroutput><ref refid="dc/dee/a00053_a6f08e4cabe236a4f317bc2b0f8f3d96c_1a6f08e4cabe236a4f317bc2b0f8f3d96c" kindref="member">size()</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>i</computeroutput> is less than 0 </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" kindref="member">operator[](Index)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="228" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="228" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a4e214d776fd7b7e4b163c0ebb23ec3c4_1a4e214d776fd7b7e4b163c0ebb23ec3c4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::set</definition>
+        <argsstring>(Index position, T value)</argsstring>
+        <name>set</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type>T</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Set data at a certain position to equal a new value. </para>        </briefdescription>
+        <detaileddescription>
+<para>Slower than <computeroutput>operator[]</computeroutput> because it does bounds checking. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to put the new value, zero indexed. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to put in <computeroutput>position</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>i</computeroutput> is greater than <computeroutput><ref refid="dc/dee/a00053_a6f08e4cabe236a4f317bc2b0f8f3d96c_1a6f08e4cabe236a4f317bc2b0f8f3d96c" kindref="member">size()</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>IndexOutOfBounds</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If <computeroutput>i</computeroutput> is less than 0 </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" kindref="member">operator[](Index)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="240" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="240" bodyend="243"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_abb14d1d219fbd5cc3c9a6c50e4334986_1abb14d1d219fbd5cc3c9a6c50e4334986" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T *</type>
+        <definition>const T* mc::Vector&lt; T, N &gt;::flatten</definition>
+        <argsstring>(T arr[N]) const </argsstring>
+        <name>flatten</name>
+        <param>
+          <type>T</type>
+          <declname>arr</declname>
+          <array>[N]</array>
+        </param>
+        <briefdescription>
+<para>Creates an array with the data of this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput>, in O(N) time. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Pointer to <computeroutput>arr</computeroutput> </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The array to fill </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="250" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="250" bodyend="255"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_af7b4b0cd42037f15e3d7e7f97fb155ba_1af7b4b0cd42037f15e3d7e7f97fb155ba" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 1 &gt;</type>
+        <definition>Vector&lt;T, 1&gt; mc::Vector&lt; T, N &gt;::x</definition>
+        <argsstring>() const </argsstring>
+        <name>x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="257" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="257" bodyend="259"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a673cc1fbb20b74e1c873e77cc54889f5_1a673cc1fbb20b74e1c873e77cc54889f5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 1 &gt;</type>
+        <definition>Vector&lt;T, 1&gt; mc::Vector&lt; T, N &gt;::y</definition>
+        <argsstring>() const </argsstring>
+        <name>y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="261" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="261" bodyend="264"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ab9926b56accea64b6b033712888fec56_1ab9926b56accea64b6b033712888fec56" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 1 &gt;</type>
+        <definition>Vector&lt;T, 1&gt; mc::Vector&lt; T, N &gt;::z</definition>
+        <argsstring>() const </argsstring>
+        <name>z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="266" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="266" bodyend="269"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a55f97b148e33cadd1a577aa3e9c132a9_1a55f97b148e33cadd1a577aa3e9c132a9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 1 &gt;</type>
+        <definition>Vector&lt;T, 1&gt; mc::Vector&lt; T, N &gt;::w</definition>
+        <argsstring>() const </argsstring>
+        <name>w</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="271" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="271" bodyend="274"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ac7798d8afd7ef39232120883e62208f0_1ac7798d8afd7ef39232120883e62208f0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 2 &gt;</type>
+        <definition>Vector&lt;T, 2&gt; mc::Vector&lt; T, N &gt;::xy</definition>
+        <argsstring>() const </argsstring>
+        <name>xy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="276" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="276" bodyend="279"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a0ec930835d4a5cd53406c5d0f7c61ee5_1a0ec930835d4a5cd53406c5d0f7c61ee5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 3 &gt;</type>
+        <definition>Vector&lt;T, 3&gt; mc::Vector&lt; T, N &gt;::xyz</definition>
+        <argsstring>() const </argsstring>
+        <name>xyz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="281" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="281" bodyend="284"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a786e32b6cdfd5e73e93390d82710c0ee_1a786e32b6cdfd5e73e93390d82710c0ee" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 4 &gt;</type>
+        <definition>Vector&lt;T, 4&gt; mc::Vector&lt; T, N &gt;::xyzw</definition>
+        <argsstring>() const </argsstring>
+        <name>xyzw</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="286" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="286" bodyend="289"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T&amp; mc::Vector&lt; T, N &gt;::operator[]</definition>
+        <argsstring>(Index i)</argsstring>
+        <name>operator[]</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves the content at a certain <computeroutput>Index</computeroutput>, zero indexed. </para>        </briefdescription>
+        <detaileddescription>
+<para>This operator is faster than <computeroutput><ref refid="dc/dee/a00053_a699b2e331ade356257fb185280019b87_1a699b2e331ade356257fb185280019b87" kindref="member">get(Index)</ref>,</computeroutput> as it doesn&apos;t do bounds checking. However, accessing an invalid index will be undefined. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to retrieve the data </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The data at <computeroutput>i</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_af56e7800e947754a7c7e508301ee3f9a_1af56e7800e947754a7c7e508301ee3f9a" kindref="member">operator[](Index) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="297" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="297" bodyend="299"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_af56e7800e947754a7c7e508301ee3f9a_1af56e7800e947754a7c7e508301ee3f9a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T&amp; mc::Vector&lt; T, N &gt;::operator[]</definition>
+        <argsstring>(Index i) const </argsstring>
+        <name>operator[]</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para><computeroutput>const</computeroutput> version of <computeroutput><ref refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" kindref="member">operator[](Index)</ref></computeroutput> used if a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> is declared <computeroutput>const</computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to retrieve the data </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The data at <computeroutput>i</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" kindref="member">operator[](Index)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="306" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="306" bodyend="308"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a7eb2384ab474fa1a0ba5171a49139e5c_1a7eb2384ab474fa1a0ba5171a49139e5c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>T &amp;</type>
+        <definition>virtual T&amp; mc::Vector&lt; T, N &gt;::operator()</definition>
+        <argsstring>(Index i)</argsstring>
+        <name>operator()</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves content at a certain <computeroutput>Index</computeroutput>, not zero indexed. </para>        </briefdescription>
+        <detaileddescription>
+<para>Equal to<programlisting><codeline><highlight class="normal">vector[i-1]</highlight></codeline>
+</programlisting> <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Not zero indexed <computeroutput>Index</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Value at <computeroutput>i-1</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" kindref="member">operator[](Index)</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="320" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="320" bodyend="322"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a572904b63c9e2d35ca6625ad2f2b1627_1a572904b63c9e2d35ca6625ad2f2b1627" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T&amp; mc::Vector&lt; T, N &gt;::operator()</definition>
+        <argsstring>(Index i) const </argsstring>
+        <name>operator()</name>
+        <param>
+          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para><computeroutput>const</computeroutput> version of <computeroutput><ref refid="dc/dee/a00053_a7eb2384ab474fa1a0ba5171a49139e5c_1a7eb2384ab474fa1a0ba5171a49139e5c" kindref="member">operator()(Index)</ref></computeroutput>. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Not zero indexed <computeroutput>Index</computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Value at <computeroutput>i-1</computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="329" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="329" bodyend="331"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a41f3ca26b2d43a91797df7499afcc5c5_1a41f3ca26b2d43a91797df7499afcc5c5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator+</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;right) const </argsstring>
+        <name>operator+</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Adds 2 <computeroutput>Vectors</computeroutput> together. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in o(N) time</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> that was created by adding 2 <computeroutput>Vectors</computeroutput> together </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053" kindref="compound">Vector</ref> for an explanation of <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> <ref refid="d1/d1e/a00087" kindref="compound">math</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="342" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="342" bodyend="346"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ac486a0798fd812967cb543c23bf60e3b_1ac486a0798fd812967cb543c23bf60e3b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator-</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;right) const </argsstring>
+        <name>operator-</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Subtracts 2 <computeroutput>Vectors</computeroutput> together. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> that was created by subtracting 2 <computeroutput>Vectors</computeroutput> together </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053" kindref="compound">Vector</ref> for an explanation of <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> <ref refid="d1/d1e/a00087" kindref="compound">math</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="356" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="356" bodyend="360"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a743ef1fe1d428bd3fabc37adb783aca9_1a743ef1fe1d428bd3fabc37adb783aca9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator*</definition>
+        <argsstring>(const Vector&lt; T, 3 &gt; &amp;right) const </argsstring>
+        <name>operator*</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Multiplies 2 <computeroutput>Vectors</computeroutput> together. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The product of the multiplication </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053" kindref="compound">Vector</ref> for an explanation of <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> <ref refid="d1/d1e/a00087" kindref="compound">math</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="371" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="371" bodyend="375"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ac25e36e26f8ffb471a47b101b289d3ef_1ac25e36e26f8ffb471a47b101b289d3ef" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator/</definition>
+        <argsstring>(const Vector&lt; T, 3 &gt; &amp;right) const </argsstring>
+        <name>operator/</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, 3 &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Divides 2 <computeroutput>Vectors</computeroutput> together. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The quotient of 2 <computeroutput>Vectors</computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053" kindref="compound">Vector</ref> for an explanation of <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> <ref refid="d1/d1e/a00087" kindref="compound">math</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="386" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="386" bodyend="390"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ade01989965997b8fc323a3b96eae8bfa_1ade01989965997b8fc323a3b96eae8bfa" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator+</definition>
+        <argsstring>(const T scalar) const </argsstring>
+        <name>operator+</name>
+        <param>
+          <type>const T</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Translates a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> with a scalar. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to translate this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> translated. </para></simplesect>
+<simplesect kind="see"><para>operator*(const Vector&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="400" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="400" bodyend="404"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a4b82b18836e6dfc6a4a09d40baf63ffd_1a4b82b18836e6dfc6a4a09d40baf63ffd" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator-</definition>
+        <argsstring>(const T scalar) const </argsstring>
+        <name>operator-</name>
+        <param>
+          <type>const T</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Translates a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> with a scalar. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to translate this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> translated. </para></simplesect>
+<simplesect kind="see"><para>operator*(const Vector&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="414" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="414" bodyend="418"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a073741c6651aad098b8ee5adea09eaa4_1a073741c6651aad098b8ee5adea09eaa4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator*</definition>
+        <argsstring>(const T scalar) const </argsstring>
+        <name>operator*</name>
+        <param>
+          <type>const T</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Multiplies a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by a scalar. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to multiply this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> scaled. </para></simplesect>
+<simplesect kind="see"><para>operator*(const Vector&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="428" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="428" bodyend="432"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ab8095bda1d18b74aafc434a0f1b2bcd4_1ab8095bda1d18b74aafc434a0f1b2bcd4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></type>
+        <definition>Vector mc::Vector&lt; T, N &gt;::operator/</definition>
+        <argsstring>(const T scalar) const </argsstring>
+        <name>operator/</name>
+        <param>
+          <type>const T</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Divides a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by a scalar. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to divided this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> scaled. </para></simplesect>
+<simplesect kind="see"><para>operator*(const T&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="442" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="442" bodyend="446"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_add67c85219f90da24ad00508be384ab4_1add67c85219f90da24ad00508be384ab4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator+=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;right)</argsstring>
+        <name>operator+=</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Adds a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to this one. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to add </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a41f3ca26b2d43a91797df7499afcc5c5_1a41f3ca26b2d43a91797df7499afcc5c5" kindref="member">operator+(const Vector&lt;T,N&gt;&amp;) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="453" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="453" bodyend="457"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a4a0aee255e45235c029a51cad50b4f2c_1a4a0aee255e45235c029a51cad50b4f2c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator-=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;right)</argsstring>
+        <name>operator-=</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Subtracts a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> from this one. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to subtract </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_ac486a0798fd812967cb543c23bf60e3b_1ac486a0798fd812967cb543c23bf60e3b" kindref="member">operator-(const Vector&lt;T,N&gt;&amp;) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="464" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="464" bodyend="468"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a2727025232d2c2c491b871299babcdbc_1a2727025232d2c2c491b871299babcdbc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator*=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;right)</argsstring>
+        <name>operator*=</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Multiplies a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by this one. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to multiply </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a41f3ca26b2d43a91797df7499afcc5c5_1a41f3ca26b2d43a91797df7499afcc5c5" kindref="member">operator+(const Vector&lt;T,N&gt;&amp;) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="475" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="475" bodyend="479"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_aaa157b6d3969ccd93e40efd9c6656333_1aaa157b6d3969ccd93e40efd9c6656333" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator/=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;right)</argsstring>
+        <name>operator/=</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+<para>Divides a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> by this one. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>right</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to divide </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a41f3ca26b2d43a91797df7499afcc5c5_1a41f3ca26b2d43a91797df7499afcc5c5" kindref="member">operator+(const Vector&lt;T,N&gt;&amp;) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="486" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="486" bodyend="490"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_ab9e06146219477eb114cfe5ec0484879_1ab9e06146219477eb114cfe5ec0484879" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator+=</definition>
+        <argsstring>(const T &amp;scalar)</argsstring>
+        <name>operator+=</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Translates this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a743ef1fe1d428bd3fabc37adb783aca9_1a743ef1fe1d428bd3fabc37adb783aca9" kindref="member">operator*(const Vector&lt;T,3&gt;&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para>operator*(const T&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="499" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="499" bodyend="503"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a00a55f32dca64a72e7b29a3b3c350ef5_1a00a55f32dca64a72e7b29a3b3c350ef5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator-=</definition>
+        <argsstring>(const T &amp;scalar)</argsstring>
+        <name>operator-=</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Translates this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to translate by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a743ef1fe1d428bd3fabc37adb783aca9_1a743ef1fe1d428bd3fabc37adb783aca9" kindref="member">operator*(const Vector&lt;T,3&gt;&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para>operator*(const T&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="511" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="511" bodyend="515"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_af95e59326592e258341dfd2a02d628ff_1af95e59326592e258341dfd2a02d628ff" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator*=</definition>
+        <argsstring>(const T &amp;scalar)</argsstring>
+        <name>operator*=</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Scales this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to scale </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a743ef1fe1d428bd3fabc37adb783aca9_1a743ef1fe1d428bd3fabc37adb783aca9" kindref="member">operator*(const Vector&lt;T,3&gt;&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para>operator*(const T&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="523" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="523" bodyend="527"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a63c0c33c81fa939285ca1c83120ce172_1a63c0c33c81fa939285ca1c83120ce172" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Vector&lt; T, N &gt;::operator/=</definition>
+        <argsstring>(const T &amp;scalar)</argsstring>
+        <name>operator/=</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>scalar</declname>
+        </param>
+        <briefdescription>
+<para>Divides this <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>scalar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much to divide by </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a743ef1fe1d428bd3fabc37adb783aca9_1a743ef1fe1d428bd3fabc37adb783aca9" kindref="member">operator*(const Vector&lt;T,3&gt;&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para>operator*(const T&amp;) const </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="535" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="535" bodyend="539"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a4ea0c891100c07ca827fb2b63ff4ab40_1a4ea0c891100c07ca827fb2b63ff4ab40" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>bool</type>
-        <definition>bool mc::gfx::ogl::VertexArray::isCreated</definition>
-        <argsstring>() const  override</argsstring>
-        <name>isCreated</name>
-        <reimplements refid="df/d61/a00031_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67">isCreated</reimplements>
-        <briefdescription>
-<para>Queries OpenGL whether this <ref refid="df/d61/a00031" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="837" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a6b6c9e9784fb18e6ddbd6a160b153abe_1a6b6c9e9784fb18e6ddbd6a160b153abe" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::draw</definition>
-        <argsstring>(const Enum type=GL_TRIANGLES) const </argsstring>
-        <name>draw</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>type</declname>
-          <defval>GL_TRIANGLES</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glDrawElements">https://www.opengl.org/wiki/GLAPI/glDrawElements</ulink> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="843" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a32a897023c4852401ddab8664a2c40c5_1a32a897023c4852401ddab8664a2c40c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::loadVertices</definition>
-        <argsstring>(const Size verticeSize, const float vertices[], const Index location=15, const Byte attributeSize=3)</argsstring>
-        <name>loadVertices</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>verticeSize</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>vertices</declname>
-          <array>[]</array>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>location</declname>
-          <defval>15</defval>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>attributeSize</declname>
-          <defval>3</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="849" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a3ae4c47857605a7fa3aa056cf62d3238_1a3ae4c47857605a7fa3aa056cf62d3238" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::loadIndices</definition>
-        <argsstring>(const Size indiceNum, const unsigned int *indiceData)</argsstring>
-        <name>loadIndices</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>indiceNum</declname>
-        </param>
-        <param>
-          <type>const unsigned int *</type>
-          <declname>indiceData</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="854" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_ad4eb51ec059a94870c5dd357a6703ca7_1ad4eb51ec059a94870c5dd357a6703ca7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::storeDataInAttributeList</definition>
-        <argsstring>(const Size dataSize, const GLvoid *data, const Index location=0, const Byte attributeSize=3)</argsstring>
-        <name>storeDataInAttributeList</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>dataSize</declname>
-        </param>
-        <param>
-          <type>const GLvoid *</type>
-          <declname>data</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>location</declname>
-          <defval>0</defval>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>attributeSize</declname>
-          <defval>3</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="860" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a35ffa9ced897f667d5cae79bfabd7b38_1a35ffa9ced897f667d5cae79bfabd7b38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::addBuffer</definition>
-        <argsstring>(const VertexBuffer &amp;newBuffer)</argsstring>
-        <name>addBuffer</name>
-        <param>
-          <type>const <ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> &amp;</type>
-          <declname>newBuffer</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="865" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_aa1641edcb35d6f1f9c6e9800ffafd996_1aa1641edcb35d6f1f9c6e9800ffafd996" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::setVertexNumber</definition>
-        <argsstring>(const Size vertexNum)</argsstring>
-        <name>setVertexNumber</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>vertexNum</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="867" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a8a2635652fb0b34b6693f74b7b8d95da_1a8a2635652fb0b34b6693f74b7b8d95da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-        <definition>Size mc::gfx::ogl::VertexArray::getVertexNumber</definition>
-        <argsstring>()</argsstring>
-        <name>getVertexNumber</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="868" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_aec2a55a0ef933adacde7f3cd4ad267a7_1aec2a55a0ef933adacde7f3cd4ad267a7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-        <definition>const Size mc::gfx::ogl::VertexArray::getVertexNumber</definition>
-        <argsstring>() const </argsstring>
-        <name>getVertexNumber</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="869" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a5a05c7e3a7bda6613567460be3e2bef7_1a5a05c7e3a7bda6613567460be3e2bef7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::setIndices</definition>
-        <argsstring>(const ElementBuffer &amp;buffer)</argsstring>
-        <name>setIndices</name>
-        <param>
-          <type>const <ref refid="d2/de7/a00014" kindref="compound">ElementBuffer</ref> &amp;</type>
-          <declname>buffer</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="871" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a71f13fe1a17d70c6e2488e75d9877d5a_1a71f13fe1a17d70c6e2488e75d9877d5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d2/de7/a00014" kindref="compound">ElementBuffer</ref> &amp;</type>
-        <definition>ElementBuffer&amp; mc::gfx::ogl::VertexArray::getIndices</definition>
-        <argsstring>()</argsstring>
-        <name>getIndices</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="872" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_abd29e22869199e6dfbe38debdb2c9c15_1abd29e22869199e6dfbe38debdb2c9c15" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d2/de7/a00014" kindref="compound">ElementBuffer</ref> &amp;</type>
-        <definition>const ElementBuffer&amp; mc::gfx::ogl::VertexArray::getIndices</definition>
-        <argsstring>() const </argsstring>
-        <name>getIndices</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="873" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_ab38f6e4f638d5793fa691837b7a5bc3d_1ab38f6e4f638d5793fa691837b7a5bc3d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::setBuffers</definition>
-        <argsstring>(const std::vector&lt; VertexBuffer &gt; &amp;newBuffers)</argsstring>
-        <name>setBuffers</name>
-        <param>
-          <type>const std::vector&lt; <ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> &gt; &amp;</type>
-          <declname>newBuffers</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="875" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_a8c79d8d0ffe0bdb39f89e4de7ca88143_1a8c79d8d0ffe0bdb39f89e4de7ca88143" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::vector&lt; <ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> &gt; &amp;</type>
-        <definition>std::vector&lt;VertexBuffer&gt;&amp; mc::gfx::ogl::VertexArray::getBuffers</definition>
-        <argsstring>()</argsstring>
-        <name>getBuffers</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="876" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_ad275131e38080d91531c121ff11cb620_1ad275131e38080d91531c121ff11cb620" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const std::vector&lt; <ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> &gt; &amp;</type>
-        <definition>const std::vector&lt;VertexBuffer&gt;&amp; mc::gfx::ogl::VertexArray::getBuffers</definition>
-        <argsstring>() const </argsstring>
-        <name>getBuffers</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="877" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_aa33272510457f54f9f706c03beaf8f5b_1aa33272510457f54f9f706c03beaf8f5b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::VertexArray::operator==</definition>
-        <argsstring>(const VertexArray &amp;other) const </argsstring>
+        <definition>bool mc::Vector&lt; T, N &gt;::operator==</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;other) const </argsstring>
         <name>operator==</name>
         <param>
-          <type>const <ref refid="dc/dee/a00053" kindref="compound">VertexArray</ref> &amp;</type>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
           <declname>other</declname>
         </param>
         <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+<para>Compares whether 2 <computeroutput>Vectors</computeroutput> have the same values. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
-<parameterlist kind="param"><parameteritem>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare with </para></parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to compare <computeroutput>this</computeroutput> against </para></parameterdescription>
 </parameteritem>
 </parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the 2 are equal, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+<simplesect kind="see"><para>operator!=(const Vector&lt;T,N&gt;) const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" kindref="member">operator&lt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" kindref="member">operator&gt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" kindref="member">operator&lt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" kindref="member">operator&gt;(const Vector&amp;) const</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="882" column="1"/>
+        <location file="include/MACE/Utility/Vector.h" line="553" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="553" bodyend="560"/>
       </memberdef>
-      <memberdef kind="function" id="dc/dee/a00053_ac71bd3e70562dfe5429663f3702e79f4_1ac71bd3e70562dfe5429663f3702e79f4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/dee/a00053_a4be78cbc5b6bcbe9488f5c3cd8ffa2e9_1a4be78cbc5b6bcbe9488f5c3cd8ffa2e9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>bool</type>
-        <definition>bool mc::gfx::ogl::VertexArray::operator!=</definition>
-        <argsstring>(const VertexArray &amp;other) const </argsstring>
+        <definition>bool mc::Vector&lt; T, N &gt;::operator!=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;other) const </argsstring>
         <name>operator!=</name>
         <param>
-          <type>const <ref refid="dc/dee/a00053" kindref="compound">VertexArray</ref> &amp;</type>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
           <declname>other</declname>
         </param>
         <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+<para>Compares whether 2 <computeroutput>Vectors</computeroutput> don&apos;t have the same values. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
-<parameterlist kind="param"><parameteritem>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare with </para></parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to compare <computeroutput>this</computeroutput> against </para></parameterdescription>
 </parameteritem>
 </parameterlist>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the 2 are not equal, <computeroutput>false</computeroutput> otherwise </para></simplesect>
+<simplesect kind="see"><para>operator==(const Vector&lt;T,N&gt;) const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" kindref="member">operator&lt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" kindref="member">operator&gt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" kindref="member">operator&lt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" kindref="member">operator&gt;(const Vector&amp;) const</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="886" column="1"/>
+        <location file="include/MACE/Utility/Vector.h" line="574" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="574" bodyend="576"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::ogl::Object::bind</definition>
-        <argsstring>() const </argsstring>
-        <name>bind</name>
-        <reimplementedby refid="de/d8c/a00036_1aa2aa180de0c314967fef3dc1f506695f">bind</reimplementedby>
-        <reimplementedby refid="d5/df9/a00044_1a0899273f842e1b692da3a08e162ee7f3">bind</reimplementedby>
-        <briefdescription>
-<para>Binds this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const</ref> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="113" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::ogl::Object::unbind</definition>
-        <argsstring>() const </argsstring>
-        <name>unbind</name>
-        <reimplementedby refid="de/d8c/a00036_1ad05128a71051c75e7c6a66bf135f4ce5">unbind</reimplementedby>
-        <reimplementedby refid="d5/df9/a00044_1a91dc153976fbd78b0047c436c12967d6">unbind</reimplementedby>
-        <briefdescription>
-<para>Unbinds this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="119" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::ogl::Object::getID</definition>
-        <argsstring>() const </argsstring>
-        <name>getID</name>
-        <briefdescription>
-<para>Retrieves the current ID that this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
-        <detaileddescription>
-<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="140" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>bool</type>
-        <definition>bool mc::gfx::ogl::Object::operator==</definition>
-        <argsstring>(const Object &amp;other) const </argsstring>
-        <name>operator==</name>
+        <definition>bool mc::Vector&lt; T, N &gt;::operator&gt;</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;other) const </argsstring>
+        <name>operator&gt;</name>
         <param>
-          <type>const <ref refid="df/d61/a00031" kindref="compound">Object</ref> &amp;</type>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
           <declname>other</declname>
         </param>
         <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+<para>Compares the <computeroutput>&gt;</computeroutput> operator on 2 <computeroutput>Vectors</computeroutput> elements. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
-<parameterlist kind="param"><parameteritem>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare with </para></parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to compare against </para></parameterdescription>
 </parameteritem>
 </parameterlist>
+<simplesect kind="return"><para>The result of the <computeroutput>&gt;</computeroutput> operator on each element </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" kindref="member">operator&lt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" kindref="member">operator&gt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" kindref="member">operator&lt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4ea0c891100c07ca827fb2b63ff4ab40_1a4ea0c891100c07ca827fb2b63ff4ab40" kindref="member">operator==(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4be78cbc5b6bcbe9488f5c3cd8ffa2e9_1a4be78cbc5b6bcbe9488f5c3cd8ffa2e9" kindref="member">operator!=(const Vector&amp;) const</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="149" column="1"/>
+        <location file="include/MACE/Utility/Vector.h" line="590" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="590" bodyend="597"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>bool</type>
-        <definition>bool mc::gfx::ogl::Object::operator!=</definition>
-        <argsstring>(const Object &amp;other) const </argsstring>
-        <name>operator!=</name>
+        <definition>bool mc::Vector&lt; T, N &gt;::operator&gt;=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;other) const </argsstring>
+        <name>operator&gt;=</name>
         <param>
-          <type>const <ref refid="df/d61/a00031" kindref="compound">Object</ref> &amp;</type>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
           <declname>other</declname>
         </param>
         <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+<para>Compares the <computeroutput>&gt;=</computeroutput> operator on 2 <computeroutput>Vectors</computeroutput> elements. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
-<parameterlist kind="param"><parameteritem>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>other</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>What to compare with </para></parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to compare against </para></parameterdescription>
 </parameteritem>
 </parameterlist>
+<simplesect kind="return"><para>The result of the <computeroutput>&gt;=</computeroutput> operator on each element </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" kindref="member">operator&lt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" kindref="member">operator&gt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" kindref="member">operator&lt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4ea0c891100c07ca827fb2b63ff4ab40_1a4ea0c891100c07ca827fb2b63ff4ab40" kindref="member">operator==(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4be78cbc5b6bcbe9488f5c3cd8ffa2e9_1a4be78cbc5b6bcbe9488f5c3cd8ffa2e9" kindref="member">operator!=(const Vector&amp;) const</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="157" column="1"/>
+        <location file="include/MACE/Utility/Vector.h" line="611" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="611" bodyend="613"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Vector&lt; T, N &gt;::operator&lt;</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;other) const </argsstring>
+        <name>operator&lt;</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares the <computeroutput>&lt;</computeroutput> operator on 2 <computeroutput>Vectors</computeroutput> elements. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to compare against </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the <computeroutput>&lt;</computeroutput> operator on each element </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" kindref="member">operator&lt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" kindref="member">operator&gt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" kindref="member">operator&gt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4ea0c891100c07ca827fb2b63ff4ab40_1a4ea0c891100c07ca827fb2b63ff4ab40" kindref="member">operator==(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4be78cbc5b6bcbe9488f5c3cd8ffa2e9_1a4be78cbc5b6bcbe9488f5c3cd8ffa2e9" kindref="member">operator!=(const Vector&amp;) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="627" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="627" bodyend="629"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::Vector&lt; T, N &gt;::operator&lt;=</definition>
+        <argsstring>(const Vector&lt; T, N &gt; &amp;other) const </argsstring>
+        <name>operator&lt;=</name>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares the <computeroutput>&lt;=</computeroutput> operator on 2 <computeroutput>Vectors</computeroutput> elements. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> to compare against </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the <computeroutput>&lt;=</computeroutput> operator on each element </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" kindref="member">operator&lt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" kindref="member">operator&gt;=(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" kindref="member">operator&gt;(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4ea0c891100c07ca827fb2b63ff4ab40_1a4ea0c891100c07ca827fb2b63ff4ab40" kindref="member">operator==(const Vector&amp;) const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/dee/a00053_a4be78cbc5b6bcbe9488f5c3cd8ffa2e9_1a4be78cbc5b6bcbe9488f5c3cd8ffa2e9" kindref="member">operator!=(const Vector&amp;) const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Vector.h" line="641" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="641" bodyend="643"/>
       </memberdef>
       </sectiondef>
-      <sectiondef kind="private-func">
-      <memberdef kind="function" id="dc/dee/a00053_1a008295676e3f4f9beb38d39b43adc9d1" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::VertexArray::bindIndex</definition>
-        <argsstring>(const Index id) const  override</argsstring>
-        <name>bindIndex</name>
-        <reimplements refid="df/d61/a00031_a5f9f3150ac508ecf142eff4f1bc9f424_1a5f9f3150ac508ecf142eff4f1bc9f424">bindIndex</reimplements>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="dc/dee/a00053_a0bf7bca5cdd4235d9d8c0707a83bbbf0_1a0bf7bca5cdd4235d9d8c0707a83bbbf0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>friend std::ostream &amp;</type>
+        <definition>std::ostream&amp; operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;output, const Vector&lt; T, N &gt; &amp;v)</argsstring>
+        <name>operator&lt;&lt;</name>
         <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>id</declname>
+          <type>std::ostream &amp;</type>
+          <declname>output</declname>
+        </param>
+        <param>
+          <type>const <ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; T, N &gt; &amp;</type>
+          <declname>v</declname>
         </param>
         <briefdescription>
-<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
+<para>Operator used to output to <computeroutput>std::cout</computeroutput>. </para>        </briefdescription>
         <detaileddescription>
-<para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>and <ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<para>This is done in O(N) time <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>id</parametername>
+<parametername>output</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+<para><computeroutput>std::ostream</computeroutput> the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Matrix</ref></computeroutput> was inserted into </para></parameterdescription>
 </parameteritem>
-</parameterlist>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
+<parameteritem>
 <parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
+<parametername>v</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+<para><computeroutput><ref refid="d5/d79/a00030" kindref="compound">Matrix</ref></computeroutput> which will be printed </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="return"><para><computeroutput>output</computeroutput> for chaining </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="888" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="df/d61/a00031_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::ogl::Object::id</definition>
-        <argsstring></argsstring>
-        <name>id</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-<para>The ID of this `Object. </para>        </briefdescription>
-        <detaileddescription>
-<para>` Should be set in <ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> and become 0 in <ref refid="df/d61/a00031_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="164" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="164" bodyend="-1"/>
+        <location file="include/MACE/Utility/Vector.h" line="653" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="653" bodyend="662"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-    </briefdescription>
+<para>1-dimensional vector class that supports mathmatical operations. </para>    </briefdescription>
     <detaileddescription>
-<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Vertex_Specification#Vertex_Array_Object">https://www.opengl.org/wiki/Vertex_Specification#Vertex_Array_Object</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d1/dea/a00054" kindref="compound">VertexBuffer</ref> </para></simplesect>
+<para><computeroutput>Vectors</computeroutput> can be added, subtracted, and multiplied. by other <computeroutput>Vectors</computeroutput> of equal width. Additionally, they can also be operated by a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Matrix</ref></computeroutput> of equal width. <computeroutput>Vectors</computeroutput> CANNOT be divided. </para><para><computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> math is done by adding the adjacent values of both vectors together. For example, we want to add these 2 <computeroutput>Vectors</computeroutput> together: <programlisting><codeline><highlight class="normal">left<sp/>=<sp/>[55,42,-12,23]</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">right<sp/>=<sp/>[3,7,5,9]</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">result<sp/>=<sp/>left<sp/>+<sp/>right</highlight></codeline>
+</programlisting> The result would be every value across from eachother added together, as so: <programlisting><codeline><highlight class="normal">result<sp/>=<sp/>[left[1]+right[1],left[2]+right[2],left[3]+right[3],left[4]+right[4]]</highlight></codeline>
+</programlisting> or <programlisting><codeline><highlight class="normal">result<sp/>=<sp/>[58,49,-7,32]</highlight></codeline>
+</programlisting> Multiplication, and subtraction are the same concept. To do math with <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref>, all you need to do is to use the mathmatical operators. </para><para>Examples: <programlisting><codeline><highlight class="normal">Vector&lt;int,3&gt;<sp/>vector<sp/>=<sp/>Vector&lt;int,3&gt;();//Create<sp/>a<sp/>Vector<sp/>of<sp/>3<sp/>ints</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">int<sp/>array[]<sp/>=<sp/>{1,2,3};</highlight></codeline>
+<codeline><highlight class="normal">vector<sp/>=<sp/>array;//Generate<sp/>Vector<sp/>from<sp/>array</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vector.get(i);//Get<sp/>int<sp/>from<sp/>position<sp/>i</highlight></codeline>
+<codeline><highlight class="normal">vector[i];//get<sp/>int<sp/>from<sp/>position<sp/>i</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vector.set(i,v);//Set<sp/>int<sp/>at<sp/>position<sp/>i<sp/>to<sp/>equal<sp/>v</highlight></codeline>
+<codeline><highlight class="normal">vector[i]=v;//set<sp/>int<sp/>at<sp/>position<sp/>i<sp/>to<sp/>equal<sp/>v</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vector.size()<sp/>//Get<sp/>how<sp/>many<sp/>elements<sp/>the<sp/>Vector<sp/>has</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//Iterate<sp/>through<sp/>a<sp/>Vector:</highlight></codeline>
+<codeline><highlight class="normal">for(Index<sp/>i<sp/>=0;i&lt;vector.size();i++){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>int<sp/>value<sp/>=<sp/>vector[i];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting> </para><para>There are various type aliases in place to prevent using the template parameters. They all use the following syntax: <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>[size][prefix]</computeroutput> </para><para>Prefixes exist for every primitive type and are the first letter of the primitive name. For example, the prefix for a <computeroutput>float</computeroutput> would be <computeroutput>f</computeroutput> and the prefix for an <computeroutput>int</computeroutput> would be <computeroutput>i</computeroutput>. Primitives with modifiers simply add the letter. The prefixed for an <computeroutput>unsigned char</computeroutput> would be <computeroutput>uc</computeroutput> and the prefix for a <computeroutput>long long int</computeroutput> would be <computeroutput>lli</computeroutput> </para><para>Sizes exist for vertices up to 5 objects </para><para>For example, to create a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> that is made up of 4 floats, you would use <computeroutput>Vector4f</computeroutput>. For a <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> of 2 unsigned ints, you would use <computeroutput>Vector2ui</computeroutput> <simplesect kind="see"><para><ref refid="d5/d79/a00030" kindref="compound">Matrix</ref> </para></simplesect>
+<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>what the <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> is made of and calculates with. Can be any type/ </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>N</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>amount of elements in the <computeroutput><ref refid="dc/dee/a00053" kindref="compound">Vector</ref></computeroutput> which must be greater than 0. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
 </para>    </detaileddescription>
     <inheritancegraph>
-      <node id="690">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="df/d61/a00031"/>
-      </node>
-      <node id="689">
-        <label>mc::gfx::ogl::VertexArray</label>
-        <link refid="dc/dee/a00053"/>
-        <childnode refid="690" relation="public-inheritance">
+      <node id="664">
+        <label>mc::Matrix&lt; T, W, H &gt;</label>
+        <link refid="d5/d79/a00030"/>
+        <childnode refid="663" relation="public-inheritance">
         </childnode>
+      </node>
+      <node id="665">
+        <label>mc::Vector&lt; float, 3 &gt;</label>
+        <link refid="dc/dee/a00053"/>
+        <childnode refid="662" relation="template-instance">
+          <edgelabel>&lt; float, 3 &gt;</edgelabel>
+        </childnode>
+      </node>
+      <node id="663">
+        <label>mc::Vector&lt; MatrixRow&lt; T, H &gt;, W &gt;</label>
+        <link refid="dc/dee/a00053"/>
+        <childnode refid="662" relation="template-instance">
+          <edgelabel>&lt; MatrixRow&lt; T, H &gt;, W &gt;</edgelabel>
+        </childnode>
+      </node>
+      <node id="662">
+        <label>mc::Vector&lt; T, N &gt;</label>
+        <link refid="dc/dee/a00053"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="692">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="df/d61/a00031"/>
+      <node id="667">
+        <label>T</label>
       </node>
-      <node id="691">
-        <label>mc::gfx::ogl::VertexArray</label>
+      <node id="666">
+        <label>mc::Vector&lt; T, N &gt;</label>
         <link refid="dc/dee/a00053"/>
-        <childnode refid="692" relation="public-inheritance">
+        <childnode refid="667" relation="usage">
+          <edgelabel>content</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/OGL.h" line="832" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="832" bodyend="894"/>
+    <location file="include/MACE/Utility/Vector.h" line="89" column="1" bodyfile="include/MACE/Utility/Vector.h" bodystart="89" bodyend="666"/>
     <listofallmembers>
-      <member refid="dc/dee/a00053_a35ffa9ced897f667d5cae79bfabd7b38_1a35ffa9ced897f667d5cae79bfabd7b38" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>addBuffer</name></member>
-      <member refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>bind</name></member>
-      <member refid="dc/dee/a00053_1a008295676e3f4f9beb38d39b43adc9d1" prot="private" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>bindIndex</name></member>
-      <member refid="dc/dee/a00053_1a5519c5413dfc866a346b9003ceecb813" prot="private" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>buffers</name></member>
-      <member refid="dc/dee/a00053_a1ea8420821e8d076d3b39ac39456537b_1a1ea8420821e8d076d3b39ac39456537b" prot="public" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>destroy</name></member>
-      <member refid="dc/dee/a00053_a6b6c9e9784fb18e6ddbd6a160b153abe_1a6b6c9e9784fb18e6ddbd6a160b153abe" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>draw</name></member>
-      <member refid="dc/dee/a00053_a8c79d8d0ffe0bdb39f89e4de7ca88143_1a8c79d8d0ffe0bdb39f89e4de7ca88143" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getBuffers</name></member>
-      <member refid="dc/dee/a00053_ad275131e38080d91531c121ff11cb620_1ad275131e38080d91531c121ff11cb620" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getBuffers</name></member>
-      <member refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getID</name></member>
-      <member refid="dc/dee/a00053_a71f13fe1a17d70c6e2488e75d9877d5a_1a71f13fe1a17d70c6e2488e75d9877d5a" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getIndices</name></member>
-      <member refid="dc/dee/a00053_abd29e22869199e6dfbe38debdb2c9c15_1abd29e22869199e6dfbe38debdb2c9c15" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getIndices</name></member>
-      <member refid="dc/dee/a00053_a8a2635652fb0b34b6693f74b7b8d95da_1a8a2635652fb0b34b6693f74b7b8d95da" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getVertexNumber</name></member>
-      <member refid="dc/dee/a00053_aec2a55a0ef933adacde7f3cd4ad267a7_1aec2a55a0ef933adacde7f3cd4ad267a7" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>getVertexNumber</name></member>
-      <member refid="df/d61/a00031_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>id</name></member>
-      <member refid="dc/dee/a00053_1a24ebdbf6aac09e9a5ec4611a2638942f" prot="private" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>indices</name></member>
-      <member refid="dc/dee/a00053_a2e5f1ca422d96bc7861e29116b1bfb81_1a2e5f1ca422d96bc7861e29116b1bfb81" prot="public" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>init</name></member>
-      <member refid="dc/dee/a00053_ab19cf7b7a163b0585b2f8b8c6550251b_1ab19cf7b7a163b0585b2f8b8c6550251b" prot="public" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>isCreated</name></member>
-      <member refid="dc/dee/a00053_a3ae4c47857605a7fa3aa056cf62d3238_1a3ae4c47857605a7fa3aa056cf62d3238" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>loadIndices</name></member>
-      <member refid="dc/dee/a00053_a32a897023c4852401ddab8664a2c40c5_1a32a897023c4852401ddab8664a2c40c5" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>loadVertices</name></member>
-      <member refid="dc/dee/a00053_ac71bd3e70562dfe5429663f3702e79f4_1ac71bd3e70562dfe5429663f3702e79f4" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>operator!=</name></member>
-      <member refid="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::VertexArray</scope><name>operator!=</name></member>
-      <member refid="dc/dee/a00053_aa33272510457f54f9f706c03beaf8f5b_1aa33272510457f54f9f706c03beaf8f5b" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>operator==</name></member>
-      <member refid="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::VertexArray</scope><name>operator==</name></member>
-      <member refid="dc/dee/a00053_ab38f6e4f638d5793fa691837b7a5bc3d_1ab38f6e4f638d5793fa691837b7a5bc3d" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>setBuffers</name></member>
-      <member refid="dc/dee/a00053_a5a05c7e3a7bda6613567460be3e2bef7_1a5a05c7e3a7bda6613567460be3e2bef7" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>setIndices</name></member>
-      <member refid="dc/dee/a00053_aa1641edcb35d6f1f9c6e9800ffafd996_1aa1641edcb35d6f1f9c6e9800ffafd996" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>setVertexNumber</name></member>
-      <member refid="dc/dee/a00053_ad4eb51ec059a94870c5dd357a6703ca7_1ad4eb51ec059a94870c5dd357a6703ca7" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>storeDataInAttributeList</name></member>
-      <member refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>unbind</name></member>
-      <member refid="dc/dee/a00053_1a79617a44429a00205ac254a6812d53f4" prot="private" virt="non-virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>vertexNumber</name></member>
-      <member refid="df/d61/a00031_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" virt="virtual"><scope>mc::gfx::ogl::VertexArray</scope><name>~Object</name></member>
+      <member refid="dc/dee/a00053_a1cb61e23c56abeb0b1d4c1a8b569e831_1a1cb61e23c56abeb0b1d4c1a8b569e831" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>begin</name></member>
+      <member refid="dc/dee/a00053_ac5913b24ed4cb38173a1492d05cb5ff2_1ac5913b24ed4cb38173a1492d05cb5ff2" prot="protected" virt="non-virtual"><scope>mc::Vector</scope><name>content</name></member>
+      <member refid="dc/dee/a00053_a728eef3a0e46669e5c7be8792a8b7b26_1a728eef3a0e46669e5c7be8792a8b7b26" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>end</name></member>
+      <member refid="dc/dee/a00053_abb14d1d219fbd5cc3c9a6c50e4334986_1abb14d1d219fbd5cc3c9a6c50e4334986" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>flatten</name></member>
+      <member refid="dc/dee/a00053_a699b2e331ade356257fb185280019b87_1a699b2e331ade356257fb185280019b87" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>get</name></member>
+      <member refid="dc/dee/a00053_a7595892f896b87fbb58d2c36be3389a8_1a7595892f896b87fbb58d2c36be3389a8" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>get</name></member>
+      <member refid="dc/dee/a00053_ad8649fb50d1cebdc4f7e2886f445560a_1ad8649fb50d1cebdc4f7e2886f445560a" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>getContents</name></member>
+      <member refid="dc/dee/a00053_aac3af5465ade1ef1c7b41b579fb6099e_1aac3af5465ade1ef1c7b41b579fb6099e" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>getContents</name></member>
+      <member refid="dc/dee/a00053_a4be78cbc5b6bcbe9488f5c3cd8ffa2e9_1a4be78cbc5b6bcbe9488f5c3cd8ffa2e9" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator!=</name></member>
+      <member refid="dc/dee/a00053_a7eb2384ab474fa1a0ba5171a49139e5c_1a7eb2384ab474fa1a0ba5171a49139e5c" prot="public" virt="virtual"><scope>mc::Vector</scope><name>operator()</name></member>
+      <member refid="dc/dee/a00053_a572904b63c9e2d35ca6625ad2f2b1627_1a572904b63c9e2d35ca6625ad2f2b1627" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator()</name></member>
+      <member refid="dc/dee/a00053_a743ef1fe1d428bd3fabc37adb783aca9_1a743ef1fe1d428bd3fabc37adb783aca9" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator*</name></member>
+      <member refid="dc/dee/a00053_a073741c6651aad098b8ee5adea09eaa4_1a073741c6651aad098b8ee5adea09eaa4" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator*</name></member>
+      <member refid="dc/dee/a00053_a2727025232d2c2c491b871299babcdbc_1a2727025232d2c2c491b871299babcdbc" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator*=</name></member>
+      <member refid="dc/dee/a00053_af95e59326592e258341dfd2a02d628ff_1af95e59326592e258341dfd2a02d628ff" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator*=</name></member>
+      <member refid="dc/dee/a00053_a41f3ca26b2d43a91797df7499afcc5c5_1a41f3ca26b2d43a91797df7499afcc5c5" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator+</name></member>
+      <member refid="dc/dee/a00053_ade01989965997b8fc323a3b96eae8bfa_1ade01989965997b8fc323a3b96eae8bfa" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator+</name></member>
+      <member refid="dc/dee/a00053_add67c85219f90da24ad00508be384ab4_1add67c85219f90da24ad00508be384ab4" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator+=</name></member>
+      <member refid="dc/dee/a00053_ab9e06146219477eb114cfe5ec0484879_1ab9e06146219477eb114cfe5ec0484879" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator+=</name></member>
+      <member refid="dc/dee/a00053_ac486a0798fd812967cb543c23bf60e3b_1ac486a0798fd812967cb543c23bf60e3b" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator-</name></member>
+      <member refid="dc/dee/a00053_a4b82b18836e6dfc6a4a09d40baf63ffd_1a4b82b18836e6dfc6a4a09d40baf63ffd" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator-</name></member>
+      <member refid="dc/dee/a00053_a4a0aee255e45235c029a51cad50b4f2c_1a4a0aee255e45235c029a51cad50b4f2c" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator-=</name></member>
+      <member refid="dc/dee/a00053_a00a55f32dca64a72e7b29a3b3c350ef5_1a00a55f32dca64a72e7b29a3b3c350ef5" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator-=</name></member>
+      <member refid="dc/dee/a00053_ac25e36e26f8ffb471a47b101b289d3ef_1ac25e36e26f8ffb471a47b101b289d3ef" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator/</name></member>
+      <member refid="dc/dee/a00053_ab8095bda1d18b74aafc434a0f1b2bcd4_1ab8095bda1d18b74aafc434a0f1b2bcd4" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator/</name></member>
+      <member refid="dc/dee/a00053_aaa157b6d3969ccd93e40efd9c6656333_1aaa157b6d3969ccd93e40efd9c6656333" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator/=</name></member>
+      <member refid="dc/dee/a00053_a63c0c33c81fa939285ca1c83120ce172_1a63c0c33c81fa939285ca1c83120ce172" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator/=</name></member>
+      <member refid="dc/dee/a00053_a3cf2432f2b843c9fd3a90ab73e600ee0_1a3cf2432f2b843c9fd3a90ab73e600ee0" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator&lt;</name></member>
+      <member refid="dc/dee/a00053_a0bf7bca5cdd4235d9d8c0707a83bbbf0_1a0bf7bca5cdd4235d9d8c0707a83bbbf0" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator&lt;&lt;</name></member>
+      <member refid="dc/dee/a00053_a796b41e71ce3fec49a5b1891c13290ee_1a796b41e71ce3fec49a5b1891c13290ee" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator&lt;=</name></member>
+      <member refid="dc/dee/a00053_a4ea0c891100c07ca827fb2b63ff4ab40_1a4ea0c891100c07ca827fb2b63ff4ab40" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator==</name></member>
+      <member refid="dc/dee/a00053_afd548f2844ce721daa85501dedc8fd6f_1afd548f2844ce721daa85501dedc8fd6f" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator&gt;</name></member>
+      <member refid="dc/dee/a00053_af3d351c9d80e71ce467749dd6587b49f_1af3d351c9d80e71ce467749dd6587b49f" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator&gt;=</name></member>
+      <member refid="dc/dee/a00053_a8955aa9951f184610444f10051699211_1a8955aa9951f184610444f10051699211" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator[]</name></member>
+      <member refid="dc/dee/a00053_af56e7800e947754a7c7e508301ee3f9a_1af56e7800e947754a7c7e508301ee3f9a" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>operator[]</name></member>
+      <member refid="dc/dee/a00053_a4e214d776fd7b7e4b163c0ebb23ec3c4_1a4e214d776fd7b7e4b163c0ebb23ec3c4" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>set</name></member>
+      <member refid="dc/dee/a00053_a2e674c851be8cf10808c86895e9ca86f_1a2e674c851be8cf10808c86895e9ca86f" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>setContents</name></member>
+      <member refid="dc/dee/a00053_a57b55a629453b1d1e80d81c56269e833_1a57b55a629453b1d1e80d81c56269e833" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>setContents</name></member>
+      <member refid="dc/dee/a00053_a6f08e4cabe236a4f317bc2b0f8f3d96c_1a6f08e4cabe236a4f317bc2b0f8f3d96c" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>size</name></member>
+      <member refid="dc/dee/a00053_a7c2fa3ae75ebb6d155aa3e3aa140ce09_1a7c2fa3ae75ebb6d155aa3e3aa140ce09" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>Vector</name></member>
+      <member refid="dc/dee/a00053_a417fb70d18a6f7c59b42c451dd396189_1a417fb70d18a6f7c59b42c451dd396189" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>Vector</name></member>
+      <member refid="dc/dee/a00053_a417ea1abf7c631482d80c04b05003bb2_1a417ea1abf7c631482d80c04b05003bb2" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>Vector</name></member>
+      <member refid="dc/dee/a00053_ad81a516cd25fe7e71ae9a1a01c8e74c5_1ad81a516cd25fe7e71ae9a1a01c8e74c5" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>Vector</name></member>
+      <member refid="dc/dee/a00053_a9f2fe50f9873007c05fe0bee3f5def76_1a9f2fe50f9873007c05fe0bee3f5def76" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>Vector</name></member>
+      <member refid="dc/dee/a00053_a9cd50db0b1a697ff4368a1072e99182d_1a9cd50db0b1a697ff4368a1072e99182d" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>Vector</name></member>
+      <member refid="dc/dee/a00053_a55f97b148e33cadd1a577aa3e9c132a9_1a55f97b148e33cadd1a577aa3e9c132a9" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>w</name></member>
+      <member refid="dc/dee/a00053_af7b4b0cd42037f15e3d7e7f97fb155ba_1af7b4b0cd42037f15e3d7e7f97fb155ba" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>x</name></member>
+      <member refid="dc/dee/a00053_ac7798d8afd7ef39232120883e62208f0_1ac7798d8afd7ef39232120883e62208f0" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>xy</name></member>
+      <member refid="dc/dee/a00053_a0ec930835d4a5cd53406c5d0f7c61ee5_1a0ec930835d4a5cd53406c5d0f7c61ee5" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>xyz</name></member>
+      <member refid="dc/dee/a00053_a786e32b6cdfd5e73e93390d82710c0ee_1a786e32b6cdfd5e73e93390d82710c0ee" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>xyzw</name></member>
+      <member refid="dc/dee/a00053_a673cc1fbb20b74e1c873e77cc54889f5_1a673cc1fbb20b74e1c873e77cc54889f5" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>y</name></member>
+      <member refid="dc/dee/a00053_ab9926b56accea64b6b033712888fec56_1ab9926b56accea64b6b033712888fec56" prot="public" virt="non-virtual"><scope>mc::Vector</scope><name>z</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

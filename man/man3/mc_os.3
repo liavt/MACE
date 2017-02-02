@@ -1,4 +1,4 @@
-.TH "mc::os" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::os" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -37,7 +37,10 @@ mc::os \- Namespace with functions related to the operating system like keyboard
 .RI "char * \fBasctime\fP (char *buffer, std::size_t bufSize, const std::tm *time)"
 .br
 .ti -1c
-.RI "std::size_t * \fBmbsrtowcs\fP (std::size_t *returnValue, wchar_t *wcstr, std::size_t sizeInWords, const char **mbstr, std::size_t count, mbstate_t *mbstate)"
+.RI "FILE * \fBfopen\fP (FILE **result, const char *filename, const char *mode)"
+.br
+.ti -1c
+.RI "std::size_t \fBmbsrtowcs\fP (std::size_t *returnValue, wchar_t *wcstr, std::size_t sizeInWords, const char **mbstr, std::size_t count, mbstate_t *mbstate)"
 .br
 .ti -1c
 .RI "void \fBassert\fP (const bool cond, const std::string &message)"
@@ -55,6 +58,8 @@ Also contains cross-platform safer versions of many std functions\&.
 \fBTodo\fP
 .RS 4
 Add function for pausing the console 
+.PP
+Add memory functions like memcpy and memmove 
 .RE
 .PP
 
@@ -68,11 +73,13 @@ Add function for pausing the console
 
 .SS "char* mc::os::ctime (char * buffer, std::size_t bufSize, const std::time_t * time)"
 
+.SS "FILE* mc::os::fopen (FILE ** result, const char * filename, const char * mode)"
+
 .SS "std::tm* mc::os::gmtime (std::tm * result, const std::time_t * time)"
 
 .SS "std::tm* mc::os::localtime (std::tm * result, const std::time_t * time)"
 
-.SS "std::size_t* mc::os::mbsrtowcs (std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate)"
+.SS "std::size_t mc::os::mbsrtowcs (std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate)"
 
 .SH "Author"
 .PP 

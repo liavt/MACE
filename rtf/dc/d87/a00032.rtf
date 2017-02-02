@@ -82,25 +82,20 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::ogl::PixelPackBuffer Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer}
-{\bkmkstart AAAAAAABQU}
-{\bkmkend AAAAAAABQU}
+mc::gfx::ogl::Object Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object}
+{\bkmkstart AAAAAAABTH}
+{\bkmkend AAAAAAABTH}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Special buffer that excels at asynchronous pixel transfer operations. }}\par
+Represents a OpenGL object in memory. }}\par
 {
 {\f2 #include <OGL.h>}}\par
-Inheritance diagram for mc::gfx::ogl::PixelPackBuffer:{
+Inheritance diagram for mc::gfx::ogl::Object:{
 \pard\plain 
 \par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d31/a00208.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::gfx::ogl::PixelPackBuffer:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d3/de5/a00209.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -109,103 +104,24 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b PixelPackBuffer} () noexcept\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b isCreated} () const  override\par
+virtual {\b ~Object} ()=default\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Queries OpenGL whether this {\b Object}'s ID is a valid object. }{
+Virtual destructor for subclasses and safety. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} () override\par
+virtual void {\b init} ()=0\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Calls the corresponding glCreate* function and assigns an ID. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () override\par
+virtual void {\b destroy} ()=0\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Calls the corresponding glDestroy* function and deletes the ID. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setData} (const ptrdiff_t &dataSize, const void *data, const {\b Enum} drawType=GL_DYNAMIC_DRAW)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates and initalizes the data store for this {\f2 {\b Buffer}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setDataRange} (const {\b Index} offset, const ptrdiff_t &dataSize, const void *data)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Sets data in a range of the buffer. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b copyData} ({\b Buffer} &other, const ptrdiff_t &size, const {\b Index} readOffset=0, const {\b Index} writeOffset=0)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Copy part of the data store of this {\f2 {\b Buffer}}  into another {\f2 {\b Buffer}}  }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void * {\b map} (const {\b Enum} access=GL_READ_WRITE)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Maps the data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void * {\b mapRange} (const {\b Index} offset, const {\b Size} length, const unsigned int access)\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Maps a range of data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b unmap} ()\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unmaps the buffer. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b Enum} {\b getBufferType} () const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the buffer type for this buffer. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Buffer} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator==} (const {\b Object} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Buffer} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b operator!=} (const {\b Object} &other) const \par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -223,10 +139,44 @@ Unbinds this {\f2 {\b Object}}  which is equivalent to binding ID 0. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual bool {\b isCreated} () const  =0\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Queries OpenGL whether this {\b Object}'s ID is a valid object. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b Index} {\b getID} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Retrieves the current ID that this {\f2 {\b Object}}  represents. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator==} (const {\b Object} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are equal. }{
+}\par
+}}
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator!=} (const {\b Object} &other) const \par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Compares if 2 {\f2 Objects}  are not equal. }{
+}\par
+}}
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected Member Functions\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b bindIndex} (const {\b Index} {\b id}) const  =0\par
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Intended to be overloaded to bind to a certain index. }{
 }\par
 }}
 }
@@ -249,44 +199,69 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Special buffer that excels at asynchronous pixel transfer operations. \par
+Represents a OpenGL object in memory. \par
 }
 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The {\f2 {\b PixelUnpackBuffer}}  is fast at reading pixels while the {\f2 {\b PixelPackBuffer}}  is fast at writing pixels. \par
-Not to be confused with a {\f2 {\b FrameBuffer}}  or {\f2 {\b Texture}.}  \par
+All abstractions for OpenGL objects override this. \par
+Due to how the OpenGL model works, using an OpenGL function outside of a thread with a context will throw an error. Thus, this class does not follow the RAII model. \par
+A subclass of {\f2 {\b Object}}  will observe the following rules:{
+\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+The constructor and destructor will do nothing, as there is no guarantee that the {\f2 {\b Object}}  will be declared in a OpenGL thread.\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+The {\b init()} and {\b destroy()} functions must be called in an OpenGL thread and will call the coressponding glCreate* and glDestroy* functions\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+The {\b bind()} and {\b unbind()} functions must be called in an OpenGL thread and will call the coressponding glBind* functions.\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+It will have an ID generated by glCreate* and be deleted in glDelete*.\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b bind()} will use the ID created by glCreate* and no other\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b isCreated()} has to be called in an OpenGL thread\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+It will override == and !=\par}
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/Pixel_Buffer_Object} \par
-}}{
-Definition at line 679 of file OGL.h.}\par
+See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer} \par
+{\f2 https://www.opengl.org/wiki/OpenGL_Object} \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid create an RAII wrapper which calls {\b init()} and {\b destroy()} automatically \par
+store what object is currently bound. static {\b Object} getBoundObject(), bool isBound() \par
+}
+}{
+Definition at line 98 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v PixelPackBuffer\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:PixelPackBuffer}
+{\xe \v ~Object\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:~Object}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::gfx::ogl::PixelPackBuffer::PixelPackBuffer (){\f2 [noexcept]}}}
+virtual mc::gfx::ogl::Object::~Object (){\f2 [virtual]}, {\f2 [default]}}}
 \par
-{\bkmkstart AAAAAAABQV}
-{\bkmkend AAAAAAABQV}
+{\bkmkstart AAAAAAABTI}
+{\bkmkend AAAAAAABTI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Virtual destructor for subclasses and safety. }}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v bind\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:bind}
+{\xe \v bind\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:bind}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOC}
-{\bkmkend AAAAAAABOC}
+{\bkmkstart AAAAAAABDX}
+{\bkmkend AAAAAAABDX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -318,55 +293,32 @@ Exceptions:\par}
 {\row }
 }
 }}
-{\xe \v copyData\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:copyData}
+{\xe \v bindIndex\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:bindIndex}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::copyData ({\b Buffer} &  {\i other}, const ptrdiff_t &  {\i size}, const {\b Index}  {\i readOffset} = {\f2 0}, const {\b Index}  {\i writeOffset} = {\f2 0}){\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::bindIndex (const {\b Index}  {\i id}) const{\f2 [protected]}, {\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABOD}
-{\bkmkend AAAAAAABOD}
+{\bkmkstart AAAAAAABTJ}
+{\bkmkend AAAAAAABTJ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Copy part of the data store of this {\f2 {\b Buffer}}  into another {\f2 {\b Buffer}}  }}\par
+Intended to be overloaded to bind to a certain index. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
+{\b Object::bind() const }and {\b Object::unbind() const }both use this function. {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Parameters:\par}
 \pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{Target {\f2 {\b Buffer}}  to copy into \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i size} \cell }{How much data to copy \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i readOffset} \cell }{How much data to offset by in this {\f2 {\b Buffer}}  \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i writeOffset} \cell }{Where to write the data in the target {\f2 {\b Buffer}}  \cell }
+{{\i id} \cell }{Index to bind to. If it is 0, it needs to be unbinded. \cell }
 {\row }
 }
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer::setData(const ptrdiff_t&, const void*, const Enum)} \par
-{\f2 https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData} \par
-{\b CopyReadBuffer} \par
-{\b CopyWriteBuffer} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
 }{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Exceptions:\par}
@@ -377,15 +329,17 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}}
-{\xe \v destroy\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:destroy}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}}}
+{\xe \v destroy\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::destroy (){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABOE}
-{\bkmkend AAAAAAABOE}
+{\bkmkstart AAAAAAABEA}
+{\bkmkend AAAAAAABEA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -420,35 +374,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTK \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTL \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTM \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABRQ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABSW \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDZ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTN \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTO \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getBufferType\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:getBufferType}
+{\xe \v getID\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:getID}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const {\b Enum} mc::gfx::ogl::Buffer::getBufferType () const{\f2 [inherited]}}}
+{\b Index} mc::gfx::ogl::Object::getID () const}}
 \par
-{\bkmkstart AAAAAAABOG}
-{\bkmkend AAAAAAABOG}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the buffer type for this buffer. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This is based on the class. \par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The buffer type \par
-}}}
-{\xe \v getID\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:getID}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOH}
-{\bkmkend AAAAAAABOH}
+{\bkmkstart AAAAAAABEC}
+{\bkmkend AAAAAAABEC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -462,14 +397,14 @@ When using {\b Object::bind() const }it will bind to this ID. {\b Object::unbind
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID represented by this {\f2 {\b Object}}  \par
 }}}
-{\xe \v init\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:init}
+{\xe \v init\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::init (){\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::init (){\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABOI}
-{\bkmkend AAAAAAABOI}
+{\bkmkstart AAAAAAABEI}
+{\bkmkend AAAAAAABEI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -495,16 +430,16 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTP \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTQ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTR \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABRS \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABSY \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEH \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTS \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTT \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v isCreated\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:isCreated}
+{\xe \v isCreated\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:isCreated}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual bool mc::gfx::ogl::Object::isCreated () const{\f2 [pure virtual]}}}
 \par
-{\bkmkstart AAAAAAABOK}
-{\bkmkend AAAAAAABOK}
+{\bkmkstart AAAAAAABEK}
+{\bkmkend AAAAAAABEK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -530,116 +465,16 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOL \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implemented in {\b mc::gfx::ogl::ShaderProgram} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTU \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Shader} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTV \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::VertexArray} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTW \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Buffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABRT \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::FrameBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABSZ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::Texture} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEJ \\*MERGEFORMAT}{\fldrslt pagenum}}}), {\b mc::gfx::ogl::RenderBuffer} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTX \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::ogl::QueryObject} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABTY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v map\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:map}
+{\xe \v operator!=\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:operator!=}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void* mc::gfx::ogl::Buffer::map (const {\b Enum}  {\i access} = {\f2 GL_READ_WRITE}){\f2 [inherited]}}}
+bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABOM}
-{\bkmkend AAAAAAABOM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Maps the data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-May be slow.\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i access} \cell }{Which access to use. Must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE. \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glMapBuffer} \par
-{\b Buffer::mapRange(const Index, const Size, const unsigned int)} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. \par
-After {\b Buffer::unmap()} is called, the pointer returned may be unsafe. Using it will be undefined. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid When using this function don't forget to use {\b Buffer::unmap()} when you are done using the pointer \par
-This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v mapRange\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:mapRange}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void* mc::gfx::ogl::Buffer::mapRange (const {\b Index}  {\i offset}, const {\b Size}  {\i length}, const unsigned int  {\i access}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABON}
-{\bkmkend AAAAAAABON}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Maps a range of data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i offset} \cell }{The starting offset to map \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i length} \cell }{How much data to map \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i access} \cell }{A combination of access flags to determine how the data will be used. These flags determine how fast or slow the mapping will take. \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glMapBufferRange} \par
-{\b Buffer::map(const Enum)} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. \par
-After {\b Buffer::unmap()} is called, the pointer returned may be unsafe. Using it will be undefined. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid When using this function don't forget to use {\b Buffer::unmap()} when you are done using the pointer \par
-This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v operator!=\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:operator!=}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOO}
-{\bkmkend AAAAAAABOO}
+{\bkmkstart AAAAAAABEN}
+{\bkmkend AAAAAAABEN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -663,45 +498,14 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator!=\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:operator!=}
+{\xe \v operator==\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:operator==}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::Buffer::operator!= (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
+bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABOP}
-{\bkmkend AAAAAAABOP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are not equal. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
-{\b Object::operator==(const Object&) const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are different \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{What to compare with \cell }
-{\row }
-}
-}}
-{\xe \v operator==\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:operator==}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOQ}
-{\bkmkend AAAAAAABOQ}
+{\bkmkstart AAAAAAABEQ}
+{\bkmkend AAAAAAABEQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -725,150 +529,14 @@ Parameters:\par}
 {\row }
 }
 }}
-{\xe \v operator==\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:operator==}
+{\xe \v unbind\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:unbind}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::ogl::Buffer::operator== (const {\b Buffer} &  {\i other}) const{\f2 [inherited]}}}
+virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOR}
-{\bkmkend AAAAAAABOR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Compares if 2 {\f2 Objects}  are equal. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::getID() const} \par
-{\b Object::operator!=(const Object&) const} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether {\f2 this}  and {\f2 other}  are the same \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i other} \cell }{What to compare with \cell }
-{\row }
-}
-}}
-{\xe \v setData\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:setData}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Buffer::setData (const ptrdiff_t &  {\i dataSize}, const void *  {\i data}, const {\b Enum}  {\i drawType} = {\f2 GL_DYNAMIC_DRAW}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOS}
-{\bkmkend AAAAAAABOS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates and initalizes the data store for this {\f2 {\b Buffer}}  }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i dataSize} \cell }{Size of the buffer, measured in bytes. \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i data} \cell }{Pointer to the actual data. Using {\f2 nullptr}  or {\f2 NULL}  will create an empty buffer. \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i drawType} \cell }{Expected usage pattern for the data. GL_DYNAMIC_DRAW by default \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Buffer::setDataRange(const Index, const ptrdiff_t, const void*) \par
-{\b Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)} \par
-{\f2 https://www.opengl.org/wiki/GLAPI/glBufferData} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v setDataRange\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:setDataRange}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::ogl::Buffer::setDataRange (const {\b Index}  {\i offset}, const ptrdiff_t &  {\i dataSize}, const void *  {\i data}){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOT}
-{\bkmkend AAAAAAABOT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Sets data in a range of the buffer. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Does not initialize data. {\b Buffer}:{\b setData(const ptrdiff_t&, const void*, const Enum)} must be called first. {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i offset} \cell }{Offset into the buffer to set the data, measured in bytes \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i dataSize} \cell }{How large the region being inserted is, measured in bytes \cell }
-{\row }
-\trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i data} \cell }{Pointer to the data being inserted \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\f2 https://www.opengl.org/wiki/GLAPI/glBufferSubData} \par
-{\b Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
-{\xe \v unbind\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:unbind}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOU}
-{\bkmkend AAAAAAABOU}
+{\bkmkstart AAAAAAABFB}
+{\bkmkend AAAAAAABFB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -891,54 +559,18 @@ Exceptions:\par}
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Object::bind() const} \par
 }}}
-{\xe \v unmap\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:unmap}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-bool mc::gfx::ogl::Buffer::unmap (){\f2 [inherited]}}}
-\par
-{\bkmkstart AAAAAAABOV}
-{\bkmkend AAAAAAABOV}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unmaps the buffer. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Any mapped points will be deleted and using them will be undefined.\par
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether the data was corrupted during reading. This will be very rare but when it does happen you must reinitialize the data. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Buffer::map(const Enum)} \par
-{\b Buffer::mapRange(const Index, const Size, const unsigned int)} \par
-{\f2 https://www.opengl.org/wiki/GLAPI/glMapBuffer} \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Using a pointer after it was unmapped will be undefined \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Data Documentation\par
 \pard\plain 
-{\xe \v id\:mc::gfx::ogl::PixelPackBuffer}
-{\xe \v mc::gfx::ogl::PixelPackBuffer\:id}
+{\xe \v id\:mc::gfx::ogl::Object}
+{\xe \v mc::gfx::ogl::Object\:id}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
+{\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}}}
 \par
-{\bkmkstart AAAAAAABOW}
-{\bkmkend AAAAAAABOW}
+{\bkmkstart AAAAAAABFC}
+{\bkmkend AAAAAAABFC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -949,7 +581,7 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 164 of file OGL.h.}\par
+Definition at line 182 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

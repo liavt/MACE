@@ -85,8 +85,8 @@
 mc::os Namespace Reference\par \pard\plain 
 {\tc\tcl2 \v mc::os}
 {\xe \v mc::os}
-{\bkmkstart AAAAAAACAY}
-{\bkmkend AAAAAAACAY}
+{\bkmkstart AAAAAAACDQ}
+{\bkmkend AAAAAAACDQ}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -121,7 +121,9 @@ char * {\b ctime} (char *buffer, std::size_t bufSize, const std::time_t *time)\p
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 char * {\b asctime} (char *buffer, std::size_t bufSize, const std::tm *time)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::size_t * {\b mbsrtowcs} (std::size_t *returnValue, wchar_t *wcstr, std::size_t sizeInWords, const char **mbstr, std::size_t count, mbstate_t *mbstate)\par
+FILE * {\b fopen} (FILE **result, const char *filename, const char *mode)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+std::size_t {\b mbsrtowcs} (std::size_t *returnValue, wchar_t *wcstr, std::size_t sizeInWords, const char **mbstr, std::size_t count, mbstate_t *mbstate)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b assert} (const bool cond, const std::string &message)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -138,6 +140,7 @@ Namespace with functions related to the operating system like keyboard input, mo
 Also contains cross-platform safer versions of many std functions.\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid Add function for pausing the console \par
+Add memory functions like memcpy and memmove \par
 }
 }}
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
@@ -150,8 +153,8 @@ Function Documentation\par
 {\b 
 char* mc::os::asctime (char *  {\i buffer}, std::size_t  {\i bufSize}, const std::tm *  {\i time})}}
 \par
-{\bkmkstart AAAAAAACAZ}
-{\bkmkend AAAAAAACAZ}
+{\bkmkstart AAAAAAACDR}
+{\bkmkend AAAAAAACDR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -161,8 +164,8 @@ char* mc::os::asctime (char *  {\i buffer}, std::size_t  {\i bufSize}, const std
 {\b 
 void mc::os::assert (const bool  {\i cond}, const std::string &  {\i message})}}
 \par
-{\bkmkstart AAAAAAACBA}
-{\bkmkend AAAAAAACBA}
+{\bkmkstart AAAAAAACDS}
+{\bkmkend AAAAAAACDS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -172,8 +175,8 @@ void mc::os::assert (const bool  {\i cond}, const std::string &  {\i message})}}
 {\b 
 void mc::os::assert (const bool  {\i cond}, const char *  {\i message} = {\f2 "Assertion\~ failed"})}}
 \par
-{\bkmkstart AAAAAAACBB}
-{\bkmkend AAAAAAACBB}
+{\bkmkstart AAAAAAACDT}
+{\bkmkend AAAAAAACDT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -183,8 +186,19 @@ void mc::os::assert (const bool  {\i cond}, const char *  {\i message} = {\f2 "A
 {\b 
 char* mc::os::ctime (char *  {\i buffer}, std::size_t  {\i bufSize}, const std::time_t *  {\i time})}}
 \par
-{\bkmkstart AAAAAAACBC}
-{\bkmkend AAAAAAACBC}
+{\bkmkstart AAAAAAACDU}
+{\bkmkend AAAAAAACDU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v fopen\:mc::os}
+{\xe \v mc::os\:fopen}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+FILE* mc::os::fopen (FILE **  {\i result}, const char *  {\i filename}, const char *  {\i mode})}}
+\par
+{\bkmkstart AAAAAAACDV}
+{\bkmkend AAAAAAACDV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -194,8 +208,8 @@ char* mc::os::ctime (char *  {\i buffer}, std::size_t  {\i bufSize}, const std::
 {\b 
 std::tm* mc::os::gmtime (std::tm *  {\i result}, const std::time_t *  {\i time})}}
 \par
-{\bkmkstart AAAAAAACBD}
-{\bkmkend AAAAAAACBD}
+{\bkmkstart AAAAAAACDW}
+{\bkmkend AAAAAAACDW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -205,8 +219,8 @@ std::tm* mc::os::gmtime (std::tm *  {\i result}, const std::time_t *  {\i time})
 {\b 
 std::tm* mc::os::localtime (std::tm *  {\i result}, const std::time_t *  {\i time})}}
 \par
-{\bkmkstart AAAAAAACBE}
-{\bkmkend AAAAAAACBE}
+{\bkmkstart AAAAAAACDX}
+{\bkmkend AAAAAAACDX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -214,10 +228,10 @@ std::tm* mc::os::localtime (std::tm *  {\i result}, const std::time_t *  {\i tim
 {\xe \v mc::os\:mbsrtowcs}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::size_t* mc::os::mbsrtowcs (std::size_t *  {\i returnValue}, wchar_t *  {\i wcstr}, std::size_t  {\i sizeInWords}, const char **  {\i mbstr}, std::size_t  {\i count}, mbstate_t *  {\i mbstate})}}
+std::size_t mc::os::mbsrtowcs (std::size_t *  {\i returnValue}, wchar_t *  {\i wcstr}, std::size_t  {\i sizeInWords}, const char **  {\i mbstr}, std::size_t  {\i count}, mbstate_t *  {\i mbstate})}}
 \par
-{\bkmkstart AAAAAAACBF}
-{\bkmkend AAAAAAACBF}
+{\bkmkstart AAAAAAACDY}
+{\bkmkend AAAAAAACDY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }

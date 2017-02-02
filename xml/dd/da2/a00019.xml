@@ -1,227 +1,81 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="dd/da2/a00019" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::FPSComponent</compoundname>
-    <basecompoundref refid="da/d45/a00011" prot="public" virt="non-virtual">mc::gfx::Component</basecompoundref>
-    <includes refid="d4/de8/a00061" local="no">Components.h</includes>
-      <sectiondef kind="public-type">
-      <memberdef kind="typedef" id="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" prot="public" static="no">
-        <type>void(*</type>
-        <definition>typedef void(* mc::gfx::FPSComponent::TickCallbackPtr) (FPSComponent *, Entity *)</definition>
-        <argsstring>)(FPSComponent *, Entity *)</argsstring>
-        <name>TickCallbackPtr</name>
+    <compoundname>mc::gfx::Font</compoundname>
+    <includes refid="d1/d6f/a00063" local="no">Entity2D.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="dd/da2/a00019_1af59e961b38dcb549d3b4262277f72fe4" prot="private" static="no" mutable="no">
+        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Font::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="67" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="67" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="287" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="287" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="dd/da2/a00019_1a131c47b22d1293aea619bba256150c1b" prot="private" static="no" mutable="no">
+        <type><ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        <definition>Size mc::gfx::Font::height</definition>
+        <argsstring></argsstring>
+        <name>height</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="288" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="288" bodyend="-1"/>
       </memberdef>
       </sectiondef>
-      <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="dd/da2/a00019_1a8fb2e8279dbbefc5f436384e8e90248a" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::updatesPerSecond</definition>
-        <argsstring></argsstring>
-        <name>updatesPerSecond</name>
-        <initializer>= 0</initializer>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="dd/da2/a00019_ab907da5fcbee882984d7af883a6e3a3b_1ab907da5fcbee882984d7af883a6e3a3b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="dd/da2/a00019" kindref="compound">Font</ref></type>
+        <definition>static Font mc::gfx::Font::loadFont</definition>
+        <argsstring>(const std::string &amp;name)</argsstring>
+        <name>loadFont</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="85" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="85" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="260" column="1"/>
       </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1a3edbae9c4674a6d1f10bf7251919177f" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::nbUpdates</definition>
-        <argsstring></argsstring>
-        <name>nbUpdates</name>
-        <initializer>= 0</initializer>
+      <memberdef kind="function" id="dd/da2/a00019_aa187b2fac92651ceb87d9f706cade557_1aa187b2fac92651ceb87d9f706cade557" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="dd/da2/a00019" kindref="compound">Font</ref></type>
+        <definition>static Font mc::gfx::Font::loadFont</definition>
+        <argsstring>(const char *name)</argsstring>
+        <name>loadFont</name>
+        <param>
+          <type>const char *</type>
+          <declname>name</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="85" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="85" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1ab14d1818d26b5dcbba1ce8850b94dd93" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::framesPerSecond</definition>
-        <argsstring></argsstring>
-        <name>framesPerSecond</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="86" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="86" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1afc4c4052742cd3a9a67d7d2fd6cf047f" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::nbFrames</definition>
-        <argsstring></argsstring>
-        <name>nbFrames</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="86" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="86" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1a44e338320187585f4587364b61271af3" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::cleansPerSecond</definition>
-        <argsstring></argsstring>
-        <name>cleansPerSecond</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="87" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="87" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1a1fe23b5235596461d09f38ad4bc9d476" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::nbCleans</definition>
-        <argsstring></argsstring>
-        <name>nbCleans</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="87" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="87" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1a479533283037d88833afb0a406f7a4ff" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::hoversPerSecond</definition>
-        <argsstring></argsstring>
-        <name>hoversPerSecond</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="88" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="88" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1a89b8d49cd3751a72b5be0845a3a03fe3" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::nbHovers</definition>
-        <argsstring></argsstring>
-        <name>nbHovers</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="88" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="88" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1a79a8bc3c357ccf2197675705c270f043" prot="private" static="no" mutable="no">
-        <type><ref refid="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" kindref="member">TickCallbackPtr</ref></type>
-        <definition>TickCallbackPtr mc::gfx::FPSComponent::tickCallback</definition>
-        <argsstring></argsstring>
-        <name>tickCallback</name>
-        <initializer>= [] (<ref refid="dd/da2/a00019" kindref="compound">FPSComponent</ref>*, <ref refid="dd/d1b/a00015" kindref="compound">Entity</ref>*) {}</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="90" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="90" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="dd/da2/a00019_1aeeac0c9a8b1162e0a53f94d540a34615" prot="private" static="no" mutable="no">
-        <type>time_t</type>
-        <definition>time_t mc::gfx::FPSComponent::lastTime</definition>
-        <argsstring></argsstring>
-        <name>lastTime</name>
-        <initializer>= 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="92" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="92" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="261" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="dd/da2/a00019_ab02f5e59c34a4d2c306daf419afbd9b8_1ab02f5e59c34a4d2c306daf419afbd9b8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::getUpdatesPerSecond</definition>
-        <argsstring>() const </argsstring>
-        <name>getUpdatesPerSecond</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="69" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a515fb9ca93ffa2f3bcf46c1f47e8e685_1a515fb9ca93ffa2f3bcf46c1f47e8e685" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::getFramesPerSecond</definition>
-        <argsstring>() const </argsstring>
-        <name>getFramesPerSecond</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="70" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_ae8d463b42196b7ce96908dc276bb9ef6_1ae8d463b42196b7ce96908dc276bb9ef6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::getCleansPerSecond</definition>
-        <argsstring>() const </argsstring>
-        <name>getCleansPerSecond</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="71" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a180893854f5ba04f7da77b503b1849e7_1a180893854f5ba04f7da77b503b1849e7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::FPSComponent::getHoversPerSecond</definition>
-        <argsstring>() const </argsstring>
-        <name>getHoversPerSecond</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="72" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_aea57be48e1a23148db36d1b53d158cfe_1aea57be48e1a23148db36d1b53d158cfe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FPSComponent::setTickCallback</definition>
-        <argsstring>(const TickCallbackPtr callback)</argsstring>
-        <name>setTickCallback</name>
+      <memberdef kind="function" id="dd/da2/a00019_ad8d194e0c7421d4d6ee942268555ee84_1ad8d194e0c7421d4d6ee942268555ee84" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::gfx::Font::Font</definition>
+        <argsstring>(const Font &amp;f)</argsstring>
+        <name>Font</name>
         <param>
-          <type>const <ref refid="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" kindref="member">TickCallbackPtr</ref></type>
-          <declname>callback</declname>
+          <type>const <ref refid="dd/da2/a00019" kindref="compound">Font</ref> &amp;</type>
+          <declname>f</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -229,278 +83,212 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="74" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="263" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a4ab3886af9547a106ab00edb252bfc25_1a4ab3886af9547a106ab00edb252bfc25" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" kindref="member">TickCallbackPtr</ref></type>
-        <definition>TickCallbackPtr mc::gfx::FPSComponent::getTickCallback</definition>
+      <memberdef kind="function" id="dd/da2/a00019_ab87c1a3756133093f6838e32115319c2_1ab87c1a3756133093f6838e32115319c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::gfx::Font::Font</definition>
+        <argsstring>(const Index id=0, const Size h=0)</argsstring>
+        <name>Font</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>id</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>h</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="264" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_a519923729ff68871ce1099bba0ab4dec_1a519923729ff68871ce1099bba0ab4dec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Font::destroy</definition>
         <argsstring>()</argsstring>
-        <name>getTickCallback</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="75" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a0933105f99798dd58a97606ebe5b61c3_1a0933105f99798dd58a97606ebe5b61c3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" kindref="member">TickCallbackPtr</ref></type>
-        <definition>const TickCallbackPtr mc::gfx::FPSComponent::getTickCallback</definition>
-        <argsstring>() const </argsstring>
-        <name>getTickCallback</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="76" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-func">
-      <memberdef kind="function" id="dd/da2/a00019_a7f0c3b9d25af123b7385bc49bd2e7bdd_1a7f0c3b9d25af123b7385bc49bd2e7bdd" prot="protected" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FPSComponent::init</definition>
-        <argsstring>(Entity *e) final</argsstring>
-        <name>init</name>
-        <reimplements refid="da/d45/a00011_a54725c3c089320813539927b9cf93e78_1a54725c3c089320813539927b9cf93e78">init</reimplements>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-<para>Called when this <computeroutput><ref refid="da/d45/a00011" kindref="compound">Component</ref></computeroutput> is added to the <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput> via <ref refid="dd/d1b/a00015_a6aa74436ab9806d75212629acc58a736_1a6aa74436ab9806d75212629acc58a736" kindref="member">Entity::addComponent(Component&amp;)</ref>. </para>        </briefdescription>
-        <detaileddescription>
-<para>Required function. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The parent <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="note"><para>This is not called at <ref refid="dd/d1b/a00015_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">Entity::init()</ref>, instead it is called when the component is added to the <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput>. Keep that in mind. </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="78" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a68e91d1b44703a0248f79533161cd930_1a68e91d1b44703a0248f79533161cd930" prot="protected" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::FPSComponent::update</definition>
-        <argsstring>(Entity *e) final</argsstring>
-        <name>update</name>
-        <reimplements refid="da/d45/a00011_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37">update</reimplements>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-<para>Called when <ref refid="dd/d1b/a00015_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">Entity::update()</ref> is called. </para>        </briefdescription>
-        <detaileddescription>
-<para>Required function. </para><para>There is no function to remove a <computeroutput><ref refid="da/d45/a00011" kindref="compound">Component</ref></computeroutput> so this is the only way for a <computeroutput><ref refid="da/d45/a00011" kindref="compound">Component</ref></computeroutput> to be removed from an <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput> </para><para><ref refid="da/d45/a00011_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">Component::destroy(Entity*)</ref> will be called afterwards. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The parent <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Whether this <computeroutput><ref refid="da/d45/a00011" kindref="compound">Component</ref></computeroutput> should be deleted or not. </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="79" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a1a1dbdb28896c3174152349571e97e41_1a1a1dbdb28896c3174152349571e97e41" prot="protected" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FPSComponent::render</definition>
-        <argsstring>(Entity *e) final</argsstring>
-        <name>render</name>
-        <reimplements refid="da/d45/a00011_a55315efee992bdb1caeaaebd151de49f_1a55315efee992bdb1caeaaebd151de49f">render</reimplements>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="80" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a32c41ea9756783415938c108f1a3286e_1a32c41ea9756783415938c108f1a3286e" prot="protected" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FPSComponent::clean</definition>
-        <argsstring>(Entity *e) final</argsstring>
-        <name>clean</name>
-        <reimplements refid="da/d45/a00011_aca617afee4ec19457718c9cecdbad9fe_1aca617afee4ec19457718c9cecdbad9fe">clean</reimplements>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-<para>Called when <ref refid="dd/d1b/a00015_acad662b2fc7163c6c36f4db9f194982e_1acad662b2fc7163c6c36f4db9f194982e" kindref="member">Entity::clean()</ref> is called and it was dirty. </para>        </briefdescription>
-        <detaileddescription>
-<para>This is not required for inheritance. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The parent <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="81" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_a9ba9644f0304b8c8d1e42da6ac494e21_1a9ba9644f0304b8c8d1e42da6ac494e21" prot="protected" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FPSComponent::hover</definition>
-        <argsstring>(Entity *e) final</argsstring>
-        <name>hover</name>
-        <reimplements refid="da/d45/a00011_a832c8255a365af45b49b0d47968824d6_1a832c8255a365af45b49b0d47968824d6">hover</reimplements>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="82" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dd/da2/a00019_ae5f6f16ac0694193728dd13759eb7934_1ae5f6f16ac0694193728dd13759eb7934" prot="protected" static="no" const="no" explicit="no" inline="no" final="yes" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::FPSComponent::destroy</definition>
-        <argsstring>(Entity *e) final</argsstring>
         <name>destroy</name>
-        <reimplements refid="da/d45/a00011_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c">destroy</reimplements>
-        <param>
-          <type><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
         <briefdescription>
-<para>Called when <ref refid="dd/d1b/a00015_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" kindref="member">Entity::destroy()</ref> is called or the <computeroutput><ref refid="da/d45/a00011" kindref="compound">Component</ref></computeroutput> is removed via <ref refid="da/d45/a00011_a2287f51d5468df7a6e672c908a268a37_1a2287f51d5468df7a6e672c908a268a37" kindref="member">Component::update(Entity*)</ref>, whichever comes first. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para>Once <ref refid="da/d45/a00011_a046ce9a51d40b1597165e3e38668ee1c_1a046ce9a51d40b1597165e3e38668ee1c" kindref="member">Component::destroy(Entity*)</ref> is called, it is immediately removed from the <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput>. Required function. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The parent <computeroutput><ref refid="dd/d1b/a00015" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Components.h" line="83" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="266" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_add718ea20eb20a512e9b47030caff993_1add718ea20eb20a512e9b47030caff993" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Font::getCharacter</definition>
+        <argsstring>(const wchar_t character, Letter *let) const </argsstring>
+        <name>getCharacter</name>
+        <param>
+          <type>const wchar_t</type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type><ref refid="dc/d3c/a00028" kindref="compound">Letter</ref> *</type>
+          <declname>let</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><xrefsect id="d8/d84/a00001_1_todo000004"><xreftitle>Todo</xreftitle><xrefdescription><para>find a way to dynamically allocate letters without passing in a pointer </para><para>cache characters </para></xrefdescription></xrefsect></para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="272" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_ae1205d951c9acdf61d301e9d190d2371_1ae1205d951c9acdf61d301e9d190d2371" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Font::setSize</definition>
+        <argsstring>(const Size height)</argsstring>
+        <name>setSize</name>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="274" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_ab3fe63bd719b55860e2bdfeff63807e2_1ab3fe63bd719b55860e2bdfeff63807e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+        <definition>Size&amp; mc::gfx::Font::getSize</definition>
+        <argsstring>()</argsstring>
+        <name>getSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="275" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_ad7075781d64c8bbe498d8821f8300803_1ad7075781d64c8bbe498d8821f8300803" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref> &amp;</type>
+        <definition>const Size&amp; mc::gfx::Font::getSize</definition>
+        <argsstring>() const </argsstring>
+        <name>getSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="276" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_addfb473d31193423717b76534db19419_1addfb473d31193423717b76534db19419" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Font::hasKerning</definition>
+        <argsstring>() const </argsstring>
+        <name>hasKerning</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="278" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_ad8bdac5202b082eac094e70b619d5fe5_1ad8bdac5202b082eac094e70b619d5fe5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="dc/dee/a00053" kindref="compound">Vector</ref>&lt; unsigned int, 2 &gt;</type>
+        <definition>Vector&lt;unsigned int, 2&gt; mc::gfx::Font::getKerning</definition>
+        <argsstring>(const wchar_t prev, const wchar_t current) const </argsstring>
+        <name>getKerning</name>
+        <param>
+          <type>const wchar_t</type>
+          <declname>prev</declname>
+        </param>
+        <param>
+          <type>const wchar_t</type>
+          <declname>current</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="280" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_aa8b87c12495b91a7ee4bafdecdcd1699_1aa8b87c12495b91a7ee4bafdecdcd1699" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::Font::getID</definition>
+        <argsstring>() const </argsstring>
+        <name>getID</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="282" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_a3885a76ecc2d8157b934e354d7e7a93c_1a3885a76ecc2d8157b934e354d7e7a93c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Font::operator==</definition>
+        <argsstring>(const Font &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="dd/da2/a00019" kindref="compound">Font</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="284" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dd/da2/a00019_a0e10985baf41656de23071ca30edd389_1a0e10985baf41656de23071ca30edd389" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Font::operator!=</definition>
+        <argsstring>(const Font &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="dd/da2/a00019" kindref="compound">Font</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="285" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <inheritancegraph>
-      <node id="449">
-        <label>mc::gfx::Component</label>
-        <link refid="da/d45/a00011"/>
-      </node>
-      <node id="448">
-        <label>mc::gfx::FPSComponent</label>
-        <link refid="dd/da2/a00019"/>
-        <childnode refid="449" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="451">
-        <label>mc::gfx::Component</label>
-        <link refid="da/d45/a00011"/>
-      </node>
-      <node id="450">
-        <label>mc::gfx::FPSComponent</label>
-        <link refid="dd/da2/a00019"/>
-        <childnode refid="451" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="include/MACE/Graphics/Components.h" line="65" column="1" bodyfile="include/MACE/Graphics/Components.h" bodystart="65" bodyend="93"/>
+<para><xrefsect id="d7/d46/a00002_1_bug000002"><xreftitle>Bug</xreftitle><xrefdescription><para>non-monospaced fonts dont have correct spacing </para></xrefdescription></xrefsect><xrefsect id="d8/d84/a00001_1_todo000003"><xreftitle>Todo</xreftitle><xrefdescription><para>Make a default font system so people dont have to create new font classes each time they use text </para><para>instead of using an id system add FT_Face </para></xrefdescription></xrefsect></para>    </detaileddescription>
+    <location file="include/MACE/Graphics/Entity2D.h" line="258" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="258" bodyend="289"/>
     <listofallmembers>
-      <member refid="dd/da2/a00019_a32c41ea9756783415938c108f1a3286e_1a32c41ea9756783415938c108f1a3286e" prot="protected" virt="virtual"><scope>mc::gfx::FPSComponent</scope><name>clean</name></member>
-      <member refid="dd/da2/a00019_1a44e338320187585f4587364b61271af3" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>cleansPerSecond</name></member>
-      <member refid="dd/da2/a00019_ae5f6f16ac0694193728dd13759eb7934_1ae5f6f16ac0694193728dd13759eb7934" prot="protected" virt="virtual"><scope>mc::gfx::FPSComponent</scope><name>destroy</name></member>
-      <member refid="dd/da2/a00019_1ab14d1818d26b5dcbba1ce8850b94dd93" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>framesPerSecond</name></member>
-      <member refid="dd/da2/a00019_ae8d463b42196b7ce96908dc276bb9ef6_1ae8d463b42196b7ce96908dc276bb9ef6" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>getCleansPerSecond</name></member>
-      <member refid="dd/da2/a00019_a515fb9ca93ffa2f3bcf46c1f47e8e685_1a515fb9ca93ffa2f3bcf46c1f47e8e685" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>getFramesPerSecond</name></member>
-      <member refid="dd/da2/a00019_a180893854f5ba04f7da77b503b1849e7_1a180893854f5ba04f7da77b503b1849e7" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>getHoversPerSecond</name></member>
-      <member refid="dd/da2/a00019_a4ab3886af9547a106ab00edb252bfc25_1a4ab3886af9547a106ab00edb252bfc25" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>getTickCallback</name></member>
-      <member refid="dd/da2/a00019_a0933105f99798dd58a97606ebe5b61c3_1a0933105f99798dd58a97606ebe5b61c3" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>getTickCallback</name></member>
-      <member refid="dd/da2/a00019_ab02f5e59c34a4d2c306daf419afbd9b8_1ab02f5e59c34a4d2c306daf419afbd9b8" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>getUpdatesPerSecond</name></member>
-      <member refid="dd/da2/a00019_a9ba9644f0304b8c8d1e42da6ac494e21_1a9ba9644f0304b8c8d1e42da6ac494e21" prot="protected" virt="virtual"><scope>mc::gfx::FPSComponent</scope><name>hover</name></member>
-      <member refid="dd/da2/a00019_1a479533283037d88833afb0a406f7a4ff" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>hoversPerSecond</name></member>
-      <member refid="dd/da2/a00019_a7f0c3b9d25af123b7385bc49bd2e7bdd_1a7f0c3b9d25af123b7385bc49bd2e7bdd" prot="protected" virt="virtual"><scope>mc::gfx::FPSComponent</scope><name>init</name></member>
-      <member refid="dd/da2/a00019_1aeeac0c9a8b1162e0a53f94d540a34615" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>lastTime</name></member>
-      <member refid="dd/da2/a00019_1a1fe23b5235596461d09f38ad4bc9d476" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>nbCleans</name></member>
-      <member refid="dd/da2/a00019_1afc4c4052742cd3a9a67d7d2fd6cf047f" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>nbFrames</name></member>
-      <member refid="dd/da2/a00019_1a89b8d49cd3751a72b5be0845a3a03fe3" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>nbHovers</name></member>
-      <member refid="dd/da2/a00019_1a3edbae9c4674a6d1f10bf7251919177f" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>nbUpdates</name></member>
-      <member refid="dd/da2/a00019_a1a1dbdb28896c3174152349571e97e41_1a1a1dbdb28896c3174152349571e97e41" prot="protected" virt="virtual"><scope>mc::gfx::FPSComponent</scope><name>render</name></member>
-      <member refid="dd/da2/a00019_aea57be48e1a23148db36d1b53d158cfe_1aea57be48e1a23148db36d1b53d158cfe" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>setTickCallback</name></member>
-      <member refid="dd/da2/a00019_1a79a8bc3c357ccf2197675705c270f043" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>tickCallback</name></member>
-      <member refid="dd/da2/a00019_a62acb15984659aa1ea5f8e214c4f7155_1a62acb15984659aa1ea5f8e214c4f7155" prot="public" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>TickCallbackPtr</name></member>
-      <member refid="dd/da2/a00019_a68e91d1b44703a0248f79533161cd930_1a68e91d1b44703a0248f79533161cd930" prot="protected" virt="virtual"><scope>mc::gfx::FPSComponent</scope><name>update</name></member>
-      <member refid="dd/da2/a00019_1a8fb2e8279dbbefc5f436384e8e90248a" prot="private" virt="non-virtual"><scope>mc::gfx::FPSComponent</scope><name>updatesPerSecond</name></member>
+      <member refid="dd/da2/a00019_a519923729ff68871ce1099bba0ab4dec_1a519923729ff68871ce1099bba0ab4dec" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>destroy</name></member>
+      <member refid="dd/da2/a00019_ad8d194e0c7421d4d6ee942268555ee84_1ad8d194e0c7421d4d6ee942268555ee84" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>Font</name></member>
+      <member refid="dd/da2/a00019_ab87c1a3756133093f6838e32115319c2_1ab87c1a3756133093f6838e32115319c2" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>Font</name></member>
+      <member refid="dd/da2/a00019_add718ea20eb20a512e9b47030caff993_1add718ea20eb20a512e9b47030caff993" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>getCharacter</name></member>
+      <member refid="dd/da2/a00019_aa8b87c12495b91a7ee4bafdecdcd1699_1aa8b87c12495b91a7ee4bafdecdcd1699" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>getID</name></member>
+      <member refid="dd/da2/a00019_ad8bdac5202b082eac094e70b619d5fe5_1ad8bdac5202b082eac094e70b619d5fe5" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>getKerning</name></member>
+      <member refid="dd/da2/a00019_ab3fe63bd719b55860e2bdfeff63807e2_1ab3fe63bd719b55860e2bdfeff63807e2" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>getSize</name></member>
+      <member refid="dd/da2/a00019_ad7075781d64c8bbe498d8821f8300803_1ad7075781d64c8bbe498d8821f8300803" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>getSize</name></member>
+      <member refid="dd/da2/a00019_addfb473d31193423717b76534db19419_1addfb473d31193423717b76534db19419" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>hasKerning</name></member>
+      <member refid="dd/da2/a00019_1a131c47b22d1293aea619bba256150c1b" prot="private" virt="non-virtual"><scope>mc::gfx::Font</scope><name>height</name></member>
+      <member refid="dd/da2/a00019_1af59e961b38dcb549d3b4262277f72fe4" prot="private" virt="non-virtual"><scope>mc::gfx::Font</scope><name>id</name></member>
+      <member refid="dd/da2/a00019_ab907da5fcbee882984d7af883a6e3a3b_1ab907da5fcbee882984d7af883a6e3a3b" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>loadFont</name></member>
+      <member refid="dd/da2/a00019_aa187b2fac92651ceb87d9f706cade557_1aa187b2fac92651ceb87d9f706cade557" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>loadFont</name></member>
+      <member refid="dd/da2/a00019_a0e10985baf41656de23071ca30edd389_1a0e10985baf41656de23071ca30edd389" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>operator!=</name></member>
+      <member refid="dd/da2/a00019_a3885a76ecc2d8157b934e354d7e7a93c_1a3885a76ecc2d8157b934e354d7e7a93c" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>operator==</name></member>
+      <member refid="dd/da2/a00019_ae1205d951c9acdf61d301e9d190d2371_1ae1205d951c9acdf61d301e9d190d2371" prot="public" virt="non-virtual"><scope>mc::gfx::Font</scope><name>setSize</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

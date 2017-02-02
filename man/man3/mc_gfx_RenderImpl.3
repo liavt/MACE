@@ -1,4 +1,4 @@
-.TH "mc::gfx::RenderImpl" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::RenderImpl" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,22 +20,31 @@ Inherited by \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< Ima
 .RI "virtual \fB~RenderImpl\fP () noexcept=default"
 .br
 .ti -1c
-.RI "virtual void \fBresize\fP (const \fBSize\fP width, const \fBSize\fP height)=0"
+.RI "virtual void \fBresize\fP (const \fBSize\fP, const \fBSize\fP)"
 .br
 .ti -1c
-.RI "virtual void \fBinit\fP (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)=0"
+.RI "virtual void \fBinit\fP (const \fBSize\fP, const \fBSize\fP)=0"
 .br
 .ti -1c
-.RI "virtual void \fBsetUp\fP (\fBos::WindowModule\fP *win, \fBRenderQueue\fP *queue)=0"
+.RI "virtual void \fBinitEntity\fP (\fBGraphicsEntity\fP *)"
 .br
 .ti -1c
-.RI "virtual void \fBrender\fP (\fBos::WindowModule\fP *win, \fBGraphicsEntity\fP *entity)=0"
+.RI "virtual void \fBsetUp\fP (\fBos::WindowModule\fP *, \fBRenderQueue\fP *)"
 .br
 .ti -1c
-.RI "virtual void \fBtearDown\fP (\fBos::WindowModule\fP *win, \fBRenderQueue\fP *queue)=0"
+.RI "virtual void \fBrenderEntity\fP (\fBos::WindowModule\fP *, \fBGraphicsEntity\fP *entity)=0"
+.br
+.ti -1c
+.RI "virtual void \fBtearDown\fP (\fBos::WindowModule\fP *, \fBRenderQueue\fP *)"
+.br
+.ti -1c
+.RI "virtual void \fBcleanEntity\fP (\fBGraphicsEntity\fP *)"
 .br
 .ti -1c
 .RI "virtual void \fBdestroy\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBdestroyEntity\fP (\fBGraphicsEntity\fP *)"
 .br
 .in -1c
 .SS "Friends"
@@ -68,6 +77,29 @@ Definition at line 105 of file Renderer\&.h\&.
 
 .SH "Member Function Documentation"
 .PP 
+.SS "virtual void mc::gfx::RenderImpl::cleanEntity (\fBGraphicsEntity\fP *)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::gfx::RenderProtocol< T >\fP\&.
+.PP
+Definition at line 150 of file Renderer\&.h\&.
 .SS "virtual void mc::gfx::RenderImpl::destroy ()\fC [pure virtual]\fP"
 
 .PP
@@ -89,7 +121,30 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [pure virtual]\fP"
+.SS "virtual void mc::gfx::RenderImpl::destroyEntity (\fBGraphicsEntity\fP *)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::gfx::RenderProtocol< T >\fP\&.
+.PP
+Definition at line 161 of file Renderer\&.h\&.
+.SS "virtual void mc::gfx::RenderImpl::init (const \fBSize\fP, const \fBSize\fP)\fC [pure virtual]\fP"
 
 .PP
 \fBWarning:\fP
@@ -110,7 +165,30 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::render (\fBos::WindowModule\fP * win, \fBGraphicsEntity\fP * entity)\fC [pure virtual]\fP"
+.SS "virtual void mc::gfx::RenderImpl::initEntity (\fBGraphicsEntity\fP *)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+.PP
+Definition at line 128 of file Renderer\&.h\&.
+.SS "virtual void mc::gfx::RenderImpl::renderEntity (\fBos::WindowModule\fP *, \fBGraphicsEntity\fP * entity)\fC [pure virtual]\fP"
 
 .PP
 \fBWarning:\fP
@@ -131,7 +209,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::resize (const \fBSize\fP width, const \fBSize\fP height)\fC [pure virtual]\fP"
+.SS "virtual void mc::gfx::RenderImpl::resize (const \fBSize\fP, const \fBSize\fP)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
 \fBWarning:\fP
@@ -151,8 +229,10 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::setUp (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
+Reimplemented in \fBmc::gfx::RenderProtocol< T >\fP\&.
+.PP
+Definition at line 117 of file Renderer\&.h\&.
+.SS "virtual void mc::gfx::RenderImpl::setUp (\fBos::WindowModule\fP *, \fBRenderQueue\fP *)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
 \fBWarning:\fP
@@ -172,8 +252,10 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
-.SS "virtual void mc::gfx::RenderImpl::tearDown (\fBos::WindowModule\fP * win, \fBRenderQueue\fP * queue)\fC [pure virtual]\fP"
+Reimplemented in \fBmc::gfx::RenderProtocol< T >\fP\&.
+.PP
+Definition at line 134 of file Renderer\&.h\&.
+.SS "virtual void mc::gfx::RenderImpl::tearDown (\fBos::WindowModule\fP *, \fBRenderQueue\fP *)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
 \fBWarning:\fP
@@ -193,7 +275,9 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::RenderProtocol< Letter >\fP, \fBmc::gfx::RenderProtocol< T >\fP, \fBmc::gfx::RenderProtocol< ProgressBar >\fP, and \fBmc::gfx::RenderProtocol< Image >\fP\&.
+Reimplemented in \fBmc::gfx::RenderProtocol< T >\fP\&.
+.PP
+Definition at line 144 of file Renderer\&.h\&.
 .SH "Friends And Related Function Documentation"
 .PP 
 .SS "friend class \fBRenderer\fP\fC [friend]\fP"

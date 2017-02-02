@@ -82,401 +82,241 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::FPSComponent Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent}
-{\bkmkstart AAAAAAABHM}
-{\bkmkend AAAAAAABHM}
+mc::gfx::Font Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::Font}
+{\xe \v mc::gfx::Font}
+{\bkmkstart AAAAAAABJZ}
+{\bkmkend AAAAAAABJZ}
 \par
 {
-{\f2 #include <Components.h>}}\par
-Inheritance diagram for mc::gfx::FPSComponent:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d3/d65/a00154.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::gfx::FPSComponent:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d3/df8/a00155.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Public Types\par
-\pard\plain 
-
-{
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-typedef void(* {\b TickCallbackPtr}) ({\b FPSComponent} *, {\b Entity} *)\par
-}
+{\f2 #include <Entity2D.h>}}\par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b getUpdatesPerSecond} () const \par
+{\b Font} (const {\b Font} &f)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b getFramesPerSecond} () const \par
+{\b Font} (const {\b Index} id=0, const {\b Size} h=0)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b getCleansPerSecond} () const \par
+void {\b destroy} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b Index} {\b getHoversPerSecond} () const \par
+void {\b getCharacter} (const wchar_t character, {\b Letter} *let) const \par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setTickCallback} (const {\b TickCallbackPtr} callback)\par
+void {\b setSize} (const {\b Size} height)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b TickCallbackPtr} {\b getTickCallback} ()\par
+{\b Size} & {\b getSize} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const {\b TickCallbackPtr} {\b getTickCallback} () const \par
+const {\b Size} & {\b getSize} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b hasKerning} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Vector}< unsigned int, 2 > {\b getKerning} (const wchar_t prev, const wchar_t current) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Index} {\b getID} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator==} (const {\b Font} &other) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator!=} (const {\b Font} &other) const \par
 }
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Protected Member Functions\par
+Static Public Member Functions\par
 \pard\plain 
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} ({\b Entity} *e) final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when this {\f2 {\b Component}}  is added to the {\f2 {\b Entity}}  via {\b Entity::addComponent(Component&)}. }{
-}\par
-}}
+static {\b Font} {\b loadFont} (const std::string &name)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-bool {\b update} ({\b Entity} *e) final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b Entity::update()} is called. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b render} ({\b Entity} *e) final\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b clean} ({\b Entity} *e) final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b Entity::clean()} is called and it was dirty. }{
-}\par
-}}
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b hover} ({\b Entity} *e) final\par
-\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} ({\b Entity} *e) final\par
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b Entity::destroy()} is called or the {\f2 {\b Component}}  is removed via {\b Component::update(Entity*)}, whichever comes first. }{
-}\par
-}}
+static {\b Font} {\b loadFont} (const char *name)\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 65 of file Components.h.}\par
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Bug:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid non-monospaced fonts dont have correct spacing \par
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid Make a default font system so people dont have to create new font classes each time they use text \par
+instead of using an id system add FT_Face \par
+}
+}{
+Definition at line 258 of file Entity2D.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
-Member Typedef Documentation\par
+Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v TickCallbackPtr\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:TickCallbackPtr}
+{\xe \v Font\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:Font}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-typedef void(* mc::gfx::FPSComponent::TickCallbackPtr) ({\b FPSComponent} *, {\b Entity} *)}}
+mc::gfx::Font::Font (const {\b Font} &  {\i f})}}
 \par
-{\bkmkstart AAAAAAABHN}
-{\bkmkend AAAAAAABHN}
+{\bkmkstart AAAAAAABKA}
+{\bkmkend AAAAAAABKA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v Font\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:Font}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::Font::Font (const {\b Index}  {\i id} = {\f2 0}, const {\b Size}  {\i h} = {\f2 0})}}
 \par
+{\bkmkstart AAAAAAABKB}
+{\bkmkend AAAAAAABKB}
 {
-Definition at line 67 of file Components.h.}\par
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v clean\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:clean}
+{\xe \v destroy\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::FPSComponent::clean ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
+void mc::gfx::Font::destroy ()}}
 \par
-{\bkmkstart AAAAAAABCJ}
-{\bkmkend AAAAAAABCJ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b Entity::clean()} is called and it was dirty. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This is not required for inheritance. {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Reimplemented from {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v destroy\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:destroy}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::FPSComponent::destroy ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCK}
-{\bkmkend AAAAAAABCK}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b Entity::destroy()} is called or the {\f2 {\b Component}}  is removed via {\b Component::update(Entity*)}, whichever comes first. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Once {\b Component::destroy(Entity*)} is called, it is immediately removed from the {\f2 {\b Entity}} . Required function. {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v getCleansPerSecond\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:getCleansPerSecond}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Index} mc::gfx::FPSComponent::getCleansPerSecond () const}}
-\par
-{\bkmkstart AAAAAAABHO}
-{\bkmkend AAAAAAABHO}
+{\bkmkstart AAAAAAABKC}
+{\bkmkend AAAAAAABKC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v getFramesPerSecond\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:getFramesPerSecond}
+{\xe \v getCharacter\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:getCharacter}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-{\b Index} mc::gfx::FPSComponent::getFramesPerSecond () const}}
+void mc::gfx::Font::getCharacter (const wchar_t  {\i character}, {\b Letter} *  {\i let}) const}}
 \par
-{\bkmkstart AAAAAAABHP}
-{\bkmkend AAAAAAABHP}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getHoversPerSecond\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:getHoversPerSecond}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Index} mc::gfx::FPSComponent::getHoversPerSecond () const}}
-\par
-{\bkmkstart AAAAAAABHQ}
-{\bkmkend AAAAAAABHQ}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getTickCallback\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:getTickCallback}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b TickCallbackPtr} mc::gfx::FPSComponent::getTickCallback ()}}
-\par
-{\bkmkstart AAAAAAABHR}
-{\bkmkend AAAAAAABHR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getTickCallback\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:getTickCallback}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-const {\b TickCallbackPtr} mc::gfx::FPSComponent::getTickCallback () const}}
-\par
-{\bkmkstart AAAAAAABHS}
-{\bkmkend AAAAAAABHS}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v getUpdatesPerSecond\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:getUpdatesPerSecond}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-{\b Index} mc::gfx::FPSComponent::getUpdatesPerSecond () const}}
-\par
-{\bkmkstart AAAAAAABHT}
-{\bkmkend AAAAAAABHT}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-}
-{\xe \v hover\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:hover}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::FPSComponent::hover ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCL}
-{\bkmkend AAAAAAABCL}
+{\bkmkstart AAAAAAABKD}
+{\bkmkend AAAAAAABKD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
+Todo:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid find a way to dynamically allocate letters without passing in a pointer \par
+cache characters \par
 }
-}{
-Reimplemented from {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBV \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v init\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:init}
+}}
+{\xe \v getID\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:getID}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::FPSComponent::init ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
+{\b Index} mc::gfx::Font::getID () const}}
 \par
-{\bkmkstart AAAAAAABCM}
-{\bkmkend AAAAAAABCM}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when this {\f2 {\b Component}}  is added to the {\f2 {\b Entity}}  via {\b Entity::addComponent(Component&)}. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Required function. {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
-{\row }
-}
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This is not called at {\b Entity::init()}, instead it is called when the component is added to the {\f2 {\b Entity}} . Keep that in mind. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
-}
-}{
-Implements {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBX \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v render\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:render}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::FPSComponent::render ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAABCN}
-{\bkmkend AAAAAAABCN}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-Implements {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABBZ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v setTickCallback\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:setTickCallback}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::gfx::FPSComponent::setTickCallback (const {\b TickCallbackPtr}  {\i callback})}}
-\par
-{\bkmkstart AAAAAAABHU}
-{\bkmkend AAAAAAABHU}
+{\bkmkstart AAAAAAABKE}
+{\bkmkend AAAAAAABKE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v update\:mc::gfx::FPSComponent}
-{\xe \v mc::gfx::FPSComponent\:update}
+{\xe \v getKerning\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:getKerning}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-bool mc::gfx::FPSComponent::update ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
+{\b Vector}<unsigned int, 2> mc::gfx::Font::getKerning (const wchar_t  {\i prev}, const wchar_t  {\i current}) const}}
 \par
-{\bkmkstart AAAAAAABCO}
-{\bkmkend AAAAAAABCO}
+{\bkmkstart AAAAAAABKF}
+{\bkmkend AAAAAAABKF}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getSize\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:getSize}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size}& mc::gfx::Font::getSize ()}}
 \par
+{\bkmkstart AAAAAAABKG}
+{\bkmkend AAAAAAABKG}
 {
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b Entity::update()} is called. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Required function. \par
-There is no function to remove a {\f2 {\b Component}}  so this is the only way for a {\f2 {\b Component}}  to be removed from an {\f2 {\b Entity}}  \par
-{\b Component::destroy(Entity*)} will be called afterwards. {\par
-{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Parameters:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
-{\row }
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether this {\f2 {\b Component}}  should be deleted or not. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
+{\xe \v getSize\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:getSize}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b Size}& mc::gfx::Font::getSize () const}}
+\par
+{\bkmkstart AAAAAAABKH}
+{\bkmkend AAAAAAABKH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-}{
-Implements {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABCH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+{\xe \v hasKerning\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:hasKerning}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Font::hasKerning () const}}
+\par
+{\bkmkstart AAAAAAABKI}
+{\bkmkend AAAAAAABKI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v loadFont\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:loadFont}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+static {\b Font} mc::gfx::Font::loadFont (const std::string &  {\i name}){\f2 [static]}}}
+\par
+{\bkmkstart AAAAAAABKJ}
+{\bkmkend AAAAAAABKJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v loadFont\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:loadFont}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+static {\b Font} mc::gfx::Font::loadFont (const char *  {\i name}){\f2 [static]}}}
+\par
+{\bkmkstart AAAAAAABKK}
+{\bkmkend AAAAAAABKK}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator!=\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:operator!=}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Font::operator!= (const {\b Font} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABKL}
+{\bkmkend AAAAAAABKL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator==\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:operator==}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Font::operator== (const {\b Font} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABKM}
+{\bkmkend AAAAAAABKM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v setSize\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:setSize}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Font::setSize (const {\b Size}  {\i height})}}
+\par
+{\bkmkstart AAAAAAABKN}
+{\bkmkend AAAAAAABKN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Components.h\par
+include/MACE/Graphics/Entity2D.h\par
 }}

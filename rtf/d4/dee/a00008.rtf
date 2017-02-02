@@ -85,22 +85,22 @@
 mc::gfx::ogl::Buffer Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer}
-{\bkmkstart AAAAAAABNZ}
-{\bkmkend AAAAAAABNZ}
+{\bkmkstart AAAAAAABRM}
+{\bkmkend AAAAAAABRM}
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Represents a buffer of memory in the GPU. }}\par
+Represents a sslBuffer of memory in the GPU. }}\par
 {
 {\f2 #include <OGL.h>}}\par
 Inheritance diagram for mc::gfx::ogl::Buffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/dd0/a00191.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dd/df4/a00193.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 Collaboration diagram for mc::gfx::ogl::Buffer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dd/da2/a00192.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d57/a00194.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -114,7 +114,7 @@ virtual {\b ~Buffer} ()=default\par
 {\b Buffer} (const {\b Enum} bufferType) noexcept\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates the buffer with the specified buffer type. }{
+Creates the sslBuffer with the specified sslBuffer type. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -146,10 +146,10 @@ Creates and initalizes the data store for this {\f2 {\b Buffer}}  }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b setDataRange} (const {\b Index} offset, const ptrdiff_t &dataSize, const void *data)\par
+void {\b setDataRange} (const ptrdiff_t &dataSize, const void *data, const {\b Index} offset)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Sets data in a range of the buffer. }{
+Sets data in a range of the sslBuffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -177,14 +177,14 @@ Maps a range of data in this {\f2 {\b Buffer}}  to a pointer on the CPU side. }{
 bool {\b unmap} ()\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unmaps the buffer. }{
+Unmaps the sslBuffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 const {\b Enum} {\b getBufferType} () const \par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the buffer type for this buffer. }{
+Retrieves the sslBuffer type for this sslBuffer. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -256,11 +256,11 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Represents a buffer of memory in the GPU. \par
+Represents a sslBuffer of memory in the GPU. \par
 }
 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-This class should not be used directly. Instead, use special subclasses which provide additional functionality for the specific buffer type.\par
+This class should not be used directly. Instead, use special subclasses which provide additional functionality for the specific sslBuffer type.\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b RenderBuffer} \par
 {\b FrameBuffer} \par
@@ -268,7 +268,7 @@ See also:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b Re
 {\b UniformBuffer} \par
 {\b ElementBuffer} \par
 }}{
-Definition at line 535 of file OGL.h.}\par
+Definition at line 572 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -280,8 +280,8 @@ Constructor & Destructor Documentation\par
 {\b 
 virtual mc::gfx::ogl::Buffer::~Buffer (){\f2 [virtual]}, {\f2 [default]}}}
 \par
-{\bkmkstart AAAAAAABOA}
-{\bkmkend AAAAAAABOA}
+{\bkmkstart AAAAAAABRN}
+{\bkmkend AAAAAAABRN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -291,16 +291,16 @@ virtual mc::gfx::ogl::Buffer::~Buffer (){\f2 [virtual]}, {\f2 [default]}}}
 {\b 
 mc::gfx::ogl::Buffer::Buffer (const {\b Enum}  {\i bufferType}){\f2 [noexcept]}}}
 \par
-{\bkmkstart AAAAAAABOB}
-{\bkmkend AAAAAAABOB}
+{\bkmkstart AAAAAAABRO}
+{\bkmkend AAAAAAABRO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Creates the buffer with the specified buffer type. }}\par
+Creates the sslBuffer with the specified sslBuffer type. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-You should not usually use this directly. Instead, use a subclass which has extra functions for the buffer type. \par
+You should not usually use this directly. Instead, use a subclass which has extra functions for the sslBuffer type. \par
 For example, instead of creating a {\f2 {\b Buffer}}  with the type of {\f2 GL_ARRAY_BUFFER} , use the {\f2 {\b VertexBuffer}}  class.\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
 Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
@@ -330,8 +330,8 @@ Member Function Documentation\par
 {\b 
 virtual void mc::gfx::ogl::Object::bind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOC}
-{\bkmkend AAAAAAABOC}
+{\bkmkstart AAAAAAABDX}
+{\bkmkend AAAAAAABDX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -369,8 +369,8 @@ Exceptions:\par}
 {\b 
 void mc::gfx::ogl::Buffer::copyData ({\b Buffer} &  {\i other}, const ptrdiff_t &  {\i size}, const {\b Index}  {\i readOffset} = {\f2 0}, const {\b Index}  {\i writeOffset} = {\f2 0})}}
 \par
-{\bkmkstart AAAAAAABOD}
-{\bkmkend AAAAAAABOD}
+{\bkmkstart AAAAAAABRP}
+{\bkmkend AAAAAAABRP}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -429,8 +429,8 @@ Exceptions:\par}
 {\b 
 void mc::gfx::ogl::Buffer::destroy (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOE}
-{\bkmkend AAAAAAABOE}
+{\bkmkstart AAAAAAABRQ}
+{\bkmkend AAAAAAABRQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -465,7 +465,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOF \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEA \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v getBufferType\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:getBufferType}
@@ -473,18 +473,18 @@ Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF 
 {\b 
 const {\b Enum} mc::gfx::ogl::Buffer::getBufferType () const}}
 \par
-{\bkmkstart AAAAAAABOG}
-{\bkmkend AAAAAAABOG}
+{\bkmkstart AAAAAAABRR}
+{\bkmkend AAAAAAABRR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Retrieves the buffer type for this buffer. }}\par
+Retrieves the sslBuffer type for this sslBuffer. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 This is based on the class. \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The buffer type \par
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The sslBuffer type \par
 }}}
 {\xe \v getID\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:getID}
@@ -492,8 +492,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The buf
 {\b 
 {\b Index} mc::gfx::ogl::Object::getID () const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOH}
-{\bkmkend AAAAAAABOH}
+{\bkmkstart AAAAAAABEC}
+{\bkmkend AAAAAAABEC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -513,8 +513,8 @@ Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid The ID 
 {\b 
 void mc::gfx::ogl::Buffer::init (){\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOI}
-{\bkmkend AAAAAAABOI}
+{\bkmkstart AAAAAAABRS}
+{\bkmkend AAAAAAABRS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -540,7 +540,7 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b Object::unbind} const \par
 {\b Object::isCreated() const} \par
 }}{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEI \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v isCreated\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:isCreated}
@@ -548,8 +548,8 @@ Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF 
 {\b 
 bool mc::gfx::ogl::Buffer::isCreated () const{\f2 [override]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOK}
-{\bkmkend AAAAAAABOK}
+{\bkmkstart AAAAAAABRT}
+{\bkmkend AAAAAAABRT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -575,7 +575,7 @@ Exceptions:\par}
 {\row }
 }
 }{
-Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOL \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\xe \v map\:mc::gfx::ogl::Buffer}
 {\xe \v mc::gfx::ogl::Buffer\:map}
@@ -583,8 +583,8 @@ Implements {\b mc::gfx::ogl::Object} ({\i p.{\field\fldedit {\*\fldinst PAGEREF 
 {\b 
 void* mc::gfx::ogl::Buffer::map (const {\b Enum}  {\i access} = {\f2 GL_READ_WRITE})}}
 \par
-{\bkmkstart AAAAAAABOM}
-{\bkmkend AAAAAAABOM}
+{\bkmkstart AAAAAAABRU}
+{\bkmkend AAAAAAABRU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -627,8 +627,8 @@ Exceptions:\par}
 {\b 
 void* mc::gfx::ogl::Buffer::mapRange (const {\b Index}  {\i offset}, const {\b Size}  {\i length}, const unsigned int  {\i access})}}
 \par
-{\bkmkstart AAAAAAABON}
-{\bkmkend AAAAAAABON}
+{\bkmkstart AAAAAAABRV}
+{\bkmkend AAAAAAABRV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -683,8 +683,8 @@ Exceptions:\par}
 {\b 
 bool mc::gfx::ogl::Object::operator!= (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOO}
-{\bkmkend AAAAAAABOO}
+{\bkmkstart AAAAAAABEN}
+{\bkmkend AAAAAAABEN}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -714,8 +714,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Buffer::operator!= (const {\b Buffer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABOP}
-{\bkmkend AAAAAAABOP}
+{\bkmkstart AAAAAAABRW}
+{\bkmkend AAAAAAABRW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -745,8 +745,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Object::operator== (const {\b Object} &  {\i other}) const{\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOQ}
-{\bkmkend AAAAAAABOQ}
+{\bkmkstart AAAAAAABEQ}
+{\bkmkend AAAAAAABEQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -776,8 +776,8 @@ Parameters:\par}
 {\b 
 bool mc::gfx::ogl::Buffer::operator== (const {\b Buffer} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABOR}
-{\bkmkend AAAAAAABOR}
+{\bkmkstart AAAAAAABRX}
+{\bkmkend AAAAAAABRX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -807,8 +807,8 @@ Parameters:\par}
 {\b 
 void mc::gfx::ogl::Buffer::setData (const ptrdiff_t &  {\i dataSize}, const void *  {\i data}, const {\b Enum}  {\i drawType} = {\f2 GL_DYNAMIC_DRAW})}}
 \par
-{\bkmkstart AAAAAAABOS}
-{\bkmkend AAAAAAABOS}
+{\bkmkstart AAAAAAABRY}
+{\bkmkend AAAAAAABRY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -823,13 +823,13 @@ Parameters:\par}
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i dataSize} \cell }{Size of the buffer, measured in bytes. \cell }
+{{\i dataSize} \cell }{Size of the sslBuffer, measured in bytes. \cell }
 {\row }
 \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i data} \cell }{Pointer to the actual data. Using {\f2 nullptr}  or {\f2 NULL}  will create an empty buffer. \cell }
+{{\i data} \cell }{Pointer to the actual data. Using {\f2 nullptr}  or {\f2 NULL}  will create an empty sslBuffer. \cell }
 {\row }
 \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
@@ -858,16 +858,16 @@ Exceptions:\par}
 {\xe \v mc::gfx::ogl::Buffer\:setDataRange}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::gfx::ogl::Buffer::setDataRange (const {\b Index}  {\i offset}, const ptrdiff_t &  {\i dataSize}, const void *  {\i data})}}
+void mc::gfx::ogl::Buffer::setDataRange (const ptrdiff_t &  {\i dataSize}, const void *  {\i data}, const {\b Index}  {\i offset})}}
 \par
-{\bkmkstart AAAAAAABOT}
-{\bkmkend AAAAAAABOT}
+{\bkmkstart AAAAAAABRZ}
+{\bkmkend AAAAAAABRZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Sets data in a range of the buffer. }}\par
+Sets data in a range of the sslBuffer. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Does not initialize data. {\b Buffer}:{\b setData(const ptrdiff_t&, const void*, const Enum)} must be called first. {\par
 {\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -876,7 +876,7 @@ Parameters:\par}
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
 \pard \widctlpar\intbl\adjustright
-{{\i offset} \cell }{Offset into the buffer to set the data, measured in bytes \cell }
+{{\i offset} \cell }{Offset into the sslBuffer to set the data, measured in bytes \cell }
 {\row }
 \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
 \clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
@@ -912,8 +912,8 @@ Exceptions:\par}
 {\b 
 virtual void mc::gfx::ogl::Object::unbind () const{\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOU}
-{\bkmkend AAAAAAABOU}
+{\bkmkstart AAAAAAABFB}
+{\bkmkend AAAAAAABFB}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -942,14 +942,14 @@ See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Ob
 {\b 
 bool mc::gfx::ogl::Buffer::unmap ()}}
 \par
-{\bkmkstart AAAAAAABOV}
-{\bkmkend AAAAAAABOV}
+{\bkmkstart AAAAAAABSA}
+{\bkmkend AAAAAAABSA}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Unmaps the buffer. }}\par
+Unmaps the sslBuffer. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 Any mapped points will be deleted and using them will be undefined.\par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
@@ -982,8 +982,8 @@ Member Data Documentation\par
 {\b 
 {\b Index} mc::gfx::ogl::Object::id = 0{\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAABOW}
-{\bkmkend AAAAAAABOW}
+{\bkmkstart AAAAAAABFC}
+{\bkmkend AAAAAAABFC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
@@ -994,7 +994,7 @@ The ID of this `Object. }}\par
 ` Should be set in {\b Object::init()} and become 0 in {\b Object::destroy()} \par
 {\b Object::getID() const }returns this. \par
 }{
-Definition at line 164 of file OGL.h.}\par
+Definition at line 182 of file OGL.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par

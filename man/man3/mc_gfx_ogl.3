@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,15 +13,15 @@ mc::gfx::ogl \- Contains various abstractions for OpenGL\&.
 .ti -1c
 .RI "class \fBBuffer\fP"
 .br
-.RI "\fIRepresents a buffer of memory in the GPU\&. \fP"
+.RI "\fIRepresents a sslBuffer of memory in the GPU\&. \fP"
 .ti -1c
 .RI "class \fBCopyReadBuffer\fP"
 .br
-.RI "\fISpecial buffer with no extra semantics to be used as a proxy in copying\&. \fP"
+.RI "\fISpecial sslBuffer with no extra semantics to be used as a proxy in copying\&. \fP"
 .ti -1c
 .RI "class \fBCopyWriteBuffer\fP"
 .br
-.RI "\fISpecial buffer with no extra semantics to be used as a proxy in copying\&. \fP"
+.RI "\fISpecial sslBuffer with no extra semantics to be used as a proxy in copying\&. \fP"
 .ti -1c
 .RI "class \fBElementBuffer\fP"
 .br
@@ -37,11 +37,11 @@ mc::gfx::ogl \- Contains various abstractions for OpenGL\&.
 .ti -1c
 .RI "class \fBPixelPackBuffer\fP"
 .br
-.RI "\fISpecial buffer that excels at asynchronous pixel transfer operations\&. \fP"
+.RI "\fISpecial sslBuffer that excels at asynchronous pixel transfer operations\&. \fP"
 .ti -1c
 .RI "class \fBPixelUnpackBuffer\fP"
 .br
-.RI "\fISpecial buffer that excels at asynchronous pixel transfer operations\&. \fP"
+.RI "\fISpecial sslBuffer that excels at asynchronous pixel transfer operations\&. \fP"
 .ti -1c
 .RI "class \fBQueryObject\fP"
 .br
@@ -49,7 +49,7 @@ mc::gfx::ogl \- Contains various abstractions for OpenGL\&.
 .ti -1c
 .RI "class \fBRenderBuffer\fP"
 .br
-.RI "\fIRepresents a render buffer for use with a `FrameBuffer\&. \fP"
+.RI "\fIRepresents a render sslBuffer for use with a `FrameBuffer\&. \fP"
 .ti -1c
 .RI "class \fBShader\fP"
 .br
@@ -63,7 +63,7 @@ mc::gfx::ogl \- Contains various abstractions for OpenGL\&.
 .ti -1c
 .RI "class \fBUniformBuffer\fP"
 .br
-.RI "\fIStores uniform data for a shader in the form of a buffer\&. \fP"
+.RI "\fIStores uniform data for a shader in the form of a sslBuffer\&. \fP"
 .ti -1c
 .RI "class \fBVertexArray\fP"
 .br
@@ -90,6 +90,18 @@ mc::gfx::ogl \- Contains various abstractions for OpenGL\&.
 .br
 .ti -1c
 .RI "void \fBcheckGLError\fP (const \fBIndex\fP line, const std::string &file)"
+.br
+.ti -1c
+.RI "void \fBenable\fP (const \fBEnum\fP param)"
+.br
+.ti -1c
+.RI "void \fBdisable\fP (const \fBEnum\fP param)"
+.br
+.ti -1c
+.RI "void \fBsetBlending\fP (const \fBEnum\fP sfactor, const \fBEnum\fP dfactor)"
+.br
+.ti -1c
+.RI "void \fBsetViewport\fP (const \fBIndex\fP x, const \fBIndex\fP y, const \fBSize\fP width, const \fBSize\fP height)"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -124,11 +136,11 @@ create a ReadableBuffer class with functions like glReadPixels
 .SS "using \fBmc::gfx::ogl::GLError\fP = typedef \fBException\fP"
 
 .PP
-Definition at line 47 of file OGL\&.h\&.
+Definition at line 46 of file OGL\&.h\&.
 .SS "using \fBmc::gfx::ogl::ShaderError\fP = typedef \fBException\fP"
 
 .PP
-Definition at line 49 of file OGL\&.h\&.
+Definition at line 48 of file OGL\&.h\&.
 .SH "Function Documentation"
 .PP 
 .SS "void mc::gfx::ogl::checkGLError (const \fBIndex\fP line = \fC0\fP, const char * file = \fC'Unknown file'\fP)"
@@ -148,6 +160,62 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "void mc::gfx::ogl::checkGLError (const \fBIndex\fP line, const std::string & file)"
 
 .PP
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::disable (const \fBEnum\fP param)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::enable (const \fBEnum\fP param)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::setBlending (const \fBEnum\fP sfactor, const \fBEnum\fP dfactor)"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "void mc::gfx::ogl::setViewport (const \fBIndex\fP x, const \fBIndex\fP y, const \fBSize\fP width, const \fBSize\fP height)"
 
 .PP
 \fBAttention:\fP

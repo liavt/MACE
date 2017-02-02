@@ -1,4 +1,4 @@
-.TH "mc::gfx::Renderer" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Renderer" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -16,6 +16,9 @@ mc::gfx::Renderer \-
 .br
 .ti -1c
 .RI "static void \fBinit\fP (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)"
+.br
+.ti -1c
+.RI "static void \fBinitEntity\fP (\fBGraphicsEntity\fP *en, const \fBIndex\fP protocol)"
 .br
 .ti -1c
 .RI "static void \fBsetUp\fP (\fBos::WindowModule\fP *win)"
@@ -36,7 +39,13 @@ mc::gfx::Renderer \-
 .RI "static void \fBcheckInput\fP ()"
 .br
 .ti -1c
+.RI "static void \fBcleanEntity\fP (\fBGraphicsEntity\fP *en, const \fBIndex\fP protocol)"
+.br
+.ti -1c
 .RI "static void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "static void \fBdestroyEntity\fP (\fBGraphicsEntity\fP *en, const \fBIndex\fP protocol)"
 .br
 .ti -1c
 .RI "static void \fBclearBuffers\fP ()"
@@ -56,6 +65,9 @@ mc::gfx::Renderer \-
 .ti -1c
 .RI "static \fBSize\fP \fBgetOriginalHeight\fP ()"
 .br
+.ti -1c
+.RI "static \fBSize\fP \fBgetSamples\fP ()"
+.br
 .in -1c
 .SS "Friends"
 
@@ -66,10 +78,38 @@ mc::gfx::Renderer \-
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 167 of file Renderer\&.h\&.
+
+.PP
+\fBTodo\fP
+.RS 4
+add function to change how many samples msaa uses 
+.RE
+.PP
+
+.PP
+Definition at line 193 of file Renderer\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "static void mc::gfx::Renderer::checkInput ()\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "static void mc::gfx::Renderer::cleanEntity (\fBGraphicsEntity\fP * en, const \fBIndex\fP protocol)\fC [static]\fP"
 
 .PP
 \fBWarning:\fP
@@ -126,11 +166,51 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.SS "static void mc::gfx::Renderer::destroyEntity (\fBGraphicsEntity\fP * en, const \fBIndex\fP protocol)\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "static \fBSize\fP mc::gfx::Renderer::getOriginalHeight ()\fC [static]\fP"
 
 .SS "static \fBSize\fP mc::gfx::Renderer::getOriginalWidth ()\fC [static]\fP"
 
+.SS "static \fBSize\fP mc::gfx::Renderer::getSamples ()\fC [static]\fP"
+
 .SS "static void mc::gfx::Renderer::init (const \fBSize\fP originalWidth, const \fBSize\fP originalHeight)\fC [static]\fP"
+
+.PP
+\fBWarning:\fP
+.RS 4
+This should only be used internally or by advanced users\&. Misuse can cause undefined behavior 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "static void mc::gfx::Renderer::initEntity (\fBGraphicsEntity\fP * en, const \fBIndex\fP protocol)\fC [static]\fP"
 
 .PP
 \fBWarning:\fP
@@ -156,7 +236,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "template<typename T > static \fBIndex\fP mc::gfx::Renderer::registerProtocol ()\fC [inline]\fP, \fC [static]\fP"
 
 .PP
-Definition at line 233 of file Renderer\&.h\&.
+Definition at line 276 of file Renderer\&.h\&.
 .SS "static void mc::gfx::Renderer::renderFrame (\fBos::WindowModule\fP * win)\fC [static]\fP"
 
 .PP

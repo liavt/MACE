@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::FrameBuffer" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::FrameBuffer" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -48,10 +48,6 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fISpecifies what buffers to render to\&. \fP"
 .ti -1c
-.RI "void \fBsetReadBuffer\fP (const \fBEnum\fP mode)"
-.br
-.RI "\fISelect which color buffer to use for reading via \fBFrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const\fP\&. \fP"
-.ti -1c
 .RI "void \fBreadPixels\fP (const int x, const int y, const \fBSize\fP width, const \fBSize\fP height, const \fBEnum\fP format, const \fBEnum\fP type, void *data) const "
 .br
 .RI "\fIRead pixels from this \fC\fBFrameBuffer\fP\fP \fP"
@@ -92,6 +88,26 @@ Inherits \fBmc::gfx::ogl::Object\fP\&.
 .br
 .RI "\fICompares if 2 \fCObjects\fP are not equal\&. \fP"
 .in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBsetReadBuffer\fP (const \fBEnum\fP mode)"
+.br
+.RI "\fISelect which color sslBuffer to use for reading via \fBFrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const\fP\&. \fP"
+.ti -1c
+.RI "static void \fBsetDrawBuffer\fP (const \fBEnum\fP mode)"
+.br
+.ti -1c
+.RI "static \fBFrameBuffer\fP \fBgetDefaultFramebuffer\fP ()"
+.br
+.ti -1c
+.RI "static void \fBclear\fP (const int field)"
+.br
+.ti -1c
+.RI "static void \fBsetClearColor\fP (const float r, const float g, const float b, const float a)"
+.br
+.in -1c
 .SS "Protected Attributes"
 
 .in +1c
@@ -106,7 +122,7 @@ Represents an OpenGL Framebuffer \fBObject\fP which allows rendering to a non-sc
 
 This also allows rendering to a \fC\fBTexture\fP\fP or \fC\fBRenderBuffer\fP\fP object\&. 
 .PP
-This is not a subclass of the \fC\fBBuffer\fP\fP object as this is technically not an OpenGL buffer\&. The name is misleading\&.
+This is not a subclass of the \fC\fBBuffer\fP\fP object as this is technically not an OpenGL sslBuffer\&. The name is misleading\&.
 .PP
 \fBSee also:\fP
 .RS 4
@@ -124,7 +140,7 @@ target variable which is GL_FRAMEBUFFER by default\&. and update documentation a
 .PP
 
 .PP
-Definition at line 389 of file OGL\&.h\&.
+Definition at line 407 of file OGL\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::ogl::FrameBuffer::attachRenderbuffer (const \fBEnum\fP target, const \fBEnum\fP attachment, const \fBRenderBuffer\fP & buffer)"
@@ -138,12 +154,22 @@ Attaches a \fC\fBRenderBuffer\fP\fP to this \fC\fBFrameBuffer\fP\fP for renderin
 .br
 \fIattachment\fP Which attachment port to use 
 .br
-\fIbuffer\fP The \fC\fBRenderBuffer\fP\fP to use\&. 
+\fIsslBuffer\fP The \fC\fBRenderBuffer\fP\fP to use\&. 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
 https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer 
+.RE
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
 .RE
 .PP
 
@@ -298,6 +324,20 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.SS "static void mc::gfx::ogl::FrameBuffer::clear (const int field)\fC [static]\fP"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::ogl::FrameBuffer::destroy ()\fC [override]\fP, \fC [virtual]\fP"
 
 .PP
@@ -332,6 +372,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Implements \fBmc::gfx::ogl::Object\fP\&.
+.SS "static \fBFrameBuffer\fP mc::gfx::ogl::FrameBuffer::getDefaultFramebuffer ()\fC [static]\fP"
+
 .SS "\fBIndex\fP mc::gfx::ogl::Object::getID () const\fC [inherited]\fP"
 
 .PP
@@ -494,10 +536,38 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.SS "static void mc::gfx::ogl::FrameBuffer::setClearColor (const float r, const float g, const float b, const float a)\fC [static]\fP"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
+.SS "static void mc::gfx::ogl::FrameBuffer::setDrawBuffer (const \fBEnum\fP mode)\fC [static]\fP"
+
+.PP
+\fBAttention:\fP
+.RS 4
+This uses an OpenGL function and must be called in a thread with an OpenGL context\&. Otherwise, an error will be thrown\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIGL_INVALID_OPERATION\fP If the current thread does not have an OpenGL context 
+.RE
+.PP
+
 .SS "void mc::gfx::ogl::FrameBuffer::setDrawBuffers (const \fBSize\fP arrSize, const \fBEnum\fP * buffers)"
 
 .PP
-Specifies what buffers to render to\&. Takes in an array of attachments\&. A \fC\fBRenderBuffer\fP\fP or \fC\fBTexture\fP\fP can be attached to act as a draw buffer\&. 
+Specifies what buffers to render to\&. Takes in an array of attachments\&. A \fC\fBRenderBuffer\fP\fP or \fC\fBTexture\fP\fP can be attached to act as a draw sslBuffer\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -592,10 +662,10 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::FrameBuffer::setReadBuffer (const \fBEnum\fP mode)"
+.SS "static void mc::gfx::ogl::FrameBuffer::setReadBuffer (const \fBEnum\fP mode)\fC [static]\fP"
 
 .PP
-Select which color buffer to use for reading via \fBFrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const\fP\&. 
+Select which color sslBuffer to use for reading via \fBFrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const\fP\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -662,7 +732,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 164 of file OGL\&.h\&.
+Definition at line 182 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

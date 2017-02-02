@@ -1,4 +1,4 @@
-.TH "mc::MACE" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::MACE" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -56,7 +56,7 @@ mc::MACE \- Core class of \fBMACE\fP, managing \fCModules\fP\&.
 .ti -1c
 .RI "int \fBindexOf\fP (const \fBModule\fP &m)"
 .br
-.RI "\fIRetrieves the location of a \fC\fBModule\fP\fP in the buffer\&. \fP"
+.RI "\fIRetrieves the location of a \fC\fBModule\fP\fP in the sslBuffer\&. \fP"
 .ti -1c
 .RI "int \fBindexOf\fP (const std::string name)"
 .br
@@ -154,7 +154,7 @@ Register a \fBModule\fP\&. Registered \fCModules\fP will have \fC\fBupdate()\fP,
 .PP
 \fBReturns:\fP
 .RS 4
-Location of the \fC\fBModule\fP\fP in the buffer\&. This index can be used in various other methods\&. 
+Location of the \fC\fBModule\fP\fP in the sslBuffer\&. This index can be used in various other methods\&. 
 .RE
 .PP
 
@@ -285,7 +285,7 @@ A pointer to a \fC\fBModule\fP\fP at the specified location
 .SS "int mc::MACE::indexOf (const \fBModule\fP & m)"
 
 .PP
-Retrieves the location of a \fC\fBModule\fP\fP in the buffer\&. Equivalent to calling
+Retrieves the location of a \fC\fBModule\fP\fP in the sslBuffer\&. Equivalent to calling
 .PP
 .nf
 indexOf(m\&.getName());
@@ -344,7 +344,7 @@ Should be called at the start of the program\&.
 .SS "bool mc::MACE::isRunning ()"
 
 .PP
-Checks whether the \fC\fBMACE\fP\fP is ready to be updated\&. \fC\fBinit()\fP\fP must have been called and \fC\fBdestroy()\fP\fP must not have been called\&. Additionally, if \fCshouldStop()\fP is \fCtrue\fP, this function also returns \fCfalse\fP\&. 
+Checks whether the \fC\fBMACE\fP\fP is ready to be updated\&. Will return true if \fC\fBMACE::init()\fP\fP has been called, and \fC\fBMACE::destroy()\fP\fP and \fC\fBMACE::requestStop()\fP\fP have not been called\&. 
 .PP
 \fBReturns:\fP
 .RS 4
@@ -353,7 +353,7 @@ If \fC\fBupdate()\fP\fP should be called\&. If this returns \fCfalse\fP, you sho
 .PP
 \fBSee also:\fP
 .RS 4
-\fBrequestStop()\fP 
+\fBMACE::requestStop()\fP 
 .PP
 \fBMACE\fP for an optimal main loop 
 .RE
@@ -398,7 +398,7 @@ Retrieves the amount of \fC\fBModule\fP\fP currently being updated by \fC\fBMACE
 .PP
 \fBReturns:\fP
 .RS 4
-\fCSize\fP of the internal \fC\fBModule\fP\fP buffer 
+\fCSize\fP of the internal \fC\fBModule\fP\fP sslBuffer 
 .RE
 .PP
 
@@ -409,7 +409,7 @@ Remove a \fC\fBModule\fP\fP by reference\&. This is generally more safe than \fC
 .PP
 \fBParameters:\fP
 .RS 4
-\fIm\fP Reference to \fBModule\fP in the buffer\&. 
+\fIm\fP Reference to \fBModule\fP in the sslBuffer\&. 
 .RE
 .PP
 \fBExceptions:\fP

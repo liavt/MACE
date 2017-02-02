@@ -1,29 +1,52 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d6/d2c/a00072" kind="file" language="C++">
-    <compoundname>ssl_vertex.glsl</compoundname>
+    <compoundname>ssl_position.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
 <codeline><highlight class="normal">R&quot;(</highlight></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_POSITION_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_POSITION_LIBRARY_<sp/>1</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#ifndef<sp/>_SSL_VERTEX_LIBRARY_</highlight></codeline>
-<codeline><highlight class="normal">#define<sp/>_SSL_VERTEX_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;ssl_core&gt;</highlight></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;ssl_entity&gt;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#include<sp/>&lt;ssl_position&gt;</highlight></codeline>
+<codeline><highlight class="normal">layout(location<sp/>=<sp/>15)<sp/>in<sp/>vec3<sp/>ssl_VertexPosition;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">vec4<sp/>ssl_vert_main(vec4);</highlight></codeline>
+<codeline><highlight class="normal">mat3<sp/>sslCreateRotationMatrix(vec3<sp/>ssl_RotationInput){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>ssl_CosZ<sp/>=<sp/>cos(ssl_RotationInput.z),<sp/>ssl_SinZ<sp/>=<sp/>sin(ssl_RotationInput.z),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ssl_CosY<sp/>=<sp/>cos(ssl_RotationInput.y),<sp/>ssl_SinY<sp/>=<sp/>sin(ssl_RotationInput.y),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ssl_CosX<sp/>=<sp/>cos(ssl_RotationInput.x),<sp/>ssl_SinX<sp/>=<sp/>sin(ssl_RotationInput.x);</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">void<sp/>main(void){</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>gl_Position<sp/>=<sp/>ssl_vert_main(sslGetEntityPosition());</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>mat3<sp/>ssl_OutMatrix;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[0][0]<sp/>=<sp/>ssl_CosZ*ssl_CosY;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[1][1]<sp/>=<sp/>ssl_CosZ*ssl_CosX;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[2][2]<sp/>=<sp/>ssl_CosX*ssl_CosY;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[0][1]<sp/>=<sp/>ssl_SinZ;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[0][2]<sp/>=<sp/>-ssl_SinY;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[1][0]<sp/>=<sp/>-ssl_SinZ;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[1][2]<sp/>=<sp/>ssl_SinX;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[2][0]<sp/>=<sp/>ssl_SinY;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ssl_OutMatrix[2][1]<sp/>=<sp/>-ssl_SinX;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>ssl_OutMatrix;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vec4<sp/>sslGetEntityPosition(){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//putting<sp/>it<sp/>all<sp/>in<sp/>one<sp/>line<sp/>allows<sp/>for<sp/>the<sp/>compiler<sp/>to<sp/>optimize<sp/>it<sp/>into<sp/>a<sp/>single<sp/>MAD<sp/>operation<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>vec4(ssl_VertexPosition<sp/>*<sp/>ssl_Scale<sp/>*<sp/>sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>+<sp/>ssl_BaseEntity.ssl_Translation<sp/>*<sp/>sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>+<sp/>ssl_ParentEntity.ssl_Translation,<sp/>1.0);</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">#endif</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="include/MACE/Graphics/Shaders/include/ssl_vertex.glsl"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_position.glsl"/>
   </compounddef>
 </doxygen>

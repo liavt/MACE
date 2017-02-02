@@ -1,4 +1,4 @@
-.TH "mc" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -1333,6 +1333,16 @@ mc \- Namespace for everything in \fBMACE\fP\&.
 .br
 .RI "\fI\fC\fBException\fP\fP thrown when a syntax error is encountered, or #error is called\&. \fP"
 .in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename T , Size N> \fBVector\fP< T, N > \fBoperator*=\fP (const \fBVector\fP< T, N > &v, const \fBMatrix\fP< T, N, N > &m)"
+.br
+.ti -1c
+.RI "template<typename T , Size N> \fBVector\fP< T, N > \fBoperator*\fP (const \fBVector\fP< T, N > &v, const \fBMatrix\fP< T, N, N > &m)"
+.br
+.in -1c
 .SH "Detailed Description"
 .PP 
 Namespace for everything in \fBMACE\fP\&. 
@@ -1347,7 +1357,7 @@ Preproccessor definitions will start with \fCMACE_\fP and \fCMACE_INCLUDED\fP wi
 .PP
 Thrown when something goes wrong while doing math, like dividing by zero\&. 
 .PP
-Definition at line 155 of file Constants\&.h\&.
+Definition at line 163 of file Constants\&.h\&.
 .SS "using \fBmc::AssertionError\fP = typedef \fBException\fP"
 
 .PP
@@ -1360,7 +1370,7 @@ Thrown when an assertion fails\&.
 .PP
 
 .PP
-Definition at line 137 of file Constants\&.h\&.
+Definition at line 145 of file Constants\&.h\&.
 .SS "using \fBmc::Byte\fP = typedef std::uint8_t"
 
 .PP
@@ -1379,7 +1389,7 @@ Primitive type guaranteed to be equal to 8 bits (1 byte)\&. The definition here 
 .PP
 
 .PP
-Definition at line 47 of file Constants\&.h\&.
+Definition at line 55 of file Constants\&.h\&.
 .SS "using \fBmc::Enum\fP = typedef unsigned int"
 
 .PP
@@ -1396,7 +1406,7 @@ Type representing an int-based enum (such as GL_* constants)
 .PP
 
 .PP
-Definition at line 96 of file Constants\&.h\&.
+Definition at line 104 of file Constants\&.h\&.
 .SS "using \fBmc::Index\fP = typedef unsigned int"
 
 .PP
@@ -1435,1243 +1445,1243 @@ getObject(Index)
 .PP
 
 .PP
-Definition at line 89 of file Constants\&.h\&.
+Definition at line 97 of file Constants\&.h\&.
 .SS "using \fBmc::IndexOutOfBoundsException\fP = typedef \fBException\fP"
 
 .PP
 Thrown when an index is provided for an array, but it is outside the valid bounds of the array\&. 
 .PP
-Definition at line 151 of file Constants\&.h\&.
+Definition at line 159 of file Constants\&.h\&.
 .SS "using \fBmc::InitializationError\fP = typedef \fBException\fP"
 
 .PP
 Thrown when an object wasn't initializaed or initializtion failed\&. 
 .PP
-Definition at line 142 of file Constants\&.h\&.
+Definition at line 150 of file Constants\&.h\&.
 .SS "using \fBmc::Matrix1c\fP = typedef \fBMatrix\fP< char, 1, 1 >"
 
 .PP
-Definition at line 368 of file MatrixAliases\&.h\&.
+Definition at line 368 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1d\fP = typedef \fBMatrix\fP< double, 1, 1 >"
 
 .PP
-Definition at line 181 of file MatrixAliases\&.h\&.
+Definition at line 181 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1f\fP = typedef \fBMatrix\fP< float, 1, 1 >"
 
 .PP
-Definition at line 164 of file MatrixAliases\&.h\&.
+Definition at line 164 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1i\fP = typedef \fBMatrix\fP< int, 1, 1 >"
 
 .PP
-Definition at line 113 of file MatrixAliases\&.h\&.
+Definition at line 113 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1l\fP = typedef \fBMatrix\fP< long int, 1, 1 >"
 
 .PP
-Definition at line 266 of file MatrixAliases\&.h\&.
+Definition at line 266 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1ld\fP = typedef \fBMatrix\fP< long double, 1, 1 >"
 
 .PP
-Definition at line 198 of file MatrixAliases\&.h\&.
+Definition at line 198 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1ll\fP = typedef \fBMatrix\fP< long long int, 1, 1 >"
 
 .PP
-Definition at line 317 of file MatrixAliases\&.h\&.
+Definition at line 317 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1s\fP = typedef \fBMatrix\fP< short int, 1, 1 >"
 
 .PP
-Definition at line 215 of file MatrixAliases\&.h\&.
+Definition at line 215 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1sc\fP = typedef \fBMatrix\fP< signed char, 1, 1 >"
 
 .PP
-Definition at line 402 of file MatrixAliases\&.h\&.
+Definition at line 402 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1si\fP = typedef \fBMatrix\fP< signed int, 1, 1 >"
 
 .PP
-Definition at line 147 of file MatrixAliases\&.h\&.
+Definition at line 147 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1sl\fP = typedef \fBMatrix\fP< signed long int, 1, 1 >"
 
 .PP
-Definition at line 300 of file MatrixAliases\&.h\&.
+Definition at line 300 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1sll\fP = typedef \fBMatrix\fP< signed long long int, 1, 1 >"
 
 .PP
-Definition at line 351 of file MatrixAliases\&.h\&.
+Definition at line 351 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1ss\fP = typedef \fBMatrix\fP< signed short int, 1, 1 >"
 
 .PP
-Definition at line 249 of file MatrixAliases\&.h\&.
+Definition at line 249 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1uc\fP = typedef \fBMatrix\fP< unsigned char, 1, 1 >"
 
 .PP
-Definition at line 385 of file MatrixAliases\&.h\&.
+Definition at line 385 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1ui\fP = typedef \fBMatrix\fP< unsigned int, 1, 1 >"
 
 .PP
-Definition at line 130 of file MatrixAliases\&.h\&.
+Definition at line 130 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1ul\fP = typedef \fBMatrix\fP< unsigned long int, 1, 1 >"
 
 .PP
-Definition at line 283 of file MatrixAliases\&.h\&.
+Definition at line 283 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1ull\fP = typedef \fBMatrix\fP< unsigned long long int, 1, 1 >"
 
 .PP
-Definition at line 334 of file MatrixAliases\&.h\&.
+Definition at line 334 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix1us\fP = typedef \fBMatrix\fP< unsigned short int, 1, 1 >"
 
 .PP
-Definition at line 232 of file MatrixAliases\&.h\&.
+Definition at line 232 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2c\fP = typedef \fBMatrix\fP< char, 2, 2 >"
 
 .PP
-Definition at line 369 of file MatrixAliases\&.h\&.
+Definition at line 369 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2d\fP = typedef \fBMatrix\fP< double, 2, 2 >"
 
 .PP
-Definition at line 182 of file MatrixAliases\&.h\&.
+Definition at line 182 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2f\fP = typedef \fBMatrix\fP< float, 2, 2 >"
 
 .PP
-Definition at line 165 of file MatrixAliases\&.h\&.
+Definition at line 165 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2i\fP = typedef \fBMatrix\fP< int, 2, 2 >"
 
 .PP
-Definition at line 114 of file MatrixAliases\&.h\&.
+Definition at line 114 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2l\fP = typedef \fBMatrix\fP< long int, 2, 2 >"
 
 .PP
-Definition at line 267 of file MatrixAliases\&.h\&.
+Definition at line 267 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2ld\fP = typedef \fBMatrix\fP< long double, 2, 2 >"
 
 .PP
-Definition at line 199 of file MatrixAliases\&.h\&.
+Definition at line 199 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2ll\fP = typedef \fBMatrix\fP< long long int, 2, 2 >"
 
 .PP
-Definition at line 318 of file MatrixAliases\&.h\&.
+Definition at line 318 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2s\fP = typedef \fBMatrix\fP< short int, 2, 2 >"
 
 .PP
-Definition at line 216 of file MatrixAliases\&.h\&.
+Definition at line 216 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2sc\fP = typedef \fBMatrix\fP< signed char, 2, 2 >"
 
 .PP
-Definition at line 403 of file MatrixAliases\&.h\&.
+Definition at line 403 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2si\fP = typedef \fBMatrix\fP< signed int, 2, 2 >"
 
 .PP
-Definition at line 148 of file MatrixAliases\&.h\&.
+Definition at line 148 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2sl\fP = typedef \fBMatrix\fP< signed long int, 2, 2 >"
 
 .PP
-Definition at line 301 of file MatrixAliases\&.h\&.
+Definition at line 301 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2sll\fP = typedef \fBMatrix\fP< signed long long int, 2, 2 >"
 
 .PP
-Definition at line 352 of file MatrixAliases\&.h\&.
+Definition at line 352 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2ss\fP = typedef \fBMatrix\fP< signed short int, 2, 2 >"
 
 .PP
-Definition at line 250 of file MatrixAliases\&.h\&.
+Definition at line 250 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2uc\fP = typedef \fBMatrix\fP< unsigned char, 2, 2 >"
 
 .PP
-Definition at line 386 of file MatrixAliases\&.h\&.
+Definition at line 386 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2ui\fP = typedef \fBMatrix\fP< unsigned int, 2, 2 >"
 
 .PP
-Definition at line 131 of file MatrixAliases\&.h\&.
+Definition at line 131 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2ul\fP = typedef \fBMatrix\fP< unsigned long int, 2, 2 >"
 
 .PP
-Definition at line 284 of file MatrixAliases\&.h\&.
+Definition at line 284 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2ull\fP = typedef \fBMatrix\fP< unsigned long long int, 2, 2 >"
 
 .PP
-Definition at line 335 of file MatrixAliases\&.h\&.
+Definition at line 335 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2us\fP = typedef \fBMatrix\fP< unsigned short int, 2, 2 >"
 
 .PP
-Definition at line 233 of file MatrixAliases\&.h\&.
+Definition at line 233 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3c\fP = typedef \fBMatrix\fP< char, 2, 3 >"
 
 .PP
-Definition at line 373 of file MatrixAliases\&.h\&.
+Definition at line 373 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3d\fP = typedef \fBMatrix\fP< double, 2, 3 >"
 
 .PP
-Definition at line 186 of file MatrixAliases\&.h\&.
+Definition at line 186 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3f\fP = typedef \fBMatrix\fP< float, 2, 3 >"
 
 .PP
-Definition at line 169 of file MatrixAliases\&.h\&.
+Definition at line 169 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3i\fP = typedef \fBMatrix\fP< int, 2, 3 >"
 
 .PP
-Definition at line 118 of file MatrixAliases\&.h\&.
+Definition at line 118 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3l\fP = typedef \fBMatrix\fP< long int, 2, 3 >"
 
 .PP
-Definition at line 271 of file MatrixAliases\&.h\&.
+Definition at line 271 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3ld\fP = typedef \fBMatrix\fP< long double, 2, 3 >"
 
 .PP
-Definition at line 203 of file MatrixAliases\&.h\&.
+Definition at line 203 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3ll\fP = typedef \fBMatrix\fP< long long int, 2, 3 >"
 
 .PP
-Definition at line 322 of file MatrixAliases\&.h\&.
+Definition at line 322 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3s\fP = typedef \fBMatrix\fP< short int, 2, 3 >"
 
 .PP
-Definition at line 220 of file MatrixAliases\&.h\&.
+Definition at line 220 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3sc\fP = typedef \fBMatrix\fP< signed char, 2, 3 >"
 
 .PP
-Definition at line 407 of file MatrixAliases\&.h\&.
+Definition at line 407 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3si\fP = typedef \fBMatrix\fP< signed int, 2, 3 >"
 
 .PP
-Definition at line 152 of file MatrixAliases\&.h\&.
+Definition at line 152 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3sl\fP = typedef \fBMatrix\fP< signed long int, 2, 3 >"
 
 .PP
-Definition at line 305 of file MatrixAliases\&.h\&.
+Definition at line 305 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3sll\fP = typedef \fBMatrix\fP< signed long long int, 2, 3 >"
 
 .PP
-Definition at line 356 of file MatrixAliases\&.h\&.
+Definition at line 356 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3ss\fP = typedef \fBMatrix\fP< signed short int, 2, 3 >"
 
 .PP
-Definition at line 254 of file MatrixAliases\&.h\&.
+Definition at line 254 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3uc\fP = typedef \fBMatrix\fP< unsigned char, 2, 3 >"
 
 .PP
-Definition at line 390 of file MatrixAliases\&.h\&.
+Definition at line 390 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3ui\fP = typedef \fBMatrix\fP< unsigned int, 2, 3 >"
 
 .PP
-Definition at line 135 of file MatrixAliases\&.h\&.
+Definition at line 135 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3ul\fP = typedef \fBMatrix\fP< unsigned long int, 2, 3 >"
 
 .PP
-Definition at line 288 of file MatrixAliases\&.h\&.
+Definition at line 288 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3ull\fP = typedef \fBMatrix\fP< unsigned long long int, 2, 3 >"
 
 .PP
-Definition at line 339 of file MatrixAliases\&.h\&.
+Definition at line 339 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x3us\fP = typedef \fBMatrix\fP< unsigned short int, 2, 3 >"
 
 .PP
-Definition at line 237 of file MatrixAliases\&.h\&.
+Definition at line 237 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4c\fP = typedef \fBMatrix\fP< char, 2, 4 >"
 
 .PP
-Definition at line 375 of file MatrixAliases\&.h\&.
+Definition at line 375 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4d\fP = typedef \fBMatrix\fP< double, 2, 4 >"
 
 .PP
-Definition at line 188 of file MatrixAliases\&.h\&.
+Definition at line 188 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4f\fP = typedef \fBMatrix\fP< float, 2, 4 >"
 
 .PP
-Definition at line 171 of file MatrixAliases\&.h\&.
+Definition at line 171 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4i\fP = typedef \fBMatrix\fP< int, 2, 4 >"
 
 .PP
-Definition at line 120 of file MatrixAliases\&.h\&.
+Definition at line 120 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4l\fP = typedef \fBMatrix\fP< long int, 2, 4 >"
 
 .PP
-Definition at line 273 of file MatrixAliases\&.h\&.
+Definition at line 273 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4ld\fP = typedef \fBMatrix\fP< long double, 2, 4 >"
 
 .PP
-Definition at line 205 of file MatrixAliases\&.h\&.
+Definition at line 205 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4ll\fP = typedef \fBMatrix\fP< long long int, 2, 4 >"
 
 .PP
-Definition at line 324 of file MatrixAliases\&.h\&.
+Definition at line 324 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4s\fP = typedef \fBMatrix\fP< short int, 2, 4 >"
 
 .PP
-Definition at line 222 of file MatrixAliases\&.h\&.
+Definition at line 222 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4sc\fP = typedef \fBMatrix\fP< signed char, 2, 4 >"
 
 .PP
-Definition at line 409 of file MatrixAliases\&.h\&.
+Definition at line 409 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4si\fP = typedef \fBMatrix\fP< signed int, 2, 4 >"
 
 .PP
-Definition at line 154 of file MatrixAliases\&.h\&.
+Definition at line 154 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4sl\fP = typedef \fBMatrix\fP< signed long int, 2, 4 >"
 
 .PP
-Definition at line 307 of file MatrixAliases\&.h\&.
+Definition at line 307 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4sll\fP = typedef \fBMatrix\fP< signed long long int, 2, 4 >"
 
 .PP
-Definition at line 358 of file MatrixAliases\&.h\&.
+Definition at line 358 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4ss\fP = typedef \fBMatrix\fP< signed short int, 2, 4 >"
 
 .PP
-Definition at line 256 of file MatrixAliases\&.h\&.
+Definition at line 256 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4uc\fP = typedef \fBMatrix\fP< unsigned char, 2, 4 >"
 
 .PP
-Definition at line 392 of file MatrixAliases\&.h\&.
+Definition at line 392 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4ui\fP = typedef \fBMatrix\fP< unsigned int, 2, 4 >"
 
 .PP
-Definition at line 137 of file MatrixAliases\&.h\&.
+Definition at line 137 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4ul\fP = typedef \fBMatrix\fP< unsigned long int, 2, 4 >"
 
 .PP
-Definition at line 290 of file MatrixAliases\&.h\&.
+Definition at line 290 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4ull\fP = typedef \fBMatrix\fP< unsigned long long int, 2, 4 >"
 
 .PP
-Definition at line 341 of file MatrixAliases\&.h\&.
+Definition at line 341 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x4us\fP = typedef \fBMatrix\fP< unsigned short int, 2, 4 >"
 
 .PP
-Definition at line 239 of file MatrixAliases\&.h\&.
+Definition at line 239 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5c\fP = typedef \fBMatrix\fP< char, 2, 5 >"
 
 .PP
-Definition at line 377 of file MatrixAliases\&.h\&.
+Definition at line 377 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5d\fP = typedef \fBMatrix\fP< double, 2, 5 >"
 
 .PP
-Definition at line 190 of file MatrixAliases\&.h\&.
+Definition at line 190 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5f\fP = typedef \fBMatrix\fP< float, 2, 5 >"
 
 .PP
-Definition at line 173 of file MatrixAliases\&.h\&.
+Definition at line 173 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5i\fP = typedef \fBMatrix\fP< int, 2, 5 >"
 
 .PP
-Definition at line 122 of file MatrixAliases\&.h\&.
+Definition at line 122 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5l\fP = typedef \fBMatrix\fP< long int, 2, 5 >"
 
 .PP
-Definition at line 275 of file MatrixAliases\&.h\&.
+Definition at line 275 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5ld\fP = typedef \fBMatrix\fP< long double, 2, 5 >"
 
 .PP
-Definition at line 207 of file MatrixAliases\&.h\&.
+Definition at line 207 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5ll\fP = typedef \fBMatrix\fP< long long int, 2, 5 >"
 
 .PP
-Definition at line 326 of file MatrixAliases\&.h\&.
+Definition at line 326 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5s\fP = typedef \fBMatrix\fP< short int, 2, 5 >"
 
 .PP
-Definition at line 224 of file MatrixAliases\&.h\&.
+Definition at line 224 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5sc\fP = typedef \fBMatrix\fP< signed char, 2, 5 >"
 
 .PP
-Definition at line 411 of file MatrixAliases\&.h\&.
+Definition at line 411 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5si\fP = typedef \fBMatrix\fP< signed int, 2, 5 >"
 
 .PP
-Definition at line 156 of file MatrixAliases\&.h\&.
+Definition at line 156 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5sl\fP = typedef \fBMatrix\fP< signed long int, 2, 5 >"
 
 .PP
-Definition at line 309 of file MatrixAliases\&.h\&.
+Definition at line 309 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5sll\fP = typedef \fBMatrix\fP< signed long long int, 2, 5 >"
 
 .PP
-Definition at line 360 of file MatrixAliases\&.h\&.
+Definition at line 360 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5ss\fP = typedef \fBMatrix\fP< signed short int, 2, 5 >"
 
 .PP
-Definition at line 258 of file MatrixAliases\&.h\&.
+Definition at line 258 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5uc\fP = typedef \fBMatrix\fP< unsigned char, 2, 5 >"
 
 .PP
-Definition at line 394 of file MatrixAliases\&.h\&.
+Definition at line 394 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5ui\fP = typedef \fBMatrix\fP< unsigned int, 2, 5 >"
 
 .PP
-Definition at line 139 of file MatrixAliases\&.h\&.
+Definition at line 139 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5ul\fP = typedef \fBMatrix\fP< unsigned long int, 2, 5 >"
 
 .PP
-Definition at line 292 of file MatrixAliases\&.h\&.
+Definition at line 292 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5ull\fP = typedef \fBMatrix\fP< unsigned long long int, 2, 5 >"
 
 .PP
-Definition at line 343 of file MatrixAliases\&.h\&.
+Definition at line 343 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix2x5us\fP = typedef \fBMatrix\fP< unsigned short int, 2, 5 >"
 
 .PP
-Definition at line 241 of file MatrixAliases\&.h\&.
+Definition at line 241 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3c\fP = typedef \fBMatrix\fP< char, 3, 3 >"
 
 .PP
-Definition at line 370 of file MatrixAliases\&.h\&.
+Definition at line 370 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3d\fP = typedef \fBMatrix\fP< double, 3, 3 >"
 
 .PP
-Definition at line 183 of file MatrixAliases\&.h\&.
+Definition at line 183 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3f\fP = typedef \fBMatrix\fP< float, 3, 3 >"
 
 .PP
-Definition at line 166 of file MatrixAliases\&.h\&.
+Definition at line 166 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3i\fP = typedef \fBMatrix\fP< int, 3, 3 >"
 
 .PP
-Definition at line 115 of file MatrixAliases\&.h\&.
+Definition at line 115 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3l\fP = typedef \fBMatrix\fP< long int, 3, 3 >"
 
 .PP
-Definition at line 268 of file MatrixAliases\&.h\&.
+Definition at line 268 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3ld\fP = typedef \fBMatrix\fP< long double, 3, 3 >"
 
 .PP
-Definition at line 200 of file MatrixAliases\&.h\&.
+Definition at line 200 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3ll\fP = typedef \fBMatrix\fP< long long int, 3, 3 >"
 
 .PP
-Definition at line 319 of file MatrixAliases\&.h\&.
+Definition at line 319 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3s\fP = typedef \fBMatrix\fP< short int, 3, 3 >"
 
 .PP
-Definition at line 217 of file MatrixAliases\&.h\&.
+Definition at line 217 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3sc\fP = typedef \fBMatrix\fP< signed char, 3, 3 >"
 
 .PP
-Definition at line 404 of file MatrixAliases\&.h\&.
+Definition at line 404 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3si\fP = typedef \fBMatrix\fP< signed int, 3, 3 >"
 
 .PP
-Definition at line 149 of file MatrixAliases\&.h\&.
+Definition at line 149 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3sl\fP = typedef \fBMatrix\fP< signed long int, 3, 3 >"
 
 .PP
-Definition at line 302 of file MatrixAliases\&.h\&.
+Definition at line 302 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3sll\fP = typedef \fBMatrix\fP< signed long long int, 3, 3 >"
 
 .PP
-Definition at line 353 of file MatrixAliases\&.h\&.
+Definition at line 353 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3ss\fP = typedef \fBMatrix\fP< signed short int, 3, 3 >"
 
 .PP
-Definition at line 251 of file MatrixAliases\&.h\&.
+Definition at line 251 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3uc\fP = typedef \fBMatrix\fP< unsigned char, 3, 3 >"
 
 .PP
-Definition at line 387 of file MatrixAliases\&.h\&.
+Definition at line 387 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3ui\fP = typedef \fBMatrix\fP< unsigned int, 3, 3 >"
 
 .PP
-Definition at line 132 of file MatrixAliases\&.h\&.
+Definition at line 132 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3ul\fP = typedef \fBMatrix\fP< unsigned long int, 3, 3 >"
 
 .PP
-Definition at line 285 of file MatrixAliases\&.h\&.
+Definition at line 285 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3ull\fP = typedef \fBMatrix\fP< unsigned long long int, 3, 3 >"
 
 .PP
-Definition at line 336 of file MatrixAliases\&.h\&.
+Definition at line 336 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3us\fP = typedef \fBMatrix\fP< unsigned short int, 3, 3 >"
 
 .PP
-Definition at line 234 of file MatrixAliases\&.h\&.
+Definition at line 234 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2c\fP = typedef \fBMatrix\fP< char, 3, 2 >"
 
 .PP
-Definition at line 374 of file MatrixAliases\&.h\&.
+Definition at line 374 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2d\fP = typedef \fBMatrix\fP< double, 3, 2 >"
 
 .PP
-Definition at line 187 of file MatrixAliases\&.h\&.
+Definition at line 187 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2f\fP = typedef \fBMatrix\fP< float, 3, 2 >"
 
 .PP
-Definition at line 170 of file MatrixAliases\&.h\&.
+Definition at line 170 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2i\fP = typedef \fBMatrix\fP< int, 3, 2 >"
 
 .PP
-Definition at line 119 of file MatrixAliases\&.h\&.
+Definition at line 119 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2l\fP = typedef \fBMatrix\fP< long int, 3, 2 >"
 
 .PP
-Definition at line 272 of file MatrixAliases\&.h\&.
+Definition at line 272 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2ld\fP = typedef \fBMatrix\fP< long double, 3, 2 >"
 
 .PP
-Definition at line 204 of file MatrixAliases\&.h\&.
+Definition at line 204 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2ll\fP = typedef \fBMatrix\fP< long long int, 3, 2 >"
 
 .PP
-Definition at line 323 of file MatrixAliases\&.h\&.
+Definition at line 323 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2s\fP = typedef \fBMatrix\fP< short int, 3, 2 >"
 
 .PP
-Definition at line 221 of file MatrixAliases\&.h\&.
+Definition at line 221 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2sc\fP = typedef \fBMatrix\fP< signed char, 3, 2 >"
 
 .PP
-Definition at line 408 of file MatrixAliases\&.h\&.
+Definition at line 408 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2si\fP = typedef \fBMatrix\fP< signed int, 3, 2 >"
 
 .PP
-Definition at line 153 of file MatrixAliases\&.h\&.
+Definition at line 153 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2sl\fP = typedef \fBMatrix\fP< signed long int, 3, 2 >"
 
 .PP
-Definition at line 306 of file MatrixAliases\&.h\&.
+Definition at line 306 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2sll\fP = typedef \fBMatrix\fP< signed long long int, 3, 2 >"
 
 .PP
-Definition at line 357 of file MatrixAliases\&.h\&.
+Definition at line 357 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2ss\fP = typedef \fBMatrix\fP< signed short int, 3, 2 >"
 
 .PP
-Definition at line 255 of file MatrixAliases\&.h\&.
+Definition at line 255 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2uc\fP = typedef \fBMatrix\fP< unsigned char, 3, 2 >"
 
 .PP
-Definition at line 391 of file MatrixAliases\&.h\&.
+Definition at line 391 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2ui\fP = typedef \fBMatrix\fP< unsigned int, 3, 2 >"
 
 .PP
-Definition at line 136 of file MatrixAliases\&.h\&.
+Definition at line 136 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2ul\fP = typedef \fBMatrix\fP< unsigned long int, 3, 2 >"
 
 .PP
-Definition at line 289 of file MatrixAliases\&.h\&.
+Definition at line 289 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2ull\fP = typedef \fBMatrix\fP< unsigned long long int, 3, 2 >"
 
 .PP
-Definition at line 340 of file MatrixAliases\&.h\&.
+Definition at line 340 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x2us\fP = typedef \fBMatrix\fP< unsigned short int, 3, 2 >"
 
 .PP
-Definition at line 238 of file MatrixAliases\&.h\&.
+Definition at line 238 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4c\fP = typedef \fBMatrix\fP< char, 3, 4 >"
 
 .PP
-Definition at line 379 of file MatrixAliases\&.h\&.
+Definition at line 379 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4d\fP = typedef \fBMatrix\fP< double, 3, 4 >"
 
 .PP
-Definition at line 192 of file MatrixAliases\&.h\&.
+Definition at line 192 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4f\fP = typedef \fBMatrix\fP< float, 3, 4 >"
 
 .PP
-Definition at line 175 of file MatrixAliases\&.h\&.
+Definition at line 175 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4i\fP = typedef \fBMatrix\fP< int, 3, 4 >"
 
 .PP
-Definition at line 124 of file MatrixAliases\&.h\&.
+Definition at line 124 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4l\fP = typedef \fBMatrix\fP< long int, 3, 4 >"
 
 .PP
-Definition at line 277 of file MatrixAliases\&.h\&.
+Definition at line 277 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4ld\fP = typedef \fBMatrix\fP< long double, 3, 4 >"
 
 .PP
-Definition at line 209 of file MatrixAliases\&.h\&.
+Definition at line 209 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4ll\fP = typedef \fBMatrix\fP< long long int, 3, 4 >"
 
 .PP
-Definition at line 328 of file MatrixAliases\&.h\&.
+Definition at line 328 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4s\fP = typedef \fBMatrix\fP< short int, 3, 4 >"
 
 .PP
-Definition at line 226 of file MatrixAliases\&.h\&.
+Definition at line 226 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4sc\fP = typedef \fBMatrix\fP< signed char, 3, 4 >"
 
 .PP
-Definition at line 413 of file MatrixAliases\&.h\&.
+Definition at line 413 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4si\fP = typedef \fBMatrix\fP< signed int, 3, 4 >"
 
 .PP
-Definition at line 158 of file MatrixAliases\&.h\&.
+Definition at line 158 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4sl\fP = typedef \fBMatrix\fP< signed long int, 3, 4 >"
 
 .PP
-Definition at line 311 of file MatrixAliases\&.h\&.
+Definition at line 311 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4sll\fP = typedef \fBMatrix\fP< signed long long int, 3, 4 >"
 
 .PP
-Definition at line 362 of file MatrixAliases\&.h\&.
+Definition at line 362 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4ss\fP = typedef \fBMatrix\fP< signed short int, 3, 4 >"
 
 .PP
-Definition at line 260 of file MatrixAliases\&.h\&.
+Definition at line 260 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4uc\fP = typedef \fBMatrix\fP< unsigned char, 3, 4 >"
 
 .PP
-Definition at line 396 of file MatrixAliases\&.h\&.
+Definition at line 396 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4ui\fP = typedef \fBMatrix\fP< unsigned int, 3, 4 >"
 
 .PP
-Definition at line 141 of file MatrixAliases\&.h\&.
+Definition at line 141 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4ul\fP = typedef \fBMatrix\fP< unsigned long int, 3, 4 >"
 
 .PP
-Definition at line 294 of file MatrixAliases\&.h\&.
+Definition at line 294 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4ull\fP = typedef \fBMatrix\fP< unsigned long long int, 3, 4 >"
 
 .PP
-Definition at line 345 of file MatrixAliases\&.h\&.
+Definition at line 345 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x4us\fP = typedef \fBMatrix\fP< unsigned short int, 3, 4 >"
 
 .PP
-Definition at line 243 of file MatrixAliases\&.h\&.
+Definition at line 243 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5c\fP = typedef \fBMatrix\fP< char, 3, 5 >"
 
 .PP
-Definition at line 381 of file MatrixAliases\&.h\&.
+Definition at line 381 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5d\fP = typedef \fBMatrix\fP< double, 3, 5 >"
 
 .PP
-Definition at line 194 of file MatrixAliases\&.h\&.
+Definition at line 194 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5f\fP = typedef \fBMatrix\fP< float, 3, 5 >"
 
 .PP
-Definition at line 177 of file MatrixAliases\&.h\&.
+Definition at line 177 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5i\fP = typedef \fBMatrix\fP< int, 3, 5 >"
 
 .PP
-Definition at line 126 of file MatrixAliases\&.h\&.
+Definition at line 126 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5l\fP = typedef \fBMatrix\fP< long int, 3, 5 >"
 
 .PP
-Definition at line 279 of file MatrixAliases\&.h\&.
+Definition at line 279 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5ld\fP = typedef \fBMatrix\fP< long double, 3, 5 >"
 
 .PP
-Definition at line 211 of file MatrixAliases\&.h\&.
+Definition at line 211 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5ll\fP = typedef \fBMatrix\fP< long long int, 3, 5 >"
 
 .PP
-Definition at line 330 of file MatrixAliases\&.h\&.
+Definition at line 330 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5s\fP = typedef \fBMatrix\fP< short int, 3, 5 >"
 
 .PP
-Definition at line 228 of file MatrixAliases\&.h\&.
+Definition at line 228 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5sc\fP = typedef \fBMatrix\fP< signed char, 3, 5 >"
 
 .PP
-Definition at line 415 of file MatrixAliases\&.h\&.
+Definition at line 415 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5si\fP = typedef \fBMatrix\fP< signed int, 3, 5 >"
 
 .PP
-Definition at line 160 of file MatrixAliases\&.h\&.
+Definition at line 160 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5sl\fP = typedef \fBMatrix\fP< signed long int, 3, 5 >"
 
 .PP
-Definition at line 313 of file MatrixAliases\&.h\&.
+Definition at line 313 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5sll\fP = typedef \fBMatrix\fP< signed long long int, 3, 5 >"
 
 .PP
-Definition at line 364 of file MatrixAliases\&.h\&.
+Definition at line 364 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5ss\fP = typedef \fBMatrix\fP< signed short int, 3, 5 >"
 
 .PP
-Definition at line 262 of file MatrixAliases\&.h\&.
+Definition at line 262 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5uc\fP = typedef \fBMatrix\fP< unsigned char, 3, 5 >"
 
 .PP
-Definition at line 398 of file MatrixAliases\&.h\&.
+Definition at line 398 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5ui\fP = typedef \fBMatrix\fP< unsigned int, 3, 5 >"
 
 .PP
-Definition at line 143 of file MatrixAliases\&.h\&.
+Definition at line 143 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5ul\fP = typedef \fBMatrix\fP< unsigned long int, 3, 5 >"
 
 .PP
-Definition at line 296 of file MatrixAliases\&.h\&.
+Definition at line 296 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5ull\fP = typedef \fBMatrix\fP< unsigned long long int, 3, 5 >"
 
 .PP
-Definition at line 347 of file MatrixAliases\&.h\&.
+Definition at line 347 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix3x5us\fP = typedef \fBMatrix\fP< unsigned short int, 3, 5 >"
 
 .PP
-Definition at line 245 of file MatrixAliases\&.h\&.
+Definition at line 245 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4c\fP = typedef \fBMatrix\fP< char, 4, 4 >"
 
 .PP
-Definition at line 371 of file MatrixAliases\&.h\&.
+Definition at line 371 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4d\fP = typedef \fBMatrix\fP< double, 4, 4 >"
 
 .PP
-Definition at line 184 of file MatrixAliases\&.h\&.
+Definition at line 184 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4f\fP = typedef \fBMatrix\fP< float, 4, 4 >"
 
 .PP
-Definition at line 167 of file MatrixAliases\&.h\&.
+Definition at line 167 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4i\fP = typedef \fBMatrix\fP< int, 4, 4 >"
 
 .PP
-Definition at line 116 of file MatrixAliases\&.h\&.
+Definition at line 116 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4l\fP = typedef \fBMatrix\fP< long int, 4, 4 >"
 
 .PP
-Definition at line 269 of file MatrixAliases\&.h\&.
+Definition at line 269 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4ld\fP = typedef \fBMatrix\fP< long double, 4, 4 >"
 
 .PP
-Definition at line 201 of file MatrixAliases\&.h\&.
+Definition at line 201 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4ll\fP = typedef \fBMatrix\fP< long long int, 4, 4 >"
 
 .PP
-Definition at line 320 of file MatrixAliases\&.h\&.
+Definition at line 320 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4s\fP = typedef \fBMatrix\fP< short int, 4, 4 >"
 
 .PP
-Definition at line 218 of file MatrixAliases\&.h\&.
+Definition at line 218 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4sc\fP = typedef \fBMatrix\fP< signed char, 4, 4 >"
 
 .PP
-Definition at line 405 of file MatrixAliases\&.h\&.
+Definition at line 405 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4si\fP = typedef \fBMatrix\fP< signed int, 4, 4 >"
 
 .PP
-Definition at line 150 of file MatrixAliases\&.h\&.
+Definition at line 150 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4sl\fP = typedef \fBMatrix\fP< signed long int, 4, 4 >"
 
 .PP
-Definition at line 303 of file MatrixAliases\&.h\&.
+Definition at line 303 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4sll\fP = typedef \fBMatrix\fP< signed long long int, 4, 4 >"
 
 .PP
-Definition at line 354 of file MatrixAliases\&.h\&.
+Definition at line 354 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4ss\fP = typedef \fBMatrix\fP< signed short int, 4, 4 >"
 
 .PP
-Definition at line 252 of file MatrixAliases\&.h\&.
+Definition at line 252 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4uc\fP = typedef \fBMatrix\fP< unsigned char, 4, 4 >"
 
 .PP
-Definition at line 388 of file MatrixAliases\&.h\&.
+Definition at line 388 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4ui\fP = typedef \fBMatrix\fP< unsigned int, 4, 4 >"
 
 .PP
-Definition at line 133 of file MatrixAliases\&.h\&.
+Definition at line 133 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4ul\fP = typedef \fBMatrix\fP< unsigned long int, 4, 4 >"
 
 .PP
-Definition at line 286 of file MatrixAliases\&.h\&.
+Definition at line 286 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4ull\fP = typedef \fBMatrix\fP< unsigned long long int, 4, 4 >"
 
 .PP
-Definition at line 337 of file MatrixAliases\&.h\&.
+Definition at line 337 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4us\fP = typedef \fBMatrix\fP< unsigned short int, 4, 4 >"
 
 .PP
-Definition at line 235 of file MatrixAliases\&.h\&.
+Definition at line 235 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2c\fP = typedef \fBMatrix\fP< char, 4, 2 >"
 
 .PP
-Definition at line 376 of file MatrixAliases\&.h\&.
+Definition at line 376 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2d\fP = typedef \fBMatrix\fP< double, 4, 2 >"
 
 .PP
-Definition at line 189 of file MatrixAliases\&.h\&.
+Definition at line 189 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2f\fP = typedef \fBMatrix\fP< float, 4, 2 >"
 
 .PP
-Definition at line 172 of file MatrixAliases\&.h\&.
+Definition at line 172 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2i\fP = typedef \fBMatrix\fP< int, 4, 2 >"
 
 .PP
-Definition at line 121 of file MatrixAliases\&.h\&.
+Definition at line 121 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2l\fP = typedef \fBMatrix\fP< long int, 4, 2 >"
 
 .PP
-Definition at line 274 of file MatrixAliases\&.h\&.
+Definition at line 274 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2ld\fP = typedef \fBMatrix\fP< long double, 4, 2 >"
 
 .PP
-Definition at line 206 of file MatrixAliases\&.h\&.
+Definition at line 206 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2ll\fP = typedef \fBMatrix\fP< long long int, 4, 2 >"
 
 .PP
-Definition at line 325 of file MatrixAliases\&.h\&.
+Definition at line 325 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2s\fP = typedef \fBMatrix\fP< short int, 4, 2 >"
 
 .PP
-Definition at line 223 of file MatrixAliases\&.h\&.
+Definition at line 223 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2sc\fP = typedef \fBMatrix\fP< signed char, 4, 2 >"
 
 .PP
-Definition at line 410 of file MatrixAliases\&.h\&.
+Definition at line 410 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2si\fP = typedef \fBMatrix\fP< signed int, 4, 2 >"
 
 .PP
-Definition at line 155 of file MatrixAliases\&.h\&.
+Definition at line 155 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2sl\fP = typedef \fBMatrix\fP< signed long int, 4, 2 >"
 
 .PP
-Definition at line 308 of file MatrixAliases\&.h\&.
+Definition at line 308 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2sll\fP = typedef \fBMatrix\fP< signed long long int, 4, 2 >"
 
 .PP
-Definition at line 359 of file MatrixAliases\&.h\&.
+Definition at line 359 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2ss\fP = typedef \fBMatrix\fP< signed short int, 4, 2 >"
 
 .PP
-Definition at line 257 of file MatrixAliases\&.h\&.
+Definition at line 257 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2uc\fP = typedef \fBMatrix\fP< unsigned char, 4, 2 >"
 
 .PP
-Definition at line 393 of file MatrixAliases\&.h\&.
+Definition at line 393 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2ui\fP = typedef \fBMatrix\fP< unsigned int, 4, 2 >"
 
 .PP
-Definition at line 138 of file MatrixAliases\&.h\&.
+Definition at line 138 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2ul\fP = typedef \fBMatrix\fP< unsigned long int, 4, 2 >"
 
 .PP
-Definition at line 291 of file MatrixAliases\&.h\&.
+Definition at line 291 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2ull\fP = typedef \fBMatrix\fP< unsigned long long int, 4, 2 >"
 
 .PP
-Definition at line 342 of file MatrixAliases\&.h\&.
+Definition at line 342 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x2us\fP = typedef \fBMatrix\fP< unsigned short int, 4, 2 >"
 
 .PP
-Definition at line 240 of file MatrixAliases\&.h\&.
+Definition at line 240 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3c\fP = typedef \fBMatrix\fP< char, 4, 3 >"
 
 .PP
-Definition at line 380 of file MatrixAliases\&.h\&.
+Definition at line 380 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3d\fP = typedef \fBMatrix\fP< double, 4, 3 >"
 
 .PP
-Definition at line 193 of file MatrixAliases\&.h\&.
+Definition at line 193 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3f\fP = typedef \fBMatrix\fP< float, 4, 3 >"
 
 .PP
-Definition at line 176 of file MatrixAliases\&.h\&.
+Definition at line 176 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3i\fP = typedef \fBMatrix\fP< int, 4, 3 >"
 
 .PP
-Definition at line 125 of file MatrixAliases\&.h\&.
+Definition at line 125 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3l\fP = typedef \fBMatrix\fP< long int, 4, 3 >"
 
 .PP
-Definition at line 278 of file MatrixAliases\&.h\&.
+Definition at line 278 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3ld\fP = typedef \fBMatrix\fP< long double, 4, 3 >"
 
 .PP
-Definition at line 210 of file MatrixAliases\&.h\&.
+Definition at line 210 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3ll\fP = typedef \fBMatrix\fP< long long int, 4, 3 >"
 
 .PP
-Definition at line 329 of file MatrixAliases\&.h\&.
+Definition at line 329 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3s\fP = typedef \fBMatrix\fP< short int, 4, 3 >"
 
 .PP
-Definition at line 227 of file MatrixAliases\&.h\&.
+Definition at line 227 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3sc\fP = typedef \fBMatrix\fP< signed char, 4, 3 >"
 
 .PP
-Definition at line 414 of file MatrixAliases\&.h\&.
+Definition at line 414 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3si\fP = typedef \fBMatrix\fP< signed int, 4, 3 >"
 
 .PP
-Definition at line 159 of file MatrixAliases\&.h\&.
+Definition at line 159 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3sl\fP = typedef \fBMatrix\fP< signed long int, 4, 3 >"
 
 .PP
-Definition at line 312 of file MatrixAliases\&.h\&.
+Definition at line 312 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3sll\fP = typedef \fBMatrix\fP< signed long long int, 4, 3 >"
 
 .PP
-Definition at line 363 of file MatrixAliases\&.h\&.
+Definition at line 363 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3ss\fP = typedef \fBMatrix\fP< signed short int, 4, 3 >"
 
 .PP
-Definition at line 261 of file MatrixAliases\&.h\&.
+Definition at line 261 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3uc\fP = typedef \fBMatrix\fP< unsigned char, 4, 3 >"
 
 .PP
-Definition at line 397 of file MatrixAliases\&.h\&.
+Definition at line 397 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3ui\fP = typedef \fBMatrix\fP< unsigned int, 4, 3 >"
 
 .PP
-Definition at line 142 of file MatrixAliases\&.h\&.
+Definition at line 142 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3ul\fP = typedef \fBMatrix\fP< unsigned long int, 4, 3 >"
 
 .PP
-Definition at line 295 of file MatrixAliases\&.h\&.
+Definition at line 295 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3ull\fP = typedef \fBMatrix\fP< unsigned long long int, 4, 3 >"
 
 .PP
-Definition at line 346 of file MatrixAliases\&.h\&.
+Definition at line 346 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x3us\fP = typedef \fBMatrix\fP< unsigned short int, 4, 3 >"
 
 .PP
-Definition at line 244 of file MatrixAliases\&.h\&.
+Definition at line 244 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5c\fP = typedef \fBMatrix\fP< char, 4, 5 >"
 
 .PP
-Definition at line 383 of file MatrixAliases\&.h\&.
+Definition at line 383 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5d\fP = typedef \fBMatrix\fP< double, 4, 5 >"
 
 .PP
-Definition at line 196 of file MatrixAliases\&.h\&.
+Definition at line 196 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5f\fP = typedef \fBMatrix\fP< float, 4, 5 >"
 
 .PP
-Definition at line 179 of file MatrixAliases\&.h\&.
+Definition at line 179 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5i\fP = typedef \fBMatrix\fP< int, 4, 5 >"
 
 .PP
-Definition at line 128 of file MatrixAliases\&.h\&.
+Definition at line 128 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5l\fP = typedef \fBMatrix\fP< long int, 4, 5 >"
 
 .PP
-Definition at line 281 of file MatrixAliases\&.h\&.
+Definition at line 281 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5ld\fP = typedef \fBMatrix\fP< long double, 4, 5 >"
 
 .PP
-Definition at line 213 of file MatrixAliases\&.h\&.
+Definition at line 213 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5ll\fP = typedef \fBMatrix\fP< long long int, 4, 5 >"
 
 .PP
-Definition at line 332 of file MatrixAliases\&.h\&.
+Definition at line 332 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5s\fP = typedef \fBMatrix\fP< short int, 4, 5 >"
 
 .PP
-Definition at line 230 of file MatrixAliases\&.h\&.
+Definition at line 230 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5sc\fP = typedef \fBMatrix\fP< signed char, 4, 5 >"
 
 .PP
-Definition at line 417 of file MatrixAliases\&.h\&.
+Definition at line 417 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5si\fP = typedef \fBMatrix\fP< signed int, 4, 5 >"
 
 .PP
-Definition at line 162 of file MatrixAliases\&.h\&.
+Definition at line 162 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5sl\fP = typedef \fBMatrix\fP< signed long int, 4, 5 >"
 
 .PP
-Definition at line 315 of file MatrixAliases\&.h\&.
+Definition at line 315 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5sll\fP = typedef \fBMatrix\fP< signed long long int, 4, 5 >"
 
 .PP
-Definition at line 366 of file MatrixAliases\&.h\&.
+Definition at line 366 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5ss\fP = typedef \fBMatrix\fP< signed short int, 4, 5 >"
 
 .PP
-Definition at line 264 of file MatrixAliases\&.h\&.
+Definition at line 264 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5uc\fP = typedef \fBMatrix\fP< unsigned char, 4, 5 >"
 
 .PP
-Definition at line 400 of file MatrixAliases\&.h\&.
+Definition at line 400 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5ui\fP = typedef \fBMatrix\fP< unsigned int, 4, 5 >"
 
 .PP
-Definition at line 145 of file MatrixAliases\&.h\&.
+Definition at line 145 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5ul\fP = typedef \fBMatrix\fP< unsigned long int, 4, 5 >"
 
 .PP
-Definition at line 298 of file MatrixAliases\&.h\&.
+Definition at line 298 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5ull\fP = typedef \fBMatrix\fP< unsigned long long int, 4, 5 >"
 
 .PP
-Definition at line 349 of file MatrixAliases\&.h\&.
+Definition at line 349 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix4x5us\fP = typedef \fBMatrix\fP< unsigned short int, 4, 5 >"
 
 .PP
-Definition at line 247 of file MatrixAliases\&.h\&.
+Definition at line 247 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5c\fP = typedef \fBMatrix\fP< char, 5, 5 >"
 
 .PP
-Definition at line 372 of file MatrixAliases\&.h\&.
+Definition at line 372 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5d\fP = typedef \fBMatrix\fP< double, 5, 5 >"
 
 .PP
-Definition at line 185 of file MatrixAliases\&.h\&.
+Definition at line 185 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5f\fP = typedef \fBMatrix\fP< float, 5, 5 >"
 
 .PP
-Definition at line 168 of file MatrixAliases\&.h\&.
+Definition at line 168 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5i\fP = typedef \fBMatrix\fP< int, 5, 5 >"
 
 .PP
-Definition at line 117 of file MatrixAliases\&.h\&.
+Definition at line 117 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5l\fP = typedef \fBMatrix\fP< long int, 5, 5 >"
 
 .PP
-Definition at line 270 of file MatrixAliases\&.h\&.
+Definition at line 270 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5ld\fP = typedef \fBMatrix\fP< long double, 5, 5 >"
 
 .PP
-Definition at line 202 of file MatrixAliases\&.h\&.
+Definition at line 202 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5ll\fP = typedef \fBMatrix\fP< long long int, 5, 5 >"
 
 .PP
-Definition at line 321 of file MatrixAliases\&.h\&.
+Definition at line 321 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5s\fP = typedef \fBMatrix\fP< short int, 5, 5 >"
 
 .PP
-Definition at line 219 of file MatrixAliases\&.h\&.
+Definition at line 219 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5sc\fP = typedef \fBMatrix\fP< signed char, 5, 5 >"
 
 .PP
-Definition at line 406 of file MatrixAliases\&.h\&.
+Definition at line 406 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5si\fP = typedef \fBMatrix\fP< signed int, 5, 5 >"
 
 .PP
-Definition at line 151 of file MatrixAliases\&.h\&.
+Definition at line 151 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5sl\fP = typedef \fBMatrix\fP< signed long int, 5, 5 >"
 
 .PP
-Definition at line 304 of file MatrixAliases\&.h\&.
+Definition at line 304 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5sll\fP = typedef \fBMatrix\fP< signed long long int, 5, 5 >"
 
 .PP
-Definition at line 355 of file MatrixAliases\&.h\&.
+Definition at line 355 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5ss\fP = typedef \fBMatrix\fP< signed short int, 5, 5 >"
 
 .PP
-Definition at line 253 of file MatrixAliases\&.h\&.
+Definition at line 253 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5uc\fP = typedef \fBMatrix\fP< unsigned char, 5, 5 >"
 
 .PP
-Definition at line 389 of file MatrixAliases\&.h\&.
+Definition at line 389 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5ui\fP = typedef \fBMatrix\fP< unsigned int, 5, 5 >"
 
 .PP
-Definition at line 134 of file MatrixAliases\&.h\&.
+Definition at line 134 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5ul\fP = typedef \fBMatrix\fP< unsigned long int, 5, 5 >"
 
 .PP
-Definition at line 287 of file MatrixAliases\&.h\&.
+Definition at line 287 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5ull\fP = typedef \fBMatrix\fP< unsigned long long int, 5, 5 >"
 
 .PP
-Definition at line 338 of file MatrixAliases\&.h\&.
+Definition at line 338 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5us\fP = typedef \fBMatrix\fP< unsigned short int, 5, 5 >"
 
 .PP
-Definition at line 236 of file MatrixAliases\&.h\&.
+Definition at line 236 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2c\fP = typedef \fBMatrix\fP< char, 5, 2 >"
 
 .PP
-Definition at line 378 of file MatrixAliases\&.h\&.
+Definition at line 378 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2d\fP = typedef \fBMatrix\fP< double, 5, 2 >"
 
 .PP
-Definition at line 191 of file MatrixAliases\&.h\&.
+Definition at line 191 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2f\fP = typedef \fBMatrix\fP< float, 5, 2 >"
 
 .PP
-Definition at line 174 of file MatrixAliases\&.h\&.
+Definition at line 174 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2i\fP = typedef \fBMatrix\fP< int, 5, 2 >"
 
 .PP
-Definition at line 123 of file MatrixAliases\&.h\&.
+Definition at line 123 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2l\fP = typedef \fBMatrix\fP< long int, 5, 2 >"
 
 .PP
-Definition at line 276 of file MatrixAliases\&.h\&.
+Definition at line 276 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2ld\fP = typedef \fBMatrix\fP< long double, 5, 2 >"
 
 .PP
-Definition at line 208 of file MatrixAliases\&.h\&.
+Definition at line 208 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2ll\fP = typedef \fBMatrix\fP< long long int, 5, 2 >"
 
 .PP
-Definition at line 327 of file MatrixAliases\&.h\&.
+Definition at line 327 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2s\fP = typedef \fBMatrix\fP< short int, 5, 2 >"
 
 .PP
-Definition at line 225 of file MatrixAliases\&.h\&.
+Definition at line 225 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2sc\fP = typedef \fBMatrix\fP< signed char, 5, 2 >"
 
 .PP
-Definition at line 412 of file MatrixAliases\&.h\&.
+Definition at line 412 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2si\fP = typedef \fBMatrix\fP< signed int, 5, 2 >"
 
 .PP
-Definition at line 157 of file MatrixAliases\&.h\&.
+Definition at line 157 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2sl\fP = typedef \fBMatrix\fP< signed long int, 5, 2 >"
 
 .PP
-Definition at line 310 of file MatrixAliases\&.h\&.
+Definition at line 310 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2sll\fP = typedef \fBMatrix\fP< signed long long int, 5, 2 >"
 
 .PP
-Definition at line 361 of file MatrixAliases\&.h\&.
+Definition at line 361 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2ss\fP = typedef \fBMatrix\fP< signed short int, 5, 2 >"
 
 .PP
-Definition at line 259 of file MatrixAliases\&.h\&.
+Definition at line 259 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2uc\fP = typedef \fBMatrix\fP< unsigned char, 5, 2 >"
 
 .PP
-Definition at line 395 of file MatrixAliases\&.h\&.
+Definition at line 395 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2ui\fP = typedef \fBMatrix\fP< unsigned int, 5, 2 >"
 
 .PP
-Definition at line 140 of file MatrixAliases\&.h\&.
+Definition at line 140 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2ul\fP = typedef \fBMatrix\fP< unsigned long int, 5, 2 >"
 
 .PP
-Definition at line 293 of file MatrixAliases\&.h\&.
+Definition at line 293 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2ull\fP = typedef \fBMatrix\fP< unsigned long long int, 5, 2 >"
 
 .PP
-Definition at line 344 of file MatrixAliases\&.h\&.
+Definition at line 344 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x2us\fP = typedef \fBMatrix\fP< unsigned short int, 5, 2 >"
 
 .PP
-Definition at line 242 of file MatrixAliases\&.h\&.
+Definition at line 242 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3c\fP = typedef \fBMatrix\fP< char, 5, 3 >"
 
 .PP
-Definition at line 382 of file MatrixAliases\&.h\&.
+Definition at line 382 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3d\fP = typedef \fBMatrix\fP< double, 5, 3 >"
 
 .PP
-Definition at line 195 of file MatrixAliases\&.h\&.
+Definition at line 195 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3f\fP = typedef \fBMatrix\fP< float, 5, 3 >"
 
 .PP
-Definition at line 178 of file MatrixAliases\&.h\&.
+Definition at line 178 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3i\fP = typedef \fBMatrix\fP< int, 5, 3 >"
 
 .PP
-Definition at line 127 of file MatrixAliases\&.h\&.
+Definition at line 127 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3l\fP = typedef \fBMatrix\fP< long int, 5, 3 >"
 
 .PP
-Definition at line 280 of file MatrixAliases\&.h\&.
+Definition at line 280 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3ld\fP = typedef \fBMatrix\fP< long double, 5, 3 >"
 
 .PP
-Definition at line 212 of file MatrixAliases\&.h\&.
+Definition at line 212 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3ll\fP = typedef \fBMatrix\fP< long long int, 5, 3 >"
 
 .PP
-Definition at line 331 of file MatrixAliases\&.h\&.
+Definition at line 331 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3s\fP = typedef \fBMatrix\fP< short int, 5, 3 >"
 
 .PP
-Definition at line 229 of file MatrixAliases\&.h\&.
+Definition at line 229 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3sc\fP = typedef \fBMatrix\fP< signed char, 5, 3 >"
 
 .PP
-Definition at line 416 of file MatrixAliases\&.h\&.
+Definition at line 416 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3si\fP = typedef \fBMatrix\fP< signed int, 5, 3 >"
 
 .PP
-Definition at line 161 of file MatrixAliases\&.h\&.
+Definition at line 161 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3sl\fP = typedef \fBMatrix\fP< signed long int, 5, 3 >"
 
 .PP
-Definition at line 314 of file MatrixAliases\&.h\&.
+Definition at line 314 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3sll\fP = typedef \fBMatrix\fP< signed long long int, 5, 3 >"
 
 .PP
-Definition at line 365 of file MatrixAliases\&.h\&.
+Definition at line 365 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3ss\fP = typedef \fBMatrix\fP< signed short int, 5, 3 >"
 
 .PP
-Definition at line 263 of file MatrixAliases\&.h\&.
+Definition at line 263 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3uc\fP = typedef \fBMatrix\fP< unsigned char, 5, 3 >"
 
 .PP
-Definition at line 399 of file MatrixAliases\&.h\&.
+Definition at line 399 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3ui\fP = typedef \fBMatrix\fP< unsigned int, 5, 3 >"
 
 .PP
-Definition at line 144 of file MatrixAliases\&.h\&.
+Definition at line 144 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3ul\fP = typedef \fBMatrix\fP< unsigned long int, 5, 3 >"
 
 .PP
-Definition at line 297 of file MatrixAliases\&.h\&.
+Definition at line 297 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3ull\fP = typedef \fBMatrix\fP< unsigned long long int, 5, 3 >"
 
 .PP
-Definition at line 348 of file MatrixAliases\&.h\&.
+Definition at line 348 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x3us\fP = typedef \fBMatrix\fP< unsigned short int, 5, 3 >"
 
 .PP
-Definition at line 246 of file MatrixAliases\&.h\&.
+Definition at line 246 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4c\fP = typedef \fBMatrix\fP< char, 5, 4 >"
 
 .PP
-Definition at line 384 of file MatrixAliases\&.h\&.
+Definition at line 384 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4d\fP = typedef \fBMatrix\fP< double, 5, 4 >"
 
 .PP
-Definition at line 197 of file MatrixAliases\&.h\&.
+Definition at line 197 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4f\fP = typedef \fBMatrix\fP< float, 5, 4 >"
 
 .PP
-Definition at line 180 of file MatrixAliases\&.h\&.
+Definition at line 180 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4i\fP = typedef \fBMatrix\fP< int, 5, 4 >"
 
 .PP
-Definition at line 129 of file MatrixAliases\&.h\&.
+Definition at line 129 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4l\fP = typedef \fBMatrix\fP< long int, 5, 4 >"
 
 .PP
-Definition at line 282 of file MatrixAliases\&.h\&.
+Definition at line 282 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4ld\fP = typedef \fBMatrix\fP< long double, 5, 4 >"
 
 .PP
-Definition at line 214 of file MatrixAliases\&.h\&.
+Definition at line 214 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4ll\fP = typedef \fBMatrix\fP< long long int, 5, 4 >"
 
 .PP
-Definition at line 333 of file MatrixAliases\&.h\&.
+Definition at line 333 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4s\fP = typedef \fBMatrix\fP< short int, 5, 4 >"
 
 .PP
-Definition at line 231 of file MatrixAliases\&.h\&.
+Definition at line 231 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4sc\fP = typedef \fBMatrix\fP< signed char, 5, 4 >"
 
 .PP
-Definition at line 418 of file MatrixAliases\&.h\&.
+Definition at line 418 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4si\fP = typedef \fBMatrix\fP< signed int, 5, 4 >"
 
 .PP
-Definition at line 163 of file MatrixAliases\&.h\&.
+Definition at line 163 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4sl\fP = typedef \fBMatrix\fP< signed long int, 5, 4 >"
 
 .PP
-Definition at line 316 of file MatrixAliases\&.h\&.
+Definition at line 316 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4sll\fP = typedef \fBMatrix\fP< signed long long int, 5, 4 >"
 
 .PP
-Definition at line 367 of file MatrixAliases\&.h\&.
+Definition at line 367 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4ss\fP = typedef \fBMatrix\fP< signed short int, 5, 4 >"
 
 .PP
-Definition at line 265 of file MatrixAliases\&.h\&.
+Definition at line 265 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4uc\fP = typedef \fBMatrix\fP< unsigned char, 5, 4 >"
 
 .PP
-Definition at line 401 of file MatrixAliases\&.h\&.
+Definition at line 401 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4ui\fP = typedef \fBMatrix\fP< unsigned int, 5, 4 >"
 
 .PP
-Definition at line 146 of file MatrixAliases\&.h\&.
+Definition at line 146 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4ul\fP = typedef \fBMatrix\fP< unsigned long int, 5, 4 >"
 
 .PP
-Definition at line 299 of file MatrixAliases\&.h\&.
+Definition at line 299 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4ull\fP = typedef \fBMatrix\fP< unsigned long long int, 5, 4 >"
 
 .PP
-Definition at line 350 of file MatrixAliases\&.h\&.
+Definition at line 350 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Matrix5x4us\fP = typedef \fBMatrix\fP< unsigned short int, 5, 4 >"
 
 .PP
-Definition at line 248 of file MatrixAliases\&.h\&.
+Definition at line 248 of file MatrixTypes\&.h\&.
 .SS "template<typename T , Size N> using \fBmc::MatrixRow\fP = typedef \fBmc::Vector\fP<T, N>"
 
 .PP
@@ -2697,13 +2707,13 @@ Definition at line 24 of file Matrix\&.h\&.
 .PP
 Thrown when a pointer is equal to NULL\&. 
 .PP
-Definition at line 130 of file Constants\&.h\&.
+Definition at line 138 of file Constants\&.h\&.
 .SS "using \fBmc::ObjectNotFoundInArrayException\fP = typedef \fBException\fP"
 
 .PP
 Thrown when a function looks for an object, but doesn't find it\&. 
 .PP
-Definition at line 147 of file Constants\&.h\&.
+Definition at line 155 of file Constants\&.h\&.
 .SS "using \fBmc::PreprocessorException\fP = typedef \fBException\fP"
 
 .PP
@@ -2740,367 +2750,367 @@ Size getSize()
 .PP
 
 .PP
-Definition at line 65 of file Constants\&.h\&.
+Definition at line 73 of file Constants\&.h\&.
 .SS "using \fBmc::Vector1c\fP = typedef \fBVector\fP< char, 1 >"
 
 .PP
-Definition at line 96 of file MatrixAliases\&.h\&.
+Definition at line 96 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1d\fP = typedef \fBVector\fP< double, 1 >"
 
 .PP
-Definition at line 41 of file MatrixAliases\&.h\&.
+Definition at line 41 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1f\fP = typedef \fBVector\fP< float, 1 >"
 
 .PP
-Definition at line 36 of file MatrixAliases\&.h\&.
+Definition at line 36 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1i\fP = typedef \fBVector\fP< int, 1 >"
 
 .PP
-Definition at line 21 of file MatrixAliases\&.h\&.
+Definition at line 21 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1l\fP = typedef \fBVector\fP< long int, 1 >"
 
 .PP
-Definition at line 66 of file MatrixAliases\&.h\&.
+Definition at line 66 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1ld\fP = typedef \fBVector\fP< long double, 1 >"
 
 .PP
-Definition at line 46 of file MatrixAliases\&.h\&.
+Definition at line 46 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1ll\fP = typedef \fBVector\fP< long long int, 1 >"
 
 .PP
-Definition at line 81 of file MatrixAliases\&.h\&.
+Definition at line 81 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1s\fP = typedef \fBVector\fP< short int, 1 >"
 
 .PP
-Definition at line 51 of file MatrixAliases\&.h\&.
+Definition at line 51 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1sc\fP = typedef \fBVector\fP< signed char, 1 >"
 
 .PP
-Definition at line 106 of file MatrixAliases\&.h\&.
+Definition at line 106 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1si\fP = typedef \fBVector\fP< signed int, 1 >"
 
 .PP
-Definition at line 31 of file MatrixAliases\&.h\&.
+Definition at line 31 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1sl\fP = typedef \fBVector\fP< signed long int, 1 >"
 
 .PP
-Definition at line 76 of file MatrixAliases\&.h\&.
+Definition at line 76 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1sll\fP = typedef \fBVector\fP< signed long long int, 1 >"
 
 .PP
-Definition at line 91 of file MatrixAliases\&.h\&.
+Definition at line 91 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1ss\fP = typedef \fBVector\fP< signed short int, 1 >"
 
 .PP
-Definition at line 61 of file MatrixAliases\&.h\&.
+Definition at line 61 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1uc\fP = typedef \fBVector\fP< unsigned char, 1 >"
 
 .PP
-Definition at line 101 of file MatrixAliases\&.h\&.
+Definition at line 101 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1ui\fP = typedef \fBVector\fP< unsigned int, 1 >"
 
 .PP
-Definition at line 26 of file MatrixAliases\&.h\&.
+Definition at line 26 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1ul\fP = typedef \fBVector\fP< unsigned long int, 1 >"
 
 .PP
-Definition at line 71 of file MatrixAliases\&.h\&.
+Definition at line 71 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1ull\fP = typedef \fBVector\fP< unsigned long long int, 1 >"
 
 .PP
-Definition at line 86 of file MatrixAliases\&.h\&.
+Definition at line 86 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector1us\fP = typedef \fBVector\fP< unsigned short int, 1 >"
 
 .PP
-Definition at line 56 of file MatrixAliases\&.h\&.
+Definition at line 56 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2c\fP = typedef \fBVector\fP< char, 2 >"
 
 .PP
-Definition at line 97 of file MatrixAliases\&.h\&.
+Definition at line 97 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2d\fP = typedef \fBVector\fP< double, 2 >"
 
 .PP
-Definition at line 42 of file MatrixAliases\&.h\&.
+Definition at line 42 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2f\fP = typedef \fBVector\fP< float, 2 >"
 
 .PP
-Definition at line 37 of file MatrixAliases\&.h\&.
+Definition at line 37 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2i\fP = typedef \fBVector\fP< int, 2 >"
 
 .PP
-Definition at line 22 of file MatrixAliases\&.h\&.
+Definition at line 22 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2l\fP = typedef \fBVector\fP< long int, 2 >"
 
 .PP
-Definition at line 67 of file MatrixAliases\&.h\&.
+Definition at line 67 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2ld\fP = typedef \fBVector\fP< long double, 2 >"
 
 .PP
-Definition at line 47 of file MatrixAliases\&.h\&.
+Definition at line 47 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2ll\fP = typedef \fBVector\fP< long long int, 2 >"
 
 .PP
-Definition at line 82 of file MatrixAliases\&.h\&.
+Definition at line 82 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2s\fP = typedef \fBVector\fP< short int, 2 >"
 
 .PP
-Definition at line 52 of file MatrixAliases\&.h\&.
+Definition at line 52 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2sc\fP = typedef \fBVector\fP< signed char, 2 >"
 
 .PP
-Definition at line 107 of file MatrixAliases\&.h\&.
+Definition at line 107 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2si\fP = typedef \fBVector\fP< signed int, 2 >"
 
 .PP
-Definition at line 32 of file MatrixAliases\&.h\&.
+Definition at line 32 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2sl\fP = typedef \fBVector\fP< signed long int, 2 >"
 
 .PP
-Definition at line 77 of file MatrixAliases\&.h\&.
+Definition at line 77 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2sll\fP = typedef \fBVector\fP< signed long long int, 2 >"
 
 .PP
-Definition at line 92 of file MatrixAliases\&.h\&.
+Definition at line 92 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2ss\fP = typedef \fBVector\fP< signed short int, 2 >"
 
 .PP
-Definition at line 62 of file MatrixAliases\&.h\&.
+Definition at line 62 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2uc\fP = typedef \fBVector\fP< unsigned char, 2 >"
 
 .PP
-Definition at line 102 of file MatrixAliases\&.h\&.
+Definition at line 102 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2ui\fP = typedef \fBVector\fP< unsigned int, 2 >"
 
 .PP
-Definition at line 27 of file MatrixAliases\&.h\&.
+Definition at line 27 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2ul\fP = typedef \fBVector\fP< unsigned long int, 2 >"
 
 .PP
-Definition at line 72 of file MatrixAliases\&.h\&.
+Definition at line 72 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2ull\fP = typedef \fBVector\fP< unsigned long long int, 2 >"
 
 .PP
-Definition at line 87 of file MatrixAliases\&.h\&.
+Definition at line 87 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector2us\fP = typedef \fBVector\fP< unsigned short int, 2 >"
 
 .PP
-Definition at line 57 of file MatrixAliases\&.h\&.
+Definition at line 57 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3c\fP = typedef \fBVector\fP< char, 3 >"
 
 .PP
-Definition at line 98 of file MatrixAliases\&.h\&.
+Definition at line 98 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3d\fP = typedef \fBVector\fP< double, 3 >"
 
 .PP
-Definition at line 43 of file MatrixAliases\&.h\&.
+Definition at line 43 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3f\fP = typedef \fBVector\fP< float, 3 >"
 
 .PP
-Definition at line 38 of file MatrixAliases\&.h\&.
+Definition at line 38 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3i\fP = typedef \fBVector\fP< int, 3 >"
 
 .PP
-Definition at line 23 of file MatrixAliases\&.h\&.
+Definition at line 23 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3l\fP = typedef \fBVector\fP< long int, 3 >"
 
 .PP
-Definition at line 68 of file MatrixAliases\&.h\&.
+Definition at line 68 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3ld\fP = typedef \fBVector\fP< long double, 3 >"
 
 .PP
-Definition at line 48 of file MatrixAliases\&.h\&.
+Definition at line 48 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3ll\fP = typedef \fBVector\fP< long long int, 3 >"
 
 .PP
-Definition at line 83 of file MatrixAliases\&.h\&.
+Definition at line 83 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3s\fP = typedef \fBVector\fP< short int, 3 >"
 
 .PP
-Definition at line 53 of file MatrixAliases\&.h\&.
+Definition at line 53 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3sc\fP = typedef \fBVector\fP< signed char, 3 >"
 
 .PP
-Definition at line 108 of file MatrixAliases\&.h\&.
+Definition at line 108 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3si\fP = typedef \fBVector\fP< signed int, 3 >"
 
 .PP
-Definition at line 33 of file MatrixAliases\&.h\&.
+Definition at line 33 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3sl\fP = typedef \fBVector\fP< signed long int, 3 >"
 
 .PP
-Definition at line 78 of file MatrixAliases\&.h\&.
+Definition at line 78 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3sll\fP = typedef \fBVector\fP< signed long long int, 3 >"
 
 .PP
-Definition at line 93 of file MatrixAliases\&.h\&.
+Definition at line 93 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3ss\fP = typedef \fBVector\fP< signed short int, 3 >"
 
 .PP
-Definition at line 63 of file MatrixAliases\&.h\&.
+Definition at line 63 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3uc\fP = typedef \fBVector\fP< unsigned char, 3 >"
 
 .PP
-Definition at line 103 of file MatrixAliases\&.h\&.
+Definition at line 103 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3ui\fP = typedef \fBVector\fP< unsigned int, 3 >"
 
 .PP
-Definition at line 28 of file MatrixAliases\&.h\&.
+Definition at line 28 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3ul\fP = typedef \fBVector\fP< unsigned long int, 3 >"
 
 .PP
-Definition at line 73 of file MatrixAliases\&.h\&.
+Definition at line 73 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3ull\fP = typedef \fBVector\fP< unsigned long long int, 3 >"
 
 .PP
-Definition at line 88 of file MatrixAliases\&.h\&.
+Definition at line 88 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector3us\fP = typedef \fBVector\fP< unsigned short int, 3 >"
 
 .PP
-Definition at line 58 of file MatrixAliases\&.h\&.
+Definition at line 58 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4c\fP = typedef \fBVector\fP< char, 4 >"
 
 .PP
-Definition at line 99 of file MatrixAliases\&.h\&.
+Definition at line 99 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4d\fP = typedef \fBVector\fP< double, 4 >"
 
 .PP
-Definition at line 44 of file MatrixAliases\&.h\&.
+Definition at line 44 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4f\fP = typedef \fBVector\fP< float, 4 >"
 
 .PP
-Definition at line 39 of file MatrixAliases\&.h\&.
+Definition at line 39 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4i\fP = typedef \fBVector\fP< int, 4 >"
 
 .PP
-Definition at line 24 of file MatrixAliases\&.h\&.
+Definition at line 24 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4l\fP = typedef \fBVector\fP< long int, 4 >"
 
 .PP
-Definition at line 69 of file MatrixAliases\&.h\&.
+Definition at line 69 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4ld\fP = typedef \fBVector\fP< long double, 4 >"
 
 .PP
-Definition at line 49 of file MatrixAliases\&.h\&.
+Definition at line 49 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4ll\fP = typedef \fBVector\fP< long long int, 4 >"
 
 .PP
-Definition at line 84 of file MatrixAliases\&.h\&.
+Definition at line 84 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4s\fP = typedef \fBVector\fP< short int, 4 >"
 
 .PP
-Definition at line 54 of file MatrixAliases\&.h\&.
+Definition at line 54 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4sc\fP = typedef \fBVector\fP< signed char, 4 >"
 
 .PP
-Definition at line 109 of file MatrixAliases\&.h\&.
+Definition at line 109 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4si\fP = typedef \fBVector\fP< signed int, 4 >"
 
 .PP
-Definition at line 34 of file MatrixAliases\&.h\&.
+Definition at line 34 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4sl\fP = typedef \fBVector\fP< signed long int, 4 >"
 
 .PP
-Definition at line 79 of file MatrixAliases\&.h\&.
+Definition at line 79 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4sll\fP = typedef \fBVector\fP< signed long long int, 4 >"
 
 .PP
-Definition at line 94 of file MatrixAliases\&.h\&.
+Definition at line 94 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4ss\fP = typedef \fBVector\fP< signed short int, 4 >"
 
 .PP
-Definition at line 64 of file MatrixAliases\&.h\&.
+Definition at line 64 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4uc\fP = typedef \fBVector\fP< unsigned char, 4 >"
 
 .PP
-Definition at line 104 of file MatrixAliases\&.h\&.
+Definition at line 104 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4ui\fP = typedef \fBVector\fP< unsigned int, 4 >"
 
 .PP
-Definition at line 29 of file MatrixAliases\&.h\&.
+Definition at line 29 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4ul\fP = typedef \fBVector\fP< unsigned long int, 4 >"
 
 .PP
-Definition at line 74 of file MatrixAliases\&.h\&.
+Definition at line 74 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4ull\fP = typedef \fBVector\fP< unsigned long long int, 4 >"
 
 .PP
-Definition at line 89 of file MatrixAliases\&.h\&.
+Definition at line 89 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector4us\fP = typedef \fBVector\fP< unsigned short int, 4 >"
 
 .PP
-Definition at line 59 of file MatrixAliases\&.h\&.
+Definition at line 59 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5c\fP = typedef \fBVector\fP< char, 5 >"
 
 .PP
-Definition at line 100 of file MatrixAliases\&.h\&.
+Definition at line 100 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5d\fP = typedef \fBVector\fP< double, 5 >"
 
 .PP
-Definition at line 45 of file MatrixAliases\&.h\&.
+Definition at line 45 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5f\fP = typedef \fBVector\fP< float, 5 >"
 
 .PP
-Definition at line 40 of file MatrixAliases\&.h\&.
+Definition at line 40 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5i\fP = typedef \fBVector\fP< int, 5 >"
 
 .PP
-Definition at line 25 of file MatrixAliases\&.h\&.
+Definition at line 25 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5l\fP = typedef \fBVector\fP< long int, 5 >"
 
 .PP
-Definition at line 70 of file MatrixAliases\&.h\&.
+Definition at line 70 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5ld\fP = typedef \fBVector\fP< long double, 5 >"
 
 .PP
-Definition at line 50 of file MatrixAliases\&.h\&.
+Definition at line 50 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5ll\fP = typedef \fBVector\fP< long long int, 5 >"
 
 .PP
-Definition at line 85 of file MatrixAliases\&.h\&.
+Definition at line 85 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5s\fP = typedef \fBVector\fP< short int, 5 >"
 
 .PP
-Definition at line 55 of file MatrixAliases\&.h\&.
+Definition at line 55 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5sc\fP = typedef \fBVector\fP< signed char, 5 >"
 
 .PP
-Definition at line 110 of file MatrixAliases\&.h\&.
+Definition at line 110 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5si\fP = typedef \fBVector\fP< signed int, 5 >"
 
 .PP
-Definition at line 35 of file MatrixAliases\&.h\&.
+Definition at line 35 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5sl\fP = typedef \fBVector\fP< signed long int, 5 >"
 
 .PP
-Definition at line 80 of file MatrixAliases\&.h\&.
+Definition at line 80 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5sll\fP = typedef \fBVector\fP< signed long long int, 5 >"
 
 .PP
-Definition at line 95 of file MatrixAliases\&.h\&.
+Definition at line 95 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5ss\fP = typedef \fBVector\fP< signed short int, 5 >"
 
 .PP
-Definition at line 65 of file MatrixAliases\&.h\&.
+Definition at line 65 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5uc\fP = typedef \fBVector\fP< unsigned char, 5 >"
 
 .PP
-Definition at line 105 of file MatrixAliases\&.h\&.
+Definition at line 105 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5ui\fP = typedef \fBVector\fP< unsigned int, 5 >"
 
 .PP
-Definition at line 30 of file MatrixAliases\&.h\&.
+Definition at line 30 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5ul\fP = typedef \fBVector\fP< unsigned long int, 5 >"
 
 .PP
-Definition at line 75 of file MatrixAliases\&.h\&.
+Definition at line 75 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5ull\fP = typedef \fBVector\fP< unsigned long long int, 5 >"
 
 .PP
-Definition at line 90 of file MatrixAliases\&.h\&.
+Definition at line 90 of file MatrixTypes\&.h\&.
 .SS "using \fBmc::Vector5us\fP = typedef \fBVector\fP< unsigned short int, 5 >"
 
 .PP
-Definition at line 60 of file MatrixAliases\&.h\&.
+Definition at line 60 of file MatrixTypes\&.h\&.
 .SS "typedef void(* mc::VoidFunctionPtr) ()"
 
 .PP
@@ -3117,7 +3127,17 @@ Type representing a function that returns void and has no arguments\&. Created f
 .PP
 
 .PP
-Definition at line 106 of file Constants\&.h\&.
+Definition at line 114 of file Constants\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "template<typename T , Size N> \fBVector\fP<T, N> mc::operator* (const \fBVector\fP< T, N > & v, const \fBMatrix\fP< T, N, N > & m)"
+
+.PP
+Definition at line 514 of file Matrix\&.h\&.
+.SS "template<typename T , Size N> \fBVector\fP<T, N> mc::operator*= (const \fBVector\fP< T, N > & v, const \fBMatrix\fP< T, N, N > & m)"
+
+.PP
+Definition at line 509 of file Matrix\&.h\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

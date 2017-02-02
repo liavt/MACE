@@ -1,4 +1,4 @@
-.TH "mc::Color" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Color" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -13,7 +13,13 @@ mc::Color \- Represents a color in the RGBA space\&.
 
 .in +1c
 .ti -1c
-.RI "\fBColor\fP (const float &red, const float &green, const float &blue, const float &alpha=1\&.0f) noexcept"
+.RI "\fBColor\fP (const int red, const int green, const int blue, const int alpha=255) noexcept"
+.br
+.ti -1c
+.RI "\fBColor\fP (const \fBByte\fP red, const \fBByte\fP green, const \fBByte\fP blue, const \fBByte\fP alpha=255) noexcept"
+.br
+.ti -1c
+.RI "\fBColor\fP (const float red, const float green, const float blue, const float alpha=1\&.0f) noexcept"
 .br
 .RI "\fICreates a \fC\fBColor\fP\fP from specified values\&. \fP"
 .ti -1c
@@ -159,7 +165,11 @@ color\&.setRed(127); //set the red component to be 0\&.5f as a Byte from 0 to 25
 Definition at line 41 of file Color\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "mc::Color::Color (const float & red, const float & green, const float & blue, const float & alpha = \fC1\&.0f\fP)\fC [noexcept]\fP"
+.SS "mc::Color::Color (const int red, const int green, const int blue, const int alpha = \fC255\fP)\fC [explicit]\fP, \fC [noexcept]\fP"
+
+.SS "mc::Color::Color (const \fBByte\fP red, const \fBByte\fP green, const \fBByte\fP blue, const \fBByte\fP alpha = \fC255\fP)\fC [explicit]\fP, \fC [noexcept]\fP"
+
+.SS "mc::Color::Color (const float red, const float green, const float blue, const float alpha = \fC1\&.0f\fP)\fC [noexcept]\fP"
 
 .PP
 Creates a \fC\fBColor\fP\fP from specified values\&. 
@@ -195,7 +205,7 @@ Creates a \fC\fBColor\fP\fP from an array of \fCfloats\fP\&.
 .RS 4
 Color(std::array<Byte,4>) 
 .PP
-Color(float,float,float,float) 
+\fBColor(float,float,float,float)\fP 
 .PP
 \fBsetValues\fP(std::array<float,4> 
 .RE
@@ -236,7 +246,7 @@ A darker \fC\fBColor\fP\fP
 .RE
 .PP
 
-.SS "const float* mc::Color::flatten (float arr[4]) const\fC [inline]\fP"
+.SS "const float* mc::Color::flatten (float arr[4]) const"
 
 .PP
 Creates an array with the data of this \fC\fBColor\fP\fP, in O(N) time\&. 
@@ -252,8 +262,6 @@ Pointer to \fCarr\fP
 .RE
 .PP
 
-.PP
-Definition at line 191 of file Color\&.h\&.
 .SS "\fBByte\fP mc::Color::getAlpha () const"
 
 .PP
@@ -565,7 +573,7 @@ Color(std::array<Byte,4>)
 .PP
 Color(std::array<float,4>) 
 .PP
-Color(float,float,float,float) 
+\fBColor(float,float,float,float)\fP 
 .PP
 setValues(std::array<float,4>) 
 .RE
@@ -587,7 +595,7 @@ Color(std::array<Byte,4>)
 .PP
 Color(std::array<Byte,4>) 
 .PP
-Color(float,float,float,float) 
+\fBColor(float,float,float,float)\fP 
 .PP
 setValues(std::array<float,3>) 
 .RE

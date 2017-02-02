@@ -1,8 +1,8 @@
-.TH "mc::gfx::ogl::PixelPackBuffer" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::PixelPackBuffer" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc::gfx::ogl::PixelPackBuffer \- Special buffer that excels at asynchronous pixel transfer operations\&.  
+mc::gfx::ogl::PixelPackBuffer \- Special sslBuffer that excels at asynchronous pixel transfer operations\&.  
 
 .SH SYNOPSIS
 .br
@@ -34,9 +34,9 @@ Inherits \fBmc::gfx::ogl::Buffer\fP\&.
 .br
 .RI "\fICreates and initalizes the data store for this \fC\fBBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBsetDataRange\fP (const \fBIndex\fP offset, const ptrdiff_t &dataSize, const void *data)"
+.RI "void \fBsetDataRange\fP (const ptrdiff_t &dataSize, const void *data, const \fBIndex\fP offset)"
 .br
-.RI "\fISets data in a range of the buffer\&. \fP"
+.RI "\fISets data in a range of the sslBuffer\&. \fP"
 .ti -1c
 .RI "void \fBcopyData\fP (\fBBuffer\fP &other, const ptrdiff_t &size, const \fBIndex\fP readOffset=0, const \fBIndex\fP writeOffset=0)"
 .br
@@ -52,11 +52,11 @@ Inherits \fBmc::gfx::ogl::Buffer\fP\&.
 .ti -1c
 .RI "bool \fBunmap\fP ()"
 .br
-.RI "\fIUnmaps the buffer\&. \fP"
+.RI "\fIUnmaps the sslBuffer\&. \fP"
 .ti -1c
 .RI "const \fBEnum\fP \fBgetBufferType\fP () const "
 .br
-.RI "\fIRetrieves the buffer type for this buffer\&. \fP"
+.RI "\fIRetrieves the sslBuffer type for this sslBuffer\&. \fP"
 .ti -1c
 .RI "bool \fBoperator==\fP (const \fBBuffer\fP &other) const "
 .br
@@ -96,7 +96,7 @@ Inherits \fBmc::gfx::ogl::Buffer\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Special buffer that excels at asynchronous pixel transfer operations\&. 
+Special sslBuffer that excels at asynchronous pixel transfer operations\&. 
 
 The \fC\fBPixelUnpackBuffer\fP\fP is fast at reading pixels while the \fC\fBPixelPackBuffer\fP\fP is fast at writing pixels\&. 
 .PP
@@ -109,7 +109,7 @@ https://www.opengl.org/wiki/Pixel_Buffer_Object
 .PP
 
 .PP
-Definition at line 679 of file OGL\&.h\&.
+Definition at line 716 of file OGL\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::ogl::PixelPackBuffer::PixelPackBuffer ()\fC [noexcept]\fP"
@@ -217,11 +217,11 @@ Implements \fBmc::gfx::ogl::Object\fP\&.
 .SS "const \fBEnum\fP mc::gfx::ogl::Buffer::getBufferType () const\fC [inherited]\fP"
 
 .PP
-Retrieves the buffer type for this buffer\&. This is based on the class\&. 
+Retrieves the sslBuffer type for this sslBuffer\&. This is based on the class\&. 
 .PP
 \fBReturns:\fP
 .RS 4
-The buffer type 
+The sslBuffer type 
 .RE
 .PP
 
@@ -476,9 +476,9 @@ Creates and initalizes the data store for this \fC\fBBuffer\fP\fP
 .PP
 \fBParameters:\fP
 .RS 4
-\fIdataSize\fP Size of the buffer, measured in bytes\&. 
+\fIdataSize\fP Size of the sslBuffer, measured in bytes\&. 
 .br
-\fIdata\fP Pointer to the actual data\&. Using \fCnullptr\fP or \fCNULL\fP will create an empty buffer\&. 
+\fIdata\fP Pointer to the actual data\&. Using \fCnullptr\fP or \fCNULL\fP will create an empty sslBuffer\&. 
 .br
 \fIdrawType\fP Expected usage pattern for the data\&. GL_DYNAMIC_DRAW by default 
 .RE
@@ -503,14 +503,14 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Buffer::setDataRange (const \fBIndex\fP offset, const ptrdiff_t & dataSize, const void * data)\fC [inherited]\fP"
+.SS "void mc::gfx::ogl::Buffer::setDataRange (const ptrdiff_t & dataSize, const void * data, const \fBIndex\fP offset)\fC [inherited]\fP"
 
 .PP
-Sets data in a range of the buffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const ptrdiff_t&, const void*, const Enum)\fP must be called first\&. 
+Sets data in a range of the sslBuffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const ptrdiff_t&, const void*, const Enum)\fP must be called first\&. 
 .PP
 \fBParameters:\fP
 .RS 4
-\fIoffset\fP Offset into the buffer to set the data, measured in bytes 
+\fIoffset\fP Offset into the sslBuffer to set the data, measured in bytes 
 .br
 \fIdataSize\fP How large the region being inserted is, measured in bytes 
 .br
@@ -559,7 +559,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "bool mc::gfx::ogl::Buffer::unmap ()\fC [inherited]\fP"
 
 .PP
-Unmaps the buffer\&. Any mapped points will be deleted and using them will be undefined\&.
+Unmaps the sslBuffer\&. Any mapped points will be deleted and using them will be undefined\&.
 .PP
 \fBReturns:\fP
 .RS 4
@@ -600,7 +600,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 164 of file OGL\&.h\&.
+Definition at line 182 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

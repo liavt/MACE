@@ -1,9 +1,12 @@
 var a00043 =
 [
-    [ "destroy", "d6/d42/a00043_a681ef8c8a89befa77f0e98c35556fe09.html#a681ef8c8a89befa77f0e98c35556fe09", null ],
-    [ "init", "d6/d42/a00043_a9b96a7c4453cb5de382e8866ad9bd859.html#a9b96a7c4453cb5de382e8866ad9bd859", null ],
-    [ "render", "d6/d42/a00043_a9876dee818ccee8efe65644703d343a8.html#a9876dee818ccee8efe65644703d343a8", null ],
-    [ "resize", "d6/d42/a00043_a45410525e92bff76d24c4b6bc717644e.html#a45410525e92bff76d24c4b6bc717644e", null ],
-    [ "setUp", "d6/d42/a00043_af58313972888926e0c4a923f077d69a5.html#af58313972888926e0c4a923f077d69a5", null ],
-    [ "tearDown", "d6/d42/a00043_a090d5002d12098a22f22c0a59c086fb1.html#a090d5002d12098a22f22c0a59c086fb1", null ]
+    [ "cleanEntity", "d6/d42/a00043.html#a992cd784efc111151a4bb6c699821e37", null ],
+    [ "destroy", "d6/d42/a00043_ab0414b1d55e9c95325453448084f5d18.html#ab0414b1d55e9c95325453448084f5d18", null ],
+    [ "destroyEntity", "d6/d42/a00043.html#a8865aa2228ff0bc7479dfd0126a1d3b9", null ],
+    [ "init", "d6/d42/a00043_a22a95178025b8c055d05a13e31d2062d.html#a22a95178025b8c055d05a13e31d2062d", null ],
+    [ "initEntity", "d6/d42/a00043_af47726dc3b0fda74a20bc7f58ef7a2e2.html#af47726dc3b0fda74a20bc7f58ef7a2e2", null ],
+    [ "renderEntity", "d6/d42/a00043_a73ecd2f827d24cddee82fd57ccaaa82c.html#a73ecd2f827d24cddee82fd57ccaaa82c", null ],
+    [ "resize", "d6/d42/a00043.html#a6bd329f3d60c5ea961bda5f29c3231a8", null ],
+    [ "setUp", "d6/d42/a00043.html#a09de296a552820e6739bc9227e57b56d", null ],
+    [ "tearDown", "d6/d42/a00043.html#acbce840815446695a44776cb15537b2e", null ]
 ];

@@ -1,8 +1,8 @@
-.TH "mc::gfx::ogl::Buffer" 3 "Sat Jan 14 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::Buffer" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-mc::gfx::ogl::Buffer \- Represents a buffer of memory in the GPU\&.  
+mc::gfx::ogl::Buffer \- Represents a sslBuffer of memory in the GPU\&.  
 
 .SH SYNOPSIS
 .br
@@ -22,7 +22,7 @@ Inherited by \fBmc::gfx::ogl::CopyReadBuffer\fP, \fBmc::gfx::ogl::CopyWriteBuffe
 .ti -1c
 .RI "\fBBuffer\fP (const \fBEnum\fP bufferType) noexcept"
 .br
-.RI "\fICreates the buffer with the specified buffer type\&. \fP"
+.RI "\fICreates the sslBuffer with the specified sslBuffer type\&. \fP"
 .ti -1c
 .RI "bool \fBisCreated\fP () const  override"
 .br
@@ -40,9 +40,9 @@ Inherited by \fBmc::gfx::ogl::CopyReadBuffer\fP, \fBmc::gfx::ogl::CopyWriteBuffe
 .br
 .RI "\fICreates and initalizes the data store for this \fC\fBBuffer\fP\fP \fP"
 .ti -1c
-.RI "void \fBsetDataRange\fP (const \fBIndex\fP offset, const ptrdiff_t &dataSize, const void *data)"
+.RI "void \fBsetDataRange\fP (const ptrdiff_t &dataSize, const void *data, const \fBIndex\fP offset)"
 .br
-.RI "\fISets data in a range of the buffer\&. \fP"
+.RI "\fISets data in a range of the sslBuffer\&. \fP"
 .ti -1c
 .RI "void \fBcopyData\fP (\fBBuffer\fP &other, const ptrdiff_t &size, const \fBIndex\fP readOffset=0, const \fBIndex\fP writeOffset=0)"
 .br
@@ -58,11 +58,11 @@ Inherited by \fBmc::gfx::ogl::CopyReadBuffer\fP, \fBmc::gfx::ogl::CopyWriteBuffe
 .ti -1c
 .RI "bool \fBunmap\fP ()"
 .br
-.RI "\fIUnmaps the buffer\&. \fP"
+.RI "\fIUnmaps the sslBuffer\&. \fP"
 .ti -1c
 .RI "const \fBEnum\fP \fBgetBufferType\fP () const "
 .br
-.RI "\fIRetrieves the buffer type for this buffer\&. \fP"
+.RI "\fIRetrieves the sslBuffer type for this sslBuffer\&. \fP"
 .ti -1c
 .RI "bool \fBoperator==\fP (const \fBBuffer\fP &other) const "
 .br
@@ -102,9 +102,9 @@ Inherited by \fBmc::gfx::ogl::CopyReadBuffer\fP, \fBmc::gfx::ogl::CopyWriteBuffe
 .in -1c
 .SH "Detailed Description"
 .PP 
-Represents a buffer of memory in the GPU\&. 
+Represents a sslBuffer of memory in the GPU\&. 
 
-This class should not be used directly\&. Instead, use special subclasses which provide additional functionality for the specific buffer type\&.
+This class should not be used directly\&. Instead, use special subclasses which provide additional functionality for the specific sslBuffer type\&.
 .PP
 \fBSee also:\fP
 .RS 4
@@ -121,7 +121,7 @@ This class should not be used directly\&. Instead, use special subclasses which 
 .PP
 
 .PP
-Definition at line 535 of file OGL\&.h\&.
+Definition at line 572 of file OGL\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "virtual mc::gfx::ogl::Buffer::~Buffer ()\fC [virtual]\fP, \fC [default]\fP"
@@ -129,7 +129,7 @@ Definition at line 535 of file OGL\&.h\&.
 .SS "mc::gfx::ogl::Buffer::Buffer (const \fBEnum\fP bufferType)\fC [noexcept]\fP"
 
 .PP
-Creates the buffer with the specified buffer type\&. You should not usually use this directly\&. Instead, use a subclass which has extra functions for the buffer type\&. 
+Creates the sslBuffer with the specified sslBuffer type\&. You should not usually use this directly\&. Instead, use a subclass which has extra functions for the sslBuffer type\&. 
 .PP
 For example, instead of creating a \fC\fBBuffer\fP\fP with the type of \fCGL_ARRAY_BUFFER\fP, use the \fC\fBVertexBuffer\fP\fP class\&.
 .PP
@@ -260,11 +260,11 @@ Implements \fBmc::gfx::ogl::Object\fP\&.
 .SS "const \fBEnum\fP mc::gfx::ogl::Buffer::getBufferType () const"
 
 .PP
-Retrieves the buffer type for this buffer\&. This is based on the class\&. 
+Retrieves the sslBuffer type for this sslBuffer\&. This is based on the class\&. 
 .PP
 \fBReturns:\fP
 .RS 4
-The buffer type 
+The sslBuffer type 
 .RE
 .PP
 
@@ -519,9 +519,9 @@ Creates and initalizes the data store for this \fC\fBBuffer\fP\fP
 .PP
 \fBParameters:\fP
 .RS 4
-\fIdataSize\fP Size of the buffer, measured in bytes\&. 
+\fIdataSize\fP Size of the sslBuffer, measured in bytes\&. 
 .br
-\fIdata\fP Pointer to the actual data\&. Using \fCnullptr\fP or \fCNULL\fP will create an empty buffer\&. 
+\fIdata\fP Pointer to the actual data\&. Using \fCnullptr\fP or \fCNULL\fP will create an empty sslBuffer\&. 
 .br
 \fIdrawType\fP Expected usage pattern for the data\&. GL_DYNAMIC_DRAW by default 
 .RE
@@ -546,14 +546,14 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
-.SS "void mc::gfx::ogl::Buffer::setDataRange (const \fBIndex\fP offset, const ptrdiff_t & dataSize, const void * data)"
+.SS "void mc::gfx::ogl::Buffer::setDataRange (const ptrdiff_t & dataSize, const void * data, const \fBIndex\fP offset)"
 
 .PP
-Sets data in a range of the buffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const ptrdiff_t&, const void*, const Enum)\fP must be called first\&. 
+Sets data in a range of the sslBuffer\&. Does not initialize data\&. \fBBuffer\fP:\fBsetData(const ptrdiff_t&, const void*, const Enum)\fP must be called first\&. 
 .PP
 \fBParameters:\fP
 .RS 4
-\fIoffset\fP Offset into the buffer to set the data, measured in bytes 
+\fIoffset\fP Offset into the sslBuffer to set the data, measured in bytes 
 .br
 \fIdataSize\fP How large the region being inserted is, measured in bytes 
 .br
@@ -602,7 +602,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .SS "bool mc::gfx::ogl::Buffer::unmap ()"
 
 .PP
-Unmaps the buffer\&. Any mapped points will be deleted and using them will be undefined\&.
+Unmaps the sslBuffer\&. Any mapped points will be deleted and using them will be undefined\&.
 .PP
 \fBReturns:\fP
 .RS 4
@@ -643,7 +643,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 164 of file OGL\&.h\&.
+Definition at line 182 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

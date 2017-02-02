@@ -1,6 +1,8 @@
 var a00010 =
 [
-    [ "Color", "d7/dec/a00010_a03305f478005ed77ce442abb80c4a620.html#a03305f478005ed77ce442abb80c4a620", null ],
+    [ "Color", "d7/dec/a00010_a03d5582c315a264983afdcf6f65ebcd1.html#a03d5582c315a264983afdcf6f65ebcd1", null ],
+    [ "Color", "d7/dec/a00010_a1aa625d0c73d4dc4e0e478068f941b56.html#a1aa625d0c73d4dc4e0e478068f941b56", null ],
+    [ "Color", "d7/dec/a00010_ae2a4cd8d14d3dd7a15a75e0f89cf3e94.html#ae2a4cd8d14d3dd7a15a75e0f89cf3e94", null ],
     [ "Color", "d7/dec/a00010_aec257d54c111fae86bff3f37f669ea28.html#aec257d54c111fae86bff3f37f669ea28", null ],
     [ "Color", "d7/dec/a00010_ae634a7ef0ff71dd340fb07c53984ba1e.html#ae634a7ef0ff71dd340fb07c53984ba1e", null ],
     [ "Color", "d7/dec/a00010_a76d6a7562831cc481357bc9ef114e249.html#a76d6a7562831cc481357bc9ef114e249", null ],

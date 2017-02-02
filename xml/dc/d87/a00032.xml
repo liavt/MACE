@@ -1,55 +1,59 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="dc/d87/a00032" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::ogl::PixelPackBuffer</compoundname>
-    <basecompoundref refid="d4/dee/a00008" prot="public" virt="non-virtual">mc::gfx::ogl::Buffer</basecompoundref>
+  <compounddef id="dc/d87/a00032" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>mc::gfx::ogl::Object</compoundname>
+    <derivedcompoundref refid="d4/dee/a00008" prot="public" virt="non-virtual">mc::gfx::ogl::Buffer</derivedcompoundref>
+    <derivedcompoundref refid="de/d11/a00021" prot="public" virt="non-virtual">mc::gfx::ogl::FrameBuffer</derivedcompoundref>
+    <derivedcompoundref refid="d1/dc6/a00037" prot="public" virt="non-virtual">mc::gfx::ogl::QueryObject</derivedcompoundref>
+    <derivedcompoundref refid="d8/d41/a00038" prot="public" virt="non-virtual">mc::gfx::ogl::RenderBuffer</derivedcompoundref>
+    <derivedcompoundref refid="d6/d97/a00045" prot="public" virt="non-virtual">mc::gfx::ogl::Shader</derivedcompoundref>
+    <derivedcompoundref refid="d3/dea/a00046" prot="public" virt="non-virtual">mc::gfx::ogl::ShaderProgram</derivedcompoundref>
+    <derivedcompoundref refid="d5/de0/a00050" prot="public" virt="non-virtual">mc::gfx::ogl::Texture</derivedcompoundref>
+    <derivedcompoundref refid="d1/dea/a00054" prot="public" virt="non-virtual">mc::gfx::ogl::VertexArray</derivedcompoundref>
     <includes refid="de/de1/a00065" local="no">OGL.h</includes>
-      <sectiondef kind="public-func">
-      <memberdef kind="function" id="dc/d87/a00032_acb8340155d4efebcad24831a245d3190_1acb8340155d4efebcad24831a245d3190" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::ogl::PixelPackBuffer::PixelPackBuffer</definition>
-        <argsstring>() noexcept</argsstring>
-        <name>PixelPackBuffer</name>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="dc/d87/a00032_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" static="no" mutable="no">
+        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::ogl::Object::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <initializer>= 0</initializer>
         <briefdescription>
-        </briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
+        <detaileddescription>
+<para>` Should be set in <ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> and become 0 in <ref refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="182" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="182" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="dc/d87/a00032_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual mc::gfx::ogl::Object::~Object</definition>
+        <argsstring>()=default</argsstring>
+        <name>~Object</name>
+        <briefdescription>
+<para>Virtual destructor for subclasses and safety. </para>        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="681" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="103" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_a4042320270935513c6fbfbd101986a83_1a4042320270935513c6fbfbd101986a83" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Buffer::isCreated</definition>
-        <argsstring>() const  override</argsstring>
-        <name>isCreated</name>
-        <reimplements refid="df/d61/a00031_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67">isCreated</reimplements>
-        <briefdescription>
-<para>Queries OpenGL whether this <ref refid="df/d61/a00031" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="556" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_aea6e64228bbfa092e1448ea9d851fb94_1aea6e64228bbfa092e1448ea9d851fb94" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
         <type>void</type>
-        <definition>void mc::gfx::ogl::Buffer::init</definition>
-        <argsstring>() override</argsstring>
+        <definition>virtual void mc::gfx::ogl::Object::init</definition>
+        <argsstring>()=0</argsstring>
         <name>init</name>
-        <reimplements refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c">init</reimplements>
+        <reimplementedby refid="d1/dc6/a00037_a4904b54134ba156406775f51d5d84497_1a4904b54134ba156406775f51d5d84497">init</reimplementedby>
+        <reimplementedby refid="d8/d41/a00038_aec584f1f39db5c931f0ed507345d1287_1aec584f1f39db5c931f0ed507345d1287">init</reimplementedby>
+        <reimplementedby refid="d5/de0/a00050_a62f5985c5873d794455517035e5d022e_1a62f5985c5873d794455517035e5d022e">init</reimplementedby>
+        <reimplementedby refid="de/d11/a00021_a2dac9a86c52fb504b4e16cb7a2e47897_1a2dac9a86c52fb504b4e16cb7a2e47897">init</reimplementedby>
+        <reimplementedby refid="d4/dee/a00008_aea6e64228bbfa092e1448ea9d851fb94_1aea6e64228bbfa092e1448ea9d851fb94">init</reimplementedby>
+        <reimplementedby refid="d1/dea/a00054_a2e5f1ca422d96bc7861e29116b1bfb81_1a2e5f1ca422d96bc7861e29116b1bfb81">init</reimplementedby>
+        <reimplementedby refid="d6/d97/a00045_a22dbd7cb706cee95ef2cbc7dde4c35a9_1a22dbd7cb706cee95ef2cbc7dde4c35a9">init</reimplementedby>
+        <reimplementedby refid="d3/dea/a00046_a4a7905edf34a864ff6aefca4f181fa09_1a4a7905edf34a864ff6aefca4f181fa09">init</reimplementedby>
         <briefdescription>
 <para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
         <detaileddescription>
@@ -62,21 +66,28 @@
 <para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="558" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="113" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_ac4e88a83c70a133c24667545832a6f0d_1ac4e88a83c70a133c24667545832a6f0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
         <type>void</type>
-        <definition>void mc::gfx::ogl::Buffer::destroy</definition>
-        <argsstring>() override</argsstring>
+        <definition>virtual void mc::gfx::ogl::Object::destroy</definition>
+        <argsstring>()=0</argsstring>
         <name>destroy</name>
-        <reimplements refid="df/d61/a00031_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d">destroy</reimplements>
+        <reimplementedby refid="d1/dc6/a00037_abe32a19bf3c65a1365a5041abd64847e_1abe32a19bf3c65a1365a5041abd64847e">destroy</reimplementedby>
+        <reimplementedby refid="d8/d41/a00038_ad93b1def47f9e0bb49c16dad476bc981_1ad93b1def47f9e0bb49c16dad476bc981">destroy</reimplementedby>
+        <reimplementedby refid="d5/de0/a00050_a6a03ba23b0c284c60cc290b7ed6aa1be_1a6a03ba23b0c284c60cc290b7ed6aa1be">destroy</reimplementedby>
+        <reimplementedby refid="de/d11/a00021_a576cec8bb74e6279568759b0c43c4183_1a576cec8bb74e6279568759b0c43c4183">destroy</reimplementedby>
+        <reimplementedby refid="d4/dee/a00008_ac4e88a83c70a133c24667545832a6f0d_1ac4e88a83c70a133c24667545832a6f0d">destroy</reimplementedby>
+        <reimplementedby refid="d1/dea/a00054_a1ea8420821e8d076d3b39ac39456537b_1a1ea8420821e8d076d3b39ac39456537b">destroy</reimplementedby>
+        <reimplementedby refid="d6/d97/a00045_a4d54fa6b35994a86abd910fafb6905e6_1a4d54fa6b35994a86abd910fafb6905e6">destroy</reimplementedby>
+        <reimplementedby refid="d3/dea/a00046_ae81e507d6003156d3751b295a918f8dc_1ae81e507d6003156d3751b295a918f8dc">destroy</reimplementedby>
         <briefdescription>
 <para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
         <detaileddescription>
@@ -89,477 +100,32 @@
 <para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>If this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
+<para>If this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="559" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="123" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Buffer::setData</definition>
-        <argsstring>(const ptrdiff_t &amp;dataSize, const void *data, const Enum drawType=GL_DYNAMIC_DRAW)</argsstring>
-        <name>setData</name>
-        <param>
-          <type>const ptrdiff_t &amp;</type>
-          <declname>dataSize</declname>
-        </param>
-        <param>
-          <type>const void *</type>
-          <declname>data</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>drawType</declname>
-          <defval>GL_DYNAMIC_DRAW</defval>
-        </param>
-        <briefdescription>
-<para>Creates and initalizes the data store for this <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>dataSize</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Size of the buffer, measured in bytes. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>data</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Pointer to the actual data. Using <computeroutput>nullptr</computeroutput> or <computeroutput>NULL</computeroutput> will create an empty buffer. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>drawType</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Expected usage pattern for the data. GL_DYNAMIC_DRAW by default </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para>Buffer::setDataRange(const Index, const ptrdiff_t, const void*) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" kindref="member">Buffer::copyData(Buffer&amp;, const ptrdiff_t&amp;, const Index, const Index)</ref> </para></simplesect>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferData">https://www.opengl.org/wiki/GLAPI/glBufferData</ulink> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="572" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_a174abcec3c5dd8f00a44c4ffb23b95fc_1a174abcec3c5dd8f00a44c4ffb23b95fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Buffer::setDataRange</definition>
-        <argsstring>(const Index offset, const ptrdiff_t &amp;dataSize, const void *data)</argsstring>
-        <name>setDataRange</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>offset</declname>
-        </param>
-        <param>
-          <type>const ptrdiff_t &amp;</type>
-          <declname>dataSize</declname>
-        </param>
-        <param>
-          <type>const void *</type>
-          <declname>data</declname>
-        </param>
-        <briefdescription>
-<para>Sets data in a range of the buffer. </para>        </briefdescription>
-        <detaileddescription>
-<para>Does not initialize data. <ref refid="d4/dee/a00008" kindref="compound">Buffer</ref>:<ref refid="d4/dee/a00008_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" kindref="member">setData(const ptrdiff_t&amp;, const void*, const Enum)</ref> must be called first. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>offset</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Offset into the buffer to set the data, measured in bytes </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>dataSize</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How large the region being inserted is, measured in bytes </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>data</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Pointer to the data being inserted </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferSubData">https://www.opengl.org/wiki/GLAPI/glBufferSubData</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" kindref="member">Buffer::copyData(Buffer&amp;, const ptrdiff_t&amp;, const Index, const Index)</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="584" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Buffer::copyData</definition>
-        <argsstring>(Buffer &amp;other, const ptrdiff_t &amp;size, const Index readOffset=0, const Index writeOffset=0)</argsstring>
-        <name>copyData</name>
-        <param>
-          <type><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <param>
-          <type>const ptrdiff_t &amp;</type>
-          <declname>size</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>readOffset</declname>
-          <defval>0</defval>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>writeOffset</declname>
-          <defval>0</defval>
-        </param>
-        <briefdescription>
-<para>Copy part of the data store of this <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> into another <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Target <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> to copy into </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>size</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much data to copy </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>readOffset</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much data to offset by in this <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>writeOffset</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Where to write the data in the target <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" kindref="member">Buffer::setData(const ptrdiff_t&amp;, const void*, const Enum)</ref> </para></simplesect>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData">https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d86/a00012" kindref="compound">CopyReadBuffer</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/dd4/a00013" kindref="compound">CopyWriteBuffer</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="599" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* mc::gfx::ogl::Buffer::map</definition>
-        <argsstring>(const Enum access=GL_READ_WRITE)</argsstring>
-        <name>map</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>access</declname>
-          <defval>GL_READ_WRITE</defval>
-        </param>
-        <briefdescription>
-<para>Maps the data in this <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> to a pointer on the CPU side. </para>        </briefdescription>
-        <detaileddescription>
-<para>May be slow.</para><para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>access</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Which access to use. Must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBuffer">https://www.opengl.org/wiki/GLAPI/glMapBuffer</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" kindref="member">Buffer::mapRange(const Index, const Size, const unsigned int)</ref> </para></simplesect>
-<simplesect kind="warning"><para>DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. </para></simplesect>
-<simplesect kind="warning"><para>After <ref refid="d4/dee/a00008_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> is called, the pointer returned may be unsafe. Using it will be undefined. </para></simplesect>
-<simplesect kind="attention"><para>When using this function don&apos;t forget to use <ref refid="d4/dee/a00008_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> when you are done using the pointer </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="612" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* mc::gfx::ogl::Buffer::mapRange</definition>
-        <argsstring>(const Index offset, const Size length, const unsigned int access)</argsstring>
-        <name>mapRange</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>offset</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>length</declname>
-        </param>
-        <param>
-          <type>const unsigned int</type>
-          <declname>access</declname>
-        </param>
-        <briefdescription>
-<para>Maps a range of data in this <computeroutput><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref></computeroutput> to a pointer on the CPU side. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>offset</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The starting offset to map </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>length</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>How much data to map </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>access</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A combination of access flags to determine how the data will be used. These flags determine how fast or slow the mapping will take. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBufferRange">https://www.opengl.org/wiki/GLAPI/glMapBufferRange</ulink> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" kindref="member">Buffer::map(const Enum)</ref> </para></simplesect>
-<simplesect kind="warning"><para>DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. </para></simplesect>
-<simplesect kind="warning"><para>After <ref refid="d4/dee/a00008_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> is called, the pointer returned may be unsafe. Using it will be undefined. </para></simplesect>
-<simplesect kind="attention"><para>When using this function don&apos;t forget to use <ref refid="d4/dee/a00008_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> when you are done using the pointer </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="627" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Buffer::unmap</definition>
-        <argsstring>()</argsstring>
-        <name>unmap</name>
-        <briefdescription>
-<para>Unmaps the buffer. </para>        </briefdescription>
-        <detaileddescription>
-<para>Any mapped points will be deleted and using them will be undefined.</para><para><simplesect kind="return"><para>Whether the data was corrupted during reading. This will be very rare but when it does happen you must reinitialize the data. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" kindref="member">Buffer::map(const Enum)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/dee/a00008_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" kindref="member">Buffer::mapRange(const Index, const Size, const unsigned int)</ref> </para></simplesect>
-<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBuffer">https://www.opengl.org/wiki/GLAPI/glMapBuffer</ulink> </para></simplesect>
-<simplesect kind="warning"><para>Using a pointer after it was unmapped will be undefined </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="639" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_a396693ef6c22c043c5bf0115d3d4aa4a_1a396693ef6c22c043c5bf0115d3d4aa4a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-        <definition>const Enum mc::gfx::ogl::Buffer::getBufferType</definition>
-        <argsstring>() const </argsstring>
-        <name>getBufferType</name>
-        <briefdescription>
-<para>Retrieves the buffer type for this buffer. </para>        </briefdescription>
-        <detaileddescription>
-<para>This is based on the class. <simplesect kind="return"><para>The buffer type </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="645" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_a41aadf11e2d1d51951e59c649cc66ccf_1a41aadf11e2d1d51951e59c649cc66ccf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Buffer::operator==</definition>
-        <argsstring>(const Buffer &amp;other) const </argsstring>
-        <name>operator==</name>
-        <param>
-          <type>const <ref refid="d4/dee/a00008" kindref="compound">Buffer</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="650" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Object::operator==</definition>
-        <argsstring>(const Object &amp;other) const </argsstring>
-        <name>operator==</name>
-        <param>
-          <type>const <ref refid="df/d61/a00031" kindref="compound">Object</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="149" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dee/a00008_a8c9f33cca265609a823432dd4a4c03a8_1a8c9f33cca265609a823432dd4a4c03a8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Buffer::operator!=</definition>
-        <argsstring>(const Buffer &amp;other) const </argsstring>
-        <name>operator!=</name>
-        <param>
-          <type>const <ref refid="d4/dee/a00008" kindref="compound">Buffer</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="654" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Object::operator!=</definition>
-        <argsstring>(const Object &amp;other) const </argsstring>
-        <name>operator!=</name>
-        <param>
-          <type>const <ref refid="df/d61/a00031" kindref="compound">Object</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="157" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void mc::gfx::ogl::Object::bind</definition>
         <argsstring>() const </argsstring>
         <name>bind</name>
-        <reimplementedby refid="de/d8c/a00036_1aa2aa180de0c314967fef3dc1f506695f">bind</reimplementedby>
-        <reimplementedby refid="d5/df9/a00044_1a0899273f842e1b692da3a08e162ee7f3">bind</reimplementedby>
+        <reimplementedby refid="d1/dc6/a00037_1aa2aa180de0c314967fef3dc1f506695f">bind</reimplementedby>
+        <reimplementedby refid="d6/d97/a00045_1a0899273f842e1b692da3a08e162ee7f3">bind</reimplementedby>
         <briefdescription>
-<para>Binds this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
+<para>Binds this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
         <detaileddescription>
 <para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
@@ -570,29 +136,29 @@
 <para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const</ref> </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>If this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+<para>If this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="113" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="131" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void mc::gfx::ogl::Object::unbind</definition>
         <argsstring>() const </argsstring>
         <name>unbind</name>
-        <reimplementedby refid="de/d8c/a00036_1ad05128a71051c75e7c6a66bf135f4ce5">unbind</reimplementedby>
-        <reimplementedby refid="d5/df9/a00044_1a91dc153976fbd78b0047c436c12967d6">unbind</reimplementedby>
+        <reimplementedby refid="d1/dc6/a00037_1ad05128a71051c75e7c6a66bf135f4ce5">unbind</reimplementedby>
+        <reimplementedby refid="d6/d97/a00045_1a91dc153976fbd78b0047c436c12967d6">unbind</reimplementedby>
         <briefdescription>
-<para>Unbinds this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
+<para>Unbinds this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
         <detaileddescription>
 <para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
@@ -603,108 +169,284 @@
 <para>If the current thread does not have an OpenGL context </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="see"><para><ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="119" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="137" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool mc::gfx::ogl::Object::isCreated</definition>
+        <argsstring>() const  =0</argsstring>
+        <name>isCreated</name>
+        <reimplementedby refid="d1/dc6/a00037_ad2187aa662f9092f16b2e9d90b422fe8_1ad2187aa662f9092f16b2e9d90b422fe8">isCreated</reimplementedby>
+        <reimplementedby refid="d8/d41/a00038_a48633a707ce546f97193752a11c90c00_1a48633a707ce546f97193752a11c90c00">isCreated</reimplementedby>
+        <reimplementedby refid="d5/de0/a00050_a7fe5e1a38957b97cd91ccb997ca5d400_1a7fe5e1a38957b97cd91ccb997ca5d400">isCreated</reimplementedby>
+        <reimplementedby refid="de/d11/a00021_a5ffa98720ae5b547992c7fbe9e7fdcf5_1a5ffa98720ae5b547992c7fbe9e7fdcf5">isCreated</reimplementedby>
+        <reimplementedby refid="d4/dee/a00008_a4042320270935513c6fbfbd101986a83_1a4042320270935513c6fbfbd101986a83">isCreated</reimplementedby>
+        <reimplementedby refid="d1/dea/a00054_ab19cf7b7a163b0585b2f8b8c6550251b_1ab19cf7b7a163b0585b2f8b8c6550251b">isCreated</reimplementedby>
+        <reimplementedby refid="d6/d97/a00045_ad78731430de11d793bd567a6c7ba86e7_1ad78731430de11d793bd567a6c7ba86e7">isCreated</reimplementedby>
+        <reimplementedby refid="d3/dea/a00046_a66ee2252fc2e2a079324d43af90ab35d_1a66ee2252fc2e2a079324d43af90ab35d">isCreated</reimplementedby>
+        <briefdescription>
+<para>Queries OpenGL whether this <ref refid="dc/d87/a00032" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="146" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
         <definition>Index mc::gfx::ogl::Object::getID</definition>
         <argsstring>() const </argsstring>
         <name>getID</name>
         <briefdescription>
-<para>Retrieves the current ID that this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
         <detaileddescription>
-<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="df/d61/a00031" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="140" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="158" column="1"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="df/d61/a00031_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::ogl::Object::id</definition>
-        <argsstring></argsstring>
-        <name>id</name>
-        <initializer>= 0</initializer>
+      <memberdef kind="function" id="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="dc/d87/a00032" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
         <briefdescription>
-<para>The ID of this `Object. </para>        </briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
         <detaileddescription>
-<para>` Should be set in <ref refid="df/d61/a00031_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> and become 0 in <ref refid="df/d61/a00031_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para><para><ref refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
+<para><simplesect kind="see"><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="164" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="164" bodyend="-1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="167" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="dc/d87/a00032" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="175" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="dc/d87/a00032_a5f9f3150ac508ecf142eff4f1bc9f424_1a5f9f3150ac508ecf142eff4f1bc9f424" prot="protected" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::ogl::Object::bindIndex</definition>
+        <argsstring>(const Index id) const  =0</argsstring>
+        <name>bindIndex</name>
+        <reimplementedby refid="d1/dc6/a00037_1a9040f70106da230eb1738535be052b99">bindIndex</reimplementedby>
+        <reimplementedby refid="d8/d41/a00038_1a519da1ec24136f18769337837ea7ecd2">bindIndex</reimplementedby>
+        <reimplementedby refid="d5/de0/a00050_1a8a97f0202e9a19b556b4d2a61b79f795">bindIndex</reimplementedby>
+        <reimplementedby refid="de/d11/a00021_1a384f35270a5efb34394525593714c306">bindIndex</reimplementedby>
+        <reimplementedby refid="d4/dee/a00008_1a7d4e6f89550b02e3e20a1aca323b3e29">bindIndex</reimplementedby>
+        <reimplementedby refid="d1/dea/a00054_1a008295676e3f4f9beb38d39b43adc9d1">bindIndex</reimplementedby>
+        <reimplementedby refid="d6/d97/a00045_1a872378f88579ee80e2267f37dab30f99">bindIndex</reimplementedby>
+        <reimplementedby refid="d3/dea/a00046_1a8aaaf654d33579c3705aa045193bfbd7">bindIndex</reimplementedby>
+        <param>
+          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
+        <detaileddescription>
+<para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>and <ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="190" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Special buffer that excels at asynchronous pixel transfer operations. </para>    </briefdescription>
+<para>Represents a OpenGL object in memory. </para>    </briefdescription>
     <detaileddescription>
-<para>The <computeroutput><ref refid="d0/dc0/a00033" kindref="compound">PixelUnpackBuffer</ref></computeroutput> is fast at reading pixels while the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">PixelPackBuffer</ref></computeroutput> is fast at writing pixels. </para><para>Not to be confused with a <computeroutput><ref refid="db/db2/a00020" kindref="compound">FrameBuffer</ref></computeroutput> or <computeroutput><ref refid="d2/dee/a00049" kindref="compound">Texture</ref>.</computeroutput> <simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Pixel_Buffer_Object">https://www.opengl.org/wiki/Pixel_Buffer_Object</ulink> </para></simplesect>
-</para>    </detaileddescription>
+<para>All abstractions for OpenGL objects override this. </para><para>Due to how the OpenGL model works, using an OpenGL function outside of a thread with a context will throw an error. Thus, this class does not follow the RAII model. </para><para>A subclass of <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> will observe the following rules:<itemizedlist>
+<listitem><para>The constructor and destructor will do nothing, as there is no guarantee that the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> will be declared in a OpenGL thread.</para></listitem><listitem><para>The <ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">init()</ref> and <ref refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">destroy()</ref> functions must be called in an OpenGL thread and will call the coressponding glCreate* and glDestroy* functions</para></listitem><listitem><para>The <ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">bind()</ref> and <ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">unbind()</ref> functions must be called in an OpenGL thread and will call the coressponding glBind* functions.</para></listitem><listitem><para>It will have an ID generated by glCreate* and be deleted in glDelete*.</para></listitem><listitem><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">bind()</ref> will use the ID created by glCreate* and no other</para></listitem><listitem><para><ref refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">isCreated()</ref> has to be called in an OpenGL thread</para></listitem><listitem><para>It will override == and !=</para></listitem></itemizedlist>
+</para><para><simplesect kind="see"><para><ref refid="d4/dee/a00008" kindref="compound">Buffer</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/OpenGL_Object">https://www.opengl.org/wiki/OpenGL_Object</ulink> </para></simplesect>
+<xrefsect id="d8/d84/a00001_1_todo000006"><xreftitle>Todo</xreftitle><xrefdescription><para>create an RAII wrapper which calls <ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">init()</ref> and <ref refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">destroy()</ref> automatically </para><para>store what object is currently bound. static <ref refid="dc/d87/a00032" kindref="compound">Object</ref> getBoundObject(), bool isBound() </para></xrefdescription></xrefsect></para>    </detaileddescription>
     <inheritancegraph>
-      <node id="573">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="df/d61/a00031"/>
-      </node>
-      <node id="572">
-        <label>mc::gfx::ogl::Buffer</label>
-        <link refid="d4/dee/a00008"/>
-        <childnode refid="573" relation="public-inheritance">
+      <node id="543">
+        <label>mc::gfx::ogl::UniformBuffer</label>
+        <link refid="d1/d84/a00052"/>
+        <childnode refid="537" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="571">
-        <label>mc::gfx::ogl::PixelPackBuffer</label>
+      <node id="536">
+        <label>mc::gfx::ogl::Object</label>
         <link refid="dc/d87/a00032"/>
-        <childnode refid="572" relation="public-inheritance">
+      </node>
+      <node id="545">
+        <label>mc::gfx::ogl::FrameBuffer</label>
+        <link refid="de/d11/a00021"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="547">
+        <label>mc::gfx::ogl::RenderBuffer</label>
+        <link refid="d8/d41/a00038"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="552">
+        <label>mc::gfx::ogl::VertexArray</label>
+        <link refid="d1/dea/a00054"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="542">
+        <label>mc::gfx::ogl::PixelUnpackBuffer</label>
+        <link refid="db/df3/a00034"/>
+        <childnode refid="537" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="546">
+        <label>mc::gfx::ogl::QueryObject</label>
+        <link refid="d1/dc6/a00037"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="550">
+        <label>mc::gfx::ogl::Texture</label>
+        <link refid="d5/de0/a00050"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="539">
+        <label>mc::gfx::ogl::CopyWriteBuffer</label>
+        <link refid="d2/de7/a00014"/>
+        <childnode refid="537" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="540">
+        <label>mc::gfx::ogl::ElementBuffer</label>
+        <link refid="dd/d1b/a00015"/>
+        <childnode refid="537" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="549">
+        <label>mc::gfx::ogl::ShaderProgram</label>
+        <link refid="d3/dea/a00046"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="544">
+        <label>mc::gfx::ogl::VertexBuffer</label>
+        <link refid="d4/d6d/a00055"/>
+        <childnode refid="537" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="551">
+        <label>mc::gfx::ColorAttachment</label>
+        <link refid="da/d45/a00011"/>
+        <childnode refid="550" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="548">
+        <label>mc::gfx::ogl::Shader</label>
+        <link refid="d6/d97/a00045"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="538">
+        <label>mc::gfx::ogl::CopyReadBuffer</label>
+        <link refid="d7/dd4/a00013"/>
+        <childnode refid="537" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="537">
+        <label>mc::gfx::ogl::Buffer</label>
+        <link refid="d4/dee/a00008"/>
+        <childnode refid="536" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="541">
+        <label>mc::gfx::ogl::PixelPackBuffer</label>
+        <link refid="d0/dc0/a00033"/>
+        <childnode refid="537" relation="public-inheritance">
         </childnode>
       </node>
     </inheritancegraph>
-    <collaborationgraph>
-      <node id="576">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="df/d61/a00031"/>
-      </node>
-      <node id="575">
-        <label>mc::gfx::ogl::Buffer</label>
-        <link refid="d4/dee/a00008"/>
-        <childnode refid="576" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="574">
-        <label>mc::gfx::ogl::PixelPackBuffer</label>
-        <link refid="dc/d87/a00032"/>
-        <childnode refid="575" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="include/MACE/Graphics/OGL.h" line="679" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="679" bodyend="685"/>
+    <location file="include/MACE/Graphics/OGL.h" line="98" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="98" bodyend="191"/>
     <listofallmembers>
-      <member refid="df/d61/a00031_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>bind</name></member>
-      <member refid="d4/dee/a00008_a594d43d10fe98f8412119328756ca824_1a594d43d10fe98f8412119328756ca824" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>Buffer</name></member>
-      <member refid="d4/dee/a00008_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>copyData</name></member>
-      <member refid="d4/dee/a00008_ac4e88a83c70a133c24667545832a6f0d_1ac4e88a83c70a133c24667545832a6f0d" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>destroy</name></member>
-      <member refid="d4/dee/a00008_a396693ef6c22c043c5bf0115d3d4aa4a_1a396693ef6c22c043c5bf0115d3d4aa4a" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>getBufferType</name></member>
-      <member refid="df/d61/a00031_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>getID</name></member>
-      <member refid="df/d61/a00031_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>id</name></member>
-      <member refid="d4/dee/a00008_aea6e64228bbfa092e1448ea9d851fb94_1aea6e64228bbfa092e1448ea9d851fb94" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>init</name></member>
-      <member refid="d4/dee/a00008_a4042320270935513c6fbfbd101986a83_1a4042320270935513c6fbfbd101986a83" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>isCreated</name></member>
-      <member refid="d4/dee/a00008_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>map</name></member>
-      <member refid="d4/dee/a00008_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>mapRange</name></member>
-      <member refid="d4/dee/a00008_a8c9f33cca265609a823432dd4a4c03a8_1a8c9f33cca265609a823432dd4a4c03a8" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>operator!=</name></member>
-      <member refid="df/d61/a00031_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>operator!=</name></member>
-      <member refid="d4/dee/a00008_a41aadf11e2d1d51951e59c649cc66ccf_1a41aadf11e2d1d51951e59c649cc66ccf" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>operator==</name></member>
-      <member refid="df/d61/a00031_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>operator==</name></member>
-      <member refid="dc/d87/a00032_acb8340155d4efebcad24831a245d3190_1acb8340155d4efebcad24831a245d3190" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>PixelPackBuffer</name></member>
-      <member refid="d4/dee/a00008_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>setData</name></member>
-      <member refid="d4/dee/a00008_a174abcec3c5dd8f00a44c4ffb23b95fc_1a174abcec3c5dd8f00a44c4ffb23b95fc" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>setDataRange</name></member>
-      <member refid="df/d61/a00031_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>unbind</name></member>
-      <member refid="d4/dee/a00008_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>unmap</name></member>
-      <member refid="d4/dee/a00008_aeb2f251a5cc6f0324f7d7e1fe490c03a_1aeb2f251a5cc6f0324f7d7e1fe490c03a" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>~Buffer</name></member>
-      <member refid="df/d61/a00031_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" virt="virtual"><scope>mc::gfx::ogl::PixelPackBuffer</scope><name>~Object</name></member>
+      <member refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" virt="virtual"><scope>mc::gfx::ogl::Object</scope><name>bind</name></member>
+      <member refid="dc/d87/a00032_a5f9f3150ac508ecf142eff4f1bc9f424_1a5f9f3150ac508ecf142eff4f1bc9f424" prot="protected" virt="pure-virtual"><scope>mc::gfx::ogl::Object</scope><name>bindIndex</name></member>
+      <member refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" prot="public" virt="pure-virtual"><scope>mc::gfx::ogl::Object</scope><name>destroy</name></member>
+      <member refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Object</scope><name>getID</name></member>
+      <member refid="dc/d87/a00032_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" virt="non-virtual"><scope>mc::gfx::ogl::Object</scope><name>id</name></member>
+      <member refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" prot="public" virt="pure-virtual"><scope>mc::gfx::ogl::Object</scope><name>init</name></member>
+      <member refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" prot="public" virt="pure-virtual"><scope>mc::gfx::ogl::Object</scope><name>isCreated</name></member>
+      <member refid="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Object</scope><name>operator!=</name></member>
+      <member refid="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Object</scope><name>operator==</name></member>
+      <member refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" virt="virtual"><scope>mc::gfx::ogl::Object</scope><name>unbind</name></member>
+      <member refid="dc/d87/a00032_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" virt="virtual"><scope>mc::gfx::ogl::Object</scope><name>~Object</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

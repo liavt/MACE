@@ -45,21 +45,21 @@
         <argsstring>(Module &amp;m)</argsstring>
         <name>addModule</name>
         <param>
-          <type><ref refid="d5/d79/a00030" kindref="compound">Module</ref> &amp;</type>
+          <type><ref refid="df/d61/a00031" kindref="compound">Module</ref> &amp;</type>
           <declname>m</declname>
         </param>
         <briefdescription>
-<para>Register a <ref refid="d5/d79/a00030" kindref="compound">Module</ref>. </para>        </briefdescription>
+<para>Register a <ref refid="df/d61/a00031" kindref="compound">Module</ref>. </para>        </briefdescription>
         <detaileddescription>
 <para>Registered <computeroutput>Modules</computeroutput> will have <computeroutput><ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">update()</ref>, <ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">init()</ref>,</computeroutput> and <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">destroy()</ref></computeroutput> are respectivaly called when <computeroutput><ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">MACE.update()</ref>, <ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">MACE.init()</ref>,</computeroutput> and <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">MACE.destroy()</ref></computeroutput> are called. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>m</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Reference to a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref>.</computeroutput> If the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> referenced leaves scope or gets deallocated, a <computeroutput>read access violation will occur.</computeroutput> </para></parameterdescription>
+<para>Reference to a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref>.</computeroutput> If the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> referenced leaves scope or gets deallocated, a <computeroutput>read access violation will occur.</computeroutput> </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Location of the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> in the buffer. This index can be used in various other methods. </para></simplesect>
+<simplesect kind="return"><para>Location of the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> in the sslBuffer. This index can be used in various other methods. </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -71,18 +71,18 @@
         <argsstring>(const Module &amp;m)</argsstring>
         <name>removeModule</name>
         <param>
-          <type>const <ref refid="d5/d79/a00030" kindref="compound">Module</ref> &amp;</type>
+          <type>const <ref refid="df/d61/a00031" kindref="compound">Module</ref> &amp;</type>
           <declname>m</declname>
         </param>
         <briefdescription>
-<para>Remove a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> by reference. </para>        </briefdescription>
+<para>Remove a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> by reference. </para>        </briefdescription>
         <detaileddescription>
 <para>This is generally more safe than <computeroutput><ref refid="d4/d3a/a00101_a295f7353bf36639159a5a17d6db7cdd4_1a295f7353bf36639159a5a17d6db7cdd4" kindref="member">removeModule(std::string)</ref></computeroutput> as this checks by reference, not by name. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>m</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Reference to <ref refid="d5/d79/a00030" kindref="compound">Module</ref> in the buffer. </para></parameterdescription>
+<para>Reference to <ref refid="df/d61/a00031" kindref="compound">Module</ref> in the sslBuffer. </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 <parameterlist kind="exception"><parameteritem>
@@ -90,7 +90,7 @@
 <parametername>ObjectNotFoundInArray</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if the referenced <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> doesn&apos;t exist. </para></parameterdescription>
+<para>if the referenced <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> doesn&apos;t exist. </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
@@ -108,14 +108,14 @@
           <declname>module</declname>
         </param>
         <briefdescription>
-<para>Remove a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> by name. </para>        </briefdescription>
+<para>Remove a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> by name. </para>        </briefdescription>
         <detaileddescription>
-<para>It will find the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> based on their <ref refid="d5/d79/a00030_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="param"><parameteritem>
+<para>It will find the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> based on their <ref refid="df/d61/a00031_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>module</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Name of a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
+<para>Name of a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 <parameterlist kind="exception"><parameteritem>
@@ -123,7 +123,7 @@
 <parametername>ObjectNotFoundInArray</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the given name doesn&apos;t exist. </para></parameterdescription>
+<para>if a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the given name doesn&apos;t exist. </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
@@ -141,7 +141,7 @@
           <declname>i</declname>
         </param>
         <briefdescription>
-<para>Remove a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> by it&apos;s index. </para>        </briefdescription>
+<para>Remove a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> by it&apos;s index. </para>        </briefdescription>
         <detaileddescription>
 <para>The index is provided from <ref refid="d4/d3a/a00101_aea0de9ffe89afcdca1b6d0b087e9a009_1aea0de9ffe89afcdca1b6d0b087e9a009" kindref="member">addModule(Module&amp;)</ref> or <ref refid="" kindref="compound">indexOf(Module&amp;)</ref> <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
@@ -156,7 +156,7 @@
 <parametername>i</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Index of a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> to delete </para></parameterdescription>
+<para>Index of a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> to delete </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
@@ -165,7 +165,7 @@
         <location file="include/MACE/Core/Module.h" line="121" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d4/d3a/a00101_a6f45a34fe3200aad38df5807c2fabe60_1a6f45a34fe3200aad38df5807c2fabe60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d5/d79/a00030" kindref="compound">Module</ref> *</type>
+        <type><ref refid="df/d61/a00031" kindref="compound">Module</ref> *</type>
         <definition>Module* mc::MACE::getModule</definition>
         <argsstring>(const std::string keyword)</argsstring>
         <name>getModule</name>
@@ -174,17 +174,17 @@
           <declname>keyword</declname>
         </param>
         <briefdescription>
-<para>Retrieve a pointer to a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
+<para>Retrieve a pointer to a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
         <detaileddescription>
-<para>It will find the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> based on their <ref refid="d5/d79/a00030_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="exception"><parameteritem>
+<para>It will find the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> based on their <ref refid="df/d61/a00031_aa6d981a55ad5c04a39768e3ddcb0ad49_1aa6d981a55ad5c04a39768e3ddcb0ad49" kindref="member">getName()</ref> function, so if there are multiple <computeroutput>Modules</computeroutput> with the same name, this function may produce unexpected behavior. <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>ObjectNotFoundInArray</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if there is no <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the specified name </para></parameterdescription>
+<para>if there is no <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the specified name </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>A <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns the specified keyword </para></simplesect>
+<simplesect kind="return"><para>A <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns the specified keyword </para></simplesect>
 <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>keyword</parametername>
@@ -200,7 +200,7 @@
         <location file="include/MACE/Core/Module.h" line="131" column="1"/>
       </memberdef>
       <memberdef kind="function" id="d4/d3a/a00101_af154f2f1770d5c065e9c82a19ee28989_1af154f2f1770d5c065e9c82a19ee28989" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d5/d79/a00030" kindref="compound">Module</ref> *</type>
+        <type><ref refid="df/d61/a00031" kindref="compound">Module</ref> *</type>
         <definition>Module* mc::MACE::getModule</definition>
         <argsstring>(const Index i)</argsstring>
         <name>getModule</name>
@@ -209,15 +209,15 @@
           <declname>i</declname>
         </param>
         <briefdescription>
-<para>Retrieves the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> at a certain index. </para>        </briefdescription>
+<para>Retrieves the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> at a certain index. </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="return"><para>A pointer to a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> at the specified location </para></simplesect>
+<para><simplesect kind="return"><para>A pointer to a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> at the specified location </para></simplesect>
 <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>i</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Valid index to a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
+<para>Valid index to a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 <parameterlist kind="exception"><parameteritem>
@@ -243,7 +243,7 @@
           <declname>module</declname>
         </param>
         <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> exists via it&apos;s <computeroutput>getName()</computeroutput> function. </para>        </briefdescription>
+<para>Checks whether a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> exists via it&apos;s <computeroutput>getName()</computeroutput> function. </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
@@ -253,7 +253,7 @@
 <para>Name to search for </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if there is a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the specified name, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if there is a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the specified name, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -265,21 +265,21 @@
         <argsstring>(const Module *module)</argsstring>
         <name>moduleExists</name>
         <param>
-          <type>const <ref refid="d5/d79/a00030" kindref="compound">Module</ref> *</type>
+          <type>const <ref refid="df/d61/a00031" kindref="compound">Module</ref> *</type>
           <declname>module</declname>
         </param>
         <briefdescription>
-<para>Checks whether a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> exists via a pointer. </para>        </briefdescription>
+<para>Checks whether a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> exists via a pointer. </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>module</parametername>
 </parameternamelist>
 <parameterdescription>
-<para><computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> to search for </para></parameterdescription>
+<para><computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> to search for </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> exists, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
+<simplesect kind="return"><para><computeroutput>true</computeroutput> if the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> exists, <computeroutput>false</computeroutput> otherwise. </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -291,9 +291,9 @@
         <argsstring>()</argsstring>
         <name>numberOfModules</name>
         <briefdescription>
-<para>Retrieves the amount of <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> currently being updated by <computeroutput><ref refid="d4/d3a/a00101" kindref="compound">MACE</ref></computeroutput> </para>        </briefdescription>
+<para>Retrieves the amount of <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> currently being updated by <computeroutput><ref refid="d4/d3a/a00101" kindref="compound">MACE</ref></computeroutput> </para>        </briefdescription>
         <detaileddescription>
-<para><simplesect kind="return"><para><computeroutput>Size</computeroutput> of the internal <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> buffer </para></simplesect>
+<para><simplesect kind="return"><para><computeroutput>Size</computeroutput> of the internal <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> sslBuffer </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -305,11 +305,11 @@
         <argsstring>(const Module &amp;m)</argsstring>
         <name>indexOf</name>
         <param>
-          <type>const <ref refid="d5/d79/a00030" kindref="compound">Module</ref> &amp;</type>
+          <type>const <ref refid="df/d61/a00031" kindref="compound">Module</ref> &amp;</type>
           <declname>m</declname>
         </param>
         <briefdescription>
-<para>Retrieves the location of a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> in the buffer. </para>        </briefdescription>
+<para>Retrieves the location of a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> in the sslBuffer. </para>        </briefdescription>
         <detaileddescription>
 <para>Equivalent to calling<programlisting><codeline><highlight class="normal">indexOf(m.getName());</highlight></codeline>
 </programlisting> <parameterlist kind="param"><parameteritem>
@@ -317,10 +317,10 @@
 <parametername>m</parametername>
 </parameternamelist>
 <parameterdescription>
-<para><ref refid="d5/d79/a00030" kindref="compound">Module</ref> to find the index of. </para></parameterdescription>
+<para><ref refid="df/d61/a00031" kindref="compound">Module</ref> to find the index of. </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Location of the <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref>,</computeroutput> or <computeroutput>-1</computeroutput> if it doesnt exist. </para></simplesect>
+<simplesect kind="return"><para>Location of the <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref>,</computeroutput> or <computeroutput>-1</computeroutput> if it doesnt exist. </para></simplesect>
 <simplesect kind="see"><para>indexOf(Module&amp;) </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
@@ -337,7 +337,7 @@
           <declname>name</declname>
         </param>
         <briefdescription>
-<para>Find a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
+<para>Find a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the specified name. </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
@@ -347,7 +347,7 @@
 <para>Name to search for </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>Location of a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns <computeroutput>name,</computeroutput> or <computeroutput>-1</computeroutput> if wasn&apos;t found </para></simplesect>
+<simplesect kind="return"><para>Location of a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> whose <computeroutput>getName()</computeroutput> function returns <computeroutput>name,</computeroutput> or <computeroutput>-1</computeroutput> if wasn&apos;t found </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -367,9 +367,9 @@
           <declname>errorMessage</declname>
         </param>
         <briefdescription>
-<para>Require that a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the specified name exists, or throw an exception. </para>        </briefdescription>
+<para>Require that a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the specified name exists, or throw an exception. </para>        </briefdescription>
         <detaileddescription>
-<para>If your <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> depends on another <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref>,</computeroutput> use this function to require your dependencies. <parameterlist kind="param"><parameteritem>
+<para>If your <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> depends on another <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref>,</computeroutput> use this function to require your dependencies. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>module</parametername>
 </parameternamelist>
@@ -389,7 +389,7 @@
 <parametername>AssertionError</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>if there isn&apos;t a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> with the requested name. </para></parameterdescription>
+<para>if there isn&apos;t a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> with the requested name. </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 </para>        </detaileddescription>
@@ -407,14 +407,14 @@
           <declname>module</declname>
         </param>
         <briefdescription>
-<para>Overloads <ref refid="d4/d3a/a00101_ac4beb3f22191b1ea322d12e7e02f079b_1ac4beb3f22191b1ea322d12e7e02f079b" kindref="member">assertModule(std::string,std::string)</ref> with <computeroutput>errorMessage</computeroutput> being <computeroutput>The specified <ref refid="d5/d79/a00030" kindref="compound">Module</ref> does not exist!</computeroutput> </para>        </briefdescription>
+<para>Overloads <ref refid="d4/d3a/a00101_ac4beb3f22191b1ea322d12e7e02f079b_1ac4beb3f22191b1ea322d12e7e02f079b" kindref="member">assertModule(std::string,std::string)</ref> with <computeroutput>errorMessage</computeroutput> being <computeroutput>The specified <ref refid="df/d61/a00031" kindref="compound">Module</ref> does not exist!</computeroutput> </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>module</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Name of a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput> to assert </para></parameterdescription>
+<para>Name of a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput> to assert </para></parameterdescription>
 </parameteritem>
 </parameterlist>
 <simplesect kind="see"><para><ref refid="d4/d3a/a00101_ac4beb3f22191b1ea322d12e7e02f079b_1ac4beb3f22191b1ea322d12e7e02f079b" kindref="member">assertModule(std::string,std::string)</ref> </para></simplesect>
@@ -429,7 +429,7 @@
         <argsstring>()</argsstring>
         <name>init</name>
         <briefdescription>
-<para>Initializes <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> and calls <ref refid="d5/d79/a00030_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" kindref="member">init()</ref> on all registered `Modules. </para>        </briefdescription>
+<para>Initializes <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> and calls <ref refid="df/d61/a00031_a854aad3bb8a2f60446fb14aeb28967b6_1a854aad3bb8a2f60446fb14aeb28967b6" kindref="member">init()</ref> on all registered `Modules. </para>        </briefdescription>
         <detaileddescription>
 <para>` </para><para>Should be called at the start of the program. <simplesect kind="see"><para><ref refid="d4/d3a/a00101_aea0de9ffe89afcdca1b6d0b087e9a009_1aea0de9ffe89afcdca1b6d0b087e9a009" kindref="member">addModule(Module&amp;)</ref> </para></simplesect>
 <simplesect kind="see"><para><ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> for an optimal main loop </para></simplesect>
@@ -446,7 +446,7 @@
         <briefdescription>
 <para>Update <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> and all <computeroutput>Modules</computeroutput> registered, and checks if a close has been requested. </para>        </briefdescription>
         <detaileddescription>
-<para>Should be called in your main loop. <simplesect kind="return"><para><computeroutput>true</computeroutput> if it updated succesfully. <computeroutput>false</computeroutput> if an error occurred, or a close has been requested from a <computeroutput><ref refid="d5/d79/a00030" kindref="compound">Module</ref></computeroutput>. When this returns <computeroutput>false</computeroutput>, you should end the main loop and call <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">destroy()</ref></computeroutput> </para></simplesect>
+<para>Should be called in your main loop. <simplesect kind="return"><para><computeroutput>true</computeroutput> if it updated succesfully. <computeroutput>false</computeroutput> if an error occurred, or a close has been requested from a <computeroutput><ref refid="df/d61/a00031" kindref="compound">Module</ref></computeroutput>. When this returns <computeroutput>false</computeroutput>, you should end the main loop and call <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">destroy()</ref></computeroutput> </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>InitializationError</parametername>
@@ -468,7 +468,7 @@
         <argsstring>()</argsstring>
         <name>destroy</name>
         <briefdescription>
-<para>Destroys <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> and calls <ref refid="d5/d79/a00030_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" kindref="member">destroy()</ref> on all registered `Modules. </para>        </briefdescription>
+<para>Destroys <ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> and calls <ref refid="df/d61/a00031_abf13bd45de10185d4139dfff22a555d2_1abf13bd45de10185d4139dfff22a555d2" kindref="member">destroy()</ref> on all registered `Modules. </para>        </briefdescription>
         <detaileddescription>
 <para>` </para><para>Should be called at the end of the program after <computeroutput><ref refid="d4/d3a/a00101_a7a12d5c692e104287e3b0ea5f5c9a250_1a7a12d5c692e104287e3b0ea5f5c9a250" kindref="member">MACE.isRunning()</ref></computeroutput> is <computeroutput>false</computeroutput> <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
@@ -493,8 +493,8 @@
         <briefdescription>
 <para>Checks whether the <computeroutput><ref refid="d4/d3a/a00101" kindref="compound">MACE</ref></computeroutput> is ready to be updated. </para>        </briefdescription>
         <detaileddescription>
-<para><computeroutput><ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">init()</ref></computeroutput> must have been called and <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">destroy()</ref></computeroutput> must not have been called. Additionally, if <computeroutput>shouldStop()</computeroutput> is <computeroutput>true</computeroutput>, this function also returns <computeroutput>false</computeroutput>. <simplesect kind="return"><para>If <computeroutput><ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">update()</ref></computeroutput> should be called. If this returns <computeroutput>false</computeroutput>, you should exit the main loop and call <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">destroy()</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d3a/a00101_a9799613939f37db68ef0fc865976a6f9_1a9799613939f37db68ef0fc865976a6f9" kindref="member">requestStop()</ref> </para></simplesect>
+<para>Will return true if <computeroutput><ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">MACE::init()</ref></computeroutput> has been called, and <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">MACE::destroy()</ref></computeroutput> and <computeroutput><ref refid="d4/d3a/a00101_a9799613939f37db68ef0fc865976a6f9_1a9799613939f37db68ef0fc865976a6f9" kindref="member">MACE::requestStop()</ref></computeroutput> have not been called. <simplesect kind="return"><para>If <computeroutput><ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">update()</ref></computeroutput> should be called. If this returns <computeroutput>false</computeroutput>, you should exit the main loop and call <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">destroy()</ref></computeroutput> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d3a/a00101_a9799613939f37db68ef0fc865976a6f9_1a9799613939f37db68ef0fc865976a6f9" kindref="member">MACE::requestStop()</ref> </para></simplesect>
 <simplesect kind="see"><para><ref refid="d4/d3a/a00101" kindref="compound">MACE</ref> for an optimal main loop </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>

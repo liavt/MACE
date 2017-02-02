@@ -12,8 +12,6 @@
 <codeline></codeline>
 <codeline><highlight class="normal">//FRAGMENT<sp/>SHADER</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">#version<sp/>330<sp/>core</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal">#include<sp/>&lt;ssl_frag&gt;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">precision<sp/>highp<sp/>float;<sp/>//<sp/>Defines<sp/>precision<sp/>for<sp/>float<sp/>and<sp/>float-derived<sp/>(vector/matrix)<sp/>types.</highlight></codeline>
@@ -24,18 +22,24 @@
 <codeline><highlight class="normal">uniform<sp/>lowp<sp/>sampler2D<sp/>foregroundTexture;</highlight></codeline>
 <codeline><highlight class="normal">uniform<sp/>lowp<sp/>sampler2D<sp/>selectionTexture;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">uniform<sp/>float<sp/>progress;</highlight></codeline>
+<codeline><highlight class="normal">sslUniformBuffer<sp/>textureData{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sslAttachmentData<sp/>selectionData;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sslAttachmentData<sp/>foregroundData;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sslAttachmentData<sp/>backgroundData;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>float<sp/>progress;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">vec4<sp/>ssl_frag_main()<sp/><sp/></highlight></codeline>
 <codeline><highlight class="normal">{<sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>selection<sp/>=<sp/>texture(selectionTexture,<sp/>textureCoord);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>foreground<sp/>=<sp/>texture(foregroundTexture,<sp/>textureCoord);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>selection<sp/>=<sp/><sp/>sslAttachmentBlend(selectionData,<sp/>texture(selectionTexture,<sp/>textureCoord));</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(<sp/>progress<sp/>&gt;=<sp/>selection.r<sp/>){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if(<sp/>progress<sp/>&gt;=<sp/>selection.r<sp/>&amp;&amp;<sp/>selection.r<sp/>==<sp/>selection.g<sp/>&amp;&amp;<sp/>selection.g<sp/>==<sp/>selection.b<sp/>){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>vec4<sp/>foreground<sp/>=<sp/>sslAttachmentBlend(foregroundData,<sp/>texture(foregroundTexture,<sp/>textureCoord));</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>vec4(foreground.rgb,<sp/>foreground.a<sp/>*<sp/>selection.a);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>texture(backgroundTexture,<sp/>textureCoord);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>sslAttachmentBlend(backgroundData,<sp/>texture(backgroundTexture,<sp/>textureCoord));</highlight></codeline>
 <codeline><highlight class="normal">}<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">)&quot;</highlight></codeline>

@@ -1,9 +1,12 @@
 var a00041 =
 [
-    [ "destroy", "dd/d32/a00041_a26ab7664a9de12c637b17d2376d888fb.html#a26ab7664a9de12c637b17d2376d888fb", null ],
-    [ "init", "dd/d32/a00041_acc26605ca1ee6d85de2b5da64573e72b.html#acc26605ca1ee6d85de2b5da64573e72b", null ],
-    [ "render", "dd/d32/a00041_a4c4fbc2599a3ba8c83ff7f8ada3f4e4b.html#a4c4fbc2599a3ba8c83ff7f8ada3f4e4b", null ],
-    [ "resize", "dd/d32/a00041_a28f8a2b44b5a3697aa1f0ce9d53c0443.html#a28f8a2b44b5a3697aa1f0ce9d53c0443", null ],
-    [ "setUp", "dd/d32/a00041_a0d629966c9769ae5385528c54785fec2.html#a0d629966c9769ae5385528c54785fec2", null ],
-    [ "tearDown", "dd/d32/a00041_a0a82be6395851c77079746396e99d918.html#a0a82be6395851c77079746396e99d918", null ]
+    [ "cleanEntity", "dd/d32/a00041_a2e9c06972639b6e5f6182302acc259ec.html#a2e9c06972639b6e5f6182302acc259ec", null ],
+    [ "destroy", "dd/d32/a00041_a341f82638122be6c2a693ecdf5c3e6c8.html#a341f82638122be6c2a693ecdf5c3e6c8", null ],
+    [ "destroyEntity", "dd/d32/a00041_a15a1ba89268e1a29266e9c75d719f75e.html#a15a1ba89268e1a29266e9c75d719f75e", null ],
+    [ "init", "dd/d32/a00041_af4126f9f608c452128d5ae4d310cba54.html#af4126f9f608c452128d5ae4d310cba54", null ],
+    [ "initEntity", "dd/d32/a00041_af3478fe346e01afb2908d6f7e34e5674.html#af3478fe346e01afb2908d6f7e34e5674", null ],
+    [ "renderEntity", "dd/d32/a00041_ae710e7f3e338567c02efb264f6cbd5dd.html#ae710e7f3e338567c02efb264f6cbd5dd", null ],
+    [ "resize", "dd/d32/a00041_acffe593147fc5558d65a1e495c1e4de1.html#acffe593147fc5558d65a1e495c1e4de1", null ],
+    [ "setUp", "dd/d32/a00041_a90100403ef1d81460b9b24abe90e03ba.html#a90100403ef1d81460b9b24abe90e03ba", null ],
+    [ "tearDown", "dd/d32/a00041_a62069cbbaddd980bb02daceafe8c4538.html#a62069cbbaddd980bb02daceafe8c4538", null ]
 ];
