@@ -29,7 +29,6 @@ mat3 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 }
 
 vec4 sslGetEntityPosition(){
-
 	//putting it all in one line allows for the compiler to optimize it into a single MAD operation		
 	return vec4(ssl_VertexPosition * ssl_Scale * sslCreateRotationMatrix(ssl_BaseEntity.ssl_Rotation)
 							  + ssl_BaseEntity.ssl_Translation * sslCreateRotationMatrix(ssl_ParentEntity.ssl_Rotation)

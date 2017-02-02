@@ -400,7 +400,6 @@ namespace mc {
 			*/
 			Entity& scale(float x, float y, float z = 1.0f);
 
-
 			/**
 			Retrieve this `Entitys` parent `Entity.`
 			@return A `Entity` which contains `this`

@@ -9,10 +9,9 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <Catch.h>
 #include <MACE/Utility/Matrix.h>
-#include <MACE/Utility/MatrixAliases.h>
+#include <MACE/Utility/MatrixTypes.h>
 
 namespace mc {
-
 	TEST_CASE("Testing matrix width and height", "[utility][vector]") {
 		Matrix<int, 5, 1> m = Matrix<int, 5, 1>();
 
@@ -165,6 +164,18 @@ namespace mc {
 					REQUIRE(v[2] == 42.4f);
 				}
 			}
+			SECTION("GLSL-style vectors") {
+				Vector1i v1 = { 1 };
+				REQUIRE(v1 == Vector1i({ 1 }));
+				Vector2i v2 = Vector2i(v1, 2);
+				REQUIRE(v2 == Vector2i({ 1, 2 }));
+				Vector3i v3 = Vector3i(v2, 3);
+				REQUIRE(v3 == Vector3i({ 1, 2, 3 }));
+				Vector4i v4 = Vector4i(v3, 4);
+				REQUIRE(v4 == Vector4i({ 1, 2, 3, 4 }));
+				Vector5i v5 = Vector5i(v4, 5);
+				REQUIRE(v5 == Vector5i({ 1, 2, 3, 4, 5 }));
+			}
 		}
 
 		SECTION("Matrix initialization") {
@@ -270,6 +281,18 @@ namespace mc {
 			}
 		}
 
+		SECTION("Testing GLSL-style getting") {
+			Vector4i v = { 1,2,3,4 };
+			REQUIRE(v.x() == Vector1i({ 1 }));
+			REQUIRE(v.y() == Vector1i({ 2 }));
+			REQUIRE(v.z() == Vector1i({ 3 }));
+			REQUIRE(v.w() == Vector1i({ 4 }));
+
+			REQUIRE(v.xy() == Vector2i({ 1,2 }));
+			REQUIRE(v.xyz() == Vector3i({ 1,2,3 }));
+			REQUIRE(v.xyzw() == Vector4i({ 1,2,3,4 }));
+		}
+
 		SECTION("Testing getting and setting of matrices") {
 			Matrix5i m = Matrix5i();
 
@@ -370,7 +393,7 @@ namespace mc {
 				SECTION("Determinate") {
 					//how determinated am i to determine the determinate of a matrix?
 					REQUIRE(math::det(Matrix2f({ {1,3},{5,4} })) == -11);
-				//	REQUIRE(math::det(Matrix3f({ { 4,-1,0 },{ 1,3,2 },{5,3,4} })) == 18);
+					//	REQUIRE(math::det(Matrix3f({ { 4,-1,0 },{ 1,3,2 },{5,3,4} })) == 18);
 				}
 				SECTION("Inverse") {
 					REQUIRE(math::inverse(Matrix2f({ {-1,0},{3,2} })) == Matrix2f({ {-1,0},{1.5f,0.5f} }));

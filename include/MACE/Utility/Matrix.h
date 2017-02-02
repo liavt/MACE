@@ -77,8 +77,6 @@ namespace mc {
 	*/
 	template<typename T, Size W, Size H>
 	struct Matrix: public Vector<MatrixRow<T, H>, W> {
-		using Vector<MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected
-
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
@@ -503,8 +501,19 @@ namespace mc {
 			output << ' ' << ']';
 			return output;
 		}
-
+	protected:
+		using Vector<MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected from the Vector inheritance
 	};//Matrix
+
+	template<typename T, Size N>
+	Vector<T, N> operator*=(const Vector<T, N>& v, const Matrix<T, N, N>& m) {
+		return m * v;
+	}
+
+	template<typename T, Size N>
+	Vector<T, N> operator*(const Vector<T, N>& v, const Matrix<T, N, N>& m) {
+		return m * v;
+	}
 
 	namespace math {
 		/**

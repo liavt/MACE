@@ -99,7 +99,7 @@ namespace mc {
 		Consructs a `Vector` from the contents of an array.
 		@param arr An equally-sized array whose contents will be filled into a `Vector`
 		*/
-		Vector(const T arr[N]) : content()//we need to initialize the array first, or else we will try to access an empty memory location
+		Vector(const T arr[N]) : Vector()//we need to initialize the array first, or else we will try to access an empty memory location
 		{
 			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
@@ -108,7 +108,7 @@ namespace mc {
 		Consructs a `Vector` from the contents of an `std::array`.
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
-		Vector(const std::array<T, N>& contents) {
+		Vector(const std::array<T, N>& contents) : Vector() {
 			for( Index i = 0; i < N; ++i ) {
 				content[i] = contents[i];
 			}
@@ -125,14 +125,24 @@ namespace mc {
 		@todo Make this constexpr
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
-		Vector(const std::initializer_list<T> args) : content() {//this is for aggregate initializaition
+		Vector(const std::initializer_list<T> args) : Vector() {//this is for aggregate initializaition
 			if( args.size() != N )throw IndexOutOfBoundsException("The number of arguments MUST be equal to the size of the array.");
-			
+
 			Index counter = 0;
 			for( auto elem : args ) {
 				content[counter] = elem;
 				++counter;
 			}
+		}
+
+		/**
+		O(N) time
+		*/
+		Vector(const Vector<T, N - 1>& v, const T& last) : Vector() {
+			for( Index i = 0; i < N - 1; ++i ) {
+				content[i] = v[i];
+			}
+			content[N - 1] = last;
 		}
 
 		/**
@@ -242,6 +252,40 @@ namespace mc {
 				arr[i] = content[i];
 			}
 			return arr;
+		}
+
+		Vector<T, 1> x() const {
+			return{ content[0] };
+		}
+
+		Vector<T, 1> y() const {
+			static_assert(N > 1, "To use y(), you must have a Vector with at least 2 components");
+			return{ content[1] };
+		}
+
+		Vector<T, 1> z() const {
+			static_assert(N > 2, "To use z(), you must have a Vector with at least 3 components");
+			return{ content[2] };
+		}
+
+		Vector<T, 1> w() const {
+			static_assert(N > 3, "To use w(), you must have a Vector with at least 4 components");
+			return{ content[3] };
+		}
+
+		Vector<T, 2> xy() const {
+			static_assert(N > 1, "To use xy(), you must have a Vector with at least 2 components");
+			return{ content[0], content[1] };
+		}
+
+		Vector<T, 3> xyz() const {
+			static_assert(N > 2, "To use xyz(), you must have a Vector with at least 3 components");
+			return{ content[0], content[1], content[2] };
+		}
+
+		Vector<T, 4> xyzw() const {
+			static_assert(N > 3, "To use xyzw(), you must have a Vector with at least 4 components");
+			return{ content[0], content[1], content[2], content[3] };
 		}
 
 		/**

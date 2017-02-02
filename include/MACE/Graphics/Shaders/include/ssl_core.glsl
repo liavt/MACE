@@ -5,8 +5,6 @@ R"(
 
 SSL_GL_VERSION_DECLARATION
 
-#extension all : warn
-
 #ifndef GL_VERSION_3_3
 #extension GL_ARB_shader_bit_encoding : require
 #extension GL_ARB_explicit_attrib_location : require
