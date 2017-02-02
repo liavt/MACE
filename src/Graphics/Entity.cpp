@@ -45,6 +45,8 @@ namespace mc {
 
 				solidColor.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				solidColor.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+				id = solidColor.getID();
 			}
 		}
 
