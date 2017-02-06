@@ -87,9 +87,11 @@ namespace mc {
 			unsigned int fps = 0;
 
 			GLFWwindow* window;
+
+			std::string title;
+
 			int originalWidth;
 			int originalHeight;
-			std::string title;
 
 			BitField properties;
 
