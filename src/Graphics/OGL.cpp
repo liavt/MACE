@@ -823,7 +823,7 @@ namespace mc {
 
 			void ShaderProgram::attachShader(const Shader shader) {
 				glAttachShader(id, shader.getID());
-				shaders[shader.getType()] = shader;
+				shaders.insert(std::pair<Enum, Shader>(shader.getType(), shader));
 			}
 
 			void ShaderProgram::createFragment(const char shader[]) {

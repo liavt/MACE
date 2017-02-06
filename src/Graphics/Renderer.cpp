@@ -480,15 +480,15 @@ namespace mc {
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				//std::copy(translation.begin(), translation.end(), mappedEntityData);
+				std::copy(translation.begin(), translation.end(), mappedEntityData);
 				mappedEntityData += 4;//pointer arithmetic!
-				//std::copy(rotation.begin(), rotation.end(), mappedEntityData);
+				std::copy(rotation.begin(), rotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				//std::copy(inheritedTranslation.begin(), inheritedTranslation.end(), mappedEntityData);
+				std::copy(inheritedTranslation.begin(), inheritedTranslation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				//std::copy(inheritedRotation.begin(), inheritedRotation.end(), mappedEntityData);
+				std::copy(inheritedRotation.begin(), inheritedRotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				//std::copy(scale.begin(), scale.end(), mappedEntityData);
+				std::copy(scale.begin(), scale.end(), mappedEntityData);
 				mappedEntityData += 3;
 				std::copy(&entity->opacity, &entity->opacity + sizeof(entity->opacity), mappedEntityData);
 				buf.unmap();

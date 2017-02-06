@@ -40,8 +40,7 @@ namespace mc {
 				wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
 				if( wn == std::size_t(-1) ) {
-					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
-					return L"";
+					throw AssertionError("Error in mbsrtowcs() with result " + errno);
 				}
 
 				std::vector<wchar_t> buf(wn + 1);
@@ -49,8 +48,7 @@ namespace mc {
 				wn = mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
 
 				if( wn_again == std::size_t(-1) ) {
-					std::cout << "Error in mbsrtowcs(): " << errno << std::endl;
-					return L"";
+					throw AssertionError("Error in mbsrtowcs() with result " + errno);
 				}
 
 				return std::wstring(buf.data(), wn);
@@ -334,9 +332,9 @@ namespace mc {
 
 				const float startProg;
 				const float prog;
+				const float time;
 				const EaseFunction func;
 				float start;
-				const float time;
 				const EaseDoneCallback done;
 			protected:
 				void init(Entity*) override {}

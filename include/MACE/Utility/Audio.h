@@ -31,7 +31,7 @@ namespace mc {
 			LOOPING = 0
 		};
 
-		Sound(std::string path);
+		Sound(const std::string& path);
 
 		void play();
 		void pause();
@@ -53,7 +53,7 @@ namespace mc {
 		BitField& getProperties();
 		const BitField& getProperties() const;
 	private:
-		BitField properties;
+		BitField properties = 0;
 		unsigned int source, buffer;
 		unsigned int frequency;
 		int size;
