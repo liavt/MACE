@@ -20,6 +20,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 //we need to include algorithim for memcpy
 #include <algorithm>
+//cstring is for strcmp
+#include <cstring>
 #include <iostream>
 
 namespace mc {
