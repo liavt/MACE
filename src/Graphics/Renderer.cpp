@@ -7,12 +7,19 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+//std::copy raises a dumb warning on this version of msvc which does not contribute anything at all
+#if defined(_MSC_VER) && _MSC_VER >= 1400 
+#	pragma warning(push) 
+#	pragma warning( disable: 4996 ) 
+#endif 
+
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Utility/Preprocessor.h>
-//we need to include cstring for memcpy
-#include <cstring>
+
+//we need to include algorithim for memcpy
+#include <algorithm>
 #include <iostream>
 
 namespace mc {
@@ -471,17 +478,17 @@ namespace mc {
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				std::memcpy((mappedEntityData), translation.begin(), sizeof(translation));
+				//std::copy(translation.begin(), translation.end(), mappedEntityData);
 				mappedEntityData += 4;//pointer arithmetic!
-				std::memcpy(mappedEntityData, rotation.begin(), sizeof(rotation));
+				//std::copy(rotation.begin(), rotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, inheritedTranslation.begin(), sizeof(inheritedTranslation));
+				//std::copy(inheritedTranslation.begin(), inheritedTranslation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, inheritedRotation.begin(), sizeof(inheritedRotation));
+				//std::copy(inheritedRotation.begin(), inheritedRotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				std::memcpy(mappedEntityData, scale.begin(), sizeof(scale));
+				//std::copy(scale.begin(), scale.end(), mappedEntityData);
 				mappedEntityData += 3;
-				std::memcpy(mappedEntityData, &entity->opacity, sizeof(entity->opacity));
+				std::copy(&entity->opacity, &entity->opacity + sizeof(entity->opacity), mappedEntityData);
 				buf.unmap();
 
 				buf.setLocation(MACE_ENTITY_DATA_LOCATION);
@@ -786,3 +793,6 @@ namespace mc {
 	}//gfx
 }//mc
 
+#if defined(_MSC_VER) && _MSC_VER >= 1400 
+#	pragma warning(pop) 
+#endif 

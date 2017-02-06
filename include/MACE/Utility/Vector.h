@@ -202,7 +202,7 @@ namespace mc {
 		}
 
 		T* end() {
-			return content + (N - 1);
+			return content + (sizeof(T) * (N - 1));
 		}
 
 		/**

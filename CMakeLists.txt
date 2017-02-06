@@ -194,6 +194,14 @@ else()
 	endif()
 endif()
 
+if(CMAKE_COMPILER_IS_GNUXX)
+	check_cxx_compiler_flag("-g" COMPILER_SUPPORTS_DEBUGGING)
+	if(COMPILER_SUPPORTS_DEBUGGING)
+		target_compile_options(MACE PRIVATE "$<$<CONFIG:DEBUG>:-g>")
+	endif()
+endif()
+
+
 target_compile_definitions(MACE PRIVATE "$<$<CONFIG:DEBUG>:MACE_DEBUG=true>")
 
 if(NOT ${GLFW_FOUND})
