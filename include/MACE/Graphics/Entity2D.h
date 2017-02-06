@@ -238,7 +238,7 @@ namespace mc {
 			void onClean() override final;
 			void onDestroy() override final;
 		private:
-			float max = 0, min = 0, progress = 0;
+			float min = 0,  max = 0, progress = 0;
 
 			ColorAttachment backgroundTexture;
 			ColorAttachment foregroundTexture;

@@ -332,12 +332,12 @@ namespace mc {
 			public:
 				EaseComponent(const float p, const float t, const float sp, const EaseFunction f, const EaseDoneCallback cb) : Component(), startProg(sp), prog(p), time(t), func(f), start(0), done(cb) {};
 
-				const float prog;
 				const float startProg;
+				const float prog;
+				const EaseFunction func;
 				float start;
 				const float time;
 				const EaseDoneCallback done;
-				const EaseFunction func;
 			protected:
 				void init(Entity*) override {}
 				bool update(Entity* e) override {

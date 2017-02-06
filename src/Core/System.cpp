@@ -22,6 +22,12 @@ namespace mc {
 			return pointer;
 #elif defined(MACE_POSIX)
 			localtime_r(time, pointer);
+
+			if( pointer == nullptr ) {
+				throw NullPointerException("localtime_r returned a nullptr");
+			}
+
+			return pointer;
 #else
 			//fallback to the built in localtime, which isn't thread safe
 			return std::localtime(time);
