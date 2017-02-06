@@ -87,7 +87,9 @@ namespace mc {
 			if( !soundFile )
 				throw AssertionError(path);
 
-			std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile);
+			if( !std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile) ) {
+				throw AssertionError("error loading WAVE data into struct!");
+			}
 
 			if( (riff_header.chunkID[0] != 'R' ||
 			   riff_header.chunkID[1] != 'I' ||
@@ -100,7 +102,9 @@ namespace mc {
 				throw AssertionError("Invalid RIFF or WAVE Header");
 			}
 
-			std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile);
+			if( !std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile) ) {
+				throw AssertionError("error loading WAVE data into struct!");
+			}
 
 			if( wave_format.subChunkID[0] != 'f' ||
 			   wave_format.subChunkID[1] != 'm' ||
@@ -110,10 +114,12 @@ namespace mc {
 			}
 
 			if( wave_format.subChunkSize > 16 ) {
-				fseek(soundFile, sizeof(short), SEEK_CUR);
+				std::fseek(soundFile, sizeof(short), SEEK_CUR);
 			}
 
-			std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile);
+			if( !std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile) ) {
+				throw AssertionError("error loading WAVE data into struct!");
+			}
 
 			if( wave_data.subChunkID[0] != 'd' ||
 			   wave_data.subChunkID[1] != 'a' ||

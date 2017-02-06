@@ -45,10 +45,6 @@ namespace mc {
 					}
 					throw ShaderError("Error generating " + friendlyType + ".\nMessage: \"" + message + "\"\nGLSL error: \"" + log_string.get() + "\"");
 				}
-
-				void throwShaderError(const Index shaderId, const Enum type) {
-					throwShaderError(shaderId, type, "No message was specified");
-				}
 			}//anon namespace
 
 #ifdef MACE_DEBUG
@@ -1018,6 +1014,6 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-		}//ogl
-	}//gfx
-}//mc
+			}//ogl
+		}//gfx
+	}//mc
