@@ -287,7 +287,12 @@ namespace mc {
 			static Size getOriginalWidth();
 			static Size getOriginalHeight();
 
+			static Size getWidth();
+			static Size getHeight();
+
 			static Size getSamples();
+
+			static Vector<float, 2> getWindowRatios();
 		private:
 			Renderer() = delete;
 			~Renderer() = delete;

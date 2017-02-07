@@ -894,26 +894,9 @@ namespace mc {
 				addChild(letters);
 			}
 
-			Vector<float, 3> scale = transformation.scaler;
-			Vector<float, 3> inheritedScale = { 1,1,1 };
+			Entity::Metrics metrics = getMetrics();
 
-			if( hasParent() ) {
-
-				const Entity* par = getParent();
-
-				//iterate through every parent
-				while( par->hasParent() ) {
-					const TransformMatrix& parTransform = par->getTransformation();
-
-					inheritedScale *= parTransform.scaler * inheritedScale;
-
-					par = par->getParent();
-				}
-			}
-
-			scale *= inheritedScale;
-
-			const float widthScale = 1.0f / scale[0], heightScale = 1.0f / scale[1];
+			const float widthScale = 1.0f / metrics.scale[0], heightScale = 1.0f / metrics.scale[1];
 
 			const float origWidth = static_cast<const float>(Renderer::getOriginalWidth()),
 				origHeight = static_cast<const float>(Renderer::getOriginalHeight());

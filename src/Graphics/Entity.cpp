@@ -229,6 +229,51 @@ namespace mc {
 			return par;
 		}
 
+		Entity::Metrics Entity::getMetrics() const {
+			Entity::Metrics m;
+			m.translation = transformation.translation;
+			m.rotation = transformation.rotation;
+			m.scale = transformation.scaler;
+
+			if( hasParent() ) {
+
+				const Entity* par = getParent();
+
+				const Entity::Metrics parentMetrics = par->getMetrics();
+				
+				m.inheritedTranslation += parentMetrics.translation;
+				m.inheritedScale *= parentMetrics.scale;
+				m.inheritedRotation += parentMetrics.rotation;
+			}
+
+			m.translation *= m.inheritedScale;
+
+			m.scale *= m.inheritedScale;
+
+			m.rotation += m.inheritedRotation;
+
+			const Vector<float, 2> windowRatios = Renderer::getWindowRatios();
+
+			if( getProperty(Entity::STRETCH_X) ) {
+				m.translation[0] *= windowRatios[0];
+				m.inheritedTranslation[0] *= windowRatios[0];
+			}
+			if( getProperty(Entity::STRETCH_Y) ) {
+				m.translation[1] *= windowRatios[1];
+				m.inheritedTranslation[1] *= windowRatios[1];
+			}
+			if( getProperty(Entity::STRETCH_WIDTH) ) {
+				m.scale[0] *= windowRatios[0];
+				m.inheritedScale[0] *= windowRatios[0];
+			}
+			if( getProperty(Entity::STRETCH_HEIGHT) ) {
+				m.scale[1] *= windowRatios[1];
+				m.inheritedScale[1] *= windowRatios[1];
+			}
+
+			return m;
+		}
+
 		void Entity::reset() {
 			clearChildren();
 			properties = 0;

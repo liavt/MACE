@@ -201,7 +201,15 @@ namespace mc {
 			return content;
 		}
 
+		const T* begin() const{
+			return content;
+		}
+
 		T* end() {
+			return content + (sizeof(T) * (N - 1));
+		}
+
+		const T* end() const {
 			return content + (sizeof(T) * (N - 1));
 		}
 

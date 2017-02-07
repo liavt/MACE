@@ -36,6 +36,8 @@ namespace mc {
 
 			Size samples = 1;
 
+			Vector<float, 2> windowRatios;
+
 			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
 			Index entityIndex = 0;
 		}//anon namespace
@@ -138,11 +140,22 @@ namespace mc {
 
 		Size Renderer::getOriginalHeight() {
 			return originalHeight;
-		}//getOriginalHeight()
+		}
+		Size Renderer::getWidth() {
+			return static_cast<Size>(static_cast<float>(Renderer::getOriginalWidth()) * windowRatios[0]);
+		}
+		Size Renderer::getHeight() {
+			return static_cast<Size>(static_cast<float>(Renderer::getOriginalHeight()) * windowRatios[1]);
+		}
+		//getOriginalHeight()
 
 		Size Renderer::getSamples() {
 			return samples;
-		}//getSamples()
+		}
+		Vector<float, 2> Renderer::getWindowRatios() {
+			return windowRatios;
+		}
+		//getSamples()
 
 		void Renderer::pushEntity(Index protocol, GraphicsEntity * entity) {
 			renderQueue.push_back(std::pair<Index, GraphicsEntity*>(protocol, entity));
@@ -176,8 +189,6 @@ namespace mc {
 				ogl::Texture sceneTexture = ogl::Texture();
 				ogl::Texture idTexture = ogl::Texture();
 				ogl::Texture proxyIDTexture = ogl::Texture();
-
-				Vector<float, 2> windowRatios;
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -428,67 +439,21 @@ namespace mc {
 				}
 
 				ogl::UniformBuffer& buf = entity->sslBuffer;
-				const TransformMatrix& transform = entity->transformation;
-
-				Vector<float, 3> translation = transform.translation;
-				Vector<float, 3> scale = transform.scaler;
-				Vector<float, 3> rotation = transform.rotation;
-				Vector<float, 3> inheritedTranslation = { 0,0,0 };
-				Vector<float, 3> inheritedScale = { 1,1,1 };
-				Vector<float, 3> inheritedRotation = { 0,0,0 };
-
-				if( entity->hasParent() ) {
-
-					const Entity* par = entity->getParent();
-
-					//iterate through every parent
-					while( par->hasParent() ) {
-						const TransformMatrix& parTransform = par->getTransformation();
-
-						inheritedTranslation += parTransform.translation * inheritedScale;
-						inheritedScale *= parTransform.scaler * inheritedScale;
-						inheritedRotation += parTransform.rotation;
-
-						par = par->getParent();
-					}
-				}
-
-				translation *= inheritedScale;
-
-				scale *= inheritedScale;
-
-				rotation += inheritedRotation;
-
-				if( !entity->getProperty(Entity::STRETCH_X) ) {
-					translation[0] *= windowRatios[0];
-					inheritedTranslation[0] *= windowRatios[0];
-				}
-				if( !entity->getProperty(Entity::STRETCH_Y) ) {
-					translation[1] *= windowRatios[1];
-					inheritedTranslation[1] *= windowRatios[1];
-				}
-				if( !entity->getProperty(Entity::STRETCH_WIDTH) ) {
-					scale[0] *= windowRatios[0];
-					inheritedScale[0] *= windowRatios[0];
-				}
-				if( !entity->getProperty(Entity::STRETCH_HEIGHT) ) {
-					scale[1] *= windowRatios[1];
-					inheritedScale[1] *= windowRatios[1];
-				}
+				const Entity::Metrics metrics = entity->getMetrics();
 
 				//now we set the uniform sslBuffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				std::copy(translation.begin(), translation.end(), mappedEntityData);
+				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
 				mappedEntityData += 4;//pointer arithmetic!
-				std::copy(rotation.begin(), rotation.end(), mappedEntityData);
+				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				std::copy(inheritedTranslation.begin(), inheritedTranslation.end(), mappedEntityData);
+				std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				std::copy(inheritedRotation.begin(), inheritedRotation.end(), mappedEntityData);
+				std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				std::copy(scale.begin(), scale.end(), mappedEntityData);
+				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
 				mappedEntityData += 3;
 				std::copy(&entity->opacity, &entity->opacity + sizeof(entity->opacity), mappedEntityData);
 				buf.unmap();

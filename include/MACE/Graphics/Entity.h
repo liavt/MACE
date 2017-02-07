@@ -201,7 +201,16 @@ namespace mc {
 				STRETCH_HEIGHT = 7,
 
 				DEFAULT_PROPERTIES = 0x00000000
-			};
+			};//EntityProperty
+
+			struct Metrics {
+				Vector<float, 3> translation;
+				Vector<float, 3> scale;
+				Vector<float, 3> rotation;
+				Vector<float, 3> inheritedTranslation = { 0,0,0 };
+				Vector<float, 3> inheritedScale = { 1,1,1 };
+				Vector<float, 3> inheritedRotation = { 0,0,0 };
+			};//Metrics
 
 			/**
 			Default constructor. Constructs properties based on `Entity::DEFAULT_PROPERTIES`
@@ -497,6 +506,8 @@ namespace mc {
 			*/
 			Entity* getRootParent();
 			const Entity* getRootParent() const;
+
+			Metrics getMetrics() const;
 
 			/**
 			@internal
