@@ -30,8 +30,6 @@ void create() {
 	botLeft.setTexture(Colors::RED);
 	botLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
 	botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
-	botLeft.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	botLeft.setProperty(gfx::Entity::MAINTAIN_HEIGHT, false);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
 	botRight.setTexture(Colors::YELLOW);

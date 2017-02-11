@@ -594,10 +594,10 @@ namespace mc {
 				throw InitializationError("Failed to load glyph with error code " + std::to_string(result));
 			}
 
-			character->width = fonts[id]->glyph->bitmap.width;
-			character->height = fonts[id]->glyph->bitmap.rows;
-			character->bearingX = fonts[id]->glyph->bitmap_left;
-			character->bearingY = fonts[id]->glyph->bitmap_top;
+			character->width = fonts[id]->glyph->metrics.width >> 6;
+			character->height = fonts[id]->glyph->metrics.height >> 6;
+			character->bearingX = fonts[id]->glyph->metrics.horiBearingY >> 6;
+			character->bearingY = fonts[id]->glyph->metrics.horiBearingY >> 6;
 			character->advanceX = fonts[id]->glyph->advance.x >> 6;
 			character->advanceY = fonts[id]->glyph->advance.y >> 6;
 
@@ -937,8 +937,14 @@ namespace mc {
 						position[1] += static_cast<float>(delta[1]) / origHeight;
 					}
 
-					position[0] += (static_cast<float>(let->bearingX) / origWidth);
-					position[1] += (static_cast<float>((let->getHeight()) - (font.getSize() - (let->bearingY >> 1))) / origHeight);
+					position[0] += static_cast<float>(let->bearingX) / origWidth;
+					//font.getSize() - 
+					//let->getHeight() - 
+					//position[1] -= ((font.getSize() + (let->bearingY >> 1)) / origHeight);
+					position[1] -= let->getHeight();
+					position[1] += (let->bearingY + let->height) / origHeight;
+
+					//position[1] += let->getHeight();
 
 					//i cant bear this
 					let->setX(position[0] * widthScale);
@@ -964,26 +970,26 @@ namespace mc {
 			switch( horzAlign ) {
 			default:
 			case HorizontalAlign::CENTER:
-				letters.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				letters.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 				break;
 			case HorizontalAlign::RIGHT:
-				letters.setX((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				letters.setX((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 				break;
 			case HorizontalAlign::LEFT:
-				letters.setX(-1.0f + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				letters.setX(-1.0f + static_cast<const float>(font.getSize() >> 1) / origWidth);
 				break;
 			}
 
 			switch( vertAlign ) {
 			default:
 			case VerticalAlign::CENTER:
-				letters.setY((-height / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalHeight());
+				letters.setY((-height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
 				break;
 			case VerticalAlign::BOTTOM:
-				letters.setY((-1.0f + height / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalHeight());
+				letters.setY((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
 				break;
 			case VerticalAlign::TOP:
-				letters.setY(1.0f);
+				letters.setY((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
 				break;
 			}
 		}
