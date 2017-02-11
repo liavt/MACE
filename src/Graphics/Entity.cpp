@@ -241,7 +241,7 @@ namespace mc {
 
 				const Entity::Metrics parentMetrics = par->getMetrics();
 				
-				m.inheritedTranslation += parentMetrics.translation;
+				m.inheritedTranslation += parentMetrics.translation + parentMetrics.inheritedTranslation;
 				m.inheritedScale *= parentMetrics.scale;
 				m.inheritedRotation += parentMetrics.rotation;
 			}
@@ -254,19 +254,19 @@ namespace mc {
 
 			const Vector<float, 2> windowRatios = Renderer::getWindowRatios();
 
-			if( getProperty(Entity::STRETCH_X) ) {
+			if( getProperty(Entity::MAINTAIN_X) ) {
 				m.translation[0] *= windowRatios[0];
 				m.inheritedTranslation[0] *= windowRatios[0];
 			}
-			if( getProperty(Entity::STRETCH_Y) ) {
+			if( getProperty(Entity::MAINTAIN_Y) ) {
 				m.translation[1] *= windowRatios[1];
 				m.inheritedTranslation[1] *= windowRatios[1];
 			}
-			if( getProperty(Entity::STRETCH_WIDTH) ) {
+			if( getProperty(Entity::MAINTAIN_WIDTH) ) {
 				m.scale[0] *= windowRatios[0];
 				m.inheritedScale[0] *= windowRatios[0];
 			}
-			if( getProperty(Entity::STRETCH_HEIGHT) ) {
+			if( getProperty(Entity::MAINTAIN_HEIGHT) ) {
 				m.scale[1] *= windowRatios[1];
 				m.inheritedScale[1] *= windowRatios[1];
 			}

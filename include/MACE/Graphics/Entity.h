@@ -168,37 +168,37 @@ namespace mc {
 
 				/**
 				Flag representing whether an Entity's X position should be stretched when window is resized.
-				@see Entity::STRETCH_Y
-				@see Entity::STRETCH_WIDTH
-				@see Entity::STRETCH_HEIGHT
+				@see Entity::MAINTAIN_Y
+				@see Entity::MAINTAIN_WIDTH
+				@see Entity::MAINTAIN_HEIGHT
 				*/
-				STRETCH_X = 4,
+				MAINTAIN_X = 4,
 
 				/**
 				Flag representing whether an Entity's Y position should be stretched when window is resized.
-				@see Entity::STRETCH_X
-				@see Entity::STRETCH_WIDTH
-				@see Entity::STRETCH_HEIGHT
+				@see Entity::MAINTAIN_X
+				@see Entity::MAINTAIN_WIDTH
+				@see Entity::MAINTAIN_HEIGHT
 				@see WindowModule::setResizable(bool)
 				*/
-				STRETCH_Y = 5,
+				MAINTAIN_Y = 5,
 
 				/**
 				Flag representing whether an Entity's width should be stretched when window is resized.
-				@see Entity::STRETCH_X
-				@see Entity::STRETCH_Y
-				@see Entity::STRETCH_HEIGHT
+				@see Entity::MAINTAIN_X
+				@see Entity::MAINTAIN_Y
+				@see Entity::MAINTAIN_HEIGHT
 				@see WindowModule::setResizable(bool)
 				*/
-				STRETCH_WIDTH = 6,
+				MAINTAIN_WIDTH = 6,
 				/**
 				Flag representing whether an Entity's height should be stretched when window is resized.
-				@see Entity::STRETCH_X
-				@see Entity::STRETCH_Y
-				@see Entity::STRETCH_WIDTH
+				@see Entity::MAINTAIN_X
+				@see Entity::MAINTAIN_Y
+				@see Entity::MAINTAIN_WIDTH
 				@see WindowModule::setResizable(bool)
 				*/
-				STRETCH_HEIGHT = 7,
+				MAINTAIN_HEIGHT = 7,
 
 				DEFAULT_PROPERTIES = 0x00000000
 			};//EntityProperty

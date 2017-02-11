@@ -8,10 +8,10 @@ using namespace mc;
 class TestComponent: public gfx::Component {
 
 	void init(gfx::Entity* en) override {
-		en->setProperty(gfx::Entity::STRETCH_X, true);
-		en->setProperty(gfx::Entity::STRETCH_Y, true);
-		en->setProperty(gfx::Entity::STRETCH_WIDTH, true);
-		en->setProperty(gfx::Entity::STRETCH_HEIGHT, true);
+		en->setProperty(gfx::Entity::MAINTAIN_X, true);
+		en->setProperty(gfx::Entity::MAINTAIN_Y, true);
+		en->setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
+		en->setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 	}
 
 	bool update(gfx::Entity* en) override {

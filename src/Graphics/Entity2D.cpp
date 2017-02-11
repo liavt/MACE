@@ -964,7 +964,7 @@ namespace mc {
 			switch( horzAlign ) {
 			default:
 			case HorizontalAlign::CENTER:
-				letters.setX((-width / 2.0f) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
+				letters.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
 				break;
 			case HorizontalAlign::RIGHT:
 				letters.setX((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / Renderer::getOriginalWidth());
