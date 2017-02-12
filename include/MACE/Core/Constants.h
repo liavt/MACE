@@ -41,6 +41,10 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_POSIX true
 #endif
 
+#if defined(CV_VERSION) && defined(CV_MAJOR_VERSION) && defined(CV_MINOR_VERSION)
+#	define MACE_OPENCV true
+#endif
+
 #include <cstdint>
 #include <stdexcept>
 
@@ -115,52 +119,102 @@ namespace mc {
 
 	/*Exceptions*/
 
+#define _MACE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
+
 	/**
 	Superclass that all exceptions in MACE extend.
 	*/
-	class Exception: public std::runtime_error {
+	class Error: public std::runtime_error {
 	public:
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/
-		static void handleException[[noreturn]](const std::exception& e);
+		static void handleError[[noreturn]](const std::exception& e);
 
 		using std::runtime_error::runtime_error;
 
-		Exception() noexcept = default;
-		~Exception() noexcept = default;
+		Error() noexcept = default;
+		~Error() noexcept = default;
+
+		void handle[[noreturn]]();
 	};
 
 
 	/**
 	Thrown when a pointer is equal to NULL
 	*/
-	using NullPointerException = Exception;
+	_MACE_ERROR(NullPointer);
 
 
 	/**
 	Thrown when an assertion fails.
 	@see MACE::assertModule(std::string)
 	*/
-	using AssertionError = Exception;
+	_MACE_ERROR(AssertionFailed);
 
 	/**
 	Thrown when an object wasn't initializaed or initializtion failed
 	*/
-	using InitializationError = Exception;
+	_MACE_ERROR(InitializationFailed);
+
+	/**
+	Thrown when an error occured trying to read or write an image
+	*/
+	_MACE_ERROR(BadImage);
+
+	/**
+	Thrown when an error occured trying to read or write a sound file
+	*/
+	_MACE_ERROR(BadSound);
 
 	/**
 	Thrown when a function looks for an object, but doesn't find it.
 	*/
-	using ObjectNotFoundInArrayException = Exception;
+	_MACE_ERROR(ObjectNotFound);
+
+	/**
+	Thrown when something is of the wrong type
+	*/
+	_MACE_ERROR(InvalidType);
+
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	using IndexOutOfBoundsException = Exception;
+	_MACE_ERROR(IndexOutOfBounds);
 	/**
 	Thrown when something goes wrong while doing math, like dividing by zero
 	*/
-	using ArithmeticException = Exception;
+	_MACE_ERROR(InvalidArithmetic);
+
+	/**
+	Thrown when something relate to Freetype or fonts fails
+	*/
+	_MACE_ERROR(Font);
+
+	/**
+	Thrown when OpenGL fails or errors
+	@see ShaderError
+	*/
+	_MACE_ERROR(OpenGL);
+
+	/**
+	Thrown when a Shader throws an exception, such as a failed compilation.
+	@see OpenGLError
+	*/
+	_MACE_ERROR(Shader);
+
+	/**
+	Thrown when a Framebuffer fails to be created, or throws an error
+	@see gfx::ogl::Framebuffer
+	@see OpenGLError
+	*/
+	_MACE_ERROR(Framebuffer);
+
+	/**
+	`Exception` thrown when a syntax error is encountered, or #error is called. The filename and line number will be in message.
+	*/
+	_MACE_ERROR(Preprocessor)
+#undef _MACE_ERROR
 }
 
 #endif

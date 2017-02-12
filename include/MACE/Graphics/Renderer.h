@@ -277,7 +277,7 @@ namespace mc {
 				//in destroy(), this memory is deleted
 				RenderImpl* protocol = new RenderProtocol<T>();
 				if( protocol == nullptr ) {
-					throw NullPointerException("Error creating RenderProtocol");
+					throw InvalidTypeError("Error creating RenderProtocol because template does not exist for it");
 				}
 				protocol->init(getOriginalWidth(), getOriginalHeight());
 				pushProtocol(protocol);

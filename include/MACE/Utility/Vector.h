@@ -126,7 +126,7 @@ namespace mc {
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		Vector(const std::initializer_list<T> args) : Vector() {//this is for aggregate initializaition
-			if( args.size() != N )throw IndexOutOfBoundsException("The number of arguments MUST be equal to the size of the array.");
+			if( args.size() != N )throw IndexOutOfBoundsError("The number of arguments MUST be equal to the size of the array.");
 
 			Index counter = 0;
 			for( auto elem : args ) {
@@ -222,7 +222,7 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		T& get(Index i) {
-			if( i >= N )throw IndexOutOfBoundsException(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if( i >= N )throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			return content[i];
 		}
 		/**
@@ -234,7 +234,7 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		const T& get(Index i) const {
-			if( i >= N )throw IndexOutOfBoundsException(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if( i >= N )throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			return content.at(i);
 		}
 		/**
@@ -246,7 +246,7 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		void set(Index position, T value) {
-			if( position >= N )throw IndexOutOfBoundsException(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if( position >= N )throw IndexOutOfBoundsError(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			content[position] = value;
 		}
 

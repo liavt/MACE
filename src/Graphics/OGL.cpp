@@ -53,28 +53,28 @@ namespace mc {
 				while( (result = glGetError()) != GL_NO_ERROR ) {
 					switch( result ) {
 					case GL_INVALID_ENUM:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
 						break;
 					case GL_INVALID_VALUE:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_VALUE! A numeric argument is out of range!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_VALUE! A numeric argument is out of range!");
 						break;
 					case GL_INVALID_OPERATION:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
 						break;
 					case GL_INVALID_FRAMEBUFFER_OPERATION:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
 						break;
 					case GL_STACK_OVERFLOW:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
 						break;
 					case GL_STACK_UNDERFLOW:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
 						break;
 					case GL_OUT_OF_MEMORY:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
 						break;
 					default:
-						throw GLError("Line " + std::to_string(line) + " in " + file + ": OpenGL has errored with an error code of " + std::to_string(result));
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": OpenGL has errored with an error code of " + std::to_string(result));
 						break;
 					}
 				}
@@ -641,7 +641,7 @@ namespace mc {
 
 			void Shader::init() {
 				if( type == GL_FALSE ) {
-					throw InitializationError("Must assign a type to the shader before init() is called!");
+					throw InitializationFailedError("Must assign a type to the shader before init() is called!");
 				}
 				id = glCreateShader(type);
 			}

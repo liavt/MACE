@@ -43,10 +43,6 @@ namespace mc {
 		*/
 		namespace ogl {
 
-			using GLError = Exception;
-
-			using ShaderError = Exception;
-
 			/**
 			@opengl
 			*/

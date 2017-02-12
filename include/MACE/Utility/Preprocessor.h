@@ -20,11 +20,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 
 	/**
-	`Exception` thrown when a syntax error is encountered, or #error is called. The filename and line number will be in message.
-	*/
-	using PreprocessorException = Exception;
-
-	/**
 	Represents a `Macro` in code. Created automatically when #define is encountered.
 	@see Preprocessor
 	*/

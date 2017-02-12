@@ -117,7 +117,7 @@ int main() {
 
 
 	} catch( const std::exception& e ) {
-		Exception::handleException(e);
+		Error::handleError(e);
 		return -1;
 	}
 	return 0;

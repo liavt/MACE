@@ -96,7 +96,7 @@ namespace mc {
 			}
 
 			if( !window ) {
-				throw mc::InitializationError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
+				throw mc::InitializationFailedError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
 
 			glfwMakeContextCurrent(window);
@@ -120,7 +120,7 @@ namespace mc {
 				if( result == GLEW_ERROR_NO_GL_VERSION ) {
 					errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
 				}
-				throw mc::InitializationError(errorMessage.str());
+				throw mc::InitializationFailedError(errorMessage.str());
 			}
 
 			try {
@@ -272,7 +272,7 @@ namespace mc {
 					windowDelay = 1000.0f / static_cast<float>(fps);
 				}
 			} catch( const std::exception& e ) {
-				Exception::handleException(e);
+				Error::handleError(e);
 			} catch( ... ) {
 				std::cerr << "An error has occured";
 				MACE::requestStop();
@@ -314,7 +314,7 @@ namespace mc {
 						std::this_thread::sleep_for(std::chrono::milliseconds((unsigned int) windowDelay));
 					}
 				} catch( const std::exception& e ) {
-					Exception::handleException(e);
+					Error::handleError(e);
 					break;
 				} catch( ... ) {
 					std::cerr << "An error has occured";
@@ -332,7 +332,7 @@ namespace mc {
 
 					glfwDestroyWindow(window);
 				} catch( const std::exception& e ) {
-					Exception::handleException(e);
+					Error::handleError(e);
 				} catch( ... ) {
 					std::cerr << "An error has occured";
 					MACE::requestStop();
@@ -343,7 +343,7 @@ namespace mc {
 
 		void WindowModule::init() {
 			if( !glfwInit() ) {
-				throw InitializationError("GLFW failed to initialize!");
+				throw InitializationFailedError("GLFW failed to initialize!");
 			}
 
 			windowThread = std::thread(&WindowModule::threadCallback, this);

@@ -124,7 +124,7 @@ namespace mc {
 
 	TEST_CASE("Testing #error", "[utility][preprocessor]") {
 		Preprocessor p = Preprocessor("#error This is an error!");
-		REQUIRE_THROWS_AS(p.preprocess(), PreprocessorException);
+		REQUIRE_THROWS_AS(p.preprocess(), PreprocessorError);
 	}
 
 
@@ -135,7 +135,7 @@ namespace mc {
 
 	TEST_CASE("Unknown directive") {
 		Preprocessor p = Preprocessor("#test");
-		REQUIRE_THROWS_AS(p.preprocess(), PreprocessorException);
+		REQUIRE_THROWS_AS(p.preprocess(), PreprocessorError);
 	}
 
 }

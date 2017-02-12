@@ -113,10 +113,10 @@ namespace mc {
 		*/
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix()//this is for aggregate initializaition
 		{
-			if( args.size() != W )throw IndexOutOfBoundsException("The width of the argument must be equal to to the height of the Matrix!");
+			if( args.size() != W )throw IndexOutOfBoundsError("The width of the argument must be equal to to the height of the Matrix!");
 			Index counterX = 0, counterY = 0;
 			for( std::initializer_list<T> elemX : args ) {
-				if( elemX.size() != H )throw IndexOutOfBoundsException("The height of the argument must be equal to to the height of the Matrix!");
+				if( elemX.size() != H )throw IndexOutOfBoundsError("The height of the argument must be equal to to the height of the Matrix!");
 				counterY = 0;
 				for( T elemY : elemX ) {
 					content[counterX][counterY] = elemY;
@@ -173,8 +173,8 @@ namespace mc {
 		@see #operator[]
 		*/
 		T& get(Index x, Index y) {
-			if( x >= W ) throw IndexOutOfBoundsException(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			if( y >= H ) throw IndexOutOfBoundsException(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			if( x >= W ) throw IndexOutOfBoundsError(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			if( y >= H ) throw IndexOutOfBoundsError(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			return content[x][y];
 		}
 
@@ -189,8 +189,8 @@ namespace mc {
 		@see #operator[]
 		*/
 		const T& get(Index x, Index y) const {
-			if( x >= W ) throw IndexOutOfBoundsException(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			if( y >= H ) throw IndexOutOfBoundsException(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			if( x >= W ) throw IndexOutOfBoundsError(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			if( y >= H ) throw IndexOutOfBoundsError(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			return content[x][y];
 		}
 
@@ -205,8 +205,8 @@ namespace mc {
 		@see #get(Index, Index)
 		*/
 		void set(Index x, Index y, T value) {
-			if( x >= W ) throw IndexOutOfBoundsException(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			if( y >= H ) throw IndexOutOfBoundsException(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			if( x >= W ) throw IndexOutOfBoundsError(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			if( y >= H ) throw IndexOutOfBoundsError(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			content[x][y] = value;
 		}
 

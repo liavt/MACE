@@ -85,10 +85,10 @@ namespace mc {
 		try {
 			soundFile = mc::os::fopen(&soundFile, path.c_str(), "rb");
 			if( !soundFile )
-				throw AssertionError(path);
+				throw BadSoundError(path);
 
 			if( !std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile) ) {
-				throw AssertionError("error loading WAVE data into struct!");
+				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
 			if( (riff_header.chunkID[0] != 'R' ||
@@ -99,18 +99,18 @@ namespace mc {
 			   riff_header.format[1] != 'A' ||
 			   riff_header.format[2] != 'V' ||
 			   riff_header.format[3] != 'E') ) {
-				throw AssertionError("Invalid RIFF or WAVE Header");
+				throw BadSoundError("Invalid RIFF or WAVE Header");
 			}
 
 			if( !std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile) ) {
-				throw AssertionError("error loading WAVE data into struct!");
+				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
 			if( wave_format.subChunkID[0] != 'f' ||
 			   wave_format.subChunkID[1] != 'm' ||
 			   wave_format.subChunkID[2] != 't' ||
 			   wave_format.subChunkID[3] != ' ' ) {
-				throw AssertionError("Invalid Wave Format");
+				throw BadSoundError("Invalid Wave Format");
 			}
 
 			if( wave_format.subChunkSize > 16 ) {
@@ -118,20 +118,20 @@ namespace mc {
 			}
 
 			if( !std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile) ) {
-				throw AssertionError("error loading WAVE data into struct!");
+				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
 			if( wave_data.subChunkID[0] != 'd' ||
 			   wave_data.subChunkID[1] != 'a' ||
 			   wave_data.subChunkID[2] != 't' ||
 			   wave_data.subChunkID[3] != 'a' ) {
-				throw AssertionError("Invalid data header");
+				throw BadSoundError("Invalid data header");
 			}
 
 			buf = new unsigned char[wave_data.subChunk2Size];
 
 			if( !std::fread(buf, wave_data.subChunk2Size, 1, soundFile) ) {
-				throw AssertionError("error loading WAVE data into struct!");
+				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
 			size = wave_data.subChunk2Size;
@@ -161,7 +161,7 @@ namespace mc {
 
 			std::fclose(soundFile);
 			return;
-		} catch( const Exception& error ) {
+		} catch( const Error& error ) {
 
 			std::cerr << error.what() << " : trying to load "
 				<< path << std::endl;

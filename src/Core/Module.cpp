@@ -30,25 +30,25 @@ namespace mc {
 	}
 	void MACE::removeModule(const Module& m) {
 		const int location = indexOf(m);
-		if( location < 0 )throw ObjectNotFoundInArrayException("Module by name of " + m.getName() + " not found! Can\'t remove!");
+		if( location < 0 )throw ObjectNotFoundError("Module by name of " + m.getName() + " not found! Can\'t remove!");
 		removeModule(location);
 	}
 	void MACE::removeModule(const std::string module) {
 		const int location = indexOf(module);
-		if( location < 0 )throw ObjectNotFoundInArrayException("Module by name of " + module + " not found! Can\'t remove!");
+		if( location < 0 )throw ObjectNotFoundError("Module by name of " + module + " not found! Can\'t remove!");
 		removeModule(location);
 	}
 	void MACE::removeModule(const Index i) {
-		if( i >= numberOfModules() )throw IndexOutOfBoundsException("Input is greater than the amount of modules!");
+		if( i >= numberOfModules() )throw ObjectNotFoundError("Input is greater than the amount of modules!");
 		modules.erase(modules.begin() + i);
 	}
 	Module * MACE::getModule(const std::string keyword) {
 		const int location = indexOf(keyword);
-		if( location < 0 )throw ObjectNotFoundInArrayException("No module by the name of " + keyword + " found!");
+		if( location < 0 )throw ObjectNotFoundError("No module by the name of " + keyword + " found!");
 		return modules[location];
 	}
 	Module * MACE::getModule(const Index i) {
-		if( i >= numberOfModules() )throw IndexOutOfBoundsException("Input is not a valid index!");
+		if( i >= numberOfModules() )throw ObjectNotFoundError("Input is not a valid index!");
 		return modules[i];
 	}
 	bool MACE::moduleExists(const std::string module) {
@@ -63,7 +63,7 @@ namespace mc {
 	}
 	void MACE::assertModule(const std::string module, const std::string errorMessage) {
 		if( !moduleExists(module) ) {
-			throw AssertionError(errorMessage);
+			throw AssertionFailedError(errorMessage);
 		}
 	}
 	void MACE::assertModule(const std::string module) {
@@ -89,7 +89,7 @@ namespace mc {
 	}
 
 	void MACE::init() {
-		if( modules.size() == 0 )throw InitializationError("Must add a Module via MACE::addModule!");
+		if( modules.size() == 0 )throw InitializationFailedError("Must add a Module via MACE::addModule!");
 		flags.untoggleBit(MACE::DESTROYED);
 		flags.toggleBit(MACE::INIT);
 
@@ -100,7 +100,7 @@ namespace mc {
 
 	void MACE::destroy() {
 		if( !flags.getBit(MACE::INIT) ) {
-			throw InitializationError("Can't destroy MACE without calling init() first!");
+			throw InitializationFailedError("Can't destroy MACE without calling init() first!");
 		}
 		flags.toggleBit(MACE::DESTROYED);
 		flags.untoggleBit(MACE::INIT);
@@ -111,7 +111,7 @@ namespace mc {
 	}
 
 	void MACE::update() {
-		if( !flags.getBit(MACE::INIT) )throw InitializationError("init() must be called!");
+		if( !flags.getBit(MACE::INIT) )throw InitializationFailedError("init() must be called!");
 		for( Index i = 0; i < modules.size(); i++ ) {
 			modules[i]->update();
 		}

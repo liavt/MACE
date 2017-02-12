@@ -101,8 +101,18 @@ namespace mc {
 			ColorAttachment(const char* file);
 			ColorAttachment(const std::string& file);
 
-			void setDataFromFile(const char* file);
-			void setDataFromFile(const std::string& file);
+#			ifdef MACE_OPENCV
+			ColorAttachment(const cv::Mat& mat);
+
+			void load(const cv::Mat& mat);
+#			endif
+
+			void load(const char* file);
+			void load(const std::string& file);
+
+			void load(const Color& c);
+
+
 
 			Color& getPaint();
 			const Color& getPaint() const;

@@ -16,6 +16,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <string>
 
 #define STB_IMAGE_IMPLEMENTATION
+#ifdef MACE_DEBUG
+#	define STBI_FAILURE_USERMSG
+#endif
 #include <stb_image.h>
 
 namespace mc {
@@ -31,7 +34,7 @@ namespace mc {
 
 		ColorAttachment::ColorAttachment(const char * file) : ColorAttachment() {
 			init();
-			setDataFromFile(file);
+			load(file);
 		}
 
 		ColorAttachment::ColorAttachment(const std::string & file) : ColorAttachment(file.c_str()) {}
@@ -50,17 +53,26 @@ namespace mc {
 			}
 		}
 
-		void ColorAttachment::setDataFromFile(const char * file) {
+		void ColorAttachment::load(const char * file) {
 			int width, height, componentSize;
 
-			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
+			Byte* image = stbi_load(file, &width, &height, &componentSize, 0);
 
-			if( image == nullptr || width == 0 || height == 0 ) {
+			if( image == nullptr || width == 0 || height == 0 || componentSize == 0 ) {
 				stbi_image_free(image);
-				throw NullPointerException("Unable to read image: " + std::string(file));
+				throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 			}
 
-			setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+			Enum format = GL_RGBA;
+			if( componentSize == 1 ) {
+				format = GL_RED;
+			} else if( componentSize == 2 ) {
+				format = GL_RG;
+			} else if( componentSize == 3 ) {
+				format = GL_RGB;
+			}
+
+			setData(image, width, height, GL_UNSIGNED_BYTE, format, GL_RGBA);
 
 			stbi_image_free(image);
 
@@ -70,9 +82,54 @@ namespace mc {
 			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		}
 
-		void ColorAttachment::setDataFromFile(const std::string & file) {
-			setDataFromFile(file.c_str());
+		void ColorAttachment::load(const std::string & file) {
+			load(file.c_str());
 		}
+
+		void ColorAttachment::load(const Color & c) {
+			setData(&c, 1, 1, GL_FLOAT, GL_RGBA);
+		}
+
+#ifdef MACE_OPENCV
+		ColorAttachment::ColorAttachment(const cv::Mat & mat) {
+			init();
+			load(mat);
+		}
+
+		void ColorAttachment::load(const cv::Mat & mat) {
+			//opencv and opengl store textures differently, and more especially, flipped.
+			cv::flip(mat, mat, 0);
+
+			Enum colorFormat = GL_BGR;
+			if( mat.channels() == 1 ) {
+				colorFormat = GL_LUMINANCE;
+			} else if( mat.channels() == 2 ) {
+				colorFormat == GL_LUMINANCE_ALPHA;
+			} else if( mat.channels() == 4 ) {
+				colorFormat == GL_BGRA;
+			}
+
+			Enum type = GL_UNSIGNED_BYTE;
+			if( mat.depth() == CV_8S ) {
+				type = GL_BYTE;
+			} else if( mat.depth() == CV_16U ) {
+				type = GL_UNSIGNED_INT;
+			} else if( mat.depth() == CV_16S ) {
+				type = GL_INT;
+			} else if( mat.depth() == CV_32S ) {
+				type = GL_UNSIGNED_INT_8_8_8_8;
+			} else if( mat.depth() == CV_32F ) {
+				type = GL_FLOAT;
+			} else if( mat.depth() == CV_64F ) {
+				throw BadImageError("Unsupported cv::Mat depth: CV_64F");
+			}
+
+			glPixelStorei(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
+			glPixelStorei(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
+
+			setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
+		}
+#endif
 
 		Color& ColorAttachment::getPaint() {
 			return paint;
@@ -126,16 +183,16 @@ namespace mc {
 					return;
 				}
 			}
-			throw ObjectNotFoundInArrayException("Specified argument is not a valid object in the array!");
+			throw ObjectNotFoundError("Specified argument is not a valid object in the array!");
 		}
 
 		void Entity::removeChild(Index index) {
 			makeDirty();
 
 			if( children.empty() ) {
-				throw IndexOutOfBoundsException("Can\'t remove a child from an empty entity!");
+				throw IndexOutOfBoundsError("Can\'t remove a child from an empty entity!");
 			} else if( index >= children.size() ) {
-				throw IndexOutOfBoundsException(std::to_string(index) + " is larger than the amount of children!");
+				throw IndexOutOfBoundsError(std::to_string(index) + " is larger than the amount of children!");
 			} else if( children.size() == 1 ) {
 				children.clear();
 			} else {
@@ -425,7 +482,7 @@ namespace mc {
 		void Entity::init() {
 
 			if( getProperty(Entity::INIT) ) {
-				throw InitializationError("Entity can not have init() called twice.");
+				throw InitializationFailedError("Entity can not have init() called twice.");
 			}
 			makeDirty();
 			for( Index i = 0; i < children.size(); ++i ) {
@@ -438,7 +495,7 @@ namespace mc {
 
 		void Entity::destroy() {
 			if( !getProperty(Entity::INIT) ) {
-				throw InitializationError("Entity can not have destroy() called when it has not been initialized");
+				throw InitializationFailedError("Entity can not have destroy() called when it has not been initialized");
 			}
 			makeDirty();
 			for( Index i = 0; i < children.size(); ++i ) {
@@ -480,16 +537,16 @@ namespace mc {
 
 		bool Entity::getProperty(const Byte position) const {
 #ifdef MACE_DEBUG
-			if( position > 8 )throw IndexOutOfBoundsException("Input position is greater than 8");
-			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
+			if( position > 8 )throw IndexOutOfBoundsError("Input position is greater than 8");
+			else if( position < 0 )throw IndexOutOfBoundsError("Input position is less than 0!");
 #endif
 			return properties.getBit(position);
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
 #ifdef MACE_DEBUG
-			if( position > 8 )throw IndexOutOfBoundsException("Input position is greater than 8");
-			else if( position < 0 )throw IndexOutOfBoundsException("Input position is less than 0!");
+			if( position > 8 )throw IndexOutOfBoundsError("Input position is greater than 8");
+			else if( position < 0 )throw IndexOutOfBoundsError("Input position is less than 0!");
 #endif
 			if( properties.getBit(position) != value ) {
 				if( position != Entity::DIRTY ) {

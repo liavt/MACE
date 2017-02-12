@@ -40,7 +40,7 @@ namespace mc {
 				wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
 				if( wn == std::size_t(-1) ) {
-					throw AssertionError("Error in mbsrtowcs() with result " + errno);
+					throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
 				}
 
 				std::vector<wchar_t> buf(wn + 1);
@@ -48,7 +48,7 @@ namespace mc {
 				wn = mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
 
 				if( wn_again == std::size_t(-1) ) {
-					throw AssertionError("Error in mbsrtowcs() with result " + errno);
+					throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
 				}
 
 				return std::wstring(buf.data(), wn);
@@ -170,7 +170,7 @@ namespace mc {
 		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
 			Image* img = dynamic_cast<Image*>(e);
 			if( img == nullptr ) {
-				throw NullPointerException("Input to RenderProtocol<Image>::initEntity must be of type Image");
+				throw InvalidTypeError("Input to RenderProtocol<Image>::initEntity must be of type Image");
 			}
 
 			img->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
@@ -179,7 +179,7 @@ namespace mc {
 		void RenderProtocol<Image>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Image* entity = dynamic_cast<Image*>(e);
 			if( entity == nullptr ) {
-				throw NullPointerException("You must queue an Image for RenderProtocol<Image>");
+				throw InvalidTypeError("You must queue an Image for RenderProtocol<Image>");
 			}
 
 			entity->texture.bind();
@@ -342,7 +342,7 @@ namespace mc {
 					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 					if( bar == nullptr ) {
 						//should never happen, as this class is only ever defined and used here, but just in caes
-						throw NullPointerException("Internal error: EaseComponent did not receive a progress bar in update()");
+						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in update()");
 					}
 
 					//combine 2 operations into 1
@@ -387,7 +387,7 @@ namespace mc {
 				void destroy(Entity* e) override {
 					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 					if( bar == nullptr ) {
-						throw NullPointerException("Internal error: EaseComponent did not receive a progress bar in destroy()");
+						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in destroy()");
 					}
 					done(bar);
 
@@ -503,7 +503,7 @@ namespace mc {
 		void RenderProtocol<ProgressBar>::initEntity(GraphicsEntity* e) {
 			ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 			if( bar == nullptr ) {
-				throw NullPointerException("Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
+				throw InvalidTypeError("Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
 			}
 
 			bar->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
@@ -512,7 +512,7 @@ namespace mc {
 		void RenderProtocol<ProgressBar>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			ProgressBar* entity = dynamic_cast<ProgressBar*>(e);
 			if( entity == nullptr ) {
-				throw NullPointerException("You must queue an ProgressBar for RenderProtocol<ProgressBar>");
+				throw InvalidTypeError("You must queue an ProgressBar for RenderProtocol<ProgressBar>");
 			}
 
 			entity->backgroundTexture.bind(0);
@@ -539,7 +539,7 @@ namespace mc {
 		Font Font::loadFont(const char* name) {
 			if( freetypeStatus < 0 ) {
 				if( (freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok ) {
-					throw InitializationError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
+					throw FontError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
 				}
 			}
 
@@ -547,11 +547,11 @@ namespace mc {
 
 			fonts.push_back(FT_Face());
 			if( int result = FT_New_Face(freetype, name, 0, &fonts[id]) ) {
-				throw InitializationError("Freetype failed to create font with result " + std::to_string(result));
+				throw FontError("Freetype failed to create font with result " + std::to_string(result));
 			}
 
 			if( int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE) ) {
-				throw InitializationError("Freetype failed to change charmap with result " + std::to_string(result));
+				throw FontError("Freetype failed to change charmap with result " + std::to_string(result));
 			}
 
 			return Font(id);
@@ -559,7 +559,7 @@ namespace mc {
 
 		void Font::destroy() {
 			if( int result = FT_Done_Face(fonts[id]) ) {
-				throw InitializationError("Freetype failed to delete font with result " + std::to_string(result));
+				throw FontError("Freetype failed to delete font with result " + std::to_string(result));
 			}
 		}
 
@@ -585,13 +585,13 @@ namespace mc {
 
 		void Font::getCharacter(const wchar_t c, Letter* character) const {
 			if( height <= 0 ) {
-				throw IndexOutOfBoundsException("The height of the font cannot be 0 - you must set it!");
+				throw IndexOutOfBoundsError("The height of the font cannot be 0 - you must set it!");
 			}
 
 			FT_Set_Pixel_Sizes(fonts[id], 0, height);
 
 			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT) ) {
-				throw InitializationError("Failed to load glyph with error code " + std::to_string(result));
+				throw FontError("Failed to load glyph with error code " + std::to_string(result));
 			}
 
 			character->width = fonts[id]->glyph->metrics.width >> 6;
@@ -664,7 +664,7 @@ namespace mc {
 		void RenderProtocol<Letter>::initEntity(GraphicsEntity* en) {
 			Letter* let = dynamic_cast<Letter*>(en);
 			if( let == nullptr ) {
-				throw NullPointerException("Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
+				throw InvalidTypeError("Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
 			}
 
 			let->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
@@ -673,7 +673,7 @@ namespace mc {
 		void RenderProtocol<Letter>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Letter* entity = dynamic_cast<Letter*>(e);
 			if( entity == nullptr ) {
-				throw NullPointerException("You must queue an Letter for RenderProtocol<Letter>");
+				throw InvalidTypeError("You must queue an Letter for RenderProtocol<Letter>");
 			}
 
 			entity->mask.bind(0);
