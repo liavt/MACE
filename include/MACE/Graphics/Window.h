@@ -117,10 +117,10 @@ namespace mc {
 				PRESSED = 0,
 				REPEATED = 1,
 				RELEASED = 2,
-				MOD_SHIFT = 3,
-				MOD_CONTROL = 4,
-				MOD_ALT = 5,
-				MOD_SUPER = 6
+				MODIFIER_SHIFT = 3,
+				MODIFIER_CONTROL = 4,
+				MODIFIER_ALT = 5,
+				MODIFIER_SUPER = 6
 			};//Action
 
 			//it is a short int to save memory as no value exceeds MAX_SHORT_INT
@@ -268,7 +268,10 @@ namespace mc {
 
 				INSERT = 260,
 
-				DELETE = 261,
+				/**
+				Delete key. Named DEL to prevent naming conflict with DELETE
+				*/
+				DEL = 261,
 
 				RIGHT = 262,
 

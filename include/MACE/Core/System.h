@@ -37,8 +37,8 @@ namespace mc {
 
 		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
 
-		void assert(const bool cond, const std::string& message);
-		void assert(const bool cond, const char* message = "Assertion failed");
+		void assertion(const bool cond, const std::string& message);
+		void assertion(const bool cond, const char* message = "Assertion failed");
 	}//os
 }//mc
 

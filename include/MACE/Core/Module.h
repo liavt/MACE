@@ -177,14 +177,14 @@ namespace mc {
 		Require that a `Module` with the specified name exists, or throw an exception.
 		<p>
 		If your `Module` depends on another `Module,` use this function to require your dependencies.
-		@param module Name to assert
+		@param module Name to assertion
 		@param errorMessage What to print if the assertion fails
 		@throw AssertionError if there isn't a `Module` with the requested name.
 		*/
 		void assertModule(const std::string module, std::string errorMessage);
 		/**
 		Overloads {@link #assertModule(std::string,std::string)} with `errorMessage` being `The specified Module does not exist!`
-		@param module Name of a `Module` to assert
+		@param module Name of a `Module` to assertion
 		@see #assertModule(std::string,std::string)
 		*/
 		void assertModule(const std::string module);

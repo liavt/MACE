@@ -90,47 +90,6 @@ namespace mc {
 			setData(&c, 1, 1, GL_FLOAT, GL_RGBA);
 		}
 
-#ifdef MACE_OPENCV
-		ColorAttachment::ColorAttachment(const cv::Mat & mat) {
-			init();
-			load(mat);
-		}
-
-		void ColorAttachment::load(const cv::Mat & mat) {
-			//opencv and opengl store textures differently, and more especially, flipped.
-			cv::flip(mat, mat, 0);
-
-			Enum colorFormat = GL_BGR;
-			if( mat.channels() == 1 ) {
-				colorFormat = GL_LUMINANCE;
-			} else if( mat.channels() == 2 ) {
-				colorFormat == GL_LUMINANCE_ALPHA;
-			} else if( mat.channels() == 4 ) {
-				colorFormat == GL_BGRA;
-			}
-
-			Enum type = GL_UNSIGNED_BYTE;
-			if( mat.depth() == CV_8S ) {
-				type = GL_BYTE;
-			} else if( mat.depth() == CV_16U ) {
-				type = GL_UNSIGNED_INT;
-			} else if( mat.depth() == CV_16S ) {
-				type = GL_INT;
-			} else if( mat.depth() == CV_32S ) {
-				type = GL_UNSIGNED_INT_8_8_8_8;
-			} else if( mat.depth() == CV_32F ) {
-				type = GL_FLOAT;
-			} else if( mat.depth() == CV_64F ) {
-				throw BadImageError("Unsupported cv::Mat depth: CV_64F");
-			}
-
-			glPixelStorei(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
-			glPixelStorei(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
-
-			setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
-		}
-#endif
-
 		Color& ColorAttachment::getPaint() {
 			return paint;
 		}

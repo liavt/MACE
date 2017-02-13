@@ -41,7 +41,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_POSIX true
 #endif
 
-#if defined(CV_VERSION) && defined(CV_MAJOR_VERSION) && defined(CV_MINOR_VERSION)
+#if defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR)
 #	define MACE_OPENCV true
 #endif
 

@@ -84,7 +84,7 @@ namespace mc {
 
 		FILE * fopen(FILE ** result, const char * filename, const char * mode) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			mc::os::assert(fopen_s(result, filename, mode) != 0, "fopen_s failed");
+			mc::os::assertion(fopen_s(result, filename, mode) != 0, "fopen_s failed");
 
 			return *result;
 #else
@@ -103,12 +103,12 @@ namespace mc {
 			return std::mbsrtowcs(wcstr, mbstr, count, mbstate);
 #endif
 		}
-		void assert(const bool cond, const std::string & message) {
+		void assertion(const bool cond, const std::string & message) {
 #ifdef MACE_DEBUG
-			assert(cond, message.c_str());
+			assertion(cond, message.c_str());
 #endif
 		}
-		void assert(const bool cond, const char * message) {
+		void assertion(const bool cond, const char * message) {
 #ifdef MACE_DEBUG
 			if( cond ) {
 				throw AssertionFailedError(message);

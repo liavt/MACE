@@ -160,10 +160,10 @@ namespace mc {
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
 				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
-				actions.setBit(Input::MOD_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
-				actions.setBit(Input::MOD_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
-				actions.setBit(Input::MOD_ALT, (mods & GLFW_MOD_ALT) != 0);
-				actions.setBit(Input::MOD_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
+				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
+				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
+				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
 
 				pushKeyEvent(static_cast<short int>(key), actions);
 			};
@@ -174,10 +174,10 @@ namespace mc {
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
 				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
-				actions.setBit(Input::MOD_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
-				actions.setBit(Input::MOD_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
-				actions.setBit(Input::MOD_ALT, (mods & GLFW_MOD_ALT) != 0);
-				actions.setBit(Input::MOD_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
+				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
+				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
+				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
 
 				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
 				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
