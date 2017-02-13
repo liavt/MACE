@@ -74,8 +74,8 @@ int main() {
 
 		while( mc::MACE::isRunning() ) {
 			mc::MACE::update();
-
-			std::this_thread::sleep_for(std::chrono::milliseconds(33));
+			
+			mc::os::wait(33);
 		}
 
 		mc::MACE::destroy();

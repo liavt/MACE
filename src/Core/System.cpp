@@ -10,6 +10,10 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/System.h>
 #include <MACE/Core/Constants.h>
 #include <string>
+#include <chrono>
+#include <vector>
+#include <thread>
+#include <iostream>
 
 namespace mc {
 	namespace os {
@@ -113,6 +117,40 @@ namespace mc {
 			if( cond ) {
 				throw AssertionFailedError(message);
 			}
+#endif
+		}
+
+		void wait(const long long int ms) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+		}
+
+		//thanks stack overflow for this function. the c++ library has no portable way to do this normally.
+		std::wstring toWideString(const std::string & s) {
+			const char * cs = s.c_str();
+			std::size_t wn;
+			wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
+
+			if( wn == std::size_t(-1) ) {
+				throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
+			}
+
+			std::vector<wchar_t> buf(wn + 1);
+			std::size_t wn_again;
+			wn = mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
+
+			if( wn_again == std::size_t(-1) ) {
+				throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
+			}
+
+			return std::wstring(buf.data(), wn);
+			}
+
+		void pause() {
+#ifdef MACE_WINDOWS
+			system("pause");
+#else
+			std::cout << std::endl << "Press any key to continue...";
+			std::cin.get();
 #endif
 		}
 	}//os

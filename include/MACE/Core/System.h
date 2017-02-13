@@ -23,9 +23,6 @@ namespace mc {
 	/**
 	Namespace with functions related to the operating system like keyboard input, mouse, and windows. Also contains cross-platform
 	safer versions of many std functions.
-
-	@todo Add function for pausing the console
-	@todo Add memory functions like memcpy and memmove
 	*/
 	namespace os {
 		std::tm* localtime(std::tm* result, const std::time_t* time);
@@ -39,6 +36,12 @@ namespace mc {
 
 		void assertion(const bool cond, const std::string& message);
 		void assertion(const bool cond, const char* message = "Assertion failed");
+
+		void wait(const long long int ms);
+
+		std::wstring toWideString(const std::string& s);
+
+		void pause();
 	}//os
 }//mc
 

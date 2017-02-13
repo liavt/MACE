@@ -8,6 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/System.h>
 
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
@@ -311,7 +312,7 @@ namespace mc {
 					if( delta < windowDelay ) {
 						lastFrame = now;
 
-						std::this_thread::sleep_for(std::chrono::milliseconds((unsigned int) windowDelay));
+						os::wait(static_cast<long long int>(windowDelay));
 					}
 				} catch( const std::exception& e ) {
 					Error::handleError(e);

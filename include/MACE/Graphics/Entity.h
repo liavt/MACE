@@ -111,7 +111,9 @@ namespace mc {
 			void load(const cv::Mat& mat) {
 				//opencv and opengl store textures differently, and more especially, flipped.
 				//cv::flip(mat, mat, 0);
-				/*
+
+				bind();
+
 				Enum colorFormat = GL_BGR;
 				if (mat.channels() == 1) {
 					colorFormat = GL_LUMINANCE;
@@ -141,13 +143,12 @@ namespace mc {
 				}
 				else if (mat.depth() == CV_64F) {
 					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
-				}*/
+				}
 
 				glPixelStorei(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
 				glPixelStorei(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
 
-				setData(mat.data, mat.cols, mat.rows, GL_UNSIGNED_BYTE, GL_BGR, GL_RGBA);
-				//setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGB);
+				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGB);
 			}
 #			endif//MACE_OPENCV
 

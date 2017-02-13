@@ -56,7 +56,7 @@ namespace mc {
 		void ColorAttachment::load(const char * file) {
 			int width, height, componentSize;
 
-			Byte* image = stbi_load(file, &width, &height, &componentSize, 0);
+			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
 
 			if( image == nullptr || width == 0 || height == 0 || componentSize == 0 ) {
 				stbi_image_free(image);

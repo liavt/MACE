@@ -32,27 +32,6 @@ namespace mc {
 			int freetypeStatus = -1;
 
 			std::vector<FT_Face> fonts = std::vector<FT_Face>();
-
-			//thanks stack overflow for this function. the c++ library has no portable way to do this normally.
-			std::wstring toWideString(const std::string & s) {
-				const char * cs = s.c_str();
-				std::size_t wn;
-				wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
-
-				if( wn == std::size_t(-1) ) {
-					throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
-				}
-
-				std::vector<wchar_t> buf(wn + 1);
-				std::size_t wn_again;
-				wn = mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
-
-				if( wn_again == std::size_t(-1) ) {
-					throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
-				}
-
-				return std::wstring(buf.data(), wn);
-			}
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
@@ -781,7 +760,7 @@ namespace mc {
 			buffer.setData(sizeof(texture.getPaint()), &texture.getPaint());
 		}
 
-		Text::Text(const std::string & s, const Font & f) : Text(toWideString(s), f) {}
+		Text::Text(const std::string & s, const Font & f) : Text(os::toWideString(s), f) {}
 
 		Text::Text(const std::wstring & t, const Font& f) : Entity2D(), text(t), font(f) {}
 
@@ -929,15 +908,16 @@ namespace mc {
 					let->setHeight((static_cast<float>(let->height) / origHeight) * heightScale);
 
 					Vector<float, 2> position = { x, y };
-
+					
 					if( i > 0 && useKerning ) {
 						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
 						position[1] += static_cast<float>(delta[1]) / origHeight;
 					}
+					
+					//position[0] -= static_cast<float>(let->bearingX - let->width) / origWidth;
 
-					position[0] += static_cast<float>(let->bearingX) / origWidth;
 					//font.getSize() - 
 					//let->getHeight() - 
 					//position[1] -= ((font.getSize() + (let->bearingY >> 1)) / origHeight);
@@ -953,7 +933,8 @@ namespace mc {
 					let->setOpacity(getOpacity());
 
 					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
-					x += static_cast<float>((let->advanceX) + let->width) / origWidth;
+					x += static_cast<float>(let->advanceX) / origWidth;
+					x += let->getWidth();
 					y += static_cast<float>(let->advanceY) / origHeight;
 
 					let->texture = this->texture;
