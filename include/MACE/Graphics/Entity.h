@@ -93,11 +93,11 @@ namespace mc {
 			virtual void hover(Entity* e);
 		};//Component
 
-		class ColorAttachment: public ogl::Texture {
+		class ColorAttachment: public ogl::Texture2D {
 		public:
 			ColorAttachment();
 			ColorAttachment(const Color& col);
-			ColorAttachment(const ogl::Texture& tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+			ColorAttachment(const ogl::Texture2D& tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			ColorAttachment(const char* file);
 			ColorAttachment(const std::string& file);
 
@@ -112,43 +112,49 @@ namespace mc {
 				//opencv and opengl store textures differently, and more especially, flipped.
 				//cv::flip(mat, mat, 0);
 
+				if( mat.empty() ) {
+					throw BadImageError("Inputted Mat is empty");
+				}
+
 				bind();
 
 				Enum colorFormat = GL_BGR;
-				if (mat.channels() == 1) {
+				if( mat.channels() == 1 ) {
 					colorFormat = GL_LUMINANCE;
-				}
-				else if (mat.channels() == 2) {
+				} else if( mat.channels() == 2 ) {
 					colorFormat = GL_LUMINANCE_ALPHA;
-				}
-				else if (mat.channels() == 4) {
+				} else if( mat.channels() == 4 ) {
 					colorFormat = GL_BGRA;
 				}
 
 				Enum type = GL_UNSIGNED_BYTE;
-				if (mat.depth() == CV_8S) {
+				if( mat.depth() == CV_8S ) {
 					type = GL_BYTE;
-				}
-				else if (mat.depth() == CV_16U) {
+				} else if( mat.depth() == CV_16U ) {
 					type = GL_UNSIGNED_INT;
-				}
-				else if (mat.depth() == CV_16S) {
+				} else if( mat.depth() == CV_16S ) {
 					type = GL_INT;
-				}
-				else if (mat.depth() == CV_32S) {
+				} else if( mat.depth() == CV_32S ) {
 					type = GL_UNSIGNED_INT_8_8_8_8;
-				}
-				else if (mat.depth() == CV_32F) {
+				} else if( mat.depth() == CV_32F ) {
 					type = GL_FLOAT;
-				}
-				else if (mat.depth() == CV_64F) {
+				} else if( mat.depth() == CV_64F ) {
 					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
 				}
 
-				glPixelStorei(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				glPixelStorei(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
+				glPixelStorei(GL_UNPACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
+				glPixelStorei(GL_UNPACK_ROW_LENGTH, mat.step / mat.elemSize());
 
-				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGB);
+				ogl::checkGLError(__LINE__, __FILE__);
+
+				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
+
+				generateMipmap();
+
+				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+				ogl::checkGLError(__LINE__, __FILE__);
 			}
 #			endif//MACE_OPENCV
 
@@ -495,45 +501,71 @@ namespace mc {
 			void addComponent(Component& action);
 			std::vector<Component*> getComponents();
 
+			const float& getWidth() const;
 			/**
 			@dirty
+			@copydoc Entity::getWidth() const
 			*/
 			float& getWidth();
-			const float& getWidth() const;
 			/**
 			@dirty
 			*/
 			void setWidth(const float& s);
 
+			const float& getHeight() const;
 			/**
+			@copydoc Entity::getHeight() const
 			@dirty
 			*/
 			float& getHeight();
-			const float& getHeight() const;
 			/**
 			@dirty
 			*/
 			void setHeight(const float& s);
 
+			const float& getDepth() const;
+			/**
+			@dirty
+			@copydoc Entity::getHeight() const
+			*/
+			float& getDepth();
 			/**
 			@dirty
 			*/
-			float& getX();
+			void setDepth(const float& s);
+
 			const float& getX() const;
+			/**
+			@dirty
+			@copydoc Entity::getX() const
+			*/
+			float& getX();
 			/**
 			@dirty
 			*/
 			void setX(const float& newX);
 
+			const float& getY() const;
 			/**
 			@dirty
+			@copydoc Entity::getY() const
 			*/
 			float& getY();
-			const float& getY() const;
 			/**
 			@dirty
 			*/
 			void setY(const float& newY);
+
+			const float& getZ() const;
+			/**
+			@dirty
+			@copydoc Entity::getZ() const
+			*/
+			float& getZ();
+			/**
+			@dirty
+			*/
+			void setZ(const float& newY);
 
 			/**
 			Compares if 2 `Entities` have the same children, parent, and properties.

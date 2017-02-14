@@ -277,7 +277,7 @@ namespace mc {
 			};//QueryObject
 
 			/**
-			Represents a render sslBuffer for use with a `FrameBuffer.` Instead of using a `Texture` target, you can attach a `RenderBuffer` instead
+			Represents a render sslBuffer for use with a `FrameBuffer.` Instead of using a `Texture2D` target, you can attach a `RenderBuffer` instead
 			and accomplish a similar effect. A `RenderBuffer` supports anti-aliasing natively but you can not access or modify it's data. It also
 			represents a single image, similar to a texture.
 			@see FrameBuffer
@@ -321,9 +321,9 @@ namespace mc {
 			/**
 			@see https://www.opengl.org/wiki/Texture
 			*/
-			class Texture: public Object {
+			class Texture2D: public Object {
 			public:
-				Texture() noexcept;
+				Texture2D() noexcept;
 
 				void init() override;
 				void destroy() override;
@@ -331,33 +331,44 @@ namespace mc {
 				void bind(const Index location = 0) const;
 
 				/**
-				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				@opengl
+				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
 				void setData(const void * data, const Size width, const Size height, const Enum type = GL_FLOAT, const Enum format = GL_RGB, const Enum internalFormat = GL_RGB, const Index mipmapLevel = 0);
 
 				/**
 				@opengl
+				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2DMultisample.xhtml
 				*/
 				void setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples = true);
 
 				/**
 				@opengl
+				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
 				*/
-				void loadFile(const char* file);
+				void setPixelStorage(const Enum alignment, const int number);
+
+				/**
+				@copydoc Texture2D::setPixelStorage(const Enum, const int)
+				*/
+				void setPixelStorage(const Enum alignment, const float number);
+
+
+				/**
+				@copydoc Texture2D::setPixelStorage(const Enum, const int)
+				*/
+				void setPixelStorage(const Enum alignment, const bool value);
 
 				/**
 				@opengl
+				@see Texture2D::setPixelStorage(const Enum, const int)
+				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
 				*/
-				void setPixelStore(const Enum alignment, const int number);
+				void resetPixelStorage();
 
 				/**
 				@opengl
-				*/
-				void setPixelStore(const Enum alignment, const float number);
-
-				/**
-				@opengl
+				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenerateMipmap.xhtml
 				*/
 				void generateMipmap();
 
@@ -368,36 +379,36 @@ namespace mc {
 				bool isCreated() const override;
 
 				/**
-				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
 				@opengl
+				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
 				*/
 				void setParameter(const Enum name, const int value);
 
 				/**
 				@copydoc Object::operator==(const Object&) const
 				*/
-				bool operator==(const Texture& other) const;
+				bool operator==(const Texture2D& other) const;
 				/**
 				@copydoc Object::operator!=(const Object&) const
 				*/
-				bool operator!=(const Texture& other) const;
+				bool operator!=(const Texture2D& other) const;
 
 			private:
 				Enum target = GL_TEXTURE_2D;
 
 				void bindIndex(const Index id) const override;
-			};//Texture
+			};//Texture2D
 
 			/**
 			Represents an OpenGL Framebuffer Object which allows rendering to a non-screen location. This also allows
-			rendering to a `Texture` or `RenderBuffer` object.
+			rendering to a `Texture2D` or `RenderBuffer` object.
 			<p>
 			This is not a subclass of the `Buffer` object as this is technically not an OpenGL sslBuffer. The name is
 			misleading.
 
 			@see https://www.opengl.org/wiki/Framebuffer_Object
 			@see RenderBuffer
-			@see Texture
+			@see Texture2D
 			@todo target variable which is GL_FRAMEBUFFER by default. and update documentation accordingly
 			*/
 			class FrameBuffer: public Object {
@@ -407,7 +418,7 @@ namespace mc {
 				FrameBuffer::readPixels(const int, const int, const Size, const Size, const Enum, const Enum, void*) const
 
 				@param mode Which attachment to use
-				@see FrameBuffer::setPixelStore(const Enum, const float)
+				@see FrameBuffer::setPixelStorage(const Enum, const float)
 				@see https://www.opengl.org/sdk/docs/man/html/glReadBuffer.xhtml
 				@see FrameBuffer::attachTexture(const Enum, const Enum, const Enum, const unsigned int)
 				@see FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
@@ -443,39 +454,39 @@ namespace mc {
 				Attaches a texture to this `FrameBuffer`
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@param attachment Which attachment port to use.
-				@param textureID ID for the `Texture` to attach. See Texture::getID() const
+				@param textureID ID for the `Texture2D` to attach. See Texture2D::getID() const
 				@param level Mipmap level to attach. Is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 				@see setDrawBuffers(const Size, const Enum*)
 				@opengl
 				*/
-				void attachTexture(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);
+				void attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
 				@copydoc FrameBuffer::attachTexture(const Enum, const Enum, const unsigned int, const int)
 				@param texTarget Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link.
 				*/
-				void attachTexture1D(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);
+				void attachTexture1D(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
 				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
 				*/
-				void attachTexture2D(const Enum target, const Enum attachment, const Texture& tex, const int level = 0);
+				void attachTexture2D(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
 				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
 				@param layer Which layer of the 3-dimensional image to use. It is 0 by default.
 				*/
-				void attachTexture3D(const Enum target, const Enum attachment, const Texture& tex, const int level = 0, const int layer = 0);
+				void attachTexture3D(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0, const int layer = 0);
 
 				/**
 				Attaches a single layer from a texture to this `FrameBuffer`
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@param attachment Which attachment port to use.
-				@param texture ID for the `Texture` to attach. See Texture::getID() const
+				@param texture ID for the `Texture2D` to attach. See Texture2D::getID() const
 				@param level Mipmap level to attach. Is 0 by default.
 				@param layer Which layer of the texture to use. It is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer
 				@opengl
 				*/
-				void attachTextureLayer(const Enum target, const Enum attachment, const Texture& tex, const int level = 0, const int layer = 0);
+				void attachTextureLayer(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0, const int layer = 0);
 
 				/**
 				Attaches a `RenderBuffer` to this `FrameBuffer` for rendering.
@@ -489,7 +500,7 @@ namespace mc {
 
 
 				/**
-				Specifies what buffers to render to. Takes in an array of attachments. A `RenderBuffer` or `Texture` can be attached to act
+				Specifies what buffers to render to. Takes in an array of attachments. A `RenderBuffer` or `Texture2D` can be attached to act
 				as a draw sslBuffer.
 				@param arrSize Size of the array of render buffers
 				@param buffers Pointer to the first element of the array
@@ -515,7 +526,7 @@ namespace mc {
 				@param type The type of the pixel data
 				@param data Pointer to where you want the data to be written to.
 				@see https://www.opengl.org/sdk/docs/man/html/glReadPixels.xhtml
-				@see FrameBuffer::setPixelStore(const Enum, const float)
+				@see FrameBuffer::setPixelStorage(const Enum, const float)
 				@see FrameBuffer::setReadBuffer(const Enum);
 				@opengl
 				*/
@@ -531,11 +542,11 @@ namespace mc {
 				@see
 				@opengl
 				*/
-				void setPixelStore(const Enum name, const float param);
+				void setPixelStorage(const Enum name, const float param);
 				/**
-				@copydoc setPixelStore(const Enum, const float)
+				@copydoc setPixelStorage(const Enum, const float)
 				*/
-				void setPixelStore(const Enum name, const int param);
+				void setPixelStorage(const Enum name, const int param);
 
 				bool isCreated() const override;
 
@@ -579,7 +590,7 @@ namespace mc {
 				@internal
 				@see RenderBuffer
 				@see FrameBuffer
-				@see Texture
+				@see Texture2D
 				@see VertexBuffer
 				@see UniformBuffer
 				@param bufferType OpenGL symbolic constant with the desired type.
@@ -695,7 +706,7 @@ namespace mc {
 			Special sslBuffer that excels at asynchronous pixel transfer operations. The `PixelUnpackBuffer` is fast at reading
 			pixels while the `PixelPackBuffer` is fast at writing pixels.
 			<p>
-			Not to be confused with a `FrameBuffer` or `Texture.`
+			Not to be confused with a `FrameBuffer` or `Texture2D.`
 			@see https://www.opengl.org/wiki/Pixel_Buffer_Object
 			*/
 			class PixelUnpackBuffer: public Buffer {

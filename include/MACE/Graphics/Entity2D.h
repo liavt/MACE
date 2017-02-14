@@ -312,10 +312,10 @@ namespace mc {
 		public:
 			static int getProtocol();
 
-			Letter(const ogl::Texture& mask = ogl::Texture());
+			Letter(const ogl::Texture2D& mask = ogl::Texture2D());
 			~Letter() = default;
 
-			const ogl::Texture& getMask() const;
+			const ogl::Texture2D& getMask() const;
 
 			const ColorAttachment& getTexture() const;
 
@@ -337,7 +337,7 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
-			ogl::Texture mask;
+			ogl::Texture2D mask;
 
 			ColorAttachment texture = ColorAttachment();
 

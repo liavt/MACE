@@ -246,27 +246,27 @@ namespace mc {
 				id = 0;
 			}
 
-			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture& tex, const int level) {
+			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
 				bind();
 				glFramebufferTexture(target, attachment, tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Texture& tex, const int level) {
+			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
 				bind();
 				glFramebufferTexture1D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Texture& tex, const int level) {
+			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
 				bind();
 				glFramebufferTexture2D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Texture& tex, const int level, const int layer) {
+			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Texture2D& tex, const int level, const int layer) {
 				bind();
 				glFramebufferTexture3D(target, attachment, tex.getTarget(), tex.getID(), level, layer);
 			}
 
-			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture& texture, const int level, const int layer) {
+			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture2D& texture, const int level, const int layer) {
 				bind();
 				glFramebufferTextureLayer(target, attachment, level, texture.getID(), layer);
 			}
@@ -303,12 +303,12 @@ namespace mc {
 				glReadPixels(x, y, width, height, format, type, data);
 			}
 
-			void FrameBuffer::setPixelStore(const Enum name, const float param) {
+			void FrameBuffer::setPixelStorage(const Enum name, const float param) {
 				bind();
 				glPixelStoref(name, param);
 			}
 
-			void FrameBuffer::setPixelStore(const Enum name, const int param) {
+			void FrameBuffer::setPixelStorage(const Enum name, const int param) {
 				bind();
 				glPixelStorei(name, param);
 			}
@@ -372,81 +372,105 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			Texture::Texture() noexcept {}
+			Texture2D::Texture2D() noexcept {}
 
-			void Texture::init() {
+			void Texture2D::init() {
 				if( !isCreated() ) {
 					glGenTextures(1, &id);
 				}
 			}
 
-			void Texture::destroy() {
+			void Texture2D::destroy() {
 				if( isCreated() ) {
 
 					glDeleteTextures(1, &id);
 				}
 			}
 
-			void Texture::bind(const Index location) const {
+			void Texture2D::bind(const Index location) const {
 				glActiveTexture(GL_TEXTURE0 + location);
 				Object::bind();
 			}
 
-			void Texture::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
+			void Texture2D::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
 				bind();
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 			}
 
-			void Texture::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples) {
+			void Texture2D::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples) {
 				bind();
 				glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
-			void Texture::setPixelStore(const Enum alignment, const int number) {
+			void Texture2D::setPixelStorage(const Enum alignment, const int number) {
 				bind();
 				glPixelStorei(alignment, number);
 			}
 
-			void Texture::setPixelStore(const Enum alignment, const float number) {
+			void Texture2D::setPixelStorage(const Enum alignment, const bool value) {
+				setPixelStorage(alignment, value ? 1 : 0);
+			}
+
+			void Texture2D::setPixelStorage(const Enum alignment, const float number) {
 				bind();
 				glPixelStoref(alignment, number);
 			}
 
-			void Texture::generateMipmap() {
+			void Texture2D::resetPixelStorage() {
+				bind();
+				setPixelStorage(GL_PACK_SWAP_BYTES, false);
+				setPixelStorage(GL_UNPACK_SWAP_BYTES, false);
+				setPixelStorage(GL_PACK_LSB_FIRST, false);
+				setPixelStorage(GL_UNPACK_LSB_FIRST, false);
+				setPixelStorage(GL_PACK_ALIGNMENT, 4);
+				setPixelStorage(GL_UNPACK_ALIGNMENT, 4);
+				setPixelStorage(GL_PACK_ROW_LENGTH, 0);
+				setPixelStorage(GL_UNPACK_ROW_LENGTH, 0);
+				setPixelStorage(GL_PACK_IMAGE_HEIGHT, 0);
+				setPixelStorage(GL_UNPACK_IMAGE_HEIGHT, 0);
+				setPixelStorage(GL_PACK_SKIP_ROWS, 0);
+				setPixelStorage(GL_UNPACK_SKIP_ROWS, 0);
+				setPixelStorage(GL_PACK_SKIP_PIXELS, 0);
+				setPixelStorage(GL_UNPACK_SKIP_PIXELS, 0);
+				setPixelStorage(GL_PACK_SKIP_IMAGES, 0);
+				setPixelStorage(GL_UNPACK_SKIP_IMAGES, 0);
+			}
+
+			void Texture2D::generateMipmap() {
 				bind();
 				glGenerateMipmap(target);
 			}
 
-			void Texture::setTarget(Enum targ) {
+			void Texture2D::setTarget(Enum targ) {
 				this->target = targ;
 			}
 
-			Enum& Texture::getTarget() {
+			Enum& Texture2D::getTarget() {
 				return target;
 			}
 
-			const Enum& Texture::getTarget() const {
+			const Enum& Texture2D::getTarget() const {
 				return target;
 			}
 
-			bool Texture::isCreated() const {
+			bool Texture2D::isCreated() const {
 				return glIsTexture(id) == 1;
 			}
 
-			void Texture::setParameter(const Enum name, const int value) {
+			void Texture2D::setParameter(const Enum name, const int value) {
 				bind();
 				glTexParameteri(GL_TEXTURE_2D, name, value);
 			}
 
-			bool Texture::operator==(const Texture & other) const {
+			bool Texture2D::operator==(const Texture2D & other) const {
 				return target == other.target&&Object::operator==(other);
 			}
 
-			bool Texture::operator!=(const Texture & other) const {
+			bool Texture2D::operator!=(const Texture2D & other) const {
 				return !operator==(other);
 			}
 
-			void Texture::bindIndex(const Index ID) const {
+			void Texture2D::bindIndex(const Index ID) const {
 				glBindTexture(target, ID);
 			}
 

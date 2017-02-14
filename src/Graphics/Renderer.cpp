@@ -186,9 +186,9 @@ namespace mc {
 				ogl::FrameBuffer proxyBuffer = ogl::FrameBuffer();
 				ogl::RenderBuffer depthBuffer = ogl::RenderBuffer();
 
-				ogl::Texture sceneTexture = ogl::Texture();
-				ogl::Texture idTexture = ogl::Texture();
-				ogl::Texture proxyIDTexture = ogl::Texture();
+				ogl::Texture2D sceneTexture = ogl::Texture2D();
+				ogl::Texture2D idTexture = ogl::Texture2D();
+				ogl::Texture2D proxyIDTexture = ogl::Texture2D();
 
 				IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>

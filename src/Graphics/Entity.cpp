@@ -25,12 +25,12 @@ namespace mc {
 	namespace gfx {
 		namespace {
 			//when you request for a solid color ColorAttachment, it will use the same texture to save memory
-			ogl::Texture solidColor = ogl::Texture();
+			ogl::Texture2D solidColor = ogl::Texture2D();
 		};
 
-		ColorAttachment::ColorAttachment() : Texture(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
+		ColorAttachment::ColorAttachment() : Texture2D(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-		ColorAttachment::ColorAttachment(const ogl::Texture& tex, const Color& col) : Texture(tex), paint(col) {}
+		ColorAttachment::ColorAttachment(const ogl::Texture2D& tex, const Color& col) : Texture2D(tex), paint(col) {}
 
 		ColorAttachment::ColorAttachment(const char * file) : ColorAttachment() {
 			init();
@@ -42,6 +42,8 @@ namespace mc {
 		ColorAttachment::ColorAttachment(const Color& col) : ColorAttachment(solidColor, col) {
 			if( !solidColor.isCreated() ) {
 				solidColor.init();
+
+				solidColor.resetPixelStorage();
 
 				const float data[] = { 1,1,1,1 };
 				solidColor.setData(data, 1, 1, GL_FLOAT, GL_RGBA);
@@ -63,16 +65,9 @@ namespace mc {
 				throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 			}
 
-			Enum format = GL_RGBA;
-			if( componentSize == 1 ) {
-				format = GL_RED;
-			} else if( componentSize == 2 ) {
-				format = GL_RG;
-			} else if( componentSize == 3 ) {
-				format = GL_RGB;
-			}
+			resetPixelStorage();
 
-			setData(image, width, height, GL_UNSIGNED_BYTE, format, GL_RGBA);
+			setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 
 			stbi_image_free(image);
 
@@ -80,6 +75,8 @@ namespace mc {
 
 			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+			ogl::checkGLError(__LINE__, __FILE__);
 		}
 
 		void ColorAttachment::load(const std::string & file) {
@@ -103,7 +100,7 @@ namespace mc {
 		}
 
 		bool ColorAttachment::operator==(const ColorAttachment& other) const {
-			return paint == other.paint && Texture::operator==(other);
+			return paint == other.paint && Texture2D::operator==(other);
 		}
 
 		bool ColorAttachment::operator!=(const ColorAttachment& other) const {
@@ -256,7 +253,7 @@ namespace mc {
 				const Entity* par = getParent();
 
 				const Entity::Metrics parentMetrics = par->getMetrics();
-				
+
 				m.inheritedTranslation += parentMetrics.translation + parentMetrics.inheritedTranslation;
 				m.inheritedScale *= parentMetrics.scale;
 				m.inheritedRotation += parentMetrics.rotation;
@@ -591,9 +588,11 @@ namespace mc {
 
 			return transformation.scaler[0];
 		}
+
 		const float & Entity::getWidth() const {
 			return transformation.scaler[0];
 		}
+
 		void Entity::setWidth(const float & s) {
 			if( transformation.scaler[0] != s ) {
 				makeDirty();
@@ -601,14 +600,17 @@ namespace mc {
 				transformation.scaler[0] = s;
 			}
 		}
+
 		float & Entity::getHeight() {
 			makeDirty();
 
 			return transformation.scaler[1];
 		}
+
 		const float & Entity::getHeight() const {
 			return transformation.scaler[1];
 		}
+
 		void Entity::setHeight(const float & s) {
 			if( transformation.scaler[1] != s ) {
 				makeDirty();
@@ -616,6 +618,25 @@ namespace mc {
 				transformation.scaler[1] = s;
 			}
 		}
+
+		float & Entity::getDepth() {
+			makeDirty();
+
+			return transformation.scaler[2];
+		}
+
+		const float & Entity::getDepth() const {
+			return transformation.scaler[2];
+		}
+
+		void Entity::setDepth(const float & s) {
+			if( transformation.scaler[2] != s ) {
+				makeDirty();
+
+				transformation.scaler[2] = s;
+			}
+		}
+
 		float & Entity::getX() {
 			makeDirty();
 
@@ -631,19 +652,40 @@ namespace mc {
 				transformation.translation[0] = newX;
 			}
 		}
+
 		float & Entity::getY() {
 			makeDirty();
 
 			return transformation.translation[1];
 		}
+
 		const float & Entity::getY() const {
 			return transformation.translation[1];
 		}
+
 		void Entity::setY(const float & newY) {
 			if( transformation.translation[1] != newY ) {
 				makeDirty();
 
 				transformation.translation[1] = newY;
+			}
+		}
+
+		float & Entity::getZ() {
+			makeDirty();
+
+			return transformation.translation[2];
+		}
+
+		const float & Entity::getZ() const {
+			return transformation.translation[2];
+		}
+
+		void Entity::setZ(const float & newZ) {
+			if( transformation.translation[2] != newZ ) {
+				makeDirty();
+
+				transformation.translation[2] = newZ;
 			}
 		}
 

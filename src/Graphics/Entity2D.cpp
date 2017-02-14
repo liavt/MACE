@@ -25,7 +25,7 @@ namespace mc {
 			int PROGRESS_BAR_PROTOCOL = -1;
 			int LETTER_PROTOCOL = -1;
 
-			ogl::Texture whiteTexture;
+			ogl::Texture2D whiteTexture;
 
 			FT_Library freetype;
 			//error if freetype init failed or -1 if it hasnt been created
@@ -583,7 +583,9 @@ namespace mc {
 			character->mask.init();
 			character->mask.bind();
 
-			character->mask.setPixelStore(GL_UNPACK_ALIGNMENT, 1);
+			character->mask.resetPixelStorage();
+
+			character->mask.setPixelStorage(GL_UNPACK_ALIGNMENT, 1);
 
 			character->mask.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
 			character->mask.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -672,9 +674,9 @@ namespace mc {
 
 		}//destroy
 
-		Letter::Letter(const ogl::Texture& tex) : mask(tex) {}
+		Letter::Letter(const ogl::Texture2D& tex) : mask(tex) {}
 
-		const ogl::Texture& Letter::getMask() const {
+		const ogl::Texture2D& Letter::getMask() const {
 			return mask;
 		}
 		const ColorAttachment & Letter::getTexture() const {
@@ -870,6 +872,11 @@ namespace mc {
 			letters.clearChildren();
 
 			if( !hasChild(letters) ) {
+				letters.setProperty(Entity::MAINTAIN_WIDTH, true);
+				letters.setProperty(Entity::MAINTAIN_HEIGHT, true);
+				letters.setProperty(Entity::MAINTAIN_X, getProperty(Entity::MAINTAIN_X));
+				letters.setProperty(Entity::MAINTAIN_Y, getProperty(Entity::MAINTAIN_Y));
+
 				addChild(letters);
 			}
 
@@ -908,14 +915,14 @@ namespace mc {
 					let->setHeight((static_cast<float>(let->height) / origHeight) * heightScale);
 
 					Vector<float, 2> position = { x, y };
-					
+
 					if( i > 0 && useKerning ) {
 						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
 						position[1] += static_cast<float>(delta[1]) / origHeight;
 					}
-					
+
 					//position[0] -= static_cast<float>(let->bearingX - let->width) / origWidth;
 
 					//font.getSize() - 
@@ -946,7 +953,7 @@ namespace mc {
 			y += static_cast<float>(font.getSize() << 1) / origHeight;
 
 			width = x;
-			height = y;
+			height += y;
 
 			switch( horzAlign ) {
 			default:
@@ -964,7 +971,7 @@ namespace mc {
 			switch( vertAlign ) {
 			default:
 			case VerticalAlign::CENTER:
-				letters.setY((-height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
+				letters.setY(height + (static_cast<const float>(font.getSize() >> 1) / origHeight));
 				break;
 			case VerticalAlign::BOTTOM:
 				letters.setY((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);

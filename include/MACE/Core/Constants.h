@@ -145,7 +145,6 @@ namespace mc {
 	*/
 	_MACE_ERROR(NullPointer);
 
-
 	/**
 	Thrown when an assertion fails.
 	@see MACE::assertModule(std::string)
