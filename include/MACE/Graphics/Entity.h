@@ -589,10 +589,14 @@ namespace mc {
 			bool operator!=(const Entity& other) const noexcept;
 
 			/**
+			@bug MAJOR - never returns
+			*/
+			const Entity* getRootParent() const;
+			/**
 			@dirty
+			@copydoc Entity::getRootParent() const
 			*/
 			Entity* getRootParent();
-			const Entity* getRootParent() const;
 
 			Metrics getMetrics() const;
 

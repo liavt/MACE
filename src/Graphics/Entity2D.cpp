@@ -971,7 +971,8 @@ namespace mc {
 			switch( vertAlign ) {
 			default:
 			case VerticalAlign::CENTER:
-				letters.setY(height + (static_cast<const float>(font.getSize() >> 1) / origHeight));
+				letters.setY(1.0f + height * 2);
+				//letters.setY(height + (static_cast<const float>(font.getSize() >> 1) / origHeight));
 				break;
 			case VerticalAlign::BOTTOM:
 				letters.setY((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
