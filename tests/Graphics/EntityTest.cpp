@@ -155,8 +155,11 @@ namespace mc {
 
 			REQUIRE_FALSE(e.hasParent());
 			REQUIRE_FALSE(e2.hasParent());
+			REQUIRE(c.isEmpty());
 
 			c.addChild(e);
+
+			REQUIRE(!c.isEmpty());
 
 			SECTION("hasParent()") {
 				REQUIRE(e.hasParent());
@@ -174,7 +177,36 @@ namespace mc {
 
 			REQUIRE_FALSE(e.hasParent());
 			REQUIRE(e2.hasParent());
+			REQUIRE(c.isEmpty());
+		}
 
+		TEST_CASE("Testing getRoot()") {
+			REQUIRE(c.getRoot() == &c);
+			REQUIRE_FALSE(c.hasParent());
+
+			DummyEntity e = DummyEntity();
+
+			REQUIRE_FALSE(e.hasParent());
+			REQUIRE(e.getRoot() == &e);
+
+			c.addChild(e);
+
+			REQUIRE(c.getRoot() == &c);
+			REQUIRE(e.hasParent());
+			REQUIRE(e.getRoot() == &c);
+			
+			DummyEntity e1 = DummyEntity();
+
+			REQUIRE(e1.getRoot() == &e1);
+
+			c.addChild(e1);
+
+			REQUIRE(c.getRoot() == &c);
+			REQUIRE(e.getRoot() == &c);
+			REQUIRE(e1.getRoot() == &c);
+
+			c.reset();
+			
 		}
 
 		TEST_CASE("Testing the ENABLE property of an entity", "[entity][graphics]") {

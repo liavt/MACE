@@ -33,6 +33,7 @@ namespace mc {
 		FILE* fopen(FILE** result, const char* filename, const char* mode);
 
 		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
+		std::size_t wcstombs(std::size_t* returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, const std::size_t length);
 
 		void assertion(const bool cond, const std::string& message);
 		void assertion(const bool cond, const char* message = "Assertion failed");
@@ -40,6 +41,7 @@ namespace mc {
 		void wait(const long long int ms);
 
 		std::wstring toWideString(const std::string& s);
+		std::string toNarrowString(const std::wstring& s);
 
 		void pause();
 	}//os

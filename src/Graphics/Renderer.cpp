@@ -9,7 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 //std::copy raises a dumb warning on this version of msvc which does not contribute anything at all
 #if defined(_MSC_VER) && _MSC_VER >= 1400 
-#	pragma warning(push) 
+#	pragma warning( push ) 
 #	pragma warning( disable: 4996 ) 
 #endif 
 
@@ -62,7 +62,10 @@ namespace mc {
 		}//setUp
 
 		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
-			if( e == nullptr )throw NullPointerError("Input pointer to an entity must not be null in queue()");
+			if( e == nullptr ) {
+				throw NullPointerError("Input pointer to an entity must not be null in queue()");
+			}
+
 			pushEntity(protocol, e);
 		}//queue
 

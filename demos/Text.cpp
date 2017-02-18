@@ -11,7 +11,7 @@ gfx::Text topLeft, center, topRight, botLeft, botRight;
 void create() {
 	gfx::Renderer::setRefreshColor(Colors::DARK_GREEN);
 
-	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/consola.ttf"));
+	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
 	font.setSize(48);
 
 	center = gfx::Text(L"©enter text!", font);

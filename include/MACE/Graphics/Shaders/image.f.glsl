@@ -17,7 +17,7 @@ sslUniformBuffer textureData{
 
 vec4 ssl_frag_main()  
 {    
-	return sslAttachmentBlend(image, texture(tex, textureCoord));
+	return sslAttachmentBlend(image, texture(tex, textureCoord).rgba);
 }       
 
 )"

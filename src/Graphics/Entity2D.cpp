@@ -920,7 +920,7 @@ namespace mc {
 						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
-						position[1] += static_cast<float>(delta[1]) / origHeight;
+						position[1] += static_cast<float>(delta[1]) / origHeight;	
 					}
 
 					//position[0] -= static_cast<float>(let->bearingX - let->width) / origWidth;
@@ -928,21 +928,21 @@ namespace mc {
 					//font.getSize() - 
 					//let->getHeight() - 
 					//position[1] -= ((font.getSize() + (let->bearingY >> 1)) / origHeight);
-					position[1] -= let->getHeight();
-					position[1] += (let->bearingY + let->height) / origHeight;
+					position[1] += let->getHeight();
+					position[1] -= static_cast<float>(let->height - let->bearingY) / origHeight;
 
 					//position[1] += let->getHeight();
 
-					//i cant bear this
-					let->setX(position[0] * widthScale);
-					let->setY(position[1] * heightScale);
+					//i cant bear this|
+					let->setX((position[0] + (static_cast<float>(let->width) / origWidth)));
+					let->setY(position[1]);
 
 					let->setOpacity(getOpacity());
 
 					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
 					x += static_cast<float>(let->advanceX) / origWidth;
 					x += let->getWidth();
-					y += static_cast<float>(let->advanceY) / origHeight;
+					//y += static_cast<float>(let->advanceY) / origHeight;
 
 					let->texture = this->texture;
 
@@ -952,7 +952,10 @@ namespace mc {
 
 			y += static_cast<float>(font.getSize() << 1) / origHeight;
 
-			width = x;
+			if( x > width ) {
+				width = x;
+			}
+
 			height += y;
 
 			switch( horzAlign ) {
@@ -971,7 +974,7 @@ namespace mc {
 			switch( vertAlign ) {
 			default:
 			case VerticalAlign::CENTER:
-				letters.setY(1.0f + height * 2);
+				//letters.setY(1.0f + height * 2);
 				//letters.setY(height + (static_cast<const float>(font.getSize() >> 1) / origHeight));
 				break;
 			case VerticalAlign::BOTTOM:
