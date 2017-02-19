@@ -71,7 +71,7 @@ namespace mc {
 	}
 
 	int MACE::indexOf(const Module& m) {
-		for( Index i = 0; i < modules.size(); i++ ) {
+		for( Index i = 0; i < modules.size(); ++i ) {
 			if( modules[i] == &m ) {
 				return static_cast<int>(i);
 			}
@@ -80,7 +80,7 @@ namespace mc {
 	}
 
 	int MACE::indexOf(const std::string name) {
-		for( Index i = 0; i < modules.size(); i++ ) {
+		for( Index i = 0; i < modules.size(); ++i ) {
 			if( modules[i]->getName() == name ) {
 				return static_cast<int>(i);
 			}
