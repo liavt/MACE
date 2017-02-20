@@ -899,11 +899,9 @@ namespace mc {
 						width = x;
 					}
 
-					y += static_cast<float>(font.getSize() << 1) / origHeight;
+					y += static_cast<float>(font.getSize()) / origHeight;
 
-					if( y > height ) {
-						height = y;
-					}
+					height = y;
 
 					x = 0;
 				} else {

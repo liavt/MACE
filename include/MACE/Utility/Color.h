@@ -243,7 +243,7 @@ namespace mc {
 		Constant `Color` values for easy access to common colors
 		*/
 		const Color RED = Color(200, 0, 0), LIGHT_RED = Color(255, 0, 0),
-			DARK_BLUE = Color(0, 0, 255), CYAN = Color(0, 255, 255),
+			DARK_BLUE = Color(0, 0, 255), BLUE = Color(0, 0, 200), CYAN = Color(0, 255, 255),
 			LIGHT_BLUE = Color(50, 200, 255), DARK_RED = Color(150, 0, 0),
 			DARK_GREEN = Color(0, 50, 0), GREEN = Color(0, 150, 0),
 			LIGHT_GREEN = Color(0, 250, 0), PURPLE = Color(100, 0, 255),
@@ -252,7 +252,7 @@ namespace mc {
 			DARK_GRAY = Color(100, 100, 100), LIGHT_GRAY = Color(200, 200, 200),
 			ORANGE = Color(255, 125, 0), GRAY = Color(150, 150, 150),
 			DARK_ORANGE = Color(255, 100, 0), LIGHT_ORANGE = Color(255, 150, 0),
-			INVISIBLE = Color(0,0,0,0);
+			INVISIBLE = Color(0, 0, 0, 0);
 	};
 }//mc
 

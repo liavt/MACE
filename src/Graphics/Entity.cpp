@@ -85,7 +85,12 @@ namespace mc {
 		}
 
 		void ColorAttachment::load(const Color & c) {
+			resetPixelStorage();
+
 			setData(&c, 1, 1, GL_FLOAT, GL_RGBA);
+
+			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		}
 
 		Color& ColorAttachment::getPaint() {

@@ -93,7 +93,7 @@ namespace mc {
 			virtual void hover(Entity* e);
 		};//Component
 
-		class ColorAttachment: public ogl::Texture2D {
+		class ColorAttachment : public ogl::Texture2D {
 		public:
 			ColorAttachment();
 			ColorAttachment(const Color& col);
@@ -103,58 +103,46 @@ namespace mc {
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included.
 #			ifdef MACE_OPENCV
-			ColorAttachment(const cv::Mat& mat) {
-				init();
-				load(mat);
-			}
-
-			void load(const cv::Mat& mat) {
+			void load(cv::Mat mat) {
 				//opencv and opengl store textures differently, and more especially, flipped.
 				//cv::flip(mat, mat, 0);
 
-				if( mat.empty() ) {
+				if (mat.empty()) {
 					throw BadImageError("Inputted Mat is empty");
 				}
 
 				bind();
 
-				Enum colorFormat = GL_BGR;
-				if( mat.channels() == 1 ) {
-					colorFormat = GL_LUMINANCE;
-				} else if( mat.channels() == 2 ) {
-					colorFormat = GL_LUMINANCE_ALPHA;
-				} else if( mat.channels() == 4 ) {
-					colorFormat = GL_BGRA;
+				resetPixelStorage();
+
+				std::vector<unsigned char> data = std::vector<unsigned char>();
+
+				int cn = mat.channels();
+
+				for (int i = 0; i < mat.rows; ++i)
+				{
+					for (int j = 0; j < mat.cols; ++j)
+					{
+						cv::Vec3b v = mat.at<cv::Vec3b>(i, j);
+						data.push_back(v[2]);
+						data.push_back(v[1]);
+						data.push_back(v[0]);
+					}
 				}
 
-				Enum type = GL_UNSIGNED_BYTE;
-				if( mat.depth() == CV_8S ) {
-					type = GL_BYTE;
-				} else if( mat.depth() == CV_16U ) {
-					type = GL_UNSIGNED_INT;
-				} else if( mat.depth() == CV_16S ) {
-					type = GL_INT;
-				} else if( mat.depth() == CV_32S ) {
-					type = GL_UNSIGNED_INT_8_8_8_8;
-				} else if( mat.depth() == CV_32F ) {
-					type = GL_FLOAT;
-				} else if( mat.depth() == CV_64F ) {
-					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
-				}
+				gfx::ogl::checkGLError(__LINE__, __FILE__);
 
-				glPixelStorei(GL_UNPACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				glPixelStorei(GL_UNPACK_ROW_LENGTH, mat.step / mat.elemSize());
+				setData(&data[0], mat.rows, mat.cols, GL_UNSIGNED_BYTE, GL_RGB, GL_RGBA);																	//c.load(Colors::GREEN);
 
-				ogl::checkGLError(__LINE__, __FILE__);
-
-				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
-
-				generateMipmap();
-
-				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 				ogl::checkGLError(__LINE__, __FILE__);
+		}
+
+			ColorAttachment(cv::Mat mat) : ColorAttachment() {
+				init();
+				load(mat);
 			}
 #			endif//MACE_OPENCV
 
@@ -186,7 +174,7 @@ namespace mc {
 		class Entity {
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it
-			enum EntityProperty: Byte {
+			enum EntityProperty : Byte {
 				/**
 				Bit location representing whether an `Entity` is dead.
 				<p>
@@ -754,7 +742,7 @@ namespace mc {
 			void setParent(Entity* parent);
 		};//Entity
 
-		class Group: public Entity {
+		class Group : public Entity {
 		protected:
 			void onInit() override;
 			void onUpdate() override;
@@ -763,7 +751,7 @@ namespace mc {
 
 		};//Group
 
-		class GraphicsEntity: public Entity {
+		class GraphicsEntity : public Entity {
 			friend void ssl::bindBuffer(ogl::UniformBuffer&);
 			friend void ssl::bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
 			friend void ssl::fillBuffer(GraphicsEntity*);
