@@ -313,7 +313,7 @@ if(${OpenCV_FOUND})
 endif()
 
 #Checks
-check_include_file("unistd.h" MACE_POSIX)
+check_include_files("unistd.h" MACE_POSIX)
 test_big_endian(MACE_BIG_ENDIAN)
 
 #Macros for configuration
