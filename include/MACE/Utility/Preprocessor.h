@@ -150,8 +150,8 @@ namespace mc {
 	@todo Digraphs (see 6.4.6 of standard)
 	@todo Variable arguments
 	@todo Macro concat
-	@todo `#if and `#elif`
-	@todo `#pragma` (if STDC follows, do no macro replacement)
+	@todo `#if and `#elif` (funtion parseIfStatement exists and needs to get a definition)
+	@todo `#pragma` (if STDC follows, do no macro replacement. if once follows, only include file once)
 	*/
 	class Preprocessor {
 	public:

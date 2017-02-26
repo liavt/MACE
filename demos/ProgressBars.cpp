@@ -63,6 +63,7 @@ int main() {
 
 		module.setFPS(30);
 		module.setVSync(false);
+		module.setResizable(true);
 
 		module.addChild(group);
 

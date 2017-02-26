@@ -277,7 +277,7 @@ namespace mc {
 			};//QueryObject
 
 			/**
-			Represents a render sslBuffer for use with a `FrameBuffer.` Instead of using a `Texture2D` target, you can attach a `RenderBuffer` instead
+			Represents a render buffer for use with a `FrameBuffer.` Instead of using a `Texture2D` target, you can attach a `RenderBuffer` instead
 			and accomplish a similar effect. A `RenderBuffer` supports anti-aliasing natively but you can not access or modify it's data. It also
 			represents a single image, similar to a texture.
 			@see FrameBuffer
@@ -291,8 +291,8 @@ namespace mc {
 				/**
 				Sets the flags for the storage of this `RenderBuffer.`
 				@param format A valied OpenGL image format such as GL_RGBA8
-				@param width The width of the sslBuffer
-				@param height The height of the sslBuffer
+				@param width The width of the buffer
+				@param height The height of the buffer
 				@see RenderBuffer::setStorageMultisampled(const Size, const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorage
 				@opengl
@@ -302,8 +302,8 @@ namespace mc {
 				Sets the flags for the storage of this `RenderBuffer.` This version can have anti-aliasing.
 				@param samples How many samples to use for MSAA
 				@param format A valied OpenGL image format such as GL_RGBA8
-				@param width The width of the sslBuffer
-				@param height The height of the sslBuffer
+				@param width The width of the buffer
+				@param height The height of the buffer
 				@see RenderBuffer::setStorage(const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorageMultisample
 				@opengl
@@ -328,7 +328,8 @@ namespace mc {
 				void init() override;
 				void destroy() override;
 
-				void bind(const Index location = 0) const;
+				void bind() const override;
+				void bind(const Index location) const;
 
 				/**
 				@opengl

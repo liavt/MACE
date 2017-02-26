@@ -255,8 +255,6 @@ namespace mc {
 				par = par->parent;
 			}
 
-			std::cout << par << std::endl;
-
 			return par;
 		}
 
@@ -334,13 +332,7 @@ namespace mc {
 			if (!getProperty(Entity::DIRTY)) {
 				setProperty(Entity::DIRTY, true);
 
-				if (hasParent()) {
-					getParent()->setProperty(Entity::DIRTY, true);
-				}
-
-				for (Index i = 0; i < children.size(); ++i) {
-					children[i]->makeDirty();
-				}
+				getRoot()->setProperty(Entity::DIRTY, true);
 			}
 		}
 

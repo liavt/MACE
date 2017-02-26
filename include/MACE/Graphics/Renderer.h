@@ -159,8 +159,6 @@ namespace mc {
 			@opengl
 			*/
 			virtual void destroyEntity(GraphicsEntity*) {};
-		private:
-			int index = -1;
 		};
 
 		/**
@@ -194,6 +192,11 @@ namespace mc {
 			//needs to access registerProtocol
 			friend void ssl::init(const Size&, const Size&);
 		public:
+
+			/**
+			@internal
+			*/
+			static void flagResize();
 			/**
 			@internal
 			@opengl

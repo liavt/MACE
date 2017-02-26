@@ -27,6 +27,9 @@ namespace mc {
 	struct BitField;
 
 	namespace os {
+		/**
+		@todo move glfw event handling to its own thread. this requires Renderer::resize(const int width, const int height) to be moved out of a callback
+		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
             enum Properties: Byte{

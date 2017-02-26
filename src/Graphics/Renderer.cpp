@@ -36,6 +36,8 @@ namespace mc {
 
 			Size samples = 1;
 
+			bool resized;
+
 			Vector<float, 2> windowRatios;
 
 			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
@@ -54,6 +56,16 @@ namespace mc {
 		}
 
 		void Renderer::setUp(os::WindowModule* win) {
+			if( resized ) {
+				int width, height;
+
+				glfwGetFramebufferSize(win->getGLFWWindow(), &width, &height);
+
+				gfx::Renderer::resize(width, height);
+
+				resized = false;
+			}
+
 			ssl::setUp(win);
 
 			for( Index i = 0; i < protocols.size(); ++i ) {
@@ -63,11 +75,15 @@ namespace mc {
 
 		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
 			if( e == nullptr ) {
-				throw NullPointerError("Input pointer to an entity must not be null in queue()");
+				throw NullPointerError("Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
 			}
 
 			pushEntity(protocol, e);
 		}//queue
+
+		void Renderer::flagResize() {
+			resized = true;
+		}//flagResize
 
 		void Renderer::resize(const Size width, const Size height) {
 			ssl::resize(width, height);
@@ -75,6 +91,8 @@ namespace mc {
 			for( Index i = 0; i < protocols.size(); ++i ) {
 				protocols[i]->resize(width, height);
 			}
+
+			resized = false;
 		}//resize
 
 		Size Renderer::numberOfProtocols() {

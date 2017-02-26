@@ -144,7 +144,7 @@ namespace mc {
 			wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
 			if( wn == std::size_t(-1) ) {
-				throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
+				throw AssertionFailedError("Error in mbsrtowcs() with result " + std::to_string(errno));
 			}
 
 			std::vector<wchar_t> buf(wn + 1);
@@ -152,7 +152,7 @@ namespace mc {
 			wn = mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
 
 			if( wn_again == std::size_t(-1) ) {
-				throw AssertionFailedError("Error in mbsrtowcs() with result " + errno);
+				throw AssertionFailedError("Error in mbsrtowcs() with result " + std::to_string(errno));
 			}
 
 			return std::wstring(buf.data(), wn);
@@ -164,7 +164,7 @@ namespace mc {
 			wn = mc::os::wcstombs(&wn, nullptr, 0, cs, 0);
 
 			if( wn == std::size_t(-1) ) {
-				throw AssertionFailedError("Error in wcstombs() with result " + errno);
+				throw AssertionFailedError("Error in wcstombs() with result " + std::to_string(errno));
 			}
 
 			std::vector<char> buf(wn + 1);
@@ -172,7 +172,7 @@ namespace mc {
 			wn = mc::os::wcstombs(&wn_again, buf.data(), buf.size(), cs, wn + 1);
 
 			if( wn_again == std::size_t(-1) ) {
-				throw AssertionFailedError("Error in wcstombs() with result " + errno);
+				throw AssertionFailedError("Error in wcstombs() with result " + std::to_string(errno));
 			}
 
 			return std::string(buf.data(), wn);

@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_CORE_CONSTANTS_H
 #define MACE_CORE_CONSTANTS_H
 
-#define MACE_INCLUDED true //this will be true if MACE is included
+#include <MACE/Core/Configure.h>
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!
@@ -21,27 +21,11 @@ The above copyright notice and this permission notice shall be included in all c
 #	if MACE_DEBUG == 0 || MACE_DEBUG == false
 #		undef MACE_DEBUG
 #	endif//MACE_DEBUG == 0
-#elif defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG)
+#elif defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG) || defined(MACE_DOXYGEN_PASS)
 #	define MACE_DEBUG true
 #endif//elif
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-#	define MACE_WINDOWS true
-#	define MACE_WIN32 true
-#elif defined(__APPLE__) && defined(__MACH__)
-#	define MACE_OSX true
-#elif defined(__linux__) || defined(__unix__)
-#	define MACE_LINUX true
-#else
-#	warning "This is a system on which MACE has not been tested with. MACE may have undefined behavior."
-#endif
-
-
-#if !defined(MACE_WIN32)  && defined(_POSIX_SOURCE) || defined(_POSIX_VERSION) && (defined(MACE_LINUX) || defined(MACE_OSX))
-#	define MACE_POSIX true
-#endif
-
-#if defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR)
+#if defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
 #	define MACE_OPENCV true
 #endif
 
@@ -117,9 +101,7 @@ namespace mc {
 	*/
 	typedef void(*VoidFunctionPtr)();
 
-	/*Exceptions*/
-
-#define _MACE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
+	/*Errors*/
 
 	/**
 	Superclass that all exceptions in MACE extend.
@@ -139,6 +121,7 @@ namespace mc {
 		void handle[[noreturn]]();
 	};
 
+#define _MACE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
 
 	/**
 	Thrown when a pointer is equal to NULL

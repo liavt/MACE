@@ -102,11 +102,6 @@ namespace mc {
 
 			glfwMakeContextCurrent(window);
 
-			auto errorCallback = [] (int id, const char* desc) {
-				std::cout << "GLFW errored with an ID of " << id << " and a description of \'" << desc << '\'';
-			};
-			glfwSetErrorCallback(errorCallback);
-
 			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
 			glewExperimental = true;
@@ -149,14 +144,14 @@ namespace mc {
 
 			glfwSetWindowUserPointer(window, this);
 
-			auto closeCallback = [] (GLFWwindow* window) {
+			const auto closeCallback = [] (GLFWwindow* window) {
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 
 				mc::MACE::requestStop();
 			};
 			glfwSetWindowCloseCallback(window, closeCallback);
 
-			auto keyDown = [] (GLFWwindow*, int key, int, int action, int mods) {
+			const auto keyDown = [] (GLFWwindow*, int key, int, int action, int mods) {
 				BitField actions = BitField(0);
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
@@ -170,7 +165,7 @@ namespace mc {
 			};
 			glfwSetKeyCallback(window, keyDown);
 
-			auto mouseDown = [] (GLFWwindow*, int button, int action, int mods) {
+			const auto mouseDown = [] (GLFWwindow*, int button, int action, int mods) {
 				BitField actions = BitField(0);
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
@@ -185,25 +180,25 @@ namespace mc {
 			};
 			glfwSetMouseButtonCallback(window, mouseDown);
 
-			auto cursorPosition = [] (GLFWwindow*, double xpos, double ypos) {
+			const auto cursorPosition = [] (GLFWwindow*, double xpos, double ypos) {
 				mouseX = static_cast<int>(mc::math::floor(xpos));
 				mouseY = static_cast<int>(mc::math::floor(ypos));
 			};
 			glfwSetCursorPosCallback(window, cursorPosition);
 
-			auto scrollWheel = [] (GLFWwindow*, double xoffset, double yoffset) {
+			const auto scrollWheel = [] (GLFWwindow*, double xoffset, double yoffset) {
 				scrollY = yoffset;
 				scrollX = xoffset;
 			};
 			glfwSetScrollCallback(window, scrollWheel);
 
-			auto framebufferResize = [] (GLFWwindow* window, int width, int height) {
-				gfx::Renderer::resize(width, height);
+			const auto framebufferResize = [] (GLFWwindow* window, int, int) {
+				gfx::Renderer::flagResize();
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetFramebufferSizeCallback(window, framebufferResize);
 
-			auto windowDamaged = [] (GLFWwindow* window) {
+			const auto windowDamaged = [] (GLFWwindow* window) {
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetWindowRefreshCallback(window, windowDamaged);
@@ -263,7 +258,7 @@ namespace mc {
 
 
 			try {
-				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+				const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
 				create();
 
@@ -275,7 +270,7 @@ namespace mc {
 			} catch( const std::exception& e ) {
 				Error::handleError(e);
 			} catch( ... ) {
-				std::cerr << "An error has occured";
+				std::cerr << "An error has occured trying to initalize MACE";
 				MACE::requestStop();
 			}
 
@@ -286,7 +281,7 @@ namespace mc {
 
 					{
 						//thread doesn't own window, so we have to lock the mutex
-						std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
 						glfwPollEvents();
 
@@ -318,14 +313,14 @@ namespace mc {
 					Error::handleError(e);
 					break;
 				} catch( ... ) {
-					std::cerr << "An error has occured";
+					std::cerr << "An unknown error has occured trying to render MACE";
 					MACE::requestStop();
 					break;
 				}
 			}
 
 			{
-				std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+				const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 				try {
 					Entity::destroy();
 
@@ -335,7 +330,7 @@ namespace mc {
 				} catch( const std::exception& e ) {
 					Error::handleError(e);
 				} catch( ... ) {
-					std::cerr << "An error has occured";
+					std::cerr << "An unknown error has occured trying to destroy MACE";
 					MACE::requestStop();
 				}
 			}
@@ -347,12 +342,19 @@ namespace mc {
 				throw InitializationFailedError("GLFW failed to initialize!");
 			}
 
+			const auto errorCallback = [] (int id, const char* desc) {
+				throw OpenGLError("GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
+			};
+			glfwSetErrorCallback(errorCallback);
+
 			windowThread = std::thread(&WindowModule::threadCallback, this);
 		}
 
 		void WindowModule::update() {
 			std::mutex mutex;
-			std::unique_lock<std::mutex> guard(mutex);
+			const std::unique_lock<std::mutex> guard(mutex);
+
+			glfwPollEvents();
 
 			Entity::update();
 		}//update

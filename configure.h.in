@@ -1,0 +1,65 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+#pragma once
+#ifndef MACE_CORE_CONFIGURE_H
+#define MACE_CORE_CONFIGURE_H
+
+#define MACE_INCLUDED 1
+
+/*Meta stuff*/
+#cmakedefine MACE_TESTS 1
+#cmakedefine MACE_DEMOS 1
+
+#cmakedefine MACE_INCLUDES ${MACE_INCLUDES}
+
+#define MACE_DIRECTORY ${PROJECT_SOURCE_DIR}
+
+#define MACE_SYSTEM_NAME ${CMAKE_SYSTEM_NAME}
+#define MACE_SYSTEM_VERSION ${CMAKE_SYSTEM_VERSION}
+#define MACE_PROCESSOR_NAME ${CMAKE_SYSTEM_PROCESSOR}
+
+/*Libraries*/
+#cmakedefine MACE_OPENCV 1
+
+#cmakedefine MACE_X11 1
+
+#cmakedefine MACE_POSIX 1
+
+/*Operating System*/
+#cmakedefine MACE_OSX 1
+#cmakedefine MACE_WINDOWS 1
+#cmakedefine MACE_UNIX 1
+
+#cmakedefine MACE_BIG_ENDIAN 1
+
+#cmakedefine MACE_SHARED_LIBS 1
+#cmakedefine MACE_STATIC_LIBS 1
+
+#define MACE_POINTER_SIZE ${CMAKE_SIZEOF_VOID_P}
+
+/*Compilers*/
+#cmakedefine MACE_BORLAND 1
+
+#cmakedefine MACE_MSVC 1
+#cmakedefine MACE_MSVC_CL 1
+#cmakedefine MACE_MSVC_2005 1
+#cmakedefine MACE_MSVC_IDE 1
+
+#cmakedefine MACE_CYGWIN 1
+#cmakedefine MACE_CLANG 1
+#cmakedefine MACE_GNU 1
+#cmakedefine MACE_HP 1
+#cmakedefine MACE_INTEL 1
+#cmakedefine MACE_ORACLE 1
+#cmakedefine MACE_TEXAS_INSTRUMENTS 1
+#cmakedefine MACE_WATCOM 1
+#cmakedefine MACE_IBM 1
+
+#endif//MACE_CORE_CONFIGURE_H

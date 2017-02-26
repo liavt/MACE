@@ -15,7 +15,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	/**
 	Namespace containing classes used for Graphics in MACE.
-	@bug Crashes after some time on NVIDIA gpus
 	*/
 	namespace gfx {}
 }

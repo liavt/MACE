@@ -170,7 +170,7 @@ namespace mc {
 				std::fclose(soundFile);
 			}
 
-			throw error;
+			Error::handleError(error);
 		}
 	}
 

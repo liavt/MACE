@@ -35,6 +35,7 @@ namespace mc {
 		long double phi() {
 			return 1.61803398874989484820458683436563811772030917980576l;
 		}
+
 		double abs(const double value) {
 			return value < 0 ? -value : value;
 		}

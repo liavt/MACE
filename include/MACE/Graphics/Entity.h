@@ -104,38 +104,45 @@ namespace mc {
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included.
 #			ifdef MACE_OPENCV
 			void load(cv::Mat mat) {
-				//opencv and opengl store textures differently, and more especially, flipped.
 				//cv::flip(mat, mat, 0);
 
-				if (mat.empty()) {
-					throw BadImageError("Inputted Mat is empty");
-				}
-
-				bind();
-
+ 				Enum colorFormat = GL_BGR;
+ 				if (mat.channels() == 1) {
+ 					colorFormat = GL_LUMINANCE;
+ 				}
+ 				else if (mat.channels() == 2) {
+ 					colorFormat = GL_LUMINANCE_ALPHA;
+ 				}
+ 				else if (mat.channels() == 4) {
+ 					colorFormat = GL_BGRA;
+ 				}
+ 
+ 				Enum type = GL_UNSIGNED_BYTE;
+ 				if (mat.depth() == CV_8S) {
+ 					type = GL_BYTE;
+ 				}
+ 				else if (mat.depth() == CV_16U) {
+ 					type = GL_UNSIGNED_SHORT;
+ 				}
+ 				else if (mat.depth() == CV_16S) {
+ 					type = GL_SHORT;
+ 				}
+ 				else if (mat.depth() == CV_32S) {
+					type = GL_INT;
+ 				}
+ 				else if (mat.depth() == CV_32F) {
+ 					type = GL_FLOAT;
+ 				}
+ 				else if (mat.depth() == CV_64F) {
+ 					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
+ 				}
+ 
 				resetPixelStorage();
-
-				std::vector<unsigned char> data = std::vector<unsigned char>();
-
-				int cn = mat.channels();
-
-				for (int i = 0; i < mat.rows; ++i)
-				{
-					for (int j = 0; j < mat.cols; ++j)
-					{
-						cv::Vec3b v = mat.at<cv::Vec3b>(i, j);
-						data.push_back(v[2]);
-						data.push_back(v[1]);
-						data.push_back(v[0]);
-					}
-				}
-
-				gfx::ogl::checkGLError(__LINE__, __FILE__);
-
-				setData(&data[0], mat.rows, mat.cols, GL_UNSIGNED_BYTE, GL_RGB, GL_RGBA);																	//c.load(Colors::GREEN);
-
-				setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+ 				setStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
+ 				setStorage(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
+ 
+ 				//setData(mat.data, mat.cols, mat.rows, GL_UNSIGNED_BYTE, GL_BGR, GL_RGBA);
+ 				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
 
 				ogl::checkGLError(__LINE__, __FILE__);
 		}

@@ -21,6 +21,7 @@ include(FindPackageHandleStandardArgs)
 include(CheckCXXCompilerFlag)
 include(DownloadLibrary)
 include(CheckIncludeFiles)
+include(TestBigEndian)
 
 option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
 option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
@@ -298,7 +299,91 @@ target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
 if(UNIX AND NOT APPLE)#glfw requires this
 	find_package(X11 REQUIRED)
 	target_link_libraries(MACE LINK_PUBLIC -ldl -lm ${X11_LIBRARIES} )
+	
+	set(MACE_X11 1)
 endif()
+
+find_package(OpenCV)
+
+if(${OpenCV_FOUND})
+	set(MACE_OPENCV 1)
+	
+	target_link_libraries(MACE LINK_PUBLIC ${OpenCV_LIBRARIES})
+	target_include_directories(MACE PUBLIC ${OpenCV_INCLUDE_DIR})
+endif()
+
+#Checks
+check_include_file("unistd.h" MACE_POSIX)
+test_big_endian(MACE_BIG_ENDIAN)
+
+#Macros for configuration
+if(APPLE)
+	set(MACE_OSX 1)
+endif()
+
+if(BORLAND)
+	set(MACE_BORLAND 1)
+endif()
+
+if(MSVC)
+	set(MACE_MSVC 1)
+
+	if(CMAKE_CL_64)
+		set(MACE_MSVC_CL 1)
+	endif()
+
+	if(CMAKE_COMPILER_2005)
+		set(MACE_MSVC_2005 1)
+	endif()
+	
+	if(MSVC_IDE)
+		set(MACE_MSVC_IDE 1)
+	endif()
+endif()
+
+if(UNIX)
+	set(MACE_UNIX 1)
+endif()
+
+if(WIN32)
+	set(MACE_WINDOWS 1)
+endif()
+
+if(CYGWIN)
+	set(MACE_CYGWIN 1)
+endif()
+
+if(BUILD_SHARED_LIBS)
+	set(MACE_SHARED_LIBS 1)
+else()
+	set(MACE_STATIC_LIBS 1)
+endif()
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+	set(MACE_CLANG 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+	set(MACE_GNU 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "HP")
+	set(MACE_HP 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+	set(MACE_INTEL 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "SunPro")
+	set(MACE_ORACLE 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "TI_DSP")
+	set(MACE_TEXAS_INSTRUMENTS 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Watcom")
+	set(MACE_WATCOM 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "XL" OR CMAKE_CXX_COMPILER_ID MATCHES "VisualAge" OR CMAKE_CXX_COMPILER_ID MATCHES "zOS")
+	set(MACE_IBM 1)
+endif()
+
+set(MACE_DIRECTORY "${PROJECT_SOURCE_DIR}")
+
+set(MACE_SYSTEM "${CMAKE_SYSTEM_NAME}")
+set(MACE_SYSTEM_VERSION "${CMAKE_SYSTEM_VERSION}")
+set(MACE_PROCESSOR "${CMAKE_SYSTEM_PROCESSOR}")
+
+configure_file("${PROJECT_SOURCE_DIR}/configure.h.in" "${MACE_INCLUDES}/MACE/Core/Configure.h" ESCAPE_QUOTES)
 
 if(COMMAND cmake_policy)
 	cmake_policy(POP)

@@ -387,6 +387,10 @@ namespace mc {
 				}
 			}
 
+			void Texture2D::bind() const {
+				Texture2D::bind(0);
+			}
+
 			void Texture2D::bind(const Index location) const {
 				glActiveTexture(GL_TEXTURE0 + location);
 				Object::bind();

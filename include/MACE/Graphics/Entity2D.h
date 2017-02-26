@@ -144,7 +144,6 @@ namespace mc {
 		};//RenderProtocol<ProgressBar>
 
 		/**
-		@bug some weird artifacting because of anti-aliasing
 		*/
 		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
@@ -315,6 +314,9 @@ namespace mc {
 			Letter(const ogl::Texture2D& mask = ogl::Texture2D());
 			~Letter() = default;
 
+			/**
+			@internal
+			*/
 			const ogl::Texture2D& getMask() const;
 
 			const ColorAttachment& getTexture() const;
@@ -337,6 +339,7 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
+			//it is a Texture2D and not a ColorAttachment because it is supposed to be internal
 			ogl::Texture2D mask;
 
 			ColorAttachment texture = ColorAttachment();
