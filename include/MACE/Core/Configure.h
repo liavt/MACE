@@ -44,6 +44,17 @@ The above copyright notice and this permission notice shall be included in all c
 
 #define MACE_POINTER_SIZE 4
 
+#define MACE_UNSIGNED_CHAR_SIZE 1
+#define MACE_CHAR_SIZE 1
+#define MACE_UNSIGNED_INT_SIZE 4
+#define MACE_INT_SIZE 4
+#define MACE_SHORT_INT_SIZE 2
+#define MACE_LONG_INT_SIZE 4
+#define MACE_LONG_LONG_INT_SIZE 8
+#define MACE_FLOAT_SIZE 4
+#define MACE_DOUBLE_SIZE 8
+#define MACE_BOOL_SIZE 1
+
 /*Compilers*/
 /* #undef MACE_BORLAND */
 
@@ -60,6 +71,11 @@ The above copyright notice and this permission notice shall be included in all c
 /* #undef MACE_ORACLE */
 /* #undef MACE_TEXAS_INSTRUMENTS */
 /* #undef MACE_WATCOM */
+/* #undef MACE_ADSP */
+/* #undef MACE_CRAY */
+/* #undef MACE_MIPSPRO */
+/* #undef MACE_PORTLAND */
+/* #undef MACE_PATHSCALE */
 /* #undef MACE_IBM */
 
 #endif//MACE_CORE_CONFIGURE_H

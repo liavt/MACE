@@ -11,10 +11,15 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_GRAPHICS_ENTITY_H
 #define MACE_GRAPHICS_ENTITY_H
 
+#include <MACE/Core/Constants.h>
 #include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Graphics/OGL.h>
 #include <vector>
+
+#ifdef MACE_OPENCV
+#	include <opencv2/opencv.hpp>
+#endif//MACE_OPENCV
 
 namespace mc {
 	namespace gfx {
