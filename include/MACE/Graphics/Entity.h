@@ -143,8 +143,8 @@ namespace mc {
  				}
  
 				resetPixelStorage();
- 				setStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
- 				setStorage(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
+ 				setPixelStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
+ 				setPixelStorage(GL_PACK_ROW_LENGTH, mat.step / mat.elemSize());
  
  				//setData(mat.data, mat.cols, mat.rows, GL_UNSIGNED_BYTE, GL_BGR, GL_RGBA);
  				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
