@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_CORE_CONSTANTS_H
 #define MACE_CORE_CONSTANTS_H
 
-#include <MACE/Core/Configure.h>
+#include <MACE-Configure.h>
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!
@@ -22,11 +22,11 @@ The above copyright notice and this permission notice shall be included in all c
 #		undef MACE_DEBUG
 #	endif//MACE_DEBUG == 0
 #elif defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG) || defined(MACE_DOXYGEN_PASS)
-#	define MACE_DEBUG true
+#	define MACE_DEBUG 1
 #endif//elif
 
 #if defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
-#	define MACE_OPENCV true
+#	define MACE_OPENCV 1
 #endif
 
 #include <cstdint>
@@ -199,4 +199,4 @@ namespace mc {
 #undef _MACE_ERROR
 }
 
-#endif
+#endif//MACE_CORE_CONSTANTS_H

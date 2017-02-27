@@ -406,7 +406,9 @@ set(MACE_SYSTEM "${CMAKE_SYSTEM_NAME}")
 set(MACE_SYSTEM_VERSION "${CMAKE_SYSTEM_VERSION}")
 set(MACE_PROCESSOR "${CMAKE_SYSTEM_PROCESSOR}")
 
-configure_file("${PROJECT_SOURCE_DIR}/configure.h.in" "${MACE_INCLUDES}/MACE/Core/Configure.h" ESCAPE_QUOTES)
+configure_file("${PROJECT_SOURCE_DIR}/configure.h.in" "MACE-Configure.h" ESCAPE_QUOTES)
+
+target_include_directories(MACE PUBLIC ${CMAKE_BINARY_DIR})
 
 if(COMMAND cmake_policy)
 	cmake_policy(POP)
