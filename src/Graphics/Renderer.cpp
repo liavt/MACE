@@ -7,16 +7,18 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+
+//std::copy raises a dumb warning on this version of msvc which does not contribute anything at all
+//the reason why this check does not use MACE_MSVC is because that would require including Constants.h which is what raises the warning
+#if defined(_MSC_VER) && _MSC_VER >= 1400 
+#	pragma warning( push ) 
+#	pragma warning( disable: 4996 ) 
+#endif 
+
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Utility/Preprocessor.h>
-
-//std::copy raises a dumb warning on this version of msvc which does not contribute anything at all
-#if defined(MACE_MSVC) && _MSC_VER >= 1400 
-#	pragma warning( push ) 
-#	pragma warning( disable: 4996 ) 
-#endif 
 
 //we need to include algorithim for memcpy
 #include <algorithm>
@@ -776,7 +778,7 @@ namespace mc {
 	}//gfx
 }//mc
 
-#if defined(MACE_MSVC) && _MSC_VER >= 1400 
+#if defined(_MSC_VER) && _MSC_VER >= 1400 
 //pop the disable of warning 4996 which is a useless warning
 #	pragma warning( pop ) 
 #endif 

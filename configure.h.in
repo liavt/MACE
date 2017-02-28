@@ -32,6 +32,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 #cmakedefine MACE_POSIX 1
 
+#cmakedefine MACE_WINAPI 1
+
 /*Operating System*/
 #cmakedefine MACE_OSX 1
 #cmakedefine MACE_WINDOWS 1
@@ -44,25 +46,20 @@ The above copyright notice and this permission notice shall be included in all c
 
 #define MACE_POINTER_SIZE ${CMAKE_SIZEOF_VOID_P}
 
-#cmakedefine MACE_UNSIGNED_CHAR_SIZE ${MACE_UNSIGNED_CHAR_SIZE}
-#cmakedefine MACE_CHAR_SIZE ${MACE_CHAR_SIZE}
-#cmakedefine MACE_UNSIGNED_INT_SIZE ${MACE_UNSIGNED_INT_SIZE}
-#cmakedefine MACE_INT_SIZE ${MACE_INT_SIZE}
-#cmakedefine MACE_SHORT_INT_SIZE ${MACE_SHORT_INT_SIZE}
-#cmakedefine MACE_LONG_INT_SIZE ${MACE_LONG_INT_SIZE}
-#cmakedefine MACE_LONG_LONG_INT_SIZE ${MACE_LONG_LONG_INT_SIZE}
-#cmakedefine MACE_FLOAT_SIZE ${MACE_FLOAT_SIZE}
-#cmakedefine MACE_DOUBLE_SIZE ${MACE_DOUBLE_SIZE}
-#cmakedefine MACE_BOOL_SIZE ${MACE_BOOL_SIZE}
+#if MACE_POINTER_SIZE == 4
+#	define MACE_32_BIT
+#elif MACE_POINTER_SIZE == 8
+#	define MACE_64_BIT
+#endif
 
 /*Compilers*/
-#cmakedefine MACE_BORLAND 1
-
 #cmakedefine MACE_MSVC 1
 #cmakedefine MACE_MSVC_CL 1
 #cmakedefine MACE_MSVC_2005 1
 #cmakedefine MACE_MSVC_IDE 1
 
+#cmakedefine MACE_BORLAND 1
+#cmakedefine MACE_MINGW 1
 #cmakedefine MACE_CYGWIN 1
 #cmakedefine MACE_CLANG 1
 #cmakedefine MACE_GNU 1

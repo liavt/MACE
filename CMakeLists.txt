@@ -8,6 +8,10 @@ if(COMMAND cmake_policy)
 	if(POLICY CMP0017)
 		cmake_policy(SET CMP0017 NEW)
 	endif()
+	
+	if(POLICY CMP0025)
+		cmake_policy(SET CMP0025 OLD)
+	endif()
 endif()
 
 message("MACE project added")
@@ -66,23 +70,6 @@ find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
-
-#Catch is for unit testing.
-if(${MACE_TESTS})
-	if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
-		if(${MACE_DOWNLOAD_DEPENDENCIES})
-			#Catch is one header file, so its easy to fix. Just download it!
-			message(STATUS "Downloading Catch..")
-			file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}")
-			message(STATUS "Done downloading Catch.")
-		else()
-			message(FATAL_ERROR "Catch is not  found!")
-		endif()
-	else()
-		message(STATUS "Catch found.")
-	endif()
-endif()
-
 
 if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
@@ -143,30 +130,11 @@ endforeach()
 add_library(MACE ${HEADERS} ${SRC})
 
 if(${MACE_TESTS})
-	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
-	add_executable(MACE-Testing ${TESTS_SRC})
-		
-	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
-	target_include_directories(MACE-Testing PUBLIC ${MACE_INCLUDES})
-	
-	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC")
+	add_subdirectory(tests)
 endif()
 
 if(${MACE_DEMOS})
-	file(GLOB_RECURSE DEMOS_SRC "demos/*.cpp")
-	foreach(FILE ${DEMOS_SRC})
-		get_filename_component(FILE_NAME ${FILE} NAME_WE)
-		
-		set(PROJECT_NAME MACE-${FILE_NAME})
-		
-		add_executable(${PROJECT_NAME} ${FILE})
-	
-		target_link_libraries(${PROJECT_NAME} LINK_PUBLIC MACE)
-		
-		target_compile_definitions(${PROJECT_NAME} PUBLIC MACE_DEMO_ASSETS="${PROJECT_SOURCE_DIR}/demos/assets/")
-		
-		set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "MC/Demos")
-	endforeach()
+	add_subdirectory(demos)
 endif()
 
 #COMPILER CHECKS
@@ -315,17 +283,7 @@ endif()
 
 #Checks
 check_include_files("unistd.h" MACE_POSIX)
-
-check_type_size("unsigned char" MACE_UNSIGNED_CHAR_SIZE LANGUAGE CXX)
-check_type_size("char" MACE_CHAR_SIZE LANGUAGE CXX)
-check_type_size("unsigned int" MACE_UNSIGNED_INT_SIZE LANGUAGE CXX)
-check_type_size("int" MACE_INT_SIZE LANGUAGE CXX)
-check_type_size("short int" MACE_SHORT_INT_SIZE LANGUAGE CXX)
-check_type_size("long int" MACE_LONG_INT_SIZE LANGUAGE CXX)
-check_type_size("long long int" MACE_LONG_LONG_INT_SIZE LANGUAGE CXX)
-check_type_size("float" MACE_FLOAT_SIZE LANGUAGE CXX)
-check_type_size("double" MACE_DOUBLE_SIZE LANGUAGE CXX)
-check_type_size("bool" MACE_BOOL_SIZE LANGUAGE CXX)
+check_include_files("windows.h" MACE_WINAPI)
 
 test_big_endian(MACE_BIG_ENDIAN)
 
@@ -334,11 +292,23 @@ if(APPLE)
 	set(MACE_OSX 1)
 endif()
 
-if(BORLAND)
-	set(MACE_BORLAND 1)
+if(UNIX)
+	set(MACE_UNIX 1)
 endif()
 
-if(MSVC)
+if(WIN32)
+	set(MACE_WINDOWS 1)
+endif()
+
+if(BUILD_SHARED_LIBS)
+	set(MACE_SHARED_LIBS 1)
+else()
+	set(MACE_STATIC_LIBS 1)
+endif()
+
+if(MSYS)
+	set(MACE_MINGW 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" OR MSVC)
 	set(MACE_MSVC 1)
 
 	if(CMAKE_CL_64)
@@ -352,29 +322,13 @@ if(MSVC)
 	if(MSVC_IDE)
 		set(MACE_MSVC_IDE 1)
 	endif()
-endif()
-
-if(UNIX)
-	set(MACE_UNIX 1)
-endif()
-
-if(WIN32)
-	set(MACE_WINDOWS 1)
-endif()
-
-if(CYGWIN)
+elseif(CYGWIN)
 	set(MACE_CYGWIN 1)
-endif()
-
-if(BUILD_SHARED_LIBS)
-	set(MACE_SHARED_LIBS 1)
-else()
-	set(MACE_STATIC_LIBS 1)
-endif()
-
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+elseif(BORLAND)
+	set(MACE_BORLAND 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
 	set(MACE_CLANG 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_COMPILER_IS_GNUXX)
 	set(MACE_GNU 1)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "HP")
 	set(MACE_HP 1)
@@ -384,7 +338,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "SunPro")
 	set(MACE_ORACLE 1)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "TI_DSP")
 	set(MACE_TEXAS_INSTRUMENTS 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Watcom")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Watcom" OR WATCOM)
 	set(MACE_WATCOM 1)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "ADSP")
 	set(MACE_ANALOG_VISUAL 1)
@@ -406,9 +360,9 @@ set(MACE_SYSTEM "${CMAKE_SYSTEM_NAME}")
 set(MACE_SYSTEM_VERSION "${CMAKE_SYSTEM_VERSION}")
 set(MACE_PROCESSOR "${CMAKE_SYSTEM_PROCESSOR}")
 
-configure_file("${PROJECT_SOURCE_DIR}/configure.h.in" "MACE-Configure.h" ESCAPE_QUOTES)
+configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "MACE-Configure.h" ESCAPE_QUOTES)
 
-target_include_directories(MACE PUBLIC ${CMAKE_BINARY_DIR})
+target_include_directories(MACE PUBLIC "${CMAKE_BINARY_DIR}")
 
 if(COMMAND cmake_policy)
 	cmake_policy(POP)
