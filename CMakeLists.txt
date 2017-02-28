@@ -392,9 +392,13 @@ set(MACE_SYSTEM "${CMAKE_SYSTEM_NAME}")
 set(MACE_SYSTEM_VERSION "${CMAKE_SYSTEM_VERSION}")
 set(MACE_PROCESSOR "${CMAKE_SYSTEM_PROCESSOR}")
 
-configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${CMAKE_BINARY_DIR}/MACE-Configure.h" ESCAPE_QUOTES)
+if(${CMAKE_BUILD_TYPE} MATCHES "Debug" OR ${CMAKE_BUILD_TYPE} MATCHES "RelWithDebInfo" )
+	set(MACE_DEBUG 1)
+endif()
 
-target_include_directories(MACE PUBLIC "${CMAKE_BINARY_DIR}")
+configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${CMAKE_BINARY_DIR}/MACE-Configure.h" ESCAPE_QUOTES @ONLY)
+
+target_include_directories(MACE PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
 
 if(COMMAND cmake_policy)
 	cmake_policy(POP)

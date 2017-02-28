@@ -955,6 +955,28 @@ namespace mc {
 		_MACE_PREDEFINE_MACRO(__STDC_IEC_559_COMPLEX__);
 		_MACE_PREDEFINE_MACRO(__STDCPP_STRICT_POINTER_SAFETY__);
 
+		//the following are special MACE specific configuration macros (see Configuration.h)
+		_MACE_PREDEFINE_MACRO(MACE_INCLUDED);
+		_MACE_PREDEFINE_MACRO(MACE_TESTS);
+		_MACE_PREDEFINE_MACRO(MACE_DEMOS);
+		_MACE_PREDEFINE_MACRO(MACE_INCLUDES);
+		_MACE_PREDEFINE_MACRO(MACE_DIRECTORY);
+		_MACE_PREDEFINE_MACRO(MACE_SYSTEM_NAME);
+		_MACE_PREDEFINE_MACRO(MACE_SYSTEM_VERSION);
+		_MACE_PREDEFINE_MACRO(MACE_PROCESSOR_NAME);
+		_MACE_PREDEFINE_MACRO(MACE_DEBUG);
+		_MACE_PREDEFINE_MACRO(MACE_OPENCV);
+		_MACE_PREDEFINE_MACRO(MACE_X11);
+		_MACE_PREDEFINE_MACRO(MACE_POSIX);
+		_MACE_PREDEFINE_MACRO(MACE_WINAPI);
+		_MACE_PREDEFINE_MACRO(MACE_BIG_ENDIAN);
+		_MACE_PREDEFINE_MACRO(MACE_LITTLE_ENDIAN);
+		_MACE_PREDEFINE_MACRO(MACE_SHARED_LIBS);
+		_MACE_PREDEFINE_MACRO(MACE_STATIC_LIBS);
+		_MACE_PREDEFINE_MACRO(MACE_POINTER_SIZE);
+		_MACE_PREDEFINE_MACRO(MACE_32_BIT);
+		_MACE_PREDEFINE_MACRO(MACE_64_BIT);
+		
 		//now, a giant list of predefined macros from various compilers, including gcc, clang, borland, oracle, digital mars, and vsc.
 		//this list does not include compiler specific macros (denoted by a prefix, like __GCC_VERSION__)
 		_MACE_PREDEFINE_MACRO(__CHAR_UNSIGNED__);
@@ -1207,6 +1229,7 @@ namespace mc {
 		_MACE_PREDEFINE_MACRO(__MEDIUM__);
 		_MACE_PREDEFINE_MACRO(__COMPACT__);
 		_MACE_PREDEFINE_MACRO(__LARGE__);
+		_MACE_PREDEFINE_MACRO(NDEBUG);
 	}//defineStandardMacros
 
 	void Preprocessor::defineOSMacros() {
@@ -1218,6 +1241,10 @@ namespace mc {
 		This list was compiled from the macros located at https://sourceforge.net/p/predef/wiki/OperatingSystems/
 		Don't know how they did it, but it exists
 		*/
+
+		_MACE_PREDEFINE_MACRO(MACE_OSX);
+		_MACE_PREDEFINE_MACRO(MACE_WINDOWS);
+		_MACE_PREDEFINE_MACRO(MACE_UNIX);
 
 		_MACE_PREDEFINE_MACRO(_AIX);
 		_MACE_PREDEFINE_MACRO(__TOS_AIX__);
