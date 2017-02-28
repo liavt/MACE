@@ -130,11 +130,43 @@ endforeach()
 add_library(MACE ${HEADERS} ${SRC})
 
 if(${MACE_TESTS})
-	add_subdirectory(tests)
+	if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
+		if(${MACE_DOWNLOAD_DEPENDENCIES})
+			#Catch is one header file, so its easy to fix. Just download it!
+			message(STATUS "Downloading Catch..")
+			file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}")
+			message(STATUS "Done downloading Catch.")
+		else()
+			message(FATAL_ERROR "Catch is not  found!")
+		endif()
+	else()
+		message(STATUS "Catch found.")
+	endif()
+
+	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
+	add_executable(MACE-Testing ${TESTS_SRC})
+		
+	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
+	target_include_directories(MACE-Testing PUBLIC ${MACE_INCLUDES})
+
+	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC")
 endif()
 
 if(${MACE_DEMOS})
-	add_subdirectory(demos)
+	file(GLOB_RECURSE DEMOS_SRC "demos/*.cpp")
+	foreach(FILE ${DEMOS_SRC})
+		get_filename_component(FILE_NAME ${FILE} NAME_WE)
+		
+		set(PROJECT_NAME MACE-${FILE_NAME})
+		
+		add_executable(${PROJECT_NAME} ${FILE})
+
+		target_link_libraries(${PROJECT_NAME} LINK_PUBLIC MACE)
+		
+		target_compile_definitions(${PROJECT_NAME} PUBLIC MACE_DEMO_ASSETS="${PROJECT_SOURCE_DIR}/demos/assets/")
+		
+		set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "MC/Demos")
+	endforeach()
 endif()
 
 #COMPILER CHECKS
