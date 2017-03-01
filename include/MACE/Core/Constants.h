@@ -21,11 +21,11 @@ The above copyright notice and this permission notice shall be included in all c
 #	if MACE_DEBUG == 0 || MACE_DEBUG == false
 #		undef MACE_DEBUG
 #	endif//MACE_DEBUG == 0
-#elif defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG) || defined(MACE_DOXYGEN_PASS)
+#elif !defined(MACE_DEBUG)&&(defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG) || defined(MACE_DOXYGEN_PASS))
 #	define MACE_DEBUG 1
 #endif//elif
 
-#if defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
+#if !defined(MACE_OPENCV)&&(defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR)))
 #	define MACE_OPENCV 1
 #endif
 

@@ -22,6 +22,11 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//MACE_OPENCV
 
 namespace mc {
+	namespace os{
+		//declaring dependency
+		struct WindowModule;
+	}
+
 	namespace gfx {
 		using EntityProperties = BitField;
 
@@ -33,7 +38,7 @@ namespace mc {
 			void fillBuffer(GraphicsEntity*);
 			void bindBuffer(ogl::UniformBuffer&);
 			void bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
-			void checkInput();
+			void checkInput(mc::os::WindowModule*);
 		};
 
 		/**
@@ -767,7 +772,7 @@ namespace mc {
 			friend void ssl::bindBuffer(ogl::UniformBuffer&);
 			friend void ssl::bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
 			friend void ssl::fillBuffer(GraphicsEntity*);
-			friend void ssl::checkInput();
+			friend void ssl::checkInput(mc::os::WindowModule*);
 		public:
 			GraphicsEntity() noexcept;
 

@@ -25,7 +25,7 @@ namespace mc {
 
 	namespace {
 		//these words can't be defined or undefined
-		const std::string reservedWords[] = {
+		constexpr char const * reservedWords[] = {
 			"and", "and_eq", "asm",	"auto",	"bitand",
 			"bitor", "bool",	"break",	"case",	"catch",
 			"char", "class",	"const",	"const_cast",	"continue",
@@ -51,12 +51,14 @@ namespace mc {
 		<p>
 		A punctuator according to the standard is something that seperates tokens.
 		*/
-		constexpr char punctuators1c[] = ",\"\'{}[]~.|&+-*/=;!%><:?";
+		constexpr char punctuators1c[] ={ 
+			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?' 
+		};
 
 		/**
 		2 character long punctuators
 		*/
-		constexpr char* punctuators2c[] = {
+		constexpr char const * punctuators2c[] = {
 			">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
 		};
 

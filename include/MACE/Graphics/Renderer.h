@@ -64,7 +64,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void checkInput();
+			void checkInput(os::WindowModule* win);
 
 			/**
 			@internal
@@ -241,7 +241,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			static void checkInput();
+			static void checkInput(os::WindowModule* win);
 
 			/**
 			@internal

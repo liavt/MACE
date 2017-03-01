@@ -14,7 +14,6 @@ The above copyright notice and this permission notice shall be included in all c
 //so we can use glew
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-
 #include <MACE/Core/Module.h>
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
