@@ -13,7 +13,7 @@ function(download_library name url)
 		
 		file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/${name})
 		
-		if(EXISTS ${name}.tar.gz)
+		if(EXISTS "${name}.tar.gz")
 			set(TARBELL_NAME ${name}.tar.gz)
 		else()
 			set(TARBELL_NAME ${name}.tgz)
