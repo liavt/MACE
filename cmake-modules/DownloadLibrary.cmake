@@ -13,10 +13,10 @@ function(download_library name url)
 		
 		file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/${name})
 		
-		if(EXISTS "${name}.tar.gz")
-			set(TARBELL_NAME ${name}.tar.gz)
+		if(EXISTS "${PROJECT_SOURCE_DIR}/${name}.tar.gz")
+			set(TARBELL_NAME "${name}.tar.gz")
 		else()
-			set(TARBELL_NAME ${name}.tgz)
+			set(TARBELL_NAME "${name}.tgz")
 		endif()
 
 		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${TARBELL_NAME} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
