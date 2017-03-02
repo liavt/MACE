@@ -19,7 +19,7 @@ function(download_library name url)
 			set(TARBELL_NAME ${name}.tgz)
 		endif()
 
-		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf TARBELL_NAME WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${TARBELL_NAME} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 	endif()
 	
 	message(STATUS "Found ${name} in source directory")
