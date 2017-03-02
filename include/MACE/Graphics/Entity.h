@@ -24,7 +24,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace os{
 		//declaring dependency
-		struct WindowModule;
+		class WindowModule;
 	}
 
 	namespace gfx {
@@ -61,6 +61,8 @@ namespace mc {
 		class Component {
 			friend class Entity;
 		protected:
+
+			virtual ~Component() = default;
 			/**
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
 			Required function.

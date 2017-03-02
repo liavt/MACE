@@ -19,7 +19,13 @@ The above copyright notice and this permission notice shall be included in all c
 #define STB_IMAGE_IMPLEMENTATION
 #ifdef MACE_DEBUG
 #	define STBI_FAILURE_USERMSG
-#endif
+#endif//MACE_DEBUG
+
+#ifdef MACE_GNU
+//stb_image raises this warning and can be safely ignored
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif//MACE_GNU
 #include <stb_image.h>
 
 namespace mc {
@@ -780,3 +786,7 @@ namespace mc {
 
 	}//gfx
 }//mc
+
+#ifdef MACE_GNU
+#	pragma GCC diagnostic pop
+#endif//MACE_GNU

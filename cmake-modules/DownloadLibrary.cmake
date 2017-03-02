@@ -13,7 +13,13 @@ function(download_library name url)
 		
 		file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/${name})
 		
-		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${name}.tar.gz WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+		if(EXISTS ${name}.tar.gz)
+			set(TARBELL_NAME ${name}.tar.gz)
+		else()
+			set(TARBELL_NAME ${name}.tgz)
+		endif()
+
+		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf TARBELL_NAME WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 	endif()
 	
 	message(STATUS "Found ${name} in source directory")

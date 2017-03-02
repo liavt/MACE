@@ -108,7 +108,7 @@ namespace mc {
 	}
 
 	std::array<float, 4> Color::getValues() const {
-		return { r,g,b,a };
+		return { { r,g,b,a } };
 	}
 
 	const float * Color::flatten(float arr[4]) const {
