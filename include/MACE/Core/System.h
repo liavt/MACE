@@ -43,6 +43,11 @@ namespace mc {
 		std::wstring toWideString(const std::string& s);
 		std::string toNarrowString(const std::wstring& s);
 
+		template<class T, std::size_t n>
+		inline constexpr std::size_t getArraySize(T(&)[n]) {
+			return n;
+		}
+
 		void pause();
 	}//os
 }//mc

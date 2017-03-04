@@ -144,6 +144,7 @@ namespace mc {
 		};//RenderProtocol<ProgressBar>
 
 		/**
+		@todo Replace the EaseComponent with a non dynamic pointer
 		*/
 		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;

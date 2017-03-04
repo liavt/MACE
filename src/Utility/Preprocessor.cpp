@@ -25,7 +25,7 @@ namespace mc {
 
 	namespace {
 		//these words can't be defined or undefined
-		constexpr char const * reservedWords[] = {
+		char const * reservedWords[] = {
 			"and", "and_eq", "asm",	"auto",	"bitand",
 			"bitor", "bool",	"break",	"case",	"catch",
 			"char", "class",	"const",	"const_cast",	"continue",
@@ -51,8 +51,8 @@ namespace mc {
 		<p>
 		A punctuator according to the standard is something that seperates tokens.
 		*/
-		constexpr char punctuators1c[] ={ 
-			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?' 
+		constexpr char punctuators1c[] = {
+			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
 		};
 
 		/**
@@ -866,7 +866,7 @@ namespace mc {
 	}
 
 	void Preprocessor::setMacro(const Macro& m) {
-		for( unsigned int iterator = 0; iterator < macros.size(); ++iterator ) {
+		for( Index iterator = 0; iterator < macros.size(); ++iterator ) {
 			if( macros[iterator].name == m.name ) {
 				macros[iterator].definition = m.definition;
 				macros[iterator].parameters = m.parameters;
@@ -878,8 +878,8 @@ namespace mc {
 
 
 	void Preprocessor::defineMacro(const Macro& m) {
-		for( unsigned int iterator = 0; iterator < sizeof(reservedWords) / sizeof(*reservedWords); ++iterator ) {
-			if( reservedWords[iterator] == m.name ) {
+		for( Index iterator = 0; iterator < os::getArraySize(reservedWords); ++iterator ) {
+			if( m.name == reservedWords[iterator] ) {
 				throw PreprocessorError(getLocation() + ": can\'t define " + m.name + " - it is a reserved word");
 			}
 		}
@@ -933,7 +933,7 @@ namespace mc {
 			strftime(buffer, 12, "%b %e %Y", &timeStruct);
 
 			setMacro(Macro("__DATE__", buffer));
-			
+
 			//strftime puts a null termination character, so this wont overflow
 			strftime(buffer, 9, "%H:%M:%S", &timeStruct);
 
@@ -978,7 +978,7 @@ namespace mc {
 		_MACE_PREDEFINE_MACRO(MACE_POINTER_SIZE);
 		_MACE_PREDEFINE_MACRO(MACE_32_BIT);
 		_MACE_PREDEFINE_MACRO(MACE_64_BIT);
-		
+
 		//now, a giant list of predefined macros from various compilers, including gcc, clang, borland, oracle, digital mars, and vsc.
 		//this list does not include compiler specific macros (denoted by a prefix, like __GCC_VERSION__)
 		_MACE_PREDEFINE_MACRO(__CHAR_UNSIGNED__);

@@ -16,17 +16,29 @@ The above copyright notice and this permission notice shall be included in all c
 #include <iostream>
 #include <string>
 
-#define STB_IMAGE_IMPLEMENTATION
-#ifdef MACE_DEBUG
-#	define STBI_FAILURE_USERMSG
-#endif//MACE_DEBUG
-
 #ifdef MACE_GNU
 //stb_image raises this warning and can be safely ignored
 #	pragma GCC diagnostic push
 #	pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-#endif//MACE_GNU
+#elif defined(MACE_MSVC)
+#	pragma warning( push ) 
+//these are all warnings that STB_IMAGE activates which dont really matter
+#	pragma warning( disable: 4244 ) 
+#endif
+
+#define STB_IMAGE_IMPLEMENTATION
+#ifdef MACE_DEBUG
+//	this macro makes more descriptive error messages
+#	define STBI_FAILURE_USERMSG
+#endif//MACE_DEBUG
+
 #include <stb_image.h>
+
+#ifdef MACE_GNU
+#	pragma GCC diagnostic pop
+#elif defined(MACE_MSVC)
+#	pragma warning( pop )
+#endif
 
 namespace mc {
 	namespace gfx {
@@ -63,6 +75,9 @@ namespace mc {
 		}
 
 		void ColorAttachment::load(const char * file) {
+			
+			resetPixelStorage();
+
 			int width, height, componentSize;
 
 			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
@@ -72,9 +87,12 @@ namespace mc {
 				throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 			}
 
-			resetPixelStorage();
-
-			setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+			try {
+				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+			} catch( const std::exception& e ) {
+				stbi_image_free(image);
+				throw e;
+			}
 
 			stbi_image_free(image);
 
@@ -154,7 +172,7 @@ namespace mc {
 				throw AssertionFailedError("Can\'t remove child from an empty entity (empty() is true)");
 			}
 
-			for (Index i = 0; i < children.size(); i++) {
+			for (Index i = 0; i < children.size(); ++i) {
 				if (e == children[i]) {
 					makeDirty();
 
@@ -202,7 +220,7 @@ namespace mc {
 					children[i]->render();
 				}
 
-				for (Index i = 0; i < components.size(); i++) {
+				for (Index i = 0; i < components.size(); ++i) {
 					components[i]->render(this);
 				}
 			}
@@ -211,7 +229,7 @@ namespace mc {
 
 		void Entity::hover() {
 			onHover();
-			for (Index i = 0; i < components.size(); i++) {
+			for (Index i = 0; i < components.size(); ++i) {
 				components[i]->hover(this);
 			}
 		}
@@ -220,7 +238,7 @@ namespace mc {
 			if (getProperty(Entity::DIRTY)) {
 				onClean();
 
-				for (Size i = 0; i < children.size(); i++) {
+				for (Size i = 0; i < children.size(); ++i) {
 					if (children[i] == nullptr) {
 						removeChild(i);
 						//to account for the entity beng removed
@@ -232,7 +250,7 @@ namespace mc {
 					}
 				}
 
-				for (Index i = 0; i < components.size(); i++) {
+				for (Index i = 0; i < components.size(); ++i) {
 					if (components[i] == nullptr) {
 						throw NullPointerError("One of the components in an entity was nullptr");
 					}
@@ -243,7 +261,7 @@ namespace mc {
 				setProperty(Entity::DIRTY, false);
 			}
 			else {
-				for (Size i = 0; i < children.size(); i++) {
+				for (Size i = 0; i < children.size(); ++i) {
 					if (children[i]->getProperty(Entity::INIT)) {
 						if (children[i] != nullptr) {
 							children[i]->clean();
@@ -325,7 +343,7 @@ namespace mc {
 			properties = 0;
 			transformation.reset();
 
-			for (Index i = 0; i < components.size(); i++) {
+			for (Index i = 0; i < components.size(); ++i) {
 				if (components[i] != nullptr) {
 					components[i]->destroy(this);
 				}
@@ -381,7 +399,7 @@ namespace mc {
 		}
 
 		int Entity::indexOf(const Entity & e) const {
-			for (Index i = 0; i < children.size(); i++) {
+			for (Index i = 0; i < children.size(); ++i) {
 				if (children[i] == &e) {
 					return i;
 				}
@@ -447,7 +465,7 @@ namespace mc {
 			if (!getProperty(Entity::DISABLED)) {
 
 				//update the components of this entity
-				for (Index i = 0; i < components.size(); i++) {
+				for (Index i = 0; i < components.size(); ++i) {
 					Component* a = components.at(i);
 					if (a->update(this)) {
 						a->destroy(this);
@@ -459,7 +477,7 @@ namespace mc {
 				onUpdate();
 
 				//call update() on children
-				for (Index i = 0; i < children.size(); i++) {
+				for (Index i = 0; i < children.size(); ++i) {
 					if (children[i] == nullptr || children[i]->getProperty(Entity::DEAD)) {
 						if (children[i] != nullptr) {
 							children[i]->kill();
@@ -786,7 +804,3 @@ namespace mc {
 
 	}//gfx
 }//mc
-
-#ifdef MACE_GNU
-#	pragma GCC diagnostic pop
-#endif//MACE_GNU

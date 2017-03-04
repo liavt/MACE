@@ -49,7 +49,7 @@ set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL
 
 set(GLEW_SOURCE_VERSION "2.0.0")
 set(GLEW_SOURCE_NAME "glew-${GLEW_SOURCE_VERSION}")
-set(GLEW_URL "https://kent.dl.sourceforge.net/project/glew/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz")
+set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz/download")
 
 set(FREETYPE_SOURCE_VERSION "2.5.2")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")

@@ -24,57 +24,101 @@ namespace mc {
 		It is located here as a `long double` to have the most possible digits.
 		@return Pi
 		*/
-		long double pi();
+		constexpr inline long double pi() {
+			return 3.14159265358979323846264338327950288419716939937510l;
+		}
 
 		/**
 		Calculates the mathmatical constant `tau`. `Tau` is known as `2pi` and represents the full turn of a circle. It also represents 6.28 radians, a full circle, equal to 360 degrees.
 		@return Tau
 		@see #toRadians()
 		*/
-		long double tau();
+		constexpr inline long double tau() {
+			return 6.28318530717958647692528676655900576839433879875021l;
+		}
 
 		/**
 		Calculates the mathmatical constant represented by `gamma`, or the `Euler–Mascheroni constant.` Gamma is used in number theory and analysis.
 		@return The `Euler–Mascheroni constant`
 		*/
-		long double gamma();
+		constexpr inline long double gamma() {
+			return 0.57721566490153286060651209008240243104215933593992l;
+		}
 
 		/**
 		Calculates the mathmatical constant known as `Eulers Number,` or `e`. `E` is used as the base for the natural logarithim.
 		@return `Eulers Number`
 		@see logn(double);
 		*/
-		long double e();
+		constexpr inline long double e() {
+			return 2.71828182845904523536028747135266249775724709369995l;
+		}
 
 		/**
 		Calculates the square root of 2, also known as the `principal square root of 2`. This number when multiplied by itself returns 2. It is used in trigonometry.
 		@return Square root of 2
 		*/
-		long double root2();
+		constexpr inline long double root2() {
+			return 1.41421356237309504880168872420969807856967187537694l;
+		}
 
 		/**
 		Calculates the square root of 3, also known as the `principal square root of 3`. This number when multiplied by itself returns 3. It is used in geometery and trigonometry.
 		@return Square root of 3
 		*/
-		long double root3();
+		constexpr inline long double root3() {
+			return 1.73205080756887729352744634150587236694280525381038l;
+		}
 
 		/**
 		Calculates the square root of 5, also known as the `principal square root of 5`. This number when multiplied by itself returns 5. It is used in geometery and trigonometry.
 		@return Square root of 5
 		*/
-		long double root5();
+		constexpr inline long double root5() {
+			return 2.23606797749978969640917366873127623544061835961152l;
+		}
 
 		/**
 		Calculates the golden ratio, also represented by `phi`. The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra.
 		*/
-		long double phi();
+		constexpr inline long double phi() {
+			return 1.61803398874989484820458683436563811772030917980576l;
+		}
 
 		/**
 		Gets the absolute value of a number. The absolute value is the unsigned version of a number.
 		@param value Number that is either negative or positive
 		@return `|value|`
 		*/
-		double abs(const double value);
+		template<typename T>
+		constexpr inline T abs(const T value) {
+			return value < 0 ? -value : value;
+		}
+
+		template<signed char>
+		constexpr inline unsigned char abs(const signed char value) {
+			return value < 0 ? -value : value;
+		}
+
+		template<signed int>
+		constexpr inline unsigned int abs(const signed int value) {
+			return value < 0 ? -value : value;
+		}
+
+		template<signed short int>
+		constexpr inline unsigned short int abs(const signed short int value) {
+			return value < 0 ? -value : value;
+		}
+
+		template<signed long int>
+		constexpr inline unsigned long int abs(const signed long int value) {
+			return value < 0 ? -value : value;
+		}
+
+		template<signed long long int>
+		constexpr inline unsigned long long int abs(const signed long long int value) {
+			return value < 0 ? -value : value;
+		}
 
 		/**
 		"Ceils" a number, or rounds it up.
@@ -93,7 +137,11 @@ namespace mc {
 		@see ceil(const double)
 		@see round(const double)
 		*/
-		int floor(const double value);
+		constexpr inline int floor(const double value) {
+			//IEEE Standard states that it will round down in a static cast.
+			//however, compilers will round towards zero, and floor should not.
+			return static_cast<int>(value) < 0 ? static_cast<int>(value) - 1 : static_cast<int>(value);
+		}
 
 		/**
 		Verifies whether a number is prime. A prime number is one that's only factors are one and itself.
@@ -108,22 +156,26 @@ namespace mc {
 		@return `true` if the `value` is divisable by 2, `false` otherwise
 		@see isOdd(const int)
 		*/
-		bool isEven(const int value);
+		constexpr inline bool isEven(const int value) {
+			return value % 2 == 0;
+		}
 		/**
 		Checks if a number is odd. An odd number is one that is not divisable by 2.
 		@param value Number to check if odd
 		@return `true` if the `value` is not divisable by 2, `false` otherwise
 		@see isEven(const int)
 		*/
-		bool isOdd(const int value);
+		constexpr inline bool isOdd(const int value) {
+			return !isEven(value);
+		}
 
 		/**
 		Calculates a number to an exponenet, or `value^power`
 		@param value Base number
 		@param power The exponent
 		@return `value^power`
-		@see sqr(const double)
-		@see cube(const double)
+		@see sqr(const T)
+		@see cube(const T)
 		*/
 		double pow(const double value, const int power);
 
@@ -132,18 +184,24 @@ namespace mc {
 		@param value Number to square
 		@return `value^2` or `value*value`
 		@see pow(const double, const double)
-		@see cube(const double)
+		@see cube(const T)
 		*/
-		double sqr(const double value);
+		template<typename T>
+		constexpr inline T sqr(const T value) {
+			return value*value;
+		}
 
 		/**
 		Cubes a number. Cubing a number is equal to itself to the power of 3.
 		@param value Number to cube
 		@return `value^3` or `value*value*value`
 		@see pow(const double, const double)
-		@see sqr(const double)
+		@see sqr(const T)
 		*/
-		double cube(const double value);
+		template<typename T>
+		constexpr inline T cube(const T value) {
+			return value*value*value;
+		}
 
 		/**
 		Conversion of degreees to radians.
@@ -151,7 +209,9 @@ namespace mc {
 		@return The same number represented as radians
 		@see #pi()
 		*/
-		double toRadians(const double degrees);
+		constexpr inline double toRadians(const double degrees) {
+			return degrees*(static_cast<double>(pi()) / 180.0);
+		}
 
 		/**
 		Conversion of radians to degrees.
@@ -159,7 +219,9 @@ namespace mc {
 		@return The same number represented as degrees
 		@see #pi()
 		*/
-		double toDegrees(const double radians);
+		constexpr inline double toDegrees(const double radians) {
+			return radians*(180.0 / static_cast<double>(pi()));
+		}
 	}//math
 }//mc
 
