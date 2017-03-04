@@ -1,9 +1,15 @@
+#The MIT License (MIT)
+#
+#Copyright (c) 2016 Liav Turkia
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 project(MACE CXX)
 
 if(COMMAND cmake_policy)
-	cmake_policy(PUSH)
 	cmake_policy(VERSION 2.8.12)
 	if(POLICY CMP0017)
 		cmake_policy(SET CMP0017 NEW)
@@ -19,7 +25,7 @@ message("MACE project added")
 #On unix systems this line is requied to compile GLFW and GLEW
 enable_language(C)
 
-set(CMAKE_MODULE_PATH ${CMAKE_ROOT}/Modules "${PROJECT_SOURCE_DIR}/cmake-modules")
+set(CMAKE_MODULE_PATH "${CMAKE_ROOT}/Modules" "${PROJECT_SOURCE_DIR}/cmake-modules")
 
 include(FindPackageHandleStandardArgs)
 include(CheckCXXCompilerFlag)
@@ -70,6 +76,100 @@ find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
+
+find_package(OpenCV)
+
+if(${OpenCV_FOUND})
+	set(MACE_OPENCV 1)
+	
+	target_link_libraries(MACE LINK_PUBLIC ${OpenCV_LIBRARIES})
+	target_include_directories(MACE PUBLIC ${OpenCV_INCLUDE_DIRS})
+endif()
+
+#Checks
+check_include_files("unistd.h" MACE_POSIX)
+check_include_files("windows.h" MACE_WINAPI)
+
+test_big_endian(MACE_BIG_ENDIAN)
+
+#Macros for configuration
+if(APPLE)
+	set(MACE_OSX 1)
+endif()
+
+if(UNIX)
+	set(MACE_UNIX 1)
+endif()
+
+if(WIN32)
+	set(MACE_WINDOWS 1)
+endif()
+
+if(BUILD_SHARED_LIBS)
+	set(MACE_SHARED_LIBS 1)
+else()
+	set(MACE_STATIC_LIBS 1)
+endif()
+
+if(MSYS)
+	set(MACE_MINGW 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" OR MSVC)
+	set(MACE_MSVC 1)
+
+	if(CMAKE_CL_64)
+		set(MACE_MSVC_CL 1)
+	endif()
+
+	if(CMAKE_COMPILER_2005)
+		set(MACE_MSVC_2005 1)
+	endif()
+	
+	if(MSVC_IDE)
+		set(MACE_MSVC_IDE 1)
+	endif()
+elseif(CYGWIN)
+	set(MACE_CYGWIN 1)
+elseif(BORLAND)
+	set(MACE_BORLAND 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
+	set(MACE_CLANG 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_COMPILER_IS_GNUXX)
+	set(MACE_GNU 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "HP")
+	set(MACE_HP 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+	set(MACE_INTEL 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "SunPro")
+	set(MACE_ORACLE 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "TI_DSP")
+	set(MACE_TEXAS_INSTRUMENTS 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Watcom" OR WATCOM)
+	set(MACE_WATCOM 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "ADSP")
+	set(MACE_ANALOG_VISUAL 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Cray")
+	set(MACE_CRAY 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MIPSpro")
+	set(MACE_MIPSPRO 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "PGI")
+	set(MACE_PORTLAND 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "PathScale")
+	set(MACE_PATHSCALE 1)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "XL" OR CMAKE_CXX_COMPILER_ID MATCHES "VisualAge" OR CMAKE_CXX_COMPILER_ID MATCHES "zOS")
+	set(MACE_IBM 1)
+endif()
+
+set(MACE_DIRECTORY "${PROJECT_SOURCE_DIR}")
+
+set(MACE_SYSTEM "${CMAKE_SYSTEM_NAME}")
+set(MACE_SYSTEM_VERSION "${CMAKE_SYSTEM_VERSION}")
+set(MACE_PROCESSOR "${CMAKE_SYSTEM_PROCESSOR}")
+
+if("${CMAKE_BUILD_TYPE}" MATCHES "Debug")
+	set(MACE_DEBUG 1)
+endif()
+
+configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${CMAKE_BINARY_DIR}/MACE-Configure.h" ESCAPE_QUOTES @ONLY)
 
 if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
@@ -304,102 +404,5 @@ if(UNIX AND NOT APPLE)#glfw requires this
 	set(MACE_X11 1)
 endif()
 
-find_package(OpenCV)
-
-if(${OpenCV_FOUND})
-	set(MACE_OPENCV 1)
-	
-	target_link_libraries(MACE LINK_PUBLIC ${OpenCV_LIBRARIES})
-	target_include_directories(MACE PUBLIC ${OpenCV_INCLUDE_DIRS})
-endif()
-
-#Checks
-check_include_files("unistd.h" MACE_POSIX)
-check_include_files("windows.h" MACE_WINAPI)
-
-test_big_endian(MACE_BIG_ENDIAN)
-
-#Macros for configuration
-if(APPLE)
-	set(MACE_OSX 1)
-endif()
-
-if(UNIX)
-	set(MACE_UNIX 1)
-endif()
-
-if(WIN32)
-	set(MACE_WINDOWS 1)
-endif()
-
-if(BUILD_SHARED_LIBS)
-	set(MACE_SHARED_LIBS 1)
-else()
-	set(MACE_STATIC_LIBS 1)
-endif()
-
-if(MSYS)
-	set(MACE_MINGW 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" OR MSVC)
-	set(MACE_MSVC 1)
-
-	if(CMAKE_CL_64)
-		set(MACE_MSVC_CL 1)
-	endif()
-
-	if(CMAKE_COMPILER_2005)
-		set(MACE_MSVC_2005 1)
-	endif()
-	
-	if(MSVC_IDE)
-		set(MACE_MSVC_IDE 1)
-	endif()
-elseif(CYGWIN)
-	set(MACE_CYGWIN 1)
-elseif(BORLAND)
-	set(MACE_BORLAND 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
-	set(MACE_CLANG 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_COMPILER_IS_GNUXX)
-	set(MACE_GNU 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "HP")
-	set(MACE_HP 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-	set(MACE_INTEL 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "SunPro")
-	set(MACE_ORACLE 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "TI_DSP")
-	set(MACE_TEXAS_INSTRUMENTS 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Watcom" OR WATCOM)
-	set(MACE_WATCOM 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "ADSP")
-	set(MACE_ANALOG_VISUAL 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Cray")
-	set(MACE_CRAY 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "MIPSpro")
-	set(MACE_MIPSPRO 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "PGI")
-	set(MACE_PORTLAND 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "PathScale")
-	set(MACE_PATHSCALE 1)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "XL" OR CMAKE_CXX_COMPILER_ID MATCHES "VisualAge" OR CMAKE_CXX_COMPILER_ID MATCHES "zOS")
-	set(MACE_IBM 1)
-endif()
-
-set(MACE_DIRECTORY "${PROJECT_SOURCE_DIR}")
-
-set(MACE_SYSTEM "${CMAKE_SYSTEM_NAME}")
-set(MACE_SYSTEM_VERSION "${CMAKE_SYSTEM_VERSION}")
-set(MACE_PROCESSOR "${CMAKE_SYSTEM_PROCESSOR}")
-
-if("${CMAKE_BUILD_TYPE}" MATCHES "Debug" OR "${CMAKE_BUILD_TYPE}" MATCHES "RelWithDebInfo" )
-	set(MACE_DEBUG 1)
-endif()
-
-configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${CMAKE_BINARY_DIR}/MACE-Configure.h" ESCAPE_QUOTES @ONLY)
-
+#For the configure file
 target_include_directories(MACE PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
-
-if(COMMAND cmake_policy)
-	cmake_policy(POP)
-endif()

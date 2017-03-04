@@ -354,8 +354,6 @@ namespace mc {
 			std::mutex mutex;
 			const std::unique_lock<std::mutex> guard(mutex);
 
-			glfwPollEvents();
-
 			Entity::update();
 		}//update
 

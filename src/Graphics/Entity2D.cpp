@@ -136,14 +136,11 @@ namespace mc {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			const char* vertexShader2D = {
-		#	include <MACE/Graphics/Shaders/image.v.glsl>
-			};
-			const char* fragmentShader2D = {
-		#	include <MACE/Graphics/Shaders/image.f.glsl>
-			};
-
-			renderer.init(vertexShader2D, fragmentShader2D);
+			renderer.init({
+#	include <MACE/Graphics/Shaders/image.v.glsl>
+			}, {
+#	include <MACE/Graphics/Shaders/image.f.glsl>
+			});
 		}//init
 
 		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
@@ -459,14 +456,11 @@ namespace mc {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			const char* vertexShader2D = {
+			renderer.init({
 #	include <MACE/Graphics/Shaders/progressbar.v.glsl>
-			};
-			const char* fragmentShader2D = {
+			}, {
 #	include <MACE/Graphics/Shaders/progressbar.f.glsl>
-			};
-
-			renderer.init(vertexShader2D, fragmentShader2D);
+			});
 
 			ogl::ShaderProgram& prog = renderer.getShader();
 			prog.bind();
@@ -622,14 +616,11 @@ namespace mc {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			const char* vertexShader2D = {
-		#	include <MACE/Graphics/Shaders/letter.v.glsl>
-			};
-			const char* fragmentShader2D = {
-		#	include <MACE/Graphics/Shaders/letter.f.glsl>
-			};
-
-			renderer.init(vertexShader2D, fragmentShader2D);
+			renderer.init({
+#	include <MACE/Graphics/Shaders/letter.v.glsl>
+			}, {
+#	include <MACE/Graphics/Shaders/letter.f.glsl>
+			});
 
 			ogl::ShaderProgram& prog = renderer.getShader();
 			prog.bind();
