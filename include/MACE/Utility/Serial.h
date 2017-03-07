@@ -51,13 +51,13 @@ namespace mc {
 			int read(char* buffer, Size bufferSize);
 			template<int S>
 			int read(char buffer[S]) {
-				read(buffer, S);
+				return read(buffer, S);
 			}
 
 			void write(const char* buffer, const Size bufferSize);
 			template<int S>
 			int write(const char buffer[S]) {
-				write(buffer, S);
+				return write(buffer, S);
 			}
 			void write(const std::string& port);
 

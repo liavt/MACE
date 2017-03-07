@@ -10,6 +10,14 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Serial.h>
 #include <MACE/Core/System.h>
 
+#ifdef MACE_POSIX
+#	include <sys/stat.h>
+#	include <sys/ioctl.h>
+#	include <fcntl.h>
+#	include <termios.h>
+#	include <unistd.h>
+#endif
+
 namespace mc {
 	namespace os {
 		Serial::Serial(const char * port, const BitField & flags, const Size baudRate) {
@@ -108,9 +116,9 @@ namespace mc {
 			options.c_cflag |= (CLOCAL | CREAD);
 
 			//enable no parity and 8 byte word size
-			options.c_cflag &= ~PARENB
-				options.c_cflag &= ~CSTOPB
-				options.c_cflag &= ~CSIZE;
+			options.c_cflag &= ~PARENB;
+			options.c_cflag &= ~CSTOPB;
+			options.c_cflag &= ~CSIZE;
 			options.c_cflag |= CS8;
 
 			//raw input mode
@@ -174,7 +182,7 @@ namespace mc {
 
 			return 0;
 #elif defined(MACE_POSIX)
-			ssize_t bytesRead = read(serial, static_cast<void*>(buffer), toRead);
+			ssize_t bytesRead = ::read(serial, static_cast<void*>(buffer), toRead);
 
 			if( bytesRead < 0 ) {
 				os::checkError(__LINE__, __FILE__);
@@ -198,7 +206,7 @@ namespace mc {
 
 			return;
 #elif defined(MACE_POSIX)
-			ssize_t bytesWritten = write(serial, static_cast<const void*>(buffer), bufferSize, 0);
+			ssize_t bytesWritten = ::write(serial, static_cast<const void*>(buffer), bufferSize);
 
 			if( bytesWritten < 0 ) {
 				os::checkError(__LINE__, __FILE__);

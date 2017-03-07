@@ -21,6 +21,7 @@ The above copyright notice and this permission notice shall be included in all c
 #elif defined(MACE_POSIX)
 #	include <unistd.h>
 #	include <errno.h>
+#	include <cstring>
 #endif
 
 namespace mc {
@@ -207,7 +208,7 @@ namespace mc {
 			//POSIX man pages says to save the error before using it
 			int error = errno;
 
-			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": with message " + strerror(error));
+			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": with message " + std::strerror(error));
 #endif
 		}
 
