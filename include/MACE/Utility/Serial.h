@@ -19,8 +19,6 @@ The above copyright notice and this permission notice shall be included in all c
 #ifdef MACE_WINAPI
 #	define WIN32_LEAN_AND_MEAN
 #	include <windows.h>
-#elif defined(MACE_POSIX)
-#	include <unistd.h>
 #endif
 
 namespace mc {
@@ -51,13 +49,13 @@ namespace mc {
 			int read(char* buffer, Size bufferSize);
 			template<int S>
 			int read(char buffer[S]) {
-				return read(buffer, S);
+				return this->read(buffer, S);
 			}
 
 			void write(const char* buffer, const Size bufferSize);
 			template<int S>
 			int write(const char buffer[S]) {
-				return write(buffer, S);
+				return this->write(buffer, S);
 			}
 			void write(const std::string& port);
 
@@ -68,6 +66,7 @@ namespace mc {
 			bool hasAvailable() const;
 
 			bool isConnected() const;
+			bool isValid() const;
 		private:
 			bool connected = false;
 

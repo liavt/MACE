@@ -171,7 +171,12 @@ namespace mc {
 
 		int Serial::read(char * buffer, Size bufferSize) {
 			if( !isConnected() ) {
-				throw AssertionFailedError("Failed to read from serial: Not connected to serial port");
+				throw InitializationFailedError("Failed to read from serial: Not connected to serial port");
+			}
+
+			if( !isValid() ) {
+				connected = false;
+				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
 
 			Size available = getAvailableCharacterAmount();
@@ -211,7 +216,12 @@ namespace mc {
 
 		void Serial::write(const char * buffer, const Size bufferSize) {
 			if( !isConnected() ) {
-				throw AssertionFailedError("Failed to write to serial: Not connected to serial port");
+				throw InitializationFailedError("Failed to write to serial: Not connected to serial port");
+			}
+
+			if( !isValid() ) {
+				connected = false;
+				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
 
 #ifdef MACE_WINAPI
@@ -233,10 +243,19 @@ namespace mc {
 		}
 
 		void Serial::write(const std::string & port) {
-			write(port.c_str(), port.size());
+			this->write(port.c_str(), port.size());
 		}
 
 		void Serial::flush() {
+			if( !isConnected() ) {
+				throw InitializationFailedError("Unable to flush serial stream - it is not connected");
+			}
+
+			if( !isValid() ) {
+				connected = false;
+				throw FileNotFoundError("Socket closed. Please recall init()");
+			}
+
 #ifdef MACE_WINAPI
 			FlushFileBuffers(serial);
 
@@ -249,6 +268,14 @@ namespace mc {
 		}
 
 		Size Serial::getAvailableCharacterAmount() const {
+			if( !isConnected() ) {
+				throw InitializationFailedError("Unable to read available characters from serial port - it is not connected");
+			}
+
+			if( !isValid() ) {
+				throw FileNotFoundError("Socket closed. Please recall init()");
+			}
+
 #ifdef MACE_WINAPI
 			DWORD errors;
 			COMSTAT status;
@@ -276,5 +303,22 @@ namespace mc {
 		bool Serial::isConnected() const {
 			return connected;
 		}
-			}//os
-	}//mc
+		bool Serial::isValid() const {
+#ifdef MACE_WINDOWS
+			DCB commState;
+
+			//cheatey way to check if it exists by seeing if this errors
+			if( !GetCommState(serial, &commState) ) {
+				//get rid of the flag
+				const DWORD lastError = GetLastError();
+
+				return false;
+			} else {
+				return true;
+			}
+#elif defined(MACE_POSIX)
+			return fcntl(serial, F_GETFD) != -1 || errno != EBADF;
+#endif
+		}
+	}//os
+}//mc
