@@ -150,6 +150,18 @@ namespace mc {
 	_MACE_ERROR(BadSound);
 
 	/**
+	Thrown when an error occured trying to read or write a sound file
+	@see FileNotFoundError
+	*/
+	_MACE_ERROR(BadFile);
+
+	/**
+	Thrown when a file was not found on the filesystem
+	@see BadFileError
+	*/
+	_MACE_ERROR(FileNotFound);
+
+	/**
 	Thrown when a function looks for an object, but doesn't find it.
 	*/
 	_MACE_ERROR(ObjectNotFound);
@@ -172,6 +184,11 @@ namespace mc {
 	Thrown when something relate to Freetype or fonts fails
 	*/
 	_MACE_ERROR(Font);
+
+	/**
+	Thrown when the operating system throws and error
+	*/
+	_MACE_ERROR(System);
 
 	/**
 	Thrown when OpenGL fails or errors

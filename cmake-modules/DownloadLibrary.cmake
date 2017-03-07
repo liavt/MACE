@@ -14,22 +14,23 @@ set(__MACE_DOWNLOAD_LIBRARY YES)
 
 function(download_library name url)
 	if(NOT EXISTS "${PROJECT_SOURCE_DIR}/${name}")
+		string(REGEX MATCH "tar\\.gz|tgz|zip" FILE_EXTENSION "${url}")
+	
+		set(TARBELL_NAME "${name}.${FILE_EXTENSION}")
+	
 		if(NOT EXISTS "${PROJECT_SOURCE_DIR}/${name}.tar.gz")
-			message(STATUS "Downloading ${PROJECT_SOURCE_DIR}/${name} from ${url}")
-			file(DOWNLOAD "${url}" ${PROJECT_SOURCE_DIR}/${name}.tar.gz TIMEOUT 10)
+			message(STATUS "Downloading ${PROJECT_SOURCE_DIR}/${TARBELL_NAME} from ${url}")
+			
+			
+			file(DOWNLOAD "${url}" "${PROJECT_SOURCE_DIR}/${TARBELL_NAME}" TIMEOUT 30 STATUS DOWNLOAD_RESULT)
+			if(NOT "${DOWNLOAD_RESULT}" MATCHES "0")
+				message(FATAL_ERROR "Failed to download from ${url} with error ${DOWNLOAD_RESULT}. Are you sure you are connected to the internet?")
+			endif()
 		endif()
 		
 		file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/${name})
-		
-		if(EXISTS "${PROJECT_SOURCE_DIR}/${name}.tar.gz")
-			set(TARBELL_NAME "${name}.tar.gz")
-		elseif(EXISTS "${PROJECT_SOURCE_DIR}/${name}.tgz")
-			set(TARBELL_NAME "${name}.tgz")
-		else()
-			message(FATAL_ERROR "Failed to download ${name} from ${url}. Are you connected to the internet?")
-		endif()
-		
-		message(STATUS Extracting ${TARBELL_NAME}...)
+				
+		message(STATUS "Extracting ${TARBELL_NAME}...")
 
 		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${TARBELL_NAME} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE UNTAR_RESULT)
 				

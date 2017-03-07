@@ -15,6 +15,14 @@ The above copyright notice and this permission notice shall be included in all c
 #include <thread>
 #include <iostream>
 
+#ifdef MACE_WINAPI
+#	define WIN32_LEAN_AND_MEAN
+#	include <windows.h>
+#elif defined(MACE_POSIX)
+#	include <unistd.h>
+#	include <errno.h>
+#endif
+
 namespace mc {
 	namespace os {
 		std::tm* localtime(std::tm * pointer, const std::time_t * time) {
@@ -176,7 +184,32 @@ namespace mc {
 			}
 
 			return std::string(buf.data(), wn);
+		}
+
+		void checkError(const int line, const char* file) {
+#ifdef MACE_WINAPI
+			DWORD error = GetLastError();
+			if( error == 0 ) {
+				//no error
+				return;
 			}
+
+			LPSTR messageBuffer = nullptr;
+			size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+										 nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR) &messageBuffer, 0, nullptr);
+
+			std::string message(messageBuffer, size);
+
+			LocalFree(messageBuffer);
+
+			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": Winapi threw error " + std::to_string(error) + " with message " + message);
+#elif defined(MACE_POSIX)
+			//POSIX man pages says to save the error before using it
+			int error = errno;
+
+			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": with message " + strerror(error));
+#endif
+		}
 
 		void pause() {
 #ifdef MACE_WINDOWS

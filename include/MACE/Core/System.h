@@ -48,6 +48,8 @@ namespace mc {
 			return n;
 		}
 
+		void checkError(const int lineNumber = 0, const char* filename = "No file specified");
+
 		void pause();
 	}//os
 }//mc
