@@ -61,6 +61,8 @@ namespace mc {
 				}
 			}
 
+			os::checkError(__LINE__, __FILE__);
+
 			DCB serialParams = { 0 };
 
 			if( !GetCommState(serial, &serialParams) ) {
@@ -74,11 +76,26 @@ namespace mc {
 			serialParams.fDtrControl = DTR_CONTROL_ENABLE;
 
 			if( !SetCommState(serial, &serialParams) ) {
-				throw BadFileError("Error serial parameters for " + std::string(port));
+				throw BadFileError("Error setting serial parameters for " + std::string(port));
+			}
+
+			os::checkError(__LINE__, __FILE__);
+
+			COMMTIMEOUTS timeout = { 0 };
+			timeout.ReadIntervalTimeout = 50;
+			timeout.ReadTotalTimeoutConstant = 50;
+			timeout.ReadTotalTimeoutMultiplier = 50;
+			timeout.WriteTotalTimeoutConstant = 50;
+			timeout.WriteTotalTimeoutMultiplier = 10;
+
+			if( !SetCommTimeouts(serial, &timeout) ) {
+				throw BadFileError("Error setting serial timeout for " + std::string(port));
 			}
 
 			//we shall purge everything to flush any previous characters;
-			PurgeComm(serial, PURGE_RXCLEAR | PURGE_TXCLEAR);
+			if( !PurgeComm(serial, PURGE_RXCLEAR | PURGE_TXCLEAR) ) {
+				throw BadFileError("Error purging serial communications for " + std::string(port));
+			};
 
 			os::checkError(__LINE__, __FILE__);
 
@@ -259,5 +276,5 @@ namespace mc {
 		bool Serial::isConnected() const {
 			return connected;
 		}
-	}//os
-}//mc
+			}//os
+	}//mc

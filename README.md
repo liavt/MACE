@@ -4,11 +4,14 @@
 # MACE
 MACE stands for MACE is A C++ Engine, Modular Abstract Components Engine, Many Amazing Classes Everywhere, Many Acronyms Can Exist, or the medievel weapon. Choose whichever one you like best.
 
-##What is it?
+##What is in it?
 It is a many things:
 * Graphics and UI engine
-* Utility library
-* Audio player (soon!)
+* Audio player
+* Serial communication
+* Vector and Matrix math library
+* Macros to determine compilers and systems
+* A full C98 compliant preprocessor
 * Module loader
 
 You can implement your own modules to make MACE whatever you want!
