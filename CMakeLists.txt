@@ -402,7 +402,7 @@ if("${CMAKE_BUILD_TYPE}" MATCHES "Debug")
 	set(MACE_DEBUG 1)
 endif()
 
-configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${CMAKE_BINARY_DIR}/MACE-Configure.h" ESCAPE_QUOTES @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${CMAKE_CURRENT_BINARY_DIR}/MACE-Configure.h" ESCAPE_QUOTES @ONLY)
 
 #For the configure file
 target_include_directories(MACE PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")

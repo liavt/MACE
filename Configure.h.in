@@ -42,6 +42,10 @@ Libraries
 
 #cmakedefine MACE_WINAPI 1
 
+#if !defined(MACE_POSIX) && !defined(MACE_WINAPI)
+#	error "This system is unsupported. It must have either windows.h or unistd.h"
+#endif
+
 /*
 =======================================
 Operating System
