@@ -39,6 +39,7 @@ namespace mc {
 				WRITE = 1,
 			};
 
+			Serial();
 			Serial(const char* port, const Size baudRate = 9600);
 			Serial(const std::string& port, const Size baudRate = 9600);
 			~Serial();

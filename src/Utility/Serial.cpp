@@ -20,7 +20,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace os {
-		Serial::Serial(const char * port, const Size baudRate) {
+		Serial::Serial() {}
+
+		Serial::Serial(const char * port, const Size baudRate) : Serial() {
 			init(port, baudRate);
 		}
 
