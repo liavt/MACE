@@ -48,44 +48,50 @@ namespace mc {
 			}//anon namespace
 
 #ifdef MACE_DEBUG
-			void checkGLError(const Index line, const char* file) {
+			void checkGLError(const Index line, const char* file, const char* message) {
 				Enum result = GL_NO_ERROR;
 				while( (result = glGetError()) != GL_NO_ERROR ) {
 					switch( result ) {
 					case GL_INVALID_ENUM:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
 						break;
 					case GL_INVALID_VALUE:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_VALUE! A numeric argument is out of range!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_VALUE! A numeric argument is out of range!");
 						break;
 					case GL_INVALID_OPERATION:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
 						break;
 					case GL_INVALID_FRAMEBUFFER_OPERATION:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
 						break;
 					case GL_STACK_OVERFLOW:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
 						break;
 					case GL_STACK_UNDERFLOW:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
 						break;
 					case GL_OUT_OF_MEMORY:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
 						break;
 					default:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": OpenGL has errored with an error code of " + std::to_string(result));
+						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": OpenGL has errored with an error code of " + std::to_string(result));
 						break;
 					}
 				}
 #else
-			void checkGLError(const Index, const char*) {
+			void checkGLError(const Index, const char*, const char*) {
 #endif
+			}
+
+			void checkGLError(const Index line, const std::string & file, const std::string message) {
+				checkGLError(line, file.c_str(), message.c_str());
 			}
 
 
 			void VertexArray::init() {
 				glGenVertexArrays(1, &id);
+
+				checkGLError(__LINE__, __FILE__, "Error creating VAO");
 			}
 
 			void VertexArray::destroy() {
@@ -100,6 +106,8 @@ namespace mc {
 						buffers[i].destroy();
 					}
 				}
+
+				checkGLError(__LINE__, __FILE__, "Error destroying VAO");
 			}
 
 			bool VertexArray::isCreated() const {
@@ -129,13 +137,15 @@ namespace mc {
 
 				addBuffer(buffer);
 
-				checkGLError(__LINE__, __FILE__);
+				checkGLError(__LINE__, __FILE__, "Error putting data in VAO attribute list");
 			}
 
 			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
 				indices = ElementBuffer(indiceNum);
 				indices.init();
 				indices.setData(sizeof(unsigned int)*indiceNum, indiceData, GL_STATIC_DRAW);
+
+				checkGLError(__LINE__, __FILE__, "Error putting indices in VAO");
 			}
 
 			void VertexArray::addBuffer(const VertexBuffer & newBuffer) {
@@ -144,6 +154,8 @@ namespace mc {
 				newBuffer.enable();
 
 				buffers.push_back(newBuffer);
+
+				checkGLError(__LINE__, __FILE__, "Error adding buffer to VAO");
 			}
 
 			void VertexArray::setVertexNumber(const Size vertexNum) {
@@ -192,6 +204,8 @@ namespace mc {
 
 			void VertexArray::bindIndex(const Index ID) const {
 				glBindVertexArray(ID);
+
+				checkGLError(__LINE__, __FILE__, "Error binding VAO");
 			}
 
 			UniformBuffer::UniformBuffer() noexcept : Buffer(GL_UNIFORM_BUFFER) {}
@@ -238,12 +252,16 @@ namespace mc {
 
 			void FrameBuffer::init() {
 				glGenFramebuffers(1, &id);
+
+				checkGLError(__LINE__, __FILE__, "Error creating framebuffer");
 			}
 
 			void FrameBuffer::destroy() {
 				unbind();
 				glDeleteFramebuffers(1, &id);
 				id = 0;
+
+				checkGLError(__LINE__, __FILE__, "Error destroying framebuffer");
 			}
 
 			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
@@ -328,10 +346,14 @@ namespace mc {
 
 			void RenderBuffer::init() {
 				glGenRenderbuffers(1, &id);
+
+				checkGLError(__LINE__, __FILE__, "Error creating RenderBuffer");
 			}
 
 			void RenderBuffer::destroy() {
 				glDeleteRenderbuffers(1, &id);
+
+				checkGLError(__LINE__, __FILE__, "Error destroying RenderBuffer");
 			}
 
 			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
@@ -377,13 +399,16 @@ namespace mc {
 			void Texture2D::init() {
 				if( !isCreated() ) {
 					glGenTextures(1, &id);
+
+					checkGLError(__LINE__, __FILE__, "Error creating Texture2D");
 				}
 			}
 
 			void Texture2D::destroy() {
 				if( isCreated() ) {
-
 					glDeleteTextures(1, &id);
+
+					checkGLError(__LINE__, __FILE__, "Error destroying Texture2D");
 				}
 			}
 
@@ -735,7 +760,7 @@ namespace mc {
 					throwShaderError(id, type, "The shader failed to compile");
 				}
 
-				checkGLError(__LINE__, __FILE__);
+				checkGLError(__LINE__, __FILE__, "Error compiling GLSL shader");
 			}
 
 			bool Shader::isCreated() const {
@@ -772,7 +797,7 @@ namespace mc {
 
 			void ShaderProgram::init() {
 				id = glCreateProgram();
-				checkGLError(__LINE__, __FILE__);
+				checkGLError(__LINE__, __FILE__, "Error creating shader program");
 				if( id == 0 ) {
 					throwShaderError(id, GL_PROGRAM, "Failed to retrieve program ID");
 				}
@@ -787,7 +812,7 @@ namespace mc {
 					}
 					glDeleteProgram(id);
 				}
-				checkGLError(__LINE__, __FILE__);
+				checkGLError(__LINE__, __FILE__, "Error destroying shader program");
 			}
 			void ShaderProgram::link() {
 				glLinkProgram(id);
@@ -808,7 +833,7 @@ namespace mc {
 					}
 				}
 
-				checkGLError(__LINE__, __FILE__);
+				checkGLError(__LINE__, __FILE__, "Error linking shader program");
 			}
 			bool ShaderProgram::isCreated() const {
 				return glIsProgram(id) == 1;
@@ -1023,10 +1048,6 @@ namespace mc {
 				return uniforms;
 			}
 
-			void checkGLError(const Index line, const std::string & file) {
-				checkGLError(line, file.c_str());
-			}
-
 			void enable(const Enum param) {
 				glEnable(param);
 			}
@@ -1042,6 +1063,6 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-			}//ogl
-		}//gfx
-	}//mc
+		}//ogl
+	}//gfx
+}//mc

@@ -102,7 +102,7 @@ namespace mc {
 
 			glfwMakeContextCurrent(window);
 
-			gfx::ogl::checkGLError(__LINE__, __FILE__);
+			gfx::ogl::checkGLError(__LINE__, __FILE__, "Error creating window");
 
 			glewExperimental = true;
 			GLenum result = glewInit();
@@ -120,7 +120,7 @@ namespace mc {
 			}
 
 			try {
-				gfx::ogl::checkGLError(__LINE__, __FILE__);
+				gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
 			} catch( ... ) {
 				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 			}
@@ -136,8 +136,6 @@ namespace mc {
 			std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 			std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-
-			gfx::ogl::checkGLError(__LINE__, __FILE__);
 
 			if( properties.getBit(WindowModule::VSYNC) )glfwSwapInterval(1);
 			else glfwSwapInterval(0);

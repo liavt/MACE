@@ -156,7 +156,7 @@ namespace mc {
  				//setData(mat.data, mat.cols, mat.rows, GL_UNSIGNED_BYTE, GL_BGR, GL_RGBA);
  				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from OpenCV Mat");
 		}
 
 			ColorAttachment(cv::Mat mat) : ColorAttachment() {

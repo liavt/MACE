@@ -471,6 +471,8 @@ namespace mc {
 			prog.setUniform("backgroundTexture", 0);
 			prog.setUniform("foregroundTexture", 1);
 			prog.setUniform("selectionTexture", 2);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Error initializing RenderProtocol<ProgressBar>");
 		}//init
 
 		void RenderProtocol<ProgressBar>::initEntity(GraphicsEntity* e) {
@@ -498,7 +500,7 @@ namespace mc {
 
 			renderer.draw(entity);
 
-			ogl::checkGLError(__LINE__, __FILE__);
+			ogl::checkGLError(__LINE__, __FILE__, "Error rendering ProgressBar");
 		}//render
 
 		void RenderProtocol<ProgressBar>::destroy() {
@@ -630,7 +632,7 @@ namespace mc {
 			prog.setUniform("mask", 0);
 			prog.setUniform("tex", 1);
 
-			ogl::checkGLError(__LINE__, __FILE__);
+			ogl::checkGLError(__LINE__, __FILE__, "Error creating RenderProtocol<Letter>");
 		}//init
 
 		void RenderProtocol<Letter>::initEntity(GraphicsEntity* en) {
@@ -657,7 +659,7 @@ namespace mc {
 
 			renderer.draw(entity);
 
-			ogl::checkGLError(__LINE__, __FILE__);
+			ogl::checkGLError(__LINE__, __FILE__, "Error rendering Letter");
 		}//render
 
 		void RenderProtocol<Letter>::destroy() {

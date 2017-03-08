@@ -22,6 +22,7 @@ namespace mc {
 	namespace math {}
 }
 
+#include <MACE/Utility/Serial.h>
 #include <MACE/Utility/Audio.h>
 #include <MACE/Utility/Color.h>
 #include <MACE/Utility/Vector.h>

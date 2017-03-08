@@ -120,12 +120,12 @@ namespace mc {
 		}
 
 		void FPSComponent::init(Entity *) {
-			lastTime = time(0);
+			lastTime = std::time(0);
 		}
 
 		bool FPSComponent::update(Entity * e) {
 			++nbUpdates;
-			if( time(0) - lastTime >= 1.0 ) {
+			if( std::time(0) - lastTime >= 1.0 ) {
 				updatesPerSecond = nbUpdates;
 				framesPerSecond = nbFrames;
 				cleansPerSecond = nbCleans;

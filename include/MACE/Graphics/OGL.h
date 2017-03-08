@@ -46,11 +46,11 @@ namespace mc {
 			/**
 			@opengl
 			*/
-			void checkGLError(const Index line = 0, const char* file = "Unknown file");
+			void checkGLError(const Index line = 0, const char* file = "Unknown file", const char* message = "No message specified");
 			/**
-			@copydoc ogl::checkGLError(const Index, const char*)
+			@copydoc ogl::checkGLError(const Index, const char*, const char*)
 			*/
-			void checkGLError(const Index line, const std::string& file);
+			void checkGLError(const Index line, const std::string& file, const std::string message);
 
 			/**
 			@opengl

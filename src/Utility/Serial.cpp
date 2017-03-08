@@ -20,11 +20,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace os {
-		Serial::Serial(const char * port, const BitField & flags, const Size baudRate) {
-			init(port, flags, baudRate);
+		Serial::Serial(const char * port, const Size baudRate) {
+			init(port, baudRate);
 		}
 
-		Serial::Serial(const std::string & port, const BitField & flags, const Size baudRate) : Serial(port.c_str(), flags, baudRate) {}
+		Serial::Serial(const std::string & port, const Size baudRate) : Serial(port.c_str(), baudRate) {}
 
 		Serial::~Serial() {
 			if( isConnected() ) {
@@ -32,36 +32,27 @@ namespace mc {
 			}
 		}
 
-		void Serial::init(const char * port, const BitField & flags, const Size baudRate) {
+		void Serial::init(const char * port, const Size baudRate) {
 			if( isConnected() ) {
 				throw AssertionFailedError("Can't call init() on a Serial class that is already connected!");
 			}
 
 #ifdef MACE_WINAPI
-			DWORD accessFlags;
-			if( flags.getBit(Serial::WRITE) && flags.getBit(Serial::READ) ) {
-				accessFlags = GENERIC_READ | GENERIC_WRITE;
-			} else if( flags.getBit(Serial::READ) ) {
-				accessFlags = GENERIC_READ;
-			} else if( flags.getBit(Serial::WRITE) ) {
-				accessFlags = GENERIC_WRITE;
-			} else {
-				throw InitializationFailedError("Serial port must be opened with either the Serial::WRITE or Serial::READ flags!");
-			}
-
-			serial = CreateFile(port, accessFlags, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+			serial = CreateFile(port, GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 			if( serial == INVALID_HANDLE_VALUE ) {
 				const DWORD lastError = GetLastError();
 
 				if( lastError == ERROR_FILE_NOT_FOUND ) {
 					throw FileNotFoundError("Serial port with name " + std::string(port) + " not found.");
+				} else if( lastError == ERROR_ACCESS_DENIED ) {
+					throw SystemError("Access denied accessing serial port at " + std::string(port));
 				} else {
 					throw FileNotFoundError("Error opening " + std::string(port) + " with error from CreateFile " + std::to_string(lastError));
 				}
 			}
 
-			os::checkError(__LINE__, __FILE__);
+			os::checkError(__LINE__, __FILE__, "Error opening serial socket with CreateFile at " + std::string(port));
 
 			DCB serialParams = { 0 };
 
@@ -79,7 +70,7 @@ namespace mc {
 				throw BadFileError("Error setting serial parameters for " + std::string(port));
 			}
 
-			os::checkError(__LINE__, __FILE__);
+			os::checkError(__LINE__, __FILE__, "Error setting serial communication status for " + std::string(port));
 
 			COMMTIMEOUTS timeout = { 0 };
 			timeout.ReadIntervalTimeout = 50;
@@ -92,43 +83,40 @@ namespace mc {
 				throw BadFileError("Error setting serial timeout for " + std::string(port));
 			}
 
+			os::checkError(__LINE__, __FILE__, "Error setting serial communication timeouts for " + std::string(port));
+
 			//we shall purge everything to flush any previous characters;
 			if( !PurgeComm(serial, PURGE_RXCLEAR | PURGE_TXCLEAR) ) {
 				throw BadFileError("Error purging serial communications for " + std::string(port));
 			};
 
-			os::checkError(__LINE__, __FILE__);
-
-			connected = true;
+			os::checkError(__LINE__, __FILE__, "Error purging previous messages on the serial communication line at " + std::string(port));
 #elif defined(MACE_POSIX)
-			mode_t accessFlags;
-			if( flags.getBit(Serial::WRITE) && flags.getBit(Serial::READ) ) {
-				accessFlags = S_IRWXU;
-			} else if( flags.getBit(Serial::READ) ) {
-				accessFlags = S_IRUSR;
-			} else if( flags.getBit(Serial::WRITE) ) {
-				accessFlags = S_IWUSR;
-			} else {
-				throw InitializationFailedError("Serial port must be opened with either the Serial::WRITE or Serial::READ flags!");
-			}
-
 			//tell it to not block or own the process
-			serial = open(port, O_RDWR | O_NOCTTY | O_NDELAY, accessFlags);
+			serial = open(port, O_RDWR | O_NOCTTY | O_NDELAY, S_IRWXU);
 
 			if( serial == -1 ) {
 				throw FileNotFoundError("Unable to open serial port " + std::string(port));
 			}
 
+			os::checkError(__LINE__, __FILE__, "Error opening serial port at " + std::string(port));
+
 			//we dont want to block reading - only return 0.
 			fcntl(serial, F_SETFL, FNDELAY);
+
+			os::checkError(__LINE__, __FILE__, "Error setting serial block settings for " + std::string(port));
 
 			struct termios options;
 
 			//get current options
 			tcgetattr(serial, &options);
 
+			os::checkError(__LINE__, __FILE__, "Error getting serial attributes for " + std::string(port));
+
 			cfsetispeed(&options, baudRate);
 			cfsetospeed(&options, baudRate);
+
+			os::checkError(__LINE__, __FILE__, "Error setting baud rate for " + std::string(port));
 
 			options.c_cflag |= (CLOCAL | CREAD);
 
@@ -147,10 +135,10 @@ namespace mc {
 			//actually set the options
 			tcsetattr(serial, TCSANOW, &options);
 
-			os::checkError(__LINE__, __FILE__);
+			os::checkError(__LINE__, __FILE__, "Error setting serial attributes for " + std::string(port));
+#endif
 
 			connected = true;
-#endif
 		}
 
 		void Serial::destroy() {
@@ -158,15 +146,15 @@ namespace mc {
 				throw AssertionFailedError("Can't destroy an unconnected Serial object!");
 			}
 
-			connected = false;
-
 #ifdef MACE_WINAPI
 			CloseHandle(serial);
 #elif defined(MACE_POSIX)
 			close(serial);
 #endif
+			os::checkError(__LINE__, __FILE__, "Error closing serial port");
 
-			os::checkError(__LINE__, __FILE__);
+			connected = false;
+
 		}
 
 		int Serial::read(char * buffer, Size bufferSize) {
@@ -175,22 +163,17 @@ namespace mc {
 			}
 
 			if( !isValid() ) {
-				connected = false;
+				destroy();
 				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
 
-			Size available = getAvailableCharacterAmount();
+			const Size available = getAvailableCharacterAmount();
 
-			if( available < 1 ) {
+			//dont want to overflow the buffer
+			Size toRead = available > bufferSize ? bufferSize : available;
+
+			if( toRead == 0 ) {
 				return 0;
-			}
-
-			Size toRead;
-
-			if( available > bufferSize ) {
-				toRead = bufferSize;
-			} else {
-				toRead = available;
 			}
 
 #ifdef MACE_WINAPI
@@ -200,14 +183,18 @@ namespace mc {
 				return bytesRead;
 			}
 
-			os::checkError(__LINE__, __FILE__);
+			if( bytesRead == 0 && toRead > 0 ) {
+				throw BadFileError("Failed to read from serial stream");
+			}
 
-			return 0;
+			os::checkError(__LINE__, __FILE__, "Error reading from serial port");
+
+			return bytesRead;
 #elif defined(MACE_POSIX)
-			ssize_t bytesRead = ::read(serial, static_cast<void*>(buffer), toRead);
+			ssize_t bytesRead = ::read(serial, buffer, toRead);
 
 			if( bytesRead < 0 ) {
-				os::checkError(__LINE__, __FILE__);
+				os::checkError(__LINE__, __FILE__, "Error reading from serial port");
 			}
 
 			return bytesRead;
@@ -220,23 +207,31 @@ namespace mc {
 			}
 
 			if( !isValid() ) {
-				connected = false;
+				destroy();
 				throw FileNotFoundError("Socket closed. Please recall init()");
+			}
+
+			if( bufferSize == 0 ) {
+				return;
 			}
 
 #ifdef MACE_WINAPI
 			DWORD bytesSent;
 
-			if( !WriteFile(serial, static_cast<const void*>(buffer), bufferSize, &bytesSent, 0) ) {
-				os::checkError(__LINE__, __FILE__);
+			if( !WriteFile(serial, buffer, bufferSize, &bytesSent, 0) ) {
+				os::checkError(__LINE__, __FILE__, "Failed to write to serial port");
+			}
+
+			if( bytesSent == 0 && bufferSize > 0 ) {
+				throw BadFileError("Unable to write to serial port");
 			}
 
 			return;
 #elif defined(MACE_POSIX)
-			ssize_t bytesWritten = ::write(serial, static_cast<const void*>(buffer), bufferSize);
+			ssize_t bytesWritten = ::write(serial, buffer, bufferSize);
 
-			if( bytesWritten < 0 ) {
-				os::checkError(__LINE__, __FILE__);
+			if( bytesWritten <= 0 ) {
+				os::checkError(__LINE__, __FILE__, "Failed to write to serial port");
 				return;
 			}
 #endif
@@ -252,19 +247,18 @@ namespace mc {
 			}
 
 			if( !isValid() ) {
-				connected = false;
+				destroy();
 				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
 
 #ifdef MACE_WINAPI
 			FlushFileBuffers(serial);
 
-			os::checkError(__LINE__, __FILE__);
 #elif defined(MACE_POSIX)
 			tcflush(serial, TCIOFLUSH);
-
-			os::checkError(__LINE__, __FILE__);
 #endif
+
+			os::checkError(__LINE__, __FILE__, "Failed to flush serial buffer");
 		}
 
 		Size Serial::getAvailableCharacterAmount() const {
@@ -282,7 +276,7 @@ namespace mc {
 
 			ClearCommError(serial, &errors, &status);
 
-			os::checkError(__LINE__, __FILE__);
+			os::checkError(__LINE__, __FILE__, "Failed to retrieve available character amount with error code: ClearCommError returned " + std::to_string(errors));
 
 			return status.cbInQue;
 #elif defined(MACE_POSIX)
@@ -290,7 +284,7 @@ namespace mc {
 
 			ioctl(serial, FIONREAD, &bytes);
 
-			os::checkError(__LINE__, __FILE__);
+			os::checkError(__LINE__, __FILE__, "Failed to retrieve available character amount");
 
 			return static_cast<Size>(bytes);
 #endif
@@ -305,6 +299,10 @@ namespace mc {
 		}
 		bool Serial::isValid() const {
 #ifdef MACE_WINDOWS
+			if( serial == INVALID_HANDLE_VALUE ) {
+				return false;
+			}
+
 			DCB commState;
 
 			//cheatey way to check if it exists by seeing if this errors
@@ -317,7 +315,9 @@ namespace mc {
 				return true;
 			}
 #elif defined(MACE_POSIX)
-			return fcntl(serial, F_GETFD) != -1 || errno != EBADF;
+			const bool valid = fcntl(serial, F_GETFD) != -1 || errno != EBADF;;
+			errno = 0;
+			return valid;
 #endif
 		}
 	}//os

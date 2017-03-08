@@ -101,7 +101,7 @@ namespace mc {
 			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-			ogl::checkGLError(__LINE__, __FILE__);
+			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from file");
 		}
 
 		void ColorAttachment::load(const std::string & file) {
@@ -115,6 +115,8 @@ namespace mc {
 
 			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from color");
 		}
 
 		Color& ColorAttachment::getPaint() {

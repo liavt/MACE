@@ -39,11 +39,11 @@ namespace mc {
 				WRITE = 1,
 			};
 
-			Serial(const char* port, const BitField& flags = 0b1111111, const Size baudRate = 9600);
-			Serial(const std::string& port, const BitField& flags = 0b11111111, const Size baudRate = 9600);
+			Serial(const char* port, const Size baudRate = 9600);
+			Serial(const std::string& port, const Size baudRate = 9600);
 			~Serial();
 
-			void init(const char* port, const BitField& flags = 0b1111111, const Size baudRate = 9600);
+			void init(const char* port,const Size baudRate = 9600);
 			void destroy();
 
 			int read(char* buffer, Size bufferSize);

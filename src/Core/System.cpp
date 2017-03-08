@@ -187,7 +187,7 @@ namespace mc {
 			return std::string(buf.data(), wn);
 		}
 
-		void checkError(const int line, const char* file) {
+		void checkError(const int line, const char* file, const std::string errorMessage) {
 #ifdef MACE_WINAPI
 			DWORD error = GetLastError();
 			if( error == 0 ) {
@@ -203,12 +203,19 @@ namespace mc {
 
 			LocalFree(messageBuffer);
 
-			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": Winapi threw error " + std::to_string(error) + " with message " + message);
+			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": Winapi threw error " + std::to_string(error) + " with message " + message);
 #elif defined(MACE_POSIX)
 			//POSIX man pages says to save the error before using it
 			int error = errno;
 
-			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": with message " + std::strerror(error));
+			if( error == 0 ) {
+				//no error
+				return;
+			}
+
+			errno = 0;
+
+			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": with message " + std::strerror(error));
 #endif
 		}
 

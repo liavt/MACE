@@ -109,7 +109,7 @@ namespace mc {
 
 			ssl::tearDown(win);
 
-			ogl::checkGLError(__LINE__, __FILE__);
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
 		}//tearDown
 
 		void Renderer::renderFrame(os::WindowModule* win) {
@@ -233,24 +233,24 @@ namespace mc {
 					depthBuffer.init();
 					depthBuffer.bind();
 
-					ogl::checkGLError(__LINE__, __FILE__);
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
 
 					sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 					idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
 					depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
 
-					ogl::checkGLError(__LINE__, __FILE__);
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
 
 					//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
 					frameBuffer.init();
 
-					ogl::checkGLError(__LINE__, __FILE__);
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
 
 					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture);
 					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture);
 					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
 
-					ogl::checkGLError(__LINE__, __FILE__);
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
 
 					Enum status;
 					if( (status = frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE ) {
@@ -285,7 +285,7 @@ namespace mc {
 					constexpr Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 					frameBuffer.setDrawBuffers(2, buffers);
 
-					ogl::checkGLError(__LINE__, __FILE__);
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
 
 					glViewport(0, 0, width, height);
 
@@ -301,18 +301,18 @@ namespace mc {
 				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
 
 				idTexture.init();
 				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
 				//better to access originalWidth and originalHeight directly than via a parameter.
 				generateFramebuffer(originalWidth, originalHeight);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
 
 				//gl states
 				ogl::enable(GL_BLEND);
@@ -320,7 +320,7 @@ namespace mc {
 
 				ogl::enable(GL_MULTISAMPLE);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error enabling blending and multisampling for renderer");
 			}//init
 
 			void setUp(os::WindowModule *) {
@@ -333,7 +333,7 @@ namespace mc {
 
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up ssl");
 			}//setUp
 
 			void tearDown(os::WindowModule * win) {
@@ -349,7 +349,7 @@ namespace mc {
 				ogl::FrameBuffer::setDrawBuffer(GL_BACK);
 
 				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down ssl");
 
 				glfwSwapBuffers(win->getGLFWWindow());
 			}//tearDown
@@ -405,7 +405,7 @@ namespace mc {
 
 				if( pixel > 0 ) {
 					if(pixel > renderQueue.size()){
-						throw AssertionFailedError("Internal error: Pixel read from framebuffer is larger than the render queue!");
+						throw AssertionFailedError("Internal Error: Pixel read from framebuffer is larger than the render queue!");
 					}
 				
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual index
@@ -414,7 +414,7 @@ namespace mc {
 
 				frameBuffer.unbind();
 
-				ogl::checkGLError(__LINE__, __FILE__);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to check input from framebuffer in ssl");
 			}//checkInput
 
 			void bindBuffer(ogl::UniformBuffer & buf) {
@@ -628,7 +628,6 @@ namespace mc {
 			}//getSSLPreprocessor
 #undef _MACE_ENTITY_DATA_BUFFER_SIZE
 #undef _MACE_ENTITY_DATA_LOCATION
-
 		}//ssl
 
 		SimpleQuadRenderer::SimpleQuadRenderer(const bool ssl) : useSSL(ssl) {}
@@ -676,7 +675,7 @@ namespace mc {
 				ssl::bindShaderProgram(shaders2D);
 			}
 
-			ogl::checkGLError(__LINE__, __FILE__);
+			ogl::checkGLError(__LINE__, __FILE__, "Failed to create simple quad renderer");
 		}
 
 		void SimpleQuadRenderer::init(const char * vertexShader, const std::string & fragShader) {
