@@ -268,7 +268,7 @@ namespace mc {
 				*/
 				MAINTAIN_HEIGHT = 7,
 
-				DEFAULT_PROPERTIES = 0x00000000
+				DEFAULT_PROPERTIES = 0b00000000
 			};//EntityProperty
 
 			struct Metrics {
@@ -803,6 +803,35 @@ namespace mc {
 
 			float opacity = 1.0f;
 		};//GraphicsEntity
+
+		class Selectable{
+		public:
+			bool isClicked() const;
+			bool isDisabled() const;
+			bool isHovered() const;
+
+			void click();
+	
+			void disable();
+			void enable();
+
+			void trigger();
+		protected:
+			enum SelectableProperty: Byte {
+				CLICKED = 0,
+				DISABLED = 1,
+				HOVERED = 2
+			};
+
+			BitField selectableProperties = 0;
+
+			virtual void onClick();
+
+			virtual void onEnable();
+			virtual void onDisable();
+
+			virtual void onTrigger();
+		};
 
 	}//gfx
 }//mc

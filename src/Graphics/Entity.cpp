@@ -59,7 +59,7 @@ namespace mc {
 		ColorAttachment::ColorAttachment(const std::string & file) : ColorAttachment(file.c_str()) {}
 
 		ColorAttachment::ColorAttachment(const Color& col) : ColorAttachment(solidColor, col) {
-			if (!solidColor.isCreated()) {
+			if( !solidColor.isCreated() ) {
 				solidColor.init();
 
 				solidColor.resetPixelStorage();
@@ -75,14 +75,14 @@ namespace mc {
 		}
 
 		void ColorAttachment::load(const char * file) {
-			
+
 			resetPixelStorage();
 
 			int width, height, componentSize;
 
 			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
 
-			if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
+			if( image == nullptr || width == 0 || height == 0 || componentSize == 0 ) {
 				stbi_image_free(image);
 				throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 			}
@@ -140,8 +140,8 @@ namespace mc {
 		}
 
 		bool Entity::hasChild(Entity & e) const {
-			for (Size i = 0; i < children.size(); ++i) {
-				if (children[i] == &e) {
+			for( Size i = 0; i < children.size(); ++i ) {
+				if( children[i] == &e ) {
 					return true;
 				}
 			}
@@ -151,7 +151,7 @@ namespace mc {
 		void Entity::clearChildren() {
 			makeDirty();
 
-			while (!children.empty()) {
+			while( !children.empty() ) {
 				children.back()->setParent(nullptr);
 				children.pop_back();
 			}
@@ -167,15 +167,14 @@ namespace mc {
 		}
 
 		void Entity::removeChild(const Entity * e) {
-			if (e == nullptr) {
+			if( e == nullptr ) {
 				throw NullPointerError("Argument to removeChild is nullptr!");
-			}
-			else if (children.empty()) {
+			} else if( children.empty() ) {
 				throw AssertionFailedError("Can\'t remove child from an empty entity (empty() is true)");
 			}
 
-			for (Index i = 0; i < children.size(); ++i) {
-				if (e == children[i]) {
+			for( Index i = 0; i < children.size(); ++i ) {
+				if( e == children[i] ) {
 					makeDirty();
 
 					removeChild(i);
@@ -189,40 +188,37 @@ namespace mc {
 		void Entity::removeChild(Index index) {
 			makeDirty();
 
-			if (children.empty()) {
+			if( children.empty() ) {
 				throw IndexOutOfBoundsError("Can\'t remove a child from an empty entity!");
-			}
-			else if (index >= children.size()) {
+			} else if( index >= children.size() ) {
 				throw IndexOutOfBoundsError(std::to_string(index) + " is larger than the amount of children!");
-			}
-			else if (children.size() == 1) {
+			} else if( children.size() == 1 ) {
 				children.clear();
-			}
-			else {
+			} else {
 				children.erase(children.begin() + index);
 			}
 		}
 
 		void Entity::render() {
-			if (!getProperty(Entity::INIT)) {
+			if( !getProperty(Entity::INIT) ) {
 				init();
 			}
 
 			//we want to do the actual cleaning in render() because clean() does some graphical work
-			if (getProperty(Entity::DIRTY)) {
+			if( getProperty(Entity::DIRTY) ) {
 				clean();
 			}
 
 			//check if we can render
-			if (!getProperty(Entity::DISABLED)) {
+			if( !getProperty(Entity::DISABLED) ) {
 				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
 				onRender();
 
-				for (Index i = 0; i < children.size(); ++i) {
+				for( Index i = 0; i < children.size(); ++i ) {
 					children[i]->render();
 				}
 
-				for (Index i = 0; i < components.size(); ++i) {
+				for( Index i = 0; i < components.size(); ++i ) {
 					components[i]->render(this);
 				}
 			}
@@ -231,29 +227,28 @@ namespace mc {
 
 		void Entity::hover() {
 			onHover();
-			for (Index i = 0; i < components.size(); ++i) {
+			for( Index i = 0; i < components.size(); ++i ) {
 				components[i]->hover(this);
 			}
 		}
 
 		void Entity::clean() {
-			if (getProperty(Entity::DIRTY)) {
+			if( getProperty(Entity::DIRTY) ) {
 				onClean();
 
-				for (Size i = 0; i < children.size(); ++i) {
-					if (children[i] == nullptr) {
+				for( Size i = 0; i < children.size(); ++i ) {
+					if( children[i] == nullptr ) {
 						removeChild(i);
 						//to account for the entity beng removed
 						--i;
-					}
-					else if (children[i]->getProperty(Entity::INIT)) {
+					} else if( children[i]->getProperty(Entity::INIT) ) {
 						children[i]->setProperty(Entity::DIRTY, true);
 						children[i]->clean();
 					}
 				}
 
-				for (Index i = 0; i < components.size(); ++i) {
-					if (components[i] == nullptr) {
+				for( Index i = 0; i < components.size(); ++i ) {
+					if( components[i] == nullptr ) {
 						throw NullPointerError("One of the components in an entity was nullptr");
 					}
 
@@ -261,11 +256,10 @@ namespace mc {
 				}
 
 				setProperty(Entity::DIRTY, false);
-			}
-			else {
-				for (Size i = 0; i < children.size(); ++i) {
-					if (children[i]->getProperty(Entity::INIT)) {
-						if (children[i] != nullptr) {
+			} else {
+				for( Size i = 0; i < children.size(); ++i ) {
+					if( children[i]->getProperty(Entity::INIT) ) {
+						if( children[i] != nullptr ) {
 							children[i]->clean();
 						}
 					}
@@ -277,7 +271,7 @@ namespace mc {
 			Entity* par = this;
 
 			//get the highest level element
-			while (par->parent != nullptr) {
+			while( par->parent != nullptr ) {
 				par = par->parent;
 			}
 
@@ -288,7 +282,7 @@ namespace mc {
 			const Entity* par = this;
 
 			//get the highest level element
-			while (par->hasParent()) {
+			while( par->hasParent() ) {
 				par = par->getParent();
 			}
 
@@ -301,7 +295,7 @@ namespace mc {
 			m.rotation = transformation.rotation;
 			m.scale = transformation.scaler;
 
-			if (hasParent()) {
+			if( hasParent() ) {
 
 				const Entity* par = getParent();
 
@@ -320,19 +314,19 @@ namespace mc {
 
 			const Vector<float, 2> windowRatios = Renderer::getWindowRatios();
 
-			if (getProperty(Entity::MAINTAIN_X)) {
+			if( getProperty(Entity::MAINTAIN_X) ) {
 				m.translation[0] *= windowRatios[0];
 				m.inheritedTranslation[0] *= windowRatios[0];
 			}
-			if (getProperty(Entity::MAINTAIN_Y)) {
+			if( getProperty(Entity::MAINTAIN_Y) ) {
 				m.translation[1] *= windowRatios[1];
 				m.inheritedTranslation[1] *= windowRatios[1];
 			}
-			if (getProperty(Entity::MAINTAIN_WIDTH)) {
+			if( getProperty(Entity::MAINTAIN_WIDTH) ) {
 				m.scale[0] *= windowRatios[0];
 				m.inheritedScale[0] *= windowRatios[0];
 			}
-			if (getProperty(Entity::MAINTAIN_HEIGHT)) {
+			if( getProperty(Entity::MAINTAIN_HEIGHT) ) {
 				m.scale[1] *= windowRatios[1];
 				m.inheritedScale[1] *= windowRatios[1];
 			}
@@ -345,8 +339,8 @@ namespace mc {
 			properties = 0;
 			transformation.reset();
 
-			for (Index i = 0; i < components.size(); ++i) {
-				if (components[i] != nullptr) {
+			for( Index i = 0; i < components.size(); ++i ) {
+				if( components[i] != nullptr ) {
 					components[i]->destroy(this);
 				}
 			}
@@ -355,7 +349,7 @@ namespace mc {
 
 		void Entity::makeDirty() {
 			//checking for the parent can be slow. only want to do the pointer stuff if its not already dirty
-			if (!getProperty(Entity::DIRTY)) {
+			if( !getProperty(Entity::DIRTY) ) {
 				setProperty(Entity::DIRTY, true);
 
 				getRoot()->setProperty(Entity::DIRTY, true);
@@ -401,8 +395,8 @@ namespace mc {
 		}
 
 		int Entity::indexOf(const Entity & e) const {
-			for (Index i = 0; i < children.size(); ++i) {
-				if (children[i] == &e) {
+			for( Index i = 0; i < children.size(); ++i ) {
+				if( children[i] == &e ) {
 					return i;
 				}
 			}
@@ -431,7 +425,7 @@ namespace mc {
 		}
 
 		void Entity::addChild(Entity * e) {
-			if (e == nullptr) {
+			if( e == nullptr ) {
 				throw NullPointerError("Inputted Entity to addChild() was nullptr");
 			}
 
@@ -440,7 +434,7 @@ namespace mc {
 			children.push_back(e);
 			e->setParent(this);
 
-			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
+			if( getProperty(Entity::INIT) && !e->getProperty(Entity::INIT) ) {
 				e->init();
 			}
 		}
@@ -464,12 +458,12 @@ namespace mc {
 
 		void Entity::update() {
 			//check if we can update
-			if (!getProperty(Entity::DISABLED)) {
+			if( !getProperty(Entity::DISABLED) ) {
 
 				//update the components of this entity
-				for (Index i = 0; i < components.size(); ++i) {
+				for( Index i = 0; i < components.size(); ++i ) {
 					Component* a = components.at(i);
-					if (a->update(this)) {
+					if( a->update(this) ) {
 						a->destroy(this);
 						components.erase(components.begin() + i);
 						i--;//update the index after a removal, so we dont get an exception for accessing deleted memory
@@ -479,9 +473,9 @@ namespace mc {
 				onUpdate();
 
 				//call update() on children
-				for (Index i = 0; i < children.size(); ++i) {
-					if (children[i] == nullptr || children[i]->getProperty(Entity::DEAD)) {
-						if (children[i] != nullptr) {
+				for( Index i = 0; i < children.size(); ++i ) {
+					if( children[i] == nullptr || children[i]->getProperty(Entity::DEAD) ) {
+						if( children[i] != nullptr ) {
 							children[i]->kill();
 						}
 						removeChild(i);
@@ -495,11 +489,11 @@ namespace mc {
 
 		void Entity::init() {
 
-			if (getProperty(Entity::INIT)) {
+			if( getProperty(Entity::INIT) ) {
 				throw InitializationFailedError("Entity can not have init() called twice.");
 			}
 			makeDirty();
-			for (Index i = 0; i < children.size(); ++i) {
+			for( Index i = 0; i < children.size(); ++i ) {
 				children[i]->init();
 			}
 			onInit();
@@ -508,12 +502,12 @@ namespace mc {
 		}
 
 		void Entity::destroy() {
-			if (!getProperty(Entity::INIT)) {
+			if( !getProperty(Entity::INIT) ) {
 				throw InitializationFailedError("Entity can not have destroy() called when it has not been initialized");
 			}
 			makeDirty();
-			for (Index i = 0; i < children.size(); ++i) {
-				if (children[i] != nullptr) {
+			for( Index i = 0; i < children.size(); ++i ) {
+				if( children[i] != nullptr ) {
 					children[i]->destroy();
 				}
 			}
@@ -545,7 +539,7 @@ namespace mc {
 		}
 
 		void Entity::setProperties(EntityProperties& b) {
-			if (b != properties) {
+			if( b != properties ) {
 				makeDirty();
 				properties = b;
 			}
@@ -553,19 +547,19 @@ namespace mc {
 
 		bool Entity::getProperty(const Byte position) const {
 #ifdef MACE_DEBUG
-			if (position > 8)throw IndexOutOfBoundsError("Input position is greater than 8");
-			else if (position < 0)throw IndexOutOfBoundsError("Input position is less than 0!");
+			if( position > 8 )throw IndexOutOfBoundsError("Input position is greater than 8");
+			else if( position < 0 )throw IndexOutOfBoundsError("Input position is less than 0!");
 #endif
 			return properties.getBit(position);
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
 #ifdef MACE_DEBUG
-			if (position > 8)throw IndexOutOfBoundsError("Input position is greater than 8");
-			else if (position < 0)throw IndexOutOfBoundsError("Input position is less than 0!");
+			if( position > 8 )throw IndexOutOfBoundsError("Input position is greater than 8");
+			else if( position < 0 )throw IndexOutOfBoundsError("Input position is less than 0!");
 #endif
-			if (properties.getBit(position) != value) {
-				if (position != Entity::DIRTY) {
+			if( properties.getBit(position) != value ) {
+				if( position != Entity::DIRTY ) {
 					properties.setBit(Entity::DIRTY, true);
 				}
 
@@ -585,7 +579,7 @@ namespace mc {
 
 		//we are trans-supportive here!
 		void Entity::setTransformation(TransformMatrix & trans) {
-			if (transformation != trans) {
+			if( transformation != trans ) {
 				makeDirty();
 
 				transformation = trans;
@@ -617,16 +611,16 @@ namespace mc {
 		}
 
 		bool Entity::operator==(const Entity& other) const noexcept {
-			if (other.properties != properties) {
+			if( other.properties != properties ) {
 				return false;
 			}
-			if (other.parent != parent) {
+			if( other.parent != parent ) {
 				return false;
 			}
-			if (other.transformation != transformation) {
+			if( other.transformation != transformation ) {
 				return false;
 			}
-			if (other.components != components) {
+			if( other.components != components ) {
 				return false;
 			}
 			return children == other.children;
@@ -655,7 +649,7 @@ namespace mc {
 		}
 
 		void Entity::setWidth(const float & s) {
-			if (transformation.scaler[0] != s) {
+			if( transformation.scaler[0] != s ) {
 				makeDirty();
 
 				transformation.scaler[0] = s;
@@ -673,7 +667,7 @@ namespace mc {
 		}
 
 		void Entity::setHeight(const float & s) {
-			if (transformation.scaler[1] != s) {
+			if( transformation.scaler[1] != s ) {
 				makeDirty();
 
 				transformation.scaler[1] = s;
@@ -691,7 +685,7 @@ namespace mc {
 		}
 
 		void Entity::setDepth(const float & s) {
-			if (transformation.scaler[2] != s) {
+			if( transformation.scaler[2] != s ) {
 				makeDirty();
 
 				transformation.scaler[2] = s;
@@ -707,7 +701,7 @@ namespace mc {
 			return transformation.translation[0];
 		}
 		void Entity::setX(const float & newX) {
-			if (transformation.translation[0] != newX) {
+			if( transformation.translation[0] != newX ) {
 				makeDirty();
 
 				transformation.translation[0] = newX;
@@ -725,7 +719,7 @@ namespace mc {
 		}
 
 		void Entity::setY(const float & newY) {
-			if (transformation.translation[1] != newY) {
+			if( transformation.translation[1] != newY ) {
 				makeDirty();
 
 				transformation.translation[1] = newY;
@@ -743,7 +737,7 @@ namespace mc {
 		}
 
 		void Entity::setZ(const float & newZ) {
-			if (transformation.translation[2] != newZ) {
+			if( transformation.translation[2] != newZ ) {
 				makeDirty();
 
 				transformation.translation[2] = newZ;
@@ -755,7 +749,7 @@ namespace mc {
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::init() {
-			if (!sslBuffer.isCreated()) {
+			if( !sslBuffer.isCreated() ) {
 				sslBuffer.init();
 			}
 			ssl::bindBuffer(sslBuffer);
@@ -776,7 +770,7 @@ namespace mc {
 		}
 
 		void GraphicsEntity::clean() {
-			if (getProperty(Entity::DIRTY)) {
+			if( getProperty(Entity::DIRTY) ) {
 				ssl::fillBuffer(this);
 			}
 			Entity::clean();
@@ -793,7 +787,7 @@ namespace mc {
 		}
 
 		void GraphicsEntity::setOpacity(const float f) {
-			if (opacity != f) {
+			if( opacity != f ) {
 				makeDirty();
 
 				opacity = f;
@@ -803,6 +797,49 @@ namespace mc {
 		void Component::clean(Entity *) {}
 
 		void Component::hover(Entity *) {}
+
+		bool Selectable::isClicked() const {
+			return selectableProperties.getBit(Selectable::CLICKED);
+		}
+
+		bool Selectable::isDisabled() const {
+			return selectableProperties.getBit(Selectable::DISABLED);
+		}
+
+		bool Selectable::isHovered() const {
+			return selectableProperties.getBit(Selectable::HOVERED);
+		}
+
+		void Selectable::click() {
+			selectableProperties.setBit(Selectable::CLICKED, true);
+
+			onClick();
+		}
+
+		void Selectable::disable() {
+			selectableProperties.setBit(Selectable::DISABLED, true);
+
+			onDisable();
+		}
+
+		void Selectable::enable() {
+			selectableProperties.setBit(Selectable::DISABLED, false);
+
+			onEnable();
+		}
+
+		void Selectable::trigger() {
+			onTrigger();
+		}
+
+		void Selectable::onClick() {}
+
+
+		void Selectable::onEnable() {}
+
+		void Selectable::onDisable() {}
+
+		void Selectable::onTrigger() {}
 
 	}//gfx
 }//mc

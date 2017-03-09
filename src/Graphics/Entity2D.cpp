@@ -24,6 +24,7 @@ namespace mc {
 			int IMAGE_PROTOCOL = -1;
 			int PROGRESS_BAR_PROTOCOL = -1;
 			int LETTER_PROTOCOL = -1;
+			int BUTTON_PROTOCOL = -1;
 
 			ogl::Texture2D whiteTexture;
 
@@ -911,7 +912,7 @@ namespace mc {
 						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
-						position[1] += static_cast<float>(delta[1]) / origHeight;	
+						position[1] += static_cast<float>(delta[1]) / origHeight;
 					}
 
 					//position[0] -= static_cast<float>(let->bearingX - let->width) / origWidth;
@@ -975,6 +976,235 @@ namespace mc {
 				letters.setY((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
 				break;
 			}
+		}
+
+		void RenderProtocol<Button>::init(const Size, const Size) {
+			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
+			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
+			renderer.init({
+#	include <MACE/Graphics/Shaders/button.v.glsl>
+			}, {
+#	include <MACE/Graphics/Shaders/button.f.glsl>
+			});
+
+			ogl::ShaderProgram& prog = renderer.getShader();
+			prog.bind();
+			prog.createUniform("backgroundTexture");
+			prog.createUniform("hoverTexture");
+			prog.createUniform("clickedTexture");
+			prog.createUniform("disabledTexture");
+
+			prog.setUniform("backgroundTexture", 0);
+			prog.setUniform("hoverTexture", 1);
+			prog.setUniform("clickedTexture", 2);
+			prog.setUniform("disabledTexture", 3);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Error initializing RenderProtocol<Button>");
+		}
+
+		void RenderProtocol<Button>::initEntity(GraphicsEntity* e) {
+			Button* but = dynamic_cast<Button*>(e);
+			if( but == nullptr ) {
+				throw InvalidTypeError("Input to RenderProtocol<Button>::initEntity must be of type Button");
+			}
+
+			but->getBuffer().bindToUniformBlock(renderer.getShader(), "buttonData");
+		}
+
+		void RenderProtocol<Button>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
+			Button* entity = dynamic_cast<Button*>(e);
+			if( entity == nullptr ) {
+				throw InvalidTypeError("You must queue a Button for RenderProtocol<Button>");
+			}
+
+			entity->texture.bind(0);
+			entity->hoverTexture.bind(1);
+			entity->clickedTexture.bind(2);
+			entity->disabledTexture.bind(2);
+
+			entity->buffer.bindForRender();
+
+			renderer.bind();
+
+			renderer.draw(entity);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Error rendering Button");
+		}
+		
+		void RenderProtocol<Button>::destroy() {
+			renderer.destroy();
+		}
+
+		int Button::getProtocol() {
+			return BUTTON_PROTOCOL;
+		}
+
+		const ColorAttachment & Button::getTexture() const {
+			return texture;
+		}
+
+		ColorAttachment & Button::getTexture() {
+			makeDirty();
+
+			return texture;
+		}
+
+		void Button::setTexture(const ColorAttachment & c) {
+			if( texture != c ) {
+				makeDirty();
+
+				texture = c;
+			}
+		}
+
+		const ColorAttachment & Button::getHoverTexture() const {
+			return hoverTexture;
+		}
+
+		ColorAttachment & Button::getHoverTexture() {
+			makeDirty();
+
+			return hoverTexture;
+		}
+
+		void Button::setHoverTexture(const ColorAttachment & c) {
+			if( hoverTexture != c ) {
+				makeDirty();
+
+				hoverTexture = c;
+			}
+		}
+
+		const ColorAttachment & Button::getClickedTexture() const {
+			return clickedTexture;
+		}
+
+		ColorAttachment & Button::getClickedTexture() {
+			makeDirty();
+
+			return clickedTexture;
+		}
+
+		void Button::setClickedTexture(const ColorAttachment & c) {
+			if( clickedTexture != c ) {
+				makeDirty();
+
+				clickedTexture = c;
+			}
+		}
+
+		const ColorAttachment & Button::getDisabledTexture() const {
+			return disabledTexture;
+		}
+
+		ColorAttachment & Button::getDisabledTexture() {
+			makeDirty();
+
+			return disabledTexture;
+		}
+
+		void Button::setDisabledTexture(const ColorAttachment & c) {
+			if( disabledTexture != c ) {
+				makeDirty();
+
+				disabledTexture = c;
+			}
+		}
+
+		void Button::onInit() {
+			if( !texture.isCreated() ) {
+				texture.init();
+			}
+
+			if( !hoverTexture.isCreated() ) {
+				hoverTexture.init();
+			}
+
+			if( !clickedTexture.isCreated() ) {
+				clickedTexture.init();
+			}
+
+			if( !disabledTexture.isCreated() ) {
+				disabledTexture.init();
+			}
+
+			if( BUTTON_PROTOCOL < 0 ) {
+				BUTTON_PROTOCOL = Renderer::registerProtocol<Button>();
+			}
+
+			if( !buffer.isCreated() ) {
+				buffer.init();
+			}
+
+			buffer.setLocation(0);
+
+			buffer.setData((4 * sizeof(texture.getPaint())) + (3 * sizeof(float)), nullptr);
+
+			Renderer::initEntity(this, BUTTON_PROTOCOL);
+		}
+
+		void Button::onUpdate() {}
+
+		void Button::onRender() {
+			Renderer::queue(this, BUTTON_PROTOCOL);
+		}
+
+		void Button::onDestroy() {
+			if( texture.isCreated() ) {
+				texture.destroy();
+			}
+
+			if( hoverTexture.isCreated() ) {
+				hoverTexture.destroy();
+			}
+
+			if( clickedTexture.isCreated() ) {
+				clickedTexture.destroy();
+			}
+
+			if( disabledTexture.isCreated() ) {
+				disabledTexture.destroy();
+			}
+
+			if( buffer.isCreated() ) {
+				buffer.destroy();
+			}
+		}
+
+		void Button::onHover() {
+			hover();
+
+			if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+				click();
+			}
+
+			if( os::Input::isKeyReleased(os::Input::MOUSE_LEFT) && isClicked() ) {
+				selectableProperties.setBit(Selectable::CLICKED, false);
+
+				trigger();
+			}
+		}
+
+		void Button::onClean() {
+			const float hovered = selectableProperties.getBit(Selectable::HOVERED) ? 1.0f : 0.0f;
+			const float clicked = selectableProperties.getBit(Selectable::CLICKED) ? 1.0f : 0.0f;
+			const float disabled = selectableProperties.getBit(Selectable::DISABLED) ? 1.0f : 0.0f;
+
+
+			Index offset = 0;
+			buffer.setDataRange(sizeof(texture.getPaint()), &texture.getPaint(), offset);
+			offset += sizeof(texture.getPaint());
+			buffer.setDataRange(sizeof(hoverTexture.getPaint()), &hoverTexture.getPaint(), offset);
+			offset += sizeof(hoverTexture.getPaint());
+			buffer.setDataRange(sizeof(clickedTexture.getPaint()), &clickedTexture.getPaint(), offset);
+			offset += sizeof(clickedTexture.getPaint());
+			buffer.setDataRange(sizeof(disabledTexture.getPaint()), &disabledTexture.getPaint(), offset);
+			offset += sizeof(disabledTexture.getPaint());
+			buffer.setDataRange(sizeof(hovered), &hovered, offset);
+			offset += sizeof(hovered);
+			buffer.setDataRange(sizeof(clicked), &clicked, offset);
+			offset += sizeof(clicked);
+			buffer.setDataRange(sizeof(disabled), &disabled, offset);
 		}
 	}//gfx
 }//mc

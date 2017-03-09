@@ -427,6 +427,88 @@ namespace mc {
 
 			ColorAttachment texture;
 		};//Text
+
+		class Button;
+
+		/**
+		@internal
+		@opengl
+		*/
+		template<>
+		class RenderProtocol<Button>: public RenderImpl {
+		public:
+			void init(const Size originalWidth, const Size originalHeight) override;
+			void initEntity(GraphicsEntity* en) override;
+
+			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
+
+			void destroy() override;
+		private:
+			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
+		};//RenderProtocol<Button>
+
+		class Button: public Selectable, Entity2D {
+			friend class RenderProtocol<Button>;
+		public:
+			static int getProtocol();
+
+			const ColorAttachment& getTexture() const;
+			/**
+			@copydoc Button::getTexture() const
+			@dirty
+			*/
+			ColorAttachment& getTexture();
+			/**
+			@dirty
+			*/
+			void setTexture(const ColorAttachment& c);
+
+			const ColorAttachment& getHoverTexture() const;
+			/**
+			@copydoc Button::getHoverTexture() const
+			@dirty
+			*/
+			ColorAttachment& getHoverTexture();
+			/**
+			@dirty
+			*/
+			void setHoverTexture(const ColorAttachment& c);
+
+			const ColorAttachment& getClickedTexture() const;
+			/**
+			@copydoc Button::getClickedTexture() const
+			@dirty
+			*/
+			ColorAttachment& getClickedTexture();
+			/**
+			@dirty
+			*/
+			void setClickedTexture(const ColorAttachment& c);
+
+			const ColorAttachment& getDisabledTexture() const;
+			/**
+			@copydoc Button::getDisabledTexture() const
+			@dirty
+			*/
+			ColorAttachment& getDisabledTexture();
+			/**
+			@dirty
+			*/
+			void setDisabledTexture(const ColorAttachment& c);
+
+		protected:
+			void onInit() override;
+			void onUpdate() override;
+			void onRender() override;
+			void onDestroy() override;
+			void onHover() override;
+			void onClean() override;
+		private:
+			ColorAttachment texture;
+			ColorAttachment hoverTexture;
+			ColorAttachment clickedTexture;
+			ColorAttachment disabledTexture;
+		};
 	}//gfx
 }//mc
 
