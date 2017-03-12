@@ -53,6 +53,9 @@ int main() {
 
 		MACE::addModule(module);
 
+		os::SignalModule sigModule = os::SignalModule();
+		MACE::addModule(sigModule);
+
 		module.setCreationCallback(&create);
 
 		mc::MACE::init();

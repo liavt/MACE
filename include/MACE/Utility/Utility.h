@@ -31,5 +31,6 @@ namespace mc {
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Preprocessor.h>
 #include <MACE/Utility/MatrixTypes.h>
+#include <MACE/Utility/SignalModule.h>
 
 #endif
