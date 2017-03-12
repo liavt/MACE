@@ -18,23 +18,23 @@ void create() {
 
 	topLeft = gfx::Text("Top left!", font);
 	topLeft.setTexture(Colors::WHITE);
-	topLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
-	topLeft.setVerticalAlign(gfx::VerticalAlign::TOP);
+//	topLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
+	//topLeft.setVerticalAlign(gfx::VerticalAlign::TOP);
 
 	topRight = gfx::Text("Top right.", font);
 	topRight.setTexture(Colors::LIGHT_BLUE);
-	topRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
-	topRight.setVerticalAlign(gfx::VerticalAlign::TOP);
+	//topRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
+	//topRight.setVerticalAlign(gfx::VerticalAlign::TOP);
 
 	botLeft = gfx::Text("bOtToM lEfT?", font);
 	botLeft.setTexture(Colors::RED);
-	botLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
-	botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
+	//botLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
+	//botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
 	botRight.setTexture(Colors::YELLOW);
-	botRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
-	botRight.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
+	//botRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
+	//botRight.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
 
 	group.addChild(center);
 	group.addChild(topLeft);

@@ -12,6 +12,78 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		AlignmentComponent::AlignmentComponent(const VerticalAlign vert, const HorizontalAlign horz)
+			: vertAlign(vert), horzAlign(horz) {}
+
+		void AlignmentComponent::setVerticalAlign(const VerticalAlign align) {
+			if( vertAlign != align ) {
+				if( getParent() != nullptr ) {
+					getParent()->makeDirty();
+				}
+
+				vertAlign = align;
+			}
+		}
+
+		const VerticalAlign AlignmentComponent::getVerticalAlign() const {
+			return vertAlign;
+		}
+
+		void AlignmentComponent::setHorizontalAlign(HorizontalAlign align) {
+			if( horzAlign != align ) {
+				if( getParent() != nullptr ) {
+					getParent()->makeDirty();
+				}
+
+				horzAlign = align;
+			}
+		}
+
+		const HorizontalAlign AlignmentComponent::getHorizontalAlign() const {
+			return horzAlign;
+		}
+
+		bool AlignmentComponent::operator==(const AlignmentComponent & other) const {
+			return horzAlign == other.horzAlign && vertAlign == other.vertAlign && Component::operator==(other);
+		}
+
+		bool AlignmentComponent::operator!=(const AlignmentComponent & other) const {
+			return !operator==(other);
+		}
+
+		void AlignmentComponent::clean(Entity * e) {
+			Entity::Metrics m = e->getMetrics();
+
+			float width = m.scale[0], height = m.scale[1];
+
+			switch( horzAlign ) {
+			default:
+			case HorizontalAlign::CENTER:
+				e->setX(0.0f);
+				//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
+				break;
+			case HorizontalAlign::RIGHT:
+				e->setX(1.0f - (width / 2.0f));
+				break;
+			case HorizontalAlign::LEFT:
+				e->setX((width / 2.0f) - 1.0f);
+				break;
+			}
+
+			switch( vertAlign ) {
+			default:
+			case VerticalAlign::CENTER:
+				e->setX(0.0f);
+				break;
+			case VerticalAlign::BOTTOM:
+				e->setY((height / 2.0f) - 1.0f);
+				break;
+			case VerticalAlign::TOP:
+				e->setY(1.0f - (height / 2.0f));
+				break;
+			}
+		}
+
 		void CallbackComponent::init(Entity * e) {
 			initCallback(e);
 		}
@@ -86,6 +158,17 @@ namespace mc {
 			return cleanCallback;
 		}
 
+		bool CallbackComponent::operator==(const CallbackComponent & other) const {
+			return destroyCallback == other.destroyCallback && renderCallback == other.renderCallback
+				&& initCallback == other.initCallback && hoverCallback == other.hoverCallback
+				&& cleanCallback == other.cleanCallback && updateCallback == other.updateCallback
+				&& Component::operator==(other);
+		}
+
+		bool CallbackComponent::operator!=(const CallbackComponent & other) const {
+			return !operator==(other);
+		}
+
 		void CallbackComponent::setDestroyCallback(const CallbackPtr func) {
 			destroyCallback = func;
 		}
@@ -117,6 +200,18 @@ namespace mc {
 
 		const FPSComponent::TickCallbackPtr FPSComponent::getTickCallback() const {
 			return tickCallback;
+		}
+
+		bool FPSComponent::operator==(const FPSComponent & other) const {
+			return Component::operator==(other) && updatesPerSecond == other.updatesPerSecond
+				&& framesPerSecond == other.framesPerSecond && cleansPerSecond == other.framesPerSecond
+				&& hoversPerSecond == other.hoversPerSecond && tickCallback == other.tickCallback
+				&& lastTime == other.lastTime && nbUpdates == other.nbUpdates && nbFrames == other.nbFrames
+				&& nbCleans == other.nbCleans && nbHovers == other.nbHovers;
+		}
+
+		bool FPSComponent::operator!=(const FPSComponent & other) const {
+			return !operator==(other);
 		}
 
 		void FPSComponent::init(Entity *) {
@@ -155,5 +250,5 @@ namespace mc {
 			++nbHovers;
 		}
 		void FPSComponent::destroy(Entity *) {}
-	}
+	}//gfx
 }//mc

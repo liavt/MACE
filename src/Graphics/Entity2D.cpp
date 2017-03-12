@@ -796,32 +796,8 @@ namespace mc {
 			return font;
 		}
 
-		const Group& Text::getLetters() const {
+		const std::vector<Letter>& Text::getLetters() const {
 			return letters;
-		}
-
-		void Text::setVerticalAlign(const VerticalAlign align) {
-			if( vertAlign != align ) {
-				makeDirty();
-
-				vertAlign = align;
-			}
-		}
-
-		const VerticalAlign Text::getVerticalAlign() const {
-			return vertAlign;
-		}
-
-		void Text::setHorizontalAlign(const HorizontalAlign align) {
-			if( horzAlign != align ) {
-				makeDirty();
-
-				horzAlign = align;
-			}
-		}
-
-		const HorizontalAlign Text::getHorizontalAlign() const {
-			return horzAlign;
 		}
 
 		void Text::setTexture(const ColorAttachment & tex) {
@@ -843,7 +819,7 @@ namespace mc {
 		}
 
 		bool Text::operator==(const Text & other) const {
-			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture && vertAlign == other.vertAlign && horzAlign == other.horzAlign;
+			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture;
 		}
 
 		bool Text::operator!=(const Text & other) const {
@@ -860,19 +836,14 @@ namespace mc {
 
 		void Text::onClean() {
 			for( Index i = 0; i < letters.size(); ++i ) {
-				delete &letters[i];
+				if( hasChild(letters[i]) ) {
+					removeChild(letters[i]);
+				}
 			}
 
-			letters.clearChildren();
+			letters.clear();
 
-			if( !hasChild(letters) ) {
-				letters.setProperty(Entity::MAINTAIN_WIDTH, true);
-				letters.setProperty(Entity::MAINTAIN_HEIGHT, true);
-				letters.setProperty(Entity::MAINTAIN_X, getProperty(Entity::MAINTAIN_X));
-				letters.setProperty(Entity::MAINTAIN_Y, getProperty(Entity::MAINTAIN_Y));
-
-				addChild(letters);
-			}
+			letters.resize(text.length());
 
 			Entity::Metrics metrics = getMetrics();
 
@@ -881,7 +852,7 @@ namespace mc {
 			const float origWidth = static_cast<const float>(Renderer::getOriginalWidth()),
 				origHeight = static_cast<const float>(Renderer::getOriginalHeight());
 
-			const bool useKerning = font.hasKerning();
+			const bool hasKerning = font.hasKerning();
 
 			float x = 0, y = 0;
 
@@ -899,16 +870,16 @@ namespace mc {
 
 					x = 0;
 				} else {
-					Letter* let = new Letter();
-					font.getCharacter(text[i], let);
+					letters[i] = Letter();
+					font.getCharacter(text[i], &letters[i]);
 
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-					let->setWidth((static_cast<float>(let->width) / origWidth) * widthScale);
-					let->setHeight((static_cast<float>(let->height) / origHeight) * heightScale);
+					letters[i].setWidth((static_cast<float>(letters[i].width) / origWidth) * widthScale);
+					letters[i].setHeight((static_cast<float>(letters[i].height) / origHeight) * heightScale);
 
 					Vector<float, 2> position = { x, y };
 
-					if( i > 0 && useKerning ) {
+					if( i > 0 && hasKerning ) {
 						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
@@ -920,25 +891,24 @@ namespace mc {
 					//font.getSize() - 
 					//let->getHeight() - 
 					//position[1] -= ((font.getSize() + (let->bearingY >> 1)) / origHeight);
-					position[1] += let->getHeight();
-					position[1] -= static_cast<float>(let->height - let->bearingY) / origHeight;
+					position[1] += letters[i].getHeight();
+					//i cant bear this
+					position[1] -= static_cast<float>(letters[i].height - letters[i].bearingY) / origHeight;
 
 					//position[1] += let->getHeight();
 
-					//i cant bear this|
-					let->setX((position[0] + (static_cast<float>(let->width) / origWidth)));
-					let->setY(position[1]);
+					letters[i].setX((position[0] + (static_cast<float>(letters[i].width) / origWidth)));
+					letters[i].setY(position[1]);
 
-					let->setOpacity(getOpacity());
+					letters[i].setOpacity(getOpacity());
 
-					//it needs to be bit shifted by 6 to get raw pixel values because it is 1/64 of a pixel
-					x += static_cast<float>(let->advanceX) / origWidth;
-					x += let->getWidth();
+					x += static_cast<float>(letters[i].advanceX) / origWidth;
+					x += letters[i].getWidth();
 					//y += static_cast<float>(let->advanceY) / origHeight;
 
-					let->texture = this->texture;
+					letters[i].texture = this->texture;
 
-					letters.addChild(let);
+					addChild(letters[i]);
 				}
 			}
 
@@ -950,31 +920,8 @@ namespace mc {
 
 			height += y;
 
-			switch( horzAlign ) {
-			default:
-			case HorizontalAlign::CENTER:
-				letters.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
-				break;
-			case HorizontalAlign::RIGHT:
-				letters.setX((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / origWidth);
-				break;
-			case HorizontalAlign::LEFT:
-				letters.setX(-1.0f + static_cast<const float>(font.getSize() >> 1) / origWidth);
-				break;
-			}
-
-			switch( vertAlign ) {
-			default:
-			case VerticalAlign::CENTER:
-				//letters.setY(1.0f + height * 2);
-				//letters.setY(height + (static_cast<const float>(font.getSize() >> 1) / origHeight));
-				break;
-			case VerticalAlign::BOTTOM:
-				letters.setY((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
-				break;
-			case VerticalAlign::TOP:
-				letters.setY((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
-				break;
+			for( Index i = 0; i < letters.size(); ++i ) {
+				letters[i].translate((-width / 2.0f) + static_cast<const float>(font.getSize() >> 1) / origWidth, 0.0f);
 			}
 		}
 
@@ -1030,7 +977,7 @@ namespace mc {
 
 			ogl::checkGLError(__LINE__, __FILE__, "Error rendering Button");
 		}
-		
+
 		void RenderProtocol<Button>::destroy() {
 			renderer.destroy();
 		}

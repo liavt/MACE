@@ -85,7 +85,6 @@ void create() {
 
 int main() {
 	try {
-
 		os::WindowModule module = os::WindowModule(600, 500, "Cleaning Demo");
 
 		module.setFPS(30);

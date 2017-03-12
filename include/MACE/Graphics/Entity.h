@@ -61,7 +61,6 @@ namespace mc {
 		class Component {
 			friend class Entity;
 		protected:
-
 			virtual ~Component() = default;
 			/**
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
@@ -70,7 +69,7 @@ namespace mc {
 			@note This is not called at Entity::init(), instead it is called when the component is added to the `Entity`. Keep that in mind.
 			@opengl
 			*/
-			virtual void init(Entity* e) = 0;
+			virtual void init(Entity* e);
 			/**
 			Called when Entity::update() is called. Required function.
 			<p>
@@ -81,7 +80,7 @@ namespace mc {
 			@return Whether this `Component` should be deleted or not.
 			@opengl
 			*/
-			virtual bool update(Entity* e) = 0;
+			virtual bool update(Entity* e);
 			/**
 			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
 			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
@@ -89,9 +88,9 @@ namespace mc {
 			@param e The parent `Entity`
 			@opengl
 			*/
-			virtual void destroy(Entity* e) = 0;
+			virtual void destroy(Entity* e);
 
-			virtual void render(Entity* e) = 0;
+			virtual void render(Entity* e);
 			/**
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
 			@param e The parent `Entity`
@@ -103,6 +102,13 @@ namespace mc {
 			@opengl
 			*/
 			virtual void hover(Entity* e);
+
+			Entity* getParent();
+
+			bool operator==(const Component& other) const;
+			bool operator!=(const Component& other) const;
+		private:
+			Entity* parent;
 		};//Component
 
 		class ColorAttachment : public ogl::Texture2D {

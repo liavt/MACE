@@ -19,19 +19,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-
-		enum class VerticalAlign: Byte {
-			TOP,
-			CENTER,
-			BOTTOM
-		};
-
-		enum class HorizontalAlign: Byte {
-			LEFT,
-			CENTER,
-			RIGHT
-		};
-
 		enum class EaseFunction: Byte {
 			//Starts fast, decelerates at end
 			SINUSOIDAL,
@@ -382,19 +369,7 @@ namespace mc {
 			Font& getFont();
 			const Font& getFont() const;
 
-			const Group& getLetters() const;
-
-			/**
-			@dirty
-			*/
-			void setVerticalAlign(const VerticalAlign align);
-			const VerticalAlign getVerticalAlign() const;
-
-			/**
-			@dirty
-			*/
-			void setHorizontalAlign(HorizontalAlign align);
-			const HorizontalAlign getHorizontalAlign() const;
+			const std::vector<Letter>& getLetters() const;
 
 			/**
 			@dirty
@@ -416,12 +391,9 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
-			Group letters = Group();
+			std::vector<Letter> letters;
 
 			std::wstring text;
-
-			VerticalAlign vertAlign = VerticalAlign::CENTER;
-			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
 
 			Font font;
 

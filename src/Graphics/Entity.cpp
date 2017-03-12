@@ -47,6 +47,32 @@ namespace mc {
 			ogl::Texture2D solidColor = ogl::Texture2D();
 		};
 
+		void Component::init(Entity *) {}
+
+		bool Component::update(Entity *) {
+			return true;
+		}
+
+		void Component::destroy(Entity *) {}
+
+		void Component::render(Entity *) {}
+
+		void Component::clean(Entity *) {}
+
+		void Component::hover(Entity *) {}
+
+		Entity * Component::getParent() {
+			return parent;
+		}
+
+		bool Component::operator==(const Component & other) const {
+			return parent == other.parent;
+		}
+
+		bool Component::operator!=(const Component & other) const {
+			return !operator==(other);
+		}
+
 		ColorAttachment::ColorAttachment() : Texture2D(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
 
 		ColorAttachment::ColorAttachment(const ogl::Texture2D& tex, const Color& col) : Texture2D(tex), paint(col) {}
@@ -445,6 +471,7 @@ namespace mc {
 
 		void Entity::addComponent(Component * component) {
 			components.push_back(component);
+			component->parent = this;
 			component->init(this);
 		}
 
@@ -793,10 +820,6 @@ namespace mc {
 				opacity = f;
 			}
 		}
-
-		void Component::clean(Entity *) {}
-
-		void Component::hover(Entity *) {}
 
 		bool Selectable::isClicked() const {
 			return selectableProperties.getBit(Selectable::CLICKED);

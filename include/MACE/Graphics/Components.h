@@ -15,6 +15,42 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		enum class VerticalAlign: Byte {
+			TOP,
+			CENTER,
+			BOTTOM
+		};
+
+		enum class HorizontalAlign: Byte {
+			LEFT,
+			CENTER,
+			RIGHT
+		};
+
+		class AlignmentComponent: public Component {
+		public:
+			AlignmentComponent(const VerticalAlign vert = VerticalAlign::CENTER, const HorizontalAlign horz = HorizontalAlign::CENTER);
+
+			/**
+			@dirty
+			*/
+			void setVerticalAlign(const VerticalAlign align);
+			const VerticalAlign getVerticalAlign() const;
+
+			/**
+			@dirty
+			*/
+			void setHorizontalAlign(HorizontalAlign align);
+			const HorizontalAlign getHorizontalAlign() const;
+
+			bool operator==(const AlignmentComponent& other) const;
+			bool operator!=(const AlignmentComponent& other) const;
+		protected:
+			void clean(Entity* e) final;
+		private:
+			VerticalAlign vertAlign;
+			HorizontalAlign horzAlign;
+		};
 
 		class CallbackComponent: public Component {
 		public:
@@ -44,6 +80,9 @@ namespace mc {
 			void setCleanCallback(const CallbackPtr func);
 			CallbackPtr getCleanCallback();
 			const CallbackPtr getCleanCallback() const;
+
+			bool operator==(const CallbackComponent& other) const;
+			bool operator!=(const CallbackComponent& other) const;
 		protected:
 			void init(Entity* e) final;
 			bool update(Entity* e) final;
@@ -74,6 +113,9 @@ namespace mc {
 			void setTickCallback(const TickCallbackPtr callback);
 			TickCallbackPtr getTickCallback();
 			const TickCallbackPtr getTickCallback() const;
+
+			bool operator==(const FPSComponent& other) const;
+			bool operator!=(const FPSComponent& other) const;
 		protected:
 			void init(Entity* e) final;
 			bool update(Entity* e) final;
