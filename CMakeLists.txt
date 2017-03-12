@@ -62,7 +62,7 @@ set(FREETYPE_SOURCE_VERSION "2.5.2")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
 set(FREETYPE_URL "http://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
 
-set(MACE_OUTPUT_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/include")
+set(MACE_OUTPUT_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
 
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
@@ -220,7 +220,7 @@ if(NOT ${GLFW_FOUND})
 		message(FATAL_ERROR "GLFW not found!")
 	else()
 		download_library(${GLFW_SOURCE_NAME} ${GLFW_URL})
-		add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${GLFW_SOURCE_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${GLFW_SOURCE_NAME})
+		add_subdirectory(${CMAKE_BINARY_DIR}/${GLFW_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${GLFW_SOURCE_NAME})
 		
 		if(MSVC)
 			#the /rtc flag breaks glfw. we have to remove it.
@@ -234,7 +234,7 @@ if(NOT ${GLFW_FOUND})
 			endforeach(flag_var)
 		endif()
 		
-		set(GLFW_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${GLFW_SOURCE_NAME}/include)
+		set(GLFW_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${GLFW_SOURCE_NAME}/include)
 		set(GLFW_LIBRARY glfw)
 	endif()
 endif()
@@ -244,7 +244,7 @@ if(NOT ${GLEW_FOUND})
 		message(FATAL_ERROR "GLEW not found!")
 	else()
 		download_library(${GLEW_SOURCE_NAME} ${GLEW_URL})
-		add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${GLEW_SOURCE_NAME}/build/cmake ${CMAKE_CURRENT_BINARY_DIR}/${GLEW_SOURCE_NAME})
+		add_subdirectory(${CMAKE_BINARY_DIR}/${GLEW_SOURCE_NAME}/build/cmake ${CMAKE_BINARY_DIR}/${GLEW_SOURCE_NAME})
 		
 		set(GLEW_LIBRARY glew_s)
 		
@@ -254,7 +254,7 @@ if(NOT ${GLEW_FOUND})
 			add_definitions(-DGLEW_STATIC)
 		endif()
 		
-		set(GLEW_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${GLEW_SOURCE_NAME}/include)
+		set(GLEW_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${GLEW_SOURCE_NAME}/include)
 	endif()
 endif()
 
@@ -263,11 +263,11 @@ if(NOT ${FREETYPE_FOUND})
 		message(FATAL_ERROR "Freetype not found!")
 	else()
 		download_library(${FREETYPE_SOURCE_NAME} ${FREETYPE_URL})
-		add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${FREETYPE_SOURCE_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${FREETYPE_SOURCE_NAME})
+		add_subdirectory(${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME})
 		
 		set(FREETYPE_LIBRARY freetype)
 		
-		set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_CURRENT_BINARY_DIR}/${FREETYPE_SOURCE_NAME}/include)
+		set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME}/include)
 		set(FREETYPE_INCLUDE_DIR_freetype2 ${FREETYPE_INCLUDE_DIR_ft2build})
 	endif()
 endif()
@@ -277,7 +277,7 @@ if(NOT ${OPENAL_FOUND})
 		message(FATAL_ERROR "OpenAL not found!")
 	else()
 		download_library(${OPENAL_SOURCE_NAME} ${OPENAL_URL})
-		add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/${OPENAL_SOURCE_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${OPENAL_SOURCE_NAME})
+		add_subdirectory(${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME})
 		
 		if(WIN32)
 			set(OPENAL_LIBRARY OpenAL32)
@@ -285,7 +285,7 @@ if(NOT ${OPENAL_FOUND})
 			set(OPENAL_LIBRARY openal)
 		endif()
 		
-		set(OPENAL_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/${OPENAL_SOURCE_NAME}/include)
+		set(OPENAL_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME}/include)
 	endif()
 endif()
 
