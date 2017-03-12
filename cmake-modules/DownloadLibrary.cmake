@@ -13,29 +13,29 @@ endif()
 set(__MACE_DOWNLOAD_LIBRARY YES)
 
 function(download_library name url)
-	if(NOT EXISTS "${PROJECT_SOURCE_DIR}/${name}")
+	if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/${name}")
 		string(REGEX MATCH "tar\\.gz|tgz|zip" FILE_EXTENSION "${url}")
 	
 		set(TARBELL_NAME "${name}.${FILE_EXTENSION}")
 	
-		if(NOT EXISTS "${PROJECT_SOURCE_DIR}/${name}.tar.gz")
-			message(STATUS "Downloading ${PROJECT_SOURCE_DIR}/${TARBELL_NAME} from ${url}")
+		if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/${TARBELL_NAME}")
+			message(STATUS "Downloading ${CMAKE_CURRENT_BINARY_DIR}/${TARBELL_NAME} from ${url}")
 			
 			
-			file(DOWNLOAD "${url}" "${PROJECT_SOURCE_DIR}/${TARBELL_NAME}" TIMEOUT 30 STATUS DOWNLOAD_RESULT)
+			file(DOWNLOAD "${url}" "${CMAKE_CURRENT_BINARY_DIR}/${TARBELL_NAME}" TIMEOUT 30 STATUS DOWNLOAD_RESULT)
 			if(NOT "${DOWNLOAD_RESULT}" MATCHES "0")
 				message(FATAL_ERROR "Failed to download from ${url} with error ${DOWNLOAD_RESULT}. Are you sure you are connected to the internet?")
 			endif()
 		endif()
+						
+		message(STATUS "Extracting ${CMAKE_CURRENT_BINARY_DIR}/${TARBELL_NAME} to ${CMAKE_CURRENT_BINARY_DIR}/${name}...")
 		
-		file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/${name})
-				
-		message(STATUS "Extracting ${TARBELL_NAME}...")
+		file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${name})
 
-		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${TARBELL_NAME} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE UNTAR_RESULT)
+		execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_BINARY_DIR}/${TARBELL_NAME} WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} RESULT_VARIABLE UNTAR_RESULT)
 				
 		if(NOT "${UNTAR_RESULT}" MATCHES "0")
-			message(FATAL_ERROR "Failed to untar ${TARBELL_NAME} with result ${UNTAR_RESULT}")
+			message(FATAL_ERROR "Failed to untar ${TARBELL_NAME}: ${UNTAR_RESULT}")
 		endif()
 		
 		message(STATUS "Downloaded ${name} to source directory.")

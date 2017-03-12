@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_CORE_CONSTANTS_H
 #define MACE_CORE_CONSTANTS_H
 
-#include <MACE-Configure.h>
+#include <MACE/Configure.h>
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!
