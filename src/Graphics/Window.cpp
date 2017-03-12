@@ -356,7 +356,12 @@ namespace mc {
 		}//update
 
 		void WindowModule::destroy() {
-			setProperty(WindowModule::DESTROYED, true);
+			{
+				std::mutex mutex;
+				const std::unique_lock<std::mutex> guard(mutex);
+				setProperty(WindowModule::DESTROYED, true);
+			}
+
 			windowThread.join();
 
 			glfwTerminate();

@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_UTILITY_SIGNAL_MODULE_H
-#define MACE_UTILITY_SIGNAL_MODULE_H
+#ifndef MACE_UTILITY_SIGNAL_H
+#define MACE_UTILITY_SIGNAL_H
 
 #include <MACE/Core/Module.h>
 #include <MACE/Core/Constants.h>
@@ -53,4 +53,4 @@ namespace mc {
 	}//os
 }//mc
 
-#endif//MACE_UTILITY_SIGNAL_MODULE_H
+#endif//MACE_UTILITY_SIGNAL_H
