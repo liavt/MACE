@@ -61,7 +61,10 @@ namespace mc {
 			std::signal(SIGINT, &signalHandle);
 			std::signal(SIGSEGV, &signalHandle);
 			std::signal(SIGTERM, &signalHandle);
-#ifdef MACE_POSIX
+
+#ifdef MACE_WINDOWS
+			std::signal(SIGABRT_COMPAT, &signalHandle);
+#elif defined(MACE_POSIX)
 			std::signal(SIGHUP, &signalHandle);
 			std::signal(SIGKILL, &signalHandle);
 			std::signal(SIGSTOP, &signalHandle);

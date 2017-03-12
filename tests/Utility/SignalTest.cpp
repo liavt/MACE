@@ -25,8 +25,8 @@ namespace mc {
 			REQUIRE_THROWS_AS(std::raise(SIGSTOP), SignalStopError);
 			REQUIRE_THROWS_AS(std::raise(SIGALRM), SignalAlarmError);
 			REQUIRE_THROWS_AS(std::raise(SIGTSTP), SignalTerminalStopError);
-			REQUIRE_THROWS_AS(std::raise(SIGTSTTIN), SignalTerminalInputError);
-			REQUIRE_THROWS_AS(std::raise(SIGTSTTOU), SignalTerminalOutputError);
+			REQUIRE_THROWS_AS(std::raise(SIGTTIN), SignalTerminalInputError);
+			REQUIRE_THROWS_AS(std::raise(SIGTTOU), SignalTerminalOutputError);
 #endif//MACE_POSIX
 
 			MACE::destroy();

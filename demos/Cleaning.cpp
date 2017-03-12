@@ -99,7 +99,7 @@ int main() {
 		f.setTickCallback([] (gfx::FPSComponent* com, gfx::Entity*) {
 			std::cout << "UPS: " << com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
 		});
-		module.addComponent(f);
+		module.addComponent(f);https://travis-ci.org/liavt/MACE/jobs/210344324#
 
 		module.setCreationCallback(&create);
 
