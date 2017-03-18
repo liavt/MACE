@@ -42,7 +42,7 @@ The above copyright notice and this permission notice shall be included in all c
 #		define MACE_FUNCTION_EXPORT __declspec(dllexport)
 #		define MACE_FUNCTION_IMPORT __declspec(dllimport)
 #	endif
-#elif defined(MACE_GNU) && __GNUC__ >= 4
+#elif defined(MACE_CLANG)||(defined(MACE_GNU) && __GNUC__ >= 4)
 #	define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
 #	define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
 #else
