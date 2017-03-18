@@ -23,7 +23,7 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically -
 		//it needs to be an integer, not a pointer value.
-		runningProcess.dll = dlopen(0, RTLD_GLOBAL);
+		runningProcess.dll = dlopen(0, RTLD_GLOBAL | RTLD_LAZY);
 #endif
 
 		if( runningProcess.dll == nullptr ) {
