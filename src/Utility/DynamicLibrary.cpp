@@ -20,7 +20,7 @@ namespace mc {
 
 #ifdef MACE_WINAPI
 		runningProcess.dll = GetModuleHandle(nullptr);
-#elif MACE_POSIX
+#elif defined(MACE_POSIX)
 		runningProcess.dll = dlopen(nullptr, 0);
 #endif
 
@@ -92,6 +92,10 @@ namespace mc {
 	}
 
 	void * DynamicLibrary::getFunction(const char * name) {
+		if( !isCreated() ) {
+			throw InitializationFailedError("Can\'t load a function symbol from an unitialized dynamic library");
+		}
+
 #ifdef MACE_WINAPI
 		void* extractedSymbol = GetProcAddress(dll, name);
 #elif defined(MACE_POSIX)
