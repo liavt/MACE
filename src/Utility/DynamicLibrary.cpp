@@ -26,6 +26,16 @@ namespace mc {
 		runningProcess.dll = dlopen(NULL, 0);
 #endif
 
+		if( runningProcess.dll == nullptr ) {
+#ifdef MACE_POSIX
+			const char* errorMessage = dlerror();
+#else
+			constexpr char* errorMessage = "Handle to running process was nullptr";
+#endif
+
+			throw NullPointerError("Internal Error: " + std::string(errorMessage));
+		}
+
 		runningProcess.created = true;
 
 		os::checkError(__LINE__, __FILE__, "Error retrieving current running process as dynamic library");
@@ -64,9 +74,15 @@ namespace mc {
 #endif
 
 		if( dll == nullptr ) {
-			os::checkError(__LINE__, __FILE__, "Attempt to load library " + std::string(path) + " returned a nullptr.");
+#ifdef MACE_POSIX
+			const char* errorMessage = dlerror();
+#else
+			constexpr char* errorMessage = "Library handle was nullptr";
+#endif
 
-			throw FileNotFoundError("Unable to load dynamic library: " + std::string(path));
+			os::checkError(__LINE__, __FILE__, "Attempt to load library " + std::string(path) + " returned a nullptr: " + std::string(errorMessage));
+
+			throw FileNotFoundError("Unable to load dynamic library: " + std::string(path) + ": " + std::string(errorMessage));
 		}
 
 		created = true;
@@ -77,7 +93,11 @@ namespace mc {
 
 	void DynamicLibrary::destroy() {
 		if( !isCreated() ) {
-			throw AssertionFailedError("Can't destroy an uncreated DynamicLibrary");
+			throw AssertionFailedError("Can\'t destroy an uncreated DynamicLibrary");
+		}
+
+		if( dll == nullptr ) {
+			throw NullPointerError("Can\'t destroy DynamicLibrary: internal handle was nullptr. Did initialization fail?");
 		}
 
 #ifdef MACE_WINAPI
@@ -107,9 +127,15 @@ namespace mc {
 #endif
 
 		if( extractedSymbol == nullptr ) {
-			os::checkError(__LINE__, __FILE__, "Attempt to load symbol " + std::string(name) + " returned a nullptr.");
+#ifdef MACE_POSIX
+			const char* errorMessage = dlerror();
+#else
+			constexpr char* errorMessage = "Returned function pointer was null pointer";
+#endif
 
-			throw NullPointerError("Unable to load symbol from dynamic library: " + std::string(name));
+			os::checkError(__LINE__, __FILE__, "Attempt to load symbol " + std::string(name) + " returned a nullptr: " + std::string(errorMessage));
+
+			throw NullPointerError("Unable to load symbol from dynamic library: " + std::string(name) + ": "+std::string(errorMessage));
 		}
 
 		os::checkError(__LINE__, __FILE__, "Error extracting symbol " + std::string(name) + " from dynamic library");
