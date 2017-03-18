@@ -14,5 +14,7 @@ int main(int argc, char* const argv[]) {
 	//constant? get it?
 	const int result = Catch::Session().run(argc, argv);
 
+	system("pause");
+
 	return result;
 }

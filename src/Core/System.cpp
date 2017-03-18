@@ -196,7 +196,7 @@ namespace mc {
 			}
 
 			LPSTR messageBuffer = nullptr;
-			size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			std::size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 										 nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR) &messageBuffer, 0, nullptr);
 
 			std::string message(messageBuffer, size);
@@ -215,7 +215,7 @@ namespace mc {
 
 			errno = 0;
 
-			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": with message " + std::strerror(error));
+			throw SystemError("Line "+ std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": " + std::strerror(error));
 #endif
 		}
 

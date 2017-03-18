@@ -21,7 +21,9 @@ namespace mc {
 #ifdef MACE_WINAPI
 		runningProcess.dll = GetModuleHandle(nullptr);
 #elif defined(MACE_POSIX)
-		runningProcess.dll = dlopen(nullptr, 0);
+		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically -
+		//it needs to be an integer, not a pointer value.
+		runningProcess.dll = dlopen(NULL, 0);
 #endif
 
 		runningProcess.created = true;
@@ -83,6 +85,8 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		dlclose(dll);
 #endif
+
+		created = false;
 
 		os::checkError(__LINE__, __FILE__, "Error destroying dynamic library");
 	}

@@ -154,11 +154,22 @@ if(${MACE_TESTS})
 
 	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
 	add_executable(MACE-Testing ${TESTS_SRC})
-		
+			
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
 	target_include_directories(MACE-Testing PUBLIC ${MACE_INCLUDES})
+	
+	#to test runtime dll linking we compiled a source file twice: once as part as MACE-Testing and one as a shared library to test runtime linking
+	add_library(MACE-DynamicLibraryTest SHARED "tests/Utility/DynamicLibraryTest.cpp")
+	
+	target_link_libraries(MACE-DynamicLibraryTest LINK_PUBLIC MACE)
+	target_link_libraries(MACE-Testing LINK_PUBLIC MACE-DynamicLibraryTest)
+	target_include_directories(MACE-DynamicLibraryTest PUBLIC ${MACE_INCLUDES})
+	
+	target_compile_definitions(MACE-Testing PUBLIC MACE_DLL_TEST_OUTPUT="$<TARGET_FILE:MACE-DynamicLibraryTest>")
+	target_compile_definitions(MACE-DynamicLibraryTest PRIVATE MACE_DLL_OUT_PASS="1")
 
-	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC")
+	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC/Tests")
+	set_target_properties(MACE-DynamicLibraryTest PROPERTIES FOLDER "MC/Tests")
 endif()
 
 if(${MACE_DEMOS})
