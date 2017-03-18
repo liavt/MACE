@@ -137,11 +137,11 @@ namespace mc {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init({
+			renderer.init(
 #	include <MACE/Graphics/Shaders/image.v.glsl>
-			}, {
+			,
 #	include <MACE/Graphics/Shaders/image.f.glsl>
-			});
+			);
 		}//init
 
 		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
@@ -457,11 +457,11 @@ namespace mc {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init({
+			renderer.init(
 #	include <MACE/Graphics/Shaders/progressbar.v.glsl>
-			}, {
+			,
 #	include <MACE/Graphics/Shaders/progressbar.f.glsl>
-			});
+			);
 
 			ogl::ShaderProgram& prog = renderer.getShader();
 			prog.bind();
@@ -619,11 +619,11 @@ namespace mc {
 
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init({
+			renderer.init(
 #	include <MACE/Graphics/Shaders/letter.v.glsl>
-			}, {
+			,
 #	include <MACE/Graphics/Shaders/letter.f.glsl>
-			});
+			);
 
 			ogl::ShaderProgram& prog = renderer.getShader();
 			prog.bind();
@@ -928,11 +928,11 @@ namespace mc {
 		void RenderProtocol<Button>::init(const Size, const Size) {
 			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init({
+			renderer.init(
 #	include <MACE/Graphics/Shaders/button.v.glsl>
-			}, {
+			,
 #	include <MACE/Graphics/Shaders/button.f.glsl>
-			});
+			);
 
 			ogl::ShaderProgram& prog = renderer.getShader();
 			prog.bind();
