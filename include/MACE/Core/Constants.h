@@ -29,6 +29,21 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_OPENCV 1
 #endif
 
+#ifdef MACE_WINAPI
+#	define WIN32_LEAN_AND_MEAN
+#	include <windows.h>
+
+#	define MACE_FUNCTION_EXPORT __declspec(dllexport)
+#	define MACE_FUNCTION_IMPORT __declspec(dllimport)
+#elif defined(MACE_POSIX)
+#	define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
+#	define MACE_FUNCTION_IMPORT 
+#else
+//do nothing and hope for the best. this shouldn't ever run anyways
+#	define MACE_FUNCTION_EXPORT 
+#	define MACE_FUNCTION_IMPORT 
+#endif
+
 #include <cstdint>
 #include <stdexcept>
 
@@ -121,99 +136,59 @@ namespace mc {
 		void handle[[noreturn]]();
 	};
 
-#define _MACE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
+#define _MACE_DECLARE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
 
 	/**
 	Thrown when a pointer is equal to NULL
 	*/
-	_MACE_ERROR(NullPointer);
+	_MACE_DECLARE_ERROR(NullPointer);
 
 	/**
 	Thrown when an assertion fails.
 	@see MACE::assertModule(std::string)
 	*/
-	_MACE_ERROR(AssertionFailed);
+	_MACE_DECLARE_ERROR(AssertionFailed);
 
 	/**
 	Thrown when an object wasn't initializaed or initializtion failed
 	*/
-	_MACE_ERROR(InitializationFailed);
-
-	/**
-	Thrown when an error occured trying to read or write an image
-	*/
-	_MACE_ERROR(BadImage);
-
-	/**
-	Thrown when an error occured trying to read or write a sound file
-	*/
-	_MACE_ERROR(BadSound);
+	_MACE_DECLARE_ERROR(InitializationFailed);
 
 	/**
 	Thrown when an error occured trying to read or write a sound file
 	@see FileNotFoundError
 	*/
-	_MACE_ERROR(BadFile);
+	_MACE_DECLARE_ERROR(BadFile);
 
 	/**
 	Thrown when a file was not found on the filesystem
 	@see BadFileError
 	*/
-	_MACE_ERROR(FileNotFound);
+	_MACE_DECLARE_ERROR(FileNotFound);
 
 	/**
 	Thrown when a function looks for an object, but doesn't find it.
 	*/
-	_MACE_ERROR(ObjectNotFound);
+	_MACE_DECLARE_ERROR(ObjectNotFound);
 
 	/**
 	Thrown when something is of the wrong type
 	*/
-	_MACE_ERROR(InvalidType);
+	_MACE_DECLARE_ERROR(InvalidType);
 
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	_MACE_ERROR(IndexOutOfBounds);
+	_MACE_DECLARE_ERROR(IndexOutOfBounds);
 	/**
 	Thrown when something goes wrong while doing math, like dividing by zero
 	*/
-	_MACE_ERROR(InvalidArithmetic);
+	_MACE_DECLARE_ERROR(InvalidArithmetic);
 
 	/**
-	Thrown when something relate to Freetype or fonts fails
+	Thrown when the operating system throws an error
 	*/
-	_MACE_ERROR(Font);
-
-	/**
-	Thrown when the operating system throws and error
-	*/
-	_MACE_ERROR(System);
-
-	/**
-	Thrown when OpenGL fails or errors
-	@see ShaderError
-	*/
-	_MACE_ERROR(OpenGL);
-
-	/**
-	Thrown when a Shader throws an exception, such as a failed compilation.
-	@see OpenGLError
-	*/
-	_MACE_ERROR(Shader);
-
-	/**
-	Thrown when a Framebuffer fails to be created, or throws an error
-	@see gfx::ogl::Framebuffer
-	@see OpenGLError
-	*/
-	_MACE_ERROR(Framebuffer);
-
-	/**
-	`Exception` thrown when a syntax error is encountered, or #error is called. The filename and line number will be in message.
-	*/
-	_MACE_ERROR(Preprocessor)
-#undef _MACE_ERROR
+	_MACE_DECLARE_ERROR(System);
 }
 
 #endif//MACE_CORE_CONSTANTS_H

@@ -86,15 +86,15 @@ namespace mc {
 
 		return projectionMatrix;
 	}
-	Matrix<float, 4, 4> math::ortho(const float left, const float right, const float bottom, const float top, const float near, const float far) {
+	Matrix<float, 4, 4> math::ortho(const float left, const float right, const float bottom, const float top, const float nearPlane, const float farPlane) {
 		Matrix<float, 4, 4> orthoMatrix;
 		orthoMatrix[0][0] = 2.0f / (right - left);
 		orthoMatrix[1][1] = 2.0f / (top - bottom);
-		orthoMatrix[2][2] = -2.0f / (far - near);
+		orthoMatrix[2][2] = -2.0f / (farPlane - nearPlane);
 
 		orthoMatrix[3][0] = -((right + left) / (right - left));
 		orthoMatrix[3][1] = -((top + bottom) / (top - bottom));
-		orthoMatrix[3][2] = -((far + near) / (far - near));
+		orthoMatrix[3][2] = -((farPlane + nearPlane) / (farPlane - nearPlane));
 
 		orthoMatrix[3][3] = 1.0f;
 

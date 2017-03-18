@@ -50,7 +50,7 @@ namespace mc {
 			} else if( sig == SIGTERM ) {
 				throw SignalTerminateError("SIGTERM: Program was terminated");
 			} else {
-				throw SignalError("Program recieved signal " + sig);
+				throw SignalError("Program recieved signal " + std::to_string(sig));
 			}
 		}
 

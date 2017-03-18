@@ -32,6 +32,6 @@ namespace mc {
 #include <MACE/Utility/Preprocessor.h>
 #include <MACE/Utility/MatrixTypes.h>
 #include <MACE/Utility/Signal.h>
-#include <MACE/Utility/Logger.h>
+#include <MACE/Utility/DynamicLibrary.h>
 
 #endif

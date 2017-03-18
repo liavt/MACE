@@ -44,6 +44,25 @@ namespace mc {
 		namespace ogl {
 
 			/**
+			Thrown when OpenGL fails or errors
+			@see ShaderError
+			*/
+			_MACE_DECLARE_ERROR(OpenGL);
+
+			/**
+			Thrown when a Shader throws an exception, such as a failed compilation.
+			@see OpenGLError
+			*/
+			_MACE_DECLARE_ERROR(Shader);
+
+			/**
+			Thrown when a Framebuffer fails to be created, or throws an error
+			@see gfx::ogl::Framebuffer
+			@see OpenGLError
+			*/
+			_MACE_DECLARE_ERROR(Framebuffer);
+
+			/**
 			@opengl
 			*/
 			void checkGLError(const Index line = 0, const char* file = "Unknown file", const char* message = "No message specified");

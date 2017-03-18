@@ -341,7 +341,7 @@ namespace mc {
 			}
 
 			const auto errorCallback = [] (int id, const char* desc) {
-				throw OpenGLError("GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
+				throw gfx::ogl::OpenGLError("GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
 			};
 			glfwSetErrorCallback(errorCallback);
 

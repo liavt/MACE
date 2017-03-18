@@ -25,6 +25,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 
 namespace mc {
+	/**
+	Thrown when an error occured trying to read or write a sound file
+	*/
+	_MACE_DECLARE_ERROR(BadSound);
+
 	class Sound {
 	public:
 		enum Properties: Byte {

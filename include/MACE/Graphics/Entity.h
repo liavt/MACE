@@ -28,6 +28,11 @@ namespace mc {
 	}
 
 	namespace gfx {
+		/**
+		Thrown when an error occured trying to read or write an image
+		*/
+		_MACE_DECLARE_ERROR(BadImage);
+
 		using EntityProperties = BitField;
 
 		//forward-defining dependencies

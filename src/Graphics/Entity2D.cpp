@@ -180,7 +180,7 @@ namespace mc {
 
 		ProgressBar::ProgressBar() noexcept: ProgressBar(0, 0, 0) {}
 
-		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : min(minimum), max(maximum), progress(prog) {}
+		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
 		void ProgressBar::setBackgroundTexture(const ColorAttachment & tex) {
 			if( backgroundTexture != tex ) {
@@ -240,39 +240,39 @@ namespace mc {
 
 
 		void ProgressBar::setMinimum(const float minimum) {
-			if( min != minimum ) {
+			if( minimumProgress != minimum ) {
 				makeDirty();
 
-				min = minimum;
+				minimumProgress = minimum;
 			}
 		}
 
 		float & ProgressBar::getMinimum() {
 			makeDirty();
 
-			return min;
+			return minimumProgress;
 		}
 
 		const float & ProgressBar::getMinimum() const {
-			return min;
+			return minimumProgress;
 		}
 
 		void ProgressBar::setMaximum(const float maximum) {
-			if( max != maximum ) {
+			if( maximumProgress != maximum ) {
 				makeDirty();
 
-				max = maximum;
+				maximumProgress = maximum;
 			}
 		}
 
 		float & ProgressBar::getMaximum() {
 			makeDirty();
 
-			return max;
+			return maximumProgress;
 		}
 
 		const float & ProgressBar::getMaximum() const {
-			return max;
+			return maximumProgress;
 		}
 
 		void ProgressBar::setProgress(const float prog) {
@@ -382,7 +382,7 @@ namespace mc {
 		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {
-			return Entity2D::operator==(other) && max == other.max&&min == other.min&&progress == other.progress&&backgroundTexture == other.backgroundTexture&&foregroundTexture == other.foregroundTexture&&selectionTexture == other.selectionTexture;
+			return Entity2D::operator==(other) && maximumProgress == other.maximumProgress&&minimumProgress == other.minimumProgress&&progress == other.progress&&backgroundTexture == other.backgroundTexture&&foregroundTexture == other.foregroundTexture&&selectionTexture == other.selectionTexture;
 		}
 
 		bool ProgressBar::operator!=(const ProgressBar & other) const {
@@ -431,7 +431,7 @@ namespace mc {
 			offset += sizeof(foregroundTexture.getPaint());
 			buffer.setDataRange(sizeof(backgroundTexture.getPaint()), &backgroundTexture.getPaint(), offset);
 			offset += sizeof(backgroundTexture.getPaint());
-			const float outProgress = (progress - min) / (max - min);
+			const float outProgress = (progress - minimumProgress) / (maximumProgress - minimumProgress);
 			buffer.setDataRange(sizeof(progress), &outProgress, offset);
 		}
 

@@ -19,6 +19,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		/**
+		Thrown when something relate to Freetype or fonts fails
+		*/
+		_MACE_DECLARE_ERROR(Font);
+
 		enum class EaseFunction: Byte {
 			//Starts fast, decelerates at end
 			SINUSOIDAL,
@@ -225,7 +230,7 @@ namespace mc {
 			void onClean() override final;
 			void onDestroy() override final;
 		private:
-			float min = 0,  max = 0, progress = 0;
+			float minimumProgress = 0,  maximumProgress = 0, progress = 0;
 
 			ColorAttachment backgroundTexture;
 			ColorAttachment foregroundTexture;

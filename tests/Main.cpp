@@ -9,10 +9,17 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #define CATCH_CONFIG_RUNNER
 #include <Catch.h>
+#include <MACE/Core/Constants.h>
+#include <MACE/Core/System.h>
 
 int main(int argc, char* const argv[]) {
 	//constant? get it?
 	const int result = Catch::Session().run(argc, argv);
+
+	//the msvc ide closes the window really quickly, so we pause it in case people are compiling with the ide
+#ifdef MACE_MSVC_IDE
+	mc::os::pause();
+#endif
 
 	return result;
 }
