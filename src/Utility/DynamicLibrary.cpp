@@ -23,7 +23,7 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically -
 		//it needs to be an integer, not a pointer value.
-		runningProcess.dll = dlopen(NULL, 0);
+		runningProcess.dll = dlopen(NULL, RTLD_LAZY);
 #endif
 
 		if( runningProcess.dll == nullptr ) {
@@ -101,9 +101,21 @@ namespace mc {
 		}
 
 #ifdef MACE_WINAPI
-		FreeLibrary(dll);
+		if( !FreeLibrary(dll) ) {
+			os::checkError(__LINE__, __FILE__, "Destruction of dynamic library failed");
+
+			throw AssertionFailedError("Destruction of dynamic library failed");
+		}
 #elif defined(MACE_POSIX)
-		dlclose(dll);
+		int result = dlclose(dll);
+
+		if( result != 0 ) {
+			const char* errorMessage = dlerror();
+
+			os::checkError(__LINE__, __FILE__, "Failed to close dynamic library handle with result " + std::to_string(result) + ": " + std::string(errorMessage));
+
+			throw AssertionFailedError("Failed to close dynamic library handle with result "+std::to_string(result)+": "+std::string(errorMessage));
+		}
 #endif
 
 		created = false;
