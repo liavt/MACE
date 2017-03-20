@@ -16,6 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <ctime>
 #include <typeinfo>
 #include <fstream>
+#include <cstring>
 
 namespace mc {
 	namespace {
