@@ -46,7 +46,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
 #	define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
 #else
-//do nothing and hope for the best. this shouldn't ever run anyways
+//do nothing and hope for the best
 #	define MACE_FUNCTION_EXPORT 
 #	define MACE_FUNCTION_IMPORT 
 #endif
@@ -130,6 +130,12 @@ namespace mc {
 	*/
 	class Error: public std::runtime_error {
 	public:
+		static std::string getErrorDump(const std::exception& e);
+
+		static void setLogFileEnabled(const bool& writeLog);
+		
+		static void setVerboseErrors(const bool& verbose);
+
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/

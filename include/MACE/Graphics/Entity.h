@@ -124,7 +124,7 @@ namespace mc {
 			ColorAttachment(const char* file);
 			ColorAttachment(const std::string& file);
 
-			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included.
+			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
 			void load(cv::Mat mat) {
 				//cv::flip(mat, mat, 0);

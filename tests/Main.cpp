@@ -10,9 +10,19 @@ The above copyright notice and this permission notice shall be included in all c
 #define CATCH_CONFIG_RUNNER
 #include <Catch.h>
 
-int main(int argc, char* const argv[]) {
-	//constant? get it?
-	const int result = Catch::Session().run(argc, argv);
+#include <MACE/Core/Constants.h>
 
-	return result;
+int main(int argc, char* const argv[]) {
+	mc::Error::setVerboseErrors(true);
+
+	try {
+		//constant? get it?
+		const int result = Catch::Session().run(argc, argv);
+
+		return result;
+	} catch( const std::exception& e ) {
+		mc::Error::handleError(e);
+	}
+
+	return -1;
 }
