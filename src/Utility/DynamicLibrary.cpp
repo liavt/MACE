@@ -15,34 +15,6 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//MACE_POSIX
 
 namespace mc {
-	DynamicLibrary DynamicLibrary::getRunningProcess() {
-		DynamicLibrary runningProcess = DynamicLibrary();
-
-#ifdef MACE_WINAPI
-		runningProcess.dll = GetModuleHandle(nullptr);
-#elif defined(MACE_POSIX)
-		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically -
-		//it needs to be an integer, not a pointer value.
-		runningProcess.dll = dlopen(NULL, RTLD_GLOBAL | RTLD_LAZY);
-#endif
-
-		if( runningProcess.dll == nullptr ) {
-#ifdef MACE_POSIX
-			const char* errorMessage = dlerror();
-#else
-			constexpr char* errorMessage = "Handle to running process was nullptr";
-#endif
-
-			throw NullPointerError("Internal Error: " + std::string(errorMessage));
-		}
-
-		runningProcess.created = true;
-
-		os::checkError(__LINE__, __FILE__, "Error retrieving current running process as dynamic library");
-
-		return runningProcess;
-	}
-
 	DynamicLibrary::~DynamicLibrary() {
 		if( isCreated() ) {
 			destroy();
