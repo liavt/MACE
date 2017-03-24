@@ -51,6 +51,10 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_FUNCTION_IMPORT 
 #endif
 
+#define MACE_STRINGIFY(name) #name
+#define MACE_STRINGIFY_NAME(name) "" #name
+#define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
+
 #include <cstdint>
 #include <stdexcept>
 

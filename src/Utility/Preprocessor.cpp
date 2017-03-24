@@ -940,11 +940,8 @@ namespace mc {
 			setMacro(Macro("__TIME__", buffer));
 		}
 
-		//indirection is the only way to expand macros in other macros
-#define _MACE_NAME_STRINGIFY(name) "" #name
-#define _MACE_STRINGIFY(name) #name
 		//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define _MACE_PREDEFINE_MACRO(name) if(std::strcmp("" #name ,_MACE_NAME_STRINGIFY(name))){setMacro( Macro( #name , _MACE_STRINGIFY( name ) ));}
+#define _MACE_PREDEFINE_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){setMacro( Macro( #name , MACE_STRINGIFY( name ) ));}
 
 
 		//the following are macros denoted by the standard.
@@ -1379,8 +1376,6 @@ namespace mc {
 	}
 
 	//just to be safe. wont hurt to undefine at the end
-#undef _MACE_STRINGIFY
-#undef _MACE_NAME_STRINGIFY
 #undef _MACE_PREDEFINE_MACRO
 
 	const Macro & Preprocessor::getMacro(const std::string & name) const {

@@ -86,11 +86,8 @@ namespace mc {
 
 		dump << "\n\n";
 
-#define _MACE_STRINGIFY(name) #name
-#define _MACE_NAME_STRINGIFY(name) "" #name
-#define _MACE_DEFINITION_STRINGIFY(name) "" _MACE_STRINGIFY(name)
 		//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define _MACE_CHECK_MACRO(name) if(std::strcmp("" #name ,_MACE_NAME_STRINGIFY(name))){dump << "Yes";}else{dump << "No";}dump<<"\n";
+#define _MACE_CHECK_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){dump << "Yes";}else{dump << "No";}dump<<"\n";
 		dump << "====COMPILATION DETAILS====\n";
 		dump << "Tests:\n\t";
 		_MACE_CHECK_MACRO(MACE_TESTS);
@@ -99,11 +96,11 @@ namespace mc {
 
 		dump << std::endl;
 
-		dump << "Include Directory:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_INCLUDES) << "\n";
-		dump << "Source Directory:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_DIRECTORY) << "\n";
-		dump << "System Name:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_SYSTEM_NAME) << "\n";
-		dump << "System Version:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_SYSTEM_VERSION) << "\n";
-		dump << "Processor:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_PROCESSOR_NAME) << "\n";
+		dump << "Include Directory:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_INCLUDES) << "\n";
+		dump << "Source Directory:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_DIRECTORY) << "\n";
+		dump << "System Name:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_SYSTEM_NAME) << "\n";
+		dump << "System Version:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_SYSTEM_VERSION) << "\n";
+		dump << "Processor:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_PROCESSOR_NAME) << "\n";
 
 		dump << std::endl;
 
@@ -142,7 +139,7 @@ namespace mc {
 		dump << std::endl;
 		dump << "Static Libs:\n\t";
 		_MACE_CHECK_MACRO(MACE_STATIC_LIBS);
-		dump << "Pointer Size:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_POINTER_SIZE) << "\n";
+		dump << "Pointer Size:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_POINTER_SIZE) << "\n";
 		dump << "Architecture Bitness:\n\t";
 #ifdef MACE_32_BIT
 		dump << "32 Bit";
@@ -161,8 +158,8 @@ namespace mc {
 #	pragma warning( disable: 4003 ) 
 #endif 
 
-		dump << "Dynamic Library Prefix:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_DYNAMIC_LIBRARY_PREFIX) << "\n";
-		dump << "Dynamic Library Suffix:\n\t" << _MACE_DEFINITION_STRINGIFY(MACE_DYNAMIC_LIBRARY_SUFFIX) << "\n";
+		dump << "Dynamic Library Prefix:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_PREFIX) << "\n";
+		dump << "Dynamic Library Suffix:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_SUFFIX) << "\n";
 
 #if defined(MACE_MSVC)
 #	pragma warning( pop )
@@ -217,9 +214,6 @@ namespace mc {
 		dump << "Unknown compiler";
 #endif
 
-#undef _MACE_NAME_STRINGIFY
-#undef _MACE_STRINGIFY
-#undef _MACE_DEFINITION_STRINGIFY
 #undef _MACE_CHECK_MACRO
 
 		return dump.str();
