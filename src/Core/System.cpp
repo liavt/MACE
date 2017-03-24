@@ -205,7 +205,7 @@ namespace mc {
 
 			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": Winapi threw error " + std::to_string(error) + " with message " + message);
 #elif defined(MACE_POSIX)
-			//POSIX man pages says to save the error before using it
+			//POSIX man pages says to save the error before using it in case of a concurrent environment
 			int error = errno;
 
 			if( error == 0 ) {
