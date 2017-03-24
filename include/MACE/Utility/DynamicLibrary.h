@@ -18,8 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	class DynamicLibrary {
 	public:
-		static DynamicLibrary getRunningProcess();
-
 		~DynamicLibrary();
 		DynamicLibrary();
 		DynamicLibrary(const std::string& path);
