@@ -19,7 +19,7 @@ int main(int argc, char* const argv[]) {
 		//constant? get it?
 		const int result = Catch::Session().run(argc, argv);
 
-		std::cout << MACE_STRINGIFY_DEFINITION(MACE_FUNCTION_IMPORT);
+		std::cout << MACE_STRINGIFY_DEFINITION(MACE_FUNCTION_EXPORT);
 
 		return result;
 	} catch( const std::exception& e ) {

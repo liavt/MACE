@@ -178,40 +178,8 @@ namespace mc {
 #	endif
 
 		dump << " (Version " << std::to_string(_MSC_VER) << ")";
-#elif MACE_BORLAND
-		dump << "Borland";
-#elif MACE_MINGW
-		dump << "MingW";
-#elif MACE_CYGWIN
-		dump << "Cygwin";
-#elif MACE_CLANG
-		dump << "CLang";
-#elif MACE_GNU
-		dump << "GNU";
-#elif MACE_HP
-		dump << "HP";
-#elif MACE_INTEL
-		dump << "Intel";
-#elif MACE_ORACLE
-		dump << "Oracle";
-#elif MACE_TEXAS_INSTRUMENTS
-		dump << "Texas Instruments";
-#elif MACE_WATCOM
-		dump << "Watcom";
-#elif MACE_ADSP
-		dump << "ADSP";
-#elif MACE_CRAY
-		dump << "Cray";
-#elif MACE_MIPSPRO
-		dump << "MIPSPRO";
-#elif MACE_PORTLAND
-		dump << "Portland";
-#elif MACE_PATHSCALE
-		dump << "Pathscale";
-#elif MACE_IBM
-		dump << "IBM";
 #else
-		dump << "Unknown compiler";
+		dump << MACE_STRINGIFY_DEFINITION(MACE_COMPILER);
 #endif
 
 #undef _MACE_CHECK_MACRO
