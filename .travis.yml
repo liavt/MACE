@@ -1,6 +1,5 @@
 sudo: required
 dist: trusty
-language: cpp
 
 notifications:
   email: false
@@ -19,7 +18,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-    - compiler: g++-6
+      env: COMPILER=g++-5 CXX=g++-5 CC=gcc-5
+	  - compiler: g++-6
       os: linux
       addons:
         apt:
@@ -27,6 +27,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-6
+      env: COMPILER=g++-6 CXX=g++-6 CC=gcc-6
     - compiler: clang-3.7
       os: linux
       addons:
@@ -36,6 +37,7 @@ matrix:
             - llvm-toolchain-precise-3.7
           packages:
             - clang-3.7
+      env: COMPILER=clang++-3.7 CXX=clang++-3.7 CC=clang-3.7
     - compiler: clang-3.5
       os: linux
       addons:
@@ -45,6 +47,7 @@ matrix:
             - llvm-toolchain-precise-3.5
           packages:
             - clang-3.5
+      env: COMPILER=clang++-3.5 CXX=clang++-3.5 CC=clang-3.5
     - compiler: clang-3.5
       os: osx
       addons:
@@ -54,6 +57,7 @@ matrix:
             - llvm-toolchain-precise-3.5
           packages:
             - clang-3.5
+     env: COMPILER=clang++-3.5 CXX=clang++-3.5 CC=clang-3.5
     - compiler: clang-3.8
       os: osx
       addons:
@@ -63,6 +67,7 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
+     env: COMPILER=clang++-3.8 CXX=clang++-3.8 CC=clang-3.8
 
 
 before_install:
