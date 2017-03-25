@@ -170,6 +170,8 @@ if(${MACE_TESTS})
 
 	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC/Tests")
 	set_target_properties(MACE-DynamicLibraryTest PROPERTIES FOLDER "MC/Tests")
+	
+	add_test(NAME MACE-Test COMMAND MACE-Testing)
 endif()
 
 if(${MACE_DEMOS})
