@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+language: cpp
 
 notifications:
   email: false
@@ -10,7 +11,7 @@ branches:
   
 matrix:
   include:
-    - compiler: gcc
+    - compiler: g++-5
       os: linux
       addons:
         apt:
@@ -18,8 +19,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: COMPILER=g++-5 CXX=g++-5 CC=gcc-5
-    - compiler: gcc
+    - compiler: g++-6
       os: linux
       addons:
         apt:
@@ -27,8 +27,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-6
-      env: COMPILER=g++-6 CXX=g++-6 CC=gcc-6
-    - compiler: clang
+    - compiler: clang-3.7
       os: linux
       addons:
         apt:
@@ -37,28 +36,25 @@ matrix:
             - llvm-toolchain-precise-3.7
           packages:
             - clang-3.7
-      env: COMPILER=clang++-3.7 CXX=clang++-3.7 CC=clang-3.7
-    - compiler: clang
+    - compiler: clang-3.5
       os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.3
+            - llvm-toolchain-precise-3.5
           packages:
-            - clang-3.3
-      env: COMPILER=clang++-3.3 CXX=clang++-3.3 CC=clang-3.3
-    - compiler: clang
+            - clang-3.5
+    - compiler: clang-3.5
       os: osx
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.3
+            - llvm-toolchain-precise-3.5
           packages:
-            - clang-3.3
-      env: COMPILER=clang++-3.3 CXX=clang++-3.3 CC=clang-3.3
-    - compiler: clang
+            - clang-3.5
+    - compiler: clang-3.8
       os: osx
       addons:
         apt:
@@ -67,7 +63,6 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: COMPILER=clang++-3.8 CXX=clang++-3.8 CC=clang-3.8
 
 
 before_install:
