@@ -11,11 +11,16 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/DynamicLibrary.h>
 
 namespace mc {
-	extern "C" MACE_FUNCTION_EXPORT int exportTest(int returnValue) {
+	extern "C" MACE_FUNCTION_EXPORT int exportTest1(int returnValue) {
 		return returnValue;
 	}
 
-	typedef int(*ExportTestPtr)(int);
+	extern "C" MACE_FUNCTION_EXPORT bool exportTest2() {
+		return true;
+	}
+
+	typedef int(*ExportTest1Ptr)(int);
+	typedef bool(*ExportTest2Ptr)();
 
 	//this macro is defined when the file is compiled as a dynamic library
 #ifndef MACE_DLL_OUT_PASS
@@ -27,9 +32,17 @@ namespace mc {
 
 		REQUIRE(dllTest.isCreated());
 
-		ExportTestPtr exportTestFunc = reinterpret_cast<ExportTestPtr>(dllTest.getFunction("exportTest"));
+		ExportTest1Ptr exportTest1Func = reinterpret_cast<ExportTest1Ptr>(dllTest.getFunction("exportTest1"));
 
-		REQUIRE(exportTestFunc(42) == 42);
+		REQUIRE(exportTest1Func(42) == 42);
+
+		REQUIRE(dllTest.isCreated());
+
+		ExportTest2Ptr exportTest2Func = reinterpret_cast<ExportTest2Ptr>(dllTest["exportTest2"]);
+
+		REQUIRE(exportTest2Func());
+
+		REQUIRE(exportTest1Func(42) == 42);
 
 		REQUIRE(dllTest.isCreated());
 

@@ -72,9 +72,6 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glew glfw3 freetype openal-soft                                              ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libopencv-dev xorg-dev libopenal-dev libfreetype6 libfreetype6-dev libglu1-mesa-dev libglew-dev libglfw2;sudo apt-get update ; git clone https://github.com/glfw/glfw.git ./glfw ; cd ./glfw ; git checkout latest ;cmake . -DBUILD_SHARED_LIBS=ON ; make ; sudo make install ; sudo ldconfig ; cd .. ; fi
 
-install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-
 script:
   - mkdir build/
   - cd build/

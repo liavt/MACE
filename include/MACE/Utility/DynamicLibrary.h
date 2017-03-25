@@ -31,6 +31,14 @@ namespace mc {
 		void* getFunction(const std::string& name);
 		void* getFunction(const char* name);
 
+		void* operator[](const char* name) {
+			return getFunction(name);
+		}
+
+		void* operator[](const std::string& name) {
+			return this->operator[](name.c_str());
+		}
+
 		bool isCreated() const;
 	private:
 		bool created = false;
