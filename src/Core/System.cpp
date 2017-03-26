@@ -22,6 +22,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	include <unistd.h>
 #	include <errno.h>
 #	include <cstring>
+#include "..\..\include\MACE\Core\System.h"
 #endif
 
 namespace mc {
@@ -148,6 +149,8 @@ namespace mc {
 
 		//thanks stack overflow for this function. the c++ library has no portable way to do this normally.
 		std::wstring toWideString(const std::string & s) {
+			clearError(__LINE__, __FILE__);
+
 			const char * cs = s.c_str();
 			std::size_t wn;
 			wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
@@ -168,6 +171,8 @@ namespace mc {
 		}
 
 		std::string toNarrowString(const std::wstring & s) {
+			clearError(__LINE__, __FILE__);
+
 			const wchar_t * cs = s.c_str();
 			std::size_t wn;
 			wn = mc::os::wcstombs(&wn, nullptr, 0, cs, 0);
@@ -185,6 +190,10 @@ namespace mc {
 			}
 
 			return std::string(buf.data(), wn);
+		}
+
+		void clearError(const int line, const char* file) {
+			os::checkError(line, file, "An unexpected error occured previously and was not caught correctly");
 		}
 
 		void checkError(const int line, const char* file, const std::string errorMessage) {

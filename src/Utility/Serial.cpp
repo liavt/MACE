@@ -35,6 +35,8 @@ namespace mc {
 		}
 
 		void Serial::init(const char * port, const Size baudRate) {
+			os::clearError();
+
 			if( isConnected() ) {
 				throw AssertionFailedError("Can't call init() on a Serial class that is already connected!");
 			}
@@ -144,6 +146,8 @@ namespace mc {
 		}
 
 		void Serial::destroy() {
+			os::clearError();
+
 			if( !connected ) {
 				throw AssertionFailedError("Can't destroy an unconnected Serial object!");
 			}
@@ -160,6 +164,8 @@ namespace mc {
 		}
 
 		int Serial::read(char * buffer, Size bufferSize) {
+			os::clearError();
+
 			if( !isConnected() ) {
 				throw InitializationFailedError("Failed to read from serial: Not connected to serial port");
 			}
@@ -195,15 +201,15 @@ namespace mc {
 #elif defined(MACE_POSIX)
 			ssize_t bytesRead = ::read(serial, buffer, toRead);
 
-			if( bytesRead < 0 ) {
-				os::checkError(__LINE__, __FILE__, "Error reading from serial port");
-			}
+			os::checkError(__LINE__, __FILE__, "Error reading from serial port");
 
 			return bytesRead;
 #endif
 		}
 
 		void Serial::write(const char * buffer, const Size bufferSize) {
+			os::clearError();
+
 			if( !isConnected() ) {
 				throw InitializationFailedError("Failed to write to serial: Not connected to serial port");
 			}
@@ -244,6 +250,8 @@ namespace mc {
 		}
 
 		void Serial::flush() {
+			os::clearError();
+
 			if( !isConnected() ) {
 				throw InitializationFailedError("Unable to flush serial stream - it is not connected");
 			}
@@ -264,6 +272,8 @@ namespace mc {
 		}
 
 		Size Serial::getAvailableCharacterAmount() const {
+			os::clearError();
+
 			if( !isConnected() ) {
 				throw InitializationFailedError("Unable to read available characters from serial port - it is not connected");
 			}
@@ -300,6 +310,8 @@ namespace mc {
 			return connected;
 		}
 		bool Serial::isValid() const {
+			os::clearError();
+
 #ifdef MACE_WINDOWS
 			if( serial == INVALID_HANDLE_VALUE ) {
 				return false;

@@ -20,11 +20,10 @@ You can implement your own modules to make MACE whatever you want!
 The graphics capabilities target hardware with OpenGL 3.3 compatibility
 
 The following compilers are unit tested automatically:
-* G++ 5 on OSX and Linux
-* G++ 4 on OSX and Linux
-* Clang 3.3 on OSX and Linux
-* Clang 3.8 on OSX
-* Clang 3.7 on Linux
+* G++ 5 on Linux
+* G++ 4 on Linux
+* Clang 3.3 on Linux
+* Clang 3.7 on OSX and Linux
 * VS 2015 on Windows
 
 MACE requires a C++ 11 compliant compiler.

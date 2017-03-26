@@ -48,6 +48,7 @@ namespace mc {
 			return n;
 		}
 
+		void clearError(const int lineNumber = 0, const char* filename = "Unknown file");
 		void checkError(const int lineNumber = 0, const char* filename = "Unknown file", const std::string message = "Unknown message");
 
 		void pause();

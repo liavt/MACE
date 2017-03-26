@@ -16,24 +16,24 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	DynamicLibrary DynamicLibrary::getRunningProcess() {
+		os::clearError(__LINE__, __FILE__);
+
 		DynamicLibrary runningProcess = DynamicLibrary();
 
 #ifdef MACE_WINAPI
 		runningProcess.dll = GetModuleHandle(nullptr);
+
+		constexpr char* errorMessage = "Handle to running process was nullptr";
 #elif defined(MACE_POSIX)
 		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically 
 		//it needs to be an integer, not a pointer value.
 		runningProcess.dll = dlopen(NULL, RTLD_LOCAL | RTLD_LAZY);
-#endif
 
-#ifdef MACE_POSIX
 		char* errorMessage = dlerror();
 
 		if( errorMessage == nullptr ) {
-			errorMessage = "No error detected by POSIX";
-		}
-#else
-		constexpr char* errorMessage = "Handle to running process was nullptr";
+			errorMessage = "Handle to running process was nullptr";
+	}
 #endif
 
 		if( runningProcess.dll == nullptr ) {
@@ -45,7 +45,7 @@ namespace mc {
 		os::checkError(__LINE__, __FILE__, "Error retrieving current running process as dynamic library: " + std::string(errorMessage));
 
 		return runningProcess;
-	}
+}
 
 	DynamicLibrary::~DynamicLibrary() {
 		if( isCreated() ) {
@@ -67,6 +67,8 @@ namespace mc {
 	}
 
 	void DynamicLibrary::init(const char * path) {
+		os::clearError(__LINE__, __FILE__);
+
 		if( isCreated() ) {
 			throw InitializationFailedError("Can\'t reinitialize a DynamicLibrary object!");
 		}
@@ -96,7 +98,7 @@ namespace mc {
 		created = true;
 
 		os::checkError(__LINE__, __FILE__, "Error creating dynamic library at " + std::string(path) + ": " + std::string(errorMessage));
-	}
+		}
 
 
 	void DynamicLibrary::destroy() {
@@ -120,9 +122,9 @@ namespace mc {
 		if( result != 0 ) {
 			const char* errorMessage = dlerror();
 
-			os::checkError(__LINE__, __FILE__, "Failed to close dynamic library handle with result " + std::to_string(result) + ": " + std::string(errorMessage));
+			os::checkError(__LINE__, __FILE__, "Failed to close dynamic library handle: Error code " + std::to_string(result) + ": " + std::string(errorMessage));
 
-			throw AssertionFailedError("Failed to close dynamic library handle with result " + std::to_string(result) + ": " + std::string(errorMessage));
+			throw AssertionFailedError("dlclose returned error code " + std::to_string(result) + ": " + std::string(errorMessage));
 		}
 #endif
 
@@ -136,9 +138,11 @@ namespace mc {
 	}
 
 	void * DynamicLibrary::getFunction(const char * name) {
+		os::clearError(__LINE__, __FILE__);
+
 		if( !isCreated() ) {
 			throw InitializationFailedError("Can\'t load a function symbol from an unitialized dynamic library");
-		}
+	}
 
 #ifdef MACE_WINAPI
 		void* extractedSymbol = GetProcAddress(dll, name);
@@ -161,7 +165,7 @@ namespace mc {
 		os::checkError(__LINE__, __FILE__, "Error extracting symbol " + std::string(name) + " from dynamic library");
 
 		return extractedSymbol;
-		}
+	}
 
 	bool DynamicLibrary::isCreated() const {
 		return created;
