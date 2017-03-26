@@ -22,12 +22,13 @@ The above copyright notice and this permission notice shall be included in all c
 #	include <unistd.h>
 #	include <errno.h>
 #	include <cstring>
-#include "..\..\include\MACE\Core\System.h"
 #endif
 
 namespace mc {
 	namespace os {
 		std::tm* localtime(std::tm * pointer, const std::time_t * time) {
+			clearError(__LINE__, __FILE__);
+
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = localtime_s(pointer, time) ) {
 				throw AssertionFailedError("localtime_s errored with code " + std::to_string(status));
@@ -36,6 +37,8 @@ namespace mc {
 			return pointer;
 #elif defined(MACE_POSIX)
 			localtime_r(time, pointer);
+
+			checkError(__LINE__, __FILE__, "localtime_r failed");
 
 			if( pointer == nullptr ) {
 				throw NullPointerError("localtime_r returned a nullptr");
@@ -49,6 +52,8 @@ namespace mc {
 		}
 
 		std::tm* gmtime(std::tm * pointer, const std::time_t * time) {
+			clearError(__LINE__, __FILE__);
+
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if( errno_t status = gmtime_s(pointer, time) ) {
 				throw AssertionFailedError("gmtime_s errored with code " + std::to_string(status));
@@ -57,6 +62,8 @@ namespace mc {
 			return pointer;
 #elif defined(MACE_POSIX)
 			gmtime_r(time, pointer);
+
+			checkError(__LINE__, __FILE__, "gmtime_r failed");
 
 			if( pointer == nullptr ) {
 				throw NullPointerError("gmtime_r returned a nullptr");

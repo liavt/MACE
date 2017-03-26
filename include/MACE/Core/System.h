@@ -12,9 +12,27 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE_CORE_SYSTEM_H
 #define MACE_CORE_SYSTEM_H
 
-#define __STDC_WANT_LIB_EXT1__ 1
+#ifdef __STDC_LIB_EXT1__
+//this entire mechanism below is to make sure that defining __STDC_WANT_LIB_EXT1__ doesnt cause any issues
+#	ifdef __STDC_WANT_LIB_EXT1__
+#		define MACE_STDC_WAS_DEFINED __STDC_WANT_LIB_EXT1__
+#	endif
+
+#	define __STDC_WANT_LIB_EXT1__ 1
+#endif//__STDC_LIB_EXT1__
+
 #include <ctime>
 #include <cstddef>
+
+#ifdef __STDC_LIB_EXT1__
+#	ifdef MACE_STDC_WAS_DEFINED
+#		define __STDC_WANT_LIB_EXT1__ MACE_STDC_WAS_DEFINED
+#	else
+#		undef __STDC_WANT_LIB_EXT1__
+#	endif
+
+#	undef MACE_STDC_WAS_DEFINED
+#endif//__STDC_LIB_EXT1__
 
 #include <string>
 
