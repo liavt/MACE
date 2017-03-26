@@ -29,10 +29,14 @@ namespace mc {
 		//it needs to be an integer, not a pointer value.
 		runningProcess.dll = dlopen(NULL, RTLD_LOCAL | RTLD_LAZY);
 
-		char* errorMessage = dlerror();
+		char* systemError = dlerror();
 
-		if( errorMessage == nullptr ) {
+		const char* errorMessage;
+
+		if( SystemError == nullptr ) {
 			errorMessage = "Handle to running process was nullptr";
+		} else {
+			errorMessage = systemError;
 		}
 #endif
 
@@ -80,10 +84,14 @@ namespace mc {
 #endif
 
 #ifdef MACE_POSIX
-		char* errorMessage = dlerror();
+		char* systemError = dlerror();
 
-		if( errorMessage == nullptr ) {
-			errorMessage = "No message detected from POSIX";
+		const char* errorMessage;
+
+		if( SystemError == nullptr ) {
+			errorMessage = "Library handle was nullptr";
+		} else {
+			errorMessage = systemError;
 		}
 #else
 		constexpr char* errorMessage = "Library handle was nullptr";
