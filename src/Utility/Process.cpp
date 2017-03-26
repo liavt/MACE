@@ -42,7 +42,7 @@ namespace mc {
 		process = fork();
 
 		if (process == 0) {
-			exec(path, args);
+			execl(path, args, nullptr);
 			exit(0);
 		}
 		else if (process == -1) {
