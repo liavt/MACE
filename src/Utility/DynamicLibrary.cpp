@@ -33,7 +33,7 @@ namespace mc {
 
 		if( errorMessage == nullptr ) {
 			errorMessage = "Handle to running process was nullptr";
-	}
+		}
 #endif
 
 		if( runningProcess.dll == nullptr ) {
@@ -45,7 +45,7 @@ namespace mc {
 		os::checkError(__LINE__, __FILE__, "Error retrieving current running process as dynamic library: " + std::string(errorMessage));
 
 		return runningProcess;
-}
+	}
 
 	DynamicLibrary::~DynamicLibrary() {
 		if( isCreated() ) {
@@ -98,7 +98,7 @@ namespace mc {
 		created = true;
 
 		os::checkError(__LINE__, __FILE__, "Error creating dynamic library at " + std::string(path) + ": " + std::string(errorMessage));
-		}
+	}
 
 
 	void DynamicLibrary::destroy() {
@@ -142,7 +142,7 @@ namespace mc {
 
 		if( !isCreated() ) {
 			throw InitializationFailedError("Can\'t load a function symbol from an unitialized dynamic library");
-	}
+		}
 
 #ifdef MACE_WINAPI
 		void* extractedSymbol = GetProcAddress(dll, name);
@@ -170,4 +170,4 @@ namespace mc {
 	bool DynamicLibrary::isCreated() const {
 		return created;
 	}
-	}//mc
+}//mc

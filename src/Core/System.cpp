@@ -199,8 +199,13 @@ namespace mc {
 			return std::string(buf.data(), wn);
 		}
 
-		void clearError(const int line, const char* file) {
-			os::checkError(line, file, "An unexpected error occured previously and was not caught correctly");
+		void clearError(const int, const char*) {
+			//os::checkError(line, file, "An unexpected error occured previously and was not caught correctly");
+#ifdef MACE_WINAPI
+			GetLastError();
+#elif defined(MACE_POSIX)
+			errno = 0;
+#endif
 		}
 
 		void checkError(const int line, const char* file, const std::string errorMessage) {

@@ -9,6 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Core/Module.h>
 #include <MACE/Utility/BitField.h>
+#include <MACE/Core/System.h>
 #include <vector>
 
 namespace mc {
@@ -111,6 +112,8 @@ namespace mc {
 	}
 
 	void MACE::update() {
+		os::clearError(__LINE__, __FILE__);
+
 		if( !flags.getBit(MACE::INIT) )throw InitializationFailedError("init() must be called!");
 		for( Index i = 0; i < modules.size(); i++ ) {
 			modules[i]->update();
