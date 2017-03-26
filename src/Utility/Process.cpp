@@ -14,7 +14,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 #ifdef MACE_POSIX
 #	include <sys/wait.h>
-#	include <csignal>
+#	include <signal.h>
+#	include <cstdlib>
 #endif//MACE_POSIX
 
 namespace mc {
@@ -43,7 +44,7 @@ namespace mc {
 
 		if (process == 0) {
 			execl(path, args, nullptr);
-			exit(0);
+			std::exit(-1);
 		}
 		else if (process == -1) {
 			os::checkError(__LINE__, __FILE__, "Failed to fork process");
@@ -92,6 +93,7 @@ namespace mc {
 		}
 #elif defined(MACE_POSIX)
 		if (isRunning()) {
+			//hasta la vista baby
 			if (!kill(process, SIGTERM)) {
 				os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process");
 
