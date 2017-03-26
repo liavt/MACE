@@ -39,7 +39,7 @@ namespace mc {
 			Serial(const std::string& port, const Size baudRate = 9600);
 			~Serial();
 
-			void init(const char* port,const Size baudRate = 9600);
+			void init(const char* port, const Size baudRate = 9600);
 			void destroy();
 
 			int read(char* buffer, Size bufferSize);
@@ -63,6 +63,16 @@ namespace mc {
 
 			bool isConnected() const;
 			bool isValid() const;
+
+#if defined(MACE_WINAPI) && MACE_EXPOSE_WINAPI
+			HANDLE getHandle() const {
+				return serial;
+			}
+#elif defined(MACE_POSIX) && defined(MACE_EXPOSE_POSIX)
+			int getDescriptor() const {
+				return serial;
+			}
+#endif
 		private:
 			bool connected = false;
 

@@ -51,6 +51,11 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_STRINGIFY_NAME(name) "" #name
 #define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
 
+#ifdef MACE_DOXYGEN_PASS
+#	define MACE_EXPOSE_WINAPI 
+#	define MACE_EXPOSE_POSIX 1
+#endif
+
 #include <cstdint>
 #include <stdexcept>
 

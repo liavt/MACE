@@ -160,16 +160,25 @@ if(${MACE_TESTS})
 	
 	#to test runtime dll linking we compiled a source file twice: once as part as MACE-Testing and one as a shared library to test runtime linking
 	add_library(MACE-DynamicLibraryTest SHARED "tests/Utility/DynamicLibraryTest.cpp")
+
+	add_executable(MACE-ProcessTest "tests/Utility/ProcessTest.cpp")
 	
 	target_link_libraries(MACE-DynamicLibraryTest LINK_PUBLIC MACE)
+	target_link_libraries(MACE-ProcessTest LINK_PUBLIC MACE)
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE-DynamicLibraryTest)
 	target_include_directories(MACE-DynamicLibraryTest PUBLIC ${MACE_INCLUDES})
+	target_include_directories(MACE-ProcessTest PUBLIC ${MACE_INCLUDES})
+
+	add_dependencies(MACE-Testing MACE-ProcessTest)
 	
-	target_compile_definitions(MACE-Testing PUBLIC MACE_DLL_TEST_OUTPUT="$<TARGET_FILE:MACE-DynamicLibraryTest>")
+	target_compile_definitions(MACE-Testing PUBLIC MACE_DLL_TEST_OUTPUT="$<TARGET_FILE:MACE-DynamicLibraryTest>"
+													MACE_PROC_TEST_OUTPUT="$<TARGET_FILE:MACE-ProcessTest>")
 	target_compile_definitions(MACE-DynamicLibraryTest PRIVATE MACE_DLL_OUT_PASS="1")
+	target_compile_definitions(MACE-ProcessTest PRIVATE MACE_PROC_OUT_PASS="1")
 
 	set_target_properties(MACE-Testing PROPERTIES FOLDER "MC/Tests")
 	set_target_properties(MACE-DynamicLibraryTest PROPERTIES FOLDER "MC/Tests")
+	set_target_properties(MACE-ProcessTest PROPERTIES FOLDER "MC/Tests")
 	
 	add_test(NAME MACE-Test COMMAND MACE-Testing)
 endif()
@@ -215,6 +224,15 @@ else()
 	check_cxx_compiler_flag("-Wall" COMPILER_SUPPORTS_ALL_WARNINGS)
 	if(COMPILER_SUPPORTS_ALL_WARNINGS)
 		target_compile_options(MACE PRIVATE "$<$<CONFIG:DEBUG>:-Wall>")
+	endif()
+endif()
+
+if(MSVC)
+	check_cxx_compiler_flag("/EHsc" COMPILER_SUPPORTS_EXCEPTION_HANDLING)
+	if(COMPILER_SUPPORTS_EXCEPTION_HANDLING)
+		target_compile_options(MACE PRIVATE "/EHsc")
+	else()
+		message(FATAL_ERROR "This version of Microsoft Visual Studio does not support exception handling.")
 	endif()
 endif()
 
