@@ -33,7 +33,7 @@ namespace mc {
 
 		if( writeToLog ) {
 			std::ofstream logFile;
-			logFile.open("blah.log", std::ofstream::out | std::ofstream::trunc);
+			logFile.open("err.log", std::ofstream::out | std::ofstream::trunc);
 			logFile << Error::getErrorDump(e);
 			logFile.close();
 		}

@@ -16,7 +16,7 @@ namespace mc {
 		}
 
 		Byte convertFloatToRGBA(const float& color) {
-			return (mc::Byte)(trimFloat(color)*254.0f);
+			return static_cast<Byte>(trimFloat(color)*254.0f);
 		}
 
 		float convertRGBAToFloat(const Byte& color) {

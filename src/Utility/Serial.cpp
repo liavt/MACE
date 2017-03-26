@@ -246,7 +246,7 @@ namespace mc {
 		}
 
 		void Serial::write(const std::string & port) {
-			this->write(port.c_str(), port.size());
+			this->write(port.c_str(), static_cast<Size>(port.size()));
 		}
 
 		void Serial::flush() {

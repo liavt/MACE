@@ -519,7 +519,8 @@ namespace mc {
 				}
 			}
 
-			Index id = fonts.size();
+			//on 64 bit systems this cast is required
+			Index id = static_cast<Index>(fonts.size());
 
 			fonts.push_back(FT_Face());
 			if( int result = FT_New_Face(freetype, name, 0, &fonts[id]) ) {
