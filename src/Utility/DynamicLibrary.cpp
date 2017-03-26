@@ -17,30 +17,34 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	DynamicLibrary DynamicLibrary::getRunningProcess() {
 		DynamicLibrary runningProcess = DynamicLibrary();
-		
+
 #ifdef MACE_WINAPI
 		runningProcess.dll = GetModuleHandle(nullptr);
 #elif defined(MACE_POSIX)
 		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically 
 		//it needs to be an integer, not a pointer value.
-		runningProcess.dll = dlopen(NULL, RTLD_GLOBAL | RTLD_LAZY);
+		runningProcess.dll = dlopen(NULL, RTLD_LOCAL | RTLD_LAZY);
 #endif
-			
-		if( runningProcess.dll == nullptr ) {
+
 #ifdef MACE_POSIX
-			const char* errorMessage = dlerror();
+		char* errorMessage = dlerror();
+
+		if( errorMessage == nullptr ) {
+			errorMessage = "No error detected by POSIX";
+		}
 #else
-			constexpr char* errorMessage = "Handle to running process was nullptr";
+		constexpr char* errorMessage = "Handle to running process was nullptr";
 #endif
-				
+
+		if( runningProcess.dll == nullptr ) {
 			throw NullPointerError("Internal Error: " + std::string(errorMessage));
 		}
-		
+
 		runningProcess.created = true;
-		
-		os::checkError(__LINE__, __FILE__, "Error retrieving current running process as dynamic library");
-		
-		return runningProcess;	
+
+		os::checkError(__LINE__, __FILE__, "Error retrieving current running process as dynamic library: " + std::string(errorMessage));
+
+		return runningProcess;
 	}
 
 	DynamicLibrary::~DynamicLibrary() {
@@ -73,21 +77,25 @@ namespace mc {
 		dll = dlopen(path, RTLD_LAZY);
 #endif
 
-		if( dll == nullptr ) {
 #ifdef MACE_POSIX
-			const char* errorMessage = dlerror();
+		char* errorMessage = dlerror();
+
+		if( errorMessage == nullptr ) {
+			errorMessage = "No message detected from POSIX";
+		}
 #else
-			constexpr char* errorMessage = "Library handle was nullptr";
+		constexpr char* errorMessage = "Library handle was nullptr";
 #endif
 
+		if( dll == nullptr ) {
 			os::checkError(__LINE__, __FILE__, "Attempt to load library " + std::string(path) + " returned a nullptr: " + std::string(errorMessage));
 
-			throw FileNotFoundError("Unable to load dynamic library: " + std::string(path) + ": " + std::string(errorMessage));
+			throw FileNotFoundError("Dynamic library not found: " + std::string(path) + ": " + std::string(errorMessage));
 		}
 
 		created = true;
 
-		os::checkError(__LINE__, __FILE__, "Error creating dynamic library at " + std::string(path));
+		os::checkError(__LINE__, __FILE__, "Error creating dynamic library at " + std::string(path) + ": " + std::string(errorMessage));
 	}
 
 
@@ -114,7 +122,7 @@ namespace mc {
 
 			os::checkError(__LINE__, __FILE__, "Failed to close dynamic library handle with result " + std::to_string(result) + ": " + std::string(errorMessage));
 
-			throw AssertionFailedError("Failed to close dynamic library handle with result "+std::to_string(result)+": "+std::string(errorMessage));
+			throw AssertionFailedError("Failed to close dynamic library handle with result " + std::to_string(result) + ": " + std::string(errorMessage));
 		}
 #endif
 
@@ -147,15 +155,15 @@ namespace mc {
 
 			os::checkError(__LINE__, __FILE__, "Attempt to load symbol " + std::string(name) + " returned a nullptr: " + std::string(errorMessage));
 
-			throw NullPointerError("Unable to load symbol from dynamic library: " + std::string(name) + ": "+std::string(errorMessage));
+			throw NullPointerError("Unable to load symbol from dynamic library: " + std::string(name) + ": " + std::string(errorMessage));
 		}
 
 		os::checkError(__LINE__, __FILE__, "Error extracting symbol " + std::string(name) + " from dynamic library");
 
 		return extractedSymbol;
-	}
+		}
 
 	bool DynamicLibrary::isCreated() const {
 		return created;
 	}
-}//mc
+	}//mc
