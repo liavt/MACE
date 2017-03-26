@@ -33,7 +33,7 @@ namespace mc {
 
 		const char* errorMessage;
 
-		if( SystemError == nullptr ) {
+		if( systemError == nullptr ) {
 			errorMessage = "Handle to running process was nullptr";
 		} else {
 			errorMessage = systemError;
@@ -88,7 +88,7 @@ namespace mc {
 
 		const char* errorMessage;
 
-		if( SystemError == nullptr ) {
+		if( systemError == nullptr ) {
 			errorMessage = "Library handle was nullptr";
 		} else {
 			errorMessage = systemError;
