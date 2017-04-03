@@ -19,8 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//MACE_POSIX
 
 namespace mc {
-	void Process::init(const char * path, char * args)
-	{
+	void Process::init(const char * path, char * args) {
 		os::clearError();
 
 		if (isCreated()) {
@@ -45,8 +44,7 @@ namespace mc {
 		if (process == 0) {
 			execl(path, args, nullptr);
 			std::exit(-1);
-		}
-		else if (process == -1) {
+		} else if (process == -1) {
 			os::checkError(__LINE__, __FILE__, "Failed to fork process");
 
 			throw NullPointerError("Failed to fork process");
@@ -59,12 +57,10 @@ namespace mc {
 
 	}
 
-	void Process::init(const std::string & path, std::string & args)
-	{
+	void Process::init(const std::string & path, std::string & args) {
 		init(path.c_str(), &args[0]);//it has to be &args[0] instead of c_str() because windows requires process arguments to be mutable and c_str() is immutable.
 	}
-	void Process::destroy()
-	{
+	void Process::destroy() {
 		os::clearError();
 
 		if (!isCreated()) {
@@ -106,8 +102,7 @@ namespace mc {
 
 		os::checkError(__LINE__, __FILE__, "Failed to destroy Process");
 	}
-	int Process::wait()
-	{
+	int Process::wait() {
 		os::clearError(__LINE__, __FILE__);
 
 		if (!isCreated()) {
@@ -145,8 +140,7 @@ namespace mc {
 		return status;
 #endif
 	}
-	bool Process::isRunning() const
-	{
+	bool Process::isRunning() const {
 		if (!isCreated()) {
 			return false;
 		}
@@ -157,23 +151,17 @@ namespace mc {
 		return kill(process, 0) == 0;
 #endif
 	}
-	bool Process::isCreated() const
-	{
+	bool Process::isCreated() const {
 		return created;
 	}
-	Process::Process()
-	{
-	}
-	Process::Process(const char * path, char * args) : Process()
-	{
+	Process::Process() {}
+	Process::Process(const char * path, char * args) : Process() {
 		init(path, args);
 	}
-	Process::Process(const std::string & path, std::string & args) : Process()
-	{
+	Process::Process(const std::string & path, std::string & args) : Process() {
 		init(path, args);
 	}
-	Process::~Process()
-	{
+	Process::~Process() {
 		if (isCreated()) {
 			destroy();
 		}

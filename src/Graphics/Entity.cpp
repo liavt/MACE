@@ -101,19 +101,18 @@ namespace mc {
 		}
 
 		void ColorAttachment::load(const char * file) {
-
 			resetPixelStorage();
 
 			int width, height, componentSize;
 
 			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
 
-			if( image == nullptr || width == 0 || height == 0 || componentSize == 0 ) {
-				stbi_image_free(image);
-				throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
-			}
-
 			try {
+				if( image == nullptr || width == 0 || height == 0 || componentSize == 0 ) {
+					stbi_image_free(image);
+					throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
+				}
+
 				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
 			} catch( const std::exception& e ) {
 				stbi_image_free(image);
@@ -143,6 +142,35 @@ namespace mc {
 			setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from color");
+		}
+
+		void ColorAttachment::load(const unsigned char * c, const Size size) {
+			resetPixelStorage();
+
+			int width, height, componentSize;
+
+			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
+
+			try {
+				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
+					stbi_image_free(image);
+					throw BadImageError("Unable to read image from memory: " + std::string(stbi_failure_reason()));
+				}
+
+				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+			} catch (const std::exception& e) {
+				stbi_image_free(image);
+				throw e;
+			}
+
+			stbi_image_free(image);
+
+			generateMipmap();
+
+			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from memory");
 		}
 
 		Color& ColorAttachment::getPaint() {
