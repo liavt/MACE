@@ -109,11 +109,6 @@ namespace mc {
 			throw InitializationFailedError("Can\'t use wait() on unitialized Process");
 		}
 
-		if(!isRunning()){
-			created = false;
-			return;
-		}
-
 #ifdef MACE_WINAPI
 		WaitForSingleObject(process.hProcess, INFINITE);
 
