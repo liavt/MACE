@@ -164,7 +164,6 @@ namespace mc {
  				setPixelStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
  				setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
  
- 				//setData(mat.data, mat.cols, mat.rows, GL_UNSIGNED_BYTE, GL_BGR, GL_RGBA);
  				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from OpenCV Mat");
@@ -178,10 +177,12 @@ namespace mc {
 
 			void load(const char* file);
 			void load(const std::string& file);
-
 			void load(const Color& c);
-
-
+			void load(const unsigned char* c, const Size size);
+			template<std::size_t S>
+			void load(const unsigned char c[S]) {
+				load(c, S);
+			}
 
 			Color& getPaint();
 			const Color& getPaint() const;
