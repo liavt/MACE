@@ -114,6 +114,11 @@ namespace mc {
 			throw InitializationFailedError("Can\'t use wait() on unitialized Process");
 		}
 
+		if(!isRunning()){
+			created = false;
+			return;
+		}
+
 #ifdef MACE_WINAPI
 		WaitForSingleObject(process.hProcess, INFINITE);
 
@@ -132,7 +137,7 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		int status;
 
-		pid_t result = waitpid(process, &status, 0);
+		pid_t result = waitpid(process, &status, WUNTRACED | WCONTINUED);
 
 		if (result != process) {
 			os::checkError(__LINE__, __FILE__, "waitpid() returned exit code " + std::to_string(result));
