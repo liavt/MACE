@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::PixelUnpackBuffer" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::PixelUnpackBuffer" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -100,7 +100,7 @@ Special sslBuffer that excels at asynchronous pixel transfer operations\&.
 
 The \fC\fBPixelUnpackBuffer\fP\fP is fast at reading pixels while the \fC\fBPixelPackBuffer\fP\fP is fast at writing pixels\&. 
 .PP
-Not to be confused with a \fC\fBFrameBuffer\fP\fP or \fC\fBTexture\fP\&.\fP 
+Not to be confused with a \fC\fBFrameBuffer\fP\fP or \fC\fBTexture2D\fP\&.\fP 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -109,7 +109,7 @@ https://www.opengl.org/wiki/Pixel_Buffer_Object
 .PP
 
 .PP
-Definition at line 705 of file OGL\&.h\&.
+Definition at line 732 of file OGL\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::ogl::PixelUnpackBuffer::PixelUnpackBuffer ()\fC [noexcept]\fP"
@@ -142,6 +142,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::gfx::ogl::Texture2D\fP\&.
 .SS "void mc::gfx::ogl::Buffer::copyData (\fBBuffer\fP & other, const ptrdiff_t & size, const \fBIndex\fP readOffset = \fC0\fP, const \fBIndex\fP writeOffset = \fC0\fP)\fC [inherited]\fP"
 
 .PP
@@ -600,7 +602,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 182 of file OGL\&.h\&.
+Definition at line 197 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

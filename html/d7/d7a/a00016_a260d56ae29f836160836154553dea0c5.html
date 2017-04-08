@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('d7/d7a/a00016_a260d56ae29f836160836154
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5">mc::gfx::Entity::EntityProperty</a> : <a class="el" href="../../d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca.html#a7c6e1fbcd00ba27af6389a4a891788ca">Byte</a></td>
+          <td class="memname">enum <a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5">mc::gfx::Entity::EntityProperty</a> : <a class="el" href="../../d1/d44/a00098_a7c6e1fbcd00ba27af6389a4a891788ca.html#a7c6e1fbcd00ba27af6389a4a891788ca">Byte</a></td>
         </tr>
       </table>
   </td>
@@ -135,46 +135,46 @@ $(document).ready(function(){initNavTree('d7/d7a/a00016_a260d56ae29f836160836154
 <li>The <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> has been changed. Assume that any non-const function other than <a class="el" href="../../d7/d7a/a00016_a27bda0c0dd0fff4adbe4fe04e27bc5f6.html#a27bda0c0dd0fff4adbe4fe04e27bc5f6" title="Should be called by a Entity when the graphical Window clears the frame. ">render()</a> and <a class="el" href="../../d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d.html#aae7029661100df41b6b737b378b9d40d" title="Should be called a by Entity when MACE.update() is called. ">update()</a> will trigger this condition.</li>
 <li>The window is resized, moved, or created </li>
 </ul>
-<p>Other classes that inherit <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> can also set this to true via <a class="el" href="../../d7/d7a/a00016_ab7d0bef41e5a511452abcdfdd15d3d78.html#ab7d0bef41e5a511452abcdfdd15d3d78" title="Set a property to be true or false.Property consants start with Entity:: ">Entity::setProperty(Byte, bool)</a> </p>
+<p>Other classes that inherit <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> can also set this to true via <a class="el" href="../../d7/d7a/a00016_ab7d0bef41e5a511452abcdfdd15d3d78.html#ab7d0bef41e5a511452abcdfdd15d3d78" title="Set a property to be true or false. ">Entity::setProperty(Byte, bool)</a> </p>
 <p>When an <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code>, which is usually the <code>GraphicsContext</code>. From there, it will decide what to do based on it's <code><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" title="Flag representing whether this Entity is dirty and it&#39;s positions needs to be recalculated. ">Entity::DIRTY</a></code> flag. </p>
 <p>Certain <code>GraphicsContexts</code> may only render when something is dirty, heavily increasing performance in applications with little moving objects. </p>
 <p>Additionally, an <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> that is considered dirty will have it's sslBuffer updated on the GPU side. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636"></a>STRETCH_X&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5ad18a0e486f168a44ea1b021fae6fddbb"></a>MAINTAIN_X&#160;</td><td class="fielddoc">
 <p>Flag representing whether an <a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a>'s X position should be stretched when window is resized. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" title="Flag representing whether an Entity&#39;s Y position should be stretched when window is resized...">Entity::STRETCH_Y</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a2b64ec8cd08152ccafd2c6eafad19d36" title="Flag representing whether an Entity&#39;s Y position should be stretched when window is resized...">Entity::MAINTAIN_Y</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" title="Flag representing whether an Entity&#39;s width should be stretched when window is resized. ">Entity::STRETCH_WIDTH</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a7d44e309537b8326cfe4140f5f929032" title="Flag representing whether an Entity&#39;s width should be stretched when window is resized. ">Entity::MAINTAIN_WIDTH</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" title="Flag representing whether an Entity&#39;s height should be stretched when window is resized. ">Entity::STRETCH_HEIGHT</a> </dd></dl>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a17b61d96d84dc8efd14e4d116fb1df78" title="Flag representing whether an Entity&#39;s height should be stretched when window is resized. ">Entity::MAINTAIN_HEIGHT</a> </dd></dl>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d"></a>STRETCH_Y&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5a2b64ec8cd08152ccafd2c6eafad19d36"></a>MAINTAIN_Y&#160;</td><td class="fielddoc">
 <p>Flag representing whether an <a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a>'s Y position should be stretched when window is resized. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" title="Flag representing whether an Entity&#39;s X position should be stretched when window is resized...">Entity::STRETCH_X</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5ad18a0e486f168a44ea1b021fae6fddbb" title="Flag representing whether an Entity&#39;s X position should be stretched when window is resized...">Entity::MAINTAIN_X</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" title="Flag representing whether an Entity&#39;s width should be stretched when window is resized. ">Entity::STRETCH_WIDTH</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a7d44e309537b8326cfe4140f5f929032" title="Flag representing whether an Entity&#39;s width should be stretched when window is resized. ">Entity::MAINTAIN_WIDTH</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" title="Flag representing whether an Entity&#39;s height should be stretched when window is resized. ">Entity::STRETCH_HEIGHT</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a17b61d96d84dc8efd14e4d116fb1df78" title="Flag representing whether an Entity&#39;s height should be stretched when window is resized. ">Entity::MAINTAIN_HEIGHT</a> </dd>
 <dd>
 WindowModule::setResizable(bool) </dd></dl>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5"></a>STRETCH_WIDTH&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5a7d44e309537b8326cfe4140f5f929032"></a>MAINTAIN_WIDTH&#160;</td><td class="fielddoc">
 <p>Flag representing whether an <a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a>'s width should be stretched when window is resized. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" title="Flag representing whether an Entity&#39;s X position should be stretched when window is resized...">Entity::STRETCH_X</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5ad18a0e486f168a44ea1b021fae6fddbb" title="Flag representing whether an Entity&#39;s X position should be stretched when window is resized...">Entity::MAINTAIN_X</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" title="Flag representing whether an Entity&#39;s Y position should be stretched when window is resized...">Entity::STRETCH_Y</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a2b64ec8cd08152ccafd2c6eafad19d36" title="Flag representing whether an Entity&#39;s Y position should be stretched when window is resized...">Entity::MAINTAIN_Y</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" title="Flag representing whether an Entity&#39;s height should be stretched when window is resized. ">Entity::STRETCH_HEIGHT</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a17b61d96d84dc8efd14e4d116fb1df78" title="Flag representing whether an Entity&#39;s height should be stretched when window is resized. ">Entity::MAINTAIN_HEIGHT</a> </dd>
 <dd>
 WindowModule::setResizable(bool) </dd></dl>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0"></a>STRETCH_HEIGHT&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a260d56ae29f836160836154553dea0c5a17b61d96d84dc8efd14e4d116fb1df78"></a>MAINTAIN_HEIGHT&#160;</td><td class="fielddoc">
 <p>Flag representing whether an <a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a>'s height should be stretched when window is resized. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" title="Flag representing whether an Entity&#39;s X position should be stretched when window is resized...">Entity::STRETCH_X</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5ad18a0e486f168a44ea1b021fae6fddbb" title="Flag representing whether an Entity&#39;s X position should be stretched when window is resized...">Entity::MAINTAIN_X</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" title="Flag representing whether an Entity&#39;s Y position should be stretched when window is resized...">Entity::STRETCH_Y</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a2b64ec8cd08152ccafd2c6eafad19d36" title="Flag representing whether an Entity&#39;s Y position should be stretched when window is resized...">Entity::MAINTAIN_Y</a> </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" title="Flag representing whether an Entity&#39;s width should be stretched when window is resized. ">Entity::STRETCH_WIDTH</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a7d44e309537b8326cfe4140f5f929032" title="Flag representing whether an Entity&#39;s width should be stretched when window is resized. ">Entity::MAINTAIN_WIDTH</a> </dd>
 <dd>
 WindowModule::setResizable(bool) </dd></dl>
 </td></tr>
@@ -182,7 +182,7 @@ WindowModule::setResizable(bool) </dd></dl>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="../../df/d03/a00062_source.html#l00128">128</a> of file <a class="el" href="../../df/d03/a00062_source.html">Entity.h</a>.</p>
+<p>Definition at line <a class="el" href="../../df/d5f/a00064_source.html#l00189">189</a> of file <a class="el" href="../../df/d5f/a00064_source.html">Entity.h</a>.</p>
 
 </div>
 </div>

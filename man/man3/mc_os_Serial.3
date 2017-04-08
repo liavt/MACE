@@ -1,0 +1,118 @@
+.TH "mc::os::Serial" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::os::Serial \- Opens up a serial communciation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Serial\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSerial\fP ()"
+.br
+.ti -1c
+.RI "\fBSerial\fP (const char *port, const \fBSize\fP baudRate=9600)"
+.br
+.ti -1c
+.RI "\fBSerial\fP (const std::string &port, const \fBSize\fP baudRate=9600)"
+.br
+.ti -1c
+.RI "\fB~Serial\fP ()"
+.br
+.ti -1c
+.RI "void \fBinit\fP (const char *port, const \fBSize\fP baudRate=9600)"
+.br
+.ti -1c
+.RI "void \fBdestroy\fP ()"
+.br
+.ti -1c
+.RI "int \fBread\fP (char *buffer, \fBSize\fP bufferSize)"
+.br
+.ti -1c
+.RI "template<int S> int \fBread\fP (char buffer[S])"
+.br
+.ti -1c
+.RI "void \fBwrite\fP (const char *buffer, const \fBSize\fP bufferSize)"
+.br
+.ti -1c
+.RI "template<int S> int \fBwrite\fP (const char buffer[S])"
+.br
+.ti -1c
+.RI "void \fBwrite\fP (const std::string &port)"
+.br
+.ti -1c
+.RI "void \fBflush\fP ()"
+.br
+.ti -1c
+.RI "\fBSize\fP \fBgetAvailableCharacterAmount\fP () const "
+.br
+.ti -1c
+.RI "bool \fBhasAvailable\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisConnected\fP () const "
+.br
+.ti -1c
+.RI "bool \fBisValid\fP () const "
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Opens up a serial communciation\&. 
+
+The serial connection will have no parity and a byte size of 8\&. The baud rate can be specified by the constructor\&. 
+.PP
+Data will be sent and received raw, with no extra formatting\&. 
+.PP
+The \fC\fBSerial\fP\fP class is intended for communication to a microcontroller such as an Arduino\&. 
+.PP
+Definition at line 35 of file Serial\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::os::Serial::Serial ()"
+
+.SS "mc::os::Serial::Serial (const char * port, const \fBSize\fP baudRate = \fC9600\fP)"
+
+.SS "mc::os::Serial::Serial (const std::string & port, const \fBSize\fP baudRate = \fC9600\fP)"
+
+.SS "mc::os::Serial::~Serial ()"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void mc::os::Serial::destroy ()"
+
+.SS "void mc::os::Serial::flush ()"
+
+.SS "\fBSize\fP mc::os::Serial::getAvailableCharacterAmount () const"
+
+.SS "bool mc::os::Serial::hasAvailable () const"
+
+.SS "void mc::os::Serial::init (const char * port, const \fBSize\fP baudRate = \fC9600\fP)"
+
+.SS "bool mc::os::Serial::isConnected () const"
+
+.SS "bool mc::os::Serial::isValid () const"
+
+.SS "int mc::os::Serial::read (char * buffer, \fBSize\fP bufferSize)"
+
+.SS "template<int S> int mc::os::Serial::read (char buffer[S])\fC [inline]\fP"
+
+.PP
+Definition at line 47 of file Serial\&.h\&.
+.SS "void mc::os::Serial::write (const char * buffer, const \fBSize\fP bufferSize)"
+
+.SS "template<int S> int mc::os::Serial::write (const char buffer[S])\fC [inline]\fP"
+
+.PP
+Definition at line 53 of file Serial\&.h\&.
+.SS "void mc::os::Serial::write (const std::string & port)"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

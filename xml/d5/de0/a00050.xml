@@ -1,728 +1,255 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d5/de0/a00050" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::ogl::Texture</compoundname>
-    <basecompoundref refid="dc/d87/a00032" prot="public" virt="non-virtual">mc::gfx::ogl::Object</basecompoundref>
-    <derivedcompoundref refid="da/d45/a00011" prot="public" virt="non-virtual">mc::gfx::ColorAttachment</derivedcompoundref>
-    <includes refid="de/de1/a00065" local="no">OGL.h</includes>
-      <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="d5/de0/a00050_1aa545f2f67d8a0315f093d36dfa8c0ff2" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-        <definition>Enum mc::gfx::ogl::Texture::target</definition>
-        <argsstring></argsstring>
-        <name>target</name>
-        <initializer>= GL_TEXTURE_2D</initializer>
+    <compoundname>mc::gfx::Selectable</compoundname>
+    <derivedcompoundref refid="d7/dec/a00010" prot="public" virt="non-virtual">mc::gfx::Button</derivedcompoundref>
+    <includes refid="df/d5d/a00084" local="no">Entity.h</includes>
+      <sectiondef kind="protected-type">
+      <memberdef kind="enum" id="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10e" prot="protected" static="no">
+        <name>SelectableProperty</name>
+        <enumvalue id="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10eade99bf6ed371b86732c453a4660cb26d" prot="protected">
+          <name>CLICKED</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10ea4e9338c3d8d103a79868af7c6b1894ca" prot="protected">
+          <name>DISABLED</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10eab189774c2e01f14fb2fd5084a414ae9b" prot="protected">
+          <name>HOVERED</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="390" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="390" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-func">
-      <memberdef kind="function" id="d5/de0/a00050_ae8bd9f8ebc83dfd7a5c97e57671207b2_1ae8bd9f8ebc83dfd7a5c97e57671207b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::ogl::Texture::Texture</definition>
-        <argsstring>() noexcept</argsstring>
-        <name>Texture</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="330" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a62f5985c5873d794455517035e5d022e_1a62f5985c5873d794455517035e5d022e" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::init</definition>
-        <argsstring>() override</argsstring>
-        <name>init</name>
-        <reimplements refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c">init</reimplements>
-        <briefdescription>
-<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="332" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a6a03ba23b0c284c60cc290b7ed6aa1be_1a6a03ba23b0c284c60cc290b7ed6aa1be" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::destroy</definition>
-        <argsstring>() override</argsstring>
-        <name>destroy</name>
-        <reimplements refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d">destroy</reimplements>
-        <briefdescription>
-<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="333" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a3a4facc4cc2eb7095745a46d40694d7e_1a3a4facc4cc2eb7095745a46d40694d7e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::bind</definition>
-        <argsstring>(const Index location=0) const </argsstring>
-        <name>bind</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>location</declname>
-          <defval>0</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="335" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_ae2c5d43d175f25a3cd9ad7423aebd204_1ae2c5d43d175f25a3cd9ad7423aebd204" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::setData</definition>
-        <argsstring>(const void *data, const Size width, const Size height, const Enum type=GL_FLOAT, const Enum format=GL_RGB, const Enum internalFormat=GL_RGB, const Index mipmapLevel=0)</argsstring>
-        <name>setData</name>
-        <param>
-          <type>const void *</type>
-          <declname>data</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>width</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>height</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>type</declname>
-          <defval>GL_FLOAT</defval>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>format</declname>
-          <defval>GL_RGB</defval>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>internalFormat</declname>
-          <defval>GL_RGB</defval>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>mipmapLevel</declname>
-          <defval>0</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glTexImage2D">https://www.opengl.org/wiki/GLAPI/glTexImage2D</ulink> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="341" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a52bb78caac65910f4a5cf322c5e01756_1a52bb78caac65910f4a5cf322c5e01756" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::setMultisampledData</definition>
-        <argsstring>(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples=true)</argsstring>
-        <name>setMultisampledData</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>samples</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>width</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-          <declname>height</declname>
-        </param>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>internalFormat</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>fixedSamples</declname>
-          <defval>true</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="346" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a16097725c20f98d6afb50dc8d24f07ed_1a16097725c20f98d6afb50dc8d24f07ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::loadFile</definition>
-        <argsstring>(const char *file)</argsstring>
-        <name>loadFile</name>
-        <param>
-          <type>const char *</type>
-          <declname>file</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="351" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a4f67cfeef3a8967f2cdd5094a60a5f82_1a4f67cfeef3a8967f2cdd5094a60a5f82" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::setPixelStore</definition>
-        <argsstring>(const Enum alignment, const int number)</argsstring>
-        <name>setPixelStore</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>alignment</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>number</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="356" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a871a6de0198742138522bde9beffc0ee_1a871a6de0198742138522bde9beffc0ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::setPixelStore</definition>
-        <argsstring>(const Enum alignment, const float number)</argsstring>
-        <name>setPixelStore</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>alignment</declname>
-        </param>
-        <param>
-          <type>const float</type>
-          <declname>number</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="361" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_afd41392456dfb2e7a223062172040038_1afd41392456dfb2e7a223062172040038" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::generateMipmap</definition>
-        <argsstring>()</argsstring>
-        <name>generateMipmap</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="366" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a13ed52d53a014b033f735230210c0c62_1a13ed52d53a014b033f735230210c0c62" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::setTarget</definition>
-        <argsstring>(const Enum target)</argsstring>
-        <name>setTarget</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>target</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="368" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_acfafcb85a93ba31d3b8c5aec46c3d5df_1acfafcb85a93ba31d3b8c5aec46c3d5df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
-        <definition>Enum&amp; mc::gfx::ogl::Texture::getTarget</definition>
-        <argsstring>()</argsstring>
-        <name>getTarget</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="369" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a0e68315091b2651f9f7b0a8305e36102_1a0e68315091b2651f9f7b0a8305e36102" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref> &amp;</type>
-        <definition>const Enum&amp; mc::gfx::ogl::Texture::getTarget</definition>
-        <argsstring>() const </argsstring>
-        <name>getTarget</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="370" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a7fe5e1a38957b97cd91ccb997ca5d400_1a7fe5e1a38957b97cd91ccb997ca5d400" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Texture::isCreated</definition>
-        <argsstring>() const  override</argsstring>
-        <name>isCreated</name>
-        <reimplements refid="dc/d87/a00032_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67">isCreated</reimplements>
-        <briefdescription>
-<para>Queries OpenGL whether this <ref refid="dc/d87/a00032" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="372" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a5e488ef6770efd07d4cb8a32a298928b_1a5e488ef6770efd07d4cb8a32a298928b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::setParameter</definition>
-        <argsstring>(const Enum name, const int value)</argsstring>
-        <name>setParameter</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>const int</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glTexParameter">https://www.opengl.org/wiki/GLAPI/glTexParameter</ulink> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="378" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a4929774fa12511a757d43f106bc04ee9_1a4929774fa12511a757d43f106bc04ee9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Texture::operator==</definition>
-        <argsstring>(const Texture &amp;other) const </argsstring>
-        <name>operator==</name>
-        <param>
-          <type>const <ref refid="d5/de0/a00050" kindref="compound">Texture</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="383" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d5/de0/a00050_a5cba9f544d1d5f5765564467cbe4a78b_1a5cba9f544d1d5f5765564467cbe4a78b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Texture::operator!=</definition>
-        <argsstring>(const Texture &amp;other) const </argsstring>
-        <name>operator!=</name>
-        <param>
-          <type>const <ref refid="d5/de0/a00050" kindref="compound">Texture</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="387" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::ogl::Object::bind</definition>
-        <argsstring>() const </argsstring>
-        <name>bind</name>
-        <reimplementedby refid="d1/dc6/a00037_1aa2aa180de0c314967fef3dc1f506695f">bind</reimplementedby>
-        <reimplementedby refid="d6/d97/a00045_1a0899273f842e1b692da3a08e162ee7f3">bind</reimplementedby>
-        <briefdescription>
-<para>Binds this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const</ref> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="131" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::ogl::Object::unbind</definition>
-        <argsstring>() const </argsstring>
-        <name>unbind</name>
-        <reimplementedby refid="d1/dc6/a00037_1ad05128a71051c75e7c6a66bf135f4ce5">unbind</reimplementedby>
-        <reimplementedby refid="d6/d97/a00045_1a91dc153976fbd78b0047c436c12967d6">unbind</reimplementedby>
-        <briefdescription>
-<para>Unbinds this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="137" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::ogl::Object::getID</definition>
-        <argsstring>() const </argsstring>
-        <name>getID</name>
-        <briefdescription>
-<para>Retrieves the current ID that this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
-        <detaileddescription>
-<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="dc/d87/a00032" kindref="compound">Object</ref></computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="158" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Object::operator==</definition>
-        <argsstring>(const Object &amp;other) const </argsstring>
-        <name>operator==</name>
-        <param>
-          <type>const <ref refid="dc/d87/a00032" kindref="compound">Object</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="167" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::ogl::Object::operator!=</definition>
-        <argsstring>(const Object &amp;other) const </argsstring>
-        <name>operator!=</name>
-        <param>
-          <type>const <ref refid="dc/d87/a00032" kindref="compound">Object</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
-<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What to compare with </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="175" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="private-func">
-      <memberdef kind="function" id="d5/de0/a00050_1a8a97f0202e9a19b556b4d2a61b79f795" prot="private" static="no" const="yes" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>void mc::gfx::ogl::Texture::bindIndex</definition>
-        <argsstring>(const Index id) const  override</argsstring>
-        <name>bindIndex</name>
-        <reimplements refid="dc/d87/a00032_a5f9f3150ac508ecf142eff4f1bc9f424_1a5f9f3150ac508ecf142eff4f1bc9f424">bindIndex</reimplements>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>id</declname>
-        </param>
-        <briefdescription>
-<para>Intended to be overloaded to bind to a certain index. </para>        </briefdescription>
-        <detaileddescription>
-<para><ref refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>and <ref refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>both use this function. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>id</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Index to bind to. If it is 0, it needs to be unbinded. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="392" column="1"/>
+        <location file="include/MACE/Graphics/Entity.h" line="832" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="832" bodyend="836"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="dc/d87/a00032_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-        <definition>Index mc::gfx::ogl::Object::id</definition>
+      <memberdef kind="variable" id="d5/de0/a00050_a59d3cbdf2605679020003d974dd6f75b_1a59d3cbdf2605679020003d974dd6f75b" prot="protected" static="no" mutable="no">
+        <type><ref refid="d4/dee/a00008" kindref="compound">BitField</ref></type>
+        <definition>BitField mc::gfx::Selectable::selectableProperties</definition>
         <argsstring></argsstring>
-        <name>id</name>
+        <name>selectableProperties</name>
         <initializer>= 0</initializer>
         <briefdescription>
-<para>The ID of this `Object. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
-<para>` Should be set in <ref refid="dc/d87/a00032_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> and become 0 in <ref refid="dc/d87/a00032_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para><para><ref refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/OGL.h" line="182" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="182" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity.h" line="838" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="838" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d5/de0/a00050_a7957abdb1dabf6fdf22666ace8370b20_1a7957abdb1dabf6fdf22666ace8370b20" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Selectable::isClicked</definition>
+        <argsstring>() const </argsstring>
+        <name>isClicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="821" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_ab80dc77ba245b75162527173dbb6d27e_1ab80dc77ba245b75162527173dbb6d27e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Selectable::isDisabled</definition>
+        <argsstring>() const </argsstring>
+        <name>isDisabled</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="822" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_ab4fb14761e251beecdd733fadf121faa_1ab4fb14761e251beecdd733fadf121faa" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::Selectable::isHovered</definition>
+        <argsstring>() const </argsstring>
+        <name>isHovered</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="823" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_a6a5429488fa5308221d841f177c2f176_1a6a5429488fa5308221d841f177c2f176" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Selectable::click</definition>
+        <argsstring>()</argsstring>
+        <name>click</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="825" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_a59100e60cabbd1c3aae3db7e0b37a5cf_1a59100e60cabbd1c3aae3db7e0b37a5cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Selectable::disable</definition>
+        <argsstring>()</argsstring>
+        <name>disable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="827" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_a55f065ddc7e1b37488644cd037bf8b6c_1a55f065ddc7e1b37488644cd037bf8b6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Selectable::enable</definition>
+        <argsstring>()</argsstring>
+        <name>enable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="828" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_ad692512fd93d6fc3681e2a855ce0ff8c_1ad692512fd93d6fc3681e2a855ce0ff8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::Selectable::trigger</definition>
+        <argsstring>()</argsstring>
+        <name>trigger</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="830" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="d5/de0/a00050_aa81a0216eeb001977737965885d1888d_1aa81a0216eeb001977737965885d1888d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::Selectable::onClick</definition>
+        <argsstring>()</argsstring>
+        <name>onClick</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="840" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_a2f9c6ca5c0e9b62c84efdfe03a66dc92_1a2f9c6ca5c0e9b62c84efdfe03a66dc92" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::Selectable::onEnable</definition>
+        <argsstring>()</argsstring>
+        <name>onEnable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="842" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_aec4dc94266438b8300b89f377765c128_1aec4dc94266438b8300b89f377765c128" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::Selectable::onDisable</definition>
+        <argsstring>()</argsstring>
+        <name>onDisable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="843" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/de0/a00050_a94bed5d48edea6a6353535ebe00dda9f_1a94bed5d48edea6a6353535ebe00dda9f" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::Selectable::onTrigger</definition>
+        <argsstring>()</argsstring>
+        <name>onTrigger</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity.h" line="845" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-<para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Texture">https://www.opengl.org/wiki/Texture</ulink> </para></simplesect>
-</para>    </detaileddescription>
+    </detaileddescription>
     <inheritancegraph>
-      <node id="647">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="dc/d87/a00032"/>
+      <node id="892">
+        <label>mc::gfx::Button</label>
+        <link refid="d7/dec/a00010"/>
+        <childnode refid="891" relation="public-inheritance">
+        </childnode>
       </node>
-      <node id="646">
-        <label>mc::gfx::ogl::Texture</label>
+      <node id="891">
+        <label>mc::gfx::Selectable</label>
         <link refid="d5/de0/a00050"/>
-        <childnode refid="647" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="648">
-        <label>mc::gfx::ColorAttachment</label>
-        <link refid="da/d45/a00011"/>
-        <childnode refid="646" relation="public-inheritance">
-        </childnode>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="650">
-        <label>mc::gfx::ogl::Object</label>
-        <link refid="dc/d87/a00032"/>
-      </node>
-      <node id="649">
-        <label>mc::gfx::ogl::Texture</label>
+      <node id="893">
+        <label>mc::gfx::Selectable</label>
         <link refid="d5/de0/a00050"/>
-        <childnode refid="650" relation="public-inheritance">
+        <childnode refid="894" relation="usage">
+          <edgelabel>selectableProperties</edgelabel>
         </childnode>
       </node>
+      <node id="894">
+        <label>mc::BitField</label>
+        <link refid="d4/dee/a00008"/>
+      </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/OGL.h" line="328" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="328" bodyend="393"/>
+    <location file="include/MACE/Graphics/Entity.h" line="819" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="819" bodyend="846"/>
     <listofallmembers>
-      <member refid="d5/de0/a00050_a3a4facc4cc2eb7095745a46d40694d7e_1a3a4facc4cc2eb7095745a46d40694d7e" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>bind</name></member>
-      <member refid="dc/d87/a00032_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" virt="virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::Texture</scope><name>bind</name></member>
-      <member refid="d5/de0/a00050_1a8a97f0202e9a19b556b4d2a61b79f795" prot="private" virt="virtual"><scope>mc::gfx::ogl::Texture</scope><name>bindIndex</name></member>
-      <member refid="d5/de0/a00050_a6a03ba23b0c284c60cc290b7ed6aa1be_1a6a03ba23b0c284c60cc290b7ed6aa1be" prot="public" virt="virtual"><scope>mc::gfx::ogl::Texture</scope><name>destroy</name></member>
-      <member refid="d5/de0/a00050_afd41392456dfb2e7a223062172040038_1afd41392456dfb2e7a223062172040038" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>generateMipmap</name></member>
-      <member refid="dc/d87/a00032_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>getID</name></member>
-      <member refid="d5/de0/a00050_acfafcb85a93ba31d3b8c5aec46c3d5df_1acfafcb85a93ba31d3b8c5aec46c3d5df" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>getTarget</name></member>
-      <member refid="d5/de0/a00050_a0e68315091b2651f9f7b0a8305e36102_1a0e68315091b2651f9f7b0a8305e36102" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>getTarget</name></member>
-      <member refid="dc/d87/a00032_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>id</name></member>
-      <member refid="d5/de0/a00050_a62f5985c5873d794455517035e5d022e_1a62f5985c5873d794455517035e5d022e" prot="public" virt="virtual"><scope>mc::gfx::ogl::Texture</scope><name>init</name></member>
-      <member refid="d5/de0/a00050_a7fe5e1a38957b97cd91ccb997ca5d400_1a7fe5e1a38957b97cd91ccb997ca5d400" prot="public" virt="virtual"><scope>mc::gfx::ogl::Texture</scope><name>isCreated</name></member>
-      <member refid="d5/de0/a00050_a16097725c20f98d6afb50dc8d24f07ed_1a16097725c20f98d6afb50dc8d24f07ed" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>loadFile</name></member>
-      <member refid="d5/de0/a00050_a5cba9f544d1d5f5765564467cbe4a78b_1a5cba9f544d1d5f5765564467cbe4a78b" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>operator!=</name></member>
-      <member refid="dc/d87/a00032_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::Texture</scope><name>operator!=</name></member>
-      <member refid="d5/de0/a00050_a4929774fa12511a757d43f106bc04ee9_1a4929774fa12511a757d43f106bc04ee9" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>operator==</name></member>
-      <member refid="dc/d87/a00032_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::Texture</scope><name>operator==</name></member>
-      <member refid="d5/de0/a00050_ae2c5d43d175f25a3cd9ad7423aebd204_1ae2c5d43d175f25a3cd9ad7423aebd204" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>setData</name></member>
-      <member refid="d5/de0/a00050_a52bb78caac65910f4a5cf322c5e01756_1a52bb78caac65910f4a5cf322c5e01756" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>setMultisampledData</name></member>
-      <member refid="d5/de0/a00050_a5e488ef6770efd07d4cb8a32a298928b_1a5e488ef6770efd07d4cb8a32a298928b" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>setParameter</name></member>
-      <member refid="d5/de0/a00050_a4f67cfeef3a8967f2cdd5094a60a5f82_1a4f67cfeef3a8967f2cdd5094a60a5f82" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>setPixelStore</name></member>
-      <member refid="d5/de0/a00050_a871a6de0198742138522bde9beffc0ee_1a871a6de0198742138522bde9beffc0ee" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>setPixelStore</name></member>
-      <member refid="d5/de0/a00050_a13ed52d53a014b033f735230210c0c62_1a13ed52d53a014b033f735230210c0c62" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>setTarget</name></member>
-      <member refid="d5/de0/a00050_1aa545f2f67d8a0315f093d36dfa8c0ff2" prot="private" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>target</name></member>
-      <member refid="d5/de0/a00050_ae8bd9f8ebc83dfd7a5c97e57671207b2_1ae8bd9f8ebc83dfd7a5c97e57671207b2" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::Texture</scope><name>Texture</name></member>
-      <member refid="dc/d87/a00032_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" virt="virtual"><scope>mc::gfx::ogl::Texture</scope><name>unbind</name></member>
-      <member refid="dc/d87/a00032_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" virt="virtual"><scope>mc::gfx::ogl::Texture</scope><name>~Object</name></member>
+      <member refid="d5/de0/a00050_a6a5429488fa5308221d841f177c2f176_1a6a5429488fa5308221d841f177c2f176" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>click</name></member>
+      <member refid="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10eade99bf6ed371b86732c453a4660cb26d" prot="protected" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>CLICKED</name></member>
+      <member refid="d5/de0/a00050_a59100e60cabbd1c3aae3db7e0b37a5cf_1a59100e60cabbd1c3aae3db7e0b37a5cf" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>disable</name></member>
+      <member refid="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10ea4e9338c3d8d103a79868af7c6b1894ca" prot="protected" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>DISABLED</name></member>
+      <member refid="d5/de0/a00050_a55f065ddc7e1b37488644cd037bf8b6c_1a55f065ddc7e1b37488644cd037bf8b6c" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>enable</name></member>
+      <member refid="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10eab189774c2e01f14fb2fd5084a414ae9b" prot="protected" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>HOVERED</name></member>
+      <member refid="d5/de0/a00050_a7957abdb1dabf6fdf22666ace8370b20_1a7957abdb1dabf6fdf22666ace8370b20" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>isClicked</name></member>
+      <member refid="d5/de0/a00050_ab80dc77ba245b75162527173dbb6d27e_1ab80dc77ba245b75162527173dbb6d27e" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>isDisabled</name></member>
+      <member refid="d5/de0/a00050_ab4fb14761e251beecdd733fadf121faa_1ab4fb14761e251beecdd733fadf121faa" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>isHovered</name></member>
+      <member refid="d5/de0/a00050_aa81a0216eeb001977737965885d1888d_1aa81a0216eeb001977737965885d1888d" prot="protected" virt="virtual"><scope>mc::gfx::Selectable</scope><name>onClick</name></member>
+      <member refid="d5/de0/a00050_aec4dc94266438b8300b89f377765c128_1aec4dc94266438b8300b89f377765c128" prot="protected" virt="virtual"><scope>mc::gfx::Selectable</scope><name>onDisable</name></member>
+      <member refid="d5/de0/a00050_a2f9c6ca5c0e9b62c84efdfe03a66dc92_1a2f9c6ca5c0e9b62c84efdfe03a66dc92" prot="protected" virt="virtual"><scope>mc::gfx::Selectable</scope><name>onEnable</name></member>
+      <member refid="d5/de0/a00050_a94bed5d48edea6a6353535ebe00dda9f_1a94bed5d48edea6a6353535ebe00dda9f" prot="protected" virt="virtual"><scope>mc::gfx::Selectable</scope><name>onTrigger</name></member>
+      <member refid="d5/de0/a00050_a59d3cbdf2605679020003d974dd6f75b_1a59d3cbdf2605679020003d974dd6f75b" prot="protected" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>selectableProperties</name></member>
+      <member refid="d5/de0/a00050_aaf8aa664bfdd0e339d5339a014afa10e_1aaf8aa664bfdd0e339d5339a014afa10e" prot="protected" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>SelectableProperty</name></member>
+      <member refid="d5/de0/a00050_ad692512fd93d6fc3681e2a855ce0ff8c_1ad692512fd93d6fc3681e2a855ce0ff8c" prot="public" virt="non-virtual"><scope>mc::gfx::Selectable</scope><name>trigger</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

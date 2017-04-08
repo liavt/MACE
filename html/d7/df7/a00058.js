@@ -1,5 +1,4 @@
 var a00058 =
 [
-    [ "NetworkModule", "dd/d1b/a00015.html", "dd/d1b/a00015" ],
-    [ "TcpServer", "db/db2/a00020.html", "db/db2/a00020" ]
+    [ "handle", "d7/df7/a00058.html#acd892bd04e5e9ca631e9a4836d2ab730", null ]
 ];

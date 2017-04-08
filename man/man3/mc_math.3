@@ -1,4 +1,4 @@
-.TH "mc::math" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::math" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -11,47 +11,62 @@ mc::math \- Namespace with various mathmatical functions\&.
 
 .in +1c
 .ti -1c
-.RI "long double \fBpi\fP ()"
+.RI "constexpr long double \fBpi\fP ()"
 .br
 .RI "\fICalculates the mathmatical constant \fCpi\fP\&. \fP"
 .ti -1c
-.RI "long double \fBtau\fP ()"
+.RI "constexpr long double \fBtau\fP ()"
 .br
 .RI "\fICalculates the mathmatical constant \fCtau\fP\&. \fP"
 .ti -1c
-.RI "long double \fBgamma\fP ()"
+.RI "constexpr long double \fBgamma\fP ()"
 .br
 .RI "\fICalculates the mathmatical constant represented by \fCgamma\fP, or the `Euler–Mascheroni constant\&. \fP"
 .ti -1c
-.RI "long double \fBe\fP ()"
+.RI "constexpr long double \fBe\fP ()"
 .br
 .RI "\fICalculates the mathmatical constant known as \fCEulers Number,\fP or \fCe\fP\&. \fP"
 .ti -1c
-.RI "long double \fBroot2\fP ()"
+.RI "constexpr long double \fBroot2\fP ()"
 .br
 .RI "\fICalculates the square root of 2, also known as the \fCprincipal square root of 2\fP\&. \fP"
 .ti -1c
-.RI "long double \fBroot3\fP ()"
+.RI "constexpr long double \fBroot3\fP ()"
 .br
 .RI "\fICalculates the square root of 3, also known as the \fCprincipal square root of 3\fP\&. \fP"
 .ti -1c
-.RI "long double \fBroot5\fP ()"
+.RI "constexpr long double \fBroot5\fP ()"
 .br
 .RI "\fICalculates the square root of 5, also known as the \fCprincipal square root of 5\fP\&. \fP"
 .ti -1c
-.RI "long double \fBphi\fP ()"
+.RI "constexpr long double \fBphi\fP ()"
 .br
 .RI "\fICalculates the golden ratio, also represented by \fCphi\fP\&. \fP"
 .ti -1c
-.RI "double \fBabs\fP (const double value)"
+.RI "template<typename T > constexpr T \fBabs\fP (const T value)"
 .br
 .RI "\fIGets the absolute value of a number\&. \fP"
+.ti -1c
+.RI "template<signed char> constexpr unsigned char \fBabs\fP (const signed char value)"
+.br
+.ti -1c
+.RI "template<signed int> constexpr unsigned int \fBabs\fP (const signed int value)"
+.br
+.ti -1c
+.RI "template<signed short int> constexpr unsigned short int \fBabs\fP (const signed short int value)"
+.br
+.ti -1c
+.RI "template<signed long int> constexpr unsigned long int \fBabs\fP (const signed long int value)"
+.br
+.ti -1c
+.RI "template<signed long long int> constexpr unsigned long long int \fBabs\fP (const signed long long int value)"
+.br
 .ti -1c
 .RI "int \fBceil\fP (const double value)"
 .br
 .RI "\fI'Ceils' a number, or rounds it up\&. \fP"
 .ti -1c
-.RI "int \fBfloor\fP (const double value)"
+.RI "constexpr int \fBfloor\fP (const double value)"
 .br
 .RI "\fI'Floors' a number, or rounds it down\&. \fP"
 .ti -1c
@@ -59,11 +74,11 @@ mc::math \- Namespace with various mathmatical functions\&.
 .br
 .RI "\fIVerifies whether a number is prime\&. \fP"
 .ti -1c
-.RI "bool \fBisEven\fP (const int value)"
+.RI "constexpr bool \fBisEven\fP (const int value)"
 .br
 .RI "\fIChecks if a number is even\&. \fP"
 .ti -1c
-.RI "bool \fBisOdd\fP (const int value)"
+.RI "constexpr bool \fBisOdd\fP (const int value)"
 .br
 .RI "\fIChecks if a number is odd\&. \fP"
 .ti -1c
@@ -71,19 +86,19 @@ mc::math \- Namespace with various mathmatical functions\&.
 .br
 .RI "\fICalculates a number to an exponenet, or \fCvalue^power\fP \fP"
 .ti -1c
-.RI "double \fBsqr\fP (const double value)"
+.RI "template<typename T > constexpr T \fBsqr\fP (const T value)"
 .br
 .RI "\fISquares a number\&. \fP"
 .ti -1c
-.RI "double \fBcube\fP (const double value)"
+.RI "template<typename T > constexpr T \fBcube\fP (const T value)"
 .br
 .RI "\fICubes a number\&. \fP"
 .ti -1c
-.RI "double \fBtoRadians\fP (const double degrees)"
+.RI "constexpr double \fBtoRadians\fP (const double degrees)"
 .br
 .RI "\fIConversion of degreees to radians\&. \fP"
 .ti -1c
-.RI "double \fBtoDegrees\fP (const double radians)"
+.RI "constexpr double \fBtoDegrees\fP (const double radians)"
 .br
 .RI "\fIConversion of radians to degrees\&. \fP"
 .ti -1c
@@ -174,7 +189,7 @@ Namespace with various mathmatical functions\&.
 Namespace that contains mathmathetics with vectors and functions relevant in graphics programming\&. 
 .SH "Function Documentation"
 .PP 
-.SS "double mc::math::abs (const double value)"
+.SS "template<typename T > constexpr T mc::math::abs (const T value)\fC [inline]\fP"
 
 .PP
 Gets the absolute value of a number\&. The absolute value is the unsigned version of a number\&. 
@@ -190,6 +205,28 @@ Gets the absolute value of a number\&. The absolute value is the unsigned versio
 .RE
 .PP
 
+.PP
+Definition at line 94 of file Math\&.h\&.
+.SS "template<signed char> constexpr unsigned char mc::math::abs (const signed char value)\fC [inline]\fP"
+
+.PP
+Definition at line 99 of file Math\&.h\&.
+.SS "template<signed int> constexpr unsigned int mc::math::abs (const signed int value)\fC [inline]\fP"
+
+.PP
+Definition at line 104 of file Math\&.h\&.
+.SS "template<signed short int> constexpr unsigned short int mc::math::abs (const signed short int value)\fC [inline]\fP"
+
+.PP
+Definition at line 109 of file Math\&.h\&.
+.SS "template<signed long int> constexpr unsigned long int mc::math::abs (const signed long int value)\fC [inline]\fP"
+
+.PP
+Definition at line 114 of file Math\&.h\&.
+.SS "template<signed long long int> constexpr unsigned long long int mc::math::abs (const signed long long int value)\fC [inline]\fP"
+
+.PP
+Definition at line 119 of file Math\&.h\&.
 .SS "int mc::math::ceil (const double value)"
 
 .PP
@@ -244,8 +281,8 @@ A vector calculated from the cross product of \fCa\fP and \fCb\fP
 .PP
 
 .PP
-Definition at line 681 of file Vector\&.h\&.
-.SS "double mc::math::cube (const double value)"
+Definition at line 689 of file Vector\&.h\&.
+.SS "template<typename T > constexpr T mc::math::cube (const T value)\fC [inline]\fP"
 
 .PP
 Cubes a number\&. Cubing a number is equal to itself to the power of 3\&. 
@@ -264,10 +301,12 @@ Cubes a number\&. Cubing a number is equal to itself to the power of 3\&.
 .RS 4
 pow(const double, const double) 
 .PP
-\fBsqr(const double)\fP 
+\fBsqr(const T)\fP 
 .RE
 .PP
 
+.PP
+Definition at line 202 of file Math\&.h\&.
 .SS "template<typename T > T mc::math::det (const \fBMatrix\fP< T, 2, 2 > & matrix)"
 
 .PP
@@ -359,8 +398,8 @@ cross(const Vector&, const Vector&)
 .PP
 
 .PP
-Definition at line 711 of file Vector\&.h\&.
-.SS "long double mc::math::e ()"
+Definition at line 719 of file Vector\&.h\&.
+.SS "constexpr long double mc::math::e ()\fC [inline]\fP"
 
 .PP
 Calculates the mathmatical constant known as \fCEulers Number,\fP or \fCe\fP\&. \fCE\fP is used as the base for the natural logarithim\&. 
@@ -376,7 +415,9 @@ logn(double);
 .RE
 .PP
 
-.SS "int mc::math::floor (const double value)"
+.PP
+Definition at line 53 of file Math\&.h\&.
+.SS "constexpr int mc::math::floor (const double value)\fC [inline]\fP"
 
 .PP
 'Floors' a number, or rounds it down\&. 
@@ -399,10 +440,14 @@ round(const double)
 .RE
 .PP
 
-.SS "long double mc::math::gamma ()"
+.PP
+Definition at line 140 of file Math\&.h\&.
+.SS "constexpr long double mc::math::gamma ()\fC [inline]\fP"
 
 .PP
 Calculates the mathmatical constant represented by \fCgamma\fP, or the `Euler–Mascheroni constant\&. \fCGamma is used in number theory and analysis\&. @return The\fPEuler–Mascheroni constant` 
+.PP
+Definition at line 44 of file Math\&.h\&.
 .SS "template<typename T , Size N> \fBMatrix\fP<T, N, N> mc::math::identity ()"
 
 .PP
@@ -464,7 +509,7 @@ Matrices bigger then 2x2 dont work
 
 .PP
 Definition at line 652 of file Matrix\&.h\&.
-.SS "bool mc::math::isEven (const int value)"
+.SS "constexpr bool mc::math::isEven (const int value)\fC [inline]\fP"
 
 .PP
 Checks if a number is even\&. An even number is one that is divisable by 2\&. 
@@ -485,7 +530,9 @@ Checks if a number is even\&. An even number is one that is divisable by 2\&.
 .RE
 .PP
 
-.SS "bool mc::math::isOdd (const int value)"
+.PP
+Definition at line 159 of file Math\&.h\&.
+.SS "constexpr bool mc::math::isOdd (const int value)\fC [inline]\fP"
 
 .PP
 Checks if a number is odd\&. An odd number is one that is not divisable by 2\&. 
@@ -506,6 +553,8 @@ Checks if a number is odd\&. An odd number is one that is not divisable by 2\&.
 .RE
 .PP
 
+.PP
+Definition at line 168 of file Math\&.h\&.
 .SS "bool mc::math::isPrime (const int value)"
 
 .PP
@@ -553,7 +602,7 @@ cross(const Vector&, const Vector&)
 .PP
 
 .PP
-Definition at line 729 of file Vector\&.h\&.
+Definition at line 737 of file Vector\&.h\&.
 .SS "template<typename T , Size N> \fBVector\fP<T, N> mc::math::normalize (\fBVector\fP< T, N > & vector)"
 
 .PP
@@ -587,7 +636,7 @@ cross(const Vector&, const Vector&)
 .PP
 
 .PP
-Definition at line 749 of file Vector\&.h\&.
+Definition at line 757 of file Vector\&.h\&.
 .SS "\fBMatrix\fP<float, 4, 4> mc::math::ortho (const float left, const float right, const float bottom, const float top, const float near, const float far)"
 
 .PP
@@ -619,11 +668,13 @@ An ortographic projection matrix generated from the values\&.
 .RE
 .PP
 
-.SS "long double mc::math::phi ()"
+.SS "constexpr long double mc::math::phi ()\fC [inline]\fP"
 
 .PP
 Calculates the golden ratio, also represented by \fCphi\fP\&. The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra\&. 
-.SS "long double mc::math::pi ()"
+.PP
+Definition at line 84 of file Math\&.h\&.
+.SS "constexpr long double mc::math::pi ()\fC [inline]\fP"
 
 .PP
 Calculates the mathmatical constant \fCpi\fP\&. \fCPi\fP is the ratio of a circle's circumfernce to it's diameter, always coming out to equal roughly 3\&.14, no matter the size of the circle\&. 
@@ -636,6 +687,8 @@ Pi
 .RE
 .PP
 
+.PP
+Definition at line 27 of file Math\&.h\&.
 .SS "double mc::math::pow (const double value, const int power)"
 
 .PP
@@ -655,9 +708,9 @@ Calculates a number to an exponenet, or \fCvalue^power\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBsqr(const double)\fP 
+\fBsqr(const T)\fP 
 .PP
-\fBcube(const double)\fP 
+\fBcube(const T)\fP 
 .RE
 .PP
 
@@ -690,7 +743,7 @@ ortho(const float, const float, const float, const float, const float)
 .RE
 .PP
 
-.SS "long double mc::math::root2 ()"
+.SS "constexpr long double mc::math::root2 ()\fC [inline]\fP"
 
 .PP
 Calculates the square root of 2, also known as the \fCprincipal square root of 2\fP\&. This number when multiplied by itself returns 2\&. It is used in trigonometry\&. 
@@ -701,7 +754,9 @@ Square root of 2
 .RE
 .PP
 
-.SS "long double mc::math::root3 ()"
+.PP
+Definition at line 61 of file Math\&.h\&.
+.SS "constexpr long double mc::math::root3 ()\fC [inline]\fP"
 
 .PP
 Calculates the square root of 3, also known as the \fCprincipal square root of 3\fP\&. This number when multiplied by itself returns 3\&. It is used in geometery and trigonometry\&. 
@@ -712,7 +767,9 @@ Square root of 3
 .RE
 .PP
 
-.SS "long double mc::math::root5 ()"
+.PP
+Definition at line 69 of file Math\&.h\&.
+.SS "constexpr long double mc::math::root5 ()\fC [inline]\fP"
 
 .PP
 Calculates the square root of 5, also known as the \fCprincipal square root of 5\fP\&. This number when multiplied by itself returns 5\&. It is used in geometery and trigonometry\&. 
@@ -723,6 +780,8 @@ Square root of 5
 .RE
 .PP
 
+.PP
+Definition at line 77 of file Math\&.h\&.
 .SS "\fBMatrix\fP<float,4, 4> mc::math::rotate (const float x, const float y, const float z)"
 
 .PP
@@ -841,7 +900,7 @@ A \fCMatrix4f\fP that is scaled based on the supplied values
 .RE
 .PP
 
-.SS "double mc::math::sqr (const double value)"
+.SS "template<typename T > constexpr T mc::math::sqr (const T value)\fC [inline]\fP"
 
 .PP
 Squares a number\&. Squaring a number equals a number times iteslf\&. 
@@ -860,11 +919,13 @@ Squares a number\&. Squaring a number equals a number times iteslf\&.
 .RS 4
 pow(const double, const double) 
 .PP
-\fBcube(const double)\fP 
+\fBcube(const T)\fP 
 .RE
 .PP
 
-.SS "long double mc::math::tau ()"
+.PP
+Definition at line 190 of file Math\&.h\&.
+.SS "constexpr long double mc::math::tau ()\fC [inline]\fP"
 
 .PP
 Calculates the mathmatical constant \fCtau\fP\&. \fCTau\fP is known as \fC2pi\fP and represents the full turn of a circle\&. It also represents 6\&.28 radians, a full circle, equal to 360 degrees\&. 
@@ -880,7 +941,9 @@ Tau
 .RE
 .PP
 
-.SS "double mc::math::toDegrees (const double radians)"
+.PP
+Definition at line 36 of file Math\&.h\&.
+.SS "constexpr double mc::math::toDegrees (const double radians)\fC [inline]\fP"
 
 .PP
 Conversion of radians to degrees\&. 
@@ -901,7 +964,9 @@ The same number represented as degrees
 .RE
 .PP
 
-.SS "double mc::math::toRadians (const double degrees)"
+.PP
+Definition at line 222 of file Math\&.h\&.
+.SS "constexpr double mc::math::toRadians (const double degrees)\fC [inline]\fP"
 
 .PP
 Conversion of degreees to radians\&. 
@@ -922,6 +987,8 @@ The same number represented as radians
 .RE
 .PP
 
+.PP
+Definition at line 212 of file Math\&.h\&.
 .SS "template<typename T , Size N> T mc::math::tr (const \fBMatrix\fP< T, N, N > & m)"
 
 .PP

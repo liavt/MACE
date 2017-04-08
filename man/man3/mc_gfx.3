@@ -1,4 +1,4 @@
-.TH "mc::gfx" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -22,6 +22,12 @@ mc::gfx \- Namespace containing classes used for Graphics in \fBMACE\fP\&.
 .SS "Classes"
 
 .in +1c
+.ti -1c
+.RI "class \fBAlignmentComponent\fP"
+.br
+.ti -1c
+.RI "class \fBButton\fP"
+.br
 .ti -1c
 .RI "class \fBCallbackComponent\fP"
 .br
@@ -70,6 +76,9 @@ mc::gfx \- Namespace containing classes used for Graphics in \fBMACE\fP\&.
 .RI "class \fBRenderProtocol\fP"
 .br
 .ti -1c
+.RI "class \fBRenderProtocol< Button >\fP"
+.br
+.ti -1c
 .RI "class \fBRenderProtocol< Image >\fP"
 .br
 .ti -1c
@@ -77,6 +86,9 @@ mc::gfx \- Namespace containing classes used for Graphics in \fBMACE\fP\&.
 .br
 .ti -1c
 .RI "class \fBRenderProtocol< ProgressBar >\fP"
+.br
+.ti -1c
+.RI "class \fBSelectable\fP"
 .br
 .ti -1c
 .RI "class \fBSimpleQuadRenderer\fP"
@@ -108,24 +120,33 @@ mc::gfx \- Namespace containing classes used for Graphics in \fBMACE\fP\&.
 .RI "enum \fBEaseFunction\fP : Byte { \fBEaseFunction::SINUSOIDAL\fP, \fBEaseFunction::COSINE\fP, \fBEaseFunction::CUBIC\fP, \fBEaseFunction::QUADRATIC\fP, \fBEaseFunction::QUARTIC\fP, \fBEaseFunction::QUINTIC\fP, \fBEaseFunction::SQUARE_ROOT\fP, \fBEaseFunction::CUBE_ROOT\fP, \fBEaseFunction::LINEAR\fP }"
 .br
 .in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (BadImage)"
+.br
+.RI "\fIThrown when an error occured trying to read or write an image\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (\fBFont\fP)"
+.br
+.RI "\fIThrown when something relate to Freetype or fonts fails\&. \fP"
+.ti -1c
+.RI "\fBRenderer\fP * \fBgetRenderer\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetRenderer\fP (\fBRenderer\fP *r)"
+.br
+.in -1c
 .SH "Detailed Description"
 .PP 
 Namespace containing classes used for Graphics in \fBMACE\fP\&. 
-
-
-.PP
-\fBBug\fP
-.RS 4
-Crashes after some time on NVIDIA gpus 
-.RE
-.PP
-
 .SH "Typedef Documentation"
 .PP 
 .SS "using \fBmc::gfx::EntityProperties\fP = typedef \fBBitField\fP"
 
 .PP
-Definition at line 21 of file Entity\&.h\&.
+Definition at line 36 of file Entity\&.h\&.
 .SS "using \fBmc::gfx::RenderQueue\fP = typedef std::deque<std::pair<\fBIndex\fP, \fBGraphicsEntity\fP*>>"
 
 .PP
@@ -156,7 +177,7 @@ Definition at line 27 of file Renderer\&.h\&.
 .TP
 \fB\fILINEAR \fP\fP
 .PP
-Definition at line 35 of file Entity2D\&.h\&.
+Definition at line 28 of file Entity2D\&.h\&.
 .SS "enum \fBmc::gfx::HorizontalAlign\fP : \fBByte\fP\fC [strong]\fP"
 
 .PP
@@ -169,7 +190,7 @@ Definition at line 35 of file Entity2D\&.h\&.
 .TP
 \fB\fIRIGHT \fP\fP
 .PP
-Definition at line 29 of file Entity2D\&.h\&.
+Definition at line 24 of file Components\&.h\&.
 .SS "enum \fBmc::gfx::VerticalAlign\fP : \fBByte\fP\fC [strong]\fP"
 
 .PP
@@ -182,7 +203,21 @@ Definition at line 29 of file Entity2D\&.h\&.
 .TP
 \fB\fIBOTTOM \fP\fP
 .PP
-Definition at line 23 of file Entity2D\&.h\&.
+Definition at line 18 of file Components\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "mc::gfx::_MACE_DECLARE_ERROR (\fBFont\fP)"
+
+.PP
+Thrown when something relate to Freetype or fonts fails\&. 
+.SS "mc::gfx::_MACE_DECLARE_ERROR (BadImage)"
+
+.PP
+Thrown when an error occured trying to read or write an image\&. 
+.SS "\fBRenderer\fP* mc::gfx::getRenderer ()"
+
+.SS "void mc::gfx::setRenderer (\fBRenderer\fP * r)"
+
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for MACE from the source code\&.

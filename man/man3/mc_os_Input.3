@@ -1,4 +1,4 @@
-.TH "mc::os::Input" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::os::Input" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,10 +10,10 @@ mc::os::Input \-
 
 .in +1c
 .ti -1c
-.RI "enum \fBAction\fP : Byte { \fBPRESSED\fP = 0, \fBREPEATED\fP = 1, \fBRELEASED\fP = 2, \fBMOD_SHIFT\fP = 3, \fBMOD_CONTROL\fP = 4, \fBMOD_ALT\fP = 5, \fBMOD_SUPER\fP = 6 }"
+.RI "enum \fBAction\fP : Byte { \fBPRESSED\fP = 0, \fBREPEATED\fP = 1, \fBRELEASED\fP = 2, \fBMODIFIER_SHIFT\fP = 3, \fBMODIFIER_CONTROL\fP = 4, \fBMODIFIER_ALT\fP = 5, \fBMODIFIER_SUPER\fP = 6 }"
 .br
 .ti -1c
-.RI "enum \fBKey\fP : short int { \fBUNKNOWN\fP = -1, \fBMOUSE_1\fP = 1, \fBMOUSE_2\fP = 2, \fBMOUSE_3\fP = 3, \fBMOUSE_4\fP = 4, \fBMOUSE_5\fP = 5, \fBMOUSE_6\fP = 6, \fBMOUSE_7\fP = 7, \fBMOUSE_8\fP = 8, \fBMOUSE_LEFT\fP = MOUSE_1, \fBMOUSE_RIGHT\fP = MOUSE_2, \fBMOUSE_MIDDLE\fP = MOUSE_3, \fBMOUSE_LAST\fP = MOUSE_8, \fBMOUSE_FIRST\fP = MOUSE_1, \fBSPACE\fP = 32, \fBAPOSTROPHE\fP = 39, \fBCOMMA\fP = 44, \fBMINUS\fP = 45, \fBPERIOD\fP = 46, \fBSLASH\fP = 47, \fBNUM_0\fP = 48, \fBNUM_1\fP = 49, \fBNUM_2\fP = 50, \fBNUM_3\fP = 51, \fBNUM_4\fP = 52, \fBNUM_5\fP = 53, \fBNUM_6\fP = 54, \fBNUM_7\fP = 55, \fBNUM_8\fP = 56, \fBNUM_9\fP = 57, \fBSEMICOLON\fP = 59, \fBEQUAL\fP = 61, \fBA\fP = 65, \fBB\fP = 66, \fBC\fP = 67, \fBD\fP = 68, \fBE\fP = 69, \fBF\fP = 70, \fBG\fP = 71, \fBH\fP = 72, \fBI\fP = 73, \fBJ\fP = 74, \fBK\fP = 75, \fBL\fP = 76, \fBM\fP = 77, \fBN\fP = 78, \fBO\fP = 79, \fBP\fP = 80, \fBQ\fP = 81, \fBR\fP = 82, \fBS\fP = 83, \fBT\fP = 84, \fBU\fP = 85, \fBV\fP = 86, \fBW\fP = 87, \fBX\fP = 88, \fBY\fP = 89, \fBZ\fP = 90, \fBLEFT_BRACKET\fP = 91, \fBBACKSLASH\fP = 92, \fBRIGHT_BRACKET\fP = 93, \fBGRAVE_ACCENT\fP = 96, \fBWORLD_1\fP = 161, \fBWORLD_2\fP = 162, \fBESCAPE\fP = 256, \fBENTER\fP = 257, \fBTAB\fP = 258, \fBBACKSPACE\fP = 259, \fBINSERT\fP = 260, \fBDELETE\fP = 261, \fBRIGHT\fP = 262, \fBLEFT\fP = 263, \fBDOWN\fP = 264, \fBUP\fP = 265, \fBPAGE_UP\fP = 266, \fBPAGE_DOWN\fP = 267, \fBHOME\fP = 268, \fBEND\fP = 269, \fBCAPS_LOCK\fP = 280, \fBSCROLL_LOCK\fP = 281, \fBNUM_LOCK\fP = 282, \fBPRINT_SCREEN\fP = 283, \fBPAUSE\fP = 284, \fBF1\fP = 290, \fBF2\fP = 291, \fBF3\fP = 292, \fBF4\fP = 293, \fBF5\fP = 294, \fBF6\fP = 295, \fBF7\fP = 296, \fBF8\fP = 297, \fBF9\fP = 298, \fBF10\fP = 299, \fBF11\fP = 300, \fBF12\fP = 301, \fBF13\fP = 302, \fBF14\fP = 303, \fBF15\fP = 304, \fBF16\fP = 305, \fBF17\fP = 306, \fBF18\fP = 307, \fBF19\fP = 308, \fBF20\fP = 309, \fBF21\fP = 310, \fBF22\fP = 311, \fBF23\fP = 312, \fBF24\fP = 313, \fBF25\fP = 314, \fBKP_0\fP = 320, \fBKP_1\fP = 321, \fBKP_2\fP = 322, \fBKP_3\fP = 323, \fBKP_4\fP = 324, \fBKP_5\fP = 325, \fBKP_6\fP = 326, \fBKP_7\fP = 327, \fBKP_8\fP = 328, \fBKP_9\fP = 329, \fBKP_DECIMAL\fP = 330, \fBKP_DIVIDE\fP = 331, \fBKP_MULTIPLY\fP = 332, \fBKP_SUBTRACT\fP = 333, \fBKP_ADD\fP = 334, \fBKP_ENTER\fP = 335, \fBKP_EQUAL\fP = 336, \fBLEFT_SHIFT\fP = 340, \fBLEFT_CONTROL\fP = 341, \fBLEFT_ALT\fP = 342, \fBLEFT_SUPER\fP = 343, \fBRIGHT_SHIFT\fP = 344, \fBRIGHT_CONTROL\fP = 345, \fBRIGHT_ALT\fP = 346, \fBRIGHT_SUPER\fP = 347, \fBMENU\fP = 348, \fBLAST\fP = MENU, \fBFIRST\fP = SPACE }"
+.RI "enum \fBKey\fP : short int { \fBUNKNOWN\fP = -1, \fBMOUSE_1\fP = 1, \fBMOUSE_2\fP = 2, \fBMOUSE_3\fP = 3, \fBMOUSE_4\fP = 4, \fBMOUSE_5\fP = 5, \fBMOUSE_6\fP = 6, \fBMOUSE_7\fP = 7, \fBMOUSE_8\fP = 8, \fBMOUSE_LEFT\fP = MOUSE_1, \fBMOUSE_RIGHT\fP = MOUSE_2, \fBMOUSE_MIDDLE\fP = MOUSE_3, \fBMOUSE_LAST\fP = MOUSE_8, \fBMOUSE_FIRST\fP = MOUSE_1, \fBSPACE\fP = 32, \fBAPOSTROPHE\fP = 39, \fBCOMMA\fP = 44, \fBMINUS\fP = 45, \fBPERIOD\fP = 46, \fBSLASH\fP = 47, \fBNUM_0\fP = 48, \fBNUM_1\fP = 49, \fBNUM_2\fP = 50, \fBNUM_3\fP = 51, \fBNUM_4\fP = 52, \fBNUM_5\fP = 53, \fBNUM_6\fP = 54, \fBNUM_7\fP = 55, \fBNUM_8\fP = 56, \fBNUM_9\fP = 57, \fBSEMICOLON\fP = 59, \fBEQUAL\fP = 61, \fBA\fP = 65, \fBB\fP = 66, \fBC\fP = 67, \fBD\fP = 68, \fBE\fP = 69, \fBF\fP = 70, \fBG\fP = 71, \fBH\fP = 72, \fBI\fP = 73, \fBJ\fP = 74, \fBK\fP = 75, \fBL\fP = 76, \fBM\fP = 77, \fBN\fP = 78, \fBO\fP = 79, \fBP\fP = 80, \fBQ\fP = 81, \fBR\fP = 82, \fBS\fP = 83, \fBT\fP = 84, \fBU\fP = 85, \fBV\fP = 86, \fBW\fP = 87, \fBX\fP = 88, \fBY\fP = 89, \fBZ\fP = 90, \fBLEFT_BRACKET\fP = 91, \fBBACKSLASH\fP = 92, \fBRIGHT_BRACKET\fP = 93, \fBGRAVE_ACCENT\fP = 96, \fBWORLD_1\fP = 161, \fBWORLD_2\fP = 162, \fBESCAPE\fP = 256, \fBENTER\fP = 257, \fBTAB\fP = 258, \fBBACKSPACE\fP = 259, \fBINSERT\fP = 260, \fBDEL\fP = 261, \fBRIGHT\fP = 262, \fBLEFT\fP = 263, \fBDOWN\fP = 264, \fBUP\fP = 265, \fBPAGE_UP\fP = 266, \fBPAGE_DOWN\fP = 267, \fBHOME\fP = 268, \fBEND\fP = 269, \fBCAPS_LOCK\fP = 280, \fBSCROLL_LOCK\fP = 281, \fBNUM_LOCK\fP = 282, \fBPRINT_SCREEN\fP = 283, \fBPAUSE\fP = 284, \fBF1\fP = 290, \fBF2\fP = 291, \fBF3\fP = 292, \fBF4\fP = 293, \fBF5\fP = 294, \fBF6\fP = 295, \fBF7\fP = 296, \fBF8\fP = 297, \fBF9\fP = 298, \fBF10\fP = 299, \fBF11\fP = 300, \fBF12\fP = 301, \fBF13\fP = 302, \fBF14\fP = 303, \fBF15\fP = 304, \fBF16\fP = 305, \fBF17\fP = 306, \fBF18\fP = 307, \fBF19\fP = 308, \fBF20\fP = 309, \fBF21\fP = 310, \fBF22\fP = 311, \fBF23\fP = 312, \fBF24\fP = 313, \fBF25\fP = 314, \fBKP_0\fP = 320, \fBKP_1\fP = 321, \fBKP_2\fP = 322, \fBKP_3\fP = 323, \fBKP_4\fP = 324, \fBKP_5\fP = 325, \fBKP_6\fP = 326, \fBKP_7\fP = 327, \fBKP_8\fP = 328, \fBKP_9\fP = 329, \fBKP_DECIMAL\fP = 330, \fBKP_DIVIDE\fP = 331, \fBKP_MULTIPLY\fP = 332, \fBKP_SUBTRACT\fP = 333, \fBKP_ADD\fP = 334, \fBKP_ENTER\fP = 335, \fBKP_EQUAL\fP = 336, \fBLEFT_SHIFT\fP = 340, \fBLEFT_CONTROL\fP = 341, \fBLEFT_ALT\fP = 342, \fBLEFT_SUPER\fP = 343, \fBRIGHT_SHIFT\fP = 344, \fBRIGHT_CONTROL\fP = 345, \fBRIGHT_ALT\fP = 346, \fBRIGHT_SUPER\fP = 347, \fBMENU\fP = 348, \fBLAST\fP = MENU, \fBFIRST\fP = SPACE }"
 .br
 .in -1c
 .SS "Functions"
@@ -58,15 +58,15 @@ mc::os::Input \-
 .TP
 \fB\fIRELEASED \fP\fP
 .TP
-\fB\fIMOD_SHIFT \fP\fP
+\fB\fIMODIFIER_SHIFT \fP\fP
 .TP
-\fB\fIMOD_CONTROL \fP\fP
+\fB\fIMODIFIER_CONTROL \fP\fP
 .TP
-\fB\fIMOD_ALT \fP\fP
+\fB\fIMODIFIER_ALT \fP\fP
 .TP
-\fB\fIMOD_SUPER \fP\fP
+\fB\fIMODIFIER_SUPER \fP\fP
 .PP
-Definition at line 114 of file Window\&.h\&.
+Definition at line 118 of file Window\&.h\&.
 .SS "enum \fBmc::os::Input::Key\fP : short int"
 
 .PP
@@ -211,7 +211,8 @@ Definition at line 114 of file Window\&.h\&.
 .TP
 \fB\fIINSERT \fP\fP
 .TP
-\fB\fIDELETE \fP\fP
+\fB\fIDEL \fP\fP
+Delete key\&. Named DEL to prevent naming conflict with DELETE 
 .TP
 \fB\fIRIGHT \fP\fP
 .TP
@@ -345,7 +346,7 @@ Definition at line 114 of file Window\&.h\&.
 .TP
 \fB\fIFIRST \fP\fP
 .PP
-Definition at line 125 of file Window\&.h\&.
+Definition at line 129 of file Window\&.h\&.
 .SH "Function Documentation"
 .PP 
 .SS "const \fBBitField\fP& mc::os::Input::getKey (const short int key)"

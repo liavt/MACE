@@ -1,5 +1,4 @@
 var a00060 =
 [
-    [ "Window", "de/d11/a00021.html", "de/d11/a00021" ],
-    [ "WindowModule", "d7/de0/a00022.html", "d7/de0/a00022" ]
+    [ "handle", "d9/d73/a00060.html#acd892bd04e5e9ca631e9a4836d2ab730", null ]
 ];

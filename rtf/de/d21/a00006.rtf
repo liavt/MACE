@@ -82,22 +82,22 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::AudioModule Class Reference\par \pard\plain 
-{\tc\tcl2 \v mc::AudioModule}
-{\xe \v mc::AudioModule}
-{\bkmkstart AAAAAAAAQO}
-{\bkmkend AAAAAAAAQO}
+mc::gfx::AlignmentComponent Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent}
+{\bkmkstart AAAAAAABDV}
+{\bkmkend AAAAAAABDV}
 \par
 {
-{\f2 #include <Audio.h>}}\par
-Inheritance diagram for mc::AudioModule:{
+{\f2 #include <Components.h>}}\par
+Inheritance diagram for mc::gfx::AlignmentComponent:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d7/d70/a00106.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d9/d38/a00166.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
-Collaboration diagram for mc::AudioModule:{
+Collaboration diagram for mc::gfx::AlignmentComponent:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "df/d98/a00107.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/de6/a00167.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -106,39 +106,63 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} () override\par
+{\b AlignmentComponent} (const {\b VerticalAlign} vert={\b VerticalAlign::CENTER}, const {\b HorizontalAlign} horz={\b HorizontalAlign::CENTER})\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setVerticalAlign} (const {\b VerticalAlign} align)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b VerticalAlign} {\b getVerticalAlign} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setHorizontalAlign} ({\b HorizontalAlign} align)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+const {\b HorizontalAlign} {\b getHorizontalAlign} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator==} (const {\b AlignmentComponent} &other) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator!=} (const {\b AlignmentComponent} &other) const \par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected Member Functions\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b clean} ({\b Entity} *e) final\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b MACE#init} is called and this {\f2 {\b Module}}  is registered. }{
+Called when {\b Entity::clean()} is called and it was dirty. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b update} () override\par
+virtual void {\b init} ({\b Entity} *e)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b MACE#update} is called and this {\f2 {\b Module}}  is registered. }{
+Called when this {\f2 {\b Component}}  is added to the {\f2 {\b Entity}}  via {\b Entity::addComponent(Component&)}. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () override\par
+virtual bool {\b update} ({\b Entity} *e)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b MACE#destroy} is called and this {\f2 {\b Module}}  is registered. }{
+Called when {\b Entity::update()} is called. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-std::string {\b getName} () const  override\par
+virtual void {\b destroy} ({\b Entity} *e)\par
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid {\i {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Override this function and return a UNIQUE name for this {\f2 {\b Module}}  }{
+Called when {\b Entity::destroy()} is called or the {\f2 {\b Component}}  is removed via {\b Component::update(Entity*)}, whichever comes first. }{
 }\par
 }}
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-const std::vector< {\b Sound} > & {\b getSounds} () const \par
+virtual void {\b render} ({\b Entity} *e)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b addSound} ({\b Sound} &s)\par
+virtual void {\b hover} ({\b Entity} *e)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-{\b AudioModule} ()\par
+{\b Entity} * {\b getParent} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator==} (const {\b Component} &other) const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b operator!=} (const {\b Component} &other) const \par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -146,20 +170,20 @@ Detailed Description\par
 \pard\plain 
 {
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {
-Definition at line 67 of file Audio.h.}\par
+Definition at line 30 of file Components.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Constructor & Destructor Documentation\par
 \pard\plain 
-{\xe \v AudioModule\:mc::AudioModule}
-{\xe \v mc::AudioModule\:AudioModule}
+{\xe \v AlignmentComponent\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:AlignmentComponent}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-mc::AudioModule::AudioModule ()}}
+mc::gfx::AlignmentComponent::AlignmentComponent (const {\b VerticalAlign}  {\i vert} = {\f2 {\b VerticalAlign::CENTER}}, const {\b HorizontalAlign}  {\i horz} = {\f2 {\b HorizontalAlign::CENTER}})}}
 \par
-{\bkmkstart AAAAAAAAQP}
-{\bkmkend AAAAAAAAQP}
+{\bkmkstart AAAAAAABDW}
+{\bkmkend AAAAAAABDW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -167,109 +191,321 @@ mc::AudioModule::AudioModule ()}}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v addSound\:mc::AudioModule}
-{\xe \v mc::AudioModule\:addSound}
+{\xe \v clean\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:clean}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::AudioModule::addSound ({\b Sound} &  {\i s})}}
+void mc::gfx::AlignmentComponent::clean ({\b Entity} *  {\i e}){\f2 [final]}, {\f2 [protected]}, {\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAAAQQ}
-{\bkmkend AAAAAAAAQQ}
+{\bkmkstart AAAAAAABDX}
+{\bkmkend AAAAAAABDX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::clean()} is called and it was dirty. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+This is not required for inheritance. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
 }
-{\xe \v destroy\:mc::AudioModule}
-{\xe \v mc::AudioModule\:destroy}
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
-{\b 
-void mc::AudioModule::destroy (){\f2 [override]}, {\f2 [virtual]}}}
-\par
-{\bkmkstart AAAAAAAAQR}
-{\bkmkend AAAAAAAAQR}
-{
-\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
-\par
-{
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b MACE#destroy} is called and this {\f2 {\b Module}}  is registered. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this to clear memory, close streams, or clean up anything that needs to be cleaned up. \par
-Should only be called before the program is closed. \par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
 }{
-Implements {\b mc::Module} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAQS \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented from {\b mc::gfx::Component} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABDY \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getName\:mc::AudioModule}
-{\xe \v mc::AudioModule\:getName}
+{\xe \v destroy\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-std::string mc::AudioModule::getName () const{\f2 [override]}, {\f2 [virtual]}}}
+virtual void mc::gfx::Component::destroy ({\b Entity} *  {\i e}){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAQT}
-{\bkmkend AAAAAAAAQT}
+{\bkmkstart AAAAAAABDZ}
+{\bkmkend AAAAAAABDZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Override this function and return a UNIQUE name for this {\f2 {\b Module}}  }}\par
+Called when {\b Entity::destroy()} is called or the {\f2 {\b Component}}  is removed via {\b Component::update(Entity*)}, whichever comes first. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-The name for your {\f2 {\b Module}}  is used in comparison, so make sure it is as unique as possible. \par
-It is akin to a hashcode. \par
+Once {\b Component::destroy(Entity*)} is called, it is immediately removed from the {\f2 {\b Entity}} . Required function. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
 }{
-Implements {\b mc::Module} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAQU \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented in {\b mc::gfx::FPSComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEA \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::CallbackComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v getSounds\:mc::AudioModule}
-{\xe \v mc::AudioModule\:getSounds}
+{\xe \v getHorizontalAlign\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:getHorizontalAlign}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-const std::vector<{\b Sound}>& mc::AudioModule::getSounds () const}}
+const {\b HorizontalAlign} mc::gfx::AlignmentComponent::getHorizontalAlign () const}}
 \par
-{\bkmkstart AAAAAAAAQV}
-{\bkmkend AAAAAAAAQV}
+{\bkmkstart AAAAAAABEC}
+{\bkmkend AAAAAAABEC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
-{\xe \v init\:mc::AudioModule}
-{\xe \v mc::AudioModule\:init}
+{\xe \v getParent\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:getParent}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::AudioModule::init (){\f2 [override]}, {\f2 [virtual]}}}
+{\b Entity}* mc::gfx::Component::getParent (){\f2 [protected]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAQW}
-{\bkmkend AAAAAAAAQW}
+{\bkmkstart AAAAAAABED}
+{\bkmkend AAAAAAABED}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getVerticalAlign\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:getVerticalAlign}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+const {\b VerticalAlign} mc::gfx::AlignmentComponent::getVerticalAlign () const}}
 \par
+{\bkmkstart AAAAAAABEE}
+{\bkmkend AAAAAAABEE}
 {
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v hover\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:hover}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Component::hover ({\b Entity} *  {\i e}){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABEF}
+{\bkmkend AAAAAAABEF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b MACE#init} is called and this {\f2 {\b Module}}  is registered. }}\par
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this to initialize variables, start streams, or launch a context. \par
-Should only be called once. \par
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
 }{
-Implements {\b mc::Module} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAQX \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented in {\b mc::gfx::FPSComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEG \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::CallbackComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
-{\xe \v update\:mc::AudioModule}
-{\xe \v mc::AudioModule\:update}
+{\xe \v init\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:init}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void mc::AudioModule::update (){\f2 [override]}, {\f2 [virtual]}}}
+virtual void mc::gfx::Component::init ({\b Entity} *  {\i e}){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
 \par
-{\bkmkstart AAAAAAAAQY}
-{\bkmkend AAAAAAAAQY}
+{\bkmkstart AAAAAAABEI}
+{\bkmkend AAAAAAABEI}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 \par
 {
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Called when {\b MACE#update} is called and this {\f2 {\b Module}}  is registered. }}\par
+Called when this {\f2 {\b Component}}  is added to the {\f2 {\b Entity}}  via {\b Entity::addComponent(Component&)}. }}\par
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked. \par
+Required function. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This is not called at {\b Entity::init()}, instead it is called when the component is added to the {\f2 {\b Entity}} . Keep that in mind. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
 }{
-Implements {\b mc::Module} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAAAQZ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+Reimplemented in {\b mc::gfx::FPSComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEJ \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::CallbackComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v operator!=\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:operator!=}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::AlignmentComponent::operator!= (const {\b AlignmentComponent} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABEL}
+{\bkmkend AAAAAAABEL}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator!=\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:operator!=}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Component::operator!= (const {\b Component} &  {\i other}) const{\f2 [protected]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABEM}
+{\bkmkend AAAAAAABEM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator==\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:operator==}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::AlignmentComponent::operator== (const {\b AlignmentComponent} &  {\i other}) const}}
+\par
+{\bkmkstart AAAAAAABEN}
+{\bkmkend AAAAAAABEN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v operator==\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:operator==}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Component::operator== (const {\b Component} &  {\i other}) const{\f2 [protected]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABEO}
+{\bkmkend AAAAAAABEO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v render\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:render}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Component::render ({\b Entity} *  {\i e}){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABEP}
+{\bkmkend AAAAAAABEP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Reimplemented in {\b mc::gfx::FPSComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEQ \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::CallbackComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABER \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}
+{\xe \v setHorizontalAlign\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:setHorizontalAlign}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::AlignmentComponent::setHorizontalAlign ({\b HorizontalAlign}  {\i align})}}
+\par
+{\bkmkstart AAAAAAABES}
+{\bkmkend AAAAAAABES}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+}}}
+{\xe \v setVerticalAlign\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:setVerticalAlign}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::AlignmentComponent::setVerticalAlign (const {\b VerticalAlign}  {\i align})}}
+\par
+{\bkmkstart AAAAAAABET}
+{\bkmkend AAAAAAABET}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Note:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This will make this {\f2 {\b Entity}}  dirty. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+See also:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid {\b Entity::DIRTY} \par
+}}}
+{\xe \v update\:mc::gfx::AlignmentComponent}
+{\xe \v mc::gfx::AlignmentComponent\:update}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual bool mc::gfx::Component::update ({\b Entity} *  {\i e}){\f2 [protected]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+\par
+{\bkmkstart AAAAAAABEU}
+{\bkmkend AAAAAAABEU}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Called when {\b Entity::update()} is called. }}\par
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+Required function. \par
+There is no function to remove a {\f2 {\b Component}}  so this is the only way for a {\f2 {\b Component}}  to be removed from an {\f2 {\b Entity}}  \par
+{\b Component::destroy(Entity*)} will be called afterwards. {\par
+{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Parameters:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i e} \cell }{The parent {\f2 {\b Entity}}  \cell }
+{\row }
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Returns:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid Whether this {\f2 {\b Component}}  should be deleted or not. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}{
+Reimplemented in {\b mc::gfx::FPSComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEV \\*MERGEFORMAT}{\fldrslt pagenum}}}), and {\b mc::gfx::CallbackComponent} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABEW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Utility/Audio.h\par
+include/MACE/Graphics/Components.h\par
 }}

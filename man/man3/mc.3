@@ -1,4 +1,4 @@
-.TH "mc" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -46,7 +46,10 @@ mc \- Namespace for everything in \fBMACE\fP\&.
 .br
 .RI "\fIRepresents a color in the RGBA space\&. \fP"
 .ti -1c
-.RI "class \fBException\fP"
+.RI "class \fBDynamicLibrary\fP"
+.br
+.ti -1c
+.RI "class \fBError\fP"
 .br
 .RI "\fISuperclass that all exceptions in \fBMACE\fP extend\&. \fP"
 .ti -1c
@@ -62,10 +65,6 @@ mc \- Namespace for everything in \fBMACE\fP\&.
 .br
 .RI "\fIRepresents a fake file, in which you can add include files that don't exist on the filesystem\&. \fP"
 .ti -1c
-.RI "struct \fBMacro\fP"
-.br
-.RI "\fIRepresents a \fC\fBMacro\fP\fP in code\&. \fP"
-.ti -1c
 .RI "struct \fBMatrix\fP"
 .br
 .RI "\fIA class representing a 2-dimensional matrix, and allows for math involving matrices\&. \fP"
@@ -77,6 +76,9 @@ mc \- Namespace for everything in \fBMACE\fP\&.
 .RI "class \fBPreprocessor\fP"
 .br
 .RI "\fICustomizable string preprocessor which follows ANSI-C preprocessor standard\&. \fP"
+.ti -1c
+.RI "class \fBProcess\fP"
+.br
 .ti -1c
 .RI "class \fBSound\fP"
 .br
@@ -112,30 +114,6 @@ mc \- Namespace for everything in \fBMACE\fP\&.
 .RI "typedef void(* \fBVoidFunctionPtr\fP) ()"
 .br
 .RI "\fIType representing a function that returns void and has no arguments\&. \fP"
-.ti -1c
-.RI "using \fBNullPointerException\fP = \fBException\fP"
-.br
-.RI "\fIThrown when a pointer is equal to NULL\&. \fP"
-.ti -1c
-.RI "using \fBAssertionError\fP = \fBException\fP"
-.br
-.RI "\fIThrown when an assertion fails\&. \fP"
-.ti -1c
-.RI "using \fBInitializationError\fP = \fBException\fP"
-.br
-.RI "\fIThrown when an object wasn't initializaed or initializtion failed\&. \fP"
-.ti -1c
-.RI "using \fBObjectNotFoundInArrayException\fP = \fBException\fP"
-.br
-.RI "\fIThrown when a function looks for an object, but doesn't find it\&. \fP"
-.ti -1c
-.RI "using \fBIndexOutOfBoundsException\fP = \fBException\fP"
-.br
-.RI "\fIThrown when an index is provided for an array, but it is outside the valid bounds of the array\&. \fP"
-.ti -1c
-.RI "using \fBArithmeticException\fP = \fBException\fP"
-.br
-.RI "\fIThrown when something goes wrong while doing math, like dividing by zero\&. \fP"
 .ti -1c
 .RI "template<typename T , Size N> using \fBMatrixRow\fP = \fBmc::Vector\fP< T, N >"
 .br
@@ -1328,20 +1306,64 @@ mc \- Namespace for everything in \fBMACE\fP\&.
 .ti -1c
 .RI "using \fBMatrix5x4sc\fP = \fBMatrix\fP< signed char, 5, 4 >"
 .br
-.ti -1c
-.RI "using \fBPreprocessorException\fP = \fBException\fP"
-.br
-.RI "\fI\fC\fBException\fP\fP thrown when a syntax error is encountered, or #error is called\&. \fP"
 .in -1c
 .SS "Functions"
 
 .in +1c
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (NullPointer)"
+.br
+.RI "\fIThrown when a pointer is equal to NULL\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (AssertionFailed)"
+.br
+.RI "\fIThrown when an assertion fails\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (InitializationFailed)"
+.br
+.RI "\fIThrown when an object wasn't initializaed or initializtion failed\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (BadFile)"
+.br
+.RI "\fIThrown when an error occured trying to read or write a sound file\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (FileNotFound)"
+.br
+.RI "\fIThrown when a file was not found on the filesystem\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (ObjectNotFound)"
+.br
+.RI "\fIThrown when a function looks for an object, but doesn't find it\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (InvalidType)"
+.br
+.RI "\fIThrown when something is of the wrong type\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (IndexOutOfBounds)"
+.br
+.RI "\fIThrown when an index is provided for an array, but it is outside the valid bounds of the array\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (InvalidArithmetic)"
+.br
+.RI "\fIThrown when something goes wrong while doing math, like dividing by zero\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (System)"
+.br
+.RI "\fIThrown when the operating system throws an error\&. \fP"
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (BadSound)"
+.br
+.RI "\fIThrown when an error occured trying to read or write a sound file\&. \fP"
 .ti -1c
 .RI "template<typename T , Size N> \fBVector\fP< T, N > \fBoperator*=\fP (const \fBVector\fP< T, N > &v, const \fBMatrix\fP< T, N, N > &m)"
 .br
 .ti -1c
 .RI "template<typename T , Size N> \fBVector\fP< T, N > \fBoperator*\fP (const \fBVector\fP< T, N > &v, const \fBMatrix\fP< T, N, N > &m)"
 .br
+.ti -1c
+.RI "\fB_MACE_DECLARE_ERROR\fP (\fBPreprocessor\fP) struct Macro"
+.br
+.RI "\fI\fCException\fP thrown when a syntax error is encountered, or #error is called\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -1350,27 +1372,15 @@ Namespace for everything in \fBMACE\fP\&.
 This includes constants, typedefs, tests, classes, and variables\&. 
 .PP
 Preproccessor definitions will start with \fCMACE_\fP and \fCMACE_INCLUDED\fP will be defined to equal \fCtrue\fP if \fBMACE\fP is included\&. 
-.SH "Typedef Documentation"
-.PP 
-.SS "using \fBmc::ArithmeticException\fP = typedef \fBException\fP"
-
 .PP
-Thrown when something goes wrong while doing math, like dividing by zero\&. 
-.PP
-Definition at line 163 of file Constants\&.h\&.
-.SS "using \fBmc::AssertionError\fP = typedef \fBException\fP"
-
-.PP
-Thrown when an assertion fails\&. 
-.PP
-\fBSee also:\fP
+\fBTodo\fP
 .RS 4
-\fBMACE::assertModule(std::string)\fP 
+Add a proper logger 
 .RE
 .PP
 
-.PP
-Definition at line 145 of file Constants\&.h\&.
+.SH "Typedef Documentation"
+.PP 
 .SS "using \fBmc::Byte\fP = typedef std::uint8_t"
 
 .PP
@@ -1389,7 +1399,7 @@ Primitive type guaranteed to be equal to 8 bits (1 byte)\&. The definition here 
 .PP
 
 .PP
-Definition at line 55 of file Constants\&.h\&.
+Definition at line 70 of file Constants\&.h\&.
 .SS "using \fBmc::Enum\fP = typedef unsigned int"
 
 .PP
@@ -1406,7 +1416,7 @@ Type representing an int-based enum (such as GL_* constants)
 .PP
 
 .PP
-Definition at line 104 of file Constants\&.h\&.
+Definition at line 119 of file Constants\&.h\&.
 .SS "using \fBmc::Index\fP = typedef unsigned int"
 
 .PP
@@ -1445,19 +1455,7 @@ getObject(Index)
 .PP
 
 .PP
-Definition at line 97 of file Constants\&.h\&.
-.SS "using \fBmc::IndexOutOfBoundsException\fP = typedef \fBException\fP"
-
-.PP
-Thrown when an index is provided for an array, but it is outside the valid bounds of the array\&. 
-.PP
-Definition at line 159 of file Constants\&.h\&.
-.SS "using \fBmc::InitializationError\fP = typedef \fBException\fP"
-
-.PP
-Thrown when an object wasn't initializaed or initializtion failed\&. 
-.PP
-Definition at line 150 of file Constants\&.h\&.
+Definition at line 112 of file Constants\&.h\&.
 .SS "using \fBmc::Matrix1c\fP = typedef \fBMatrix\fP< char, 1, 1 >"
 
 .PP
@@ -2702,24 +2700,6 @@ Used in the \fC\fBMatrix\fP\fP class\&. Defined for clarity for when you iterate
 
 .PP
 Definition at line 24 of file Matrix\&.h\&.
-.SS "using \fBmc::NullPointerException\fP = typedef \fBException\fP"
-
-.PP
-Thrown when a pointer is equal to NULL\&. 
-.PP
-Definition at line 138 of file Constants\&.h\&.
-.SS "using \fBmc::ObjectNotFoundInArrayException\fP = typedef \fBException\fP"
-
-.PP
-Thrown when a function looks for an object, but doesn't find it\&. 
-.PP
-Definition at line 155 of file Constants\&.h\&.
-.SS "using \fBmc::PreprocessorException\fP = typedef \fBException\fP"
-
-.PP
-\fC\fBException\fP\fP thrown when a syntax error is encountered, or #error is called\&. The filename and line number will be in message\&. 
-.PP
-Definition at line 25 of file Preprocessor\&.h\&.
 .SS "using \fBmc::Size\fP = typedef unsigned int"
 
 .PP
@@ -2750,7 +2730,7 @@ Size getSize()
 .PP
 
 .PP
-Definition at line 73 of file Constants\&.h\&.
+Definition at line 88 of file Constants\&.h\&.
 .SS "using \fBmc::Vector1c\fP = typedef \fBVector\fP< char, 1 >"
 
 .PP
@@ -3127,9 +3107,87 @@ Type representing a function that returns void and has no arguments\&. Created f
 .PP
 
 .PP
-Definition at line 114 of file Constants\&.h\&.
+Definition at line 129 of file Constants\&.h\&.
 .SH "Function Documentation"
 .PP 
+.SS "mc::_MACE_DECLARE_ERROR (\fBPreprocessor\fP)"
+
+.PP
+\fCException\fP thrown when a syntax error is encountered, or #error is called\&. The filename and line number will be in message\&. Represents a \fCMacro\fP in code\&. Created automatically when #define is encountered\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBPreprocessor\fP 
+.RE
+.PP
+
+.PP
+Definition at line 25 of file Preprocessor\&.h\&.
+.SS "mc::_MACE_DECLARE_ERROR (BadSound)"
+
+.PP
+Thrown when an error occured trying to read or write a sound file\&. 
+.SS "mc::_MACE_DECLARE_ERROR (NullPointer)"
+
+.PP
+Thrown when a pointer is equal to NULL\&. 
+.SS "mc::_MACE_DECLARE_ERROR (AssertionFailed)"
+
+.PP
+Thrown when an assertion fails\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBMACE::assertModule(std::string)\fP 
+.RE
+.PP
+
+.SS "mc::_MACE_DECLARE_ERROR (InitializationFailed)"
+
+.PP
+Thrown when an object wasn't initializaed or initializtion failed\&. 
+.SS "mc::_MACE_DECLARE_ERROR (BadFile)"
+
+.PP
+Thrown when an error occured trying to read or write a sound file\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+FileNotFoundError 
+.RE
+.PP
+
+.SS "mc::_MACE_DECLARE_ERROR (FileNotFound)"
+
+.PP
+Thrown when a file was not found on the filesystem\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+BadFileError 
+.RE
+.PP
+
+.SS "mc::_MACE_DECLARE_ERROR (ObjectNotFound)"
+
+.PP
+Thrown when a function looks for an object, but doesn't find it\&. 
+.SS "mc::_MACE_DECLARE_ERROR (InvalidType)"
+
+.PP
+Thrown when something is of the wrong type\&. 
+.SS "mc::_MACE_DECLARE_ERROR (IndexOutOfBounds)"
+
+.PP
+Thrown when an index is provided for an array, but it is outside the valid bounds of the array\&. 
+.SS "mc::_MACE_DECLARE_ERROR (InvalidArithmetic)"
+
+.PP
+Thrown when something goes wrong while doing math, like dividing by zero\&. 
+.SS "mc::_MACE_DECLARE_ERROR (System)"
+
+.PP
+Thrown when the operating system throws an error\&. 
 .SS "template<typename T , Size N> \fBVector\fP<T, N> mc::operator* (const \fBVector\fP< T, N > & v, const \fBMatrix\fP< T, N, N > & m)"
 
 .PP

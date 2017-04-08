@@ -1,4 +1,4 @@
-.TH "mc::os" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::os" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -17,6 +17,55 @@ mc::os \- Namespace with functions related to the operating system like keyboard
 .SS "Classes"
 
 .in +1c
+.ti -1c
+.RI "class \fBSerial\fP"
+.br
+.RI "\fIOpens up a serial communciation\&. \fP"
+.ti -1c
+.RI "class \fBSignalAbortError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalAlarmError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalFloatingPointError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalHangupError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalIllegalInstructionError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalInterruptError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalKillError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalModule\fP"
+.br
+.ti -1c
+.RI "class \fBSignalSegmentFaultError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalStopError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalTerminalInputError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalTerminalOutputError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalTerminalStopError\fP"
+.br
+.ti -1c
+.RI "class \fBSignalTerminateError\fP"
+.br
 .ti -1c
 .RI "class \fBWindowModule\fP"
 .br
@@ -43,43 +92,81 @@ mc::os \- Namespace with functions related to the operating system like keyboard
 .RI "std::size_t \fBmbsrtowcs\fP (std::size_t *returnValue, wchar_t *wcstr, std::size_t sizeInWords, const char **mbstr, std::size_t count, mbstate_t *mbstate)"
 .br
 .ti -1c
-.RI "void \fBassert\fP (const bool cond, const std::string &message)"
+.RI "std::size_t \fBwcstombs\fP (std::size_t *returnValue, char *dst, std::size_t sizeInWords, const wchar_t *src, const std::size_t length)"
 .br
 .ti -1c
-.RI "void \fBassert\fP (const bool cond, const char *message='Assertion failed')"
+.RI "void \fBassertion\fP (const bool cond, const std::string &message)"
+.br
+.ti -1c
+.RI "void \fBassertion\fP (const bool cond, const char *message='Assertion failed')"
+.br
+.ti -1c
+.RI "void \fBwait\fP (const long long int ms)"
+.br
+.ti -1c
+.RI "std::wstring \fBtoWideString\fP (const std::string &s)"
+.br
+.ti -1c
+.RI "std::string \fBtoNarrowString\fP (const std::wstring &s)"
+.br
+.ti -1c
+.RI "template<class T , std::size_t n> constexpr std::size_t \fBgetArraySize\fP (T(&)[n])"
+.br
+.ti -1c
+.RI "void \fBclearError\fP (const int lineNumber=0, const char *filename='Unknown file')"
+.br
+.ti -1c
+.RI "void \fBcheckError\fP (const int lineNumber=0, const char *filename='Unknown file', const std::string message='Unknown message')"
+.br
+.ti -1c
+.RI "void \fBpause\fP ()"
+.br
+.ti -1c
+.RI "void \fBsignalHandle\fP (int sig)"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
 Namespace with functions related to the operating system like keyboard input, mouse, and windows\&. 
 
-Also contains cross-platform safer versions of many std functions\&.
-.PP
-\fBTodo\fP
-.RS 4
-Add function for pausing the console 
-.PP
-Add memory functions like memcpy and memmove 
-.RE
-.PP
-
+Also contains cross-platform safer versions of many std functions\&. 
 .SH "Function Documentation"
 .PP 
 .SS "char* mc::os::asctime (char * buffer, std::size_t bufSize, const std::tm * time)"
 
-.SS "void mc::os::assert (const bool cond, const std::string & message)"
+.SS "void mc::os::assertion (const bool cond, const std::string & message)"
 
-.SS "void mc::os::assert (const bool cond, const char * message = \fC'Assertion failed'\fP)"
+.SS "void mc::os::assertion (const bool cond, const char * message = \fC'Assertion failed'\fP)"
+
+.SS "void mc::os::checkError (const int lineNumber = \fC0\fP, const char * filename = \fC'Unknown file'\fP, const std::string message = \fC'Unknown message'\fP)"
+
+.SS "void mc::os::clearError (const int lineNumber = \fC0\fP, const char * filename = \fC'Unknown file'\fP)"
 
 .SS "char* mc::os::ctime (char * buffer, std::size_t bufSize, const std::time_t * time)"
 
 .SS "FILE* mc::os::fopen (FILE ** result, const char * filename, const char * mode)"
 
+.SS "template<class T , std::size_t n> constexpr std::size_t mc::os::getArraySize (T(&)[n])\fC [inline]\fP"
+
+.PP
+Definition at line 65 of file System\&.h\&.
 .SS "std::tm* mc::os::gmtime (std::tm * result, const std::time_t * time)"
 
 .SS "std::tm* mc::os::localtime (std::tm * result, const std::time_t * time)"
 
 .SS "std::size_t mc::os::mbsrtowcs (std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate)"
+
+.SS "void mc::os::pause ()"
+
+.SS "void mc::os::signalHandle (int sig)"
+
+.SS "std::string mc::os::toNarrowString (const std::wstring & s)"
+
+.SS "std::wstring mc::os::toWideString (const std::string & s)"
+
+.SS "void mc::os::wait (const long long int ms)"
+
+.SS "std::size_t mc::os::wcstombs (std::size_t * returnValue, char * dst, std::size_t sizeInWords, const wchar_t * src, const std::size_t length)"
 
 .SH "Author"
 .PP 

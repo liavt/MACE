@@ -1,18 +1,18 @@
-.TH "todo" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "todo" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 todo \- Todo List 
 
+.IP "\fBNamespace \fBmc\fP \fP" 1c
+Add a proper logger  
 .IP "\fBClass \fBmc::gfx::Component\fP \fP" 1c
 unit testing for \fBclean()\fP \fBrender()\fP and \fBhover()\fP  
 .IP "\fBClass \fBmc::gfx::Font\fP \fP" 1c
 Make a default font system so people dont have to create new font classes each time they use text 
 .PP
 instead of using an id system add FT_Face  
-.IP "\fBMember \fBmc::gfx::Font::getCharacter\fP (const wchar_t character, \fBLetter\fP *let) const \fP" 1c
-find a way to dynamically allocate letters without passing in a pointer 
-.PP
+.IP "\fBMember \fBmc::gfx::Font::getCharacter\fP (const wchar_t character, \fBLetter\fP &let) const \fP" 1c
 cache characters  
 .IP "\fBNamespace \fBmc::gfx::ogl\fP \fP" 1c
 create a ReadableBuffer class with functions like glReadPixels  
@@ -22,22 +22,22 @@ target variable which is GL_FRAMEBUFFER by default\&. and update documentation a
 create an RAII wrapper which calls \fBinit()\fP and \fBdestroy()\fP automatically 
 .PP
 store what object is currently bound\&. static \fBObject\fP getBoundObject(), bool isBound()  
+.IP "\fBClass \fBmc::gfx::ProgressBar\fP \fP" 1c
+Replace the EaseComponent with a non dynamic pointer  
 .IP "\fBClass \fBmc::gfx::Renderer\fP \fP" 1c
 add function to change how many samples msaa uses  
-.IP "\fBNamespace \fBmc::os\fP \fP" 1c
-Add function for pausing the console 
-.PP
-Add memory functions like memcpy and memmove  
+.IP "\fBClass \fBmc::os::WindowModule\fP \fP" 1c
+move glfw event handling to its own thread\&. 
 .IP "\fBClass \fBmc::Preprocessor\fP \fP" 1c
 Digraphs (see 6\&.4\&.6 of standard) 
 .PP
 Variable arguments 
 .PP
-\fBMacro\fP concat 
+Macro concat 
 .PP
-\fC#if and\fP#elif` 
+\fC#if and\fP#elif` (funtion parseIfStatement exists and needs to get a definition) 
 .PP
-\fC#pragma\fP (if STDC follows, do no macro replacement)  
+\fC#pragma\fP (if STDC follows, do no macro replacement\&. if once follows, only include file once)  
 .IP "\fBMember \fBmc::Vector< T, N >::Vector\fP (const std::initializer_list< T > args)\fP" 1c
 Make this constexpr 
 .PP

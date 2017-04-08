@@ -1,4 +1,4 @@
-.TH "mc::gfx::Font" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Font" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -21,7 +21,7 @@ mc::gfx::Font \-
 .RI "void \fBdestroy\fP ()"
 .br
 .ti -1c
-.RI "void \fBgetCharacter\fP (const wchar_t character, \fBLetter\fP *let) const "
+.RI "void \fBgetCharacter\fP (const wchar_t character, \fBLetter\fP &let) const "
 .br
 .ti -1c
 .RI "void \fBsetSize\fP (const \fBSize\fP height)"
@@ -62,11 +62,6 @@ mc::gfx::Font \-
 .PP 
 
 .PP
-\fBBug\fP
-.RS 4
-non-monospaced fonts dont have correct spacing 
-.RE
-.PP
 \fBTodo\fP
 .RS 4
 Make a default font system so people dont have to create new font classes each time they use text 
@@ -76,7 +71,7 @@ instead of using an id system add FT_Face
 .PP
 
 .PP
-Definition at line 258 of file Entity2D\&.h\&.
+Definition at line 250 of file Entity2D\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::Font::Font (const \fBFont\fP & f)"
@@ -87,13 +82,11 @@ Definition at line 258 of file Entity2D\&.h\&.
 .PP 
 .SS "void mc::gfx::Font::destroy ()"
 
-.SS "void mc::gfx::Font::getCharacter (const wchar_t character, \fBLetter\fP * let) const"
+.SS "void mc::gfx::Font::getCharacter (const wchar_t character, \fBLetter\fP & let) const"
 
 .PP
 \fBTodo\fP
 .RS 4
-find a way to dynamically allocate letters without passing in a pointer 
-.PP
 cache characters 
 .RE
 .PP

@@ -1,4 +1,4 @@
-.TH "mc::Matrix< T, W, H >" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Matrix< T, W, H >" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -142,7 +142,13 @@ Inherits \fBmc::Vector< MatrixRow< T, H >, W >\fP\&.
 .RI "\fBMatrixRow\fP< T, H > * \fBbegin\fP ()"
 .br
 .ti -1c
+.RI "const \fBMatrixRow\fP< T, H > * \fBbegin\fP () const"
+.br
+.ti -1c
 .RI "\fBMatrixRow\fP< T, H > * \fBend\fP ()"
+.br
+.ti -1c
+.RI "const \fBMatrixRow\fP< T, H > * \fBend\fP () const"
 .br
 .ti -1c
 .RI "\fBMatrixRow\fP< T, H > & \fBget\fP (\fBIndex\fP i)"
@@ -432,10 +438,18 @@ Definition at line 134 of file Matrix\&.h\&.
 
 .PP
 Definition at line 200 of file Vector\&.h\&.
-.SS "\fBMatrixRow\fP< T, H > * \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::end ()\fC [inline]\fP, \fC [inherited]\fP"
+.SS "const \fBMatrixRow\fP< T, H > * \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::begin () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
 Definition at line 204 of file Vector\&.h\&.
+.SS "\fBMatrixRow\fP< T, H > * \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::end ()\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 208 of file Vector\&.h\&.
+.SS "const \fBMatrixRow\fP< T, H > * \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::end () const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Definition at line 212 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> const T* \fBmc::Matrix\fP< T, W, H >::flatten (T arr[W *H]) const\fC [inline]\fP"
 
 .PP
@@ -466,7 +480,7 @@ Pointer to \fCarr\fP
 .PP
 
 .PP
-Definition at line 250 of file Vector\&.h\&.
+Definition at line 258 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> const T* \fBmc::Matrix\fP< T, W, H >::flattenTransposed (T arr[W *H]) const\fC [inline]\fP"
 
 .PP
@@ -577,7 +591,7 @@ The value located at \fCi\fP
 .PP
 
 .PP
-Definition at line 216 of file Vector\&.h\&.
+Definition at line 224 of file Vector\&.h\&.
 .SS "const \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::get (\fBIndex\fP i) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -607,7 +621,7 @@ The \fCconst\fP value located at \fCi\fP
 .PP
 
 .PP
-Definition at line 228 of file Vector\&.h\&.
+Definition at line 236 of file Vector\&.h\&.
 .SS "std::array< \fBMatrixRow\fP< T, H > , N>& \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::getContents ()\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -694,7 +708,7 @@ operator>(const Vector&) const
 .PP
 
 .PP
-Definition at line 574 of file Vector\&.h\&.
+Definition at line 582 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> virtual T& \fBmc::Matrix\fP< T, W, H >::operator() (\fBIndex\fP x, \fBIndex\fP y)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
@@ -787,7 +801,7 @@ Value at \fCi-1\fP
 .PP
 
 .PP
-Definition at line 320 of file Vector\&.h\&.
+Definition at line 328 of file Vector\&.h\&.
 .SS "const \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator() (\fBIndex\fP i) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -805,7 +819,7 @@ Value at \fCi-1\fP
 .PP
 
 .PP
-Definition at line 329 of file Vector\&.h\&.
+Definition at line 337 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> \fBVector\fP<T, H> \fBmc::Matrix\fP< T, W, H >::operator* (const \fBVector\fP< T, H > & right) const\fC [inline]\fP"
 
 .PP
@@ -858,7 +872,7 @@ The product of the multiplication
 .PP
 
 .PP
-Definition at line 371 of file Vector\&.h\&.
+Definition at line 379 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator* (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
 
 .PP
@@ -945,7 +959,7 @@ operator*(const Vector&) const
 .PP
 
 .PP
-Definition at line 428 of file Vector\&.h\&.
+Definition at line 436 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator*= (\fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
 
 .PP
@@ -1007,7 +1021,7 @@ operator+(const Vector<T,N>&) const
 .PP
 
 .PP
-Definition at line 475 of file Vector\&.h\&.
+Definition at line 483 of file Vector\&.h\&.
 .SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator*= (const \fBMatrixRow\fP< T, H >  & scalar)\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1027,7 +1041,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 523 of file Vector\&.h\&.
+Definition at line 531 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> \fBVector\fP<T, H> \fBmc::Matrix\fP< T, W, H >::operator+ (const \fBVector\fP< T, H > & right) const\fC [inline]\fP"
 
 .PP
@@ -1110,7 +1124,7 @@ A \fCVector\fP that was created by adding 2 \fCVectors\fP together
 .PP
 
 .PP
-Definition at line 342 of file Vector\&.h\&.
+Definition at line 350 of file Vector\&.h\&.
 .SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator+ (const \fBMatrixRow\fP< T, H > scalar) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1133,7 +1147,7 @@ operator*(const Vector&) const
 .PP
 
 .PP
-Definition at line 400 of file Vector\&.h\&.
+Definition at line 408 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator+= (const \fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
 
 .PP
@@ -1173,7 +1187,7 @@ operator+(const Vector<T,N>&) const
 .PP
 
 .PP
-Definition at line 453 of file Vector\&.h\&.
+Definition at line 461 of file Vector\&.h\&.
 .SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator+= (const \fBMatrixRow\fP< T, H >  & scalar)\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1193,7 +1207,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 499 of file Vector\&.h\&.
+Definition at line 507 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> \fBVector\fP<T, H> \fBmc::Matrix\fP< T, W, H >::operator\- (const \fBVector\fP< T, H > & right) const\fC [inline]\fP"
 
 .PP
@@ -1224,29 +1238,6 @@ The \fBMatrix\fP's width must not be larger than the height
 
 .PP
 Definition at line 300 of file Matrix\&.h\&.
-.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator\- (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right) const\fC [inline]\fP, \fC [inherited]\fP"
-
-.PP
-Subtracts 2 \fCVectors\fP together\&. This is done in O(N) time
-.PP
-\fBParameters:\fP
-.RS 4
-\fIright\fP Another \fCVector\fP 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-A \fCVector\fP that was created by subtracting 2 \fCVectors\fP together 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBVector\fP for an explanation of \fC\fBVector\fP\fP math 
-.RE
-.PP
-
-.PP
-Definition at line 356 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator\- (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
 
 .PP
@@ -1277,6 +1268,29 @@ Both Matrices' width and height must be equal to each other
 
 .PP
 Definition at line 360 of file Matrix\&.h\&.
+.SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator\- (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & right) const\fC [inline]\fP, \fC [inherited]\fP"
+
+.PP
+Subtracts 2 \fCVectors\fP together\&. This is done in O(N) time
+.PP
+\fBParameters:\fP
+.RS 4
+\fIright\fP Another \fCVector\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fCVector\fP that was created by subtracting 2 \fCVectors\fP together 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBVector\fP for an explanation of \fC\fBVector\fP\fP math 
+.RE
+.PP
+
+.PP
+Definition at line 364 of file Vector\&.h\&.
 .SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator\- (const \fBMatrixRow\fP< T, H > scalar) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1299,7 +1313,7 @@ operator*(const Vector&) const
 .PP
 
 .PP
-Definition at line 414 of file Vector\&.h\&.
+Definition at line 422 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator\-= (const \fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
 
 .PP
@@ -1339,7 +1353,7 @@ operator-(const Vector<T,N>&) const
 .PP
 
 .PP
-Definition at line 464 of file Vector\&.h\&.
+Definition at line 472 of file Vector\&.h\&.
 .SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator\-= (const \fBMatrixRow\fP< T, H >  & scalar)\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1359,7 +1373,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 511 of file Vector\&.h\&.
+Definition at line 519 of file Vector\&.h\&.
 .SS "\fBVector\fP \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator/ (const \fBVector\fP< \fBMatrixRow\fP< T, H > , 3 > & right) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1382,7 +1396,7 @@ The quotient of 2 \fCVectors\fP
 .PP
 
 .PP
-Definition at line 386 of file Vector\&.h\&.
+Definition at line 394 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> \fBMatrix\fP<T, W, H> \fBmc::Matrix\fP< T, W, H >::operator/ (const \fBMatrix\fP< T, W, H > & right) const\fC [inline]\fP"
 
 .PP
@@ -1440,7 +1454,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 442 of file Vector\&.h\&.
+Definition at line 450 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::operator/= (const \fBMatrix\fP< T, W, H > & right)\fC [inline]\fP"
 
 .PP
@@ -1480,7 +1494,7 @@ operator+(const Vector<T,N>&) const
 .PP
 
 .PP
-Definition at line 486 of file Vector\&.h\&.
+Definition at line 494 of file Vector\&.h\&.
 .SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator/= (const \fBMatrixRow\fP< T, H >  & scalar)\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1500,7 +1514,7 @@ operator*(const T&) const
 .PP
 
 .PP
-Definition at line 535 of file Vector\&.h\&.
+Definition at line 543 of file Vector\&.h\&.
 .SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator< (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1531,7 +1545,7 @@ operator!=(const Vector&) const
 .PP
 
 .PP
-Definition at line 627 of file Vector\&.h\&.
+Definition at line 635 of file Vector\&.h\&.
 .SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator<= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1562,7 +1576,7 @@ operator!=(const Vector&) const
 .PP
 
 .PP
-Definition at line 641 of file Vector\&.h\&.
+Definition at line 649 of file Vector\&.h\&.
 .SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator== (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1593,7 +1607,7 @@ operator>(const Vector&) const
 .PP
 
 .PP
-Definition at line 553 of file Vector\&.h\&.
+Definition at line 561 of file Vector\&.h\&.
 .SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator> (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1624,7 +1638,7 @@ operator!=(const Vector&) const
 .PP
 
 .PP
-Definition at line 590 of file Vector\&.h\&.
+Definition at line 598 of file Vector\&.h\&.
 .SS "bool \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator>= (const \fBVector\fP< \fBMatrixRow\fP< T, H > , N > & other) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1655,7 +1669,7 @@ operator!=(const Vector&) const
 .PP
 
 .PP
-Definition at line 611 of file Vector\&.h\&.
+Definition at line 619 of file Vector\&.h\&.
 .SS "\fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator[] (\fBIndex\fP i)\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1678,7 +1692,7 @@ The data at \fCi\fP
 .PP
 
 .PP
-Definition at line 297 of file Vector\&.h\&.
+Definition at line 305 of file Vector\&.h\&.
 .SS "const \fBMatrixRow\fP< T, H > & \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::operator[] (\fBIndex\fP i) const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1701,7 +1715,7 @@ The data at \fCi\fP
 .PP
 
 .PP
-Definition at line 306 of file Vector\&.h\&.
+Definition at line 314 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> void \fBmc::Matrix\fP< T, W, H >::set (\fBIndex\fP x, \fBIndex\fP y, T value)\fC [inline]\fP"
 
 .PP
@@ -1759,7 +1773,7 @@ Set data at a certain position to equal a new value\&. Slower than \fCoperator[]
 .PP
 
 .PP
-Definition at line 240 of file Vector\&.h\&.
+Definition at line 248 of file Vector\&.h\&.
 .SS "void \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::setContents (const std::array< \fBMatrixRow\fP< T, H > , N > contents)\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1809,7 +1823,7 @@ Definition at line 142 of file Matrix\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 1> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::w () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 271 of file Vector\&.h\&.
+Definition at line 279 of file Vector\&.h\&.
 .SS "template<typename T, Size W, Size H> constexpr \fBSize\fP \fBmc::Matrix\fP< T, W, H >::width () const\fC [inline]\fP"
 
 .PP
@@ -1833,27 +1847,27 @@ Definition at line 152 of file Matrix\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 1> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::x () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 257 of file Vector\&.h\&.
+Definition at line 265 of file Vector\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 2> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::xy () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 276 of file Vector\&.h\&.
+Definition at line 284 of file Vector\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 3> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::xyz () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 281 of file Vector\&.h\&.
+Definition at line 289 of file Vector\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 4> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::xyzw () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 286 of file Vector\&.h\&.
+Definition at line 294 of file Vector\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 1> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::y () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 261 of file Vector\&.h\&.
+Definition at line 269 of file Vector\&.h\&.
 .SS "\fBVector\fP<\fBMatrixRow\fP< T, H > , 1> \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::z () const\fC [inline]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 266 of file Vector\&.h\&.
+Definition at line 274 of file Vector\&.h\&.
 .SH "Friends And Related Function Documentation"
 .PP 
 .SS "template<typename T, Size W, Size H> std::ostream& operator<< (std::ostream & output, const \fBMatrix\fP< T, W, H > & m)\fC [friend]\fP"
@@ -1886,7 +1900,7 @@ Definition at line 491 of file Matrix\&.h\&.
 .SS "\fBMatrixRow\fP< T, H >  \fBmc::Vector\fP< \fBMatrixRow\fP< T, H > , N >::content[N]\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 665 of file Vector\&.h\&.
+Definition at line 673 of file Vector\&.h\&.
 
 .SH "Author"
 .PP 

@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('d7/d7a/a00016_ab7d0bef41e5a511452abcdf
         <tr>
           <td class="memname">void mc::gfx::Entity::setProperty </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca.html#a7c6e1fbcd00ba27af6389a4a891788ca">Byte</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../d1/d44/a00098_a7c6e1fbcd00ba27af6389a4a891788ca.html#a7c6e1fbcd00ba27af6389a4a891788ca">Byte</a>&#160;</td>
           <td class="paramname"><em>position</em>, </td>
         </tr>
         <tr>
@@ -130,9 +130,8 @@ $(document).ready(function(){initNavTree('d7/d7a/a00016_ab7d0bef41e5a511452abcdf
 </table>
 </div><div class="memdoc">
 
-<p>Set a property to be <code>true</code> or <code>false</code>.Property consants start with <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a>::</code> </p>
-<dl class="section note"><dt>Note</dt><dd>This will make this <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> dirty. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" title="Flag representing whether this Entity is dirty and it&#39;s positions needs to be recalculated. ">Entity::DIRTY</a> </dd></dl>
+<p>Set a property to be <code>true</code> or <code>false</code>. </p>
+<p>By default, they are all false. </p><dl class="section note"><dt>Note</dt><dd>Do not use <code>setProperty(Entity::DIRTY, true)</code>. Use Entity::makeDity() instead. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">position</td><td>Location of the property based on a constant </td></tr>
@@ -140,11 +139,13 @@ $(document).ready(function(){initNavTree('d7/d7a/a00016_ab7d0bef41e5a511452abcdf
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>getProperty(Index) const </dd>
+<dl class="section see"><dt>See also</dt><dd>Entity::getProperty(Index) const </dd>
 <dd>
-<a class="el" href="../../d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c.html#a9853f637166caef4ffcb231517cec29c" title="Retrieves the Entity&#39;s properties as a ByteField ">getProperties()</a> </dd>
+<a class="el" href="../../d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c.html#a9853f637166caef4ffcb231517cec29c" title="Retrieves the Entity&#39;s properties as a ByteField ">Entity::getProperties()</a> </dd>
 <dd>
-setProperties(ByteField&amp;) </dd></dl>
+Entity::setProperties(ByteField&amp;) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This will make this <code><a class="el" href="../../d7/d7a/a00016.html" title="Abstract superclass for all graphical objects. ">Entity</a></code> dirty. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="../../d7/d7a/a00016_a260d56ae29f836160836154553dea0c5.html#a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" title="Flag representing whether this Entity is dirty and it&#39;s positions needs to be recalculated. ">Entity::DIRTY</a> </dd></dl>
 
 </div>
 </div>

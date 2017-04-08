@@ -1,31 +1,4 @@
 var a00055 =
 [
-    [ "VertexBuffer", "d4/d6d/a00055_a44bed20a3e3c9986fed7371f87aa953d.html#a44bed20a3e3c9986fed7371f87aa953d", null ],
-    [ "bind", "d4/d6d/a00055.html#a3f02451ab4df9d4d732d79ed2941dfb1", null ],
-    [ "copyData", "d4/d6d/a00055.html#ab5b3d28ddc269895c8f77f513f9c1fd0", null ],
-    [ "destroy", "d4/d6d/a00055.html#ac4e88a83c70a133c24667545832a6f0d", null ],
-    [ "disable", "d4/d6d/a00055_afd0eb97f1a5d24e55d55f4757a498c8f.html#afd0eb97f1a5d24e55d55f4757a498c8f", null ],
-    [ "enable", "d4/d6d/a00055_ab0deec01104bc4699fc373573e891a42.html#ab0deec01104bc4699fc373573e891a42", null ],
-    [ "getBufferType", "d4/d6d/a00055.html#a396693ef6c22c043c5bf0115d3d4aa4a", null ],
-    [ "getID", "d4/d6d/a00055.html#a717ff2f0b9420b4ce0939ff51ed9d545", null ],
-    [ "getLocation", "d4/d6d/a00055_ab997544c1a7d63eaf0c4b3dd20295cc7.html#ab997544c1a7d63eaf0c4b3dd20295cc7", null ],
-    [ "getLocation", "d4/d6d/a00055_a179d6a0ab3fdfe7906bd96b7c02a11a4.html#a179d6a0ab3fdfe7906bd96b7c02a11a4", null ],
-    [ "init", "d4/d6d/a00055.html#aea6e64228bbfa092e1448ea9d851fb94", null ],
-    [ "isCreated", "d4/d6d/a00055.html#a4042320270935513c6fbfbd101986a83", null ],
-    [ "map", "d4/d6d/a00055.html#a5212bb7bc1308bfde2ecd7ae73a064ac", null ],
-    [ "mapRange", "d4/d6d/a00055.html#aaaf5780cc43099de399e57ef773a9ee0", null ],
-    [ "operator!=", "d4/d6d/a00055.html#a5ff3ea4d06441e968ab9f3933329a828", null ],
-    [ "operator!=", "d4/d6d/a00055.html#a8c9f33cca265609a823432dd4a4c03a8", null ],
-    [ "operator!=", "d4/d6d/a00055_a470def0c1dfe76786326d37dca9c16c1.html#a470def0c1dfe76786326d37dca9c16c1", null ],
-    [ "operator==", "d4/d6d/a00055.html#a75cf124fcf3b2ce36c402d9ff8b9447d", null ],
-    [ "operator==", "d4/d6d/a00055.html#a41aadf11e2d1d51951e59c649cc66ccf", null ],
-    [ "operator==", "d4/d6d/a00055_ac54e87a99788911560329efc7b1d5f31.html#ac54e87a99788911560329efc7b1d5f31", null ],
-    [ "setAttributePointer", "d4/d6d/a00055_a98b32580bf3501b90d892bce3c9b7be4.html#a98b32580bf3501b90d892bce3c9b7be4", null ],
-    [ "setData", "d4/d6d/a00055.html#aaf268a39626aa530a4b9facc4950f724", null ],
-    [ "setDataRange", "d4/d6d/a00055.html#aeca7c19d83db827a2bca5e708d445ce7", null ],
-    [ "setDivisor", "d4/d6d/a00055_a8648fb701e6aec9ea022f97cca039321.html#a8648fb701e6aec9ea022f97cca039321", null ],
-    [ "setLocation", "d4/d6d/a00055_ae448973c5622518f6adf0dd4e4fa39c6.html#ae448973c5622518f6adf0dd4e4fa39c6", null ],
-    [ "unbind", "d4/d6d/a00055.html#ae357cedf8793a3ccd358c0174d645a63", null ],
-    [ "unmap", "d4/d6d/a00055.html#ad94233be26bd43680d3830cf1a2174c8", null ],
-    [ "id", "d4/d6d/a00055.html#aa6f2acefb1ac01ff347ff593738eab46", null ]
+    [ "handle", "d4/d6d/a00055.html#acd892bd04e5e9ca631e9a4836d2ab730", null ]
 ];

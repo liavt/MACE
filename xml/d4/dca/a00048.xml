@@ -1,446 +1,337 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d4/dca/a00048" kind="class" language="C++" prot="public">
-    <compoundname>mc::Sound</compoundname>
-    <includes refid="d4/d63/a00082" local="no">Audio.h</includes>
-      <sectiondef kind="public-type">
-      <memberdef kind="enum" id="d4/dca/a00048_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11" prot="public" static="no">
-        <name>Properties</name>
-        <enumvalue id="d4/dca/a00048_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d" prot="public">
-          <name>LOOPING</name>
-          <initializer>= 0</initializer>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="30" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="30" bodyend="32"/>
-      </memberdef>
-      </sectiondef>
+    <compoundname>mc::gfx::RenderProtocol&lt; Letter &gt;</compoundname>
+    <basecompoundref refid="d5/df9/a00044" prot="public" virt="non-virtual">mc::gfx::RenderImpl</basecompoundref>
+    <includes refid="df/d13/a00085" local="no">Entity2D.h</includes>
+    <templateparamlist>
+    </templateparamlist>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="d4/dca/a00048_1a33db8736bf37c5fed511e41d0431e6d7" prot="private" static="no" mutable="no">
-        <type><ref refid="de/d5e/a00007" kindref="compound">BitField</ref></type>
-        <definition>BitField mc::Sound::properties</definition>
+      <memberdef kind="variable" id="d4/dca/a00048_1a7cfcc63dafeb34a17e30aea08cf583cf" prot="private" static="no" mutable="no">
+        <type><ref refid="d4/d31/a00069" kindref="compound">SimpleQuadRenderer</ref></type>
+        <definition>SimpleQuadRenderer mc::gfx::RenderProtocol&lt; Letter &gt;::renderer</definition>
         <argsstring></argsstring>
-        <name>properties</name>
+        <name>renderer</name>
+        <initializer>= <ref refid="d4/d31/a00069" kindref="compound">SimpleQuadRenderer</ref>(true)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="56" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="56" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1a9f8adae676de2d6228c99ae00f66bced" prot="private" static="no" mutable="no">
-        <type>unsigned int</type>
-        <definition>unsigned int mc::Sound::source</definition>
-        <argsstring></argsstring>
-        <name>source</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="57" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="57" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1af65aee12ab4ee93f6abe3c914a12f658" prot="private" static="no" mutable="no">
-        <type>unsigned int</type>
-        <definition>unsigned int mc::Sound::buffer</definition>
-        <argsstring></argsstring>
-        <name>buffer</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="57" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="57" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1a426249b3d09c26009533e4ba90150488" prot="private" static="no" mutable="no">
-        <type>unsigned int</type>
-        <definition>unsigned int mc::Sound::frequency</definition>
-        <argsstring></argsstring>
-        <name>frequency</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="58" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="58" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1a563b3b2baeaa3e97fc3adc5a7841922b" prot="private" static="no" mutable="no">
-        <type>int</type>
-        <definition>int mc::Sound::size</definition>
-        <argsstring></argsstring>
-        <name>size</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="59" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="59" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1acf57c7da2ea9b610e7bde50a8829bd02" prot="private" static="no" mutable="no">
-        <type><ref refid="d9/df8/a00096_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
-        <definition>Enum mc::Sound::format</definition>
-        <argsstring></argsstring>
-        <name>format</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="60" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="60" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1afbea0216dc6aa5291bf0092ec5f5a984" prot="private" static="no" mutable="no">
-        <type>unsigned char *</type>
-        <definition>unsigned char* mc::Sound::buf</definition>
-        <argsstring></argsstring>
-        <name>buf</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="61" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="61" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1a772a669552d84b15934607c3f1a4b2cf" prot="private" static="no" mutable="no">
-        <type>std::string</type>
-        <definition>std::string mc::Sound::path</definition>
-        <argsstring></argsstring>
-        <name>path</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="62" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="62" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1a814180d1e95b7aeb84455b905ef3a5f7" prot="private" static="no" mutable="no">
-        <type>float</type>
-        <definition>float mc::Sound::volume</definition>
-        <argsstring></argsstring>
-        <name>volume</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="63" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="63" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1af94ea0a539ef806697f0d4d5b4c1ec5e" prot="private" static="no" mutable="no">
-        <type>float</type>
-        <definition>float mc::Sound::x</definition>
-        <argsstring></argsstring>
-        <name>x</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="64" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="64" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1afa90421d8e935e75e9ca7e7427ba76fd" prot="private" static="no" mutable="no">
-        <type>float</type>
-        <definition>float mc::Sound::y</definition>
-        <argsstring></argsstring>
-        <name>y</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="64" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="64" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d4/dca/a00048_1abf967b708765b1d0523dab56a376bd34" prot="private" static="no" mutable="no">
-        <type>float</type>
-        <definition>float mc::Sound::z</definition>
-        <argsstring></argsstring>
-        <name>z</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="64" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="64" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="296" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="296" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d4/dca/a00048_a0878afff202e1115129c6fd1448f2103_1a0878afff202e1115129c6fd1448f2103" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::Sound::Sound</definition>
-        <argsstring>(std::string path)</argsstring>
-        <name>Sound</name>
-        <param>
-          <type>std::string</type>
-          <declname>path</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="34" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_ada8c6c5ca032301f7d38aa7c996c0f9e_1ada8c6c5ca032301f7d38aa7c996c0f9e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/dca/a00048_a22a95178025b8c055d05a13e31d2062d_1a22a95178025b8c055d05a13e31d2062d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::Sound::play</definition>
-        <argsstring>()</argsstring>
-        <name>play</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="36" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a67dcafee2327b68452b091e13101fe92_1a67dcafee2327b68452b091e13101fe92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::Sound::pause</definition>
-        <argsstring>()</argsstring>
-        <name>pause</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="37" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a51548f5c106e154185347660e171133b_1a51548f5c106e154185347660e171133b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::Sound::stop</definition>
-        <argsstring>()</argsstring>
-        <name>stop</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="38" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a82344fda7067c63c663206952f969573_1a82344fda7067c63c663206952f969573" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::Sound::setVolume</definition>
-        <argsstring>(float volume)</argsstring>
-        <name>setVolume</name>
-        <param>
-          <type>float</type>
-          <declname>volume</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="40" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a29d14b8d95e9b315e94cc861312dd490_1a29d14b8d95e9b315e94cc861312dd490" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
-        <type>float</type>
-        <definition>float mc::Sound::getVolume</definition>
-        <argsstring>()</argsstring>
-        <name>getVolume</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="41" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="41" bodyend="41"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_af33d4338287d9d32de4afed352fbf4ae_1af33d4338287d9d32de4afed352fbf4ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::Sound::init</definition>
-        <argsstring>()</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Letter &gt;::init</definition>
+        <argsstring>(const Size originalWidth, const Size originalHeight) override</argsstring>
         <name>init</name>
+        <reimplements refid="d5/df9/a00044_a4fd8e0a36eb1e0e32b2966c68a9d1f2f_1a4fd8e0a36eb1e0e32b2966c68a9d1f2f">init</reimplements>
+        <param>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="43" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="289" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a595bb512e1176165389897728366769c_1a595bb512e1176165389897728366769c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d4/dca/a00048_af47726dc3b0fda74a20bc7f58ef7a2e2_1af47726dc3b0fda74a20bc7f58ef7a2e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::Sound::destroy</definition>
-        <argsstring>()</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Letter &gt;::initEntity</definition>
+        <argsstring>(GraphicsEntity *en) override</argsstring>
+        <name>initEntity</name>
+        <reimplements refid="d5/df9/a00044_aa4cc0dfa80d8fa019a2dfc673c1b5747_1aa4cc0dfa80d8fa019a2dfc673c1b5747">initEntity</reimplements>
+        <param>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="290" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/dca/a00048_a73ecd2f827d24cddee82fd57ccaaa82c_1a73ecd2f827d24cddee82fd57ccaaa82c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Letter &gt;::renderEntity</definition>
+        <argsstring>(os::WindowModule *win, GraphicsEntity *entity) override</argsstring>
+        <name>renderEntity</name>
+        <reimplements refid="d5/df9/a00044_a9f00ce6cfcc7306ad6b69b182ab2928f_1a9f00ce6cfcc7306ad6b69b182ab2928f">renderEntity</reimplements>
+        <param>
+          <type><ref refid="d9/da4/a00078" kindref="compound">os::WindowModule</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
+          <declname>entity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Entity2D.h" line="292" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/dca/a00048_ab0414b1d55e9c95325453448084f5d18_1ab0414b1d55e9c95325453448084f5d18" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::RenderProtocol&lt; Letter &gt;::destroy</definition>
+        <argsstring>() override</argsstring>
         <name>destroy</name>
+        <reimplements refid="d5/df9/a00044_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee">destroy</reimplements>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="44" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="294" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a905a92f2df21a6144e8ff3fce340f0be_1a905a92f2df21a6144e8ff3fce340f0be" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::Sound::getProperty</definition>
-        <argsstring>(const Byte param) const </argsstring>
-        <name>getProperty</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>param</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="46" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_afb381c80dda4973445cefefa59746a5c_1afb381c80dda4973445cefefa59746a5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_a6bd329f3d60c5ea961bda5f29c3231a8_1a6bd329f3d60c5ea961bda5f29c3231a8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::Sound::setProperty</definition>
-        <argsstring>(const Byte param, const bool value)</argsstring>
-        <name>setProperty</name>
+        <definition>virtual void mc::gfx::RenderImpl::resize</definition>
+        <argsstring>(const Size, const Size)</argsstring>
+        <name>resize</name>
+        <reimplementedby refid="d6/d97/a00045_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1">resize</reimplementedby>
         <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>param</declname>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
         </param>
         <param>
-          <type>const bool</type>
-          <declname>value</declname>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="47" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="118" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="118" bodyend="118"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a708f0a746ff19ec7d548dae3056a30b2_1a708f0a746ff19ec7d548dae3056a30b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_a09de296a552820e6739bc9227e57b56d_1a09de296a552820e6739bc9227e57b56d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::Sound::setLooping</definition>
-        <argsstring>(const bool val)</argsstring>
-        <name>setLooping</name>
+        <definition>virtual void mc::gfx::RenderImpl::setUp</definition>
+        <argsstring>(os::WindowModule *, RenderQueue *)</argsstring>
+        <name>setUp</name>
+        <reimplementedby refid="d6/d97/a00045_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba">setUp</reimplementedby>
         <param>
-          <type>const bool</type>
-          <declname>val</declname>
+          <type><ref refid="d9/da4/a00078" kindref="compound">os::WindowModule</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="d7/d12/a00126_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="49" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="135" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="135" bodyend="135"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a71120a75bdd0f0f0c257bf8d02bd1891_1a71120a75bdd0f0f0c257bf8d02bd1891" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::Sound::isLooping</definition>
-        <argsstring>() const </argsstring>
-        <name>isLooping</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="50" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a042bbb3fe90c6e62c757daa48f5adef3_1a042bbb3fe90c6e62c757daa48f5adef3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_acbce840815446695a44776cb15537b2e_1acbce840815446695a44776cb15537b2e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::Sound::setProperties</definition>
-        <argsstring>(const BitField &amp;b)</argsstring>
-        <name>setProperties</name>
+        <definition>virtual void mc::gfx::RenderImpl::tearDown</definition>
+        <argsstring>(os::WindowModule *, RenderQueue *)</argsstring>
+        <name>tearDown</name>
+        <reimplementedby refid="d6/d97/a00045_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538">tearDown</reimplementedby>
         <param>
-          <type>const <ref refid="de/d5e/a00007" kindref="compound">BitField</ref> &amp;</type>
-          <declname>b</declname>
+          <type><ref refid="d9/da4/a00078" kindref="compound">os::WindowModule</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="d7/d12/a00126_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="52" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="145" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="145" bodyend="145"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_a3b8ee4aa8d3b86a3746480dbba30e408_1a3b8ee4aa8d3b86a3746480dbba30e408" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="de/d5e/a00007" kindref="compound">BitField</ref> &amp;</type>
-        <definition>BitField&amp; mc::Sound::getProperties</definition>
-        <argsstring>()</argsstring>
-        <name>getProperties</name>
+      <memberdef kind="function" id="d5/df9/a00044_a992cd784efc111151a4bb6c699821e37_1a992cd784efc111151a4bb6c699821e37" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::cleanEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>cleanEntity</name>
+        <reimplementedby refid="d6/d97/a00045_a2e9c06972639b6e5f6182302acc259ec_1a2e9c06972639b6e5f6182302acc259ec">cleanEntity</reimplementedby>
+        <param>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="53" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="151" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="151" bodyend="151"/>
       </memberdef>
-      <memberdef kind="function" id="d4/dca/a00048_adbdb57e74228f65794f94d7a9f789498_1adbdb57e74228f65794f94d7a9f789498" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="de/d5e/a00007" kindref="compound">BitField</ref> &amp;</type>
-        <definition>const BitField&amp; mc::Sound::getProperties</definition>
-        <argsstring>() const </argsstring>
-        <name>getProperties</name>
+      <memberdef kind="function" id="d5/df9/a00044_a8865aa2228ff0bc7479dfd0126a1d3b9_1a8865aa2228ff0bc7479dfd0126a1d3b9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::destroyEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>destroyEntity</name>
+        <reimplementedby refid="d6/d97/a00045_a15a1ba89268e1a29266e9c75d719f75e_1a15a1ba89268e1a29266e9c75d719f75e">destroyEntity</reimplementedby>
+        <param>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Audio.h" line="54" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="162" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="162" bodyend="162"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <location file="include/MACE/Utility/Audio.h" line="28" column="1" bodyfile="include/MACE/Utility/Audio.h" bodystart="28" bodyend="65"/>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="884">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="d5/df9/a00044"/>
+      </node>
+      <node id="883">
+        <label>mc::gfx::RenderProtocol&lt; Letter &gt;</label>
+        <link refid="d4/dca/a00048"/>
+        <childnode refid="884" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="886">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="d5/df9/a00044"/>
+      </node>
+      <node id="885">
+        <label>mc::gfx::RenderProtocol&lt; Letter &gt;</label>
+        <link refid="d4/dca/a00048"/>
+        <childnode refid="886" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Graphics/Entity2D.h" line="287" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="287" bodyend="297"/>
     <listofallmembers>
-      <member refid="d4/dca/a00048_1afbea0216dc6aa5291bf0092ec5f5a984" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>buf</name></member>
-      <member refid="d4/dca/a00048_1af65aee12ab4ee93f6abe3c914a12f658" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>buffer</name></member>
-      <member refid="d4/dca/a00048_a595bb512e1176165389897728366769c_1a595bb512e1176165389897728366769c" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>destroy</name></member>
-      <member refid="d4/dca/a00048_1acf57c7da2ea9b610e7bde50a8829bd02" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>format</name></member>
-      <member refid="d4/dca/a00048_1a426249b3d09c26009533e4ba90150488" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>frequency</name></member>
-      <member refid="d4/dca/a00048_a3b8ee4aa8d3b86a3746480dbba30e408_1a3b8ee4aa8d3b86a3746480dbba30e408" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getProperties</name></member>
-      <member refid="d4/dca/a00048_adbdb57e74228f65794f94d7a9f789498_1adbdb57e74228f65794f94d7a9f789498" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getProperties</name></member>
-      <member refid="d4/dca/a00048_a905a92f2df21a6144e8ff3fce340f0be_1a905a92f2df21a6144e8ff3fce340f0be" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getProperty</name></member>
-      <member refid="d4/dca/a00048_a29d14b8d95e9b315e94cc861312dd490_1a29d14b8d95e9b315e94cc861312dd490" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>getVolume</name></member>
-      <member refid="d4/dca/a00048_af33d4338287d9d32de4afed352fbf4ae_1af33d4338287d9d32de4afed352fbf4ae" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>init</name></member>
-      <member refid="d4/dca/a00048_a71120a75bdd0f0f0c257bf8d02bd1891_1a71120a75bdd0f0f0c257bf8d02bd1891" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>isLooping</name></member>
-      <member refid="d4/dca/a00048_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>LOOPING</name></member>
-      <member refid="d4/dca/a00048_1a772a669552d84b15934607c3f1a4b2cf" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>path</name></member>
-      <member refid="d4/dca/a00048_a67dcafee2327b68452b091e13101fe92_1a67dcafee2327b68452b091e13101fe92" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>pause</name></member>
-      <member refid="d4/dca/a00048_ada8c6c5ca032301f7d38aa7c996c0f9e_1ada8c6c5ca032301f7d38aa7c996c0f9e" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>play</name></member>
-      <member refid="d4/dca/a00048_1a33db8736bf37c5fed511e41d0431e6d7" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>properties</name></member>
-      <member refid="d4/dca/a00048_a689b2fffd2a430f7d966ef867ad2cd11_1a689b2fffd2a430f7d966ef867ad2cd11" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>Properties</name></member>
-      <member refid="d4/dca/a00048_a708f0a746ff19ec7d548dae3056a30b2_1a708f0a746ff19ec7d548dae3056a30b2" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setLooping</name></member>
-      <member refid="d4/dca/a00048_a042bbb3fe90c6e62c757daa48f5adef3_1a042bbb3fe90c6e62c757daa48f5adef3" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setProperties</name></member>
-      <member refid="d4/dca/a00048_afb381c80dda4973445cefefa59746a5c_1afb381c80dda4973445cefefa59746a5c" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setProperty</name></member>
-      <member refid="d4/dca/a00048_a82344fda7067c63c663206952f969573_1a82344fda7067c63c663206952f969573" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>setVolume</name></member>
-      <member refid="d4/dca/a00048_1a563b3b2baeaa3e97fc3adc5a7841922b" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>size</name></member>
-      <member refid="d4/dca/a00048_a0878afff202e1115129c6fd1448f2103_1a0878afff202e1115129c6fd1448f2103" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>Sound</name></member>
-      <member refid="d4/dca/a00048_1a9f8adae676de2d6228c99ae00f66bced" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>source</name></member>
-      <member refid="d4/dca/a00048_a51548f5c106e154185347660e171133b_1a51548f5c106e154185347660e171133b" prot="public" virt="non-virtual"><scope>mc::Sound</scope><name>stop</name></member>
-      <member refid="d4/dca/a00048_1a814180d1e95b7aeb84455b905ef3a5f7" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>volume</name></member>
-      <member refid="d4/dca/a00048_1af94ea0a539ef806697f0d4d5b4c1ec5e" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>x</name></member>
-      <member refid="d4/dca/a00048_1afa90421d8e935e75e9ca7e7427ba76fd" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>y</name></member>
-      <member refid="d4/dca/a00048_1abf967b708765b1d0523dab56a376bd34" prot="private" virt="non-virtual"><scope>mc::Sound</scope><name>z</name></member>
+      <member refid="d5/df9/a00044_a992cd784efc111151a4bb6c699821e37_1a992cd784efc111151a4bb6c699821e37" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>cleanEntity</name></member>
+      <member refid="d4/dca/a00048_ab0414b1d55e9c95325453448084f5d18_1ab0414b1d55e9c95325453448084f5d18" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>destroy</name></member>
+      <member refid="d5/df9/a00044_a8865aa2228ff0bc7479dfd0126a1d3b9_1a8865aa2228ff0bc7479dfd0126a1d3b9" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>destroyEntity</name></member>
+      <member refid="d4/dca/a00048_a22a95178025b8c055d05a13e31d2062d_1a22a95178025b8c055d05a13e31d2062d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>init</name></member>
+      <member refid="d4/dca/a00048_af47726dc3b0fda74a20bc7f58ef7a2e2_1af47726dc3b0fda74a20bc7f58ef7a2e2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>initEntity</name></member>
+      <member refid="d4/dca/a00048_a73ecd2f827d24cddee82fd57ccaaa82c_1a73ecd2f827d24cddee82fd57ccaaa82c" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>renderEntity</name></member>
+      <member refid="d4/dca/a00048_1a7cfcc63dafeb34a17e30aea08cf583cf" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>renderer</name></member>
+      <member refid="d5/df9/a00044_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>RenderImpl</name></member>
+      <member refid="d5/df9/a00044_a6bd329f3d60c5ea961bda5f29c3231a8_1a6bd329f3d60c5ea961bda5f29c3231a8" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>resize</name></member>
+      <member refid="d5/df9/a00044_a09de296a552820e6739bc9227e57b56d_1a09de296a552820e6739bc9227e57b56d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>setUp</name></member>
+      <member refid="d5/df9/a00044_acbce840815446695a44776cb15537b2e_1acbce840815446695a44776cb15537b2e" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>tearDown</name></member>
+      <member refid="d5/df9/a00044_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Letter &gt;</scope><name>~RenderImpl</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

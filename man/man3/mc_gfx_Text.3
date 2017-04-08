@@ -1,4 +1,4 @@
-.TH "mc::gfx::Text" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::Text" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -14,7 +14,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 
 .in +1c
 .ti -1c
-.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBDISABLED\fP = 1, \fBINIT\fP = 2, \fBDIRTY\fP = 3, \fBSTRETCH_X\fP = 4, \fBSTRETCH_Y\fP = 5, \fBSTRETCH_WIDTH\fP = 6, \fBSTRETCH_HEIGHT\fP = 7, \fBDEFAULT_PROPERTIES\fP = 0x00000000 }"
+.RI "enum \fBEntityProperty\fP : Byte { \fBDEAD\fP = 0, \fBDISABLED\fP = 1, \fBINIT\fP = 2, \fBDIRTY\fP = 3, \fBMAINTAIN_X\fP = 4, \fBMAINTAIN_Y\fP = 5, \fBMAINTAIN_WIDTH\fP = 6, \fBMAINTAIN_HEIGHT\fP = 7, \fBDEFAULT_PROPERTIES\fP = 0b00000000 }"
 .br
 .in -1c
 .SS "Public Member Functions"
@@ -48,7 +48,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "const \fBFont\fP & \fBgetFont\fP () const "
 .br
 .ti -1c
-.RI "const \fBGroup\fP & \fBgetLetters\fP () const "
+.RI "const std::vector< \fBLetter\fP > & \fBgetLetters\fP () const "
 .br
 .ti -1c
 .RI "void \fBsetVerticalAlign\fP (const \fBVerticalAlign\fP align)"
@@ -133,7 +133,11 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .ti -1c
 .RI "void \fBremoveChild\fP (const \fBEntity\fP &e)"
 .br
-.RI "\fIRemoves a child by reference\&. \fP"
+.RI "\fIRemoves a child\&. \fP"
+.ti -1c
+.RI "void \fBremoveChild\fP (const \fBEntity\fP *e)"
+.br
+.RI "\fIRemoves a child\&. \fP"
 .ti -1c
 .RI "void \fBremoveChild\fP (\fBIndex\fP index)"
 .br
@@ -167,13 +171,17 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .br
 .RI "\fIFinds the location of an \fC\fBEntity\fP\fP in this \fC\fBEntity\fP\fP \fP"
 .ti -1c
+.RI "bool \fBisEmpty\fP () const "
+.br
+.RI "\fIChecks whether this \fC\fBEntity\fP\fP has any children\&. \fP"
+.ti -1c
 .RI "std::vector< \fBEntity\fP * >::iterator \fBbegin\fP ()"
 .br
-.RI "\fIGets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. \fP"
+.RI "\fIRetrieves the beginning of the children of this \fC\fBEntity\fP\fP \fP"
 .ti -1c
 .RI "std::vector< \fBEntity\fP * >::iterator \fBend\fP ()"
 .br
-.RI "\fIGets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. \fP"
+.RI "\fIRetrieves the end of the children of this \fC\fBEntity\fP\fP \fP"
 .ti -1c
 .RI "\fBSize\fP \fBsize\fP () const "
 .br
@@ -197,7 +205,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .ti -1c
 .RI "void \fBsetProperty\fP (const \fBByte\fP position, const bool value)"
 .br
-.RI "\fISet a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fC\fBEntity\fP::\fP \fP"
+.RI "\fISet a property to be \fCtrue\fP or \fCfalse\fP\&. \fP"
 .ti -1c
 .RI "\fBTransformMatrix\fP & \fBgetTransformation\fP ()"
 .br
@@ -243,46 +251,69 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .RI "std::vector< \fBComponent\fP * > \fBgetComponents\fP ()"
 .br
 .ti -1c
-.RI "float & \fBgetWidth\fP ()"
+.RI "const float & \fBgetWidth\fP () const "
 .br
 .ti -1c
-.RI "const float & \fBgetWidth\fP () const "
+.RI "float & \fBgetWidth\fP ()"
 .br
 .ti -1c
 .RI "void \fBsetWidth\fP (const float &s)"
 .br
 .ti -1c
-.RI "float & \fBgetHeight\fP ()"
+.RI "const float & \fBgetHeight\fP () const "
 .br
 .ti -1c
-.RI "const float & \fBgetHeight\fP () const "
+.RI "float & \fBgetHeight\fP ()"
 .br
 .ti -1c
 .RI "void \fBsetHeight\fP (const float &s)"
 .br
 .ti -1c
-.RI "float & \fBgetX\fP ()"
+.RI "const float & \fBgetDepth\fP () const "
+.br
+.ti -1c
+.RI "float & \fBgetDepth\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetDepth\fP (const float &s)"
 .br
 .ti -1c
 .RI "const float & \fBgetX\fP () const "
 .br
 .ti -1c
-.RI "void \fBsetX\fP (const float &newX)"
+.RI "float & \fBgetX\fP ()"
 .br
 .ti -1c
-.RI "float & \fBgetY\fP ()"
+.RI "void \fBsetX\fP (const float &newX)"
 .br
 .ti -1c
 .RI "const float & \fBgetY\fP () const "
 .br
 .ti -1c
+.RI "float & \fBgetY\fP ()"
+.br
+.ti -1c
 .RI "void \fBsetY\fP (const float &newY)"
 .br
 .ti -1c
-.RI "\fBEntity\fP * \fBgetRootParent\fP ()"
+.RI "const float & \fBgetZ\fP () const "
 .br
 .ti -1c
-.RI "const \fBEntity\fP * \fBgetRootParent\fP () const "
+.RI "float & \fBgetZ\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetZ\fP (const float &newY)"
+.br
+.ti -1c
+.RI "const \fBEntity\fP * \fBgetRoot\fP () const "
+.br
+.RI "\fIRetrieves the top most parent (known as the 'root\&.') \fP"
+.ti -1c
+.RI "\fBEntity\fP * \fBgetRoot\fP ()"
+.br
+.RI "\fIRetrieves the top most parent (known as the 'root\&.') \fP"
+.ti -1c
+.RI "\fBMetrics\fP \fBgetMetrics\fP () const "
 .br
 .ti -1c
 .RI "void \fBreset\fP ()"
@@ -290,7 +321,7 @@ Inherits \fBmc::gfx::Entity2D\fP\&.
 .ti -1c
 .RI "void \fBmakeDirty\fP ()"
 .br
-.RI "\fIMakes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. \fP"
+.RI "\fIMakes this \fC\fBEntity\fP\fP dirty and root dirty\&. \fP"
 .in -1c
 .SS "Protected Member Functions"
 
@@ -354,7 +385,7 @@ newline with vertical align doesnt really work
 .PP
 
 .PP
-Definition at line 355 of file Entity2D\&.h\&.
+Definition at line 350 of file Entity2D\&.h\&.
 .SH "Member Enumeration Documentation"
 .PP 
 .SS "enum \fBmc::gfx::Entity::EntityProperty\fP : \fBByte\fP\fC [inherited]\fP"
@@ -411,62 +442,62 @@ Certain \fCGraphicsContexts\fP may only render when something is dirty, heavily 
 .PP
 Additionally, an \fC\fBEntity\fP\fP that is considered dirty will have it's sslBuffer updated on the GPU side\&. 
 .TP
-\fB\fISTRETCH_X \fP\fP
+\fB\fIMAINTAIN_X \fP\fP
 Flag representing whether an \fBEntity\fP's X position should be stretched when window is resized\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBEntity::STRETCH_Y\fP 
+\fBEntity::MAINTAIN_Y\fP 
 .PP
-\fBEntity::STRETCH_WIDTH\fP 
+\fBEntity::MAINTAIN_WIDTH\fP 
 .PP
-\fBEntity::STRETCH_HEIGHT\fP 
+\fBEntity::MAINTAIN_HEIGHT\fP 
 .RE
 .PP
 
 .TP
-\fB\fISTRETCH_Y \fP\fP
+\fB\fIMAINTAIN_Y \fP\fP
 Flag representing whether an \fBEntity\fP's Y position should be stretched when window is resized\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBEntity::STRETCH_X\fP 
+\fBEntity::MAINTAIN_X\fP 
 .PP
-\fBEntity::STRETCH_WIDTH\fP 
+\fBEntity::MAINTAIN_WIDTH\fP 
 .PP
-\fBEntity::STRETCH_HEIGHT\fP 
+\fBEntity::MAINTAIN_HEIGHT\fP 
 .PP
 WindowModule::setResizable(bool) 
 .RE
 .PP
 
 .TP
-\fB\fISTRETCH_WIDTH \fP\fP
+\fB\fIMAINTAIN_WIDTH \fP\fP
 Flag representing whether an \fBEntity\fP's width should be stretched when window is resized\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBEntity::STRETCH_X\fP 
+\fBEntity::MAINTAIN_X\fP 
 .PP
-\fBEntity::STRETCH_Y\fP 
+\fBEntity::MAINTAIN_Y\fP 
 .PP
-\fBEntity::STRETCH_HEIGHT\fP 
+\fBEntity::MAINTAIN_HEIGHT\fP 
 .PP
 WindowModule::setResizable(bool) 
 .RE
 .PP
 
 .TP
-\fB\fISTRETCH_HEIGHT \fP\fP
+\fB\fIMAINTAIN_HEIGHT \fP\fP
 Flag representing whether an \fBEntity\fP's height should be stretched when window is resized\&. 
 .PP
 \fBSee also:\fP
 .RS 4
-\fBEntity::STRETCH_X\fP 
+\fBEntity::MAINTAIN_X\fP 
 .PP
-\fBEntity::STRETCH_Y\fP 
+\fBEntity::MAINTAIN_Y\fP 
 .PP
-\fBEntity::STRETCH_WIDTH\fP 
+\fBEntity::MAINTAIN_WIDTH\fP 
 .PP
 WindowModule::setResizable(bool) 
 .RE
@@ -475,7 +506,7 @@ WindowModule::setResizable(bool)
 .TP
 \fB\fIDEFAULT_PROPERTIES \fP\fP
 .PP
-Definition at line 128 of file Entity\&.h\&.
+Definition at line 208 of file Entity\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "mc::gfx::Text::Text (const std::string & t, const \fBFont\fP & f = \fC\fBFont\fP()\fP)"
@@ -525,18 +556,18 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::begin ()\fC [inherited]\fP"
 
 .PP
-Gets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. 
+Retrieves the beginning of the children of this \fC\fBEntity\fP\fP 
 .PP
 \fBReturns:\fP
 .RS 4
-Iterator of the first \fC\fBEntity\fP\fP 
+Pointer to the first \fC\fBEntity\fP\fP 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBend()\fP 
+\fBEntity::end()\fP 
 .PP
-\fBsize()\fP 
+\fBEntity::size()\fP 
 .RE
 .PP
 
@@ -575,11 +606,11 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RS 4
 \fBEntity::DIRTY\fP 
 .PP
-\fBsize()\fP 
+\fBEntity::size()\fP 
 .PP
-\fBremoveChild(Index)\fP 
+\fBEntity::removeChild(Index)\fP 
 .PP
-\fBremoveChild(const Entity&)\fP 
+\fBEntity::removeChild(const Entity&)\fP 
 .RE
 .PP
 
@@ -618,18 +649,18 @@ Reimplemented from \fBmc::gfx::Entity\fP\&.
 .SS "std::vector<\fBEntity\fP*>::iterator mc::gfx::Entity::end ()\fC [inherited]\fP"
 
 .PP
-Gets an iterator over this \fC\fBEntity\fP\fP for enchanced for loops\&. 
+Retrieves the end of the children of this \fC\fBEntity\fP\fP 
 .PP
 \fBReturns:\fP
 .RS 4
-Iterator of the last \fC\fBEntity\fP\fP 
+End of the last \fC\fBEntity\fP\fP 
 .RE
 .PP
 \fBSee also:\fP
 .RS 4
-\fBbegin()\fP 
+\fBEntity::begin()\fP 
 .PP
-\fBsize()\fP 
+\fBEntity::size()\fP 
 .RE
 .PP
 
@@ -685,9 +716,9 @@ Reference to the \fC\fBEntity\fP\fP located at \fCi\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBoperator[]\fP 
+\fBEntity::operator[]\fP 
 .PP
-\fBindexOf(const Entity&) const\fP 
+\fBEntity::indexOf(const Entity&) const\fP 
 .RE
 .PP
 
@@ -713,9 +744,9 @@ Reference to the \fC\fBEntity\fP\fP located at \fCi\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBoperator[]\fP 
+\fBEntity::operator[]\fP 
 .PP
-\fBindexOf(const Entity&) const\fP 
+\fBEntity::indexOf(const Entity&) const\fP 
 .RE
 .PP
 
@@ -731,6 +762,24 @@ an \fCstd::vector\fP with all children of this \fC\fBEntity\fP\fP
 .PP
 
 .SS "std::vector<\fBComponent\fP*> mc::gfx::Entity::getComponents ()\fC [inherited]\fP"
+
+.SS "const float& mc::gfx::Entity::getDepth () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getDepth ()\fC [inherited]\fP"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP
+.RE
+.PP
 
 .SS "\fBFont\fP& mc::gfx::Text::getFont ()"
 
@@ -748,7 +797,11 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 
 .SS "const \fBFont\fP& mc::gfx::Text::getFont () const"
 
+.SS "const float& mc::gfx::Entity::getHeight () const\fC [inherited]\fP"
+
 .SS "float& mc::gfx::Entity::getHeight ()\fC [inherited]\fP"
+
+.PP
 
 .PP
 \fBNote:\fP
@@ -762,11 +815,11 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
-.SS "const float& mc::gfx::Entity::getHeight () const\fC [inherited]\fP"
-
 .SS "const \fBHorizontalAlign\fP mc::gfx::Text::getHorizontalAlign () const"
 
-.SS "const \fBGroup\fP& mc::gfx::Text::getLetters () const"
+.SS "const std::vector<\fBLetter\fP>& mc::gfx::Text::getLetters () const"
+
+.SS "\fBMetrics\fP mc::gfx::Entity::getMetrics () const\fC [inherited]\fP"
 
 .SS "float mc::gfx::GraphicsEntity::getOpacity ()\fC [inherited]\fP"
 
@@ -816,6 +869,22 @@ Entity::hasChild(const Entity&) const;
 .PP
 Retrieves the \fC\fBEntity\fP's\fP properties as a \fCByteField\fP 
 .PP
+\fBReturns:\fP
+.RS 4
+The current properties belonging to this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::getProperties() const\fP 
+.PP
+Entity::setProperties(ByteField&) 
+.PP
+Entity::getProperty(Index) const 
+.PP
+Entity::setProperty(Index, bool) 
+.RE
+.PP
 \fBNote:\fP
 .RS 4
 This will make this \fC\fBEntity\fP\fP dirty\&. 
@@ -824,22 +893,6 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 \fBSee also:\fP
 .RS 4
 \fBEntity::DIRTY\fP 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-The current properties belonging to this \fC\fBEntity\fP\fP 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBgetProperties() const\fP 
-.PP
-setProperties(ByteField&) 
-.PP
-getProperty(Index) const 
-.PP
-setProperty(Index, bool) 
 .RE
 .PP
 
@@ -855,18 +908,18 @@ The current properties belonging to this \fC\fBEntity\fP\fP
 .PP
 \fBSee also:\fP
 .RS 4
-setProperties(ByteField&) 
+Entity::setProperties(ByteField&) 
 .PP
-getProperty(Index) const 
+Entity::getProperty(Index) const 
 .PP
-setProperty(Index, bool) 
+Entity::setProperty(Index, bool) 
 .RE
 .PP
 
 .SS "bool mc::gfx::Entity::getProperty (const \fBByte\fP position) const\fC [inherited]\fP"
 
 .PP
-Retrieve the value of a property\&. Property consants start with \fC\fBEntity\fP::\fP 
+Retrieve the value of a property\&. By default, they are all false\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -880,29 +933,39 @@ Retrieve the value of a property\&. Property consants start with \fC\fBEntity\fP
 .PP
 \fBSee also:\fP
 .RS 4
-setProperty(Index, bool) 
+Entity::setProperty(Index, bool) 
 .PP
-\fBgetProperties()\fP 
+\fBEntity::getProperties()\fP 
 .PP
-setProperties(ByteField&) 
+Entity::setProperties(ByteField&) 
 .RE
 .PP
 
-.SS "\fBEntity\fP* mc::gfx::Entity::getRootParent ()\fC [inherited]\fP"
+.SS "const \fBEntity\fP* mc::gfx::Entity::getRoot () const\fC [inherited]\fP"
 
 .PP
-\fBNote:\fP
+Retrieves the top most parent (known as the 'root\&.') The root does not have any parent\&. 
+.PP
+If this \fC\fBEntity\fP\fP does not have any parent, returns \fCthis\fP 
+.PP
+\fBReturns:\fP
 .RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
+The root \fC\fBEntity\fP\fP of which this \fC\fBEntity\fP\fP belongs to\&. 
 .RE
 .PP
 
-.SS "const \fBEntity\fP* mc::gfx::Entity::getRootParent () const\fC [inherited]\fP"
+.SS "\fBEntity\fP* mc::gfx::Entity::getRoot ()\fC [inherited]\fP"
+
+.PP
+Retrieves the top most parent (known as the 'root\&.') The root does not have any parent\&. 
+.PP
+If this \fC\fBEntity\fP\fP does not have any parent, returns \fCthis\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+The root \fC\fBEntity\fP\fP of which this \fC\fBEntity\fP\fP belongs to\&. 
+.RE
+.PP
 
 .SS "std::wstring& mc::gfx::Text::getText ()"
 
@@ -956,23 +1019,11 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 
 .SS "const \fBVerticalAlign\fP mc::gfx::Text::getVerticalAlign () const"
 
+.SS "const float& mc::gfx::Entity::getWidth () const\fC [inherited]\fP"
+
 .SS "float& mc::gfx::Entity::getWidth ()\fC [inherited]\fP"
 
 .PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
-.PP
-
-.SS "const float& mc::gfx::Entity::getWidth () const\fC [inherited]\fP"
-
-.SS "float& mc::gfx::Entity::getX ()\fC [inherited]\fP"
 
 .PP
 \fBNote:\fP
@@ -982,13 +1033,15 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBEntity::DIRTY\fP 
+\fBEntity::DIRTY\fP
 .RE
 .PP
 
 .SS "const float& mc::gfx::Entity::getX () const\fC [inherited]\fP"
 
-.SS "float& mc::gfx::Entity::getY ()\fC [inherited]\fP"
+.SS "float& mc::gfx::Entity::getX ()\fC [inherited]\fP"
+
+.PP
 
 .PP
 \fBNote:\fP
@@ -998,11 +1051,45 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBEntity::DIRTY\fP 
+\fBEntity::DIRTY\fP
 .RE
 .PP
 
 .SS "const float& mc::gfx::Entity::getY () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getY ()\fC [inherited]\fP"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP
+.RE
+.PP
+
+.SS "const float& mc::gfx::Entity::getZ () const\fC [inherited]\fP"
+
+.SS "float& mc::gfx::Entity::getZ ()\fC [inherited]\fP"
+
+.PP
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP
+.RE
+.PP
 
 .SS "bool mc::gfx::Entity::hasChild (\fBEntity\fP & e) const\fC [inherited]\fP"
 
@@ -1021,7 +1108,7 @@ Checks to see if this \fC\fBEntity\fP\fP contains an \fC\fBEntity\fP\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBindexOf(const Entity& ) const\fP 
+\fBEntity::indexOf(const Entity& ) const\fP 
 .RE
 .PP
 
@@ -1063,9 +1150,9 @@ Location of \fCe,\fP or -1 if \fCe\fP is not a child of this \fC\fBEntity\fP\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBoperator[]\fP 
+\fBEntity::operator[]\fP 
 .PP
-\fBgetChild(Index)\fP 
+\fBEntity::getChild(Index)\fP 
 .RE
 .PP
 
@@ -1101,10 +1188,26 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 
 .PP
 Reimplemented from \fBmc::gfx::Entity\fP\&.
+.SS "bool mc::gfx::Entity::isEmpty () const\fC [inherited]\fP"
+
+.PP
+Checks whether this \fC\fBEntity\fP\fP has any children\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+If \fBEntity::size()\fP is 0 
+.RE
+.PP
+
 .SS "void mc::gfx::Entity::makeDirty ()\fC [inherited]\fP"
 
 .PP
-Makes this \fC\fBEntity\fP\fP dirty and the root level parent dirty\&. Should be used over \fCsetProperty(Entity::DIRTY,true)\fP as it updaets the root parent\&. 
+Makes this \fC\fBEntity\fP\fP dirty and root dirty\&. Should be used over \fCsetProperty(Entity::DIRTY,true)\fP as it updaets the root parent\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::getRoot()\fP 
+.RE
 .PP
 \fBNote:\fP
 .RS 4
@@ -1185,6 +1288,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::gfx::Button\fP\&.
 .SS "void mc::gfx::Text::onInit ()\fC [final]\fP, \fC [override]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
@@ -1337,9 +1442,9 @@ Reference to the \fC\fBEntity\fP\fP located at \fCi\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBgetChild(Index)\fP 
+\fBEntity::getChild(Index)\fP 
 .PP
-\fBindexOf(const Entity&) const\fP 
+\fBEntity::indexOf(const Entity&) const\fP 
 .RE
 .PP
 
@@ -1360,16 +1465,62 @@ Reference to the \fC\fBEntity\fP\fP located at \fCi\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBgetChild(Index) const\fP 
+\fBEntity::getChild(Index) const\fP 
 .PP
-\fBindexOf(const Entity&) const\fP 
+\fBEntity::indexOf(const Entity&) const\fP 
 .RE
 .PP
 
 .SS "void mc::gfx::Entity::removeChild (const \fBEntity\fP & e)\fC [inherited]\fP"
 
 .PP
-Removes a child by reference\&. 
+Removes a child\&. This function calls no member functions of the argument, meaning that 
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIObjectNotFoundInArray\fP if this \fC\fBEntity\fP\fP does not contain the argument returns \fCfalse\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an \fC\fBEntity\fP\fP to remove 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::removeChild(Index)\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::removeChild (const \fBEntity\fP * e)\fC [inherited]\fP"
+
+.PP
+Removes a child\&. This function calls no member functions of the argument, meaning that 
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIObjectNotFoundInArray\fP if this \fC\fBEntity\fP\fP does not contain the argument returns \fCfalse\fP 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an \fC\fBEntity\fP\fP to remove 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::removeChild(Index)\fP 
+.RE
 .PP
 \fBNote:\fP
 .RS 4
@@ -1383,17 +1534,7 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIObjectNotFoundInArray\fP if \fBhasChild(Entity&) const\fP returns \fCfalse\fP 
-.RE
-.PP
-\fBParameters:\fP
-.RS 4
-\fIe\fP Reference to a child 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBremoveChild(Index)\fP 
+\fINullPointerError\fP if the argument is \fCnullptr\fP 
 .RE
 .PP
 
@@ -1401,16 +1542,6 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 
 .PP
 Removes a child via location\&. 
-.PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
 .PP
 \fBExceptions:\fP
 .RS 4
@@ -1424,9 +1555,19 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBindexOf(const Entity&) const\fP 
+\fBEntity::indexOf(const Entity&) const\fP 
 .PP
-\fBremoveChild(const Entity&)\fP 
+\fBEntity::removeChild(const Entity&)\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1512,6 +1653,20 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
+.SS "void mc::gfx::Entity::setDepth (const float & s)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
 .SS "void mc::gfx::Text::setFont (const \fBFont\fP & f)"
 
 .PP
@@ -1573,16 +1728,6 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 Set the properties for this \fC\fBEntity\fP\fP 
 .PP
-\fBNote:\fP
-.RS 4
-This will make this \fC\fBEntity\fP\fP dirty\&. 
-.RE
-.PP
-\fBSee also:\fP
-.RS 4
-\fBEntity::DIRTY\fP 
-.RE
-.PP
 \fBParameters:\fP
 .RS 4
 \fIb\fP New \fC\fBEntity\fP\fP properties 
@@ -1590,18 +1735,12 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBgetProperties()\fP 
+\fBEntity::getProperties()\fP 
 .PP
-getProperty(Index) const 
+Entity::getProperty(Index) const 
 .PP
-setProperty(Index, bool) 
+Entity::setProperty(Index, bool) 
 .RE
-.PP
-
-.SS "void mc::gfx::Entity::setProperty (const \fBByte\fP position, const bool value)\fC [inherited]\fP"
-
-.PP
-Set a property to be \fCtrue\fP or \fCfalse\fP\&.Property consants start with \fC\fBEntity\fP::\fP 
 .PP
 \fBNote:\fP
 .RS 4
@@ -1611,6 +1750,17 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 \fBSee also:\fP
 .RS 4
 \fBEntity::DIRTY\fP 
+.RE
+.PP
+
+.SS "void mc::gfx::Entity::setProperty (const \fBByte\fP position, const bool value)\fC [inherited]\fP"
+
+.PP
+Set a property to be \fCtrue\fP or \fCfalse\fP\&. By default, they are all false\&. 
+.PP
+\fBNote:\fP
+.RS 4
+Do not use \fCsetProperty(Entity::DIRTY, true)\fP\&. Use Entity::makeDity() instead\&. 
 .RE
 .PP
 \fBParameters:\fP
@@ -1622,11 +1772,21 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .PP
 \fBSee also:\fP
 .RS 4
-getProperty(Index) const 
+Entity::getProperty(Index) const 
 .PP
-\fBgetProperties()\fP 
+\fBEntity::getProperties()\fP 
 .PP
-setProperties(ByteField&) 
+Entity::setProperties(ByteField&) 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
 .RE
 .PP
 
@@ -1728,6 +1888,20 @@ This will make this \fC\fBEntity\fP\fP dirty\&.
 .RE
 .PP
 
+.SS "void mc::gfx::Entity::setZ (const float & newY)\fC [inherited]\fP"
+
+.PP
+\fBNote:\fP
+.RS 4
+This will make this \fC\fBEntity\fP\fP dirty\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::DIRTY\fP 
+.RE
+.PP
+
 .SS "\fBSize\fP mc::gfx::Entity::size () const\fC [inherited]\fP"
 
 .PP
@@ -1736,6 +1910,11 @@ Calculates the amount of children this \fC\fBEntity\fP\fP has\&.
 \fBReturns:\fP
 .RS 4
 Size of this \fC\fBEntity\fP\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBEntity::isEmpty()\fP 
 .RE
 .PP
 
@@ -1773,7 +1952,7 @@ Reimplemented in \fBmc::os::WindowModule\fP\&.
 .SS "\fBogl::UniformBuffer\fP mc::gfx::Entity2D::buffer = \fBogl::UniformBuffer\fP()\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-Definition at line 73 of file Entity2D\&.h\&.
+Definition at line 66 of file Entity2D\&.h\&.
 .SS "std::vector<\fBEntity\fP*> mc::gfx::Entity::children = std::vector<\fBEntity\fP*>()\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1786,7 +1965,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 603 of file Entity\&.h\&.
+Definition at line 751 of file Entity\&.h\&.
 .SS "\fBTransformMatrix\fP mc::gfx::Entity::transformation\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
@@ -1797,7 +1976,7 @@ This should only be used internally or by advanced users\&. Misuse can cause und
 .PP
 
 .PP
-Definition at line 608 of file Entity\&.h\&.
+Definition at line 756 of file Entity\&.h\&.
 
 .SH "Author"
 .PP 

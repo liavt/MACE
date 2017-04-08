@@ -1,4 +1,4 @@
-.TH "mc::gfx::CallbackComponent" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::CallbackComponent" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -77,6 +77,12 @@ Inherits \fBmc::gfx::Component\fP\&.
 .ti -1c
 .RI "const \fBCallbackPtr\fP \fBgetCleanCallback\fP () const "
 .br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBCallbackComponent\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBCallbackComponent\fP &other) const "
+.br
 .in -1c
 .SS "Protected Member Functions"
 
@@ -103,20 +109,29 @@ Inherits \fBmc::gfx::Component\fP\&.
 .RI "void \fBclean\fP (\fBEntity\fP *e) final"
 .br
 .RI "\fICalled when \fBEntity::clean()\fP is called and it was dirty\&. \fP"
+.ti -1c
+.RI "\fBEntity\fP * \fBgetParent\fP ()"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBComponent\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBComponent\fP &other) const "
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 19 of file Components\&.h\&.
+Definition at line 55 of file Components\&.h\&.
 .SH "Member Typedef Documentation"
 .PP 
 .SS "typedef void(* mc::gfx::CallbackComponent::CallbackPtr) (\fBEntity\fP *)"
 
 .PP
-Definition at line 21 of file Components\&.h\&.
+Definition at line 57 of file Components\&.h\&.
 .SS "typedef bool(* mc::gfx::CallbackComponent::UpdatePtr) (\fBEntity\fP *)"
 
 .PP
-Definition at line 22 of file Components\&.h\&.
+Definition at line 58 of file Components\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::CallbackComponent::clean (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
@@ -164,7 +179,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
 .SS "\fBCallbackPtr\fP mc::gfx::CallbackComponent::getCleanCallback ()"
 
 .SS "const \fBCallbackPtr\fP mc::gfx::CallbackComponent::getCleanCallback () const"
@@ -180,6 +195,8 @@ Implements \fBmc::gfx::Component\fP\&.
 .SS "\fBCallbackPtr\fP mc::gfx::CallbackComponent::getInitCallback ()"
 
 .SS "const \fBCallbackPtr\fP mc::gfx::CallbackComponent::getInitCallback () const"
+
+.SS "\fBEntity\fP* mc::gfx::Component::getParent ()\fC [protected]\fP, \fC [inherited]\fP"
 
 .SS "\fBCallbackPtr\fP mc::gfx::CallbackComponent::getRenderCallback ()"
 
@@ -232,11 +249,19 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
+.SS "bool mc::gfx::CallbackComponent::operator!= (const \fBCallbackComponent\fP & other) const"
+
+.SS "bool mc::gfx::Component::operator!= (const \fBComponent\fP & other) const\fC [protected]\fP, \fC [inherited]\fP"
+
+.SS "bool mc::gfx::CallbackComponent::operator== (const \fBCallbackComponent\fP & other) const"
+
+.SS "bool mc::gfx::Component::operator== (const \fBComponent\fP & other) const\fC [protected]\fP, \fC [inherited]\fP"
+
 .SS "void mc::gfx::CallbackComponent::render (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
 .SS "void mc::gfx::CallbackComponent::setCleanCallback (const \fBCallbackPtr\fP func)"
 
 .SS "void mc::gfx::CallbackComponent::setDestroyCallback (const \fBCallbackPtr\fP func)"
@@ -280,7 +305,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
 
 .SH "Author"
 .PP 

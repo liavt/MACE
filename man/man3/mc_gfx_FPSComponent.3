@@ -1,4 +1,4 @@
-.TH "mc::gfx::FPSComponent" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::FPSComponent" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -41,6 +41,12 @@ Inherits \fBmc::gfx::Component\fP\&.
 .ti -1c
 .RI "const \fBTickCallbackPtr\fP \fBgetTickCallback\fP () const "
 .br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBFPSComponent\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBFPSComponent\fP &other) const "
+.br
 .in -1c
 .SS "Protected Member Functions"
 
@@ -67,16 +73,25 @@ Inherits \fBmc::gfx::Component\fP\&.
 .RI "void \fBdestroy\fP (\fBEntity\fP *e) final"
 .br
 .RI "\fICalled when \fBEntity::destroy()\fP is called or the \fC\fBComponent\fP\fP is removed via \fBComponent::update(Entity*)\fP, whichever comes first\&. \fP"
+.ti -1c
+.RI "\fBEntity\fP * \fBgetParent\fP ()"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBComponent\fP &other) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBComponent\fP &other) const "
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 65 of file Components\&.h\&.
+Definition at line 104 of file Components\&.h\&.
 .SH "Member Typedef Documentation"
 .PP 
 .SS "typedef void(* mc::gfx::FPSComponent::TickCallbackPtr) (\fBFPSComponent\fP *, \fBEntity\fP *)"
 
 .PP
-Definition at line 67 of file Components\&.h\&.
+Definition at line 106 of file Components\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::FPSComponent::clean (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
@@ -124,12 +139,14 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
 .SS "\fBIndex\fP mc::gfx::FPSComponent::getCleansPerSecond () const"
 
 .SS "\fBIndex\fP mc::gfx::FPSComponent::getFramesPerSecond () const"
 
 .SS "\fBIndex\fP mc::gfx::FPSComponent::getHoversPerSecond () const"
+
+.SS "\fBEntity\fP* mc::gfx::Component::getParent ()\fC [protected]\fP, \fC [inherited]\fP"
 
 .SS "\fBTickCallbackPtr\fP mc::gfx::FPSComponent::getTickCallback ()"
 
@@ -180,11 +197,19 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
+.SS "bool mc::gfx::Component::operator!= (const \fBComponent\fP & other) const\fC [protected]\fP, \fC [inherited]\fP"
+
+.SS "bool mc::gfx::FPSComponent::operator!= (const \fBFPSComponent\fP & other) const"
+
+.SS "bool mc::gfx::Component::operator== (const \fBComponent\fP & other) const\fC [protected]\fP, \fC [inherited]\fP"
+
+.SS "bool mc::gfx::FPSComponent::operator== (const \fBFPSComponent\fP & other) const"
+
 .SS "void mc::gfx::FPSComponent::render (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
 .SS "void mc::gfx::FPSComponent::setTickCallback (const \fBTickCallbackPtr\fP callback)"
 
 .SS "bool mc::gfx::FPSComponent::update (\fBEntity\fP * e)\fC [final]\fP, \fC [protected]\fP, \fC [virtual]\fP"
@@ -218,7 +243,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implements \fBmc::gfx::Component\fP\&.
+Reimplemented from \fBmc::gfx::Component\fP\&.
 
 .SH "Author"
 .PP 

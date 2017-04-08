@@ -1,28 +1,4 @@
 var a00054 =
 [
-    [ "addBuffer", "d1/dea/a00054_a35ffa9ced897f667d5cae79bfabd7b38.html#a35ffa9ced897f667d5cae79bfabd7b38", null ],
-    [ "bind", "d1/dea/a00054.html#a3f02451ab4df9d4d732d79ed2941dfb1", null ],
-    [ "destroy", "d1/dea/a00054_a1ea8420821e8d076d3b39ac39456537b.html#a1ea8420821e8d076d3b39ac39456537b", null ],
-    [ "draw", "d1/dea/a00054_a6b6c9e9784fb18e6ddbd6a160b153abe.html#a6b6c9e9784fb18e6ddbd6a160b153abe", null ],
-    [ "getBuffers", "d1/dea/a00054_a8c79d8d0ffe0bdb39f89e4de7ca88143.html#a8c79d8d0ffe0bdb39f89e4de7ca88143", null ],
-    [ "getBuffers", "d1/dea/a00054_ad275131e38080d91531c121ff11cb620.html#ad275131e38080d91531c121ff11cb620", null ],
-    [ "getID", "d1/dea/a00054.html#a717ff2f0b9420b4ce0939ff51ed9d545", null ],
-    [ "getIndices", "d1/dea/a00054_a71f13fe1a17d70c6e2488e75d9877d5a.html#a71f13fe1a17d70c6e2488e75d9877d5a", null ],
-    [ "getIndices", "d1/dea/a00054_abd29e22869199e6dfbe38debdb2c9c15.html#abd29e22869199e6dfbe38debdb2c9c15", null ],
-    [ "getVertexNumber", "d1/dea/a00054_a8a2635652fb0b34b6693f74b7b8d95da.html#a8a2635652fb0b34b6693f74b7b8d95da", null ],
-    [ "getVertexNumber", "d1/dea/a00054_aec2a55a0ef933adacde7f3cd4ad267a7.html#aec2a55a0ef933adacde7f3cd4ad267a7", null ],
-    [ "init", "d1/dea/a00054_a2e5f1ca422d96bc7861e29116b1bfb81.html#a2e5f1ca422d96bc7861e29116b1bfb81", null ],
-    [ "isCreated", "d1/dea/a00054_ab19cf7b7a163b0585b2f8b8c6550251b.html#ab19cf7b7a163b0585b2f8b8c6550251b", null ],
-    [ "loadIndices", "d1/dea/a00054_a3ae4c47857605a7fa3aa056cf62d3238.html#a3ae4c47857605a7fa3aa056cf62d3238", null ],
-    [ "loadVertices", "d1/dea/a00054_a32a897023c4852401ddab8664a2c40c5.html#a32a897023c4852401ddab8664a2c40c5", null ],
-    [ "operator!=", "d1/dea/a00054.html#a5ff3ea4d06441e968ab9f3933329a828", null ],
-    [ "operator!=", "d1/dea/a00054_ac71bd3e70562dfe5429663f3702e79f4.html#ac71bd3e70562dfe5429663f3702e79f4", null ],
-    [ "operator==", "d1/dea/a00054.html#a75cf124fcf3b2ce36c402d9ff8b9447d", null ],
-    [ "operator==", "d1/dea/a00054_aa33272510457f54f9f706c03beaf8f5b.html#aa33272510457f54f9f706c03beaf8f5b", null ],
-    [ "setBuffers", "d1/dea/a00054_ab38f6e4f638d5793fa691837b7a5bc3d.html#ab38f6e4f638d5793fa691837b7a5bc3d", null ],
-    [ "setIndices", "d1/dea/a00054_a5a05c7e3a7bda6613567460be3e2bef7.html#a5a05c7e3a7bda6613567460be3e2bef7", null ],
-    [ "setVertexNumber", "d1/dea/a00054_aa1641edcb35d6f1f9c6e9800ffafd996.html#aa1641edcb35d6f1f9c6e9800ffafd996", null ],
-    [ "storeDataInAttributeList", "d1/dea/a00054_ad4eb51ec059a94870c5dd357a6703ca7.html#ad4eb51ec059a94870c5dd357a6703ca7", null ],
-    [ "unbind", "d1/dea/a00054.html#ae357cedf8793a3ccd358c0174d645a63", null ],
-    [ "id", "d1/dea/a00054.html#aa6f2acefb1ac01ff347ff593738eab46", null ]
+    [ "handle", "d1/dea/a00054.html#acd892bd04e5e9ca631e9a4836d2ab730", null ]
 ];

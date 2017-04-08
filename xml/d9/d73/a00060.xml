@@ -1,100 +1,163 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d9/d73/a00060" kind="file" language="C++">
-    <compoundname>System.h</compoundname>
-    <includes local="no">ctime</includes>
-    <includes local="no">cstddef</includes>
-    <includes local="no">string</includes>
-    <incdepgraph>
-      <node id="49">
-        <label>string</label>
-      </node>
-      <node id="46">
-        <label>include/MACE/Core/System.h</label>
-        <link refid="System.h"/>
-        <childnode refid="47" relation="include">
-        </childnode>
-        <childnode refid="48" relation="include">
-        </childnode>
-        <childnode refid="49" relation="include">
-        </childnode>
-      </node>
-      <node id="47">
-        <label>ctime</label>
-      </node>
-      <node id="48">
-        <label>cstddef</label>
-      </node>
-    </incdepgraph>
-    <innernamespace refid="d9/df8/a00096">mc</innernamespace>
-    <innernamespace refid="d9/dcc/a00102">mc::os</innernamespace>
-      <sectiondef kind="define">
-      <memberdef kind="define" id="d9/d73/a00060_a0154a4a70a2a705761e493c7e92438c9_1a0154a4a70a2a705761e493c7e92438c9" prot="public" static="no">
-        <name>MACE_CORE_SYSTEM_H</name>
+  <compounddef id="d9/d73/a00060" kind="class" language="C++" prot="public">
+    <compoundname>mc::os::SignalInterruptError</compoundname>
+    <basecompoundref refid="d9/d2e/a00056" prot="public" virt="non-virtual">mc::os::SignalError</basecompoundref>
+    <includes refid="d9/d4b/a00117" local="no">Signal.h</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="de/d11/a00021_a1e0ef9475c8da77f7e1a92fbb603d809_1a1e0ef9475c8da77f7e1a92fbb603d809" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>static std::string mc::Error::getErrorDump</definition>
+        <argsstring>(const std::exception &amp;e)</argsstring>
+        <name>getErrorDump</name>
+        <param>
+          <type>const std::exception &amp;</type>
+          <declname>e</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Core/System.h" line="13" column="9" bodyfile="include/MACE/Core/System.h" bodystart="13" bodyend="-1"/>
+        <location file="include/MACE/Core/Constants.h" line="138" column="1"/>
       </memberdef>
-      <memberdef kind="define" id="d9/d73/a00060_a7a104b2e349617222c6419b36bfd3260_1a7a104b2e349617222c6419b36bfd3260" prot="public" static="no">
-        <name>__STDC_WANT_LIB_EXT1__</name>
-        <initializer>1</initializer>
+      <memberdef kind="function" id="de/d11/a00021_a9a9a6b810f54038e18dc8c87e8f59bc7_1a9a9a6b810f54038e18dc8c87e8f59bc7" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void mc::Error::setLogFileEnabled</definition>
+        <argsstring>(const bool &amp;writeLog)</argsstring>
+        <name>setLogFileEnabled</name>
+        <param>
+          <type>const bool &amp;</type>
+          <declname>writeLog</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Core/System.h" line="15" column="9" bodyfile="include/MACE/Core/System.h" bodystart="15" bodyend="-1"/>
+        <location file="include/MACE/Core/Constants.h" line="140" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d11/a00021_a457b33442717d3667b3e2eca6a0bc650_1a457b33442717d3667b3e2eca6a0bc650" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void mc::Error::setVerboseErrors</definition>
+        <argsstring>(const bool &amp;verbose)</argsstring>
+        <name>setVerboseErrors</name>
+        <param>
+          <type>const bool &amp;</type>
+          <declname>verbose</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Core/Constants.h" line="142" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="de/d11/a00021_a471cbc78b5d7d548721d814c12113b78_1a471cbc78b5d7d548721d814c12113b78" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void mc::Error::handleError</definition>
+        <argsstring>(const std::exception &amp;e)</argsstring>
+        <name>handleError</name>
+        <param>
+          <type>const std::exception &amp;</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+<para>Stops <ref refid="d9/d47/a00129" kindref="compound">MACE</ref> and prints an exception to console accordingly. </para>        </briefdescription>
+        <detaileddescription>
+<para>This should be used every time a fatal exception is thrown. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Core/Constants.h" line="147" column="1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="de/d11/a00021_acd892bd04e5e9ca631e9a4836d2ab730_1acd892bd04e5e9ca631e9a4836d2ab730" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::Error::handle</definition>
+        <argsstring>()</argsstring>
+        <name>handle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Core/Constants.h" line="154" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"></highlight></codeline>
-<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"></highlight></codeline>
-<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="10"><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_CORE_SYSTEM_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_CORE_SYSTEM_H</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__STDC_WANT_LIB_EXT1__<sp/>1</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;ctime&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;cstddef&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight></codeline>
-<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"><highlight class="normal"></highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="d9/df8/a00096" kindref="compound">mc</ref><sp/>{</highlight></codeline>
-<codeline lineno="22"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30" refid="d9/dcc/a00102" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">os<sp/>{</highlight></codeline>
-<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::tm*<sp/><ref refid="d9/dcc/a00102_ae1554c02627e42cccb39b91daf0671bb_1ae1554c02627e42cccb39b91daf0671bb" kindref="member">localtime</ref>(std::tm*<sp/>result,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::time_t*<sp/>time);</highlight></codeline>
-<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::tm*<sp/><ref refid="d9/dcc/a00102_a4e12ed8528ae6b574f739bf660a19a9a_1a4e12ed8528ae6b574f739bf660a19a9a" kindref="member">gmtime</ref>(std::tm*<sp/>result,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::time_t*<sp/>time);</highlight></codeline>
-<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="d9/dcc/a00102_a7bd61ca55cef4b73ba0678e48af8ed12_1a7bd61ca55cef4b73ba0678e48af8ed12" kindref="member">ctime</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>buffer,<sp/>std::size_t<sp/>bufSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::time_t*<sp/>time);</highlight></codeline>
-<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="d9/dcc/a00102_a4a747d94471822f20503b6ed5166feec_1a4a747d94471822f20503b6ed5166feec" kindref="member">asctime</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>buffer,<sp/>std::size_t<sp/>bufSize,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::tm*<sp/>time);</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>FILE*<sp/><ref refid="d9/dcc/a00102_a98a4b7e648b5ff638827f5538f940a9e_1a98a4b7e648b5ff638827f5538f940a9e" kindref="member">fopen</ref>(FILE**<sp/>result,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>filename,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>mode);</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::size_t<sp/><ref refid="d9/dcc/a00102_ac0a8a7d68544550a1767a3f59456a334_1ac0a8a7d68544550a1767a3f59456a334" kindref="member">mbsrtowcs</ref>(std::size_t*<sp/>returnValue,<sp/></highlight><highlight class="keywordtype">wchar_t</highlight><highlight class="normal">*<sp/>wcstr,<sp/>std::size_t<sp/>sizeInWords,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">**<sp/>mbstr,<sp/>std::size_t<sp/>count,<sp/>mbstate_t*<sp/>mbstate);</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d9/dcc/a00102_a104db37ac588d6d412e71b82d5721df2_1a104db37ac588d6d412e71b82d5721df2" kindref="member">assert</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>cond,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>message);</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="d9/dcc/a00102_a104db37ac588d6d412e71b82d5721df2_1a104db37ac588d6d412e71b82d5721df2" kindref="member">assert</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>cond,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>message<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;Assertion<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight><highlight class="comment">//os</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif//MACE_CORE_SYSTEM_H</highlight></codeline>
-    </programlisting>
-    <location file="include/MACE/Core/System.h"/>
+    <inheritancegraph>
+      <node id="979">
+        <label>std::runtime_error</label>
+        <childnode refid="980" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="980">
+        <label>std::exception</label>
+      </node>
+      <node id="976">
+        <label>mc::os::SignalInterruptError</label>
+        <link refid="d9/d73/a00060"/>
+        <childnode refid="977" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="978">
+        <label>mc::Error</label>
+        <link refid="de/d11/a00021"/>
+        <childnode refid="979" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="977">
+        <label>mc::os::SignalError</label>
+        <link refid="d9/d2e/a00056"/>
+        <childnode refid="978" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="984">
+        <label>std::runtime_error</label>
+        <childnode refid="985" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="985">
+        <label>std::exception</label>
+      </node>
+      <node id="981">
+        <label>mc::os::SignalInterruptError</label>
+        <link refid="d9/d73/a00060"/>
+        <childnode refid="982" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="983">
+        <label>mc::Error</label>
+        <link refid="de/d11/a00021"/>
+        <childnode refid="984" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="982">
+        <label>mc::os::SignalError</label>
+        <link refid="d9/d2e/a00056"/>
+        <childnode refid="983" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Utility/Signal.h" line="25" column="1" bodyfile="include/MACE/Utility/Signal.h" bodystart="25" bodyend="25"/>
+    <listofallmembers>
+      <member refid="de/d11/a00021_a84c63566f973b5cf798ca77521367526_1a84c63566f973b5cf798ca77521367526" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>Error</name></member>
+      <member refid="de/d11/a00021_a1e0ef9475c8da77f7e1a92fbb603d809_1a1e0ef9475c8da77f7e1a92fbb603d809" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>getErrorDump</name></member>
+      <member refid="de/d11/a00021_acd892bd04e5e9ca631e9a4836d2ab730_1acd892bd04e5e9ca631e9a4836d2ab730" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>handle</name></member>
+      <member refid="de/d11/a00021_a471cbc78b5d7d548721d814c12113b78_1a471cbc78b5d7d548721d814c12113b78" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>handleError</name></member>
+      <member refid="de/d11/a00021_a9a9a6b810f54038e18dc8c87e8f59bc7_1a9a9a6b810f54038e18dc8c87e8f59bc7" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>setLogFileEnabled</name></member>
+      <member refid="de/d11/a00021_a457b33442717d3667b3e2eca6a0bc650_1a457b33442717d3667b3e2eca6a0bc650" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>setVerboseErrors</name></member>
+      <member refid="de/d11/a00021_a540f18501f81aa9c6c3cdd05468cc211_1a540f18501f81aa9c6c3cdd05468cc211" prot="public" virt="non-virtual"><scope>mc::os::SignalInterruptError</scope><name>~Error</name></member>
+    </listofallmembers>
   </compounddef>
 </doxygen>

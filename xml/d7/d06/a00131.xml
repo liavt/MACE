@@ -1,0 +1,1299 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="d7/d06/a00131" kind="namespace" language="C++">
+    <compoundname>mc::os::Input</compoundname>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209" prot="public" static="no">
+        <name>Action</name>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209a668bb4df3320eb74b07142b468b71100" prot="public">
+          <name>PRESSED</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209adcdc6f99f0910223876942b8a0d76fb2" prot="public">
+          <name>REPEATED</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209afcdfee64e77f580d5f1fa63b5f2dd246" prot="public">
+          <name>RELEASED</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209a02b8f9b3a28ce78d328d88bb4b4320d3" prot="public">
+          <name>MODIFIER_SHIFT</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209a06a477a4267f31ffaa9bdabf16bce2de" prot="public">
+          <name>MODIFIER_CONTROL</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209aeed163c57c089b3bf28e54c1c9440dea" prot="public">
+          <name>MODIFIER_ALT</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_acce99fc3a75249143da75e4e920cf209_1acce99fc3a75249143da75e4e920cf209ab51547c0a2e1cdd6617e82c89c1ca5da" prot="public">
+          <name>MODIFIER_SUPER</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="118" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="118" bodyend="126"/>
+      </memberdef>
+      <memberdef kind="enum" id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aa" prot="public" static="no">
+        <name>Key</name>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaadee846d55e811c2d3030be3e8c9e5298" prot="public">
+          <name>UNKNOWN</name>
+          <initializer>= -1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa39a6f2502a01976c3bcd8d982e3adf2f" prot="public">
+          <name>MOUSE_1</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa14e7eaab8dfa30a914f31245d3bd1319" prot="public">
+          <name>MOUSE_2</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaafa8a87524a455064ff52fc7e373f4b10" prot="public">
+          <name>MOUSE_3</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2e0846c9955f7f33502df958decd8ddd" prot="public">
+          <name>MOUSE_4</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa8fa669f3936bc3ef13bbdf076c3fa34c" prot="public">
+          <name>MOUSE_5</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa767abcb7d36e49f5674b5c43078abb30" prot="public">
+          <name>MOUSE_6</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa39e9c0118b1084c5dc925c9b5880e979" prot="public">
+          <name>MOUSE_7</name>
+          <initializer>= 7</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa668f0897418864822db546083e498550" prot="public">
+          <name>MOUSE_8</name>
+          <initializer>= 8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa24031165c4e15dcf700a8dd0c3d7e6ef" prot="public">
+          <name>MOUSE_LEFT</name>
+          <initializer>= MOUSE_1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaab9d905c87b7c553a3a628fe0b2eeb439" prot="public">
+          <name>MOUSE_RIGHT</name>
+          <initializer>= MOUSE_2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa790fe9539653b8ed5e7086a58f1027bb" prot="public">
+          <name>MOUSE_MIDDLE</name>
+          <initializer>= MOUSE_3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad6a9bb0aef9a17f1bd4227548870d4f7" prot="public">
+          <name>MOUSE_LAST</name>
+          <initializer>= MOUSE_8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa59562e049ea9b7021c99028d70a538e3" prot="public">
+          <name>MOUSE_FIRST</name>
+          <initializer>= MOUSE_1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa6105cf5c50d861a684d4fcc484ca1637" prot="public">
+          <name>SPACE</name>
+          <initializer>= 32</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa77140d1d4666cdcadca71ba2f7b2b13b" prot="public">
+          <name>APOSTROPHE</name>
+          <initializer>= 39</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad281fa1d918ef6b987c3fb979d653a1d" prot="public">
+          <name>COMMA</name>
+          <initializer>= 44</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa3bd5a814792bf556ef5855a73f2453bc" prot="public">
+          <name>MINUS</name>
+          <initializer>= 45</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaadeafb2be1572e75839c11d0e3f1fb43a" prot="public">
+          <name>PERIOD</name>
+          <initializer>= 46</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa4ffb0c9004a8504efd8da05aeb7ca5c2" prot="public">
+          <name>SLASH</name>
+          <initializer>= 47</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa17855b893d2b3eaf5d67c6b203fae8e0" prot="public">
+          <name>NUM_0</name>
+          <initializer>= 48</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa7bdc89e2106cc5cdec7d05fc7a3c2ebf" prot="public">
+          <name>NUM_1</name>
+          <initializer>= 49</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa176e169606d2bb430f0c34e30e6ddf43" prot="public">
+          <name>NUM_2</name>
+          <initializer>= 50</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa282458dff785199424ac75c54730ffa7" prot="public">
+          <name>NUM_3</name>
+          <initializer>= 51</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa4e1f3a15892469ddc56afe7ea6ffe151" prot="public">
+          <name>NUM_4</name>
+          <initializer>= 52</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa9730b17a25f528851adf3bacf90b0293" prot="public">
+          <name>NUM_5</name>
+          <initializer>= 53</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad68f5f5ada3f4dfe131b2d2512abdb39" prot="public">
+          <name>NUM_6</name>
+          <initializer>= 54</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae978ccbfb6df70a1ae2fe559295c4867" prot="public">
+          <name>NUM_7</name>
+          <initializer>= 55</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa88c80740ca217385490d4d360e9a2dc3" prot="public">
+          <name>NUM_8</name>
+          <initializer>= 56</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa0c61e7eda9ddd9789b0593124122bec9" prot="public">
+          <name>NUM_9</name>
+          <initializer>= 57</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaec494a5b08e6ada53e53cbd337423d96" prot="public">
+          <name>SEMICOLON</name>
+          <initializer>= 59</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa42c95fab6f31406e99422fe0210280c6" prot="public">
+          <name>EQUAL</name>
+          <initializer>= 61</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa3c38f62b5644bfae96646a6bd1285b75" prot="public">
+          <name>A</name>
+          <initializer>= 65</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa7f1a36f30a73e2a0f447e8cda0f82255" prot="public">
+          <name>B</name>
+          <initializer>= 66</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa37383202671bc57a576f895bdc8a620c" prot="public">
+          <name>C</name>
+          <initializer>= 67</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaade8c6378e5a2fe42679676078f0ac2be" prot="public">
+          <name>D</name>
+          <initializer>= 68</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaa9d570ec34a6a009ffc6e6c759fc6535" prot="public">
+          <name>E</name>
+          <initializer>= 69</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa9da12a6457670d26f0b813610f0970ba" prot="public">
+          <name>F</name>
+          <initializer>= 70</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaf509255d9066741bbd19bb446bfa6c5d" prot="public">
+          <name>G</name>
+          <initializer>= 71</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa8f3abc9e4a4d0901882b473e8198999c" prot="public">
+          <name>H</name>
+          <initializer>= 72</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa8409797803d773fc5a2db102f9006551" prot="public">
+          <name>I</name>
+          <initializer>= 73</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa91f8bb93586e0799c6ba78a5daec6adf" prot="public">
+          <name>J</name>
+          <initializer>= 74</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa22025b25fd9f091cd505fcb9c1106498" prot="public">
+          <name>K</name>
+          <initializer>= 75</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaea95176e9312866d7542cd7cdc31d255" prot="public">
+          <name>L</name>
+          <initializer>= 76</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa302742e0aef346d2fb5ae1a61046d601" prot="public">
+          <name>M</name>
+          <initializer>= 77</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa75219e73a3a1dd9f2ec38222896e79cf" prot="public">
+          <name>N</name>
+          <initializer>= 78</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa4978997198539b702e2970332b86cac0" prot="public">
+          <name>O</name>
+          <initializer>= 79</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa20b5d562e7a369b9f29eda4f0306f23e" prot="public">
+          <name>P</name>
+          <initializer>= 80</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaab10b3b625d98c4d279847c34ab929055" prot="public">
+          <name>Q</name>
+          <initializer>= 81</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa59f56a09d701c7e455ae207260b30c83" prot="public">
+          <name>R</name>
+          <initializer>= 82</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2f27879137dc6758adae2c134500722d" prot="public">
+          <name>S</name>
+          <initializer>= 83</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2e475ce53ec52dc16c3d9630a99abd43" prot="public">
+          <name>T</name>
+          <initializer>= 84</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa552d15b75d6126db0e574c7b4657a373" prot="public">
+          <name>U</name>
+          <initializer>= 85</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad1c70fd568c707752a0a79213b8a1bc4" prot="public">
+          <name>V</name>
+          <initializer>= 86</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaacf23bfff9e80cfef42062a4f767e282e" prot="public">
+          <name>W</name>
+          <initializer>= 87</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaac189519ed5550de6d80a3f8f855c5357" prot="public">
+          <name>X</name>
+          <initializer>= 88</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2eba86fb366e82fc9edd9d4bf955bb8f" prot="public">
+          <name>Y</name>
+          <initializer>= 89</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa9b802701c23bc1742a515176de1351ce" prot="public">
+          <name>Z</name>
+          <initializer>= 90</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaacbac698c259729acd6fbb21e40a72683" prot="public">
+          <name>LEFT_BRACKET</name>
+          <initializer>= 91</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae1da36d435f78de3b29f052b6581bd19" prot="public">
+          <name>BACKSLASH</name>
+          <initializer>= 92</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaa640fef422c4be49ffba73e86e0c1ddd" prot="public">
+          <name>RIGHT_BRACKET</name>
+          <initializer>= 93</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa4ac2e8c790ab90029df5476ea9482c67" prot="public">
+          <name>GRAVE_ACCENT</name>
+          <initializer>= 96</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa48fde0bdc0b0e3149b1b67204b0cd84b" prot="public">
+          <name>WORLD_1</name>
+          <initializer>= 161</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5503d3fb6982bbb0172bff6873560d7d" prot="public">
+          <name>WORLD_2</name>
+          <initializer>= 162</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa8e93af715a0256759ece28f3783add2b" prot="public">
+          <name>ESCAPE</name>
+          <initializer>= 256</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa0b32c981add089314bc297332825f023" prot="public">
+          <name>ENTER</name>
+          <initializer>= 257</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaada0c76e80d5487a23b786e6be554ca24" prot="public">
+          <name>TAB</name>
+          <initializer>= 258</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaa0497ea1a91de290bbc4221c3ea89e34" prot="public">
+          <name>BACKSPACE</name>
+          <initializer>= 259</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5faf8d11f3a238599a3c4ab02f031bd7" prot="public">
+          <name>INSERT</name>
+          <initializer>= 260</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa02bdc0fc1abfbe322c94c8c1b66c78ff" prot="public">
+          <name>DEL</name>
+          <initializer>= 261</initializer>
+          <briefdescription>
+<para>Delete key. </para>          </briefdescription>
+          <detaileddescription>
+<para>Named DEL to prevent naming conflict with DELETE </para>          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa484f88c5663fc02d9da8e49fe441c7ae" prot="public">
+          <name>RIGHT</name>
+          <initializer>= 262</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2d713b53cc870ad44bb08a9261fb7e61" prot="public">
+          <name>LEFT</name>
+          <initializer>= 263</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2a31cf7d08610dc94076d8a5610d7487" prot="public">
+          <name>DOWN</name>
+          <initializer>= 264</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa0944ec8f7bbfbd855737dac7e3e4c869" prot="public">
+          <name>UP</name>
+          <initializer>= 265</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad30357890ba2eddfecbba1bd52a20275" prot="public">
+          <name>PAGE_UP</name>
+          <initializer>= 266</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad13bd0b1c40aa4dcf165a581571348be" prot="public">
+          <name>PAGE_DOWN</name>
+          <initializer>= 267</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa26a75e1ece4adcd7c923dac5745e6506" prot="public">
+          <name>HOME</name>
+          <initializer>= 268</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa7f19e95a9af97d4bb0e6818d05231c7f" prot="public">
+          <name>END</name>
+          <initializer>= 269</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaab940fa7252ddbc1c1b86b4a5dca46f34" prot="public">
+          <name>CAPS_LOCK</name>
+          <initializer>= 280</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa84e4f67ab7b0700ce568289ec165fef9" prot="public">
+          <name>SCROLL_LOCK</name>
+          <initializer>= 281</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5a338f0458cf647e8a654c56abaa7463" prot="public">
+          <name>NUM_LOCK</name>
+          <initializer>= 282</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2d3b20732cfca206aa34778e97ff33ab" prot="public">
+          <name>PRINT_SCREEN</name>
+          <initializer>= 283</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaafa0400a12b07ee5401cb6a236deb40de" prot="public">
+          <name>PAUSE</name>
+          <initializer>= 284</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae80f12a5a37198c183b1b19a6618471d" prot="public">
+          <name>F1</name>
+          <initializer>= 290</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa22aa35c60eddb872a9cefb2df1ef3b9c" prot="public">
+          <name>F2</name>
+          <initializer>= 291</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa8e7bf882c66ba614e8199ad8ff3fbebd" prot="public">
+          <name>F3</name>
+          <initializer>= 292</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa9de0262d8c1fca5f845c88ee9857b6c1" prot="public">
+          <name>F4</name>
+          <initializer>= 293</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5c0f4446e3f3e8eff817758b6938d09e" prot="public">
+          <name>F5</name>
+          <initializer>= 294</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa6c7eff16d03492179bc0fea6f95e48cd" prot="public">
+          <name>F6</name>
+          <initializer>= 295</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5b2ed2addf58376112e0c07418ec8a64" prot="public">
+          <name>F7</name>
+          <initializer>= 296</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaabb6259a71c3a8c4bc3abe5bb4dbd5cdd" prot="public">
+          <name>F8</name>
+          <initializer>= 297</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaada3cad8ed99529c6db7e0f6e67c38f4e" prot="public">
+          <name>F9</name>
+          <initializer>= 298</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaf803ec2d0b64d3222d86589e003dc128" prot="public">
+          <name>F10</name>
+          <initializer>= 299</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa00fb4ac1f08788c96a828bf59e6602d1" prot="public">
+          <name>F11</name>
+          <initializer>= 300</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa438694c3bb2927dc489b5dda67d8cff5" prot="public">
+          <name>F12</name>
+          <initializer>= 301</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae38e3d33692f2f289a9313c45476a3a2" prot="public">
+          <name>F13</name>
+          <initializer>= 302</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaf9f987bd0af5ded048faca142fb36687" prot="public">
+          <name>F14</name>
+          <initializer>= 303</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa433296f09948f98efa37d7f94d5e1631" prot="public">
+          <name>F15</name>
+          <initializer>= 304</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaa20d412f647ab20b3fd8813cf3101000" prot="public">
+          <name>F16</name>
+          <initializer>= 305</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa6f5292e3a53d2045b4d008a60347adb2" prot="public">
+          <name>F17</name>
+          <initializer>= 306</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa3747835733b8de3d66c1df492257a5f9" prot="public">
+          <name>F18</name>
+          <initializer>= 307</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa7cf79f2615f3bc7ec64a24828d4fc42a" prot="public">
+          <name>F19</name>
+          <initializer>= 308</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa3f272e425d57e4ca239a44658fccccb4" prot="public">
+          <name>F20</name>
+          <initializer>= 309</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5ce492c78ffdaf34f80964098e031a98" prot="public">
+          <name>F21</name>
+          <initializer>= 310</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa4b9b6c4fc24e0d1058f5c3e3a9df8b49" prot="public">
+          <name>F22</name>
+          <initializer>= 311</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa47822a0def2300a0f0ced8382e55510a" prot="public">
+          <name>F23</name>
+          <initializer>= 312</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa98cd7524850eead687fe7dde0c6b04fb" prot="public">
+          <name>F24</name>
+          <initializer>= 313</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa018536e87299516df6d45a32d2d6144f" prot="public">
+          <name>F25</name>
+          <initializer>= 314</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5ba583140214145319010bf296b5ecee" prot="public">
+          <name>KP_0</name>
+          <initializer>= 320</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaad60ab563cf3c7b58192055f7e8b3a18a" prot="public">
+          <name>KP_1</name>
+          <initializer>= 321</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa9d07d638ee6bbd4e76789b838c6ebcf4" prot="public">
+          <name>KP_2</name>
+          <initializer>= 322</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaac9d34e7943ec0ee2c1f87c45f2742b72" prot="public">
+          <name>KP_3</name>
+          <initializer>= 323</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa0ccbafe3f033e83471559cb95ee2ac1d" prot="public">
+          <name>KP_4</name>
+          <initializer>= 324</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa8559477665963e3c71695e3414b373b2" prot="public">
+          <name>KP_5</name>
+          <initializer>= 325</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa9d685c91c82c19e5b858f51f59fc46dd" prot="public">
+          <name>KP_6</name>
+          <initializer>= 326</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa4fd36c8ec98ac10632107ffee99e21ea" prot="public">
+          <name>KP_7</name>
+          <initializer>= 327</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaac0adea56ebcf0c8b982e0b40919b7901" prot="public">
+          <name>KP_8</name>
+          <initializer>= 328</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaadf174fb88de88117e74b90387ad9e6e8" prot="public">
+          <name>KP_9</name>
+          <initializer>= 329</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa5efed79ef4e7f95a666c053ae4dafc42" prot="public">
+          <name>KP_DECIMAL</name>
+          <initializer>= 330</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa06f5d53dfbcc63c06da94b6f25875344" prot="public">
+          <name>KP_DIVIDE</name>
+          <initializer>= 331</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaadf8882c59b76ecb7859405ac389e0e77" prot="public">
+          <name>KP_MULTIPLY</name>
+          <initializer>= 332</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa6975ed0aeb311055605943c6da060916" prot="public">
+          <name>KP_SUBTRACT</name>
+          <initializer>= 333</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae95f218d802aeda37445acb8b25b2dc4" prot="public">
+          <name>KP_ADD</name>
+          <initializer>= 334</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaefc1de9d7deff3dd4f51b053ec8b9865" prot="public">
+          <name>KP_ENTER</name>
+          <initializer>= 335</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa896fc76b476144428c80baed544c6627" prot="public">
+          <name>KP_EQUAL</name>
+          <initializer>= 336</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae4ec84f1cbb3e174571149a2e0b6cd9f" prot="public">
+          <name>LEFT_SHIFT</name>
+          <initializer>= 340</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaaf9a60301b9024d69146a50db0bac7226" prot="public">
+          <name>LEFT_CONTROL</name>
+          <initializer>= 341</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa534d9af9b60ecea023f4bc2c4faded4b" prot="public">
+          <name>LEFT_ALT</name>
+          <initializer>= 342</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa94382145b0930eabbd3d589adf4e7dcc" prot="public">
+          <name>LEFT_SUPER</name>
+          <initializer>= 343</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaae3f6e09643192edbd3546fe8b60a3d61" prot="public">
+          <name>RIGHT_SHIFT</name>
+          <initializer>= 344</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa1611d435b48b0a799aa95c0c5847cc7d" prot="public">
+          <name>RIGHT_CONTROL</name>
+          <initializer>= 345</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa61a02e2975271f1fbc22bc99e5b748a9" prot="public">
+          <name>RIGHT_ALT</name>
+          <initializer>= 346</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa73d3232bec8e99c571567ab314f46374" prot="public">
+          <name>RIGHT_SUPER</name>
+          <initializer>= 347</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa62667aa5859dfbd07a8df5c8bb547443" prot="public">
+          <name>MENU</name>
+          <initializer>= 348</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaa2284a0c2c5f15415be0570e5e53025db" prot="public">
+          <name>LAST</name>
+          <initializer>= MENU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="d7/d06/a00131_a090bf578a34c41fc751131d34152b9aa_1a090bf578a34c41fc751131d34152b9aaab98219a132094608cc461233f5b2e02b" prot="public">
+          <name>FIRST</name>
+          <initializer>= SPACE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="129" column="1" bodyfile="include/MACE/Graphics/Window.h" bodystart="129" bodyend="411"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="d7/d06/a00131_a2ffe2e53888a5620bdd98dc27437530a_1a2ffe2e53888a5620bdd98dc27437530a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="d4/dee/a00008" kindref="compound">BitField</ref> &amp;</type>
+        <definition>const BitField&amp; mc::os::Input::getKey</definition>
+        <argsstring>(const short int key)</argsstring>
+        <name>getKey</name>
+        <param>
+          <type>const short int</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="413" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_a8197d11e46c9d1ebbac12c4c713c3ba3_1a8197d11e46c9d1ebbac12c4c713c3ba3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::os::Input::isKeyDown</definition>
+        <argsstring>(const short int key)</argsstring>
+        <name>isKeyDown</name>
+        <param>
+          <type>const short int</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="415" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_adafe66bfb27ce4c8f6b0936b3d149805_1adafe66bfb27ce4c8f6b0936b3d149805" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::os::Input::isKeyRepeated</definition>
+        <argsstring>(const short int key)</argsstring>
+        <name>isKeyRepeated</name>
+        <param>
+          <type>const short int</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="416" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_a1f7c59fcd998d5d03031c248d801674e_1a1f7c59fcd998d5d03031c248d801674e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::os::Input::isKeyReleased</definition>
+        <argsstring>(const short int key)</argsstring>
+        <name>isKeyReleased</name>
+        <param>
+          <type>const short int</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="417" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_af0b80d6dad353ffb90cc6206bfa21362_1af0b80d6dad353ffb90cc6206bfa21362" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::os::Input::getMouseX</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>getMouseX</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="419" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_abf771a83caeeaf78aefb6ab8ed7085d3_1abf771a83caeeaf78aefb6ab8ed7085d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mc::os::Input::getMouseY</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>getMouseY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="420" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_a5e6063f3822f980cc3e7f64753e19461_1a5e6063f3822f980cc3e7f64753e19461" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::os::Input::getScrollVertical</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>getScrollVertical</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="422" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d7/d06/a00131_ad91c8c779520ddb5312dce19ddc2946c_1ad91c8c779520ddb5312dce19ddc2946c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double mc::os::Input::getScrollHorizontal</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>getScrollHorizontal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/Window.h" line="423" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/MACE/Graphics/Window.h" line="111" column="1"/>
+  </compounddef>
+</doxygen>

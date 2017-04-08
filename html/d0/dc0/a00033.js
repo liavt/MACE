@@ -1,22 +1,9 @@
 var a00033 =
 [
-    [ "PixelPackBuffer", "d0/dc0/a00033_acb8340155d4efebcad24831a245d3190.html#acb8340155d4efebcad24831a245d3190", null ],
-    [ "bind", "d0/dc0/a00033.html#a3f02451ab4df9d4d732d79ed2941dfb1", null ],
-    [ "copyData", "d0/dc0/a00033.html#ab5b3d28ddc269895c8f77f513f9c1fd0", null ],
-    [ "destroy", "d0/dc0/a00033.html#ac4e88a83c70a133c24667545832a6f0d", null ],
-    [ "getBufferType", "d0/dc0/a00033.html#a396693ef6c22c043c5bf0115d3d4aa4a", null ],
-    [ "getID", "d0/dc0/a00033.html#a717ff2f0b9420b4ce0939ff51ed9d545", null ],
-    [ "init", "d0/dc0/a00033.html#aea6e64228bbfa092e1448ea9d851fb94", null ],
-    [ "isCreated", "d0/dc0/a00033.html#a4042320270935513c6fbfbd101986a83", null ],
-    [ "map", "d0/dc0/a00033.html#a5212bb7bc1308bfde2ecd7ae73a064ac", null ],
-    [ "mapRange", "d0/dc0/a00033.html#aaaf5780cc43099de399e57ef773a9ee0", null ],
-    [ "operator!=", "d0/dc0/a00033.html#a5ff3ea4d06441e968ab9f3933329a828", null ],
-    [ "operator!=", "d0/dc0/a00033.html#a8c9f33cca265609a823432dd4a4c03a8", null ],
-    [ "operator==", "d0/dc0/a00033.html#a75cf124fcf3b2ce36c402d9ff8b9447d", null ],
-    [ "operator==", "d0/dc0/a00033.html#a41aadf11e2d1d51951e59c649cc66ccf", null ],
-    [ "setData", "d0/dc0/a00033.html#aaf268a39626aa530a4b9facc4950f724", null ],
-    [ "setDataRange", "d0/dc0/a00033.html#aeca7c19d83db827a2bca5e708d445ce7", null ],
-    [ "unbind", "d0/dc0/a00033.html#ae357cedf8793a3ccd358c0174d645a63", null ],
-    [ "unmap", "d0/dc0/a00033.html#ad94233be26bd43680d3830cf1a2174c8", null ],
-    [ "id", "d0/dc0/a00033.html#aa6f2acefb1ac01ff347ff593738eab46", null ]
+    [ "inheritedRotation", "d0/dc0/a00033_a32daea2c4d50f235d621978b479ed2e7.html#a32daea2c4d50f235d621978b479ed2e7", null ],
+    [ "inheritedScale", "d0/dc0/a00033_aba0cdf2945116cb64521c51f2379e9cd.html#aba0cdf2945116cb64521c51f2379e9cd", null ],
+    [ "inheritedTranslation", "d0/dc0/a00033_a0ec596f8d3c987b18754263fa0fadb38.html#a0ec596f8d3c987b18754263fa0fadb38", null ],
+    [ "rotation", "d0/dc0/a00033_aea73809034e66ed41f74d72181dc6784.html#aea73809034e66ed41f74d72181dc6784", null ],
+    [ "scale", "d0/dc0/a00033_afc01b8b1259fd29ac48e4d0d80ad8f89.html#afc01b8b1259fd29ac48e4d0d80ad8f89", null ],
+    [ "translation", "d0/dc0/a00033_a9a139756f7ebaa90fd33dd9bb32a6ee7.html#a9a139756f7ebaa90fd33dd9bb32a6ee7", null ]
 ];

@@ -1,0 +1,74 @@
+.TH "mc::Error" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+mc::Error \- Superclass that all exceptions in \fBMACE\fP extend\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Constants\&.h>\fP
+.PP
+Inherits std::runtime_error\&.
+.PP
+Inherited by \fBmc::os::SignalError\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBError\fP () noexcept=default"
+.br
+.ti -1c
+.RI "\fB~Error\fP () noexcept=default"
+.br
+.ti -1c
+.RI "void \fBhandle\fP ()"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static std::string \fBgetErrorDump\fP (const std::exception &e)"
+.br
+.ti -1c
+.RI "static void \fBsetLogFileEnabled\fP (const bool &writeLog)"
+.br
+.ti -1c
+.RI "static void \fBsetVerboseErrors\fP (const bool &verbose)"
+.br
+.ti -1c
+.RI "static void \fBhandleError\fP (const std::exception &e)"
+.br
+.RI "\fIStops \fBMACE\fP and prints an exception to console accordingly\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Superclass that all exceptions in \fBMACE\fP extend\&. 
+.PP
+Definition at line 136 of file Constants\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "mc::Error::Error ()\fC [default]\fP, \fC [noexcept]\fP"
+
+.SS "mc::Error::~Error ()\fC [default]\fP, \fC [noexcept]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "static std::string mc::Error::getErrorDump (const std::exception & e)\fC [static]\fP"
+
+.SS "void mc::Error::handle ()"
+
+.SS "static void mc::Error::handleError (const std::exception & e)\fC [static]\fP"
+
+.PP
+Stops \fBMACE\fP and prints an exception to console accordingly\&. This should be used every time a fatal exception is thrown\&. 
+.SS "static void mc::Error::setLogFileEnabled (const bool & writeLog)\fC [static]\fP"
+
+.SS "static void mc::Error::setVerboseErrors (const bool & verbose)\fC [static]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MACE from the source code\&.

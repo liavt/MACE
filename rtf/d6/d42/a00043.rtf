@@ -82,22 +82,17 @@
 }
 {\comment begin body}
 \pard\plain \s2\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs28\kerning28\cgrid 
-mc::gfx::RenderProtocol< Letter > Class Template Reference\par \pard\plain 
-{\tc\tcl2 \v mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >}
-{\bkmkstart AAAAAAABPQ}
-{\bkmkend AAAAAAABPQ}
+mc::gfx::Renderer Class Reference\par \pard\plain 
+{\tc\tcl2 \v mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer}
+{\bkmkstart AAAAAAABRU}
+{\bkmkend AAAAAAABRU}
 \par
 {
-{\f2 #include <Entity2D.h>}}\par
-Inheritance diagram for mc::gfx::RenderProtocol< Letter >:{
+{\f2 #include <Renderer.h>}}\par
+Collaboration diagram for mc::gfx::Renderer:{
 \pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d52/a00183.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
-}
-\par
-Collaboration diagram for mc::gfx::RenderProtocol< Letter >:{
-\pard\plain 
-\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "d2/d94/a00184.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
+\par\pard \qc {\field\flddirty {\*\fldinst INCLUDEPICTURE "dc/d31/a00208.svg" \\d \\*MERGEFORMAT}{\fldrslt IMAGE}}\par
 }
 \par
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -106,66 +101,127 @@ Public Member Functions\par
 
 {
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b init} (const {\b Size} originalWidth, const {\b Size} originalHeight) override\par
+void {\b flagResize} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b initEntity} ({\b GraphicsEntity} *en) override\par
+virtual void {\b resize} (const {\b Size} width, const {\b Size} height)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b renderEntity} ({\b os::WindowModule} *win, {\b GraphicsEntity} *entity) override\par
+virtual void {\b init} (const {\b Size} {\b originalWidth}, const {\b Size} {\b originalHeight})\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-void {\b destroy} () override\par
+virtual void {\b initEntity} ({\b GraphicsEntity} *en, const {\b Index} protocol)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b resize} (const {\b Size}, const {\b Size})\par
+virtual void {\b setUp} ({\b os::WindowModule} *win)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b setUp} ({\b os::WindowModule} *, {\b RenderQueue} *)\par
+void {\b queue} ({\b GraphicsEntity} *e, const {\b Index} protocol)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b tearDown} ({\b os::WindowModule} *, {\b RenderQueue} *)\par
+{\b Size} {\b numberOfProtocols} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b cleanEntity} ({\b GraphicsEntity} *)\par
+virtual void {\b tearDown} ({\b os::WindowModule} *win)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
-virtual void {\b destroyEntity} ({\b GraphicsEntity} *)\par
+virtual void {\b renderFrame} ({\b os::WindowModule} *win)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b checkInput} ({\b os::WindowModule} *win)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b cleanEntity} ({\b GraphicsEntity} *en, const {\b Index} protocol)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b destroy} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b destroyEntity} ({\b GraphicsEntity} *en, const {\b Index} protocol)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b clearBuffers} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b setRefreshColor} (const float r, const float g, const float b, const float a=1.0f)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b setRefreshColor} (const {\b Color} &c)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+template<typename T > {\b Index} {\b registerProtocol} ()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b getOriginalWidth} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b getOriginalHeight} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b getWidth} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b getHeight} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b getSamples} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Vector}< float, 2 > {\b getWindowRatios} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b RenderQueue} {\b getRenderQueue} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Index} {\b getEntityIndex} () const \par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b isResized} () const \par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected Member Functions\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b pushEntity} ({\b Index} protocol, {\b GraphicsEntity} *entity)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b pushProtocol} ({\b RenderImpl} *protocol)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+virtual void {\b generateFramebuffer} (const {\b Size} &width, const {\b Size} &height)\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Protected Attributes\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b RenderQueue} {\b renderQueue} = {\b RenderQueue}()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+std::vector< {\b RenderImpl} * > {\b protocols} = std::vector<{\b RenderImpl}*>()\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b originalWidth} = 0\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b originalHeight} = 0\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Size} {\b samples} = 1\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+bool {\b resized}\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Vector}< float, 2 > {\b windowRatios}\par
+}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Friends\par
+\pard\plain 
+
+{
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b ssl::init} (const {\b Size} &, const {\b Size} &)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b ssl::bindEntity} (const {\b GraphicsEntity} *en, {\b ogl::ShaderProgram} &prog)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+void {\b ssl::checkInput} ({\b os::WindowModule} *win)\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Detailed Description\par
 \pard\plain 
 {
-\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
-{
-\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-template<>\par
-class mc::gfx::RenderProtocol< Letter >\par
-}
-
-{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Warning:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Attention:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
-}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Exceptions:\par}
-\pard\plain \s60\li0\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
-\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
-\pard \widctlpar\intbl\adjustright
-{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
-{\row }
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid add function to change how many samples msaa uses \par
 }
 }{
-Definition at line 296 of file Entity2D.h.}\par
+Definition at line 195 of file Renderer.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
 Member Function Documentation\par
 \pard\plain 
-{\xe \v cleanEntity\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:cleanEntity}
+{\xe \v checkInput\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:checkInput}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::RenderImpl::cleanEntity ({\b GraphicsEntity} * ){\f2 [inline]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::Renderer::checkInput ({\b os::WindowModule} *  {\i win}){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOI}
-{\bkmkend AAAAAAABOI}
+{\bkmkstart AAAAAAABRV}
+{\bkmkend AAAAAAABRV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -183,19 +239,15 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Reimplemented in {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-{
-Definition at line 150 of file Renderer.h.}\par
-}
-{\xe \v destroy\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:destroy}
+}}
+{\xe \v cleanEntity\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:cleanEntity}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void {\b mc::gfx::RenderProtocol}< {\b Letter} >::destroy (){\f2 [override]}, {\f2 [virtual]}}}
+virtual void mc::gfx::Renderer::cleanEntity ({\b GraphicsEntity} *  {\i en}, const {\b Index}  {\i protocol}){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOL}
-{\bkmkend AAAAAAABOL}
+{\bkmkstart AAAAAAABRW}
+{\bkmkend AAAAAAABRW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -213,17 +265,15 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Implements {\b mc::gfx::RenderImpl} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOK \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v destroyEntity\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:destroyEntity}
+}}
+{\xe \v clearBuffers\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:clearBuffers}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::RenderImpl::destroyEntity ({\b GraphicsEntity} * ){\f2 [inline]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::Renderer::clearBuffers (){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOP}
-{\bkmkend AAAAAAABOP}
+{\bkmkstart AAAAAAABRX}
+{\bkmkend AAAAAAABRX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -241,19 +291,15 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Reimplemented in {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOQ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-{
-Definition at line 161 of file Renderer.h.}\par
-}
-{\xe \v init\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:init}
+}}
+{\xe \v destroy\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:destroy}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void {\b mc::gfx::RenderProtocol}< {\b Letter} >::init (const {\b Size} , const {\b Size} ){\f2 [override]}, {\f2 [virtual]}}}
+virtual void mc::gfx::Renderer::destroy (){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOS}
-{\bkmkend AAAAAAABOS}
+{\bkmkstart AAAAAAABRY}
+{\bkmkend AAAAAAABRY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -271,17 +317,15 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Implements {\b mc::gfx::RenderImpl} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOR \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v initEntity\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:initEntity}
+}}
+{\xe \v destroyEntity\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:destroyEntity}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void {\b mc::gfx::RenderProtocol}< {\b Letter} >::initEntity ({\b GraphicsEntity} * ){\f2 [override]}, {\f2 [virtual]}}}
+virtual void mc::gfx::Renderer::destroyEntity ({\b GraphicsEntity} *  {\i en}, const {\b Index}  {\i protocol}){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABOX}
-{\bkmkend AAAAAAABOX}
+{\bkmkstart AAAAAAABRZ}
+{\bkmkend AAAAAAABRZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -299,17 +343,129 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Reimplemented from {\b mc::gfx::RenderImpl} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABOW \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v renderEntity\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:renderEntity}
+}}
+{\xe \v flagResize\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:flagResize}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-void {\b mc::gfx::RenderProtocol}< {\b Letter} >::renderEntity ({\b os::WindowModule} * , {\b GraphicsEntity} *  {\i entity}){\f2 [override]}, {\f2 [virtual]}}}
+void mc::gfx::Renderer::flagResize ()}}
 \par
-{\bkmkstart AAAAAAABPC}
-{\bkmkend AAAAAAABPC}
+{\bkmkstart AAAAAAABSA}
+{\bkmkend AAAAAAABSA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}}}
+{\xe \v generateFramebuffer\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:generateFramebuffer}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Renderer::generateFramebuffer (const {\b Size} &  {\i width}, const {\b Size} &  {\i height}){\f2 [protected]}, {\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABSB}
+{\bkmkend AAAAAAABSB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getEntityIndex\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getEntityIndex}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Index} mc::gfx::Renderer::getEntityIndex () const}}
+\par
+{\bkmkstart AAAAAAABSC}
+{\bkmkend AAAAAAABSC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getHeight\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getHeight}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::getHeight () const}}
+\par
+{\bkmkstart AAAAAAABSD}
+{\bkmkend AAAAAAABSD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getOriginalHeight\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getOriginalHeight}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::getOriginalHeight () const}}
+\par
+{\bkmkstart AAAAAAABSE}
+{\bkmkend AAAAAAABSE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getOriginalWidth\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getOriginalWidth}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::getOriginalWidth () const}}
+\par
+{\bkmkstart AAAAAAABSF}
+{\bkmkend AAAAAAABSF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getRenderQueue\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getRenderQueue}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b RenderQueue} mc::gfx::Renderer::getRenderQueue () const}}
+\par
+{\bkmkstart AAAAAAABSG}
+{\bkmkend AAAAAAABSG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getSamples\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getSamples}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::getSamples () const}}
+\par
+{\bkmkstart AAAAAAABSH}
+{\bkmkend AAAAAAABSH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getWidth\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getWidth}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::getWidth () const}}
+\par
+{\bkmkstart AAAAAAABSI}
+{\bkmkend AAAAAAABSI}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v getWindowRatios\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:getWindowRatios}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Vector}<float, 2> mc::gfx::Renderer::getWindowRatios () const}}
+\par
+{\bkmkstart AAAAAAABSJ}
+{\bkmkend AAAAAAABSJ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v init\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Renderer::init (const {\b Size}  {\i originalWidth}, const {\b Size}  {\i originalHeight}){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABSK}
+{\bkmkend AAAAAAABSK}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -327,17 +483,15 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Implements {\b mc::gfx::RenderImpl} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABPB \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-}
-{\xe \v resize\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:resize}
+}}
+{\xe \v initEntity\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:initEntity}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::RenderImpl::resize (const {\b Size} , const {\b Size} ){\f2 [inline]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::Renderer::initEntity ({\b GraphicsEntity} *  {\i en}, const {\b Index}  {\i protocol}){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABPG}
-{\bkmkend AAAAAAABPG}
+{\bkmkstart AAAAAAABSL}
+{\bkmkend AAAAAAABSL}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -355,19 +509,84 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Reimplemented in {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABPH \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-{
-Definition at line 117 of file Renderer.h.}\par
-}
-{\xe \v setUp\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:setUp}
+}}
+{\xe \v isResized\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:isResized}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::RenderImpl::setUp ({\b os::WindowModule} * , {\b RenderQueue} * ){\f2 [inline]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+bool mc::gfx::Renderer::isResized () const}}
 \par
-{\bkmkstart AAAAAAABPI}
-{\bkmkend AAAAAAABPI}
+{\bkmkstart AAAAAAABSM}
+{\bkmkend AAAAAAABSM}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v numberOfProtocols\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:numberOfProtocols}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::numberOfProtocols ()}}
+\par
+{\bkmkstart AAAAAAABSN}
+{\bkmkend AAAAAAABSN}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v pushEntity\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:pushEntity}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Renderer::pushEntity ({\b Index}  {\i protocol}, {\b GraphicsEntity} *  {\i entity}){\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABSO}
+{\bkmkend AAAAAAABSO}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v pushProtocol\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:pushProtocol}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Renderer::pushProtocol ({\b RenderImpl} *  {\i protocol}){\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABSP}
+{\bkmkend AAAAAAABSP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v queue\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:queue}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Renderer::queue ({\b GraphicsEntity} *  {\i e}, const {\b Index}  {\i protocol})}}
+\par
+{\bkmkstart AAAAAAABSQ}
+{\bkmkend AAAAAAABSQ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v registerProtocol\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:registerProtocol}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+template<typename T > {\b Index} mc::gfx::Renderer::registerProtocol (){\f2 [inline]}}}
+\par
+{\bkmkstart AAAAAAABSR}
+{\bkmkend AAAAAAABSR}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 285 of file Renderer.h.}\par
+}
+{\xe \v renderFrame\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:renderFrame}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Renderer::renderFrame ({\b os::WindowModule} *  {\i win}){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABSS}
+{\bkmkend AAAAAAABSS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -385,19 +604,15 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Reimplemented in {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABPJ \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
-{
-Definition at line 134 of file Renderer.h.}\par
-}
-{\xe \v tearDown\:mc::gfx::RenderProtocol< Letter >}
-{\xe \v mc::gfx::RenderProtocol< Letter >\:tearDown}
+}}
+{\xe \v resize\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:resize}
 \pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
 {\b 
-virtual void mc::gfx::RenderImpl::tearDown ({\b os::WindowModule} * , {\b RenderQueue} * ){\f2 [inline]}, {\f2 [virtual]}, {\f2 [inherited]}}}
+virtual void mc::gfx::Renderer::resize (const {\b Size}  {\i width}, const {\b Size}  {\i height}){\f2 [virtual]}}}
 \par
-{\bkmkstart AAAAAAABPK}
-{\bkmkend AAAAAAABPK}
+{\bkmkstart AAAAAAABST}
+{\bkmkend AAAAAAABST}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -415,13 +630,248 @@ Exceptions:\par}
 {{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
 {\row }
 }
-}{
-Reimplemented in {\b mc::gfx::RenderProtocol< T >} ({\i p.{\field\fldedit {\*\fldinst PAGEREF AAAAAAABPL \\*MERGEFORMAT}{\fldrslt pagenum}}}).}\par
+}}
+{\xe \v setRefreshColor\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:setRefreshColor}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Renderer::setRefreshColor (const float  {\i r}, const float  {\i g}, const float  {\i b}, const float  {\i a} = {\f2 1.0f}){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABSU}
+{\bkmkend AAAAAAABSU}
 {
-Definition at line 144 of file Renderer.h.}\par
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v setRefreshColor\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:setRefreshColor}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void mc::gfx::Renderer::setRefreshColor (const {\b Color} &  {\i c})}}
+\par
+{\bkmkstart AAAAAAABSV}
+{\bkmkend AAAAAAABSV}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v setUp\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:setUp}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Renderer::setUp ({\b os::WindowModule} *  {\i win}){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABSW}
+{\bkmkend AAAAAAABSW}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\xe \v tearDown\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:tearDown}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+virtual void mc::gfx::Renderer::tearDown ({\b os::WindowModule} *  {\i win}){\f2 [virtual]}}}
+\par
+{\bkmkstart AAAAAAABSX}
+{\bkmkend AAAAAAABSX}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+{\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
+\par
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Warning:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This should only be used internally or by advanced users. Misuse can cause undefined behavior \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Attention:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. \par
+}{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Exceptions:\par}
+\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid \trowd \trgaph108\trleft426\tblind426\trbrdrt\brdrs\brdrw10\brdrcf15 \trbrdrl\brdrs\brdrw10\brdrcf15 \trbrdrb\brdrs\brdrw10\brdrcf15 \trbrdrr\brdrs\brdrw10\brdrcf15 \trbrdrh\brdrs\brdrw10\brdrcf15 \trbrdrv\brdrs\brdrw10\brdrcf15 
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx2187
+\clvertalt\clbrdrt\brdrs\brdrw10\brdrcf15 \clbrdrl\brdrs\brdrw10\brdrcf15 \clbrdrb\brdrs\brdrw10\brdrcf15 \clbrdrr \brdrs\brdrw10\brdrcf15 \cltxlrtb \cellx8748
+\pard \widctlpar\intbl\adjustright
+{{\i GL_INVALID_OPERATION} \cell }{If the current thread does not have an OpenGL context \cell }
+{\row }
+}
+}}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Friends And Related Function Documentation\par
+\pard\plain 
+{\xe \v ssl::bindEntity\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:ssl::bindEntity}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void {\b ssl::bindEntity} (const {\b GraphicsEntity} *  {\i en}, {\b ogl::ShaderProgram} &  {\i prog}){\f2 [friend]}}}
+\par
+{\bkmkstart AAAAAAABSY}
+{\bkmkend AAAAAAABSY}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v ssl::checkInput\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:ssl::checkInput}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void {\b ssl::checkInput} ({\b os::WindowModule} *  {\i win}){\f2 [friend]}}}
+\par
+{\bkmkstart AAAAAAABSZ}
+{\bkmkend AAAAAAABSZ}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v ssl::init\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:ssl::init}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+void {\b ssl::init} (const {\b Size} & , const {\b Size} & ){\f2 [friend]}}}
+\par
+{\bkmkstart AAAAAAABTA}
+{\bkmkend AAAAAAABTA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
+\pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
+Member Data Documentation\par
+\pard\plain 
+{\xe \v originalHeight\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:originalHeight}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::originalHeight = 0{\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTB}
+{\bkmkend AAAAAAABTB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 321 of file Renderer.h.}\par
+}
+{\xe \v originalWidth\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:originalWidth}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::originalWidth = 0{\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTC}
+{\bkmkend AAAAAAABTC}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 320 of file Renderer.h.}\par
+}
+{\xe \v protocols\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:protocols}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+std::vector<{\b RenderImpl}*> mc::gfx::Renderer::protocols = std::vector<{\b RenderImpl}*>(){\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTD}
+{\bkmkend AAAAAAABTD}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 318 of file Renderer.h.}\par
+}
+{\xe \v renderQueue\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:renderQueue}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b RenderQueue} mc::gfx::Renderer::renderQueue = {\b RenderQueue}(){\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTE}
+{\bkmkend AAAAAAABTE}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 317 of file Renderer.h.}\par
+}
+{\xe \v resized\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:resized}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+bool mc::gfx::Renderer::resized{\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTF}
+{\bkmkend AAAAAAABTF}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 325 of file Renderer.h.}\par
+}
+{\xe \v samples\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:samples}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Size} mc::gfx::Renderer::samples = 1{\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTG}
+{\bkmkend AAAAAAABTG}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 323 of file Renderer.h.}\par
+}
+{\xe \v windowRatios\:mc::gfx::Renderer}
+{\xe \v mc::gfx::Renderer\:windowRatios}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+{\b Vector}<float, 2> mc::gfx::Renderer::windowRatios{\f2 [protected]}}}
+\par
+{\bkmkstart AAAAAAABTH}
+{\bkmkend AAAAAAABTH}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 327 of file Renderer.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 The documentation for this class was generated from the following file:{\par
 \pard\plain \s81\fi-360\li720\widctlpar\jclisttab\tx720{\*\pn \pnlvlbody\ilvl0\ls2\pnrnot0\pndec }\ls2\adjustright \fs20\cgrid 
-include/MACE/Graphics/Entity2D.h\par
+include/MACE/Graphics/Renderer.h\par
 }}

@@ -1,4 +1,4 @@
-.TH "mc::Module" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Module" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,7 +10,7 @@ mc::Module \- Abstract class used for doing a task in \fBMACE\fP\&.
 .PP
 \fC#include <Module\&.h>\fP
 .PP
-Inherited by \fBmc::AudioModule\fP, and \fBmc::os::WindowModule\fP\&.
+Inherited by \fBmc::AudioModule\fP, \fBmc::os::SignalModule\fP, and \fBmc::os::WindowModule\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -47,7 +47,7 @@ Called when \fBMACE#destroy\fP is called and this \fC\fBModule\fP\fP is register
 .PP
 Should only be called before the program is closed\&. 
 .PP
-Implemented in \fBmc::AudioModule\fP, and \fBmc::os::WindowModule\fP\&.
+Implemented in \fBmc::AudioModule\fP, \fBmc::os::WindowModule\fP, and \fBmc::os::SignalModule\fP\&.
 .SS "virtual std::string mc::Module::getName () const\fC [pure virtual]\fP"
 
 .PP
@@ -55,7 +55,7 @@ Override this function and return a UNIQUE name for this \fC\fBModule\fP\fP The 
 .PP
 It is akin to a hashcode\&. 
 .PP
-Implemented in \fBmc::AudioModule\fP, and \fBmc::os::WindowModule\fP\&.
+Implemented in \fBmc::AudioModule\fP, \fBmc::os::WindowModule\fP, and \fBmc::os::SignalModule\fP\&.
 .SS "virtual void mc::Module::init ()\fC [pure virtual]\fP"
 
 .PP
@@ -63,13 +63,13 @@ Called when \fBMACE#init\fP is called and this \fC\fBModule\fP\fP is registered\
 .PP
 Should only be called once\&. 
 .PP
-Implemented in \fBmc::AudioModule\fP, and \fBmc::os::WindowModule\fP\&.
+Implemented in \fBmc::AudioModule\fP, \fBmc::os::WindowModule\fP, and \fBmc::os::SignalModule\fP\&.
 .SS "virtual void mc::Module::update ()\fC [pure virtual]\fP"
 
 .PP
 Called when \fBMACE#update\fP is called and this \fC\fBModule\fP\fP is registered\&. Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked\&. 
 .PP
-Implemented in \fBmc::AudioModule\fP, and \fBmc::os::WindowModule\fP\&.
+Implemented in \fBmc::AudioModule\fP, \fBmc::os::WindowModule\fP, and \fBmc::os::SignalModule\fP\&.
 
 .SH "Author"
 .PP 

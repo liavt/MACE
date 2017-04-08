@@ -1,87 +1,45 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
   <compounddef id="d6/d2d/a00047" kind="class" language="C++" prot="public">
-    <compoundname>mc::gfx::SimpleQuadRenderer</compoundname>
-    <includes refid="d9/db3/a00066" local="no">Renderer.h</includes>
+    <compoundname>mc::gfx::RenderProtocol&lt; Image &gt;</compoundname>
+    <basecompoundref refid="d5/df9/a00044" prot="public" virt="non-virtual">mc::gfx::RenderImpl</basecompoundref>
+    <includes refid="df/d13/a00085" local="no">Entity2D.h</includes>
+    <templateparamlist>
+    </templateparamlist>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="d6/d2d/a00047_1a08ed4bc1ad2afb4944d7d783ffe04a03" prot="private" static="no" mutable="no">
-        <type><ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref></type>
-        <definition>ogl::ShaderProgram mc::gfx::SimpleQuadRenderer::shaders2D</definition>
+      <memberdef kind="variable" id="d6/d2d/a00047_1a15833712ca49e8b05e71badd45dc670c" prot="private" static="no" mutable="no">
+        <type><ref refid="d4/d31/a00069" kindref="compound">SimpleQuadRenderer</ref></type>
+        <definition>SimpleQuadRenderer mc::gfx::RenderProtocol&lt; Image &gt;::renderer</definition>
         <argsstring></argsstring>
-        <name>shaders2D</name>
-        <initializer>= <ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref>()</initializer>
+        <name>renderer</name>
+        <initializer>= <ref refid="d4/d31/a00069" kindref="compound">SimpleQuadRenderer</ref>(true)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="345" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="345" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d6/d2d/a00047_1ae55c7a31a3fc4d7f6cb7c422ebd45878" prot="private" static="no" mutable="no">
-        <type><ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref></type>
-        <definition>ogl::VertexArray mc::gfx::SimpleQuadRenderer::square</definition>
-        <argsstring></argsstring>
-        <name>square</name>
-        <initializer>= <ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref>()</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="346" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="346" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d6/d2d/a00047_1ae3d6ae729a69af08720a7e92e726b21c" prot="private" static="no" mutable="no">
-        <type>const bool</type>
-        <definition>const bool mc::gfx::SimpleQuadRenderer::useSSL</definition>
-        <argsstring></argsstring>
-        <name>useSSL</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="348" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="348" bodyend="-1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="85" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="85" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d6/d2d/a00047_a6f20bf748b4714cf20d6ea66bb89f218_1a6f20bf748b4714cf20d6ea66bb89f218" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::SimpleQuadRenderer::SimpleQuadRenderer</definition>
-        <argsstring>(const bool ssl=true)</argsstring>
-        <name>SimpleQuadRenderer</name>
-        <param>
-          <type>const bool</type>
-          <declname>ssl</declname>
-          <defval>true</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="301" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a40d6af559377d10b97709685f4ed7c70_1a40d6af559377d10b97709685f4ed7c70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
-        <argsstring>(const char *vertexShader, const char *fragShader)</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::init</definition>
+        <argsstring>(const Size originalWidth, const Size originalHeight) override</argsstring>
         <name>init</name>
+        <reimplements refid="d5/df9/a00044_a4fd8e0a36eb1e0e32b2966c68a9d1f2f_1a4fd8e0a36eb1e0e32b2966c68a9d1f2f">init</reimplements>
         <param>
-          <type>const char *</type>
-          <declname>vertexShader</declname>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
         </param>
         <param>
-          <type>const char *</type>
-          <declname>fragShader</declname>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -93,25 +51,22 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="306" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="78" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_ad11c108e4a34cac15d683f9e2fae4fd7_1ad11c108e4a34cac15d683f9e2fae4fd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_a9a2f187614ae80d6f474f96ccf47d953_1a9a2f187614ae80d6f474f96ccf47d953" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
-        <argsstring>(const char *vertexShader, const std::string &amp;fragShader)</argsstring>
-        <name>init</name>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::initEntity</definition>
+        <argsstring>(GraphicsEntity *en) override</argsstring>
+        <name>initEntity</name>
+        <reimplements refid="d5/df9/a00044_aa4cc0dfa80d8fa019a2dfc673c1b5747_1aa4cc0dfa80d8fa019a2dfc673c1b5747">initEntity</reimplements>
         <param>
-          <type>const char *</type>
-          <declname>vertexShader</declname>
-        </param>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>fragShader</declname>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -123,25 +78,26 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="310" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="79" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a4a4c6b52d025aa2128c9cf4e67696ac5_1a4a4c6b52d025aa2128c9cf4e67696ac5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_aae61236b4817699d57605efa8b413a39_1aae61236b4817699d57605efa8b413a39" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
-        <argsstring>(const std::string &amp;vertexShader, const char *fragShader)</argsstring>
-        <name>init</name>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::renderEntity</definition>
+        <argsstring>(os::WindowModule *win, GraphicsEntity *entity) override</argsstring>
+        <name>renderEntity</name>
+        <reimplements refid="d5/df9/a00044_a9f00ce6cfcc7306ad6b69b182ab2928f_1a9f00ce6cfcc7306ad6b69b182ab2928f">renderEntity</reimplements>
         <param>
-          <type>const std::string &amp;</type>
-          <declname>vertexShader</declname>
+          <type><ref refid="d9/da4/a00078" kindref="compound">os::WindowModule</ref> *</type>
         </param>
         <param>
-          <type>const char *</type>
-          <declname>fragShader</declname>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
+          <declname>entity</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -153,47 +109,19 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="314" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="81" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_ac149c3748f0592279b8c09ce0e089a1e_1ac149c3748f0592279b8c09ce0e089a1e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d6/d2d/a00047_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::init</definition>
-        <argsstring>(const std::string &amp;vertexShader, const std::string &amp;fragShader)</argsstring>
-        <name>init</name>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>vertexShader</declname>
-        </param>
-        <param>
-          <type>const std::string &amp;</type>
-          <declname>fragShader</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="318" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a440110f763db19efbda7425eba97ed63_1a440110f763db19efbda7425eba97ed63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::destroy</definition>
-        <argsstring>()</argsstring>
+        <definition>void mc::gfx::RenderProtocol&lt; Image &gt;::destroy</definition>
+        <argsstring>() override</argsstring>
         <name>destroy</name>
+        <reimplements refid="d5/df9/a00044_aa45e3ec6a2548c4dcb4bdbffa19fe0ee_1aa45e3ec6a2548c4dcb4bdbffa19fe0ee">destroy</reimplements>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -205,17 +133,25 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="322" column="1"/>
+        <location file="include/MACE/Graphics/Entity2D.h" line="83" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_aef26719f0319c297f5134d21c4438028_1aef26719f0319c297f5134d21c4438028" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_a6bd329f3d60c5ea961bda5f29c3231a8_1a6bd329f3d60c5ea961bda5f29c3231a8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::bind</definition>
-        <argsstring>() const </argsstring>
-        <name>bind</name>
+        <definition>virtual void mc::gfx::RenderImpl::resize</definition>
+        <argsstring>(const Size, const Size)</argsstring>
+        <name>resize</name>
+        <reimplementedby refid="d6/d97/a00045_acffe593147fc5558d65a1e495c1e4de1_1acffe593147fc5558d65a1e495c1e4de1">resize</reimplementedby>
+        <param>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -227,22 +163,25 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="327" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="118" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="118" bodyend="118"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a48aad346e44b0044e1a748569ed9ad1b_1a48aad346e44b0044e1a748569ed9ad1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_a09de296a552820e6739bc9227e57b56d_1a09de296a552820e6739bc9227e57b56d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::draw</definition>
-        <argsstring>(const GraphicsEntity *en=nullptr)</argsstring>
-        <name>draw</name>
+        <definition>virtual void mc::gfx::RenderImpl::setUp</definition>
+        <argsstring>(os::WindowModule *, RenderQueue *)</argsstring>
+        <name>setUp</name>
+        <reimplementedby refid="d6/d97/a00045_a90100403ef1d81460b9b24abe90e03ba_1a90100403ef1d81460b9b24abe90e03ba">setUp</reimplementedby>
         <param>
-          <type>const <ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> *</type>
-          <declname>en</declname>
-          <defval>nullptr</defval>
+          <type><ref refid="d9/da4/a00078" kindref="compound">os::WindowModule</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="d7/d12/a00126_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
 <parameterlist kind="exception"><parameteritem>
 <parameternamelist>
 <parametername>GL_INVALID_OPERATION</parametername>
@@ -254,154 +193,145 @@
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="332" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="135" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="135" bodyend="135"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a62f7e69bc0837b4daa66915d5957152e_1a62f7e69bc0837b4daa66915d5957152e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_acbce840815446695a44776cb15537b2e_1acbce840815446695a44776cb15537b2e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::setShader</definition>
-        <argsstring>(const ogl::ShaderProgram &amp;shader)</argsstring>
-        <name>setShader</name>
+        <definition>virtual void mc::gfx::RenderImpl::tearDown</definition>
+        <argsstring>(os::WindowModule *, RenderQueue *)</argsstring>
+        <name>tearDown</name>
+        <reimplementedby refid="d6/d97/a00045_a62069cbbaddd980bb02daceafe8c4538_1a62069cbbaddd980bb02daceafe8c4538">tearDown</reimplementedby>
         <param>
-          <type>const <ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
-          <declname>shader</declname>
+          <type><ref refid="d9/da4/a00078" kindref="compound">os::WindowModule</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="d7/d12/a00126_aa8d831470fc2c8d0246e9d04a3d68f5f_1aa8d831470fc2c8d0246e9d04a3d68f5f" kindref="member">RenderQueue</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="334" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="145" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="145" bodyend="145"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_ac4a4fc92880084844683f5b365e55b62_1ac4a4fc92880084844683f5b365e55b62" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
-        <definition>ogl::ShaderProgram&amp; mc::gfx::SimpleQuadRenderer::getShader</definition>
-        <argsstring>()</argsstring>
-        <name>getShader</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="335" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a0f129a8356d59239c80730091a0d3e85_1a0f129a8356d59239c80730091a0d3e85" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d3/dea/a00046" kindref="compound">ogl::ShaderProgram</ref> &amp;</type>
-        <definition>const ogl::ShaderProgram&amp; mc::gfx::SimpleQuadRenderer::getShader</definition>
-        <argsstring>() const </argsstring>
-        <name>getShader</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="336" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a667fa583612f7b4ea34653ab6e6d7480_1a667fa583612f7b4ea34653ab6e6d7480" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/df9/a00044_a992cd784efc111151a4bb6c699821e37_1a992cd784efc111151a4bb6c699821e37" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>void</type>
-        <definition>void mc::gfx::SimpleQuadRenderer::setVertexArray</definition>
-        <argsstring>(const ogl::VertexArray &amp;vertices)</argsstring>
-        <name>setVertexArray</name>
+        <definition>virtual void mc::gfx::RenderImpl::cleanEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>cleanEntity</name>
+        <reimplementedby refid="d6/d97/a00045_a2e9c06972639b6e5f6182302acc259ec_1a2e9c06972639b6e5f6182302acc259ec">cleanEntity</reimplementedby>
         <param>
-          <type>const <ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref> &amp;</type>
-          <declname>vertices</declname>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="338" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="151" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="151" bodyend="151"/>
       </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a5742d8c595ed77eeb0155759d61f2add_1a5742d8c595ed77eeb0155759d61f2add" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref> &amp;</type>
-        <definition>ogl::VertexArray&amp; mc::gfx::SimpleQuadRenderer::getVertexArray</definition>
-        <argsstring>()</argsstring>
-        <name>getVertexArray</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="339" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a735aee6065eb403dd61d5d03ec38a5ae_1a735aee6065eb403dd61d5d03ec38a5ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d1/dea/a00054" kindref="compound">ogl::VertexArray</ref> &amp;</type>
-        <definition>const ogl::VertexArray&amp; mc::gfx::SimpleQuadRenderer::getVertexArray</definition>
-        <argsstring>() const </argsstring>
-        <name>getVertexArray</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="340" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_a61d5e3e6acbea808eee553f8e41796c0_1a61d5e3e6acbea808eee553f8e41796c0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::SimpleQuadRenderer::operator==</definition>
-        <argsstring>(const SimpleQuadRenderer &amp;other) const </argsstring>
-        <name>operator==</name>
+      <memberdef kind="function" id="d5/df9/a00044_a8865aa2228ff0bc7479dfd0126a1d3b9_1a8865aa2228ff0bc7479dfd0126a1d3b9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::RenderImpl::destroyEntity</definition>
+        <argsstring>(GraphicsEntity *)</argsstring>
+        <name>destroyEntity</name>
+        <reimplementedby refid="d6/d97/a00045_a15a1ba89268e1a29266e9c75d719f75e_1a15a1ba89268e1a29266e9c75d719f75e">destroyEntity</reimplementedby>
         <param>
-          <type>const <ref refid="d6/d2d/a00047" kindref="compound">SimpleQuadRenderer</ref> &amp;</type>
-          <declname>other</declname>
+          <type><ref refid="d3/dfe/a00025" kindref="compound">GraphicsEntity</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-        </detaileddescription>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="342" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d6/d2d/a00047_af921ab242875f66b3ba376d6148e6062_1af921ab242875f66b3ba376d6148e6062" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::SimpleQuadRenderer::operator!=</definition>
-        <argsstring>(const SimpleQuadRenderer &amp;other) const </argsstring>
-        <name>operator!=</name>
-        <param>
-          <type>const <ref refid="d6/d2d/a00047" kindref="compound">SimpleQuadRenderer</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Renderer.h" line="343" column="1"/>
+        <location file="include/MACE/Graphics/Renderer.h" line="162" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="162" bodyend="162"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-    </detaileddescription>
-    <location file="include/MACE/Graphics/Renderer.h" line="299" column="1" bodyfile="include/MACE/Graphics/Renderer.h" bodystart="299" bodyend="349"/>
+<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="879">
+        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
+        <link refid="d6/d2d/a00047"/>
+        <childnode refid="880" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="880">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="d5/df9/a00044"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="881">
+        <label>mc::gfx::RenderProtocol&lt; Image &gt;</label>
+        <link refid="d6/d2d/a00047"/>
+        <childnode refid="882" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="882">
+        <label>mc::gfx::RenderImpl</label>
+        <link refid="d5/df9/a00044"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/MACE/Graphics/Entity2D.h" line="76" column="1" bodyfile="include/MACE/Graphics/Entity2D.h" bodystart="76" bodyend="86"/>
     <listofallmembers>
-      <member refid="d6/d2d/a00047_aef26719f0319c297f5134d21c4438028_1aef26719f0319c297f5134d21c4438028" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>bind</name></member>
-      <member refid="d6/d2d/a00047_a440110f763db19efbda7425eba97ed63_1a440110f763db19efbda7425eba97ed63" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>destroy</name></member>
-      <member refid="d6/d2d/a00047_a48aad346e44b0044e1a748569ed9ad1b_1a48aad346e44b0044e1a748569ed9ad1b" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>draw</name></member>
-      <member refid="d6/d2d/a00047_ac4a4fc92880084844683f5b365e55b62_1ac4a4fc92880084844683f5b365e55b62" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getShader</name></member>
-      <member refid="d6/d2d/a00047_a0f129a8356d59239c80730091a0d3e85_1a0f129a8356d59239c80730091a0d3e85" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getShader</name></member>
-      <member refid="d6/d2d/a00047_a5742d8c595ed77eeb0155759d61f2add_1a5742d8c595ed77eeb0155759d61f2add" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getVertexArray</name></member>
-      <member refid="d6/d2d/a00047_a735aee6065eb403dd61d5d03ec38a5ae_1a735aee6065eb403dd61d5d03ec38a5ae" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>getVertexArray</name></member>
-      <member refid="d6/d2d/a00047_a40d6af559377d10b97709685f4ed7c70_1a40d6af559377d10b97709685f4ed7c70" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
-      <member refid="d6/d2d/a00047_ad11c108e4a34cac15d683f9e2fae4fd7_1ad11c108e4a34cac15d683f9e2fae4fd7" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
-      <member refid="d6/d2d/a00047_a4a4c6b52d025aa2128c9cf4e67696ac5_1a4a4c6b52d025aa2128c9cf4e67696ac5" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
-      <member refid="d6/d2d/a00047_ac149c3748f0592279b8c09ce0e089a1e_1ac149c3748f0592279b8c09ce0e089a1e" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>init</name></member>
-      <member refid="d6/d2d/a00047_af921ab242875f66b3ba376d6148e6062_1af921ab242875f66b3ba376d6148e6062" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>operator!=</name></member>
-      <member refid="d6/d2d/a00047_a61d5e3e6acbea808eee553f8e41796c0_1a61d5e3e6acbea808eee553f8e41796c0" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>operator==</name></member>
-      <member refid="d6/d2d/a00047_a62f7e69bc0837b4daa66915d5957152e_1a62f7e69bc0837b4daa66915d5957152e" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>setShader</name></member>
-      <member refid="d6/d2d/a00047_a667fa583612f7b4ea34653ab6e6d7480_1a667fa583612f7b4ea34653ab6e6d7480" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>setVertexArray</name></member>
-      <member refid="d6/d2d/a00047_1a08ed4bc1ad2afb4944d7d783ffe04a03" prot="private" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>shaders2D</name></member>
-      <member refid="d6/d2d/a00047_a6f20bf748b4714cf20d6ea66bb89f218_1a6f20bf748b4714cf20d6ea66bb89f218" prot="public" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>SimpleQuadRenderer</name></member>
-      <member refid="d6/d2d/a00047_1ae55c7a31a3fc4d7f6cb7c422ebd45878" prot="private" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>square</name></member>
-      <member refid="d6/d2d/a00047_1ae3d6ae729a69af08720a7e92e726b21c" prot="private" virt="non-virtual"><scope>mc::gfx::SimpleQuadRenderer</scope><name>useSSL</name></member>
+      <member refid="d5/df9/a00044_a992cd784efc111151a4bb6c699821e37_1a992cd784efc111151a4bb6c699821e37" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>cleanEntity</name></member>
+      <member refid="d6/d2d/a00047_a26ab7664a9de12c637b17d2376d888fb_1a26ab7664a9de12c637b17d2376d888fb" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>destroy</name></member>
+      <member refid="d5/df9/a00044_a8865aa2228ff0bc7479dfd0126a1d3b9_1a8865aa2228ff0bc7479dfd0126a1d3b9" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>destroyEntity</name></member>
+      <member refid="d6/d2d/a00047_acc26605ca1ee6d85de2b5da64573e72b_1acc26605ca1ee6d85de2b5da64573e72b" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>init</name></member>
+      <member refid="d6/d2d/a00047_a9a2f187614ae80d6f474f96ccf47d953_1a9a2f187614ae80d6f474f96ccf47d953" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>initEntity</name></member>
+      <member refid="d6/d2d/a00047_aae61236b4817699d57605efa8b413a39_1aae61236b4817699d57605efa8b413a39" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>renderEntity</name></member>
+      <member refid="d6/d2d/a00047_1a15833712ca49e8b05e71badd45dc670c" prot="private" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>renderer</name></member>
+      <member refid="d5/df9/a00044_ab9f74038bf9e1c44b26eebc57c3a9b47_1ab9f74038bf9e1c44b26eebc57c3a9b47" prot="public" virt="non-virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>RenderImpl</name></member>
+      <member refid="d5/df9/a00044_a6bd329f3d60c5ea961bda5f29c3231a8_1a6bd329f3d60c5ea961bda5f29c3231a8" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>resize</name></member>
+      <member refid="d5/df9/a00044_a09de296a552820e6739bc9227e57b56d_1a09de296a552820e6739bc9227e57b56d" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>setUp</name></member>
+      <member refid="d5/df9/a00044_acbce840815446695a44776cb15537b2e_1acbce840815446695a44776cb15537b2e" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>tearDown</name></member>
+      <member refid="d5/df9/a00044_a1a83129c78f067dc116964ee24e15fb2_1a1a83129c78f067dc116964ee24e15fb2" prot="public" virt="virtual"><scope>mc::gfx::RenderProtocol&lt; Image &gt;</scope><name>~RenderImpl</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

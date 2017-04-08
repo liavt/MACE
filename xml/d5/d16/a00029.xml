@@ -1,215 +1,124 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d5/d16/a00029" kind="struct" language="C++" prot="public">
-    <compoundname>mc::Macro</compoundname>
-    <includes refid="db/dab/a00089" local="no">Preprocessor.h</includes>
-      <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="d5/d16/a00029_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" prot="public" static="no" mutable="no">
-        <type>std::string</type>
-        <definition>std::string mc::Macro::name</definition>
+  <compounddef id="d5/d16/a00029" kind="class" language="C++" prot="public">
+    <compoundname>mc::IncludeDirectory</compoundname>
+    <basecompoundref refid="dc/d3c/a00028" prot="public" virt="non-virtual">mc::Include</basecompoundref>
+    <includes refid="d8/d17/a00114" local="no">Preprocessor.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="d5/d16/a00029_1ac2e3abb310bce3f0f8a9ae6e406b1784" prot="private" static="no" mutable="no">
+        <type>const std::string</type>
+        <definition>const std::string mc::IncludeDirectory::directory</definition>
         <argsstring></argsstring>
-        <name>name</name>
+        <name>directory</name>
+        <initializer>= &quot;&quot;</initializer>
         <briefdescription>
-<para>The name of the macro, as specified by the constructor. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d5/d16/a00029_ac61bcdc639d34b41e44fea3de9f437c0_1ac61bcdc639d34b41e44fea3de9f437c0" kindref="member">definition</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="52" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="52" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d5/d16/a00029_ac61bcdc639d34b41e44fea3de9f437c0_1ac61bcdc639d34b41e44fea3de9f437c0" prot="public" static="no" mutable="no">
-        <type>std::string</type>
-        <definition>std::string mc::Macro::definition</definition>
-        <argsstring></argsstring>
-        <name>definition</name>
-        <briefdescription>
-<para>The definition of the macro. </para>        </briefdescription>
-        <detaileddescription>
-<para>Whenever <computeroutput>name</computeroutput> is encountered, it will be expanded to the definition. <simplesect kind="see"><para><ref refid="d5/d16/a00029_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" kindref="member">name</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="57" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="57" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d5/d16/a00029_ababe583a76390d17524bd3278bd247e5_1ababe583a76390d17524bd3278bd247e5" prot="public" static="no" mutable="no">
-        <type>std::vector&lt; std::string &gt;</type>
-        <definition>std::vector&lt; std::string &gt; mc::Macro::parameters</definition>
-        <argsstring></argsstring>
-        <name>parameters</name>
-        <briefdescription>
-<para>If the macro is a function, list of parameters that the macro takes in. </para>        </briefdescription>
-        <detaileddescription>
-<para>Can be empty if not a function. <simplesect kind="see"><para><ref refid="d5/d16/a00029_a8c3739b5fc3dc6bc401294585c50e1d7_1a8c3739b5fc3dc6bc401294585c50e1d7" kindref="member">parameterString</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="62" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="62" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d5/d16/a00029_a8c3739b5fc3dc6bc401294585c50e1d7_1a8c3739b5fc3dc6bc401294585c50e1d7" prot="public" static="no" mutable="no">
-        <type>std::string</type>
-        <definition>std::string mc::Macro::parameterString</definition>
-        <argsstring></argsstring>
-        <name>parameterString</name>
-        <briefdescription>
-<para>The original string with the parenthesis, spaces, and parameters intact, but without the name. </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="66" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="66" bodyend="-1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="127" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="127" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="d5/d16/a00029_a8d1f55595da57d5f8d24939a5b5d9d89_1a8d1f55595da57d5f8d24939a5b5d9d89" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="d5/d16/a00029_a9920e37ccb64827b39d43b31d64d5286_1a9920e37ccb64827b39d43b31d64d5286" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
-        <definition>mc::Macro::Macro</definition>
-        <argsstring>(std::string name, std::string definition, std::vector&lt; std::string &gt; parameters, std::string parameterString)</argsstring>
-        <name>Macro</name>
+        <definition>mc::IncludeDirectory::IncludeDirectory</definition>
+        <argsstring>(const std::string &amp;dir)</argsstring>
+        <name>IncludeDirectory</name>
         <param>
-          <type>std::string</type>
-          <declname>name</declname>
-        </param>
-        <param>
-          <type>std::string</type>
-          <declname>definition</declname>
-        </param>
-        <param>
-          <type>std::vector&lt; std::string &gt;</type>
-          <declname>parameters</declname>
-        </param>
-        <param>
-          <type>std::string</type>
-          <declname>parameterString</declname>
+          <type>const std::string &amp;</type>
+          <declname>dir</declname>
         </param>
         <briefdescription>
-<para>Generates a function macro. </para>        </briefdescription>
+<para>Creates an <computeroutput><ref refid="d5/d16/a00029" kindref="compound">IncludeDirectory</ref></computeroutput> representing a directory on the filesystem. </para>        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>name</parametername>
+<parametername>dir</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>The name of the macro, not including parenthesis </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>definition</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What it expands to. Parameters can be used here. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>parameters</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>A list of every parameter. Spaces parenthesis should not be included. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>parameterString</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The original string with the parenthesis, spaces, and parameters intact. </para></parameterdescription>
+<para>Path to a directory </para></parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="see"><para><ref refid="d5/d16/a00029_a899f06a959807624fb795a6476c51e8d_1a899f06a959807624fb795a6476c51e8d" kindref="member">Macro(std::string, std::string)</ref> </para></simplesect>
 </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="40" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="120" column="1"/>
       </memberdef>
-      <memberdef kind="function" id="d5/d16/a00029_a899f06a959807624fb795a6476c51e8d_1a899f06a959807624fb795a6476c51e8d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::Macro::Macro</definition>
-        <argsstring>(std::string name, std::string definition)</argsstring>
-        <name>Macro</name>
+      <memberdef kind="function" id="d5/d16/a00029_aad2d7f5d8ae4c397b944663e00e0c359_1aad2d7f5d8ae4c397b944663e00e0c359" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool mc::IncludeDirectory::hasFile</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>hasFile</name>
+        <reimplements refid="dc/d3c/a00028_a1aaf4bc2ad50c93962901c653bbed0bc_1a1aaf4bc2ad50c93962901c653bbed0bc">hasFile</reimplements>
         <param>
-          <type>std::string</type>
+          <type>const std::string &amp;</type>
           <declname>name</declname>
         </param>
-        <param>
-          <type>std::string</type>
-          <declname>definition</declname>
-        </param>
         <briefdescription>
-<para>Generates a standard, variable like macro. </para>        </briefdescription>
+<para>Checks whether this include has the specified file. </para>        </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>name</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The name of the macro. Whenever this is encountered in the input, it will be expanded. </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>definition</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>What the macro expands to. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
+<para>If there isn&apos;t an <computeroutput><ref refid="dc/d3c/a00028" kindref="compound">Include</ref></computeroutput> with the file, then a <computeroutput>PreprocessorException</computeroutput> is thrown. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Utility/Preprocessor.h" line="46" column="1"/>
+        <location file="include/MACE/Utility/Preprocessor.h" line="122" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d5/d16/a00029_a7488daf3a1e77c84a4892e221f610957_1a7488daf3a1e77c84a4892e221f610957" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>std::string</type>
+        <definition>std::string mc::IncludeDirectory::getFile</definition>
+        <argsstring>(const std::string &amp;name) const </argsstring>
+        <name>getFile</name>
+        <reimplements refid="dc/d3c/a00028_aaeb33580110dc594eb065363fcdd65bf_1aaeb33580110dc594eb065363fcdd65bf">getFile</reimplements>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves a file with a certain name. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Preprocessor.h" line="123" column="1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Represents a <computeroutput><ref refid="d5/d16/a00029" kindref="compound">Macro</ref></computeroutput> in code. </para>    </briefdescription>
+<para>Represents a directory on the disk from which you can include files from. </para>    </briefdescription>
     <detaileddescription>
-<para>Created automatically when #define is encountered. <simplesect kind="see"><para><ref refid="d4/d8c/a00035" kindref="compound">Preprocessor</ref> </para></simplesect>
+<para><simplesect kind="see"><para><ref refid="d5/d79/a00030" kindref="compound">IncludeString</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d8/d41/a00038" kindref="compound">Preprocessor</ref> </para></simplesect>
 </para>    </detaileddescription>
-    <collaborationgraph>
-      <node id="524">
-        <label>T</label>
+    <inheritancegraph>
+      <node id="756">
+        <label>mc::Include</label>
+        <link refid="dc/d3c/a00028"/>
       </node>
-      <node id="519">
-        <label>mc::Macro</label>
+      <node id="755">
+        <label>mc::IncludeDirectory</label>
         <link refid="d5/d16/a00029"/>
-        <childnode refid="520" relation="usage">
-          <edgelabel>parameterString</edgelabel>
-          <edgelabel>definition</edgelabel>
-          <edgelabel>name</edgelabel>
-        </childnode>
-        <childnode refid="522" relation="usage">
-          <edgelabel>parameters</edgelabel>
+        <childnode refid="756" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="523">
-        <label>std::vector&lt; T &gt;</label>
-        <childnode refid="524" relation="usage">
-          <edgelabel>elements</edgelabel>
-        </childnode>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="758">
+        <label>mc::Include</label>
+        <link refid="dc/d3c/a00028"/>
       </node>
-      <node id="521">
-        <label>std::basic_string&lt; char &gt;</label>
-      </node>
-      <node id="522">
-        <label>std::vector&lt; std::string &gt;</label>
-        <childnode refid="520" relation="usage">
-          <edgelabel>elements</edgelabel>
-        </childnode>
-        <childnode refid="523" relation="template-instance">
-          <edgelabel>&lt; std::string &gt;</edgelabel>
-        </childnode>
-      </node>
-      <node id="520">
-        <label>std::string</label>
-        <childnode refid="521" relation="public-inheritance">
+      <node id="757">
+        <label>mc::IncludeDirectory</label>
+        <link refid="d5/d16/a00029"/>
+        <childnode refid="758" relation="public-inheritance">
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Utility/Preprocessor.h" line="31" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="31" bodyend="67"/>
+    <location file="include/MACE/Utility/Preprocessor.h" line="114" column="1" bodyfile="include/MACE/Utility/Preprocessor.h" bodystart="114" bodyend="128"/>
     <listofallmembers>
-      <member refid="d5/d16/a00029_ac61bcdc639d34b41e44fea3de9f437c0_1ac61bcdc639d34b41e44fea3de9f437c0" prot="public" virt="non-virtual"><scope>mc::Macro</scope><name>definition</name></member>
-      <member refid="d5/d16/a00029_a8d1f55595da57d5f8d24939a5b5d9d89_1a8d1f55595da57d5f8d24939a5b5d9d89" prot="public" virt="non-virtual"><scope>mc::Macro</scope><name>Macro</name></member>
-      <member refid="d5/d16/a00029_a899f06a959807624fb795a6476c51e8d_1a899f06a959807624fb795a6476c51e8d" prot="public" virt="non-virtual"><scope>mc::Macro</scope><name>Macro</name></member>
-      <member refid="d5/d16/a00029_a27a98c3be4efb0b5e8e5751d24b78110_1a27a98c3be4efb0b5e8e5751d24b78110" prot="public" virt="non-virtual"><scope>mc::Macro</scope><name>name</name></member>
-      <member refid="d5/d16/a00029_ababe583a76390d17524bd3278bd247e5_1ababe583a76390d17524bd3278bd247e5" prot="public" virt="non-virtual"><scope>mc::Macro</scope><name>parameters</name></member>
-      <member refid="d5/d16/a00029_a8c3739b5fc3dc6bc401294585c50e1d7_1a8c3739b5fc3dc6bc401294585c50e1d7" prot="public" virt="non-virtual"><scope>mc::Macro</scope><name>parameterString</name></member>
+      <member refid="d5/d16/a00029_1ac2e3abb310bce3f0f8a9ae6e406b1784" prot="private" virt="non-virtual"><scope>mc::IncludeDirectory</scope><name>directory</name></member>
+      <member refid="d5/d16/a00029_a7488daf3a1e77c84a4892e221f610957_1a7488daf3a1e77c84a4892e221f610957" prot="public" virt="virtual"><scope>mc::IncludeDirectory</scope><name>getFile</name></member>
+      <member refid="d5/d16/a00029_aad2d7f5d8ae4c397b944663e00e0c359_1aad2d7f5d8ae4c397b944663e00e0c359" prot="public" virt="virtual"><scope>mc::IncludeDirectory</scope><name>hasFile</name></member>
+      <member refid="d5/d16/a00029_a9920e37ccb64827b39d43b31d64d5286_1a9920e37ccb64827b39d43b31d64d5286" prot="public" virt="non-virtual"><scope>mc::IncludeDirectory</scope><name>IncludeDirectory</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

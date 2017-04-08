@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
+  <compounddef id="d1/dd6/a00108" kind="file" language="C++">
+    <compoundname>Color.h</compoundname>
+    <includes refid="d1/d51/a00079" local="no">MACE/Core/Constants.h</includes>
+    <includes local="no">array</includes>
+    <includedby refid="d1/d1e/a00087" local="no">include/MACE/Graphics/OGL.h</includedby>
+    <includedby refid="df/d6a/a00119" local="no">include/MACE/Utility/Utility.h</includedby>
+    <incdepgraph>
+      <node id="334">
+        <label>include/MACE/Utility/Color.h</label>
+        <link refid="Color.h"/>
+        <childnode refid="335" relation="include">
+        </childnode>
+        <childnode refid="339" relation="include">
+        </childnode>
+      </node>
+      <node id="337">
+        <label>cstdint</label>
+      </node>
+      <node id="338">
+        <label>stdexcept</label>
+      </node>
+      <node id="336">
+        <label>MACE/Configure.h</label>
+      </node>
+      <node id="339">
+        <label>array</label>
+      </node>
+      <node id="335">
+        <label>MACE/Core/Constants.h</label>
+        <link refid="d1/d51/a00079_source"/>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="337" relation="include">
+        </childnode>
+        <childnode refid="338" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="346">
+        <label>include/MACE/Utility/Utility.h</label>
+        <link refid="df/d6a/a00119_source"/>
+        <childnode refid="345" relation="include">
+        </childnode>
+      </node>
+      <node id="340">
+        <label>include/MACE/Utility/Color.h</label>
+        <link refid="Color.h"/>
+        <childnode refid="341" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+      </node>
+      <node id="345">
+        <label>include/MACE/MACE.h</label>
+        <link refid="d3/d32/a00105_source"/>
+      </node>
+      <node id="342">
+        <label>include/MACE/Graphics/Renderer.h</label>
+        <link refid="db/ddf/a00088_source"/>
+        <childnode refid="343" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+      </node>
+      <node id="344">
+        <label>include/MACE/Graphics/Graphics.h</label>
+        <link refid="da/d2a/a00086_source"/>
+        <childnode refid="345" relation="include">
+        </childnode>
+      </node>
+      <node id="343">
+        <label>include/MACE/Graphics/Entity2D.h</label>
+        <link refid="df/d13/a00085_source"/>
+        <childnode refid="344" relation="include">
+        </childnode>
+      </node>
+      <node id="341">
+        <label>include/MACE/Graphics/OGL.h</label>
+        <link refid="d1/d1e/a00087_source"/>
+        <childnode refid="342" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="df/d86/a00012" prot="public">mc::Color</innerclass>
+    <innernamespace refid="da/d72/a00124">mc</innernamespace>
+    <innernamespace refid="dc/dfe/a00125">mc::Colors</innernamespace>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="d1/dd6/a00108_a6e64700c09a035e5709dfcbd127d132d_1a6e64700c09a035e5709dfcbd127d132d" prot="public" static="no">
+        <name>MACE_UTILITY_COLOR_H</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Utility/Color.h" line="12" column="9" bodyfile="include/MACE/Utility/Color.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">Copyright<sp/>(c)<sp/>2016<sp/>Liav<sp/>Turkia</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"></highlight></codeline>
+<codeline lineno="6"><highlight class="comment">Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MACE_UTILITY_COLOR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MACE_UTILITY_COLOR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;MACE/Core/Constants.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;array&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="da/d72/a00124" kindref="compound">mc</ref><sp/>{</highlight></codeline>
+<codeline lineno="41" refid="df/d86/a00012" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="df/d86/a00012" kindref="compound">Color</ref><sp/>{</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="df/d86/a00012_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_a21e476d9238f36f210f5cd35868b3d08_1a21e476d9238f36f210f5cd35868b3d08" kindref="member">r</ref>,<sp/><ref refid="df/d86/a00012_a16c106a491d5ab2deef17a0a5f4c0a95_1a16c106a491d5ab2deef17a0a5f4c0a95" kindref="member">g</ref>,<sp/><ref refid="df/d86/a00012_afd537e7822ea1674f3f66db22b343ec0_1afd537e7822ea1674f3f66db22b343ec0" kindref="member">b</ref>,<sp/><ref refid="df/d86/a00012_a6d83e513538a31ebb79a310bb3249548_1a6d83e513538a31ebb79a310bb3249548" kindref="member">a</ref>;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">explicit</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>red,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>green,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>blue,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>alpha<sp/>=<sp/>255)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>explicit<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>(const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>red,<sp/>const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>green,<sp/>const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>blue,<sp/>const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/>alpha<sp/>=<sp/>255)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>(const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>red,<sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>green,<sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>blue,<sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>alpha<sp/>=<sp/>1.0f)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>(const<sp/><ref refid="d5/deb/a00132" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>4&gt;&amp;<sp/>values);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>copy)<sp/>noexcept;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>()<sp/>noexcept;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref><sp/><ref refid="df/d86/a00012_af0db284b5868c6bb6d449c277dad7d36_1af0db284b5868c6bb6d449c277dad7d36" kindref="member">darken</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref><sp/><ref refid="df/d86/a00012_ac10a06d41c34ed11ad76e214f0f1cfc5_1ac10a06d41c34ed11ad76e214f0f1cfc5" kindref="member">lighten</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="df/d86/a00012_a17499a7e18ab38fc8ebedd3aec808e69_1a17499a7e18ab38fc8ebedd3aec808e69" kindref="member">getRed</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="df/d86/a00012_a41884a44e13eddd57c14095547e64c41_1a41884a44e13eddd57c14095547e64c41" kindref="member">getGreen</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="df/d86/a00012_aee855a9b5145e1e479d470276a405ef5_1aee855a9b5145e1e479d470276a405ef5" kindref="member">getBlue</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref><sp/><ref refid="df/d86/a00012_a48f56fc575c026028eb2b0ba86a2e5c0_1a48f56fc575c026028eb2b0ba86a2e5c0" kindref="member">getAlpha</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_af4ec1e1b4ae8575cd76ee0ce21802cfd_1af4ec1e1b4ae8575cd76ee0ce21802cfd" kindref="member">setRed</ref>(const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>r);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_a8f4992ffded20025bfe69e9513f53f92_1a8f4992ffded20025bfe69e9513f53f92" kindref="member">setGreen</ref>(const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>g);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_ab1351780822e03e813afa0dc6344ecb2_1ab1351780822e03e813afa0dc6344ecb2" kindref="member">setBlue</ref>(const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>b);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_af1cad290fe847c6870bfe5cc51402f48_1af1cad290fe847c6870bfe5cc51402f48" kindref="member">setAlpha</ref>(const<sp/><ref refid="da/d72/a00124_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref>&amp;<sp/>a);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" kindref="member">setValues</ref>(const<sp/><ref refid="d5/deb/a00132" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>4&gt;&amp;<sp/>rgba);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012_afbbb1e05fec491f75f4686d9f8b098fa_1afbbb1e05fec491f75f4686d9f8b098fa" kindref="member">setValues</ref>(const<sp/><ref refid="d5/deb/a00132" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>3&gt;&amp;<sp/>rgb);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="d5/deb/a00132" kindref="compound">std</ref>::array&lt;</highlight><highlight class="keywordtype">float</highlight><highlight class="normal">,<sp/>4&gt;<sp/><ref refid="df/d86/a00012_abdfddcdc4a6d3a415bd5c690b9c7e703_1abdfddcdc4a6d3a415bd5c690b9c7e703" kindref="member">getValues</ref>()<sp/>const;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">*<sp/><ref refid="df/d86/a00012_a29c3b4b9c645d963c57f9febab56c652_1a29c3b4b9c645d963c57f9febab56c652" kindref="member">flatten</ref>(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>arr[4])<sp/>const;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator==(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>other)<sp/>const;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator!=(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>other)<sp/>const;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&gt;(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>other)<sp/>const;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&gt;=(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>other)<sp/>const;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&lt;(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>other)<sp/>const;</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>operator&lt;=(const<sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref>&amp;<sp/>other)<sp/>const;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight><highlight class="comment">//Color</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="241" refid="dc/dfe/a00125" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/>namespace<sp/>Colors<sp/>{</highlight></codeline>
+<codeline lineno="245" refid="dc/dfe/a00125_a8ccbcb1d89192f8d7636898d250ea12f_1a8ccbcb1d89192f8d7636898d250ea12f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="df/d86/a00012" kindref="compound">Color</ref><sp/><ref refid="dc/dfe/a00125_a8ccbcb1d89192f8d7636898d250ea12f_1a8ccbcb1d89192f8d7636898d250ea12f" kindref="member">RED</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(200,<sp/>0,<sp/>0),<sp/><ref refid="dc/dfe/a00125_a067d0c98a6b4c732a6062eb3bb9a6aae_1a067d0c98a6b4c732a6062eb3bb9a6aae" kindref="member">LIGHT_RED</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>0,<sp/>0),</highlight></codeline>
+<codeline lineno="246" refid="dc/dfe/a00125_a8dd93f22126d8e713f2619509abf216c_1a8dd93f22126d8e713f2619509abf216c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_a8dd93f22126d8e713f2619509abf216c_1a8dd93f22126d8e713f2619509abf216c" kindref="member">DARK_BLUE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>0,<sp/>255),<sp/><ref refid="dc/dfe/a00125_a7f53858099352c59b31c5314c04d0e4d_1a7f53858099352c59b31c5314c04d0e4d" kindref="member">BLUE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>0,<sp/>200),<sp/><ref refid="dc/dfe/a00125_aca1d0b3ccc5ada137fb4bf6a51346c3e_1aca1d0b3ccc5ada137fb4bf6a51346c3e" kindref="member">CYAN</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>255,<sp/>255),</highlight></codeline>
+<codeline lineno="247" refid="dc/dfe/a00125_ace301ab105d87437d87d31fda125c0d9_1ace301ab105d87437d87d31fda125c0d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_ace301ab105d87437d87d31fda125c0d9_1ace301ab105d87437d87d31fda125c0d9" kindref="member">LIGHT_BLUE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(50,<sp/>200,<sp/>255),<sp/><ref refid="dc/dfe/a00125_a7cd13ad15a9305dbafe7072f85a0837f_1a7cd13ad15a9305dbafe7072f85a0837f" kindref="member">DARK_RED</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(150,<sp/>0,<sp/>0),</highlight></codeline>
+<codeline lineno="248" refid="dc/dfe/a00125_ab1fc193a861495d8aa3a36793c5a8ab6_1ab1fc193a861495d8aa3a36793c5a8ab6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_ac2733fa9c122dfb454eb8915a049f3fc_1ac2733fa9c122dfb454eb8915a049f3fc" kindref="member">DARK_GREEN</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>50,<sp/>0),<sp/><ref refid="dc/dfe/a00125_ab1fc193a861495d8aa3a36793c5a8ab6_1ab1fc193a861495d8aa3a36793c5a8ab6" kindref="member">GREEN</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>150,<sp/>0),</highlight></codeline>
+<codeline lineno="249" refid="dc/dfe/a00125_ab257dd55413c9ea0aa5e227335db546c_1ab257dd55413c9ea0aa5e227335db546c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_aa4e90c337609d198cdb1ae8111a92cf6_1aa4e90c337609d198cdb1ae8111a92cf6" kindref="member">LIGHT_GREEN</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>250,<sp/>0),<sp/><ref refid="dc/dfe/a00125_ab257dd55413c9ea0aa5e227335db546c_1ab257dd55413c9ea0aa5e227335db546c" kindref="member">PURPLE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(100,<sp/>0,<sp/>255),</highlight></codeline>
+<codeline lineno="250" refid="dc/dfe/a00125_a1a23f35130d83b50bc880ec9d79bcd3e_1a1a23f35130d83b50bc880ec9d79bcd3e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_aec88fae5d2dec42d7e223a34a59ec22e_1aec88fae5d2dec42d7e223a34a59ec22e" kindref="member">MAGENTA</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>0,<sp/>255),<sp/><ref refid="dc/dfe/a00125_a1a23f35130d83b50bc880ec9d79bcd3e_1a1a23f35130d83b50bc880ec9d79bcd3e" kindref="member">WHITE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>255,<sp/>255),</highlight></codeline>
+<codeline lineno="251" refid="dc/dfe/a00125_a1ff67c17e02faaa7cbe95886d464f1e8_1a1ff67c17e02faaa7cbe95886d464f1e8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_aaa9b7c535022d1b76a84e336837719b7_1aaa9b7c535022d1b76a84e336837719b7" kindref="member">BLACK</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>0,<sp/>0),<sp/><ref refid="dc/dfe/a00125_a1ff67c17e02faaa7cbe95886d464f1e8_1a1ff67c17e02faaa7cbe95886d464f1e8" kindref="member">YELLOW</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>255,<sp/>0),</highlight></codeline>
+<codeline lineno="252" refid="dc/dfe/a00125_add1252332e37da04dc2db76fd3b13ad5_1add1252332e37da04dc2db76fd3b13ad5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_a2acbe5afe445eab38e1aed5881bd1867_1a2acbe5afe445eab38e1aed5881bd1867" kindref="member">DARK_GRAY</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(100,<sp/>100,<sp/>100),<sp/><ref refid="dc/dfe/a00125_add1252332e37da04dc2db76fd3b13ad5_1add1252332e37da04dc2db76fd3b13ad5" kindref="member">LIGHT_GRAY</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(200,<sp/>200,<sp/>200),</highlight></codeline>
+<codeline lineno="253" refid="dc/dfe/a00125_a199d3203b387ed3854a6fe95fbcfe2bd_1a199d3203b387ed3854a6fe95fbcfe2bd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_a199d3203b387ed3854a6fe95fbcfe2bd_1a199d3203b387ed3854a6fe95fbcfe2bd" kindref="member">ORANGE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>125,<sp/>0),<sp/><ref refid="dc/dfe/a00125_a59362e60b1cb125667e76b7cd88b010c_1a59362e60b1cb125667e76b7cd88b010c" kindref="member">GRAY</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(150,<sp/>150,<sp/>150),</highlight></codeline>
+<codeline lineno="254" refid="dc/dfe/a00125_a4bf8e02ed16ca442c7aea4f22ed75f44_1a4bf8e02ed16ca442c7aea4f22ed75f44" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_a5885c228e9017e4fcfe6dadbe98d7fa3_1a5885c228e9017e4fcfe6dadbe98d7fa3" kindref="member">DARK_ORANGE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>100,<sp/>0),<sp/><ref refid="dc/dfe/a00125_a4bf8e02ed16ca442c7aea4f22ed75f44_1a4bf8e02ed16ca442c7aea4f22ed75f44" kindref="member">LIGHT_ORANGE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(255,<sp/>150,<sp/>0),</highlight></codeline>
+<codeline lineno="255" refid="dc/dfe/a00125_a27dea967ebd44917f3748f5d82f977f3_1a27dea967ebd44917f3748f5d82f977f3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="dc/dfe/a00125_a27dea967ebd44917f3748f5d82f977f3_1a27dea967ebd44917f3748f5d82f977f3" kindref="member">INVISIBLE</ref><sp/>=<sp/><ref refid="df/d86/a00012_a76d6a7562831cc481357bc9ef114e249_1a76d6a7562831cc481357bc9ef114e249" kindref="member">Color</ref>(0,<sp/>0,<sp/>0,<sp/>0);</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="257"><highlight class="normal">}</highlight><highlight class="comment">//mc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="include/MACE/Utility/Color.h"/>
+  </compounddef>
+</doxygen>

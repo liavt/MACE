@@ -1,33 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d4/d7d/a00093" kind="file" language="Markdown">
-    <compoundname>INSTALLATION.md</compoundname>
+  <compounddef id="d4/d7d/a00093" kind="file" language="C++">
+    <compoundname>ssl_core.glsl</compoundname>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">#<sp/>Installation</highlight></codeline>
+<codeline><highlight class="normal">R&quot;(</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">*<sp/>Download<sp/>the<sp/>MACE<sp/>source.<sp/></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>This<sp/>can<sp/>be<sp/>done<sp/>via<sp/>Git:<sp/>Type<sp/>`git<sp/>clone<sp/>https://github.com/liavt/mace.git`<sp/>in<sp/>terminal.<sp/>On<sp/>Windows,<sp/>you<sp/>will<sp/>need<sp/>MingW<sp/>or<sp/>a<sp/>similar<sp/>Unix<sp/>emulator</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>You<sp/>can<sp/>also<sp/>use<sp/><sp/>the<sp/>Git<sp/>GUI<sp/>if<sp/>you<sp/>don&apos;t<sp/>like<sp/>command<sp/><sp/>line.</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>Download<sp/>CMake</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>On<sp/>Windows<sp/>systems,<sp/>make<sp/>sure<sp/>to<sp/>add<sp/>it<sp/>to<sp/>your<sp/>Path.</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>Create<sp/>a<sp/>new<sp/>folder<sp/>called<sp/>build<sp/>in<sp/>the<sp/>MACE<sp/>source<sp/>directory</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>Open<sp/>the<sp/>terminal.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>On<sp/>Windows<sp/>systems,<sp/>open<sp/>the<sp/>standard<sp/>command<sp/>prompt.</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>Type<sp/>`cd<sp/>&lt;path<sp/>to<sp/>where<sp/>you<sp/>downloaded<sp/>the<sp/>MACE<sp/>source&gt;`</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>On<sp/>Windows,<sp/>you<sp/>may<sp/>need<sp/>to<sp/>change<sp/>to<sp/>the<sp/>drive<sp/>via<sp/>`cd<sp/>\d<sp/><sp/>&lt;drive<sp/>letter&gt;`</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>Type<sp/>`cd<sp/>build`</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>Finally,<sp/>type<sp/>`cmake<sp/>..`</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>You<sp/>will<sp/>need<sp/>an<sp/>internet<sp/>connection<sp/>for<sp/>this<sp/>step.</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>You<sp/>should<sp/>now<sp/>be<sp/>installing<sp/>MACE!</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>If<sp/>you<sp/>are<sp/>on<sp/>Windows,<sp/>a<sp/>Visual<sp/>Studio<sp/>solution<sp/>file<sp/>should<sp/>have<sp/>been<sp/>generated.<sp/>Open<sp/>it<sp/>to<sp/>find<sp/>all<sp/>of<sp/>the<sp/>source<sp/>code<sp/>linked<sp/>and<sp/>ready!</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>*<sp/>To<sp/>build<sp/>MACE,<sp/>simply<sp/>use<sp/>Visual<sp/>Studio<sp/>to<sp/>build<sp/>the<sp/>ALL-BUILD<sp/>project</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>If<sp/>you<sp/>are<sp/>on<sp/>OSX,<sp/>you<sp/>will<sp/>have<sp/>a<sp/>choice<sp/>of<sp/>generating<sp/>a<sp/>Makefile<sp/>or<sp/>an<sp/>XCode<sp/>project</highlight></codeline>
-<codeline><highlight class="normal">*<sp/>If<sp/>you<sp/>are<sp/>on<sp/>Linux,<sp/><sp/>you<sp/>will<sp/>have<sp/>a<sp/>Makefile<sp/>generated<sp/>for<sp/>you.<sp/>Simply<sp/>type<sp/>`make<sp/>&lt;path<sp/>to<sp/>makefile&gt;`<sp/>to<sp/>compile<sp/>it<sp/>via<sp/>GCC</highlight></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>_SSL_CORE_LIBRARY_</highlight></codeline>
+<codeline><highlight class="normal">#define<sp/>_SSL_CORE_LIBRARY_<sp/>1</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">SSL_GL_VERSION_DECLARATION</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>GL_VERSION_3_3</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_shader_bit_encoding<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_explicit_attrib_location<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#endif<sp/>//GL_VERSION_3_3</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>GL_VERSION_3_2</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_fragment_coord_conventions<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_texture_multisample<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_geometry_shader4<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#endif<sp/>//GL_VERSION_3_2</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>GL_VERSION_3_1</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_uniform_buffer_object<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_draw_instanced<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_ARB_texture_rectangle<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#endif<sp/>//GL_VERSION_3_1</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#ifndef<sp/>GL_VERSION_3_0</highlight></codeline>
+<codeline><highlight class="normal">#extension<sp/>GL_EXT_texture_array<sp/>:<sp/>require</highlight></codeline>
+<codeline><highlight class="normal">#endif<sp/>//GL_VERSION_3_0</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">struct<sp/>sslAttachmentData{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>vec4<sp/>paint;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">vec4<sp/>sslAttachmentBlend(sslAttachmentData<sp/>data,<sp/>vec4<sp/>color){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>vec4(mix(data.paint.rgb,<sp/>color.rgb,<sp/>(1.0f<sp/>-<sp/>data.paint.a)),<sp/>color.a);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#define<sp/>sslUniformBuffer<sp/>layout(std140)<sp/>uniform</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#endif<sp/>//_SSL_CORE_LIBRARY_</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">)&quot;</highlight></codeline>
     </programlisting>
-    <location file="INSTALLATION.md"/>
+    <location file="include/MACE/Graphics/Shaders/include/ssl_core.glsl"/>
   </compounddef>
 </doxygen>

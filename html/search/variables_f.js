@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['white',['WHITE',['../d1/d84/a00097_a1a23f35130d83b50bc880ec9d79bcd3e.html#a1a23f35130d83b50bc880ec9d79bcd3e',1,'mc::Colors']]]
+  ['yellow',['YELLOW',['../dc/dfe/a00125_a1ff67c17e02faaa7cbe95886d464f1e8.html#a1ff67c17e02faaa7cbe95886d464f1e8',1,'mc::Colors']]]
 ];

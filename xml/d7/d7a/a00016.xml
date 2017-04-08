@@ -1,1825 +1,715 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.11">
-  <compounddef id="d7/d7a/a00016" kind="class" language="C++" prot="public" abstract="yes">
-    <compoundname>mc::gfx::Entity</compoundname>
-    <derivedcompoundref refid="d7/de0/a00022" prot="public" virt="non-virtual">mc::gfx::GraphicsEntity</derivedcompoundref>
-    <derivedcompoundref refid="d3/d52/a00023" prot="public" virt="non-virtual">mc::gfx::Group</derivedcompoundref>
-    <derivedcompoundref refid="d9/d2e/a00056" prot="public" virt="non-virtual">mc::os::WindowModule</derivedcompoundref>
-    <includes refid="df/d03/a00062" local="no">Entity.h</includes>
-      <sectiondef kind="public-type">
-      <memberdef kind="enum" id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5" prot="public" static="no">
-        <name>EntityProperty</name>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a24af0038cdbff90b6ef551f68e5c0bd2" prot="public">
-          <name>DEAD</name>
-          <initializer>= 0</initializer>
-          <briefdescription>
-<para>Bit location representing whether an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> is dead. </para>          </briefdescription>
-          <detaileddescription>
-<para>If <computeroutput>true,</computeroutput> any <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> holding it will remove it and call <computeroutput>kill()</computeroutput> <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a90e56e1021ac7b7be9a1e2ef6431a77f" prot="public">
-          <name>DISABLED</name>
-          <initializer>= 1</initializer>
-          <briefdescription>
-<para>Property defining if an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> can be updated and rendered. </para>          </briefdescription>
-          <detaileddescription>
-<para>If this is <computeroutput>true</computeroutput>, <computeroutput><ref refid="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">Entity::update()</ref></computeroutput> and <computeroutput><ref refid="d7/d7a/a00016_a27bda0c0dd0fff4adbe4fe04e27bc5f6_1a27bda0c0dd0fff4adbe4fe04e27bc5f6" kindref="member">Entity::render()</ref></computeroutput> will not be called by it&apos;s parent. <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" prot="public">
-          <name>INIT</name>
-          <initializer>= 2</initializer>
-          <briefdescription>
-<para>Flag representing whether an <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s <ref refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">init()</ref> function has been called. </para>          </briefdescription>
-          <detaileddescription>
-<para>If <ref refid="d7/d7a/a00016_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" kindref="member">destroy()</ref> or <ref refid="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">update()</ref> is called and this is <computeroutput>false</computeroutput>, an <computeroutput>InitializationError</computeroutput> is thrown. </para><para>If <ref refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">init()</ref> is called and this is <computeroutput>true</computeroutput>, an <computeroutput>InitializationError</computeroutput> is thrown. <simplesect kind="see"><para>Entity::getProperty(unsigned int) </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" prot="public">
-          <name>DIRTY</name>
-          <initializer>= 3</initializer>
-          <briefdescription>
-<para>Flag representing whether this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> is dirty and it&apos;s positions needs to be recalculated. </para>          </briefdescription>
-          <detaileddescription>
-<para>This will become true under the following conditions:<itemizedlist>
-<listitem><para>The <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> has been changed. Assume that any non-const function other than <ref refid="d7/d7a/a00016_a27bda0c0dd0fff4adbe4fe04e27bc5f6_1a27bda0c0dd0fff4adbe4fe04e27bc5f6" kindref="member">render()</ref> and <ref refid="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">update()</ref> will trigger this condition.</para></listitem><listitem><para>The window is resized, moved, or created </para></listitem></itemizedlist>
-</para><para>Other classes that inherit <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> can also set this to true via <ref refid="d7/d7a/a00016_ab7d0bef41e5a511452abcdfdd15d3d78_1ab7d0bef41e5a511452abcdfdd15d3d78" kindref="member">Entity::setProperty(Byte, bool)</ref> </para><para>When an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> becomes dirty, it will propogate up the tree. It&apos;s parent will become dirty, it&apos;s parent will become dirty, etc. This will continue until it reaches the highest level <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput>, which is usually the <computeroutput>GraphicsContext</computeroutput>. From there, it will decide what to do based on it&apos;s <computeroutput><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref></computeroutput> flag. </para><para>Certain <computeroutput>GraphicsContexts</computeroutput> may only render when something is dirty, heavily increasing performance in applications with little moving objects. </para><para>Additionally, an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> that is considered dirty will have it&apos;s sslBuffer updated on the GPU side. </para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" prot="public">
-          <name>STRETCH_X</name>
-          <initializer>= 4</initializer>
-          <briefdescription>
-<para>Flag representing whether an <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s X position should be stretched when window is resized. </para>          </briefdescription>
-          <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" kindref="member">Entity::STRETCH_Y</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" kindref="member">Entity::STRETCH_WIDTH</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" kindref="member">Entity::STRETCH_HEIGHT</ref> </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" prot="public">
-          <name>STRETCH_Y</name>
-          <initializer>= 5</initializer>
-          <briefdescription>
-<para>Flag representing whether an <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s Y position should be stretched when window is resized. </para>          </briefdescription>
-          <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" kindref="member">Entity::STRETCH_X</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" kindref="member">Entity::STRETCH_WIDTH</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" kindref="member">Entity::STRETCH_HEIGHT</ref> </para></simplesect>
-<simplesect kind="see"><para>WindowModule::setResizable(bool) </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" prot="public">
-          <name>STRETCH_WIDTH</name>
-          <initializer>= 6</initializer>
-          <briefdescription>
-<para>Flag representing whether an <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s width should be stretched when window is resized. </para>          </briefdescription>
-          <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" kindref="member">Entity::STRETCH_X</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" kindref="member">Entity::STRETCH_Y</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" kindref="member">Entity::STRETCH_HEIGHT</ref> </para></simplesect>
-<simplesect kind="see"><para>WindowModule::setResizable(bool) </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" prot="public">
-          <name>STRETCH_HEIGHT</name>
-          <initializer>= 7</initializer>
-          <briefdescription>
-<para>Flag representing whether an <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s height should be stretched when window is resized. </para>          </briefdescription>
-          <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" kindref="member">Entity::STRETCH_X</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" kindref="member">Entity::STRETCH_Y</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" kindref="member">Entity::STRETCH_WIDTH</ref> </para></simplesect>
-<simplesect kind="see"><para>WindowModule::setResizable(bool) </para></simplesect>
-</para>          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5aeb563d4051c62d1209ab82b7d9146858" prot="public">
-          <name>DEFAULT_PROPERTIES</name>
-          <initializer>= 0x00000000</initializer>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
+  <compounddef id="d7/d7a/a00016" kind="class" language="C++" prot="public">
+    <compoundname>mc::gfx::ogl::CopyWriteBuffer</compoundname>
+    <basecompoundref refid="da/da0/a00009" prot="public" virt="non-virtual">mc::gfx::ogl::Buffer</basecompoundref>
+    <includes refid="d1/d1e/a00087" local="no">OGL.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="d7/d7a/a00016_a045b118bce254c25c9519f955e8e1148_1a045b118bce254c25c9519f955e8e1148" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mc::gfx::ogl::CopyWriteBuffer::CopyWriteBuffer</definition>
+        <argsstring>() noexcept</argsstring>
+        <name>CopyWriteBuffer</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="128" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="128" bodyend="204"/>
+        <location file="include/MACE/Graphics/OGL.h" line="983" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_a4042320270935513c6fbfbd101986a83_1a4042320270935513c6fbfbd101986a83" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Buffer::isCreated</definition>
+        <argsstring>() const  override</argsstring>
+        <name>isCreated</name>
+        <reimplements refid="d4/d8c/a00035_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67">isCreated</reimplements>
+        <briefdescription>
+<para>Queries OpenGL whether this <ref refid="d4/d8c/a00035" kindref="compound">Object</ref>&apos;s ID is a valid object. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Whether this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> represents memory </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="620" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_aea6e64228bbfa092e1448ea9d851fb94_1aea6e64228bbfa092e1448ea9d851fb94" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::Buffer::init</definition>
+        <argsstring>() override</argsstring>
+        <name>init</name>
+        <reimplements refid="d4/d8c/a00035_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c">init</reimplements>
+        <briefdescription>
+<para>Calls the corresponding glCreate* function and assigns an ID. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="622" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_ac4e88a83c70a133c24667545832a6f0d_1ac4e88a83c70a133c24667545832a6f0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::Buffer::destroy</definition>
+        <argsstring>() override</argsstring>
+        <name>destroy</name>
+        <reimplements refid="d4/d8c/a00035_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d">destroy</reimplements>
+        <briefdescription>
+<para>Calls the corresponding glDestroy* function and deletes the ID. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind</ref> const </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_ac965ad8371e8691103fe2418152f9d67_1ac965ad8371e8691103fe2418152f9d67" kindref="member">Object::isCreated() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> has not been created yet (<ref refid="d4/d8c/a00035_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> has not been called) </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="623" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::Buffer::setData</definition>
+        <argsstring>(const ptrdiff_t &amp;dataSize, const void *data, const Enum drawType=GL_DYNAMIC_DRAW)</argsstring>
+        <name>setData</name>
+        <param>
+          <type>const ptrdiff_t &amp;</type>
+          <declname>dataSize</declname>
+        </param>
+        <param>
+          <type>const void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+          <declname>drawType</declname>
+          <defval>GL_DYNAMIC_DRAW</defval>
+        </param>
+        <briefdescription>
+<para>Creates and initalizes the data store for this <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>dataSize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of the sslBuffer, measured in bytes. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the actual data. Using <computeroutput>nullptr</computeroutput> or <computeroutput>NULL</computeroutput> will create an empty sslBuffer. </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>drawType</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Expected usage pattern for the data. GL_DYNAMIC_DRAW by default </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para>Buffer::setDataRange(const Index, const ptrdiff_t, const void*) </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" kindref="member">Buffer::copyData(Buffer&amp;, const ptrdiff_t&amp;, const Index, const Index)</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferData">https://www.opengl.org/wiki/GLAPI/glBufferData</ulink> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="636" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_aeca7c19d83db827a2bca5e708d445ce7_1aeca7c19d83db827a2bca5e708d445ce7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::Buffer::setDataRange</definition>
+        <argsstring>(const ptrdiff_t &amp;dataSize, const void *data, const Index offset)</argsstring>
+        <name>setDataRange</name>
+        <param>
+          <type>const ptrdiff_t &amp;</type>
+          <declname>dataSize</declname>
+        </param>
+        <param>
+          <type>const void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+<para>Sets data in a range of the sslBuffer. </para>        </briefdescription>
+        <detaileddescription>
+<para>Does not initialize data. <ref refid="da/da0/a00009" kindref="compound">Buffer</ref>:<ref refid="da/da0/a00009_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" kindref="member">setData(const ptrdiff_t&amp;, const void*, const Enum)</ref> must be called first. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Offset into the sslBuffer to set the data, measured in bytes </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>dataSize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How large the region being inserted is, measured in bytes </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the data being inserted </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glBufferSubData">https://www.opengl.org/wiki/GLAPI/glBufferSubData</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" kindref="member">Buffer::copyData(Buffer&amp;, const ptrdiff_t&amp;, const Index, const Index)</ref> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="648" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mc::gfx::ogl::Buffer::copyData</definition>
+        <argsstring>(Buffer &amp;other, const ptrdiff_t &amp;size, const Index readOffset=0, const Index writeOffset=0)</argsstring>
+        <name>copyData</name>
+        <param>
+          <type><ref refid="da/da0/a00009" kindref="compound">Buffer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <param>
+          <type>const ptrdiff_t &amp;</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>readOffset</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>writeOffset</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>Copy part of the data store of this <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> into another <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> to copy into </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much data to copy </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>readOffset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much data to offset by in this <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>writeOffset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Where to write the data in the target <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" kindref="member">Buffer::setData(const ptrdiff_t&amp;, const void*, const Enum)</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData">https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dd/d1b/a00015" kindref="compound">CopyReadBuffer</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/d7a/a00016" kindref="compound">CopyWriteBuffer</ref> </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="663" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* mc::gfx::ogl::Buffer::map</definition>
+        <argsstring>(const Enum access=GL_READ_WRITE)</argsstring>
+        <name>map</name>
+        <param>
+          <type>const <ref refid="da/d72/a00124_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+          <declname>access</declname>
+          <defval>GL_READ_WRITE</defval>
+        </param>
+        <briefdescription>
+<para>Maps the data in this <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> to a pointer on the CPU side. </para>        </briefdescription>
+        <detaileddescription>
+<para>May be slow.</para><para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>access</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Which access to use. Must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBuffer">https://www.opengl.org/wiki/GLAPI/glMapBuffer</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" kindref="member">Buffer::mapRange(const Index, const Size, const unsigned int)</ref> </para></simplesect>
+<simplesect kind="warning"><para>DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. </para></simplesect>
+<simplesect kind="warning"><para>After <ref refid="da/da0/a00009_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> is called, the pointer returned may be unsafe. Using it will be undefined. </para></simplesect>
+<simplesect kind="attention"><para>When using this function don&apos;t forget to use <ref refid="da/da0/a00009_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> when you are done using the pointer </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="676" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* mc::gfx::ogl::Buffer::mapRange</definition>
+        <argsstring>(const Index offset, const Size length, const unsigned int access)</argsstring>
+        <name>mapRange</name>
+        <param>
+          <type>const <ref refid="da/d72/a00124_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>const <ref refid="da/d72/a00124_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const unsigned int</type>
+          <declname>access</declname>
+        </param>
+        <briefdescription>
+<para>Maps a range of data in this <computeroutput><ref refid="da/da0/a00009" kindref="compound">Buffer</ref></computeroutput> to a pointer on the CPU side. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The starting offset to map </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>How much data to map </para></parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>access</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A combination of access flags to determine how the data will be used. These flags determine how fast or slow the mapping will take. </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBufferRange">https://www.opengl.org/wiki/GLAPI/glMapBufferRange</ulink> </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" kindref="member">Buffer::map(const Enum)</ref> </para></simplesect>
+<simplesect kind="warning"><para>DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED. </para></simplesect>
+<simplesect kind="warning"><para>After <ref refid="da/da0/a00009_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> is called, the pointer returned may be unsafe. Using it will be undefined. </para></simplesect>
+<simplesect kind="attention"><para>When using this function don&apos;t forget to use <ref refid="da/da0/a00009_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" kindref="member">Buffer::unmap()</ref> when you are done using the pointer </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="691" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Buffer::unmap</definition>
+        <argsstring>()</argsstring>
+        <name>unmap</name>
+        <briefdescription>
+<para>Unmaps the sslBuffer. </para>        </briefdescription>
+        <detaileddescription>
+<para>Any mapped points will be deleted and using them will be undefined.</para><para><simplesect kind="return"><para>Whether the data was corrupted during reading. This will be very rare but when it does happen you must reinitialize the data. </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" kindref="member">Buffer::map(const Enum)</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" kindref="member">Buffer::mapRange(const Index, const Size, const unsigned int)</ref> </para></simplesect>
+<simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/GLAPI/glMapBuffer">https://www.opengl.org/wiki/GLAPI/glMapBuffer</ulink> </para></simplesect>
+<simplesect kind="warning"><para>Using a pointer after it was unmapped will be undefined </para></simplesect>
+<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="703" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_a396693ef6c22c043c5bf0115d3d4aa4a_1a396693ef6c22c043c5bf0115d3d4aa4a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="da/d72/a00124_a566eb8c7b00951108f89aef1bd02d493_1a566eb8c7b00951108f89aef1bd02d493" kindref="member">Enum</ref></type>
+        <definition>const Enum mc::gfx::ogl::Buffer::getBufferType</definition>
+        <argsstring>() const </argsstring>
+        <name>getBufferType</name>
+        <briefdescription>
+<para>Retrieves the sslBuffer type for this sslBuffer. </para>        </briefdescription>
+        <detaileddescription>
+<para>This is based on the class. <simplesect kind="return"><para>The sslBuffer type </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="709" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_a41aadf11e2d1d51951e59c649cc66ccf_1a41aadf11e2d1d51951e59c649cc66ccf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Buffer::operator==</definition>
+        <argsstring>(const Buffer &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="da/da0/a00009" kindref="compound">Buffer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="714" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d8c/a00035_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Object::operator==</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator==</name>
+        <param>
+          <type>const <ref refid="d4/d8c/a00035" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are equal. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" kindref="member">Object::operator!=(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are the same </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="182" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="da/da0/a00009_a8c9f33cca265609a823432dd4a4c03a8_1a8c9f33cca265609a823432dd4a4c03a8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Buffer::operator!=</definition>
+        <argsstring>(const Buffer &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="da/da0/a00009" kindref="compound">Buffer</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="718" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d8c/a00035_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool mc::gfx::ogl::Object::operator!=</definition>
+        <argsstring>(const Object &amp;other) const </argsstring>
+        <name>operator!=</name>
+        <param>
+          <type>const <ref refid="d4/d8c/a00035" kindref="compound">Object</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Compares if 2 <computeroutput>Objects</computeroutput> are not equal. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" kindref="member">Object::operator==(const Object&amp;) const</ref> </para></simplesect>
+<simplesect kind="return"><para>Whether <computeroutput>this</computeroutput> and <computeroutput>other</computeroutput> are different </para></simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What to compare with </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="190" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::ogl::Object::bind</definition>
+        <argsstring>() const </argsstring>
+        <name>bind</name>
+        <reimplementedby refid="dd/d32/a00041_1aa2aa180de0c314967fef3dc1f506695f">bind</reimplementedby>
+        <reimplementedby refid="d6/d2c/a00072_a015584f65a76a171745cd42e5877a785_1a015584f65a76a171745cd42e5877a785">bind</reimplementedby>
+        <reimplementedby refid="d1/d84/a00052_1a0899273f842e1b692da3a08e162ee7f3">bind</reimplementedby>
+        <briefdescription>
+<para>Binds this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> to be used in an OpenGL function. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const</ref> </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> has not been created yet </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="146" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d8c/a00035_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void mc::gfx::ogl::Object::unbind</definition>
+        <argsstring>() const </argsstring>
+        <name>unbind</name>
+        <reimplementedby refid="dd/d32/a00041_1ad05128a71051c75e7c6a66bf135f4ce5">unbind</reimplementedby>
+        <reimplementedby refid="d1/d84/a00052_1a91dc153976fbd78b0047c436c12967d6">unbind</reimplementedby>
+        <briefdescription>
+<para>Unbinds this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> which is equivalent to binding ID 0. </para>        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>GL_INVALID_OPERATION</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>If the current thread does not have an OpenGL context </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const</ref> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="152" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="da/d72/a00124_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::ogl::Object::getID</definition>
+        <argsstring>() const </argsstring>
+        <name>getID</name>
+        <briefdescription>
+<para>Retrieves the current ID that this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> represents. </para>        </briefdescription>
+        <detaileddescription>
+<para>The ID is an unsigned number that acts like a pointer to OpenGL memory. It is assigned when <ref refid="d4/d8c/a00035_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> is called. </para><para>If it is 0, the <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> is considered uncreated. </para><para>When using <ref refid="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" kindref="member">Object::bind() const </ref>it will bind to this ID. <ref refid="d4/d8c/a00035_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" kindref="member">Object::unbind() const </ref>will bind to ID 0, which is the equivelant of a null pointer. <simplesect kind="return"><para>The ID represented by this <computeroutput><ref refid="d4/d8c/a00035" kindref="compound">Object</ref></computeroutput> </para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/MACE/Graphics/OGL.h" line="173" column="1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="d7/d7a/a00016_a843be07a7155289c9769e128aed7efdc_1a843be07a7155289c9769e128aed7efdc" prot="protected" static="no" mutable="no">
-        <type>std::vector&lt; <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> * &gt;</type>
-        <definition>std::vector&lt;Entity*&gt; mc::gfx::Entity::children</definition>
+      <memberdef kind="variable" id="d4/d8c/a00035_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" static="no" mutable="no">
+        <type><ref refid="da/d72/a00124_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
+        <definition>Index mc::gfx::ogl::Object::id</definition>
         <argsstring></argsstring>
-        <name>children</name>
-        <initializer>= std::vector&lt;<ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>*&gt;()</initializer>
+        <name>id</name>
+        <initializer>= 0</initializer>
         <briefdescription>
-<para><computeroutput>std::vector</computeroutput> of this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>\&apos;s</computeroutput> children. </para>        </briefdescription>
+<para>The ID of this `Object. </para>        </briefdescription>
         <detaileddescription>
-<para>Use of this variable directly is unrecommended. Use <computeroutput><ref refid="d7/d7a/a00016_ab38c7d3dd07f986a04991c329eb591c2_1ab38c7d3dd07f986a04991c329eb591c2" kindref="member">addChild()</ref></computeroutput> or <computeroutput><ref refid="d7/d7a/a00016_ab1f8b9ae4b5c02534bbf5924148b4003_1ab1f8b9ae4b5c02534bbf5924148b4003" kindref="member">removeChild()</ref></computeroutput> instead. <simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
+<para>` Should be set in <ref refid="d4/d8c/a00035_a3d8fead77f923fc687b367c12f5e0f7c_1a3d8fead77f923fc687b367c12f5e0f7c" kindref="member">Object::init()</ref> and become 0 in <ref refid="d4/d8c/a00035_aff0ae807b5e930697ea3766301588f6d_1aff0ae807b5e930697ea3766301588f6d" kindref="member">Object::destroy()</ref> </para><para><ref refid="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" kindref="member">Object::getID() const </ref>returns this. </para>        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="603" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="603" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d7/d7a/a00016_a2f423919fa564ce852cb641b74f21d87_1a2f423919fa564ce852cb641b74f21d87" prot="protected" static="no" mutable="no">
-        <type><ref refid="d2/d79/a00051" kindref="compound">TransformMatrix</ref></type>
-        <definition>TransformMatrix mc::gfx::Entity::transformation</definition>
-        <argsstring></argsstring>
-        <name>transformation</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="608" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="608" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="d7/d7a/a00016_1a65a429a726c295fbadce010072135c2a" prot="private" static="no" mutable="no">
-        <type>std::vector&lt; <ref refid="df/d86/a00012" kindref="compound">Component</ref> * &gt;</type>
-        <definition>std::vector&lt;Component*&gt; mc::gfx::Entity::components</definition>
-        <argsstring></argsstring>
-        <name>components</name>
-        <initializer>= std::vector&lt;<ref refid="df/d86/a00012" kindref="compound">Component</ref>*&gt;()</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="611" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="611" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d7/d7a/a00016_1a73412d04b3714ceb341b47ebec3d7a79" prot="private" static="no" mutable="no">
-        <type><ref refid="d1/d44/a00098_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" kindref="member">EntityProperties</ref></type>
-        <definition>EntityProperties mc::gfx::Entity::properties</definition>
-        <argsstring></argsstring>
-        <name>properties</name>
-        <initializer>= <ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5aeb563d4051c62d1209ab82b7d9146858" kindref="member">Entity::DEFAULT_PROPERTIES</ref></initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="613" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="613" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="d7/d7a/a00016_1aedcf3c242b3387f2e30bf78b699ccc1c" prot="private" static="no" mutable="no">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *</type>
-        <definition>Entity* mc::gfx::Entity::parent</definition>
-        <argsstring></argsstring>
-        <name>parent</name>
-        <initializer>= nullptr</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="616" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="616" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-func">
-      <memberdef kind="function" id="d7/d7a/a00016_a9f8638fff5431b7c91034e76d44fe12b_1a9f8638fff5431b7c91034e76d44fe12b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::Entity::Entity</definition>
-        <argsstring>() noexcept</argsstring>
-        <name>Entity</name>
-        <briefdescription>
-<para>Default constructor. </para>        </briefdescription>
-        <detaileddescription>
-<para>Constructs properties based on <computeroutput><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5aeb563d4051c62d1209ab82b7d9146858" kindref="member">Entity::DEFAULT_PROPERTIES</ref></computeroutput> </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="209" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a2be93085d78b0c86a0acf3fb6ca1a4bb_1a2be93085d78b0c86a0acf3fb6ca1a4bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>mc::gfx::Entity::Entity</definition>
-        <argsstring>(const Entity &amp;obj) noexcept</argsstring>
-        <name>Entity</name>
-        <param>
-          <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>obj</declname>
-        </param>
-        <briefdescription>
-<para>Cloning constructor. </para>        </briefdescription>
-        <detaileddescription>
-<para>Copies another&apos;s <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s</computeroutput> properties and children. </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="213" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a675362ba8b043625682855c25e093539_1a675362ba8b043625682855c25e093539" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type></type>
-        <definition>virtual mc::gfx::Entity::~Entity</definition>
-        <argsstring>() noexcept</argsstring>
-        <name>~Entity</name>
-        <briefdescription>
-<para>Destructor. </para>        </briefdescription>
-        <detaileddescription>
-<para>Made <computeroutput>virtual</computeroutput> for inheritance. <simplesect kind="see"><para><ref refid="d7/d7a/a00016_a675362ba8b043625682855c25e093539_1a675362ba8b043625682855c25e093539" kindref="member">~Entity()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="218" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a38b3c5311cb39e76f2b24f145323c130_1a38b3c5311cb39e76f2b24f145323c130" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const std::vector&lt; <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> * &gt; &amp;</type>
-        <definition>const std::vector&lt;Entity*&gt;&amp; mc::gfx::Entity::getChildren</definition>
-        <argsstring>() const </argsstring>
-        <name>getChildren</name>
-        <briefdescription>
-<para>Gets all of this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s</computeroutput> children. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>an <computeroutput>std::vector</computeroutput> with all children of this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="224" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ab1f8b9ae4b5c02534bbf5924148b4003_1ab1f8b9ae4b5c02534bbf5924148b4003" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::removeChild</definition>
-        <argsstring>(const Entity &amp;e)</argsstring>
-        <name>removeChild</name>
-        <param>
-          <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-<para>Removes a child by reference. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>ObjectNotFoundInArray</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if <ref refid="d7/d7a/a00016_ac0903b8c965b0438d8ac37c14164787c_1ac0903b8c965b0438d8ac37c14164787c" kindref="member">hasChild(Entity&amp;) const</ref> returns <computeroutput>false</computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Reference to a child </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a6f48a5e5555f64dd5bc84e27852f4773_1a6f48a5e5555f64dd5bc84e27852f4773" kindref="member">removeChild(Index)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="232" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a6f48a5e5555f64dd5bc84e27852f4773_1a6f48a5e5555f64dd5bc84e27852f4773" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::removeChild</definition>
-        <argsstring>(Index index)</argsstring>
-        <name>removeChild</name>
-        <param>
-          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>index</declname>
-        </param>
-        <briefdescription>
-<para>Removes a child via location. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>IndexOutOfBounds</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if the index is less than 0 or greater than <ref refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" kindref="member">size()</ref> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>index</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Index of the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> to be removed </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" kindref="member">indexOf(const Entity&amp;) const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_ab1f8b9ae4b5c02534bbf5924148b4003_1ab1f8b9ae4b5c02534bbf5924148b4003" kindref="member">removeChild(const Entity&amp;)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="242" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ac0903b8c965b0438d8ac37c14164787c_1ac0903b8c965b0438d8ac37c14164787c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::Entity::hasChild</definition>
-        <argsstring>(Entity &amp;e) const </argsstring>
-        <name>hasChild</name>
-        <param>
-          <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-<para>Checks to see if this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> contains an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Reference to an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>false</computeroutput> if this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> doesn&apos;t contain the referenced <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput>, <computeroutput>true</computeroutput> otherwise </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" kindref="member">indexOf(const Entity&amp; ) const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="250" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a0dfa57638b24bc0d82d42ccb275ca87e_1a0dfa57638b24bc0d82d42ccb275ca87e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::clearChildren</definition>
-        <argsstring>()</argsstring>
-        <name>clearChildren</name>
-        <briefdescription>
-<para>Removes EVERY <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> from this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" kindref="member">size()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a6f48a5e5555f64dd5bc84e27852f4773_1a6f48a5e5555f64dd5bc84e27852f4773" kindref="member">removeChild(Index)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_ab1f8b9ae4b5c02534bbf5924148b4003_1ab1f8b9ae4b5c02534bbf5924148b4003" kindref="member">removeChild(const Entity&amp;)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="259" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a9502b14235e187539f6fd5da4090d474_1a9502b14235e187539f6fd5da4090d474" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>Entity&amp; mc::gfx::Entity::operator[]</definition>
-        <argsstring>(Index i)</argsstring>
-        <name>operator[]</name>
-        <param>
-          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>i</declname>
-        </param>
-        <briefdescription>
-<para>Access an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput>. </para>        </briefdescription>
-        <detaileddescription>
-<para>This is different than <computeroutput><ref refid="d7/d7a/a00016_add8148c0ea0a51b80f74cbb4a890902d_1add8148c0ea0a51b80f74cbb4a890902d" kindref="member">getChild()</ref></computeroutput> because <computeroutput>operator[]</computeroutput> doesn&apos;t do bounds checking. Accessing an invalid location will result in a memory error. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>i</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Location of an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Reference to the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> located at <computeroutput>i</computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_add8148c0ea0a51b80f74cbb4a890902d_1add8148c0ea0a51b80f74cbb4a890902d" kindref="member">getChild(Index)</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" kindref="member">indexOf(const Entity&amp;) const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="270" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a97a0a270c1d4c710ac2f4033b52dd9bd_1a97a0a270c1d4c710ac2f4033b52dd9bd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>const Entity&amp; mc::gfx::Entity::operator[]</definition>
-        <argsstring>(Index i) const </argsstring>
-        <name>operator[]</name>
-        <param>
-          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>i</declname>
-        </param>
-        <briefdescription>
-<para><computeroutput>const</computeroutput> version of <ref refid="d7/d7a/a00016_a9502b14235e187539f6fd5da4090d474_1a9502b14235e187539f6fd5da4090d474" kindref="member">operator[](Index i)</ref> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>i</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Location of an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Reference to the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> located at <computeroutput>i</computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9a1b5fa1fd897da0acdf91dd3085561d_1a9a1b5fa1fd897da0acdf91dd3085561d" kindref="member">getChild(Index) const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" kindref="member">indexOf(const Entity&amp;) const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="279" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_add8148c0ea0a51b80f74cbb4a890902d_1add8148c0ea0a51b80f74cbb4a890902d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>Entity&amp; mc::gfx::Entity::getChild</definition>
-        <argsstring>(Index i)</argsstring>
-        <name>getChild</name>
-        <param>
-          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>i</declname>
-        </param>
-        <briefdescription>
-<para>Retrieves a child at a certain index. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>i</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Index of the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Reference to the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> located at <computeroutput>i</computeroutput> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>IndexOutOfBounds</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if <computeroutput>i</computeroutput> is less than <computeroutput>0</computeroutput> or greater than <ref refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" kindref="member">size()</ref> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9502b14235e187539f6fd5da4090d474_1a9502b14235e187539f6fd5da4090d474" kindref="member">operator[]</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" kindref="member">indexOf(const Entity&amp;) const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="290" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a9a1b5fa1fd897da0acdf91dd3085561d_1a9a1b5fa1fd897da0acdf91dd3085561d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>const Entity&amp; mc::gfx::Entity::getChild</definition>
-        <argsstring>(Index i) const </argsstring>
-        <name>getChild</name>
-        <param>
-          <type><ref refid="d9/df8/a00096_a5cd2bc023fe3e9f155cb6baf56f045d9_1a5cd2bc023fe3e9f155cb6baf56f045d9" kindref="member">Index</ref></type>
-          <declname>i</declname>
-        </param>
-        <briefdescription>
-<para><computeroutput>const</computeroutput> version of <ref refid="d7/d7a/a00016_add8148c0ea0a51b80f74cbb4a890902d_1add8148c0ea0a51b80f74cbb4a890902d" kindref="member">getChild(Index)</ref> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>i</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><computeroutput>Index</computeroutput> of the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Reference to the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> located at <computeroutput>i</computeroutput> </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>IndexOutOfBounds</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>if <computeroutput>i</computeroutput> is less than <computeroutput>0</computeroutput> or greater than <ref refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" kindref="member">size()</ref> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9502b14235e187539f6fd5da4090d474_1a9502b14235e187539f6fd5da4090d474" kindref="member">operator[]</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" kindref="member">indexOf(const Entity&amp;) const</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="300" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int mc::gfx::Entity::indexOf</definition>
-        <argsstring>(const Entity &amp;e) const </argsstring>
-        <name>indexOf</name>
-        <param>
-          <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-<para>Finds the location of an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> in this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>e</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Reference to an <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>Location of <computeroutput>e,</computeroutput> or -1 if <computeroutput>e</computeroutput> is not a child of this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9502b14235e187539f6fd5da4090d474_1a9502b14235e187539f6fd5da4090d474" kindref="member">operator[]</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_add8148c0ea0a51b80f74cbb4a890902d_1add8148c0ea0a51b80f74cbb4a890902d" kindref="member">getChild(Index)</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="309" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a4e87e3bf8fee9377f9ed711d8fe864b7_1a4e87e3bf8fee9377f9ed711d8fe864b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::vector&lt; <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> * &gt;::iterator</type>
-        <definition>std::vector&lt;Entity*&gt;::iterator mc::gfx::Entity::begin</definition>
-        <argsstring>()</argsstring>
-        <name>begin</name>
-        <briefdescription>
-<para>Gets an iterator over this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> for enchanced for loops. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Iterator of the first <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a52af677c4d992d9fcde7466cd6235e7b_1a52af677c4d992d9fcde7466cd6235e7b" kindref="member">end()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" kindref="member">size()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="317" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a52af677c4d992d9fcde7466cd6235e7b_1a52af677c4d992d9fcde7466cd6235e7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::vector&lt; <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> * &gt;::iterator</type>
-        <definition>std::vector&lt;Entity*&gt;::iterator mc::gfx::Entity::end</definition>
-        <argsstring>()</argsstring>
-        <name>end</name>
-        <briefdescription>
-<para>Gets an iterator over this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> for enchanced for loops. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Iterator of the last <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a4e87e3bf8fee9377f9ed711d8fe864b7_1a4e87e3bf8fee9377f9ed711d8fe864b7" kindref="member">begin()</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" kindref="member">size()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="324" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d9/df8/a00096_ad1c06461067735b3b17e0df612532c4e_1ad1c06461067735b3b17e0df612532c4e" kindref="member">Size</ref></type>
-        <definition>Size mc::gfx::Entity::size</definition>
-        <argsstring>() const </argsstring>
-        <name>size</name>
-        <briefdescription>
-<para>Calculates the amount of children this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> has. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>Size of this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="330" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c_1a9853f637166caef4ffcb231517cec29c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d1/d44/a00098_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" kindref="member">EntityProperties</ref> &amp;</type>
-        <definition>EntityProperties&amp; mc::gfx::Entity::getProperties</definition>
-        <argsstring>()</argsstring>
-        <name>getProperties</name>
-        <briefdescription>
-<para>Retrieves the <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>&apos;s</computeroutput> properties as a <computeroutput>ByteField</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<simplesect kind="return"><para>The current properties belonging to this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a54c70abc95778ab5fed11dd8bbc131ee_1a54c70abc95778ab5fed11dd8bbc131ee" kindref="member">getProperties() const</ref> </para></simplesect>
-<simplesect kind="see"><para>setProperties(ByteField&amp;) </para></simplesect>
-<simplesect kind="see"><para>getProperty(Index) const </para></simplesect>
-<simplesect kind="see"><para>setProperty(Index, bool) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="341" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a54c70abc95778ab5fed11dd8bbc131ee_1a54c70abc95778ab5fed11dd8bbc131ee" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d1/d44/a00098_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" kindref="member">EntityProperties</ref> &amp;</type>
-        <definition>const EntityProperties&amp; mc::gfx::Entity::getProperties</definition>
-        <argsstring>() const </argsstring>
-        <name>getProperties</name>
-        <briefdescription>
-<para><computeroutput>const</computeroutput> version of <computeroutput><ref refid="d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c_1a9853f637166caef4ffcb231517cec29c" kindref="member">getProperties()</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>The current properties belonging to this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para></simplesect>
-<simplesect kind="see"><para>setProperties(ByteField&amp;) </para></simplesect>
-<simplesect kind="see"><para>getProperty(Index) const </para></simplesect>
-<simplesect kind="see"><para>setProperty(Index, bool) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="349" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_af07ef60a815c87d686bf81dd92a817eb_1af07ef60a815c87d686bf81dd92a817eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setProperties</definition>
-        <argsstring>(EntityProperties &amp;b)</argsstring>
-        <name>setProperties</name>
-        <param>
-          <type><ref refid="d1/d44/a00098_a6179dec54918a9dc1c86f419bc000343_1a6179dec54918a9dc1c86f419bc000343" kindref="member">EntityProperties</ref> &amp;</type>
-          <declname>b</declname>
-        </param>
-        <briefdescription>
-<para>Set the properties for this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>b</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>New <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> properties </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c_1a9853f637166caef4ffcb231517cec29c" kindref="member">getProperties()</ref> </para></simplesect>
-<simplesect kind="see"><para>getProperty(Index) const </para></simplesect>
-<simplesect kind="see"><para>setProperty(Index, bool) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="358" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a46570a241b370527b9e8a3e0fb335248_1a46570a241b370527b9e8a3e0fb335248" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::Entity::getProperty</definition>
-        <argsstring>(const Byte position) const </argsstring>
-        <name>getProperty</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>position</declname>
-        </param>
-        <briefdescription>
-<para>Retrieve the value of a property. </para>        </briefdescription>
-        <detaileddescription>
-<para>Property consants start with <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>::</computeroutput> <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>position</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Location of the property based on a constant </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> or <computeroutput>false</computeroutput> based on the postition </para></simplesect>
-<simplesect kind="see"><para>setProperty(Index, bool) </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c_1a9853f637166caef4ffcb231517cec29c" kindref="member">getProperties()</ref> </para></simplesect>
-<simplesect kind="see"><para>setProperties(ByteField&amp;) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="368" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ab7d0bef41e5a511452abcdfdd15d3d78_1ab7d0bef41e5a511452abcdfdd15d3d78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setProperty</definition>
-        <argsstring>(const Byte position, const bool value)</argsstring>
-        <name>setProperty</name>
-        <param>
-          <type>const <ref refid="d9/df8/a00096_a7c6e1fbcd00ba27af6389a4a891788ca_1a7c6e1fbcd00ba27af6389a4a891788ca" kindref="member">Byte</ref></type>
-          <declname>position</declname>
-        </param>
-        <param>
-          <type>const bool</type>
-          <declname>value</declname>
-        </param>
-        <briefdescription>
-<para>Set a property to be <computeroutput>true</computeroutput> or <computeroutput>false</computeroutput>.Property consants start with <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref>::</computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>position</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Location of the property based on a constant </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>value</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Whether it is <computeroutput>true</computeroutput> or <computeroutput>false</computeroutput> </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para>getProperty(Index) const </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c_1a9853f637166caef4ffcb231517cec29c" kindref="member">getProperties()</ref> </para></simplesect>
-<simplesect kind="see"><para>setProperties(ByteField&amp;) </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="378" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ae5444c9fabdb47ce42720ef16139cb74_1ae5444c9fabdb47ce42720ef16139cb74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d2/d79/a00051" kindref="compound">TransformMatrix</ref> &amp;</type>
-        <definition>TransformMatrix&amp; mc::gfx::Entity::getTransformation</definition>
-        <argsstring>()</argsstring>
-        <name>getTransformation</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="383" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a200bbd6f007f227c7afe0c1afb8d0abb_1a200bbd6f007f227c7afe0c1afb8d0abb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d2/d79/a00051" kindref="compound">TransformMatrix</ref> &amp;</type>
-        <definition>const TransformMatrix&amp; mc::gfx::Entity::getTransformation</definition>
-        <argsstring>() const </argsstring>
-        <name>getTransformation</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="384" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a0f9b978bf306a200abca7bde5781475a_1a0f9b978bf306a200abca7bde5781475a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setTransformation</definition>
-        <argsstring>(TransformMatrix &amp;trans)</argsstring>
-        <name>setTransformation</name>
-        <param>
-          <type><ref refid="d2/d79/a00051" kindref="compound">TransformMatrix</ref> &amp;</type>
-          <declname>trans</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="388" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ac977cb0fc9ee90771c88bbdeaf234a03_1ac977cb0fc9ee90771c88bbdeaf234a03" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>Entity&amp; mc::gfx::Entity::translate</definition>
-        <argsstring>(float x, float y, float z=0.0f)</argsstring>
-        <name>translate</name>
-        <param>
-          <type>float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>float</type>
-          <declname>z</declname>
-          <defval>0.0f</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="393" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ad7e0ab13473c643feb43358074aab3c2_1ad7e0ab13473c643feb43358074aab3c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>Entity&amp; mc::gfx::Entity::rotate</definition>
-        <argsstring>(float x, float y, float z=0.0f)</argsstring>
-        <name>rotate</name>
-        <param>
-          <type>float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>float</type>
-          <declname>z</declname>
-          <defval>0.0f</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="397" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a14fda0e29efc83be1bd18b3cecb76747_1a14fda0e29efc83be1bd18b3cecb76747" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-        <definition>Entity&amp; mc::gfx::Entity::scale</definition>
-        <argsstring>(float x, float y, float z=1.0f)</argsstring>
-        <name>scale</name>
-        <param>
-          <type>float</type>
-          <declname>x</declname>
-        </param>
-        <param>
-          <type>float</type>
-          <declname>y</declname>
-        </param>
-        <param>
-          <type>float</type>
-          <declname>z</declname>
-          <defval>1.0f</defval>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="401" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_acf8ed144237208f06295e676c2b1f3e6_1acf8ed144237208f06295e676c2b1f3e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *const</type>
-        <definition>Entity* const mc::gfx::Entity::getParent</definition>
-        <argsstring>()</argsstring>
-        <name>getParent</name>
-        <briefdescription>
-<para>Retrieve this <computeroutput>Entitys</computeroutput> parent `Entity. </para>        </briefdescription>
-        <detaileddescription>
-<para><computeroutput> @return A</computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref><computeroutput>which contains</computeroutput>this` <simplesect kind="see"><para>Entity::hasChild(const Entity&amp;) const; </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="408" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a30676f4c85b44e30a9de343e07c26ae3_1a30676f4c85b44e30a9de343e07c26ae3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *const</type>
-        <definition>const Entity* const mc::gfx::Entity::getParent</definition>
-        <argsstring>() const </argsstring>
-        <name>getParent</name>
-        <briefdescription>
-<para><computeroutput>const</computeroutput> version of <computeroutput><ref refid="d7/d7a/a00016_acf8ed144237208f06295e676c2b1f3e6_1acf8ed144237208f06295e676c2b1f3e6" kindref="member">getParent()</ref></computeroutput> </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="return"><para>A <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> which contains <computeroutput>this</computeroutput> </para></simplesect>
-<simplesect kind="see"><para>Entity::hasChild(const Entity&amp;) const; </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="414" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_aff435e798a2cb43bd5d04d79f0d9a542_1aff435e798a2cb43bd5d04d79f0d9a542" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::Entity::hasParent</definition>
-        <argsstring>() const </argsstring>
-        <name>hasParent</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="416" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ab38c7d3dd07f986a04991c329eb591c2_1ab38c7d3dd07f986a04991c329eb591c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::addChild</definition>
-        <argsstring>(Entity &amp;e)</argsstring>
-        <name>addChild</name>
-        <param>
-          <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="421" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a1bd8b865710f86f1d80644151689d032_1a1bd8b865710f86f1d80644151689d032" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::addChild</definition>
-        <argsstring>(Entity *e)</argsstring>
-        <name>addChild</name>
-        <param>
-          <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *</type>
-          <declname>e</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="425" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a4e8e092a7f1ef167e014850f99515663_1a4e8e092a7f1ef167e014850f99515663" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::addComponent</definition>
-        <argsstring>(Component *action)</argsstring>
-        <name>addComponent</name>
-        <param>
-          <type><ref refid="df/d86/a00012" kindref="compound">Component</ref> *</type>
-          <declname>action</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="427" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a6aa74436ab9806d75212629acc58a736_1a6aa74436ab9806d75212629acc58a736" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::addComponent</definition>
-        <argsstring>(Component &amp;action)</argsstring>
-        <name>addComponent</name>
-        <param>
-          <type><ref refid="df/d86/a00012" kindref="compound">Component</ref> &amp;</type>
-          <declname>action</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="431" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ac0acc4ad4d83a961e77dad1c4bf97c7c_1ac0acc4ad4d83a961e77dad1c4bf97c7c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>std::vector&lt; <ref refid="df/d86/a00012" kindref="compound">Component</ref> * &gt;</type>
-        <definition>std::vector&lt;Component*&gt; mc::gfx::Entity::getComponents</definition>
-        <argsstring>()</argsstring>
-        <name>getComponents</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="432" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a1873ddf0dbe7421dd193906c46a15a22_1a1873ddf0dbe7421dd193906c46a15a22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>float &amp;</type>
-        <definition>float&amp; mc::gfx::Entity::getWidth</definition>
-        <argsstring>()</argsstring>
-        <name>getWidth</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="437" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a5e1ebb934e48d9a0e758ce46543ac913_1a5e1ebb934e48d9a0e758ce46543ac913" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const float &amp;</type>
-        <definition>const float&amp; mc::gfx::Entity::getWidth</definition>
-        <argsstring>() const </argsstring>
-        <name>getWidth</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="438" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ad7bb754e9ada2401d234d49ba85463ad_1ad7bb754e9ada2401d234d49ba85463ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setWidth</definition>
-        <argsstring>(const float &amp;s)</argsstring>
-        <name>setWidth</name>
-        <param>
-          <type>const float &amp;</type>
-          <declname>s</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="442" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a48ec951abc73bb80af1f3a474df33d93_1a48ec951abc73bb80af1f3a474df33d93" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>float &amp;</type>
-        <definition>float&amp; mc::gfx::Entity::getHeight</definition>
-        <argsstring>()</argsstring>
-        <name>getHeight</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="447" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_aa0aa51eeaa5f34ba09ed3e544b96645c_1aa0aa51eeaa5f34ba09ed3e544b96645c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const float &amp;</type>
-        <definition>const float&amp; mc::gfx::Entity::getHeight</definition>
-        <argsstring>() const </argsstring>
-        <name>getHeight</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="448" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a1d9f4a5586e05cf2315183be5062e84a_1a1d9f4a5586e05cf2315183be5062e84a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setHeight</definition>
-        <argsstring>(const float &amp;s)</argsstring>
-        <name>setHeight</name>
-        <param>
-          <type>const float &amp;</type>
-          <declname>s</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="452" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a5ed09eb98c83fa88f10892eb969cfb51_1a5ed09eb98c83fa88f10892eb969cfb51" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>float &amp;</type>
-        <definition>float&amp; mc::gfx::Entity::getX</definition>
-        <argsstring>()</argsstring>
-        <name>getX</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="457" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a8be1810d8c9150ba4b56dc4f419d0b5b_1a8be1810d8c9150ba4b56dc4f419d0b5b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const float &amp;</type>
-        <definition>const float&amp; mc::gfx::Entity::getX</definition>
-        <argsstring>() const </argsstring>
-        <name>getX</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="458" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ab1227baaa1d429be4d648e782dec6269_1ab1227baaa1d429be4d648e782dec6269" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setX</definition>
-        <argsstring>(const float &amp;newX)</argsstring>
-        <name>setX</name>
-        <param>
-          <type>const float &amp;</type>
-          <declname>newX</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="462" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ad8d0322ec7c44e409987cd891b9e37f8_1ad8d0322ec7c44e409987cd891b9e37f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>float &amp;</type>
-        <definition>float&amp; mc::gfx::Entity::getY</definition>
-        <argsstring>()</argsstring>
-        <name>getY</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="467" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a8e1622c328280ccf6d80bae0a80e2a99_1a8e1622c328280ccf6d80bae0a80e2a99" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const float &amp;</type>
-        <definition>const float&amp; mc::gfx::Entity::getY</definition>
-        <argsstring>() const </argsstring>
-        <name>getY</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="468" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a9339119f35be0f3147b994e48bf1d2d7_1a9339119f35be0f3147b994e48bf1d2d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setY</definition>
-        <argsstring>(const float &amp;newY)</argsstring>
-        <name>setY</name>
-        <param>
-          <type>const float &amp;</type>
-          <declname>newY</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="472" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a07610ae2fac37c6015a054c781b04918_1a07610ae2fac37c6015a054c781b04918" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::Entity::operator==</definition>
-        <argsstring>(const Entity &amp;other) const  noexcept</argsstring>
-        <name>operator==</name>
-        <param>
-          <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Entities</computeroutput> have the same children, parent, and properties. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>An <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> compare this one to </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>true</computeroutput> if they are equal </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a54c70abc95778ab5fed11dd8bbc131ee_1a54c70abc95778ab5fed11dd8bbc131ee" kindref="member">getProperties() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a30676f4c85b44e30a9de343e07c26ae3_1a30676f4c85b44e30a9de343e07c26ae3" kindref="member">getParent() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a38b3c5311cb39e76f2b24f145323c130_1a38b3c5311cb39e76f2b24f145323c130" kindref="member">getChildren() const</ref> </para></simplesect>
-<simplesect kind="see"><para>operator!= </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="483" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a8aaef736185a43f4c700c7f65dcd7d3f_1a8aaef736185a43f4c700c7f65dcd7d3f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>bool</type>
-        <definition>bool mc::gfx::Entity::operator!=</definition>
-        <argsstring>(const Entity &amp;other) const  noexcept</argsstring>
-        <name>operator!=</name>
-        <param>
-          <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> &amp;</type>
-          <declname>other</declname>
-        </param>
-        <briefdescription>
-<para>Compares if 2 <computeroutput>Entities</computeroutput> don&apos;t have the same children, parent, and properties. </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>other</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>An <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> compare this one to </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para><computeroutput>false</computeroutput> if they are equal </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a54c70abc95778ab5fed11dd8bbc131ee_1a54c70abc95778ab5fed11dd8bbc131ee" kindref="member">getProperties() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a30676f4c85b44e30a9de343e07c26ae3_1a30676f4c85b44e30a9de343e07c26ae3" kindref="member">getParent() const</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a38b3c5311cb39e76f2b24f145323c130_1a38b3c5311cb39e76f2b24f145323c130" kindref="member">getChildren() const</ref> </para></simplesect>
-<simplesect kind="see"><para>operator== </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="493" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ab3e19a2a0c0a1663a7b63feea364d3aa_1ab3e19a2a0c0a1663a7b63feea364d3aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *</type>
-        <definition>Entity* mc::gfx::Entity::getRootParent</definition>
-        <argsstring>()</argsstring>
-        <name>getRootParent</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="498" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a72a61c49f0e51cad4c69d72def629689_1a72a61c49f0e51cad4c69d72def629689" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>const <ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *</type>
-        <definition>const Entity* mc::gfx::Entity::getRootParent</definition>
-        <argsstring>() const </argsstring>
-        <name>getRootParent</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="499" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_acad662b2fc7163c6c36f4db9f194982e_1acad662b2fc7163c6c36f4db9f194982e" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::clean</definition>
-        <argsstring>()</argsstring>
-        <name>clean</name>
-        <reimplementedby refid="d9/d2e/a00056_1a619ca85062e7a30ea1264d19995221fe">clean</reimplementedby>
-        <reimplementedby refid="d7/de0/a00022_a14a9742f62cedec9f8dcaf74ade5124d_1a14a9742f62cedec9f8dcaf74ade5124d">clean</reimplementedby>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="505" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a85a822baaae376b546e66b098b128932_1a85a822baaae376b546e66b098b128932" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::reset</definition>
-        <argsstring>()</argsstring>
-        <name>reset</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="510" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ad19419a5ae7483fad138e497bf7035a3_1ad19419a5ae7483fad138e497bf7035a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::makeDirty</definition>
-        <argsstring>()</argsstring>
-        <name>makeDirty</name>
-        <briefdescription>
-<para>Makes this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty and the root level parent dirty. </para>        </briefdescription>
-        <detaileddescription>
-<para>Should be used over <computeroutput>setProperty(Entity::DIRTY,true)</computeroutput> as it updaets the root parent. <simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="516" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-func">
-      <memberdef kind="function" id="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::update</definition>
-        <argsstring>()</argsstring>
-        <name>update</name>
-        <reimplementedby refid="d9/d2e/a00056_a4e30b4c62fb168a976063b265dd50c38_1a4e30b4c62fb168a976063b265dd50c38">update</reimplementedby>
-        <briefdescription>
-<para>Should be called a by <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> when <computeroutput><ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">MACE.update()</ref></computeroutput> is called. </para>        </briefdescription>
-        <detaileddescription>
-<para>Calls <computeroutput><ref refid="d7/d7a/a00016_ac66cb6966baa172bf575f4a0ff466e73_1ac66cb6966baa172bf575f4a0ff466e73" kindref="member">onUpdate()</ref></computeroutput>. </para><para>Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override <computeroutput><ref refid="d7/d7a/a00016_ac66cb6966baa172bf575f4a0ff466e73_1ac66cb6966baa172bf575f4a0ff466e73" kindref="member">onUpdate()</ref></computeroutput> <parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>InitializationError</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the property <computeroutput><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" kindref="member">Entity::INIT</ref></computeroutput> is false, meaning <computeroutput><ref refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">init()</ref></computeroutput> was not called. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="524" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::init</definition>
-        <argsstring>()</argsstring>
-        <name>init</name>
-        <reimplementedby refid="d9/d2e/a00056_aa14fd4f80a3b582f1584ecacbf541f54_1aa14fd4f80a3b582f1584ecacbf541f54">init</reimplementedby>
-        <reimplementedby refid="d7/de0/a00022_aa28289505408ae0c2c1f85d0ee49338d_1aa28289505408ae0c2c1f85d0ee49338d">init</reimplementedby>
-        <briefdescription>
-<para>Should be called a by <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> when <computeroutput><ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">MACE.init()</ref></computeroutput> is called. </para>        </briefdescription>
-        <detaileddescription>
-<para>Calls <computeroutput><ref refid="d7/d7a/a00016_a11cf6a76902a6e19eee7a002468cb118_1a11cf6a76902a6e19eee7a002468cb118" kindref="member">onInit()</ref></computeroutput> </para><para>Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override <computeroutput><ref refid="d7/d7a/a00016_a11cf6a76902a6e19eee7a002468cb118_1a11cf6a76902a6e19eee7a002468cb118" kindref="member">onInit()</ref></computeroutput> <simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>InitializationError</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the property <computeroutput><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" kindref="member">Entity::INIT</ref></computeroutput> is true, meaning <computeroutput><ref refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">init()</ref></computeroutput> has already been called. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="533" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::destroy</definition>
-        <argsstring>()</argsstring>
-        <name>destroy</name>
-        <reimplementedby refid="d9/d2e/a00056_a588d592078a0b1ca34b3cec75a2f4ae3_1a588d592078a0b1ca34b3cec75a2f4ae3">destroy</reimplementedby>
-        <reimplementedby refid="d7/de0/a00022_a099e552dfbea5da421d7a661e9ed2e0d_1a099e552dfbea5da421d7a661e9ed2e0d">destroy</reimplementedby>
-        <briefdescription>
-<para>Should be called a by <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> when <computeroutput><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">MACE.destroy()</ref></computeroutput> is called. </para>        </briefdescription>
-        <detaileddescription>
-<para>Calls <computeroutput><ref refid="d7/d7a/a00016_a9ed783f8417120704dfd5988bd037f14_1a9ed783f8417120704dfd5988bd037f14" kindref="member">onDestroy()</ref></computeroutput>. Sets <computeroutput><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" kindref="member">Entity::INIT</ref></computeroutput> to be false </para><para>Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override <computeroutput><ref refid="d7/d7a/a00016_a9ed783f8417120704dfd5988bd037f14_1a9ed783f8417120704dfd5988bd037f14" kindref="member">onDestroy()</ref></computeroutput> <simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>InitializationError</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the property <computeroutput><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" kindref="member">Entity::INIT</ref></computeroutput> is false, meaning <computeroutput><ref refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">init()</ref></computeroutput> was not called. </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="542" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a27bda0c0dd0fff4adbe4fe04e27bc5f6_1a27bda0c0dd0fff4adbe4fe04e27bc5f6" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::render</definition>
-        <argsstring>()</argsstring>
-        <name>render</name>
-        <briefdescription>
-<para>Should be called by a <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> when the graphical <computeroutput>Window</computeroutput> clears the frame. </para>        </briefdescription>
-        <detaileddescription>
-<para>Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override <computeroutput><ref refid="d7/d7a/a00016_a14defaca92f04c32b892cbc08263d3ac_1a14defaca92f04c32b892cbc08263d3ac" kindref="member">onRender()</ref></computeroutput> <simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">Entity::update()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="551" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a71b165d76cba0c689a85acf2d5b2b2fb_1a71b165d76cba0c689a85acf2d5b2b2fb" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::hover</definition>
-        <argsstring>()</argsstring>
-        <name>hover</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="557" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ac66cb6966baa172bf575f4a0ff466e73_1ac66cb6966baa172bf575f4a0ff466e73" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::onUpdate</definition>
-        <argsstring>()=0</argsstring>
-        <name>onUpdate</name>
-        <reimplementedby refid="d9/d2e/a00056_1a5a52d643a313828445ab946157233e1c">onUpdate</reimplementedby>
-        <reimplementedby refid="dc/de2/a00024_abaec388596f6c4743b29f20a5745ffb2_1abaec388596f6c4743b29f20a5745ffb2">onUpdate</reimplementedby>
-        <reimplementedby refid="de/d8c/a00036_a0f7295f7b348e774d91c51a071f6484c_1a0f7295f7b348e774d91c51a071f6484c">onUpdate</reimplementedby>
-        <reimplementedby refid="dc/d3c/a00028_af6672c8365e11578b8110dd75e63cc83_1af6672c8365e11578b8110dd75e63cc83">onUpdate</reimplementedby>
-        <reimplementedby refid="d2/dee/a00049_a56a35ff326b587717fd5b2e4fcc338c6_1a56a35ff326b587717fd5b2e4fcc338c6">onUpdate</reimplementedby>
-        <reimplementedby refid="d3/d52/a00023_a8f869f7d0134c4b2f3d22098fe35c463_1a8f869f7d0134c4b2f3d22098fe35c463">onUpdate</reimplementedby>
-        <briefdescription>
-<para>When <computeroutput><ref refid="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" kindref="member">Entity.update()</ref></computeroutput> is called, <computeroutput><ref refid="d7/d7a/a00016_ac66cb6966baa172bf575f4a0ff466e73_1ac66cb6966baa172bf575f4a0ff466e73" kindref="member">onUpdate()</ref></computeroutput> is called on all of it&apos;s children. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d4/d3a/a00101_a857b4aaf5098870c36994338ded0eb88_1a857b4aaf5098870c36994338ded0eb88" kindref="member">MACE::update()</ref> </para></simplesect>
-<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="564" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a11cf6a76902a6e19eee7a002468cb118_1a11cf6a76902a6e19eee7a002468cb118" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::onInit</definition>
-        <argsstring>()=0</argsstring>
-        <name>onInit</name>
-        <reimplementedby refid="d9/d2e/a00056_1afe8017c13dbe3547c919f8bdaf415b2d">onInit</reimplementedby>
-        <reimplementedby refid="dc/de2/a00024_a95b76f7d1c5cd210e1ed9597ed2786ed_1a95b76f7d1c5cd210e1ed9597ed2786ed">onInit</reimplementedby>
-        <reimplementedby refid="de/d8c/a00036_a15aead9932b0d70ce860de47c110d5ab_1a15aead9932b0d70ce860de47c110d5ab">onInit</reimplementedby>
-        <reimplementedby refid="dc/d3c/a00028_ad7bb4f8d7ba9242aab959c73ac3ad4b9_1ad7bb4f8d7ba9242aab959c73ac3ad4b9">onInit</reimplementedby>
-        <reimplementedby refid="d2/dee/a00049_ac042cfee827b587c1d875b13553a1ea0_1ac042cfee827b587c1d875b13553a1ea0">onInit</reimplementedby>
-        <reimplementedby refid="d3/d52/a00023_a71c5c6370f8863b71e10602c53ca9933_1a71c5c6370f8863b71e10602c53ca9933">onInit</reimplementedby>
-        <briefdescription>
-<para>When <computeroutput><ref refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" kindref="member">Entity.init()</ref></computeroutput> is called, <computeroutput><ref refid="d7/d7a/a00016_a11cf6a76902a6e19eee7a002468cb118_1a11cf6a76902a6e19eee7a002468cb118" kindref="member">onInit()</ref></computeroutput> is called on all of it&apos;s children. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d4/d3a/a00101_a87ae59d4d843c7d01b12f5dadc36c01a_1a87ae59d4d843c7d01b12f5dadc36c01a" kindref="member">MACE::init()</ref> </para></simplesect>
-<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="571" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a9ed783f8417120704dfd5988bd037f14_1a9ed783f8417120704dfd5988bd037f14" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::onDestroy</definition>
-        <argsstring>()=0</argsstring>
-        <name>onDestroy</name>
-        <reimplementedby refid="d9/d2e/a00056_1acf472772d2c451ee5969e87be5b5b483">onDestroy</reimplementedby>
-        <reimplementedby refid="dc/de2/a00024_acf650d2749684894437cae0790792ee0_1acf650d2749684894437cae0790792ee0">onDestroy</reimplementedby>
-        <reimplementedby refid="de/d8c/a00036_ae72c2da62383fc4398b2cf9bdf089b41_1ae72c2da62383fc4398b2cf9bdf089b41">onDestroy</reimplementedby>
-        <reimplementedby refid="dc/d3c/a00028_a9ea872fd7fb3e3831e187f2508ce287f_1a9ea872fd7fb3e3831e187f2508ce287f">onDestroy</reimplementedby>
-        <reimplementedby refid="d2/dee/a00049_a60e964f0bad9c5af146dbdbda03dc7fe_1a60e964f0bad9c5af146dbdbda03dc7fe">onDestroy</reimplementedby>
-        <reimplementedby refid="d3/d52/a00023_a8a8ea1d49198347b9fe3fa10dfd441c7_1a8a8ea1d49198347b9fe3fa10dfd441c7">onDestroy</reimplementedby>
-        <briefdescription>
-<para>When <computeroutput><ref refid="d7/d7a/a00016_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" kindref="member">Entity.destroy()</ref></computeroutput> is called, <computeroutput><ref refid="d7/d7a/a00016_a9ed783f8417120704dfd5988bd037f14_1a9ed783f8417120704dfd5988bd037f14" kindref="member">onDestroy()</ref></computeroutput> is called on all of it&apos;s children. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="see"><para><ref refid="d4/d3a/a00101_a2d1213f9aab871e066d5dbfb316c3dc2_1a2d1213f9aab871e066d5dbfb316c3dc2" kindref="member">MACE::destroy()</ref> </para></simplesect>
-<simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="578" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_a14defaca92f04c32b892cbc08263d3ac_1a14defaca92f04c32b892cbc08263d3ac" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::onRender</definition>
-        <argsstring>()=0</argsstring>
-        <name>onRender</name>
-        <reimplementedby refid="d9/d2e/a00056_1a522b9db5f6d677afe13335b9e61b2372">onRender</reimplementedby>
-        <reimplementedby refid="dc/de2/a00024_ae3e0d10e13b40d41620db2105a9c5a60_1ae3e0d10e13b40d41620db2105a9c5a60">onRender</reimplementedby>
-        <reimplementedby refid="de/d8c/a00036_ae2c63d5afb1a1e137b9983f6c205b1f2_1ae2c63d5afb1a1e137b9983f6c205b1f2">onRender</reimplementedby>
-        <reimplementedby refid="dc/d3c/a00028_ae674e77e286162557505f7542ccd5a32_1ae674e77e286162557505f7542ccd5a32">onRender</reimplementedby>
-        <reimplementedby refid="d2/dee/a00049_a91120d5946147b49712bbf2bd121e511_1a91120d5946147b49712bbf2bd121e511">onRender</reimplementedby>
-        <reimplementedby refid="d3/d52/a00023_a535ae64179ee8945415b14dbbdcf5e42_1a535ae64179ee8945415b14dbbdcf5e42">onRender</reimplementedby>
-        <briefdescription>
-<para>When <computeroutput><ref refid="d7/d7a/a00016_a27bda0c0dd0fff4adbe4fe04e27bc5f6_1a27bda0c0dd0fff4adbe4fe04e27bc5f6" kindref="member">Entity.render()</ref></computeroutput> is called, <computeroutput><ref refid="d7/d7a/a00016_a14defaca92f04c32b892cbc08263d3ac_1a14defaca92f04c32b892cbc08263d3ac" kindref="member">onRender()</ref></computeroutput> is called on all of it&apos;s children. </para>        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="585" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_aeadffde284327eea1ba89ce687f28dd9_1aeadffde284327eea1ba89ce687f28dd9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::onClean</definition>
-        <argsstring>()</argsstring>
-        <name>onClean</name>
-        <reimplementedby refid="dc/de2/a00024_a93b6986479071096bad4fc761763bbf5_1a93b6986479071096bad4fc761763bbf5">onClean</reimplementedby>
-        <reimplementedby refid="de/d8c/a00036_aa8dbe151ac87763912a61ad904fdb041_1aa8dbe151ac87763912a61ad904fdb041">onClean</reimplementedby>
-        <reimplementedby refid="dc/d3c/a00028_a49c2395a12cd517261de30211ff22158_1a49c2395a12cd517261de30211ff22158">onClean</reimplementedby>
-        <reimplementedby refid="d2/dee/a00049_a96578557ae8a24c1fd185e078b1b2adb_1a96578557ae8a24c1fd185e078b1b2adb">onClean</reimplementedby>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="591" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_ac33575a022984f3b0e7d3327d3eb5da9_1ac33575a022984f3b0e7d3327d3eb5da9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void mc::gfx::Entity::onHover</definition>
-        <argsstring>()</argsstring>
-        <name>onHover</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para><simplesect kind="warning"><para>This should only be used internally or by advanced users. Misuse can cause undefined behavior </para></simplesect>
-<simplesect kind="attention"><para>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </para></simplesect>
-<parameterlist kind="exception"><parameteritem>
-<parameternamelist>
-<parametername>GL_INVALID_OPERATION</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>If the current thread does not have an OpenGL context </para></parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="597" column="1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="private-func">
-      <memberdef kind="function" id="d7/d7a/a00016_1a00d40394078cb8f1abc7461bad968fb3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::kill</definition>
-        <argsstring>()</argsstring>
-        <name>kill</name>
-        <briefdescription>
-<para>Automatically called when <computeroutput>Entity::PROPERTY_DEAD</computeroutput> is true. </para>        </briefdescription>
-        <detaileddescription>
-<para>Removes this entity from it&apos;s parent, and calls it&apos;s <computeroutput><ref refid="d7/d7a/a00016_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" kindref="member">destroy()</ref></computeroutput> method. <simplesect kind="note"><para>This will make this <computeroutput><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref></computeroutput> dirty. </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" kindref="member">Entity::DIRTY</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d7/d7a/a00016_acf8ed144237208f06295e676c2b1f3e6_1acf8ed144237208f06295e676c2b1f3e6" kindref="member">getParent()</ref> </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="623" column="1"/>
-      </memberdef>
-      <memberdef kind="function" id="d7/d7a/a00016_1ac8c1a507bcd3fa79509a17d17d2822c0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void mc::gfx::Entity::setParent</definition>
-        <argsstring>(Entity *parent)</argsstring>
-        <name>setParent</name>
-        <param>
-          <type><ref refid="d7/d7a/a00016" kindref="compound">Entity</ref> *</type>
-          <declname>parent</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="include/MACE/Graphics/Entity.h" line="625" column="1"/>
+        <location file="include/MACE/Graphics/OGL.h" line="197" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="197" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>Abstract superclass for all graphical objects. </para>    </briefdescription>
+<para>Special sslBuffer with no extra semantics to be used as a proxy in copying. </para>    </briefdescription>
     <detaileddescription>
-<para>Contains basic information like position, and provides a standard interface for communicating with graphical objects. </para><para>Prefer using <computeroutput><ref refid="df/d86/a00012" kindref="compound">Component</ref></computeroutput> instead of extending this class for one-time functionality. <simplesect kind="see"><para><ref refid="d7/de0/a00022" kindref="compound">GraphicsEntity</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="d4/d51/a00017" kindref="compound">Entity2D</ref> </para></simplesect>
-<simplesect kind="see"><para><ref refid="df/d86/a00012" kindref="compound">Component</ref> </para></simplesect>
+<para>Instead of using an existing sslBuffer with data to copy data, this sslBuffer can be used easily.</para><para><simplesect kind="see"><para><ulink url="https://www.opengl.org/wiki/Buffer_Object::Copying">https://www.opengl.org/wiki/Buffer_Object::Copying</ulink> </para></simplesect>
+<simplesect kind="see"><para>Buffer::copyData(Buffer, ptrdiff_t, Index, Index); </para></simplesect>
+<simplesect kind="see"><para><ref refid="d7/d7a/a00016" kindref="compound">CopyWriteBuffer</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="da/da0/a00009" kindref="compound">Buffer</ref> </para></simplesect>
+<simplesect kind="see"><para><ref refid="dd/d1b/a00015" kindref="compound">CopyReadBuffer</ref> </para></simplesect>
 </para>    </detaileddescription>
     <inheritancegraph>
-      <node id="401">
-        <label>mc::gfx::ProgressBar</label>
-        <link refid="de/d8c/a00036"/>
-        <childnode refid="398" relation="public-inheritance">
-        </childnode>
+      <node id="629">
+        <label>mc::gfx::ogl::Object</label>
+        <link refid="d4/d8c/a00035"/>
       </node>
-      <node id="403">
-        <label>mc::gfx::Group</label>
-        <link refid="d3/d52/a00023"/>
-        <childnode refid="396" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="404">
-        <label>mc::os::WindowModule</label>
-        <link refid="d9/d2e/a00056"/>
-        <childnode refid="396" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="396">
-        <label>mc::gfx::Entity</label>
+      <node id="627">
+        <label>mc::gfx::ogl::CopyWriteBuffer</label>
         <link refid="d7/d7a/a00016"/>
-      </node>
-      <node id="398">
-        <label>mc::gfx::Entity2D</label>
-        <link refid="d4/d51/a00017"/>
-        <childnode refid="397" relation="public-inheritance">
+        <childnode refid="628" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="400">
-        <label>mc::gfx::Letter</label>
-        <link refid="dc/d3c/a00028"/>
-        <childnode refid="398" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="399">
-        <label>mc::gfx::Image</label>
-        <link refid="dc/de2/a00024"/>
-        <childnode refid="398" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="397">
-        <label>mc::gfx::GraphicsEntity</label>
-        <link refid="d7/de0/a00022"/>
-        <childnode refid="396" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="402">
-        <label>mc::gfx::Text</label>
-        <link refid="d2/dee/a00049"/>
-        <childnode refid="398" relation="public-inheritance">
+      <node id="628">
+        <label>mc::gfx::ogl::Buffer</label>
+        <link refid="da/da0/a00009"/>
+        <childnode refid="629" relation="public-inheritance">
         </childnode>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="408">
-        <label>T</label>
+      <node id="632">
+        <label>mc::gfx::ogl::Object</label>
+        <link refid="d4/d8c/a00035"/>
       </node>
-      <node id="407">
-        <label>std::vector&lt; T &gt;</label>
-        <childnode refid="408" relation="usage">
-          <edgelabel>elements</edgelabel>
-        </childnode>
-      </node>
-      <node id="406">
-        <label>std::vector&lt; mc::gfx::Entity * &gt;</label>
-        <childnode refid="405" relation="usage">
-          <edgelabel>elements</edgelabel>
-        </childnode>
-        <childnode refid="407" relation="template-instance">
-          <edgelabel>&lt; mc::gfx::Entity * &gt;</edgelabel>
-        </childnode>
-      </node>
-      <node id="405">
-        <label>mc::gfx::Entity</label>
+      <node id="630">
+        <label>mc::gfx::ogl::CopyWriteBuffer</label>
         <link refid="d7/d7a/a00016"/>
-        <childnode refid="406" relation="usage">
-          <edgelabel>children</edgelabel>
-        </childnode>
-        <childnode refid="409" relation="usage">
-          <edgelabel>transformation</edgelabel>
+        <childnode refid="631" relation="public-inheritance">
         </childnode>
       </node>
-      <node id="410">
-        <label>mc::Vector&lt; float, 3 &gt;</label>
-        <link refid="dc/dee/a00053"/>
-        <childnode refid="411" relation="template-instance">
-          <edgelabel>&lt; float, 3 &gt;</edgelabel>
-        </childnode>
-      </node>
-      <node id="409">
-        <label>mc::TransformMatrix</label>
-        <link refid="d2/d79/a00051"/>
-        <childnode refid="410" relation="usage">
-          <edgelabel>rotation</edgelabel>
-          <edgelabel>scaler</edgelabel>
-          <edgelabel>translation</edgelabel>
-        </childnode>
-      </node>
-      <node id="411">
-        <label>mc::Vector&lt; T, N &gt;</label>
-        <link refid="dc/dee/a00053"/>
-        <childnode refid="408" relation="usage">
-          <edgelabel>content</edgelabel>
+      <node id="631">
+        <label>mc::gfx::ogl::Buffer</label>
+        <link refid="da/da0/a00009"/>
+        <childnode refid="632" relation="public-inheritance">
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="include/MACE/Graphics/Entity.h" line="125" column="1" bodyfile="include/MACE/Graphics/Entity.h" bodystart="125" bodyend="626"/>
+    <location file="include/MACE/Graphics/OGL.h" line="981" column="1" bodyfile="include/MACE/Graphics/OGL.h" bodystart="981" bodyend="987"/>
     <listofallmembers>
-      <member refid="d7/d7a/a00016_ab38c7d3dd07f986a04991c329eb591c2_1ab38c7d3dd07f986a04991c329eb591c2" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>addChild</name></member>
-      <member refid="d7/d7a/a00016_a1bd8b865710f86f1d80644151689d032_1a1bd8b865710f86f1d80644151689d032" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>addChild</name></member>
-      <member refid="d7/d7a/a00016_a4e8e092a7f1ef167e014850f99515663_1a4e8e092a7f1ef167e014850f99515663" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>addComponent</name></member>
-      <member refid="d7/d7a/a00016_a6aa74436ab9806d75212629acc58a736_1a6aa74436ab9806d75212629acc58a736" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>addComponent</name></member>
-      <member refid="d7/d7a/a00016_a4e87e3bf8fee9377f9ed711d8fe864b7_1a4e87e3bf8fee9377f9ed711d8fe864b7" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>begin</name></member>
-      <member refid="d7/d7a/a00016_a843be07a7155289c9769e128aed7efdc_1a843be07a7155289c9769e128aed7efdc" prot="protected" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>children</name></member>
-      <member refid="d7/d7a/a00016_acad662b2fc7163c6c36f4db9f194982e_1acad662b2fc7163c6c36f4db9f194982e" prot="public" virt="virtual"><scope>mc::gfx::Entity</scope><name>clean</name></member>
-      <member refid="d7/d7a/a00016_a0dfa57638b24bc0d82d42ccb275ca87e_1a0dfa57638b24bc0d82d42ccb275ca87e" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>clearChildren</name></member>
-      <member refid="d7/d7a/a00016_1a65a429a726c295fbadce010072135c2a" prot="private" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>components</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a24af0038cdbff90b6ef551f68e5c0bd2" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>DEAD</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5aeb563d4051c62d1209ab82b7d9146858" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>DEFAULT_PROPERTIES</name></member>
-      <member refid="d7/d7a/a00016_a07a66f2c02ff3b29f45f0a1c200e3cb3_1a07a66f2c02ff3b29f45f0a1c200e3cb3" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>destroy</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a2fe74f34469112558859753232475314" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>DIRTY</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a90e56e1021ac7b7be9a1e2ef6431a77f" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>DISABLED</name></member>
-      <member refid="d7/d7a/a00016_a52af677c4d992d9fcde7466cd6235e7b_1a52af677c4d992d9fcde7466cd6235e7b" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>end</name></member>
-      <member refid="d7/d7a/a00016_a9f8638fff5431b7c91034e76d44fe12b_1a9f8638fff5431b7c91034e76d44fe12b" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>Entity</name></member>
-      <member refid="d7/d7a/a00016_a2be93085d78b0c86a0acf3fb6ca1a4bb_1a2be93085d78b0c86a0acf3fb6ca1a4bb" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>Entity</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>EntityProperty</name></member>
-      <member refid="d7/d7a/a00016_add8148c0ea0a51b80f74cbb4a890902d_1add8148c0ea0a51b80f74cbb4a890902d" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getChild</name></member>
-      <member refid="d7/d7a/a00016_a9a1b5fa1fd897da0acdf91dd3085561d_1a9a1b5fa1fd897da0acdf91dd3085561d" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getChild</name></member>
-      <member refid="d7/d7a/a00016_a38b3c5311cb39e76f2b24f145323c130_1a38b3c5311cb39e76f2b24f145323c130" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getChildren</name></member>
-      <member refid="d7/d7a/a00016_ac0acc4ad4d83a961e77dad1c4bf97c7c_1ac0acc4ad4d83a961e77dad1c4bf97c7c" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getComponents</name></member>
-      <member refid="d7/d7a/a00016_a48ec951abc73bb80af1f3a474df33d93_1a48ec951abc73bb80af1f3a474df33d93" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getHeight</name></member>
-      <member refid="d7/d7a/a00016_aa0aa51eeaa5f34ba09ed3e544b96645c_1aa0aa51eeaa5f34ba09ed3e544b96645c" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getHeight</name></member>
-      <member refid="d7/d7a/a00016_acf8ed144237208f06295e676c2b1f3e6_1acf8ed144237208f06295e676c2b1f3e6" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getParent</name></member>
-      <member refid="d7/d7a/a00016_a30676f4c85b44e30a9de343e07c26ae3_1a30676f4c85b44e30a9de343e07c26ae3" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getParent</name></member>
-      <member refid="d7/d7a/a00016_a9853f637166caef4ffcb231517cec29c_1a9853f637166caef4ffcb231517cec29c" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getProperties</name></member>
-      <member refid="d7/d7a/a00016_a54c70abc95778ab5fed11dd8bbc131ee_1a54c70abc95778ab5fed11dd8bbc131ee" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getProperties</name></member>
-      <member refid="d7/d7a/a00016_a46570a241b370527b9e8a3e0fb335248_1a46570a241b370527b9e8a3e0fb335248" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getProperty</name></member>
-      <member refid="d7/d7a/a00016_ab3e19a2a0c0a1663a7b63feea364d3aa_1ab3e19a2a0c0a1663a7b63feea364d3aa" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getRootParent</name></member>
-      <member refid="d7/d7a/a00016_a72a61c49f0e51cad4c69d72def629689_1a72a61c49f0e51cad4c69d72def629689" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getRootParent</name></member>
-      <member refid="d7/d7a/a00016_ae5444c9fabdb47ce42720ef16139cb74_1ae5444c9fabdb47ce42720ef16139cb74" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getTransformation</name></member>
-      <member refid="d7/d7a/a00016_a200bbd6f007f227c7afe0c1afb8d0abb_1a200bbd6f007f227c7afe0c1afb8d0abb" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getTransformation</name></member>
-      <member refid="d7/d7a/a00016_a1873ddf0dbe7421dd193906c46a15a22_1a1873ddf0dbe7421dd193906c46a15a22" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getWidth</name></member>
-      <member refid="d7/d7a/a00016_a5e1ebb934e48d9a0e758ce46543ac913_1a5e1ebb934e48d9a0e758ce46543ac913" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getWidth</name></member>
-      <member refid="d7/d7a/a00016_a5ed09eb98c83fa88f10892eb969cfb51_1a5ed09eb98c83fa88f10892eb969cfb51" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getX</name></member>
-      <member refid="d7/d7a/a00016_a8be1810d8c9150ba4b56dc4f419d0b5b_1a8be1810d8c9150ba4b56dc4f419d0b5b" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getX</name></member>
-      <member refid="d7/d7a/a00016_ad8d0322ec7c44e409987cd891b9e37f8_1ad8d0322ec7c44e409987cd891b9e37f8" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getY</name></member>
-      <member refid="d7/d7a/a00016_a8e1622c328280ccf6d80bae0a80e2a99_1a8e1622c328280ccf6d80bae0a80e2a99" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>getY</name></member>
-      <member refid="d7/d7a/a00016_ac0903b8c965b0438d8ac37c14164787c_1ac0903b8c965b0438d8ac37c14164787c" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>hasChild</name></member>
-      <member refid="d7/d7a/a00016_aff435e798a2cb43bd5d04d79f0d9a542_1aff435e798a2cb43bd5d04d79f0d9a542" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>hasParent</name></member>
-      <member refid="d7/d7a/a00016_a71b165d76cba0c689a85acf2d5b2b2fb_1a71b165d76cba0c689a85acf2d5b2b2fb" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>hover</name></member>
-      <member refid="d7/d7a/a00016_a25de57983646d31beed78459847f6056_1a25de57983646d31beed78459847f6056" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>indexOf</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5afb2b5f5f538b52e48c87b6db652e14d4" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>INIT</name></member>
-      <member refid="d7/d7a/a00016_a62ce605be3c0681f7f7d1a9b8f60d91c_1a62ce605be3c0681f7f7d1a9b8f60d91c" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>init</name></member>
-      <member refid="d7/d7a/a00016_1a00d40394078cb8f1abc7461bad968fb3" prot="private" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>kill</name></member>
-      <member refid="d7/d7a/a00016_ad19419a5ae7483fad138e497bf7035a3_1ad19419a5ae7483fad138e497bf7035a3" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>makeDirty</name></member>
-      <member refid="d7/d7a/a00016_aeadffde284327eea1ba89ce687f28dd9_1aeadffde284327eea1ba89ce687f28dd9" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>onClean</name></member>
-      <member refid="d7/d7a/a00016_a9ed783f8417120704dfd5988bd037f14_1a9ed783f8417120704dfd5988bd037f14" prot="protected" virt="pure-virtual"><scope>mc::gfx::Entity</scope><name>onDestroy</name></member>
-      <member refid="d7/d7a/a00016_ac33575a022984f3b0e7d3327d3eb5da9_1ac33575a022984f3b0e7d3327d3eb5da9" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>onHover</name></member>
-      <member refid="d7/d7a/a00016_a11cf6a76902a6e19eee7a002468cb118_1a11cf6a76902a6e19eee7a002468cb118" prot="protected" virt="pure-virtual"><scope>mc::gfx::Entity</scope><name>onInit</name></member>
-      <member refid="d7/d7a/a00016_a14defaca92f04c32b892cbc08263d3ac_1a14defaca92f04c32b892cbc08263d3ac" prot="protected" virt="pure-virtual"><scope>mc::gfx::Entity</scope><name>onRender</name></member>
-      <member refid="d7/d7a/a00016_ac66cb6966baa172bf575f4a0ff466e73_1ac66cb6966baa172bf575f4a0ff466e73" prot="protected" virt="pure-virtual"><scope>mc::gfx::Entity</scope><name>onUpdate</name></member>
-      <member refid="d7/d7a/a00016_a8aaef736185a43f4c700c7f65dcd7d3f_1a8aaef736185a43f4c700c7f65dcd7d3f" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>operator!=</name></member>
-      <member refid="d7/d7a/a00016_a07610ae2fac37c6015a054c781b04918_1a07610ae2fac37c6015a054c781b04918" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>operator==</name></member>
-      <member refid="d7/d7a/a00016_a9502b14235e187539f6fd5da4090d474_1a9502b14235e187539f6fd5da4090d474" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>operator[]</name></member>
-      <member refid="d7/d7a/a00016_a97a0a270c1d4c710ac2f4033b52dd9bd_1a97a0a270c1d4c710ac2f4033b52dd9bd" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>operator[]</name></member>
-      <member refid="d7/d7a/a00016_1aedcf3c242b3387f2e30bf78b699ccc1c" prot="private" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>parent</name></member>
-      <member refid="d7/d7a/a00016_1a73412d04b3714ceb341b47ebec3d7a79" prot="private" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>properties</name></member>
-      <member refid="d7/d7a/a00016_ab1f8b9ae4b5c02534bbf5924148b4003_1ab1f8b9ae4b5c02534bbf5924148b4003" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>removeChild</name></member>
-      <member refid="d7/d7a/a00016_a6f48a5e5555f64dd5bc84e27852f4773_1a6f48a5e5555f64dd5bc84e27852f4773" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>removeChild</name></member>
-      <member refid="d7/d7a/a00016_a27bda0c0dd0fff4adbe4fe04e27bc5f6_1a27bda0c0dd0fff4adbe4fe04e27bc5f6" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>render</name></member>
-      <member refid="d7/d7a/a00016_a85a822baaae376b546e66b098b128932_1a85a822baaae376b546e66b098b128932" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>reset</name></member>
-      <member refid="d7/d7a/a00016_ad7e0ab13473c643feb43358074aab3c2_1ad7e0ab13473c643feb43358074aab3c2" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>rotate</name></member>
-      <member refid="d7/d7a/a00016_a14fda0e29efc83be1bd18b3cecb76747_1a14fda0e29efc83be1bd18b3cecb76747" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>scale</name></member>
-      <member refid="d7/d7a/a00016_a1d9f4a5586e05cf2315183be5062e84a_1a1d9f4a5586e05cf2315183be5062e84a" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setHeight</name></member>
-      <member refid="d7/d7a/a00016_1ac8c1a507bcd3fa79509a17d17d2822c0" prot="private" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setParent</name></member>
-      <member refid="d7/d7a/a00016_af07ef60a815c87d686bf81dd92a817eb_1af07ef60a815c87d686bf81dd92a817eb" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setProperties</name></member>
-      <member refid="d7/d7a/a00016_ab7d0bef41e5a511452abcdfdd15d3d78_1ab7d0bef41e5a511452abcdfdd15d3d78" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setProperty</name></member>
-      <member refid="d7/d7a/a00016_a0f9b978bf306a200abca7bde5781475a_1a0f9b978bf306a200abca7bde5781475a" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setTransformation</name></member>
-      <member refid="d7/d7a/a00016_ad7bb754e9ada2401d234d49ba85463ad_1ad7bb754e9ada2401d234d49ba85463ad" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setWidth</name></member>
-      <member refid="d7/d7a/a00016_ab1227baaa1d429be4d648e782dec6269_1ab1227baaa1d429be4d648e782dec6269" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setX</name></member>
-      <member refid="d7/d7a/a00016_a9339119f35be0f3147b994e48bf1d2d7_1a9339119f35be0f3147b994e48bf1d2d7" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>setY</name></member>
-      <member refid="d7/d7a/a00016_a53f0c51e7af4e86c2f40f78f985ed628_1a53f0c51e7af4e86c2f40f78f985ed628" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>size</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5af380097045937aff4cb37b35319f0fa0" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>STRETCH_HEIGHT</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a384b972ec3c0796f34bcfd00c4cf0ad5" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>STRETCH_WIDTH</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a8565f820f09539177483266a2cc5a636" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>STRETCH_X</name></member>
-      <member refid="d7/d7a/a00016_a260d56ae29f836160836154553dea0c5_1a260d56ae29f836160836154553dea0c5a11e9ea3255b1d5bfc71356f787a10c9d" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>STRETCH_Y</name></member>
-      <member refid="d7/d7a/a00016_a2f423919fa564ce852cb641b74f21d87_1a2f423919fa564ce852cb641b74f21d87" prot="protected" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>transformation</name></member>
-      <member refid="d7/d7a/a00016_ac977cb0fc9ee90771c88bbdeaf234a03_1ac977cb0fc9ee90771c88bbdeaf234a03" prot="public" virt="non-virtual"><scope>mc::gfx::Entity</scope><name>translate</name></member>
-      <member refid="d7/d7a/a00016_aae7029661100df41b6b737b378b9d40d_1aae7029661100df41b6b737b378b9d40d" prot="protected" virt="virtual"><scope>mc::gfx::Entity</scope><name>update</name></member>
-      <member refid="d7/d7a/a00016_a675362ba8b043625682855c25e093539_1a675362ba8b043625682855c25e093539" prot="public" virt="virtual"><scope>mc::gfx::Entity</scope><name>~Entity</name></member>
+      <member refid="d4/d8c/a00035_a3f02451ab4df9d4d732d79ed2941dfb1_1a3f02451ab4df9d4d732d79ed2941dfb1" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>bind</name></member>
+      <member refid="da/da0/a00009_a594d43d10fe98f8412119328756ca824_1a594d43d10fe98f8412119328756ca824" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>Buffer</name></member>
+      <member refid="da/da0/a00009_ab5b3d28ddc269895c8f77f513f9c1fd0_1ab5b3d28ddc269895c8f77f513f9c1fd0" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>copyData</name></member>
+      <member refid="d7/d7a/a00016_a045b118bce254c25c9519f955e8e1148_1a045b118bce254c25c9519f955e8e1148" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>CopyWriteBuffer</name></member>
+      <member refid="da/da0/a00009_ac4e88a83c70a133c24667545832a6f0d_1ac4e88a83c70a133c24667545832a6f0d" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>destroy</name></member>
+      <member refid="da/da0/a00009_a396693ef6c22c043c5bf0115d3d4aa4a_1a396693ef6c22c043c5bf0115d3d4aa4a" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>getBufferType</name></member>
+      <member refid="d4/d8c/a00035_a717ff2f0b9420b4ce0939ff51ed9d545_1a717ff2f0b9420b4ce0939ff51ed9d545" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>getID</name></member>
+      <member refid="d4/d8c/a00035_aa6f2acefb1ac01ff347ff593738eab46_1aa6f2acefb1ac01ff347ff593738eab46" prot="protected" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>id</name></member>
+      <member refid="da/da0/a00009_aea6e64228bbfa092e1448ea9d851fb94_1aea6e64228bbfa092e1448ea9d851fb94" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>init</name></member>
+      <member refid="da/da0/a00009_a4042320270935513c6fbfbd101986a83_1a4042320270935513c6fbfbd101986a83" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>isCreated</name></member>
+      <member refid="da/da0/a00009_a5212bb7bc1308bfde2ecd7ae73a064ac_1a5212bb7bc1308bfde2ecd7ae73a064ac" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>map</name></member>
+      <member refid="da/da0/a00009_aaaf5780cc43099de399e57ef773a9ee0_1aaaf5780cc43099de399e57ef773a9ee0" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>mapRange</name></member>
+      <member refid="da/da0/a00009_a8c9f33cca265609a823432dd4a4c03a8_1a8c9f33cca265609a823432dd4a4c03a8" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>operator!=</name></member>
+      <member refid="d4/d8c/a00035_a5ff3ea4d06441e968ab9f3933329a828_1a5ff3ea4d06441e968ab9f3933329a828" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>operator!=</name></member>
+      <member refid="da/da0/a00009_a41aadf11e2d1d51951e59c649cc66ccf_1a41aadf11e2d1d51951e59c649cc66ccf" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>operator==</name></member>
+      <member refid="d4/d8c/a00035_a75cf124fcf3b2ce36c402d9ff8b9447d_1a75cf124fcf3b2ce36c402d9ff8b9447d" prot="public" virt="non-virtual" ambiguityscope="mc::gfx::ogl::Object::"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>operator==</name></member>
+      <member refid="da/da0/a00009_aaf268a39626aa530a4b9facc4950f724_1aaf268a39626aa530a4b9facc4950f724" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>setData</name></member>
+      <member refid="da/da0/a00009_aeca7c19d83db827a2bca5e708d445ce7_1aeca7c19d83db827a2bca5e708d445ce7" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>setDataRange</name></member>
+      <member refid="d4/d8c/a00035_ae357cedf8793a3ccd358c0174d645a63_1ae357cedf8793a3ccd358c0174d645a63" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>unbind</name></member>
+      <member refid="da/da0/a00009_ad94233be26bd43680d3830cf1a2174c8_1ad94233be26bd43680d3830cf1a2174c8" prot="public" virt="non-virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>unmap</name></member>
+      <member refid="da/da0/a00009_aeb2f251a5cc6f0324f7d7e1fe490c03a_1aeb2f251a5cc6f0324f7d7e1fe490c03a" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>~Buffer</name></member>
+      <member refid="d4/d8c/a00035_a4bf5ddbce67658a6dd14bedfa00bcac5_1a4bf5ddbce67658a6dd14bedfa00bcac5" prot="public" virt="virtual"><scope>mc::gfx::ogl::CopyWriteBuffer</scope><name>~Object</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,4 +1,4 @@
-.TH "mc::gfx::ogl::Object" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ogl::Object" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,7 +10,7 @@ mc::gfx::ogl::Object \- Represents a OpenGL object in memory\&.
 .PP
 \fC#include <OGL\&.h>\fP
 .PP
-Inherited by \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::QueryObject\fP, \fBmc::gfx::ogl::RenderBuffer\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Texture\fP, and \fBmc::gfx::ogl::VertexArray\fP\&.
+Inherited by \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::QueryObject\fP, \fBmc::gfx::ogl::RenderBuffer\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Texture2D\fP, and \fBmc::gfx::ogl::VertexArray\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -108,7 +108,7 @@ store what object is currently bound\&. static \fBObject\fP getBoundObject(), bo
 .PP
 
 .PP
-Definition at line 98 of file OGL\&.h\&.
+Definition at line 113 of file OGL\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "virtual mc::gfx::ogl::Object::~Object ()\fC [virtual]\fP, \fC [default]\fP"
@@ -143,6 +143,8 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .RE
 .PP
 
+.PP
+Reimplemented in \fBmc::gfx::ogl::Texture2D\fP\&.
 .SS "virtual void mc::gfx::ogl::Object::bindIndex (const \fBIndex\fP id) const\fC [protected]\fP, \fC [pure virtual]\fP"
 
 .PP
@@ -202,7 +204,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::VertexArray\fP, \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::Texture\fP, \fBmc::gfx::ogl::RenderBuffer\fP, and \fBmc::gfx::ogl::QueryObject\fP\&.
+Implemented in \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::VertexArray\fP, \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::Texture2D\fP, \fBmc::gfx::ogl::RenderBuffer\fP, and \fBmc::gfx::ogl::QueryObject\fP\&.
 .SS "\fBIndex\fP mc::gfx::ogl::Object::getID () const"
 
 .PP
@@ -246,7 +248,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::VertexArray\fP, \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::Texture\fP, \fBmc::gfx::ogl::RenderBuffer\fP, and \fBmc::gfx::ogl::QueryObject\fP\&.
+Implemented in \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::VertexArray\fP, \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::Texture2D\fP, \fBmc::gfx::ogl::RenderBuffer\fP, and \fBmc::gfx::ogl::QueryObject\fP\&.
 .SS "virtual bool mc::gfx::ogl::Object::isCreated () const\fC [pure virtual]\fP"
 
 .PP
@@ -276,7 +278,7 @@ This uses an OpenGL function and must be called in a thread with an OpenGL conte
 .PP
 
 .PP
-Implemented in \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::VertexArray\fP, \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::Texture\fP, \fBmc::gfx::ogl::RenderBuffer\fP, and \fBmc::gfx::ogl::QueryObject\fP\&.
+Implemented in \fBmc::gfx::ogl::ShaderProgram\fP, \fBmc::gfx::ogl::Shader\fP, \fBmc::gfx::ogl::VertexArray\fP, \fBmc::gfx::ogl::Buffer\fP, \fBmc::gfx::ogl::FrameBuffer\fP, \fBmc::gfx::ogl::Texture2D\fP, \fBmc::gfx::ogl::RenderBuffer\fP, and \fBmc::gfx::ogl::QueryObject\fP\&.
 .SS "bool mc::gfx::ogl::Object::operator!= (const \fBObject\fP & other) const"
 
 .PP
@@ -353,7 +355,7 @@ The ID of this `Object\&. ` Should be set in \fBObject::init()\fP and become 0 i
 .PP
 \fBObject::getID() const \fPreturns this\&. 
 .PP
-Definition at line 182 of file OGL\&.h\&.
+Definition at line 197 of file OGL\&.h\&.
 
 .SH "Author"
 .PP 

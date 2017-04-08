@@ -1,4 +1,4 @@
-.TH "mc::Preprocessor" 3 "Wed Feb 1 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::Preprocessor" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -73,17 +73,17 @@ mc::Preprocessor \- Customizable string preprocessor which follows ANSI-C prepro
 .br
 .RI "\fISets the line number\&. \fP"
 .ti -1c
-.RI "void \fBdefineMacro\fP (const \fBMacro\fP &macro)"
+.RI "void \fBdefineMacro\fP (const Macro &macro)"
 .br
-.RI "\fIDefines a \fC\fBMacro\fP\fP \fP"
+.RI "\fIDefines a \fCMacro\fP \fP"
 .ti -1c
 .RI "bool \fBisMacroDefined\fP (const std::string &name) const "
 .br
-.RI "\fIChecks if a \fC\fBMacro\fP\fP with a certain name is defined\&. \fP"
+.RI "\fIChecks if a \fCMacro\fP with a certain name is defined\&. \fP"
 .ti -1c
 .RI "void \fBundefineMacro\fP (const std::string &name)"
 .br
-.RI "\fIRemoves a \fC\fBMacro\fP\fP with the specified name\&. \fP"
+.RI "\fIRemoves a \fCMacro\fP with the specified name\&. \fP"
 .ti -1c
 .RI "unsigned int \fBmacroNumber\fP () const "
 .br
@@ -97,9 +97,9 @@ mc::Preprocessor \- Customizable string preprocessor which follows ANSI-C prepro
 .br
 .RI "\fIDefines macros that determine what OS you are on\&. \fP"
 .ti -1c
-.RI "const \fBMacro\fP & \fBgetMacro\fP (const std::string &name) const "
+.RI "const Macro & \fBgetMacro\fP (const std::string &name) const "
 .br
-.RI "\fIFinds a \fC\fBMacro\fP\fP with the given name\&. \fP"
+.RI "\fIFinds a \fCMacro\fP with the given name\&. \fP"
 .ti -1c
 .RI "std::string \fBgetLocation\fP () const "
 .br
@@ -109,7 +109,7 @@ mc::Preprocessor \- Customizable string preprocessor which follows ANSI-C prepro
 .PP 
 Customizable string preprocessor which follows ANSI-C preprocessor standard\&. 
 
-It can define all standard and operating system macros with special functions\&. Additionally, the following macros are always defined: \fBMacro\fP name \fBMacro\fP definition  \fC__MACE__\fP Always defined \fC__INCLUDE_LEVEL__\fP Incremented by 1 when a file is included, and decremented when the included file ends\&. Identical to the GCC macro of the same name \fC__IF_SCOPE__\fP The depth of the current preprocessor conditional\&. Shouldn't be used\&. \fC__CURRENT_IF_SCOPE__\fP The level at which a conditional directive returned false\&. Shouldn't be used\&. Even if they are not defined, you can never defined or undefine a standard macro as denoted by the ANSI-C standard\&. You also can't define or undefine keywords 
+It can define all standard and operating system macros with special functions\&. Additionally, the following macros are always defined: Macro name Macro definition  \fC__MACE__\fP Always defined \fC__INCLUDE_LEVEL__\fP Incremented by 1 when a file is included, and decremented when the included file ends\&. Identical to the GCC macro of the same name \fC__IF_SCOPE__\fP The depth of the current preprocessor conditional\&. Shouldn't be used\&. \fC__CURRENT_IF_SCOPE__\fP The level at which a conditional directive returned false\&. Shouldn't be used\&. Even if they are not defined, you can never defined or undefine a standard macro as denoted by the ANSI-C standard\&. You also can't define or undefine keywords 
 .PP
 Every directive in the ANSI-C standard is supported except for \fC#if\fP, \fC#elif\fP, and \fC#pragma\fP\&. \fC#warning\fP outputs a message to console\&. Additionally, \fC#version\fP is silenty ignored instead of being an error for GLSL support\&. 
 .PP
@@ -121,7 +121,7 @@ The \fCssl\fP uses the \fC\fBPreprocessor\fP\fP class to handle shader files\&.
 .PP
 \fBSee also:\fP
 .RS 4
-\fBMacro\fP 
+Macro 
 .PP
 \fBInclude\fP 
 .PP
@@ -134,11 +134,11 @@ Digraphs (see 6\&.4\&.6 of standard)
 .PP
 Variable arguments 
 .PP
-\fBMacro\fP concat 
+Macro concat 
 .PP
-\fC#if and\fP#elif` 
+\fC#if and\fP#elif` (funtion parseIfStatement exists and needs to get a definition) 
 .PP
-\fC#pragma\fP (if STDC follows, do no macro replacement) 
+\fC#pragma\fP (if STDC follows, do no macro replacement\&. if once follows, only include file once) 
 .RE
 .PP
 
@@ -196,10 +196,10 @@ Because this function takes in a reference, the \fC\fBInclude\fP\fP provided mus
 .RE
 .PP
 
-.SS "void mc::Preprocessor::defineMacro (const \fBMacro\fP & macro)"
+.SS "void mc::Preprocessor::defineMacro (const Macro & macro)"
 
 .PP
-Defines a \fC\fBMacro\fP\fP Called when #define is found in the \fCinput\fP 
+Defines a \fCMacro\fP Called when #define is found in the \fCinput\fP 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -208,7 +208,7 @@ Defines a \fC\fBMacro\fP\fP Called when #define is found in the \fCinput\fP
 .PP
 \fBSee also:\fP
 .RS 4
-\fBMacro\fP 
+Macro 
 .PP
 \fBundefineMacro(const std::string&)\fP 
 .RE
@@ -247,7 +247,7 @@ Oracle
 .PP
 These function will only define macros that have values at the time that \fBMACE\fP is compiled\&. For example, if you compiler does not define \fC__STDC__\fP, this function will not define \fC__STDC__\fP\&. Additionally, only standard macros documented in the compiler's manual will be defined here\&. Custom macros that you define in the \fBMACE\fP compilation will not be defined by this function\&. For that, use the \fCdefineMacro(Macro)\fP function\&. 
 .PP
-Table of standard, non compiler specific macros: \fBMacro\fP name \fBMacro\fP definition  \fC__FILE__\fP The current filename as specified by the constructor, #include, or,\fC#line\fP directive\&. If \fC#line\fP is called, this macro is defined even if \fC\fBdefineStandardMacros()\fP\fP was not called\&. \fC__LINE__\fP The current line number in the file\&. Can be changed via \fC#line\fP\&. If \fC#line\fP is called, this macro is defined even if \fC\fBdefineStandardMacros()\fP\fP was not called\&. \fC__DATE__\fP Equal to the date at which the \fCinput\fP was processed with the format MNN DD YYYY\&. Only updates when \fC\fBdefineStandardMacros()\fP\fP is called\&. \fC__TIME__\fP Equal to the time at which the \fCinput\fP was processed with the format HH:MM:SS\&. Only updates when \fC\fBdefineStandardMacros()\fP\fP is called\&. \fC__BASE_FILE__\fP The filename from which the processing starts\&. #include does not affect this macro, but #line does\&. \fC__STDC__\fP Whether the preprocessor follows standard\&. The value of this macro is dependent on the value of \fBSTDC\fP when \fBMACE\fP was compiled\&. \fC__STDC_HOSTED__\fP Whether this supports a hosted implementation\&. The value of this macro is equal to it's value when \fBMACE\fP was compiled\&. The standard requires this, so it is 1 most of the time\&. \fC__cpluplus\fP What version of C++ is being used\&. This is equal to the version used to compile \fBMACE\fP\&. 
+Table of standard, non compiler specific macros: Macro name Macro definition  \fC__FILE__\fP The current filename as specified by the constructor, #include, or,\fC#line\fP directive\&. If \fC#line\fP is called, this macro is defined even if \fC\fBdefineStandardMacros()\fP\fP was not called\&. \fC__LINE__\fP The current line number in the file\&. Can be changed via \fC#line\fP\&. If \fC#line\fP is called, this macro is defined even if \fC\fBdefineStandardMacros()\fP\fP was not called\&. \fC__DATE__\fP Equal to the date at which the \fCinput\fP was processed with the format MNN DD YYYY\&. Only updates when \fC\fBdefineStandardMacros()\fP\fP is called\&. \fC__TIME__\fP Equal to the time at which the \fCinput\fP was processed with the format HH:MM:SS\&. Only updates when \fC\fBdefineStandardMacros()\fP\fP is called\&. \fC__BASE_FILE__\fP The filename from which the processing starts\&. #include does not affect this macro, but #line does\&. \fC__STDC__\fP Whether the preprocessor follows standard\&. The value of this macro is dependent on the value of \fBSTDC\fP when \fBMACE\fP was compiled\&. \fC__STDC_HOSTED__\fP Whether this supports a hosted implementation\&. The value of this macro is equal to it's value when \fBMACE\fP was compiled\&. The standard requires this, so it is 1 most of the time\&. \fC__cpluplus\fP What version of C++ is being used\&. This is equal to the version used to compile \fBMACE\fP\&. 
 .PP
 \fBSee also:\fP
 .RS 4
@@ -363,10 +363,10 @@ The current location in the file
 .RE
 .PP
 
-.SS "const \fBMacro\fP& mc::Preprocessor::getMacro (const std::string & name) const"
+.SS "const Macro& mc::Preprocessor::getMacro (const std::string & name) const"
 
 .PP
-Finds a \fC\fBMacro\fP\fP with the given name\&. 
+Finds a \fCMacro\fP with the given name\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -375,23 +375,23 @@ Finds a \fC\fBMacro\fP\fP with the given name\&.
 .PP
 \fBReturns:\fP
 .RS 4
-A \fC\fBMacro\fP\fP with the specified name 
+A \fCMacro\fP with the specified name 
 .RE
 .PP
 \fBExceptions:\fP
 .RS 4
-\fIPreprocessorException\fP If the \fC\fBMacro\fP\fP with the name is not found\&. 
+\fIPreprocessorException\fP If the \fCMacro\fP with the name is not found\&. 
 .RE
 .PP
 
 .SS "bool mc::Preprocessor::isMacroDefined (const std::string & name) const"
 
 .PP
-Checks if a \fC\fBMacro\fP\fP with a certain name is defined\&. Called when \fC#if\fPdef is encountered in the \fCinput\fP 
+Checks if a \fCMacro\fP with a certain name is defined\&. Called when \fC#if\fPdef is encountered in the \fCinput\fP 
 .PP
 \fBParameters:\fP
 .RS 4
-\fIname\fP Name of the \fC\fBMacro\fP\fP to search for 
+\fIname\fP Name of the \fCMacro\fP to search for 
 .RE
 .PP
 \fBReturns:\fP
@@ -407,7 +407,7 @@ Calculates the amount of \fCMacros\fP in this \fC\fBPreprocessor\fP\fP
 .PP
 \fBReturns:\fP
 .RS 4
-Size of the internal \fC\fBMacro\fP\fP array\&. 
+Size of the internal \fCMacro\fP array\&. 
 .RE
 .PP
 
@@ -508,13 +508,13 @@ Sets the line number\&. This does not affect processing\&. This function is call
 .SS "void mc::Preprocessor::undefineMacro (const std::string & name)"
 
 .PP
-Removes a \fC\fBMacro\fP\fP with the specified name\&. Called when #undef is encountered in the \fCinput\fP 
+Removes a \fCMacro\fP with the specified name\&. Called when #undef is encountered in the \fCinput\fP 
 .PP
 Because the standard requires #undef to silently do nothing if the macro does not exist, this function does the same\&. 
 .PP
 \fBParameters:\fP
 .RS 4
-\fIname\fP Name of the \fC\fBMacro\fP\fP to undefine 
+\fIname\fP Name of the \fCMacro\fP to undefine 
 .RE
 .PP
 
