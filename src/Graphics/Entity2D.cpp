@@ -8,6 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity2D.h>
+#include <MACE/Graphics/Arial.h>
 #include <MACE/Core/System.h>
 
 #include <ft2build.h>
@@ -45,7 +46,7 @@ namespace mc {
 			return buffer;
 		}
 		void Entity2D::setBuffer(const ogl::UniformBuffer & newBuffer) {
-			if( newBuffer != buffer ) {
+			if (newBuffer != buffer) {
 				makeDirty();
 				buffer = newBuffer;
 			}
@@ -70,35 +71,35 @@ namespace mc {
 		Image::Image(const ColorAttachment& tex) : texture(tex) {}
 
 		void Image::onInit() {
-			if( !texture.isCreated() ) {
+			if (!texture.isCreated()) {
 				texture.init();
 			}
 
-			if( IMAGE_PROTOCOL < 0 ) {
-				IMAGE_PROTOCOL = Renderer::registerProtocol<Image>();
+			if (IMAGE_PROTOCOL < 0) {
+				IMAGE_PROTOCOL = getRenderer()->registerProtocol<Image>();
 			}
 
-			if( !buffer.isCreated() ) {
+			if (!buffer.isCreated()) {
 				buffer.init();
 			}
 
 			buffer.setLocation(0);
 
-			Renderer::initEntity(this, IMAGE_PROTOCOL);
+			getRenderer()->initEntity(this, IMAGE_PROTOCOL);
 		}
 
 		void Image::onUpdate() {}
 
 		void Image::onRender() {
-			Renderer::queue(this, IMAGE_PROTOCOL);
+			getRenderer()->queue(this, IMAGE_PROTOCOL);
 		}
 
 		void Image::onDestroy() {
-			if( texture.isCreated() ) {
+			if (texture.isCreated()) {
 				texture.destroy();
 			}
 
-			if( buffer.isCreated() ) {
+			if (buffer.isCreated()) {
 				buffer.destroy();
 			}
 		}
@@ -108,7 +109,7 @@ namespace mc {
 		}
 
 		void Image::setTexture(const ColorAttachment & tex) {
-			if( tex != texture ) {
+			if (tex != texture) {
 				makeDirty();
 
 				texture = tex;
@@ -139,14 +140,14 @@ namespace mc {
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
 			renderer.init(
 #	include <MACE/Graphics/Shaders/image.v.glsl>
-			,
+				,
 #	include <MACE/Graphics/Shaders/image.f.glsl>
 			);
 		}//init
 
 		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
 			Image* img = dynamic_cast<Image*>(e);
-			if( img == nullptr ) {
+			if (img == nullptr) {
 				throw InvalidTypeError("Input to RenderProtocol<Image>::initEntity must be of type Image");
 			}
 
@@ -155,7 +156,7 @@ namespace mc {
 
 		void RenderProtocol<Image>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Image* entity = dynamic_cast<Image*>(e);
-			if( entity == nullptr ) {
+			if (entity == nullptr) {
 				throw InvalidTypeError("You must queue an Image for RenderProtocol<Image>");
 			}
 
@@ -183,7 +184,7 @@ namespace mc {
 		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
 		void ProgressBar::setBackgroundTexture(const ColorAttachment & tex) {
-			if( backgroundTexture != tex ) {
+			if (backgroundTexture != tex) {
 				makeDirty();
 
 				backgroundTexture = tex;
@@ -201,7 +202,7 @@ namespace mc {
 		}
 
 		void ProgressBar::setForegroundTexture(const ColorAttachment & tex) {
-			if( foregroundTexture != tex ) {
+			if (foregroundTexture != tex) {
 				makeDirty();
 
 				foregroundTexture = tex;
@@ -219,7 +220,7 @@ namespace mc {
 		}
 
 		void ProgressBar::setSelectionTexture(const ColorAttachment & tex) {
-			if( selectionTexture != tex ) {
+			if (selectionTexture != tex) {
 				makeDirty();
 
 				selectionTexture = tex;
@@ -240,7 +241,7 @@ namespace mc {
 
 
 		void ProgressBar::setMinimum(const float minimum) {
-			if( minimumProgress != minimum ) {
+			if (minimumProgress != minimum) {
 				makeDirty();
 
 				minimumProgress = minimum;
@@ -258,7 +259,7 @@ namespace mc {
 		}
 
 		void ProgressBar::setMaximum(const float maximum) {
-			if( maximumProgress != maximum ) {
+			if (maximumProgress != maximum) {
 				makeDirty();
 
 				maximumProgress = maximum;
@@ -276,7 +277,7 @@ namespace mc {
 		}
 
 		void ProgressBar::setProgress(const float prog) {
-			if( progress != prog ) {
+			if (progress != prog) {
 				makeDirty();
 
 				progress = prog;
@@ -284,7 +285,7 @@ namespace mc {
 		}
 
 		void ProgressBar::addProgress(const float prog) {
-			if( prog != 0 ) {
+			if (prog != 0) {
 				makeDirty();
 
 				progress += prog;
@@ -303,7 +304,7 @@ namespace mc {
 
 
 		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const EaseDoneCallback callback) {
-			class EaseComponent: public Component {
+			class EaseComponent : public Component {
 			public:
 				EaseComponent(const float p, const float t, const float sp, const EaseFunction f, const EaseDoneCallback cb) : Component(), startProg(sp), prog(p), time(t), func(f), start(0), done(cb) {};
 
@@ -317,7 +318,7 @@ namespace mc {
 				void init(Entity*) override {}
 				bool update(Entity* e) override {
 					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
-					if( bar == nullptr ) {
+					if (bar == nullptr) {
 						//should never happen, as this class is only ever defined and used here, but just in caes
 						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in update()");
 					}
@@ -326,21 +327,21 @@ namespace mc {
 					float difference = start++ / time;
 					float percentDone;
 
-					if( func == EaseFunction::SINUSOIDAL ) {
+					if (func == EaseFunction::SINUSOIDAL) {
 						percentDone = static_cast<float>(std::sin(difference * (math::pi() / 2)));
-					} else if( func == EaseFunction::COSINE ) {
+					} else if (func == EaseFunction::COSINE) {
 						percentDone = 1.0f - static_cast<float>(std::cos(difference * (math::pi() / 2)));
-					} else if( func == EaseFunction::QUADRATIC ) {
+					} else if (func == EaseFunction::QUADRATIC) {
 						percentDone = difference*difference;
-					} else if( func == EaseFunction::CUBIC ) {
+					} else if (func == EaseFunction::CUBIC) {
 						percentDone = difference*difference*difference;
-					} else if( func == EaseFunction::QUARTIC ) {
+					} else if (func == EaseFunction::QUARTIC) {
 						percentDone = difference*difference*difference*difference;
-					} else if( func == EaseFunction::QUINTIC ) {
+					} else if (func == EaseFunction::QUINTIC) {
 						percentDone = difference*difference*difference*difference*difference;
-					} else if( func == EaseFunction::SQUARE_ROOT ) {
+					} else if (func == EaseFunction::SQUARE_ROOT) {
 						percentDone = std::sqrt(difference);
-					} else if( func == EaseFunction::SQUARE_ROOT ) {
+					} else if (func == EaseFunction::SQUARE_ROOT) {
 						percentDone = std::cbrt(difference);
 					} else {
 						//linear as a fallback
@@ -348,14 +349,14 @@ namespace mc {
 					}
 
 					//meaning that we are easing backwards
-					if( startProg > prog ) {
+					if (startProg > prog) {
 						bar->setProgress(startProg - (startProg - prog)*(percentDone));
 					} else {
 						bar->setProgress(startProg + (prog - startProg)*(percentDone));
 					}
 
 					//if we got there or time has run out
-					if( bar->getProgress() == prog || difference >= 1.0f ) {
+					if (bar->getProgress() == prog || difference >= 1.0f) {
 						return true;
 					}
 					return false;
@@ -363,7 +364,7 @@ namespace mc {
 				void render(Entity*) override {}
 				void destroy(Entity* e) override {
 					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
-					if( bar == nullptr ) {
+					if (bar == nullptr) {
 						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in destroy()");
 					}
 					done(bar);
@@ -390,23 +391,23 @@ namespace mc {
 		}
 
 		void ProgressBar::onInit() {
-			if( !backgroundTexture.isCreated() ) {
+			if (!backgroundTexture.isCreated()) {
 				backgroundTexture.init();
 			}
 
-			if( !foregroundTexture.isCreated() ) {
+			if (!foregroundTexture.isCreated()) {
 				foregroundTexture.init();
 			}
 
-			if( !selectionTexture.isCreated() ) {
+			if (!selectionTexture.isCreated()) {
 				selectionTexture.init();
 			}
 
-			if( PROGRESS_BAR_PROTOCOL < 0 ) {
-				PROGRESS_BAR_PROTOCOL = Renderer::registerProtocol<ProgressBar>();
+			if (PROGRESS_BAR_PROTOCOL < 0) {
+				PROGRESS_BAR_PROTOCOL = getRenderer()->registerProtocol<ProgressBar>();
 			}
 
-			if( !buffer.isCreated() ) {
+			if (!buffer.isCreated()) {
 				buffer.init();
 			}
 
@@ -414,13 +415,13 @@ namespace mc {
 
 			buffer.setData((3 * sizeof(selectionTexture.getPaint())) + sizeof(progress), nullptr);
 
-			Renderer::initEntity(this, PROGRESS_BAR_PROTOCOL);
+			getRenderer()->initEntity(this, PROGRESS_BAR_PROTOCOL);
 		}
 
 		void ProgressBar::onUpdate() {}
 
 		void ProgressBar::onRender() {
-			Renderer::queue(this, PROGRESS_BAR_PROTOCOL);
+			getRenderer()->queue(this, PROGRESS_BAR_PROTOCOL);
 		}
 
 		void ProgressBar::onClean() {
@@ -436,19 +437,19 @@ namespace mc {
 		}
 
 		void ProgressBar::onDestroy() {
-			if( backgroundTexture.isCreated() ) {
+			if (backgroundTexture.isCreated()) {
 				backgroundTexture.destroy();
 			}
 
-			if( foregroundTexture.isCreated() ) {
+			if (foregroundTexture.isCreated()) {
 				foregroundTexture.destroy();
 			}
 
-			if( selectionTexture.isCreated() ) {
+			if (selectionTexture.isCreated()) {
 				selectionTexture.destroy();
 			}
 
-			if( buffer.isCreated() ) {
+			if (buffer.isCreated()) {
 				buffer.destroy();
 			}
 		}
@@ -459,7 +460,7 @@ namespace mc {
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
 			renderer.init(
 #	include <MACE/Graphics/Shaders/progressbar.v.glsl>
-			,
+				,
 #	include <MACE/Graphics/Shaders/progressbar.f.glsl>
 			);
 
@@ -478,7 +479,7 @@ namespace mc {
 
 		void RenderProtocol<ProgressBar>::initEntity(GraphicsEntity* e) {
 			ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
-			if( bar == nullptr ) {
+			if (bar == nullptr) {
 				throw InvalidTypeError("Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
 			}
 
@@ -487,7 +488,7 @@ namespace mc {
 
 		void RenderProtocol<ProgressBar>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			ProgressBar* entity = dynamic_cast<ProgressBar*>(e);
-			if( entity == nullptr ) {
+			if (entity == nullptr) {
 				throw InvalidTypeError("You must queue an ProgressBar for RenderProtocol<ProgressBar>");
 			}
 
@@ -513,8 +514,8 @@ namespace mc {
 		}
 
 		Font Font::loadFont(const char* name) {
-			if( freetypeStatus < 0 ) {
-				if( (freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok ) {
+			if (freetypeStatus < 0) {
+				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
 					throw FontError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
 				}
 			}
@@ -523,11 +524,11 @@ namespace mc {
 			Index id = static_cast<Index>(fonts.size());
 
 			fonts.push_back(FT_Face());
-			if( int result = FT_New_Face(freetype, name, 0, &fonts[id]) ) {
+			if (int result = FT_New_Face(freetype, name, 0, &fonts[id])) {
 				throw FontError("Freetype failed to create font with result " + std::to_string(result));
 			}
 
-			if( int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE) ) {
+			if (int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE)) {
 				throw FontError("Freetype failed to change charmap with result " + std::to_string(result));
 			}
 
@@ -535,7 +536,7 @@ namespace mc {
 		}
 
 		void Font::destroy() {
-			if( int result = FT_Done_Face(fonts[id]) ) {
+			if (int result = FT_Done_Face(fonts[id])) {
 				throw FontError("Freetype failed to delete font with result " + std::to_string(result));
 			}
 		}
@@ -560,36 +561,36 @@ namespace mc {
 			return id;
 		}
 
-		void Font::getCharacter(const wchar_t c, Letter* character) const {
-			if( height <= 0 ) {
+		void Font::getCharacter(const wchar_t c, Letter& character) const {
+			if (height <= 0) {
 				throw IndexOutOfBoundsError("The height of the font cannot be 0 - you must set it!");
 			}
 
 			FT_Set_Pixel_Sizes(fonts[id], 0, height);
 
-			if( int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT) ) {
+			if (int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT)) {
 				throw FontError("Failed to load glyph with error code " + std::to_string(result));
 			}
 
-			character->width = fonts[id]->glyph->metrics.width >> 6;
-			character->height = fonts[id]->glyph->metrics.height >> 6;
-			character->bearingX = fonts[id]->glyph->metrics.horiBearingY >> 6;
-			character->bearingY = fonts[id]->glyph->metrics.horiBearingY >> 6;
-			character->advanceX = fonts[id]->glyph->advance.x >> 6;
-			character->advanceY = fonts[id]->glyph->advance.y >> 6;
+			character.width = fonts[id]->glyph->metrics.width >> 6;
+			character.height = fonts[id]->glyph->metrics.height >> 6;
+			character.bearingX = fonts[id]->glyph->metrics.horiBearingY >> 6;
+			character.bearingY = fonts[id]->glyph->metrics.horiBearingY >> 6;
+			character.advanceX = fonts[id]->glyph->advance.x >> 6;
+			character.advanceY = fonts[id]->glyph->advance.y >> 6;
 
-			character->mask.init();
-			character->mask.bind();
+			character.mask.init();
+			character.mask.bind();
 
-			character->mask.resetPixelStorage();
+			character.mask.resetPixelStorage();
 
-			character->mask.setPixelStorage(GL_UNPACK_ALIGNMENT, 1);
+			character.mask.setPixelStorage(GL_UNPACK_ALIGNMENT, 1);
 
-			character->mask.setData(fonts[id]->glyph->bitmap.buffer, character->width, character->height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
-			character->mask.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			character->mask.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			character->mask.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			character->mask.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			character.mask.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
+			character.mask.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			character.mask.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			character.mask.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			character.mask.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
@@ -622,7 +623,7 @@ namespace mc {
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
 			renderer.init(
 #	include <MACE/Graphics/Shaders/letter.v.glsl>
-			,
+				,
 #	include <MACE/Graphics/Shaders/letter.f.glsl>
 			);
 
@@ -639,7 +640,7 @@ namespace mc {
 
 		void RenderProtocol<Letter>::initEntity(GraphicsEntity* en) {
 			Letter* let = dynamic_cast<Letter*>(en);
-			if( let == nullptr ) {
+			if (let == nullptr) {
 				throw InvalidTypeError("Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
 			}
 
@@ -648,7 +649,7 @@ namespace mc {
 
 		void RenderProtocol<Letter>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Letter* entity = dynamic_cast<Letter*>(e);
-			if( entity == nullptr ) {
+			if (entity == nullptr) {
 				throw InvalidTypeError("You must queue an Letter for RenderProtocol<Letter>");
 			}
 
@@ -710,25 +711,25 @@ namespace mc {
 		}
 
 		void Letter::onInit() {
-			if( !mask.isCreated() ) {
+			if (!mask.isCreated()) {
 				mask.init();
 			}
 
-			if( !texture.isCreated() ) {
+			if (!texture.isCreated()) {
 				texture.init();
 			}
 
-			if( LETTER_PROTOCOL < 0 ) {
-				LETTER_PROTOCOL = Renderer::registerProtocol<Letter>();
+			if (LETTER_PROTOCOL < 0) {
+				LETTER_PROTOCOL = getRenderer()->registerProtocol<Letter>();
 			}
 
-			if( !buffer.isCreated() ) {
+			if (!buffer.isCreated()) {
 				buffer.init();
 			}
 
 			buffer.setLocation(0);
 
-			Renderer::initEntity(this, LETTER_PROTOCOL);
+			getRenderer()->initEntity(this, LETTER_PROTOCOL);
 		}
 
 		void Letter::onUpdate() {
@@ -736,19 +737,19 @@ namespace mc {
 		}
 
 		void Letter::onRender() {
-			Renderer::queue(this, LETTER_PROTOCOL);
+			getRenderer()->queue(this, LETTER_PROTOCOL);
 		}
 
 		void Letter::onDestroy() {
-			if( mask.isCreated() ) {
+			if (mask.isCreated()) {
 				mask.destroy();
 			}
 
-			if( texture.isCreated() ) {
+			if (texture.isCreated()) {
 				texture.destroy();
 			}
 
-			if( buffer.isCreated() ) {
+			if (buffer.isCreated()) {
 				buffer.destroy();
 			}
 		}
@@ -762,7 +763,7 @@ namespace mc {
 		Text::Text(const std::wstring & t, const Font& f) : Entity2D(), text(t), font(f) {}
 
 		void Text::setText(const std::wstring & newText) {
-			if( text != newText ) {
+			if (text != newText) {
 				makeDirty();
 
 				text = newText;
@@ -780,7 +781,7 @@ namespace mc {
 		}
 
 		void Text::setFont(const Font& f) {
-			if( font != f ) {
+			if (font != f) {
 				makeDirty();
 
 				font = f;
@@ -801,8 +802,32 @@ namespace mc {
 			return letters;
 		}
 
+		void Text::setVerticalAlign(const VerticalAlign align) {
+			if (vertAlign != align) {
+				makeDirty();
+
+				vertAlign = align;
+			}
+		}
+
+		const VerticalAlign Text::getVerticalAlign() const {
+			return vertAlign;
+		}
+
+		void Text::setHorizontalAlign(const HorizontalAlign align) {
+			if (horzAlign != align) {
+				makeDirty();
+
+				horzAlign = align;
+			}
+		}
+
+		const HorizontalAlign Text::getHorizontalAlign() const {
+			return horzAlign;
+		}
+
 		void Text::setTexture(const ColorAttachment & tex) {
-			if( tex != texture ) {
+			if (tex != texture) {
 				makeDirty();
 
 				texture = tex;
@@ -820,7 +845,7 @@ namespace mc {
 		}
 
 		bool Text::operator==(const Text & other) const {
-			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture;
+			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture && vertAlign == other.vertAlign && horzAlign == other.horzAlign;
 		}
 
 		bool Text::operator!=(const Text & other) const {
@@ -836,8 +861,8 @@ namespace mc {
 		void Text::onDestroy() {}
 
 		void Text::onClean() {
-			for( Index i = 0; i < letters.size(); ++i ) {
-				if( hasChild(letters[i]) ) {
+			for (Index i = 0; i < letters.size(); ++i) {
+				if (hasChild(letters[i])) {
 					removeChild(letters[i]);
 				}
 			}
@@ -850,8 +875,8 @@ namespace mc {
 
 			const float widthScale = 1.0f / metrics.scale[0], heightScale = 1.0f / metrics.scale[1];
 
-			const float origWidth = static_cast<const float>(Renderer::getOriginalWidth()),
-				origHeight = static_cast<const float>(Renderer::getOriginalHeight());
+			const float origWidth = static_cast<const float>(getRenderer()->getOriginalWidth()),
+				origHeight = static_cast<const float>(getRenderer()->getOriginalHeight());
 
 			const bool hasKerning = font.hasKerning();
 
@@ -859,9 +884,9 @@ namespace mc {
 
 			float width = 0, height = 0;
 
-			for( Index i = 0; i < text.length(); ++i ) {
-				if( text[i] == '\n' ) {
-					if( x > width ) {
+			for (Index i = 0; i < text.length(); ++i) {
+				if (text[i] == '\n') {
+					if (x > width) {
 						width = x;
 					}
 
@@ -872,7 +897,7 @@ namespace mc {
 					x = 0;
 				} else {
 					letters[i] = Letter();
-					font.getCharacter(text[i], &letters[i]);
+					font.getCharacter(text[i], letters[i]);
 
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
 					letters[i].setWidth((static_cast<float>(letters[i].width) / origWidth) * widthScale);
@@ -880,23 +905,16 @@ namespace mc {
 
 					Vector<float, 2> position = { x, y };
 
-					if( i > 0 && hasKerning ) {
+					if (i > 0 && hasKerning) {
 						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
 						position[1] += static_cast<float>(delta[1]) / origHeight;
 					}
 
-					//position[0] -= static_cast<float>(let->bearingX - let->width) / origWidth;
-
-					//font.getSize() - 
-					//let->getHeight() - 
-					//position[1] -= ((font.getSize() + (let->bearingY >> 1)) / origHeight);
 					position[1] += letters[i].getHeight();
 					//i cant bear this
 					position[1] -= static_cast<float>(letters[i].height - letters[i].bearingY) / origHeight;
-
-					//position[1] += let->getHeight();
 
 					letters[i].setX((position[0] + (static_cast<float>(letters[i].width) / origWidth)));
 					letters[i].setY(position[1]);
@@ -905,7 +923,6 @@ namespace mc {
 
 					x += static_cast<float>(letters[i].advanceX) / origWidth;
 					x += letters[i].getWidth();
-					//y += static_cast<float>(let->advanceY) / origHeight;
 
 					letters[i].texture = this->texture;
 
@@ -915,14 +932,43 @@ namespace mc {
 
 			y += static_cast<float>(font.getSize() << 1) / origHeight;
 
-			if( x > width ) {
+			if (x > width) {
 				width = x;
 			}
 
 			height += y;
 
-			for( Index i = 0; i < letters.size(); ++i ) {
-				letters[i].translate((-width / 2.0f) + static_cast<const float>(font.getSize() >> 1) / origWidth, 0.0f);
+			//alignment has to be calculated after the initial pass so it knows how much screen space the text takes up
+			float xAlignment, yAlignment;
+
+			switch (horzAlign) {
+				default:
+				case HorizontalAlign::CENTER:
+					xAlignment = ((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
+					break;
+				case HorizontalAlign::RIGHT:
+					xAlignment = ((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / origWidth);
+					break;
+				case HorizontalAlign::LEFT:
+					xAlignment = (-1.0f + static_cast<const float>(font.getSize() >> 1) / origWidth);
+					break;
+			}
+
+			switch (vertAlign) {
+				default:
+				case VerticalAlign::CENTER:
+					yAlignment = 0.0f;
+					break;
+				case VerticalAlign::BOTTOM:
+					yAlignment = ((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
+					break;
+				case VerticalAlign::TOP:
+					yAlignment = ((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
+					break;
+			}
+
+			for (Index i = 0; i < letters.size(); ++i) {
+				letters[i].translate(xAlignment, yAlignment);
 			}
 		}
 
@@ -931,7 +977,7 @@ namespace mc {
 			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
 			renderer.init(
 #	include <MACE/Graphics/Shaders/button.v.glsl>
-			,
+				,
 #	include <MACE/Graphics/Shaders/button.f.glsl>
 			);
 
@@ -952,7 +998,7 @@ namespace mc {
 
 		void RenderProtocol<Button>::initEntity(GraphicsEntity* e) {
 			Button* but = dynamic_cast<Button*>(e);
-			if( but == nullptr ) {
+			if (but == nullptr) {
 				throw InvalidTypeError("Input to RenderProtocol<Button>::initEntity must be of type Button");
 			}
 
@@ -961,7 +1007,7 @@ namespace mc {
 
 		void RenderProtocol<Button>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Button* entity = dynamic_cast<Button*>(e);
-			if( entity == nullptr ) {
+			if (entity == nullptr) {
 				throw InvalidTypeError("You must queue a Button for RenderProtocol<Button>");
 			}
 
@@ -998,7 +1044,7 @@ namespace mc {
 		}
 
 		void Button::setTexture(const ColorAttachment & c) {
-			if( texture != c ) {
+			if (texture != c) {
 				makeDirty();
 
 				texture = c;
@@ -1016,7 +1062,7 @@ namespace mc {
 		}
 
 		void Button::setHoverTexture(const ColorAttachment & c) {
-			if( hoverTexture != c ) {
+			if (hoverTexture != c) {
 				makeDirty();
 
 				hoverTexture = c;
@@ -1034,7 +1080,7 @@ namespace mc {
 		}
 
 		void Button::setClickedTexture(const ColorAttachment & c) {
-			if( clickedTexture != c ) {
+			if (clickedTexture != c) {
 				makeDirty();
 
 				clickedTexture = c;
@@ -1052,7 +1098,7 @@ namespace mc {
 		}
 
 		void Button::setDisabledTexture(const ColorAttachment & c) {
-			if( disabledTexture != c ) {
+			if (disabledTexture != c) {
 				makeDirty();
 
 				disabledTexture = c;
@@ -1060,27 +1106,27 @@ namespace mc {
 		}
 
 		void Button::onInit() {
-			if( !texture.isCreated() ) {
+			if (!texture.isCreated()) {
 				texture.init();
 			}
 
-			if( !hoverTexture.isCreated() ) {
+			if (!hoverTexture.isCreated()) {
 				hoverTexture.init();
 			}
 
-			if( !clickedTexture.isCreated() ) {
+			if (!clickedTexture.isCreated()) {
 				clickedTexture.init();
 			}
 
-			if( !disabledTexture.isCreated() ) {
+			if (!disabledTexture.isCreated()) {
 				disabledTexture.init();
 			}
 
-			if( BUTTON_PROTOCOL < 0 ) {
-				BUTTON_PROTOCOL = Renderer::registerProtocol<Button>();
+			if (BUTTON_PROTOCOL < 0) {
+				BUTTON_PROTOCOL = getRenderer()->registerProtocol<Button>();
 			}
 
-			if( !buffer.isCreated() ) {
+			if (!buffer.isCreated()) {
 				buffer.init();
 			}
 
@@ -1088,33 +1134,33 @@ namespace mc {
 
 			buffer.setData((4 * sizeof(texture.getPaint())) + (3 * sizeof(float)), nullptr);
 
-			Renderer::initEntity(this, BUTTON_PROTOCOL);
+			getRenderer()->initEntity(this, BUTTON_PROTOCOL);
 		}
 
 		void Button::onUpdate() {}
 
 		void Button::onRender() {
-			Renderer::queue(this, BUTTON_PROTOCOL);
+			getRenderer()->queue(this, BUTTON_PROTOCOL);
 		}
 
 		void Button::onDestroy() {
-			if( texture.isCreated() ) {
+			if (texture.isCreated()) {
 				texture.destroy();
 			}
 
-			if( hoverTexture.isCreated() ) {
+			if (hoverTexture.isCreated()) {
 				hoverTexture.destroy();
 			}
 
-			if( clickedTexture.isCreated() ) {
+			if (clickedTexture.isCreated()) {
 				clickedTexture.destroy();
 			}
 
-			if( disabledTexture.isCreated() ) {
+			if (disabledTexture.isCreated()) {
 				disabledTexture.destroy();
 			}
 
-			if( buffer.isCreated() ) {
+			if (buffer.isCreated()) {
 				buffer.destroy();
 			}
 		}
@@ -1122,11 +1168,11 @@ namespace mc {
 		void Button::onHover() {
 			hover();
 
-			if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+			if (os::Input::isKeyDown(os::Input::MOUSE_LEFT)) {
 				click();
 			}
 
-			if( os::Input::isKeyReleased(os::Input::MOUSE_LEFT) && isClicked() ) {
+			if (os::Input::isKeyReleased(os::Input::MOUSE_LEFT) && isClicked()) {
 				selectableProperties.setBit(Selectable::CLICKED, false);
 
 				trigger();

@@ -16,8 +16,8 @@ namespace mc {
 			: vertAlign(vert), horzAlign(horz) {}
 
 		void AlignmentComponent::setVerticalAlign(const VerticalAlign align) {
-			if( vertAlign != align ) {
-				if( getParent() != nullptr ) {
+			if (vertAlign != align) {
+				if (getParent() != nullptr) {
 					getParent()->makeDirty();
 				}
 
@@ -30,8 +30,8 @@ namespace mc {
 		}
 
 		void AlignmentComponent::setHorizontalAlign(HorizontalAlign align) {
-			if( horzAlign != align ) {
-				if( getParent() != nullptr ) {
+			if (horzAlign != align) {
+				if (getParent() != nullptr) {
 					getParent()->makeDirty();
 				}
 
@@ -56,31 +56,31 @@ namespace mc {
 
 			float width = m.scale[0], height = m.scale[1];
 
-			switch( horzAlign ) {
-			default:
-			case HorizontalAlign::CENTER:
-				e->setX(0.0f);
-				//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
-				break;
-			case HorizontalAlign::RIGHT:
-				e->setX(1.0f - (width / 2.0f));
-				break;
-			case HorizontalAlign::LEFT:
-				e->setX((width / 2.0f) - 1.0f);
-				break;
+			switch (horzAlign) {
+				default:
+				case HorizontalAlign::CENTER:
+					e->setX(0.0f);
+					//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
+					break;
+				case HorizontalAlign::RIGHT:
+					e->setX(1.0f - (width / 2.0f));
+					break;
+				case HorizontalAlign::LEFT:
+					e->setX((width / 2.0f) - 1.0f);
+					break;
 			}
 
-			switch( vertAlign ) {
-			default:
-			case VerticalAlign::CENTER:
-				e->setX(0.0f);
-				break;
-			case VerticalAlign::BOTTOM:
-				e->setY((height / 2.0f) - 1.0f);
-				break;
-			case VerticalAlign::TOP:
-				e->setY(1.0f - (height / 2.0f));
-				break;
+			switch (vertAlign) {
+				default:
+				case VerticalAlign::CENTER:
+					e->setX(0.0f);
+					break;
+				case VerticalAlign::BOTTOM:
+					e->setY((height / 2.0f) - 1.0f);
+					break;
+				case VerticalAlign::TOP:
+					e->setY(1.0f - (height / 2.0f));
+					break;
 			}
 		}
 
@@ -220,7 +220,7 @@ namespace mc {
 
 		bool FPSComponent::update(Entity * e) {
 			++nbUpdates;
-			if( std::time(0) - lastTime >= 1.0 ) {
+			if (std::time(0) - lastTime >= 1.0) {
 				updatesPerSecond = nbUpdates;
 				framesPerSecond = nbFrames;
 				cleansPerSecond = nbCleans;

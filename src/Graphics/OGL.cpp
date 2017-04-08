@@ -26,20 +26,20 @@ namespace mc {
 				void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
 					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
 					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
-					std::string friendlyType = std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
-					if( type == GL_VERTEX_SHADER ) {
+					std::string friendlyType = "UNKNOWN SHADER TYPE " + std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
+					if (type == GL_VERTEX_SHADER) {
 						friendlyType = "VERTEX SHADER";
-					} else if( type == GL_FRAGMENT_SHADER ) {
+					} else if (type == GL_FRAGMENT_SHADER) {
 						friendlyType = "FRAGMENT SHADER";
-					} else if( type == GL_COMPUTE_SHADER ) {
+					} else if (type == GL_COMPUTE_SHADER) {
 						friendlyType = "COMPUTE SHADER";
-					} else if( type == GL_GEOMETRY_SHADER ) {
+					} else if (type == GL_GEOMETRY_SHADER) {
 						friendlyType = "GEOMETERY SHADER";
-					} else if( type == GL_TESS_CONTROL_SHADER ) {
+					} else if (type == GL_TESS_CONTROL_SHADER) {
 						friendlyType = "TESSELATION CONTROL SHADER";
-					} else if( type == GL_TESS_EVALUATION_SHADER ) {
+					} else if (type == GL_TESS_EVALUATION_SHADER) {
 						friendlyType = "TESSELATION EVALUATION SHADER";
-					} else if( type == GL_PROGRAM ) {
+					} else if (type == GL_PROGRAM) {
 						friendlyType = "SHADER PROGRAM";
 						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
@@ -50,32 +50,32 @@ namespace mc {
 #ifdef MACE_DEBUG
 			void checkGLError(const Index line, const char* file, const char* message) {
 				Enum result = GL_NO_ERROR;
-				while( (result = glGetError()) != GL_NO_ERROR ) {
-					switch( result ) {
-					case GL_INVALID_ENUM:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
-						break;
-					case GL_INVALID_VALUE:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_VALUE! A numeric argument is out of range!");
-						break;
-					case GL_INVALID_OPERATION:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
-						break;
-					case GL_INVALID_FRAMEBUFFER_OPERATION:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
-						break;
-					case GL_STACK_OVERFLOW:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
-						break;
-					case GL_STACK_UNDERFLOW:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
-						break;
-					case GL_OUT_OF_MEMORY:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
-						break;
-					default:
-						throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": OpenGL has errored with an error code of " + std::to_string(result));
-						break;
+				while ((result = glGetError()) != GL_NO_ERROR) {
+					switch (result) {
+						case GL_INVALID_ENUM:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
+							break;
+						case GL_INVALID_VALUE:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_VALUE! A numeric argument is out of range!");
+							break;
+						case GL_INVALID_OPERATION:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
+							break;
+						case GL_INVALID_FRAMEBUFFER_OPERATION:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
+							break;
+						case GL_STACK_OVERFLOW:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
+							break;
+						case GL_STACK_UNDERFLOW:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
+							break;
+						case GL_OUT_OF_MEMORY:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
+							break;
+						default:
+							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": OpenGL has errored with an error code of " + std::to_string(result));
+							break;
 					}
 				}
 #else
@@ -97,12 +97,12 @@ namespace mc {
 			void VertexArray::destroy() {
 				glDeleteVertexArrays(1, &id);
 
-				if( indices.isCreated() ) {
+				if (indices.isCreated()) {
 					indices.destroy();
 				}
 
-				for( Index i = 0; i < buffers.size(); ++i ) {
-					if( buffers[i].isCreated() ) {
+				for (Index i = 0; i < buffers.size(); ++i) {
+					if (buffers[i].isCreated()) {
 						buffers[i].destroy();
 					}
 				}
@@ -223,7 +223,7 @@ namespace mc {
 			}
 
 			void UniformBuffer::bindForRender(const Index offset, const ptrdiff_t size) const {
-				if( size < 0 && offset == 0 ) {
+				if (size < 0 && offset == 0) {
 					glBindBufferBase(GL_UNIFORM_BUFFER, this->location, id);
 				} else {
 					glBindBufferRange(GL_UNIFORM_BUFFER, this->location, id, offset, size);
@@ -397,7 +397,7 @@ namespace mc {
 			Texture2D::Texture2D() noexcept {}
 
 			void Texture2D::init() {
-				if( !isCreated() ) {
+				if (!isCreated()) {
 					glGenTextures(1, &id);
 
 					checkGLError(__LINE__, __FILE__, "Error creating Texture2D");
@@ -405,7 +405,7 @@ namespace mc {
 			}
 
 			void Texture2D::destroy() {
-				if( isCreated() ) {
+				if (isCreated()) {
 					glDeleteTextures(1, &id);
 
 					checkGLError(__LINE__, __FILE__, "Error destroying Texture2D");
@@ -560,14 +560,14 @@ namespace mc {
 
 			void VertexBuffer::setAttributePointer(const Byte attribSize, const Enum type, const bool normalized, const Index stride, const void * pointer) {
 				bind();
-				if( !normalized && (
+				if (!normalized && (
 					type == GL_BYTE ||
 					type == GL_UNSIGNED_BYTE ||
 					type == GL_SHORT ||
 					type == GL_UNSIGNED_SHORT ||
 					type == GL_INT ||
 					type == GL_UNSIGNED_INT
-					) ) {
+					)) {
 
 					glVertexAttribIPointer(location, attribSize, type, stride, pointer);
 				} else {
@@ -693,7 +693,7 @@ namespace mc {
 			Shader::Shader(const Enum shaderType) noexcept : type(shaderType) {}
 
 			void Shader::init() {
-				if( type == GL_FALSE ) {
+				if (type == GL_FALSE) {
 					throw InitializationFailedError("Must assign a type to the shader before init() is called!");
 				}
 				id = glCreateShader(type);
@@ -704,7 +704,7 @@ namespace mc {
 			}
 
 			void Shader::setSource(const Size count, const char * strings[], const int lengths[]) {
-				if( type == GL_FALSE ) {
+				if (type == GL_FALSE) {
 					throw ShaderError("Shader must have a type before compile() is called");
 				}
 
@@ -751,12 +751,12 @@ namespace mc {
 
 
 			void Shader::compile() {
-				if( type == GL_FALSE ) {
+				if (type == GL_FALSE) {
 					throw ShaderError("Shader must have a type before compile() is called");
 				}
 				glCompileShader(id);
 
-				if( !isCompiled() ) {
+				if (!isCompiled()) {
 					throwShaderError(id, type, "The shader failed to compile");
 				}
 
@@ -798,15 +798,15 @@ namespace mc {
 			void ShaderProgram::init() {
 				id = glCreateProgram();
 				checkGLError(__LINE__, __FILE__, "Error creating shader program");
-				if( id == 0 ) {
+				if (id == 0) {
 					throwShaderError(id, GL_PROGRAM, "Failed to retrieve program ID");
 				}
 			}
 			void ShaderProgram::destroy() {
-				if( id > 0 ) {
+				if (id > 0) {
 					unbind();
-					for( auto s : shaders ) {
-						if( s.second.isCreated() ) {
+					for (auto s : shaders) {
+						if (s.second.isCreated()) {
 							s.second.destroy();
 						}
 					}
@@ -817,18 +817,18 @@ namespace mc {
 			void ShaderProgram::link() {
 				glLinkProgram(id);
 
-				if( !isLinked() ) {
+				if (!isLinked()) {
 					throwShaderError(id, GL_PROGRAM, "The shader program was unable to link");
 				}
 
 				validate();
 
-				if( !isValidated() ) {
+				if (!isValidated()) {
 					throwShaderError(id, GL_PROGRAM, "The shader program failed to validate");
 				}
 
-				for( auto s : shaders ) {
-					if( s.second.isCreated() ) {
+				for (auto s : shaders) {
+					if (s.second.isCreated()) {
 						detachShader(s.second);
 					}
 				}
@@ -900,7 +900,7 @@ namespace mc {
 
 			void ShaderProgram::createUniform(const std::string& name) {
 				int location = glGetUniformLocation(id, name.data());
-				if( location < 0 ) {
+				if (location < 0) {
 					throw ShaderError("Error finding uniform with name " + std::string(name));
 				}
 				uniforms[name] = location;
@@ -978,7 +978,7 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const float a, const float b, const float c) { glUniform3f(uniforms[name], a, b, c); }
 			void ShaderProgram::setUniform(const char* name, const float a, const float b, const float c, const float d) { glUniform4f(uniforms[name], a, b, c, d); }
 			void ShaderProgram::setUniform(const char* name, const Size arraySize, const float * a) { glUniform1fv(uniforms[name], arraySize, a); }
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const float * a) { if( componentSize == 1 ) glUniform1fv(uniforms[name], arraySize, a); else if( componentSize == 2 ) glUniform2fv(uniforms[name], arraySize, a); else if( componentSize == 3 ) glUniform3fv(uniforms[name], arraySize, a); else if( componentSize == 4 ) glUniform4fv(uniforms[name], arraySize, a); }
+			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const float * a) { if (componentSize == 1) glUniform1fv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2fv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3fv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4fv(uniforms[name], arraySize, a); }
 
 			//setUniform with double
 
@@ -987,7 +987,7 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const double a, const double b, const double c) { glUniform3d(uniforms[name], a, b, c); }
 			void ShaderProgram::setUniform(const char* name, const double a, const double b, const double c, const double d) { glUniform4d(uniforms[name], a, b, c, d); }
 			void ShaderProgram::setUniform(const char* name, const Size arraySize, const double * a) { glUniform1dv(uniforms[name], arraySize, a); }
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const double * a) { if( componentSize == 1 ) glUniform1dv(uniforms[name], arraySize, a); else if( componentSize == 2 ) glUniform2dv(uniforms[name], arraySize, a); else if( componentSize == 3 ) glUniform3dv(uniforms[name], arraySize, a); else if( componentSize == 4 ) glUniform4dv(uniforms[name], arraySize, a); }
+			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const double * a) { if (componentSize == 1) glUniform1dv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2dv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3dv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4dv(uniforms[name], arraySize, a); }
 
 			//setUniform with int
 
@@ -996,7 +996,7 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const int a, const int b, const int c) { glUniform3i(uniforms[name], a, b, c); }
 			void ShaderProgram::setUniform(const char* name, const int a, const int b, const int c, const int d) { glUniform4i(uniforms[name], a, b, c, d); }
 			void ShaderProgram::setUniform(const char* name, const Size arraySize, const int * a) { glUniform1iv(uniforms[name], arraySize, a); }
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const int * a) { if( componentSize == 1 ) glUniform1iv(uniforms[name], arraySize, a); else if( componentSize == 2 ) glUniform2iv(uniforms[name], arraySize, a); else if( componentSize == 3 ) glUniform3iv(uniforms[name], arraySize, a); else if( componentSize == 4 ) glUniform4iv(uniforms[name], arraySize, a); }
+			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const int * a) { if (componentSize == 1) glUniform1iv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2iv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3iv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4iv(uniforms[name], arraySize, a); }
 
 			//setUniform with unsigned int
 
@@ -1005,7 +1005,7 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c) { glUniform3ui(uniforms[name], a, b, c); }
 			void ShaderProgram::setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d) { glUniform4ui(uniforms[name], a, b, c, d); }
 			void ShaderProgram::setUniform(const char* name, const Size arraySize, const unsigned int * a) { glUniform1uiv(uniforms[name], arraySize, a); }
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const unsigned int * a) { if( componentSize == 1 ) glUniform1uiv(uniforms[name], arraySize, a); else if( componentSize == 2 ) glUniform2uiv(uniforms[name], arraySize, a); else if( componentSize == 3 ) glUniform3uiv(uniforms[name], arraySize, a); else if( componentSize == 4 ) glUniform4uiv(uniforms[name], arraySize, a); }
+			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const unsigned int * a) { if (componentSize == 1) glUniform1uiv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2uiv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3uiv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4uiv(uniforms[name], arraySize, a); }
 			void ShaderProgram::setUniform(const char* name, const mc::Vector<unsigned int, 4> v) { glUniform4ui(uniforms[name], v[0], v[1], v[2], v[3]); }
 
 			void ShaderProgram::setUniform(const char* name, const mc::Vector<unsigned int, 3> v) { glUniform3ui(uniforms[name], v[0], v[1], v[2]); }

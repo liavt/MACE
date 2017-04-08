@@ -26,7 +26,7 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create() {
-	gfx::Renderer::setRefreshColor(Colors::LIGHT_GRAY);
+	gfx::getRenderer()->setRefreshColor(Colors::LIGHT_GRAY);
 
 	gfx::ColorAttachment circle = gfx::ColorAttachment(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 

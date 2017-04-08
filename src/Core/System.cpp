@@ -30,7 +30,7 @@ namespace mc {
 			clearError(__LINE__, __FILE__);
 
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if( errno_t status = localtime_s(pointer, time) ) {
+			if (errno_t status = localtime_s(pointer, time)) {
 				throw AssertionFailedError("localtime_s errored with code " + std::to_string(status));
 			}
 
@@ -40,7 +40,7 @@ namespace mc {
 
 			checkError(__LINE__, __FILE__, "localtime_r failed");
 
-			if( pointer == nullptr ) {
+			if (pointer == nullptr) {
 				throw NullPointerError("localtime_r returned a nullptr");
 			}
 
@@ -55,7 +55,7 @@ namespace mc {
 			clearError(__LINE__, __FILE__);
 
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if( errno_t status = gmtime_s(pointer, time) ) {
+			if (errno_t status = gmtime_s(pointer, time)) {
 				throw AssertionFailedError("gmtime_s errored with code " + std::to_string(status));
 			}
 
@@ -65,7 +65,7 @@ namespace mc {
 
 			checkError(__LINE__, __FILE__, "gmtime_r failed");
 
-			if( pointer == nullptr ) {
+			if (pointer == nullptr) {
 				throw NullPointerError("gmtime_r returned a nullptr");
 			}
 
@@ -77,7 +77,7 @@ namespace mc {
 
 		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if( errno_t status = ctime_s(buffer, bufSize, time) ) {
+			if (errno_t status = ctime_s(buffer, bufSize, time)) {
 				throw AssertionFailedError("ctime_s errored with code " + std::to_string(status));
 			}
 
@@ -91,7 +91,7 @@ namespace mc {
 
 		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if( errno_t status = asctime_s(buffer, bufSize, time) ) {
+			if (errno_t status = asctime_s(buffer, bufSize, time)) {
 				throw AssertionFailedError("asctime_s errored with code " + std::to_string(status));
 			}
 
@@ -115,7 +115,7 @@ namespace mc {
 
 		std::size_t mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if( errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate) ) {
+			if (errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate)) {
 				throw AssertionFailedError("mbsrtowcs_s errored with code " + std::to_string(status));
 			}
 
@@ -127,7 +127,7 @@ namespace mc {
 
 		std::size_t wcstombs(std::size_t * returnValue, char * dst, std::size_t sizeInWords, const wchar_t * src, std::size_t length) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if( errno_t status = wcstombs_s(returnValue, dst, sizeInWords, src, length) ) {
+			if (errno_t status = wcstombs_s(returnValue, dst, sizeInWords, src, length)) {
 				throw AssertionFailedError("mbsrtowcs_s errored with code " + std::to_string(status));
 			}
 
@@ -144,7 +144,7 @@ namespace mc {
 		}
 		void assertion(const bool cond, const char * message) {
 #ifdef MACE_DEBUG
-			if( cond ) {
+			if (cond) {
 				throw AssertionFailedError(message);
 			}
 #endif
@@ -162,7 +162,7 @@ namespace mc {
 			std::size_t wn;
 			wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
-			if( wn == std::size_t(-1) ) {
+			if (wn == std::size_t(-1)) {
 				throw AssertionFailedError("Error in mbsrtowcs() with result " + std::to_string(errno));
 			}
 
@@ -170,7 +170,7 @@ namespace mc {
 			std::size_t wn_again;
 			wn = mc::os::mbsrtowcs(&wn_again, buf.data(), buf.size(), &cs, wn + 1, nullptr);
 
-			if( wn_again == std::size_t(-1) ) {
+			if (wn_again == std::size_t(-1)) {
 				throw AssertionFailedError("Error in mbsrtowcs() with result " + std::to_string(errno));
 			}
 
@@ -184,7 +184,7 @@ namespace mc {
 			std::size_t wn;
 			wn = mc::os::wcstombs(&wn, nullptr, 0, cs, 0);
 
-			if( wn == std::size_t(-1) ) {
+			if (wn == std::size_t(-1)) {
 				throw AssertionFailedError("Error in wcstombs() with result " + std::to_string(errno));
 			}
 
@@ -192,7 +192,7 @@ namespace mc {
 			std::size_t wn_again;
 			wn = mc::os::wcstombs(&wn_again, buf.data(), buf.size(), cs, wn + 1);
 
-			if( wn_again == std::size_t(-1) ) {
+			if (wn_again == std::size_t(-1)) {
 				throw AssertionFailedError("Error in wcstombs() with result " + std::to_string(errno));
 			}
 
@@ -211,32 +211,32 @@ namespace mc {
 		void checkError(const int line, const char* file, const std::string errorMessage) {
 #ifdef MACE_WINAPI
 			DWORD error = GetLastError();
-			if( error == 0 ) {
+			if (error == 0) {
 				//no error
 				return;
 			}
 
 			LPSTR messageBuffer = nullptr;
 			std::size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-										 nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR) &messageBuffer, 0, nullptr);
+											  nullptr, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, nullptr);
 
 			std::string message(messageBuffer, size);
 
 			LocalFree(messageBuffer);
 
-			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": Winapi threw error " + std::to_string(error) + " with message " + message);
+			throw SystemError(std::to_string(line) + " in " + std::string(file) + ": " + errorMessage + ": Winapi threw error " + std::to_string(error) + " with message " + message);
 #elif defined(MACE_POSIX)
 			//POSIX man pages says to save the error before using it in case of a concurrent environment
 			int error = errno;
 
-			if( error == 0 ) {
+			if (error == 0) {
 				//no error
 				return;
 			}
 
 			errno = 0;
 
-			throw SystemError("Line "+ std::to_string(line) + " in " + std::string(file) + ": "+errorMessage+": " + std::strerror(error));
+			throw SystemError("Line " + std::to_string(line) + " in " + std::string(file) + ": " + errorMessage + ": " + std::strerror(error));
 #endif
 		}
 

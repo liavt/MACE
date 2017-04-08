@@ -25,13 +25,13 @@ namespace mc {
 	}
 
 	void Error::handleError(const std::exception & e) {
-		if( verboseErrors ) {
+		if (verboseErrors) {
 			std::cerr << Error::getErrorDump(e);
 		} else {
 			std::cerr << "Error occured:\n\t" << e.what() << std::endl;
 		}
 
-		if( writeToLog ) {
+		if (writeToLog) {
 			std::ofstream logFile;
 			logFile.open("err.log", std::ofstream::out | std::ofstream::trunc);
 			logFile << Error::getErrorDump(e);
@@ -72,7 +72,7 @@ namespace mc {
 		dump << "====MACE DETAILS====\n";
 		dump << "Module Handler Size:\n\t" << MACE::numberOfModules() << "\n";
 		dump << "Modules:";
-		for( Index i = 0; i < MACE::numberOfModules(); ++i ) {
+		for (Index i = 0; i < MACE::numberOfModules(); ++i) {
 			const Module* m = MACE::getModule(i);
 
 			dump << "\n\t" << m->getName() << " (" << typeid(*m).name() << ")";

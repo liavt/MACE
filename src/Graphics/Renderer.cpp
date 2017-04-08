@@ -28,271 +28,46 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-
 		namespace {
-			RenderQueue renderQueue = RenderQueue();
-			std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
-
-			Size originalWidth = 0;
-			Size originalHeight = 0;
-
-			Size samples = 1;
-
-			bool resized;
-
-			Vector<float, 2> windowRatios;
-
-			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
-			Index entityIndex = 0;
-		}//anon namespace
-
-		void Renderer::init(const Size width, const Size height) {
-			originalWidth = width;
-			originalHeight = height;
-
-			ssl::init(width, height);
-		}//init
-
-		void Renderer::initEntity(GraphicsEntity * en, const Index protocol) {
-			protocols[protocol]->initEntity(en);
+			std::unique_ptr<Renderer> renderer = std::unique_ptr<Renderer>(new Renderer());
 		}
 
-		void Renderer::setUp(os::WindowModule* win) {
-			if( resized ) {
-				int width, height;
-
-				glfwGetFramebufferSize(win->getGLFWWindow(), &width, &height);
-
-				gfx::Renderer::resize(width, height);
-
-				resized = false;
-			}
-
-			ssl::setUp(win);
-
-			for( Index i = 0; i < protocols.size(); ++i ) {
-				protocols[i]->setUp(win, &renderQueue);
-			}
-		}//setUp
-
-		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
-			if( e == nullptr ) {
-				throw NullPointerError("Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
-			}
-
-			pushEntity(protocol, e);
-		}//queue
-
-		void Renderer::flagResize() {
-			resized = true;
-		}//flagResize
-
-		void Renderer::resize(const Size width, const Size height) {
-			ssl::resize(width, height);
-
-			for( Index i = 0; i < protocols.size(); ++i ) {
-				protocols[i]->resize(width, height);
-			}
-
-			resized = false;
-		}//resize
-
-		Size Renderer::numberOfProtocols() {
-			//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
-			return static_cast<Size>(protocols.size());
-		}//numberOfProtocols
-
-		void Renderer::tearDown(os::WindowModule* win) {
-			for( Index i = 0; i < protocols.size(); ++i ) {
-				protocols[i]->tearDown(win, &renderQueue);
-			}
-
-			ssl::tearDown(win);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
-		}//tearDown
-
-		void Renderer::renderFrame(os::WindowModule* win) {
-			setUp(win);
-			entityIndex = 0;
-			for( RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair ) {
-				protocols[pair->first]->renderEntity(win, pair->second);
-				++entityIndex;
-			}
-			tearDown(win);
-		}//renderFrame
-
-		void Renderer::checkInput(os::WindowModule* win) {
-			ssl::checkInput(win);
-		}//checkInput
-
-		void Renderer::cleanEntity(GraphicsEntity * en, const Index protocol) {
-			protocols[protocol]->cleanEntity(en);
-		}
-
-		void Renderer::destroy() {
-			while( !protocols.empty() ) {
-				RenderImpl* protocol = protocols.back();
-				protocol->destroy();
-				delete protocol;
-				protocols.pop_back();
-			}
-
-			ssl::destroy();
-		}//destroy()
-
-		void Renderer::destroyEntity(GraphicsEntity * en, const Index protocol) {
-			protocols[protocol]->destroyEntity(en);
-		}
-
-		void Renderer::clearBuffers() {
-			renderQueue.clear();
-		}//clearBuffers()
-
-		void Renderer::setRefreshColor(const float r, const float g, const float b, const float a) {
-			ogl::FrameBuffer::setClearColor(r, g, b, a);
-		}//setRefreshColor(r,g,b,a)
-
-		void Renderer::setRefreshColor(const Color & c) {
-			setRefreshColor(c.r, c.g, c.b, c.a);
-		}//setRefreshColor(Color)
-
-		Size Renderer::getOriginalWidth() {
-			return originalWidth;
-		}//getOriginalWidth()
-
-		Size Renderer::getOriginalHeight() {
-			return originalHeight;
-		}
-		Size Renderer::getWidth() {
-			return static_cast<Size>(static_cast<float>(Renderer::getOriginalWidth()) * windowRatios[0]);
-		}
-		Size Renderer::getHeight() {
-			return static_cast<Size>(static_cast<float>(Renderer::getOriginalHeight()) * windowRatios[1]);
-		}
-		//getOriginalHeight()
-
-		Size Renderer::getSamples() {
-			return samples;
-		}
-		Vector<float, 2> Renderer::getWindowRatios() {
-			return windowRatios;
-		}
-		//getSamples()
-
-		void Renderer::pushEntity(Index protocol, GraphicsEntity * entity) {
-			renderQueue.push_back(std::pair<Index, GraphicsEntity*>(protocol, entity));
-		}//pushEntity(protocol, entity)
-
-		void Renderer::pushProtocol(RenderImpl * protocol) {
-			protocols.push_back(protocol);
-		}//pushProtocol(protocol)
-
-		//ssl
 		namespace ssl {
-			//constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
+			//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-//how many floats in the entityData uniform sslBuffer.
+			//how many floats in the entityData uniform sslBuffer.
 #define _MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
-//which binding location the paintdata uniform sslBuffer should be bound to
+			//which binding location the paintdata uniform sslBuffer should be bound to
 #define _MACE_ENTITY_DATA_LOCATION 15
 
-			namespace {
 				//ssl resources
-				Preprocessor sslPreprocessor = Preprocessor("");
+			Preprocessor sslPreprocessor = Preprocessor("");
 
-				//fbo resources
-				ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
-				ogl::RenderBuffer depthBuffer = ogl::RenderBuffer();
+			//fbo resources
+			ogl::FrameBuffer frameBuffer = ogl::FrameBuffer();
+			ogl::RenderBuffer depthBuffer = ogl::RenderBuffer();
 
-				ogl::Texture2D sceneTexture = ogl::Texture2D();
-				ogl::Texture2D idTexture = ogl::Texture2D();
+			ogl::Texture2D sceneTexture = ogl::Texture2D();
+			ogl::Texture2D idTexture = ogl::Texture2D();
 
-				IncludeString vertexLibrary = IncludeString({
+			IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
-				}, "ssl_vertex");
-				/**
-				@todo Remove discard from shader
-				*/
-				IncludeString fragmentLibrary = IncludeString({
+			}, "ssl_vertex");
+			/**
+			@todo Remove discard from shader
+			*/
+			IncludeString fragmentLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
-				}, "ssl_frag");
-				IncludeString positionLibrary = IncludeString({
+			}, "ssl_frag");
+			IncludeString positionLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
-				}, "ssl_position");
-				IncludeString entityLibrary = IncludeString({
+			}, "ssl_position");
+			IncludeString entityLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_entity.glsl>
-				}, "ssl_entity");
-				IncludeString coreLibrary = IncludeString({
+			}, "ssl_entity");
+			IncludeString coreLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_core.glsl>
-				}, "ssl_core");
-
-				//this function goes into the anonymous namespace because it technically doesn't belong in the ssl namespace. it should remain to this source file
-				void generateFramebuffer(const Size& width, const Size& height) {
-
-					depthBuffer.init();
-					depthBuffer.bind();
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
-
-					sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-					idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
-					depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
-
-					//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
-					frameBuffer.init();
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
-
-					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture);
-					frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture);
-					frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
-
-					Enum status;
-					if( (status = frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE ) {
-						switch( status ) {
-						case GL_FRAMEBUFFER_UNDEFINED:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
-							break;
-						case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
-							break;
-						case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
-							break;
-						case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
-							break;
-						case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
-							break;
-						case GL_FRAMEBUFFER_UNSUPPORTED:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
-							break;
-						case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
-							break;
-						case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-							throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
-							break;
-						}
-					}
-
-					constexpr Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-					frameBuffer.setDrawBuffers(2, buffers);
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
-
-					glViewport(0, 0, width, height);
-
-					windowRatios[0] = static_cast<float>(originalWidth) / static_cast<float>(width);
-					windowRatios[1] = static_cast<float>(originalHeight) / static_cast<float>(height);
-				}//generateFrambuffer
-			}//anon namespace
+			}, "ssl_core");
 
 
 
@@ -309,11 +84,6 @@ namespace mc {
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
-				//better to access originalWidth and originalHeight directly than via a parameter.
-				generateFramebuffer(originalWidth, originalHeight);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
-
 				//gl states
 				ogl::enable(GL_BLEND);
 				ogl::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -328,13 +98,13 @@ namespace mc {
 				sceneTexture.bind();
 				idTexture.bind();
 
-				constexpr Enum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
+				constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 				frameBuffer.setDrawBuffers(2, drawBuffers);
 
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up ssl");
-			}//setUp
+			}
 
 			void tearDown(os::WindowModule * win) {
 				frameBuffer.unbind();
@@ -370,7 +140,7 @@ namespace mc {
 				entityData.bindToUniformBlock(prog.getID(), "ssl_BaseEntityBuffer");
 				entityData.bindForRender();
 
-				prog.setUniform("ssl_EntityID", entityIndex + 1);
+				prog.setUniform("ssl_EntityID", getRenderer()->entityIndex + 1);
 			}//bindEntity
 
 			void bindShaderProgram(ogl::ShaderProgram & prog) {
@@ -380,13 +150,12 @@ namespace mc {
 			void resize(const Size & width, const Size & height) {
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we dont do anything
 
-				if( width > 0 && height > 0 ) {
+				if (width > 0 && height > 0) {
 					ogl::setViewport(0, 0, width, height);
 
 					depthBuffer.destroy();
 
 					frameBuffer.destroy();
-					generateFramebuffer(width, height);
 				}
 			}//resize
 
@@ -403,13 +172,13 @@ namespace mc {
 				//it is inverted for some reason
 				frameBuffer.readPixels(os::Input::getMouseX(), height - os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
-				if( pixel > 0 ) {
-					if(pixel > renderQueue.size()){
+				if (pixel > 0) {
+					if (pixel > getRenderer()->renderQueue.size()) {
 						throw AssertionFailedError("Internal Error: Pixel read from framebuffer is larger than the render queue!");
 					}
-				
+
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual index
-					renderQueue[--pixel].second->hover();
+					getRenderer()->renderQueue[--pixel].second->hover();
 				}
 
 				frameBuffer.unbind();
@@ -425,7 +194,7 @@ namespace mc {
 			}//bindBuffer
 
 			void fillBuffer(GraphicsEntity * entity) {
-				if( !entity->getProperty(Entity::INIT) ) {
+				if (!entity->getProperty(Entity::INIT)) {
 					throw InitializationFailedError("Entity is not initializd.");
 				}
 
@@ -460,60 +229,60 @@ namespace mc {
 			}//processShader
 
 			const mc::Preprocessor& getSSLPreprocessor() {
-				if( sslPreprocessor.macroNumber() == 0 ) {
+				if (sslPreprocessor.macroNumber() == 0) {
 					sslPreprocessor.defineOSMacros();
 					sslPreprocessor.defineStandardMacros();
 
 					sslPreprocessor.defineMacro(mc::Macro("__SSL__", "1"));
 
 					//C-style casts are unsafe. Problem is that this is a C API. You must use a C-style cast in order to do this correctly.
-					sslPreprocessor.defineMacro(mc::Macro("GL_VENDOR", (const char*) (glGetString(GL_VENDOR))));
-					sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*) (glGetString(GL_RENDERER))));
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*) (glGetString(GL_VERSION))));
-					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*) (glGetString(GL_SHADING_LANGUAGE_VERSION))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_VENDOR", (const char*)(glGetString(GL_VENDOR))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*)(glGetString(GL_RENDERER))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*)(glGetString(GL_VERSION))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))));
 
-					if( GLEW_VERSION_1_1 ) {
+					if (GLEW_VERSION_1_1) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_1", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
 					}
-					if( GLEW_VERSION_1_2 ) {
+					if (GLEW_VERSION_1_2) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2", "1"));
 					}
-					if( GLEW_VERSION_1_2_1 ) {
+					if (GLEW_VERSION_1_2_1) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2_1", "1"));
 					}
-					if( GLEW_VERSION_1_3 ) {
+					if (GLEW_VERSION_1_3) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_3", "1"));
 					}
-					if( GLEW_VERSION_1_4 ) {
+					if (GLEW_VERSION_1_4) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_4", "1"));
 					}
-					if( GLEW_VERSION_1_5 ) {
+					if (GLEW_VERSION_1_5) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_5", "1"));
 					}
 
-					if( GLEW_VERSION_2_0 ) {
+					if (GLEW_VERSION_2_0) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
 					}
-					if( GLEW_VERSION_2_1 ) {
+					if (GLEW_VERSION_2_1) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
 					}
 
-					if( GLEW_VERSION_3_0 ) {
+					if (GLEW_VERSION_3_0) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 130 core"));
 					}
-					if( GLEW_VERSION_3_1 ) {
+					if (GLEW_VERSION_3_1) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
 					}
-					if( GLEW_VERSION_3_2 ) {
+					if (GLEW_VERSION_3_2) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
 					}
-					if( GLEW_VERSION_3_3 ) {
+					if (GLEW_VERSION_3_3) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_3", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 330 core"));
 					}
@@ -630,6 +399,240 @@ namespace mc {
 #undef _MACE_ENTITY_DATA_LOCATION
 		}//ssl
 
+		Renderer * getRenderer() {
+			return renderer.get();
+		}
+
+		void setRenderer(Renderer * r) {
+			renderer.reset(r);
+		}
+
+		void Renderer::init(const Size width, const Size height) {
+			originalWidth = width;
+			originalHeight = height;
+
+			ssl::init(width, height);
+
+			generateFramebuffer(originalWidth, originalHeight);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
+		}//init
+
+		void Renderer::initEntity(GraphicsEntity * en, const Index protocol) {
+			protocols[protocol]->initEntity(en);
+		}
+
+		void Renderer::setUp(os::WindowModule* win) {
+			if (resized) {
+				int width, height;
+
+				glfwGetFramebufferSize(win->getGLFWWindow(), &width, &height);
+
+				gfx::Renderer::resize(width, height);
+
+				resized = false;
+			}
+
+			ssl::setUp(win);
+
+			for (Index i = 0; i < protocols.size(); ++i) {
+				protocols[i]->setUp(win, &renderQueue);
+			}
+		}//setUp
+
+		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
+			if (e == nullptr) {
+				throw NullPointerError("Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
+			}
+
+			pushEntity(protocol, e);
+		}//queue
+
+		void Renderer::flagResize() {
+			resized = true;
+		}//flagResize
+
+		void Renderer::resize(const Size width, const Size height) {
+			ssl::resize(width, height);
+
+			generateFramebuffer(width, height);
+
+			for (Index i = 0; i < protocols.size(); ++i) {
+				protocols[i]->resize(width, height);
+			}
+
+			resized = false;
+		}//resize
+
+		Size Renderer::numberOfProtocols() {
+			//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
+			return static_cast<Size>(protocols.size());
+		}//numberOfProtocols
+
+		void Renderer::tearDown(os::WindowModule* win) {
+			for (Index i = 0; i < protocols.size(); ++i) {
+				protocols[i]->tearDown(win, &renderQueue);
+			}
+
+			ssl::tearDown(win);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
+		}//tearDown
+
+		void Renderer::renderFrame(os::WindowModule* win) {
+			setUp(win);
+			entityIndex = 0;
+			for (RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair) {
+				protocols[pair->first]->renderEntity(win, pair->second);
+				++entityIndex;
+			}
+			tearDown(win);
+		}//renderFrame
+
+		void Renderer::checkInput(os::WindowModule* win) {
+			ssl::checkInput(win);
+		}//checkInput
+
+		void Renderer::cleanEntity(GraphicsEntity * en, const Index protocol) {
+			protocols[protocol]->cleanEntity(en);
+		}
+
+		void Renderer::destroy() {
+			while (!protocols.empty()) {
+				RenderImpl* protocol = protocols.back();
+				protocol->destroy();
+				delete protocol;
+				protocols.pop_back();
+			}
+
+			ssl::destroy();
+		}//destroy()
+
+		void Renderer::destroyEntity(GraphicsEntity * en, const Index protocol) {
+			protocols[protocol]->destroyEntity(en);
+		}
+
+		void Renderer::clearBuffers() {
+			renderQueue.clear();
+		}//clearBuffers()
+
+		void Renderer::setRefreshColor(const float r, const float g, const float b, const float a) {
+			ogl::FrameBuffer::setClearColor(r, g, b, a);
+		}//setRefreshColor(r,g,b,a)
+
+		void Renderer::setRefreshColor(const Color & c) {
+			setRefreshColor(c.r, c.g, c.b, c.a);
+		}//setRefreshColor(Color)
+
+		Size Renderer::getOriginalWidth() const {
+			return originalWidth;
+		}//getOriginalWidth()
+
+		Size Renderer::getOriginalHeight() const {
+			return originalHeight;
+		}//getOriginalHeight()
+
+		Size Renderer::getWidth() const {
+			return static_cast<Size>(static_cast<float>(Renderer::getOriginalWidth()) * windowRatios[0]);
+		}
+
+		Size Renderer::getHeight() const {
+			return static_cast<Size>(static_cast<float>(Renderer::getOriginalHeight()) * windowRatios[1]);
+		}
+
+		Size Renderer::getSamples() const {
+			return samples;
+		}//getSamples()
+
+		Vector<float, 2> Renderer::getWindowRatios() const {
+			return windowRatios;
+		}
+
+		RenderQueue Renderer::getRenderQueue() const {
+			return renderQueue;
+		}
+
+		Index Renderer::getEntityIndex() const {
+			return entityIndex;
+		}
+
+		bool Renderer::isResized() const {
+			return resized;
+		}
+
+		void Renderer::pushEntity(Index protocol, GraphicsEntity * entity) {
+			renderQueue.push_back(std::pair<Index, GraphicsEntity*>(protocol, entity));
+		}//pushEntity(protocol, entity)
+
+		void Renderer::pushProtocol(RenderImpl * protocol) {
+			protocols.push_back(protocol);
+		}//pushProtocol(protocol)
+
+		void Renderer::generateFramebuffer(const Size& width, const Size& height) {
+
+			ssl::depthBuffer.init();
+			ssl::depthBuffer.bind();
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
+
+			ssl::sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
+			ssl::idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+			ssl::depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
+
+			//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
+			ssl::frameBuffer.init();
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
+
+			ssl::frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, ssl::sceneTexture);
+			ssl::frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, ssl::idTexture);
+			ssl::frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, ssl::depthBuffer);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
+
+			Enum status;
+			if ((status = ssl::frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE) {
+				switch (status) {
+					case GL_FRAMEBUFFER_UNDEFINED:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+						break;
+					case GL_FRAMEBUFFER_UNSUPPORTED:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+						break;
+				}
+			}
+
+			constexpr Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+			ssl::frameBuffer.setDrawBuffers(2, buffers);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
+
+			glViewport(0, 0, width, height);
+
+			windowRatios[0] = static_cast<float>(originalWidth) / static_cast<float>(width);
+			windowRatios[1] = static_cast<float>(originalHeight) / static_cast<float>(height);
+		}//generateFrambuffer
+
 		SimpleQuadRenderer::SimpleQuadRenderer(const bool ssl) : useSSL(ssl) {}
 
 		void SimpleQuadRenderer::init(const char * vertexShader, const char * fragShader) {
@@ -656,7 +659,7 @@ namespace mc {
 			square.init();
 
 			//vao loading
-			if( useSSL ) {
+			if (useSSL) {
 				square.loadVertices(4, squareVertices, 15, 3);
 			} else {
 				square.loadVertices(4, squareVertices, 0, 3);
@@ -671,7 +674,7 @@ namespace mc {
 
 			shaders2D.link();
 
-			if( useSSL ) {
+			if (useSSL) {
 				ssl::bindShaderProgram(shaders2D);
 			}
 
@@ -703,7 +706,7 @@ namespace mc {
 		void SimpleQuadRenderer::draw(const GraphicsEntity * en) {
 			bind();
 
-			if( useSSL ) {
+			if (useSSL) {
 				ssl::bindEntity(en, shaders2D);
 			}
 
@@ -741,7 +744,6 @@ namespace mc {
 		bool SimpleQuadRenderer::operator!=(const SimpleQuadRenderer & other) const {
 			return !operator==(other);
 		}
-
 	}//gfx
 }//mc
 

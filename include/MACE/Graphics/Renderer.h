@@ -44,6 +44,7 @@ namespace mc {
 			@opengl
 			*/
 			void setUp(os::WindowModule* win);
+
 			/**
 			@internal
 			@opengl
@@ -185,98 +186,103 @@ namespace mc {
 			void destroyEntity(GraphicsEntity*) override {};
 		};
 
+		Renderer* getRenderer();
+		void setRenderer(Renderer* r);
+
 		/**
 		@todo add function to change how many samples msaa uses
 		*/
-		class Renderer final {
+		class Renderer{
 			//needs to access registerProtocol
 			friend void ssl::init(const Size&, const Size&);
+			friend void ssl::bindEntity(const GraphicsEntity* en, ogl::ShaderProgram& prog);
+			friend void ssl::checkInput(os::WindowModule* win);
 		public:
 
 			/**
 			@internal
 			*/
-			static void flagResize();
+			void flagResize();
 			/**
 			@internal
 			@opengl
 			*/
-			static void resize(const Size width, const Size hieght);
-
-			/**
-			@internal
-			@opengl
-			*/
-			static void init(const Size originalWidth, const Size originalHeight);
+			virtual void resize(const Size width, const Size height);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void initEntity(GraphicsEntity* en, const Index protocol);
+			virtual void init(const Size originalWidth, const Size originalHeight);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void setUp(os::WindowModule* win);
-
-			static void queue(GraphicsEntity* e, const Index protocol);
-
-			static Size numberOfProtocols();
+			virtual void initEntity(GraphicsEntity* en, const Index protocol);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void tearDown(os::WindowModule* win);
+			virtual void setUp(os::WindowModule* win);
+
+			void queue(GraphicsEntity* e, const Index protocol);
+
+			Size numberOfProtocols();
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void renderFrame(os::WindowModule* win);
+			virtual void tearDown(os::WindowModule* win);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void checkInput(os::WindowModule* win);
+			virtual void renderFrame(os::WindowModule* win);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void cleanEntity(GraphicsEntity* en, const Index protocol);
+			virtual void checkInput(os::WindowModule* win);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void destroy();
-			/**
-			@internal
-			@opengl
-			*/
-			static void destroyEntity(GraphicsEntity* en, const Index protocol);
+			virtual void cleanEntity(GraphicsEntity* en, const Index protocol);
 
 			/**
 			@internal
 			@opengl
 			*/
-			static void clearBuffers();
+			virtual void destroy();
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void destroyEntity(GraphicsEntity* en, const Index protocol);
+
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void clearBuffers();
 
 			/**
 			@opengl
 			*/
-			static void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f);
+			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f);
 			/**
 			@opengl
 			*/
-			static void setRefreshColor(const Color& c);
+			void setRefreshColor(const Color& c);
 
 			template<typename T>
-			static Index registerProtocol() {
+			Index registerProtocol() {
 				//in destroy(), this memory is deleted
 				RenderImpl* protocol = new RenderProtocol<T>();
 				if( protocol == nullptr ) {
@@ -287,21 +293,41 @@ namespace mc {
 				return numberOfProtocols() - 1;
 			}
 
-			static Size getOriginalWidth();
-			static Size getOriginalHeight();
+			Size getOriginalWidth() const;
+			Size getOriginalHeight() const;
 
-			static Size getWidth();
-			static Size getHeight();
+			Size getWidth() const;
+			Size getHeight() const;
 
-			static Size getSamples();
+			Size getSamples() const;
 
-			static Vector<float, 2> getWindowRatios();
+			Vector<float, 2> getWindowRatios() const;
+
+			RenderQueue getRenderQueue() const;
+
+			Index getEntityIndex() const;
+
+			bool isResized() const;
+		protected:
+			void pushEntity(Index protocol, GraphicsEntity*  entity);
+			void pushProtocol(RenderImpl* protocol);
+
+			virtual void generateFramebuffer(const Size& width, const Size& height);
+
+			RenderQueue renderQueue = RenderQueue();
+			std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
+
+			Size originalWidth = 0;
+			Size originalHeight = 0;
+
+			Size samples = 1;
+
+			bool resized;
+
+			Vector<float, 2> windowRatios;
 		private:
-			Renderer() = delete;
-			~Renderer() = delete;
-
-			static void pushEntity(Index protocol, GraphicsEntity*  entity);
-			static void pushProtocol(RenderImpl* protocol);
+			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
+			Index entityIndex = 0;
 		};//Renderer
 
 		class SimpleQuadRenderer {

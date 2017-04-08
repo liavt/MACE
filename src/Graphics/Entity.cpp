@@ -366,7 +366,7 @@ namespace mc {
 
 			m.rotation += m.inheritedRotation;
 
-			const Vector<float, 2> windowRatios = Renderer::getWindowRatios();
+			const Vector<float, 2> windowRatios = getRenderer()->getWindowRatios();
 
 			if( getProperty(Entity::MAINTAIN_X) ) {
 				m.translation[0] *= windowRatios[0];

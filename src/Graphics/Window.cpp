@@ -191,7 +191,7 @@ namespace mc {
 			glfwSetScrollCallback(window, scrollWheel);
 
 			const auto framebufferResize = [] (GLFWwindow* window, int, int) {
-				gfx::Renderer::flagResize();
+				gfx::getRenderer()->flagResize();
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetFramebufferSizeCallback(window, framebufferResize);
@@ -201,14 +201,14 @@ namespace mc {
 			};
 			glfwSetWindowRefreshCallback(window, windowDamaged);
 
-			gfx::Renderer::init(originalWidth, originalHeight);
+			gfx::getRenderer()->init(originalWidth, originalHeight);
 
 			int width = 0, height = 0;
 
 			glfwGetFramebufferSize(window, &width, &height);
 
 			if( width != originalWidth || height != originalHeight ) {
-				gfx::Renderer::resize(width, height);
+				gfx::getRenderer()->resize(width, height);
 			}
 
 			creationCallback();
@@ -284,14 +284,14 @@ namespace mc {
 						glfwPollEvents();
 
 						if( getProperty(Entity::DIRTY) ) {
-							gfx::Renderer::clearBuffers();
+							gfx::getRenderer()->clearBuffers();
 
 							Entity::render();
 
-							gfx::Renderer::renderFrame(this);
+							gfx::getRenderer()->renderFrame(this);
 						}
 
-						gfx::Renderer::checkInput(this);
+						gfx::getRenderer()->checkInput(this);
 
 						if( !MACE::isRunning() ) {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
@@ -322,7 +322,7 @@ namespace mc {
 				try {
 					Entity::destroy();
 
-					gfx::Renderer::destroy();
+					gfx::getRenderer()->destroy();
 
 					glfwDestroyWindow(window);
 				} catch( const std::exception& e ) {

@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Utility/Vector.h>
 
@@ -243,7 +244,6 @@ namespace mc {
 		class Text;
 
 		/**
-		@bug non-monospaced fonts dont have correct spacing
 		@todo Make a default font system so people dont have to create new font classes each time they use text
 		@todo instead of using an id system add FT_Face
 		*/
@@ -258,10 +258,9 @@ namespace mc {
 			void destroy();
 
 			/**
-			@todo find a way to dynamically allocate letters without passing in a pointer
 			@todo cache characters
 			*/
-			void getCharacter(const wchar_t character, Letter* let) const;
+			void getCharacter(const wchar_t character, Letter& let) const;
 
 			void setSize(const Size height);
 			Size& getSize();
@@ -379,6 +378,18 @@ namespace mc {
 			/**
 			@dirty
 			*/
+			void setVerticalAlign(const VerticalAlign align);
+			const VerticalAlign getVerticalAlign() const;
+
+			/**
+			@dirty
+			*/
+			void setHorizontalAlign(HorizontalAlign align);
+			const HorizontalAlign getHorizontalAlign() const;
+
+			/**
+			@dirty
+			*/
 			void setTexture(const ColorAttachment& tex);
 			/**
 			@copydoc Image::getTexture() const
@@ -399,6 +410,9 @@ namespace mc {
 			std::vector<Letter> letters;
 
 			std::wstring text;
+
+			VerticalAlign vertAlign = VerticalAlign::CENTER;
+			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
 
 			Font font;
 
