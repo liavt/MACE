@@ -25,7 +25,7 @@ namespace mc {
 		*/
 		_MACE_DECLARE_ERROR(Font);
 
-		enum class EaseFunction: Byte {
+		enum class EaseFunction : Byte {
 			//Starts fast, decelerates at end
 			SINUSOIDAL,
 			//Starts slow, accelerates at end
@@ -41,7 +41,7 @@ namespace mc {
 			LINEAR
 		};
 
-		class Entity2D: public GraphicsEntity {
+		class Entity2D : public GraphicsEntity {
 		public:
 			Entity2D();
 
@@ -73,7 +73,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Image>: public RenderImpl {
+		class RenderProtocol<Image> : public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -85,7 +85,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Image>
 
-		class Image: public Entity2D {
+		class Image : public Entity2D {
 			friend class RenderProtocol<Image>;
 		public:
 			static int getProtocol();
@@ -124,7 +124,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<ProgressBar>: public RenderImpl {
+		class RenderProtocol<ProgressBar> : public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -139,7 +139,7 @@ namespace mc {
 		/**
 		@todo Replace the EaseComponent with a non dynamic pointer
 		*/
-		class ProgressBar: public Entity2D {
+		class ProgressBar : public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
 		public:
 			typedef void(*EaseDoneCallback)(ProgressBar*);
@@ -220,7 +220,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunction::SINUSOIDAL, const EaseDoneCallback callback = [] (ProgressBar*) {});
+			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunction::SINUSOIDAL, const EaseDoneCallback callback = [](ProgressBar*) {});
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;
@@ -231,7 +231,7 @@ namespace mc {
 			void onClean() override final;
 			void onDestroy() override final;
 		private:
-			float minimumProgress = 0,  maximumProgress = 0, progress = 0;
+			float minimumProgress = 0, maximumProgress = 0, progress = 0;
 
 			ColorAttachment backgroundTexture;
 			ColorAttachment foregroundTexture;
@@ -243,17 +243,29 @@ namespace mc {
 		class Letter;
 		class Text;
 
+		enum class Fonts : Byte {
+			CODE,
+			SANS,
+			SERIF,
+		};
+
 		/**
-		@todo Make a default font system so people dont have to create new font classes each time they use text
 		@todo instead of using an id system add FT_Face
+		@bug HorizontalAlignment::RIGHT misses the last letter in the width calculation
 		*/
 		class Font {
 		public:
 			static Font loadFont(const std::string& name);
 			static Font loadFont(const char* name);
+			static Font loadFontFromMemory(const unsigned char* data, long int size);
+			template<std::size_t N>
+			static inline constexpr Font loadFontFromMemory(const unsigned char data[N]) {
+				return loadFontFromMemory(data, static_cast<long int>(N));
+			}
 
 			Font(const Font& f);
 			Font(const Index id = 0, const Size h = 0);
+			Font(const Fonts f, const Size height = 32);
 
 			void destroy();
 
@@ -284,7 +296,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Letter>: public RenderImpl {
+		class RenderProtocol<Letter> : public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -296,7 +308,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Letter>
 
-		class Letter: public Entity2D {
+		class Letter : public Entity2D {
 			friend class RenderProtocol<Letter>;
 			friend class Font;
 			friend class Text;
@@ -347,7 +359,7 @@ namespace mc {
 		/**
 		@bug newline with vertical align doesnt really work
 		*/
-		class Text: public Entity2D {
+		class Text : public Entity2D {
 		public:
 			Text(const std::string& t, const Font& f = Font());
 			Text(const std::wstring& t = L"", const Font& f = Font());
@@ -426,7 +438,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Button>: public RenderImpl {
+		class RenderProtocol<Button> : public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -438,7 +450,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Button>
 
-		class Button: public Selectable, Entity2D {
+		class Button : public Selectable, Entity2D {
 			friend class RenderProtocol<Button>;
 		public:
 			static int getProtocol();

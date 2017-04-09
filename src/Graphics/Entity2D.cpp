@@ -8,7 +8,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity2D.h>
-#include <MACE/Graphics/Arial.h>
 #include <MACE/Core/System.h>
 
 #include <ft2build.h>
@@ -17,7 +16,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <cmath>
 #include <vector>
 #include <clocale>
-#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -518,6 +516,9 @@ namespace mc {
 				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
 					throw FontError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
 				}
+
+				//font 0 should be null
+				fonts.resize(2);
 			}
 
 			//on 64 bit systems this cast is required
@@ -525,7 +526,35 @@ namespace mc {
 
 			fonts.push_back(FT_Face());
 			if (int result = FT_New_Face(freetype, name, 0, &fonts[id])) {
-				throw FontError("Freetype failed to create font with result " + std::to_string(result));
+				throw FontError("Freetype failed to create font at " + std::string(name) + " with result " + std::to_string(result));
+			}
+
+			if (int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE)) {
+				throw FontError("Freetype failed to change charmap with result " + std::to_string(result));
+			}
+
+			return Font(id);
+		}
+
+		Font Font::loadFontFromMemory(const unsigned char * data, long int size) {
+			if (size <= 0) {
+				throw IndexOutOfBoundsError("Input size for loadFontFromMemory is less or equal to than 0!");
+			}
+
+			if (freetypeStatus < 0) {
+				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
+					throw FontError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
+				}
+
+				fonts.resize(2);
+			}
+
+			//on 64 bit systems this cast is required
+			Index id = static_cast<Index>(fonts.size());
+
+			fonts.push_back(FT_Face());
+			if (int result = FT_New_Memory_Face(freetype, data, size, 0, &fonts[id])) {
+				throw FontError("Freetype failed to create font from memory with result " + std::to_string(result));
 			}
 
 			if (int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE)) {
@@ -610,6 +639,47 @@ namespace mc {
 		}
 
 		Font::Font(const Index fontID, const Size h) : id(fontID), height(h) {}
+
+		//font data, compiled in another file to increase compilation time
+		extern unsigned char sourceCodeProData[];
+		extern unsigned int sourceCodeProLength;
+
+		extern unsigned char sourceSansProData[];
+		extern unsigned int sourceSansProLength;
+
+		extern unsigned char sourceSerifProData[];
+		extern unsigned int sourceSerifProLength;
+
+		Font::Font(const Fonts f, const Size h) : Font(0, h) {
+			if (f == Fonts::CODE) {
+				static Font sourceCodePro;
+
+				if (sourceCodePro.getID() == 0) {
+					sourceCodePro = Font::loadFontFromMemory(sourceCodeProData, sourceCodeProLength);
+				}
+
+				id = sourceCodePro.getID();
+			}else if (f == Fonts::SANS) {
+				static Font sourceSansPro;
+
+				if (sourceSansPro.getID() == 0) {
+					sourceSansPro = Font::loadFontFromMemory(sourceSansProData, sourceSansProLength);
+				}
+
+				id = sourceSansPro.getID();
+			} else if (f == Fonts::SERIF) {
+				static Font sourceSerifPro;
+
+				if (sourceSerifPro.getID() == 0) {
+					sourceSerifPro = Font::loadFontFromMemory(sourceSerifProData, sourceSerifProLength);
+				}
+
+				id = sourceSerifPro.getID();
+			} else {
+				//should never be reached, but just to be safe
+				throw FontError("Unknown Fonts enum constant");
+			}
+		}
 
 		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
@@ -861,6 +931,10 @@ namespace mc {
 		void Text::onDestroy() {}
 
 		void Text::onClean() {
+			if (font.getID() == 0) {
+				throw InitializationFailedError("Can\'t render Text with unitialized font!");
+			}
+
 			for (Index i = 0; i < letters.size(); ++i) {
 				if (hasChild(letters[i])) {
 					removeChild(letters[i]);

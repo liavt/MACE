@@ -14,19 +14,19 @@ void create() {
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
 	font.setSize(48);
 
-	center = gfx::Text(L"©enter text!", font);
+	center = gfx::Text(L"©enter text!", gfx::Fonts::CODE);
 
-	topLeft = gfx::Text("Top left!", font);
+	topLeft = gfx::Text("Top left!", gfx::Fonts::SERIF);
 	topLeft.setTexture(Colors::WHITE);
 	topLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
 	topLeft.setVerticalAlign(gfx::VerticalAlign::TOP);
 
-	topRight = gfx::Text("Top right.", font);
+	topRight = gfx::Text("Top right.", gfx::Fonts::SANS);
 	topRight.setTexture(Colors::LIGHT_BLUE);
 	topRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
 	topRight.setVerticalAlign(gfx::VerticalAlign::TOP);
 
-	botLeft = gfx::Text("bOtToM lEfT?", font);
+	botLeft = gfx::Text("bOtToM lEfT?", gfx::Font(gfx::Fonts::SERIF, 16));
 	botLeft.setTexture(Colors::RED);
 	botLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
 	botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);

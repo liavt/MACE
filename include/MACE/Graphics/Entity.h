@@ -22,7 +22,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//MACE_OPENCV
 
 namespace mc {
-	namespace os{
+	namespace os {
 		//declaring dependency
 		class WindowModule;
 	}
@@ -129,49 +129,58 @@ namespace mc {
 			void load(cv::Mat mat) {
 				//cv::flip(mat, mat, 0);
 
- 				Enum colorFormat = GL_BGR;
- 				if (mat.channels() == 1) {
- 					colorFormat = GL_LUMINANCE;
- 				}
- 				else if (mat.channels() == 2) {
- 					colorFormat = GL_LUMINANCE_ALPHA;
- 				}
- 				else if (mat.channels() == 4) {
- 					colorFormat = GL_BGRA;
- 				}
- 
- 				Enum type = GL_UNSIGNED_BYTE;
- 				if (mat.depth() == CV_8S) {
- 					type = GL_BYTE;
- 				}
- 				else if (mat.depth() == CV_16U) {
- 					type = GL_UNSIGNED_SHORT;
- 				}
- 				else if (mat.depth() == CV_16S) {
- 					type = GL_SHORT;
- 				}
- 				else if (mat.depth() == CV_32S) {
+				Enum colorFormat = GL_BGR;
+				if (mat.channels() == 1) {
+					colorFormat = GL_LUMINANCE;
+				} else if (mat.channels() == 2) {
+					colorFormat = GL_LUMINANCE_ALPHA;
+				} else if (mat.channels() == 4) {
+					colorFormat = GL_BGRA;
+				}
+
+				Enum type = GL_UNSIGNED_BYTE;
+				if (mat.depth() == CV_8S) {
+					type = GL_BYTE;
+				} else if (mat.depth() == CV_16U) {
+					type = GL_UNSIGNED_SHORT;
+				} else if (mat.depth() == CV_16S) {
+					type = GL_SHORT;
+				} else if (mat.depth() == CV_32S) {
 					type = GL_INT;
- 				}
- 				else if (mat.depth() == CV_32F) {
- 					type = GL_FLOAT;
- 				}
- 				else if (mat.depth() == CV_64F) {
- 					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
- 				}
- 
+				} else if (mat.depth() == CV_32F) {
+					type = GL_FLOAT;
+				} else if (mat.depth() == CV_64F) {
+					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
+				}
+
 				resetPixelStorage();
- 				setPixelStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
- 				setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
- 
- 				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
+				setPixelStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
+				setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
+
+				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from OpenCV Mat");
-		}
+			}
 
 			ColorAttachment(cv::Mat mat) : ColorAttachment() {
 				init();
 				load(mat);
+			}
+
+			cv::Mat toMat(const Size width, const Size height) {
+				cv::Mat img(height, width, CV_8UC3);
+
+				resetPixelStorage();
+				setPixelStorage(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
+				setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
+
+				bind();
+
+				glReadPixels(0, 0, img.cols, img.rows, GL_BGR, GL_UNSIGNED_BYTE, img.data);
+
+				cv::flip(img, img, 0);
+
+				return img;
 			}
 #			endif//MACE_OPENCV
 
@@ -816,20 +825,20 @@ namespace mc {
 			float opacity = 1.0f;
 		};//GraphicsEntity
 
-		class Selectable{
+		class Selectable {
 		public:
 			bool isClicked() const;
 			bool isDisabled() const;
 			bool isHovered() const;
 
 			void click();
-	
+
 			void disable();
 			void enable();
 
 			void trigger();
 		protected:
-			enum SelectableProperty: Byte {
+			enum SelectableProperty : Byte {
 				CLICKED = 0,
 				DISABLED = 1,
 				HOVERED = 2
