@@ -259,7 +259,7 @@ namespace mc {
 			static Font loadFont(const char* name);
 			static Font loadFontFromMemory(const unsigned char* data, long int size);
 			template<std::size_t N>
-			static inline constexpr Font loadFontFromMemory(const unsigned char data[N]) {
+			static inline Font loadFontFromMemory(const unsigned char data[N]) {
 				return loadFontFromMemory(data, static_cast<long int>(N));
 			}
 
