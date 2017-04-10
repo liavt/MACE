@@ -1,15 +1,6 @@
 var a00022 =
 [
-    [ "Font", "d7/de0/a00022_ad8d194e0c7421d4d6ee942268555ee84.html#ad8d194e0c7421d4d6ee942268555ee84", null ],
-    [ "Font", "d7/de0/a00022_ab87c1a3756133093f6838e32115319c2.html#ab87c1a3756133093f6838e32115319c2", null ],
-    [ "destroy", "d7/de0/a00022_a519923729ff68871ce1099bba0ab4dec.html#a519923729ff68871ce1099bba0ab4dec", null ],
-    [ "getCharacter", "d7/de0/a00022_a5b2de14319604376fca82d41214f5497.html#a5b2de14319604376fca82d41214f5497", null ],
-    [ "getID", "d7/de0/a00022_aa8b87c12495b91a7ee4bafdecdcd1699.html#aa8b87c12495b91a7ee4bafdecdcd1699", null ],
-    [ "getKerning", "d7/de0/a00022_ad8bdac5202b082eac094e70b619d5fe5.html#ad8bdac5202b082eac094e70b619d5fe5", null ],
-    [ "getSize", "d7/de0/a00022_ab3fe63bd719b55860e2bdfeff63807e2.html#ab3fe63bd719b55860e2bdfeff63807e2", null ],
-    [ "getSize", "d7/de0/a00022_ad7075781d64c8bbe498d8821f8300803.html#ad7075781d64c8bbe498d8821f8300803", null ],
-    [ "hasKerning", "d7/de0/a00022_addfb473d31193423717b76534db19419.html#addfb473d31193423717b76534db19419", null ],
-    [ "operator!=", "d7/de0/a00022_a0e10985baf41656de23071ca30edd389.html#a0e10985baf41656de23071ca30edd389", null ],
-    [ "operator==", "d7/de0/a00022_a3885a76ecc2d8157b934e354d7e7a93c.html#a3885a76ecc2d8157b934e354d7e7a93c", null ],
-    [ "setSize", "d7/de0/a00022_ae1205d951c9acdf61d301e9d190d2371.html#ae1205d951c9acdf61d301e9d190d2371", null ]
+    [ "Error", "d7/de0/a00022_a84c63566f973b5cf798ca77521367526.html#a84c63566f973b5cf798ca77521367526", null ],
+    [ "~Error", "d7/de0/a00022_a540f18501f81aa9c6c3cdd05468cc211.html#a540f18501f81aa9c6c3cdd05468cc211", null ],
+    [ "handle", "d7/de0/a00022_acd892bd04e5e9ca631e9a4836d2ab730.html#acd892bd04e5e9ca631e9a4836d2ab730", null ]
 ];

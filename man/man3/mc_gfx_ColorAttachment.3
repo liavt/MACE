@@ -1,4 +1,4 @@
-.TH "mc::gfx::ColorAttachment" 3 "Sat Apr 8 2017" "Version Alpha" "MACE" \" -*- nroff -*-
+.TH "mc::gfx::ColorAttachment" 3 "Sun Apr 9 2017" "Version Alpha" "MACE" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -33,6 +33,9 @@ Inherits \fBmc::gfx::ogl::Texture2D\fP\&.
 .br
 .ti -1c
 .RI "\fBColorAttachment\fP (cv::Mat mat)"
+.br
+.ti -1c
+.RI "cv::Mat \fBtoMat\fP (const \fBSize\fP width, const \fBSize\fP height)"
 .br
 .ti -1c
 .RI "void \fBload\fP (const char *file)"
@@ -167,7 +170,7 @@ Definition at line 119 of file Entity\&.h\&.
 .SS "mc::gfx::ColorAttachment::ColorAttachment (cv::Mat mat)\fC [inline]\fP"
 
 .PP
-Definition at line 172 of file Entity\&.h\&.
+Definition at line 165 of file Entity\&.h\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void mc::gfx::ogl::Texture2D::bind () const\fC [override]\fP, \fC [virtual]\fP, \fC [inherited]\fP"
@@ -350,7 +353,7 @@ Definition at line 129 of file Entity\&.h\&.
 .SS "template<std::size_t S> void mc::gfx::ColorAttachment::load (const unsigned char c[S])\fC [inline]\fP"
 
 .PP
-Definition at line 183 of file Entity\&.h\&.
+Definition at line 192 of file Entity\&.h\&.
 .SS "bool mc::gfx::ogl::Object::operator!= (const \fBObject\fP & other) const\fC [inherited]\fP"
 
 .PP
@@ -590,6 +593,10 @@ https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
 
 .SS "void mc::gfx::ogl::Texture2D::setTarget (const \fBEnum\fP target)\fC [inherited]\fP"
 
+.SS "cv::Mat mc::gfx::ColorAttachment::toMat (const \fBSize\fP width, const \fBSize\fP height)\fC [inline]\fP"
+
+.PP
+Definition at line 170 of file Entity\&.h\&.
 .SS "virtual void mc::gfx::ogl::Object::unbind () const\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP

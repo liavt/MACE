@@ -1,8 +1,9 @@
 var NAVTREE =
 [
   [ "MACE", "index.html", [
-    [ "Installation", "d1/d7c/a00003.html", null ],
-    [ "LICENSE", "d0/d0b/a00004.html", null ],
+    [ "LICENSE", "d1/d7c/a00003.html", null ],
+    [ "Installation", "d0/d0b/a00004.html", null ],
+    [ "Macros", "dd/dad/a00005.html", null ],
     [ "Todo List", "d8/d84/a00001.html", null ],
     [ "Bug List", "d7/d46/a00002.html", null ],
     [ "Namespace Members", "namespacemembers.html", [
@@ -33,14 +34,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d1/d09/a00077_a8648fb701e6aec9ea022f97cca039321.html#a8648fb701e6aec9ea022f97cca039321",
-"d3/dfe/a00025.html#a9339119f35be0f3147b994e48bf1d2d7",
-"d6/d42/a00043_a2d446e0b738e95762020aa858399d2bb.html#a2d446e0b738e95762020aa858399d2bb",
-"d8/d41/a00038_a84bd8e06ca5da4bf7a6f7344fceeda45.html#a84bd8e06ca5da4bf7a6f7344fceeda45",
-"db/d3a/a00040.html#a1bd8b865710f86f1d80644151689d032",
-"db/df8/a00076_a1ea8420821e8d076d3b39ac39456537b.html#a1ea8420821e8d076d3b39ac39456537b",
-"dd/d32/a00041.html#a5ff3ea4d06441e968ab9f3933329a828",
-"df/d61/a00031_a14c7cd593ad1e1799e0cbc61af4c2d5d.html#a14c7cd593ad1e1799e0cbc61af4c2d5d"
+"d1/d51/a00079.html#a4e87e3bf8fee9377f9ed711d8fe864b7",
+"d1/dea/a00054_aea6fb374ae716e6a1541d45290479a88.html#aea6fb374ae716e6a1541d45290479a88",
+"d5/df9/a00044_a0e175bbdd659821f510ea327e90f5497.html#a0e175bbdd659821f510ea327e90f5497",
+"d6/d5b/a00026.html#aee7a516ffd66b47f93323658496e1919",
+"da/d45/a00011.html#a7b67f09e94c93aff8083f224fbbc562d",
+"db/df8/a00076_a073741c6651aad098b8ee5adea09eaa4.html#a073741c6651aad098b8ee5adea09eaa4",
+"dc/d87/a00032_a49c2395a12cd517261de30211ff22158.html#a49c2395a12cd517261de30211ff22158",
+"de/d11/a00021.html#a27bda0c0dd0fff4adbe4fe04e27bc5f6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

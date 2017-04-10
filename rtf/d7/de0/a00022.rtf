@@ -85,8 +85,8 @@
 mc::gfx::Font Class Reference\par \pard\plain 
 {\tc\tcl2 \v mc::gfx::Font}
 {\xe \v mc::gfx::Font}
-{\bkmkstart AAAAAAABOH}
-{\bkmkend AAAAAAABOH}
+{\bkmkstart AAAAAAABON}
+{\bkmkend AAAAAAABON}
 \par
 {
 {\f2 #include <Entity2D.h>}}\par
@@ -99,6 +99,8 @@ Public Member Functions\par
 {\b Font} (const {\b Font} &f)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 {\b Font} (const {\b Index} id=0, const {\b Size} h=0)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+{\b Font} (const {\b Fonts} f, const {\b Size} height=32)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 void {\b destroy} ()\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
@@ -129,6 +131,10 @@ Static Public Member Functions\par
 static {\b Font} {\b loadFont} (const std::string &name)\par
 \pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
 static {\b Font} {\b loadFont} (const char *name)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+static {\b Font} {\b loadFontFromMemory} (const unsigned char *data, long int size)\par
+\pard\plain \s80\fi-360\li360\widctlpar\jclisttab\tx360{\*\pn \pnlvlbody\ilvl0\ls1\pnrnot0\pndec }\ls1\adjustright \fs20\cgrid 
+template<std::size_t N> static {\b Font} {\b loadFontFromMemory} (const unsigned char data[N])\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -138,11 +144,13 @@ Detailed Description\par
 \pard\plain \s17\sa60\sb30\widctlpar\qj \fs22\cgrid {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
 \par
 {{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
-Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid Make a default font system so people dont have to create new font classes each time they use text \par
-instead of using an id system add FT_Face \par
+Todo:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid instead of using an id system add FT_Face \par
+}
+{{\s5\sb90\sa30\keepn\widctlpar\adjustright \b\f1\fs20\cgrid 
+Bug:\par}\pard\plain \s61\li360\widctlpar\ql\adjustright \fs20\cgrid {\b HorizontalAlignment::RIGHT} misses the last letter in the width calculation \par
 }
 }{
-Definition at line 250 of file Entity2D.h.}\par
+Definition at line 256 of file Entity2D.h.}\par
 }
 {\pard\widctlpar\brdrb\brdrs\brdrw5\brsp20 \adjustright \par}
 \pard\plain \s3\sb240\sa60\keepn\widctlpar\adjustright \b\f1\cgrid 
@@ -154,8 +162,8 @@ Constructor & Destructor Documentation\par
 {\b 
 mc::gfx::Font::Font (const {\b Font} &  {\i f})}}
 \par
-{\bkmkstart AAAAAAABOI}
-{\bkmkend AAAAAAABOI}
+{\bkmkstart AAAAAAABOO}
+{\bkmkend AAAAAAABOO}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -165,8 +173,19 @@ mc::gfx::Font::Font (const {\b Font} &  {\i f})}}
 {\b 
 mc::gfx::Font::Font (const {\b Index}  {\i id} = {\f2 0}, const {\b Size}  {\i h} = {\f2 0})}}
 \par
-{\bkmkstart AAAAAAABOJ}
-{\bkmkend AAAAAAABOJ}
+{\bkmkstart AAAAAAABOP}
+{\bkmkend AAAAAAABOP}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v Font\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:Font}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+mc::gfx::Font::Font (const {\b Fonts}  {\i f}, const {\b Size}  {\i height} = {\f2 32})}}
+\par
+{\bkmkstart AAAAAAABOQ}
+{\bkmkend AAAAAAABOQ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -180,8 +199,8 @@ Member Function Documentation\par
 {\b 
 void mc::gfx::Font::destroy ()}}
 \par
-{\bkmkstart AAAAAAABOK}
-{\bkmkend AAAAAAABOK}
+{\bkmkstart AAAAAAABOR}
+{\bkmkend AAAAAAABOR}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -191,8 +210,8 @@ void mc::gfx::Font::destroy ()}}
 {\b 
 void mc::gfx::Font::getCharacter (const wchar_t  {\i character}, {\b Letter} &  {\i let}) const}}
 \par
-{\bkmkstart AAAAAAABOL}
-{\bkmkend AAAAAAABOL}
+{\bkmkstart AAAAAAABOS}
+{\bkmkend AAAAAAABOS}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 {\s17\sa60\sb30\widctlpar\qj \fs22\cgrid 
@@ -207,8 +226,8 @@ Todo:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid cache char
 {\b 
 {\b Index} mc::gfx::Font::getID () const}}
 \par
-{\bkmkstart AAAAAAABOM}
-{\bkmkend AAAAAAABOM}
+{\bkmkstart AAAAAAABOT}
+{\bkmkend AAAAAAABOT}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -218,8 +237,8 @@ Todo:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid cache char
 {\b 
 {\b Vector}<unsigned int, 2> mc::gfx::Font::getKerning (const wchar_t  {\i prev}, const wchar_t  {\i current}) const}}
 \par
-{\bkmkstart AAAAAAABON}
-{\bkmkend AAAAAAABON}
+{\bkmkstart AAAAAAABOU}
+{\bkmkend AAAAAAABOU}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -229,8 +248,8 @@ Todo:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid cache char
 {\b 
 {\b Size}& mc::gfx::Font::getSize ()}}
 \par
-{\bkmkstart AAAAAAABOO}
-{\bkmkend AAAAAAABOO}
+{\bkmkstart AAAAAAABOV}
+{\bkmkend AAAAAAABOV}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -240,8 +259,8 @@ Todo:\par}\pard\plain \s62\li720\widctlpar\ql\adjustright \fs20\cgrid cache char
 {\b 
 const {\b Size}& mc::gfx::Font::getSize () const}}
 \par
-{\bkmkstart AAAAAAABOP}
-{\bkmkend AAAAAAABOP}
+{\bkmkstart AAAAAAABOW}
+{\bkmkend AAAAAAABOW}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -251,8 +270,8 @@ const {\b Size}& mc::gfx::Font::getSize () const}}
 {\b 
 bool mc::gfx::Font::hasKerning () const}}
 \par
-{\bkmkstart AAAAAAABOQ}
-{\bkmkend AAAAAAABOQ}
+{\bkmkstart AAAAAAABOX}
+{\bkmkend AAAAAAABOX}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -262,8 +281,8 @@ bool mc::gfx::Font::hasKerning () const}}
 {\b 
 static {\b Font} mc::gfx::Font::loadFont (const std::string &  {\i name}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABOR}
-{\bkmkend AAAAAAABOR}
+{\bkmkstart AAAAAAABOY}
+{\bkmkend AAAAAAABOY}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -273,10 +292,35 @@ static {\b Font} mc::gfx::Font::loadFont (const std::string &  {\i name}){\f2 [s
 {\b 
 static {\b Font} mc::gfx::Font::loadFont (const char *  {\i name}){\f2 [static]}}}
 \par
-{\bkmkstart AAAAAAABOS}
-{\bkmkend AAAAAAABOS}
+{\bkmkstart AAAAAAABOZ}
+{\bkmkend AAAAAAABOZ}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v loadFontFromMemory\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:loadFontFromMemory}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+static {\b Font} mc::gfx::Font::loadFontFromMemory (const unsigned char *  {\i data}, long int  {\i size}){\f2 [static]}}}
+\par
+{\bkmkstart AAAAAAABPA}
+{\bkmkend AAAAAAABPA}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+}
+{\xe \v loadFontFromMemory\:mc::gfx::Font}
+{\xe \v mc::gfx::Font\:loadFontFromMemory}
+\pard\plain \s4\sb240\sa60\keepn\widctlpar\adjustright \b\f1\fs20\cgrid {
+{\b 
+template<std::size_t N> static {\b Font} mc::gfx::Font::loadFontFromMemory (const unsigned char  {\i data}[N]){\f2 [inline]}, {\f2 [static]}}}
+\par
+{\bkmkstart AAAAAAABPB}
+{\bkmkend AAAAAAABPB}
+{
+\pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
+\par
+{
+Definition at line 262 of file Entity2D.h.}\par
 }
 {\xe \v operator!=\:mc::gfx::Font}
 {\xe \v mc::gfx::Font\:operator!=}
@@ -284,8 +328,8 @@ static {\b Font} mc::gfx::Font::loadFont (const char *  {\i name}){\f2 [static]}
 {\b 
 bool mc::gfx::Font::operator!= (const {\b Font} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABOT}
-{\bkmkend AAAAAAABOT}
+{\bkmkstart AAAAAAABPC}
+{\bkmkend AAAAAAABPC}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -295,8 +339,8 @@ bool mc::gfx::Font::operator!= (const {\b Font} &  {\i other}) const}}
 {\b 
 bool mc::gfx::Font::operator== (const {\b Font} &  {\i other}) const}}
 \par
-{\bkmkstart AAAAAAABOU}
-{\bkmkend AAAAAAABOU}
+{\bkmkstart AAAAAAABPD}
+{\bkmkend AAAAAAABPD}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
@@ -306,8 +350,8 @@ bool mc::gfx::Font::operator== (const {\b Font} &  {\i other}) const}}
 {\b 
 void mc::gfx::Font::setSize (const {\b Size}  {\i height})}}
 \par
-{\bkmkstart AAAAAAABOV}
-{\bkmkend AAAAAAABOV}
+{\bkmkstart AAAAAAABPE}
+{\bkmkend AAAAAAABPE}
 {
 \pard\plain \s51\li360\sa60\sb30\qj\widctlpar\qj\adjustright \fs20\cgrid 
 }
