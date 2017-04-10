@@ -102,7 +102,7 @@ namespace mc {
 		}
 
 		/**
-		Creates a `Matrix` from an `std::initializer_list.` Allows for an aggregate-style creation.
+		Creates a `Matrix` from an `std::initializer_list`. Allows for an aggregate-style creation.
 		<p>
 		Example:
 		{@code

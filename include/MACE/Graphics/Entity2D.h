@@ -23,7 +23,7 @@ namespace mc {
 		/**
 		Thrown when something relate to Freetype or fonts fails
 		*/
-		_MACE_DECLARE_ERROR(Font);
+		MACE_DECLARE_ERROR(Font);
 
 		enum class EaseFunction : Byte {
 			//Starts fast, decelerates at end
@@ -450,7 +450,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Button>
 
-		class Button : public Selectable, Entity2D {
+		class Button : public Selectable, public Entity2D {
 			friend class RenderProtocol<Button>;
 		public:
 			static int getProtocol();

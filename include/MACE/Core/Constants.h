@@ -52,7 +52,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
 
 #ifdef MACE_DOXYGEN_PASS
-#	define MACE_EXPOSE_WINAPI 
+#	define MACE_EXPOSE_WINAPI 1
 #	define MACE_EXPOSE_POSIX 1
 #endif
 
@@ -154,59 +154,59 @@ namespace mc {
 		void handle[[noreturn]]();
 	};
 
-#define _MACE_DECLARE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
+#define MACE_DECLARE_ERROR(name) class name##Error : public Error{public: using Error::Error;};
 
 	/**
 	Thrown when a pointer is equal to NULL
 	*/
-	_MACE_DECLARE_ERROR(NullPointer);
+	MACE_DECLARE_ERROR(NullPointer);
 
 	/**
 	Thrown when an assertion fails.
 	@see MACE::assertModule(std::string)
 	*/
-	_MACE_DECLARE_ERROR(AssertionFailed);
+	MACE_DECLARE_ERROR(AssertionFailed);
 
 	/**
 	Thrown when an object wasn't initializaed or initializtion failed
 	*/
-	_MACE_DECLARE_ERROR(InitializationFailed);
+	MACE_DECLARE_ERROR(InitializationFailed);
 
 	/**
 	Thrown when an error occured trying to read or write a sound file
 	@see FileNotFoundError
 	*/
-	_MACE_DECLARE_ERROR(BadFile);
+	MACE_DECLARE_ERROR(BadFile);
 
 	/**
 	Thrown when a file was not found on the filesystem
 	@see BadFileError
 	*/
-	_MACE_DECLARE_ERROR(FileNotFound);
+	MACE_DECLARE_ERROR(FileNotFound);
 
 	/**
 	Thrown when a function looks for an object, but doesn't find it.
 	*/
-	_MACE_DECLARE_ERROR(ObjectNotFound);
+	MACE_DECLARE_ERROR(ObjectNotFound);
 
 	/**
 	Thrown when something is of the wrong type
 	*/
-	_MACE_DECLARE_ERROR(InvalidType);
+	MACE_DECLARE_ERROR(InvalidType);
 
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	_MACE_DECLARE_ERROR(IndexOutOfBounds);
+	MACE_DECLARE_ERROR(IndexOutOfBounds);
 	/**
 	Thrown when something goes wrong while doing math, like dividing by zero
 	*/
-	_MACE_DECLARE_ERROR(InvalidArithmetic);
+	MACE_DECLARE_ERROR(InvalidArithmetic);
 
 	/**
 	Thrown when the operating system throws an error
 	*/
-	_MACE_DECLARE_ERROR(System);
+	MACE_DECLARE_ERROR(System);
 }
 
 #endif//MACE_CORE_CONSTANTS_H

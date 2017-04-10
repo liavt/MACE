@@ -43,7 +43,9 @@ Libraries
 #cmakedefine MACE_WINAPI 1
 
 #if !defined(MACE_POSIX) && !defined(MACE_WINAPI)
-#	error "This system is unsupported. It must have either windows.h or unistd.h"
+#	error "Error in configuration process: this system is unsupported. It must have either windows.h or unistd.h"
+#elif defined(MACE_POSIX) && defined(MACE_WINAPI)
+#	error "Error in configuration process: this system has been detected to have both Winapi and POSIX."
 #endif
 
 /*
@@ -54,6 +56,12 @@ Operating System
 #cmakedefine MACE_OSX 1
 #cmakedefine MACE_WINDOWS 1
 #cmakedefine MACE_UNIX 1
+
+#if !(defined(MACE_OSX)||defined(MACE_WINDOWS)||defined(MACE_UNIX))
+#	error "Error in configuration process: problem detecting valid operating system: couldn't detect system"
+#elif defined(MACE_OSX) && defined(MACE_WINDOWS) && defined(MACE_UNIX)
+#	error "Error in configuration process: problem detecting valid operating system: multiple systems detected"
+#endif
 
 #cmakedefine MACE_BIG_ENDIAN 1
 
@@ -81,6 +89,7 @@ Compilers
 =======================================
 */
 #define MACE_COMPILER @CMAKE_CXX_COMPILER_ID@
+#define MACE_COMPILER_VERSION @CMAKE_CXX_COMPILER_VERSION@
 
 #cmakedefine MACE_MSVC @CMAKE_CXX_COMPILER_VERSION@
 #cmakedefine MACE_MSVC_CL 1

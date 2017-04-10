@@ -22,7 +22,7 @@ namespace mc {
 	/**
 	`Exception` thrown when a syntax error is encountered, or #error is called. The filename and line number will be in message.
 	*/
-	_MACE_DECLARE_ERROR(Preprocessor)
+	MACE_DECLARE_ERROR(Preprocessor)
 
 	/**
 	Represents a `Macro` in code. Created automatically when #define is encountered.
@@ -67,7 +67,7 @@ namespace mc {
 	};
 
 	/**
-	Superclass for classes that represent items that can be included via #include.
+	Superclass for classes that represent items that can be included via `#include.`
 	@see IncludeString
 	@see IncludeDirectory
 	@see Preprocessor
@@ -272,7 +272,7 @@ namespace mc {
 		*/
 		void defineMacro(const Macro& macro);
 		/**
-		Checks if a `Macro` with a certain name is defined. Called when `#if`def is encountered in the `input`
+		Checks if a `Macro` with a certain name is defined. Called when `#ifdef` is encountered in the `input`
 		@param name Name of the `Macro` to search for
 		@return Whether it is defined.
 		*/

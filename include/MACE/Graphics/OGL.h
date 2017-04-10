@@ -47,20 +47,20 @@ namespace mc {
 			Thrown when OpenGL fails or errors
 			@see ShaderError
 			*/
-			_MACE_DECLARE_ERROR(OpenGL);
+			MACE_DECLARE_ERROR(OpenGL);
 
 			/**
 			Thrown when a Shader throws an exception, such as a failed compilation.
 			@see OpenGLError
 			*/
-			_MACE_DECLARE_ERROR(Shader);
+			MACE_DECLARE_ERROR(Shader);
 
 			/**
 			Thrown when a Framebuffer fails to be created, or throws an error
 			@see gfx::ogl::Framebuffer
 			@see OpenGLError
 			*/
-			_MACE_DECLARE_ERROR(Framebuffer);
+			MACE_DECLARE_ERROR(Framebuffer);
 
 			/**
 			@opengl
@@ -474,7 +474,7 @@ namespace mc {
 				Attaches a texture to this `FrameBuffer`
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@param attachment Which attachment port to use.
-				@param textureID ID for the `Texture2D` to attach. See Texture2D::getID() const
+				@param tex What to attach
 				@param level Mipmap level to attach. Is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 				@see setDrawBuffers(const Size, const Enum*)
@@ -482,16 +482,15 @@ namespace mc {
 				*/
 				void attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
-				@copydoc FrameBuffer::attachTexture(const Enum, const Enum, const unsigned int, const int)
-				@param texTarget Target for the texture. If it is a cubemap, it must have a special target as specified in the OpenGL wiki link.
+				@copydoc FrameBuffer::attachTexture(const Enum, const Enum, const Texture2D&, const int)
 				*/
 				void attachTexture1D(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
-				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Texture2D&, const int)
 				*/
 				void attachTexture2D(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
-				@copydoc FrameBuffer::attachTexture1D(const Enum, const Enum, const Enum, const unsigned int, const int)
+				@copydoc FrameBuffer::attachTexture2D(const Enum, const Enum, const Texture2D&, const int)
 				@param layer Which layer of the 3-dimensional image to use. It is 0 by default.
 				*/
 				void attachTexture3D(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0, const int layer = 0);
@@ -500,7 +499,7 @@ namespace mc {
 				Attaches a single layer from a texture to this `FrameBuffer`
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@param attachment Which attachment port to use.
-				@param texture ID for the `Texture2D` to attach. See Texture2D::getID() const
+				@param tex What to attach
 				@param level Mipmap level to attach. Is 0 by default.
 				@param layer Which layer of the texture to use. It is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer
@@ -512,7 +511,7 @@ namespace mc {
 				Attaches a `RenderBuffer` to this `FrameBuffer` for rendering.
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@param attachment Which attachment port to use
-				@param sslBuffer The `RenderBuffer` to use.
+				@param buffer The `RenderBuffer` to use.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer
 				@opengl
 				*/
@@ -1340,9 +1339,9 @@ namespace mc {
 				*/
 				void bindToUniformBlock(const Index program, const char* blockName) const;
 				/**
-				@copydoc UniformBuffer::bindToUniformBlocks(const Index program, const char* blockname) const
+				@copydoc UniformBuffer::bindToUniformBlock(const Index program, const char* blockname) const
 				*/
-				void bindToUniformBlock(const ShaderProgram& program, const char* blockname) const;
+				void bindToUniformBlock(const ShaderProgram& program, const char* blockName) const;
 
 				/**
 				@copydoc Object::operator==(const Object&) const

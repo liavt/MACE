@@ -21,24 +21,24 @@ namespace mc {
 			using Error::Error;
 		};
 
-#define _MACE_SIGNAL_ERROR(name) class Signal##name##Error : public SignalError{public: using SignalError::SignalError;}
-		_MACE_SIGNAL_ERROR(Interrupt);
-		_MACE_SIGNAL_ERROR(Terminate);
-		_MACE_SIGNAL_ERROR(IllegalInstruction);
-		_MACE_SIGNAL_ERROR(Abort);
-		_MACE_SIGNAL_ERROR(FloatingPoint);
-		_MACE_SIGNAL_ERROR(SegmentFault);
+#define MACE_SIGNAL_ERROR(name) class Signal##name##Error : public SignalError{public: using SignalError::SignalError;}
+		MACE_SIGNAL_ERROR(Interrupt);
+		MACE_SIGNAL_ERROR(Terminate);
+		MACE_SIGNAL_ERROR(IllegalInstruction);
+		MACE_SIGNAL_ERROR(Abort);
+		MACE_SIGNAL_ERROR(FloatingPoint);
+		MACE_SIGNAL_ERROR(SegmentFault);
 
 		//the following are only thrown on POSIX systems, but can be caught from any system just in case
-		_MACE_SIGNAL_ERROR(Hangup);
-		_MACE_SIGNAL_ERROR(Kill);
-		_MACE_SIGNAL_ERROR(Stop);
-		_MACE_SIGNAL_ERROR(Alarm);
-		_MACE_SIGNAL_ERROR(TerminalStop);
-		_MACE_SIGNAL_ERROR(TerminalInput);
-		_MACE_SIGNAL_ERROR(TerminalOutput);
+		MACE_SIGNAL_ERROR(Hangup);
+		MACE_SIGNAL_ERROR(Kill);
+		MACE_SIGNAL_ERROR(Stop);
+		MACE_SIGNAL_ERROR(Alarm);
+		MACE_SIGNAL_ERROR(TerminalStop);
+		MACE_SIGNAL_ERROR(TerminalInput);
+		MACE_SIGNAL_ERROR(TerminalOutput);
 
-#undef _MACE_SIGNAL_ERROR//_MACE_SIGNAL_ERROR
+#undef MACE_SIGNAL_ERROR//_MACE_SIGNAL_ERROR
 
 		void signalHandle[[noreturn]](int sig);
 

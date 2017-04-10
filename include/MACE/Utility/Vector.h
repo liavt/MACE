@@ -115,7 +115,7 @@ namespace mc {
 		};
 
 		/**
-		Creates a `Vector` from an `std::initializer_list.` Allows for an aggregate-style creation.
+		Creates a `Vector` from an `std::initializer_list`. Allows for an aggregate-style creation.
 		<p>
 		Example:
 		{@code

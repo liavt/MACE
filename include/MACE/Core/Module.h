@@ -114,7 +114,7 @@ namespace mc {
 		*/
 		void removeModule(const std::string module);
 		/**
-		Remove a `Module` by it's index. The index is provided from {@link #addModule(Module&)} or {@link #indexOf(Module&)}
+		Remove a `Module` by it's index. The index is provided from MACE::addModule(Module&) or MACE::indexOf(Module&)
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		@param i Index of a `Module` to delete
 		*/
