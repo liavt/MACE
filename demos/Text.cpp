@@ -58,15 +58,7 @@ int main() {
 
 		module.setCreationCallback(&create);
 
-		mc::MACE::init();
-
-		while( mc::MACE::isRunning() ) {
-			mc::MACE::update();
-
-			mc::os::wait(33);
-		}
-
-		mc::MACE::destroy();
+		MACE::start();
 	} catch( const std::exception& e ) {
 		Error::handleError(e);
 		return -1;

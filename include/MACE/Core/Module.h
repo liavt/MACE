@@ -189,6 +189,8 @@ namespace mc {
 		*/
 		void assertModule(const std::string module);
 
+		void start(const long long ups = 30L);
+
 		/**
 		Initializes MACE and calls {@link Module#init() init()} on all registered `Modules.`
 		<p>

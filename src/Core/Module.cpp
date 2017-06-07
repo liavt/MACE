@@ -71,6 +71,18 @@ namespace mc {
 		assertModule(module, "\'" + module + "\' module has not been registered!");
 	}
 
+	void MACE::start(const long long ups) {
+		mc::MACE::init();
+
+		while (mc::MACE::isRunning()) {
+			mc::MACE::update();
+
+			mc::os::wait(1000 / ups);
+		}
+
+		mc::MACE::destroy();
+	}
+
 	int MACE::indexOf(const Module& m) {
 		for (Index i = 0; i < modules.size(); ++i) {
 			if (modules[i] == &m) {

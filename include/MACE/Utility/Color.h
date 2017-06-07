@@ -58,7 +58,7 @@ namespace mc {
 		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
 		@see Color(std::array<float,4>)
 		*/
-		Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
+		constexpr Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
 		/**
 		Creates a `Color` from an array of `floats`.
 		@param values An array where the first element is red, the second is green, etc
@@ -242,17 +242,10 @@ namespace mc {
 		/**
 		Constant `Color` values for easy access to common colors
 		*/
-		const Color RED = Color(200, 0, 0), LIGHT_RED = Color(255, 0, 0),
-			DARK_BLUE = Color(0, 0, 255), BLUE = Color(0, 0, 200), CYAN = Color(0, 255, 255),
-			LIGHT_BLUE = Color(50, 200, 255), DARK_RED = Color(150, 0, 0),
-			DARK_GREEN = Color(0, 50, 0), GREEN = Color(0, 150, 0),
-			LIGHT_GREEN = Color(0, 250, 0), PURPLE = Color(100, 0, 255),
-			MAGENTA = Color(255, 0, 255), WHITE = Color(255, 255, 255),
-			BLACK = Color(0, 0, 0), YELLOW = Color(255, 255, 0),
-			DARK_GRAY = Color(100, 100, 100), LIGHT_GRAY = Color(200, 200, 200),
-			ORANGE = Color(255, 125, 0), GRAY = Color(150, 150, 150),
-			DARK_ORANGE = Color(255, 100, 0), LIGHT_ORANGE = Color(255, 150, 0),
-			INVISIBLE = Color(0, 0, 0, 0);
+		const extern Color RED, LIGHT_RED, DARK_BLUE, BLUE, CYAN, LIGHT_BLUE, 
+			DARK_RED, DARK_GREEN, GREEN, LIGHT_GREEN, PURPLE, MAGENTA, WHITE,
+			BLACK, YELLOW, DARK_GRAY, LIGHT_GRAY, ORANGE, GRAY, DARK_ORANGE, 
+			LIGHT_ORANGE, INVISIBLE;
 	};
 }//mc
 

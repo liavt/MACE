@@ -31,14 +31,6 @@ namespace mc {
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
-            enum Properties: Byte{
-                VSYNC = 0,
-                FULLSCREEN = 1,
-                UNDECORATED = 2,
-                RESIZABLE = 3,
-				DESTROYED = 4,
-            };
-
 			WindowModule(const int width, const int height, const char* title);
 
 			/**
@@ -82,6 +74,14 @@ namespace mc {
 			const VoidFunctionPtr getCreationCallback() const;
 			VoidFunctionPtr getCreationCallback();
 		private:
+			enum Properties: Byte {
+				VSYNC = 0,
+				FULLSCREEN = 1,
+				UNDECORATED = 2,
+				RESIZABLE = 3,
+				DESTROYED = 4,
+			};
+
 			VoidFunctionPtr creationCallback = [] {};
 
 			std::thread windowThread;

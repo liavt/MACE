@@ -106,15 +106,7 @@ int main() {
 		os::SignalModule sigModule = os::SignalModule();
 		MACE::addModule(sigModule);
 
-		mc::MACE::init();
-
-		while( mc::MACE::isRunning() ) {
-			mc::MACE::update();
-
-			mc::os::wait(33);
-		}
-
-		mc::MACE::destroy();
+		MACE::start();
 
 	} catch( const std::exception& e ) {
 		Error::handleError(e);

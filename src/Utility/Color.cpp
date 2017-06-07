@@ -25,6 +25,20 @@ namespace mc {
 		}
 	}//anon namespace
 
+	namespace Colors {
+		const Color RED = Color(200, 0, 0), LIGHT_RED = Color(255, 0, 0),
+			DARK_BLUE = Color(0, 0, 255), BLUE = Color(0, 0, 200), CYAN = Color(0, 255, 255),
+			LIGHT_BLUE = Color(50, 200, 255), DARK_RED = Color(150, 0, 0),
+			DARK_GREEN = Color(0, 50, 0), GREEN = Color(0, 150, 0),
+			LIGHT_GREEN = Color(0, 250, 0), PURPLE = Color(100, 0, 255),
+			MAGENTA = Color(255, 0, 255), WHITE = Color(255, 255, 255),
+			BLACK = Color(0, 0, 0), YELLOW = Color(255, 255, 0),
+			DARK_GRAY = Color(100, 100, 100), LIGHT_GRAY = Color(200, 200, 200),
+			ORANGE = Color(255, 125, 0), GRAY = Color(150, 150, 150),
+			DARK_ORANGE = Color(255, 100, 0), LIGHT_ORANGE = Color(255, 150, 0),
+			INVISIBLE = Color(0, 0, 0, 0);
+	}
+
 	Color Color::lighten() const {
 		return Color(trimFloat(r + 0.05f), trimFloat(g + 0.05f), trimFloat(b + 0.05f), a);
 	}
@@ -72,7 +86,7 @@ namespace mc {
 		setAlpha(alpha);
 	}
 
-	Color::Color(const float red, const float green, const float blue, const float alpha) noexcept:  r(red), g(green), b(blue), a(alpha) {}
+	constexpr Color::Color(const float red, const float green, const float blue, const float alpha) noexcept:  r(red), g(green), b(blue), a(alpha) {}
 
 	Color::Color(const std::array<float, 4>& rgba) {
 		this->setValues(rgba);
