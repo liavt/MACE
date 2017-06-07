@@ -487,7 +487,7 @@ namespace mc {
 		Font Font::loadFont(const char* name) {
 			if (freetypeStatus < 0) {
 				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
-					throw FontError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
+					throw FontError("Freetype failed to initialize with error code " + std::to_string(freetypeStatus));
 				}
 
 				//font 0 should be null

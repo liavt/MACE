@@ -58,7 +58,7 @@ namespace mc {
 			//shameless resturant promotion
 			const EaseFunction BACK_OUT = [](float t, const float b, const float c, const float d) -> float {
 				const float s = 1.70158f;
-				return c*((t = t / d - 1)*t*((s + 1)*t + s) + 1) + b;
+				return c*((t /= d - 1)*t*((s + 1)*t + s) + 1) + b;
 			};
 
 			const EaseFunction BACK_IN_OUT = [](float t, const float b, const float c, const float d) -> float {

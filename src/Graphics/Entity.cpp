@@ -23,7 +23,7 @@ The above copyright notice and this permission notice shall be included in all c
 #elif defined(MACE_MSVC)
 #	pragma warning( push ) 
 //these are all warnings that STB_IMAGE activates which dont really matter
-#	pragma warning( disable: 4244 4100) 
+#	pragma warning( disable: 4244 4100 4456) 
 #endif
 
 #define STB_IMAGE_IMPLEMENTATION

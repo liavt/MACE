@@ -107,6 +107,7 @@ namespace mc {
 				ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+				//we want to clear the id texture to black only - not the color set by the user. this requires 3 setDrawBuffers - which is annoying
 				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);

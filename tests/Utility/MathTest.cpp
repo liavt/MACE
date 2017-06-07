@@ -13,14 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace math {
-		TEST_CASE("Testing pow()", "[utility][math]") {
-			REQUIRE(math::pow(2, 8) == 256);
-			REQUIRE(math::pow(5, 2) == 25);
-			REQUIRE(math::pow(4, 3) == 64);
-			REQUIRE(math::pow(10, 0) == 1);
-			REQUIRE(math::pow(-6, 3) == -216);
-		}
-
 		TEST_CASE("Testing isEven() and isOdd()") {
 			SECTION("isEven()") {
 				REQUIRE(isEven(4));
