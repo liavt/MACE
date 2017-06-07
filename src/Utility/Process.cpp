@@ -11,6 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/System.h>
 
 #include <cstring>
+#include <memory>
 
 #ifdef MACE_POSIX
 #	include <sys/wait.h>
@@ -19,7 +20,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//MACE_POSIX
 
 namespace mc {
-	void Process::init(const char * path, char * args) {
+	void Process::init(const char * path, const char * args) {
 		os::clearError();
 
 		if (isCreated()) {
@@ -33,11 +34,28 @@ namespace mc {
 		startupInfo.cb = sizeof(startupInfo);
 		ZeroMemory(&process, sizeof(process));
 
-		//startupInfo.hStdError = GetStdHandle(STD_ERROR_HANDLE);
-		//startupInfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
-		//startupInfo.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+		startupInfo.hStdError = GetStdHandle(STD_ERROR_HANDLE);
+		startupInfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+		startupInfo.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 
-		CreateProcessA(path, args, nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
+		/*
+		Ok let me rant for a second here. CreateProcessA does not accept a const char* for its args.
+		THIS IS A MASSIVE PROBLEM
+		args has to be const char* because of the possibility that someone will initialize a process
+		with a string literal. In fact, it is most likely going to be a string literal. Meaning the
+		function declaration has to say that args is a const char*.
+		BUT WINDOWS DECIDED THAT THAT IS A BAD IDEA
+		POSIX is somehow reasonable by allowing const char* in the execl function but NO WINDOWS
+		CANT DO THAT
+		So we have to do this dumb method of copying the const char* into a temporary mutable
+		buffer for the string so windows can have its way.
+		This is why Linux will always be the superior platform for development, Microsoft.
+		Because of things like this.
+		*/
+
+		std::string arguments;
+		arguments = args;
+		CreateProcessA(path, &arguments[0], nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
 #elif defined(MACE_POSIX)
 		process = fork();
 
@@ -155,7 +173,7 @@ namespace mc {
 		return created;
 	}
 	Process::Process() {}
-	Process::Process(const char * path, char * args) : Process() {
+	Process::Process(const char * path, const char * args) : Process() {
 		init(path, args);
 	}
 	Process::Process(const std::string & path, std::string & args) : Process() {

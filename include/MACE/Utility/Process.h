@@ -26,11 +26,11 @@ namespace mc {
 	class Process {
 	public:
 		Process();
-		Process(const char* path, char* args);
+		Process(const char* path, const char* args);
 		Process(const std::string& path, std::string& args);
 		~Process();
 
-		void init(const char* path, char* args);
+		void init(const char* path, const char* args);
 		void init(const std::string& path, std::string& args);
 		void destroy();
 

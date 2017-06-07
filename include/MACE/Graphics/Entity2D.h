@@ -58,14 +58,15 @@ namespace mc {
 			//shameless resturant promotion
 			const EaseFunction BACK_OUT = [](float t, const float b, const float c, const float d) -> float {
 				const float s = 1.70158f;
-				return c*((t /= d - 1)*t*((s + 1)*t + s) + 1) + b;
+				t /= d;
+				return c*((t - 1)*t*((s + 1)*t + s) + 1) + b;
 			};
 
 			const EaseFunction BACK_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
-				float s = 1.70158f;
-				if ((t /= d / 2) < 1) return c / 2 * (t*t*(((s *= (1.525f)) + 1)*t - s)) + b;
+				const float s = 2.5949095f;
+				if ((t /= d / 2) < 1) return c / 2 * (t*t*((s + 1)*t - s)) + b;
 				const float postFix = t -= 2;
-				return c / 2 * ((postFix)*t*(((s *= (1.525f)) + 1)*t + s) + 2) + b;
+				return c / 2 * ((postFix)*t*((s + 1)*t + s) + 2) + b;
 			};
 
 			const EaseFunction BOUNCE_OUT = [](float t, const float b, const float c, const float d) -> float {
@@ -94,29 +95,33 @@ namespace mc {
 			};
 
 			const EaseFunction CIRCLE_IN = [](float t, const float b, const float c, const float d) -> float {
-				return -c * (std::sqrt(1 - (t /= d)*t) - 1) + b;
+				t /= d;
+				return -c * (std::sqrt(1 - t*t) - 1) + b;
 			};
 
 			const EaseFunction CIRCLE_OUT = [](float t, const float b, const float c, const float d) -> float {
-				return c * std::sqrt(1 - (t = t / d - 1)*t) + b;
+				t /= d;
+				return c * std::sqrt(1 - (t - 1)*t) + b;
 			};
 
 			const EaseFunction CIRCLE_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
 				if ((t /= d / 2) < 1) return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
-				return c / 2 * (std::sqrt(1 - t*(t -= 2)) + 1) + b;
+				return c / 2 * (std::sqrt(1 - t*(--(--t))) + 1) + b;
 			};
 
 			const EaseFunction CUBIC_IN = [](float t, const float b, const float c, const float d) -> float {
-				return c*(t /= d)*t*t + b;
+				t /= d;
+				return c*t*t*t + b;
 			};
 
 			const EaseFunction CUBIC_OUT = [](float t, const float b, const float c, const float d) -> float {
-				return c*((t = t / d - 1)*t*t + 1) + b;
+				t /= d;
+				return c*((t - 1)*t*t + 1) + b;
 			};
 
 			const EaseFunction CUBIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
 				if ((t /= d / 2) < 1) return c / 2 * t*t*t + b;
-				return c / 2 * ((t -= 2)*t*t + 2) + b;
+				return c / 2 * ((--(--t))*t*t + 2) + b;
 			};
 
 			const EaseFunction ELASTIC_IN = [](float t, const float b, const float c, const float d) -> float {
@@ -124,7 +129,7 @@ namespace mc {
 				const float p = d*.3f;
 				const float a = c;
 				const float s = p / 4;
-				const float postFix = a*static_cast<float>(std::pow(2, 10 * (t -= 1)));
+				const float postFix = a*static_cast<float>(std::pow(2, 10 * (--t)));
 				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
 			};
 
@@ -143,11 +148,11 @@ namespace mc {
 				const float s = p / 4;
 
 				if (t < 1) {
-					const float postFix = a*static_cast<float>(std::pow(2, 10 * (t -= 1)));
+					const float postFix = a*static_cast<float>(std::pow(2, 10 * (--t)));
 					return -.5f*(postFix* static_cast<float>(std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p))) + b;
 				}
-				const float postFix = a*static_cast<float>(std::pow(2, -10 * (t -= 1)));
-				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*.5f + c + b;
+				const float postFix = a*static_cast<float>(std::pow(2, -10 * (--t)));
+				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*0.5f + c + b;
 			};
 
 			const EaseFunction EXPONENTIAL_IN = [](float t, const float b, const float c, const float d) -> float {
@@ -188,20 +193,22 @@ namespace mc {
 
 			const EaseFunction QUARTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
 				if ((t /= d / 2) < 1) return c / 2 * t*t*t*t + b;
-				return -c / 2 * ((t -= 2)*t*t*t - 2) + b;
+				return -c / 2 * ((--(--t))*t*t*t - 2) + b;
 			};
 
 			const EaseFunction QUINTIC_IN = [](float t, const float b, const float c, const float d) -> float {
-				return c*(t /= d)*t*t*t*t + b;
+				t /= d;
+				return c*t*t*t*t*t + b;
 			};
 
 			const EaseFunction QUINTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
-				return c*((t = t / d - 1)*t*t*t*t + 1) + b;
+				t /= d;
+				return c*((t - 1)*t*t*t*t + 1) + b;
 			};
 
 			const EaseFunction QUINTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
 				if ((t /= d / 2) < 1) return c / 2 * t*t*t*t*t + b;
-				return c / 2 * ((t -= 2)*t*t*t*t + 2) + b;
+				return c / 2 * ((--(--t))*t*t*t*t + 2) + b;
 			};
 
 			const EaseFunction SINUSODIAL_IN = [](float t, const float b, const float c, const float d) -> float {
@@ -217,7 +224,7 @@ namespace mc {
 			};
 		}
 
-		class Entity2D : public GraphicsEntity {
+		class Entity2D: public GraphicsEntity {
 		public:
 			Entity2D();
 
@@ -249,7 +256,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Image> : public RenderImpl {
+		class RenderProtocol<Image>: public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -261,7 +268,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Image>
 
-		class Image : public Entity2D {
+		class Image: public Entity2D {
 			friend class RenderProtocol<Image>;
 		public:
 			static int getProtocol();
@@ -300,7 +307,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<ProgressBar> : public RenderImpl {
+		class RenderProtocol<ProgressBar>: public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -315,7 +322,7 @@ namespace mc {
 		/**
 		@todo Replace the EaseComponent with a non dynamic pointer
 		*/
-		class ProgressBar : public Entity2D {
+		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
 		public:
 			typedef void(*ProgressBarEaseDoneCallback)(ProgressBar*);
@@ -419,7 +426,7 @@ namespace mc {
 		class Letter;
 		class Text;
 
-		enum class Fonts : Byte {
+		enum class Fonts: Byte {
 			CODE,
 			SANS,
 			SERIF,
@@ -472,7 +479,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Letter> : public RenderImpl {
+		class RenderProtocol<Letter>: public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -484,7 +491,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Letter>
 
-		class Letter : public Entity2D {
+		class Letter: public Entity2D {
 			friend class RenderProtocol<Letter>;
 			friend class Font;
 			friend class Text;
@@ -535,7 +542,7 @@ namespace mc {
 		/**
 		@bug newline with vertical align doesnt really work
 		*/
-		class Text : public Entity2D {
+		class Text: public Entity2D {
 		public:
 			Text(const std::string& t, const Font& f = Font());
 			Text(const std::wstring& t = L"", const Font& f = Font());
@@ -614,7 +621,7 @@ namespace mc {
 		@opengl
 		*/
 		template<>
-		class RenderProtocol<Button> : public RenderImpl {
+		class RenderProtocol<Button>: public RenderImpl {
 		public:
 			void init(const Size originalWidth, const Size originalHeight) override;
 			void initEntity(GraphicsEntity* en) override;
@@ -626,7 +633,7 @@ namespace mc {
 			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
 		};//RenderProtocol<Button>
 
-		class Button : public Selectable, public Entity2D {
+		class Button: public Selectable, public Entity2D {
 			friend class RenderProtocol<Button>;
 		public:
 			static int getProtocol();
