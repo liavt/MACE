@@ -86,7 +86,7 @@ namespace mc {
 		setAlpha(alpha);
 	}
 
-	constexpr Color::Color(const float red, const float green, const float blue, const float alpha) noexcept:  r(red), g(green), b(blue), a(alpha) {}
+	Color::Color(const float red, const float green, const float blue, const float alpha) noexcept:  r(red), g(green), b(blue), a(alpha) {}
 
 	Color::Color(const std::array<float, 4>& rgba) {
 		this->setValues(rgba);

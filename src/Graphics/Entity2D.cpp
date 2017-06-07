@@ -169,11 +169,13 @@ namespace mc {
 			};
 
 			const EaseFunction QUADRATIC_IN = [](float t, const float b, const float c, const float d) -> float {
-				return c*(t /= d)*t + b;
+				t /= d;
+				return c*t*t + b;
 			};
 
 			const EaseFunction QUADRATIC_OUT = [](float t, const float b, const float c, const float d) -> float {
-				return -c *(t /= d)*(t - 2) + b;
+				t /= d;
+				return -c *t*(t - 2) + b;
 			};
 
 			const EaseFunction QUADRATIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
