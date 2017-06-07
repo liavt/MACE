@@ -91,6 +91,12 @@ namespace mc {
 
 			/**
 			@internal
+			@opengl
+			*/
+			void setRefreshColor(const float r, const float g, const float b, const float a);
+			
+			/**
+			@internal
 			*/
 			std::string processShader(const std::string& shader, const GLenum& type);
 			/**

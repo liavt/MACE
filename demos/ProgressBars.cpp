@@ -26,8 +26,6 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create() {
-	gfx::getRenderer()->setRefreshColor(Colors::LIGHT_GRAY);
-
 	gfx::ColorAttachment circle = gfx::ColorAttachment(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
 	circleBar = gfx::ProgressBar(0, 255, 20);
@@ -39,11 +37,11 @@ void create() {
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
 
-	circleBar.easeTo(250, 100, gfx::EaseFunction::SQUARE_ROOT);
+	circleBar.easeTo(250, 100, gfx::EaseFunctions::BOUNCE_IN_OUT);
 
 	group.addChild(circleBar);
 
-	rectangleBar = gfx::ProgressBar(0, 255, 100);
+	rectangleBar = gfx::ProgressBar(0, 255, 50);
 	rectangleBar.setBackgroundTexture(Colors::RED);
 	rectangleBar.setForegroundTexture(Colors::GREEN);
 	rectangleBar.setSelectionTexture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png");
@@ -52,9 +50,11 @@ void create() {
 	rectangleBar.setX(0.5f);
 	rectangleBar.addComponent(r);
 
-	rectangleBar.easeTo(250, 100, gfx::EaseFunction::SINUSOIDAL);
+	rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
 
 	group.addChild(rectangleBar);
+
+	gfx::getRenderer()->setRefreshColor(Colors::LIGHT_GRAY);
 }
 
 int main() {

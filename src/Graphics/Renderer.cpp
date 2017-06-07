@@ -40,6 +40,9 @@ namespace mc {
 			//which binding location the paintdata uniform sslBuffer should be bound to
 #define _MACE_ENTITY_DATA_LOCATION 15
 
+#define _MACE_SCENE_ATTACHMENT_INDEX 0
+#define _MACE_ID_ATTACHMENT_INDEX 1
+
 				//ssl resources
 			Preprocessor sslPreprocessor = Preprocessor("");
 
@@ -49,6 +52,8 @@ namespace mc {
 
 			ogl::Texture2D sceneTexture = ogl::Texture2D();
 			ogl::Texture2D idTexture = ogl::Texture2D();
+
+			Color clearColor = Colors::BLACK;
 
 			IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -98,10 +103,17 @@ namespace mc {
 				sceneTexture.bind();
 				idTexture.bind();
 
-				constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-				frameBuffer.setDrawBuffers(2, drawBuffers);
-
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_SCENE_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
+				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
+
+				constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + _MACE_SCENE_ATTACHMENT_INDEX,
+					GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX };
+				frameBuffer.setDrawBuffers(2, drawBuffers);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up ssl");
 			}
@@ -115,7 +127,7 @@ namespace mc {
 
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0);
+				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + _MACE_SCENE_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setDrawBuffer(GL_BACK);
 
 				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
@@ -166,9 +178,9 @@ namespace mc {
 				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
 				Index pixel = 0;
-				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT1);
-				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT1);
-				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT1);
+				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
 				//it is inverted for some reason
 				frameBuffer.readPixels(os::Input::getMouseX(), height - os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
@@ -220,6 +232,10 @@ namespace mc {
 
 				buf.setLocation(_MACE_ENTITY_DATA_LOCATION);
 			}//fillBuffer
+
+			void setRefreshColor(const float r, const float g, const float b, const float a) {
+				clearColor = Color(r, g, b, a);
+			}
 
 			std::string processShader(const std::string & shader, const GLenum& type) {
 				Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
@@ -517,7 +533,7 @@ namespace mc {
 		}//clearBuffers()
 
 		void Renderer::setRefreshColor(const float r, const float g, const float b, const float a) {
-			ogl::FrameBuffer::setClearColor(r, g, b, a);
+			ssl::setRefreshColor(r, g, b, a);
 		}//setRefreshColor(r,g,b,a)
 
 		void Renderer::setRefreshColor(const Color & c) {

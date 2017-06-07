@@ -170,16 +170,6 @@ namespace mc {
 		}
 
 		/**
-		Calculates a number to an exponenet, or `value^power`
-		@param value Base number
-		@param power The exponent
-		@return `value^power`
-		@see sqr(const T)
-		@see cube(const T)
-		*/
-		double pow(const double value, const int power);
-
-		/**
 		Squares a number. Squaring a number equals a number times iteslf.
 		@param value Number to square
 		@return `value^2` or `value*value`

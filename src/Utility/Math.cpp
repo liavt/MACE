@@ -30,24 +30,5 @@ namespace mc {
 
 			return true;
 		}
-
-
-		double pow(const double value, const int power) {
-			//pow pow is having fun tonight
-			if( power == 0 )return 1.0;//any number to the power of 0 is 1. even 0. 0^0=1. axioms are hilarious.
-
-			double out = value;
-			//boom! pow!
-			for( int i = 0; i < abs(power) - 1; i++ ) {
-				out = out * value;
-			}
-
-			if( power < 0 ) {
-				out = (1.0 / out);
-			}
-
-			return out;
-		}
-
 	}//math
 }//mc

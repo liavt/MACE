@@ -301,17 +301,18 @@ namespace mc {
 		}
 
 
-		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const EaseDoneCallback callback) {
+		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const ProgressBarEaseDoneCallback callback) {
 			class EaseComponent : public Component {
 			public:
-				EaseComponent(const float p, const float t, const float sp, const EaseFunction f, const EaseDoneCallback cb) : Component(), startProg(sp), prog(p), time(t), func(f), start(0), done(cb) {};
+				EaseComponent(const float p, const float duration, const float sp, const EaseFunction f, const ProgressBarEaseDoneCallback cb) : Component(), b(sp), c(p), d(duration), ease(f), t(0), done(cb) {};
 
-				const float startProg;
-				const float prog;
-				const float time;
-				const EaseFunction func;
-				float start;
-				const EaseDoneCallback done;
+				//http://upshots.org/actionscript/jsas-understanding-easing for explanation of these variables
+				const float b;
+				const float c;
+				const float d;
+				const EaseFunction ease;
+				float t;
+				const ProgressBarEaseDoneCallback done;
 			protected:
 				void init(Entity*) override {}
 				bool update(Entity* e) override {
@@ -321,42 +322,14 @@ namespace mc {
 						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in update()");
 					}
 
-					//combine 2 operations into 1
-					float difference = start++ / time;
-					float percentDone;
 
-					if (func == EaseFunction::SINUSOIDAL) {
-						percentDone = static_cast<float>(std::sin(difference * (math::pi() / 2)));
-					} else if (func == EaseFunction::COSINE) {
-						percentDone = 1.0f - static_cast<float>(std::cos(difference * (math::pi() / 2)));
-					} else if (func == EaseFunction::QUADRATIC) {
-						percentDone = difference*difference;
-					} else if (func == EaseFunction::CUBIC) {
-						percentDone = difference*difference*difference;
-					} else if (func == EaseFunction::QUARTIC) {
-						percentDone = difference*difference*difference*difference;
-					} else if (func == EaseFunction::QUINTIC) {
-						percentDone = difference*difference*difference*difference*difference;
-					} else if (func == EaseFunction::SQUARE_ROOT) {
-						percentDone = std::sqrt(difference);
-					} else if (func == EaseFunction::SQUARE_ROOT) {
-						percentDone = std::cbrt(difference);
-					} else {
-						//linear as a fallback
-						percentDone = difference;
-					}
-
-					//meaning that we are easing backwards
-					if (startProg > prog) {
-						bar->setProgress(startProg - (startProg - prog)*(percentDone));
-					} else {
-						bar->setProgress(startProg + (prog - startProg)*(percentDone));
-					}
+					bar->setProgress(ease(t++, b, c - b, d));
 
 					//if we got there or time has run out
-					if (bar->getProgress() == prog || difference >= 1.0f) {
+					if (bar->getProgress() == c || t >= d) {
 						return true;
 					}
+
 					return false;
 				}
 				void render(Entity*) override {}
@@ -659,7 +632,7 @@ namespace mc {
 				}
 
 				id = sourceCodePro.getID();
-			}else if (f == Fonts::SANS) {
+			} else if (f == Fonts::SANS) {
 				static Font sourceSansPro;
 
 				if (sourceSansPro.getID() == 0) {

@@ -18,6 +18,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Utility/Vector.h>
 
+#include <cmath>
+
 namespace mc {
 	namespace gfx {
 		/**
@@ -25,21 +27,195 @@ namespace mc {
 		*/
 		MACE_DECLARE_ERROR(Font);
 
-		enum class EaseFunction : Byte {
-			//Starts fast, decelerates at end
-			SINUSOIDAL,
-			//Starts slow, accelerates at end
-			COSINE,
-			CUBIC,
-			QUADRATIC,
-			QUARTIC,
-			QUINTIC,
-			//Circular acceleration from zero
-			SQUARE_ROOT,
-			//Even faster acceleration at start, and slow down at end
-			CUBE_ROOT,
-			LINEAR
-		};
+		/**
+		Function defining a function used in an easing of a value, such as a translation or progress bar.
+		@return The value of the ease at a specified timestamp, `t`
+		@param t The current tick of the ease
+		@param b The beginning progress value of the ease
+		@param c The change between the beginning and destination value
+		@param d The total time of the ease in frames
+		@see EaseFunctions
+		*/
+		typedef float(*EaseFunction)(float t, const float b, const float c, const float d);
+
+		/**
+		Different easing functions commonly found in applications
+		@see EaseFunction
+		*/
+		namespace EaseFunctions {
+			//these fucntions are derived from https://github.com/jesusgollonet/ofpennereasing . Thank you!
+
+			const EaseFunction LINEAR = [](float t, const float b, const float c, const float d) -> float {
+				return b + c*(t / d);
+			};
+
+			const EaseFunction BACK_IN = [](float t, const float b, const float c, const float d) -> float {
+				const float s = 1.70158f;
+				const float postFix = t /= d;
+				return c*(postFix)*t*((s + 1)*t - s) + b;
+			};
+
+			//shameless resturant promotion
+			const EaseFunction BACK_OUT = [](float t, const float b, const float c, const float d) -> float {
+				const float s = 1.70158f;
+				return c*((t = t / d - 1)*t*((s + 1)*t + s) + 1) + b;
+			};
+
+			const EaseFunction BACK_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				float s = 1.70158f;
+				if ((t /= d / 2) < 1) return c / 2 * (t*t*(((s *= (1.525f)) + 1)*t - s)) + b;
+				const float postFix = t -= 2;
+				return c / 2 * ((postFix)*t*(((s *= (1.525f)) + 1)*t + s) + 2) + b;
+			};
+
+			const EaseFunction BOUNCE_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d) < (1 / 2.75f)) {
+					return c*(7.5625f*t*t) + b;
+				} else if (t < (2 / 2.75f)) {
+					const float postFix = t -= (1.5f / 2.75f);
+					return c*(7.5625f*(postFix)*t + .75f) + b;
+				} else if (t < (2.5 / 2.75)) {
+					const float postFix = t -= (2.25f / 2.75f);
+					return c*(7.5625f*(postFix)*t + .9375f) + b;
+				} else {
+					const float postFix = t -= (2.625f / 2.75f);
+					return c*(7.5625f*(postFix)*t + .984375f) + b;
+				}
+			};
+
+			//BOUNCE_IN is defined after BOUNCE_OUT just because it requires BOUNCE_OUT to be eclared
+			const EaseFunction BOUNCE_IN = [](float t, const float b, const float c, const float d) -> float {
+				return c - EaseFunctions::BOUNCE_OUT(d - t, 0, c, d) + b;
+			};
+
+			const EaseFunction BOUNCE_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t < d / 2) return EaseFunctions::BOUNCE_IN(t * 2, 0, c, d) * .5f + b;
+				else return EaseFunctions::BOUNCE_OUT(t * 2 - d, 0, c, d) * .5f + c*.5f + b;
+			};
+
+			const EaseFunction CIRCLE_IN = [](float t, const float b, const float c, const float d) -> float {
+				return -c * (std::sqrt(1 - (t /= d)*t) - 1) + b;
+			};
+
+			const EaseFunction CIRCLE_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return c * std::sqrt(1 - (t = t / d - 1)*t) + b;
+			};
+
+			const EaseFunction CIRCLE_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
+				return c / 2 * (std::sqrt(1 - t*(t -= 2)) + 1) + b;
+			};
+
+			const EaseFunction CUBIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				return c*(t /= d)*t*t + b;
+			};
+
+			const EaseFunction CUBIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return c*((t = t / d - 1)*t*t + 1) + b;
+			};
+
+			const EaseFunction CUBIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) return c / 2 * t*t*t + b;
+				return c / 2 * ((t -= 2)*t*t + 2) + b;
+			};
+
+			const EaseFunction ELASTIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) return b;  if ((t /= d) == 1) return b + c;
+				const float p = d*.3f;
+				const float a = c;
+				const float s = p / 4;
+				const float postFix = a*static_cast<float>(std::pow(2, 10 * (t -= 1)));
+				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
+			};
+
+			const EaseFunction ELASTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) return b;  if ((t /= d) == 1) return b + c;
+				const float p = d*.3f;
+				const float a = c;
+				const float s = p / 4;
+				return static_cast<float>(a*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
+			};
+
+			const EaseFunction ELASTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) return b;  if ((t /= d / 2) == 2) return b + c;
+				const float p = d*(.3f*1.5f);
+				const float a = c;
+				const float s = p / 4;
+
+				if (t < 1) {
+					const float postFix = a*static_cast<float>(std::pow(2, 10 * (t -= 1)));
+					return -.5f*(postFix* static_cast<float>(std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p))) + b;
+				}
+				const float postFix = a*static_cast<float>(std::pow(2, -10 * (t -= 1)));
+				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*.5f + c + b;
+			};
+
+			const EaseFunction EXPONENTIAL_IN = [](float t, const float b, const float c, const float d) -> float {
+				return (t == 0) ? b : c * static_cast<float>(std::pow(2, 10 * (t / d - 1))) + b;
+			};
+
+			const EaseFunction EXPONENTIAL_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return (t == d) ? b + c : c * static_cast<float>(-std::pow(2, -10 * t / d) + 1) + b;
+			};
+
+			const EaseFunction EXPONENTIAL_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) return b;
+				if (t == d) return b + c;
+				if ((t /= d / 2) < 1) return c / 2 * static_cast<float>(std::pow(2, 10 * (t - 1))) + b;
+				return c / 2 * static_cast<float>(-std::pow(2, -10 * --t) + 2) + b;
+			};
+
+			const EaseFunction QUADRATIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				return c*(t /= d)*t + b;
+			};
+
+			const EaseFunction QUADRATIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return -c *(t /= d)*(t - 2) + b;
+			};
+
+			const EaseFunction QUADRATIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) return ((c / 2)*(t*t)) + b;
+				return -c / 2 * (((t - 2)*(--t)) - 1) + b;
+			};
+
+			const EaseFunction QUARTIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				return c*(t /= d)*t*t*t + b;
+			};
+
+			const EaseFunction QUARTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return -c * ((t = t / d - 1)*t*t*t - 1) + b;
+			};
+
+			const EaseFunction QUARTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) return c / 2 * t*t*t*t + b;
+				return -c / 2 * ((t -= 2)*t*t*t - 2) + b;
+			};
+
+			const EaseFunction QUINTIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				return c*(t /= d)*t*t*t*t + b;
+			};
+
+			const EaseFunction QUINTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return c*((t = t / d - 1)*t*t*t*t + 1) + b;
+			};
+
+			const EaseFunction QUINTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) return c / 2 * t*t*t*t*t + b;
+				return c / 2 * ((t -= 2)*t*t*t*t + 2) + b;
+			};
+
+			const EaseFunction SINUSODIAL_IN = [](float t, const float b, const float c, const float d) -> float {
+				return -c * std::cos(t / d * (static_cast<float>(math::pi()) / 2)) + c + b;
+			};
+
+			const EaseFunction SINUSODIAL_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return c * std::sin(t / d * (static_cast<float>(math::pi()) / 2)) + b;
+			};
+
+			const EaseFunction SINUSODIAL_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return -c / 2 * (std::cos(static_cast<float>(math::pi())*t / d) - 1) + b;
+			};
+		}
 
 		class Entity2D : public GraphicsEntity {
 		public:
@@ -142,7 +318,7 @@ namespace mc {
 		class ProgressBar : public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
 		public:
-			typedef void(*EaseDoneCallback)(ProgressBar*);
+			typedef void(*ProgressBarEaseDoneCallback)(ProgressBar*);
 
 			static int getProtocol();
 
@@ -220,7 +396,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunction::SINUSOIDAL, const EaseDoneCallback callback = [](ProgressBar*) {});
+			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunctions::LINEAR, const ProgressBarEaseDoneCallback callback = [](ProgressBar*) {});
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;
