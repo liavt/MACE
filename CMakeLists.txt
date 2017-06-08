@@ -37,7 +37,11 @@ include(ExternalProject)
 
 option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
 option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
+option(MACE_SWIG "Whether to generage cross-language binaries with SWIG" OFF)
+set(MACE_SWIG_LANGUAGE "" CACHE STRING "What language to generate binaries for using SWIG. MACE_SWIG must be enabled for this to work.")
 option(MACE_DOWNLOAD_DEPENDENCIES "Whether to download and extract dependencies that are not found. If turned off, will instead error." ON)
+mark_as_advanced(MACE_SWIG)
+mark_as_advanced(MACE_SWIG_LANGUAGE)
 mark_as_advanced(MACE_DOWNLOAD_DEPENDENCIES)
 
 #for glfw
@@ -79,6 +83,20 @@ find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
+
+if(MACE_SWIG)
+	find_package(SWIG REQUIRED)
+	include(${SWIG_USE_FILE})
+	
+	set_source_files_properties(MACE.swig PROPERTIES CPLUSPLUS ON)
+	set_source_files_properties(MACE.swig PROPERTIES SWIG_FLAGS "-includeall")
+	
+	if(NOT MACE_SWIG_LANGUAGE)
+		message(SEND_ERROR "Must define a language for SWIG to compile to!")
+	endif()
+elseif(MACE_SWIG_LANGUAGE)
+	message(WARNING "MACE_SWIG_LANGUAGE has no effect if MACE_SWIG isnt enabled")
+endif()
 
 if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
@@ -137,6 +155,10 @@ foreach(FILE ${SRC})
 endforeach()
 
 add_library(MACE ${HEADERS} ${SRC})
+
+if(MACE_SWIG)
+	swig_add_module(MACE ${MACE_SWIG_LANGUAGE} MACE.swig)
+endif()
 
 if(${MACE_TESTS})
 	if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")

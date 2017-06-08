@@ -61,9 +61,9 @@ namespace mc {
 		std::wstring toWideString(const std::string& s);
 		std::string toNarrowString(const std::wstring& s);
 
-		template<class T, std::size_t n>
-		inline constexpr std::size_t getArraySize(T(&)[n]) {
-			return n;
+		template<class T, std::size_t N>
+		inline constexpr std::size_t getArraySize(T(&)[N]) {
+			return N;
 		}
 
 		void clearError(const int lineNumber = 0, const char* filename = "Unknown file");
