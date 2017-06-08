@@ -6,30 +6,33 @@
 using namespace mc;
 
 class TestComponent: public gfx::Component {
-
-	void init(gfx::Entity* en) override {
-		en->setProperty(gfx::Entity::MAINTAIN_X, true);
-		en->setProperty(gfx::Entity::MAINTAIN_Y, true);
-		en->setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-		en->setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
+	std::unique_ptr<Component> clone() const override {
+		return std::unique_ptr<Component>(new TestComponent());
 	}
 
-	bool update(gfx::Entity* en) override {
+	void init() override {
+		parent->setProperty(gfx::Entity::MAINTAIN_X, true);
+		parent->setProperty(gfx::Entity::MAINTAIN_Y, true);
+		parent->setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
+		parent->setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
+	}
+
+	bool update() override {
 		return false;
 	}
 
-	void render(gfx::Entity* en) override {}
+	void render() override {}
 
-	void hover(gfx::Entity* en) override {
+	void hover() override {
 		if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
-			en->makeDirty();
+			parent->makeDirty();
 		}
 	}
 
-	void destroy(gfx::Entity* en) override {}
+	void destroy() override {}
 
-	void clean(gfx::Entity* en) override {
-		dynamic_cast<gfx::Image*>(en)->getTexture().setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+	void clean() override {
+		dynamic_cast<gfx::Image*>(parent)->getTexture().setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 };
 

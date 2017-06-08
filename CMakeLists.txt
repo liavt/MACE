@@ -157,7 +157,12 @@ endforeach()
 add_library(MACE ${HEADERS} ${SRC})
 
 if(MACE_SWIG)
-	swig_add_module(MACE ${MACE_SWIG_LANGUAGE} MACE.swig)
+	swig_add_module("MACE-${MACE_SWIG_LANGUAGE}" ${MACE_SWIG_LANGUAGE} MACE.swig ${HEADERS} ${SRC})
+	swig_link_libraries("MACE-${MACE_SWIG_LANGUAGE}" MACE)
+	
+	if(TARGET "MACE-${MACE_SWIG_LANGUAGE}")
+		set_target_properties("MACE-${MACE_SWIG_LANGUAGE}" PROPERTIES FOLDER "MC")
+	endif()
 endif()
 
 if(${MACE_TESTS})

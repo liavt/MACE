@@ -13,13 +13,14 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_CORE_MODULE_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Interfaces.h>
 #include <string>
 
 namespace mc {
 	/**
 	Abstract class used for doing a task in MACE. Plugged into {@link MACE} via {@link MACE#addModule(Module&) addModule().}
 	*/
-	class Module {
+	class Module: public Initializable {
 	public:
 		/**
 		Called when {@link MACE#init} is called and this `Module` is registered.

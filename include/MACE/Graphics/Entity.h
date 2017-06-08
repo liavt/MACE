@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_GRAPHICS_ENTITY_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Graphics/OGL.h>
@@ -63,60 +64,59 @@ namespace mc {
 		@see Entity::addComponent(Component&)
 		@todo unit testing for clean() render() and hover()
 		*/
-		class Component {
+		class Component: public Initializable{
 			friend class Entity;
-		protected:
+		public:
 			virtual ~Component() = default;
+
+			Entity* getParent();
+
+			bool operator==(const Component& other) const;
+			bool operator!=(const Component& other) const;
+		protected:
+			Entity* parent;
+
 			/**
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
 			Required function.
-			@param e The parent `Entity`
 			@note This is not called at Entity::init(), instead it is called when the component is added to the `Entity`. Keep that in mind.
 			@opengl
 			*/
-			virtual void init(Entity* e);
+			virtual void init() override;
 			/**
 			Called when Entity::update() is called. Required function.
 			<p>
 			There is no function to remove a `Component` so this is the only way for a `Component` to be removed from an `Entity`
 			<p>
 			Component::destroy(Entity*) will be called afterwards.
-			@param e The parent `Entity`
 			@return Whether this `Component` should be deleted or not.
 			@opengl
 			*/
-			virtual bool update(Entity* e);
+			virtual bool update();
 			/**
 			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
 			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
 			the `Entity`. Required function.
-			@param e The parent `Entity`
 			@opengl
 			*/
-			virtual void destroy(Entity* e);
+			virtual void destroy() override;
 
-			virtual void render(Entity* e);
+			virtual void render();
 			/**
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
-			@param e The parent `Entity`
 			@opengl
 			*/
-			virtual void clean(Entity* e);
+			virtual void clean();
 
 			/**
 			@opengl
 			*/
-			virtual void hover(Entity* e);
+			virtual void hover();
 
-			Entity* getParent();
-
-			bool operator==(const Component& other) const;
-			bool operator!=(const Component& other) const;
-		private:
-			Entity* parent;
+			virtual std::unique_ptr<Component> clone() const = 0;
 		};//Component
 
-		class ColorAttachment : public ogl::Texture2D {
+		class ColorAttachment: public ogl::Texture2D {
 		public:
 			ColorAttachment();
 			ColorAttachment(const Color& col);
@@ -211,10 +211,10 @@ namespace mc {
 		@see Entity2D
 		@see Component
 		*/
-		class Entity {
+		class Entity: public Initializable {
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it
-			enum EntityProperty : Byte {
+			enum EntityProperty: Byte {
 				/**
 				Bit location representing whether an `Entity` is dead.
 				<p>
@@ -673,6 +673,17 @@ namespace mc {
 			void makeDirty();
 		protected:
 			/**
+			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
+			@internal
+			*/
+			std::vector<Entity*> children = std::vector<Entity*>();
+
+			/**
+			@internal
+			*/
+			TransformMatrix transformation;
+
+			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onUpdate()`
@@ -687,7 +698,7 @@ namespace mc {
 			@opengl
 			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
 			*/
-			virtual void init();
+			virtual void init() override;
 			/**
 			Should be called a by `Entity` when `MACE.destroy()` is called. Calls `onDestroy()`. Sets `Entity::INIT` to be false
 			<p>
@@ -696,7 +707,7 @@ namespace mc {
 			@opengl
 			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
 			*/
-			virtual void destroy();
+			virtual void destroy() override;
 
 			/**
 			Should be called by a `Entity` when the graphical `Window` clears the frame.
@@ -752,18 +763,6 @@ namespace mc {
 			@opengl
 			*/
 			virtual void onHover();
-
-			/**
-			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
-			@internal
-			*/
-			std::vector<Entity*> children = std::vector<Entity*>();
-
-			/**
-			@internal
-			*/
-			TransformMatrix transformation;
-
 		private:
 			std::vector<Component*> components = std::vector<Component*>();
 
@@ -782,7 +781,7 @@ namespace mc {
 			void setParent(Entity* parent);
 		};//Entity
 
-		class Group : public Entity {
+		class Group: public Entity {
 		protected:
 			void onInit() override;
 			void onUpdate() override;
@@ -791,7 +790,7 @@ namespace mc {
 
 		};//Group
 
-		class GraphicsEntity : public Entity {
+		class GraphicsEntity: public Entity {
 			friend void ssl::bindBuffer(ogl::UniformBuffer&);
 			friend void ssl::bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
 			friend void ssl::fillBuffer(GraphicsEntity*);
@@ -838,7 +837,7 @@ namespace mc {
 
 			void trigger();
 		protected:
-			enum SelectableProperty : Byte {
+			enum SelectableProperty: Byte {
 				CLICKED = 0,
 				DISABLED = 1,
 				HOVERED = 2

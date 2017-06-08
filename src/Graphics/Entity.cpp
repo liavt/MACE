@@ -47,19 +47,19 @@ namespace mc {
 			ogl::Texture2D solidColor = ogl::Texture2D();
 		};
 
-		void Component::init(Entity *) {}
+		void Component::init() {}
 
-		bool Component::update(Entity *) {
+		bool Component::update() {
 			return true;
 		}
 
-		void Component::destroy(Entity *) {}
+		void Component::destroy() {}
 
-		void Component::render(Entity *) {}
+		void Component::render() {}
 
-		void Component::clean(Entity *) {}
+		void Component::clean() {}
 
-		void Component::hover(Entity *) {}
+		void Component::hover() {}
 
 		Entity * Component::getParent() {
 			return parent;
@@ -273,7 +273,7 @@ namespace mc {
 				}
 
 				for( Index i = 0; i < components.size(); ++i ) {
-					components[i]->render(this);
+					components[i]->render();
 				}
 			}
 
@@ -282,7 +282,7 @@ namespace mc {
 		void Entity::hover() {
 			onHover();
 			for( Index i = 0; i < components.size(); ++i ) {
-				components[i]->hover(this);
+				components[i]->hover();
 			}
 		}
 
@@ -306,7 +306,7 @@ namespace mc {
 						throw NullPointerError("One of the components in an entity was nullptr");
 					}
 
-					components[i]->clean(this);
+					components[i]->clean();
 				}
 
 				setProperty(Entity::DIRTY, false);
@@ -395,7 +395,7 @@ namespace mc {
 
 			for( Index i = 0; i < components.size(); ++i ) {
 				if( components[i] != nullptr ) {
-					components[i]->destroy(this);
+					components[i]->destroy();
 				}
 			}
 			components.clear();
@@ -499,8 +499,8 @@ namespace mc {
 
 		void Entity::addComponent(Component * component) {
 			components.push_back(component);
-			component->parent = this;
-			component->init(this);
+			components.back()->parent = this;
+			components.back()->init();
 		}
 
 		void Entity::addComponent(Component & component) {
@@ -518,10 +518,10 @@ namespace mc {
 				//update the components of this entity
 				for( Index i = 0; i < components.size(); ++i ) {
 					Component* a = components.at(i);
-					if( a->update(this) ) {
-						a->destroy(this);
+					if( a->update() ) {
+						a->destroy();
 						components.erase(components.begin() + i);
-						i--;//update the index after a removal, so we dont get an exception for accessing deleted memory
+						--i;//update the index after a removal, so we dont get an exception for accessing deleted memory
 					}
 				}
 
@@ -534,7 +534,7 @@ namespace mc {
 							children[i]->kill();
 						}
 						removeChild(i);
-						i--;//update the index after the removal of an element, dont want an error
+						--i;//update the index after the removal of an element, dont want an error
 						return;
 					}
 					children[i]->update();

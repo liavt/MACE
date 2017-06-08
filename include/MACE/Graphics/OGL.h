@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_GRAPHICS_OGL_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/Color.h>
@@ -110,7 +111,7 @@ namespace mc {
 			@todo create an RAII wrapper which calls init() and destroy() automatically
 			@todo store what object is currently bound. static Object getBoundObject(), bool isBound()
 			*/
-			class Object {
+			class Object: public Initializable {
 			public:
 				/**
 				Virtual destructor for subclasses and safety

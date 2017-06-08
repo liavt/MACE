@@ -43,10 +43,12 @@ namespace mc {
 			void setHorizontalAlign(HorizontalAlign align);
 			const HorizontalAlign getHorizontalAlign() const;
 
+			std::unique_ptr<Component> clone() const override;
+
 			bool operator==(const AlignmentComponent& other) const;
 			bool operator!=(const AlignmentComponent& other) const;
 		protected:
-			void clean(Entity* e) final;
+			void clean() final;
 		private:
 			VerticalAlign vertAlign;
 			HorizontalAlign horzAlign;
@@ -81,15 +83,17 @@ namespace mc {
 			CallbackPtr getCleanCallback();
 			const CallbackPtr getCleanCallback() const;
 
+			std::unique_ptr<Component> clone() const override;
+
 			bool operator==(const CallbackComponent& other) const;
 			bool operator!=(const CallbackComponent& other) const;
 		protected:
-			void init(Entity* e) final;
-			bool update(Entity* e) final;
-			void render(Entity* e) final;
-			void destroy(Entity* e) final;
-			void hover(Entity* e) final;
-			void clean(Entity* e) final;
+			void init() final;
+			bool update() final;
+			void render() final;
+			void destroy() final;
+			void hover() final;
+			void clean() final;
 		private:
 			CallbackPtr destroyCallback = [] (Entity*) {},
 				renderCallback = [] (Entity*) {},
@@ -114,15 +118,17 @@ namespace mc {
 			TickCallbackPtr getTickCallback();
 			const TickCallbackPtr getTickCallback() const;
 
+			std::unique_ptr<Component> clone() const override;
+
 			bool operator==(const FPSComponent& other) const;
 			bool operator!=(const FPSComponent& other) const;
 		protected:
-			void init(Entity* e) final;
-			bool update(Entity* e) final;
-			void render(Entity* e) final;
-			void clean(Entity* e) final;
-			void hover(Entity* e) final;
-			void destroy(Entity* e) final;
+			void init() final;
+			bool update() final;
+			void render() final;
+			void clean() final;
+			void hover() final;
+			void destroy() final;
 		private:
 			Index updatesPerSecond = 0, nbUpdates = 0;
 			Index framesPerSecond = 0, nbFrames = 0;

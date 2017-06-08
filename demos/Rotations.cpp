@@ -12,25 +12,25 @@ gfx::Group botLeft, botRight, topLeft, topRight;
 
 class TestComponent: public gfx::Component {
 
-	void init(gfx::Entity* en) override {
-		dynamic_cast<gfx::Image*>(en)->getTexture().setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+	void init() override {
+		dynamic_cast<gfx::Image*>(parent)->getTexture().setPaint(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 
-	bool update(gfx::Entity* en) override {
+	bool update() override {
 		return false;
 	}
 
-	void render(gfx::Entity* en) override {}
+	void render() override {}
 
-	void hover(gfx::Entity* en) override {
+	void hover() override {
 		if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
-			en->rotate(0.0f, 0.0f, 0.01f);
+			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
 	}
 
-	void destroy(gfx::Entity* en) override {}
+	void destroy() override {}
 
-	void clean(gfx::Entity* en) override {}
+	void clean() override {}
 };
 
 class RotationComponent: public gfx::Component {

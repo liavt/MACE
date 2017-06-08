@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_UTILITY_AUDIO_H 
 
 #include <MACE/Core/Module.h>
+#include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/BitField.h>
 
 #ifdef MACE_OSX
@@ -30,7 +31,7 @@ namespace mc {
 	*/
 	MACE_DECLARE_ERROR(BadSound);
 
-	class Sound {
+	class Sound: public Initializable {
 	public:
 		enum Properties: Byte {
 			LOOPING = 0
@@ -45,8 +46,8 @@ namespace mc {
 		void setVolume(float volume);
 		float getVolume() { return volume; }
 		
-		void init();
-		void destroy();
+		void init() override;
+		void destroy() override;
 
 		bool getProperty(const Byte param) const;
 		void setProperty(const Byte param, const bool value);

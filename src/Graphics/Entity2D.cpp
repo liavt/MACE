@@ -191,7 +191,7 @@ namespace mc {
 
 			const EaseFunction QUARTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
 				t /= d;
-				return -c * ((t- 1)*t*t*t - 1) + b;
+				return -c * ((t - 1)*t*t*t - 1) + b;
 			};
 
 			const EaseFunction QUARTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
@@ -498,7 +498,7 @@ namespace mc {
 
 
 		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const ProgressBarEaseDoneCallback callback) {
-			class EaseComponent : public Component {
+			class EaseComponent: public Component {
 			public:
 				EaseComponent(const float p, const float duration, const float sp, const EaseFunction f, const ProgressBarEaseDoneCallback cb) : Component(), b(sp), c(p), d(duration), ease(f), t(0), done(cb) {};
 
@@ -509,10 +509,14 @@ namespace mc {
 				const EaseFunction ease;
 				float t;
 				const ProgressBarEaseDoneCallback done;
+
+				std::unique_ptr<Component> clone() const override {
+					return std::unique_ptr<Component>(new EaseComponent(b, c, d, ease, done));
+				}
 			protected:
-				void init(Entity*) override {}
-				bool update(Entity* e) override {
-					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
+				void init() override {}
+				bool update() override {
+					ProgressBar* bar = dynamic_cast<ProgressBar*>(parent);
 					if (bar == nullptr) {
 						//should never happen, as this class is only ever defined and used here, but just in caes
 						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in update()");
@@ -528,9 +532,9 @@ namespace mc {
 
 					return false;
 				}
-				void render(Entity*) override {}
-				void destroy(Entity* e) override {
-					ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
+				void render() override {}
+				void destroy() override {
+					ProgressBar* bar = dynamic_cast<ProgressBar*>(parent);
 					if (bar == nullptr) {
 						throw InvalidTypeError("Internal error: EaseComponent did not receive a progress bar in destroy()");
 					}

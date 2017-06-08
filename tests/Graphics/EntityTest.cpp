@@ -98,21 +98,21 @@ namespace mc {
 			bool isInit = false;
 			bool destroyed = false;
 
-			void init(Entity* e) override {
+			void init() override {
 				isInit = true;
 			}
 
-			bool update(Entity* e) override {
+			bool update() override {
 				updates++;
 				if( destroySelf )return true;
 				else return false;
 			}
 
-			void destroy(Entity* e) override {
+			void destroy() override {
 				destroyed = true;
 			}
 
-			void render(Entity* e) override {
+			void render() override {
 			
 			}
 		};

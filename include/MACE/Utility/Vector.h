@@ -130,8 +130,7 @@ namespace mc {
 
 			Index counter = 0;
 			for( auto elem : args ) {
-				content[counter] = elem;
-				++counter;
+				content[counter++] = elem;
 			}
 		}
 

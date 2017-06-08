@@ -43,6 +43,10 @@ namespace mc {
 			return horzAlign;
 		}
 
+		std::unique_ptr<Component> AlignmentComponent::clone() const {
+			return std::unique_ptr<Component>(new AlignmentComponent());
+		}
+
 		bool AlignmentComponent::operator==(const AlignmentComponent & other) const {
 			return horzAlign == other.horzAlign && vertAlign == other.vertAlign && Component::operator==(other);
 		}
@@ -51,61 +55,61 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void AlignmentComponent::clean(Entity * e) {
-			Entity::Metrics m = e->getMetrics();
+		void AlignmentComponent::clean() {
+			Entity::Metrics m = parent->getMetrics();
 
 			float width = m.scale[0], height = m.scale[1];
 
 			switch (horzAlign) {
 				default:
 				case HorizontalAlign::CENTER:
-					e->setX(0.0f);
+					parent->setX(0.0f);
 					//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
 				case HorizontalAlign::RIGHT:
-					e->setX(1.0f - (width / 2.0f));
+					parent->setX(1.0f - (width / 2.0f));
 					break;
 				case HorizontalAlign::LEFT:
-					e->setX((width / 2.0f) - 1.0f);
+					parent->setX((width / 2.0f) - 1.0f);
 					break;
 			}
 
 			switch (vertAlign) {
 				default:
 				case VerticalAlign::CENTER:
-					e->setX(0.0f);
+					parent->setX(0.0f);
 					break;
 				case VerticalAlign::BOTTOM:
-					e->setY((height / 2.0f) - 1.0f);
+					parent->setY((height / 2.0f) - 1.0f);
 					break;
 				case VerticalAlign::TOP:
-					e->setY(1.0f - (height / 2.0f));
+					parent->setY(1.0f - (height / 2.0f));
 					break;
 			}
 		}
 
-		void CallbackComponent::init(Entity * e) {
-			initCallback(e);
+		void CallbackComponent::init() {
+			initCallback(parent);
 		}
 
-		bool CallbackComponent::update(Entity * e) {
-			return updateCallback(e);
+		bool CallbackComponent::update() {
+			return updateCallback(parent);
 		}
 
-		void CallbackComponent::render(Entity * e) {
-			renderCallback(e);
+		void CallbackComponent::render() {
+			renderCallback(parent);
 		}
 
-		void CallbackComponent::destroy(Entity * e) {
-			destroyCallback(e);
+		void CallbackComponent::destroy() {
+			destroyCallback(parent);
 		}
 
-		void CallbackComponent::hover(Entity * e) {
-			hoverCallback(e);
+		void CallbackComponent::hover() {
+			hoverCallback(parent);
 		}
 
-		void CallbackComponent::clean(Entity * e) {
-			cleanCallback(e);
+		void CallbackComponent::clean() {
+			cleanCallback(parent);
 		}
 
 		void CallbackComponent::setInitCallback(const CallbackPtr func) {
@@ -158,6 +162,10 @@ namespace mc {
 			return cleanCallback;
 		}
 
+		std::unique_ptr<Component> CallbackComponent::clone() const {
+			return std::unique_ptr<Component>(new CallbackComponent());
+		}
+
 		bool CallbackComponent::operator==(const CallbackComponent & other) const {
 			return destroyCallback == other.destroyCallback && renderCallback == other.renderCallback
 				&& initCallback == other.initCallback && hoverCallback == other.hoverCallback
@@ -202,6 +210,10 @@ namespace mc {
 			return tickCallback;
 		}
 
+		std::unique_ptr<Component> FPSComponent::clone() const {
+			return std::unique_ptr<Component>(new FPSComponent());
+		}
+
 		bool FPSComponent::operator==(const FPSComponent & other) const {
 			return Component::operator==(other) && updatesPerSecond == other.updatesPerSecond
 				&& framesPerSecond == other.framesPerSecond && cleansPerSecond == other.framesPerSecond
@@ -214,11 +226,11 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void FPSComponent::init(Entity *) {
+		void FPSComponent::init() {
 			lastTime = std::time(0);
 		}
 
-		bool FPSComponent::update(Entity * e) {
+		bool FPSComponent::update() {
 			++nbUpdates;
 			if (std::time(0) - lastTime >= 1.0) {
 				updatesPerSecond = nbUpdates;
@@ -233,22 +245,22 @@ namespace mc {
 
 				lastTime += 1;
 
-				tickCallback(this, e);
+				tickCallback(this, parent);
 			}
 			return false;
 		}
 
-		void FPSComponent::render(Entity *) {
+		void FPSComponent::render() {
 			++nbFrames;
 		}
 
-		void FPSComponent::clean(Entity *) {
+		void FPSComponent::clean() {
 			++nbCleans;
 		}
 
-		void FPSComponent::hover(Entity *) {
+		void FPSComponent::hover() {
 			++nbHovers;
 		}
-		void FPSComponent::destroy(Entity *) {}
+		void FPSComponent::destroy() {}
 	}//gfx
 }//mc
