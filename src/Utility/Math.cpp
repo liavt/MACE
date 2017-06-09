@@ -13,17 +13,17 @@ namespace mc {
 	namespace math {
 		int ceil(const double value) {
 			int out = floor(value);
-			if( out != value )out++;//ceil(5) should equal 5, not 6. check to make sure it is actually a whole number
+			if (out != value)out++;//ceil(5) should equal 5, not 6. check to make sure it is actually a whole number
 			return out;//so cheap, but it works
 		}
 
 		bool isPrime(const int n) {
-			if( isEven(n) ) {
+			if (isEven(n)) {
 				return false;
 			}
 
-			for( Index i = 3; sqr(abs(n)) <= abs(n); i += 2 ) {
-				if( n % i == 0 ) {
+			for (Index i = 3; sqr(abs(n)) <= abs(n); i += 2) {
+				if (n % i == 0) {
 					return false;
 				}
 			}

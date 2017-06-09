@@ -24,7 +24,7 @@ namespace mc {
 		}
 
 		SECTION("Testing () operator") {
-			for( Index x = 1; x <= 5; x++ ) {
+			for (Index x = 1; x <= 5; x++) {
 				REQUIRE_NOTHROW(m(x, 1));
 				m(x, 1) = x;
 				REQUIRE(m(x, 1) == x);
@@ -32,7 +32,7 @@ namespace mc {
 		}
 
 		SECTION("Testing if the [] operator works") {
-			for( Index x = 0; x < 5; x++ ) {
+			for (Index x = 0; x < 5; x++) {
 				REQUIRE_NOTHROW(m[x][0]);
 				m[x][0] = x;
 				REQUIRE(m[x][0] == x);
@@ -164,17 +164,16 @@ namespace mc {
 					REQUIRE(v[2] == 42.4f);
 				}
 			}
-			SECTION("GLSL-style vectors") {
-				Vector1i v1 = { 1 };
-				REQUIRE(v1 == Vector1i({ 1 }));
-				Vector2i v2 = Vector2i(v1, 2);
-				REQUIRE(v2 == Vector2i({ 1, 2 }));
-				Vector3i v3 = Vector3i(v2, 3);
-				REQUIRE(v3 == Vector3i({ 1, 2, 3 }));
-				Vector4i v4 = Vector4i(v3, 4);
-				REQUIRE(v4 == Vector4i({ 1, 2, 3, 4 }));
-				Vector5i v5 = Vector5i(v4, 5);
-				REQUIRE(v5 == Vector5i({ 1, 2, 3, 4, 5 }));
+
+			SECTION("Type conversion") {
+				Vector1i v1 = { 2 };
+				REQUIRE(v1.size() == 1);
+				int content = static_cast<int>(v1);
+				REQUIRE(content == 2);
+
+				v1 = 3;
+				content = v1;
+				REQUIRE(content == 3);
 			}
 		}
 
@@ -183,8 +182,8 @@ namespace mc {
 				int arr[3][3] = { {1,2,3},{4,5,6},{7,8,9} };
 				Matrix3i m = arr;
 				Index counter = 0;
-				for( Index x = 0; x < m.width(); x++ ) {
-					for( Index y = 0; y < m.height(); y++ ) {
+				for (Index x = 0; x < m.width(); x++) {
+					for (Index y = 0; y < m.height(); y++) {
 						counter++;
 						REQUIRE(m[x][y] == counter);
 					}
@@ -201,8 +200,8 @@ namespace mc {
 				int arr[3][3] = { { 1,2,3 },{ 4,5,6 },{ 7,8,9 } };
 				Matrix3i m = Matrix3i(arr);
 				Index counter = 0;
-				for( Index x = 0; x < m.width(); x++ ) {
-					for( Index y = 0; y < m.height(); y++ ) {
+				for (Index x = 0; x < m.width(); x++) {
+					for (Index y = 0; y < m.height(); y++) {
 						counter++;
 						REQUIRE(m[x][y] == counter);
 					}
@@ -236,23 +235,23 @@ namespace mc {
 			}
 			SECTION("Testing copy constructors") {
 				Matrix4i m = Matrix4i();
-				for( Index x = 0; x < m.width(); x++ ) {
-					for( Index y = 0; y < m.height(); y++ ) {
+				for (Index x = 0; x < m.width(); x++) {
+					for (Index y = 0; y < m.height(); y++) {
 						m[x][y] = x*y;
 					}
 				}
 				SECTION("Testing via explicit constructor") {
 					Matrix4i other = Matrix4i(m);
-					for( Index x = 0; x < other.width(); x++ ) {
-						for( Index y = 0; y < other.height(); y++ ) {
+					for (Index x = 0; x < other.width(); x++) {
+						for (Index y = 0; y < other.height(); y++) {
 							REQUIRE(other[x][y] == x*y);
 						}
 					}
 				}
 				SECTION("Testing via assignment") {
 					Matrix4i other = m;
-					for( Index x = 0; x < other.width(); x++ ) {
-						for( Index y = 0; y < other.height(); y++ ) {
+					for (Index x = 0; x < other.width(); x++) {
+						for (Index y = 0; y < other.height(); y++) {
 							REQUIRE(other[x][y] == x*y);
 						}
 					}
@@ -265,7 +264,7 @@ namespace mc {
 		SECTION("Testing getting and setting of a vector") {
 			Vector5i v = Vector5i();
 
-			for( Index i = 0; i < v.size(); i++ ) {
+			for (Index i = 0; i < v.size(); i++) {
 				v[i] = i;
 				REQUIRE(v[i] == i);
 				REQUIRE(v.get(i) == i);
@@ -287,18 +286,14 @@ namespace mc {
 			REQUIRE(v.y() == Vector1i({ 2 }));
 			REQUIRE(v.z() == Vector1i({ 3 }));
 			REQUIRE(v.w() == Vector1i({ 4 }));
-
-			REQUIRE(v.xy() == Vector2i({ 1,2 }));
-			REQUIRE(v.xyz() == Vector3i({ 1,2,3 }));
-			REQUIRE(v.xyzw() == Vector4i({ 1,2,3,4 }));
 		}
 
 		SECTION("Testing getting and setting of matrices") {
 			Matrix5i m = Matrix5i();
 
 			int i = 0;
-			for( Index x = 0; x < m.width(); x++ ) {
-				for( Index y = 0; y < m.height(); y++ ) {
+			for (Index x = 0; x < m.width(); x++) {
+				for (Index y = 0; y < m.height(); y++) {
 					i++;
 					m[x][y] = i;
 					REQUIRE(m[x][y] == i);
@@ -362,7 +357,6 @@ namespace mc {
 				REQUIRE(Vector3f({ 5,-9,11 }) * 1 == Vector3f({ 5,-9,11 }));
 				REQUIRE(Vector3f({ 5,-9,11 }) * 2 == Vector3f({ 10,-18,22 }));
 				REQUIRE(Vector3f({ 5,-9,11 }) * -2 == Vector3f({ -10,18,-22 }));
-
 			}
 		}
 
@@ -409,7 +403,7 @@ namespace mc {
 			float arr[4];
 			Vector4f({ 3.0f,4.0f,1.0f,-1.0f }).flatten(arr);
 			float result[] = { 3.0f,4.0f,1.0f,-1.0f };
-			for( Index i = 0; i < 4; i++ ) {
+			for (Index i = 0; i < 4; i++) {
 				REQUIRE(arr[i] == result[i]);
 			}
 
@@ -421,8 +415,8 @@ namespace mc {
 				float arr[16];
 				m.flatten(arr);
 				Index x = 0, y = 0;
-				for( Index i = 0; i < 16; i++ ) {
-					if( y == 4 ) {
+				for (Index i = 0; i < 16; i++) {
+					if (y == 4) {
 						y = 0;
 						x++;
 					}
@@ -437,8 +431,8 @@ namespace mc {
 				float arr[12];
 				m.flatten(arr);
 				Index x = 0, y = 0;
-				for( Index i = 0; i < 12; i++ ) {
-					if( y == 3 ) {
+				for (Index i = 0; i < 12; i++) {
+					if (y == 3) {
 						y = 0;
 						x++;
 					}

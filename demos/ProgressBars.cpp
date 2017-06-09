@@ -25,7 +25,7 @@ class TestComponent: public gfx::Component {
 
 TestComponent r = TestComponent();
 
-void create() {
+void create(os::WindowModule&) {
 	gfx::ColorAttachment circle = gfx::ColorAttachment(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
 	circleBar = gfx::ProgressBar(0, 255, 20);
@@ -37,7 +37,7 @@ void create() {
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
 
-	circleBar.easeTo(250, 100, gfx::EaseFunctions::BOUNCE_IN_OUT);
+	circleBar.easeTo(250, 100, gfx::EaseFunctions::BOUNCE_OUT);
 
 	group.addChild(circleBar);
 
@@ -59,17 +59,14 @@ void create() {
 
 int main() {
 	try {
-		os::WindowModule module = os::WindowModule(500, 500, "Progress Bars Demo");
-
-		module.setFPS(30);
-		module.setVSync(false);
-		module.setResizable(true);
+		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(500, 500, "Progress Bars Demo");
+		config.onCreate = &create;
+		config.resizable = true;
+		os::WindowModule module = os::WindowModule(config);
 
 		module.addChild(group);
 
 		MACE::addModule(module);
-
-		module.setCreationCallback(&create);
 
 		os::SignalModule sigModule = os::SignalModule();
 		MACE::addModule(sigModule);

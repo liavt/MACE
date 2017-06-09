@@ -85,21 +85,19 @@ namespace mc {
 	@tparam T what the `Vector` is made of and calculates with. Can be any type/
 	@tparam N amount of elements in the `Vector` which must be greater than 0.
 	*/
-	template <typename T, Size N>
-	struct Vector {
+	template <typename Child, typename T, Size N>
+	struct VectorBase {
 	public:
 		/**
 		Default constructor. Constructs an empty `Vector`
 		*/
-		Vector() : content() {
-			static_assert(N != 0, "A Vector's size must be greater than 0!");
-		};
+		VectorBase() : content() {};
 
 		/**
 		Consructs a `Vector` from the contents of an array.
 		@param arr An equally-sized array whose contents will be filled into a `Vector`
 		*/
-		Vector(const T arr[N]) : Vector()//we need to initialize the array first, or else we will try to access an empty memory location
+		VectorBase(const T arr[N]) : VectorBase()//we need to initialize the array first, or else we will try to access an empty memory location
 		{
 			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
 		}
@@ -108,8 +106,8 @@ namespace mc {
 		Consructs a `Vector` from the contents of an `std::array`.
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
-		Vector(const std::array<T, N>& contents) : Vector() {
-			for( Index i = 0; i < N; ++i ) {
+		VectorBase(const std::array<T, N>& contents) : VectorBase() {
+			for (Index i = 0; i < N; ++i) {
 				content[i] = contents[i];
 			}
 		};
@@ -125,31 +123,21 @@ namespace mc {
 		@todo Make this constexpr
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
-		Vector(const std::initializer_list<T> args) : Vector() {//this is for aggregate initializaition
-			if( args.size() != N )throw IndexOutOfBoundsError("The number of arguments MUST be equal to the size of the array.");
+		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
+			if (args.size() != N)throw IndexOutOfBoundsError("The number of arguments MUST be equal to the size of the array.");
 
 			Index counter = 0;
-			for( auto elem : args ) {
+			for (auto elem : args) {
 				content[counter++] = elem;
 			}
-		}
-
-		/**
-		O(N) time
-		*/
-		Vector(const Vector<T, N - 1>& v, const T& last) : Vector() {
-			for( Index i = 0; i < N - 1; ++i ) {
-				content[i] = v[i];
-			}
-			content[N - 1] = last;
 		}
 
 		/**
 		Copies the contents of a `Vector` into a new `Vector`
 		@param obj A `Vector` to clone
 		*/
-		Vector(const Vector &obj) {
-			for( Index i = 0; i < N; ++i ) {
+		VectorBase(const Child &obj) {
+			for (Index i = 0; i < N; ++i) {
 				content[i] = obj[i];
 			}
 		};
@@ -183,7 +171,7 @@ namespace mc {
 		@param arr An equally sized array whose contents will cloned in this `Vector`
 		*/
 		void setContents(const T arr[N]) {
-			for( Index i = 0; i < N; ++i ) {
+			for (Index i = 0; i < N; ++i) {
 				set(i, arr[i]);
 			}
 		};
@@ -200,7 +188,7 @@ namespace mc {
 			return content;
 		}
 
-		const T* begin() const{
+		const T* begin() const {
 			return content;
 		}
 
@@ -221,7 +209,7 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		T& get(Index i) {
-			if( i >= N )throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if (i >= N)throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			return content[i];
 		}
 		/**
@@ -233,7 +221,7 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		const T& get(Index i) const {
-			if( i >= N )throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if (i >= N)throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			return content.at(i);
 		}
 		/**
@@ -245,7 +233,7 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		void set(Index position, T value) {
-			if( position >= N )throw IndexOutOfBoundsError(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			if (position >= N)throw IndexOutOfBoundsError(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			content[position] = value;
 		}
 
@@ -255,44 +243,10 @@ namespace mc {
 		@param arr The array to fill
 		*/
 		const T* flatten(T arr[N]) const {
-			for( Index i = 0; i < N; i++ ) {
+			for (Index i = 0; i < N; i++) {
 				arr[i] = content[i];
 			}
 			return arr;
-		}
-
-		Vector<T, 1> x() const {
-			return{ content[0] };
-		}
-
-		Vector<T, 1> y() const {
-			static_assert(N > 1, "To use y(), you must have a Vector with at least 2 components");
-			return{ content[1] };
-		}
-
-		Vector<T, 1> z() const {
-			static_assert(N > 2, "To use z(), you must have a Vector with at least 3 components");
-			return{ content[2] };
-		}
-
-		Vector<T, 1> w() const {
-			static_assert(N > 3, "To use w(), you must have a Vector with at least 4 components");
-			return{ content[3] };
-		}
-
-		Vector<T, 2> xy() const {
-			static_assert(N > 1, "To use xy(), you must have a Vector with at least 2 components");
-			return{ content[0], content[1] };
-		}
-
-		Vector<T, 3> xyz() const {
-			static_assert(N > 2, "To use xyz(), you must have a Vector with at least 3 components");
-			return{ content[0], content[1], content[2] };
-		}
-
-		Vector<T, 4> xyzw() const {
-			static_assert(N > 3, "To use xyzw(), you must have a Vector with at least 4 components");
-			return{ content[0], content[1], content[2], content[3] };
 		}
 
 		/**
@@ -346,8 +300,8 @@ namespace mc {
 		@return A `Vector` that was created by adding 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
-		Vector operator+(const Vector<T, N>& right) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator+(const Child& right) const {
+			Child out = Child(content);
 			out += right;
 			return out;
 		};
@@ -360,8 +314,8 @@ namespace mc {
 		@return A `Vector` that was created by subtracting 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
-		Vector operator-(const Vector<T, N>& right) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator-(const Child& right) const {
+			Child out = Child(content);
 			out -= right;
 			return out;
 		};
@@ -375,8 +329,8 @@ namespace mc {
 		@return The product of the multiplication
 		@see Vector for an explanation of `Vector` math
 		*/
-		Vector operator*(const Vector<T, 3>& right) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator*(const Child& right) const {
+			Child out = Child(content);
 			out *= right;
 			return out;
 		}
@@ -390,8 +344,8 @@ namespace mc {
 		@return The quotient of 2 `Vectors`
 		@see Vector for an explanation of `Vector` math
 		*/
-		Vector operator/(const Vector<T, 3>& right) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator/(const Child& right) const {
+			Child out = Child(content);
 			out /= right;
 			return out;
 		}
@@ -404,8 +358,8 @@ namespace mc {
 		@return A `Vector` translated.
 		@see operator*(const Vector&) const
 		*/
-		Vector operator+(const T scalar) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator+(const T scalar) const {
+			Child out = Child(content);
 			out += scalar;
 			return out;
 		}
@@ -418,8 +372,8 @@ namespace mc {
 		@return A `Vector` translated.
 		@see operator*(const Vector&) const
 		*/
-		Vector operator-(const T scalar) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator-(const T scalar) const {
+			Child out = Child(content);
 			out -= scalar;
 			return out;
 		}
@@ -432,8 +386,8 @@ namespace mc {
 		@return A `Vector` scaled.
 		@see operator*(const Vector&) const
 		*/
-		Vector operator*(const T scalar) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator*(const T scalar) const {
+			Child out = Child(content);
 			out *= scalar;
 			return out;
 		}
@@ -446,8 +400,8 @@ namespace mc {
 		@return A `Vector` scaled.
 		@see operator*(const T&) const
 		*/
-		Vector operator/(const T scalar) const {
-			Vector<T, N> out = Vector<T, N>(*this);
+		Child operator/(const T scalar) const {
+			Child out = Child(content);
 			out /= scalar;
 			return out;
 		}
@@ -457,8 +411,8 @@ namespace mc {
 		@param right A `Vector` to add
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator+= (const Vector<T, N>& right) {
-			for( Index i = 0; i < N; ++i ) {
+		void operator+= (const Child& right) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) += right[i];
 			}
 		}
@@ -468,8 +422,8 @@ namespace mc {
 		@param right A `Vector` to subtract
 		@see operator-(const Vector<T,N>&) const
 		*/
-		void operator-= (const Vector<T, N>& right) {
-			for( Index i = 0; i < N; ++i ) {
+		void operator-= (const Child& right) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= right[i];
 			}
 		}
@@ -479,8 +433,8 @@ namespace mc {
 		@param right A `Vector` to multiply
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator*= (const Vector<T, N>& right) {
-			for( Index i = 0; i < N; ++i ) {
+		void operator*= (const Child& right) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= right[i];
 			}
 		}
@@ -490,8 +444,8 @@ namespace mc {
 		@param right A `Vector` to divide
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator/= (const Vector<T, N>& right) {
-			for( Index i = 0; i < N; ++i ) {
+		void operator/= (const Child& right) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= right[i];
 			}
 		}
@@ -504,7 +458,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator+= (const T& scalar) {
-			for( Index i = 0; i < N; ++i ) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) += scalar;
 			}
 		}
@@ -516,7 +470,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator-= (const T& scalar) {
-			for( Index i = 0; i < N; ++i ) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= scalar;
 			}
 		}
@@ -528,7 +482,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator*= (const T& scalar) {
-			for( Index i = 0; i < N; ++i ) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= scalar;
 			}
 		}
@@ -540,7 +494,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator/= (const T& scalar) {
-			for( Index i = 0; i < N; ++i ) {
+			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= scalar;
 			}
 		}
@@ -557,9 +511,9 @@ namespace mc {
 		@see operator<=(const Vector&) const
 		@see operator>(const Vector&) const
 		*/
-		bool operator==(const Vector<T, N>& other) const {
-			for( Index i = 0; i < N; ++i ) {
-				if( operator[](i) != other[i] ) {
+		bool operator==(const Child& other) const {
+			for (Index i = 0; i < N; ++i) {
+				if (operator[](i) != other[i]) {
 					return false;
 				}
 			}
@@ -578,7 +532,7 @@ namespace mc {
 		@see operator<=(const Vector&) const
 		@see operator>(const Vector&) const
 		*/
-		bool operator!=(const Vector<T, N>& other) const {
+		bool operator!=(const Child& other) const {
 			return !operator==(other);
 		};
 
@@ -594,9 +548,9 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator>(const Vector<T, N>& other) const {
-			for( Index i = 0; i < N; ++i ) {
-				if( operator[](i) <= other[i] ) {
+		bool operator>(const Child& other) const {
+			for (Index i = 0; i < N; ++i) {
+				if (operator[](i) <= other[i]) {
 					return false;
 				}
 			}
@@ -615,7 +569,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator>=(const Vector<T, N>& other) const {
+		bool operator>=(const Child& other) const {
 			return operator>(other) || operator==(other);
 		}
 
@@ -631,7 +585,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator<(const Vector<T, N>& other) const {
+		bool operator<(const Child& other) const {
 			return !operator>=(other);
 		}
 
@@ -645,7 +599,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator<=(const Vector<T, N>& other) const {
+		bool operator<=(const Child& other) const {
 			return !operator>(other);
 		}
 
@@ -658,11 +612,11 @@ namespace mc {
 		@return `output` for chaining
 		*/
 		friend std::ostream &operator<<(std::ostream &output,
-										const Vector<T, N> &v) {
+										const Child &v) {
 			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
-			for( Index x = 0; x < N; x++ ) {
+			for (Index x = 0; x < N; x++) {
 				output << v[x];
-				if( x != N - 1 )output << ", ";
+				if (x != N - 1)output << ", ";
 			}
 			output << ' ' << ']';
 			return output;
@@ -670,7 +624,138 @@ namespace mc {
 
 	protected:
 		T content[N];
-	};//Vector
+	};//VectorBase
+
+	template<typename T, Size N>
+	struct Vector: public VectorBase<Vector<T, N>, T, N> {
+	public:
+		using VectorBase::VectorBase;
+	};
+
+	template<typename T>
+	struct Vector<T, 0>{
+	private:
+		Vector() = delete;
+		~Vector() = delete;
+	};
+
+	template<Size N>
+	struct Vector<void, N> {
+	private:
+		Vector() = delete;
+		~Vector() = delete;
+	};
+
+	template<>
+	struct Vector<void, 0> {
+	private:
+		Vector() = delete;
+		~Vector() = delete;
+	};
+
+	template<typename T>
+	struct Vector<T, 1>: public VectorBase<Vector<T, 1>, T, 1> {
+	public:
+		using VectorBase::VectorBase;
+
+		operator T() {
+			return content[0];
+		}
+
+		void operator=(const T& op) {
+			content[0] = op;
+		}
+	};
+
+	template<typename T>
+	struct Vector<T, 2>: public VectorBase<Vector<T, 2>, T, 2> {
+	public:
+		using VectorBase::VectorBase;
+
+		T& x() {
+			return content[0];
+		}
+
+		const T& x() const {
+			return content[0];
+		}
+
+		T& y() {
+			return content[1];
+		}
+
+		const T& y() const {
+			return content[1];
+		}
+	};
+
+	template<typename T>
+	struct Vector<T, 3>: public VectorBase<Vector<T, 3>, T, 3> {
+	public:
+		using VectorBase::VectorBase;
+
+		T& x() {
+			return content[0];
+		}
+
+		const T& x() const {
+			return content[0];
+		}
+
+		T& y() {
+			return content[1];
+		}
+
+		const T& y() const {
+			return content[1];
+		}
+
+		T& z() {
+			return content[2];
+		}
+
+		const T& z() const {
+			return content[2];
+		}
+	};
+
+	template<typename T>
+	struct Vector<T, 4>: public VectorBase<Vector<T, 4>, T, 4> {
+	public:
+		using VectorBase::VectorBase;
+
+		T& x() {
+			return content[0];
+		}
+
+		const T& x() const {
+			return content[0];
+		}
+
+		T& y() {
+			return content[1];
+		}
+
+		const T& y() const {
+			return content[1];
+		}
+
+		T& z() {
+			return content[2];
+		}
+
+		const T& z() const {
+			return content[2];
+		}
+
+		T& w() {
+			return content[3];
+		}
+
+		const T& w() const {
+			return content[3];
+		}
+	};
 
 	namespace math {
 		//math calculations
@@ -717,7 +802,7 @@ namespace mc {
 		template<typename T, Size N>
 		T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
 			T out = 0;
-			for( Index i = 0; i < N; i++ ) {
+			for (Index i = 0; i < N; i++) {
 				out += static_cast<T>(a[i] * b[i]);
 			}
 			return out;
@@ -736,7 +821,7 @@ namespace mc {
 		T magnitude(const Vector<T, N>& a) {
 			T out = T();//assuming its numerical
 			//basically the pythagereon theorum
-			for( Index i = 0; i < N; i++ ) {
+			for (Index i = 0; i < N; i++) {
 				out += static_cast<T>(sqr(a[i]));
 			}
 			return sqrt(out);

@@ -43,10 +43,6 @@ namespace mc {
 			return horzAlign;
 		}
 
-		std::unique_ptr<Component> AlignmentComponent::clone() const {
-			return std::unique_ptr<Component>(new AlignmentComponent());
-		}
-
 		bool AlignmentComponent::operator==(const AlignmentComponent & other) const {
 			return horzAlign == other.horzAlign && vertAlign == other.vertAlign && Component::operator==(other);
 		}
@@ -162,10 +158,6 @@ namespace mc {
 			return cleanCallback;
 		}
 
-		std::unique_ptr<Component> CallbackComponent::clone() const {
-			return std::unique_ptr<Component>(new CallbackComponent());
-		}
-
 		bool CallbackComponent::operator==(const CallbackComponent & other) const {
 			return destroyCallback == other.destroyCallback && renderCallback == other.renderCallback
 				&& initCallback == other.initCallback && hoverCallback == other.hoverCallback
@@ -208,10 +200,6 @@ namespace mc {
 
 		const FPSComponent::TickCallbackPtr FPSComponent::getTickCallback() const {
 			return tickCallback;
-		}
-
-		std::unique_ptr<Component> FPSComponent::clone() const {
-			return std::unique_ptr<Component>(new FPSComponent());
 		}
 
 		bool FPSComponent::operator==(const FPSComponent & other) const {

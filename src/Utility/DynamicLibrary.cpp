@@ -33,14 +33,14 @@ namespace mc {
 
 		const char* errorMessage;
 
-		if( systemError == nullptr ) {
+		if (systemError == nullptr) {
 			errorMessage = "Handle to running process was nullptr";
 		} else {
 			errorMessage = systemError;
 		}
 #endif
 
-		if( runningProcess.dll == nullptr ) {
+		if (runningProcess.dll == nullptr) {
 			throw NullPointerError("Internal Error: " + std::string(errorMessage));
 		}
 
@@ -52,7 +52,7 @@ namespace mc {
 	}
 
 	DynamicLibrary::~DynamicLibrary() {
-		if( isCreated() ) {
+		if (isCreated()) {
 			destroy();
 		}
 	}
@@ -73,7 +73,7 @@ namespace mc {
 	void DynamicLibrary::init(const char * path) {
 		os::clearError(__LINE__, __FILE__);
 
-		if( isCreated() ) {
+		if (isCreated()) {
 			throw InitializationFailedError("Can\'t reinitialize a DynamicLibrary object!");
 		}
 
@@ -88,7 +88,7 @@ namespace mc {
 
 		const char* errorMessage;
 
-		if( systemError == nullptr ) {
+		if (systemError == nullptr) {
 			errorMessage = "Library handle was nullptr";
 		} else {
 			errorMessage = systemError;
@@ -97,7 +97,7 @@ namespace mc {
 		constexpr char* errorMessage = "Library handle was nullptr";
 #endif
 
-		if( dll == nullptr ) {
+		if (dll == nullptr) {
 			os::checkError(__LINE__, __FILE__, "Attempt to load library " + std::string(path) + " returned a nullptr: " + std::string(errorMessage));
 
 			throw FileNotFoundError("Dynamic library not found: " + std::string(path) + ": " + std::string(errorMessage));
@@ -110,16 +110,16 @@ namespace mc {
 
 
 	void DynamicLibrary::destroy() {
-		if( !isCreated() ) {
+		if (!isCreated()) {
 			throw AssertionFailedError("Can\'t destroy an uncreated DynamicLibrary");
 		}
 
-		if( dll == nullptr ) {
+		if (dll == nullptr) {
 			throw NullPointerError("Can\'t destroy DynamicLibrary: internal handle was nullptr. Did initialization fail?");
 		}
 
 #ifdef MACE_WINAPI
-		if( !FreeLibrary(dll) ) {
+		if (!FreeLibrary(dll)) {
 			os::checkError(__LINE__, __FILE__, "Destruction of dynamic library failed");
 
 			throw AssertionFailedError("Destruction of dynamic library failed");
@@ -127,7 +127,7 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		int result = dlclose(dll);
 
-		if( result != 0 ) {
+		if (result != 0) {
 			const char* errorMessage = dlerror();
 
 			os::checkError(__LINE__, __FILE__, "Failed to close dynamic library handle: Error code " + std::to_string(result) + ": " + std::string(errorMessage));
@@ -148,7 +148,7 @@ namespace mc {
 	void * DynamicLibrary::getFunction(const char * name) {
 		os::clearError(__LINE__, __FILE__);
 
-		if( !isCreated() ) {
+		if (!isCreated()) {
 			throw InitializationFailedError("Can\'t load a function symbol from an unitialized dynamic library");
 		}
 
@@ -158,7 +158,7 @@ namespace mc {
 		void* extractedSymbol = dlsym(dll, name);
 #endif
 
-		if( extractedSymbol == nullptr ) {
+		if (extractedSymbol == nullptr) {
 #ifdef MACE_POSIX
 			const char* errorMessage = dlerror();
 #else

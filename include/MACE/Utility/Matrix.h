@@ -479,6 +479,14 @@ namespace mc {
 			setContents((*this / right).getContents());
 		}
 
+		operator Vector<MatrixRow<T, H>, W>&() {
+			return content;
+		}
+
+		operator Vector<MatrixRow<T, H>, W>() {
+			return content;
+		}
+
 		/**
 		Operator used to output to `std::cout`.
 		<p>

@@ -8,3 +8,64 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Core/Interfaces.h>
+#include <MACE/Core/Constants.h>
+
+namespace mc {
+	Initializer::Initializer() {
+		init();
+	}
+
+	Initializer::~Initializer() {
+		if (isInitialized()) {
+			destroy();
+		}
+	}
+
+	void Initializer::init() {
+		if (isInitialized()) {
+			throw InitializationFailedError("This object is already initialized!");
+		}
+
+		obj->init();
+
+		initialized = true;
+	}
+
+	void Initializer::destroy() {
+		if (!isInitialized()) {
+			throw InvalidStateError("Can\'t destroy an uninitialized object!");
+		}
+
+		obj->destroy();
+
+		initialized = false;
+	}
+
+	Initializable * Initializer::get() {
+		return obj;
+	}
+
+	const Initializable * Initializer::get() const {
+		return obj;
+	}
+
+	Initializable * Initializer::operator*() {
+		return obj;
+	}
+
+	const Initializable * Initializer::operator*() const {
+		return obj;
+	}
+
+	Initializable * Initializer::operator->() {
+		return obj;
+	}
+
+	const Initializable * Initializer::operator->() const {
+		return obj;
+	}
+
+	bool Initializer::isInitialized() const {
+		return initialized;
+	}
+}//mc

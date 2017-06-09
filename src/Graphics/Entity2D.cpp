@@ -98,7 +98,10 @@ namespace mc {
 			};
 
 			const EaseFunction CIRCLE_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
-				if ((t /= d / 2) < 1) return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
+				if ((t /= d / 2) < 1) {
+					return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
+				}
+
 				t -= 2;
 				return c / 2 * (std::sqrt(1 - t*t) + 1) + b;
 			};
@@ -114,42 +117,57 @@ namespace mc {
 			};
 
 			const EaseFunction CUBIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
-				if ((t /= d / 2) < 1) return c / 2 * t*t*t + b;
+				if ((t /= d / 2) < 1) {
+					return c / 2 * t*t*t + b;
+				}
+
 				t -= 2;
 				return c / 2 * (t*t*t + 2) + b;
 			};
 
 			const EaseFunction ELASTIC_IN = [](float t, const float b, const float c, const float d) -> float {
-				if (t == 0) return b;  if ((t /= d) == 1) return b + c;
+				if (t == 0) {
+					return b;
+				} else if ((t /= d) == 1) {
+					return b + c;
+				}
+
 				const float p = d*.3f;
-				const float a = c;
 				const float s = p / 4;
 				--t;
-				const float postFix = a*static_cast<float>(std::pow(2, 10 * t));
+				const float postFix = c*static_cast<float>(std::pow(2, 10 * t));
 				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
 			};
 
 			const EaseFunction ELASTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
-				if (t == 0) return b;  if ((t /= d) == 1) return b + c;
+				if (t == 0) {
+					return b;
+				} else if ((t /= d) == 1) {
+					return b + c;
+				}
+
 				const float p = d*.3f;
-				const float a = c;
 				const float s = p / 4;
-				return static_cast<float>(a*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
+				return static_cast<float>(c*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
 			};
 
 			const EaseFunction ELASTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
-				if (t == 0) return b;  if ((t /= d / 2) == 2) return b + c;
+				if (t == 0) {
+					return b;
+				} else if ((t /= d / 2) == 2) {
+					return b + c;
+				}
+
 				const float p = d*(.3f*1.5f);
-				const float a = c;
 				const float s = p / 4;
 
 				if (t < 1) {
 					--t;
-					const float postFix = a*static_cast<float>(std::pow(2, 10 * t));
+					const float postFix = c*static_cast<float>(std::pow(2, 10 * t));
 					return -.5f*(postFix* static_cast<float>(std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p))) + b;
 				}
 				--t;
-				const float postFix = a*static_cast<float>(std::pow(2, -10 * (t)));
+				const float postFix = c*static_cast<float>(std::pow(2, -10 * (t)));
 				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*0.5f + c + b;
 			};
 
@@ -196,7 +214,9 @@ namespace mc {
 
 			const EaseFunction QUARTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
 				t /= d;
-				if ((t / 2) < 1) return c / 2 * t*t*t*t + b;
+				if ((t / 2) < 1) {
+					return c / 2 * t*t*t*t + b;
+				}
 				return -c / 2 * (t*t*t*t - 2) + b;
 			};
 
@@ -212,7 +232,9 @@ namespace mc {
 
 			const EaseFunction QUINTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
 				t /= d;
-				if ((t / 2) < 1) return c / 2 * t*t*t*t*t + b;
+				if ((t / 2) < 1) {
+					return c / 2 * t*t*t*t*t + b;
+				}
 				t -= 2;
 				return c / 2 * (t*t*t*t*t + 2) + b;
 			};
@@ -509,10 +531,6 @@ namespace mc {
 				const EaseFunction ease;
 				float t;
 				const ProgressBarEaseDoneCallback done;
-
-				std::unique_ptr<Component> clone() const override {
-					return std::unique_ptr<Component>(new EaseComponent(b, c, d, ease, done));
-				}
 			protected:
 				void init() override {}
 				bool update() override {

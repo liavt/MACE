@@ -112,8 +112,6 @@ namespace mc {
 			@opengl
 			*/
 			virtual void hover();
-
-			virtual std::unique_ptr<Component> clone() const = 0;
 		};//Component
 
 		class ColorAttachment: public ogl::Texture2D {

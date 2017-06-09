@@ -204,6 +204,11 @@ namespace mc {
 	MACE_DECLARE_ERROR(InvalidArithmetic);
 
 	/**
+	Thrown when something was in the wrong state at the time of an operation
+	*/
+	MACE_DECLARE_ERROR(InvalidState);
+
+	/**
 	Thrown when the operating system throws an error
 	*/
 	MACE_DECLARE_ERROR(System);

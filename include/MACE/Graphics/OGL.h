@@ -108,7 +108,6 @@ namespace mc {
 
 			@see Buffer
 			@see https://www.opengl.org/wiki/OpenGL_Object
-			@todo create an RAII wrapper which calls init() and destroy() automatically
 			@todo store what object is currently bound. static Object getBoundObject(), bool isBound()
 			*/
 			class Object: public Initializable {

@@ -19,6 +19,11 @@ int main(int argc, char* const argv[]) {
 		//constant? get it?
 		const int result = Catch::Session().run(argc, argv);
 
+		//MSVC closes the window immediately after it appears so this macro is here to stop that
+#ifdef MACE_MSVC_IDE
+		system("PAUSE");
+#endif
+
 		return result;
 	} catch( const std::exception& e ) {
 		mc::Error::handleError(e);

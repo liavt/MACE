@@ -8,7 +8,7 @@ gfx::Group group;
 
 gfx::Text topLeft, center, topRight, botLeft, botRight;
 
-void create() {
+void create(os::WindowModule&) {
 	gfx::getRenderer()->setRefreshColor(Colors::DARK_GREEN);
 
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
@@ -45,18 +45,16 @@ void create() {
 
 int main() {
 	try {
-		os::WindowModule module = os::WindowModule(600, 600, "Text Demo");
-		module.setResizable(true);
-		module.setFPS(30);
-
+		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 600, "Text Demo");
+		config.onCreate = &create;
+		config.resizable = true;
+		os::WindowModule module = os::WindowModule(config);
 		module.addChild(group);
 
 		MACE::addModule(module);
 
 		os::SignalModule sigModule = os::SignalModule();
 		MACE::addModule(sigModule);
-
-		module.setCreationCallback(&create);
 
 		MACE::start();
 	} catch( const std::exception& e ) {

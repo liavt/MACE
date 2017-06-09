@@ -71,11 +71,11 @@ namespace mc {
 			return std::isspace(value) ||
 				(
 				(!isNonOperator(lastValue)
-				|| (!isNonOperator(lastValue) && isNonOperator(value))
-				|| (isNonOperator(lastValue) && !isNonOperator(value))
-				)
-				&& (std::find(std::begin(punctuators2c), std::end(punctuators2c), std::string{ lastValue,value }.c_str()) == std::end(punctuators2c))
-				);
+				 || (!isNonOperator(lastValue) && isNonOperator(value))
+				 || (isNonOperator(lastValue) && !isNonOperator(value))
+				 )
+					&& (std::find(std::begin(punctuators2c), std::end(punctuators2c), std::string{ lastValue,value }.c_str()) == std::end(punctuators2c))
+					);
 		}
 	}
 
@@ -92,7 +92,7 @@ namespace mc {
 	std::vector<std::string> Preprocessor::preprocessTokens() {
 		setMacro(Macro("__MACE__", "1"));
 
-		if( getMacroLocation("__INCLUDE_LEVEL__") < 0 ) {
+		if (getMacroLocation("__INCLUDE_LEVEL__") < 0) {
 			setMacro(Macro("__INCLUDE_LEVEL__", "0"));
 		}
 
@@ -105,7 +105,7 @@ namespace mc {
 		std::string out = "";
 		std::vector < std::string > tokens = preprocessTokens();
 
-		for( unsigned int i = 0; i < tokens.size(); i++ ) {
+		for (unsigned int i = 0; i < tokens.size(); i++) {
 			out += tokens[i];
 		}
 		return out;
@@ -152,26 +152,26 @@ namespace mc {
 		//used to accurately parse function(function(arg))
 		int parenScope = 0;
 
-		for( Index iter = 0; iter <= input.length(); ++iter ) {
+		for (Index iter = 0; iter <= input.length(); ++iter) {
 			char value;
 			//we add a newline at the end, because at the end of a line we do special calculations, and one liners need to do them as well
-			if( iter == input.length() ) {
+			if (iter == input.length()) {
 				value = '\n';
 			} else {
 				value = (input[iter]);
 			}
 
 			//this if statement does the backslash-newline, and converts it to a space by checking the current character is \ and the next one is \n
-			if( value == '\\' && (iter < input.length() - 1 && input[iter + 1] == '\n') ) {
+			if (value == '\\' && (iter < input.length() - 1 && input[iter + 1] == '\n')) {
 				++iter;
 				++line;
 				setMacro(Macro("__LINE__", std::to_string(line)));
 				continue;
 			}
 			//if its not a backslash-newline, we check if its just a newline, obviously multiline comments ignore newlines
-			else if( value == '\n' ) {
+			else if (value == '\n') {
 				//if its in the middle of parenthesis, continue on
-				if( state != MULTILINE_COMMENT&&state != PARENTHESIS ) {
+				if (state != MULTILINE_COMMENT&&state != PARENTHESIS) {
 					state = NEWLINE;
 				}
 				++line;
@@ -179,118 +179,118 @@ namespace mc {
 			}
 
 			//now we start the switch_case of the state machine.
-			switch( state ) {
-			default:
-				state = PROBING;
+			switch (state) {
+				default:
+					state = PROBING;
 
-			case PROBING:
-				//we check if the character is #, and if its the first character in the line. Also checks if its the first line, then dont check below zero
-				if( value == '#' ) {
-					if( ((iter > 0 && (std::iscntrl(input[iter - 1]))) || iter == 0) ) {
-						state = FINDING_COMMAND_START;
-						continue;
-					}
-				} else if( value == '\"' || value == '\'' ) {
-					state = STRING_LITERAL;
-					break;
-				} else if( value == '/' ) {
-					if( iter < input.length() - 1 ) {
-						char nextValue = input[iter + 1];
-						if( nextValue == '/' ) {
-							state = SINGLELINE_COMMENT;
-
-							++iter;
-							continue;
-						} else if( nextValue == '*' ) {
-							state = MULTILINE_COMMENT;
-
-							++iter;
+				case PROBING:
+					//we check if the character is #, and if its the first character in the line. Also checks if its the first line, then dont check below zero
+					if (value == '#') {
+						if (((iter > 0 && (std::iscntrl(input[iter - 1]))) || iter == 0)) {
+							state = FINDING_COMMAND_START;
 							continue;
 						}
+					} else if (value == '\"' || value == '\'') {
+						state = STRING_LITERAL;
+						break;
+					} else if (value == '/') {
+						if (iter < input.length() - 1) {
+							char nextValue = input[iter + 1];
+							if (nextValue == '/') {
+								state = SINGLELINE_COMMENT;
+
+								++iter;
+								continue;
+							} else if (nextValue == '*') {
+								state = MULTILINE_COMMENT;
+
+								++iter;
+								continue;
+							}
+						}
+					} else if (value == '\0') {
+						value = ' ';
+					} else if (value == '(') {
+						++parenScope;
+						state = PARENTHESIS;
 					}
-				} else if( value == '\0' ) {
-					value = ' ';
-				} else if( value == '(' ) {
-					++parenScope;
-					state = PARENTHESIS;
-				}
 
-				break;
+					break;
 
-			case FINDING_COMMAND_START:
-				if( !std::isspace(value) ) {
-					state = COMMAND_NAME;
-					//why are we adding it here? if we directly go to COMMAND_NAME, it will notice the previous character is space and think its time for parameters
-					command += value;
-					continue;
-				}
-
-
-			case COMMAND_NAME:
-				//we check if its not a space
-				if( !std::isspace(value) ) {
-					//i can do iter-1 because at this point, a # and a command name must have been called, so no negative indices
-					//if the previous character was a space, then obviously this is the beginning of the parameters
-					if( std::isspace(input[iter - 1]) ) {
-						state = PARAMETERS;
-					} else {
+				case FINDING_COMMAND_START:
+					if (!std::isspace(value)) {
+						state = COMMAND_NAME;
+						//why are we adding it here? if we directly go to COMMAND_NAME, it will notice the previous character is space and think its time for parameters
 						command += value;
 						continue;
 					}
-				} else {
+
+
+				case COMMAND_NAME:
+					//we check if its not a space
+					if (!std::isspace(value)) {
+						//i can do iter-1 because at this point, a # and a command name must have been called, so no negative indices
+						//if the previous character was a space, then obviously this is the beginning of the parameters
+						if (std::isspace(input[iter - 1])) {
+							state = PARAMETERS;
+						} else {
+							command += value;
+							continue;
+						}
+					} else {
+						continue;
+					}
+
+				case PARAMETERS:
+					params += value;
 					continue;
-				}
 
-			case PARAMETERS:
-				params += value;
-				continue;
+				case STRING_LITERAL:
 
-			case STRING_LITERAL:
-
-				if( value == '"' || value == '\'' ) {
-					state = PROBING;
-				}
-
-				if( outputValue )currentToken += value;
-				continue;
-
-			case SINGLELINE_COMMENT:
-				continue;
-
-			case MULTILINE_COMMENT:
-				if( value == '/'&&input[iter - 1] == '*' ) {
-					//we increment iter to account for the next / character
-					state = PROBING;
-				}
-				continue;
-
-			case PARENTHESIS:
-				if( outputValue )currentToken += value;
-				if( value == ')' ) {
-					--parenScope;
-					if( parenScope == 0 ) {
+					if (value == '"' || value == '\'') {
 						state = PROBING;
 					}
-				} else if( value == '(' ) {
-					++parenScope;
-				}
-				continue;
 
-			case NEWLINE:
-				if( !command.empty() ) {
-					//outputValue is passed by reference so it can be changed
-					std::vector < std::string > directiveTokens = executeDirective(outputValue, command, params);
+					if (outputValue)currentToken += value;
+					continue;
 
-					tokens.insert(tokens.end(), directiveTokens.begin(), directiveTokens.end());
-				}
-				command = "";
-				params = "";
-				state = PROBING;
-				break;
+				case SINGLELINE_COMMENT:
+					continue;
+
+				case MULTILINE_COMMENT:
+					if (value == '/'&&input[iter - 1] == '*') {
+						//we increment iter to account for the next / character
+						state = PROBING;
+					}
+					continue;
+
+				case PARENTHESIS:
+					if (outputValue)currentToken += value;
+					if (value == ')') {
+						--parenScope;
+						if (parenScope == 0) {
+							state = PROBING;
+						}
+					} else if (value == '(') {
+						++parenScope;
+					}
+					continue;
+
+				case NEWLINE:
+					if (!command.empty()) {
+						//outputValue is passed by reference so it can be changed
+						std::vector < std::string > directiveTokens = executeDirective(outputValue, command, params);
+
+						tokens.insert(tokens.end(), directiveTokens.begin(), directiveTokens.end());
+					}
+					command = "";
+					params = "";
+					state = PROBING;
+					break;
 			}
 
-			if( outputValue ) {
-				if( !currentToken.empty() && (isNewToken(currentToken.back(), value)) ) {
+			if (outputValue) {
+				if (!currentToken.empty() && (isNewToken(currentToken.back(), value))) {
 					tokens.push_back(expandMacro(currentToken));
 					currentToken = "";
 				}
@@ -315,24 +315,24 @@ namespace mc {
 
 	std::vector < std::string > Preprocessor::executeDirective(bool& outputValue, const std::string & command, const std::string & params) {
 		//only if we output
-		if( command == "if" ) {
-			if( params.empty() ) {
+		if (command == "if") {
+			if (params.empty()) {
 				throw PreprocessorError(getLocation() + ": #if must be called with an expression");
 			}
 
 			calculateIfScope(outputValue, parseIfStatement(params));
 
 			return std::vector< std::string >();
-		} else if( command == "elif" ) {
-			if( params.empty() ) {
+		} else if (command == "elif") {
+			if (params.empty()) {
 				throw PreprocessorError(getLocation() + ": #elif must be called with an expression");
 			}
 
 			calculateIfScope(outputValue, parseIfStatement(params));
 
 			return std::vector< std::string >();
-		} else if( command == "ifdef" ) {
-			if( params.empty() ) {
+		} else if (command == "ifdef") {
+			if (params.empty()) {
 				throw PreprocessorError(getLocation() + ": #ifdef must be called with a macro name");
 			}
 
@@ -340,8 +340,8 @@ namespace mc {
 			std::string macroName = "";
 
 			//first we get the line number
-			for( iterator = 0; iterator < params.length(); ++iterator ) {
-				if( std::isspace(params[iterator]) ) {
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (std::isspace(params[iterator])) {
 					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 					break;//the second word, lets go to the second loop
 				}
@@ -351,8 +351,8 @@ namespace mc {
 			calculateIfScope(outputValue, isMacroDefined(macroName));
 
 			return std::vector< std::string >();
-		} else if( command == "ifndef" ) {
-			if( params.empty() ) {
+		} else if (command == "ifndef") {
+			if (params.empty()) {
 				throw PreprocessorError(getLocation() + ": #ifdef must be called with a macro name");
 			}
 
@@ -360,8 +360,8 @@ namespace mc {
 			std::string macroName = "";
 
 			//first we get the line number
-			for( iterator = 0; iterator < params.length(); ++iterator ) {
-				if( std::isspace(params[iterator]) ) {
+			for (iterator = 0; iterator < params.length(); ++iterator) {
+				if (std::isspace(params[iterator])) {
 					++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 					break;//the second word, lets go to the second loop
 				}
@@ -371,21 +371,21 @@ namespace mc {
 			calculateIfScope(outputValue, !isMacroDefined(macroName));
 
 			return std::vector< std::string >();
-		} else if( command == "else" ) {
+		} else if (command == "else") {
 			int ifScope = getMacroLocation("__IF_SCOPE__");
-			if( ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0 ) {
+			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
 				throw PreprocessorError(getLocation() + ": #else is missing an if directive");
 			}
 
 			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
-			if( currentIfScope < 0 ) {
+			if (currentIfScope < 0) {
 				throw PreprocessorError(getLocation() + ": #else is missing an if directive");
 			}
 
 
-			if( outputValue || macros[ifScope].definition == macros[currentIfScope].definition ) {
+			if (outputValue || macros[ifScope].definition == macros[currentIfScope].definition) {
 				outputValue = !outputValue;
-				if( outputValue ) {
+				if (outputValue) {
 					macros[currentIfScope].definition = "0";
 				} else {
 					macros[currentIfScope].definition = macros[ifScope].definition;
@@ -393,19 +393,19 @@ namespace mc {
 			}
 
 			return std::vector< std::string >();
-		} else if( command == "endif" ) {
+		} else if (command == "endif") {
 			int ifScope = getMacroLocation("__IF_SCOPE__");
-			if( ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0 ) {
+			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
 				throw PreprocessorError(getLocation() + ": #endif is missing an if directive");
 			}
 
 			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
-			if( currentIfScope < 0 ) {
+			if (currentIfScope < 0) {
 				throw PreprocessorError(getLocation() + ": #endif is missing an if directive");
 			}
 
 
-			if( !outputValue&&macros[ifScope].definition == macros[currentIfScope].definition ) {
+			if (!outputValue&&macros[ifScope].definition == macros[currentIfScope].definition) {
 				outputValue = true;
 				setMacro(Macro("__CURRENT_IF_SCOPE__", "0"));
 			}
@@ -413,23 +413,23 @@ namespace mc {
 			macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) - 1);
 
 			return std::vector< std::string >();
-		} else if( outputValue ) {
-			if( command == "error" ) {
-				if( params.empty() ) {
+		} else if (outputValue) {
+			if (command == "error") {
+				if (params.empty()) {
 					throw PreprocessorError(getLocation() + ": #error was called with no message");
 				}
 
 				throw PreprocessorError(getLocation() + ": " + params);
-			} else if( command == "warning" ) {
-				if( params.empty() ) {
+			} else if (command == "warning") {
+				if (params.empty()) {
 					throw PreprocessorError(getLocation() + ": #warning must be called with a message");
 				}
 
 				std::cout << getLocation() << ": " << params << std::endl;
 
 				return std::vector< std::string >();
-			} else if( command == "line" ) {
-				if( params.empty() ) {
+			} else if (command == "line") {
+				if (params.empty()) {
 					throw PreprocessorError(getLocation() + ": #line must be called with a line number");
 				}
 
@@ -438,8 +438,8 @@ namespace mc {
 				std::string newFileName = "";
 
 				//first we get the line number
-				for( iterator = 0; iterator < params.length(); ++iterator ) {
-					if( params[iterator] == ' ' ) {
+				for (iterator = 0; iterator < params.length(); ++iterator) {
+					if (params[iterator] == ' ') {
 						++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 						break;//the second word, lets go to the second loop
 					}
@@ -447,12 +447,12 @@ namespace mc {
 				}
 
 				//remaining characters are added to the filename
-				for( ; iterator < params.length(); ++iterator ) {
+				for (; iterator < params.length(); ++iterator) {
 					newFileName += params[iterator];
 				}
 
 				//the filename is optional
-				if( newFileName != "" ) {
+				if (newFileName != "") {
 					setFilename(newFileName);
 				}
 
@@ -462,8 +462,8 @@ namespace mc {
 				setMacro(Macro("__FILE__", (filename)));
 
 				return std::vector< std::string >();
-			} else if( command == "define" ) {
-				if( params.empty() ) {
+			} else if (command == "define") {
+				if (params.empty()) {
 					throw PreprocessorError(getLocation() + ": #define must be called with a macro name - it\'s arguments cannot be left empty.");
 				}
 				Index iterator;
@@ -485,29 +485,29 @@ namespace mc {
 				std::string currentParameter = "";
 
 				//first we get the line number
-				for( iterator = 0; iterator < params.length(); ++iterator ) {
+				for (iterator = 0; iterator < params.length(); ++iterator) {
 					char value = params[iterator];
 
-					if( parseState == MACRO_NAME ) {
-						if( value == '(' ) {
+					if (parseState == MACRO_NAME) {
+						if (value == '(') {
 							parseState = PARAMETERS;
 							continue;
-						} else if( std::isspace(value) ) {
+						} else if (std::isspace(value)) {
 							++iterator;//lets also increment the iterator so the space doesnt get added to the macroname
 							break;//the second word, lets go to the second loop
 						}
 
 						macroName += value;
 
-					} else if( parseState == PARAMETERS ) {
+					} else if (parseState == PARAMETERS) {
 						//we dont want spaces in our parameters
-						if( std::isspace(value) ) {
+						if (std::isspace(value)) {
 							continue;
-						} else if( value == ')' ) {
+						} else if (value == ')') {
 							iterator += 2;//we add 2 to it. one to skip the ), and then another 1 to skip the space.
 							macroParameters.push_back(currentParameter);
 							break;
-						} else if( value == ',' ) {
+						} else if (value == ',') {
 							macroParameters.push_back(currentParameter);
 							currentParameter = "";
 							continue;
@@ -519,15 +519,15 @@ namespace mc {
 				}
 
 				//remaining characters are added to the filename
-				for( ; iterator < params.length(); ++iterator ) {
+				for (; iterator < params.length(); ++iterator) {
 					macroDefinition += params[iterator];
 				}
 
 				defineMacro(Macro(macroName, macroDefinition, macroParameters, ""));
 
 				return std::vector< std::string >();
-			} else if( command == "undef" ) {
-				if( params.empty() ) {
+			} else if (command == "undef") {
+				if (params.empty()) {
 					throw PreprocessorError(getLocation() + ": #undef must be called with a macro name.");
 				}
 
@@ -535,8 +535,8 @@ namespace mc {
 				std::string macroName = "";
 
 				//first we get the line number
-				for( iterator = 0; iterator < params.length(); ++iterator ) {
-					if( std::isspace(params[iterator]) ) {
+				for (iterator = 0; iterator < params.length(); ++iterator) {
+					if (std::isspace(params[iterator])) {
 						++iterator;//lets also increment the iterator so the space doesnt get added to the filename
 						break;//the second word, lets go to the second loop
 					}
@@ -546,19 +546,19 @@ namespace mc {
 				undefineMacro(params);
 
 				return std::vector< std::string >();
-			} else if( command == "include" ) {
-				if( params.empty() ) {
+			} else if (command == "include") {
+				if (params.empty()) {
 					throw PreprocessorError(getLocation() + ": #include must be called with arguments seperated by either \"\'s, a macro, or <>");
 				}
 
 
-				if( params[0] == '<' ) {
+				if (params[0] == '<') {
 					std::string term;
 					//complete is whether both <> are found
 					bool complete = false;
 
-					for( Index iter = 1; iter < params.size(); ++iter ) {
-						if( params[iter] == '>' ) {
+					for (Index iter = 1; iter < params.size(); ++iter) {
+						if (params[iter] == '>') {
 							complete = true;
 							break;
 						} else {
@@ -566,13 +566,13 @@ namespace mc {
 						}
 					}
 
-					if( !complete ) {
+					if (!complete) {
 						throw PreprocessorError(getLocation() + ": Missing closing > in #include - " + params);
 					}
 
-					for( Index iter = 0; iter < includes.size(); ++iter ) {
+					for (Index iter = 0; iter < includes.size(); ++iter) {
 						Include* incl = includes[iter];
-						if( incl->hasFile(term) ) {
+						if (incl->hasFile(term)) {
 							std::string file = incl->getFile(term);
 							//files include a lot of stuff. So we dynamically allocate the include preprocessor to prevent a stack overflow
 							std::unique_ptr<Preprocessor> fileProcessor = std::unique_ptr<Preprocessor>(new Preprocessor(file, *this));
@@ -591,13 +591,13 @@ namespace mc {
 
 					//if it found the file, it would have returned it by now.
 					throw PreprocessorError(getLocation() + ": Include with name " + term + " not found!");
-				} else if( params[0] == '\"' ) {
+				} else if (params[0] == '\"') {
 					std::string term;
 					//complete is whether both "" are found
 					bool complete = false;
 
-					for( Index iter = 1; iter < params.size(); ++iter ) {
-						if( params[iter] == '\"' ) {
+					for (Index iter = 1; iter < params.size(); ++iter) {
+						if (params[iter] == '\"') {
 							complete = true;
 							break;
 						} else {
@@ -606,14 +606,14 @@ namespace mc {
 					}
 
 
-					if( !complete ) {
+					if (!complete) {
 						throw PreprocessorError(getLocation() + ": Missing closing \" in #include - " + params);
 					}
 
 					//check the current directory for file
 					IncludeDirectory dir = IncludeDirectory(filename);
 
-					if( dir.hasFile(term) ) {
+					if (dir.hasFile(term)) {
 						std::string file = dir.getFile(term);
 						//files include a lot of stuff. So we dynamically allocate the include preprocessor to prevent a stack overflow
 						std::unique_ptr<Preprocessor> fileProcessor = std::unique_ptr<Preprocessor>(new Preprocessor(file, *this));
@@ -633,7 +633,7 @@ namespace mc {
 
 				return std::vector< std::string >();
 				//glsl commands
-			} else if( command == "version" || command == "extension" ) {
+			} else if (command == "version" || command == "extension") {
 				//this is for shaders
 				std::vector < std::string > output;
 				output.push_back("#" + command + " " + params);
@@ -642,7 +642,7 @@ namespace mc {
 			}
 		}
 
-		if( outputValue ) {
+		if (outputValue) {
 			throw PreprocessorError("Unknown directive: " + command);
 		}
 
@@ -650,8 +650,8 @@ namespace mc {
 	}
 
 	int Preprocessor::getMacroLocation(const std::string & name) const {
-		for( Index iterator = 0; iterator < macros.size(); ++iterator ) {
-			if( macros[iterator].name == name ) {
+		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].name == name) {
 				return iterator;
 			}
 		}
@@ -659,7 +659,7 @@ namespace mc {
 	}
 
 	std::string Preprocessor::expandMacro(const std::string macro) const {
-		if( !macro.empty() || (macro.length() == 1 && (std::isspace(macro[0]) || std::iscntrl(macro[0]) || std::isblank(macro[0]))) ) {
+		if (!macro.empty() || (macro.length() == 1 && (std::isspace(macro[0]) || std::iscntrl(macro[0]) || std::isblank(macro[0])))) {
 
 			std::string out = macro;
 
@@ -671,7 +671,7 @@ namespace mc {
 			//remove whitespace to check for macro. a line like int a = MACRO wont work without this line, as it would be tokenized to be (a),( =), and ( MACRO)
 			token.name.erase(std::remove_if(token.name.begin(), token.name.end(), ::isspace), token.name.end());
 
-			if( token.name[0] == '#' ) {
+			if (token.name[0] == '#') {
 				//get rid of the # so we can find the macro name
 				token.name = token.name.substr(1);
 
@@ -679,12 +679,12 @@ namespace mc {
 			}
 
 			const int macroLocation = getMacroLocation(token.name);
-			if( macroLocation >= 0 ) {
+			if (macroLocation >= 0) {
 
 				//the space is to prevent the execution of directives
 				std::unique_ptr< Preprocessor > p = std::unique_ptr< Preprocessor >(new Preprocessor(' ' + macros[macroLocation].definition, *this));
 
-				for( Index i = 0; i < token.parameters.size(); ++i ) {
+				for (Index i = 0; i < token.parameters.size(); ++i) {
 
 					std::unique_ptr< Preprocessor > argumentProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameters[i], *this));
 
@@ -694,9 +694,9 @@ namespace mc {
 				//the substr one is to get rid of the space we added in the previous line
 				std::string replacement = p->preprocess().substr(1);
 
-				if( stringify ) {
+				if (stringify) {
 					//get rid of the # for stringication
-					out.erase(std::remove_if(out.begin(), out.end(), [] (char c) {
+					out.erase(std::remove_if(out.begin(), out.end(), [](char c) {
 						return c == '#';
 					}), out.end());
 
@@ -705,32 +705,32 @@ namespace mc {
 
 				//these lines are to get rid of the parameters from the final output
 				const size_t parametersLocation = out.find("(");
-				if( parametersLocation != std::string::npos ) {
+				if (parametersLocation != std::string::npos) {
 					out = out.substr(0, parametersLocation);
 				}
 
 				std::size_t index;
 
 				//we want to preserve the whitespace in the final output, so this algorithim replaces the non-whitespace with the macro expansion
-				while( (index = out.find(token.name)) != std::string::npos ) {
+				while ((index = out.find(token.name)) != std::string::npos) {
 					out.replace(index, token.name.size(), replacement);
 				}
 			}//macroLocation>0
-			else if( !token.parameters.empty() ) {
+			else if (!token.parameters.empty()) {
 
 				//if its a function, we expand the parameters
 
 				//this will expand macros in the parameters
 				std::unique_ptr< Preprocessor > outProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameterString, *this));
 
-				for( Index i = 0; i < token.parameters.size(); i++ ) {
+				for (Index i = 0; i < token.parameters.size(); i++) {
 
 					std::unique_ptr< Preprocessor > argumentProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameters[i], *this));
 
 					std::string newArgument = argumentProcessor->preprocess();
 
 					//if they are the same, a stack overflow happens
-					if( newArgument != token.parameters[i] ) {
+					if (newArgument != token.parameters[i]) {
 						outProcessor->setMacro(Macro(token.parameters[i], newArgument));
 					}
 				}
@@ -740,8 +740,8 @@ namespace mc {
 				//we need to preserve whitespace in the token, so we get it
 				std::string whitespace;
 
-				for( Index iter = 0; iter < macro.length(); ++iter ) {
-					if( std::isspace(macro[iter]) ) {
+				for (Index iter = 0; iter < macro.length(); ++iter) {
+					if (std::isspace(macro[iter])) {
 						whitespace += macro[iter];
 					} else {
 						break;
@@ -761,7 +761,7 @@ namespace mc {
 
 	int Preprocessor::getIfScopeLocation() {
 		int ifScope = getMacroLocation("__IF_SCOPE__");
-		if( ifScope < 0 ) {
+		if (ifScope < 0) {
 			ifScope = static_cast<int>(macros.size());
 			setMacro(Macro("__IF_SCOPE__", "0"));
 		}
@@ -772,7 +772,7 @@ namespace mc {
 	int Preprocessor::getCurrentIfScopeLocation() {
 
 		int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
-		if( currentIfScope < 0 ) {
+		if (currentIfScope < 0) {
 			currentIfScope = static_cast<int>(macros.size());
 			setMacro(Macro("__CURRENT_IF_SCOPE__", "0"));
 		}
@@ -786,7 +786,7 @@ namespace mc {
 
 		macros[ifScope].definition = std::to_string(std::stoi(macros[ifScope].definition) + 1);
 
-		if( !statementPassed&&std::stoi(macros[currentIfScope].definition) == 0 ) {
+		if (!statementPassed&&std::stoi(macros[currentIfScope].definition) == 0) {
 			macros[currentIfScope].definition = macros[ifScope].definition;
 			outputValue = false;
 		}
@@ -807,9 +807,9 @@ namespace mc {
 
 		int functionScope = 0;
 
-		for( iter = 0; iter < name.length(); ++iter ) {
+		for (iter = 0; iter < name.length(); ++iter) {
 			char value = name[iter];
-			if( value == '(' ) {
+			if (value == '(') {
 
 				//we want to ignore the first parenthsis
 				++iter;
@@ -818,18 +818,18 @@ namespace mc {
 				std::string currentParam = "";
 				//each time a ( is encountered, functionScope is incremented. This is used to make sure all parameter functions are parsed correctly
 
-				for( ; iter < name.length(); ++iter ) {
+				for (; iter < name.length(); ++iter) {
 					char val = name[iter];
 
-					if( val == '(' ) {
+					if (val == '(') {
 						++functionScope;
 					}
 					//function scope needs to be equal to 1, as that means there has been one set of parenthesis. functionScope==0 means its not a function
-					else if( val == ','&&functionScope == 0 ) {
+					else if (val == ','&&functionScope == 0) {
 						params.push_back(currentParam);
 						currentParam = "";
-					} else if( val == ')' ) {
-						if( functionScope == 0 ) {
+					} else if (val == ')') {
+						if (functionScope == 0) {
 							++iter;
 							params.push_back(currentParam);
 							break;
@@ -838,7 +838,7 @@ namespace mc {
 						}
 
 						--functionScope;
-					} else if( !std::isspace(val) ) {
+					} else if (!std::isspace(val)) {
 						currentParam += val;
 					}
 
@@ -846,18 +846,18 @@ namespace mc {
 				}
 
 				break;
-			} else if( !std::isspace(value) ) {
+			} else if (!std::isspace(value)) {
 				macroName += value;
 			}
 		}
 
-		if( functionScope < 0 ) {
+		if (functionScope < 0) {
 			throw PreprocessorError(getLocation() + ": Missing ( in function macro name - " + name);
-		} else if( functionScope > 0 ) {
+		} else if (functionScope > 0) {
 			throw PreprocessorError(getLocation() + ": Missing ) in function macro name - " + name);
 		}
 
-		for( ; iter < name.length(); ++iter ) {
+		for (; iter < name.length(); ++iter) {
 			definition += name[iter];
 		}
 
@@ -866,8 +866,8 @@ namespace mc {
 	}
 
 	void Preprocessor::setMacro(const Macro& m) {
-		for( Index iterator = 0; iterator < macros.size(); ++iterator ) {
-			if( macros[iterator].name == m.name ) {
+		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].name == m.name) {
 				macros[iterator].definition = m.definition;
 				macros[iterator].parameters = m.parameters;
 				return;
@@ -878,8 +878,8 @@ namespace mc {
 
 
 	void Preprocessor::defineMacro(const Macro& m) {
-		for( Index iterator = 0; iterator < os::getArraySize(reservedWords); ++iterator ) {
-			if( m.name == reservedWords[iterator] ) {
+		for (Index iterator = 0; iterator < os::getArraySize(reservedWords); ++iterator) {
+			if (m.name == reservedWords[iterator]) {
 				throw PreprocessorError(getLocation() + ": can\'t define " + m.name + " - it is a reserved word");
 			}
 		}
@@ -888,8 +888,8 @@ namespace mc {
 	}
 
 	bool Preprocessor::isMacroDefined(const std::string & name) const {
-		for( Index iterator = 0; iterator < macros.size(); ++iterator ) {
-			if( macros[iterator].name == name ) {
+		for (Index iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].name == name) {
 				return true;
 			}
 		}
@@ -899,8 +899,8 @@ namespace mc {
 	void Preprocessor::undefineMacro(const std::string & name) {
 		Index iterator = 0;
 
-		for( iterator = 0; iterator < macros.size(); ++iterator ) {
-			if( macros[iterator].name == name ) {
+		for (iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].name == name) {
 				macros.erase(macros.begin() + iterator);
 				return;
 			}
@@ -1379,8 +1379,8 @@ namespace mc {
 #undef _MACE_PREDEFINE_MACRO
 
 	const Macro & Preprocessor::getMacro(const std::string & name) const {
-		for( unsigned int iterator = 0; iterator < macros.size(); ++iterator ) {
-			if( macros[iterator].name == name ) {
+		for (unsigned int iterator = 0; iterator < macros.size(); ++iterator) {
+			if (macros[iterator].name == name) {
 				return macros[iterator];
 			}
 		}
@@ -1478,8 +1478,8 @@ namespace mc {
 		std::string out = "";
 
 		std::string line = "";
-		if( f.is_open() ) {
-			while( std::getline(f, line) ) {
+		if (f.is_open()) {
+			while (std::getline(f, line)) {
 				out += line;
 				out += '\n';
 			}

@@ -49,7 +49,7 @@ RotationComponent r = RotationComponent();
 TestComponent testComponent = TestComponent();
 
 
-void create() {
+void create(os::WindowModule&) {
 	srand((unsigned) time(0));
 
 	const Size elementNum = 10;
@@ -92,10 +92,9 @@ int main() {
 		std::cout << "Click on a star to rotate it individually! It is pixel perfect! Holding down space will rotate all the stars in big chunks. It will only swap frames when something changes for maximum performance.\n";
 		std::cout << "Also try resizing the screen and watch how it reacts!\n";
 
-		os::WindowModule module = os::WindowModule(500, 500, "Rotations Demo");
-
-		module.setFPS(30);
-		module.setVSync(false);
+		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(500, 500, "Rotations Demo");
+		config.onCreate = &create;
+		os::WindowModule module = os::WindowModule(config);
 
 		MACE::addModule(module);
 
@@ -136,8 +135,6 @@ int main() {
 			std::cout << "UPS: " << com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
 		});
 		module.addComponent(f);
-
-		module.setCreationCallback(&create);
 
 		os::SignalModule sigModule = os::SignalModule();
 		MACE::addModule(sigModule);

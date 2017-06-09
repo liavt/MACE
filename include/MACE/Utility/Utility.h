@@ -19,7 +19,8 @@ namespace mc {
 	/**
 	Namespace that contains mathmathetics with vectors and functions relevant in graphics programming.
 	*/
-	namespace math {}
+	namespace math {
+	}
 }
 
 #include <MACE/Utility/Serial.h>

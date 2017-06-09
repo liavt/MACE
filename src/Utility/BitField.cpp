@@ -20,7 +20,7 @@ namespace mc {
 	BitField::~BitField() noexcept {}
 
 	BitField& BitField::setBit(Byte position, bool state) {
-		if( state ) {
+		if (state) {
 			return toggleBit(position);
 		} else {
 			return untoggleBit(position);
@@ -101,7 +101,7 @@ namespace mc {
 	}
 
 	BitField BitField::operator~() {
-		return BitField((const Byte) ~value);
+		return BitField((const Byte)~value);
 	}
 
 	BitField BitField::operator>>(Index places) const {

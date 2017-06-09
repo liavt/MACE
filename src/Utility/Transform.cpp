@@ -72,7 +72,7 @@ namespace mc {
 		return m;
 	}
 	Matrix<float, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
-		const float y_scale = (float) ((1.0f / tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
+		const float y_scale = (float)((1.0f / tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
 		const float x_scale = y_scale / aspectRatio;
 		const float frustum_length = FAR_PLANE - NEAR_PLANE;
 

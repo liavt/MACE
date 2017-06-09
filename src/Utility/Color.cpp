@@ -12,7 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace {
 		float trimFloat(const float& color) {
-			return color < 0.0f ? 0.0f : (color>1.0f ? 1.0f : color);
+			return color < 0.0f ? 0.0f : (color > 1.0f ? 1.0f : color);
 		}
 
 		Byte convertFloatToRGBA(const float& color) {

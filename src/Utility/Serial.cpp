@@ -29,7 +29,7 @@ namespace mc {
 		Serial::Serial(const std::string & port, const Size baudRate) : Serial(port.c_str(), baudRate) {}
 
 		Serial::~Serial() {
-			if( isConnected() ) {
+			if (isConnected()) {
 				destroy();
 			}
 		}
@@ -37,19 +37,19 @@ namespace mc {
 		void Serial::init(const char * port, const Size baudRate) {
 			os::clearError();
 
-			if( isConnected() ) {
+			if (isConnected()) {
 				throw AssertionFailedError("Can't call init() on a Serial class that is already connected!");
 			}
 
 #ifdef MACE_WINAPI
 			serial = CreateFile(port, GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
-			if( serial == INVALID_HANDLE_VALUE ) {
+			if (serial == INVALID_HANDLE_VALUE) {
 				const DWORD lastError = GetLastError();
 
-				if( lastError == ERROR_FILE_NOT_FOUND ) {
+				if (lastError == ERROR_FILE_NOT_FOUND) {
 					throw FileNotFoundError("Serial port with name " + std::string(port) + " not found.");
-				} else if( lastError == ERROR_ACCESS_DENIED ) {
+				} else if (lastError == ERROR_ACCESS_DENIED) {
 					throw SystemError("Access denied accessing serial port at " + std::string(port));
 				} else {
 					throw FileNotFoundError("Error opening " + std::string(port) + " with error from CreateFile " + std::to_string(lastError));
@@ -60,7 +60,7 @@ namespace mc {
 
 			DCB serialParams = { 0 };
 
-			if( !GetCommState(serial, &serialParams) ) {
+			if (!GetCommState(serial, &serialParams)) {
 				throw BadFileError("Error getting serial parameters from " + std::string(port));
 			}
 
@@ -70,7 +70,7 @@ namespace mc {
 			serialParams.Parity = NOPARITY;
 			serialParams.fDtrControl = DTR_CONTROL_ENABLE;
 
-			if( !SetCommState(serial, &serialParams) ) {
+			if (!SetCommState(serial, &serialParams)) {
 				throw BadFileError("Error setting serial parameters for " + std::string(port));
 			}
 
@@ -83,14 +83,14 @@ namespace mc {
 			timeout.WriteTotalTimeoutConstant = 50;
 			timeout.WriteTotalTimeoutMultiplier = 10;
 
-			if( !SetCommTimeouts(serial, &timeout) ) {
+			if (!SetCommTimeouts(serial, &timeout)) {
 				throw BadFileError("Error setting serial timeout for " + std::string(port));
 			}
 
 			os::checkError(__LINE__, __FILE__, "Error setting serial communication timeouts for " + std::string(port));
 
 			//we shall purge everything to flush any previous characters;
-			if( !PurgeComm(serial, PURGE_RXCLEAR | PURGE_TXCLEAR) ) {
+			if (!PurgeComm(serial, PURGE_RXCLEAR | PURGE_TXCLEAR)) {
 				throw BadFileError("Error purging serial communications for " + std::string(port));
 			};
 
@@ -99,7 +99,7 @@ namespace mc {
 			//tell it to not block or own the process
 			serial = open(port, O_RDWR | O_NOCTTY | O_NDELAY, S_IRWXU);
 
-			if( serial == -1 ) {
+			if (serial == -1) {
 				throw FileNotFoundError("Unable to open serial port " + std::string(port));
 			}
 
@@ -148,7 +148,7 @@ namespace mc {
 		void Serial::destroy() {
 			os::clearError();
 
-			if( !connected ) {
+			if (!connected) {
 				throw AssertionFailedError("Can't destroy an unconnected Serial object!");
 			}
 
@@ -166,11 +166,11 @@ namespace mc {
 		int Serial::read(char * buffer, Size bufferSize) {
 			os::clearError();
 
-			if( !isConnected() ) {
+			if (!isConnected()) {
 				throw InitializationFailedError("Failed to read from serial: Not connected to serial port");
 			}
 
-			if( !isValid() ) {
+			if (!isValid()) {
 				destroy();
 				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
@@ -180,18 +180,18 @@ namespace mc {
 			//dont want to overflow the buffer
 			Size toRead = available > bufferSize ? bufferSize : available;
 
-			if( toRead == 0 ) {
+			if (toRead == 0) {
 				return 0;
 			}
 
 #ifdef MACE_WINAPI
 			DWORD bytesRead;
 
-			if( ReadFile(serial, buffer, toRead, &bytesRead, nullptr) ) {
+			if (ReadFile(serial, buffer, toRead, &bytesRead, nullptr)) {
 				return bytesRead;
 			}
 
-			if( bytesRead == 0 && toRead > 0 ) {
+			if (bytesRead == 0 && toRead > 0) {
 				throw BadFileError("Failed to read from serial stream");
 			}
 
@@ -210,27 +210,27 @@ namespace mc {
 		void Serial::write(const char * buffer, const Size bufferSize) {
 			os::clearError();
 
-			if( !isConnected() ) {
+			if (!isConnected()) {
 				throw InitializationFailedError("Failed to write to serial: Not connected to serial port");
 			}
 
-			if( !isValid() ) {
+			if (!isValid()) {
 				destroy();
 				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
 
-			if( bufferSize == 0 ) {
+			if (bufferSize == 0) {
 				return;
 			}
 
 #ifdef MACE_WINAPI
 			DWORD bytesSent;
 
-			if( !WriteFile(serial, buffer, bufferSize, &bytesSent, 0) ) {
+			if (!WriteFile(serial, buffer, bufferSize, &bytesSent, 0)) {
 				os::checkError(__LINE__, __FILE__, "Failed to write to serial port");
 			}
 
-			if( bytesSent == 0 && bufferSize > 0 ) {
+			if (bytesSent == 0 && bufferSize > 0) {
 				throw BadFileError("Unable to write to serial port");
 			}
 
@@ -238,7 +238,7 @@ namespace mc {
 #elif defined(MACE_POSIX)
 			ssize_t bytesWritten = ::write(serial, buffer, bufferSize);
 
-			if( bytesWritten <= 0 ) {
+			if (bytesWritten <= 0) {
 				os::checkError(__LINE__, __FILE__, "Failed to write to serial port");
 				return;
 			}
@@ -252,11 +252,11 @@ namespace mc {
 		void Serial::flush() {
 			os::clearError();
 
-			if( !isConnected() ) {
+			if (!isConnected()) {
 				throw InitializationFailedError("Unable to flush serial stream - it is not connected");
 			}
 
-			if( !isValid() ) {
+			if (!isValid()) {
 				destroy();
 				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
@@ -274,11 +274,11 @@ namespace mc {
 		Size Serial::getAvailableCharacterAmount() const {
 			os::clearError();
 
-			if( !isConnected() ) {
+			if (!isConnected()) {
 				throw InitializationFailedError("Unable to read available characters from serial port - it is not connected");
 			}
 
-			if( !isValid() ) {
+			if (!isValid()) {
 				throw FileNotFoundError("Socket closed. Please recall init()");
 			}
 
@@ -313,14 +313,14 @@ namespace mc {
 			os::clearError();
 
 #ifdef MACE_WINDOWS
-			if( serial == INVALID_HANDLE_VALUE ) {
+			if (serial == INVALID_HANDLE_VALUE) {
 				return false;
 			}
 
 			DCB commState;
 
 			//cheatey way to check if it exists by seeing if this errors
-			if( !GetCommState(serial, &commState) ) {
+			if (!GetCommState(serial, &commState)) {
 				//get rid of the flag
 				const DWORD lastError = GetLastError();
 

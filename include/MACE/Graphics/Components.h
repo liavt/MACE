@@ -43,8 +43,6 @@ namespace mc {
 			void setHorizontalAlign(HorizontalAlign align);
 			const HorizontalAlign getHorizontalAlign() const;
 
-			std::unique_ptr<Component> clone() const override;
-
 			bool operator==(const AlignmentComponent& other) const;
 			bool operator!=(const AlignmentComponent& other) const;
 		protected:
@@ -83,8 +81,6 @@ namespace mc {
 			CallbackPtr getCleanCallback();
 			const CallbackPtr getCleanCallback() const;
 
-			std::unique_ptr<Component> clone() const override;
-
 			bool operator==(const CallbackComponent& other) const;
 			bool operator!=(const CallbackComponent& other) const;
 		protected:
@@ -117,8 +113,6 @@ namespace mc {
 			void setTickCallback(const TickCallbackPtr callback);
 			TickCallbackPtr getTickCallback();
 			const TickCallbackPtr getTickCallback() const;
-
-			std::unique_ptr<Component> clone() const override;
 
 			bool operator==(const FPSComponent& other) const;
 			bool operator!=(const FPSComponent& other) const;

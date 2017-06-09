@@ -31,6 +31,36 @@ namespace mc {
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
+			struct LaunchConfig {
+				typedef void(*WindowCallback)(WindowModule& window);
+				typedef void(*ScrollCallback)(WindowModule& window, double x, double y);
+				typedef void(*MouseMoveCallback)(WindowModule& window, int x, int y);
+
+				LaunchConfig(const int w, const int h, const char* t) : width(w), height(h), title(t) {}
+
+				const char* title;
+				const int width;
+				const int height;
+
+				unsigned int fps = 30;
+
+				WindowCallback onCreate = [](WindowModule&) {};
+				WindowCallback onClose = [](WindowModule&) {};
+				ScrollCallback onScroll = [](WindowModule&, double, double) {};
+				MouseMoveCallback onMouseMove = [](WindowModule&, int, int) {};
+
+				/**
+				Whether this window should terminate the MACE loop when destroyed
+				*/
+				bool terminateOnClose = true;
+
+				bool decorated = true;
+				bool fullscreen = false;
+				bool resizable = false;
+				bool vsync = false;
+			};
+
+			WindowModule(const LaunchConfig& config);
 			WindowModule(const int width, const int height, const char* title);
 
 			/**
@@ -38,16 +68,10 @@ namespace mc {
 			*/
 			GLFWwindow* getGLFWWindow();
 
-			const unsigned int& getFPS() const;
-			void setFPS(const unsigned int& FPS);
-
 			void create();
 
-			const int getOriginalWidth() const;
-			const int getOriginalHeight() const;
+			const LaunchConfig& getLaunchConfig() const;
 
-			std::string getTitle();
-			const std::string getTitle() const;
 			void setTitle(const std::string& newTitle);
 
 			void init() override;
@@ -56,44 +80,17 @@ namespace mc {
 
 			std::string getName() const override;
 
-			void setVSync(const bool sync);
-			bool isVSync() const;
-
-			void setFullscreen(const bool full);
-			bool isFullscreen() const;
-
-			void setResizable(const bool re);
-			bool isResizable() const;
-
-			void setUndecorated(const bool un);
-			bool isUndecorated() const;
-
 			bool isDestroyed() const;
-
-			void setCreationCallback(const VoidFunctionPtr callback);
-			const VoidFunctionPtr getCreationCallback() const;
-			VoidFunctionPtr getCreationCallback();
 		private:
 			enum Properties: Byte {
-				VSYNC = 0,
-				FULLSCREEN = 1,
-				UNDECORATED = 2,
-				RESIZABLE = 3,
-				DESTROYED = 4,
+				DESTROYED = 0,
 			};
-
-			VoidFunctionPtr creationCallback = [] {};
 
 			std::thread windowThread;
 
-			unsigned int fps = 0;
-
 			GLFWwindow* window;
 
-			std::string title;
-
-			int originalWidth;
-			int originalHeight;
+			const LaunchConfig config;
 
 			BitField properties;
 
@@ -403,7 +400,7 @@ namespace mc {
 
 				MENU = 348,
 
-				//LAST and FIRST allows you to iterate through the keys because FIRST is the first value and LAST is the second value
+				//LAST and FIRST allows you to iterate through the keys because FIRST is the first value and LAST is the last value
 
 				LAST = MENU,
 

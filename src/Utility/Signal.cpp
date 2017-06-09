@@ -15,39 +15,39 @@ namespace mc {
 	namespace os {
 		void signalHandle(int sig) {
 #ifdef MACE_POSIX
-			if( sig == SIGHUP ) {
+			if (sig == SIGHUP) {
 				throw SignalHangupError("SIGHUP: Hangup detected on controlling terminal or death of controlling process");
-			} else if( sig == SIGKILL ) {
+			} else if (sig == SIGKILL) {
 				//RIP program
 				throw SignalKillError("SIGKILL: Program was killed");
-			} else if( sig == SIGSTOP ) {
+			} else if (sig == SIGSTOP) {
 				throw SignalStopError("SIGSTOP: Program was stopped");
-			} else if( sig == SIGALRM ) {
+			} else if (sig == SIGALRM) {
 				throw SignalAlarmError("SIGALRM: Abort signal from alarm()");
-			} else if( sig == SIGTSTP ) {
+			} else if (sig == SIGTSTP) {
 				throw SignalTerminalStopError("SIGTSTP: Stop was typed in the terminal");
-			} else if( sig == SIGTTIN ) {
+			} else if (sig == SIGTTIN) {
 				throw SignalTerminalInputError("SIGTTIN: Terminal input for background process");
-			} else if( sig == SIGTTOU ) {
+			} else if (sig == SIGTTOU) {
 				throw SignalTerminalOutputError("SIGTTOU: Terminal output for background process");
 			}
 #endif//MACE_POSIX
 
-			if( sig == SIGABRT
+			if (sig == SIGABRT
 #ifdef MACE_WINDOWS
-			   || sig == SIGABRT_COMPAT
+				|| sig == SIGABRT_COMPAT
 #endif//MACE_WINDOWS
-			   ) {
+				) {
 				throw SignalAbortError("SIGABRT: Program was aborted");
-			} else if( sig == SIGFPE ) {
+			} else if (sig == SIGFPE) {
 				throw SignalFloatingPointError("SIGFPE: A floating point error occured");
-			} else if( sig == SIGILL ) {
+			} else if (sig == SIGILL) {
 				throw SignalIllegalInstructionError("SIGILL: An illegal instruction occured");
-			} else if( sig == SIGINT ) {
+			} else if (sig == SIGINT) {
 				throw SignalInterruptError("SIGINT: Program was interrupted from keyboard");
-			} else if( sig == SIGSEGV ) {
+			} else if (sig == SIGSEGV) {
 				throw SignalSegmentFaultError("SIGSEGV: Invalid memory reference (segmentation fault)");
-			} else if( sig == SIGTERM ) {
+			} else if (sig == SIGTERM) {
 				throw SignalTerminateError("SIGTERM: Program was terminated");
 			} else {
 				throw SignalError("Program recieved signal " + std::to_string(sig));

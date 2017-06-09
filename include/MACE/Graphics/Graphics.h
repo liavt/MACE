@@ -16,7 +16,8 @@ namespace mc {
 	/**
 	Namespace containing classes used for Graphics in MACE.
 	*/
-	namespace gfx {}
+	namespace gfx {
+	}
 }
 
 #include <MACE/Graphics/OGL.h>

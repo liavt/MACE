@@ -12,10 +12,43 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_CORE_INTERFACES_H
 #include <memory>
 
-class Initializable {
-	virtual void init() = 0;
+namespace mc {
+	class Initializer;
 
-	virtual void destroy() = 0;
-};
+	class Initializable {
+		friend class Initializer;
+	protected:
+		virtual void init() = 0;
+
+		virtual void destroy() = 0;
+	};//Initializable
+
+	class Initializer final: public Initializable {
+	public:
+		Initializer();
+		~Initializer();
+
+		void init() final;
+		void destroy() final;
+
+		Initializable* get();
+
+		const Initializable* get() const;
+
+		Initializable* operator*();
+
+		const Initializable* operator*() const;
+
+		Initializable* operator->();
+
+		const Initializable* operator->() const;
+
+		bool isInitialized() const;
+	private:
+		bool initialized = false;
+
+		Initializable* obj;
+	};//Initializer
+}//mc
 
 #endif//MACE_CORE_INTERFACES_H

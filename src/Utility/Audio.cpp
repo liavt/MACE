@@ -10,6 +10,14 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Audio.h>
 #include <MACE/Core/System.h>
 
+#ifdef MACE_OSX
+#	include <OpenAL/al.h>
+#	include <OpenAL/alc.h>
+#else
+#	include <AL/al.h>
+#	include <AL/alc.h>
+#endif
+
 #include <iostream>
 #include <cstdio>
 
@@ -26,7 +34,7 @@ namespace mc {
 	void AudioModule::update() {}
 
 	void AudioModule::destroy() {
-		for( Index i = 0; i < sounds.size(); ++i ) {
+		for (Index i = 0; i < sounds.size(); ++i) {
 			sounds[i].destroy();
 		}
 
@@ -84,76 +92,76 @@ namespace mc {
 
 		try {
 			soundFile = mc::os::fopen(&soundFile, path.c_str(), "rb");
-			if( !soundFile )
+			if (!soundFile)
 				throw BadSoundError(path);
 
-			if( !std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile) ) {
+			if (!std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile)) {
 				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
-			if( (riff_header.chunkID[0] != 'R' ||
-			   riff_header.chunkID[1] != 'I' ||
-			   riff_header.chunkID[2] != 'F' ||
-			   riff_header.chunkID[3] != 'F') ||
-			   (riff_header.format[0] != 'W' ||
-			   riff_header.format[1] != 'A' ||
-			   riff_header.format[2] != 'V' ||
-			   riff_header.format[3] != 'E') ) {
+			if ((riff_header.chunkID[0] != 'R' ||
+				 riff_header.chunkID[1] != 'I' ||
+				 riff_header.chunkID[2] != 'F' ||
+				 riff_header.chunkID[3] != 'F') ||
+				 (riff_header.format[0] != 'W' ||
+				  riff_header.format[1] != 'A' ||
+				  riff_header.format[2] != 'V' ||
+				  riff_header.format[3] != 'E')) {
 				throw BadSoundError("Invalid RIFF or WAVE Header");
 			}
 
-			if( !std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile) ) {
+			if (!std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile)) {
 				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
-			if( wave_format.subChunkID[0] != 'f' ||
-			   wave_format.subChunkID[1] != 'm' ||
-			   wave_format.subChunkID[2] != 't' ||
-			   wave_format.subChunkID[3] != ' ' ) {
+			if (wave_format.subChunkID[0] != 'f' ||
+				wave_format.subChunkID[1] != 'm' ||
+				wave_format.subChunkID[2] != 't' ||
+				wave_format.subChunkID[3] != ' ') {
 				throw BadSoundError("Invalid Wave Format");
 			}
 
-			if( wave_format.subChunkSize > 16 ) {
+			if (wave_format.subChunkSize > 16) {
 				std::fseek(soundFile, sizeof(short), SEEK_CUR);
 			}
 
-			if( !std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile) ) {
+			if (!std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile)) {
 				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
-			if( wave_data.subChunkID[0] != 'd' ||
-			   wave_data.subChunkID[1] != 'a' ||
-			   wave_data.subChunkID[2] != 't' ||
-			   wave_data.subChunkID[3] != 'a' ) {
+			if (wave_data.subChunkID[0] != 'd' ||
+				wave_data.subChunkID[1] != 'a' ||
+				wave_data.subChunkID[2] != 't' ||
+				wave_data.subChunkID[3] != 'a') {
 				throw BadSoundError("Invalid data header");
 			}
 
 			buf = new unsigned char[wave_data.subChunk2Size];
 
-			if( !std::fread(buf, wave_data.subChunk2Size, 1, soundFile) ) {
+			if (!std::fread(buf, wave_data.subChunk2Size, 1, soundFile)) {
 				throw BadSoundError("error loading WAVE data into struct!");
 			}
 
 			size = wave_data.subChunk2Size;
 			frequency = wave_format.sampleRate;
 
-			if( wave_format.numChannels == 1 ) {
-				if( wave_format.bitsPerSample == 8 ) {
+			if (wave_format.numChannels == 1) {
+				if (wave_format.bitsPerSample == 8) {
 					format = AL_FORMAT_MONO8;
-				} else if( wave_format.bitsPerSample == 16 ) {
+				} else if (wave_format.bitsPerSample == 16) {
 					format = AL_FORMAT_MONO16;
 				}
-			} else if( wave_format.numChannels == 2 ) {
-				if( wave_format.bitsPerSample == 8 ) {
+			} else if (wave_format.numChannels == 2) {
+				if (wave_format.bitsPerSample == 8) {
 					format = AL_FORMAT_STEREO8;
-				} else if( wave_format.bitsPerSample == 16 ) {
+				} else if (wave_format.bitsPerSample == 16) {
 					format = AL_FORMAT_STEREO16;
 				}
 			}
 
 			alGenBuffers(1, &buffer);
 
-			alBufferData(buffer, format, (void*) buf,
+			alBufferData(buffer, format, (void*)buf,
 						 size, frequency);
 
 			alGenSources(1, &source);
@@ -161,12 +169,12 @@ namespace mc {
 
 			std::fclose(soundFile);
 			return;
-		} catch( const Error& error ) {
+		} catch (const Error& error) {
 
 			std::cerr << error.what() << " : trying to load "
 				<< path << std::endl;
 
-			if( soundFile != nullptr ) {
+			if (soundFile != nullptr) {
 				std::fclose(soundFile);
 			}
 
@@ -209,7 +217,7 @@ namespace mc {
 	void Sound::setLooping(const bool val) {
 		properties.setBit(LOOPING, val);
 
-		if( val ) {
+		if (val) {
 			alSourcei(source, AL_LOOPING, AL_TRUE);
 		} else {
 			alSourcei(source, AL_LOOPING, val);

@@ -6,10 +6,6 @@
 using namespace mc;
 
 class TestComponent: public gfx::Component {
-	std::unique_ptr<Component> clone() const override {
-		return std::unique_ptr<Component>(new TestComponent());
-	}
-
 	void init() override {
 		parent->setProperty(gfx::Entity::MAINTAIN_X, true);
 		parent->setProperty(gfx::Entity::MAINTAIN_Y, true);
@@ -44,7 +40,7 @@ gfx::Image leftBot;
 gfx::Image rightTop;
 gfx::Image rightBot;
 
-void create() {
+void create(os::WindowModule&) {
 	srand((unsigned) time(0));
 
 	const Size elementNum = 10;
@@ -88,11 +84,10 @@ void create() {
 
 int main() {
 	try {
-		os::WindowModule module = os::WindowModule(600, 500, "Cleaning Demo");
-
-		module.setFPS(30);
-		module.setVSync(false);
-		module.setResizable(true);
+		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 500, "Cleaning Demo");
+		config.onCreate = &create;
+		config.resizable = true;
+		os::WindowModule module = os::WindowModule(config);
 
 		MACE::addModule(module);
 
@@ -103,8 +98,6 @@ int main() {
 			std::cout << "UPS: " << com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
 		});
 		module.addComponent(f);
-
-		module.setCreationCallback(&create);
 
 		os::SignalModule sigModule = os::SignalModule();
 		MACE::addModule(sigModule);

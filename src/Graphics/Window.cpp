@@ -43,7 +43,7 @@ namespace mc {
 
 			GLFWwindow* createWindow(const bool fullscreen, const Size width, const Size height, const std::string& title) {
 				GLFWmonitor* mon = nullptr;
-				if( fullscreen ) {
+				if (fullscreen) {
 					mon = glfwGetPrimaryMonitor();
 
 					const GLFWvidmode* mode = glfwGetVideoMode(mon);
@@ -59,7 +59,9 @@ namespace mc {
 			}
 		}//anon namespace
 
-		WindowModule::WindowModule(const int width, const int height, const char* windowTitle) : title(windowTitle), originalWidth(width), originalHeight(height) {}
+		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
+
+		WindowModule::WindowModule(const int width, const int height, const char * title) : config(LaunchConfig(width, height, title)) {}
 
 		void WindowModule::create() {
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
@@ -69,34 +71,34 @@ namespace mc {
 
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-			glfwWindowHint(GLFW_RESIZABLE, properties.getBit(WindowModule::RESIZABLE));
-			glfwWindowHint(GLFW_DECORATED, !properties.getBit(WindowModule::UNDECORATED));
+			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
+			glfwWindowHint(GLFW_DECORATED, config.decorated);
 
 #ifdef MACE_DEBUG
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-			window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
+			window = createWindow(config.fullscreen, config.width, config.height, config.title);
 
 			Index versionMajor = 3;
 
 			//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
-			for( int versionMinor = 3; versionMinor >= 0 && !window; --versionMinor ) {
+			for (int versionMinor = 3; versionMinor >= 0 && !window; --versionMinor) {
 				std::cout << "Trying OpenGL " << versionMajor << "." << versionMinor << std::endl;
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
 
 				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 
-				window = createWindow(properties.getBit(WindowModule::FULLSCREEN), originalWidth, originalHeight, title);
-				if( versionMinor == 0 && versionMajor > 1 && !window ) {
+				window = createWindow(properties.getBit(config.fullscreen), config.width, config.height, config.title);
+				if (versionMinor == 0 && versionMajor > 1 && !window) {
 					glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
 					versionMinor = 3;
 					--versionMajor;
 				}
 			}
 
-			if( !window ) {
+			if (!window) {
 				throw mc::InitializationFailedError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
 
@@ -106,14 +108,14 @@ namespace mc {
 
 			glewExperimental = true;
 			GLenum result = glewInit();
-			if( result != GLEW_OK ) {
+			if (result != GLEW_OK) {
 				std::ostringstream errorMessage;
 				errorMessage << "GLEW failed to initialize: ";
 				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
 				//+ operater in std::string can not handle this conversion.
 				errorMessage << glewGetErrorString(result);
 
-				if( result == GLEW_ERROR_NO_GL_VERSION ) {
+				if (result == GLEW_ERROR_NO_GL_VERSION) {
 					errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
 				}
 				throw mc::InitializationFailedError(errorMessage.str());
@@ -121,11 +123,11 @@ namespace mc {
 
 			try {
 				gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
-			} catch( ... ) {
+			} catch (...) {
 				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 			}
 
-			if( !GLEW_VERSION_3_3 ) {
+			if (!GLEW_VERSION_3_3) {
 				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this." << std::endl;
 			}
 
@@ -137,19 +139,25 @@ namespace mc {
 			std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
-			if( properties.getBit(WindowModule::VSYNC) )glfwSwapInterval(1);
+			if (config.vsync)glfwSwapInterval(1);
 			else glfwSwapInterval(0);
 
 			glfwSetWindowUserPointer(window, this);
 
-			const auto closeCallback = [] (GLFWwindow* window) {
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
+			const auto closeCallback = [](GLFWwindow* window) {
+				WindowModule* mod = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
+				mod->makeDirty();
 
-				mc::MACE::requestStop();
+				const LaunchConfig& config = mod->getLaunchConfig();
+				config.onClose(*mod);
+
+				if (config.terminateOnClose) {
+					mc::MACE::requestStop();
+				}
 			};
 			glfwSetWindowCloseCallback(window, closeCallback);
 
-			const auto keyDown = [] (GLFWwindow*, int key, int, int action, int mods) {
+			const auto keyDown = [](GLFWwindow*, int key, int, int action, int mods) {
 				BitField actions = BitField(0);
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
@@ -163,7 +171,7 @@ namespace mc {
 			};
 			glfwSetKeyCallback(window, keyDown);
 
-			const auto mouseDown = [] (GLFWwindow*, int button, int action, int mods) {
+			const auto mouseDown = [](GLFWwindow*, int button, int action, int mods) {
 				BitField actions = BitField(0);
 				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
 				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
@@ -178,66 +186,56 @@ namespace mc {
 			};
 			glfwSetMouseButtonCallback(window, mouseDown);
 
-			const auto cursorPosition = [] (GLFWwindow*, double xpos, double ypos) {
+			const auto cursorPosition = [](GLFWwindow* window, double xpos, double ypos) {
 				mouseX = static_cast<int>(mc::math::floor(xpos));
 				mouseY = static_cast<int>(mc::math::floor(ypos));
+				
+				WindowModule* win = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
+				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
 			};
 			glfwSetCursorPosCallback(window, cursorPosition);
 
-			const auto scrollWheel = [] (GLFWwindow*, double xoffset, double yoffset) {
+			const auto scrollWheel = [](GLFWwindow* window, double xoffset, double yoffset) {
 				scrollY = yoffset;
-				scrollX = xoffset;
+				scrollX = xoffset; 
+
+				WindowModule* win = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
+				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
 			};
 			glfwSetScrollCallback(window, scrollWheel);
 
-			const auto framebufferResize = [] (GLFWwindow* window, int, int) {
+			const auto framebufferResize = [](GLFWwindow* window, int, int) {
 				gfx::getRenderer()->flagResize();
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetFramebufferSizeCallback(window, framebufferResize);
 
-			const auto windowDamaged = [] (GLFWwindow* window) {
+			const auto windowDamaged = [](GLFWwindow* window) {
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetWindowRefreshCallback(window, windowDamaged);
 
-			gfx::getRenderer()->init(originalWidth, originalHeight);
+			gfx::getRenderer()->init(config.width, config.height);
 
 			int width = 0, height = 0;
 
 			glfwGetFramebufferSize(window, &width, &height);
 
-			if( width != originalWidth || height != originalHeight ) {
+			if (width != config.width || height != config.height) {
 				gfx::getRenderer()->resize(width, height);
 			}
 
-			creationCallback();
-		}//create
+			config.onCreate(*this);
+		}//create 
+
+		const WindowModule::LaunchConfig & WindowModule::getLaunchConfig() const {
+			return config;
+		}
 
 		GLFWwindow* WindowModule::getGLFWWindow() {
 			return window;
 		}
 
-		const unsigned int & WindowModule::getFPS() const {
-			return fps;
-		}
-
-		void WindowModule::setFPS(const unsigned int & FPS) {
-			fps = FPS;
-		}
-
-		const int WindowModule::getOriginalWidth() const {
-			return originalWidth;
-		}
-		const int WindowModule::getOriginalHeight() const {
-			return originalHeight;
-		}
-		std::string WindowModule::getTitle() {
-			return title;
-		}
-		const std::string WindowModule::getTitle() const {
-			return title;
-		}
 		void WindowModule::setTitle(const std::string & newTitle) {
 			glfwSetWindowTitle(window, newTitle.c_str());
 		}
@@ -262,19 +260,19 @@ namespace mc {
 
 				Entity::init();
 
-				if( fps != 0.0f ) {
-					windowDelay = 1000.0f / static_cast<float>(fps);
+				if (config.fps != 0.0f) {
+					windowDelay = 1000.0f / static_cast<float>(config.fps);
 				}
-			} catch( const std::exception& e ) {
+			} catch (const std::exception& e) {
 				Error::handleError(e);
-			} catch( ... ) {
+			} catch (...) {
 				std::cerr << "An error has occured trying to initalize MACE";
 				MACE::requestStop();
 			}
 
 			//this is the main rendering loop.
 			//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
-			for( ;;) {//( ;_;)
+			for (;;) {//( ;_;)
 				try {
 
 					{
@@ -283,7 +281,7 @@ namespace mc {
 
 						glfwPollEvents();
 
-						if( getProperty(Entity::DIRTY) ) {
+						if (getProperty(Entity::DIRTY)) {
 							gfx::getRenderer()->clearBuffers();
 
 							Entity::render();
@@ -293,7 +291,7 @@ namespace mc {
 
 						gfx::getRenderer()->checkInput(this);
 
-						if( !MACE::isRunning() ) {
+						if (!MACE::isRunning()) {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 						}
 
@@ -302,15 +300,15 @@ namespace mc {
 
 					const time_t delta = now - lastFrame;
 
-					if( delta < windowDelay ) {
+					if (delta < windowDelay) {
 						lastFrame = now;
 
 						os::wait(static_cast<long long int>(windowDelay));
 					}
-				} catch( const std::exception& e ) {
+				} catch (const std::exception& e) {
 					Error::handleError(e);
 					break;
-				} catch( ... ) {
+				} catch (...) {
 					std::cerr << "An unknown error has occured trying to render MACE";
 					MACE::requestStop();
 					break;
@@ -325,9 +323,9 @@ namespace mc {
 					gfx::getRenderer()->destroy();
 
 					glfwDestroyWindow(window);
-				} catch( const std::exception& e ) {
+				} catch (const std::exception& e) {
 					Error::handleError(e);
-				} catch( ... ) {
+				} catch (...) {
 					std::cerr << "An unknown error has occured trying to destroy MACE";
 					MACE::requestStop();
 				}
@@ -336,11 +334,11 @@ namespace mc {
 		}//threadCallback
 
 		void WindowModule::init() {
-			if( !glfwInit() ) {
+			if (!glfwInit()) {
 				throw InitializationFailedError("GLFW failed to initialize!");
 			}
 
-			const auto errorCallback = [] (int id, const char* desc) {
+			const auto errorCallback = [](int id, const char* desc) {
 				throw gfx::ogl::OpenGLError("GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
 			};
 			glfwSetErrorCallback(errorCallback);
@@ -371,53 +369,9 @@ namespace mc {
 			return "MACE/Window";
 		}//getName()
 
-		void WindowModule::setVSync(const bool sync) {
-			properties.setBit(WindowModule::VSYNC, sync);
-		}//setVSync
-
-		bool WindowModule::isVSync() const {
-			return properties.getBit(WindowModule::VSYNC);
-		}//isVSync
-
-		void WindowModule::setFullscreen(const bool full) {
-			properties.setBit(WindowModule::FULLSCREEN, full);
-		}//setFullscreen
-
-		bool WindowModule::isFullscreen() const {
-			return properties.getBit(WindowModule::FULLSCREEN);
-		}//isFullscreen
-
-		void WindowModule::setUndecorated(const bool un) {
-			properties.setBit(WindowModule::UNDECORATED, un);
-		}//setUndecorated
-
-		bool WindowModule::isUndecorated() const {
-			return properties.getBit(WindowModule::UNDECORATED);
-		}//isUndecorated
-
 		bool WindowModule::isDestroyed() const {
 			return properties.getBit(WindowModule::DESTROYED);
 		}//isDestroyed
-
-		void WindowModule::setResizable(const bool re) {
-			properties.setBit(WindowModule::RESIZABLE, re);
-		}//setResizable
-
-		bool WindowModule::isResizable() const {
-			return properties.getBit(WindowModule::RESIZABLE);
-		}//isResizable
-
-		void WindowModule::setCreationCallback(const VoidFunctionPtr callback) {
-			creationCallback = callback;
-		}//setCreationCallback
-
-		const VoidFunctionPtr WindowModule::getCreationCallback() const {
-			return creationCallback;
-		}//getCreationCallback
-
-		VoidFunctionPtr WindowModule::getCreationCallback() {
-			return creationCallback;
-		}//getCreationCallback
 
 		void WindowModule::onInit() {}
 
