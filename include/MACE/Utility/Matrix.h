@@ -420,7 +420,7 @@ namespace mc {
 		*/
 		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to divide matrices, the width must equal to the height.");
-			return this*math::inverse(right);
+			return this->operator*(math::inverse(right));
 		}
 
 		/**
@@ -431,7 +431,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator+=(const Matrix<T, W, H>& right) {
-			setContents((*this + right).getContents());
+			setContents(this->operator+(right).getContents());
 		}
 
 		/**
@@ -442,7 +442,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator-=(const Matrix<T, W, H>& right) {
-			setContents((*this - right).getContents());
+			setContents(this->operator-(right).getContents());
 		}
 
 		/**
@@ -453,7 +453,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator*=(Matrix<T, W, H>& right) {
-			setContents((*this*right).getContents());
+			setContents(this->operator*(right).getContents());
 		}
 
 		/**
@@ -464,7 +464,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator*=(const T& scalar) {
-			setContents((*this*scalar).getContents());
+			setContents(this->operator*(scalar).getContents());
 		}
 
 		/**
@@ -475,7 +475,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator/=(const Matrix<T, W, H>& right) {
-			setContents((*this / right).getContents());
+			setContents(this->operator/(right).getContents());
 		}
 	protected:
 		using VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected from the Vector inheritance

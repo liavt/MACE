@@ -659,11 +659,11 @@ namespace mc {
 		using VectorBase<Vector<T, 1>, T, 1>::VectorBase;
 
 		operator T() {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		void operator=(const T& op) {
-			operator[](0) = op;
+			this->operator[](0) = op;
 		}
 	};
 
@@ -673,19 +673,19 @@ namespace mc {
 		using VectorBase<Vector<T, 2>, T, 2>::VectorBase;
 
 		T& x() {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		const T& x() const {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		T& y() {
-			return operator[](1);
+			return this->operator[](1);
 		}
 
 		const T& y() const {
-			return operator[](1);
+			return this->operator[](1);
 		}
 	};
 
@@ -695,27 +695,27 @@ namespace mc {
 		using VectorBase<Vector<T, 3>, T, 3>::VectorBase;
 
 		T& x() {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		const T& x() const {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		T& y() {
-			return operator[](1);
+			return this->operator[](1);
 		}
 
 		const T& y() const {
-			return operator[](1);
+			return this->operator[](1);
 		}
 
 		T& z() {
-			return operator[](2);
+			return this->operator[](2);
 		}
 
 		const T& z() const {
-			return operator[](2);
+			return this->operator[](2);
 		}
 	};
 
@@ -725,35 +725,35 @@ namespace mc {
 		using VectorBase<Vector<T, 4>, T, 4>::VectorBase;
 
 		T& x() {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		const T& x() const {
-			return operator[](0);
+			return this->operator[](0);
 		}
 
 		T& y() {
-			return operator[](1);
+			return this->operator[](1);
 		}
 
 		const T& y() const {
-			return operator[](1);
+			return this->operator[](1);
 		}
 
 		T& z() {
-			return operator[](2);
+			return this->operator[](2);
 		}
 
 		const T& z() const {
-			return operator[](2);
+			return this->operator[](2);
 		}
 
 		T& w() {
-			return operator[](3);
+			return this->operator[](3);
 		}
 
 		const T& w() const {
-			return operator[](3);
+			return this->operator[](3);
 		}
 	};
 
