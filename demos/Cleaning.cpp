@@ -32,7 +32,6 @@ class TestComponent: public gfx::Component {
 	}
 };
 
-TestComponent component = TestComponent();
 gfx::Group group = gfx::Group();
 
 gfx::Image left;
@@ -72,10 +71,10 @@ void create(os::WindowModule&) {
 	rightBot.setX(0.5f);
 	rightBot.setY(-0.5f);
 
-	left.addComponent(component);
-	leftBot.addComponent(component);
-	rightTop.addComponent(component);
-	rightBot.addComponent(component);
+	left.addComponent(new gfx::PointerComponent(new TestComponent()));
+	leftBot.addComponent(new gfx::PointerComponent(new TestComponent()));
+	rightTop.addComponent(new gfx::PointerComponent(new TestComponent()));
+	rightBot.addComponent(new gfx::PointerComponent(new TestComponent()));
 
 	group.addChild(left);
 	group.addChild(rightTop);

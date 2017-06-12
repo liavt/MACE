@@ -189,7 +189,7 @@ namespace mc {
 			const auto cursorPosition = [](GLFWwindow* window, double xpos, double ypos) {
 				mouseX = static_cast<int>(mc::math::floor(xpos));
 				mouseY = static_cast<int>(mc::math::floor(ypos));
-				
+
 				WindowModule* win = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
 				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
 			};
@@ -197,7 +197,7 @@ namespace mc {
 
 			const auto scrollWheel = [](GLFWwindow* window, double xoffset, double yoffset) {
 				scrollY = yoffset;
-				scrollX = xoffset; 
+				scrollX = xoffset;
 
 				WindowModule* win = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
 				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
@@ -413,6 +413,9 @@ namespace mc {
 			double getScrollHorizontal() noexcept {
 				return scrollX;
 			}
-		}//Input
+		}
+
+		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char * t) : title(t), width(w), height(h) {}
+		//Input
 	}//os
 }//mc

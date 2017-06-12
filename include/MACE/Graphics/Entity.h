@@ -39,6 +39,7 @@ namespace mc {
 		//forward-defining dependencies
 		class Entity;
 		class GraphicsEntity;
+		class PointerComponent;
 
 		namespace ssl {
 			void fillBuffer(GraphicsEntity*);
@@ -66,6 +67,7 @@ namespace mc {
 		*/
 		class Component: public Initializable{
 			friend class Entity;
+			friend class PointerComponent;
 		public:
 			virtual ~Component() = default;
 

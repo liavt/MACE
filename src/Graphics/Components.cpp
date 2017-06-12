@@ -12,6 +12,224 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		namespace EaseFunctions {
+			//these fucntions are derived from https://github.com/jesusgollonet/ofpennereasing . Thank you!
+
+
+			const EaseFunction LINEAR = [](float t, const float b, const float c, const float d) -> float {
+				return b + c*(t / d);
+			};
+
+			const EaseFunction BACK_IN = [](float t, const float b, const float c, const float d) -> float {
+				const float s = 1.70158f;
+				const float postFix = t /= d;
+				return c*(postFix)*t*((s + 1)*t - s) + b;
+			};
+
+			//shameless resturant promotion
+			const EaseFunction BACK_OUT = [](float t, const float b, const float c, const float d) -> float {
+				const float s = 1.70158f;
+				t /= d;
+				return c*((t - 1)*t*((s + 1)*t + s) + 1) + b;
+			};
+
+			const EaseFunction BACK_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				const float s = 2.5949095f;
+				if ((t /= d / 2) < 1) return c / 2 * (t*t*((s + 1)*t - s)) + b;
+				const float postFix = t -= 2;
+				return c / 2 * ((postFix)*t*((s + 1)*t + s) + 2) + b;
+			};
+
+			const EaseFunction BOUNCE_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d) < (1 / 2.75f)) {
+					return c*(7.5625f*t*t) + b;
+				} else if (t < (2 / 2.75f)) {
+					const float postFix = t -= (1.5f / 2.75f);
+					return c*(7.5625f*(postFix)*t + .75f) + b;
+				} else if (t < (2.5 / 2.75)) {
+					const float postFix = t -= (2.25f / 2.75f);
+					return c*(7.5625f*(postFix)*t + .9375f) + b;
+				} else {
+					const float postFix = t -= (2.625f / 2.75f);
+					return c*(7.5625f*(postFix)*t + .984375f) + b;
+				}
+			};
+
+			//BOUNCE_IN is defined after BOUNCE_OUT just because it requires BOUNCE_OUT to be eclared
+			const EaseFunction BOUNCE_IN = [](float t, const float b, const float c, const float d) -> float {
+				return c - EaseFunctions::BOUNCE_OUT(d - t, 0, c, d) + b;
+			};
+
+			const EaseFunction BOUNCE_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t < d / 2) return EaseFunctions::BOUNCE_IN(t * 2, 0, c, d) * .5f + b;
+				else return EaseFunctions::BOUNCE_OUT(t * 2 - d, 0, c, d) * .5f + c*.5f + b;
+			};
+
+			const EaseFunction CIRCLE_IN = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return -c * (std::sqrt(1 - t*t) - 1) + b;
+			};
+
+			const EaseFunction CIRCLE_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c * std::sqrt(1 - (t - 1)*t) + b;
+			};
+
+			const EaseFunction CIRCLE_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) {
+					return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
+				}
+
+				t -= 2;
+				return c / 2 * (std::sqrt(1 - t*t) + 1) + b;
+			};
+
+			const EaseFunction CUBIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c*t*t*t + b;
+			};
+
+			const EaseFunction CUBIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c*((t - 1)*t*t + 1) + b;
+			};
+
+			const EaseFunction CUBIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) {
+					return c / 2 * t*t*t + b;
+				}
+
+				t -= 2;
+				return c / 2 * (t*t*t + 2) + b;
+			};
+
+			const EaseFunction ELASTIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) {
+					return b;
+				} else if ((t /= d) == 1) {
+					return b + c;
+				}
+
+				const float p = d*.3f;
+				const float s = p / 4;
+				--t;
+				const float postFix = c*static_cast<float>(std::pow(2, 10 * t));
+				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
+			};
+
+			const EaseFunction ELASTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) {
+					return b;
+				} else if ((t /= d) == 1) {
+					return b + c;
+				}
+
+				const float p = d*.3f;
+				const float s = p / 4;
+				return static_cast<float>(c*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
+			};
+
+			const EaseFunction ELASTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) {
+					return b;
+				} else if ((t /= d / 2) == 2) {
+					return b + c;
+				}
+
+				const float p = d*(.3f*1.5f);
+				const float s = p / 4;
+
+				if (t < 1) {
+					--t;
+					const float postFix = c*static_cast<float>(std::pow(2, 10 * t));
+					return -.5f*(postFix* static_cast<float>(std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p))) + b;
+				}
+				--t;
+				const float postFix = c*static_cast<float>(std::pow(2, -10 * (t)));
+				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*0.5f + c + b;
+			};
+
+			const EaseFunction EXPONENTIAL_IN = [](float t, const float b, const float c, const float d) -> float {
+				return (t == 0) ? b : c * static_cast<float>(std::pow(2, 10 * (t / d - 1))) + b;
+			};
+
+			const EaseFunction EXPONENTIAL_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return (t == d) ? b + c : c * static_cast<float>(-std::pow(2, -10 * t / d) + 1) + b;
+			};
+
+			const EaseFunction EXPONENTIAL_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if (t == 0) return b;
+				if (t == d) return b + c;
+				if ((t /= d / 2) < 1) return c / 2 * static_cast<float>(std::pow(2, 10 * (t - 1))) + b;
+				return c / 2 * static_cast<float>(-std::pow(2, -10 * --t) + 2) + b;
+			};
+
+			const EaseFunction QUADRATIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c*t*t + b;
+			};
+
+			const EaseFunction QUADRATIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return -c *t*(t - 2) + b;
+			};
+
+			const EaseFunction QUADRATIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				if ((t /= d / 2) < 1) return ((c / 2)*(t*t)) + b;
+				--t;
+				return -c / 2 * (((t - 1)*(t)) - 1) + b;
+			};
+
+			const EaseFunction QUARTIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c*(t)*t*t*t + b;
+			};
+
+			const EaseFunction QUARTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return -c * ((t - 1)*t*t*t - 1) + b;
+			};
+
+			const EaseFunction QUARTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				if ((t / 2) < 1) {
+					return c / 2 * t*t*t*t + b;
+				}
+				return -c / 2 * (t*t*t*t - 2) + b;
+			};
+
+			const EaseFunction QUINTIC_IN = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c*t*t*t*t*t + b;
+			};
+
+			const EaseFunction QUINTIC_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				return c*((t - 1)*t*t*t*t + 1) + b;
+			};
+
+			const EaseFunction QUINTIC_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				t /= d;
+				if ((t / 2) < 1) {
+					return c / 2 * t*t*t*t*t + b;
+				}
+				t -= 2;
+				return c / 2 * (t*t*t*t*t + 2) + b;
+			};
+
+			const EaseFunction SINUSODIAL_IN = [](float t, const float b, const float c, const float d) -> float {
+				return -c * std::cos(t / d * (static_cast<float>(math::pi()) / 2)) + c + b;
+			};
+
+			const EaseFunction SINUSODIAL_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return c * std::sin(t / d * (static_cast<float>(math::pi()) / 2)) + b;
+			};
+
+			const EaseFunction SINUSODIAL_IN_OUT = [](float t, const float b, const float c, const float d) -> float {
+				return -c / 2 * (std::cos(static_cast<float>(math::pi())*t / d) - 1) + b;
+			};
+		}
+
 		AlignmentComponent::AlignmentComponent(const VerticalAlign vert, const HorizontalAlign horz)
 			: vertAlign(vert), horzAlign(horz) {}
 
@@ -82,6 +300,107 @@ namespace mc {
 					parent->setY(1.0f - (height / 2.0f));
 					break;
 			}
+		}
+
+		EaseComponent::EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction, const EaseDoneCallback doneCallback)
+			: Component(), t(0), b(startingProgress), c(destination), d(duration), updateCallback(callback), ease(easeFunction), done(doneCallback) {}
+
+		void EaseComponent::init() {}
+
+		bool EaseComponent::update() {
+			updateCallback(parent, ease(t++, b, c - b, d));
+
+			if (t >= d) {
+				return true;
+			}
+
+			return false;
+		}
+
+		void EaseComponent::render() {}
+
+		void EaseComponent::destroy() {
+			done(parent);
+		}
+
+		PointerComponent::PointerComponent(Component * com) : ptr(com) {}
+
+		Component * PointerComponent::get() {
+			return ptr;
+		}
+
+		const Component * PointerComponent::get() const {
+			return ptr;
+		}
+
+		Component * PointerComponent::operator*() {
+			return ptr;
+		}
+
+		const Component * PointerComponent::operator*() const {
+			return ptr;
+		}
+
+		Component * PointerComponent::operator->() {
+			return ptr;
+		}
+
+		const Component * PointerComponent::operator->() const {
+			return ptr;
+		}
+
+		void PointerComponent::init() {
+			if (ptr == nullptr) {
+				throw NullPointerError("PointerComponent: pointer was nullptr in init()");
+			}
+
+			ptr->parent = this->parent;
+
+			ptr->init();
+		}
+
+		bool PointerComponent::update() {
+			if (ptr == nullptr) {
+				throw NullPointerError("PointerComponent: pointer was nullptr in update()");
+			}
+
+			return ptr->update();
+		}
+
+		void PointerComponent::render() {
+			if (ptr == nullptr) {
+				throw NullPointerError("PointerComponent: pointer was nullptr in render()");
+			}
+
+			ptr->render();
+		}
+
+		void PointerComponent::hover() {
+			if (ptr == nullptr) {
+				throw NullPointerError("PointerComponent: pointer was nullptr in hover()");
+			}
+
+			ptr->hover();
+		}
+
+		void PointerComponent::clean() {
+			if (ptr == nullptr) {
+				throw NullPointerError("PointerComponent: pointer was nullptr in clean()");
+			}
+
+			ptr->clean();
+		}
+
+		void PointerComponent::destroy() {
+			if (ptr == nullptr) {
+				throw NullPointerError("PointerComponent: pointer was nullptr in destroy()");
+			}
+
+			ptr->destroy();
+
+			delete ptr;
+
+			delete this;
 		}
 
 		void CallbackComponent::init() {

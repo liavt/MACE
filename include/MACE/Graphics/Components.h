@@ -27,6 +27,32 @@ namespace mc {
 			RIGHT
 		};
 
+
+		/**
+		Function defining a function used in an easing of a value, such as a translation or progress bar.
+		@return The value of the ease at a specified timestamp, `t`
+		@param t The current tick of the ease
+		@param b The beginning progress value of the ease
+		@param c The change between the beginning and destination value
+		@param d The total time of the ease in frames
+		@see EaseFunctions
+		*/
+		typedef float(*EaseFunction)(float t, const float b, const float c, const float d);
+
+		/**
+		Different easing functions commonly found in applications
+		@see EaseFunction
+		*/
+		namespace EaseFunctions {
+			const extern EaseFunction LINEAR, BACK_IN, BACK_OUT, BACK_IN_OUT,
+				BOUNCE_OUT, BOUNCE_IN, BOUNCE_IN_OUT, CIRCLE_IN, CIRCLE_OUT, CIRCLE_IN_OUT,
+				CUBIC_IN, CUBIC_OUT, CUBIC_IN_OUT, ELASTIC_IN, ELASTIC_OUT, ELASTIC_IN_OUT,
+				EXPONENTIAL_IN, EXPONENTIAL_OUT, EXPONENTIAL_IN_OUT, QUADRATIC_IN,
+				QUADRATIC_OUT, QUADRATIC_IN_OUT, QUARTIC_IN, QUARTIC_OUT, QUARTIC_IN_OUT,
+				QUINTIC_IN, QUINTIC_OUT, QUINTIC_IN_OUT, SINUSOIDAL_IN, SINUSOIDAL_OUT,
+				SINUSOIDAL_IN_OUT;
+		}
+
 		class AlignmentComponent: public Component {
 		public:
 			AlignmentComponent(const VerticalAlign vert = VerticalAlign::CENTER, const HorizontalAlign horz = HorizontalAlign::CENTER);
@@ -50,6 +76,50 @@ namespace mc {
 		private:
 			VerticalAlign vertAlign;
 			HorizontalAlign horzAlign;
+		};
+
+		class EaseComponent: public Component {
+		public:
+			typedef void(*EaseDoneCallback)(Entity*);
+			typedef void(*EaseUpdateCallback)(Entity*, float);
+
+			EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+		protected:
+			void init() override;
+			bool update() override;
+			void render() override;
+			void destroy() override;
+		private:
+			float t;
+			const float b;
+			const float c;
+			const float d;
+			const EaseUpdateCallback updateCallback;
+			const EaseFunction ease;
+			const EaseDoneCallback done;
+		};
+
+		class PointerComponent: public Component {
+		public:
+			PointerComponent(Component* com);
+
+			Component* get();
+			const Component* get() const;
+
+			Component* operator*();
+			const Component* operator*() const;
+
+			Component* operator->();
+			const Component* operator->() const;
+		protected:
+			void init() final;
+			bool update() final;
+			void render() final;
+			void destroy() final;
+			void hover() final;
+			void clean() final;
+		private:
+			Component* ptr;
 		};
 
 		class CallbackComponent: public Component {
@@ -91,12 +161,12 @@ namespace mc {
 			void hover() final;
 			void clean() final;
 		private:
-			CallbackPtr destroyCallback = [] (Entity*) {},
-				renderCallback = [] (Entity*) {},
-				initCallback = [] (Entity*) {},
-				hoverCallback = [] (Entity*) {},
-				cleanCallback = [] (Entity*) {};
-			UpdatePtr updateCallback = [] (Entity*) -> bool {
+			CallbackPtr destroyCallback = [](Entity*) {},
+				renderCallback = [](Entity*) {},
+				initCallback = [](Entity*) {},
+				hoverCallback = [](Entity*) {},
+				cleanCallback = [](Entity*) {};
+			UpdatePtr updateCallback = [](Entity*) -> bool {
 				return false;
 			};
 		};//CallbackEntity
@@ -129,7 +199,7 @@ namespace mc {
 			Index cleansPerSecond = 0, nbCleans = 0;
 			Index hoversPerSecond = 0, nbHovers = 0;
 
-			TickCallbackPtr tickCallback = [] (FPSComponent*, Entity*) {};
+			TickCallbackPtr tickCallback = [](FPSComponent*, Entity*) {};
 
 			time_t lastTime = 0;
 		};//FPSComponent

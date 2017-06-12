@@ -25,31 +25,6 @@ namespace mc {
 		*/
 		MACE_DECLARE_ERROR(Font);
 
-		/**
-		Function defining a function used in an easing of a value, such as a translation or progress bar.
-		@return The value of the ease at a specified timestamp, `t`
-		@param t The current tick of the ease
-		@param b The beginning progress value of the ease
-		@param c The change between the beginning and destination value
-		@param d The total time of the ease in frames
-		@see EaseFunctions
-		*/
-		typedef float(*EaseFunction)(float t, const float b, const float c, const float d);
-
-		/**
-		Different easing functions commonly found in applications
-		@see EaseFunction
-		*/
-		namespace EaseFunctions {
-			const extern EaseFunction LINEAR, BACK_IN, BACK_OUT, BACK_IN_OUT,
-				BOUNCE_OUT, BOUNCE_IN, BOUNCE_IN_OUT, CIRCLE_IN, CIRCLE_OUT, CIRCLE_IN_OUT,
-				CUBIC_IN, CUBIC_OUT, CUBIC_IN_OUT, ELASTIC_IN, ELASTIC_OUT, ELASTIC_IN_OUT,
-				EXPONENTIAL_IN, EXPONENTIAL_OUT, EXPONENTIAL_IN_OUT, QUADRATIC_IN,
-				QUADRATIC_OUT, QUADRATIC_IN_OUT, QUARTIC_IN, QUARTIC_OUT, QUARTIC_IN_OUT,
-				QUINTIC_IN, QUINTIC_OUT, QUINTIC_IN_OUT, SINUSOIDAL_IN, SINUSOIDAL_OUT,
-				SINUSOIDAL_IN_OUT;
-		}
-
 		class Entity2D: public GraphicsEntity {
 		public:
 			Entity2D();
@@ -151,8 +126,6 @@ namespace mc {
 		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
 		public:
-			typedef void(*ProgressBarEaseDoneCallback)(ProgressBar*);
-
 			static int getProtocol();
 
 			ProgressBar() noexcept;
@@ -229,7 +202,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunctions::LINEAR, const ProgressBarEaseDoneCallback callback = [](ProgressBar*) {});
+			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunctions::LINEAR, const EaseComponent::EaseDoneCallback callback = [](Entity*) {});
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;

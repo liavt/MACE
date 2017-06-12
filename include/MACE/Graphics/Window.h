@@ -36,7 +36,7 @@ namespace mc {
 				typedef void(*ScrollCallback)(WindowModule& window, double x, double y);
 				typedef void(*MouseMoveCallback)(WindowModule& window, int x, int y);
 
-				LaunchConfig(const int w, const int h, const char* t) : width(w), height(h), title(t) {}
+				LaunchConfig(const int w, const int h, const char* t);
 
 				const char* title;
 				const int width;

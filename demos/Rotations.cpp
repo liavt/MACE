@@ -45,7 +45,6 @@ class RotationComponent: public gfx::Component {
 	void destroy(gfx::Entity* e) {};
 };
 
-RotationComponent r = RotationComponent();
 TestComponent testComponent = TestComponent();
 
 
@@ -68,7 +67,7 @@ void create(os::WindowModule&) {
 			entity->setWidth((1.0f / elementNum) * 2);
 			entity->setHeight((1.0f / elementNum) * 2);
 
-			entity->addComponent(testComponent);
+			entity->addComponent(new gfx::PointerComponent(new TestComponent()));
 
 			if( x >= elementNum / 2 ) {
 				if( y >= elementNum / 2 ) {
@@ -120,10 +119,10 @@ int main() {
 		topRight.setX(0.5f);
 		topRight.setY(0.5f);
 
-		botLeft.addComponent(r);
-		botRight.addComponent(r);
-		topLeft.addComponent(r);
-		topRight.addComponent(r);
+		botLeft.addComponent(new gfx::PointerComponent(new RotationComponent()));
+		botRight.addComponent(new gfx::PointerComponent(new RotationComponent()));
+		topLeft.addComponent(new gfx::PointerComponent(new RotationComponent()));
+		topRight.addComponent(new gfx::PointerComponent(new RotationComponent()));
 
 		module.addChild(botLeft);
 		module.addChild(botRight);
