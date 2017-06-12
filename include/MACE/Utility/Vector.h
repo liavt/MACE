@@ -629,7 +629,7 @@ namespace mc {
 	template<typename T, Size N>
 	struct Vector: public VectorBase<Vector<T, N>, T, N> {
 	public:
-		using VectorBase::VectorBase;
+		using VectorBase<Vector<T, N>, T, N>::VectorBase;
 	};
 
 	template<typename T>
@@ -656,17 +656,15 @@ namespace mc {
 	template<typename T>
 	struct Vector<T, 1>: public VectorBase<Vector<T, 1>, T, 1> {
 	public:
-		using VectorBase<Vector<T, 2>, T, 2>::VectorBase;
+		using VectorBase<Vector<T, 1>, T, 1>::VectorBase;
 
 		operator T() {
-			return content[0];
+			return operator[](0);
 		}
 
 		void operator=(const T& op) {
-			content[0] = op;
+			operator[](0) = op;
 		}
-	protected:
-		using VectorBase<Vector<T, 2>, T, 2>::content;
 	};
 
 	template<typename T>
@@ -675,94 +673,88 @@ namespace mc {
 		using VectorBase<Vector<T, 2>, T, 2>::VectorBase;
 
 		T& x() {
-			return content[0];
+			return operator[](0);
 		}
 
 		const T& x() const {
-			return content[0];
+			return operator[](0);
 		}
 
 		T& y() {
-			return content[1];
+			return operator[](1);
 		}
 
 		const T& y() const {
-			return content[1];
+			return operator[](1);
 		}
-	protected:
-		using VectorBase<Vector<T, 2>, T, 2>::content;
 	};
 
 	template<typename T>
 	struct Vector<T, 3>: public VectorBase<Vector<T, 3>, T, 3> {
 	public:
-		using VectorBase<Vector<T, 2>, T, 2>::VectorBase;
+		using VectorBase<Vector<T, 3>, T, 3>::VectorBase;
 
 		T& x() {
-			return content[0];
+			return operator[](0);
 		}
 
 		const T& x() const {
-			return content[0];
+			return operator[](0);
 		}
 
 		T& y() {
-			return content[1];
+			return operator[](1);
 		}
 
 		const T& y() const {
-			return content[1];
+			return operator[](1);
 		}
 
 		T& z() {
-			return content[2];
+			return operator[](2);
 		}
 
 		const T& z() const {
-			return content[2];
+			return operator[](2);
 		}
-	protected:
-		using VectorBase<Vector<T, 2>, T, 2>::content;
 	};
 
 	template<typename T>
 	struct Vector<T, 4>: public VectorBase<Vector<T, 4>, T, 4> {
 	public:
-		using VectorBase<Vector<T, 2>, T, 2>::VectorBase;
+		using VectorBase<Vector<T, 4>, T, 4>::VectorBase;
 
 		T& x() {
-			return content[0];
+			return operator[](0);
 		}
 
 		const T& x() const {
-			return content[0];
+			return operator[](0);
 		}
 
 		T& y() {
-			return content[1];
+			return operator[](1);
 		}
 
 		const T& y() const {
-			return content[1];
+			return operator[](1);
 		}
 
 		T& z() {
-			return content[2];
+			return operator[](2);
 		}
 
 		const T& z() const {
-			return content[2];
+			return operator[](2);
 		}
 
 		T& w() {
-			return content[3];
+			return operator[](3);
 		}
 
 		const T& w() const {
-			return content[3];
+			return operator[](3);
 		}
-	protected:
-		using VectorBase<Vector<T, 2>, T, 2>::content;
 	};
 
 	namespace math {

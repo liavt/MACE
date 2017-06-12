@@ -76,15 +76,15 @@ namespace mc {
 	@tparam H The height of the `Matrix` which must be greater than 0
 	*/
 	template<typename T, Size W, Size H>
-	struct Matrix: public Vector<MatrixRow<T, H>, W> {
+	struct Matrix: public VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W> {
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
-		Matrix() : Vector<MatrixRow<T, H>, W>()//extending defautl construtor so it initializes the array
+		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>()//extending default construtor so it initializes the array
 		{
 			static_assert(W != 0, "A Matrix's width must be greater than 0!");
 			static_assert(H != 0, "A Matrix's height must be greater than 0!");
-			for( Index i = 0; i < W; i++ ) {
+			for( Index i = 0; i < W; ++i ) {
 				content[i] = MatrixRow<T, H>();
 			}
 		};
@@ -94,8 +94,8 @@ namespace mc {
 		@param arr An array of contents
 		*/
 		Matrix(T arr[W][H]) : Matrix() {
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					content[x][y] = arr[x][y];
 				}
 			}
@@ -119,11 +119,10 @@ namespace mc {
 				if( elemX.size() != H )throw IndexOutOfBoundsError("The height of the argument must be equal to to the height of the Matrix!");
 				counterY = 0;
 				for( T elemY : elemX ) {
-					content[counterX][counterY] = elemY;
-					counterY++;
+					content[counterX][counterY++] = elemY;
 				}
 
-				counterX++;
+				++counterX;
 			}
 		}
 
@@ -131,7 +130,7 @@ namespace mc {
 		Copy constructor. Clones the contents of another `Matrix` into a new `Matrix`
 		@param copy What the clone
 		*/
-		Matrix(const Matrix& copy) : Vector<MatrixRow<T, H>, W>(copy.content) {}
+		Matrix(const Matrix& copy) : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>(copy.content) {}
 
 		/**
 		Calculates how many elements are in this `Matrix`
@@ -215,8 +214,8 @@ namespace mc {
 		@return Pointer to an array of data
 		*/
 		const T* flatten(T arr[W*H]) const {
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[y + (x*H)] = (content[x][y]);
 				}
 			}
@@ -230,8 +229,8 @@ namespace mc {
 		@return Pointer to an array of data
 		*/
 		const T* flattenTransposed(T arr[W*H]) const {
-			for( Index x = 0; x < H; x++ ) {
-				for( Index y = 0; y < W; y++ ) {
+			for( Index x = 0; x < H; ++x ) {
+				for( Index y = 0; y < W; ++y ) {
 					arr[y + (x*H)] = (content[y][x]);
 				}
 			}
@@ -279,9 +278,9 @@ namespace mc {
 		Vector<T, H> operator+(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
-			for( Index x = 0; x < W; x++ ) {
+			for( Index x = 0; x < W; ++x ) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-				for( Index y = 0; y < H; y++ ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[y] += static_cast<T>(content[x][y]) + static_cast<T>(right[x]);
 				}
 			}
@@ -300,9 +299,9 @@ namespace mc {
 		Vector<T, H> operator-(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
-			for( Index x = 0; x < W; x++ ) {
+			for( Index x = 0; x < W; ++x ) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-				for( Index y = 0; y < H; y++ ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[y] += static_cast<T>(content[x][y]) - static_cast<T>(right[x]);
 				}
 			}
@@ -321,9 +320,9 @@ namespace mc {
 		Vector<T, H> operator*(const Vector<T, H>& right) const {
 			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
-			for( Index x = 0; x < W; x++ ) {
+			for( Index x = 0; x < W; ++x ) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-				for( Index y = 0; y < H; y++ ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[y] += static_cast<T>(content[x][y]) * static_cast<T>(right[x]);
 				}
 			}
@@ -341,8 +340,8 @@ namespace mc {
 		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[x][y] = content[x][y] + right[x][y];
 				}
 			}
@@ -360,8 +359,8 @@ namespace mc {
 		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[x][y] = content[x][y] - right[x][y];
 				}
 			}
@@ -380,8 +379,8 @@ namespace mc {
 		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
 			static_assert(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[x][y] = T();
 					for( Index x1 = 0; x1 < W; x1++ ) {
 						arr[x][y] += content[x][x1] * right[x1][y];
@@ -402,8 +401,8 @@ namespace mc {
 		*/
 		Matrix<T, W, H> operator*(const T& scalar) const {
 			T arr[W][H];
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					arr[x][y] = content[x][y] * scalar;
 				}
 			}
@@ -478,39 +477,8 @@ namespace mc {
 		void operator/=(const Matrix<T, W, H>& right) {
 			setContents((*this / right).getContents());
 		}
-
-		operator Vector<MatrixRow<T, H>, W>&() {
-			return content;
-		}
-
-		operator Vector<MatrixRow<T, H>, W>() {
-			return content;
-		}
-
-		/**
-		Operator used to output to `std::cout`.
-		<p>
-		The output will take up multiple lines and will show all of the `Matrix` contents
-		@param output `std::ostream` the `Matrix` was inserted into
-		@param m `Matrix` which will be printed
-		@return `output` for chaining
-		@bug the order is not retained exactly
-		*/
-		friend std::ostream &operator<<(std::ostream &output,
-										const Matrix<T, W, H> &m) {
-			for( Index x = 0; x < W; x++ ) {
-				if( x == 0 )output << '[' << ' ';//why this and not "[ "? that requires #include <string> and thats more compilition time. this way doesnt have any difference in output and doesnt need to incldue that
-				else output << std::endl << ' ' << ' ';
-				for( Index y = 0; y < H; y++ ) {
-					output << m[x][y];
-					if( y < H - 1 )output << ',' << ' ';
-				}
-			}
-			output << ' ' << ']';
-			return output;
-		}
 	protected:
-		using Vector<MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected from the Vector inheritance
+		using VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected from the Vector inheritance
 	};//Matrix
 
 	template<typename T, Size N>
