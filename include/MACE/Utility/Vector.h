@@ -142,6 +142,8 @@ namespace mc {
 			}
 		};
 
+		virtual ~VectorBase() = default;
+
 		/**
 		Retrieves the contents of this `Vector`
 		@return An `std::array` of this `Vector` contents

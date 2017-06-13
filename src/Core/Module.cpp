@@ -32,12 +32,12 @@ namespace mc {
 	void MACE::removeModule(const Module& m) {
 		const int location = indexOf(m);
 		if (location < 0)throw ObjectNotFoundError("Module by name of " + m.getName() + " not found! Can\'t remove!");
-		removeModule(location);
+		removeModule(static_cast<Index>(location));
 	}
 	void MACE::removeModule(const std::string module) {
 		const int location = indexOf(module);
 		if (location < 0)throw ObjectNotFoundError("Module by name of " + module + " not found! Can\'t remove!");
-		removeModule(location);
+		removeModule(static_cast<Index>(location));
 	}
 	void MACE::removeModule(const Index i) {
 		if (i >= numberOfModules())throw ObjectNotFoundError("Input is greater than the amount of modules!");
@@ -46,7 +46,7 @@ namespace mc {
 	Module * MACE::getModule(const std::string keyword) {
 		const int location = indexOf(keyword);
 		if (location < 0)throw ObjectNotFoundError("No module by the name of " + keyword + " found!");
-		return modules[location];
+		return modules[static_cast<Index>(location)];
 	}
 	Module * MACE::getModule(const Index i) {
 		if (i >= numberOfModules())throw ObjectNotFoundError("Input is not a valid index!");

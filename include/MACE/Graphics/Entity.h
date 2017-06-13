@@ -289,7 +289,7 @@ namespace mc {
 				*/
 				MAINTAIN_HEIGHT = 7,
 
-				DEFAULT_PROPERTIES = 0b00000000
+				DEFAULT_PROPERTIES = 0
 			};//EntityProperty
 
 			struct Metrics {

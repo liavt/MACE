@@ -79,7 +79,7 @@ namespace mc {
 	}
 	*/
 	namespace MACE {
-		enum Flags: Byte{
+		enum Flags: Byte {
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.init()` has been called.
 			*/
@@ -251,7 +251,7 @@ namespace mc {
 		"Resets" the `MACE` to its default state. `Modules` are cleared, and all flags are set to 0.
 		*/
 		void reset();
-	};
+	}
 
 }
 

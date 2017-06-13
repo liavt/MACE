@@ -223,4 +223,10 @@ namespace mc {
 	void BitField::operator--(int) {
 		--value;
 	}
+
+	std::ostream & operator<<(std::ostream & os, const BitField & b) {
+		//has to have 8 bits, so we countdown from 8
+		for (Byte i = 0; i < 8; ++i)os << b.getBit(Byte(7) - i);//0 indexed so that explains the magic number of 7
+		return os;
+	}
 }//mc

@@ -460,7 +460,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				static void clear(const int field);
+				static void clear(const unsigned int field);
 
 				/**
 				@opengl
@@ -1239,7 +1239,7 @@ namespace mc {
 				void setUniform(const char* name, const double a);
 				void setUniform(const char* name, const double a, const double b);
 				void setUniform(const char* name, const double a, const double b, const double c);
-				void setUniform(const char* name, const double a, const double b, const double c, const double d);;
+				void setUniform(const char* name, const double a, const double b, const double c, const double d);
 				void setUniform(const char* name, const Size arraySize, const double* a);
 				void setUniform(const char* name, const Size componentSize, const Size arraySize, const double* a);
 				void setUniform(const char* name, const mc::Vector<double, 1> v);
@@ -1261,7 +1261,7 @@ namespace mc {
 				void setUniform(const char* name, const unsigned int a);
 				void setUniform(const char* name, const unsigned int a, const unsigned int b);
 				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c);
-				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d);;
+				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d);
 				void setUniform(const char* name, const Size arraySize, const unsigned int* a);
 				void setUniform(const char* name, const Size componentSize, const Size arraySize, const unsigned int* a);
 				void setUniform(const char* name, const mc::Vector<unsigned int, 1> v);

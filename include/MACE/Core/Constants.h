@@ -159,59 +159,59 @@ namespace mc {
 	/**
 	Thrown when a pointer is equal to NULL
 	*/
-	MACE_DECLARE_ERROR(NullPointer);
+	MACE_DECLARE_ERROR(NullPointer)
 
 	/**
 	Thrown when an assertion fails.
 	@see MACE::assertModule(std::string)
 	*/
-	MACE_DECLARE_ERROR(AssertionFailed);
+	MACE_DECLARE_ERROR(AssertionFailed)
 
 	/**
 	Thrown when an object wasn't initializaed or initializtion failed
 	*/
-	MACE_DECLARE_ERROR(InitializationFailed);
+	MACE_DECLARE_ERROR(InitializationFailed)
 
 	/**
 	Thrown when an error occured trying to read or write a sound file
 	@see FileNotFoundError
 	*/
-	MACE_DECLARE_ERROR(BadFile);
+	MACE_DECLARE_ERROR(BadFile)
 
 	/**
 	Thrown when a file was not found on the filesystem
 	@see BadFileError
 	*/
-	MACE_DECLARE_ERROR(FileNotFound);
+	MACE_DECLARE_ERROR(FileNotFound)
 
 	/**
 	Thrown when a function looks for an object, but doesn't find it.
 	*/
-	MACE_DECLARE_ERROR(ObjectNotFound);
+	MACE_DECLARE_ERROR(ObjectNotFound)
 
 	/**
 	Thrown when something is of the wrong type
 	*/
-	MACE_DECLARE_ERROR(InvalidType);
+	MACE_DECLARE_ERROR(InvalidType)
 
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	MACE_DECLARE_ERROR(IndexOutOfBounds);
+	MACE_DECLARE_ERROR(IndexOutOfBounds)
 	/**
 	Thrown when something goes wrong while doing math, like dividing by zero
 	*/
-	MACE_DECLARE_ERROR(InvalidArithmetic);
+	MACE_DECLARE_ERROR(InvalidArithmetic)
 
 	/**
 	Thrown when something was in the wrong state at the time of an operation
 	*/
-	MACE_DECLARE_ERROR(InvalidState);
+	MACE_DECLARE_ERROR(InvalidState)
 
 	/**
 	Thrown when the operating system throws an error
 	*/
-	MACE_DECLARE_ERROR(System);
+	MACE_DECLARE_ERROR(System)
 }
 
 #endif//MACE_CORE_CONSTANTS_H

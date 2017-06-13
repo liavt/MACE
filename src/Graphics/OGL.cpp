@@ -115,7 +115,7 @@ namespace mc {
 			}
 
 			void VertexArray::draw(Enum type) const {
-				glDrawElements(type, indices.getIndiceNumber(), GL_UNSIGNED_INT, 0);
+				glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, 0);
 			}
 
 			void VertexArray::loadVertices(const Size verticeSize, const float vertices[], const Index location, const Byte attributeSize) {
@@ -132,7 +132,7 @@ namespace mc {
 				buffer.init();
 				buffer.setLocation(location);
 				// Give our data to opengl
-				buffer.setData(sizeof(GLfloat)*(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);
+				buffer.setData(static_cast<ptrdiff_t>(sizeof(GLfloat)*(attributeSize * dataSize)), data, GL_DYNAMIC_DRAW);
 				buffer.setAttributePointer(attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
 
 				addBuffer(buffer);
@@ -143,7 +143,7 @@ namespace mc {
 			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
 				indices = ElementBuffer(indiceNum);
 				indices.init();
-				indices.setData(sizeof(unsigned int)*indiceNum, indiceData, GL_STATIC_DRAW);
+				indices.setData(static_cast<ptrdiff_t>(sizeof(unsigned int)*indiceNum), indiceData, GL_STATIC_DRAW);
 
 				checkGLError(__LINE__, __FILE__, "Error putting indices in VAO");
 			}
@@ -286,7 +286,7 @@ namespace mc {
 
 			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture2D& texture, const int level, const int layer) {
 				bind();
-				glFramebufferTextureLayer(target, attachment, level, texture.getID(), layer);
+				glFramebufferTextureLayer(target, attachment, level, static_cast<GLint>(texture.getID()), layer);
 			}
 
 			void FrameBuffer::attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer & buffer) {
@@ -295,7 +295,7 @@ namespace mc {
 			}
 
 			void FrameBuffer::setDrawBuffers(const Size arrSize, const Enum * buffers) {
-				glDrawBuffers(arrSize, buffers);
+				glDrawBuffers(static_cast<GLsizei>(arrSize), buffers);
 			}
 
 			void FrameBuffer::setReadBuffer(const Enum mode) {
@@ -312,13 +312,13 @@ namespace mc {
 				return def;
 			}
 
-			void FrameBuffer::clear(const int field) {
+			void FrameBuffer::clear(const unsigned int field) {
 				glClear(field);
 			}
 
 			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void * data) const {
 				bind();
-				glReadPixels(x, y, width, height, format, type, data);
+				glReadPixels(x, y, static_cast<GLsizei>(width), static_cast<GLsizei>(height), format, type, data);
 			}
 
 			void FrameBuffer::setPixelStorage(const Enum name, const float param) {
@@ -358,7 +358,7 @@ namespace mc {
 
 			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
 				bind();
-				glRenderbufferStorage(GL_RENDERBUFFER, format, width, height);
+				glRenderbufferStorage(GL_RENDERBUFFER, format, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
 			}
 
 			void RenderBuffer::setStorageMultisampled(const Size samples, const Enum format, const Size width, const Size height) {

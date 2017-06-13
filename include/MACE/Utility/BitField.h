@@ -109,11 +109,7 @@ namespace mc {
 		/**
 		Operator for `std::cout` to correctly print this class
 		*/
-		friend std::ostream& operator<<(std::ostream &os, const BitField& b) {
-			//has to have 8 bits, so we countdown from 8
-			for( Byte i = 0; i < 8; i++ )os << b.getBit((7) - i);//0 indexed so that explains the magic number of 7
-			return os;
-		}
+		friend std::ostream& operator<<(std::ostream &os, const BitField& b);
 
 		/**
 		Operator which acts upon the internal value
