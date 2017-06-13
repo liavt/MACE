@@ -47,6 +47,9 @@ mark_as_advanced(MACE_DOWNLOAD_DEPENDENCIES)
 #for glfw
 set(LIB_SUFFIX ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
+set(MACE_MSVC_FLAGS /W4 /W44640 /W14242 /W14254 /W14265 /W14287 /W14287 /W14296 /W14311 /W14545 /W14546 /W14547 /W14546 /W14549 /W14555 /W14619 /W14640 /W14826)
+set(MACE_COMPILER_FLAGS -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -pedantic -Wconversion -Wsign-conversion -Wmisleading-indentation)
+
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
@@ -243,15 +246,19 @@ else()
 endif()
 
 if(MSVC)
-	check_cxx_compiler_flag("-W4" COMPILER_SUPPORTS_WARNING_LEVEL_4)
-	if(COMPILER_SUPPORTS_WARNING_LEVEL_4)
-		target_compile_options(MACE PRIVATE "$<$<CONFIG:DEBUG>:-W4>")
-	endif()
+	foreach(MACE_MSVC_FLAG ${MACE_MSVC_FLAGS})
+		check_cxx_compiler_flag("${MACE_MSVC_FLAG}" COMPILER_SUPPORTS_MSVC_FLAG)
+		if(COMPILER_SUPPORTS_MSVC_FLAG)
+			target_compile_options(MACE PRIVATE "$<$<CONFIG:DEBUG>:${MACE_MSVC_FLAG}>")
+		endif()
+	endforeach()
 else()
-	check_cxx_compiler_flag("-Wall" COMPILER_SUPPORTS_ALL_WARNINGS)
-	if(COMPILER_SUPPORTS_ALL_WARNINGS)
-		target_compile_options(MACE PRIVATE "$<$<CONFIG:DEBUG>:-Wall>")
-	endif()
+	foreach(MACE_COMPILER_FLAG ${MACE_COMPILER_FLAGS})
+		check_cxx_compiler_flag("${MACE_COMPILER_FLAG}" COMPILER_SUPPORTS_COMPILER_FLAG)
+		if(COMPILER_SUPPORTS_COMPILER_FLAG)
+			target_compile_options(MACE PRIVATE "$<$<CONFIG:DEBUG>:${MACE_COMPILER_FLAG}>")
+		endif()
+	endforeach()
 endif()
 
 if(MSVC)
