@@ -74,6 +74,8 @@ namespace mc {
 	*/
 	class Include {
 	public:
+		virtual ~Include() = default;
+
 		/**
 		Checks whether this include has the specified file. If there isn't an `Include` with the file, then a `PreprocessorException` is thrown.
 		*/
@@ -98,8 +100,8 @@ namespace mc {
 		*/
 		IncludeString(const std::string& content, const std::string name);
 
-		bool hasFile(const std::string& name) const;
-		std::string getFile(const std::string& name) const;
+		bool hasFile(const std::string& name) const override;
+		std::string getFile(const std::string& name) const override;
 
 	private:
 		const std::string content = "";
@@ -119,8 +121,8 @@ namespace mc {
 		*/
 		IncludeDirectory(const std::string& dir);
 
-		bool hasFile(const std::string& name) const;
-		std::string getFile(const std::string& name) const;
+		bool hasFile(const std::string& name) const override;
+		std::string getFile(const std::string& name) const override;
 
 	private:
 

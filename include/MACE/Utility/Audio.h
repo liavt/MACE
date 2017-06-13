@@ -72,6 +72,8 @@ namespace mc {
 
 	class AudioModule: public Module {
 	public:
+		AudioModule();
+
 		void init() override;
 		void update() override;
 		void destroy() override;
@@ -81,8 +83,6 @@ namespace mc {
 		const std::vector<Sound>& getSounds() const;
 	
 		void addSound(Sound& s);
-
-		AudioModule();
 	private:
 		std::vector<Sound> sounds = std::vector<Sound>();
 		ALCdevice* device;

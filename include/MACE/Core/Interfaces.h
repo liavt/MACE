@@ -17,6 +17,8 @@ namespace mc {
 
 	class Initializable {
 		friend class Initializer;
+	public:
+		virtual ~Initializable() = default;
 	protected:
 		virtual void init() = 0;
 

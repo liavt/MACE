@@ -826,6 +826,8 @@ namespace mc {
 
 		class Selectable {
 		public:
+			virtual ~Selectable() = default;
+
 			bool isClicked() const;
 			bool isDisabled() const;
 			bool isHovered() const;

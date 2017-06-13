@@ -204,6 +204,7 @@ namespace mc {
 			friend void ssl::bindEntity(const GraphicsEntity* en, ogl::ShaderProgram& prog);
 			friend void ssl::checkInput(os::WindowModule* win);
 		public:
+			virtual ~Renderer() = default;
 
 			/**
 			@internal

@@ -22,6 +22,8 @@ namespace mc {
 	*/
 	class Module: public Initializable {
 	public:
+		virtual ~Module() = default;
+
 		/**
 		Called when {@link MACE#init} is called and this `Module` is registered.
 		<p>

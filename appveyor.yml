@@ -1,0 +1,24 @@
+version: 1.0.{build}
+branches:
+  only:
+  - master
+image:
+- Visual Studio 2015
+- Previous Visual Studio 2015
+- Visual Studio 2017
+before_build:
+- cmd: >-
+    mkdir build
+
+    cd build
+
+    cmake .. -DMACE_TESTS=ON -DMACE_DEMOS=ON
+build:
+  project: build/MACE.sln
+  parallel: true
+  verbosity: minimal
+test_script:
+- cmd: >-
+    cd Debug
+
+    MACE-Testing.exe
