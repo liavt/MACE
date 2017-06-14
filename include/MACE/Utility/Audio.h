@@ -29,7 +29,7 @@ namespace mc {
 	/**
 	Thrown when an error occured trying to read or write a sound file
 	*/
-	MACE_DECLARE_ERROR(BadSound);
+	MACE_DECLARE_ERROR(BadSound)
 
 	class Sound: public Initializable {
 	public:
@@ -88,6 +88,6 @@ namespace mc {
 		ALCdevice* device;
 		ALCcontext* context;
 	};//AudioModule
-};//mc
+}//mc
 
 #endif//MACE_ULITITY_AUDIO_H

@@ -23,7 +23,7 @@ namespace mc {
 		/**
 		Thrown when something relate to Freetype or fonts fails
 		*/
-		MACE_DECLARE_ERROR(Font);
+		MACE_DECLARE_ERROR(Font)
 
 		class Entity2D: public GraphicsEntity {
 		public:
@@ -121,7 +121,6 @@ namespace mc {
 		};//RenderProtocol<ProgressBar>
 
 		/**
-		@todo Replace the EaseComponent with a non dynamic pointer
 		*/
 		class ProgressBar: public Entity2D {
 			friend class RenderProtocol<ProgressBar>;
