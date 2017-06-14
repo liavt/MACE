@@ -515,43 +515,49 @@ namespace mc {
 
 			void Buffer::destroy() {
 				glDeleteBuffers(1, &id);
-			};
+			}
+
 			void Buffer::setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType) {
 				bind();
 				glBufferData(bufferType, dataSize, data, drawType);
-			};
+			}
+
 			void Buffer::setDataRange(const ptrdiff_t& dataSize, const void* data, const Index offset) {
 				bind();
 				glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
-			};
+			}
 
 			void Buffer::copyData(Buffer& other, const ptrdiff_t& size, const Index readOffset, const Index writeOffset) {
 				glCopyBufferSubData(id, other.id, readOffset, writeOffset, size);
-			};
+			}
 
 			void* Buffer::map(const Enum access) {
 				bind();
 				return glMapBuffer(bufferType, access);
-			};
+			}
 
 			void* Buffer::mapRange(const Index offset, const Size length, const unsigned int access) {
 				bind();
 				return glMapBufferRange(bufferType, offset, length, access);
-			};
+			}
 
 			bool Buffer::unmap() {
 				bind();
 				return glUnmapBuffer(bufferType) == 1;
 			}
+
 			const Enum Buffer::getBufferType() const {
 				return bufferType;
 			}
+
 			bool Buffer::operator==(const Buffer & other) const {
 				return this->bufferType == other.bufferType&&Object::operator==(other);
 			}
+
 			bool Buffer::operator!=(const Buffer & other) const {
 				return !operator==(other);
 			}
+
 			void Buffer::bindIndex(const Index ID) const {
 				glBindBuffer(bufferType, ID);
 			}

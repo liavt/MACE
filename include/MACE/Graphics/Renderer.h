@@ -103,7 +103,7 @@ namespace mc {
 			@internal
 			*/
 			const mc::Preprocessor& getSSLPreprocessor();
-		};
+		}
 
 		//we declare RenderImpl which RenderProtocol extends. WE can't store a pointer to RenderProtocol (because its templated), but we can point to RenderImpl
 		/**

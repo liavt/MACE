@@ -45,7 +45,7 @@ namespace mc {
 		namespace {
 			//when you request for a solid color ColorAttachment, it will use the same texture to save memory
 			ogl::Texture2D solidColor = ogl::Texture2D();
-		};
+		}
 
 		void Component::init() {}
 

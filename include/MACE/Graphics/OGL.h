@@ -48,20 +48,20 @@ namespace mc {
 			Thrown when OpenGL fails or errors
 			@see ShaderError
 			*/
-			MACE_DECLARE_ERROR(OpenGL);
+			MACE_DECLARE_ERROR(OpenGL)
 
 			/**
 			Thrown when a Shader throws an exception, such as a failed compilation.
 			@see OpenGLError
 			*/
-			MACE_DECLARE_ERROR(Shader);
+			MACE_DECLARE_ERROR(Shader)
 
 			/**
 			Thrown when a Framebuffer fails to be created, or throws an error
 			@see gfx::ogl::Framebuffer
 			@see OpenGLError
 			*/
-			MACE_DECLARE_ERROR(Framebuffer);
+			MACE_DECLARE_ERROR(Framebuffer)
 
 			/**
 			@opengl

@@ -132,7 +132,7 @@ namespace mc {
 		arr[3] = a;
 
 		return arr;
-	};
+	}
 
 	bool Color::operator<(const Color& other) const {
 		//the real g right here

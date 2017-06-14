@@ -32,7 +32,7 @@ namespace mc {
 		/**
 		Thrown when an error occured trying to read or write an image
 		*/
-		MACE_DECLARE_ERROR(BadImage);
+		MACE_DECLARE_ERROR(BadImage)
 
 		using EntityProperties = BitField;
 
@@ -46,7 +46,7 @@ namespace mc {
 			void bindBuffer(ogl::UniformBuffer&);
 			void bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
 			void checkInput(mc::os::WindowModule*);
-		};
+		}
 
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
