@@ -1,18 +1,21 @@
 var a00074 =
 [
-    [ "TransformMatrix", "db/db6/a00074_ad660cc05460555676f372334d8fe9aed.html#ad660cc05460555676f372334d8fe9aed", null ],
-    [ "get", "db/db6/a00074_afc3e42106cadda5984594ee18506dcfd.html#afc3e42106cadda5984594ee18506dcfd", null ],
-    [ "operator!=", "db/db6/a00074_ac4bf06657f3dcd69ef435f02a51edc77.html#ac4bf06657f3dcd69ef435f02a51edc77", null ],
-    [ "operator<", "db/db6/a00074_a1dbe80e02969059a1ab9cc4c167343e6.html#a1dbe80e02969059a1ab9cc4c167343e6", null ],
-    [ "operator<=", "db/db6/a00074_a71515ed6991421571635bd3068437757.html#a71515ed6991421571635bd3068437757", null ],
-    [ "operator==", "db/db6/a00074_ab284df8bcb89201ccd09403ad21f28ad.html#ab284df8bcb89201ccd09403ad21f28ad", null ],
-    [ "operator>", "db/db6/a00074_a95cc17d73620c338c6cf7e39d88c66f0.html#a95cc17d73620c338c6cf7e39d88c66f0", null ],
-    [ "operator>=", "db/db6/a00074_ac4d1110fb2283ee53782f0423e6948b0.html#ac4d1110fb2283ee53782f0423e6948b0", null ],
-    [ "reset", "db/db6/a00074_add25f797b317967ba0484db1b1b8827a.html#add25f797b317967ba0484db1b1b8827a", null ],
-    [ "rotate", "db/db6/a00074_a6958ca81511314aada5e5754852751b0.html#a6958ca81511314aada5e5754852751b0", null ],
-    [ "scale", "db/db6/a00074_aabce39444cb0bb61b0f11048df0bcddc.html#aabce39444cb0bb61b0f11048df0bcddc", null ],
-    [ "translate", "db/db6/a00074_a30bf729eeb4b48a9e47d4970867eeabe.html#a30bf729eeb4b48a9e47d4970867eeabe", null ],
-    [ "rotation", "db/db6/a00074_a3ed9fc5756560490b92f7e13893e9dc4.html#a3ed9fc5756560490b92f7e13893e9dc4", null ],
-    [ "scaler", "db/db6/a00074_a4f2f6d4592045082c076e46058d6e74d.html#a4f2f6d4592045082c076e46058d6e74d", null ],
-    [ "translation", "db/db6/a00074_ab1d6d109dbc3524efa2aba9f8dddea37.html#ab1d6d109dbc3524efa2aba9f8dddea37", null ]
+    [ "Properties", "db/db6/a00074_a689b2fffd2a430f7d966ef867ad2cd11.html#a689b2fffd2a430f7d966ef867ad2cd11", [
+      [ "LOOPING", "db/db6/a00074_a689b2fffd2a430f7d966ef867ad2cd11.html#a689b2fffd2a430f7d966ef867ad2cd11abb7c5481377ef97fe864a9325279343d", null ]
+    ] ],
+    [ "Sound", "db/db6/a00074_a33e7abe226fbef94c018b128d3990a84.html#a33e7abe226fbef94c018b128d3990a84", null ],
+    [ "destroy", "db/db6/a00074_ae0b6b2c0fc37a87e97d636d1a5ad5091.html#ae0b6b2c0fc37a87e97d636d1a5ad5091", null ],
+    [ "getProperties", "db/db6/a00074_a3b8ee4aa8d3b86a3746480dbba30e408.html#a3b8ee4aa8d3b86a3746480dbba30e408", null ],
+    [ "getProperties", "db/db6/a00074_adbdb57e74228f65794f94d7a9f789498.html#adbdb57e74228f65794f94d7a9f789498", null ],
+    [ "getProperty", "db/db6/a00074_a905a92f2df21a6144e8ff3fce340f0be.html#a905a92f2df21a6144e8ff3fce340f0be", null ],
+    [ "getVolume", "db/db6/a00074_a29d14b8d95e9b315e94cc861312dd490.html#a29d14b8d95e9b315e94cc861312dd490", null ],
+    [ "init", "db/db6/a00074_a53c7a5ac64810e04564293584bfdfec7.html#a53c7a5ac64810e04564293584bfdfec7", null ],
+    [ "isLooping", "db/db6/a00074_a71120a75bdd0f0f0c257bf8d02bd1891.html#a71120a75bdd0f0f0c257bf8d02bd1891", null ],
+    [ "pause", "db/db6/a00074_a67dcafee2327b68452b091e13101fe92.html#a67dcafee2327b68452b091e13101fe92", null ],
+    [ "play", "db/db6/a00074_ada8c6c5ca032301f7d38aa7c996c0f9e.html#ada8c6c5ca032301f7d38aa7c996c0f9e", null ],
+    [ "setLooping", "db/db6/a00074_a708f0a746ff19ec7d548dae3056a30b2.html#a708f0a746ff19ec7d548dae3056a30b2", null ],
+    [ "setProperties", "db/db6/a00074_a042bbb3fe90c6e62c757daa48f5adef3.html#a042bbb3fe90c6e62c757daa48f5adef3", null ],
+    [ "setProperty", "db/db6/a00074_afb381c80dda4973445cefefa59746a5c.html#afb381c80dda4973445cefefa59746a5c", null ],
+    [ "setVolume", "db/db6/a00074_a82344fda7067c63c663206952f969573.html#a82344fda7067c63c663206952f969573", null ],
+    [ "stop", "db/db6/a00074_a51548f5c106e154185347660e171133b.html#a51548f5c106e154185347660e171133b", null ]
 ];

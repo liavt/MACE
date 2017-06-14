@@ -8,11 +8,12 @@ var searchData=
   ['_7eerror',['~Error',['../d7/de0/a00022_a540f18501f81aa9c6c3cdd05468cc211.html#a540f18501f81aa9c6c3cdd05468cc211',1,'mc::Error']]],
   ['_7egraphicsentity',['~GraphicsEntity',['../d6/d5b/a00026_a7ef9de5fa4914bd3b155dd96237bf323.html#a7ef9de5fa4914bd3b155dd96237bf323',1,'mc::gfx::GraphicsEntity']]],
   ['_7eimage',['~Image',['../dc/d3c/a00028_a43f22f215199e585da6cf42ea4ac42dc.html#a43f22f215199e585da6cf42ea4ac42dc',1,'mc::gfx::Image']]],
-  ['_7eletter',['~Letter',['../dc/d87/a00032_ad8579d8710a3eb4d3364e157e79d34a9.html#ad8579d8710a3eb4d3364e157e79d34a9',1,'mc::gfx::Letter']]],
-  ['_7eobject',['~Object',['../de/d8c/a00036_a4bf5ddbce67658a6dd14bedfa00bcac5.html#a4bf5ddbce67658a6dd14bedfa00bcac5',1,'mc::gfx::ogl::Object']]],
-  ['_7eprocess',['~Process',['../db/d3a/a00040_ae4f67ecc366c63bb06b2752178af0e28.html#ae4f67ecc366c63bb06b2752178af0e28',1,'mc::Process']]],
-  ['_7eprogressbar',['~ProgressBar',['../dd/d32/a00041_af23d2c6e91e0c02a04efb38c56d404b7.html#af23d2c6e91e0c02a04efb38c56d404b7',1,'mc::gfx::ProgressBar']]],
-  ['_7erenderimpl',['~RenderImpl',['../d6/d97/a00045_a1a83129c78f067dc116964ee24e15fb2.html#a1a83129c78f067dc116964ee24e15fb2',1,'mc::gfx::RenderImpl']]],
-  ['_7eserial',['~Serial',['../d1/d84/a00052_aebe3d484c81f83a0267a012959700372.html#aebe3d484c81f83a0267a012959700372',1,'mc::os::Serial']]],
-  ['_7etext',['~Text',['../d6/d2c/a00072_a98ef915c3d950b31553f25504ef7915c.html#a98ef915c3d950b31553f25504ef7915c',1,'mc::gfx::Text']]]
+  ['_7einitializer',['~Initializer',['../d0/dc0/a00033_ad13b1bffc8f4f5e93b2310ef04338c89.html#ad13b1bffc8f4f5e93b2310ef04338c89',1,'mc::Initializer']]],
+  ['_7eletter',['~Letter',['../d4/d8c/a00035_ad8579d8710a3eb4d3364e157e79d34a9.html#ad8579d8710a3eb4d3364e157e79d34a9',1,'mc::gfx::Letter']]],
+  ['_7eobject',['~Object',['../d3/de7/a00039_a4bf5ddbce67658a6dd14bedfa00bcac5.html#a4bf5ddbce67658a6dd14bedfa00bcac5',1,'mc::gfx::ogl::Object']]],
+  ['_7eprocess',['~Process',['../d6/d42/a00043_ae4f67ecc366c63bb06b2752178af0e28.html#ae4f67ecc366c63bb06b2752178af0e28',1,'mc::Process']]],
+  ['_7eprogressbar',['~ProgressBar',['../d5/df9/a00044_af23d2c6e91e0c02a04efb38c56d404b7.html#af23d2c6e91e0c02a04efb38c56d404b7',1,'mc::gfx::ProgressBar']]],
+  ['_7erenderimpl',['~RenderImpl',['../d4/dca/a00048_a1a83129c78f067dc116964ee24e15fb2.html#a1a83129c78f067dc116964ee24e15fb2',1,'mc::gfx::RenderImpl']]],
+  ['_7eserial',['~Serial',['../d4/d6d/a00055_aebe3d484c81f83a0267a012959700372.html#aebe3d484c81f83a0267a012959700372',1,'mc::os::Serial']]],
+  ['_7etext',['~Text',['../d9/da5/a00075_a98ef915c3d950b31553f25504ef7915c.html#a98ef915c3d950b31553f25504ef7915c',1,'mc::gfx::Text']]]
 ];

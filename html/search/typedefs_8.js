@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updateptr',['UpdatePtr',['../df/d86/a00012_a1d867336c398703717ca24ddd0ad749c.html#a1d867336c398703717ca24ddd0ad749c',1,'mc::gfx::CallbackComponent']]]
+  ['tickcallbackptr',['TickCallbackPtr',['../dc/de2/a00024_a62acb15984659aa1ea5f8e214c4f7155.html#a62acb15984659aa1ea5f8e214c4f7155',1,'mc::gfx::FPSComponent']]]
 ];

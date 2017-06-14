@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['transformation',['transformation',['../db/db2/a00020_a2f423919fa564ce852cb641b74f21d87.html#a2f423919fa564ce852cb641b74f21d87',1,'mc::gfx::Entity']]],
-  ['translation',['translation',['../db/df3/a00034_a9a139756f7ebaa90fd33dd9bb32a6ee7.html#a9a139756f7ebaa90fd33dd9bb32a6ee7',1,'mc::gfx::Entity::Metrics::translation()'],['../db/db6/a00074_ab1d6d109dbc3524efa2aba9f8dddea37.html#ab1d6d109dbc3524efa2aba9f8dddea37',1,'mc::TransformMatrix::translation()']]]
+  ['parent',['parent',['../dd/d1b/a00015_a2015a8d8e58b24c8a6f19ef8cfc25c52.html#a2015a8d8e58b24c8a6f19ef8cfc25c52',1,'mc::gfx::Component']]],
+  ['protocols',['protocols',['../d6/d2d/a00047_ac2ff679753ef0c57f428c5230ca60fb3.html#ac2ff679753ef0c57f428c5230ca60fb3',1,'mc::gfx::Renderer']]],
+  ['purple',['PURPLE',['../de/d14/a00139_ab257dd55413c9ea0aa5e227335db546c.html#ab257dd55413c9ea0aa5e227335db546c',1,'mc::Colors']]]
 ];

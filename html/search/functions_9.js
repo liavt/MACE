@@ -1,12 +1,13 @@
 var searchData=
 [
-  ['letter',['Letter',['../dc/d87/a00032_abfd4252a1da2f88435f3f140a5a2a7cc.html#abfd4252a1da2f88435f3f140a5a2a7cc',1,'mc::gfx::Letter']]],
+  ['launchconfig',['LaunchConfig',['../db/df3/a00034_a695de28d3fd6474b4ce96fedde8dbc68.html#a695de28d3fd6474b4ce96fedde8dbc68',1,'mc::os::WindowModule::LaunchConfig']]],
+  ['letter',['Letter',['../d4/d8c/a00035_abfd4252a1da2f88435f3f140a5a2a7cc.html#abfd4252a1da2f88435f3f140a5a2a7cc',1,'mc::gfx::Letter']]],
   ['lighten',['lighten',['../d7/dd4/a00013_ac10a06d41c34ed11ad76e214f0f1cfc5.html#ac10a06d41c34ed11ad76e214f0f1cfc5',1,'mc::Color']]],
-  ['link',['link',['../d1/dea/a00054_a71b68d7a3ad727fad2ac2e88d097e5d3.html#a71b68d7a3ad727fad2ac2e88d097e5d3',1,'mc::gfx::ogl::ShaderProgram']]],
+  ['link',['link',['../d1/d22/a00057_a71b68d7a3ad727fad2ac2e88d097e5d3.html#a71b68d7a3ad727fad2ac2e88d097e5d3',1,'mc::gfx::ogl::ShaderProgram']]],
   ['load',['load',['../d2/de7/a00014_aa9264ccfeeb984ca8d1e8f47560ba324.html#aa9264ccfeeb984ca8d1e8f47560ba324',1,'mc::gfx::ColorAttachment::load(cv::Mat mat)'],['../d2/de7/a00014_a176ac3e2b8f601ae364ed655cfde23fb.html#a176ac3e2b8f601ae364ed655cfde23fb',1,'mc::gfx::ColorAttachment::load(const char *file)'],['../d2/de7/a00014_abd623c6c9ad15f647f3a296d2c0937be.html#abd623c6c9ad15f647f3a296d2c0937be',1,'mc::gfx::ColorAttachment::load(const std::string &amp;file)'],['../d2/de7/a00014_a8ecf276c636f7c6a9b5e5b2584cb4418.html#a8ecf276c636f7c6a9b5e5b2584cb4418',1,'mc::gfx::ColorAttachment::load(const Color &amp;c)'],['../d2/de7/a00014_a67d839c5e691435a260711700fdeb158.html#a67d839c5e691435a260711700fdeb158',1,'mc::gfx::ColorAttachment::load(const unsigned char *c, const Size size)'],['../d2/de7/a00014_a9742a297b73622ccde6e379bbfde6ba9.html#a9742a297b73622ccde6e379bbfde6ba9',1,'mc::gfx::ColorAttachment::load(const unsigned char c[S])']]],
   ['loadfont',['loadFont',['../d3/d52/a00023_ab907da5fcbee882984d7af883a6e3a3b.html#ab907da5fcbee882984d7af883a6e3a3b',1,'mc::gfx::Font::loadFont(const std::string &amp;name)'],['../d3/d52/a00023_aa187b2fac92651ceb87d9f706cade557.html#aa187b2fac92651ceb87d9f706cade557',1,'mc::gfx::Font::loadFont(const char *name)']]],
   ['loadfontfrommemory',['loadFontFromMemory',['../d3/d52/a00023_a690efd59c765cc02cadded9d5f21ed11.html#a690efd59c765cc02cadded9d5f21ed11',1,'mc::gfx::Font::loadFontFromMemory(const unsigned char *data, long int size)'],['../d3/d52/a00023_a9b810f02182a47d3a58f59794dc1bdd4.html#a9b810f02182a47d3a58f59794dc1bdd4',1,'mc::gfx::Font::loadFontFromMemory(const unsigned char data[N])']]],
-  ['loadindices',['loadIndices',['../d1/d09/a00077_a3ae4c47857605a7fa3aa056cf62d3238.html#a3ae4c47857605a7fa3aa056cf62d3238',1,'mc::gfx::ogl::VertexArray']]],
-  ['loadvertices',['loadVertices',['../d1/d09/a00077_a32a897023c4852401ddab8664a2c40c5.html#a32a897023c4852401ddab8664a2c40c5',1,'mc::gfx::ogl::VertexArray']]],
-  ['localtime',['localtime',['../d5/deb/a00132_ae1554c02627e42cccb39b91daf0671bb.html#ae1554c02627e42cccb39b91daf0671bb',1,'mc::os']]]
+  ['loadindices',['loadIndices',['../db/ddf/a00088_a3ae4c47857605a7fa3aa056cf62d3238.html#a3ae4c47857605a7fa3aa056cf62d3238',1,'mc::gfx::ogl::VertexArray']]],
+  ['loadvertices',['loadVertices',['../db/ddf/a00088_a32a897023c4852401ddab8664a2c40c5.html#a32a897023c4852401ddab8664a2c40c5',1,'mc::gfx::ogl::VertexArray']]],
+  ['localtime',['localtime',['../da/ddb/a00145_ae1554c02627e42cccb39b91daf0671bb.html#ae1554c02627e42cccb39b91daf0671bb',1,'mc::os']]]
 ];

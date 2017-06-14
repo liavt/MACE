@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['x',['x',['../db/df8/a00076_af7b4b0cd42037f15e3d7e7f97fb155ba.html#af7b4b0cd42037f15e3d7e7f97fb155ba',1,'mc::Vector::x()'],['../d0/de8/a00133_a090bf578a34c41fc751131d34152b9aa.html#a090bf578a34c41fc751131d34152b9aaac189519ed5550de6d80a3f8f855c5357',1,'mc::os::Input::X()']]],
-  ['xy',['xy',['../db/df8/a00076_ac7798d8afd7ef39232120883e62208f0.html#ac7798d8afd7ef39232120883e62208f0',1,'mc::Vector']]],
-  ['xyz',['xyz',['../db/df8/a00076_a0ec930835d4a5cd53406c5d0f7c61ee5.html#a0ec930835d4a5cd53406c5d0f7c61ee5',1,'mc::Vector']]],
-  ['xyzw',['xyzw',['../db/df8/a00076_a786e32b6cdfd5e73e93390d82710c0ee.html#a786e32b6cdfd5e73e93390d82710c0ee',1,'mc::Vector']]]
+  ['x',['x',['../d4/d63/a00082_ad49840006ebe76fb2d67b693efd35b06.html#ad49840006ebe76fb2d67b693efd35b06',1,'mc::Vector&lt; T, 2 &gt;::x()'],['../d4/d63/a00082_a1365b9a1c46c482eb9bf0bae46412aa6.html#a1365b9a1c46c482eb9bf0bae46412aa6',1,'mc::Vector&lt; T, 2 &gt;::x() const '],['../d2/d1f/a00083_ab2076007d7a690d02dfe755582de4d1e.html#ab2076007d7a690d02dfe755582de4d1e',1,'mc::Vector&lt; T, 3 &gt;::x()'],['../d2/d1f/a00083_a5afd521e11615b9741441bd571edfe1b.html#a5afd521e11615b9741441bd571edfe1b',1,'mc::Vector&lt; T, 3 &gt;::x() const '],['../df/d5d/a00084_aa0431d36426d3a70556d374f3b4e6fed.html#aa0431d36426d3a70556d374f3b4e6fed',1,'mc::Vector&lt; T, 4 &gt;::x()'],['../df/d5d/a00084_a45590b24062b26689b4e7e9675c11997.html#a45590b24062b26689b4e7e9675c11997',1,'mc::Vector&lt; T, 4 &gt;::x() const '],['../d9/db6/a00146_a090bf578a34c41fc751131d34152b9aa.html#a090bf578a34c41fc751131d34152b9aaac189519ed5550de6d80a3f8f855c5357',1,'mc::os::Input::X()']]]
 ];
