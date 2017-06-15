@@ -20,12 +20,16 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//MACE_POSIX
 
 namespace mc {
-	void Process::init(const char * path, const char * args) {
-		os::clearError();
-
-		if (isCreated()) {
+	void Process::init() {
+		if (path == nullptr) {
+			throw NullPointerError("The path can\'t be null!");
+		} else if (args == nullptr) {
+			throw NullPointerError("The args can\'t be null!");
+		} else if (isCreated()) {
 			throw InitializationFailedError("Can\'t call init() on an already initialized Process");
 		}
+
+		os::clearError();
 
 #ifdef MACE_WINAPI
 		STARTUPINFO startupInfo;
@@ -42,8 +46,12 @@ namespace mc {
 		Ok let me rant for a second here. CreateProcessA does not accept a const char* for its args.
 		THIS IS A MASSIVE PROBLEM
 		args has to be const char* because of the possibility that someone will initialize a process
-		with a string literal. In fact, it is most likely going to be a string literal. Meaning the
-		function declaration has to say that args is a const char*.
+		with a string literal. In fact, it is most likely going to be a string literal, like so:
+		Process proc = Process("myprog", "-a --argument");
+		This can't be ignored because then G++ and clang++ raise a bunch of warnings how its a deprecated conversion
+		from string literal (const char*) to character array (char*)
+		I mean I agree with them. You should never remove constness of a variable...
+		Meaning the function declaration has to say that args is a const char*...
 		BUT WINDOWS DECIDED THAT THAT IS A BAD IDEA
 		POSIX is somehow reasonable by allowing const char* in the execl function but NO WINDOWS
 		CANT DO THAT
@@ -53,9 +61,7 @@ namespace mc {
 		Because of things like this.
 		*/
 
-		std::string arguments;
-		arguments = args;
-		CreateProcessA(path, &arguments[0], nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
+		CreateProcessA((std::string(path) + std::string(args)).c_str(), nullptr, nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
 #elif defined(MACE_POSIX)
 		process = fork();
 
@@ -75,9 +81,6 @@ namespace mc {
 
 	}
 
-	void Process::init(const std::string & path, std::string & args) {
-		init(path.c_str(), &args[0]);//it has to be &args[0] instead of c_str() because windows requires process arguments to be mutable and c_str() is immutable.
-	}
 	void Process::destroy() {
 		os::clearError();
 
@@ -120,6 +123,7 @@ namespace mc {
 
 		os::checkError(__LINE__, __FILE__, "Failed to destroy Process");
 	}
+
 	int Process::wait() {
 		os::clearError(__LINE__, __FILE__);
 
@@ -145,8 +149,7 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		int status;
 
-		pid_t result = waitpid(process, &status, WUNTRACED | WCONTINUED);
-
+		const pid_t result = waitpid(process, &status, WUNTRACED | WCONTINUED);
 		if (result != process) {
 			os::checkError(__LINE__, __FILE__, "waitpid() returned exit code " + std::to_string(result));
 
@@ -155,9 +158,20 @@ namespace mc {
 
 		os::checkError(__LINE__, __FILE__, "Error waiting for process to end");
 
+		if (WIFEXITED(status)) {
+			return WEXITSTATUS(status);
+		} else if (WIFSIGNALED(status)) {
+			return WTERMSIG(status);
+		} else if (WIFSTOPPED(status)) {
+			return WSTOPSIG(status);
+		}
+
+		os::checkError(__LINE__, __FILE__, "Error getting error code of process");
+
 		return status;
 #endif
 	}
+
 	bool Process::isRunning() const {
 		if (!isCreated()) {
 			return false;
@@ -166,19 +180,37 @@ namespace mc {
 #ifdef MACE_WINAPI
 		return WaitForSingleObject(process.hProcess, 0) == WAIT_TIMEOUT;
 #elif defined(MACE_POSIX)
-		return kill(process, 0) == 0;
+		return kill(process, 0);
 #endif
 	}
+
 	bool Process::isCreated() const {
 		return created;
 	}
-	Process::Process() {}
-	Process::Process(const char * path, const char * args) : Process() {
-		init(path, args);
+
+	void Process::setPath(const char * p) {
+		path = p;
 	}
-	Process::Process(const std::string & path, std::string & args) : Process() {
-		init(path, args);
+
+	const char * Process::getPath() const {
+		return path;
 	}
+
+	void Process::setArgs(const char * a) {
+		args = a;
+	}
+
+	const char * Process::getArgs() const {
+		return args;
+	}
+
+
+	Process::Process(const char * p, const char * a) : path(p), args(a) {}
+
+	Process::Process(const std::string & path, std::string & args) : Process(path.c_str(), args.c_str()) {}
+
+	Process::Process() : Process(nullptr, nullptr) {}
+
 	Process::~Process() {
 		if (isCreated()) {
 			destroy();

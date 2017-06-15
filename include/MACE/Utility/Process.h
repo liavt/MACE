@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_UTILITY_PROCESS_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Interfaces.h>
 
 #include <string>
 
@@ -23,21 +24,26 @@ The above copyright notice and this permission notice shall be included in all c
 #endif
 
 namespace mc {
-	class Process {
+	class Process: public Initializable {
 	public:
 		Process();
 		Process(const char* path, const char* args);
 		Process(const std::string& path, std::string& args);
 		~Process();
 
-		void init(const char* path, const char* args);
-		void init(const std::string& path, std::string& args);
-		void destroy();
+		void init() override;
+		void destroy() override;
 
 		int wait();
 
 		bool isRunning() const;
 		bool isCreated() const;
+
+		void setPath(const char* p);
+		const char* getPath() const;
+
+		void setArgs(const char* a);
+		const char* getArgs() const;
 
 #if defined(MACE_WINAPI) && defined(MACE_EXPOSE_WINAPI)
 		PROCESS_INFORMATION getProcess() const {
@@ -51,6 +57,9 @@ namespace mc {
 
 	private:
 		bool created = false;
+
+		const char* path;
+		const char* args;
 
 #ifdef MACE_WINAPI
 		PROCESS_INFORMATION process;

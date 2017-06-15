@@ -17,10 +17,20 @@ int main() {
 #define MACE_EXPOSE_WINAPI
 #define MACE_EXPOSE_POSIX
 #include <MACE/Utility/Process.h>
+#include <cstring>
 
 namespace mc {
 	TEST_CASE("Testing Process class", "[utility][process]") {
 		Process p = Process(MACE_PROC_TEST_OUTPUT, "");
+
+		REQUIRE(std::strcmp(p.getPath(), MACE_PROC_TEST_OUTPUT) == 0);
+		REQUIRE(std::strcmp(p.getArgs(), "") == 0);
+
+		REQUIRE_FALSE(p.isRunning());
+
+		REQUIRE_FALSE(p.isCreated());
+
+		p.init();
 
 		REQUIRE(p.isRunning());
 

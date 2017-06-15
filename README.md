@@ -20,11 +20,10 @@ You can implement your own modules to make MACE whatever you want!
 The graphics capabilities target hardware with OpenGL 3.3 compatibility
 
 The following compilers are unit tested automatically:
-* G++ 5 on Linux
-* G++ 4 on Linux
-* Clang 3.3 on Linux
-* Clang 3.7 on OSX and Linux
-* VS 2015 on Windows
+* G++ 5 and 6 on Linux
+* Clang 3.7 and 3.5 on Linux
+* Clang 3.5 on OSX
+* Latest and second latest version of VS 2015 and 2017 on Windows
 
 MACE requires a C++ 11 compliant compiler.
 
@@ -36,9 +35,9 @@ For install instructions, consult INSTALLATION.md in the root folder.
 
 Documentation is located [here.](https://liavt.github.io/MACE/html/index.html)
 
-To generate documentation on your own, download Doxygen. Then, run Doxygen with `Doxyfile` located in the root folder.
+To generate documentation on your own, download Doxygen. Then, run Doxygen with `Doxyfile` located in the docs/ folder.
 
-A new folder called *Docs* should have been created. Subfolders contain the different documentation types, like html or xml.
+A new folder called *out* should have been created. Subfolders contain the different documentation types, like html or xml.
 
 ## Important Notes
 * MACE will never delete any pointer you give it and you are never expected to delete a pointer it gives you.
