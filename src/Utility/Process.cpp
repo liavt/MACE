@@ -111,10 +111,17 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		if (isRunning()) {
 			//hasta la vista baby
-			if (!kill(process, SIGTERM)) {
-				os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process");
+			int result = kill(process, SIGTERM);
+			if (result != 0) {
+				if (result == ESRCH) {
+					//meaning the process never even existed or was stopped already.
+					os::clearError();
+				} else {
+					os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process");
 
-				throw AssertionFailedError("Failed to kill process");
+					throw AssertionFailedError("Failed to kill process");
+
+				}
 			}
 		}
 #endif
