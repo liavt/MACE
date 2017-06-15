@@ -180,7 +180,7 @@ namespace mc {
 #ifdef MACE_WINAPI
 		return WaitForSingleObject(process.hProcess, 0) == WAIT_TIMEOUT;
 #elif defined(MACE_POSIX)
-		return kill(process, 0);
+		return kill(process, 0) == 0;
 #endif
 	}
 
