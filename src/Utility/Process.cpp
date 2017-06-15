@@ -17,6 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	include <sys/wait.h>
 #	include <signal.h>
 #	include <cstdlib>
+#	include <errno.h>
 #endif//MACE_POSIX
 
 namespace mc {

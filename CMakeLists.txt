@@ -37,7 +37,7 @@ include(ExternalProject)
 
 option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
 option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
-option(MACE_ALL_WARNINGS "Whether to include all warnings in compilartion" OFF)
+option(MACE_ALL_WARNINGS "Whether to include all warnings in compilation" OFF)
 option(MACE_SWIG "Whether to generage cross-language binaries with SWIG" OFF)
 set(MACE_SWIG_LANGUAGE "" CACHE STRING "What language to generate binaries for using SWIG. MACE_SWIG must be enabled for this to work.")
 option(MACE_DOWNLOAD_DEPENDENCIES "Whether to download and extract dependencies that are not found. If turned off, will instead error." ON)
@@ -68,7 +68,7 @@ set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/${GLEW_SOURCE_VER
 
 set(FREETYPE_SOURCE_VERSION "2.5.2")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
-set(FREETYPE_URL "http://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
+set(FREETYPE_URL "https://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
 
 set(MACE_OUTPUT_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
 
