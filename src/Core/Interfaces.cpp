@@ -11,7 +11,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 
 namespace mc {
-	Initializer::Initializer() {
+	Initializer::Initializer(Initializable * in) {
+		obj = in;
+
 		init();
 	}
 

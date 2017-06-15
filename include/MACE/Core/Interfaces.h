@@ -27,7 +27,7 @@ namespace mc {
 
 	class Initializer final: public Initializable {
 	public:
-		Initializer();
+		Initializer(Initializable* in);
 		~Initializer();
 
 		void init() final;

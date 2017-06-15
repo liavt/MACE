@@ -112,11 +112,11 @@ namespace mc {
 #elif defined(MACE_POSIX)
 		int result = kill(process, SIGTERM);
 		if (result != 0) {
-			if (result == ESRCH) {
+			if (errno == ESRCH) {
 				//meaning the process never even existed or was stopped already.
 				os::clearError();
 			} else {
-				os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process");
+				os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process with result " + std::to_string(result));
 
 				throw AssertionFailedError("Failed to kill process");
 
