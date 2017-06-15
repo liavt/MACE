@@ -90,6 +90,7 @@ namespace mc {
 
 #ifdef MACE_WINAPI
 		if (isRunning()) {
+			//hasta la vista baby
 			if (!TerminateProcess(process.hProcess, 1)) {
 				os::checkError(__LINE__, __FILE__, "Failed to terminate process");
 
@@ -109,21 +110,19 @@ namespace mc {
 			throw AssertionFailedError("Failed to close handle to process thread");
 		}
 #elif defined(MACE_POSIX)
-		if (isRunning()) {
-			//hasta la vista baby
-			int result = kill(process, SIGTERM);
-			if (result != 0) {
-				if (result == ESRCH) {
-					//meaning the process never even existed or was stopped already.
-					os::clearError();
-				} else {
-					os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process");
+		int result = kill(process, SIGTERM);
+		if (result != 0) {
+			if (result == ESRCH) {
+				//meaning the process never even existed or was stopped already.
+				os::clearError();
+			} else {
+				os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process");
 
-					throw AssertionFailedError("Failed to kill process");
+				throw AssertionFailedError("Failed to kill process");
 
-				}
 			}
 		}
+
 #endif
 
 		created = false;
