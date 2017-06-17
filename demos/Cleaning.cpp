@@ -71,10 +71,10 @@ void create(os::WindowModule&) {
 	rightBot.setX(0.5f);
 	rightBot.setY(-0.5f);
 
-	left.addComponent(new gfx::PointerComponent(new TestComponent()));
-	leftBot.addComponent(new gfx::PointerComponent(new TestComponent()));
-	rightTop.addComponent(new gfx::PointerComponent(new TestComponent()));
-	rightBot.addComponent(new gfx::PointerComponent(new TestComponent()));
+	left.addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
+	leftBot.addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
+	rightTop.addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
+	rightBot.addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
 
 	group.addChild(left);
 	group.addChild(rightTop);
@@ -102,7 +102,6 @@ int main() {
 		MACE::addModule(sigModule);
 
 		MACE::start();
-
 	} catch( const std::exception& e ) {
 		Error::handleError(e);
 		return -1;

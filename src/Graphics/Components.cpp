@@ -305,6 +305,14 @@ namespace mc {
 		EaseComponent::EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction, const EaseDoneCallback doneCallback)
 			: Component(), t(0), b(startingProgress), c(destination), d(duration), updateCallback(callback), ease(easeFunction), done(doneCallback) {}
 
+		bool EaseComponent::operator==(const EaseComponent & other) const {
+			return t == other.t && b == other.b && c == other.c && d == other.d && updateCallback == other.updateCallback && ease == other.ease && done == other.done;
+		}
+
+		bool EaseComponent::operator!=(const EaseComponent & other) const {
+			return !operator==(other);
+		}
+
 		void EaseComponent::init() {}
 
 		bool EaseComponent::update() {
@@ -321,86 +329,6 @@ namespace mc {
 
 		void EaseComponent::destroy() {
 			done(parent);
-		}
-
-		PointerComponent::PointerComponent(Component * com) : ptr(com) {}
-
-		Component * PointerComponent::get() {
-			return ptr;
-		}
-
-		const Component * PointerComponent::get() const {
-			return ptr;
-		}
-
-		Component * PointerComponent::operator*() {
-			return ptr;
-		}
-
-		const Component * PointerComponent::operator*() const {
-			return ptr;
-		}
-
-		Component * PointerComponent::operator->() {
-			return ptr;
-		}
-
-		const Component * PointerComponent::operator->() const {
-			return ptr;
-		}
-
-		void PointerComponent::init() {
-			if (ptr == nullptr) {
-				throw NullPointerError("PointerComponent: pointer was nullptr in init()");
-			}
-
-			ptr->parent = this->parent;
-
-			ptr->init();
-		}
-
-		bool PointerComponent::update() {
-			if (ptr == nullptr) {
-				throw NullPointerError("PointerComponent: pointer was nullptr in update()");
-			}
-
-			return ptr->update();
-		}
-
-		void PointerComponent::render() {
-			if (ptr == nullptr) {
-				throw NullPointerError("PointerComponent: pointer was nullptr in render()");
-			}
-
-			ptr->render();
-		}
-
-		void PointerComponent::hover() {
-			if (ptr == nullptr) {
-				throw NullPointerError("PointerComponent: pointer was nullptr in hover()");
-			}
-
-			ptr->hover();
-		}
-
-		void PointerComponent::clean() {
-			if (ptr == nullptr) {
-				throw NullPointerError("PointerComponent: pointer was nullptr in clean()");
-			}
-
-			ptr->clean();
-		}
-
-		void PointerComponent::destroy() {
-			if (ptr == nullptr) {
-				throw NullPointerError("PointerComponent: pointer was nullptr in destroy()");
-			}
-
-			ptr->destroy();
-
-			delete ptr;
-
-			delete this;
 		}
 
 		void CallbackComponent::init() {

@@ -13,7 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/BitField.h>
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Renderer.h>
-#include <iostream>
 #include <string>
 
 #ifdef MACE_GNU
@@ -110,7 +109,7 @@ namespace mc {
 			try {
 				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
 					stbi_image_free(image);
-					throw BadImageError("Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
+					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 				}
 
 				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
@@ -154,7 +153,7 @@ namespace mc {
 			try {
 				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
 					stbi_image_free(image);
-					throw BadImageError("Unable to read image from memory: " + std::string(stbi_failure_reason()));
+					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
 				}
 
 				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
@@ -222,9 +221,9 @@ namespace mc {
 
 		void Entity::removeChild(const Entity * e) {
 			if (e == nullptr) {
-				throw NullPointerError("Argument to removeChild is nullptr!");
+				MACE__THROW(NullPointer, "Argument to removeChild is nullptr!");
 			} else if (children.empty()) {
-				throw AssertionFailedError("Can\'t remove child from an empty entity (empty() is true)");
+				MACE__THROW(AssertionFailed, "Can\'t remove child from an empty entity (empty() is true)");
 			}
 
 			for (Index i = 0; i < children.size(); ++i) {
@@ -236,16 +235,16 @@ namespace mc {
 				}
 			}
 
-			throw ObjectNotFoundError("Specified argument to removeChild is not a valid object in the array!");
+			MACE__THROW(ObjectNotFound, "Specified argument to removeChild is not a valid object in the array!");
 		}
 
 		void Entity::removeChild(Index index) {
 			makeDirty();
 
 			if (children.empty()) {
-				throw IndexOutOfBoundsError("Can\'t remove a child from an empty entity!");
+				MACE__THROW(IndexOutOfBounds, "Can\'t remove a child from an empty entity!");
 			} else if (index >= children.size()) {
-				throw IndexOutOfBoundsError(std::to_string(index) + " is larger than the amount of children!");
+				MACE__THROW(IndexOutOfBounds, std::to_string(index) + " is larger than the amount of children!");
 			} else if (children.size() == 1) {
 				children.clear();
 			} else {
@@ -302,8 +301,8 @@ namespace mc {
 				}
 
 				for (Index i = 0; i < components.size(); ++i) {
-					if (components[i] == nullptr) {
-						throw NullPointerError("One of the components in an entity was nullptr");
+					if (components[i].get() == nullptr) {
+						MACE__THROW(NullPointer, "One of the components in an entity was nullptr");
 					}
 
 					components[i]->clean();
@@ -394,7 +393,7 @@ namespace mc {
 			transformation.reset();
 
 			for (Index i = 0; i < components.size(); ++i) {
-				if (components[i] != nullptr) {
+				if (components[i].get() != nullptr) {
 					components[i]->destroy();
 				}
 			}
@@ -480,7 +479,7 @@ namespace mc {
 
 		void Entity::addChild(Entity * e) {
 			if (e == nullptr) {
-				throw NullPointerError("Inputted Entity to addChild() was nullptr");
+				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
 			}
 
 			makeDirty();
@@ -497,17 +496,24 @@ namespace mc {
 			addChild(&e);
 		}
 
-		void Entity::addComponent(Component * component) {
-			components.push_back(component);
+		void Entity::addComponent(Component & com) {
+			addComponent(SmartPointer<Component>(com));
+		}
+
+		void Entity::addComponent(Component * com) {
+			addComponent(SmartPointer<Component>(com));
+		}
+
+		void Entity::addComponent(SmartPointer<Component> com) {
+			components.push_back(com);
+			com.release();
 			components.back()->parent = this;
 			components.back()->init();
+
+			makeDirty();
 		}
 
-		void Entity::addComponent(Component & component) {
-			addComponent(&component);
-		}
-
-		std::vector<Component*> Entity::getComponents() {
+		std::vector<SmartPointer<Component>> Entity::getComponents() {
 			return components;
 		}
 
@@ -517,11 +523,13 @@ namespace mc {
 
 				//update the components of this entity
 				for (Index i = 0; i < components.size(); ++i) {
-					Component* a = components.at(i);
+					SmartPointer<Component> a = components.at(i);
+					if (a.get() == nullptr) {
+						MACE__THROW(NullPointer, "A component locaed at index "+std::to_string(i) +" was nullptr");
+					}
 					if (a->update()) {
 						a->destroy();
-						components.erase(components.begin() + i);
-						--i;//update the index after a removal, so we dont get an exception for accessing deleted memory
+						components.erase(components.begin() + i--);//update the index after a removal, so we dont get an exception for accessing deleted memory
 					}
 				}
 
@@ -533,8 +541,7 @@ namespace mc {
 						if (children[i] != nullptr) {
 							children[i]->kill();
 						}
-						removeChild(i);
-						--i;//update the index after the removal of an element, dont want an error
+						removeChild(i--);//update the index after the removal of an element, dont want an error
 						return;
 					}
 					children[i]->update();
@@ -543,9 +550,8 @@ namespace mc {
 		}
 
 		void Entity::init() {
-
 			if (getProperty(Entity::INIT)) {
-				throw InitializationFailedError("Entity can not have init() called twice.");
+				MACE__THROW(InitializationFailed, "Entity can not have init() called twice.");
 			}
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
@@ -558,7 +564,7 @@ namespace mc {
 
 		void Entity::destroy() {
 			if (!getProperty(Entity::INIT)) {
-				throw InitializationFailedError("Entity can not have destroy() called when it has not been initialized");
+				MACE__THROW(InitializationFailed, "Entity can not have destroy() called when it has not been initialized");
 			}
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
@@ -602,16 +608,22 @@ namespace mc {
 
 		bool Entity::getProperty(const Byte position) const {
 #ifdef MACE_DEBUG
-			if (position > 8)throw IndexOutOfBoundsError("Input position is greater than 8");
-			else if (position < 0)throw IndexOutOfBoundsError("Input position is less than 0!");
+			if (position > 8) {
+				MACE__THROW(IndexOutOfBounds, "Input position is greater than 8");
+			} else if (position < 0) {
+				MACE__THROW(IndexOutOfBounds, "Input position is less than 0!");
+			}
 #endif
 			return properties.getBit(position);
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
 #ifdef MACE_DEBUG
-			if (position > 8)throw IndexOutOfBoundsError("Input position is greater than 8");
-			else if (position < 0)throw IndexOutOfBoundsError("Input position is less than 0!");
+			if (position > 8) {
+				MACE__THROW(IndexOutOfBounds, "Input position is greater than 8");
+			} else if (position < 0) {
+				MACE__THROW(IndexOutOfBounds, "Input position is less than 0!");
+			}
 #endif
 			if (properties.getBit(position) != value) {
 				if (position != Entity::DIRTY) {

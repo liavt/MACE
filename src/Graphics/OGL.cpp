@@ -43,7 +43,7 @@ namespace mc {
 						friendlyType = "SHADER PROGRAM";
 						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
-					throw ShaderError("Error generating " + friendlyType + ".\nMessage: \"" + message + "\"\nGLSL error: \"" + log_string.get() + "\"");
+					MACE__THROW(Shader, "Error generating " + friendlyType + ".\nMessage: \"" + message + "\"\nGLSL error: \"" + log_string.get() + "\"");
 				}
 			}//anon namespace
 
@@ -53,28 +53,28 @@ namespace mc {
 				while ((result = glGetError()) != GL_NO_ERROR) {
 					switch (result) {
 						case GL_INVALID_ENUM:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!");
+							throw OpenGLError(std::string(message) + ": GL_INVALID_ENUM! An unacceptable value is specified for an enumerated argument!", line, file);
 							break;
 						case GL_INVALID_VALUE:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_VALUE! A numeric argument is out of range!");
+							throw OpenGLError(std::string(message) + ": GL_INVALID_VALUE! A numeric argument is out of range!", line, file);
 							break;
 						case GL_INVALID_OPERATION:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!");
+							throw OpenGLError(std::string(message) + ": GL_INVALID_OPERATION! The specified operation is not allowed in the current state!", line, file);
 							break;
 						case GL_INVALID_FRAMEBUFFER_OPERATION:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)");
+							throw OpenGLError(std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION! The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE!)", line, file);
 							break;
 						case GL_STACK_OVERFLOW:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!");
+							throw OpenGLError(std::string(message) + ": GL_STACK_OVERFLOW! A stack pushing operation cannot be done because it would overflow the limit of that stack's size!", line, file);
 							break;
 						case GL_STACK_UNDERFLOW:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.");
+							throw OpenGLError(std::string(message) + ": GL_STACK_UNDERFLOW! A stack popping operation cannot be done because the stack is already at its lowest point.", line, file);
 							break;
 						case GL_OUT_OF_MEMORY:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!");
+							throw OpenGLError(std::string(message) + ": GL_OUT_OF_MEMORY! There is not enough memory left to execute the command!", line, file);
 							break;
 						default:
-							throw OpenGLError("Line " + std::to_string(line) + " in " + file + ": " + message + ": OpenGL has errored with an error code of " + std::to_string(result));
+							throw OpenGLError(std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file);
 							break;
 					}
 				}
@@ -700,7 +700,7 @@ namespace mc {
 
 			void Shader::init() {
 				if (type == GL_FALSE) {
-					throw InitializationFailedError("Must assign a type to the shader before init() is called!");
+					MACE__THROW(InitializationFailed, "Must assign a type to the shader before init() is called!");
 				}
 				id = glCreateShader(type);
 			}
@@ -711,7 +711,7 @@ namespace mc {
 
 			void Shader::setSource(const Size count, const char * strings[], const int lengths[]) {
 				if (type == GL_FALSE) {
-					throw ShaderError("Shader must have a type before compile() is called");
+					MACE__THROW(Shader, "Shader must have a type before compile() is called");
 				}
 
 				glShaderSource(id, count, strings, lengths);
@@ -758,7 +758,7 @@ namespace mc {
 
 			void Shader::compile() {
 				if (type == GL_FALSE) {
-					throw ShaderError("Shader must have a type before compile() is called");
+					MACE__THROW(Shader, "Shader must have a type before compile() is called");
 				}
 				glCompileShader(id);
 
@@ -894,6 +894,7 @@ namespace mc {
 			void ShaderProgram::createVertex(const std::string & shader) {
 				createVertex(shader.c_str());
 			}
+
 #ifdef GL_GEOMETRY_SHADER
 			void ShaderProgram::createGeometry(const char shader[]) {
 				attachShader(createShader(GL_GEOMETRY_SHADER, shader));

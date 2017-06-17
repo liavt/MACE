@@ -25,7 +25,7 @@ namespace mc {
 
 	void Initializer::init() {
 		if (isInitialized()) {
-			throw InitializationFailedError("This object is already initialized!");
+			MACE__THROW(InitializationFailed, "This object is already initialized!");
 		}
 
 		obj->init();
@@ -35,7 +35,7 @@ namespace mc {
 
 	void Initializer::destroy() {
 		if (!isInitialized()) {
-			throw InvalidStateError("Can\'t destroy an uninitialized object!");
+			MACE__THROW(InvalidState, "Can\'t destroy an uninitialized object!");
 		}
 
 		obj->destroy();
@@ -69,5 +69,13 @@ namespace mc {
 
 	bool Initializer::isInitialized() const {
 		return initialized;
+	}
+
+	bool Initializer::operator==(const Initializer & other) const {
+		return obj == other.obj && initialized == other.initialized;
+	}
+
+	bool Initializer::operator!=(const Initializer & other) const {
+		return !operator==(other);
 	}
 }//mc

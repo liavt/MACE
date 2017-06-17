@@ -36,12 +36,12 @@ namespace mc {
 			//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
 			//how many floats in the entityData uniform sslBuffer.
-#define _MACE_ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
+#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
 			//which binding location the paintdata uniform sslBuffer should be bound to
-#define _MACE_ENTITY_DATA_LOCATION 15
+#define MACE__ENTITY_DATA_LOCATION 15
 
-#define _MACE_SCENE_ATTACHMENT_INDEX 0
-#define _MACE_ID_ATTACHMENT_INDEX 1
+#define MACE__SCENE_ATTACHMENT_INDEX 0
+#define MACE__ID_ATTACHMENT_INDEX 1
 
 				//ssl resources
 			Preprocessor sslPreprocessor = Preprocessor("");
@@ -103,17 +103,17 @@ namespace mc {
 				sceneTexture.bind();
 				idTexture.bind();
 
-				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_SCENE_ATTACHMENT_INDEX);
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 				//we want to clear the id texture to black only - not the color set by the user. this requires 3 setDrawBuffers - which is annoying
-				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
 
-				constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + _MACE_SCENE_ATTACHMENT_INDEX,
-					GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX };
+				constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
+					GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX };
 				frameBuffer.setDrawBuffers(2, drawBuffers);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up ssl");
@@ -128,7 +128,7 @@ namespace mc {
 
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + _MACE_SCENE_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setDrawBuffer(GL_BACK);
 
 				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
@@ -179,15 +179,15 @@ namespace mc {
 				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
 				Index pixel = 0;
-				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
-				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
-				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + _MACE_ID_ATTACHMENT_INDEX);
+				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				//it is inverted for some reason
 				frameBuffer.readPixels(os::Input::getMouseX(), height - os::Input::getMouseY(), 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
 				if (pixel > 0) {
 					if (pixel > getRenderer()->renderQueue.size()) {
-						throw AssertionFailedError("Internal Error: Pixel read from framebuffer is larger than the render queue!");
+						MACE__THROW(AssertionFailed, "Internal Error: Pixel read from framebuffer is larger than the render queue!");
 					}
 
 					//the entity id stored is 1 plus the actual one, to differeniate from an error read (0) or an actual id. so we decrement it to get the actual index
@@ -202,13 +202,13 @@ namespace mc {
 			void bindBuffer(ogl::UniformBuffer & buf) {
 				buf.bind();
 				//we set it to null, because during the actual rendering we set the data
-				buf.setData(_MACE_ENTITY_DATA_BUFFER_SIZE, nullptr);
+				buf.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr);
 				buf.unbind();
 			}//bindBuffer
 
 			void fillBuffer(GraphicsEntity * entity) {
 				if (!entity->getProperty(Entity::INIT)) {
-					throw InitializationFailedError("Entity is not initializd.");
+					MACE__THROW(InitializationFailed, "Entity is not initializd.");
 				}
 
 				ogl::UniformBuffer& buf = entity->sslBuffer;
@@ -217,7 +217,7 @@ namespace mc {
 				//now we set the uniform sslBuffer defining the transformations of the entity
 				buf.bind();
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, _MACE_ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+				float* mappedEntityData = static_cast<float*>(buf.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
 				mappedEntityData += 4;//pointer arithmetic!
 				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
@@ -231,7 +231,7 @@ namespace mc {
 				std::copy(&entity->opacity, &entity->opacity + sizeof(entity->opacity), mappedEntityData);
 				buf.unmap();
 
-				buf.setLocation(_MACE_ENTITY_DATA_LOCATION);
+				buf.setLocation(MACE__ENTITY_DATA_LOCATION);
 			}//fillBuffer
 
 			void setRefreshColor(const float r, const float g, const float b, const float a) {
@@ -311,98 +311,94 @@ namespace mc {
 					*/
 
 					//indirection is the only way to expand macros in other macros
-#define _MACE_NAME_STRINGIFY(name) "" #name
-#define _MACE_STRINGIFY(name) #name
 					//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define _MACE_DEFINE_MACRO(name) if(std::strcmp("" #name ,_MACE_NAME_STRINGIFY(name))){sslPreprocessor.defineMacro( Macro( #name , _MACE_STRINGIFY( name ) ));}
+#define MACE__DEFINE_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){sslPreprocessor.defineMacro( Macro( #name , MACE_STRINGIFY( name ) ));}
 					/*Shader macros*/
-					_MACE_DEFINE_MACRO(GL_VERTEX_SHADER);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_ATTRIBUTES);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_INPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_OUTPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_IMAGE_UNIFORMS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_VERTEX_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
 
-					_MACE_DEFINE_MACRO(GL_FRAGMENT_SHADER);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_ATTRIBUTES);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_INPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_OUTPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_FRAGMENT_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
 
-					_MACE_DEFINE_MACRO(GL_GEOMETRY_SHADER);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_ATTRIBUTES);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_INPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_IMAGE_UNIFORMS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_GEOMETRY_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS);
 
-					_MACE_DEFINE_MACRO(GL_TESS_CONTROL_SHADER);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATTRIBUTES);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_INPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_TESS_CONTROL_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS);
 
-					_MACE_DEFINE_MACRO(GL_TESS_EVALUATION_SHADER);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATTRIBUTES);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_TESS_EVALUATION_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS);
 
-					_MACE_DEFINE_MACRO(GL_COMPUTE_SHADER);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_ATTRIBUTES);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_INPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_OUTPUT_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_IMAGE_UNIFORMS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_COMPUTE_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS);
 
-					_MACE_DEFINE_MACRO(GL_MAX_UNIFORM_BUFFER_BINDINGS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMBINED_UNIFORM_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS);
-					_MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS);
-					_MACE_DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTERS);
-					_MACE_DEFINE_MACRO(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
-					_MACE_DEFINE_MACRO(GL_MAX_IMAGE_UNITS);
-					_MACE_DEFINE_MACRO(GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
+					MACE__DEFINE_MACRO(GL_MAX_UNIFORM_BUFFER_BINDINGS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTERS);
+					MACE__DEFINE_MACRO(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
 
-					_MACE_DEFINE_MACRO(GL_FALSE);
-					_MACE_DEFINE_MACRO(GL_TRUE);
-					_MACE_DEFINE_MACRO(NULL);
-#undef _MACE_NAME_STRINGIFY
-#undef _MACE_STRINGIFY
-#undef _MACE_DEFINE_MACRO
+					MACE__DEFINE_MACRO(GL_FALSE);
+					MACE__DEFINE_MACRO(GL_TRUE);
+					MACE__DEFINE_MACRO(NULL);
+#undef MACE__DEFINE_MACRO
 
 					sslPreprocessor.addInclude(vertexLibrary);
 					sslPreprocessor.addInclude(fragmentLibrary);
@@ -412,8 +408,8 @@ namespace mc {
 				}
 				return sslPreprocessor;
 			}//getSSLPreprocessor
-#undef _MACE_ENTITY_DATA_BUFFER_SIZE
-#undef _MACE_ENTITY_DATA_LOCATION
+#undef MACE__ENTITY_DATA_BUFFER_SIZE
+#undef MACE__ENTITY_DATA_LOCATION
 		}//ssl
 
 		Renderer * getRenderer() {
@@ -459,7 +455,7 @@ namespace mc {
 
 		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
 			if (e == nullptr) {
-				throw NullPointerError("Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
+				MACE__THROW(NullPointer, "Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
 			}
 
 			pushEntity(protocol, e);
@@ -609,34 +605,35 @@ namespace mc {
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
 
-			Enum status;
-			if ((status = ssl::frameBuffer.checkStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE) {
-				switch (status) {
-					case GL_FRAMEBUFFER_UNDEFINED:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
-						break;
-					case GL_FRAMEBUFFER_UNSUPPORTED:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
-						break;
-				}
+			switch (ssl::frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
+				case GL_FRAMEBUFFER_UNDEFINED:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+					break;
+				case GL_FRAMEBUFFER_UNSUPPORTED:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+					throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+					break;
+				case GL_FRAMEBUFFER_COMPLETE:
+				default:
+					//success
+					break;
 			}
 
 			constexpr Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };

@@ -28,7 +28,15 @@ namespace mc {
 		if (verboseErrors) {
 			std::cerr << Error::getErrorDump(e);
 		} else {
-			std::cerr << "Error occured:\n\t" << e.what() << std::endl;
+			std::cerr << typeid(e).name();
+			std::cerr << " occured:" << std::endl << "\t" << e.what() << std::endl;
+
+#ifdef MACE_DEBUG
+			const Error* err = dynamic_cast<const Error*>(&e);
+			if (err != nullptr) {
+				std::cerr << "\t[ " << err->getLine() << " @ " << err->getFile() << " ]" << std::endl;
+			}
+#endif
 		}
 
 		if (writeToLog) {
@@ -64,58 +72,63 @@ namespace mc {
 			dump << std::string(buffer);
 		}
 
-		dump << " MACE encountered an error and had to terminate the application.\n";
-		dump << "====ERROR DETAILS====\n";
-		dump << "Type:\n\t" << typeid(e).name() << "\n";
-		dump << "Message:\n\t" << e.what() << "\n";
-		dump << "\n";
-		dump << "====MACE DETAILS====\n";
-		dump << "Module Handler Size:\n\t" << MACE::numberOfModules() << "\n";
+		dump << " MACE encountered an error and had to terminate the application." << std::endl;
+		dump << "====ERROR DETAILS====" << std::endl;
+		dump << "Type:" << std::endl << '\t' << typeid(e).name() << std::endl;
+		dump << "Message:" << std::endl << '\t' << e.what() << std::endl;
+		const Error* err = dynamic_cast<const Error*>(&e);
+		if (err != nullptr) {
+			dump << "Line: " << std::endl << '\t' << err->getLine() << std::endl;
+			dump << "File: " << std::endl << '\t' << err->getFile() << std::endl;
+		}
+		dump << std::endl;
+		dump << "====MACE DETAILS====" << std::endl;
+		dump << "Module Handler Size:" << std::endl << '\t' << MACE::numberOfModules() << std::endl;
 		dump << "Modules:";
 		for (Index i = 0; i < MACE::numberOfModules(); ++i) {
 			const Module* m = MACE::getModule(i);
 
-			dump << "\n\t" << m->getName() << " (" << typeid(*m).name() << ")";
+			dump << std::endl << '\t'  << m->getName() << " (" << typeid(*m).name() << ')';
 		}
 		//we need to flush it as well as newline. endl accomplishes that
 		dump << std::endl;
-		dump << "Flags:\n\t";
-		dump << "DESTROYED - " << MACE::getFlag(MACE::Flags::DESTROYED) << "\n\t";
-		dump << "INIT - " << MACE::getFlag(MACE::Flags::INIT) << "\n\t";
+		dump << "Flags:" << std::endl << '\t';
+		dump << "DESTROYED - " << MACE::getFlag(MACE::Flags::DESTROYED) << std::endl << '\t' ;
+		dump << "INIT - " << MACE::getFlag(MACE::Flags::INIT) << std::endl << '\t' ;
 		dump << "STOP_REQUESTED - " << MACE::getFlag(MACE::Flags::STOP_REQUESTED);
 
-		dump << "\n\n";
+		dump << std::endl << std::endl;
 
 		//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define _MACE_CHECK_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){dump << "Yes";}else{dump << "No";}dump<<"\n";
-		dump << "====COMPILATION DETAILS====\n";
-		dump << "Tests:\n\t";
-		_MACE_CHECK_MACRO(MACE_TESTS);
-		dump << "Demos:\n\t";
-		_MACE_CHECK_MACRO(MACE_DEMOS);
+#define MACE__CHECK_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){dump << "Yes";}else{dump << "No";}dump<<std::endl;
+		dump << "====COMPILATION DETAILS====" << std::endl;
+		dump << "Tests:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_TESTS);
+		dump << "Demos:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_DEMOS);
 
 		dump << std::endl;
 
-		dump << "Include Directory:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_INCLUDES) << "\n";
-		dump << "Source Directory:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_DIRECTORY) << "\n";
-		dump << "System Name:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_SYSTEM_NAME) << "\n";
-		dump << "System Version:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_SYSTEM_VERSION) << "\n";
-		dump << "Processor:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_PROCESSOR_NAME) << "\n";
+		dump << "Include Directory:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_INCLUDES) << std::endl;
+		dump << "Source Directory:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_DIRECTORY) << std::endl;
+		dump << "System Name:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_SYSTEM_NAME) << std::endl;
+		dump << "System Version:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_SYSTEM_VERSION) << std::endl;
+		dump << "Processor:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_PROCESSOR_NAME) << std::endl;
 
 		dump << std::endl;
 
-		dump << "OpenCV:\n\t";
-		_MACE_CHECK_MACRO(MACE_OPENCV);
-		dump << "X11:\n\t";
-		_MACE_CHECK_MACRO(MACE_X11);
-		dump << "POSIX:\n\t";
-		_MACE_CHECK_MACRO(MACE_POSIX);
-		dump << "WinAPI:\n\t";
-		_MACE_CHECK_MACRO(MACE_WINAPI);
+		dump << "OpenCV:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_OPENCV);
+		dump << "X11:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_X11);
+		dump << "POSIX:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_POSIX);
+		dump << "WinAPI:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_WINAPI);
 
 		dump << std::endl;
 
-		dump << "Platform:\n\t";
+		dump << "Platform:" << std::endl << '\t';
 #ifdef MACE_WINDOWS
 		dump << "Windows";
 #elif defined(MACE_OSX)
@@ -128,7 +141,7 @@ namespace mc {
 
 		dump << std::endl;
 
-		dump << "Endianness:\n\t";
+		dump << "Endianness:" << std::endl << '\t';
 #ifdef MACE_BIG_ENDIAN
 		dump << "Big Endian";
 #elif defined(MACE_LITTLE_ENDIAN)
@@ -137,10 +150,10 @@ namespace mc {
 		dump << "Unknown Endianness";
 #endif
 		dump << std::endl;
-		dump << "Static Libs:\n\t";
-		_MACE_CHECK_MACRO(MACE_STATIC_LIBS);
-		dump << "Pointer Size:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_POINTER_SIZE) << "\n";
-		dump << "Architecture Bitness:\n\t";
+		dump << "Static Libs:" << std::endl << '\t';
+		MACE__CHECK_MACRO(MACE_STATIC_LIBS);
+		dump << "Pointer Size:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_POINTER_SIZE) << std::endl;
+		dump << "Architecture Bitness:" << std::endl << '\t';
 #ifdef MACE_32_BIT
 		dump << "32 Bit";
 #elif defined(MACE_64_BIT)
@@ -158,14 +171,14 @@ namespace mc {
 #	pragma warning( disable: 4003 ) 
 #endif 
 
-		dump << "Dynamic Library Prefix:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_PREFIX) << "\n";
-		dump << "Dynamic Library Suffix:\n\t" << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_SUFFIX) << "\n";
+		dump << "Dynamic Library Prefix:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_PREFIX) << std::endl;
+		dump << "Dynamic Library Suffix:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_SUFFIX) << std::endl;
 
 #if defined(MACE_MSVC)
 #	pragma warning( pop )
 #endif
 
-		dump << "Compiler:\n\t";
+		dump << "Compiler:" << std::endl << '\t';
 
 #ifdef MACE_MSVC
 		dump << "Visual Studio";
@@ -177,12 +190,14 @@ namespace mc {
 		dump << " IDE";
 #	endif
 
-		dump << " (Version " << std::to_string(_MSC_VER) << ")";
+		dump << " (Version " << std::to_string(_MSC_VER) << ')';
 #else
 		dump << MACE_STRINGIFY_DEFINITION(MACE_COMPILER);
 #endif
+		dump << std::endl << "Version:" << std::endl << '\t';
+		dump << MACE_STRINGIFY_DEFINITION(MACE_CMPILER_VERSION);
 
-#undef _MACE_CHECK_MACRO
+#undef MACE__CHECK_MACRO
 
 		return dump.str();
 	}
@@ -193,5 +208,17 @@ namespace mc {
 
 	void Error::setVerboseErrors(const bool & verbose) {
 		verboseErrors = verbose;
+	}
+
+	Error::Error(const char * message, const Index l, const char * f) : std::runtime_error(message), line(l), file(f) {}
+
+	Error::Error(const std::string message, const Index l, const char * f) : std::runtime_error(message), line(l), file(f) {}
+
+	Index Error::getLine() const {
+		return line;
+	}
+
+	const char * Error::getFile() const {
+		return file;
 	}
 }

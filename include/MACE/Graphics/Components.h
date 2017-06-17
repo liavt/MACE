@@ -84,6 +84,9 @@ namespace mc {
 			typedef void(*EaseUpdateCallback)(Entity*, float);
 
 			EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+		
+			bool operator==(const EaseComponent& other) const;
+			bool operator!=(const EaseComponent& other) const;
 		protected:
 			void init() override;
 			bool update() override;
@@ -97,29 +100,6 @@ namespace mc {
 			const EaseUpdateCallback updateCallback;
 			const EaseFunction ease;
 			const EaseDoneCallback done;
-		};
-
-		class PointerComponent: public Component {
-		public:
-			PointerComponent(Component* com);
-
-			Component* get();
-			const Component* get() const;
-
-			Component* operator*();
-			const Component* operator*() const;
-
-			Component* operator->();
-			const Component* operator->() const;
-		protected:
-			void init() final;
-			bool update() final;
-			void render() final;
-			void destroy() final;
-			void hover() final;
-			void clean() final;
-		private:
-			Component* ptr;
 		};
 
 		class CallbackComponent: public Component {

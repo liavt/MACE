@@ -38,21 +38,21 @@ namespace mc {
 			os::clearError();
 
 			if (isConnected()) {
-				throw AssertionFailedError("Can't call init() on a Serial class that is already connected!");
+				MACE__THROW(AssertionFailed, "Can't call init() on a Serial class that is already connected!");
 			}
 
 #ifdef MACE_WINAPI
-			serial = CreateFile(port, GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+			serial = CreateFile(TEXT(port), GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 			if (serial == INVALID_HANDLE_VALUE) {
 				const DWORD lastError = GetLastError();
 
 				if (lastError == ERROR_FILE_NOT_FOUND) {
-					throw FileNotFoundError("Serial port with name " + std::string(port) + " not found.");
+					MACE__THROW(FileNotFound, "Serial port with name " + std::string(port) + " not found.");
 				} else if (lastError == ERROR_ACCESS_DENIED) {
 					throw SystemError("Access denied accessing serial port at " + std::string(port));
 				} else {
-					throw FileNotFoundError("Error opening " + std::string(port) + " with error from CreateFile " + std::to_string(lastError));
+					MACE__THROW(FileNotFound, "Error opening " + std::string(port) + " with error from CreateFile " + std::to_string(lastError));
 				}
 			}
 
@@ -100,7 +100,7 @@ namespace mc {
 			serial = open(port, O_RDWR | O_NOCTTY | O_NDELAY, S_IRWXU);
 
 			if (serial == -1) {
-				throw FileNotFoundError("Unable to open serial port " + std::string(port));
+				MACE__THROW(FileNotFound, "Unable to open serial port " + std::string(port));
 			}
 
 			os::checkError(__LINE__, __FILE__, "Error opening serial port at " + std::string(port));
@@ -149,7 +149,7 @@ namespace mc {
 			os::clearError();
 
 			if (!connected) {
-				throw AssertionFailedError("Can't destroy an unconnected Serial object!");
+				MACE__THROW(AssertionFailed, "Can't destroy an unconnected Serial object!");
 			}
 
 #ifdef MACE_WINAPI
@@ -167,12 +167,12 @@ namespace mc {
 			os::clearError();
 
 			if (!isConnected()) {
-				throw InitializationFailedError("Failed to read from serial: Not connected to serial port");
+				MACE__THROW(InitializationFailed, "Failed to read from serial: Not connected to serial port");
 			}
 
 			if (!isValid()) {
 				destroy();
-				throw FileNotFoundError("Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
 			}
 
 			const Size available = getAvailableCharacterAmount();
@@ -211,12 +211,12 @@ namespace mc {
 			os::clearError();
 
 			if (!isConnected()) {
-				throw InitializationFailedError("Failed to write to serial: Not connected to serial port");
+				MACE__THROW(InitializationFailed, "Failed to write to serial: Not connected to serial port");
 			}
 
 			if (!isValid()) {
 				destroy();
-				throw FileNotFoundError("Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
 			}
 
 			if (bufferSize == 0) {
@@ -253,12 +253,12 @@ namespace mc {
 			os::clearError();
 
 			if (!isConnected()) {
-				throw InitializationFailedError("Unable to flush serial stream - it is not connected");
+				MACE__THROW(InitializationFailed, "Unable to flush serial stream - it is not connected");
 			}
 
 			if (!isValid()) {
 				destroy();
-				throw FileNotFoundError("Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
 			}
 
 #ifdef MACE_WINAPI
@@ -275,11 +275,11 @@ namespace mc {
 			os::clearError();
 
 			if (!isConnected()) {
-				throw InitializationFailedError("Unable to read available characters from serial port - it is not connected");
+				MACE__THROW(InitializationFailed, "Unable to read available characters from serial port - it is not connected");
 			}
 
 			if (!isValid()) {
-				throw FileNotFoundError("Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
 			}
 
 #ifdef MACE_WINAPI

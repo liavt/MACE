@@ -99,7 +99,7 @@ namespace mc {
 			}
 
 			if (!window) {
-				throw mc::InitializationFailedError("OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
+				MACE__THROW(InitializationFailed, "OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
 
 			glfwMakeContextCurrent(window);
@@ -118,7 +118,7 @@ namespace mc {
 				if (result == GLEW_ERROR_NO_GL_VERSION) {
 					errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
 				}
-				throw mc::InitializationFailedError(errorMessage.str());
+				MACE__THROW(InitializationFailed, errorMessage.str());
 			}
 
 			try {
@@ -266,8 +266,7 @@ namespace mc {
 			} catch (const std::exception& e) {
 				Error::handleError(e);
 			} catch (...) {
-				std::cerr << "An error has occured trying to initalize MACE";
-				MACE::requestStop();
+				MACE__THROW(InitializationFailed, "An error has occured trying to initalize MACE");
 			}
 
 			//this is the main rendering loop.
@@ -308,10 +307,6 @@ namespace mc {
 				} catch (const std::exception& e) {
 					Error::handleError(e);
 					break;
-				} catch (...) {
-					std::cerr << "An unknown error has occured trying to render MACE";
-					MACE::requestStop();
-					break;
 				}
 			}
 
@@ -325,9 +320,6 @@ namespace mc {
 					glfwDestroyWindow(window);
 				} catch (const std::exception& e) {
 					Error::handleError(e);
-				} catch (...) {
-					std::cerr << "An unknown error has occured trying to destroy MACE";
-					MACE::requestStop();
 				}
 			}
 
@@ -335,7 +327,7 @@ namespace mc {
 
 		void WindowModule::init() {
 			if (!glfwInit()) {
-				throw InitializationFailedError("GLFW failed to initialize!");
+				MACE__THROW(InitializationFailed, "GLFW failed to initialize!");
 			}
 
 			const auto errorCallback = [](int id, const char* desc) {
@@ -413,9 +405,9 @@ namespace mc {
 			double getScrollHorizontal() noexcept {
 				return scrollX;
 			}
-		}
+		}//Input
 
 		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char * t) : title(t), width(w), height(h) {}
-		//Input
+		
 	}//os
 }//mc

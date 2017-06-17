@@ -32,8 +32,8 @@ void create(os::WindowModule&) {
 	circleBar.setBackgroundTexture(gfx::ColorAttachment(circle, Colors::RED));
 	circleBar.setForegroundTexture(gfx::ColorAttachment(Colors::GREEN));
 	circleBar.setSelectionTexture(circle);
-	circleBar.setWidth(0.25f);
-	circleBar.setHeight(0.25f);
+	circleBar.setWidth(0.075f);
+	circleBar.setHeight(0.075f);
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
 
@@ -50,7 +50,7 @@ void create(os::WindowModule&) {
 	rectangleBar.setX(0.5f);
 	rectangleBar.addComponent(r);
 
-	rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
+	//rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
 
 	group.addChild(rectangleBar);
 

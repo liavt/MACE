@@ -23,11 +23,11 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	void Process::init() {
 		if (path == nullptr) {
-			throw NullPointerError("The path can\'t be null!");
+			MACE__THROW(NullPointer, "The path can\'t be null!");
 		} else if (args == nullptr) {
-			throw NullPointerError("The args can\'t be null!");
+			MACE__THROW(NullPointer, "The args can\'t be null!");
 		} else if (isCreated()) {
-			throw InitializationFailedError("Can\'t call init() on an already initialized Process");
+			MACE__THROW(InitializationFailed, "Can\'t call init() on an already initialized Process");
 		}
 
 		os::clearError();
@@ -62,7 +62,7 @@ namespace mc {
 		Because of things like this.
 		*/
 
-		CreateProcessA((std::string(path) + std::string(args)).c_str(), nullptr, nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
+		CreateProcess(TEXT((std::string(path) + std::string(args)).c_str()), nullptr, nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
 #elif defined(MACE_POSIX)
 		process = fork();
 
@@ -72,7 +72,7 @@ namespace mc {
 		} else if (process == -1) {
 			os::checkError(__LINE__, __FILE__, "Failed to fork process");
 
-			throw NullPointerError("Failed to fork process");
+			MACE__THROW(NullPointer, "Failed to fork process");
 		}
 #endif
 
@@ -86,7 +86,7 @@ namespace mc {
 		os::clearError();
 
 		if (!isCreated()) {
-			throw InitializationFailedError("Can\'t destroy an unitialized Process");
+			MACE__THROW(InitializationFailed, "Can\'t destroy an unitialized Process");
 		}
 
 #ifdef MACE_WINAPI
@@ -95,20 +95,20 @@ namespace mc {
 			if (!TerminateProcess(process.hProcess, 1)) {
 				os::checkError(__LINE__, __FILE__, "Failed to terminate process");
 
-				throw AssertionFailedError("Failed to terminate process");
+				MACE__THROW(AssertionFailed, "Failed to terminate process");
 			}
 		}
 
 		if (!CloseHandle(process.hProcess)) {
 			os::checkError(__LINE__, __FILE__, "Failed to close handle to process");
 
-			throw AssertionFailedError("Failed to close handle to process");
+			MACE__THROW(AssertionFailed, "Failed to close handle to process");
 		}
 
 		if (!CloseHandle(process.hThread)) {
 			os::checkError(__LINE__, __FILE__, "Failed to close handle to process thread");
 
-			throw AssertionFailedError("Failed to close handle to process thread");
+			MACE__THROW(AssertionFailed, "Failed to close handle to process thread");
 		}
 #elif defined(MACE_POSIX)
 		int result = kill(process, SIGTERM);
@@ -119,7 +119,7 @@ namespace mc {
 			} else {
 				os::checkError(__LINE__, __FILE__, "Failed to send SIGTERM to process with result " + std::to_string(result));
 
-				throw AssertionFailedError("Failed to kill process");
+				MACE__THROW(AssertionFailed, "Failed to kill process");
 
 			}
 		}
@@ -135,7 +135,7 @@ namespace mc {
 		os::clearError(__LINE__, __FILE__);
 
 		if (!isCreated()) {
-			throw InitializationFailedError("Can\'t use wait() on unitialized Process");
+			MACE__THROW(InitializationFailed, "Can\'t use wait() on unitialized Process");
 		}
 
 #ifdef MACE_WINAPI
@@ -147,7 +147,7 @@ namespace mc {
 		if (GetExitCodeProcess(process.hProcess, &status) == 0) {
 			os::checkError(__LINE__, __FILE__, "Failed to retrieve exit code for process");
 
-			throw AssertionFailedError("Failed to retrieve exit code for process");
+			MACE__THROW(AssertionFailed, "Failed to retrieve exit code for process");
 		}
 
 		os::checkError(__LINE__, __FILE__, "Error retrieving exit code for process");
@@ -160,7 +160,7 @@ namespace mc {
 		if (result != process) {
 			os::checkError(__LINE__, __FILE__, "waitpid() returned exit code " + std::to_string(result));
 
-			throw AssertionFailedError("waitpid() returned exit code " + std::to_string(result));
+			MACE__THROW(AssertionFailed, "waitpid() returned exit code " + std::to_string(result));
 		}
 
 		os::checkError(__LINE__, __FILE__, "Error waiting for process to end");

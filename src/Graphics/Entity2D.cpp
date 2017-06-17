@@ -146,7 +146,7 @@ namespace mc {
 		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
 			Image* img = dynamic_cast<Image*>(e);
 			if (img == nullptr) {
-				throw InvalidTypeError("Input to RenderProtocol<Image>::initEntity must be of type Image");
+				MACE__THROW(InvalidType, "Input to RenderProtocol<Image>::initEntity must be of type Image");
 			}
 
 			img->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
@@ -155,7 +155,7 @@ namespace mc {
 		void RenderProtocol<Image>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Image* entity = dynamic_cast<Image*>(e);
 			if (entity == nullptr) {
-				throw InvalidTypeError("You must queue an Image for RenderProtocol<Image>");
+				MACE__THROW(InvalidType, "You must queue an Image for RenderProtocol<Image>");
 			}
 
 			entity->texture.bind();
@@ -302,18 +302,15 @@ namespace mc {
 
 
 		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const EaseComponent::EaseDoneCallback callback) {
-			EaseComponent* com = new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
+			addComponent(SmartPointer<Component>(new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
 				ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 
 				if (bar == nullptr) {
-					throw NullPointerError("Internal Error: ProgressBar in EaseComponent is nullptr");
+					MACE__THROW(NullPointer, "Internal Error: ProgressBar in EaseComponent is nullptr");
 				}
 
-				bar->setProgress(progress); 
-			}, function, callback);
-			addComponent(new PointerComponent(com));
-
-			makeDirty();
+				bar->setProgress(progress);
+			}, function, callback), true));
 		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {
@@ -414,7 +411,7 @@ namespace mc {
 		void RenderProtocol<ProgressBar>::initEntity(GraphicsEntity* e) {
 			ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 			if (bar == nullptr) {
-				throw InvalidTypeError("Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
+				MACE__THROW(InvalidType, "Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
 			}
 
 			bar->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
@@ -423,7 +420,7 @@ namespace mc {
 		void RenderProtocol<ProgressBar>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			ProgressBar* entity = dynamic_cast<ProgressBar*>(e);
 			if (entity == nullptr) {
-				throw InvalidTypeError("You must queue an ProgressBar for RenderProtocol<ProgressBar>");
+				MACE__THROW(InvalidType, "You must queue an ProgressBar for RenderProtocol<ProgressBar>");
 			}
 
 			entity->backgroundTexture.bind(0);
@@ -647,7 +644,7 @@ namespace mc {
 		void RenderProtocol<Letter>::initEntity(GraphicsEntity* en) {
 			Letter* let = dynamic_cast<Letter*>(en);
 			if (let == nullptr) {
-				throw InvalidTypeError("Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
+				MACE__THROW(InvalidType, "Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
 			}
 
 			let->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
@@ -656,7 +653,7 @@ namespace mc {
 		void RenderProtocol<Letter>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Letter* entity = dynamic_cast<Letter*>(e);
 			if (entity == nullptr) {
-				throw InvalidTypeError("You must queue an Letter for RenderProtocol<Letter>");
+				MACE__THROW(InvalidType, "You must queue an Letter for RenderProtocol<Letter>");
 			}
 
 			entity->mask.bind(0);
@@ -868,7 +865,7 @@ namespace mc {
 
 		void Text::onClean() {
 			if (font.getID() == 0) {
-				throw InitializationFailedError("Can\'t render Text with unitialized font!");
+				MACE__THROW(InitializationFailed, "Can\'t render Text with unitialized font!");
 			}
 
 			for (Index i = 0; i < letters.size(); ++i) {
@@ -1009,7 +1006,7 @@ namespace mc {
 		void RenderProtocol<Button>::initEntity(GraphicsEntity* e) {
 			Button* but = dynamic_cast<Button*>(e);
 			if (but == nullptr) {
-				throw InvalidTypeError("Input to RenderProtocol<Button>::initEntity must be of type Button");
+				MACE__THROW(InvalidType, "Input to RenderProtocol<Button>::initEntity must be of type Button");
 			}
 
 			but->getBuffer().bindToUniformBlock(renderer.getShader(), "buttonData");
@@ -1018,7 +1015,7 @@ namespace mc {
 		void RenderProtocol<Button>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
 			Button* entity = dynamic_cast<Button*>(e);
 			if (entity == nullptr) {
-				throw InvalidTypeError("You must queue a Button for RenderProtocol<Button>");
+				MACE__THROW(InvalidType, "You must queue a Button for RenderProtocol<Button>");
 			}
 
 			entity->texture.bind(0);

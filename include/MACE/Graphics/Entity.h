@@ -32,7 +32,7 @@ namespace mc {
 		/**
 		Thrown when an error occured trying to read or write an image
 		*/
-		MACE_DECLARE_ERROR(BadImage)
+		MACE__DECLARE_ERROR(BadImage)
 
 		using EntityProperties = BitField;
 
@@ -67,7 +67,6 @@ namespace mc {
 		*/
 		class Component: public Initializable{
 			friend class Entity;
-			friend class PointerComponent;
 		public:
 			virtual ~Component() = default;
 
@@ -150,7 +149,7 @@ namespace mc {
 				} else if (mat.depth() == CV_32F) {
 					type = GL_FLOAT;
 				} else if (mat.depth() == CV_64F) {
-					throw BadImageError("Unsupported cv::Mat depth: CV_64F");
+					MACE__THROW(BadImage, "Unsupported cv::Mat depth: CV_64F");
 				}
 
 				resetPixelStorage();
@@ -542,12 +541,13 @@ namespace mc {
 			*/
 			void addChild(Entity* e);
 
-			void addComponent(Component* action);
+			void addComponent(Component& com);
+			void addComponent(Component* com);
 			/**
-			@copydoc Entity::addComponent(Component*)
+			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
-			void addComponent(Component& action);
-			std::vector<Component*> getComponents();
+			void addComponent(SmartPointer<Component> com);
+			std::vector<SmartPointer<Component>> getComponents();
 
 			const float& getWidth() const;
 			/**
@@ -764,7 +764,7 @@ namespace mc {
 			*/
 			virtual void onHover();
 		private:
-			std::vector<Component*> components = std::vector<Component*>();
+			std::vector<SmartPointer<Component>> components = std::vector<SmartPointer<Component>>();
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 

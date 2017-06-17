@@ -22,7 +22,7 @@ namespace mc {
 	/**
 	`Exception` thrown when a syntax error is encountered, or #error is called. The filename and line number will be in message.
 	*/
-	MACE_DECLARE_ERROR(Preprocessor)
+	MACE__DECLARE_ERROR(Preprocessor)
 
 	/**
 	Represents a `Macro` in code. Created automatically when #define is encountered.
@@ -135,7 +135,7 @@ namespace mc {
 	It can define all standard and operating system macros with special functions. Additionally, the following macros are always defined:
 	| Macro name             | Macro definition                                                                                                                   |
 	|------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-	| `__MACE__`             | Always defined                                                                                                                     |
+	| `_MACE_`             | Always defined                                                                                                                     |
 	| `__INCLUDE_LEVEL__`    | Incremented by 1 when a file is included, and decremented when the included file ends. Identical to the GCC macro of the same name |
 	| `__IF_SCOPE__`         | The depth of the current preprocessor conditional.  Shouldn't be used.                                                             |
 	| `__CURRENT_IF_SCOPE__` | The level at which a conditional directive returned false. Shouldn't be used.                                                      |

@@ -34,19 +34,16 @@ class TestComponent: public gfx::Component {
 };
 
 class RotationComponent: public gfx::Component {
-	void init(gfx::Entity* e) {};
-	bool update(gfx::Entity* e) {
+	void init() override {};
+	bool update() override {
 		if( rotating ) {
-			e->rotate(0.0f, 0.0f, 0.01f);
+			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
 		return false;
 	};
-	void render(gfx::Entity* e) {};
-	void destroy(gfx::Entity* e) {};
+	void render() override {};
+	void destroy() override {};
 };
-
-TestComponent testComponent = TestComponent();
-
 
 void create(os::WindowModule&) {
 	srand((unsigned) time(0));
@@ -67,7 +64,7 @@ void create(os::WindowModule&) {
 			entity->setWidth((1.0f / elementNum) * 2);
 			entity->setHeight((1.0f / elementNum) * 2);
 
-			entity->addComponent(new gfx::PointerComponent(new TestComponent()));
+			entity->addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
 
 			if( x >= elementNum / 2 ) {
 				if( y >= elementNum / 2 ) {
@@ -119,10 +116,10 @@ int main() {
 		topRight.setX(0.5f);
 		topRight.setY(0.5f);
 
-		botLeft.addComponent(new gfx::PointerComponent(new RotationComponent()));
-		botRight.addComponent(new gfx::PointerComponent(new RotationComponent()));
-		topLeft.addComponent(new gfx::PointerComponent(new RotationComponent()));
-		topRight.addComponent(new gfx::PointerComponent(new RotationComponent()));
+		botLeft.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
+		botRight.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
+		topLeft.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
+		topRight.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
 
 		module.addChild(botLeft);
 		module.addChild(botRight);
