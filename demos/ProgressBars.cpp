@@ -50,7 +50,7 @@ void create(os::WindowModule&) {
 	rectangleBar.setX(0.5f);
 	rectangleBar.addComponent(r);
 
-	//rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
+	rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
 
 	group.addChild(rectangleBar);
 

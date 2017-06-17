@@ -29,7 +29,7 @@ namespace mc {
 	/**
 	Thrown when an error occured trying to read or write a sound file
 	*/
-	MACE__DECLARE_ERROR(BadSound)
+	MACE__DECLARE_ERROR(BadSound);
 
 	class Sound: public Initializable {
 	public:

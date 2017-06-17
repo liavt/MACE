@@ -23,7 +23,7 @@ namespace mc {
 		/**
 		Thrown when something relate to Freetype or fonts fails
 		*/
-		MACE__DECLARE_ERROR(Font)
+		MACE__DECLARE_ERROR(Font);
 
 		class Entity2D: public GraphicsEntity {
 		public:

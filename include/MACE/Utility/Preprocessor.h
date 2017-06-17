@@ -22,7 +22,7 @@ namespace mc {
 	/**
 	`Exception` thrown when a syntax error is encountered, or #error is called. The filename and line number will be in message.
 	*/
-	MACE__DECLARE_ERROR(Preprocessor)
+	MACE__DECLARE_ERROR(Preprocessor);
 
 	/**
 	Represents a `Macro` in code. Created automatically when #define is encountered.
@@ -245,7 +245,7 @@ namespace mc {
 		@see Preprocessor::getLine()
 		*/
 		void setFilename(const std::string& filename);
-		
+
 		/**
 		Gets the current line number. The `__LINE__` macro's value is always equal to this function and `#line` can change the line number.
 		<p>

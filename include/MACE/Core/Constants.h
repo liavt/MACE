@@ -161,61 +161,61 @@ namespace mc {
 	};
 
 #define MACE__GET_ERROR_NAME(name) name##Error
-#define MACE__DECLARE_ERROR(name) class MACE__GET_ERROR_NAME(name) : public Error{public: using Error::Error;};
-#define MACE__THROW(name, message) throw MACE__GET_ERROR_NAME(name)##( message, __LINE__, __FILE__)
+#define MACE__DECLARE_ERROR(name) class MACE__GET_ERROR_NAME(name) : public Error{public: using Error::Error;}
+#define MACE__THROW(name, message) throw MACE__GET_ERROR_NAME(name) ( message, __LINE__, __FILE__)
 
 	/**
 	Thrown when a pointer is equal to NULL
 	*/
-	MACE__DECLARE_ERROR(NullPointer)
+	MACE__DECLARE_ERROR(NullPointer);
 
-		/**
-		Thrown when an assertion fails.
-		@see MACE::assertModule(std::string)
-		*/
-		MACE__DECLARE_ERROR(AssertionFailed)
+	/**
+	Thrown when an assertion fails.
+	@see MACE::assertModule(std::string)
+	*/
+	MACE__DECLARE_ERROR(AssertionFailed);
 
-		/**
-		Thrown when an object wasn't initializaed or initializtion failed
-		*/
-		MACE__DECLARE_ERROR(InitializationFailed)
+	/**
+	Thrown when an object wasn't initializaed or initializtion failed
+	*/
+	MACE__DECLARE_ERROR(InitializationFailed);
 
-		/**
-		Thrown when an error occured trying to read or write a file
-		@see FileNotFoundError
-		*/
-		MACE__DECLARE_ERROR(BadFile)
+	/**
+	Thrown when an error occured trying to read or write a file
+	@see FileNotFoundError
+	*/
+	MACE__DECLARE_ERROR(BadFile);
 
-		/**
-		Thrown when a file was not found on the filesystem
-		@see BadFileError
-		*/
-		MACE__DECLARE_ERROR(FileNotFound)
+	/**
+	Thrown when a file was not found on the filesystem
+	@see BadFileError
+	*/
+	MACE__DECLARE_ERROR(FileNotFound);
 
-		/**
-		Thrown when a function looks for an object, but doesn't find it.
-		*/
-		MACE__DECLARE_ERROR(ObjectNotFound)
+	/**
+	Thrown when a function looks for an object, but doesn't find it.
+	*/
+	MACE__DECLARE_ERROR(ObjectNotFound);
 
-		/**
-		Thrown when something is of the wrong type
-		*/
-		MACE__DECLARE_ERROR(InvalidType)
+	/**
+	Thrown when something is of the wrong type
+	*/
+	MACE__DECLARE_ERROR(InvalidType);
 
-		/**
-		Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
-		*/
-		MACE__DECLARE_ERROR(IndexOutOfBounds)
+	/**
+	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
+	*/
+	MACE__DECLARE_ERROR(IndexOutOfBounds);
 
-		/**
-		Thrown when something was in the wrong state at the time of an operation
-		*/
-		MACE__DECLARE_ERROR(InvalidState)
+	/**
+	Thrown when something was in the wrong state at the time of an operation
+	*/
+	MACE__DECLARE_ERROR(InvalidState);
 
-		/**
-		Thrown when the operating system throws an error
-		*/
-		MACE__DECLARE_ERROR(System)
+	/**
+	Thrown when the operating system throws an error
+	*/
+	MACE__DECLARE_ERROR(System);
 }
 
 #endif//MACE_CORE_CONSTANTS_H

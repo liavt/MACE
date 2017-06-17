@@ -32,7 +32,7 @@ namespace mc {
 		/**
 		Thrown when an error occured trying to read or write an image
 		*/
-		MACE__DECLARE_ERROR(BadImage)
+		MACE__DECLARE_ERROR(BadImage);
 
 		using EntityProperties = BitField;
 

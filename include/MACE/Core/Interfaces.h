@@ -59,11 +59,11 @@ namespace mc {
 	template<typename T>
 	class SmartPointer {
 	public:
-		constexpr SmartPointer(T& p) : SmartPointer(&p) {}
+		SmartPointer(T& p) : SmartPointer(&p) {}
 
-		constexpr SmartPointer(T* p) : SmartPointer(p, false) {}
+		SmartPointer(T* p) : SmartPointer(p, false) {}
 
-		constexpr SmartPointer(T* p, const bool isDynamic) : ptr(p), dynamic(isDynamic) {
+		SmartPointer(T* p, const bool isDynamic) : ptr(p), dynamic(isDynamic) {
 			if (ptr == nullptr) {
 				MACE__THROW(NullPointer, "Inputted pointer can not be nullptr!");
 			}
