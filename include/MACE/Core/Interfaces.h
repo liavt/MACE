@@ -122,7 +122,7 @@ namespace mc {
 		}
 
 		bool isDynamic() const {
-			return dynamic
+			return dynamic;
 		}
 
 		bool operator==(const SmartPointer& other) const {
