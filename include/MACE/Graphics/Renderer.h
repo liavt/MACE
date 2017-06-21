@@ -12,98 +12,34 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_GRAPHICS_RENDERER_H
 
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/OGL.h>
 #include <MACE/Graphics/Window.h>
 #include <deque>
 
 
 namespace mc {
-	//forward defining to prevent inclusion of header file
-	class Preprocessor;
-
 	namespace gfx {
 
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<std::pair<Index, GraphicsEntity*>>;
 
-		//forward define for friends
+		//forward define for friend declaration in later classes
 		class Renderer;
 
-		/**
-		Holds resources for the Standard Shader Library (SSL.) SSL makes it easy to interact with MACE entities from shaders through special header files.
-		@internal
-		*/
-		namespace ssl {
-			/**
-			@internal
-			@opengl
-			*/
-			void init(const Size& originalWidth, const Size& originalHeight);
-			/**
-			@internal
-			@opengl
-			*/
-			void setUp(os::WindowModule* win);
+		class Painter {
+			friend class Renderer;
+		public:
+			virtual ~Painter() noexcept = default;
 
-			/**
-			@internal
-			@opengl
-			*/
-			void tearDown(os::WindowModule* win);
-			/**
-			@internal
-			@opengl
-			*/
-			void destroy();
-			/**
-			@internal
-			@opengl
-			*/
-			void resize(const Size& width, const Size& height);
+			GraphicsEntity* getEntity();
+			const GraphicsEntity* getEntity() const;
 
-			/**
-			@internal
-			@opengl
-			*/
-			void checkInput(os::WindowModule* win);
+			virtual bool operator==(const Painter& other) const;
+			bool operator!=(const Painter& other) const;
+		protected:
+			Painter(GraphicsEntity* const en);
 
-			/**
-			@internal
-			@opengl
-			*/
-			void bindBuffer(ogl::UniformBuffer& buf);
-			/**
-			@internal
-			@opengl
-			*/
-			void fillBuffer(GraphicsEntity* en);
-
-			/**
-			@internal
-			@opengl
-			*/
-			void bindEntity(const GraphicsEntity* en, ogl::ShaderProgram& prog);
-			/**
-			@internal
-			@opengl
-			*/
-			void bindShaderProgram(ogl::ShaderProgram& prog);
-
-			/**
-			@internal
-			@opengl
-			*/
-			void setRefreshColor(const float r, const float g, const float b, const float a);
-			
-			/**
-			@internal
-			*/
-			std::string processShader(const std::string& shader, const GLenum& type);
-			/**
-			@internal
-			*/
-			const mc::Preprocessor& getSSLPreprocessor();
-		}
+			GraphicsEntity* const entity;
+		};
 
 		//we declare RenderImpl which RenderProtocol extends. WE can't store a pointer to RenderProtocol (because its templated), but we can point to RenderImpl
 		/**
@@ -111,8 +47,6 @@ namespace mc {
 		*/
 		class RenderImpl {
 			friend class Renderer;
-			//ssl::init needs to be friends to access the index variable
-			friend void ssl::init(const Size&, const Size&);
 		public:
 			RenderImpl() noexcept = default;
 			virtual ~RenderImpl() noexcept = default;
@@ -175,8 +109,12 @@ namespace mc {
 		template<typename T>
 		class RenderProtocol: public RenderImpl {
 		public:
-			using RenderImpl::RenderImpl;
-
+			RenderProtocol() {
+				//cheaty way to always fail a static_assert without including <type_traits> for std::false_type
+				//NOTE: for the uninformed, static_assert(false) is ill formed
+				static_assert(sizeof(T) != sizeof(T), "No RenderProtocol specialization exists for this GraphicsEntity type!");
+			}
+		private:
 			void resize(const Size, const Size) override {};
 
 			void init(const Size, const Size) override {}
@@ -198,41 +136,88 @@ namespace mc {
 		/**
 		@todo add function to change how many samples msaa uses
 		*/
-		class Renderer{
-			//needs to access registerProtocol
-			friend void ssl::init(const Size&, const Size&);
-			friend void ssl::bindEntity(const GraphicsEntity* en, ogl::ShaderProgram& prog);
-			friend void ssl::checkInput(os::WindowModule* win);
+		class Renderer {
+
 		public:
 			virtual ~Renderer() = default;
+
+			/**
+			@opengl
+			*/
+			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
+
+			virtual void onResize(const Size width, const Size height) = 0;
+			virtual void onInit(const Size originalWidth, const Size originalHeight) = 0;
+			virtual void onSetUp(os::WindowModule* win) = 0;
+			virtual void onTearDown(os::WindowModule* win) = 0;
+			virtual void onDestroy() = 0;
+			virtual void onInputCheck(os::WindowModule* win) = 0;
+
+			/**
+			@internal
+			@opengl
+			*/
+			void resize(const Size width, const Size height);
+
+			/**
+			@internal
+			@opengl
+			*/
+			void init(const Size originalWidth, const Size originalHeight);
+
+			/**
+			@internal
+			@opengl
+			*/
+			void setUp(os::WindowModule* win);
+
+			/**
+			@internal
+			@opengl
+			*/
+			void tearDown(os::WindowModule* win);
+
+			/**
+			@internal
+			@opengl
+			*/
+			void renderFrame(os::WindowModule* win);
+
+			/**
+			@internal
+			@opengl
+			*/
+			void checkInput(os::WindowModule* win);
+
+
+			/**
+			@internal
+			@opengl
+			*/
+			void destroy();
 
 			/**
 			@internal
 			*/
 			void flagResize();
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void resize(const Size width, const Size height);
 
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void init(const Size originalWidth, const Size originalHeight);
+			void initEntity(GraphicsEntity* en, const Index protocol);
 
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void initEntity(GraphicsEntity* en, const Index protocol);
+			void cleanEntity(GraphicsEntity* en, const Index protocol);
 
 			/**
 			@internal
 			@opengl
 			*/
-			virtual void setUp(os::WindowModule* win);
+			void destroyEntity(GraphicsEntity* en, const Index protocol);
 
 			void queue(GraphicsEntity* e, const Index protocol);
 
@@ -242,47 +227,8 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			virtual void tearDown(os::WindowModule* win);
+			void clearBuffers();
 
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void renderFrame(os::WindowModule* win);
-
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void checkInput(os::WindowModule* win);
-
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void cleanEntity(GraphicsEntity* en, const Index protocol);
-
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void destroy();
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void destroyEntity(GraphicsEntity* en, const Index protocol);
-
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void clearBuffers();
-
-			/**
-			@opengl
-			*/
-			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f);
 			/**
 			@opengl
 			*/
@@ -292,9 +238,10 @@ namespace mc {
 			Index registerProtocol() {
 				//in destroy(), this memory is deleted
 				RenderImpl* protocol = new RenderProtocol<T>();
-				if( protocol == nullptr ) {
+				if (protocol == nullptr) {
 					MACE__THROW(InvalidType, "Error creating RenderProtocol because template does not exist for it");
 				}
+
 				protocol->init(getOriginalWidth(), getOriginalHeight());
 				pushProtocol(protocol);
 				return numberOfProtocols() - 1;
@@ -319,10 +266,7 @@ namespace mc {
 			void pushEntity(Index protocol, GraphicsEntity*  entity);
 			void pushProtocol(RenderImpl* protocol);
 
-			virtual void generateFramebuffer(const Size& width, const Size& height);
-
 			RenderQueue renderQueue = RenderQueue();
-			std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
 
 			Size originalWidth = 0;
 			Size originalHeight = 0;
@@ -335,60 +279,9 @@ namespace mc {
 		private:
 			//this variable is used for both ssl and Renderer. Each iteration through the queue, this is incremented. It is then passed to the shader, and the shader returns which entity was hovered over
 			Index entityIndex = 0;
+
+			std::vector<RenderImpl*> protocols = std::vector<RenderImpl*>();
 		};//Renderer
-
-		class SimpleQuadRenderer {
-		public:
-			SimpleQuadRenderer(const bool ssl = true);
-
-			/**
-			@opengl
-			*/
-			void init(const char* vertexShader, const char* fragShader);
-			/**
-			@copydoc SimpleQuadRenderer::init(const char*, const char*)
-			*/
-			void init(const char* vertexShader, const std::string& fragShader);
-			/**
-			@copydoc SimpleQuadRenderer::init(const char*, const char*)
-			*/
-			void init(const std::string& vertexShader, const char* fragShader);
-			/**
-			@copydoc SimpleQuadRenderer::init(const char*, const char*)
-			*/
-			void init(const std::string& vertexShader, const std::string& fragShader);
-			/**
-			@opengl
-			*/
-			void destroy();
-
-			/**
-			@opengl
-			*/
-			void bind() const;
-
-			/**
-			@opengl
-			*/
-			void draw(const GraphicsEntity* en = nullptr);
-
-			void setShader(const ogl::ShaderProgram& shader);
-			ogl::ShaderProgram& getShader();
-			const ogl::ShaderProgram& getShader() const;
-
-			void setVertexArray(const ogl::VertexArray& vertices);
-			ogl::VertexArray& getVertexArray();
-			const ogl::VertexArray& getVertexArray() const;
-
-			bool operator==(const SimpleQuadRenderer& other) const;
-			bool operator!=(const SimpleQuadRenderer& other) const;
-		private:
-			ogl::ShaderProgram shaders2D = ogl::ShaderProgram();
-			ogl::VertexArray square = ogl::VertexArray();
-
-			const bool useSSL;
-		};
-
 	}//gfx
 }//mc
 

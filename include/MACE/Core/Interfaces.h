@@ -63,7 +63,7 @@ namespace mc {
 
 		SmartPointer(T* p) : SmartPointer(p, false) {}
 
-		SmartPointer(T* p, const bool isDynamic) : ptr(p), dynamic(isDynamic) {
+		SmartPointer(T* p, const bool isDynamic) : dynamic(isDynamic), ptr(p)  {
 			if (ptr == nullptr) {
 				MACE__THROW(NullPointer, "Inputted pointer can not be nullptr!");
 			}

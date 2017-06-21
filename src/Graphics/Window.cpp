@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/GLRenderer.h>
 
 #include <MACE/Utility/BitField.h>
 
@@ -214,6 +215,11 @@ namespace mc {
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetWindowRefreshCallback(window, windowDamaged);
+
+			if (gfx::getRenderer() == nullptr) {
+				//default to OpenGL
+				gfx::setRenderer(new gfx::GLRenderer());
+			}
 
 			gfx::getRenderer()->init(config.width, config.height);
 
