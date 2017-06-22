@@ -40,5 +40,5 @@ To generate documentation on your own, download Doxygen. Then, run Doxygen with 
 A new folder called *out* should have been created. Subfolders contain the different documentation types, like html or xml.
 
 ## Important Notes
-* MACE will never delete any pointer you give it and you are never expected to delete a pointer it gives you.
+* You should never delete any pointer given to you by MACE and MACE will never delete any pointer you give it unless explicitely specified.
 * MACE has varying levels on abstraciton, and gives you the power to change most of these levels. You can completely change how MACE works without touching the source code. Doing this may be dangerous if you don't know what you are doing

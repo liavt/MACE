@@ -9,6 +9,7 @@ There are many different macros that can determine how MACE works.
 | MACE_DEBUG | Does more error checking and more verbose error messages. Automatically defined in Debug configurations |
 | MACE_EXPOSE_WINAPI | If defined, classes that use Winapi will have functions to allow for direct access to any Winapi variables. Will not work if MACE_WINAPI is not defined. |
 | MACE_EXPOSE_POSIX | If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined |
+| MACE_EXPOSE_OPENGL | If defined, the OpenGL abstraction layer and renderer will be exposed by including MACE.h |
 
 ###Libraries
 

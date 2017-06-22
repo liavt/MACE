@@ -79,10 +79,9 @@ namespace mc {
 			REQUIRE_FALSE(MACE::moduleExists(&m1));
 			REQUIRE_FALSE(MACE::moduleExists(&m2));
 
-			//testing flags. 8 because it is a byte.
-			for( Index i = 0; i < 8; i++ ) {
-				REQUIRE_FALSE(MACE::getFlag(i));
-			}
+			REQUIRE_FALSE(MACE::getFlag(MACE::INIT));
+			REQUIRE_FALSE(MACE::getFlag(MACE::DESTROYED));
+			REQUIRE_FALSE(MACE::getFlag(MACE::STOP_REQUESTED));
 		}
 
 	}

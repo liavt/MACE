@@ -29,12 +29,6 @@ namespace mc {
 			originalHeight = height;
 
 			onInit(width, height);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
-		}//init
-
-		void Renderer::initEntity(GraphicsEntity * en, const Index protocol) {
-			protocols[protocol]->initEntity(en);
 		}
 
 		void Renderer::setUp(os::WindowModule* win) {
@@ -49,19 +43,22 @@ namespace mc {
 			}
 
 			onSetUp(win);
-
-			for (Index i = 0; i < protocols.size(); ++i) {
-				protocols[i]->setUp(win, &renderQueue);
-			}
 		}//setUp
 
-		void Renderer::queue(GraphicsEntity * e, const Index protocol) {
+		Index Renderer::queue(GraphicsEntity * e) {
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
 			}
 
-			pushEntity(protocol, e);
+			onQueue(e);
+
+			//it adds 1 so 0 represents a non-initalized value
+			return pushEntity(e) + 1;
 		}//queue
+
+		void Renderer::remove(const Index id) {
+			renderQueue[id - 1] = nullptr;
+		}
 
 		void Renderer::flagResize() {
 			resized = true;
@@ -70,64 +67,36 @@ namespace mc {
 		void Renderer::resize(const Size width, const Size height) {
 			onResize(width, height);
 
-			for (Index i = 0; i < protocols.size(); ++i) {
-				protocols[i]->resize(width, height);
-			}
-
 			resized = false;
 		}//resize
 
-		Size Renderer::numberOfProtocols() {
-			//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
-			return static_cast<Size>(protocols.size());
-		}//numberOfProtocols
-
 		void Renderer::tearDown(os::WindowModule* win) {
-			for (Index i = 0; i < protocols.size(); ++i) {
-				protocols[i]->tearDown(win, &renderQueue);
-			}
-
 			onTearDown(win);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
 		}//tearDown
 
 		void Renderer::renderFrame(os::WindowModule* win) {
 			setUp(win);
-			entityIndex = 0;
-			for (RenderQueue::iterator pair = renderQueue.begin(); pair != renderQueue.end(); ++pair) {
-				protocols[pair->first]->renderEntity(win, pair->second);
-				++entityIndex;
+			for (Index i = 0; i < renderQueue.size(); ++i) {
+				if (renderQueue[i] != nullptr) {
+					//remember id of entity is incremented by one
+					//render
+				}
 			}
 			tearDown(win);
 		}//renderFrame
 
-		void Renderer::checkInput(os::WindowModule* win) {
-			onInputCheck(win);
-		}//checkInput
+		void Renderer::checkInput(os::WindowModule*) {
+			GraphicsEntity* hovered = getEntityAt(os::Input::getMouseX(), os::Input::getMouseY());
 
-		void Renderer::cleanEntity(GraphicsEntity * en, const Index protocol) {
-			protocols[protocol]->cleanEntity(en);
-		}
-
-		void Renderer::destroy() {
-			while (!protocols.empty()) {
-				RenderImpl* protocol = protocols.back();
-				protocol->destroy();
-				delete protocol;
-				protocols.pop_back();
+			if (hovered != nullptr) {
+				hovered->hover();
 			}
 
+		}//checkInput
+
+		void Renderer::destroy() {
 			onDestroy();
 		}//destroy()
-
-		void Renderer::destroyEntity(GraphicsEntity * en, const Index protocol) {
-			protocols[protocol]->destroyEntity(en);
-		}
-
-		void Renderer::clearBuffers() {
-			renderQueue.clear();
-		}//clearBuffers()
 
 		void Renderer::setRefreshColor(const Color & c) {
 			setRefreshColor(c.r, c.g, c.b, c.a);
@@ -161,21 +130,20 @@ namespace mc {
 			return renderQueue;
 		}
 
-		Index Renderer::getEntityIndex() const {
-			return entityIndex;
-		}
-
 		bool Renderer::isResized() const {
 			return resized;
 		}
 
-		void Renderer::pushEntity(Index protocol, GraphicsEntity * entity) {
-			renderQueue.push_back(std::pair<Index, GraphicsEntity*>(protocol, entity));
+		Index Renderer::pushEntity(GraphicsEntity * entity) {
+			for (Index i = 0; i < renderQueue.size(); ++i) {
+				if (renderQueue[i] == nullptr) {
+					renderQueue[i] = entity;
+					return i;
+				}
+			}
+			renderQueue.push_back(entity);
+			return renderQueue.size() - 1;
 		}//pushEntity(protocol, entity)
-
-		void Renderer::pushProtocol(RenderImpl * protocol) {
-			protocols.push_back(protocol);
-		}//pushProtocol(protocol)
 
 		Painter::Painter(GraphicsEntity * const en) : entity(en) {
 #ifdef MACE_DEBUG

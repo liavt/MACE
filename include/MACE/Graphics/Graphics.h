@@ -9,8 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#ifndef MACE_GRAPHICS_GRAPHICS_H
-#define MACE_GRAPHICS_GRAPHICS_H
+#ifndef MACE__GRAPHICS_GRAPHICS_H
+#define MACE__GRAPHICS_GRAPHICS_H
 
 namespace mc {
 	/**
@@ -20,7 +20,13 @@ namespace mc {
 	}
 }
 
-#include <MACE/Graphics/OGL.h>
+//the following two headers should not be included by default as they are for implementation of the
+//OpenGL renderer and are useless to the end user unless they are using the OpenGL abstraction
+#ifdef MACE_EXPOSE_OPENGL
+#	include <MACE/Graphics/OGL.h>
+#	include <MACE/Graphics/GLRenderer.h>
+#endif
+
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/Entity2D.h>

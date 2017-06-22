@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_CORE_CORE_H
-#define MACE_CORE_CORE_H
+#ifndef MACE__CORE_CORE_H
+#define MACE__CORE_CORE_H
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>

@@ -36,22 +36,8 @@ namespace mc {
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
 
-		ogl::UniformBuffer & Entity2D::getBuffer() {
-			makeDirty();
-			return buffer;
-		}
-		const ogl::UniformBuffer & Entity2D::getBuffer() const {
-			return buffer;
-		}
-		void Entity2D::setBuffer(const ogl::UniformBuffer & newBuffer) {
-			if (newBuffer != buffer) {
-				makeDirty();
-				buffer = newBuffer;
-			}
-		}
-
 		bool Entity2D::operator==(const Entity2D & other) const {
-			return GraphicsEntity::operator==(other) && buffer == other.buffer;
+			return GraphicsEntity::operator==(other);
 		}
 
 		bool Entity2D::operator!=(const Entity2D & other) const {
@@ -59,10 +45,6 @@ namespace mc {
 		}
 
 		//IMAGE
-
-		int Image::getProtocol() {
-			return IMAGE_PROTOCOL;
-		}
 
 		Image::Image() noexcept : texture() {}
 
@@ -72,39 +54,19 @@ namespace mc {
 			if (!texture.isCreated()) {
 				texture.init();
 			}
-
-			if (IMAGE_PROTOCOL < 0) {
-				IMAGE_PROTOCOL = getRenderer()->registerProtocol<Image>();
-			}
-
-			if (!buffer.isCreated()) {
-				buffer.init();
-			}
-
-			buffer.setLocation(0);
-
-			getRenderer()->initEntity(this, IMAGE_PROTOCOL);
 		}
 
 		void Image::onUpdate() {}
 
-		void Image::onRender() {
-			getRenderer()->queue(this, IMAGE_PROTOCOL);
-		}
+		void Image::onRender() {}
 
 		void Image::onDestroy() {
 			if (texture.isCreated()) {
 				texture.destroy();
 			}
-
-			if (buffer.isCreated()) {
-				buffer.destroy();
-			}
 		}
 
-		void Image::onClean() {
-			buffer.setData(4 * sizeof(float), &texture.getPaint());
-		}
+		void Image::onClean() {}
 
 		void Image::setTexture(const ColorAttachment & tex) {
 			if (tex != texture) {
@@ -132,50 +94,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void RenderProtocol<Image>::init(const Size, const Size) {
-
-			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
-			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init(
-#	include <MACE/Graphics/Shaders/image.v.glsl>
-				,
-#	include <MACE/Graphics/Shaders/image.f.glsl>
-			);
-		}//init
-
-		void RenderProtocol<Image>::initEntity(GraphicsEntity* e) {
-			Image* img = dynamic_cast<Image*>(e);
-			if (img == nullptr) {
-				MACE__THROW(InvalidType, "Input to RenderProtocol<Image>::initEntity must be of type Image");
-			}
-
-			img->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
-		}
-
-		void RenderProtocol<Image>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
-			Image* entity = dynamic_cast<Image*>(e);
-			if (entity == nullptr) {
-				MACE__THROW(InvalidType, "You must queue an Image for RenderProtocol<Image>");
-			}
-
-			entity->texture.bind();
-
-			entity->buffer.bindForRender();
-
-			renderer.bind();
-
-			renderer.draw(entity);
-		}//render
-
-		void RenderProtocol<Image>::destroy() {
-			renderer.destroy();
-		}//destroy
-
 		//PROGRESS BAR
-
-		int ProgressBar::getProtocol() {
-			return PROGRESS_BAR_PROTOCOL;
-		}
 
 		ProgressBar::ProgressBar() noexcept: ProgressBar(0, 0, 0) {}
 
@@ -333,39 +252,13 @@ namespace mc {
 			if (!selectionTexture.isCreated()) {
 				selectionTexture.init();
 			}
-
-			if (PROGRESS_BAR_PROTOCOL < 0) {
-				PROGRESS_BAR_PROTOCOL = getRenderer()->registerProtocol<ProgressBar>();
-			}
-
-			if (!buffer.isCreated()) {
-				buffer.init();
-			}
-
-			buffer.setLocation(0);
-
-			buffer.setData((3 * sizeof(selectionTexture.getPaint())) + sizeof(progress), nullptr);
-
-			getRenderer()->initEntity(this, PROGRESS_BAR_PROTOCOL);
 		}
 
 		void ProgressBar::onUpdate() {}
 
-		void ProgressBar::onRender() {
-			getRenderer()->queue(this, PROGRESS_BAR_PROTOCOL);
-		}
+		void ProgressBar::onRender() {}
 
-		void ProgressBar::onClean() {
-			Index offset = 0;
-			buffer.setDataRange(sizeof(selectionTexture.getPaint()), &selectionTexture.getPaint(), offset);
-			offset += sizeof(selectionTexture.getPaint());
-			buffer.setDataRange(sizeof(foregroundTexture.getPaint()), &foregroundTexture.getPaint(), offset);
-			offset += sizeof(foregroundTexture.getPaint());
-			buffer.setDataRange(sizeof(backgroundTexture.getPaint()), &backgroundTexture.getPaint(), offset);
-			offset += sizeof(backgroundTexture.getPaint());
-			const float outProgress = (progress - minimumProgress) / (maximumProgress - minimumProgress);
-			buffer.setDataRange(sizeof(progress), &outProgress, offset);
-		}
+		void ProgressBar::onClean() {}
 
 		void ProgressBar::onDestroy() {
 			if (backgroundTexture.isCreated()) {
@@ -379,66 +272,7 @@ namespace mc {
 			if (selectionTexture.isCreated()) {
 				selectionTexture.destroy();
 			}
-
-			if (buffer.isCreated()) {
-				buffer.destroy();
-			}
 		}
-
-		void RenderProtocol<ProgressBar>::init(const Size, const Size) {
-
-			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
-			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init(
-#	include <MACE/Graphics/Shaders/progressbar.v.glsl>
-				,
-#	include <MACE/Graphics/Shaders/progressbar.f.glsl>
-			);
-
-			ogl::ShaderProgram& prog = renderer.getShader();
-			prog.bind();
-			prog.createUniform("backgroundTexture");
-			prog.createUniform("foregroundTexture");
-			prog.createUniform("selectionTexture");
-
-			prog.setUniform("backgroundTexture", 0);
-			prog.setUniform("foregroundTexture", 1);
-			prog.setUniform("selectionTexture", 2);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error initializing RenderProtocol<ProgressBar>");
-		}//init
-
-		void RenderProtocol<ProgressBar>::initEntity(GraphicsEntity* e) {
-			ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
-			if (bar == nullptr) {
-				MACE__THROW(InvalidType, "Input to RenderProtocol<ProgressBar>::initEntity must be of type ProgressBar");
-			}
-
-			bar->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
-		}
-
-		void RenderProtocol<ProgressBar>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
-			ProgressBar* entity = dynamic_cast<ProgressBar*>(e);
-			if (entity == nullptr) {
-				MACE__THROW(InvalidType, "You must queue an ProgressBar for RenderProtocol<ProgressBar>");
-			}
-
-			entity->backgroundTexture.bind(0);
-			entity->foregroundTexture.bind(1);
-			entity->selectionTexture.bind(2);
-
-			entity->buffer.bindForRender();
-
-			renderer.bind();
-
-			renderer.draw(entity);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error rendering ProgressBar");
-		}//render
-
-		void RenderProtocol<ProgressBar>::destroy() {
-			renderer.destroy();
-		}//destroy
 
 		Font Font::loadFont(const std::string& name) {
 			return loadFont(name.c_str());
@@ -616,63 +450,6 @@ namespace mc {
 
 		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
-		int Letter::getProtocol() {
-			return LETTER_PROTOCOL;
-		}
-
-		void RenderProtocol<Letter>::init(const Size, const Size) {
-
-			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
-			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init(
-#	include <MACE/Graphics/Shaders/letter.v.glsl>
-				,
-#	include <MACE/Graphics/Shaders/letter.f.glsl>
-			);
-
-			ogl::ShaderProgram& prog = renderer.getShader();
-			prog.bind();
-			prog.createUniform("mask");
-			prog.createUniform("tex");
-
-			prog.setUniform("mask", 0);
-			prog.setUniform("tex", 1);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error creating RenderProtocol<Letter>");
-		}//init
-
-		void RenderProtocol<Letter>::initEntity(GraphicsEntity* en) {
-			Letter* let = dynamic_cast<Letter*>(en);
-			if (let == nullptr) {
-				MACE__THROW(InvalidType, "Internal error: Input to RenderProtocol<Letter>::initEntity must be of type Letter");
-			}
-
-			let->getBuffer().bindToUniformBlock(renderer.getShader(), "textureData");
-		}
-
-		void RenderProtocol<Letter>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
-			Letter* entity = dynamic_cast<Letter*>(e);
-			if (entity == nullptr) {
-				MACE__THROW(InvalidType, "You must queue an Letter for RenderProtocol<Letter>");
-			}
-
-			entity->mask.bind(0);
-			entity->texture.bind(1);
-
-			entity->buffer.bindForRender();
-
-			renderer.bind();
-
-			renderer.draw(entity);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error rendering Letter");
-		}//render
-
-		void RenderProtocol<Letter>::destroy() {
-			renderer.destroy();
-
-		}//destroy
-
 		Letter::Letter(const ogl::Texture2D& tex) : mask(tex) {}
 
 		const ogl::Texture2D& Letter::getMask() const {
@@ -721,27 +498,11 @@ namespace mc {
 			if (!texture.isCreated()) {
 				texture.init();
 			}
-
-			if (LETTER_PROTOCOL < 0) {
-				LETTER_PROTOCOL = getRenderer()->registerProtocol<Letter>();
-			}
-
-			if (!buffer.isCreated()) {
-				buffer.init();
-			}
-
-			buffer.setLocation(0);
-
-			getRenderer()->initEntity(this, LETTER_PROTOCOL);
 		}
 
-		void Letter::onUpdate() {
+		void Letter::onUpdate() {}
 
-		}
-
-		void Letter::onRender() {
-			getRenderer()->queue(this, LETTER_PROTOCOL);
-		}
+		void Letter::onRender() {}
 
 		void Letter::onDestroy() {
 			if (mask.isCreated()) {
@@ -751,15 +512,9 @@ namespace mc {
 			if (texture.isCreated()) {
 				texture.destroy();
 			}
-
-			if (buffer.isCreated()) {
-				buffer.destroy();
-			}
 		}
 
-		void Letter::onClean() {
-			buffer.setData(sizeof(texture.getPaint()), &texture.getPaint());
-		}
+		void Letter::onClean() {}
 
 		Text::Text(const std::string & s, const Font & f) : Text(os::toWideString(s), f) {}
 
@@ -979,67 +734,6 @@ namespace mc {
 			}
 		}
 
-		void RenderProtocol<Button>::init(const Size, const Size) {
-			//including shader code inline is hard to edit, and shipping shader code with an executable reduces portability (mace should be able to run without any runtime dependencies)
-			//the preprocessor will just copy and paste an actual shader file at compile time, which means that you can use any text editor and syntax highlighting you want
-			renderer.init(
-#	include <MACE/Graphics/Shaders/button.v.glsl>
-				,
-#	include <MACE/Graphics/Shaders/button.f.glsl>
-			);
-
-			ogl::ShaderProgram& prog = renderer.getShader();
-			prog.bind();
-			prog.createUniform("backgroundTexture");
-			prog.createUniform("hoverTexture");
-			prog.createUniform("clickedTexture");
-			prog.createUniform("disabledTexture");
-
-			prog.setUniform("backgroundTexture", 0);
-			prog.setUniform("hoverTexture", 1);
-			prog.setUniform("clickedTexture", 2);
-			prog.setUniform("disabledTexture", 3);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error initializing RenderProtocol<Button>");
-		}
-
-		void RenderProtocol<Button>::initEntity(GraphicsEntity* e) {
-			Button* but = dynamic_cast<Button*>(e);
-			if (but == nullptr) {
-				MACE__THROW(InvalidType, "Input to RenderProtocol<Button>::initEntity must be of type Button");
-			}
-
-			but->getBuffer().bindToUniformBlock(renderer.getShader(), "buttonData");
-		}
-
-		void RenderProtocol<Button>::renderEntity(os::WindowModule*, GraphicsEntity* e) {
-			Button* entity = dynamic_cast<Button*>(e);
-			if (entity == nullptr) {
-				MACE__THROW(InvalidType, "You must queue a Button for RenderProtocol<Button>");
-			}
-
-			entity->texture.bind(0);
-			entity->hoverTexture.bind(1);
-			entity->clickedTexture.bind(2);
-			entity->disabledTexture.bind(2);
-
-			entity->buffer.bindForRender();
-
-			renderer.bind();
-
-			renderer.draw(entity);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error rendering Button");
-		}
-
-		void RenderProtocol<Button>::destroy() {
-			renderer.destroy();
-		}
-
-		int Button::getProtocol() {
-			return BUTTON_PROTOCOL;
-		}
-
 		const ColorAttachment & Button::getTexture() const {
 			return texture;
 		}
@@ -1128,27 +822,11 @@ namespace mc {
 			if (!disabledTexture.isCreated()) {
 				disabledTexture.init();
 			}
-
-			if (BUTTON_PROTOCOL < 0) {
-				BUTTON_PROTOCOL = getRenderer()->registerProtocol<Button>();
-			}
-
-			if (!buffer.isCreated()) {
-				buffer.init();
-			}
-
-			buffer.setLocation(0);
-
-			buffer.setData((4 * sizeof(texture.getPaint())) + (3 * sizeof(float)), nullptr);
-
-			getRenderer()->initEntity(this, BUTTON_PROTOCOL);
 		}
 
 		void Button::onUpdate() {}
 
-		void Button::onRender() {
-			getRenderer()->queue(this, BUTTON_PROTOCOL);
-		}
+		void Button::onRender() {}
 
 		void Button::onDestroy() {
 			if (texture.isCreated()) {
@@ -1166,10 +844,6 @@ namespace mc {
 			if (disabledTexture.isCreated()) {
 				disabledTexture.destroy();
 			}
-
-			if (buffer.isCreated()) {
-				buffer.destroy();
-			}
 		}
 
 		void Button::onHover() {
@@ -1186,26 +860,6 @@ namespace mc {
 			}
 		}
 
-		void Button::onClean() {
-			const float hovered = selectableProperties.getBit(Selectable::HOVERED) ? 1.0f : 0.0f;
-			const float clicked = selectableProperties.getBit(Selectable::CLICKED) ? 1.0f : 0.0f;
-			const float disabled = selectableProperties.getBit(Selectable::DISABLED) ? 1.0f : 0.0f;
-
-
-			Index offset = 0;
-			buffer.setDataRange(sizeof(texture.getPaint()), &texture.getPaint(), offset);
-			offset += sizeof(texture.getPaint());
-			buffer.setDataRange(sizeof(hoverTexture.getPaint()), &hoverTexture.getPaint(), offset);
-			offset += sizeof(hoverTexture.getPaint());
-			buffer.setDataRange(sizeof(clickedTexture.getPaint()), &clickedTexture.getPaint(), offset);
-			offset += sizeof(clickedTexture.getPaint());
-			buffer.setDataRange(sizeof(disabledTexture.getPaint()), &disabledTexture.getPaint(), offset);
-			offset += sizeof(disabledTexture.getPaint());
-			buffer.setDataRange(sizeof(hovered), &hovered, offset);
-			offset += sizeof(hovered);
-			buffer.setDataRange(sizeof(clicked), &clicked, offset);
-			offset += sizeof(clicked);
-			buffer.setDataRange(sizeof(disabled), &disabled, offset);
-		}
+		void Button::onClean() {}
 	}//gfx
 }//mc

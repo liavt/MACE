@@ -112,9 +112,10 @@ namespace mc {
 	}
 
 	void MACE::init() {
-		if (modules.size() == 0) {
+		if (modules.empty()) {
 			MACE__THROW(InitializationFailed, "Must add a Module via MACE::addModule!");
 		}
+
 		flags.untoggleBit(MACE::DESTROYED);
 		flags.toggleBit(MACE::INIT);
 
@@ -127,9 +128,11 @@ namespace mc {
 		if (!flags.getBit(MACE::INIT)) {
 			MACE__THROW(InitializationFailed, "Can't destroy MACE without calling init() first!");
 		}
+
 		flags.toggleBit(MACE::DESTROYED);
 		flags.untoggleBit(MACE::INIT);
 		flags.untoggleBit(MACE::STOP_REQUESTED);
+
 		for (Index i = 0; i < modules.size(); ++i) {
 			modules[i]->destroy();
 		}
@@ -151,8 +154,8 @@ namespace mc {
 	void MACE::requestStop() {
 		flags.toggleBit(MACE::STOP_REQUESTED);
 	}
-	bool MACE::getFlag(const Byte flag) {
-		return flags.getBit(flag);
+	bool MACE::getFlag(const MACE::Flag flag) {
+		return flags.getBit(static_cast<Byte>(flag));
 	}
 	void MACE::reset() {
 		modules.clear();

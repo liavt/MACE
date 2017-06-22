@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_UTILITY_PROCESS_H
-#define MACE_UTILITY_PROCESS_H
+#ifndef MACE__UTILITY_PROCESS_H
+#define MACE__UTILITY_PROCESS_H
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
@@ -19,6 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifdef MACE_WINAPI
 #	define WIN32_LEAN_AND_MEAN
 #	include <windows.h>
+#	undef WIN32_LEAN_AND_MEAN
 #elif defined(MACE_POSIX)
 #	include <unistd.h>
 #endif
@@ -69,4 +70,4 @@ namespace mc {
 	};
 }
 
-#endif//MACE_UTILITY_PROCESS_H
+#endif//MACE__UTILITY_PROCESS_H

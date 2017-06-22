@@ -12,7 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/GLRenderer.h>
+#include <MACE/Graphics/OGLRenderer.h>
 
 #include <MACE/Utility/BitField.h>
 
@@ -287,8 +287,6 @@ namespace mc {
 						glfwPollEvents();
 
 						if (getProperty(Entity::DIRTY)) {
-							gfx::getRenderer()->clearBuffers();
-
 							Entity::render();
 
 							gfx::getRenderer()->renderFrame(this);

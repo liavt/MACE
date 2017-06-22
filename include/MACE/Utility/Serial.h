@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_UTILITY_SERIAL_H
-#define MACE_UTILITY_SERIAL_H
+#ifndef MACE__UTILITY_SERIAL_H
+#define MACE__UTILITY_SERIAL_H
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Utility/BitField.h>
@@ -19,6 +19,8 @@ The above copyright notice and this permission notice shall be included in all c
 #ifdef MACE_WINAPI
 #	define WIN32_LEAN_AND_MEAN
 #	include <windows.h>
+//to avoid  conflicts with later declarations
+#	undef WIN32_LEAN_AND_MEAN
 #endif
 
 namespace mc {
@@ -87,4 +89,4 @@ namespace mc {
 	}//os
 }//mc
 
-#endif//MACE_UTILITY_SERIAL_H
+#endif//MACE__UTILITY_SERIAL_H

@@ -12,8 +12,8 @@ The above copyright notice and this permission notice shall be included in all c
 Includes all utility files in MACE.
 */
 #pragma once
-#ifndef MACE_UTILITY_UTILITY_H
-#define MACE_UTILITY_UTILITY_H
+#ifndef MACE__UTILITY_UTILITY_H
+#define MACE__UTILITY_UTILITY_H
 
 namespace mc {
 	/**

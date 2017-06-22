@@ -9,8 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 
 #pragma once
-#ifndef MACE_CORE_SYSTEM_H
-#define MACE_CORE_SYSTEM_H
+#ifndef MACE__CORE_SYSTEM_H
+#define MACE__CORE_SYSTEM_H
 
 #ifdef __STDC_LIB_EXT1__
 //this entire mechanism below is to make sure that defining __STDC_WANT_LIB_EXT1__ doesnt cause any issues
@@ -65,6 +65,8 @@ namespace mc {
 		inline constexpr std::size_t getArraySize(T(&)[N]) {
 			return N;
 		}
+
+		char* strerror(char* buf, std::size_t bufsize, errno_t errnum);
 
 		void clearError(const int lineNumber = 0, const char* filename = "Unknown file");
 		void checkError(const int lineNumber = 0, const char* filename = "Unknown file", const std::string message = "Unknown message");

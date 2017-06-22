@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_UTILITY_DYNAMIC_LIBRARY_H
-#define MACE_UTILITY_DYNAMIC_LIBRARY_H
+#ifndef MACE__UTILITY_DYNAMIC_LIBRARY_H
+#define MACE__UTILITY_DYNAMIC_LIBRARY_H
 
 #include <MACE/Core/Constants.h>
 
@@ -63,4 +63,4 @@ namespace mc {
 	};//DynamicLibrary
 }//mc
 
-#endif//MACE_UTILITY_DYNAMIC_LIBRARY_H
+#endif//MACE__UTILITY_DYNAMIC_LIBRARY_H

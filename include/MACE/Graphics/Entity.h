@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_GRAPHICS_ENTITY_H
-#define MACE_GRAPHICS_ENTITY_H
+#ifndef MACE__GRAPHICS_ENTITY_H
+#define MACE__GRAPHICS_ENTITY_H
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
@@ -39,14 +39,6 @@ namespace mc {
 		//forward-defining dependencies
 		class Entity;
 		class GraphicsEntity;
-		class PointerComponent;
-
-		namespace ssl {
-			void fillBuffer(GraphicsEntity*);
-			void bindBuffer(ogl::UniformBuffer&);
-			void bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
-			void checkInput(mc::os::WindowModule*);
-		}
 
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
@@ -658,6 +650,13 @@ namespace mc {
 			*/
 			virtual void clean();
 
+
+			/**
+			@internal
+			@opengl
+			*/
+			virtual void hover();
+
 			/**
 			@dirty
 			*/
@@ -717,12 +716,6 @@ namespace mc {
 			@see Entity#update()
 			*/
 			virtual void render();
-
-			/**
-			@internal
-			@opengl
-			*/
-			virtual void hover();
 
 			/**
 			When `Entity.update()` is called, `onUpdate()` is called on all of it's children.
@@ -791,10 +784,6 @@ namespace mc {
 		};//Group
 
 		class GraphicsEntity: public Entity {
-			friend void ssl::bindBuffer(ogl::UniformBuffer&);
-			friend void ssl::bindEntity(const GraphicsEntity*, ogl::ShaderProgram&);
-			friend void ssl::fillBuffer(GraphicsEntity*);
-			friend void ssl::checkInput(mc::os::WindowModule*);
 		public:
 			GraphicsEntity() noexcept;
 
@@ -805,6 +794,9 @@ namespace mc {
 			void init() final;
 
 			void destroy() final;
+
+			Index getID();
+			const Index getID() const;
 
 			/**
 			@dirty
@@ -819,7 +811,7 @@ namespace mc {
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
 		private:
-			ogl::UniformBuffer sslBuffer = ogl::UniformBuffer();
+			Index id;
 
 			float opacity = 1.0f;
 		};//GraphicsEntity

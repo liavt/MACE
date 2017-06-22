@@ -93,9 +93,9 @@ namespace mc {
 		//we need to flush it as well as newline. endl accomplishes that
 		dump << std::endl;
 		dump << "Flags:" << std::endl << '\t';
-		dump << "DESTROYED - " << MACE::getFlag(MACE::Flags::DESTROYED) << std::endl << '\t' ;
-		dump << "INIT - " << MACE::getFlag(MACE::Flags::INIT) << std::endl << '\t' ;
-		dump << "STOP_REQUESTED - " << MACE::getFlag(MACE::Flags::STOP_REQUESTED);
+		dump << "DESTROYED - " << MACE::getFlag(MACE::DESTROYED) << std::endl << '\t' ;
+		dump << "INIT - " << MACE::getFlag(MACE::INIT) << std::endl << '\t' ;
+		dump << "STOP_REQUESTED - " << MACE::getFlag(MACE::STOP_REQUESTED);
 
 		dump << std::endl << std::endl;
 

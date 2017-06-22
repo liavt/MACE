@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_GRAPHICS_WINDOW_H
-#define MACE_GRAPHICS_WINDOW_H
+#ifndef MACE__GRAPHICS_WINDOW_H
+#define MACE__GRAPHICS_WINDOW_H
 
 //so we can use glew
 #define GLFW_INCLUDE_NONE

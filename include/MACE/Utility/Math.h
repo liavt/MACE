@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE_UTILITY_MATH_H
-#define MACE_UTILITY_MATH_H
+#ifndef MACE__UTILITY_MATH_H
+#define MACE__UTILITY_MATH_H
 
 #include <MACE/Utility/Vector.h>
 

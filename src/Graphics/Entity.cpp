@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/BitField.h>
-#include <MACE/Graphics/OGL.h>
+#include <MACE/Graphics/OGLRenderer.h>
 #include <MACE/Graphics/Renderer.h>
 #include <string>
 
@@ -525,7 +525,7 @@ namespace mc {
 				for (Index i = 0; i < components.size(); ++i) {
 					SmartPointer<Component> a = components.at(i);
 					if (a.get() == nullptr) {
-						MACE__THROW(NullPointer, "A component locaed at index "+std::to_string(i) +" was nullptr");
+						MACE__THROW(NullPointer, "A component locaed at index " + std::to_string(i) + " was nullptr");
 					}
 					if (a->update()) {
 						a->destroy();
@@ -814,21 +814,29 @@ namespace mc {
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::init() {
-			if (!sslBuffer.isCreated()) {
-				sslBuffer.init();
-			}
+			id = getRenderer()->queue(this);
 
-			ssl::bindBuffer(sslBuffer);
 			Entity::init();
 		}
 
 		void GraphicsEntity::destroy() {
 			Entity::destroy();
-			sslBuffer.destroy();
+			
+			getRenderer()->remove(id);
+
+			id = 0;
+		}
+
+		Index GraphicsEntity::getID() {
+			return id;
+		}
+
+		const Index GraphicsEntity::getID() const {
+			return id;
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return sslBuffer == other.sslBuffer&&opacity == other.opacity&&Entity::operator==(other);
+			return id == other.id&&opacity == other.opacity&&Entity::operator==(other);
 		}
 
 		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
@@ -836,9 +844,6 @@ namespace mc {
 		}
 
 		void GraphicsEntity::clean() {
-			if (getProperty(Entity::DIRTY)) {
-				ssl::fillBuffer(this);
-			}
 			Entity::clean();
 		}
 

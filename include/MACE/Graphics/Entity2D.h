@@ -9,14 +9,12 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #pragma once
 
-#ifndef MACE_GRAPHICS_ENTITY2D_H
-#define MACE_GRAPHICS_ENTITY2D_H
+#ifndef MACE__GRAPHICS_ENTITY2D_H
+#define MACE__GRAPHICS_ENTITY2D_H
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/GLRenderer.h>
 #include <MACE/Graphics/Components.h>
-#include <MACE/Graphics/OGL.h>
 #include <MACE/Utility/Vector.h>
 
 namespace mc {
@@ -30,51 +28,12 @@ namespace mc {
 		public:
 			Entity2D();
 
-			/**
-			@copydoc Entity2D::getBuffer() const
-			@dirty
-			*/
-			ogl::UniformBuffer& getBuffer();
-			/**
-			@internal
-			*/
-			const ogl::UniformBuffer& getBuffer() const;
-			/**
-			@internal
-			@dirty
-			*/
-			void setBuffer(const ogl::UniformBuffer& newBuffer);
-
 			bool operator==(const Entity2D& other) const;
 			bool operator!=(const Entity2D& other) const;
-		protected:
-			ogl::UniformBuffer buffer = ogl::UniformBuffer();
 		};//Entity2D
 
-		class Image;
-
-		/**
-		@internal
-		@opengl
-		*/
-		template<>
-		class RenderProtocol<Image>: public RenderImpl {
-		public:
-			void init(const Size originalWidth, const Size originalHeight) override;
-			void initEntity(GraphicsEntity* en) override;
-
-			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void destroy() override;
-		private:
-			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
-		};//RenderProtocol<Image>
-
 		class Image: public Entity2D {
-			friend class RenderProtocol<Image>;
 		public:
-			static int getProtocol();
-
 			Image() noexcept;
 			Image(const ColorAttachment& col);
 			~Image() = default;
@@ -102,32 +61,10 @@ namespace mc {
 			ColorAttachment texture;
 		};//Image
 
-		class ProgressBar;
-
-		/**
-		@internal
-		@opengl
-		*/
-		template<>
-		class RenderProtocol<ProgressBar>: public RenderImpl {
-		public:
-			void init(const Size originalWidth, const Size originalHeight) override;
-			void initEntity(GraphicsEntity* en) override;
-
-			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void destroy() override;
-		private:
-			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
-		};//RenderProtocol<ProgressBar>
-
 		/**
 		*/
 		class ProgressBar: public Entity2D {
-			friend class RenderProtocol<ProgressBar>;
 		public:
-			static int getProtocol();
-
 			ProgressBar() noexcept;
 			ProgressBar(const float minimum, const float maximum, const float progress = 0) noexcept;
 			~ProgressBar() = default;
@@ -273,30 +210,10 @@ namespace mc {
 			Size height;
 		};//Font
 
-		/**
-		@internal
-		@opengl
-		*/
-		template<>
-		class RenderProtocol<Letter>: public RenderImpl {
-		public:
-			void init(const Size originalWidth, const Size originalHeight) override;
-			void initEntity(GraphicsEntity* en) override;
-
-			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void destroy() override;
-		private:
-			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
-		};//RenderProtocol<Letter>
-
 		class Letter: public Entity2D {
-			friend class RenderProtocol<Letter>;
 			friend class Font;
 			friend class Text;
 		public:
-			static int getProtocol();
-
 			Letter(const ogl::Texture2D& mask = ogl::Texture2D());
 			~Letter() = default;
 
@@ -413,30 +330,8 @@ namespace mc {
 			ColorAttachment texture;
 		};//Text
 
-		class Button;
-
-		/**
-		@internal
-		@opengl
-		*/
-		template<>
-		class RenderProtocol<Button>: public RenderImpl {
-		public:
-			void init(const Size originalWidth, const Size originalHeight) override;
-			void initEntity(GraphicsEntity* en) override;
-
-			void renderEntity(os::WindowModule* win, GraphicsEntity* entity) override;
-
-			void destroy() override;
-		private:
-			SimpleQuadRenderer renderer = SimpleQuadRenderer(true);
-		};//RenderProtocol<Button>
-
 		class Button: public Selectable, public Entity2D {
-			friend class RenderProtocol<Button>;
 		public:
-			static int getProtocol();
-
 			const ColorAttachment& getTexture() const;
 			/**
 			@copydoc Button::getTexture() const

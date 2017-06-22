@@ -9,8 +9,8 @@ The above copyright notice and this permission notice shall be included in all c
 */
 
 #pragma once
-#ifndef MACE_CORE_MODULE_H
-#define MACE_CORE_MODULE_H
+#ifndef MACE__CORE_MODULE_H
+#define MACE__CORE_MODULE_H
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
@@ -60,18 +60,28 @@ namespace mc {
 
 
 	/**
-	Core class of MACE, managing `Modules`. `init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `destroy()` should be called at the end of your program.
+	Core class of MACE, managing `Modules`. To start running MACE, simply call `mc::MACE::start(const long long ups)`
 	<p>
 	If `isRunning()` returns `false`, you should end your program and call `destroy()`
 	<p>
-	Your main loop should look like this:{@code
+	`mc::MACE::start(const long long ups)` starts up the MACE main loop. You can make your own main loop by
+	calling the appropriate function calls.
+	<p>
+	`init()` should be called after all `Modules` are added and before the main loop. `update()` should be called in the loop, and `destroy()` should be called at the end of your program.
+	<p>
+	An example of a custom main loop looks like this: {@code
 
-	//add modules that you need
+	//add modules that you need via mc::MACE::addModule(Module&)
 
 	mc::MACE::init();
 
 	while(mc::MACE::isRunning()){
 		mc::MACE::update();
+
+		//execute non-MACE coed
+
+		//wait 33 ms for the next iteration
+		mc::os::wait(33);
 	}
 
 	mc::MACE::destroy();
@@ -79,7 +89,7 @@ namespace mc {
 	}
 	*/
 	namespace MACE {
-		enum Flags: Byte {
+		enum Flag: Byte {
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.init()` has been called.
 			*/
@@ -217,7 +227,7 @@ namespace mc {
 		<p>
 		Should be called at the end of the program after `MACE.isRunning()` is `false`
 		@throw InitializationError if `init()` has not been called yet
-		@see #addModule(Module&)
+		@see MACE::addModule(Module&)
 		@see MACE for an optimal main loop
 		*/
 		void destroy();
@@ -226,6 +236,7 @@ namespace mc {
 		Checks whether the `MACE` is ready to be updated. Will return true if `MACE::init()` has been called, and `MACE::destroy()` and `MACE::requestStop()` have not been called.
 		@return If `update()` should be called. If this returns `false`, you should exit the main loop and call `destroy()`
 		@see MACE::requestStop()
+		@see MACE::getFlag(const Byte)
 		@see MACE for an optimal main loop
 		*/
 		bool isRunning();
@@ -233,6 +244,7 @@ namespace mc {
 		/**
 		Tell the `MACE` to destroy. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
 		@see MACE for an optimal main loop
+		@see MACE::isRunning()
 		*/
 		void requestStop();
 
@@ -240,12 +252,13 @@ namespace mc {
 		Retrieve an internal flag about the current state of the `MACE`.
 		<p>
 		Example usage:{@code
-			mc::MACE::getFlag(SYSTEM_FLAG_INIT);//get whether init() has been called
+			bool isInit = mc::MACE::getFlag(mc::MACE::INIT);//get whether init() has been called
 		}
 		@param flag Location of the flag to retrieve. Locations are stored as `const Index` and start with `SYSTEM_FLAG_`
 		@return Whether the specified flag is `true`
+		@see MACE::isRunning()
 		*/
-		bool getFlag(const Byte flag);
+		bool getFlag(const Flag flag);
 
 		/**
 		"Resets" the `MACE` to its default state. `Modules` are cleared, and all flags are set to 0.
