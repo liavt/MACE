@@ -5,7 +5,7 @@ R"(
 #include <ssl_core>
 #include <ssl_entity>
 
-layout(location = 15) in vec3 ssl_VertexPosition;
+layout(location = 0) in vec3 ssl_VertexPosition;
 
 mat3 sslCreateRotationMatrix(vec3 ssl_RotationInput){
 	float ssl_CosZ = cos(ssl_RotationInput.z), ssl_SinZ = sin(ssl_RotationInput.z),

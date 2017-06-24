@@ -14,20 +14,26 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL.h>
 #include <MACE/Utility/Preprocessor.h>
+#include <map>
 
 namespace mc {
 	namespace gfx {
-		class GLPainter: public Painter {
+		class GLRenderer;
+
+		class GLPainter: public IPainter {
 		public:
-			GLPainter(GraphicsEntity* const entity);
+			GLPainter(const GraphicsEntity* const entity);
 
 			void init() override;
 			void destroy() override;
 
 			void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) override;
+		private:
+			GLRenderer* renderer;
 		};
 
 		class GLRenderer: public Renderer {
+			friend class GLPainter;
 		public:
 			GLRenderer();
 			~GLRenderer() noexcept override = default;
@@ -43,8 +49,8 @@ namespace mc {
 
 			GraphicsEntity* getEntityAt(const int x, const int y) override;
 
-			std::unique_ptr<Painter> getPainter(GraphicsEntity * const entity) const override;
-		
+			std::shared_ptr<IPainter> getPainter(const GraphicsEntity * const entity) const override;
+
 			const Preprocessor& getSSLPreprocessor();
 		private:
 			Preprocessor sslPreprocessor;
@@ -53,10 +59,46 @@ namespace mc {
 			ogl::RenderBuffer depthBuffer;
 
 			ogl::Texture2D sceneTexture, idTexture;
-			
+
+
 			Color clearColor;
-			
+
 			void generateFramebuffer(const Size& width, const Size& height);
+
+			//painter stuff
+			enum class Brush: Byte {
+				TEXTURE
+			};
+
+			enum class RenderType: Byte {
+				QUAD
+			};
+
+			struct RenderSettings {
+				Brush brush;
+				RenderType type;
+
+				//required for use as a key in std::map
+				bool operator<(const RenderSettings& other) const {
+					return brush < other.brush && type < other.type;
+				}
+			};
+
+			struct RenderProtocol {
+				ogl::ShaderProgram program;
+				ogl::VertexArray vao;
+			};
+
+			std::map<RenderSettings, RenderProtocol> protocols = std::map<RenderSettings, RenderProtocol>();
+			ogl::UniformBuffer uniforms = ogl::UniformBuffer();
+
+			std::string processShader(const std::string& shader);
+
+			void loadEntityUniforms(const GraphicsEntity * const entity);
+
+			RenderProtocol& getProtocol(const GraphicsEntity* const entity, const RenderSettings settings);
+			ogl::ShaderProgram getShadersForSettings(const RenderSettings settings);
+			ogl::VertexArray getVAOForSettings(const RenderSettings settings);
 		};
 	}//gfx
 }//mc

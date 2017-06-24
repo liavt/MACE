@@ -821,7 +821,7 @@ namespace mc {
 
 		void GraphicsEntity::destroy() {
 			Entity::destroy();
-			
+
 			getRenderer()->remove(id);
 
 			id = 0;
@@ -907,6 +907,16 @@ namespace mc {
 		void Selectable::onDisable() {}
 
 		void Selectable::onTrigger() {}
+
+		bool Entity::Metrics::operator==(const Metrics & other) const {
+			return translation == other.translation&&scale == other.scale&&rotation == other.rotation
+				&&inheritedTranslation == other.inheritedTranslation&&inheritedScale == other.inheritedScale
+				&&inheritedRotation == other.inheritedRotation;
+		}
+
+		bool Entity::Metrics::operator!=(const Metrics & other) const {
+			return !operator==(other);
+		}
 
 	}//gfx
 }//mc

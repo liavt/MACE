@@ -16,7 +16,7 @@ vec4 ssl_frag_main(void);
 void main(void){
 	vec4 ssl_Color = ssl_frag_main();
 
-	ssl_Color.a *= ssl_EntityOpacity;
+	//ssl_Color.a *= ssl_EntityOpacity;
 	
 	if(ssl_Color.a == 0.0){
 		discard;

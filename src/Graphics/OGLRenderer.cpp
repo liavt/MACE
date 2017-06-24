@@ -23,18 +23,25 @@ The above copyright notice and this permission notice shall be included in all c
 //cstring is for strcmp
 #include <cstring>
 
+//testing purposes
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
 
 		//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-		//how many floats in the entityData uniform buffer.
+		//how many floats in the uniform buffer
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
-		//which binding location the paintdata uniform buffer should be bound to
-#define MACE__ENTITY_DATA_LOCATION 15
+		//which binding location the uniform buffer goes to
+#define MACE__ENTITY_DATA_LOCATION 0
 
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
+
+		//location of vbo of vertices and texture coordinates in the vao for each protocl
+#define MACE__VAO_VERTICES_LOCATION 0
+#define MACE__VAO_TEX_COORD_LOCATION 1
 
 		IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
@@ -95,6 +102,15 @@ namespace mc {
 			generateFramebuffer(width, height);
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
+
+			uniforms.init();
+			uniforms.bind();
+			//we set it to null, because during the actual rendering we set the data
+			uniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr);
+
+			uniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating UniformBuffer for renderer");
 		}
 
 		void GLRenderer::onSetUp(os::WindowModule *) {
@@ -144,6 +160,13 @@ namespace mc {
 			sceneTexture.destroy();
 			idTexture.destroy();
 
+			uniforms.destroy();
+
+			for (std::map<RenderSettings, RenderProtocol>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
+				iter->second.program.destroy();
+				iter->second.vao.destroy();
+			}
+
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
 		}
 
@@ -176,8 +199,8 @@ namespace mc {
 			return nullptr;
 		}
 
-		std::unique_ptr<Painter> GLRenderer::getPainter(GraphicsEntity * const entity) const {
-			return std::unique_ptr<Painter>(new GLPainter(entity));
+		std::shared_ptr<IPainter> GLRenderer::getPainter(const GraphicsEntity * const entity) const {
+			return std::shared_ptr<IPainter>(new GLPainter(entity));
 		}
 
 		void GLRenderer::generateFramebuffer(const Size& width, const Size& height) {
@@ -243,7 +266,108 @@ namespace mc {
 
 			windowRatios[0] = static_cast<float>(originalWidth) / static_cast<float>(width);
 			windowRatios[1] = static_cast<float>(originalHeight) / static_cast<float>(height);
-		}//generateFrambuffer
+		}
+
+		std::string GLRenderer::processShader(const std::string & shader) {
+			Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
+			return shaderPreprocessor.preprocess();
+		}
+
+		void GLRenderer::loadEntityUniforms(const GraphicsEntity * const entity) {
+			if (!entity->getProperty(Entity::INIT)) {
+				MACE__THROW(InitializationFailed, "Entity is not initializd.");
+			}
+
+			const Entity::Metrics metrics = entity->getMetrics();
+			const float opacity = entity->getOpacity();
+
+			//now we set the uniforms defining the transformations of the entity
+			uniforms.bind();
+			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
+			float* mappedEntityData = static_cast<float*>(uniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+			std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
+			mappedEntityData += 4;//pointer arithmetic!
+			std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
+			mappedEntityData += 4;
+			std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
+			mappedEntityData += 4;
+			std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
+			mappedEntityData += 4;
+			std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
+			mappedEntityData += 3;
+			std::copy(&opacity, &opacity + sizeof(opacity), mappedEntityData);
+			uniforms.unmap();
+		}
+
+		GLRenderer::RenderProtocol& GLRenderer::getProtocol(const GraphicsEntity* const entity, const RenderSettings settings) {
+			if (protocols.find(settings) == protocols.end()) {
+				GLRenderer::RenderProtocol prot{};
+				prot.program = getShadersForSettings(settings);
+				prot.vao = getVAOForSettings(settings);
+				protocols[settings] = prot;
+			}
+
+			loadEntityUniforms(entity);
+
+			protocols[settings].program.bind();
+			protocols[settings].program.setUniform("ssl_EntityID", entity->getID());
+
+			return protocols[settings];
+		}
+
+		ogl::ShaderProgram GLRenderer::getShadersForSettings(const RenderSettings settings) {
+			ogl::ShaderProgram program;
+			program.init();
+
+			if (settings.type == GLRenderer::RenderType::QUAD) {
+				program.createVertex(processShader({
+#include <MACE/Graphics/Shaders/quad.v.glsl>
+				}));
+			}
+
+			if (settings.brush == GLRenderer::Brush::TEXTURE) {
+				program.createFragment(processShader({
+#include <MACE/Graphics/Shaders/texture.f.glsl>
+				}));
+			}
+
+			program.link();
+
+			program.createUniform("ssl_EntityID");
+			uniforms.bindToUniformBlock(program, "ssl_BaseEntityBuffer");
+			return program;
+		}
+
+		ogl::VertexArray GLRenderer::getVAOForSettings(const RenderSettings settings) {
+			ogl::VertexArray vao;
+			vao.init();
+
+			if (settings.type == GLRenderer::RenderType::QUAD) {
+				constexpr float squareTextureCoordinates[8] = {
+					0.0f,1.0f,
+					0.0f,0.0f,
+					1.0f,0.0f,
+					1.0f,1.0f,
+				};
+
+				constexpr unsigned int squareIndices[6] = {
+					0,1,3,
+					1,2,3
+				};
+
+				constexpr float squareVertices[12] = {
+					-1.0f,-1.0f,0.0f,
+					-1.0f,1.0f,0.0f,
+					1.0f,1.0f,0.0f,
+					1.0f,-1.0f,0.0f
+				};
+
+				vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
+				vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
+				vao.loadIndices(6, squareIndices);
+			}
+			return vao;
+		}
 
 		const mc::Preprocessor& GLRenderer::getSSLPreprocessor() {
 			if (sslPreprocessor.macroNumber() == 0) {
@@ -408,70 +532,30 @@ namespace mc {
 			}
 			return sslPreprocessor;
 		}//getSSLPreprocessor
-#undef MACE__ENTITY_DATA_BUFFER_SIZE
-#undef MACE__ENTITY_DATA_LOCATION
 
-		GLPainter::GLPainter(GraphicsEntity * const entity) : Painter(entity) {}
+		GLPainter::GLPainter(const GraphicsEntity * const entity) : IPainter(entity), renderer(dynamic_cast<GLRenderer*>(getRenderer())) {
+			if (renderer == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: GLPainter cant be used without a GLRenderer! It must have gotten mixed up along the way");
+			}
 
-		void GLPainter::init() {}
+		}
+
+		void GLPainter::init() {
+			renderer->uniforms.bind();
+			renderer->uniforms.bindForRender();
+		}
 
 		void GLPainter::destroy() {}
 
 		void GLPainter::drawImage(const ColorAttachment & img, const float x, const float y, const float w, const float h) {
-		
+			GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, {GLRenderer::Brush::TEXTURE, GLRenderer::RenderType::QUAD});
+			prot.vao.bind();
+			prot.program.bind();
+
+			img.bind();
+
+			prot.vao.draw(GL_TRIANGLES);
 		}
-
-		/*
-		void SimpleQuadRenderer::init(const char * vertexShader, const char * fragShader) {
-			constexpr float squareTextureCoordinates[8] = {
-				0.0f,1.0f,
-				0.0f,0.0f,
-				1.0f,0.0f,
-				1.0f,1.0f,
-			};
-
-			constexpr unsigned int squareIndices[6] = {
-				0,1,3,
-				1,2,3
-			};
-
-			constexpr float squareVertices[12] = {
-				-1.0f,-1.0f,0.0f,
-				-1.0f,1.0f,0.0f,
-				1.0f,1.0f,0.0f,
-				1.0f,-1.0f,0.0f
-			};
-
-			shaders2D.init();
-			square.init();
-
-			//vao loading
-			if (useSSL) {
-				square.loadVertices(4, squareVertices, 15, 3);
-			} else {
-				square.loadVertices(4, squareVertices, 0, 3);
-			}
-			square.storeDataInAttributeList(4, squareTextureCoordinates, 1, 2);
-
-			square.loadIndices(6, squareIndices);
-
-			GLRenderer* r = dynamic_cast<GLRenderer*>(getRenderer());
-			if (r == nullptr) {
-				MACE__THROW(InvalidType, "In order to use this class, you must have a GLRenderer!");
-			}
-
-			//shader stuff
-			shaders2D.createVertex(useSSL ? r->processShader(vertexShader, GL_VERTEX_SHADER) : vertexShader);
-			shaders2D.createFragment(useSSL ? r->processShader(fragShader, GL_FRAGMENT_SHADER) : fragShader);
-
-			shaders2D.link();
-
-			if (useSSL) {
-				r->bindShaderProgram(shaders2D);
-			}
-
-			ogl::checkGLError(__LINE__, __FILE__, "Failed to create simple quad renderer");
-		*/
 	}//gfx
 }//mc
 

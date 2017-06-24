@@ -10,6 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Core/System.h>
 
+#undef FT_CONFIG_OPTION_USE_HARFBUZZ
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -20,11 +21,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace {
-			int IMAGE_PROTOCOL = -1;
-			int PROGRESS_BAR_PROTOCOL = -1;
-			int LETTER_PROTOCOL = -1;
-			int BUTTON_PROTOCOL = -1;
-
 			ogl::Texture2D whiteTexture;
 
 			FT_Library freetype;
@@ -58,7 +54,12 @@ namespace mc {
 
 		void Image::onUpdate() {}
 
-		void Image::onRender() {}
+		void Image::onRender() {
+			Painter p = Painter(this);
+			p->init();
+			p->drawImage(texture, 0.0f, 0.0f, 1.0f, 1.0f);
+			p->destroy();
+		}
 
 		void Image::onDestroy() {
 			if (texture.isCreated()) {

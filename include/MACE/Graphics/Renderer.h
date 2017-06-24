@@ -26,25 +26,47 @@ namespace mc {
 
 		//forward define for friend declaration in later classes
 		class Renderer;
+		class IPainter;
 
 		class Painter: public Initializable {
+		public:
+			Painter(GraphicsEntity* const en);
+
+			void init() override;
+			void destroy() override;
+
+			std::shared_ptr<IPainter> getImplementation();
+			const std::shared_ptr<IPainter> getImplementation() const;
+
+			std::shared_ptr<IPainter> operator*();
+			const std::shared_ptr<IPainter> operator*() const;
+
+			std::shared_ptr<IPainter> operator->();
+			const std::shared_ptr<IPainter> operator->() const;
+		private:
+			std::shared_ptr<IPainter> impl = nullptr;
+		};
+
+		class IPainter: public Initializable {
 			friend class Renderer;
 		public:
-			virtual ~Painter() noexcept = default;
+			virtual ~IPainter() noexcept = default;
 
-			GraphicsEntity* getEntity();
-			const GraphicsEntity* getEntity() const;
+			virtual void init() override = 0;
+			virtual void destroy() override = 0;
 
 			virtual void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) = 0;
 			void drawImage(const ColorAttachment& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
 			void drawImage(const ColorAttachment& img, const Vector<float, 4>& dim);
 
-			virtual bool operator==(const Painter& other) const;
-			bool operator!=(const Painter& other) const;
-		protected:
-			Painter(GraphicsEntity* const en);
+			const GraphicsEntity* const getEntity() const;
 
-			GraphicsEntity* const entity;
+			virtual bool operator==(const IPainter& other) const;
+			bool operator!=(const IPainter& other) const;
+		protected:
+			IPainter(const GraphicsEntity* const en);
+			
+			const GraphicsEntity* const entity;
 		};
 
 		Renderer* getRenderer();
@@ -57,7 +79,6 @@ namespace mc {
 		@todo add function to change how many samples msaa uses
 		*/
 		class Renderer {
-
 		public:
 			virtual ~Renderer() = default;
 
@@ -75,7 +96,7 @@ namespace mc {
 			virtual void onDestroy() = 0;
 			virtual void onQueue(GraphicsEntity* en) = 0;
 
-			virtual std::unique_ptr<Painter> getPainter(GraphicsEntity * const entity) const = 0;
+			virtual std::shared_ptr<IPainter> getPainter(const GraphicsEntity * const entity) const = 0;
 
 			/**
 			@internal
@@ -145,8 +166,6 @@ namespace mc {
 			Vector<float, 2> getWindowRatios() const;
 
 			RenderQueue getRenderQueue() const;
-
-			Index getEntityIndex() const;
 
 			bool isResized() const;
 		protected:

@@ -290,6 +290,9 @@ namespace mc {
 				Vector<float, 3> inheritedTranslation = { 0,0,0 };
 				Vector<float, 3> inheritedScale = { 1,1,1 };
 				Vector<float, 3> inheritedRotation = { 0,0,0 };
+
+				bool operator==(const Metrics& other) const;
+				bool operator!=(const Metrics& other) const;
 			};//Metrics
 
 			/**

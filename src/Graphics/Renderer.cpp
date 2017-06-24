@@ -145,36 +145,69 @@ namespace mc {
 			return renderQueue.size() - 1;
 		}//pushEntity(protocol, entity)
 
-		Painter::Painter(GraphicsEntity * const en) : entity(en) {
-#ifdef MACE_DEBUG
-			if (entity == nullptr) {
-				MACE__THROW(NullPointer, "Input to Painter is nullptr!");
+		IPainter::IPainter(const GraphicsEntity * const en) : entity(en) {
+			if (en == nullptr) {
+				MACE__THROW(NullPointer, "Input to Painter was nullptr");
 			}
-#endif
 		}
 
-		GraphicsEntity * Painter::getEntity() {
+		const GraphicsEntity * const IPainter::getEntity() const {
 			return entity;
 		}
 
-		const GraphicsEntity * Painter::getEntity() const {
-			return entity;
-		}
-
-		void Painter::drawImage(const ColorAttachment & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
+		void IPainter::drawImage(const ColorAttachment & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
 			drawImage(img, pos.x(), pos.y(), size.x(), size.y());
 		}
 
-		void Painter::drawImage(const ColorAttachment & img, const Vector<float, 4>& dim) {
+		void IPainter::drawImage(const ColorAttachment & img, const Vector<float, 4>& dim) {
 			drawImage(img, dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
-		bool Painter::operator==(const Painter & other) const {
+		bool IPainter::operator==(const IPainter & other) const {
 			return entity == other.entity;
 		}
 
-		bool Painter::operator!=(const Painter & other) const {
+		bool IPainter::operator!=(const IPainter & other) const {
 			return !operator==(other);
+		}
+
+		Painter::Painter(GraphicsEntity * const en) {
+			impl = getRenderer()->getPainter(en);
+			if (impl.get() == nullptr) {
+				MACE__THROW(NullPointer, "Renderer returned a nullptr to a Painter");
+			}
+		}
+
+		void Painter::init() {
+			impl->init();
+		}
+
+		void Painter::destroy() {
+			impl->destroy();
+		}
+
+		std::shared_ptr<IPainter> Painter::getImplementation() {
+			return impl;
+		}
+
+		const std::shared_ptr<IPainter> Painter::getImplementation() const {
+			return impl;
+		}
+
+		std::shared_ptr<IPainter> Painter::operator*() {
+			return impl;
+		}
+
+		const std::shared_ptr<IPainter> Painter::operator*() const {
+			return impl;
+		}
+
+		std::shared_ptr<IPainter> Painter::operator->() {
+			return impl;
+		}
+
+		const std::shared_ptr<IPainter> Painter::operator->() const {
+			return impl;
 		}
 	}//gfx
 }//mc
