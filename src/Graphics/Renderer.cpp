@@ -161,6 +161,14 @@ namespace mc {
 			return entity;
 		}
 
+		void Painter::drawImage(const ColorAttachment & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
+			drawImage(img, pos.x(), pos.y(), size.x(), size.y());
+		}
+
+		void Painter::drawImage(const ColorAttachment & img, const Vector<float, 4>& dim) {
+			drawImage(img, dim.x(), dim.y(), dim.z(), dim.w());
+		}
+
 		bool Painter::operator==(const Painter & other) const {
 			return entity == other.entity;
 		}

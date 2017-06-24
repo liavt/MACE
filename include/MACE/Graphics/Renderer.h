@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Interfaces.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Window.h>
+#include <MACE/Utility/Vector.h>
 #include <deque>
 
 
@@ -26,7 +27,7 @@ namespace mc {
 		//forward define for friend declaration in later classes
 		class Renderer;
 
-		class Painter : public Initializable{
+		class Painter: public Initializable {
 			friend class Renderer;
 		public:
 			virtual ~Painter() noexcept = default;
@@ -35,6 +36,8 @@ namespace mc {
 			const GraphicsEntity* getEntity() const;
 
 			virtual void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) = 0;
+			void drawImage(const ColorAttachment& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
+			void drawImage(const ColorAttachment& img, const Vector<float, 4>& dim);
 
 			virtual bool operator==(const Painter& other) const;
 			bool operator!=(const Painter& other) const;

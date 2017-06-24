@@ -225,7 +225,7 @@ namespace mc {
 			return std::string(buf.data(), wn);
 		}
 
-		char * strerror(char * buf, std::size_t bufsize, errno_t errnum) {
+		char * strerror(char * buf, std::size_t bufsize, int errnum) {
 			//cant use checkError() or clearError() here as that would create an infinite recursive loop
 			//clearError() and checkError() calls this function
 
@@ -236,7 +236,7 @@ namespace mc {
 
 			return buf;
 #elif defined(MACE_POSIX)
-			if(int result = strerror_r(static_cast<int>(errnum), buf, bufsize) != 0) {
+			if(int result = strerror_r(errnum, buf, bufsize) != 0) {
 				MACE__THROW(AssertionFailed, "Error in strerror_r with result " + std::to_string(result));
 			}
 

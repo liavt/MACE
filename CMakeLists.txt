@@ -54,11 +54,11 @@ set(MACE_COMPILER_FLAGS -Wall -Wnon-virtual-dtor -pedantic -Wmisleading-indentat
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
-set(GLFW_SOURCE_VERSION "3.0.4")
+set(GLFW_SOURCE_VERSION "3.2.1")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")
 
-set(OPENAL_SOURCE_VERSION "1.17.2")
+set(OPENAL_SOURCE_VERSION "1.18.0")
 set(OPENAL_SOURCE_NAME "openal-soft-openal-soft-${OPENAL_SOURCE_VERSION}")
 set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_SOURCE_VERSION}.tar.gz")
 
@@ -66,7 +66,7 @@ set(GLEW_SOURCE_VERSION "2.0.0")
 set(GLEW_SOURCE_NAME "glew-${GLEW_SOURCE_VERSION}")
 set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz/download")
 
-set(FREETYPE_SOURCE_VERSION "2.5.2")
+set(FREETYPE_SOURCE_VERSION "2.8")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
 set(FREETYPE_URL "https://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
 
@@ -333,7 +333,7 @@ if(NOT ${FREETYPE_FOUND})
 		message(FATAL_ERROR "Freetype not found!")
 	else()
 		download_library(${FREETYPE_SOURCE_NAME} ${FREETYPE_URL})
-		add_subdirectory(${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME})
+		add_subdirectory(${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME}/build)
 		
 		set(FREETYPE_LIBRARY freetype)
 		
@@ -350,7 +350,7 @@ if(NOT ${OPENAL_FOUND})
 		add_subdirectory(${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME})
 		
 		if(WIN32)
-			set(OPENAL_LIBRARY OpenAL32)
+			set(OPENAL_LIBRARY OpenAL)
 		else()
 			set(OPENAL_LIBRARY openal)
 		endif()
