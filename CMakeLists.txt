@@ -333,6 +333,7 @@ if(NOT ${FREETYPE_FOUND})
 		message(FATAL_ERROR "Freetype not found!")
 	else()
 		download_library(${FREETYPE_SOURCE_NAME} ${FREETYPE_URL})
+		set(WITH_HarfBuzz OFF)
 		add_subdirectory(${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME}/build)
 		
 		set(FREETYPE_LIBRARY freetype)
