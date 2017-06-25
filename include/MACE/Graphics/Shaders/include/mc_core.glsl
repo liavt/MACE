@@ -1,7 +1,7 @@
 R"(
 
-#ifndef _SSL_CORE_LIBRARY_
-#define _SSL_CORE_LIBRARY_ 1
+#ifndef _MC_CORE_LIBRARY_
+#define _MC_CORE_LIBRARY_ 1
 
 SSL_GL_VERSION_DECLARATION
 
@@ -26,7 +26,7 @@ SSL_GL_VERSION_DECLARATION
 #extension GL_EXT_texture_array : require
 #endif //GL_VERSION_3_0
 
-#define sslUniformBuffer layout(std140) uniform
+#define mcUniformBuffer layout(std140) uniform
 
 #endif //_SSL_CORE_LIBRARY_
 

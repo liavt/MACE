@@ -74,17 +74,6 @@ namespace mc {
 			onTearDown(win);
 		}//tearDown
 
-		void Renderer::renderFrame(os::WindowModule* win) {
-			setUp(win);
-			for (Index i = 0; i < renderQueue.size(); ++i) {
-				if (renderQueue[i] != nullptr) {
-					//remember id of entity is incremented by one
-					//render
-				}
-			}
-			tearDown(win);
-		}//renderFrame
-
 		void Renderer::checkInput(os::WindowModule*) {
 			GraphicsEntity* hovered = getEntityAt(os::Input::getMouseX(), os::Input::getMouseY());
 
@@ -145,29 +134,103 @@ namespace mc {
 			return renderQueue.size() - 1;
 		}//pushEntity(protocol, entity)
 
-		IPainter::IPainter(const GraphicsEntity * const en) : entity(en) {
+		PainterImpl::PainterImpl(const GraphicsEntity * const en) : entity(en) {
 			if (en == nullptr) {
 				MACE__THROW(NullPointer, "Input to Painter was nullptr");
 			}
 		}
 
-		const GraphicsEntity * const IPainter::getEntity() const {
+		const GraphicsEntity * const PainterImpl::getEntity() const {
 			return entity;
 		}
 
-		void IPainter::drawImage(const ColorAttachment & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
+		void PainterImpl::drawImage(const ColorAttachment & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
 			drawImage(img, pos.x(), pos.y(), size.x(), size.y());
 		}
 
-		void IPainter::drawImage(const ColorAttachment & img, const Vector<float, 4>& dim) {
+		void PainterImpl::drawImage(const ColorAttachment & img, const Vector<float, 4>& dim) {
 			drawImage(img, dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
-		bool IPainter::operator==(const IPainter & other) const {
-			return entity == other.entity;
+		void PainterImpl::setColor(const Color & col) {
+			primary = col;
 		}
 
-		bool IPainter::operator!=(const IPainter & other) const {
+		Color & PainterImpl::getColor() {
+			return primary;
+		}
+
+		const Color & PainterImpl::getColor() const {
+			return primary;
+		}
+
+		void PainterImpl::setSecondaryColor(const Color & col) {
+			secondary = col;
+		}
+
+		Color & PainterImpl::getSecondaryColor() {
+			return secondary;
+		}
+
+		const Color & PainterImpl::getSecondaryColor() const {
+			return secondary;
+		}
+
+		void PainterImpl::resetColor() {
+			primary = Colors::INVISIBLE;
+			secondary = Colors::INVISIBLE;
+		}
+
+		void PainterImpl::setTransformation(const TransformMatrix & trans) {
+			transformation = trans;
+		}
+
+		TransformMatrix & PainterImpl::getTransformation() {
+			return transformation;
+		}
+
+		const TransformMatrix & PainterImpl::getTransformation() const {
+			return transformation;
+		}
+
+		void PainterImpl::translate(const Vector<float, 3>& vec) {
+			translate(vec.x(), vec.y(), vec.z());
+		}
+
+		void PainterImpl::translate(const float x, const float y, const float z) {
+			transformation.translate(x, y, z);
+		}
+
+		void PainterImpl::rotate(const Vector<float, 3>& vec) {
+			rotate(vec.x(), vec.y(), vec.z());
+		}
+
+		void PainterImpl::rotate(const float x, const float y, const float z) {
+			transformation.rotate(x, y, z);
+		}
+
+		void PainterImpl::scale(const Vector<float, 3>& vec) {
+			scale(vec.x(), vec.y(), vec.z());
+		}
+
+		void PainterImpl::scale(const float x, const float y, const float z) {
+			transformation.scale(x, y, z);
+		}
+
+		void PainterImpl::resetTransform() {
+			transformation.reset();
+		}
+
+		void PainterImpl::reset() {
+			resetColor();
+			resetTransform();
+		}
+
+		bool PainterImpl::operator==(const PainterImpl & other) const {
+			return entity == other.entity && transformation == other.transformation && primary == other.primary && secondary == other.secondary;
+		}
+
+		bool PainterImpl::operator!=(const PainterImpl & other) const {
 			return !operator==(other);
 		}
 
@@ -186,27 +249,27 @@ namespace mc {
 			impl->destroy();
 		}
 
-		std::shared_ptr<IPainter> Painter::getImplementation() {
+		std::shared_ptr<PainterImpl> Painter::getImplementation() {
 			return impl;
 		}
 
-		const std::shared_ptr<IPainter> Painter::getImplementation() const {
+		const std::shared_ptr<PainterImpl> Painter::getImplementation() const {
 			return impl;
 		}
 
-		std::shared_ptr<IPainter> Painter::operator*() {
+		std::shared_ptr<PainterImpl> Painter::operator*() {
 			return impl;
 		}
 
-		const std::shared_ptr<IPainter> Painter::operator*() const {
+		const std::shared_ptr<PainterImpl> Painter::operator*() const {
 			return impl;
 		}
 
-		std::shared_ptr<IPainter> Painter::operator->() {
+		std::shared_ptr<PainterImpl> Painter::operator->() {
 			return impl;
 		}
 
-		const std::shared_ptr<IPainter> Painter::operator->() const {
+		const std::shared_ptr<PainterImpl> Painter::operator->() const {
 			return impl;
 		}
 	}//gfx

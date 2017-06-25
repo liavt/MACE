@@ -37,6 +37,7 @@ namespace mc {
 		color.r = 0.5f;//set the red component to be 0.5f
 		color.setRed(127); //set the red component to be 0.5f as a Byte from 0 to 255
 	}
+	@todo add begin() and end() function
 	*/
 	struct Color {
 	public:

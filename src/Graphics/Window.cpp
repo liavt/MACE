@@ -287,9 +287,9 @@ namespace mc {
 						glfwPollEvents();
 
 						if (getProperty(Entity::DIRTY)) {
+							gfx::getRenderer()->setUp(this);
 							Entity::render();
-
-							gfx::getRenderer()->renderFrame(this);
+							gfx::getRenderer()->tearDown(this);
 						}
 
 						gfx::getRenderer()->checkInput(this);

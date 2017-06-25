@@ -64,6 +64,8 @@ void create(os::WindowModule&) {
 			entity->setWidth((1.0f / elementNum) * 2);
 			entity->setHeight((1.0f / elementNum) * 2);
 
+			entity->setOpacity(0.5f);
+
 			entity->addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
 
 			if( x >= elementNum / 2 ) {

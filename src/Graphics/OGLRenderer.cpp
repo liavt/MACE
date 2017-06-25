@@ -18,12 +18,14 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/OGLRenderer.h>
 #include <MACE/Utility/Preprocessor.h>
 
-//we need to include algorithim for memcpy
+//we need to include algorithim for std::copy
 #include <algorithm>
 //cstring is for strcmp
 #include <cstring>
+//std::begin and std::end
+#include <iterator>
 
-//testing purposes
+//debug purposes
 #include <iostream>
 
 namespace mc {
@@ -31,10 +33,15 @@ namespace mc {
 
 		//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
+#define MACE__MATRIX_SIZE sizeof(float) * 4 * 4
+
 		//how many floats in the uniform buffer
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
 		//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
+
+#define MACE__PAINTER_DATA_BUFFER_SIZE MACE__MATRIX_SIZE + (2 * sizeof(Color))
+#define MACE__PAINTER_DATA_LOCATION 1
 
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
@@ -44,23 +51,23 @@ namespace mc {
 #define MACE__VAO_TEX_COORD_LOCATION 1
 
 		IncludeString vertexLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/ssl_vertex.glsl>
-		}, "ssl_vertex");
+#	include <MACE/Graphics/Shaders/include/mc_vertex.glsl>
+		}, "mc_vertex");
 		/**
 		@todo Remove discard from shader
 		*/
 		IncludeString fragmentLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/ssl_frag.glsl>
-		}, "ssl_frag");
+#	include <MACE/Graphics/Shaders/include/mc_frag.glsl>
+		}, "mc_frag");
 		IncludeString positionLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/ssl_position.glsl>
-		}, "ssl_position");
+#	include <MACE/Graphics/Shaders/include/mc_position.glsl>
+		}, "mc_position");
 		IncludeString entityLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/ssl_entity.glsl>
-		}, "ssl_entity");
+#	include <MACE/Graphics/Shaders/include/mc_entity.glsl>
+		}, "mc_entity");
 		IncludeString coreLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/ssl_core.glsl>
-		}, "ssl_core");
+#	include <MACE/Graphics/Shaders/include/mc_core.glsl>
+		}, "mc_core");
 
 		GLRenderer::GLRenderer() : sslPreprocessor(""), frameBuffer(), depthBuffer(), sceneTexture(), idTexture(), clearColor(Colors::BLACK) {}
 
@@ -103,17 +110,25 @@ namespace mc {
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
 
-			uniforms.init();
-			uniforms.bind();
+			entityUniforms.init();
+			entityUniforms.bind();
 			//we set it to null, because during the actual rendering we set the data
-			uniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr);
+			entityUniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr);
 
-			uniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
+			entityUniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
+
+			painterUniforms.init();
+			painterUniforms.bind();
+			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr);
+
+			painterUniforms.setLocation(MACE__PAINTER_DATA_LOCATION);
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating UniformBuffer for renderer");
 		}
 
 		void GLRenderer::onSetUp(os::WindowModule *) {
+			//frameBuffer.unbind();
+
 			frameBuffer.bind();
 			sceneTexture.bind();
 			idTexture.bind();
@@ -132,10 +147,12 @@ namespace mc {
 			frameBuffer.setDrawBuffers(2, drawBuffers);
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up ssl");
+
 		}
 
 		void GLRenderer::onTearDown(os::WindowModule * win) {
 			frameBuffer.unbind();
+
 			ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			int width, height;
@@ -160,7 +177,8 @@ namespace mc {
 			sceneTexture.destroy();
 			idTexture.destroy();
 
-			uniforms.destroy();
+			entityUniforms.destroy();
+			painterUniforms.destroy();
 
 			for (std::map<RenderSettings, RenderProtocol>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
 				iter->second.program.destroy();
@@ -199,8 +217,8 @@ namespace mc {
 			return nullptr;
 		}
 
-		std::shared_ptr<IPainter> GLRenderer::getPainter(const GraphicsEntity * const entity) const {
-			return std::shared_ptr<IPainter>(new GLPainter(entity));
+		std::shared_ptr<PainterImpl> GLRenderer::getPainter(const GraphicsEntity * const entity) const {
+			return std::shared_ptr<PainterImpl>(new GLPainter(entity));
 		}
 
 		void GLRenderer::generateFramebuffer(const Size& width, const Size& height) {
@@ -282,9 +300,9 @@ namespace mc {
 			const float opacity = entity->getOpacity();
 
 			//now we set the uniforms defining the transformations of the entity
-			uniforms.bind();
+			entityUniforms.bind();
 			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
-			float* mappedEntityData = static_cast<float*>(uniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+			float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
 			mappedEntityData += 4;//pointer arithmetic!
 			std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
@@ -296,7 +314,27 @@ namespace mc {
 			std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
 			mappedEntityData += 3;
 			std::copy(&opacity, &opacity + sizeof(opacity), mappedEntityData);
-			uniforms.unmap();
+			entityUniforms.unmap();
+		}
+
+		void GLRenderer::loadPainterUniforms(TransformMatrix transform, Color prim, Color second) {
+			float modelMatrix[16] = {};
+			transform.get().flattenTransposed(modelMatrix);
+
+			float color[4] = {};
+			prim.flatten(color);
+
+			//now we set the uniforms defining the transformations of the entity
+			painterUniforms.bind();
+			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
+			float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+			std::copy(std::begin(modelMatrix), std::end(modelMatrix), mappedEntityData);
+			mappedEntityData += 4 * 4;//pointer arithmetic!
+			std::copy(std::begin(color), std::end(color), mappedEntityData);
+			mappedEntityData += 4;
+			second.flatten(color);
+			std::copy(std::begin(color), std::end(color), mappedEntityData);
+			painterUniforms.unmap();
 		}
 
 		GLRenderer::RenderProtocol& GLRenderer::getProtocol(const GraphicsEntity* const entity, const RenderSettings settings) {
@@ -310,7 +348,7 @@ namespace mc {
 			loadEntityUniforms(entity);
 
 			protocols[settings].program.bind();
-			protocols[settings].program.setUniform("ssl_EntityID", entity->getID());
+			protocols[settings].program.setUniform("mc_EntityID", entity->getID());
 
 			return protocols[settings];
 		}
@@ -333,8 +371,9 @@ namespace mc {
 
 			program.link();
 
-			program.createUniform("ssl_EntityID");
-			uniforms.bindToUniformBlock(program, "ssl_BaseEntityBuffer");
+			program.createUniform("mc_EntityID");
+			entityUniforms.bindToUniformBlock(program, "mc_BaseEntityBuffer");
+			painterUniforms.bindToUniformBlock(program, "mc_PainterSettingsBuffer");
 			return program;
 		}
 
@@ -362,6 +401,7 @@ namespace mc {
 					1.0f,-1.0f,0.0f
 				};
 
+				vao.bind();
 				vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
 				vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
 				vao.loadIndices(6, squareIndices);
@@ -522,6 +562,14 @@ namespace mc {
 				MACE__DEFINE_MACRO(GL_FALSE);
 				MACE__DEFINE_MACRO(GL_TRUE);
 				MACE__DEFINE_MACRO(NULL);
+
+				MACE__DEFINE_MACRO(MACE__ENTITY_DATA_LOCATION);
+
+				MACE__DEFINE_MACRO(MACE__SCENE_ATTACHMENT_INDEX);
+				MACE__DEFINE_MACRO(MACE__ID_ATTACHMENT_INDEX);
+
+				MACE__DEFINE_MACRO(MACE__VAO_VERTICES_LOCATION);
+				MACE__DEFINE_MACRO(MACE__VAO_TEX_COORD_LOCATION);
 #undef MACE__DEFINE_MACRO
 
 				sslPreprocessor.addInclude(vertexLibrary);
@@ -533,22 +581,32 @@ namespace mc {
 			return sslPreprocessor;
 		}//getSSLPreprocessor
 
-		GLPainter::GLPainter(const GraphicsEntity * const entity) : IPainter(entity), renderer(dynamic_cast<GLRenderer*>(getRenderer())) {
+		GLPainter::GLPainter(const GraphicsEntity * const entity) : PainterImpl(entity), renderer(dynamic_cast<GLRenderer*>(getRenderer())) {
 			if (renderer == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: GLPainter cant be used without a GLRenderer! It must have gotten mixed up along the way");
+				//this should never happen unless someone extended Renderer and returned a GLPainter for some reason...
+				MACE__THROW(NullPointer, "Internal Error: GLPainter cant be used without a GLRenderer");
 			}
 
 		}
 
 		void GLPainter::init() {
-			renderer->uniforms.bind();
-			renderer->uniforms.bindForRender();
+			renderer->entityUniforms.bind();
+			renderer->entityUniforms.bindForRender();
+
+			renderer->painterUniforms.bind();
+			renderer->painterUniforms.bindForRender();
 		}
 
 		void GLPainter::destroy() {}
 
+		void GLPainter::loadSettings(TransformMatrix transform, Color prim, Color second) {
+			renderer->loadPainterUniforms(transform, prim, second);
+		}
+
 		void GLPainter::drawImage(const ColorAttachment & img, const float x, const float y, const float w, const float h) {
-			GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, {GLRenderer::Brush::TEXTURE, GLRenderer::RenderType::QUAD});
+			loadSettings(transformation, img.getPaint(), secondary);
+
+			GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, { GLRenderer::Brush::TEXTURE, GLRenderer::RenderType::QUAD });
 			prot.vao.bind();
 			prot.program.bind();
 

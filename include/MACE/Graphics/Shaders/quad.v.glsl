@@ -2,18 +2,13 @@
 R"(
 //VERTEX SHADER
 
-#include <ssl_vertex>
+#include <mc_core>
+#include <mc_vertex>
 
 precision mediump float; // Defines precision for float and float-derived (vector/matrix) types.
 
-layout(location = 1) in vec2 texCoord;
-
-out lowp vec2 textureCoord;
-
-vec4 ssl_vert_main(vec4 entityPos){		
-	textureCoord=texCoord;
-
-	return entityPos;
+vec4 mc_vert_main(vec4 pos){	
+	return pos;
 }
 
 )"

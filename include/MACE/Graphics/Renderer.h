@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Window.h>
 #include <MACE/Utility/Vector.h>
+#include <MACE/Utility/Transform.h>
 #include <deque>
 
 
@@ -26,7 +27,7 @@ namespace mc {
 
 		//forward define for friend declaration in later classes
 		class Renderer;
-		class IPainter;
+		class PainterImpl;
 
 		class Painter: public Initializable {
 		public:
@@ -35,25 +36,27 @@ namespace mc {
 			void init() override;
 			void destroy() override;
 
-			std::shared_ptr<IPainter> getImplementation();
-			const std::shared_ptr<IPainter> getImplementation() const;
+			std::shared_ptr<PainterImpl> getImplementation();
+			const std::shared_ptr<PainterImpl> getImplementation() const;
 
-			std::shared_ptr<IPainter> operator*();
-			const std::shared_ptr<IPainter> operator*() const;
+			std::shared_ptr<PainterImpl> operator*();
+			const std::shared_ptr<PainterImpl> operator*() const;
 
-			std::shared_ptr<IPainter> operator->();
-			const std::shared_ptr<IPainter> operator->() const;
+			std::shared_ptr<PainterImpl> operator->();
+			const std::shared_ptr<PainterImpl> operator->() const;
 		private:
-			std::shared_ptr<IPainter> impl = nullptr;
+			std::shared_ptr<PainterImpl> impl = nullptr;
 		};
 
-		class IPainter: public Initializable {
+		class PainterImpl: public Initializable {
 			friend class Renderer;
 		public:
-			virtual ~IPainter() noexcept = default;
+			virtual ~PainterImpl() noexcept = default;
 
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
+
+			virtual void loadSettings(TransformMatrix transform, Color prim, Color second) = 0;
 
 			virtual void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) = 0;
 			void drawImage(const ColorAttachment& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
@@ -61,12 +64,43 @@ namespace mc {
 
 			const GraphicsEntity* const getEntity() const;
 
-			virtual bool operator==(const IPainter& other) const;
-			bool operator!=(const IPainter& other) const;
+			void setColor(const Color& col);
+			Color& getColor();
+			const Color& getColor() const;
+
+			void setSecondaryColor(const Color& col);
+			Color& getSecondaryColor();
+			const Color& getSecondaryColor() const;
+
+			void resetColor();
+
+			void setTransformation(const TransformMatrix& trans);
+			TransformMatrix& getTransformation();
+			const TransformMatrix& getTransformation() const;
+
+			void translate(const Vector<float, 3>& vec);
+			void translate(const float x, const float y, const float z = 0.0f);
+
+			void rotate(const Vector<float, 3>& vec);
+			void rotate(const float x, const float y, const float z);
+
+			void scale(const Vector<float, 3>& vec);
+			void scale(const float x, const float y, const float z = 0.0f);
+
+			void resetTransform();
+
+			virtual void reset();
+
+			virtual bool operator==(const PainterImpl& other) const;
+			bool operator!=(const PainterImpl& other) const;
 		protected:
-			IPainter(const GraphicsEntity* const en);
-			
+			PainterImpl(const GraphicsEntity* const en);
+
 			const GraphicsEntity* const entity;
+
+			TransformMatrix transformation;
+
+			Color primary, secondary;
 		};
 
 		Renderer* getRenderer();
@@ -96,7 +130,7 @@ namespace mc {
 			virtual void onDestroy() = 0;
 			virtual void onQueue(GraphicsEntity* en) = 0;
 
-			virtual std::shared_ptr<IPainter> getPainter(const GraphicsEntity * const entity) const = 0;
+			virtual std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const = 0;
 
 			/**
 			@internal
@@ -121,12 +155,6 @@ namespace mc {
 			@opengl
 			*/
 			void tearDown(os::WindowModule* win);
-
-			/**
-			@internal
-			@opengl
-			*/
-			void renderFrame(os::WindowModule* win);
 
 			/**
 			@internal

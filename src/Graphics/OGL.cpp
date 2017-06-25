@@ -120,6 +120,12 @@ namespace mc {
 			}
 
 			void VertexArray::draw(Enum type) const {
+				for (Index i = 0; i < buffers.size(); ++i) {
+					buffers[i].bind();
+				}
+
+				indices.bind();
+
 				glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, 0);
 			}
 
@@ -148,6 +154,7 @@ namespace mc {
 			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
 				indices = ElementBuffer(indiceNum);
 				indices.init();
+				indices.bind();
 				indices.setData(static_cast<ptrdiff_t>(sizeof(unsigned int)*indiceNum), indiceData, GL_STATIC_DRAW);
 
 				checkGLError(__LINE__, __FILE__, "Error putting indices in VAO");

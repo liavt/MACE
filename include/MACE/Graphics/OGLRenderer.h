@@ -20,12 +20,14 @@ namespace mc {
 	namespace gfx {
 		class GLRenderer;
 
-		class GLPainter: public IPainter {
+		class GLPainter: public PainterImpl {
 		public:
 			GLPainter(const GraphicsEntity* const entity);
 
 			void init() override;
 			void destroy() override;
+
+			void loadSettings(TransformMatrix transform, Color prim, Color second) override;
 
 			void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) override;
 		private:
@@ -49,7 +51,7 @@ namespace mc {
 
 			GraphicsEntity* getEntityAt(const int x, const int y) override;
 
-			std::shared_ptr<IPainter> getPainter(const GraphicsEntity * const entity) const override;
+			std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const override;
 
 			const Preprocessor& getSSLPreprocessor();
 		private:
@@ -90,11 +92,13 @@ namespace mc {
 			};
 
 			std::map<RenderSettings, RenderProtocol> protocols = std::map<RenderSettings, RenderProtocol>();
-			ogl::UniformBuffer uniforms = ogl::UniformBuffer();
+			ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
+			ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
 
 			std::string processShader(const std::string& shader);
 
 			void loadEntityUniforms(const GraphicsEntity * const entity);
+			void loadPainterUniforms(TransformMatrix transform, Color prim, Color second);
 
 			RenderProtocol& getProtocol(const GraphicsEntity* const entity, const RenderSettings settings);
 			ogl::ShaderProgram getShadersForSettings(const RenderSettings settings);
