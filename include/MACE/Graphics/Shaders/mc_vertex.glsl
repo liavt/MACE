@@ -15,7 +15,7 @@ vec4 mc_vert_main(vec4);
 void main(void){
 	mcOutputTextureCoord = mcInputTextureCoord;
 
-	gl_Position = mc_vert_main(mcGetEntityPosition()) * mc_Transform;
+	gl_Position = mc_vert_main(mcGetEntityPosition());
 }
 
 #endif

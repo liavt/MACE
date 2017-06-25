@@ -144,6 +144,33 @@ namespace mc {
 			return entity;
 		}
 
+		void PainterImpl::fillRect(const float x, const float y, const float w, const float h) {
+			pushTransform();
+			translate(x, y);
+			scale(w, h);
+			loadSettings(transformation, primary, secondary);
+			draw(Painter::Brush::COLOR, Painter::RenderType::QUAD);
+			popTransform();
+		}
+
+		void PainterImpl::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
+			fillRect(pos.x(), pos.y(), size.x(), size.y());
+		}
+
+		void PainterImpl::fillRect(const Vector<float, 4>& dim) {
+			fillRect(dim.x(), dim.y(), dim.z(), dim.w());
+		}
+
+		void PainterImpl::drawImage(const ColorAttachment & img, const float x, const float y, const float w, const float h) {
+			pushTransform();
+			translate(x, y);
+			scale(w, h);
+			loadSettings(transformation, img.getPaint(), secondary);
+			img.bind();
+			draw(Painter::Brush::TEXTURE, Painter::RenderType::QUAD);
+			popTransform();
+		}
+
 		void PainterImpl::drawImage(const ColorAttachment & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
 			drawImage(img, pos.x(), pos.y(), size.x(), size.y());
 		}
@@ -219,6 +246,15 @@ namespace mc {
 
 		void PainterImpl::resetTransform() {
 			transformation.reset();
+		}
+
+		void PainterImpl::pushTransform() {
+			transformationStack.push(transformation);
+		}
+
+		void PainterImpl::popTransform() {
+			transformation = transformationStack.front();
+			transformationStack.pop();
 		}
 
 		void PainterImpl::reset() {

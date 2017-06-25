@@ -16,7 +16,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Window.h>
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Transform.h>
+
 #include <deque>
+#include <queue>
 
 
 namespace mc {
@@ -31,6 +33,15 @@ namespace mc {
 
 		class Painter: public Initializable {
 		public:
+			//painter stuff
+			enum class Brush: Byte {
+				TEXTURE, COLOR
+			};
+
+			enum class RenderType: Byte {
+				QUAD
+			};
+
 			Painter(GraphicsEntity* const en);
 
 			void init() override;
@@ -56,9 +67,11 @@ namespace mc {
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
 
-			virtual void loadSettings(TransformMatrix transform, Color prim, Color second) = 0;
+			void fillRect(const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
+			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
+			void fillRect(const Vector<float, 4>& dim);
 
-			virtual void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) = 0;
+			void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
 			void drawImage(const ColorAttachment& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
 			void drawImage(const ColorAttachment& img, const Vector<float, 4>& dim);
 
@@ -89,6 +102,9 @@ namespace mc {
 
 			void resetTransform();
 
+			void pushTransform();
+			void popTransform();
+
 			virtual void reset();
 
 			virtual bool operator==(const PainterImpl& other) const;
@@ -96,8 +112,12 @@ namespace mc {
 		protected:
 			PainterImpl(const GraphicsEntity* const en);
 
+			virtual void loadSettings(TransformMatrix transform, Color prim, Color second) = 0;
+			virtual void draw(const Painter::Brush brush, const Painter::RenderType type) = 0;
+
 			const GraphicsEntity* const entity;
 
+			std::queue<TransformMatrix> transformationStack = std::queue<TransformMatrix>();
 			TransformMatrix transformation;
 
 			Color primary, secondary;

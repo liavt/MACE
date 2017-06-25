@@ -57,7 +57,9 @@ namespace mc {
 		void Image::onRender() {
 			Painter p = Painter(this);
 			p->init();
-			p->drawImage(texture, 0.0f, 0.0f, 1.0f, 1.0f);
+			p->drawImage(texture, -0.5f, -0.5f, 0.5f, 0.5f);
+			p->setColor(texture.getPaint());
+			p->fillRect(0.5f, 0.5f, 0.5f, 0.5f);
 			p->destroy();
 		}
 

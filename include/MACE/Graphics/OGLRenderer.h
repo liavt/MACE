@@ -26,10 +26,9 @@ namespace mc {
 
 			void init() override;
 			void destroy() override;
-
+		protected:
 			void loadSettings(TransformMatrix transform, Color prim, Color second) override;
-
-			void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f) override;
+			void draw(const Painter::Brush brush, const Painter::RenderType type) override;
 		private:
 			GLRenderer* renderer;
 		};
@@ -67,18 +66,9 @@ namespace mc {
 
 			void generateFramebuffer(const Size& width, const Size& height);
 
-			//painter stuff
-			enum class Brush: Byte {
-				TEXTURE
-			};
-
-			enum class RenderType: Byte {
-				QUAD
-			};
-
 			struct RenderSettings {
-				Brush brush;
-				RenderType type;
+				Painter::Brush brush;
+				Painter::RenderType type;
 
 				//required for use as a key in std::map
 				bool operator<(const RenderSettings& other) const {

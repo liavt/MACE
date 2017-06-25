@@ -56,9 +56,9 @@ namespace mc {
 
 	Matrix<float, 4, 4> math::scale(const Matrix<float, 4, 4>& m, const float x, const float y, const float z) {
 		Matrix<float, 4, 4> out = m;
-		out[0][0] = x;
-		out[1][1] = y;
-		out[2][2] = z;
+		out[0][0] *= x;
+		out[1][1] *= y;
+		out[2][2] *= z;
 		return out;
 	}
 	Matrix<float, 4, 4> math::translate(const float x, const float y, const float z) {
@@ -66,9 +66,9 @@ namespace mc {
 	}
 	Matrix<float, 4, 4> math::translate(const Matrix<float, 4, 4>& in, const float x, const float y, const float z) {
 		Matrix<float, 4, 4> m = in;
-		m[3][0] = x;
-		m[3][1] = y;
-		m[3][2] = z;
+		m[3][0] += x;
+		m[3][1] += y;
+		m[3][2] += z;
 		return m;
 	}
 	Matrix<float, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
@@ -120,9 +120,9 @@ namespace mc {
 		return *this;
 	}
 	TransformMatrix & TransformMatrix::scale(const float x, const float y, const float z) {
-		scaler[0] += x;
-		scaler[1] += y;
-		scaler[2] += z;
+		scaler[0] *= x;
+		scaler[1] *= y;
+		scaler[2] *= z;
 		return *this;
 	}
 	TransformMatrix & TransformMatrix::reset() {
@@ -130,7 +130,7 @@ namespace mc {
 		return *this;
 	}
 	Matrix<float, 4, 4> TransformMatrix::get() const {
-		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2])*math::rotate(rotation[0], rotation[1], rotation[2])*math::scale(scaler[0], scaler[1], scaler[2]);
+		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2]) * math::rotate(rotation[0], rotation[1], rotation[2]) * math::scale(scaler[0], scaler[1], scaler[2]);
 	}
 	bool TransformMatrix::operator==(const TransformMatrix & other) const {
 		return other.translation == translation&&other.rotation == rotation&&other.scaler == scaler;

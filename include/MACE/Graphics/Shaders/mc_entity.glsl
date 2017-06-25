@@ -17,7 +17,9 @@ mcUniformBuffer mc_BaseEntityBuffer{
 };
 
 mcUniformBuffer mc_PainterSettingsBuffer{
-	mat4 mc_Transform;
+	vec3 mc_TransformTranslation;
+	vec3 mc_TransformRotation;
+	vec3 mc_TransformScale;
 	vec4 mc_Primary;
 	vec4 mc_Secondary;
 };

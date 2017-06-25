@@ -3,23 +3,16 @@ R"(
 
 //FRAGMENT SHADER
 
-#include <ssl_frag>
+#include <mc_core>
+#include <mc_frag>
 
 precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
 
-in lowp vec2 textureCoord;
-
-uniform lowp sampler2D mask;
 uniform lowp sampler2D tex;
 
-sslUniformBuffer textureData{
-	sslAttachmentData texData;
-};
+vec4 mc_frag_main(vec2 textureCoord){		
+	return mc_Primary;
+}
 
-vec4 ssl_frag_main()  
-{ 
-	vec4 texturePixel = sslAttachmentBlend(texData, texture(tex, textureCoord));
-	return vec4(texturePixel.rgb, texture(mask, textureCoord).r * texturePixel.a);
-}       
 
 )"

@@ -33,14 +33,12 @@ namespace mc {
 
 		//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
-#define MACE__MATRIX_SIZE sizeof(float) * 4 * 4
-
 		//how many floats in the uniform buffer
-#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float)*16
+#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 16
 		//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
 
-#define MACE__PAINTER_DATA_BUFFER_SIZE MACE__MATRIX_SIZE + (2 * sizeof(Color))
+#define MACE__PAINTER_DATA_BUFFER_SIZE (sizeof(float) * 3 * 4) + (2 * sizeof(Color))
 #define MACE__PAINTER_DATA_LOCATION 1
 
 #define MACE__SCENE_ATTACHMENT_INDEX 0
@@ -51,22 +49,22 @@ namespace mc {
 #define MACE__VAO_TEX_COORD_LOCATION 1
 
 		IncludeString vertexLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/mc_vertex.glsl>
+#	include <MACE/Graphics/Shaders/mc_vertex.glsl>
 		}, "mc_vertex");
 		/**
 		@todo Remove discard from shader
 		*/
 		IncludeString fragmentLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/mc_frag.glsl>
+#	include <MACE/Graphics/Shaders/mc_frag.glsl>
 		}, "mc_frag");
 		IncludeString positionLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/mc_position.glsl>
+#	include <MACE/Graphics/Shaders/mc_position.glsl>
 		}, "mc_position");
 		IncludeString entityLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/mc_entity.glsl>
+#	include <MACE/Graphics/Shaders/mc_entity.glsl>
 		}, "mc_entity");
 		IncludeString coreLibrary = IncludeString({
-#	include <MACE/Graphics/Shaders/include/mc_core.glsl>
+#	include <MACE/Graphics/Shaders/mc_core.glsl>
 		}, "mc_core");
 
 		GLRenderer::GLRenderer() : sslPreprocessor(""), frameBuffer(), depthBuffer(), sceneTexture(), idTexture(), clearColor(Colors::BLACK) {}
@@ -318,9 +316,6 @@ namespace mc {
 		}
 
 		void GLRenderer::loadPainterUniforms(TransformMatrix transform, Color prim, Color second) {
-			float modelMatrix[16] = {};
-			transform.get().flattenTransposed(modelMatrix);
-
 			float color[4] = {};
 			prim.flatten(color);
 
@@ -328,8 +323,12 @@ namespace mc {
 			painterUniforms.bind();
 			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 			float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-			std::copy(std::begin(modelMatrix), std::end(modelMatrix), mappedEntityData);
-			mappedEntityData += 4 * 4;//pointer arithmetic!
+			std::copy(transform.translation.begin(), transform.translation.end(), mappedEntityData);
+			mappedEntityData += 4;
+			std::copy(transform.rotation.begin(), transform.rotation.end(), mappedEntityData);
+			mappedEntityData += 4;
+			std::copy(transform.scaler.begin(), transform.scaler.end(), mappedEntityData);
+			mappedEntityData += 4;
 			std::copy(std::begin(color), std::end(color), mappedEntityData);
 			mappedEntityData += 4;
 			second.flatten(color);
@@ -357,15 +356,19 @@ namespace mc {
 			ogl::ShaderProgram program;
 			program.init();
 
-			if (settings.type == GLRenderer::RenderType::QUAD) {
+			if (settings.type == Painter::RenderType::QUAD) {
 				program.createVertex(processShader({
-#include <MACE/Graphics/Shaders/quad.v.glsl>
+#include <MACE/Graphics/Shaders/rendertypes/quad.v.glsl>
 				}));
 			}
 
-			if (settings.brush == GLRenderer::Brush::TEXTURE) {
+			if (settings.brush == Painter::Brush::TEXTURE) {
 				program.createFragment(processShader({
-#include <MACE/Graphics/Shaders/texture.f.glsl>
+#include <MACE/Graphics/Shaders/brushes/texture.f.glsl>
+				}));
+			} else if (settings.brush == Painter::Brush::COLOR) {
+				program.createFragment(processShader({
+#include <MACE/Graphics/Shaders/brushes/color.f.glsl>
 				}));
 			}
 
@@ -381,7 +384,7 @@ namespace mc {
 			ogl::VertexArray vao;
 			vao.init();
 
-			if (settings.type == GLRenderer::RenderType::QUAD) {
+			if (settings.type == Painter::RenderType::QUAD) {
 				constexpr float squareTextureCoordinates[8] = {
 					0.0f,1.0f,
 					0.0f,0.0f,
@@ -603,16 +606,14 @@ namespace mc {
 			renderer->loadPainterUniforms(transform, prim, second);
 		}
 
-		void GLPainter::drawImage(const ColorAttachment & img, const float x, const float y, const float w, const float h) {
-			loadSettings(transformation, img.getPaint(), secondary);
-
-			GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, { GLRenderer::Brush::TEXTURE, GLRenderer::RenderType::QUAD });
+		void GLPainter::draw(const Painter::Brush brush, const Painter::RenderType type) {
+			GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, { brush, type });
 			prot.vao.bind();
 			prot.program.bind();
 
-			img.bind();
-
-			prot.vao.draw(GL_TRIANGLES);
+			if (type == Painter::RenderType::QUAD) {
+				prot.vao.draw(GL_TRIANGLES);
+			}
 		}
 	}//gfx
 }//mc
