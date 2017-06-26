@@ -214,7 +214,7 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			void VertexArray::bindIndex(const Index ID) const {
+			void VertexArray::bindIndex(const GLuint ID) const {
 				glBindVertexArray(ID);
 
 				checkGLError(__LINE__, __FILE__, "Error binding VAO");
@@ -352,7 +352,7 @@ namespace mc {
 				return glCheckFramebufferStatus(target);
 			}
 
-			void FrameBuffer::bindIndex(const Index ID) const {
+			void FrameBuffer::bindIndex(const GLuint ID) const {
 				glBindFramebuffer(GL_FRAMEBUFFER, ID);
 			}
 
@@ -382,7 +382,7 @@ namespace mc {
 				return glIsRenderbuffer(id) == 1;
 			}
 
-			void RenderBuffer::bindIndex(const Index ID) const {
+			void RenderBuffer::bindIndex(const GLuint ID) const {
 				glBindRenderbuffer(GL_RENDERBUFFER, ID);
 			}
 
@@ -394,7 +394,7 @@ namespace mc {
 				bindIndex(0);
 			}
 
-			Index Object::getID() const {
+			GLuint Object::getID() const {
 				return id;
 			}
 
@@ -511,7 +511,7 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			void Texture2D::bindIndex(const Index ID) const {
+			void Texture2D::bindIndex(const GLuint ID) const {
 				glBindTexture(target, ID);
 			}
 
@@ -639,7 +639,7 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			void Buffer::bindIndex(const Index ID) const {
+			void Buffer::bindIndex(const GLuint ID) const {
 				glBindBuffer(bufferType, ID);
 			}
 
@@ -768,7 +768,7 @@ namespace mc {
 
 			void QueryObject::unbind() const {}
 
-			void QueryObject::bindIndex(const Index) const {}
+			void QueryObject::bindIndex(const GLuint) const {}
 
 			PixelUnpackBuffer::PixelUnpackBuffer() noexcept : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
 
@@ -875,9 +875,9 @@ namespace mc {
 
 			void Shader::bind() const {}
 			void Shader::unbind() const {}
-			void Shader::bindIndex(const Index) const {}
+			void Shader::bindIndex(const GLuint) const {}
 
-			void ShaderProgram::bindIndex(const Index ID) const {
+			void ShaderProgram::bindIndex(const GLuint ID) const {
 				glUseProgram(ID);
 			}
 

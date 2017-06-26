@@ -81,7 +81,7 @@ namespace mc {
 				ogl::VertexArray vao;
 			};
 
-			std::map<GLRenderer::RenderSettings, GLRenderer::RenderProtocol> protocols = std::map<GLRenderer::RenderSettings, GLRenderer::RenderProtocol>();
+			std::map<GLRenderer::RenderSettings, GLRenderer::RenderProtocol> protocols;
 			ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
 			ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
 

@@ -170,7 +170,7 @@ namespace mc {
 				When using Object::bind() const it will bind to this ID. Object::unbind() const will bind to ID 0, which is the equivelant of a null pointer.
 				@return The ID represented by this `Object`
 				*/
-				Index getID() const;
+				GLuint getID() const;
 
 				/**
 				Compares if 2 `Objects` are equal.
@@ -194,7 +194,7 @@ namespace mc {
 				<p>
 				Object::getID() const returns this.
 				*/
-				Index id = 0;
+				GLuint id = 0;
 
 				/**
 				Intended to be overloaded to bind to a certain index. Object::bind() const and Object::unbind() const both use this function.
@@ -202,7 +202,7 @@ namespace mc {
 				@opengl
 				@internal
 				*/
-				virtual void bindIndex(const Index id) const = 0;
+				virtual void bindIndex(const GLuint id) const = 0;
 			};
 
 			class Binder: public Initializable {
@@ -306,17 +306,17 @@ namespace mc {
 				void init() final;
 				void destroy() final;
 
-				bool isCreated() const final;
+				bool isCreated() const override final;
 
 				using Object::operator==;
 				using Object::operator!=;
 
 			private:
 				//queryobjects cant be bound or unbound according to the opengl spec
-				void bind() const final;
-				void unbind() const final;
+				void bind() const override final;
+				void unbind() const override final;
 
-				void bindIndex(const Index id) const final;
+				void bindIndex(const GLuint id) const override final;
 			};//QueryObject
 
 			/**
@@ -358,7 +358,7 @@ namespace mc {
 				using Object::operator==;
 				using Object::operator!=;
 			private:
-				void bindIndex(const Index id) const override;
+				void bindIndex(const GLuint id) const override;
 			};//RenderBuffer
 
 			/**
@@ -440,7 +440,7 @@ namespace mc {
 			private:
 				Enum target = GL_TEXTURE_2D;
 
-				void bindIndex(const Index id) const override;
+				void bindIndex(const GLuint id) const override;
 			};//Texture2D
 
 			/**
@@ -606,7 +606,7 @@ namespace mc {
 				using Object::operator==;
 				using Object::operator!=;
 			private:
-				void bindIndex(const Index id) const override;
+				void bindIndex(const GLuint id) const override;
 			};//FrameBuffer
 
 			/**
@@ -764,7 +764,7 @@ namespace mc {
 			private:
 				Enum bufferType;
 
-				void bindIndex(const Index id) const override;
+				void bindIndex(const GLuint id) const override;
 			};//Buffer
 
 			/**
@@ -994,7 +994,7 @@ namespace mc {
 				*/
 				bool operator!=(const VertexArray& other) const;
 			private:
-				void bindIndex(const Index id) const override;
+				void bindIndex(const GLuint id) const override;
 
 				ElementBuffer indices;
 				std::vector<VertexBuffer> buffers = std::vector<VertexBuffer>();
@@ -1123,10 +1123,10 @@ namespace mc {
 				Enum type;
 
 				//shaders cant be bound or unbound according to the opengl spec
-				void bind() const final;
-				void unbind() const final;
+				void bind() const override final;
+				void unbind() const override final;
 
-				void bindIndex(const Index id) const final;
+				void bindIndex(const GLuint id) const override final;
 			};//Shader
 
 			/**
@@ -1330,7 +1330,7 @@ namespace mc {
 				std::unordered_map<Enum, Shader> shaders;
 				std::unordered_map<std::string, int> uniforms;
 
-				void bindIndex(const Index id) const override;
+				void bindIndex(const GLuint id) const override;
 			};//ShaderProgram
 
 			/**

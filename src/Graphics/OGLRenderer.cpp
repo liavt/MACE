@@ -349,7 +349,7 @@ namespace mc {
 			loadEntityUniforms(entity);
 
 			protocols[settings].program.bind();
-			protocols[settings].program.setUniform("mc_EntityID", entity->getID());
+			protocols[settings].program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getID()));
 
 			return protocols[settings];
 		}
