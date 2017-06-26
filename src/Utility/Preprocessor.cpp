@@ -79,6 +79,8 @@ namespace mc {
 		}
 	}
 
+#define MACE__THROW_PREPROCESSOR(message) throw MACE__GET_ERROR_NAME(Preprocessor) ( message , line, filename)
+
 	Preprocessor::Preprocessor(const std::string& inputString, const std::string& filename) : input(inputString) {
 		this->filename = filename;
 	}
@@ -303,7 +305,7 @@ namespace mc {
 		const int macroLocation = getMacroLocation("__IF_SCOPE__");
 		if( macroLocation >= 0 ) {
 			if( std::stoi(getMacro("__IF_SCOPE__").definition) > 0 ) {
-				throw PreprocessorError(getLocation() + ": #if directive is missing an #endif");
+				MACE__THROW_PREPROCESSOR("#if directive is missing an #endif");
 			}
 		}
 		*/
@@ -315,7 +317,7 @@ namespace mc {
 		//only if we output
 		if (command == "if") {
 			if (params.empty()) {
-				throw PreprocessorError(getLocation() + ": #if must be called with an expression");
+				MACE__THROW_PREPROCESSOR("#if must be called with an expression");
 			}
 
 			calculateIfScope(outputValue, parseIfStatement(params));
@@ -323,7 +325,7 @@ namespace mc {
 			return std::vector< std::string >();
 		} else if (command == "elif") {
 			if (params.empty()) {
-				throw PreprocessorError(getLocation() + ": #elif must be called with an expression");
+				MACE__THROW_PREPROCESSOR("#elif must be called with an expression");
 			}
 
 			calculateIfScope(outputValue, parseIfStatement(params));
@@ -331,7 +333,7 @@ namespace mc {
 			return std::vector< std::string >();
 		} else if (command == "ifdef") {
 			if (params.empty()) {
-				throw PreprocessorError(getLocation() + ": #ifdef must be called with a macro name");
+				MACE__THROW_PREPROCESSOR("#ifdef must be called with a macro name");
 			}
 
 			Index iterator;
@@ -352,7 +354,7 @@ namespace mc {
 			return std::vector< std::string >();
 		} else if (command == "ifndef") {
 			if (params.empty()) {
-				throw PreprocessorError(getLocation() + ": #ifdef must be called with a macro name");
+				MACE__THROW_PREPROCESSOR("#ifdef must be called with a macro name");
 			}
 
 			Index iterator;
@@ -373,12 +375,12 @@ namespace mc {
 		} else if (command == "else") {
 			int ifScope = getMacroLocation("__IF_SCOPE__");
 			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
-				throw PreprocessorError(getLocation() + ": #else is missing an if directive");
+				MACE__THROW_PREPROCESSOR("#else is missing an if directive");
 			}
 
 			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
 			if (currentIfScope < 0) {
-				throw PreprocessorError(getLocation() + ": #else is missing an if directive");
+				MACE__THROW_PREPROCESSOR("#else is missing an if directive");
 			}
 
 			if (outputValue || macros[ifScope].definition == macros[currentIfScope].definition) {
@@ -394,12 +396,12 @@ namespace mc {
 		} else if (command == "endif") {
 			int ifScope = getMacroLocation("__IF_SCOPE__");
 			if (ifScope < 0 || std::stoi(macros[ifScope].definition) <= 0) {
-				throw PreprocessorError(getLocation() + ": #endif is missing an if directive");
+				MACE__THROW_PREPROCESSOR("#endif is missing an if directive");
 			}
 
 			int currentIfScope = getMacroLocation("__CURRENT_IF_SCOPE__");
 			if (currentIfScope < 0) {
-				throw PreprocessorError(getLocation() + ": #endif is missing an if directive");
+				MACE__THROW_PREPROCESSOR("#endif is missing an if directive");
 			}
 
 
@@ -414,21 +416,21 @@ namespace mc {
 		} else if (outputValue) {
 			if (command == "error") {
 				if (params.empty()) {
-					throw PreprocessorError(getLocation() + ": #error was called with no message");
+					MACE__THROW_PREPROCESSOR("#error was called with no message");
 				}
 
-				throw PreprocessorError(getLocation() + ": " + params);
+				MACE__THROW_PREPROCESSOR("" + params);
 			} else if (command == "warning") {
 				if (params.empty()) {
-					throw PreprocessorError(getLocation() + ": #warning must be called with a message");
+					MACE__THROW_PREPROCESSOR("#warning must be called with a message");
 				}
 
-				std::cout << getLocation() << ": " << params << std::endl;
+				std::cout << "Line " << std::to_string(line) << " in " << filename << ": " << params << std::endl;
 
 				return std::vector< std::string >();
 			} else if (command == "line") {
 				if (params.empty()) {
-					throw PreprocessorError(getLocation() + ": #line must be called with a line number");
+					MACE__THROW_PREPROCESSOR("#line must be called with a line number");
 				}
 
 				Index iterator;
@@ -456,13 +458,10 @@ namespace mc {
 
 				setLine(std::stoi(newLineNumber));
 
-				setMacro(Macro("__LINE__", std::to_string(line)));
-				setMacro(Macro("__FILE__", (filename)));
-
 				return std::vector< std::string >();
 			} else if (command == "define") {
 				if (params.empty()) {
-					throw PreprocessorError(getLocation() + ": #define must be called with a macro name - it\'s arguments cannot be left empty.");
+					MACE__THROW_PREPROCESSOR("#define must be called with a macro name - it\'s arguments cannot be left empty.");
 				}
 				Index iterator;
 				std::string macroName = "";
@@ -526,7 +525,7 @@ namespace mc {
 				return std::vector< std::string >();
 			} else if (command == "undef") {
 				if (params.empty()) {
-					throw PreprocessorError(getLocation() + ": #undef must be called with a macro name.");
+					MACE__THROW_PREPROCESSOR("#undef must be called with a macro name.");
 				}
 
 				Index iterator;
@@ -546,11 +545,11 @@ namespace mc {
 				return std::vector< std::string >();
 			} else if (command == "include") {
 				if (params.empty()) {
-					throw PreprocessorError(getLocation() + ": #include must be called with arguments seperated by either \"\'s, a macro, or <>");
+					MACE__THROW_PREPROCESSOR("#include must be called with arguments seperated by either \"\'s, a macro, or <>");
 				}
 
 				if (std::stoi(getMacro("__INCLUDE_LEVEL__").definition) > 255) {
-					throw PreprocessorError(getLocation() + ": Recursion too deep: Exceeded 256 include depth");
+					MACE__THROW_PREPROCESSOR("Recursion too deep: Exceeded 256 include depth");
 				}
 
 				if (params[0] == '<') {
@@ -568,7 +567,7 @@ namespace mc {
 					}
 
 					if (!complete) {
-						throw PreprocessorError(getLocation() + ": Missing closing > in #include - " + params);
+						MACE__THROW_PREPROCESSOR("Missing closing > in #include - " + params);
 					}
 
 					for (Index iter = 0; iter < includes.size(); ++iter) {
@@ -591,7 +590,7 @@ namespace mc {
 					}
 
 					//if it found the file, it would have returned it by now.
-					throw PreprocessorError(getLocation() + ": Include with name " + term + " not found!");
+					MACE__THROW_PREPROCESSOR("Include with name " + term + " not found!");
 				} else if (params[0] == '\"') {
 					std::string term;
 					//complete is whether both "" are found
@@ -608,7 +607,7 @@ namespace mc {
 
 
 					if (!complete) {
-						throw PreprocessorError(getLocation() + ": Missing closing \" in #include - " + params);
+						MACE__THROW_PREPROCESSOR("Missing closing \" in #include - " + params);
 					}
 
 					//check the current directory for file
@@ -628,7 +627,7 @@ namespace mc {
 
 						return tokens;
 					} else {
-						throw PreprocessorError(getLocation() + ": file with name " + term + " not found!");
+						MACE__THROW_PREPROCESSOR("file with name " + term + " not found!");
 					}
 				}
 
@@ -644,7 +643,7 @@ namespace mc {
 		}
 
 		if (outputValue) {
-			throw PreprocessorError("Unknown directive: " + command);
+			MACE__THROW_PREPROCESSOR("Unknown directive: " + command);
 		}
 
 		return std::vector< std::string >();
@@ -656,6 +655,7 @@ namespace mc {
 				return iterator;
 			}
 		}
+
 		return -1;
 	}
 
@@ -721,7 +721,7 @@ namespace mc {
 				//this will expand macros in the parameters
 				std::unique_ptr< Preprocessor > outProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameterString, *this));
 
-				for (Index i = 0; i < token.parameters.size(); i++) {
+				for (Index i = 0; i < token.parameters.size(); ++i) {
 
 					std::unique_ptr< Preprocessor > argumentProcessor = std::unique_ptr< Preprocessor >(new Preprocessor(token.parameters[i], *this));
 
@@ -850,9 +850,9 @@ namespace mc {
 		}
 
 		if (functionScope < 0) {
-			throw PreprocessorError(getLocation() + ": Missing ( in function macro name - " + name);
+			MACE__THROW_PREPROCESSOR("Missing ( in function macro name - " + name);
 		} else if (functionScope > 0) {
-			throw PreprocessorError(getLocation() + ": Missing ) in function macro name - " + name);
+			MACE__THROW_PREPROCESSOR("Missing ) in function macro name - " + name);
 		}
 
 		for (; iter < name.length(); ++iter) {
@@ -878,7 +878,7 @@ namespace mc {
 	void Preprocessor::defineMacro(const Macro& m) {
 		for (Index iterator = 0; iterator < os::getArraySize(reservedWords); ++iterator) {
 			if (m.name == reservedWords[iterator]) {
-				throw PreprocessorError(getLocation() + ": can\'t define " + m.name + " - it is a reserved word");
+				MACE__THROW_PREPROCESSOR("can\'t define " + m.name + " - it is a reserved word");
 			}
 		}
 
@@ -1382,11 +1382,7 @@ namespace mc {
 				return macros[iterator];
 			}
 		}
-		throw PreprocessorError(getLocation() + ": Unknown macro " + name);
-	}
-
-	std::string Preprocessor::getLocation() const {
-		return "Line " + std::to_string(line) + " in " + (filename);
+		MACE__THROW_PREPROCESSOR("Unknown macro " + name);
 	}
 
 	void Preprocessor::addInclude(Include & include) {
@@ -1419,6 +1415,7 @@ namespace mc {
 
 	void Preprocessor::setFilename(const std::string & file) {
 		this->filename = file;
+		setMacro(Macro("__FILE__", filename));
 	}
 
 	unsigned int Preprocessor::getLine() {
@@ -1431,6 +1428,7 @@ namespace mc {
 
 	void Preprocessor::setLine(const unsigned int lineNumber) {
 		this->line = lineNumber;
+		setMacro(Macro("__LINE__", std::to_string(line)));
 	}
 
 	//d is part of std? how lewd can we get
@@ -1461,7 +1459,6 @@ namespace mc {
 	}
 
 	std::string IncludeDirectory::getFile(const std::string & name) const {
-
 		std::string fileName = directory;
 
 #if defined(MACE_WINDOWS)
@@ -1482,7 +1479,7 @@ namespace mc {
 				out += '\n';
 			}
 		} else {
-			throw PreprocessorError("File with name " + name + "doesn\'t exist!");
+			MACE__THROW(FileNotFound, "File with name " + name + "doesn\'t exist!");
 		}
 
 		f.close();

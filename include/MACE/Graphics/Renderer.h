@@ -18,7 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Transform.h>
 
 #include <deque>
-#include <queue>
+#include <stack>
 
 
 namespace mc {
@@ -117,7 +117,7 @@ namespace mc {
 
 			const GraphicsEntity* const entity;
 
-			std::queue<TransformMatrix> transformationStack = std::queue<TransformMatrix>();
+			std::stack<TransformMatrix> transformationStack = std::stack<TransformMatrix>();
 			TransformMatrix transformation;
 
 			Color primary, secondary;

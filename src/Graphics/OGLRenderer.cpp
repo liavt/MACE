@@ -125,8 +125,6 @@ namespace mc {
 		}
 
 		void GLRenderer::onSetUp(os::WindowModule *) {
-			//frameBuffer.unbind();
-
 			frameBuffer.bind();
 			sceneTexture.bind();
 			idTexture.bind();
@@ -195,12 +193,19 @@ namespace mc {
 		GraphicsEntity * GLRenderer::getEntityAt(const int x, const int y) {
 			frameBuffer.bind();
 
+			GLFWwindow* win = glfwGetCurrentContext();
+			if (win == nullptr) {
+				MACE__THROW(InvalidState, "This thread does not have a rendering context!");
+			}
+			int height;
+			glfwGetFramebufferSize(win, nullptr, &height);
+
 			Index pixel = 0;
 			frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 			frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 			ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-			//it is inverted for some reason
-			frameBuffer.readPixels(x, y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
+			//opengl y-axis is inverted from window coordinates
+			frameBuffer.readPixels(x, height - y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
 			if (pixel > 0) {
 				if (pixel > renderQueue.size()) {
@@ -209,9 +214,6 @@ namespace mc {
 
 				return renderQueue[--pixel];
 			}
-
-			frameBuffer.unbind();
-
 			return nullptr;
 		}
 
@@ -298,7 +300,7 @@ namespace mc {
 			const float opacity = entity->getOpacity();
 
 			//now we set the uniforms defining the transformations of the entity
-			entityUniforms.bind();
+			ogl::Binder b(&entityUniforms);
 			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 			float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
@@ -320,7 +322,7 @@ namespace mc {
 			prim.flatten(color);
 
 			//now we set the uniforms defining the transformations of the entity
-			painterUniforms.bind();
+			ogl::Binder b(&painterUniforms);
 			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 			float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(transform.translation.begin(), transform.translation.end(), mappedEntityData);
@@ -404,7 +406,7 @@ namespace mc {
 					1.0f,-1.0f,0.0f
 				};
 
-				vao.bind();
+				ogl::Binder b(&vao);
 				vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
 				vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
 				vao.loadIndices(6, squareIndices);
@@ -607,7 +609,7 @@ namespace mc {
 		}
 
 		void GLPainter::draw(const Painter::Brush brush, const Painter::RenderType type) {
-			GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, { brush, type });
+			const GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, { brush, type });
 			prot.vao.bind();
 			prot.program.bind();
 

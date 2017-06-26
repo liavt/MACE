@@ -11,7 +11,6 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__CORE_INTERFACES_H
 #define MACE__CORE_INTERFACES_H
 #include <MACE/Core/Constants.h>
-#include <memory>
 
 namespace mc {
 	class Initializer;
@@ -26,33 +25,24 @@ namespace mc {
 		virtual void destroy() = 0;
 	};//Initializable
 
-	class Initializer final: public Initializable {
+	class Initializer final{
 	public:
-		Initializer(Initializable* in);
+		Initializer(Initializable* o);
+		Initializer(Initializable& o);
 		~Initializer();
 
-		void init() final;
-		void destroy() final;
-
 		Initializable* get();
-
 		const Initializable* get() const;
 
-		Initializable* operator*();
-
-		const Initializable* operator*() const;
-
 		Initializable* operator->();
-
 		const Initializable* operator->() const;
 
-		bool isInitialized() const;
+		Initializable* operator*();
+		const Initializable* operator*() const;
 
 		bool operator==(const Initializer& other) const;
 		bool operator!=(const Initializer& other) const;
 	private:
-		bool initialized = false;
-
 		Initializable* obj;
 	};//Initializer
 

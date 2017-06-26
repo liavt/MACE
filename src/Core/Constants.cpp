@@ -88,13 +88,13 @@ namespace mc {
 		for (Index i = 0; i < MACE::numberOfModules(); ++i) {
 			const Module* m = MACE::getModule(i);
 
-			dump << std::endl << '\t'  << m->getName() << " (" << typeid(*m).name() << ')';
+			dump << std::endl << '\t' << m->getName() << " (" << typeid(*m).name() << ')';
 		}
 		//we need to flush it as well as newline. endl accomplishes that
 		dump << std::endl;
 		dump << "Flags:" << std::endl << '\t';
-		dump << "DESTROYED - " << MACE::getFlag(MACE::DESTROYED) << std::endl << '\t' ;
-		dump << "INIT - " << MACE::getFlag(MACE::INIT) << std::endl << '\t' ;
+		dump << "DESTROYED - " << MACE::getFlag(MACE::DESTROYED) << std::endl << '\t';
+		dump << "INIT - " << MACE::getFlag(MACE::INIT) << std::endl << '\t';
 		dump << "STOP_REQUESTED - " << MACE::getFlag(MACE::STOP_REQUESTED);
 
 		dump << std::endl << std::endl;
@@ -209,6 +209,10 @@ namespace mc {
 	void Error::setVerboseErrors(const bool & verbose) {
 		verboseErrors = verbose;
 	}
+
+	Error::Error(const char * message, const Index line, const std::string file) : Error(message, line, file.c_str()) {}
+
+	Error::Error(const std::string message, const Index line, const std::string file) : Error(message, line, file.c_str()) {}
 
 	Error::Error(const char * message, const Index l, const char * f) : std::runtime_error(message), line(l), file(f) {}
 

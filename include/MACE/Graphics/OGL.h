@@ -205,6 +205,30 @@ namespace mc {
 				virtual void bindIndex(const Index id) const = 0;
 			};
 
+			class Binder: public Initializable {
+			public:
+				Binder(Object& o);
+				Binder(Object* o);
+				~Binder();
+
+				void init() override;
+				void destroy() override;
+
+				Object* get();
+				const Object* get() const;
+
+				Object* operator->();
+				const Object* operator->() const;
+
+				Object* operator*();
+				const Object* operator*() const;
+
+				bool operator==(const Binder& other) const;
+				bool operator!=(const Binder& other) const;
+			private:
+				Object* obj;
+			};
+
 			/**
 			Special object that is used for asynchronous queries of information from the GPU.
 			<p>
@@ -701,11 +725,33 @@ namespace mc {
 				*/
 				bool unmap();
 
+				void flushRange(const Index offset, const Size length);
+
+				void getPointer(void** param);
+
+				void getParameter(const Enum pname, int* data) const;
+				void getParameter(const Enum pname, GLint64* data) const;
+
+				bool isMapped() const;
+
+				GLint64 getMapLength() const;
+				GLint64 getMapOffset() const;
+
+				bool isImmutable() const;
+
+				Enum getAccess() const;
+				Enum getAccessFlags() const;
+
+				Enum getStorageFlags() const;
+				Enum getUsage() const;
+
 				/**
-				Retrieves the sslBuffer type for this sslBuffer. This is based on the class.
-				@return The sslBuffer type
+				Retrieves the buffer type for this sslBuffer. This is based on the class.
+				@return The buffer type
 				*/
 				const Enum getBufferType() const;
+
+				int getSize() const;
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -722,7 +768,7 @@ namespace mc {
 			};//Buffer
 
 			/**
-			Special sslBuffer that excels at asynchronous pixel transfer operations. The `PixelUnpackBuffer` is fast at reading
+			Special buffer that excels at asynchronous pixel transfer operations. The `PixelUnpackBuffer` is fast at reading
 			pixels while the `PixelPackBuffer` is fast at writing pixels.
 			<p>
 			Not to be confused with a `FrameBuffer` or `Texture2D.`
@@ -1287,12 +1333,12 @@ namespace mc {
 				void bindIndex(const Index id) const override;
 			};//ShaderProgram
 
-			  /**
-			  Stores uniform data for a shader in the form of a sslBuffer. Can be used to share data between multiple shaders or quickly change between
-			  sets of uniforms in one program.
-			  @see https://www.opengl.org/wiki/Uniform_Buffer_Object
-			  @see VertexBuffer
-			  */
+			/**
+			Stores uniform data for a shader in the form of a sslBuffer. Can be used to share data between multiple shaders or quickly change between
+			sets of uniforms in one program.
+			@see https://www.opengl.org/wiki/Uniform_Buffer_Object
+			@see VertexBuffer
+			*/
 			class UniformBuffer: public Buffer {
 			public:
 				UniformBuffer() noexcept;

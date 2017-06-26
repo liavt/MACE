@@ -10,6 +10,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Entity2D.h>
 
+//for testing purposes
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
 		namespace {
@@ -52,7 +55,7 @@ namespace mc {
 
 			onQueue(e);
 
-			//it adds 1 so 0 represents a non-initalized value
+			//it adds 1 so 0 (NULL) represents a non-initalized value
 			return pushEntity(e) + 1;
 		}//queue
 
@@ -146,9 +149,7 @@ namespace mc {
 
 		void PainterImpl::fillRect(const float x, const float y, const float w, const float h) {
 			pushTransform();
-			translate(x, y);
-			scale(w, h);
-			loadSettings(transformation, primary, secondary);
+			loadSettings(transformation.translate(x, y, 0.0f).scale(w, h, 0.0f), primary, secondary);
 			draw(Painter::Brush::COLOR, Painter::RenderType::QUAD);
 			popTransform();
 		}
@@ -163,9 +164,7 @@ namespace mc {
 
 		void PainterImpl::drawImage(const ColorAttachment & img, const float x, const float y, const float w, const float h) {
 			pushTransform();
-			translate(x, y);
-			scale(w, h);
-			loadSettings(transformation, img.getPaint(), secondary);
+			loadSettings(transformation.translate(x, y, 0.0f).scale(w, h, 0.0f), img.getPaint(), secondary);
 			img.bind();
 			draw(Painter::Brush::TEXTURE, Painter::RenderType::QUAD);
 			popTransform();
@@ -253,7 +252,7 @@ namespace mc {
 		}
 
 		void PainterImpl::popTransform() {
-			transformation = transformationStack.front();
+			transformation = transformationStack.top();
 			transformationStack.pop();
 		}
 

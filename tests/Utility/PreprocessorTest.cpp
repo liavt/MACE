@@ -49,7 +49,6 @@ namespace mc {
 	}
 
 	TEST_CASE("Conditionals", "[utility][preprocessor]") {
-
 		SECTION("Conditionals with macros") {
 			SECTION("#ifdef") {
 				Preprocessor p = Preprocessor("#define macro(a)\n#ifdef macro\nWorks!\n#endif\n#ifdef notAMacro\nDoesn\'t work!\n#endif");
@@ -113,6 +112,13 @@ namespace mc {
 				REQUIRE(p.preprocess() == "int foo = (10)");
 			}
 		}
+	}
+
+	TEST_CASE("Testing #line", "[utility][preprocessor]") {
+		Preprocessor p = Preprocessor("#line 5 testing\nthis is a line of code\n");
+		REQUIRE(p.preprocess() == "\nthis is a line of code\n");
+		REQUIRE(p.getLine() == 7);
+		REQUIRE(p.getFilename() == "testing");
 	}
 
 	TEST_CASE("Testing #include", "[utility][preprocessor]") {

@@ -85,7 +85,7 @@ namespace mc {
 	@see Enum
 	@see VoidFunctionPtr
 	*/
-	using Size = unsigned int;
+	using Size = std::size_t;
 
 	/**
 	Type representing an index in an array.
@@ -109,7 +109,7 @@ namespace mc {
 	@see VoidFunctionPtr
 	@see Enum
 	*/
-	using Index = unsigned int;
+	using Index = Size;
 	/**
 	Type representing an int-based enum (such as GL_* constants)
 	@see Index
@@ -146,6 +146,8 @@ namespace mc {
 		*/
 		static void handleError[[noreturn]](const std::exception& e);
 
+		Error(const char* message, const Index line, const std::string file);
+		Error(const std::string message, const Index line, const std::string file);
 		Error(const char* message, const Index line, const char* file);
 		Error(const std::string message, const Index line = 0, const char* file = "No file reported");
 		Error() noexcept = default;

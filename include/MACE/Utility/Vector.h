@@ -89,9 +89,13 @@ namespace mc {
 	struct VectorBase {
 	public:
 		/**
-		Default constructor. Constructs an empty `Vector`
+		Default constructor. Constructs an empty `Vector`.
+		<p>
+		The data is default initialized.
 		*/
-		VectorBase() : content() {};
+		VectorBase() : content{ } {};
+
+		VectorBase(const T& val) : content{ val } {};
 
 		/**
 		Consructs a `Vector` from the contents of an array.
@@ -99,18 +103,14 @@ namespace mc {
 		*/
 		VectorBase(const T arr[N]) : VectorBase()//we need to initialize the array first, or else we will try to access an empty memory location
 		{
-			this->setContents(arr);//this doesnt create a brand new std::array, it merely fills the existing one with new content
+			this->setContents(arr);//this doesnt create a brand new array, it merely fills the existing one with new content
 		}
 
 		/**
 		Consructs a `Vector` from the contents of an `std::array`.
 		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
 		*/
-		VectorBase(const std::array<T, N>& contents) : VectorBase() {
-			for (Index i = 0; i < N; ++i) {
-				content[i] = contents[i];
-			}
-		};
+		VectorBase(const std::array<T, N>& contents) : VectorBase(contents.data()) {};
 
 		/**
 		Creates a `Vector` from an `std::initializer_list`. Allows for an aggregate-style creation.
@@ -128,6 +128,7 @@ namespace mc {
 
 			Index counter = 0;
 			for (auto elem : args) {
+				//the post increment is on purpose to make sure content[0] is accessed
 				content[counter++] = elem;
 			}
 		}
@@ -245,7 +246,7 @@ namespace mc {
 		@param arr The array to fill
 		*/
 		const T* flatten(T arr[N]) const {
-			for (Index i = 0; i < N; i++) {
+			for (Index i = 0; i < N; ++i) {
 				arr[i] = content[i];
 			}
 			return arr;
@@ -616,7 +617,7 @@ namespace mc {
 		friend std::ostream &operator<<(std::ostream &output,
 										const Child &v) {
 			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
-			for (Index x = 0; x < N; x++) {
+			for (Index x = 0; x < N; ++x) {
 				output << v[x];
 				if (x != N - 1)output << ", ";
 			}
@@ -804,7 +805,7 @@ namespace mc {
 		template<typename T, Size N>
 		T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
 			T out = 0;
-			for (Index i = 0; i < N; i++) {
+			for (Index i = 0; i < N; ++i) {
 				out += static_cast<T>(a[i] * b[i]);
 			}
 			return out;
@@ -823,7 +824,7 @@ namespace mc {
 		T magnitude(const Vector<T, N>& a) {
 			T out = T();//assuming its numerical
 			//basically the pythagereon theorum
-			for (Index i = 0; i < N; i++) {
+			for (Index i = 0; i < N; ++i) {
 				out += static_cast<T>(sqr(a[i]));
 			}
 			return sqrt(out);

@@ -57,9 +57,11 @@ namespace mc {
 		void Image::onRender() {
 			Painter p = Painter(this);
 			p->init();
-			p->drawImage(texture, -0.5f, -0.5f, 0.5f, 0.5f);
+			//p->drawImage(texture, 0.5f, 0.5f, 0.5f, 0.5f);
+			//p->drawImage(texture, -0.5f, -0.5f, 0.5f, 0.5f);
 			p->setColor(texture.getPaint());
 			p->fillRect(0.5f, 0.5f, 0.5f, 0.5f);
+			p->fillRect(-0.5f, -0.5f, 0.5f, 0.5f);
 			p->destroy();
 		}
 
@@ -447,7 +449,7 @@ namespace mc {
 				id = sourceSerifPro.getID();
 			} else {
 				//should never be reached, but just to be safe
-				throw FontError("Unknown Fonts enum constant");
+				MACE__THROW(Font, "Unknown Fonts enum constant");
 			}
 		}
 

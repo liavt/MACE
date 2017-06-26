@@ -503,8 +503,8 @@ namespace mc {
 		template<typename T, Size W, Size H>
 		Matrix<T, H, W> transpose(const Matrix<T, W, H>& matrix) {
 			Matrix<T, H, W> out = Matrix<T, H, W>();
-			for( Index x = 0; x < W; x++ ) {
-				for( Index y = 0; y < H; y++ ) {
+			for( Index x = 0; x < W; ++x ) {
+				for( Index y = 0; y < H; ++y ) {
 					out[y][x] = matrix[x][y];
 				}
 			}
@@ -536,16 +536,15 @@ namespace mc {
 			static_assert(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
 			T sum = T();
 			Index counter = 0;
-			for( Index i = 0; i < N; i++ ) {
+			for( Index i = 0; i < N; ++i ) {
 				constexpr Size newMatrixSize = N - 1;
 				Matrix<T, newMatrixSize, newMatrixSize> m = Matrix<T, newMatrixSize, newMatrixSize>();
 				Index counterX = 0;
 				Index counterY = 0;
-				for( Index x = 0; x < N; x++ ) {
-					for( Index y = 1; y < N; y++ ) {
+				for( Index x = 0; x < N; ++x ) {
+					for( Index y = 1; y < N; ++y ) {
 						if( x != i ) {
-							m[counterX][counterY] = matrix[x][y];
-							counterX++;
+							m[counterX++][counterY] = matrix[x][y];
 						}
 						counterY++;
 
@@ -559,7 +558,7 @@ namespace mc {
 					tempSum *= det<T, N>(matrix);
 				}
 				sum += tempSum;
-				counter++;
+				++counter;
 			}
 			return sum;
 		}
@@ -582,7 +581,7 @@ namespace mc {
 		T tr(const Matrix<T, N, N>& m) {
 			T out = T();
 			//done without a trace!
-			for( Index x = 0; x < N; x++ ) {
+			for( Index x = 0; x < N; ++x ) {
 				out += m[x][x];
 			}
 			return out;
@@ -597,14 +596,8 @@ namespace mc {
 		template<typename T, Size N>
 		Matrix<T, N, N> identity() {
 			Matrix<T, N, N> out = Matrix<T, N, N>();
-			for( Index x = 0; x < N; x++ ) {
-				for( Index y = 0; y < N; y++ ) {
-					if( x == y ) {
-						out[x][y] = 1;
-					} else {
-						out[x][y] = 0;
-					}
-				}
+			for( Index x = 0; x < N; ++x ) {
+				out[x][x] = static_cast<T>(1);
 			}
 			return out;
 		}

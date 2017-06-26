@@ -549,7 +549,6 @@ namespace mc {
 			}
 
 			void* Buffer::mapRange(const Index offset, const Size length, const unsigned int access) {
-				bind();
 				return glMapBufferRange(bufferType, offset, length, access);
 			}
 
@@ -558,8 +557,78 @@ namespace mc {
 				return glUnmapBuffer(bufferType) == 1;
 			}
 
+			void Buffer::flushRange(const Index offset, const Size length) {
+				glFlushMappedBufferRange(bufferType, offset, length);
+			}
+
+			void Buffer::getPointer(void ** param) {
+				glGetBufferPointerv(bufferType, GL_BUFFER_MAP_POINTER, param);
+			}
+
+			void Buffer::getParameter(const Enum pname, int * data) const {
+				glGetBufferParameteriv(bufferType, pname, data);
+			}
+
+			void Buffer::getParameter(const Enum pname, GLint64 * data) const {
+				glGetBufferParameteri64v(bufferType, pname, data);
+			}
+
+			bool Buffer::isMapped() const {
+				int out;
+				getParameter(GL_BUFFER_MAPPED, &out);
+				return out != 0;
+			}
+
+			GLint64 Buffer::getMapLength() const {
+				GLint64 out;
+				getParameter(GL_BUFFER_MAP_LENGTH, &out);
+				return out;
+			}
+
+			GLint64 Buffer::getMapOffset() const {
+				GLint64 out;
+				getParameter(GL_BUFFER_MAP_OFFSET, &out);
+				return out;
+			}
+
+			bool Buffer::isImmutable() const {
+				int out;
+				getParameter(GL_BUFFER_IMMUTABLE_STORAGE, &out);
+				return out != 0;
+			}
+
+			Enum Buffer::getAccess() const {
+				int out;
+				getParameter(GL_BUFFER_ACCESS, &out);
+				return static_cast<Enum>(out);
+			}
+
+			Enum Buffer::getAccessFlags() const {
+				int out;
+				getParameter(GL_BUFFER_ACCESS_FLAGS, &out);
+				return static_cast<Enum>(out);
+			}
+
+			Enum Buffer::getStorageFlags() const {
+				int out;
+				getParameter(GL_BUFFER_STORAGE_FLAGS, &out);
+				return static_cast<Enum>(out);
+			}
+
+			Enum Buffer::getUsage() const {
+				int out;
+				getParameter(GL_BUFFER_USAGE, &out);
+				return static_cast<Enum>(out);
+			}
+
 			const Enum Buffer::getBufferType() const {
 				return bufferType;
+			}
+
+			int Buffer::getSize() const {
+				int out;
+				getParameter(GL_BUFFER_SIZE, &out);
+				return out;
 			}
 
 			bool Buffer::operator==(const Buffer & other) const {
@@ -594,7 +663,6 @@ namespace mc {
 			}
 
 			void VertexBuffer::setDivisor(const unsigned int divisor) {
-				bind();
 				glVertexAttribDivisor(location, divisor);
 			}
 
@@ -1226,6 +1294,61 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-		}//ogl
+			
+			Binder::Binder(Object & o) : Binder(&o) {}
+
+			Binder::Binder(Object * o) : obj(o) {
+#ifdef MACE_DEBUG
+				if (o == nullptr) {
+					MACE__THROW(NullPointer, "Input object to Binder is nullptr!");
+				}
+#endif
+				obj->bind();
+			}
+
+			Binder::~Binder() {
+				obj->unbind();
+			}
+
+			void Binder::init() {
+				obj->init();
+			}
+
+			void Binder::destroy() {
+				obj->destroy();
+			}
+
+			Object * Binder::get() {
+				return obj;
+			}
+
+			const Object * Binder::get() const {
+				return obj;
+			}
+
+			Object * Binder::operator->() {
+				return obj;
+			}
+
+			const Object * Binder::operator->() const {
+				return obj;
+			}
+
+			Object * Binder::operator*() {
+				return obj;
+			}
+
+			const Object * Binder::operator*() const {
+				return obj;
+			}
+
+			bool Binder::operator==(const Binder & other) const {
+				return obj == other.obj;
+			}
+
+			bool Binder::operator!=(const Binder & other) const {
+				return !operator==(other);
+			}
+}//ogl
 	}//gfx
 }//mc

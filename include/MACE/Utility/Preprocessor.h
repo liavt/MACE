@@ -335,17 +335,6 @@ namespace mc {
 		@throws PreprocessorException If the `Macro` with the name is not found.
 		*/
 		const Macro& getMacro(const std::string& name) const;
-
-		/**
-		Generates a string with the current line number and file name.
-		<p>
-		For example, a `Preprocessor` which is at line 30 in file foo will return "Line 30 in foo" from #getLocation()
-		@return The current location in the file
-		@see getLine()
-		@see getFilename()
-		*/
-		std::string getLocation() const;
-
 	private:
 		const std::string input;
 

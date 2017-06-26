@@ -11,36 +11,18 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 
 namespace mc {
-	Initializer::Initializer(Initializable * in) {
-		obj = in;
-
-		init();
-	}
-
-	Initializer::~Initializer() {
-		if (isInitialized()) {
-			destroy();
-		}
-	}
-
-	void Initializer::init() {
-		if (isInitialized()) {
-			MACE__THROW(InitializationFailed, "This object is already initialized!");
+	Initializer::Initializer(Initializable * o) : obj(o) {
+		if (obj == nullptr) {
+			MACE__THROW(NullPointer, "Input to Initializer was null!");
 		}
 
 		obj->init();
-
-		initialized = true;
 	}
 
-	void Initializer::destroy() {
-		if (!isInitialized()) {
-			MACE__THROW(InvalidState, "Can\'t destroy an uninitialized object!");
-		}
+	Initializer::Initializer(Initializable & o) : Initializer(&o) {}
 
+	Initializer::~Initializer() {
 		obj->destroy();
-
-		initialized = false;
 	}
 
 	Initializable * Initializer::get() {
@@ -48,14 +30,6 @@ namespace mc {
 	}
 
 	const Initializable * Initializer::get() const {
-		return obj;
-	}
-
-	Initializable * Initializer::operator*() {
-		return obj;
-	}
-
-	const Initializable * Initializer::operator*() const {
 		return obj;
 	}
 
@@ -67,12 +41,16 @@ namespace mc {
 		return obj;
 	}
 
-	bool Initializer::isInitialized() const {
-		return initialized;
+	Initializable * Initializer::operator*() {
+		return obj;
+	}
+
+	const Initializable * Initializer::operator*() const {
+		return obj;
 	}
 
 	bool Initializer::operator==(const Initializer & other) const {
-		return obj == other.obj && initialized == other.initialized;
+		return obj == other.obj;
 	}
 
 	bool Initializer::operator!=(const Initializer & other) const {

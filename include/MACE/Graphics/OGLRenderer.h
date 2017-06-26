@@ -81,7 +81,7 @@ namespace mc {
 				ogl::VertexArray vao;
 			};
 
-			std::map<RenderSettings, RenderProtocol> protocols = std::map<RenderSettings, RenderProtocol>();
+			std::map<GLRenderer::RenderSettings, GLRenderer::RenderProtocol> protocols = std::map<GLRenderer::RenderSettings, GLRenderer::RenderProtocol>();
 			ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
 			ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
 
@@ -90,7 +90,7 @@ namespace mc {
 			void loadEntityUniforms(const GraphicsEntity * const entity);
 			void loadPainterUniforms(TransformMatrix transform, Color prim, Color second);
 
-			RenderProtocol& getProtocol(const GraphicsEntity* const entity, const RenderSettings settings);
+			GLRenderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const RenderSettings settings);
 			ogl::ShaderProgram getShadersForSettings(const RenderSettings settings);
 			ogl::VertexArray getVAOForSettings(const RenderSettings settings);
 		};
