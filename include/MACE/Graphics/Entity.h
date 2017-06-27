@@ -153,7 +153,7 @@ namespace mc {
 				ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from OpenCV Mat");
 			}
 
-			ColorAttachment(cv::Mat mat) : ColorAttachment() {
+			Texture(cv::Mat mat) : Texture() {
 				init();
 				load(mat);
 			}

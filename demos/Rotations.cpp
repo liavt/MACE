@@ -58,7 +58,7 @@ void create(os::WindowModule&) {
 
 			entity->setTexture(star);
 
-			entity->setX((((x % (elementNum / 2)) *(1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
+			entity->setX((((x % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
 			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
 
 			entity->setWidth((1.0f / elementNum) * 2);
