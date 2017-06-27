@@ -35,19 +35,19 @@ namespace mc {
 		class Image: public Entity2D {
 		public:
 			Image() noexcept;
-			Image(const ColorAttachment& col);
+			Image(const Texture& col);
 			~Image() = default;
 
 			/**
 			@dirty
 			*/
-			void setTexture(const ColorAttachment& tex);
+			void setTexture(const Texture& tex);
 			/**
 			@copydoc Image::getTexture() const
 			@dirty
 			*/
-			ColorAttachment& getTexture();
-			const ColorAttachment& getTexture() const;
+			Texture& getTexture();
+			const Texture& getTexture() const;
 
 			bool operator==(const Image& other) const;
 			bool operator!=(const Image& other) const;
@@ -58,7 +58,7 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
-			ColorAttachment texture;
+			Texture texture;
 		};//Image
 
 		/**
@@ -72,32 +72,32 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setBackgroundTexture(const ColorAttachment& tex);
+			void setBackgroundTexture(const Texture& tex);
 			/**
 			@dirty
 			*/
-			ColorAttachment& getBackgroundTexture();
-			const ColorAttachment& getBackgroundTexture() const;
+			Texture& getBackgroundTexture();
+			const Texture& getBackgroundTexture() const;
 
 			/**
 			@dirty
 			*/
-			void setForegroundTexture(const ColorAttachment& tex);
+			void setForegroundTexture(const Texture& tex);
 			/**
 			@dirty
 			*/
-			ColorAttachment& getForegroundTexture();
-			const ColorAttachment& getForegroundTexture() const;
+			Texture& getForegroundTexture();
+			const Texture& getForegroundTexture() const;
 
 			/**
 			@dirty
 			*/
-			void setSelectionTexture(const ColorAttachment& tex);
+			void setSelectionTexture(const Texture& tex);
 			/**
 			@dirty
 			*/
-			ColorAttachment& getSelectionTexture();
-			const ColorAttachment& getSelectionTexture() const;
+			Texture& getSelectionTexture();
+			const Texture& getSelectionTexture() const;
 
 			/**
 			@dirty
@@ -152,9 +152,9 @@ namespace mc {
 		private:
 			float minimumProgress = 0, maximumProgress = 0, progress = 0;
 
-			ColorAttachment backgroundTexture;
-			ColorAttachment foregroundTexture;
-			ColorAttachment selectionTexture;
+			Texture backgroundTexture;
+			Texture foregroundTexture;
+			Texture selectionTexture;
 		};//ProgressBar
 
 		//TEXT IS UP AHEAD
@@ -222,7 +222,7 @@ namespace mc {
 			*/
 			const ogl::Texture2D& getMask() const;
 
-			const ColorAttachment& getTexture() const;
+			const Texture& getTexture() const;
 
 			const Size& getCharacterWidth() const;
 			const Size& getCharacterHeight() const;
@@ -242,10 +242,10 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
-			//it is a Texture2D and not a ColorAttachment because it is supposed to be internal
+			//it is a Texture2D and not a Texture because it is supposed to be internal
 			ogl::Texture2D mask;
 
-			ColorAttachment texture = ColorAttachment();
+			Texture texture = Texture();
 
 			Size width;
 			Size height;
@@ -301,13 +301,13 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setTexture(const ColorAttachment& tex);
+			void setTexture(const Texture& tex);
 			/**
 			@copydoc Image::getTexture() const
 			@dirty
 			*/
-			ColorAttachment& getTexture();
-			const ColorAttachment& getTexture() const;
+			Texture& getTexture();
+			const Texture& getTexture() const;
 
 			bool operator==(const Text& other) const;
 			bool operator!=(const Text& other) const;
@@ -327,54 +327,54 @@ namespace mc {
 
 			Font font;
 
-			ColorAttachment texture;
+			Texture texture;
 		};//Text
 
 		class Button: public Selectable, public Entity2D {
 		public:
-			const ColorAttachment& getTexture() const;
+			const Texture& getTexture() const;
 			/**
 			@copydoc Button::getTexture() const
 			@dirty
 			*/
-			ColorAttachment& getTexture();
+			Texture& getTexture();
 			/**
 			@dirty
 			*/
-			void setTexture(const ColorAttachment& c);
+			void setTexture(const Texture& c);
 
-			const ColorAttachment& getHoverTexture() const;
+			const Texture& getHoverTexture() const;
 			/**
 			@copydoc Button::getHoverTexture() const
 			@dirty
 			*/
-			ColorAttachment& getHoverTexture();
+			Texture& getHoverTexture();
 			/**
 			@dirty
 			*/
-			void setHoverTexture(const ColorAttachment& c);
+			void setHoverTexture(const Texture& c);
 
-			const ColorAttachment& getClickedTexture() const;
+			const Texture& getClickedTexture() const;
 			/**
 			@copydoc Button::getClickedTexture() const
 			@dirty
 			*/
-			ColorAttachment& getClickedTexture();
+			Texture& getClickedTexture();
 			/**
 			@dirty
 			*/
-			void setClickedTexture(const ColorAttachment& c);
+			void setClickedTexture(const Texture& c);
 
-			const ColorAttachment& getDisabledTexture() const;
+			const Texture& getDisabledTexture() const;
 			/**
 			@copydoc Button::getDisabledTexture() const
 			@dirty
 			*/
-			ColorAttachment& getDisabledTexture();
+			Texture& getDisabledTexture();
 			/**
 			@dirty
 			*/
-			void setDisabledTexture(const ColorAttachment& c);
+			void setDisabledTexture(const Texture& c);
 
 		protected:
 			void onInit() override;
@@ -384,10 +384,10 @@ namespace mc {
 			void onHover() override;
 			void onClean() override;
 		private:
-			ColorAttachment texture;
-			ColorAttachment hoverTexture;
-			ColorAttachment clickedTexture;
-			ColorAttachment disabledTexture;
+			Texture texture;
+			Texture hoverTexture;
+			Texture clickedTexture;
+			Texture disabledTexture;
 		};
 	}//gfx
 }//mc

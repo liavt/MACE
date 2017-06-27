@@ -30,7 +30,7 @@ mat3 mcCreateRotationMatrix(vec3 mc_RotationInput){
 
 vec4 mcGetEntityPosition(){
 	//putting it all in one line allows for the compiler to optimize it into a single MAD operation		
-	return vec4((mc_VertexPosition + mc_TransformTranslation)  * mc_TransformScale * mc_Scale * mcCreateRotationMatrix(mc_BaseEntity.mc_Rotation)
+	return vec4((mc_VertexPosition * mc_TransformScale + mc_TransformTranslation) * mc_Scale * mcCreateRotationMatrix(mc_BaseEntity.mc_Rotation)
 							  + mc_BaseEntity.mc_Translation * mcCreateRotationMatrix(mc_ParentEntity.mc_Rotation)
 							  + mc_ParentEntity.mc_Translation, 1.0);
 }

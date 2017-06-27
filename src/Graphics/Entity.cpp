@@ -42,7 +42,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace {
-			//when you request for a solid color ColorAttachment, it will use the same texture to save memory
+			//when you request for a solid color Texture, it will use the same texture to save memory
 			ogl::Texture2D solidColor = ogl::Texture2D();
 		}
 
@@ -72,18 +72,18 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		ColorAttachment::ColorAttachment() : Texture2D(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
+		Texture::Texture() : Texture2D(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-		ColorAttachment::ColorAttachment(const ogl::Texture2D& tex, const Color& col) : Texture2D(tex), paint(col) {}
+		Texture::Texture(const ogl::Texture2D& tex, const Color& col) : Texture2D(tex), paint(col) {}
 
-		ColorAttachment::ColorAttachment(const char * file) : ColorAttachment() {
+		Texture::Texture(const char * file) : Texture() {
 			init();
 			load(file);
 		}
 
-		ColorAttachment::ColorAttachment(const std::string & file) : ColorAttachment(file.c_str()) {}
+		Texture::Texture(const std::string & file) : Texture(file.c_str()) {}
 
-		ColorAttachment::ColorAttachment(const Color& col) : ColorAttachment(solidColor, col) {
+		Texture::Texture(const Color& col) : Texture(solidColor, col) {
 			if (!solidColor.isCreated()) {
 				solidColor.init();
 
@@ -99,7 +99,7 @@ namespace mc {
 			}
 		}
 
-		void ColorAttachment::load(const char * file) {
+		void Texture::load(const char * file) {
 			resetPixelStorage();
 
 			int width, height, componentSize;
@@ -128,11 +128,11 @@ namespace mc {
 			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from file");
 		}
 
-		void ColorAttachment::load(const std::string & file) {
+		void Texture::load(const std::string & file) {
 			load(file.c_str());
 		}
 
-		void ColorAttachment::load(const Color & c) {
+		void Texture::load(const Color & c) {
 			resetPixelStorage();
 
 			setData(&c, 1, 1, GL_FLOAT, GL_RGBA);
@@ -143,7 +143,7 @@ namespace mc {
 			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from color");
 		}
 
-		void ColorAttachment::load(const unsigned char * c, const Size size) {
+		void Texture::load(const unsigned char * c, const Size size) {
 			resetPixelStorage();
 
 			int width, height, componentSize;
@@ -172,23 +172,23 @@ namespace mc {
 			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from memory");
 		}
 
-		Color& ColorAttachment::getPaint() {
+		Color& Texture::getPaint() {
 			return paint;
 		}
 
-		const Color& ColorAttachment::getPaint() const {
+		const Color& Texture::getPaint() const {
 			return paint;
 		}
 
-		void ColorAttachment::setPaint(const Color& col) {
+		void Texture::setPaint(const Color& col) {
 			paint = col;
 		}
 
-		bool ColorAttachment::operator==(const ColorAttachment& other) const {
+		bool Texture::operator==(const Texture& other) const {
 			return paint == other.paint && Texture2D::operator==(other);
 		}
 
-		bool ColorAttachment::operator!=(const ColorAttachment& other) const {
+		bool Texture::operator!=(const Texture& other) const {
 			return !operator==(other);
 		}
 

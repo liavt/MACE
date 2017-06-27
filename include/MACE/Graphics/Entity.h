@@ -107,13 +107,13 @@ namespace mc {
 			virtual void hover();
 		};//Component
 
-		class ColorAttachment: public ogl::Texture2D {
+		class Texture: public ogl::Texture2D {
 		public:
-			ColorAttachment();
-			ColorAttachment(const Color& col);
-			ColorAttachment(const ogl::Texture2D& tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
-			ColorAttachment(const char* file);
-			ColorAttachment(const std::string& file);
+			Texture();
+			Texture(const Color& col);
+			Texture(const ogl::Texture2D& tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+			Texture(const char* file);
+			Texture(const std::string& file);
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
@@ -188,11 +188,11 @@ namespace mc {
 			const Color& getPaint() const;
 			void setPaint(const Color& col);
 
-			bool operator==(const ColorAttachment& other) const;
-			bool operator!=(const ColorAttachment& other) const;
+			bool operator==(const Texture& other) const;
+			bool operator!=(const Texture& other) const;
 		private:
 			Color paint;
-		};//ColorAttachment
+		};//Texture
 
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.

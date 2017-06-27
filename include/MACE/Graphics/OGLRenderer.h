@@ -27,7 +27,7 @@ namespace mc {
 			void init() override;
 			void destroy() override;
 		protected:
-			void loadSettings(TransformMatrix transform, Color prim, Color second) override;
+			void loadSettings() override;
 			void draw(const Painter::Brush brush, const Painter::RenderType type) override;
 		private:
 			GLRenderer* renderer;
@@ -66,22 +66,12 @@ namespace mc {
 
 			void generateFramebuffer(const Size& width, const Size& height);
 
-			struct RenderSettings {
-				Painter::Brush brush;
-				Painter::RenderType type;
-
-				//required for use as a key in std::map
-				bool operator<(const RenderSettings& other) const {
-					return brush < other.brush && type < other.type;
-				}
-			};
-
 			struct RenderProtocol {
 				ogl::ShaderProgram program;
 				ogl::VertexArray vao;
 			};
 
-			std::map<GLRenderer::RenderSettings, GLRenderer::RenderProtocol> protocols;
+			std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<GLRenderer::RenderProtocol>> protocols;
 			ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
 			ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
 
@@ -90,9 +80,9 @@ namespace mc {
 			void loadEntityUniforms(const GraphicsEntity * const entity);
 			void loadPainterUniforms(TransformMatrix transform, Color prim, Color second);
 
-			GLRenderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const RenderSettings settings);
-			ogl::ShaderProgram getShadersForSettings(const RenderSettings settings);
-			ogl::VertexArray getVAOForSettings(const RenderSettings settings);
+			GLRenderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings);
+			ogl::ShaderProgram getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);
+			ogl::VertexArray getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);
 		};
 	}//gfx
 }//mc

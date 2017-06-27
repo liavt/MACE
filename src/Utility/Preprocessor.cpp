@@ -909,7 +909,7 @@ namespace mc {
 
 	Size Preprocessor::macroNumber() const {
 		//size() returns size_t which could be larger than unsigned in on some systems, causing problems. static_cast will fix it
-		return static_cast<Size>(macros.size());
+		return macros.size();
 	}
 
 	void Preprocessor::defineStandardMacros() {

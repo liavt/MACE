@@ -11,9 +11,6 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__GRAPHICS_WINDOW_H
 #define MACE__GRAPHICS_WINDOW_H
 
-//so we can use glew
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
 #include <MACE/Core/Module.h>
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
@@ -21,13 +18,15 @@ The above copyright notice and this permission notice shall be included in all c
 #include <thread>
 #include <string>
 
+struct GLFWwindow;
+
 namespace mc {
 	//forward declaration for the input namespace
 	struct BitField;
 
 	namespace os {
 		/**
-		@todo move glfw event handling to its own thread. this requires Renderer::resize(const int width, const int height) to be moved out of a callback
+		@todo move the fps handling code away from ctime and to chrono and use a dynamic timestep
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:

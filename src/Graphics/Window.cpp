@@ -23,6 +23,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <unordered_map>
 #include <sstream>
 
+//so we can use glew
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 #include <GL/glew.h>
@@ -132,6 +134,7 @@ namespace mc {
 				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this." << std::endl;
 			}
 
+#ifdef MACE_DEBUG
 			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 			std::cout << "OpenGL has been created succesfully!" << std::endl;
 			std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
@@ -139,6 +142,7 @@ namespace mc {
 			std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
 			std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+#endif
 
 			if (config.vsync)glfwSwapInterval(1);
 			else glfwSwapInterval(0);
@@ -250,14 +254,13 @@ namespace mc {
 			//mutex for this function.
 			std::mutex mutex;
 
-			//now is set to be time(0) every loop, and the delta is calculated from now nad last frame.
-			time_t now = time(0);
+			//now is set to be time(nullptr) every loop, and the delta is calculated from now nad last frame.
+			time_t now = time(nullptr);
 			//each time the frame is swapped, lastFrame is updated with the new time
-			time_t lastFrame = time(0);
+			time_t lastFrame = time(nullptr);
 
-			//this stores how many milliseconds it takes for the frame to swap. it is 1 by default so it doesnt create an infinite loop
+			//this stores how many milliseconds it takes for the frame to swap.
 			float windowDelay = 0;
-
 
 			try {
 				const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
@@ -266,7 +269,7 @@ namespace mc {
 
 				Entity::init();
 
-				if (config.fps != 0.0f) {
+				if (config.fps != 0) {
 					windowDelay = 1000.0f / static_cast<float>(config.fps);
 				}
 			} catch (const std::exception& e) {
@@ -279,7 +282,6 @@ namespace mc {
 			//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
 			for (;;) {//( ;_;)
 				try {
-
 					{
 						//thread doesn't own window, so we have to lock the mutex
 						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
@@ -299,14 +301,17 @@ namespace mc {
 						}
 
 					}
-					now = time(0);
 
-					const time_t delta = now - lastFrame;
+					if (windowDelay != 0) {
+						now = time(nullptr);
 
-					if (delta < windowDelay) {
-						lastFrame = now;
+						const time_t delta = now - lastFrame;
 
-						os::wait(static_cast<long long int>(windowDelay));
+						if (delta < windowDelay) {
+							lastFrame = now;
+
+							os::wait(static_cast<long long int>(windowDelay - delta));
+						}
 					}
 				} catch (const std::exception& e) {
 					Error::handleError(e);
@@ -412,6 +417,6 @@ namespace mc {
 		}//Input
 
 		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char * t) : title(t), width(w), height(h) {}
-		
+
 	}//os
 }//mc

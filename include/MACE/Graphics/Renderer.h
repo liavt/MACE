@@ -35,11 +35,28 @@ namespace mc {
 		public:
 			//painter stuff
 			enum class Brush: Byte {
-				TEXTURE, COLOR
+				TEXTURE = 0, COLOR = 1
 			};
 
 			enum class RenderType: Byte {
-				QUAD
+				QUAD = 0
+			};
+
+			struct State {
+				TransformMatrix transformation;
+
+				Color primary, secondary;
+
+				bool operator==(const State& other) const;
+				bool operator!=(const State& other) const;
+			};
+
+			enum class DirtyFlag: Byte {
+				PRIMARY_COLOR = 0,
+				SECONDARY_COLOR = 1,
+				TRANSLATION = 2,
+				ROTATION = 3,
+				SCALE = 4
 			};
 
 			Painter(GraphicsEntity* const en);
@@ -71,9 +88,9 @@ namespace mc {
 			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
 			void fillRect(const Vector<float, 4>& dim);
 
-			void drawImage(const ColorAttachment& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
-			void drawImage(const ColorAttachment& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
-			void drawImage(const ColorAttachment& img, const Vector<float, 4>& dim);
+			void drawImage(const Texture& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
+			void drawImage(const Texture& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
+			void drawImage(const Texture& img, const Vector<float, 4>& dim);
 
 			const GraphicsEntity* const getEntity() const;
 
@@ -102,8 +119,8 @@ namespace mc {
 
 			void resetTransform();
 
-			void pushTransform();
-			void popTransform();
+			void push();
+			void pop();
 
 			virtual void reset();
 
@@ -112,15 +129,13 @@ namespace mc {
 		protected:
 			PainterImpl(const GraphicsEntity* const en);
 
-			virtual void loadSettings(TransformMatrix transform, Color prim, Color second) = 0;
+			virtual void loadSettings() = 0;
 			virtual void draw(const Painter::Brush brush, const Painter::RenderType type) = 0;
 
 			const GraphicsEntity* const entity;
 
-			std::stack<TransformMatrix> transformationStack = std::stack<TransformMatrix>();
-			TransformMatrix transformation;
-
-			Color primary, secondary;
+			std::stack<Painter::State> stateStack;
+			Painter::State state;
 		};
 
 		Renderer* getRenderer();

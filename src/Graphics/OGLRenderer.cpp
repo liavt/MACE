@@ -34,7 +34,7 @@ namespace mc {
 		//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
 		//how many floats in the uniform buffer
-#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 16
+#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 24
 		//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
 
@@ -142,11 +142,13 @@ namespace mc {
 				GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX };
 			frameBuffer.setDrawBuffers(2, drawBuffers);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up ssl");
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up renderer");
 
 		}
 
 		void GLRenderer::onTearDown(os::WindowModule * win) {
+			ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
+
 			frameBuffer.unbind();
 
 			ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -160,7 +162,7 @@ namespace mc {
 			ogl::FrameBuffer::setDrawBuffer(GL_BACK);
 
 			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down ssl");
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
 			glfwSwapBuffers(win->getGLFWWindow());
 		}
@@ -176,10 +178,12 @@ namespace mc {
 			entityUniforms.destroy();
 			painterUniforms.destroy();
 
-			for (std::map<RenderSettings, RenderProtocol>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
-				iter->second.program.destroy();
-				iter->second.vao.destroy();
+			for (std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<RenderProtocol>>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
+				iter->second->program.destroy();
+				iter->second->vao.destroy();
 			}
+
+			protocols.clear();
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
 		}
@@ -208,8 +212,9 @@ namespace mc {
 			frameBuffer.readPixels(x, height - y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
 			if (pixel > 0) {
+				//the entity that was there was removed from the renderqueue
 				if (pixel > renderQueue.size()) {
-					MACE__THROW(AssertionFailed, "Internal Error: Pixel read from framebuffer is larger than the render queue!");
+					return nullptr;
 				}
 
 				return renderQueue[--pixel];
@@ -300,7 +305,7 @@ namespace mc {
 			const float opacity = entity->getOpacity();
 
 			//now we set the uniforms defining the transformations of the entity
-			ogl::Binder b(&entityUniforms);
+			entityUniforms.bind();
 			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 			float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
@@ -323,7 +328,9 @@ namespace mc {
 
 			//now we set the uniforms defining the transformations of the entity
 			ogl::Binder b(&painterUniforms);
-			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
+			//orphan the buffer
+			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr);
+			//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
 			float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(transform.translation.begin(), transform.translation.end(), mappedEntityData);
 			mappedEntityData += 4;
@@ -338,39 +345,47 @@ namespace mc {
 			painterUniforms.unmap();
 		}
 
-		GLRenderer::RenderProtocol& GLRenderer::getProtocol(const GraphicsEntity* const entity, const RenderSettings settings) {
-			if (protocols.find(settings) == protocols.end()) {
-				GLRenderer::RenderProtocol prot{};
-				prot.program = getShadersForSettings(settings);
-				prot.vao = getVAOForSettings(settings);
-				protocols[settings] = prot;
+		GLRenderer::RenderProtocol& GLRenderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings) {
+			auto protocol = protocols.find(settings);
+			if (protocol == protocols.end()) {
+				std::unique_ptr<GLRenderer::RenderProtocol> prot = std::unique_ptr<GLRenderer::RenderProtocol>(new GLRenderer::RenderProtocol());
+				prot->program = getShadersForSettings(settings);
+				prot->vao = getVAOForSettings(settings);
+
+				protocols.insert(std::pair<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<GLRenderer::RenderProtocol>>(settings, std::move(prot)));
+
+				protocol = protocols.find(settings);
 			}
 
-			loadEntityUniforms(entity);
+#ifdef MACE_DEBUG
+			if (protocol->second == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: protocol was nullptr");
+			}
+#endif
 
-			protocols[settings].program.bind();
-			protocols[settings].program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getID()));
+			protocol->second->program.bind();
+			protocol->second->program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getID()));
 
-			return protocols[settings];
+			return *protocol->second;
 		}
 
-		ogl::ShaderProgram GLRenderer::getShadersForSettings(const RenderSettings settings) {
+		ogl::ShaderProgram GLRenderer::getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
 			ogl::ShaderProgram program;
 			program.init();
 
-			if (settings.type == Painter::RenderType::QUAD) {
+			if (settings.second == Painter::RenderType::QUAD) {
 				program.createVertex(processShader({
 #include <MACE/Graphics/Shaders/rendertypes/quad.v.glsl>
 				}));
 			}
 
-			if (settings.brush == Painter::Brush::TEXTURE) {
-				program.createFragment(processShader({
-#include <MACE/Graphics/Shaders/brushes/texture.f.glsl>
-				}));
-			} else if (settings.brush == Painter::Brush::COLOR) {
+			if (settings.first == Painter::Brush::COLOR) {
 				program.createFragment(processShader({
 #include <MACE/Graphics/Shaders/brushes/color.f.glsl>
+				}));
+			} else if (settings.first == Painter::Brush::TEXTURE) {
+				program.createFragment(processShader({
+#include <MACE/Graphics/Shaders/brushes/texture.f.glsl>
 				}));
 			}
 
@@ -382,11 +397,11 @@ namespace mc {
 			return program;
 		}
 
-		ogl::VertexArray GLRenderer::getVAOForSettings(const RenderSettings settings) {
+		ogl::VertexArray GLRenderer::getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
 			ogl::VertexArray vao;
 			vao.init();
 
-			if (settings.type == Painter::RenderType::QUAD) {
+			if (settings.second == Painter::RenderType::QUAD) {
 				constexpr float squareTextureCoordinates[8] = {
 					0.0f,1.0f,
 					0.0f,0.0f,
@@ -595,6 +610,8 @@ namespace mc {
 		}
 
 		void GLPainter::init() {
+			renderer->loadEntityUniforms(entity);
+
 			renderer->entityUniforms.bind();
 			renderer->entityUniforms.bindForRender();
 
@@ -604,8 +621,8 @@ namespace mc {
 
 		void GLPainter::destroy() {}
 
-		void GLPainter::loadSettings(TransformMatrix transform, Color prim, Color second) {
-			renderer->loadPainterUniforms(transform, prim, second);
+		void GLPainter::loadSettings() {
+			renderer->loadPainterUniforms(state.transformation, state.primary, state.secondary);
 		}
 
 		void GLPainter::draw(const Painter::Brush brush, const Painter::RenderType type) {

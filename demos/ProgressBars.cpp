@@ -26,11 +26,11 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create(os::WindowModule&) {
-	gfx::ColorAttachment circle = gfx::ColorAttachment(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
+	gfx::Texture circle = gfx::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
 	circleBar = gfx::ProgressBar(0, 255, 20);
-	circleBar.setBackgroundTexture(gfx::ColorAttachment(circle, Colors::RED));
-	circleBar.setForegroundTexture(gfx::ColorAttachment(Colors::GREEN));
+	circleBar.setBackgroundTexture(gfx::Texture(circle, Colors::RED));
+	circleBar.setForegroundTexture(gfx::Texture(Colors::GREEN));
 	circleBar.setSelectionTexture(circle);
 	circleBar.setWidth(0.075f);
 	circleBar.setHeight(0.075f);

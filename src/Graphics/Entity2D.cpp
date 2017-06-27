@@ -44,7 +44,7 @@ namespace mc {
 
 		Image::Image() noexcept : texture() {}
 
-		Image::Image(const ColorAttachment& tex) : texture(tex) {}
+		Image::Image(const Texture& tex) : texture(tex) {}
 
 		void Image::onInit() {
 			if (!texture.isCreated()) {
@@ -57,11 +57,7 @@ namespace mc {
 		void Image::onRender() {
 			Painter p = Painter(this);
 			p->init();
-			//p->drawImage(texture, 0.5f, 0.5f, 0.5f, 0.5f);
-			//p->drawImage(texture, -0.5f, -0.5f, 0.5f, 0.5f);
-			p->setColor(texture.getPaint());
-			p->fillRect(0.5f, 0.5f, 0.5f, 0.5f);
-			p->fillRect(-0.5f, -0.5f, 0.5f, 0.5f);
+			p->drawImage(texture);
 			p->destroy();
 		}
 
@@ -73,7 +69,7 @@ namespace mc {
 
 		void Image::onClean() {}
 
-		void Image::setTexture(const ColorAttachment & tex) {
+		void Image::setTexture(const Texture & tex) {
 			if (tex != texture) {
 				makeDirty();
 
@@ -81,13 +77,13 @@ namespace mc {
 			}
 		}
 
-		ColorAttachment & Image::getTexture() {
+		Texture & Image::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		const ColorAttachment & Image::getTexture() const {
+		const Texture & Image::getTexture() const {
 			return texture;
 		}
 
@@ -105,7 +101,7 @@ namespace mc {
 
 		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
-		void ProgressBar::setBackgroundTexture(const ColorAttachment & tex) {
+		void ProgressBar::setBackgroundTexture(const Texture & tex) {
 			if (backgroundTexture != tex) {
 				makeDirty();
 
@@ -113,17 +109,17 @@ namespace mc {
 			}
 		}
 
-		ColorAttachment & ProgressBar::getBackgroundTexture() {
+		Texture & ProgressBar::getBackgroundTexture() {
 			makeDirty();
 
 			return backgroundTexture;
 		}
 
-		const ColorAttachment & ProgressBar::getBackgroundTexture() const {
+		const Texture & ProgressBar::getBackgroundTexture() const {
 			return backgroundTexture;
 		}
 
-		void ProgressBar::setForegroundTexture(const ColorAttachment & tex) {
+		void ProgressBar::setForegroundTexture(const Texture & tex) {
 			if (foregroundTexture != tex) {
 				makeDirty();
 
@@ -131,17 +127,17 @@ namespace mc {
 			}
 		}
 
-		ColorAttachment & ProgressBar::getForegroundTexture() {
+		Texture & ProgressBar::getForegroundTexture() {
 			makeDirty();
 
 			return foregroundTexture;
 		}
 
-		const ColorAttachment & ProgressBar::getForegroundTexture() const {
+		const Texture & ProgressBar::getForegroundTexture() const {
 			return foregroundTexture;
 		}
 
-		void ProgressBar::setSelectionTexture(const ColorAttachment & tex) {
+		void ProgressBar::setSelectionTexture(const Texture & tex) {
 			if (selectionTexture != tex) {
 				makeDirty();
 
@@ -151,13 +147,13 @@ namespace mc {
 			}
 		}
 
-		ColorAttachment & ProgressBar::getSelectionTexture() {
+		Texture & ProgressBar::getSelectionTexture() {
 			makeDirty();
 
 			return selectionTexture;
 		}
 
-		const ColorAttachment & ProgressBar::getSelectionTexture() const {
+		const Texture & ProgressBar::getSelectionTexture() const {
 			return selectionTexture;
 		}
 
@@ -460,7 +456,7 @@ namespace mc {
 		const ogl::Texture2D& Letter::getMask() const {
 			return mask;
 		}
-		const ColorAttachment & Letter::getTexture() const {
+		const Texture & Letter::getTexture() const {
 			return texture;
 		}
 		const Size& Letter::getCharacterWidth() const {
@@ -589,7 +585,7 @@ namespace mc {
 			return horzAlign;
 		}
 
-		void Text::setTexture(const ColorAttachment & tex) {
+		void Text::setTexture(const Texture & tex) {
 			if (tex != texture) {
 				makeDirty();
 
@@ -597,13 +593,13 @@ namespace mc {
 			}
 		}
 
-		ColorAttachment & Text::getTexture() {
+		Texture & Text::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		const ColorAttachment & Text::getTexture() const {
+		const Texture & Text::getTexture() const {
 			return texture;
 		}
 
@@ -739,17 +735,17 @@ namespace mc {
 			}
 		}
 
-		const ColorAttachment & Button::getTexture() const {
+		const Texture & Button::getTexture() const {
 			return texture;
 		}
 
-		ColorAttachment & Button::getTexture() {
+		Texture & Button::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		void Button::setTexture(const ColorAttachment & c) {
+		void Button::setTexture(const Texture & c) {
 			if (texture != c) {
 				makeDirty();
 
@@ -757,17 +753,17 @@ namespace mc {
 			}
 		}
 
-		const ColorAttachment & Button::getHoverTexture() const {
+		const Texture & Button::getHoverTexture() const {
 			return hoverTexture;
 		}
 
-		ColorAttachment & Button::getHoverTexture() {
+		Texture & Button::getHoverTexture() {
 			makeDirty();
 
 			return hoverTexture;
 		}
 
-		void Button::setHoverTexture(const ColorAttachment & c) {
+		void Button::setHoverTexture(const Texture & c) {
 			if (hoverTexture != c) {
 				makeDirty();
 
@@ -775,17 +771,17 @@ namespace mc {
 			}
 		}
 
-		const ColorAttachment & Button::getClickedTexture() const {
+		const Texture & Button::getClickedTexture() const {
 			return clickedTexture;
 		}
 
-		ColorAttachment & Button::getClickedTexture() {
+		Texture & Button::getClickedTexture() {
 			makeDirty();
 
 			return clickedTexture;
 		}
 
-		void Button::setClickedTexture(const ColorAttachment & c) {
+		void Button::setClickedTexture(const Texture & c) {
 			if (clickedTexture != c) {
 				makeDirty();
 
@@ -793,17 +789,17 @@ namespace mc {
 			}
 		}
 
-		const ColorAttachment & Button::getDisabledTexture() const {
+		const Texture & Button::getDisabledTexture() const {
 			return disabledTexture;
 		}
 
-		ColorAttachment & Button::getDisabledTexture() {
+		Texture & Button::getDisabledTexture() {
 			makeDirty();
 
 			return disabledTexture;
 		}
 
-		void Button::setDisabledTexture(const ColorAttachment & c) {
+		void Button::setDisabledTexture(const Texture & c) {
 			if (disabledTexture != c) {
 				makeDirty();
 

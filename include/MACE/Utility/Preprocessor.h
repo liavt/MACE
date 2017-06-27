@@ -291,7 +291,7 @@ namespace mc {
 		Calculates the amount of `Macros` in this `Preprocessor`
 		@return Size of the internal `Macro` array.
 		*/
-		unsigned int macroNumber() const;
+		Size macroNumber() const;
 
 		/**
 		Defines macros required by ANSI C and various compiler-specific macros. However, it will not define compiler-defining macros such as `__GCC__`.

@@ -4,7 +4,7 @@
 
 using namespace mc;
 
-gfx::ColorAttachment star = gfx::ColorAttachment();
+gfx::Texture star = gfx::Texture();
 
 bool rotating = false;
 
@@ -23,7 +23,7 @@ class TestComponent: public gfx::Component {
 	void render() override {}
 
 	void hover() override {
-		if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+		if (os::Input::isKeyDown(os::Input::MOUSE_LEFT)) {
 			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
 	}
@@ -36,7 +36,7 @@ class TestComponent: public gfx::Component {
 class RotationComponent: public gfx::Component {
 	void init() override {};
 	bool update() override {
-		if( rotating ) {
+		if (rotating) {
 			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
 		return false;
@@ -46,14 +46,14 @@ class RotationComponent: public gfx::Component {
 };
 
 void create(os::WindowModule&) {
-	srand((unsigned) time(0));
+	srand((unsigned)time(0));
 
 	const Size elementNum = 10;
 
-	star = gfx::ColorAttachment(MACE_DEMO_ASSETS + std::string("star.png"));
+	star = gfx::Texture(MACE_DEMO_ASSETS + std::string("star.png"));
 
-	for( Index x = 0; x < elementNum; x++ ) {
-		for( Index y = 0; y < elementNum; y++ ) {
+	for (Index x = 0; x < elementNum; x++) {
+		for (Index y = 0; y < elementNum; y++) {
 			gfx::Image* entity = new gfx::Image();
 
 			entity->setTexture(star);
@@ -68,14 +68,14 @@ void create(os::WindowModule&) {
 
 			entity->addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
 
-			if( x >= elementNum / 2 ) {
-				if( y >= elementNum / 2 ) {
+			if (x >= elementNum / 2) {
+				if (y >= elementNum / 2) {
 					topRight.addChild(entity);
 				} else {
 					botRight.addChild(entity);
 				}
 			} else {
-				if( y >= elementNum / 2 ) {
+				if (y >= elementNum / 2) {
 					topLeft.addChild(entity);
 				} else {
 					botLeft.addChild(entity);
@@ -129,7 +129,7 @@ int main() {
 		module.addChild(topRight);
 
 		gfx::FPSComponent f = gfx::FPSComponent();
-		f.setTickCallback([] (gfx::FPSComponent* com, gfx::Entity*) {
+		f.setTickCallback([](gfx::FPSComponent* com, gfx::Entity*) {
 			std::cout << "UPS: " << com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
 		});
 		module.addComponent(f);
@@ -139,10 +139,10 @@ int main() {
 
 		mc::MACE::init();
 
-		while( mc::MACE::isRunning() ) {
+		while (mc::MACE::isRunning()) {
 			mc::MACE::update();
 
-			if( os::Input::isKeyDown(os::Input::SPACE) || os::Input::isKeyRepeated(os::Input::SPACE) ) {
+			if (os::Input::isKeyDown(os::Input::SPACE) || os::Input::isKeyRepeated(os::Input::SPACE)) {
 				rotating = true;
 			} else {
 				rotating = false;
@@ -152,7 +152,7 @@ int main() {
 		}
 
 		mc::MACE::destroy();
-	} catch( const std::exception& e ) {
+	} catch (const std::exception& e) {
 		Error::handleError(e);
 		return -1;
 	}

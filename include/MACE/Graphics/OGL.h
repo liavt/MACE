@@ -17,6 +17,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/Color.h>
 
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+
 #include <GL/glew.h>
 
 #include <unordered_map>

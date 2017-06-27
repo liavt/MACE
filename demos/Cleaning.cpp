@@ -44,10 +44,10 @@ void create(os::WindowModule&) {
 
 	const Size elementNum = 10;
 
-	left = gfx::Image(gfx::ColorAttachment(Colors::GREEN));
-	leftBot = gfx::Image(gfx::ColorAttachment(Colors::GRAY));
-	rightTop = gfx::Image(gfx::ColorAttachment(Colors::YELLOW));
-	rightBot = gfx::Image(gfx::ColorAttachment(Colors::ORANGE));
+	left = gfx::Image(gfx::Texture(Colors::GREEN));
+	leftBot = gfx::Image(gfx::Texture(Colors::GRAY));
+	rightTop = gfx::Image(gfx::Texture(Colors::YELLOW));
+	rightBot = gfx::Image(gfx::Texture(Colors::ORANGE));
 
 	left.setY(0.0f);
 	left.setX(-0.5f);
