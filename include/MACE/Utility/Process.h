@@ -16,17 +16,15 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <string>
 
-#ifdef MACE_WINAPI
-#	define WIN32_LEAN_AND_MEAN
-#	include <windows.h>
-#	undef WIN32_LEAN_AND_MEAN
-#elif defined(MACE_POSIX)
-#	include <unistd.h>
-#endif
-
 namespace mc {
 	class Process: public Initializable {
 	public:
+#ifdef MACE_WINAPI
+		using ProcessHandle = PROCESS_INFORMATION;
+#elif defined(MACE_POSIX)
+		using ProcessHandle = pid_t;
+#endif
+
 		Process();
 		Process(const char* path, const char* args);
 		Process(const std::string& path, std::string& args);
@@ -46,27 +44,13 @@ namespace mc {
 		void setArgs(const char* a);
 		const char* getArgs() const;
 
-#if defined(MACE_WINAPI) && defined(MACE_EXPOSE_WINAPI)
-		PROCESS_INFORMATION getProcess() const {
-			return process;
-		}
-#elif defined(MACE_POSIX) && defined(MACE_EXPOSE_POSIX)
-		pid_t getPID() const {
-			return process;
-		}
-#endif
-
 	private:
 		bool created = false;
 
 		const char* path;
 		const char* args;
 
-#ifdef MACE_WINAPI
-		PROCESS_INFORMATION process;
-#elif defined(MACE_POSIX)
-		pid_t process;
-#endif//MACE_POSIX
+		ProcessHandle process;
 	};
 }
 

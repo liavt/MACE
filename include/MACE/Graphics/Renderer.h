@@ -78,7 +78,9 @@ namespace mc {
 				BGRA_INTEGER,
 				STENCIL,
 				DEPTH,
-				DEPTH_STENCIL
+				DEPTH_STENCIL,
+				LUMINANCE,
+				LUMINANCE_ALPHA
 			};
 
 			/**
@@ -105,7 +107,7 @@ namespace mc {
 				ALIGNMENT,
 				ROW_LENGTH
 			};
-			
+
 			enum class WrapMode: Byte {
 				CLAMP,
 				REPEAT,
@@ -130,37 +132,35 @@ namespace mc {
 			void load(cv::Mat mat) {
 				//cv::flip(mat, mat, 0);
 
-				Enum colorFormat = GL_BGR;
+				Texture::Format colorFormat = Texture::Format::BGR;
 				if (mat.channels() == 1) {
-					colorFormat = GL_LUMINANCE;
+					colorFormat = Texture::Format::LUMINANCE;
 				} else if (mat.channels() == 2) {
-					colorFormat = GL_LUMINANCE_ALPHA;
+					colorFormat = Texture::Format::LUMINANCE_ALPHA;
 				} else if (mat.channels() == 4) {
-					colorFormat = GL_BGRA;
+					colorFormat = Texture::Format::BGRA;
 				}
 
-				Enum type = GL_UNSIGNED_BYTE;
+				Texture::Type type = Texture::Type::UNSIGNED_BYTE;
 				if (mat.depth() == CV_8S) {
-					type = GL_BYTE;
+					type = Texture::Type::BYTE;
 				} else if (mat.depth() == CV_16U) {
-					type = GL_UNSIGNED_SHORT;
+					type = Texture::Type::UNSIGNED_SHORT;
 				} else if (mat.depth() == CV_16S) {
-					type = GL_SHORT;
+					type = Texture::Type::SHORT;
 				} else if (mat.depth() == CV_32S) {
-					type = GL_INT;
+					type = Texture::Type::INT;
 				} else if (mat.depth() == CV_32F) {
-					type = GL_FLOAT;
+					type = Texture::Type::FLOAT;
 				} else if (mat.depth() == CV_64F) {
-					MACE__THROW(BadImage, "Unsupported cv::Mat depth: CV_64F");
+					MACE__THROW(BadFormat, "Unsupported cv::Mat depth: CV_64F");
 				}
 
 				texture->resetPixelStorage();
-				texture->setPixelStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				texture->setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
+				texture->setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
+				texture->setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
 
-				texture->setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from OpenCV Mat");
+				texture->setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, Texture::InternalFormat::RGBA);
 			}
 
 			Texture(cv::Mat mat) : Texture() {
@@ -172,8 +172,8 @@ namespace mc {
 				cv::Mat img(height, width, CV_8UC3);
 
 				texture->resetPixelStorage();
-				texture->setPixelStorage(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
-				texture->setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
+				texture->setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
+				texture->setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
 
 				texture->bind();
 
@@ -182,7 +182,7 @@ namespace mc {
 				cv::flip(img, img, 0);
 
 				return img;
-		}
+			}
 #			endif//MACE_OPENCV
 
 			void load(const char* file);
@@ -222,7 +222,7 @@ namespace mc {
 			std::shared_ptr<TextureImpl> texture;
 
 			Color paint;
-	};//Texture
+		};//Texture
 
 		class TextureImpl: public Initializable {
 		public:
@@ -238,10 +238,10 @@ namespace mc {
 			virtual bool isCreated() const = 0;
 
 			virtual void setData(const void* data, const Size width, const Size height, const Texture::Type type, const Texture::Format format, const Texture::InternalFormat internalFormat, const Index mipmap) = 0;
-		
+
 			virtual void setMinFilter(const Texture::ResizeFilter filter) = 0;
 			virtual void setMagFilter(const Texture::ResizeFilter filter) = 0;
-		
+
 			virtual void setUnpackStorageHint(const Texture::PixelStorage hint, const int value) = 0;
 			virtual void setPackStorageHint(const Texture::PixelStorage hint, const int value) = 0;
 
@@ -475,7 +475,7 @@ namespace mc {
 
 			Vector<float, 2> windowRatios;
 		};//Renderer
-}//gfx
+	}//gfx
 }//mc
 
 #endif

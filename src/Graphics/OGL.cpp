@@ -78,6 +78,10 @@ namespace mc {
 							return GL_DEPTH;
 						case Texture::Format::DEPTH_STENCIL:
 							return GL_DEPTH_STENCIL;
+						case Texture::Format::LUMINANCE:
+							return GL_LUMINANCE;
+						case Texture::Format::LUMINANCE_ALPHA:
+							return GL_LUMINANCE_ALPHA;
 						default:
 							MACE__THROW(BadFormat, "Unsupported format by OpenGL");
 					}

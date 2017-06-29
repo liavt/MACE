@@ -13,12 +13,17 @@ The above copyright notice and this permission notice shall be included in all c
 #include <cstring>
 #include <memory>
 
-#ifdef MACE_POSIX
+#ifdef MACE_WINAPI
+#	define WIN32_LEAN_AND_MEAN
+#	include <windows.h>
+#	undef WIN32_LEAN_AND_MEAN
+#elif defined(MACE_POSIX)
+#	include <unistd.h>
 #	include <sys/wait.h>
 #	include <signal.h>
 #	include <cstdlib>
 #	include <errno.h>
-#endif//MACE_POSIX
+#endif
 
 namespace mc {
 	void Process::init() {
