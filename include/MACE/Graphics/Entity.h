@@ -15,30 +15,14 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Transform.h>
-#include <MACE/Graphics/OGL.h>
 #include <vector>
 
-#ifdef MACE_OPENCV
-#	include <opencv2/opencv.hpp>
-#endif//MACE_OPENCV
-
 namespace mc {
-	namespace os {
-		//declaring dependency
-		class WindowModule;
-	}
-
 	namespace gfx {
-		/**
-		Thrown when an error occured trying to read or write an image
-		*/
-		MACE__DECLARE_ERROR(BadImage);
-
 		using EntityProperties = BitField;
 
 		//forward-defining dependencies
 		class Entity;
-		class GraphicsEntity;
 
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
@@ -106,93 +90,6 @@ namespace mc {
 			*/
 			virtual void hover();
 		};//Component
-
-		class Texture: public ogl::Texture2D {
-		public:
-			Texture();
-			Texture(const Color& col);
-			Texture(const ogl::Texture2D& tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
-			Texture(const char* file);
-			Texture(const std::string& file);
-
-			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
-#			ifdef MACE_OPENCV
-			void load(cv::Mat mat) {
-				//cv::flip(mat, mat, 0);
-
-				Enum colorFormat = GL_BGR;
-				if (mat.channels() == 1) {
-					colorFormat = GL_LUMINANCE;
-				} else if (mat.channels() == 2) {
-					colorFormat = GL_LUMINANCE_ALPHA;
-				} else if (mat.channels() == 4) {
-					colorFormat = GL_BGRA;
-				}
-
-				Enum type = GL_UNSIGNED_BYTE;
-				if (mat.depth() == CV_8S) {
-					type = GL_BYTE;
-				} else if (mat.depth() == CV_16U) {
-					type = GL_UNSIGNED_SHORT;
-				} else if (mat.depth() == CV_16S) {
-					type = GL_SHORT;
-				} else if (mat.depth() == CV_32S) {
-					type = GL_INT;
-				} else if (mat.depth() == CV_32F) {
-					type = GL_FLOAT;
-				} else if (mat.depth() == CV_64F) {
-					MACE__THROW(BadImage, "Unsupported cv::Mat depth: CV_64F");
-				}
-
-				resetPixelStorage();
-				setPixelStorage(GL_PACK_ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
-
-				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, GL_RGBA);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from OpenCV Mat");
-			}
-
-			Texture(cv::Mat mat) : Texture() {
-				init();
-				load(mat);
-			}
-
-			cv::Mat toMat(const Size width, const Size height) {
-				cv::Mat img(height, width, CV_8UC3);
-
-				resetPixelStorage();
-				setPixelStorage(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
-				setPixelStorage(GL_PACK_ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
-
-				bind();
-
-				glReadPixels(0, 0, img.cols, img.rows, GL_BGR, GL_UNSIGNED_BYTE, img.data);
-
-				cv::flip(img, img, 0);
-
-				return img;
-			}
-#			endif//MACE_OPENCV
-
-			void load(const char* file);
-			void load(const std::string& file);
-			void load(const Color& c);
-			void load(const unsigned char* c, const Size size);
-			template<std::size_t S>
-			void load(const unsigned char c[S]) {
-				load(c, S);
-			}
-
-			Color& getPaint();
-			const Color& getPaint() const;
-			void setPaint(const Color& col);
-
-			bool operator==(const Texture& other) const;
-			bool operator!=(const Texture& other) const;
-		private:
-			Color paint;
-		};//Texture
 
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.

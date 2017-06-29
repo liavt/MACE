@@ -11,41 +11,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/BitField.h>
-#include <MACE/Graphics/OGLRenderer.h>
 #include <MACE/Graphics/Renderer.h>
 #include <string>
 
-#ifdef MACE_GNU
-//stb_image raises this warning and can be safely ignored
-#	pragma GCC diagnostic push
-#	pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-#elif defined(MACE_MSVC)
-#	pragma warning( push ) 
-//these are all warnings that STB_IMAGE activates which dont really matter
-#	pragma warning( disable: 4244 4100 4456) 
-#endif
-
-#define STB_IMAGE_IMPLEMENTATION
-#ifdef MACE_DEBUG
-//	this macro makes more descriptive error messages
-#	define STBI_FAILURE_USERMSG
-#endif//MACE_DEBUG
-
-#include <stb_image.h>
-
-#ifdef MACE_GNU
-#	pragma GCC diagnostic pop
-#elif defined(MACE_MSVC)
-#	pragma warning( pop )
-#endif
-
 namespace mc {
-	namespace gfx {
-		namespace {
-			//when you request for a solid color Texture, it will use the same texture to save memory
-			ogl::Texture2D solidColor = ogl::Texture2D();
-		}
-
+	namespace gfx{
 		void Component::init() {}
 
 		bool Component::update() {
@@ -69,126 +39,6 @@ namespace mc {
 		}
 
 		bool Component::operator!=(const Component & other) const {
-			return !operator==(other);
-		}
-
-		Texture::Texture() : Texture2D(), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
-
-		Texture::Texture(const ogl::Texture2D& tex, const Color& col) : Texture2D(tex), paint(col) {}
-
-		Texture::Texture(const char * file) : Texture() {
-			init();
-			load(file);
-		}
-
-		Texture::Texture(const std::string & file) : Texture(file.c_str()) {}
-
-		Texture::Texture(const Color& col) : Texture(solidColor, col) {
-			if (!solidColor.isCreated()) {
-				solidColor.init();
-
-				solidColor.resetPixelStorage();
-
-				const float data[] = { 1,1,1,1 };
-				solidColor.setData(data, 1, 1, GL_FLOAT, GL_RGBA);
-
-				solidColor.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				solidColor.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-				id = solidColor.getID();
-			}
-		}
-
-		void Texture::load(const char * file) {
-			resetPixelStorage();
-
-			int width, height, componentSize;
-
-			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
-
-			try {
-				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
-					stbi_image_free(image);
-					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
-				}
-
-				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-			} catch (const std::exception& e) {
-				stbi_image_free(image);
-				throw e;
-			}
-
-			stbi_image_free(image);
-
-			generateMipmap();
-
-			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from file");
-		}
-
-		void Texture::load(const std::string & file) {
-			load(file.c_str());
-		}
-
-		void Texture::load(const Color & c) {
-			resetPixelStorage();
-
-			setData(&c, 1, 1, GL_FLOAT, GL_RGBA);
-
-			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from color");
-		}
-
-		void Texture::load(const unsigned char * c, const Size size) {
-			resetPixelStorage();
-
-			int width, height, componentSize;
-
-			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
-
-			try {
-				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
-					stbi_image_free(image);
-					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
-				}
-
-				setData(image, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-			} catch (const std::exception& e) {
-				stbi_image_free(image);
-				throw e;
-			}
-
-			stbi_image_free(image);
-
-			generateMipmap();
-
-			setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from memory");
-		}
-
-		Color& Texture::getPaint() {
-			return paint;
-		}
-
-		const Color& Texture::getPaint() const {
-			return paint;
-		}
-
-		void Texture::setPaint(const Color& col) {
-			paint = col;
-		}
-
-		bool Texture::operator==(const Texture& other) const {
-			return paint == other.paint && Texture2D::operator==(other);
-		}
-
-		bool Texture::operator!=(const Texture& other) const {
 			return !operator==(other);
 		}
 

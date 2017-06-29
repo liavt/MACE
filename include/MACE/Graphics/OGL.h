@@ -16,6 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/Color.h>
+#include <MACE/Graphics/Renderer.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -367,7 +368,7 @@ namespace mc {
 			/**
 			@see https://www.opengl.org/wiki/Texture
 			*/
-			class Texture2D: public Object {
+			class Texture2D: public Object, public gfx::TextureImpl {
 			public:
 				Texture2D() noexcept;
 
@@ -375,13 +376,23 @@ namespace mc {
 				void destroy() override;
 
 				void bind() const override;
-				void bind(const Index location) const;
+				void bind(const Index location) const override;
+				void unbind() const override;
+
+				void setMinFilter(const gfx::Texture::ResizeFilter filter) override;
+				void setMagFilter(const gfx::Texture::ResizeFilter filter) override;
+
+				void setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
+				void setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
+
+				void setWrapS(const Texture::WrapMode wrap) override;
+				void setWrapT(const Texture::WrapMode wrap) override;
 
 				/**
 				@opengl
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
-				void setData(const void * data, const Size width, const Size height, const Enum type = GL_FLOAT, const Enum format = GL_RGB, const Enum internalFormat = GL_RGB, const Index mipmapLevel = 0);
+				void setData(const void* data, const Size width, const Size height, const Texture::Type type = Texture::Type::FLOAT, const Texture::Format format = Texture::Format::RGB, const Texture::InternalFormat internalFormat = Texture::InternalFormat::RGB, const Index mipmap = 0);
 
 				/**
 				@opengl
@@ -411,7 +422,7 @@ namespace mc {
 				@see Texture2D::setPixelStorage(const Enum, const int)
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
 				*/
-				void resetPixelStorage();
+				void resetPixelStorage() override;
 
 				/**
 				@opengl
@@ -671,7 +682,7 @@ namespace mc {
 				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
 				@opengl
 				*/
-				void setDataRange(const ptrdiff_t& dataSize, const void* data, const Index offset);
+				void setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data);
 
 				/**
 				Copy part of the data store of this `Buffer` into another `Buffer`

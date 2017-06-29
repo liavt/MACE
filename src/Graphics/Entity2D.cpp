@@ -21,7 +21,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace {
-			ogl::Texture2D whiteTexture;
+			Texture whiteTexture;
 
 			FT_Library freetype;
 			//error if freetype init failed or -1 if it hasnt been created
@@ -56,9 +56,8 @@ namespace mc {
 
 		void Image::onRender() {
 			Painter p = Painter(this);
-			p->init();
+			Initializer i(p);
 			p->drawImage(texture);
-			p->destroy();
 		}
 
 		void Image::onDestroy() {
@@ -143,7 +142,7 @@ namespace mc {
 
 				selectionTexture = tex;
 
-				selectionTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+				selectionTexture.setMinFilter(Texture::ResizeFilter::MIPMAP_LINEAR);
 			}
 		}
 
@@ -259,10 +258,9 @@ namespace mc {
 
 		void ProgressBar::onRender() {
 			Painter p = Painter(this);
-			p->init();
+			Initializer i(p);
 			p->drawImage(backgroundTexture);
 			p->maskImage(foregroundTexture, selectionTexture, minimumProgress / maximumProgress, (progress - minimumProgress) / (maximumProgress - minimumProgress));
-			p->destroy();
 		}
 
 		void ProgressBar::onClean() {}
@@ -371,7 +369,7 @@ namespace mc {
 
 			FT_Set_Pixel_Sizes(fonts[id], 0, height);
 
-			if (int result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT)) {
+			if (FT_Error result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT)) {
 				throw FontError("Failed to load glyph with error code " + std::to_string(result));
 			}
 
@@ -386,17 +384,15 @@ namespace mc {
 			character.mask.bind();
 
 			character.mask.resetPixelStorage();
+			character.mask.setUnpackStorageHint(gfx::Texture::PixelStorage::ALIGNMENT, 1);
 
-			character.mask.setPixelStorage(GL_UNPACK_ALIGNMENT, 1);
-
-			character.mask.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, GL_UNSIGNED_BYTE, GL_RED, GL_RED);
-			character.mask.setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			character.mask.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			character.mask.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			character.mask.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			character.mask.setParameter(GL_TEXTURE_SWIZZLE_G, GL_ZERO);
-			character.mask.setParameter(GL_TEXTURE_SWIZZLE_B, GL_ZERO);
-			character.mask.setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
+			character.mask.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, Texture::Type::UNSIGNED_BYTE, Texture::Format::RED, Texture::InternalFormat::RED);
+			character.mask.setWrap(Texture::WrapMode::CLAMP);
+			character.mask.setMinFilter(Texture::ResizeFilter::LINEAR);
+			character.mask.setMagFilter(Texture::ResizeFilter::LINEAR);
+			//character.mask.setParameter(GL_TEXTURE_SWIZZLE_G, GL_ZERO);
+			//character.mask.setParameter(GL_TEXTURE_SWIZZLE_B, GL_ZERO);
+			//character.mask.setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
@@ -460,9 +456,9 @@ namespace mc {
 
 		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
-		Letter::Letter(const ogl::Texture2D& tex) : mask(tex) {}
+		Letter::Letter(const Texture& tex) : mask(tex) {}
 
-		const ogl::Texture2D& Letter::getMask() const {
+		const Texture& Letter::getMask() const {
 			return mask;
 		}
 		const Texture & Letter::getTexture() const {
@@ -514,9 +510,8 @@ namespace mc {
 
 		void Letter::onRender() {
 			Painter p = Painter(this);
-			p->init();
+			Initializer i(p);
 			p->maskImage(texture, mask);
-			p->destroy();
 		}
 
 		void Letter::onDestroy() {
@@ -841,7 +836,21 @@ namespace mc {
 
 		void Button::onUpdate() {}
 
-		void Button::onRender() {}
+		void Button::onRender() {
+			Painter p = Painter(this);
+			Initializer i(p);
+			p->drawImage(texture);
+			if (isDisabled()) {
+				p->drawImage(disabledTexture);
+			} else {
+				if (isHovered()) {
+					p->drawImage(hoverTexture);
+				}
+				if (isClicked()) {
+					p->drawImage(clickedTexture);
+				}
+			}
+		}
 
 		void Button::onDestroy() {
 			if (texture.isCreated()) {

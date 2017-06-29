@@ -37,9 +37,11 @@ namespace mc {
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 24
 		//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
+#define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
 
 #define MACE__PAINTER_DATA_BUFFER_SIZE (sizeof(float) * 3 * 4) + (2 * sizeof(Color))
 #define MACE__PAINTER_DATA_LOCATION 1
+#define MACE__PAINTER_DATA_USAGE GL_DYNAMIC_DRAW
 
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
@@ -111,13 +113,13 @@ namespace mc {
 			entityUniforms.init();
 			entityUniforms.bind();
 			//we set it to null, because during the actual rendering we set the data
-			entityUniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr);
+			entityUniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
 
 			entityUniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
 
 			painterUniforms.init();
 			painterUniforms.bind();
-			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr);
+			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
 
 			painterUniforms.setLocation(MACE__PAINTER_DATA_LOCATION);
 
@@ -226,14 +228,18 @@ namespace mc {
 			return std::shared_ptr<PainterImpl>(new GLPainter(entity));
 		}
 
+		std::shared_ptr<TextureImpl> GLRenderer::getTexture() const {
+			return std::shared_ptr<TextureImpl>(new ogl::Texture2D());
+		}
+
 		void GLRenderer::generateFramebuffer(const Size& width, const Size& height) {
 			depthBuffer.init();
 			depthBuffer.bind();
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
 
-			sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA);
-			idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI);
+			sceneTexture.setData(nullptr, width, height, gfx::Texture::Type::UNSIGNED_BYTE, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
+			idTexture.setData(nullptr, width, height, gfx::Texture::Type::UNSIGNED_INT, gfx::Texture::Format::RED_INTEGER, gfx::Texture::InternalFormat::R32UI, 0);
 			depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
 
 			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
@@ -306,6 +312,7 @@ namespace mc {
 
 			//now we set the uniforms defining the transformations of the entity
 			entityUniforms.bind();
+
 			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 			float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
@@ -328,8 +335,8 @@ namespace mc {
 
 			//now we set the uniforms defining the transformations of the entity
 			ogl::Binder b(&painterUniforms);
-			//orphan the buffer
-			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr);
+			//orphan the buffer (this is required for intel gpus)
+			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
 			//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
 			float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 			std::copy(transform.translation.begin(), transform.translation.end(), mappedEntityData);

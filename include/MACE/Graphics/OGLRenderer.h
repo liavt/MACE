@@ -51,6 +51,7 @@ namespace mc {
 			GraphicsEntity* getEntityAt(const int x, const int y) override;
 
 			std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const override;
+			std::shared_ptr<TextureImpl> getTexture() const override;
 
 			const Preprocessor& getSSLPreprocessor();
 		private:
