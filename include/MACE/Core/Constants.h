@@ -29,11 +29,6 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_OPENCV 1
 #endif
 
-#ifdef MACE_WINAPI
-#	define WIN32_LEAN_AND_MEAN
-#	include <windows.h>
-#endif//MACE_WINAPI
-
 #ifdef MACE_WINDOWS
 #	ifdef MACE_GNU
 #		define MACE_FUNCTION_EXPORT __attribute__((dllexport))

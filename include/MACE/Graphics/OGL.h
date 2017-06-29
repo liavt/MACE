@@ -44,7 +44,6 @@ namespace mc {
 		Each abstraction follows a very similar syntax and style to make it easier to understand.
 		@see Object
 		@see Buffer
-		@todo create a ReadableBuffer class with functions like glReadPixels
 		*/
 		namespace ogl {
 
@@ -441,6 +440,8 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
 				*/
 				void setParameter(const Enum name, const int value);
+
+				void getImage(const Texture::Format format, const Texture::Type type, void* data) const override;
 
 				/**
 				@copydoc Object::operator==(const Object&) const

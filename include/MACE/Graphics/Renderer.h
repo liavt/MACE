@@ -156,11 +156,11 @@ namespace mc {
 					MACE__THROW(BadFormat, "Unsupported cv::Mat depth: CV_64F");
 				}
 
-				texture->resetPixelStorage();
-				texture->setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				texture->setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
+				resetPixelStorage();
+				setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
+				setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
 
-				texture->setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, Texture::InternalFormat::RGBA);
+				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, Texture::InternalFormat::RGBA);
 			}
 
 			Texture(cv::Mat mat) : Texture() {
@@ -171,13 +171,13 @@ namespace mc {
 			cv::Mat toMat(const Size width, const Size height) {
 				cv::Mat img(height, width, CV_8UC3);
 
-				texture->resetPixelStorage();
-				texture->setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
-				texture->setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
+				resetPixelStorage();
+				setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
+				setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
 
-				texture->bind();
+				bind();
 
-				glReadPixels(0, 0, img.cols, img.rows, GL_BGR, GL_UNSIGNED_BYTE, img.data);
+				getImage(Texture::Format::BGR, Texture::Type::UNSIGNED_BYTE, img.data);
 
 				cv::flip(img, img, 0);
 
@@ -216,6 +216,8 @@ namespace mc {
 			void setWrapS(const Texture::WrapMode wrap);
 			void setWrapT(const Texture::WrapMode wrap);
 
+			void getImage(const Texture::Format format, const Texture::Type type, void* data) const;
+
 			bool operator==(const Texture& other) const;
 			bool operator!=(const Texture& other) const;
 		private:
@@ -247,6 +249,8 @@ namespace mc {
 
 			virtual void setWrapS(const Texture::WrapMode wrap) = 0;
 			virtual void setWrapT(const Texture::WrapMode wrap) = 0;
+
+			virtual void getImage(const Texture::Format format, const Texture::Type type, void* data) const = 0;
 		};
 
 		//if the container we use is ever going to be changed, we typedef

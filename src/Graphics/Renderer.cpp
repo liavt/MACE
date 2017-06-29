@@ -228,6 +228,10 @@ namespace mc {
 			texture->setWrapT(wrap);
 		}
 
+		void Texture::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
+			texture->getImage(format, type, data);
+		}
+
 		bool Texture::operator==(const Texture& other) const {
 			return paint == other.paint && texture == other.texture;
 		}

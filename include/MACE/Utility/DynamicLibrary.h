@@ -13,6 +13,12 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Core/Constants.h>
 
+#ifdef MACE_WINAPI
+#	define WIN32_LEAN_AND_MEAN
+#	include <windows.h>
+#	undef WIN32_LEAN_AND_MEAN
+#endif
+
 #include <string>
 
 namespace mc {

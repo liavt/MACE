@@ -692,7 +692,12 @@ namespace mc {
 
 			void Texture2D::setParameter(const Enum name, const int value) {
 				bind();
-				glTexParameteri(GL_TEXTURE_2D, name, value);
+				glTexParameteri(target, name, value);
+			}
+
+			void Texture2D::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
+				bind();
+				glGetTexImage(target, 0, getFormat(format), getType(type), data);
 			}
 
 			bool Texture2D::operator==(const Texture2D & other) const {
