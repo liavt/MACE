@@ -1,8 +1,8 @@
-#Macros
+# Macros
 
 There are many different macros that can determine how MACE works.
 
-##Macros that affect how MACE works
+## Macros that affect how MACE works
 
 | *Macro* | *Effect* |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -11,7 +11,7 @@ There are many different macros that can determine how MACE works.
 | MACE_EXPOSE_POSIX | If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined |
 | MACE_EXPOSE_OPENGL | If defined, the OpenGL abstraction layer and renderer will be exposed by including MACE.h |
 
-###Libraries
+### Libraries
 
 These macros are automatically defined if the specified library is found. Otherwise, you can manually define them.
 
@@ -20,7 +20,7 @@ These macros are automatically defined if the specified library is found. Otherw
 * MACE_WINAPI
 * MACE_POSIX
 
-###Operating Systems
+### Operating Systems
 
 One of these macros will be defined based on the operating system.
 
@@ -28,7 +28,7 @@ One of these macros will be defined based on the operating system.
 * MACE_WINDOWS
 * MACE_UNIX
 
-###Compilers
+### Compilers
 
 The macro MACE_COMPILER has the compiler ID. The MACE_COMPILER_VERSION macro has the compiler version.
 
@@ -54,9 +54,9 @@ Otherwise, one of the following macros will be defined to the compiler version:
 *  MACE_PATHSCALE 
 *  MACE_IBM 
 
-##Macros defined by MACE
+## Macros defined by MACE
 
-###Informational macros
+### Informational macros
 
 | *Macro* | *Meaning* |
 |-----------------------------|----------------------------------------------------------------------------------------------------------------|
@@ -74,7 +74,7 @@ Otherwise, one of the following macros will be defined to the compiler version:
 | MACE_DYNAMIC_LIBRARY_PREFIX | The prefix for dynamic libraries (such as lib.) Some systems may not have a prefix. |
 | MACE_DYNAMIC_LIBRARY_SUFFIX | The suffix for dynamic libraries (such as .so, .dll, or .a.) |
 
-###Utility macros
+### Utility macros
 
 | *Macro* | *Meaning* |
 |---------------------------------|---------------------------------------------------------------------------------------------------------|
