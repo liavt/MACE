@@ -1,4 +1,4 @@
-R"(
+R""(
 #ifndef _MC_POSITION_LIBRARY_
 #define _MC_POSITION_LIBRARY_ 1
 
@@ -36,4 +36,4 @@ vec4 mcGetEntityPosition(){
 }
 
 #endif
-)"
+)""

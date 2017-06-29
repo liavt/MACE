@@ -1,4 +1,4 @@
-R"(
+R""(
 #ifndef _MC_ENTITY_LIBRARY_
 #define _MC_ENTITY_LIBRARY_ 1
 
@@ -25,4 +25,4 @@ mcUniformBuffer mc_PainterSettingsBuffer{
 };
 
 #endif
-)"
+)""

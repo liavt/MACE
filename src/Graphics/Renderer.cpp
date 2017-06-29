@@ -143,6 +143,19 @@ namespace mc {
 			}
 		}
 
+		void PainterImpl::maskImage(const Texture & img, const Texture & mask, const float minimum, const float maximum, const float x, const float y, const float w, const float h) {
+			push();
+			translate(x, y);
+			scale(w, h);
+			setColor(img.getPaint());
+			setData({ minimum, maximum, 0.0f, 0.0f });
+			loadSettings();
+			img.bind(0);
+			mask.bind(1);
+			draw(Painter::Brush::MASK, Painter::RenderType::QUAD);
+			pop();
+		}
+
 		const GraphicsEntity * const PainterImpl::getEntity() const {
 			return entity;
 		}
@@ -170,7 +183,7 @@ namespace mc {
 			scale(w, h);
 			setColor(img.getPaint());
 			loadSettings();
-			img.bind();
+			img.bind(0);
 			draw(Painter::Brush::TEXTURE, Painter::RenderType::QUAD);
 			pop();
 		}
@@ -184,32 +197,32 @@ namespace mc {
 		}
 
 		void PainterImpl::setColor(const Color & col) {
-			state.primary = col;
+			state.color = col;
 		}
 
 		Color & PainterImpl::getColor() {
-			return state.primary;
+			return state.color;
 		}
 
 		const Color & PainterImpl::getColor() const {
-			return state.primary;
+			return state.color;
 		}
 
-		void PainterImpl::setSecondaryColor(const Color & col) {
-			state.secondary = col;
+		void PainterImpl::setData(const Vector<float, 4> & col) {
+			state.data = col;
 		}
 
-		Color & PainterImpl::getSecondaryColor() {
-			return state.secondary;
+		Vector<float, 4> & PainterImpl::getData() {
+			return state.data;
 		}
 
-		const Color & PainterImpl::getSecondaryColor() const {
-			return state.secondary;
+		const Vector<float, 4> & PainterImpl::getData() const {
+			return state.data;
 		}
 
 		void PainterImpl::resetColor() {
-			state.primary = Colors::INVISIBLE;
-			state.secondary = Colors::INVISIBLE;
+			state.color = Colors::INVISIBLE;
+			state.data = { 0.0f, 0.0f, 0.0f, 0.0f };
 		}
 
 		void PainterImpl::setTransformation(const TransformMatrix & trans) {
@@ -314,7 +327,7 @@ namespace mc {
 		}
 
 		bool Painter::State::operator==(const State & other) const {
-			return transformation == other.transformation && primary == other.primary && secondary == other.secondary;
+			return transformation == other.transformation && color == other.color && data == other.data;
 		}
 
 		bool Painter::State::operator!=(const State & other) const {

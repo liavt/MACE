@@ -35,7 +35,7 @@ namespace mc {
 		public:
 			//painter stuff
 			enum class Brush: Byte {
-				TEXTURE = 0, COLOR = 1
+				TEXTURE = 0, COLOR = 1, MASK = 2
 			};
 
 			enum class RenderType: Byte {
@@ -45,7 +45,9 @@ namespace mc {
 			struct State {
 				TransformMatrix transformation;
 
-				Color primary, secondary;
+				Color color;
+
+				Vector<float, 4> data;
 
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
@@ -92,15 +94,17 @@ namespace mc {
 			void drawImage(const Texture& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
 			void drawImage(const Texture& img, const Vector<float, 4>& dim);
 
+			void maskImage(const Texture& img, const Texture& mask, const float minimum = 0.0f, const float maximum = 1.0f, const float x = 0.0, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
+
 			const GraphicsEntity* const getEntity() const;
 
 			void setColor(const Color& col);
 			Color& getColor();
 			const Color& getColor() const;
 
-			void setSecondaryColor(const Color& col);
-			Color& getSecondaryColor();
-			const Color& getSecondaryColor() const;
+			void setData(const Vector<float, 4>& col);
+			Vector<float, 4>& getData();
+			const Vector<float, 4>& getData() const;
 
 			void resetColor();
 

@@ -257,7 +257,13 @@ namespace mc {
 
 		void ProgressBar::onUpdate() {}
 
-		void ProgressBar::onRender() {}
+		void ProgressBar::onRender() {
+			Painter p = Painter(this);
+			p->init();
+			p->drawImage(backgroundTexture);
+			p->maskImage(foregroundTexture, selectionTexture, minimumProgress / maximumProgress, (progress - minimumProgress) / (maximumProgress - minimumProgress));
+			p->destroy();
+		}
 
 		void ProgressBar::onClean() {}
 
@@ -388,6 +394,9 @@ namespace mc {
 			character.mask.setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			character.mask.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			character.mask.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			character.mask.setParameter(GL_TEXTURE_SWIZZLE_G, GL_ZERO);
+			character.mask.setParameter(GL_TEXTURE_SWIZZLE_B, GL_ZERO);
+			character.mask.setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
@@ -503,7 +512,12 @@ namespace mc {
 
 		void Letter::onUpdate() {}
 
-		void Letter::onRender() {}
+		void Letter::onRender() {
+			Painter p = Painter(this);
+			p->init();
+			p->maskImage(texture, mask);
+			p->destroy();
+		}
 
 		void Letter::onDestroy() {
 			if (mask.isCreated()) {

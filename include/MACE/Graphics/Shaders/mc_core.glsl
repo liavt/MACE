@@ -1,4 +1,4 @@
-R"(
+R""(
 
 #ifndef _MC_CORE_LIBRARY_
 #define _MC_CORE_LIBRARY_ 1
@@ -30,4 +30,4 @@ SSL_GL_VERSION_DECLARATION
 
 #endif //_SSL_CORE_LIBRARY_
 
-)"
+)""

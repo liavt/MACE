@@ -66,6 +66,8 @@ namespace mc {
 
 			void generateFramebuffer(const Size& width, const Size& height);
 
+			//for Painting
+
 			struct RenderProtocol {
 				ogl::ShaderProgram program;
 				ogl::VertexArray vao;
@@ -78,7 +80,7 @@ namespace mc {
 			std::string processShader(const std::string& shader);
 
 			void loadEntityUniforms(const GraphicsEntity * const entity);
-			void loadPainterUniforms(TransformMatrix transform, Color prim, Color second);
+			void loadPainterUniforms(const TransformMatrix& transform, const Color& col, const Vector<float, 4>& data);
 
 			GLRenderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings);
 			ogl::ShaderProgram getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);

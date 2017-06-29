@@ -1,4 +1,4 @@
-R"(
+R""(
 
 #ifndef _MC_FRAGMENT_LIBRARY_
 #define _MC_FRAGMENT_LIBRARY_ 1
@@ -30,4 +30,4 @@ void main(void){
 }
 
 #endif
-)"
+)""

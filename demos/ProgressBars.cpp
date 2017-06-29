@@ -32,8 +32,8 @@ void create(os::WindowModule&) {
 	circleBar.setBackgroundTexture(gfx::Texture(circle, Colors::RED));
 	circleBar.setForegroundTexture(gfx::Texture(Colors::GREEN));
 	circleBar.setSelectionTexture(circle);
-	circleBar.setWidth(0.075f);
-	circleBar.setHeight(0.075f);
+	circleBar.setWidth(0.25f);
+	circleBar.setHeight(0.25f);
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
 

@@ -988,9 +988,12 @@ namespace mc {
 			void ShaderProgram::createUniform(const std::string& name) {
 				int location = glGetUniformLocation(id, name.data());
 				if (location < 0) {
-					throw ShaderError("Error finding uniform with name " + std::string(name));
+					MACE__THROW(Shader, "Error finding uniform with name " + std::string(name));
 				}
+
 				uniforms[name] = location;
+
+				checkGLError(__LINE__, __FILE__, "Error creating uniform with name " + std::string(name));
 			}
 
 			void ShaderProgram::createUniform(const char * name) {
@@ -1294,7 +1297,7 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-			
+
 			Binder::Binder(Object & o) : Binder(&o) {}
 
 			Binder::Binder(Object * o) : obj(o) {
@@ -1349,6 +1352,6 @@ namespace mc {
 			bool Binder::operator!=(const Binder & other) const {
 				return !operator==(other);
 			}
-}//ogl
+		}//ogl
 	}//gfx
 }//mc

@@ -322,7 +322,7 @@ namespace mc {
 			entityUniforms.unmap();
 		}
 
-		void GLRenderer::loadPainterUniforms(TransformMatrix transform, Color prim, Color second) {
+		void GLRenderer::loadPainterUniforms(const TransformMatrix& transform, const Color& prim, const Vector<float, 4>& data) {
 			float color[4] = {};
 			prim.flatten(color);
 
@@ -340,8 +340,7 @@ namespace mc {
 			mappedEntityData += 4;
 			std::copy(std::begin(color), std::end(color), mappedEntityData);
 			mappedEntityData += 4;
-			second.flatten(color);
-			std::copy(std::begin(color), std::end(color), mappedEntityData);
+			std::copy(data.begin(), data.end(), mappedEntityData);
 			painterUniforms.unmap();
 		}
 
@@ -375,25 +374,44 @@ namespace mc {
 
 			if (settings.second == Painter::RenderType::QUAD) {
 				program.createVertex(processShader({
-#include <MACE/Graphics/Shaders/rendertypes/quad.v.glsl>
+#include <MACE/Graphics/Shaders/RenderTypes/quad.v.glsl>
 				}));
 			}
 
 			if (settings.first == Painter::Brush::COLOR) {
 				program.createFragment(processShader({
-#include <MACE/Graphics/Shaders/brushes/color.f.glsl>
+#include <MACE/Graphics/Shaders/Brushes/color.f.glsl>
 				}));
+
+				program.link();
 			} else if (settings.first == Painter::Brush::TEXTURE) {
 				program.createFragment(processShader({
-#include <MACE/Graphics/Shaders/brushes/texture.f.glsl>
+#include <MACE/Graphics/Shaders/Brushes/texture.f.glsl>
 				}));
-			}
 
-			program.link();
+				program.link();
+			} else if (settings.first == Painter::Brush::MASK) {
+				program.createFragment(processShader({
+#include <MACE/Graphics/Shaders/Brushes/mask.f.glsl>
+				}));
+
+				program.link();
+
+				program.bind();
+
+				program.createUniform("tex");
+				program.createUniform("mask");
+
+				//binding the samplers
+				program.setUniform("tex", 0);
+				program.setUniform("mask", 1);
+			}
 
 			program.createUniform("mc_EntityID");
 			entityUniforms.bindToUniformBlock(program, "mc_BaseEntityBuffer");
 			painterUniforms.bindToUniformBlock(program, "mc_PainterSettingsBuffer");
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter!");
 			return program;
 		}
 
@@ -426,6 +444,9 @@ namespace mc {
 				vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
 				vao.loadIndices(6, squareIndices);
 			}
+
+			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating VAO for painter!");
+
 			return vao;
 		}
 
@@ -622,7 +643,7 @@ namespace mc {
 		void GLPainter::destroy() {}
 
 		void GLPainter::loadSettings() {
-			renderer->loadPainterUniforms(state.transformation, state.primary, state.secondary);
+			renderer->loadPainterUniforms(state.transformation, state.color, state.data);
 		}
 
 		void GLPainter::draw(const Painter::Brush brush, const Painter::RenderType type) {
