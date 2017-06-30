@@ -443,6 +443,8 @@ namespace mc {
 
 				void getImage(const Texture::Format format, const Texture::Type type, void* data) const override;
 
+				void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg);
+
 				/**
 				@copydoc Object::operator==(const Object&) const
 				*/

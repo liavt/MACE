@@ -221,6 +221,10 @@ namespace mc {
 			texture->setWrapT(wrap);
 		}
 
+		void Texture::setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) {
+			texture->setSwizzle(mode, arg);
+		}
+
 		void Texture::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
 			texture->getImage(format, type, data);
 		}

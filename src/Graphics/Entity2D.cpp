@@ -390,9 +390,9 @@ namespace mc {
 			character.mask.setWrap(Texture::WrapMode::CLAMP);
 			character.mask.setMinFilter(Texture::ResizeFilter::LINEAR);
 			character.mask.setMagFilter(Texture::ResizeFilter::LINEAR);
-			//character.mask.setParameter(GL_TEXTURE_SWIZZLE_G, GL_ZERO);
-			//character.mask.setParameter(GL_TEXTURE_SWIZZLE_B, GL_ZERO);
-			//character.mask.setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
+			character.mask.setSwizzle(Texture::SwizzleMode::G, Texture::SwizzleMode::R);
+			character.mask.setSwizzle(Texture::SwizzleMode::B, Texture::SwizzleMode::R);
+			character.mask.setSwizzle(Texture::SwizzleMode::A, Texture::SwizzleMode::R);
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {

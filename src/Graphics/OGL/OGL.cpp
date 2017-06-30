@@ -572,10 +572,10 @@ namespace mc {
 			void Texture2D::setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) {
 				switch (hint) {
 					case gfx::Texture::PixelStorage::ALIGNMENT:
-						setParameter(GL_UNPACK_ALIGNMENT, value);
+						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
 						break;
 					case gfx::Texture::PixelStorage::ROW_LENGTH:
-						setParameter(GL_UNPACK_ROW_LENGTH, value);
+						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
 						break;
 					default:
 						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
@@ -585,10 +585,10 @@ namespace mc {
 			void Texture2D::setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) {
 				switch (hint) {
 					case gfx::Texture::PixelStorage::ALIGNMENT:
-						setParameter(GL_PACK_ALIGNMENT, value);
+						setPixelStorage(GL_PACK_ALIGNMENT, value);
 						break;
 					case gfx::Texture::PixelStorage::ROW_LENGTH:
-						setParameter(GL_PACK_ROW_LENGTH, value);
+						setPixelStorage(GL_PACK_ROW_LENGTH, value);
 						break;
 					default:
 						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
@@ -696,6 +696,33 @@ namespace mc {
 			void Texture2D::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
 				bind();
 				glGetTexImage(target, 0, getFormat(format), getType(type), data);
+			}
+
+			void Texture2D::setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) {
+				Enum swizzle;
+				if (arg == Texture::SwizzleMode::R) {
+					swizzle = GL_RED;
+				} else if (arg == Texture::SwizzleMode::G) {
+					swizzle = GL_GREEN;
+				} else if (arg == Texture::SwizzleMode::B) {
+					swizzle = GL_BLUE;
+				} else if (arg == Texture::SwizzleMode::A) {
+					swizzle = GL_ALPHA;
+				} else {
+					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument arg");
+				}
+
+				if (mode == Texture::SwizzleMode::R) {
+					setParameter(GL_TEXTURE_SWIZZLE_R, swizzle);
+				}else if (mode == Texture::SwizzleMode::G) {
+					setParameter(GL_TEXTURE_SWIZZLE_G, swizzle);
+				} else if (mode == Texture::SwizzleMode::B) {
+					setParameter(GL_TEXTURE_SWIZZLE_B, swizzle);
+				} else if (mode == Texture::SwizzleMode::A) {
+					setParameter(GL_TEXTURE_SWIZZLE_A, swizzle);
+				} else {
+					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument mode");
+				}
 			}
 
 			bool Texture2D::operator==(const Texture2D & other) const {

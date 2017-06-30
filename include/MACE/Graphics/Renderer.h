@@ -115,6 +115,14 @@ namespace mc {
 				MIRROR_CLAMP,
 			};
 
+			//there is no ZERO and ONE like in OpenGL because DirectX doesn't support that
+			enum class SwizzleMode: Byte {
+				R,
+				G,
+				B,
+				A
+			};
+
 			Texture();
 			Texture(const Color& col);
 			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
@@ -216,6 +224,8 @@ namespace mc {
 			void setWrapS(const Texture::WrapMode wrap);
 			void setWrapT(const Texture::WrapMode wrap);
 
+			void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg);
+
 			void getImage(const Texture::Format format, const Texture::Type type, void* data) const;
 
 			bool operator==(const Texture& other) const;
@@ -251,6 +261,8 @@ namespace mc {
 			virtual void setWrapT(const Texture::WrapMode wrap) = 0;
 
 			virtual void getImage(const Texture::Format format, const Texture::Type type, void* data) const = 0;
+
+			virtual void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) = 0;
 		};
 
 		//if the container we use is ever going to be changed, we typedef
