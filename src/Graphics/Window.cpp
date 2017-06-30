@@ -12,7 +12,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/OGLRenderer.h>
+#include <MACE/Graphics/OGL/OGL.h>
+#include <MACE/Graphics/OGL/OGLRenderer.h>
 
 #include <MACE/Utility/BitField.h>
 
@@ -26,8 +27,6 @@ The above copyright notice and this permission notice shall be included in all c
 //so we can use glew
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-
-#include <GL/glew.h>
 
 namespace mc {
 	namespace os {
@@ -109,40 +108,12 @@ namespace mc {
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__, "Error creating window");
 
-			glewExperimental = true;
-			GLenum result = glewInit();
-			if (result != GLEW_OK) {
-				std::ostringstream errorMessage;
-				errorMessage << "GLEW failed to initialize: ";
-				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
-				//+ operater in std::string can not handle this conversion.
-				errorMessage << glewGetErrorString(result);
-
-				if (result == GLEW_ERROR_NO_GL_VERSION) {
-					errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
-				}
-				MACE__THROW(InitializationFailed, errorMessage.str());
+			if (gfx::getRenderer() == nullptr) {
+				//default to OpenGL
+				gfx::setRenderer(new gfx::GLRenderer());
 			}
 
-			try {
-				gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
-			} catch (...) {
-				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
-			}
-
-			if (!GLEW_VERSION_3_3) {
-				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this." << std::endl;
-			}
-
-#ifdef MACE_DEBUG
-			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-			std::cout << "OpenGL has been created succesfully!" << std::endl;
-			std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
-			std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
-			std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
-			std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
-			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-#endif
+			gfx::getRenderer()->init(config.width, config.height);
 
 			if (config.vsync)glfwSwapInterval(1);
 			else glfwSwapInterval(0);
@@ -219,13 +190,6 @@ namespace mc {
 				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
 			};
 			glfwSetWindowRefreshCallback(window, windowDamaged);
-
-			if (gfx::getRenderer() == nullptr) {
-				//default to OpenGL
-				gfx::setRenderer(new gfx::GLRenderer());
-			}
-
-			gfx::getRenderer()->init(config.width, config.height);
 
 			int width = 0, height = 0;
 
@@ -372,7 +336,15 @@ namespace mc {
 
 		bool WindowModule::isDestroyed() const {
 			return properties.getBit(WindowModule::DESTROYED);
-		}//isDestroyed
+		}
+		Vector<int, 2> WindowModule::getFramebufferSize() const {
+			Vector<int, 2> out = {};
+
+			glfwGetFramebufferSize(window, &out[0], &out[1]);
+
+			return out;
+		}
+		//isDestroyed
 
 		void WindowModule::onInit() {}
 

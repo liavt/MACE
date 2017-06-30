@@ -58,6 +58,8 @@ void create(os::WindowModule&) {
 	leftBot.setY(-0.5f);
 	leftBot.setWidth(0.7f);
 	leftBot.setHeight(0.4f);
+	leftBot.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
+	leftBot.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
 	left.addChild(leftBot);
 

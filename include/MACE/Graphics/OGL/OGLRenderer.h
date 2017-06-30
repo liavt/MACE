@@ -12,7 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__GRAPHICS_OGLRENDERER_H
 
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/OGL.h>
+#include <MACE/Graphics/OGL/OGL.h>
 #include <MACE/Utility/Preprocessor.h>
 #include <map>
 

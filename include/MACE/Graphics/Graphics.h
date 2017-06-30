@@ -23,8 +23,8 @@ namespace mc {
 //the following two headers should not be included by default as they are for implementation of the
 //OpenGL renderer and are useless to the end user unless they are using the OpenGL abstraction
 #ifdef MACE_EXPOSE_OPENGL
-#	include <MACE/Graphics/OGL.h>
-#	include <MACE/Graphics/GLRenderer.h>
+#	include <MACE/Graphics/OGL/OGL.h>
+#	include <MACE/Graphics/OGL/GLRenderer.h>
 #endif
 
 #include <MACE/Graphics/Entity.h>

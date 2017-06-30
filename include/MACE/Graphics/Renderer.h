@@ -319,11 +319,9 @@ namespace mc {
 			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
 			void fillRect(const Vector<float, 4>& dim);
 
-			void drawImage(const Texture& img, const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
-			void drawImage(const Texture& img, const Vector<float, 2>& pos, const Vector<float, 2>& size);
-			void drawImage(const Texture& img, const Vector<float, 4>& dim);
+			void drawImage(const Texture& img);
 
-			void maskImage(const Texture& img, const Texture& mask, const float minimum = 0.0f, const float maximum = 1.0f, const float x = 0.0, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
+			void maskImage(const Texture& img, const Texture& mask, const float minimum = 0.0f, const float maximum = 1.0f);
 
 			const GraphicsEntity* const getEntity() const;
 

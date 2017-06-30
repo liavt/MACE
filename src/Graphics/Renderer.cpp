@@ -9,7 +9,6 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Entity2D.h>
-#include <MACE/Graphics/OGL.h>
 
 #ifdef MACE_GNU
 //stb_image raises this warning and can be safely ignored
@@ -121,8 +120,6 @@ namespace mc {
 
 			texture->setMinFilter(Texture::ResizeFilter::MIPMAP_LINEAR);
 			texture->setMagFilter(Texture::ResizeFilter::NEAREST);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from file");
 		}
 
 		void Texture::load(const std::string & file) {
@@ -136,8 +133,6 @@ namespace mc {
 
 			texture->setMinFilter(Texture::ResizeFilter::NEAREST);
 			texture->setMagFilter(Texture::ResizeFilter::NEAREST);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from color");
 		}
 
 		void Texture::load(const unsigned char * c, const Size size) {
@@ -163,8 +158,6 @@ namespace mc {
 
 			texture->setMinFilter(Texture::ResizeFilter::MIPMAP_LINEAR);
 			texture->setMagFilter(Texture::ResizeFilter::NEAREST);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Error loading texture from memory");
 		}
 
 		Color& Texture::getPaint() {
@@ -257,11 +250,9 @@ namespace mc {
 
 		void Renderer::setUp(os::WindowModule* win) {
 			if (resized) {
-				int width, height;
+				Vector<int, 2> dimensions = win->getFramebufferSize();
 
-				glfwGetFramebufferSize(win->getGLFWWindow(), &width, &height);
-
-				resize(width, height);
+				resize(dimensions.x(), dimensions.y());
 
 				resized = false;
 			}
@@ -364,10 +355,8 @@ namespace mc {
 			}
 		}
 
-		void PainterImpl::maskImage(const Texture & img, const Texture & mask, const float minimum, const float maximum, const float x, const float y, const float w, const float h) {
+		void PainterImpl::maskImage(const Texture & img, const Texture & mask, const float minimum, const float maximum) {
 			push();
-			translate(x, y);
-			scale(w, h);
 			setColor(img.getPaint());
 			setData({ minimum, maximum, 0.0f, 0.0f });
 			loadSettings();
@@ -398,23 +387,13 @@ namespace mc {
 			fillRect(dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
-		void PainterImpl::drawImage(const Texture & img, const float x, const float y, const float w, const float h) {
+		void PainterImpl::drawImage(const Texture & img) {
 			push();
-			translate(x, y);
-			scale(w, h);
 			setColor(img.getPaint());
 			loadSettings();
 			img.bind(0);
 			draw(Painter::Brush::TEXTURE, Painter::RenderType::QUAD);
 			pop();
-		}
-
-		void PainterImpl::drawImage(const Texture & img, const Vector<float, 2>& pos, const Vector<float, 2>& size) {
-			drawImage(img, pos.x(), pos.y(), size.x(), size.y());
-		}
-
-		void PainterImpl::drawImage(const Texture & img, const Vector<float, 4>& dim) {
-			drawImage(img, dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
 		void PainterImpl::setColor(const Color & col) {

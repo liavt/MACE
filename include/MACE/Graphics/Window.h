@@ -80,6 +80,8 @@ namespace mc {
 			std::string getName() const override;
 
 			bool isDestroyed() const;
+
+			Vector<int, 2> getFramebufferSize() const;
 		private:
 			enum Properties: Byte {
 				DESTROYED = 0,
