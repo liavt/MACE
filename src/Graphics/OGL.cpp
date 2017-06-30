@@ -195,10 +195,8 @@ namespace mc {
 			void checkGLError(const Index, const char*, const char*) {}
 
 			//to improve performance a bit we can skip out on even calling c_str()
-			void checkGLError(const Index line, const std::string &, const std::string) {}
+			void checkGLError(const Index, const std::string &, const std::string) {}
 #endif
-
-
 
 
 			void VertexArray::init() {
