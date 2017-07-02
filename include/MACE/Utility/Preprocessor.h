@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__UTILITY_PREPROCESSOR_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 
 #include <vector>
 #include <string>

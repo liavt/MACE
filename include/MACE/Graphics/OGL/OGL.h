@@ -113,7 +113,7 @@ namespace mc {
 			@see https://www.opengl.org/wiki/OpenGL_Object
 			@todo store what object is currently bound. static Object getBoundObject(), bool isBound()
 			*/
-			class Object: public Initializable {
+			class Object: public Initializable, public Bindable {
 			public:
 				/**
 				Virtual destructor for subclasses and safety
@@ -146,13 +146,13 @@ namespace mc {
 				@see Object::unbind() const
 				@throws GL_INVALID_OPERATION If this `Object` has not been created yet
 				*/
-				virtual void bind() const;
+				virtual void bind() const override;
 				/**
 				Unbinds this `Object` which is equivalent to binding ID 0.
 				@opengl
 				@see Object::bind() const
 				*/
-				virtual void unbind() const;
+				virtual void unbind() const override;
 
 				/**
 				Queries OpenGL whether this Object's ID is a valid object.
@@ -206,30 +206,6 @@ namespace mc {
 				@internal
 				*/
 				virtual void bindIndex(const GLuint id) const = 0;
-			};
-
-			class Binder: public Initializable {
-			public:
-				Binder(Object& o);
-				Binder(Object* o);
-				~Binder();
-
-				void init() override;
-				void destroy() override;
-
-				Object* get();
-				const Object* get() const;
-
-				Object* operator->();
-				const Object* operator->() const;
-
-				Object* operator*();
-				const Object* operator*() const;
-
-				bool operator==(const Binder& other) const;
-				bool operator!=(const Binder& other) const;
-			private:
-				Object* obj;
 			};
 
 			/**

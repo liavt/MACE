@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__UTILITY_VECTOR_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 #include <MACE/Utility/Math.h>
 #include <array>
 #include <string>
@@ -124,7 +125,7 @@ namespace mc {
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
-			if (args.size() != N)throw IndexOutOfBoundsError("The number of arguments MUST be equal to the size of the array.");
+			if (args.size() != N)MACE__THROW(IndexOutOfBounds, "The number of arguments MUST be equal to the size of the array.");
 
 			Index counter = 0;
 			for (auto elem : args) {

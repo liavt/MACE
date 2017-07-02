@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__GRAPHICS_RENDERER_H
 
 #include <MACE/Core/Interfaces.h>
+#include <MACE/Core/Error.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Window.h>
 #include <MACE/Utility/Vector.h>
@@ -276,7 +277,7 @@ namespace mc {
 		public:
 			//painter stuff
 			enum class Brush: Byte {
-				TEXTURE = 0, COLOR = 1, MASK = 2
+				TEXTURE = 0, COLOR = 1, MASK = 2, MASKED_BLEND = 3,
 			};
 
 			enum class RenderType: Byte {
@@ -286,7 +287,7 @@ namespace mc {
 			struct State {
 				TransformMatrix transformation;
 
-				Color color;
+				Color primaryColor, secondaryColor;
 
 				Vector<float, 4> data;
 
@@ -333,13 +334,19 @@ namespace mc {
 
 			void drawImage(const Texture& img);
 
-			void maskImage(const Texture& img, const Texture& mask, const float minimum = 0.0f, const float maximum = 1.0f);
+			void maskImage(const Texture& img, const Texture& mask);
+
+			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
 			const GraphicsEntity* const getEntity() const;
 
 			void setColor(const Color& col);
 			Color& getColor();
 			const Color& getColor() const;
+
+			void setSecondaryColor(const Color& col);
+			Color& getSecondaryColor();
+			const Color& getSecondaryColor() const;
 
 			void setData(const Vector<float, 4>& col);
 			Vector<float, 4>& getData();
@@ -377,6 +384,7 @@ namespace mc {
 
 			const GraphicsEntity* const entity;
 
+			//for pushing/popping the state
 			std::stack<Painter::State> stateStack;
 			Painter::State state;
 		};

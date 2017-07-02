@@ -10,7 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define CATCH_CONFIG_RUNNER
 #include <Catch.h>
 
-#include <MACE/Core/Constants.h>
+#include <MACE/MACE.h>
 
 int main(int argc, char* const argv[]) {
 	mc::Error::setVerboseErrors(true);

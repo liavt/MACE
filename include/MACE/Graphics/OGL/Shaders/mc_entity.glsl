@@ -20,8 +20,9 @@ mcUniformBuffer mc_PainterSettingsBuffer{
 	vec3 mc_TransformTranslation;
 	vec3 mc_TransformRotation;
 	vec3 mc_TransformScale;
-	vec4 mc_Primary;
-	vec4 mc_Secondary;
+	vec4 mc_PrimaryColor;
+	vec4 mc_SecondaryColor;
+	vec4 mc_Data;
 };
 
 #endif

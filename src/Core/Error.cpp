@@ -7,7 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 #include <MACE/Core/Module.h>
 #include <MACE/Core/System.h>
 #include <iostream>
@@ -210,15 +210,15 @@ namespace mc {
 		verboseErrors = verbose;
 	}
 
-	Error::Error(const char * message, const Index line, const std::string file) : Error(message, line, file.c_str()) {}
+	Error::Error(const char * message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
 
-	Error::Error(const std::string message, const Index line, const std::string file) : Error(message, line, file.c_str()) {}
+	Error::Error(const std::string message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
 
-	Error::Error(const char * message, const Index l, const char * f) : std::runtime_error(message), line(l), file(f) {}
+	Error::Error(const char * message, const unsigned int l, const char * f) : std::runtime_error(message), line(l), file(f) {}
 
-	Error::Error(const std::string message, const Index l, const char * f) : std::runtime_error(message), line(l), file(f) {}
+	Error::Error(const std::string message, const unsigned int l, const char * f) : std::runtime_error(message), line(l), file(f) {}
 
-	Index Error::getLine() const {
+	unsigned int Error::getLine() const {
 		return line;
 	}
 

@@ -8,9 +8,56 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 
 namespace mc {
+	Binder::Binder(Bindable & o) : Binder(&o) {}
+
+	Binder::Binder(Bindable * o) : obj(o) {
+#ifdef MACE_DEBUG
+		if (o == nullptr) {
+			MACE__THROW(NullPointer, "Input Bindable to Binder is nullptr!");
+		}
+#endif
+		obj->bind();
+	}
+
+	Binder::~Binder() {
+		obj->unbind();
+	}
+
+	Bindable * Binder::get() {
+		return obj;
+	}
+
+	const Bindable * Binder::get() const {
+		return obj;
+	}
+
+	Bindable * Binder::operator->() {
+		return obj;
+	}
+
+	const Bindable * Binder::operator->() const {
+		return obj;
+	}
+
+	Bindable * Binder::operator*() {
+		return obj;
+	}
+
+	const Bindable * Binder::operator*() const {
+		return obj;
+	}
+
+	bool Binder::operator==(const Binder & other) const {
+		return obj == other.obj;
+	}
+
+	bool Binder::operator!=(const Binder & other) const {
+		return !operator==(other);
+	}
+
 	Initializer::Initializer(Initializable * o) : obj(o) {
 		if (obj == nullptr) {
 			MACE__THROW(NullPointer, "Input to Initializer was null!");

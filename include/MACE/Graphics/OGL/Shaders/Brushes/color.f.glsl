@@ -11,7 +11,7 @@ precision highp float; // Defines precision for float and float-derived (vector/
 uniform lowp sampler2D tex;
 
 vec4 mc_frag_main(vec2 textureCoord){		
-	return mc_Primary;
+	return mc_PrimaryColor;
 }
 
 

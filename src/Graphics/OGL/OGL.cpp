@@ -106,7 +106,6 @@ namespace mc {
 						default:
 							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
-					return GL_RGB;
 				}
 
 				GLenum getType(const Texture::Type type) {
@@ -1518,61 +1517,6 @@ namespace mc {
 
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
-			}
-
-			Binder::Binder(Object & o) : Binder(&o) {}
-
-			Binder::Binder(Object * o) : obj(o) {
-#ifdef MACE_DEBUG
-				if (o == nullptr) {
-					MACE__THROW(NullPointer, "Input object to Binder is nullptr!");
-				}
-#endif
-				obj->bind();
-			}
-
-			Binder::~Binder() {
-				obj->unbind();
-			}
-
-			void Binder::init() {
-				obj->init();
-			}
-
-			void Binder::destroy() {
-				obj->destroy();
-			}
-
-			Object * Binder::get() {
-				return obj;
-			}
-
-			const Object * Binder::get() const {
-				return obj;
-			}
-
-			Object * Binder::operator->() {
-				return obj;
-			}
-
-			const Object * Binder::operator->() const {
-				return obj;
-			}
-
-			Object * Binder::operator*() {
-				return obj;
-			}
-
-			const Object * Binder::operator*() const {
-				return obj;
-			}
-
-			bool Binder::operator==(const Binder & other) const {
-				return obj == other.obj;
-			}
-
-			bool Binder::operator!=(const Binder & other) const {
-				return !operator==(other);
 			}
 		}//ogl
 	}//gfx

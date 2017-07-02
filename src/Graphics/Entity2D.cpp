@@ -259,8 +259,7 @@ namespace mc {
 		void ProgressBar::onRender() {
 			Painter p = Painter(this);
 			Initializer i(p);
-			p->drawImage(backgroundTexture);
-			p->maskImage(foregroundTexture, selectionTexture, minimumProgress / maximumProgress, (progress - minimumProgress) / (maximumProgress - minimumProgress));
+			p->blendImagesMasked(foregroundTexture, backgroundTexture, selectionTexture, minimumProgress / maximumProgress, (progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
 
 		void ProgressBar::onClean() {}

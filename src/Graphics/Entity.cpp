@@ -8,10 +8,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Graphics/Entity.h>
+#include <MACE/Graphics/Renderer.h>
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/BitField.h>
-#include <MACE/Graphics/Renderer.h>
 #include <string>
 
 namespace mc {

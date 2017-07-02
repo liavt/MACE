@@ -42,7 +42,7 @@ namespace mc {
 #define MACE__ENTITY_DATA_LOCATION 0
 #define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
 
-#define MACE__PAINTER_DATA_BUFFER_SIZE (sizeof(float) * 3 * 4) + (2 * sizeof(Color))
+#define MACE__PAINTER_DATA_BUFFER_SIZE (sizeof(float) * 3 * 4) + (3 * sizeof(Color))
 #define MACE__PAINTER_DATA_LOCATION 1
 #define MACE__PAINTER_DATA_USAGE GL_DYNAMIC_DRAW
 
@@ -367,12 +367,12 @@ namespace mc {
 			entityUniforms.unmap();
 		}
 
-		void GLRenderer::loadPainterUniforms(const TransformMatrix& transform, const Color& prim, const Vector<float, 4>& data) {
+		void GLRenderer::loadPainterUniforms(const TransformMatrix& transform, const Color& prim, const Color& second, const Vector<float, 4>& data) {
 			float color[4] = {};
 			prim.flatten(color);
 
 			//now we set the uniforms defining the transformations of the entity
-			ogl::Binder b(&painterUniforms);
+			Binder b(&painterUniforms);
 			//orphan the buffer (this is required for intel gpus)
 			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
 			//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
@@ -383,6 +383,9 @@ namespace mc {
 			mappedEntityData += 4;
 			std::copy(transform.scaler.begin(), transform.scaler.end(), mappedEntityData);
 			mappedEntityData += 4;
+			std::copy(std::begin(color), std::end(color), mappedEntityData);
+			mappedEntityData += 4;
+			second.flatten(color);
 			std::copy(std::begin(color), std::end(color), mappedEntityData);
 			mappedEntityData += 4;
 			std::copy(data.begin(), data.end(), mappedEntityData);
@@ -421,6 +424,8 @@ namespace mc {
 				program.createVertex(processShader({
 #include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
 				}));
+			} else {
+				MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
 			}
 
 			if (settings.first == Painter::Brush::COLOR) {
@@ -450,6 +455,25 @@ namespace mc {
 				//binding the samplers
 				program.setUniform("tex", 0);
 				program.setUniform("mask", 1);
+			} else if (settings.first == Painter::Brush::MASKED_BLEND) {
+				program.createFragment(processShader({
+#include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
+				}));
+
+				program.link();
+
+				program.bind();
+
+				program.createUniform("tex1");
+				program.createUniform("tex2");
+				program.createUniform("mask");
+
+				//binding the samplers
+				program.setUniform("tex1", 0);
+				program.setUniform("tex2", 1);
+				program.setUniform("mask", 2);
+			} else {
+				MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 			}
 
 			program.createUniform("mc_EntityID");
@@ -484,7 +508,7 @@ namespace mc {
 					1.0f,-1.0f,0.0f
 				};
 
-				ogl::Binder b(&vao);
+				Binder b(&vao);
 				vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
 				vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
 				vao.loadIndices(6, squareIndices);
@@ -688,7 +712,7 @@ namespace mc {
 		void GLPainter::destroy() {}
 
 		void GLPainter::loadSettings() {
-			renderer->loadPainterUniforms(state.transformation, state.color, state.data);
+			renderer->loadPainterUniforms(state.transformation, state.primaryColor, state.secondaryColor, state.data);
 		}
 
 		void GLPainter::draw(const Painter::Brush brush, const Painter::RenderType type) {

@@ -9,6 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Core/System.h>
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 #include <string>
 #include <chrono>
 #include <vector>

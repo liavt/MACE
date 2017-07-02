@@ -10,9 +10,39 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #ifndef MACE__CORE_INTERFACES_H
 #define MACE__CORE_INTERFACES_H
-#include <MACE/Core/Constants.h>
+#include <MACE/Core/Error.h>
 
 namespace mc {
+	class Bindable {
+	public:
+		virtual ~Bindable() = default;
+
+		virtual void bind() const = 0;
+
+		virtual void unbind() const = 0;
+	};
+
+	class Binder{
+	public:
+		Binder(Bindable& o);
+		Binder(Bindable* o);
+		~Binder();
+
+		Bindable* get();
+		const Bindable* get() const;
+
+		Bindable* operator->();
+		const Bindable* operator->() const;
+
+		Bindable* operator*();
+		const Bindable* operator*() const;
+
+		bool operator==(const Binder& other) const;
+		bool operator!=(const Binder& other) const;
+	private:
+		Bindable* obj;
+	};
+
 	class Initializer;
 
 	class Initializable {

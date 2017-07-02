@@ -12,7 +12,7 @@ uniform lowp sampler2D tex;
 
 vec4 mc_frag_main(vec2 textureCoord){		
 	vec4 color = texture2D(tex, textureCoord);
-	return vec4(mix(mc_Primary.rgb, color.rgb, (1.0f - mc_Primary.a)), color.a);
+	return vec4(mix(mc_PrimaryColor.rgb, color.rgb, (1.0f - mc_PrimaryColor.a)), color.a);
 }
 
 
