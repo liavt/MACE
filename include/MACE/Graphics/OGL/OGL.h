@@ -111,7 +111,6 @@ namespace mc {
 
 			@see Buffer
 			@see https://www.opengl.org/wiki/OpenGL_Object
-			@todo store what object is currently bound. static Object getBoundObject(), bool isBound()
 			*/
 			class Object: public Initializable, public Bindable {
 			public:
@@ -128,7 +127,7 @@ namespace mc {
 				@see Object::unbind const
 				@see Object::isCreated() const
 				*/
-				virtual void init() = 0;
+				virtual void init() override = 0;
 				/**
 				Calls the corresponding glDestroy\* function and deletes the ID.
 				@opengl
@@ -138,7 +137,7 @@ namespace mc {
 				@see Object::isCreated() const
 				@throws GL_INVALID_OPERATION If this `Object` has not been created yet (Object::init() has not been called)
 				*/
-				virtual void destroy() = 0;
+				virtual void destroy() override = 0;
 
 				/**
 				Binds this `Object` to be used in an OpenGL function.

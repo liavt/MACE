@@ -11,6 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__CORE_ERROR_H
 #define MACE__CORE_ERROR_H
 #include <string>
+#include <stdexcept>
 
 namespace mc {
 	/**
