@@ -18,15 +18,14 @@ vec4 mc_frag_main(vec2);
 void main(void){
 	vec4 mc_Color = mc_frag_main(mcOutputTextureCoord);
 		
-	mc_Color.a *= mc_EntityOpacity;
-	
-	if(mc_Color.a == 0.0){
+	if(mc_Color.a != 0){
+		mc_OutColor.rgb = mc_Color.rgb;
+		mc_OutColor.a = mc_Color.a * mc_EntityOpacity;
+		
+		mc_OutID = mc_EntityID;
+	}else{
 		discard;
 	}
-		
-	mc_OutColor = mc_Color;
-	
-	mc_OutID = mc_EntityID;
 }
 
 #endif

@@ -5,8 +5,6 @@ R""(
 #include <mc_core>
 #include <mc_vertex>
 
-precision mediump float; // Defines precision for float and float-derived (vector/matrix) types.
-
 vec4 mc_vert_main(vec4 pos){	
 	return pos;
 }

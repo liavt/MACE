@@ -6,10 +6,6 @@ R""(
 #include <mc_core>
 #include <mc_frag>
 
-precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
-
-uniform lowp sampler2D tex;
-
 vec4 mc_frag_main(vec2 textureCoord){		
 	return mc_PrimaryColor;
 }

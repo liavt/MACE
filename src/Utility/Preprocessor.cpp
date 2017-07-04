@@ -160,7 +160,7 @@ namespace mc {
 			if (iter == input.length()) {
 				value = '\n';
 			} else {
-				value = (input[iter]);
+				value = input[iter];
 			}
 
 			//this if statement does the backslash-newline, and converts it to a space by checking the current character is \ and the next one is \n
@@ -183,7 +183,7 @@ namespace mc {
 			switch (state) {
 				default:
 					state = PROBING;
-
+					MACE_FALLTHROUGH;
 				case PROBING:
 					//we check if the character is #, and if its the first character in the line. Also checks if its the first line, then dont check below zero
 					if (value == '#') {
@@ -247,7 +247,6 @@ namespace mc {
 					continue;
 
 				case STRING_LITERAL:
-
 					if (value == '"' || value == '\'') {
 						state = PROBING;
 					}
@@ -549,55 +548,46 @@ namespace mc {
 				}
 
 				if (std::stoi(getMacro("__INCLUDE_LEVEL__").definition) > 255) {
-					MACE__THROW_PREPROCESSOR("Recursion too deep: Exceeded 256 include depth");
+					MACE__THROW_PREPROCESSOR("Include recursion too deep: Exceeded 256 include depth");
 				}
 
-				if (params[0] == '<') {
+				std::string includeFile;
+
+				//standard permits macro in includes
+				const std::string includeParameter = expandMacro(params);
+
+				if (includeParameter[0] == '<') {
 					std::string term;
 					//complete is whether both <> are found
 					bool complete = false;
 
-					for (Index iter = 1; iter < params.size(); ++iter) {
-						if (params[iter] == '>') {
+					for (Index iter = 1; iter < includeParameter.size(); ++iter) {
+						if (includeParameter[iter] == '>') {
 							complete = true;
 							break;
 						} else {
-							term += params[iter];
+							term += includeParameter[iter];
 						}
 					}
 
 					if (!complete) {
-						MACE__THROW_PREPROCESSOR("Missing closing > in #include - " + params);
+						MACE__THROW_PREPROCESSOR("Missing closing > in #include - " + includeParameter);
 					}
 
 					for (Index iter = 0; iter < includes.size(); ++iter) {
 						Include* incl = includes[iter];
 						if (incl->hasFile(term)) {
-							std::string file = incl->getFile(term);
-							//files include a lot of stuff. So we dynamically allocate the include preprocessor to prevent a stack overflow
-							std::unique_ptr<Preprocessor> fileProcessor = std::unique_ptr<Preprocessor>(new Preprocessor(file, *this));
-
-							fileProcessor->setMacro(Macro("__INCLUDE_LEVEL__", std::to_string(std::stoi(getMacro("__INCLUDE_LEVEL__").definition) + 1)));
-
-							std::vector< std::string > tokens = fileProcessor->preprocessTokens();
-							tokens.insert(tokens.begin(), "\n");
-
-							//macros need to be added from the include. this works because the preprocessor inherits the previous macros
-							macros = fileProcessor->macros;
-
-							return tokens;
+							includeFile = incl->getFile(term);
+							break;
 						}
 					}
-
-					//if it found the file, it would have returned it by now.
-					MACE__THROW_PREPROCESSOR("Include with name " + term + " not found!");
-				} else if (params[0] == '\"') {
+				} else if (includeParameter[0] == '\"') {
 					std::string term;
 					//complete is whether both "" are found
 					bool complete = false;
 
-					for (Index iter = 1; iter < params.size(); ++iter) {
-						if (params[iter] == '\"') {
+					for (Index iter = 1; iter < includeParameter.size(); ++iter) {
+						if (includeParameter[iter] == '\"') {
 							complete = true;
 							break;
 						} else {
@@ -607,31 +597,35 @@ namespace mc {
 
 
 					if (!complete) {
-						MACE__THROW_PREPROCESSOR("Missing closing \" in #include - " + params);
+						MACE__THROW_PREPROCESSOR("Missing closing \" in #include - " + includeParameter);
 					}
 
 					//check the current directory for file
 					IncludeDirectory dir = IncludeDirectory(filename);
 
 					if (dir.hasFile(term)) {
-						std::string file = dir.getFile(term);
-						//files include a lot of stuff. So we dynamically allocate the include preprocessor to prevent a stack overflow
-						std::unique_ptr<Preprocessor> fileProcessor = std::unique_ptr<Preprocessor>(new Preprocessor(file, *this));
-
-						fileProcessor->setMacro(Macro("__INCLUDE_LEVEL__", std::to_string(std::stoi(getMacro("__INCLUDE_LEVEL__").definition) + 1)));
-
-						std::vector< std::string > tokens = fileProcessor->preprocessTokens();
-						tokens.insert(tokens.begin(), "\n");
-
-						macros = fileProcessor->macros;
-
-						return tokens;
+						includeFile = dir.getFile(term);
 					} else {
-						MACE__THROW_PREPROCESSOR("file with name " + term + " not found!");
+						MACE__THROW_PREPROCESSOR("File with name " + term + " not found");
 					}
 				}
 
-				return std::vector< std::string >();
+				if (includeFile.empty()) {
+					MACE__THROW_PREPROCESSOR("File with name " + includeFile + " not found");
+				}
+
+				//files include a lot of stuff. So we dynamically allocate the include preprocessor to prevent a stack overflow
+				std::unique_ptr<Preprocessor> fileProcessor = std::unique_ptr<Preprocessor>(new Preprocessor(includeFile, *this));
+
+				fileProcessor->setMacro(Macro("__INCLUDE_LEVEL__", std::to_string(std::stoi(getMacro("__INCLUDE_LEVEL__").definition) + 1)));
+
+				std::vector< std::string > tokens = fileProcessor->preprocessTokens();
+				tokens.insert(tokens.begin(), "\n");
+
+				//macros need to be added from the include. this works because the preprocessor inherits the previous macros
+				macros = fileProcessor->macros;
+
+				return tokens;
 				//glsl commands
 			} else if (command == "version" || command == "extension") {
 				//this is for shaders
@@ -661,7 +655,6 @@ namespace mc {
 
 	std::string Preprocessor::expandMacro(const std::string macro) const {
 		if (!macro.empty() || (macro.length() == 1 && (std::isspace(macro[0]) || std::iscntrl(macro[0]) || std::isblank(macro[0])))) {
-
 			std::string out = macro;
 
 			bool stringify = false;
@@ -795,7 +788,6 @@ namespace mc {
 	}
 
 	Macro Preprocessor::parseMacroName(const std::string & name) const {
-
 		std::string macroName;
 		std::string definition = "";
 		std::vector < std::string > params = std::vector< std::string >();
@@ -920,7 +912,7 @@ namespace mc {
 		//lets create a new block, so all of these horrendous variables disappear
 		{
 
-			std::time_t time = std::time(nullptr);
+			const std::time_t time = std::time(nullptr);
 			std::tm timeStruct;
 
 			timeStruct = *os::localtime(&timeStruct, &time);

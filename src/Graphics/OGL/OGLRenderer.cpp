@@ -32,6 +32,7 @@ The above copyright notice and this permission notice shall be included in all c
 //for printing error messages/opengl info
 #include <iostream>
 
+#include <fstream>
 
 namespace mc {
 	namespace gfx {
@@ -253,7 +254,7 @@ namespace mc {
 
 				ogl::enable(GL_MULTISAMPLE);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error enabling blending and multisampling for renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error enabling blending, and multisampling for renderer");
 
 				generateFramebuffer(width, height);
 
@@ -536,6 +537,12 @@ namespace mc {
 				program.init();
 
 				if (settings.second == Painter::RenderType::QUAD) {
+					std::ofstream file("C:/Users/Liav/Downloads/blah.txt");
+					file << processShader({
+#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
+					}) << std::endl;
+					file.close();
+
 					program.createVertex(processShader({
 	#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
 					}));
@@ -636,158 +643,31 @@ namespace mc {
 
 			const mc::Preprocessor& OGL33Renderer::getSSLPreprocessor() {
 				if (sslPreprocessor.macroNumber() == 0) {
-					sslPreprocessor.defineOSMacros();
-					sslPreprocessor.defineStandardMacros();
-
-					sslPreprocessor.defineMacro(mc::Macro("__SSL__", "1"));
-
-					//C-style casts are unsafe. Problem is that this is a C API. You must use a C-style cast in order to do this correctly.
-					sslPreprocessor.defineMacro(mc::Macro("GL_VENDOR", (const char*)(glGetString(GL_VENDOR))));
-					sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*)(glGetString(GL_RENDERER))));
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*)(glGetString(GL_VERSION))));
-					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))));
-
-					if (GLEW_VERSION_1_1) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_1", "1"));
-						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
-					}
-					if (GLEW_VERSION_1_2) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2", "1"));
-					}
-					if (GLEW_VERSION_1_2_1) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2_1", "1"));
-					}
-					if (GLEW_VERSION_1_3) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_3", "1"));
-					}
-					if (GLEW_VERSION_1_4) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_4", "1"));
-					}
-					if (GLEW_VERSION_1_5) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_5", "1"));
-					}
-
-					if (GLEW_VERSION_2_0) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
-						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
-					}
-					if (GLEW_VERSION_2_1) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
-						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
-					}
-
-					if (GLEW_VERSION_3_0) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
-						sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 130 core"));
-					}
-					if (GLEW_VERSION_3_1) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
-						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
-					}
-					if (GLEW_VERSION_3_2) {
-						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
-						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
-					}
 					if (GLEW_VERSION_3_3) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_3", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 330 core"));
+					}else if (GLEW_VERSION_3_2) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
+					}else if (GLEW_VERSION_3_1) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
+					}else if (GLEW_VERSION_3_0) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 130 core"));
+					}else if (GLEW_VERSION_2_1) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
+					}else if (GLEW_VERSION_2_0) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
+					}else {
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
 					}
-
-					/*
-					in order to define a bunch of opengl macros, we need to check if they exist, just in case this system doesnt support
-					a certain macro. the following is a special macro which only defines a macro in sslPreprocessor if it is defined in
-					reality
-					*/
 
 					//indirection is the only way to expand macros in other macros
 					//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
 #define MACE__DEFINE_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){sslPreprocessor.defineMacro( Macro( #name , MACE_STRINGIFY( name ) ));}
-				/*Shader macros*/
-					MACE__DEFINE_MACRO(GL_VERTEX_SHADER);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATTRIBUTES);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_INPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_OUTPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_IMAGE_UNIFORMS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
-
-					MACE__DEFINE_MACRO(GL_FRAGMENT_SHADER);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATTRIBUTES);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_INPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_OUTPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
-
-					MACE__DEFINE_MACRO(GL_GEOMETRY_SHADER);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATTRIBUTES);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_INPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_IMAGE_UNIFORMS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS);
-
-					MACE__DEFINE_MACRO(GL_TESS_CONTROL_SHADER);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATTRIBUTES);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_INPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS);
-
-					MACE__DEFINE_MACRO(GL_TESS_EVALUATION_SHADER);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATTRIBUTES);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS);
-
-					MACE__DEFINE_MACRO(GL_COMPUTE_SHADER);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATTRIBUTES);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_INPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_OUTPUT_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_IMAGE_UNIFORMS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS);
-
-					MACE__DEFINE_MACRO(GL_MAX_UNIFORM_BUFFER_BINDINGS);
-					MACE__DEFINE_MACRO(GL_MAX_COMBINED_UNIFORM_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS);
-					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS);
-					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS);
-					MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS);
-					MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTERS);
-					MACE__DEFINE_MACRO(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
-					MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
-					MACE__DEFINE_MACRO(GL_MAX_IMAGE_UNITS);
-					MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
-
-					MACE__DEFINE_MACRO(GL_FALSE);
-					MACE__DEFINE_MACRO(GL_TRUE);
-					MACE__DEFINE_MACRO(NULL);
-
 					MACE__DEFINE_MACRO(MACE__ENTITY_DATA_LOCATION);
 
 					MACE__DEFINE_MACRO(MACE__SCENE_ATTACHMENT_INDEX);
