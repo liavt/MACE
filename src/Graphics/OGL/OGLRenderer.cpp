@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	pragma warning( disable: 4996 ) 
 #endif 
 
+#define MACE_EXPOSE_GLFW
 #include <MACE/Graphics/OGL/OGLRenderer.h>
 #include <MACE/Utility/Preprocessor.h>
 
@@ -28,15 +29,125 @@ The above copyright notice and this permission notice shall be included in all c
 //output error messages to console
 #include <sstream>
 
+//for printing error messages/opengl info
 #include <iostream>
 
 
 namespace mc {
 	namespace gfx {
+		namespace ogl {
+			namespace {
+				GLenum getFormat(const Texture::Format format) {
+					switch (format) {
+						case Texture::Format::RED:
+							return GL_RED;
+						case Texture::Format::RG:
+							return GL_RG;
+						case Texture::Format::RGB:
+							return GL_RGB;
+						case Texture::Format::RGBA:
+							return GL_RGBA;
+						case Texture::Format::BGR:
+							return GL_BGR;
+						case Texture::Format::BGRA:
+							return GL_BGRA;
+						case Texture::Format::RED_INTEGER:
+							return GL_RED_INTEGER;
+						case Texture::Format::RG_INTEGER:
+							return GL_RG_INTEGER;
+						case Texture::Format::RGB_INTEGER:
+							return GL_RGB_INTEGER;
+						case Texture::Format::BGR_INTEGER:
+							return GL_BGR_INTEGER;
+						case Texture::Format::RGBA_INTEGER:
+							return GL_RGBA_INTEGER;
+						case Texture::Format::BGRA_INTEGER:
+							return GL_BGRA_INTEGER;
+						case Texture::Format::STENCIL:
+							return GL_STENCIL;
+						case Texture::Format::DEPTH:
+							return GL_DEPTH;
+						case Texture::Format::DEPTH_STENCIL:
+							return GL_DEPTH_STENCIL;
+						case Texture::Format::LUMINANCE:
+							return GL_LUMINANCE;
+						case Texture::Format::LUMINANCE_ALPHA:
+							return GL_LUMINANCE_ALPHA;
+						default:
+							MACE__THROW(BadFormat, "Unsupported format by OpenGL");
+					}
+				}
 
-		//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
+				GLenum getInternalFormat(const Texture::InternalFormat format) {
+					switch (format) {
+						case Texture::InternalFormat::DEPTH:
+							return GL_DEPTH_COMPONENT;
+						case Texture::InternalFormat::DEPTH_STENCIL:
+							return GL_DEPTH_STENCIL;
+						case Texture::InternalFormat::RED:
+							return GL_RED;
+						case Texture::InternalFormat::RG:
+							return GL_RG;
+						case Texture::InternalFormat::RGB:
+							return GL_RGB;
+						case Texture::InternalFormat::RGBA:
+							return GL_RGBA;
+						case Texture::InternalFormat::R32UI:
+							return GL_R32UI;
+						default:
+							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
+					}
+				}
 
-		//how many floats in the uniform buffer
+				GLenum getType(const Texture::Type type) {
+					switch (type) {
+						case Texture::Type::UNSIGNED_BYTE:
+							return GL_UNSIGNED_BYTE;
+						case Texture::Type::BYTE:
+							return GL_BYTE;
+						case Texture::Type::UNSIGNED_SHORT:
+							return GL_UNSIGNED_SHORT;
+						case Texture::Type::SHORT:
+							return GL_SHORT;
+						case Texture::Type::UNSIGNED_INT:
+							return GL_UNSIGNED_INT;
+						case Texture::Type::INT:
+							return GL_INT;
+						case Texture::Type::FLOAT:
+							return GL_FLOAT;
+						case Texture::Type::UNSIGNED_BYTE_3_3_2:
+							return GL_UNSIGNED_BYTE_3_3_2;
+						case Texture::Type::UNSIGNED_BYTE_2_3_3_REV:
+							return GL_UNSIGNED_BYTE_2_3_3_REV;
+						case Texture::Type::UNSIGNED_SHORT_5_6_5:
+							return GL_UNSIGNED_SHORT_5_6_5;
+						case Texture::Type::UNSIGNED_SHORT_5_6_5_REV:
+							return GL_UNSIGNED_SHORT_5_6_5_REV;
+						case Texture::Type::UNSIGNED_SHORT_4_4_4_4:
+							return GL_UNSIGNED_SHORT_4_4_4_4;
+						case Texture::Type::UNSIGNED_SHORT_4_4_4_4_REV:
+							return GL_UNSIGNED_SHORT_4_4_4_4_REV;
+						case Texture::Type::UNSIGNED_SHORT_5_5_5_1:
+							return GL_UNSIGNED_SHORT_5_5_5_1;
+						case Texture::Type::UNSIGNED_SHORT_1_5_5_5_REV:
+							return GL_UNSIGNED_SHORT_1_5_5_5_REV;
+						case Texture::Type::UNSIGNED_INT_8_8_8_8:
+							return GL_UNSIGNED_INT_8_8_8_8;
+						case Texture::Type::UNSIGNED_INT_8_8_8_8_REV:
+							return GL_UNSIGNED_INT_8_8_8_8_REV;
+						case Texture::Type::UNSIGNED_INT_10_10_10_2:
+							return GL_UNSIGNED_INT_10_10_10_2;
+						case Texture::Type::UNSIGNED_INT_2_10_10_10_REV:
+							return GL_UNSIGNED_INT_2_10_10_10_REV;
+						default:
+							MACE__THROW(BadFormat, "Unsupported type by OpenGL");
+					}
+				}
+			}
+
+			//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
+
+			//how many floats in the uniform buffer
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 24
 		//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
@@ -53,677 +164,828 @@ namespace mc {
 #define MACE__VAO_VERTICES_LOCATION 0
 #define MACE__VAO_TEX_COORD_LOCATION 1
 
-		IncludeString vertexLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
-		}, "mc_vertex");
-		/**
-		@todo Remove discard from shader
-		*/
-		IncludeString fragmentLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
-		}, "mc_frag");
-		IncludeString positionLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
-		}, "mc_position");
-		IncludeString entityLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
-		}, "mc_entity");
-		IncludeString coreLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
-		}, "mc_core");
+			IncludeString vertexLibrary = IncludeString({
+	#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
+			}, "mc_vertex");
+			/**
+			@todo Remove discard from shader
+			*/
+			IncludeString fragmentLibrary = IncludeString({
+	#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
+			}, "mc_frag");
+			IncludeString positionLibrary = IncludeString({
+	#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
+			}, "mc_position");
+			IncludeString entityLibrary = IncludeString({
+	#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
+			}, "mc_entity");
+			IncludeString coreLibrary = IncludeString({
+	#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
+			}, "mc_core");
 
-		GLRenderer::GLRenderer() : sslPreprocessor(""), frameBuffer(), depthBuffer(), sceneTexture(), idTexture(), clearColor(Colors::BLACK) {}
+			OGL33Renderer::OGL33Renderer() : sslPreprocessor(""), frameBuffer(), depthBuffer(), sceneTexture(), idTexture(), clearColor(Colors::BLACK) {}
 
-		void GLRenderer::onResize(const Size width, const Size height) {
-			//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
+			void OGL33Renderer::onResize(const Size width, const Size height) {
+				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
-			ogl::setViewport(0, 0, width == 0 ? 1 : width, height == 0 ? 1 : height);
+				ogl::setViewport(0, 0, width == 0 ? 1 : width, height == 0 ? 1 : height);
 
-			depthBuffer.destroy();
+				depthBuffer.destroy();
 
-			frameBuffer.destroy();
+				frameBuffer.destroy();
 
-			generateFramebuffer(width == 0 ? 1 : width, height == 0 ? 1 : height);
+				generateFramebuffer(width == 0 ? 1 : width, height == 0 ? 1 : height);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
-		}
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
+			}
 
-		void GLRenderer::onInit(const Size width, const Size height) {
-			glewExperimental = true;
-			GLenum result = glewInit();
-			if (result != GLEW_OK) {
-				std::ostringstream errorMessage;
-				errorMessage << "GLEW failed to initialize: ";
-				//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
-				//+ operater in std::string can not handle this conversion.
-				errorMessage << glewGetErrorString(result);
+			void OGL33Renderer::onInit(const Size width, const Size height) {
+				glewExperimental = true;
+				GLenum result = glewInit();
+				if (result != GLEW_OK) {
+					std::ostringstream errorMessage;
+					errorMessage << "GLEW failed to initialize: ";
+					//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
+					//+ operater in std::string can not handle this conversion.
+					errorMessage << glewGetErrorString(result);
 
-				if (result == GLEW_ERROR_NO_GL_VERSION) {
-					errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
+					if (result == GLEW_ERROR_NO_GL_VERSION) {
+						errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
+					}
+					MACE__THROW(InitializationFailed, errorMessage.str());
 				}
-				MACE__THROW(InitializationFailed, errorMessage.str());
-			}
 
-			try {
-				gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
-			} catch (...) {
-				//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
-			}
+				try {
+					gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
+				} catch (...) {
+					//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
+				}
 
-			if (!GLEW_VERSION_3_3) {
-				std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this." << std::endl;
-			}
+				if (!GLEW_VERSION_3_3) {
+					std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this." << std::endl;
+				}
 
 #ifdef MACE_DEBUG
-			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-			std::cout << "OpenGL has been created succesfully!" << std::endl;
-			std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
-			std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
-			std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
-			std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
-			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+				std::cout << "OpenGL has been created succesfully!" << std::endl;
+				std::cout << "Version: " << std::endl << "	" << glGetString(GL_VERSION) << std::endl;
+				std::cout << "Vendor: " << std::endl << "	" << glGetString(GL_VENDOR) << std::endl;
+				std::cout << "Renderer: " << std::endl << "	" << glGetString(GL_RENDERER) << std::endl;
+				std::cout << "Shader version: " << std::endl << "	" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+				std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 #endif
 
-			sceneTexture.init();
-			sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				sceneTexture.init();
+				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
 
-			idTexture.init();
-			idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				idTexture.init();
+				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
-			//gl states
-			ogl::enable(GL_BLEND);
-			ogl::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				//gl states
+				ogl::enable(GL_BLEND);
+				ogl::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			ogl::enable(GL_MULTISAMPLE);
+				ogl::enable(GL_MULTISAMPLE);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error enabling blending and multisampling for renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error enabling blending and multisampling for renderer");
 
-			generateFramebuffer(width, height);
+				generateFramebuffer(width, height);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error generating framebuffer for renderer");
 
-			entityUniforms.init();
-			entityUniforms.bind();
-			//we set it to null, because during the actual rendering we set the data
-			entityUniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
+				entityUniforms.init();
+				entityUniforms.bind();
+				//we set it to null, because during the actual rendering we set the data
+				entityUniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
 
-			entityUniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
+				entityUniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
 
-			painterUniforms.init();
-			painterUniforms.bind();
-			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
+				painterUniforms.init();
+				painterUniforms.bind();
+				painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
 
-			painterUniforms.setLocation(MACE__PAINTER_DATA_LOCATION);
+				painterUniforms.setLocation(MACE__PAINTER_DATA_LOCATION);
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating UniformBuffer for renderer");
-		}
-
-		void GLRenderer::onSetUp(os::WindowModule *) {
-			frameBuffer.bind();
-			sceneTexture.bind();
-			idTexture.bind();
-
-			frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-			ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-			ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			//we want to clear the id texture to black only - not the color set by the user. this requires 3 setDrawBuffers - which is annoying
-			frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-			ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
-			ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
-
-			constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
-				GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX };
-			frameBuffer.setDrawBuffers(2, drawBuffers);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up renderer");
-
-		}
-
-		void GLRenderer::onTearDown(os::WindowModule * win) {
-			ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
-
-			frameBuffer.unbind();
-
-			ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			int width, height;
-			glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
-
-			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-			glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-			ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-			ogl::FrameBuffer::setDrawBuffer(GL_BACK);
-
-			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
-
-			glfwSwapBuffers(win->getGLFWWindow());
-		}
-
-		void GLRenderer::onDestroy() {
-			depthBuffer.destroy();
-
-			frameBuffer.destroy();
-
-			sceneTexture.destroy();
-			idTexture.destroy();
-
-			entityUniforms.destroy();
-			painterUniforms.destroy();
-
-			for (std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<RenderProtocol>>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
-				iter->second->program.destroy();
-				iter->second->vao.destroy();
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating UniformBuffer for renderer");
 			}
 
-			protocols.clear();
+			void OGL33Renderer::onSetUp(os::WindowModule *) {
+				frameBuffer.bind();
+				sceneTexture.bind();
+				idTexture.bind();
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
-		}
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		void GLRenderer::onQueue(GraphicsEntity *) {}
+				//we want to clear the id texture to black only - not the color set by the user. this requires 3 setDrawBuffers - which is annoying
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
+				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
 
-		void GLRenderer::setRefreshColor(const float r, const float g, const float b, const float a) {
-			clearColor = Color(r, g, b, a);
-		}
+				constexpr Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
+					GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX };
+				frameBuffer.setDrawBuffers(2, drawBuffers);
 
-		GraphicsEntity * GLRenderer::getEntityAt(const int x, const int y) {
-			frameBuffer.bind();
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up renderer");
 
-			GLFWwindow* win = glfwGetCurrentContext();
-			if (win == nullptr) {
-				MACE__THROW(InvalidState, "This thread does not have a rendering context!");
 			}
-			int height;
-			glfwGetFramebufferSize(win, nullptr, &height);
 
-			Index pixel = 0;
-			frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-			frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-			ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-			//opengl y-axis is inverted from window coordinates
-			frameBuffer.readPixels(x, height - y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
+			void OGL33Renderer::onTearDown(os::WindowModule * win) {
+				ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
-			if (pixel > 0) {
-				//the entity that was there was removed from the renderqueue
-				if (pixel > renderQueue.size()) {
-					return nullptr;
+				frameBuffer.unbind();
+
+				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+				int width, height;
+				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
+
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setDrawBuffer(GL_BACK);
+
+				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
+
+				glfwSwapBuffers(win->getGLFWWindow());
+			}
+
+			void OGL33Renderer::onDestroy() {
+				depthBuffer.destroy();
+
+				frameBuffer.destroy();
+
+				sceneTexture.destroy();
+				idTexture.destroy();
+
+				entityUniforms.destroy();
+				painterUniforms.destroy();
+
+				for (std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<RenderProtocol>>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
+					iter->second->program.destroy();
+					iter->second->vao.destroy();
 				}
 
-				return renderQueue[--pixel];
-			}
-			return nullptr;
-		}
+				protocols.clear();
 
-		std::shared_ptr<PainterImpl> GLRenderer::getPainter(const GraphicsEntity * const entity) const {
-			return std::shared_ptr<PainterImpl>(new GLPainter(entity));
-		}
-
-		std::shared_ptr<TextureImpl> GLRenderer::getTexture() const {
-			return std::shared_ptr<TextureImpl>(new ogl::Texture2D());
-		}
-
-		void GLRenderer::generateFramebuffer(const Size& width, const Size& height) {
-			depthBuffer.init();
-			depthBuffer.bind();
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
-
-			sceneTexture.setData(nullptr, width, height, gfx::Texture::Type::UNSIGNED_BYTE, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
-			idTexture.setData(nullptr, width, height, gfx::Texture::Type::UNSIGNED_INT, gfx::Texture::Format::RED_INTEGER, gfx::Texture::InternalFormat::R32UI, 0);
-			depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
-
-			//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
-			frameBuffer.init();
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
-
-			frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture);
-			frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture);
-			frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
-
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
-
-			switch (frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
-				case GL_FRAMEBUFFER_UNDEFINED:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
-					break;
-				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
-					break;
-				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
-					break;
-				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
-					break;
-				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
-					break;
-				case GL_FRAMEBUFFER_UNSUPPORTED:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
-					break;
-				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
-					break;
-				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-					throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
-					break;
-				case GL_FRAMEBUFFER_COMPLETE:
-				default:
-					//success
-					break;
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
 			}
 
-			constexpr Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-			frameBuffer.setDrawBuffers(2, buffers);
+			void OGL33Renderer::onQueue(GraphicsEntity *) {}
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
-
-			glViewport(0, 0, width, height);
-
-			windowRatios[0] = static_cast<float>(originalWidth) / static_cast<float>(width);
-			windowRatios[1] = static_cast<float>(originalHeight) / static_cast<float>(height);
-		}
-
-		std::string GLRenderer::processShader(const std::string & shader) {
-			Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
-			return shaderPreprocessor.preprocess();
-		}
-
-		void GLRenderer::loadEntityUniforms(const GraphicsEntity * const entity) {
-			if (!entity->getProperty(Entity::INIT)) {
-				MACE__THROW(InitializationFailed, "Entity is not initializd.");
+			void OGL33Renderer::setRefreshColor(const float r, const float g, const float b, const float a) {
+				clearColor = Color(r, g, b, a);
 			}
 
-			const Entity::Metrics metrics = entity->getMetrics();
-			const float opacity = entity->getOpacity();
+			GraphicsEntity * OGL33Renderer::getEntityAt(const int x, const int y) {
+				frameBuffer.bind();
 
-			//now we set the uniforms defining the transformations of the entity
-			entityUniforms.bind();
+				GLFWwindow* win = glfwGetCurrentContext();
+				if (win == nullptr) {
+					MACE__THROW(InvalidState, "This thread does not have a rendering context!");
+				}
+				int height;
+				glfwGetFramebufferSize(win, nullptr, &height);
 
-			//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
-			float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-			std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
-			mappedEntityData += 4;//pointer arithmetic!
-			std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
-			mappedEntityData += 3;
-			std::copy(&opacity, &opacity + sizeof(opacity), mappedEntityData);
-			entityUniforms.unmap();
-		}
+				Index pixel = 0;
+				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				//opengl y-axis is inverted from window coordinates
+				frameBuffer.readPixels(x, height - y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
-		void GLRenderer::loadPainterUniforms(const TransformMatrix& transform, const Color& prim, const Color& second, const Vector<float, 4>& data) {
-			float color[4] = {};
-			prim.flatten(color);
+				if (pixel > 0) {
+					//the entity that was there was removed from the renderqueue
+					if (pixel > renderQueue.size()) {
+						return nullptr;
+					}
 
-			//now we set the uniforms defining the transformations of the entity
-			Binder b(&painterUniforms);
-			//orphan the buffer (this is required for intel gpus)
-			painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
-			//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
-			float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-			std::copy(transform.translation.begin(), transform.translation.end(), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(transform.rotation.begin(), transform.rotation.end(), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(transform.scaler.begin(), transform.scaler.end(), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(std::begin(color), std::end(color), mappedEntityData);
-			mappedEntityData += 4;
-			second.flatten(color);
-			std::copy(std::begin(color), std::end(color), mappedEntityData);
-			mappedEntityData += 4;
-			std::copy(data.begin(), data.end(), mappedEntityData);
-			painterUniforms.unmap();
-		}
-
-		GLRenderer::RenderProtocol& GLRenderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings) {
-			auto protocol = protocols.find(settings);
-			if (protocol == protocols.end()) {
-				std::unique_ptr<GLRenderer::RenderProtocol> prot = std::unique_ptr<GLRenderer::RenderProtocol>(new GLRenderer::RenderProtocol());
-				prot->program = getShadersForSettings(settings);
-				prot->vao = getVAOForSettings(settings);
-
-				protocols.insert(std::pair<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<GLRenderer::RenderProtocol>>(settings, std::move(prot)));
-
-				protocol = protocols.find(settings);
+					return renderQueue[--pixel];
+				}
+				return nullptr;
 			}
+
+			std::shared_ptr<PainterImpl> OGL33Renderer::getPainter(const GraphicsEntity * const entity) const {
+				return std::shared_ptr<PainterImpl>(new OGL33Painter(entity));
+			}
+
+			std::shared_ptr<TextureImpl> OGL33Renderer::getTexture() const {
+				return std::shared_ptr<TextureImpl>(new OGL33Texture());
+			}
+
+			std::shared_ptr<ModelImpl> OGL33Renderer::getModel() const {
+				return std::shared_ptr<ModelImpl>(new OGL33Model());
+			}
+
+			void OGL33Renderer::generateFramebuffer(const Size& width, const Size& height) {
+				depthBuffer.init();
+				depthBuffer.bind();
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
+
+				sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA, 0);
+				idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI, 0);
+				depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
+
+				//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
+				frameBuffer.init();
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
+
+				frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, sceneTexture);
+				frameBuffer.attachTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, idTexture);
+				frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthBuffer);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
+
+				switch (frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
+					case GL_FRAMEBUFFER_UNDEFINED:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+						break;
+					case GL_FRAMEBUFFER_UNSUPPORTED:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+						break;
+					case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+						throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+						break;
+					case GL_FRAMEBUFFER_COMPLETE:
+					default:
+						//success
+						break;
+				}
+
+				constexpr Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+				frameBuffer.setDrawBuffers(2, buffers);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
+
+				glViewport(0, 0, width, height);
+
+				windowRatios[0] = static_cast<float>(originalWidth) / static_cast<float>(width);
+				windowRatios[1] = static_cast<float>(originalHeight) / static_cast<float>(height);
+			}
+
+			std::string OGL33Renderer::processShader(const std::string & shader) {
+				Preprocessor shaderPreprocessor = Preprocessor(shader, getSSLPreprocessor());
+				return shaderPreprocessor.preprocess();
+			}
+
+			void OGL33Renderer::loadEntityUniforms(const GraphicsEntity * const entity) {
+				if (!entity->getProperty(Entity::INIT)) {
+					MACE__THROW(InitializationFailed, "Entity is not initializd.");
+				}
+
+				const Entity::Metrics metrics = entity->getMetrics();
+				const float opacity = entity->getOpacity();
+
+				//now we set the uniforms defining the transformations of the entity
+				entityUniforms.bind();
+
+				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
+				float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
+				mappedEntityData += 4;//pointer arithmetic!
+				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
+				mappedEntityData += 3;
+				std::copy(&opacity, &opacity + sizeof(opacity), mappedEntityData);
+				entityUniforms.unmap();
+			}
+
+			void OGL33Renderer::loadPainterUniforms(const TransformMatrix& transform, const Color& prim, const Color& second, const Vector<float, 4>& data) {
+				float color[4] = {};
+				prim.flatten(color);
+
+				//now we set the uniforms defining the transformations of the entity
+				Binder b(&painterUniforms);
+				//orphan the buffer (this is required for intel gpus)
+				painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
+				//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
+				float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+				std::copy(transform.translation.begin(), transform.translation.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(transform.rotation.begin(), transform.rotation.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(transform.scaler.begin(), transform.scaler.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(std::begin(color), std::end(color), mappedEntityData);
+				mappedEntityData += 4;
+				second.flatten(color);
+				std::copy(std::begin(color), std::end(color), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(data.begin(), data.end(), mappedEntityData);
+				painterUniforms.unmap();
+			}
+
+			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings) {
+				auto protocol = protocols.find(settings);
+				if (protocol == protocols.end()) {
+					std::unique_ptr<OGL33Renderer::RenderProtocol> prot = std::unique_ptr<OGL33Renderer::RenderProtocol>(new OGL33Renderer::RenderProtocol());
+					prot->program = getShadersForSettings(settings);
+					prot->vao = getVAOForSettings(settings);
+
+					protocols.insert(std::pair<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>>(settings, std::move(prot)));
+
+					protocol = protocols.find(settings);
+				}
 
 #ifdef MACE_DEBUG
-			if (protocol->second == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: protocol was nullptr");
-			}
+				if (protocol->second == nullptr) {
+					MACE__THROW(NullPointer, "Internal Error: protocol was nullptr");
+				}
 #endif
 
-			protocol->second->program.bind();
-			protocol->second->program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getID()));
+				protocol->second->program.bind();
+				protocol->second->program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getID()));
 
-			return *protocol->second;
-		}
-
-		ogl::ShaderProgram GLRenderer::getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
-			ogl::ShaderProgram program;
-			program.init();
-
-			if (settings.second == Painter::RenderType::QUAD) {
-				program.createVertex(processShader({
-#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
-				}));
-			} else {
-				MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
+				return *protocol->second;
 			}
 
-			if (settings.first == Painter::Brush::COLOR) {
-				program.createFragment(processShader({
-#include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
-				}));
+			ogl::ShaderProgram OGL33Renderer::getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
+				ogl::ShaderProgram program;
+				program.init();
 
-				program.link();
-			} else if (settings.first == Painter::Brush::TEXTURE) {
-				program.createFragment(processShader({
-#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
-				}));
+				if (settings.second == Painter::RenderType::QUAD) {
+					program.createVertex(processShader({
+	#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
+					}));
+				} else {
+					MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
+				}
 
-				program.link();
-			} else if (settings.first == Painter::Brush::MASK) {
-				program.createFragment(processShader({
-#include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
-				}));
+				if (settings.first == Painter::Brush::COLOR) {
+					program.createFragment(processShader({
+	#include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
+					}));
 
-				program.link();
+					program.link();
+				} else if (settings.first == Painter::Brush::TEXTURE) {
+					program.createFragment(processShader({
+	#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
+					}));
 
-				program.bind();
+					program.link();
+				} else if (settings.first == Painter::Brush::MASK) {
+					program.createFragment(processShader({
+	#include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
+					}));
 
-				program.createUniform("tex");
-				program.createUniform("mask");
+					program.link();
 
-				//binding the samplers
-				program.setUniform("tex", 0);
-				program.setUniform("mask", 1);
-			} else if (settings.first == Painter::Brush::MASKED_BLEND) {
-				program.createFragment(processShader({
-#include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
-				}));
+					program.bind();
 
-				program.link();
+					program.createUniform("tex");
+					program.createUniform("mask");
 
-				program.bind();
+					//binding the samplers
+					program.setUniform("tex", 0);
+					program.setUniform("mask", 1);
+				} else if (settings.first == Painter::Brush::MASKED_BLEND) {
+					program.createFragment(processShader({
+	#include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
+					}));
 
-				program.createUniform("tex1");
-				program.createUniform("tex2");
-				program.createUniform("mask");
+					program.link();
 
-				//binding the samplers
-				program.setUniform("tex1", 0);
-				program.setUniform("tex2", 1);
-				program.setUniform("mask", 2);
-			} else {
-				MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
+					program.bind();
+
+					program.createUniform("tex1");
+					program.createUniform("tex2");
+					program.createUniform("mask");
+
+					//binding the samplers
+					program.setUniform("tex1", 0);
+					program.setUniform("tex2", 1);
+					program.setUniform("mask", 2);
+				} else {
+					MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
+				}
+
+				program.createUniform("mc_EntityID");
+				entityUniforms.bindToUniformBlock(program, "mc_BaseEntityBuffer");
+				painterUniforms.bindToUniformBlock(program, "mc_PainterSettingsBuffer");
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter!");
+				return program;
 			}
 
-			program.createUniform("mc_EntityID");
-			entityUniforms.bindToUniformBlock(program, "mc_BaseEntityBuffer");
-			painterUniforms.bindToUniformBlock(program, "mc_PainterSettingsBuffer");
+			ogl::VertexArray OGL33Renderer::getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
+				ogl::VertexArray vao;
+				vao.init();
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter!");
-			return program;
-		}
+				if (settings.second == Painter::RenderType::QUAD) {
+					constexpr float squareTextureCoordinates[8] = {
+						0.0f,1.0f,
+						0.0f,0.0f,
+						1.0f,0.0f,
+						1.0f,1.0f,
+					};
 
-		ogl::VertexArray GLRenderer::getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
-			ogl::VertexArray vao;
-			vao.init();
+					constexpr unsigned int squareIndices[6] = {
+						0,1,3,
+						1,2,3
+					};
 
-			if (settings.second == Painter::RenderType::QUAD) {
-				constexpr float squareTextureCoordinates[8] = {
-					0.0f,1.0f,
-					0.0f,0.0f,
-					1.0f,0.0f,
-					1.0f,1.0f,
-				};
+					constexpr float squareVertices[12] = {
+						-1.0f,-1.0f,0.0f,
+						-1.0f,1.0f,0.0f,
+						1.0f,1.0f,0.0f,
+						1.0f,-1.0f,0.0f
+					};
 
-				constexpr unsigned int squareIndices[6] = {
-					0,1,3,
-					1,2,3
-				};
+					Binder b(&vao);
+					vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
+					vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
+					vao.loadIndices(6, squareIndices);
+				}
 
-				constexpr float squareVertices[12] = {
-					-1.0f,-1.0f,0.0f,
-					-1.0f,1.0f,0.0f,
-					1.0f,1.0f,0.0f,
-					1.0f,-1.0f,0.0f
-				};
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating VAO for painter!");
 
-				Binder b(&vao);
-				vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
-				vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
-				vao.loadIndices(6, squareIndices);
+				return vao;
 			}
 
-			ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating VAO for painter!");
+			const mc::Preprocessor& OGL33Renderer::getSSLPreprocessor() {
+				if (sslPreprocessor.macroNumber() == 0) {
+					sslPreprocessor.defineOSMacros();
+					sslPreprocessor.defineStandardMacros();
 
-			return vao;
-		}
+					sslPreprocessor.defineMacro(mc::Macro("__SSL__", "1"));
 
-		const mc::Preprocessor& GLRenderer::getSSLPreprocessor() {
-			if (sslPreprocessor.macroNumber() == 0) {
-				sslPreprocessor.defineOSMacros();
-				sslPreprocessor.defineStandardMacros();
+					//C-style casts are unsafe. Problem is that this is a C API. You must use a C-style cast in order to do this correctly.
+					sslPreprocessor.defineMacro(mc::Macro("GL_VENDOR", (const char*)(glGetString(GL_VENDOR))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*)(glGetString(GL_RENDERER))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*)(glGetString(GL_VERSION))));
+					sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))));
 
-				sslPreprocessor.defineMacro(mc::Macro("__SSL__", "1"));
+					if (GLEW_VERSION_1_1) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
+					}
+					if (GLEW_VERSION_1_2) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2", "1"));
+					}
+					if (GLEW_VERSION_1_2_1) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2_1", "1"));
+					}
+					if (GLEW_VERSION_1_3) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_3", "1"));
+					}
+					if (GLEW_VERSION_1_4) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_4", "1"));
+					}
+					if (GLEW_VERSION_1_5) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_5", "1"));
+					}
 
-				//C-style casts are unsafe. Problem is that this is a C API. You must use a C-style cast in order to do this correctly.
-				sslPreprocessor.defineMacro(mc::Macro("GL_VENDOR", (const char*)(glGetString(GL_VENDOR))));
-				sslPreprocessor.defineMacro(mc::Macro("GL_RENDERER", (const char*)(glGetString(GL_RENDERER))));
-				sslPreprocessor.defineMacro(mc::Macro("GL_VERSION", (const char*)(glGetString(GL_VERSION))));
-				sslPreprocessor.defineMacro(mc::Macro("GL_SHADING_LANGUAGE_VERSION", (const char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))));
+					if (GLEW_VERSION_2_0) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
+					}
+					if (GLEW_VERSION_2_1) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
+					}
 
-				if (GLEW_VERSION_1_1) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_1", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
-				}
-				if (GLEW_VERSION_1_2) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2", "1"));
-				}
-				if (GLEW_VERSION_1_2_1) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_2_1", "1"));
-				}
-				if (GLEW_VERSION_1_3) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_3", "1"));
-				}
-				if (GLEW_VERSION_1_4) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_4", "1"));
-				}
-				if (GLEW_VERSION_1_5) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_1_5", "1"));
-				}
+					if (GLEW_VERSION_3_0) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 130 core"));
+					}
+					if (GLEW_VERSION_3_1) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
+					}
+					if (GLEW_VERSION_3_2) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
+					}
+					if (GLEW_VERSION_3_3) {
+						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_3", "1"));
+						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 330 core"));
+					}
 
-				if (GLEW_VERSION_2_0) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
-				}
-				if (GLEW_VERSION_2_1) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
-				}
+					/*
+					in order to define a bunch of opengl macros, we need to check if they exist, just in case this system doesnt support
+					a certain macro. the following is a special macro which only defines a macro in sslPreprocessor if it is defined in
+					reality
+					*/
 
-				if (GLEW_VERSION_3_0) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_VERSION", "#version 130 core"));
-				}
-				if (GLEW_VERSION_3_1) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
-				}
-				if (GLEW_VERSION_3_2) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
-				}
-				if (GLEW_VERSION_3_3) {
-					sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_3", "1"));
-					sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 330 core"));
-				}
-
-				/*
-				in order to define a bunch of opengl macros, we need to check if they exist, just in case this system doesnt support
-				a certain macro. the following is a special macro which only defines a macro in sslPreprocessor if it is defined in
-				reality
-				*/
-
-				//indirection is the only way to expand macros in other macros
-				//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
+					//indirection is the only way to expand macros in other macros
+					//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
 #define MACE__DEFINE_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){sslPreprocessor.defineMacro( Macro( #name , MACE_STRINGIFY( name ) ));}
 				/*Shader macros*/
-				MACE__DEFINE_MACRO(GL_VERTEX_SHADER);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATTRIBUTES);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_INPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_OUTPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_IMAGE_UNIFORMS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_VERTEX_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
 
-				MACE__DEFINE_MACRO(GL_FRAGMENT_SHADER);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATTRIBUTES);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_INPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_OUTPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_FRAGMENT_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
 
-				MACE__DEFINE_MACRO(GL_GEOMETRY_SHADER);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATTRIBUTES);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_INPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_IMAGE_UNIFORMS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_GEOMETRY_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS);
 
-				MACE__DEFINE_MACRO(GL_TESS_CONTROL_SHADER);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATTRIBUTES);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_INPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_TESS_CONTROL_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS);
 
-				MACE__DEFINE_MACRO(GL_TESS_EVALUATION_SHADER);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATTRIBUTES);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_TESS_EVALUATION_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS);
 
-				MACE__DEFINE_MACRO(GL_COMPUTE_SHADER);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATTRIBUTES);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_INPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_OUTPUT_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_IMAGE_UNIFORMS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_COMPUTE_SHADER);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATTRIBUTES);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_INPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_OUTPUT_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_IMAGE_UNIFORMS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS);
 
-				MACE__DEFINE_MACRO(GL_MAX_UNIFORM_BUFFER_BINDINGS);
-				MACE__DEFINE_MACRO(GL_MAX_COMBINED_UNIFORM_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS);
-				MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS);
-				MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS);
-				MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS);
-				MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTERS);
-				MACE__DEFINE_MACRO(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
-				MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
-				MACE__DEFINE_MACRO(GL_MAX_IMAGE_UNITS);
-				MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
+					MACE__DEFINE_MACRO(GL_MAX_UNIFORM_BUFFER_BINDINGS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_UNIFORM_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS);
+					MACE__DEFINE_MACRO(GL_MAX_TRANSFORM_FEEDBACK_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_ATOMIC_COUNTERS);
+					MACE__DEFINE_MACRO(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
+					MACE__DEFINE_MACRO(GL_MAX_IMAGE_UNITS);
+					MACE__DEFINE_MACRO(GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
 
-				MACE__DEFINE_MACRO(GL_FALSE);
-				MACE__DEFINE_MACRO(GL_TRUE);
-				MACE__DEFINE_MACRO(NULL);
+					MACE__DEFINE_MACRO(GL_FALSE);
+					MACE__DEFINE_MACRO(GL_TRUE);
+					MACE__DEFINE_MACRO(NULL);
 
-				MACE__DEFINE_MACRO(MACE__ENTITY_DATA_LOCATION);
+					MACE__DEFINE_MACRO(MACE__ENTITY_DATA_LOCATION);
 
-				MACE__DEFINE_MACRO(MACE__SCENE_ATTACHMENT_INDEX);
-				MACE__DEFINE_MACRO(MACE__ID_ATTACHMENT_INDEX);
+					MACE__DEFINE_MACRO(MACE__SCENE_ATTACHMENT_INDEX);
+					MACE__DEFINE_MACRO(MACE__ID_ATTACHMENT_INDEX);
 
-				MACE__DEFINE_MACRO(MACE__VAO_VERTICES_LOCATION);
-				MACE__DEFINE_MACRO(MACE__VAO_TEX_COORD_LOCATION);
+					MACE__DEFINE_MACRO(MACE__VAO_VERTICES_LOCATION);
+					MACE__DEFINE_MACRO(MACE__VAO_TEX_COORD_LOCATION);
 #undef MACE__DEFINE_MACRO
 
-				sslPreprocessor.addInclude(vertexLibrary);
-				sslPreprocessor.addInclude(fragmentLibrary);
-				sslPreprocessor.addInclude(positionLibrary);
-				sslPreprocessor.addInclude(entityLibrary);
-				sslPreprocessor.addInclude(coreLibrary);
+					sslPreprocessor.addInclude(vertexLibrary);
+					sslPreprocessor.addInclude(fragmentLibrary);
+					sslPreprocessor.addInclude(positionLibrary);
+					sslPreprocessor.addInclude(entityLibrary);
+					sslPreprocessor.addInclude(coreLibrary);
+				}
+				return sslPreprocessor;
+			}//getSSLPreprocessor
+
+			OGL33Painter::OGL33Painter(const GraphicsEntity * const entity) : PainterImpl(entity), renderer(dynamic_cast<OGL33Renderer*>(getRenderer())) {
+				if (renderer == nullptr) {
+					//this should never happen unless someone extended Renderer and returned a OGL33Painter for some reason...
+					MACE__THROW(NullPointer, "Internal Error: OGL33Painter cant be used without a OGL33Renderer");
+				}
+
 			}
-			return sslPreprocessor;
-		}//getSSLPreprocessor
 
-		GLPainter::GLPainter(const GraphicsEntity * const entity) : PainterImpl(entity), renderer(dynamic_cast<GLRenderer*>(getRenderer())) {
-			if (renderer == nullptr) {
-				//this should never happen unless someone extended Renderer and returned a GLPainter for some reason...
-				MACE__THROW(NullPointer, "Internal Error: GLPainter cant be used without a GLRenderer");
+			void OGL33Painter::init() {
+				renderer->loadEntityUniforms(entity);
+
+				renderer->entityUniforms.bind();
+				renderer->entityUniforms.bindForRender();
+
+				renderer->painterUniforms.bind();
+				renderer->painterUniforms.bindForRender();
 			}
 
-		}
+			void OGL33Painter::destroy() {}
 
-		void GLPainter::init() {
-			renderer->loadEntityUniforms(entity);
-
-			renderer->entityUniforms.bind();
-			renderer->entityUniforms.bindForRender();
-
-			renderer->painterUniforms.bind();
-			renderer->painterUniforms.bindForRender();
-		}
-
-		void GLPainter::destroy() {}
-
-		void GLPainter::loadSettings() {
-			renderer->loadPainterUniforms(state.transformation, state.primaryColor, state.secondaryColor, state.data);
-		}
-
-		void GLPainter::draw(const Painter::Brush brush, const Painter::RenderType type) {
-			const GLRenderer::RenderProtocol prot = renderer->getProtocol(entity, { brush, type });
-			prot.vao.bind();
-			prot.program.bind();
-
-			if (type == Painter::RenderType::QUAD) {
-				prot.vao.draw(GL_TRIANGLES);
+			void OGL33Painter::loadSettings() {
+				renderer->loadPainterUniforms(state.transformation, state.primaryColor, state.secondaryColor, state.data);
 			}
-		}
+
+			void OGL33Painter::draw(const Painter::Brush brush, const Painter::RenderType type) {
+				const OGL33Renderer::RenderProtocol prot = renderer->getProtocol(entity, { brush, type });
+				prot.vao.bind();
+				prot.program.bind();
+
+				if (type == Painter::RenderType::QUAD) {
+					prot.vao.draw(GL_TRIANGLES);
+				}
+			}
+
+			void OGL33Texture::init() {
+				ogl::Texture2D::init();
+			}
+
+			void OGL33Texture::destroy() {
+				ogl::Texture2D::destroy();
+			}
+
+			void OGL33Texture::bind() const {
+				ogl::Texture2D::bind();
+			}
+
+			void OGL33Texture::bind(const Index location) const {
+				ogl::Texture2D::bind(location);
+			}
+
+			void OGL33Texture::unbind() const {
+				ogl::Texture2D::unbind();
+			}
+
+			bool OGL33Texture::isCreated() const {
+				return ogl::Texture2D::isCreated();
+			}
+
+			void OGL33Texture::setMinFilter(const gfx::Texture::ResizeFilter filter) {
+				if (filter == gfx::Texture::ResizeFilter::MIPMAP_LINEAR) {
+					generateMipmap();
+					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				} else if (filter == gfx::Texture::ResizeFilter::MIPMAP_NEAREST) {
+					generateMipmap();
+					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				} else if (filter == gfx::Texture::ResizeFilter::LINEAR) {
+					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				} else if (filter == gfx::Texture::ResizeFilter::NEAREST) {
+					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				}
+			}
+
+			void OGL33Texture::setMagFilter(const gfx::Texture::ResizeFilter filter) {
+				if (filter == gfx::Texture::ResizeFilter::MIPMAP_LINEAR ||
+					filter == gfx::Texture::ResizeFilter::MIPMAP_NEAREST) {
+					MACE__THROW(BadFormat, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
+				} else if (filter == gfx::Texture::ResizeFilter::LINEAR) {
+					setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				} else if (filter == gfx::Texture::ResizeFilter::NEAREST) {
+					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				}
+			}
+
+			void OGL33Texture::setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) {
+				switch (hint) {
+					case gfx::Texture::PixelStorage::ALIGNMENT:
+						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
+						break;
+					case gfx::Texture::PixelStorage::ROW_LENGTH:
+						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
+						break;
+					default:
+						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
+				}
+			}
+
+			void OGL33Texture::setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) {
+				switch (hint) {
+					case gfx::Texture::PixelStorage::ALIGNMENT:
+						setPixelStorage(GL_PACK_ALIGNMENT, value);
+						break;
+					case gfx::Texture::PixelStorage::ROW_LENGTH:
+						setPixelStorage(GL_PACK_ROW_LENGTH, value);
+						break;
+					default:
+						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
+				}
+			}
+
+			void OGL33Texture::setWrapS(const Texture::WrapMode wrap) {
+				if (wrap == Texture::WrapMode::CLAMP) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				} else if (wrap == Texture::WrapMode::REPEAT) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+				} else if (wrap == Texture::WrapMode::MIRRORED_REPEAT) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+				} else if (wrap == Texture::WrapMode::MIRROR_CLAMP) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_MIRROR_CLAMP_TO_EDGE);
+				} else {
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture");
+				}
+			}
+
+			void OGL33Texture::setWrapT(const Texture::WrapMode wrap) {
+				if (wrap == Texture::WrapMode::CLAMP) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+				} else if (wrap == Texture::WrapMode::REPEAT) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+				} else if (wrap == Texture::WrapMode::MIRRORED_REPEAT) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+				} else if (wrap == Texture::WrapMode::MIRROR_CLAMP) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_MIRROR_CLAMP_TO_EDGE);
+				} else {
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture");
+				}
+			}
+
+			void OGL33Texture::setData(const void * data, const Size width, const Size height, const Texture::Type type, const Texture::Format format, const Texture::InternalFormat internalFormat, const Index mipmap) {
+				ogl::Texture2D::setData(data, width, height, getType(type), getFormat(format), getInternalFormat(internalFormat), mipmap);
+			}
+
+			void OGL33Texture::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
+				ogl::Texture2D::getImage(getFormat(format), getType(type), data);
+			}
+
+			void OGL33Texture::setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) {
+				Enum swizzle;
+				if (arg == Texture::SwizzleMode::R) {
+					swizzle = GL_RED;
+				} else if (arg == Texture::SwizzleMode::G) {
+					swizzle = GL_GREEN;
+				} else if (arg == Texture::SwizzleMode::B) {
+					swizzle = GL_BLUE;
+				} else if (arg == Texture::SwizzleMode::A) {
+					swizzle = GL_ALPHA;
+				} else {
+					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument arg");
+				}
+
+				if (mode == Texture::SwizzleMode::R) {
+					setParameter(GL_TEXTURE_SWIZZLE_R, swizzle);
+				} else if (mode == Texture::SwizzleMode::G) {
+					setParameter(GL_TEXTURE_SWIZZLE_G, swizzle);
+				} else if (mode == Texture::SwizzleMode::B) {
+					setParameter(GL_TEXTURE_SWIZZLE_B, swizzle);
+				} else if (mode == Texture::SwizzleMode::A) {
+					setParameter(GL_TEXTURE_SWIZZLE_A, swizzle);
+				} else {
+					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument mode");
+				}
+			}
+
+			void OGL33Model::init() {
+				ogl::VertexArray::init();
+			}
+
+			void OGL33Model::destroy() {
+				ogl::VertexArray::destroy();
+			}
+		}//ogl
 	}//gfx
 }//mc
 

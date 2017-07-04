@@ -45,113 +45,6 @@ namespace mc {
 					}
 					MACE__THROW(Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
 				}
-
-				GLenum getFormat(const Texture::Format format) {
-					switch (format) {
-						case Texture::Format::RED:
-							return GL_RED;
-						case Texture::Format::RG:
-							return GL_RG;
-						case Texture::Format::RGB:
-							return GL_RGB;
-						case Texture::Format::RGBA:
-							return GL_RGBA;
-						case Texture::Format::BGR:
-							return GL_BGR;
-						case Texture::Format::BGRA:
-							return GL_BGRA;
-						case Texture::Format::RED_INTEGER:
-							return GL_RED_INTEGER;
-						case Texture::Format::RG_INTEGER:
-							return GL_RG_INTEGER;
-						case Texture::Format::RGB_INTEGER:
-							return GL_RGB_INTEGER;
-						case Texture::Format::BGR_INTEGER:
-							return GL_BGR_INTEGER;
-						case Texture::Format::RGBA_INTEGER:
-							return GL_RGBA_INTEGER;
-						case Texture::Format::BGRA_INTEGER:
-							return GL_BGRA_INTEGER;
-						case Texture::Format::STENCIL:
-							return GL_STENCIL;
-						case Texture::Format::DEPTH:
-							return GL_DEPTH;
-						case Texture::Format::DEPTH_STENCIL:
-							return GL_DEPTH_STENCIL;
-						case Texture::Format::LUMINANCE:
-							return GL_LUMINANCE;
-						case Texture::Format::LUMINANCE_ALPHA:
-							return GL_LUMINANCE_ALPHA;
-						default:
-							MACE__THROW(BadFormat, "Unsupported format by OpenGL");
-					}
-				}
-
-				GLenum getInternalFormat(const Texture::InternalFormat format) {
-					switch (format) {
-						case Texture::InternalFormat::DEPTH:
-							return GL_DEPTH_COMPONENT;
-						case Texture::InternalFormat::DEPTH_STENCIL:
-							return GL_DEPTH_STENCIL;
-						case Texture::InternalFormat::RED:
-							return GL_RED;
-						case Texture::InternalFormat::RG:
-							return GL_RG;
-						case Texture::InternalFormat::RGB:
-							return GL_RGB;
-						case Texture::InternalFormat::RGBA:
-							return GL_RGBA;
-						case Texture::InternalFormat::R32UI:
-							return GL_R32UI;
-						default:
-							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
-					}
-				}
-
-				GLenum getType(const Texture::Type type) {
-					switch (type) {
-						case Texture::Type::UNSIGNED_BYTE:
-							return GL_UNSIGNED_BYTE;
-						case Texture::Type::BYTE:
-							return GL_BYTE;
-						case Texture::Type::UNSIGNED_SHORT:
-							return GL_UNSIGNED_SHORT;
-						case Texture::Type::SHORT:
-							return GL_SHORT;
-						case Texture::Type::UNSIGNED_INT:
-							return GL_UNSIGNED_INT;
-						case Texture::Type::INT:
-							return GL_INT;
-						case Texture::Type::FLOAT:
-							return GL_FLOAT;
-						case Texture::Type::UNSIGNED_BYTE_3_3_2:
-							return GL_UNSIGNED_BYTE_3_3_2;
-						case Texture::Type::UNSIGNED_BYTE_2_3_3_REV:
-							return GL_UNSIGNED_BYTE_2_3_3_REV;
-						case Texture::Type::UNSIGNED_SHORT_5_6_5:
-							return GL_UNSIGNED_SHORT_5_6_5;
-						case Texture::Type::UNSIGNED_SHORT_5_6_5_REV:
-							return GL_UNSIGNED_SHORT_5_6_5_REV;
-						case Texture::Type::UNSIGNED_SHORT_4_4_4_4:
-							return GL_UNSIGNED_SHORT_4_4_4_4;
-						case Texture::Type::UNSIGNED_SHORT_4_4_4_4_REV:
-							return GL_UNSIGNED_SHORT_4_4_4_4_REV;
-						case Texture::Type::UNSIGNED_SHORT_5_5_5_1:
-							return GL_UNSIGNED_SHORT_5_5_5_1;
-						case Texture::Type::UNSIGNED_SHORT_1_5_5_5_REV:
-							return GL_UNSIGNED_SHORT_1_5_5_5_REV;
-						case Texture::Type::UNSIGNED_INT_8_8_8_8:
-							return GL_UNSIGNED_INT_8_8_8_8;
-						case Texture::Type::UNSIGNED_INT_8_8_8_8_REV:
-							return GL_UNSIGNED_INT_8_8_8_8_REV;
-						case Texture::Type::UNSIGNED_INT_10_10_10_2:
-							return GL_UNSIGNED_INT_10_10_10_2;
-						case Texture::Type::UNSIGNED_INT_2_10_10_10_REV:
-							return GL_UNSIGNED_INT_2_10_10_10_REV;
-						default:
-							MACE__THROW(BadFormat, "Unsupported type by OpenGL");
-					}
-				}
 			}//anon namespace
 
 #ifdef MACE_DEBUG
@@ -538,93 +431,9 @@ namespace mc {
 				Object::bind();
 			}
 
-			//this exists to fulfill the requirement of unbind() const from TextureImpl
-			void Texture2D::unbind() const {
-				Object::unbind();
-			}
-
-			void Texture2D::setMinFilter(const gfx::Texture::ResizeFilter filter) {
-				if (filter == gfx::Texture::ResizeFilter::MIPMAP_LINEAR) {
-					generateMipmap();
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				}else if (filter == gfx::Texture::ResizeFilter::MIPMAP_NEAREST) {
-					generateMipmap();
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				}else if (filter == gfx::Texture::ResizeFilter::LINEAR) {
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				} else if (filter == gfx::Texture::ResizeFilter::NEAREST) {
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				}
-			}
-
-			void Texture2D::setMagFilter(const gfx::Texture::ResizeFilter filter) {
-				if (filter == gfx::Texture::ResizeFilter::MIPMAP_LINEAR ||
-					filter == gfx::Texture::ResizeFilter::MIPMAP_NEAREST) {
-					MACE__THROW(BadFormat, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
-				} else if (filter == gfx::Texture::ResizeFilter::LINEAR) {
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				} else if (filter == gfx::Texture::ResizeFilter::NEAREST) {
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				}
-			}
-
-			void Texture2D::setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) {
-				switch (hint) {
-					case gfx::Texture::PixelStorage::ALIGNMENT:
-						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
-						break;
-					case gfx::Texture::PixelStorage::ROW_LENGTH:
-						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
-						break;
-					default:
-						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
-				}
-			}
-
-			void Texture2D::setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) {
-				switch (hint) {
-					case gfx::Texture::PixelStorage::ALIGNMENT:
-						setPixelStorage(GL_PACK_ALIGNMENT, value);
-						break;
-					case gfx::Texture::PixelStorage::ROW_LENGTH:
-						setPixelStorage(GL_PACK_ROW_LENGTH, value);
-						break;
-					default:
-						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
-				}
-			}
-
-			void Texture2D::setWrapS(const Texture::WrapMode wrap) {
-				if (wrap == Texture::WrapMode::CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				}else if (wrap == Texture::WrapMode::REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-				}else if (wrap == Texture::WrapMode::MIRRORED_REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-				}else if (wrap == Texture::WrapMode::MIRROR_CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_MIRROR_CLAMP_TO_EDGE);
-				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture");
-				}
-			}
-
-			void Texture2D::setWrapT(const Texture::WrapMode wrap) {
-				if (wrap == Texture::WrapMode::CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				} else if (wrap == Texture::WrapMode::REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-				} else if (wrap == Texture::WrapMode::MIRRORED_REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-				} else if (wrap == Texture::WrapMode::MIRROR_CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_MIRROR_CLAMP_TO_EDGE);
-				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture");
-				}
-			}
-
-			void Texture2D::setData(const void * data, Size width, Size height, gfx::Texture::Type type, gfx::Texture::Format format, gfx::Texture::InternalFormat internalFormat, Index mipmapLevel) {
+			void Texture2D::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
 				bind();
-				glTexImage2D(target, mipmapLevel, getInternalFormat(internalFormat), width, height, 0, getFormat(format), getType(type), data);
+				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 			}
 
 			void Texture2D::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples) {
@@ -644,26 +453,6 @@ namespace mc {
 			void Texture2D::setPixelStorage(const Enum alignment, const float number) {
 				bind();
 				glPixelStoref(alignment, number);
-			}
-
-			void Texture2D::resetPixelStorage() {
-				bind();
-				setPixelStorage(GL_PACK_SWAP_BYTES, false);
-				setPixelStorage(GL_UNPACK_SWAP_BYTES, false);
-				setPixelStorage(GL_PACK_LSB_FIRST, false);
-				setPixelStorage(GL_UNPACK_LSB_FIRST, false);
-				setPixelStorage(GL_PACK_ALIGNMENT, 4);
-				setPixelStorage(GL_UNPACK_ALIGNMENT, 4);
-				setPixelStorage(GL_PACK_ROW_LENGTH, 0);
-				setPixelStorage(GL_UNPACK_ROW_LENGTH, 0);
-				setPixelStorage(GL_PACK_IMAGE_HEIGHT, 0);
-				setPixelStorage(GL_UNPACK_IMAGE_HEIGHT, 0);
-				setPixelStorage(GL_PACK_SKIP_ROWS, 0);
-				setPixelStorage(GL_UNPACK_SKIP_ROWS, 0);
-				setPixelStorage(GL_PACK_SKIP_PIXELS, 0);
-				setPixelStorage(GL_UNPACK_SKIP_PIXELS, 0);
-				setPixelStorage(GL_PACK_SKIP_IMAGES, 0);
-				setPixelStorage(GL_UNPACK_SKIP_IMAGES, 0);
 			}
 
 			void Texture2D::generateMipmap() {
@@ -692,37 +481,11 @@ namespace mc {
 				glTexParameteri(target, name, value);
 			}
 
-			void Texture2D::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
+			void Texture2D::getImage(const Enum format, const Enum type, void * data) const {
 				bind();
-				glGetTexImage(target, 0, getFormat(format), getType(type), data);
+				glGetTexImage(target, 0, format, type, data);
 			}
 
-			void Texture2D::setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) {
-				Enum swizzle;
-				if (arg == Texture::SwizzleMode::R) {
-					swizzle = GL_RED;
-				} else if (arg == Texture::SwizzleMode::G) {
-					swizzle = GL_GREEN;
-				} else if (arg == Texture::SwizzleMode::B) {
-					swizzle = GL_BLUE;
-				} else if (arg == Texture::SwizzleMode::A) {
-					swizzle = GL_ALPHA;
-				} else {
-					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument arg");
-				}
-
-				if (mode == Texture::SwizzleMode::R) {
-					setParameter(GL_TEXTURE_SWIZZLE_R, swizzle);
-				}else if (mode == Texture::SwizzleMode::G) {
-					setParameter(GL_TEXTURE_SWIZZLE_G, swizzle);
-				} else if (mode == Texture::SwizzleMode::B) {
-					setParameter(GL_TEXTURE_SWIZZLE_B, swizzle);
-				} else if (mode == Texture::SwizzleMode::A) {
-					setParameter(GL_TEXTURE_SWIZZLE_A, swizzle);
-				} else {
-					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument mode");
-				}
-			}
 
 			bool Texture2D::operator==(const Texture2D & other) const {
 				return target == other.target&&Object::operator==(other);

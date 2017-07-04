@@ -6,19 +6,44 @@ There are many different macros that can determine how MACE works.
 
 | *Macro* | *Effect* |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| MACE_DEBUG | Does more error checking and more verbose error messages. Automatically defined in Debug configurations |
+| MACE_DEBUG | Does more error checking and more verbose error messages. Automatically defined in Debug configurations. If defined to be 0 before including any MACE headers, will never be defined. |
 | MACE_EXPOSE_WINAPI | If defined, classes that use Winapi will have functions to allow for direct access to any Winapi variables. Will not work if MACE_WINAPI is not defined. |
 | MACE_EXPOSE_POSIX | If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined |
 | MACE_EXPOSE_OPENGL | If defined, the OpenGL abstraction layer and renderer will be exposed by including MACE.h |
+| MACE_EXPOSE_GLFW | If defined, WindowModule will expose the underlying GLFWwindow |
 
 ### Libraries
 
 These macros are automatically defined if the specified library is found. Otherwise, you can manually define them.
 
-* MACE_OPENCV
 * MACE_X11
 * MACE_WINAPI
 * MACE_POSIX
+
+#### OpenCV
+
+MACE has optional interoptibility with OpenCV. To link OpenCV with CMake, set the OpenCV_* cache variables when running CMake.
+
+To manually link OpenCV yourself, define MACE_OPENCV to be 1 before including any MACE header file:
+
+```
+//specify that OpenCV is linked
+#define MACE_OPENCV 1
+#include <MACE/MACE.h.
+```
+
+MACE will include `<opencv2/opencv.hpp>` if MACE_OPENCV is defined.
+
+Additionally, if CV_VERSION is defined, MACE_OPENCV will also be defined automatically.
+
+To request to never use OpenCV, even if it is included, define MACE_OPENCV to be 0 or false.
+
+```
+//both of the following lines tell MACE to never use OpenCV
+#define MACE_OPENCV 0
+#define MACE_OPENCV false
+#include <MACE/MACE.h>
+```
 
 ### Operating Systems
 
@@ -83,5 +108,4 @@ Otherwise, one of the following macros will be defined to the compiler version:
 | MACE_STRINGIFY(name) | Directly stringifies a macro  |
 | MACE_STRINGIFY_NAME(name) | Stringifies a macro name. If the expanded macro is empty, this function returns "" |
 | MACE_STRINGIFY_DEFINITION(name) | Stringifies the definition of a macro. If the macro doesn't have a definition, this function returns "" |
-| MACE_DECLARE_ERROR(name) | This macro should only be used internally. Creates a new Error class with the specified name. |
 

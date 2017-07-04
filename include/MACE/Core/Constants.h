@@ -25,7 +25,12 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_DEBUG 1
 #endif//elif
 
-#if !defined(MACE_OPENCV)&&(defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR)))
+#ifdef MACE_OPENCV
+#	if MACE_OPENCV == 0 || MACE_OPENCV == false
+#		undef MACE_OPENCV
+#	endif
+//if doxygen is running or opencv is detected, set MACE_OPENCV to 1 if it hasnt been defined already
+#elif defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
 #	define MACE_OPENCV 1
 #endif
 
@@ -42,6 +47,18 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
 #endif
 
+#ifndef __has_cpp_attribute
+#	define MACE_HAS_ATTRIBUTE(attr) 0
+#else
+#	define MACE_HAS_ATTRIBUTE(attr) __has_cpp_attribute(attr)
+#endif
+
+#if MACE_HAS_ATTRIBUTE(fallthrough)
+#	define MACE_FALLTHROUGH [[fallthrough]]
+#else
+#	define MACE_FALLTHROUGH
+#endif
+
 #define MACE_STRINGIFY(name) #name
 #define MACE_STRINGIFY_NAME(name) "" #name
 #define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
@@ -49,9 +66,13 @@ The above copyright notice and this permission notice shall be included in all c
 #ifdef MACE_DOXYGEN_PASS
 #	define MACE_EXPOSE_WINAPI 1
 #	define MACE_EXPOSE_POSIX 1
+#	define MACE_EXPOSE_OPENGL 1
+#	define MACE_EXPOSE_GLFW 1
 #endif
 
+//for std::uint8_t
 #include <cstdint>
+//for std::size_t
 #include <cstddef>
 
 namespace mc {

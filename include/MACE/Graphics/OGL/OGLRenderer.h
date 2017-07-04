@@ -18,75 +18,111 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		class GLRenderer;
-
-		class GLPainter: public PainterImpl {
-		public:
-			GLPainter(const GraphicsEntity* const entity);
-
-			void init() override;
-			void destroy() override;
-		protected:
-			void loadSettings() override;
-			void draw(const Painter::Brush brush, const Painter::RenderType type) override;
-		private:
-			GLRenderer* renderer;
-		};
-
-		class GLRenderer: public Renderer {
-			friend class GLPainter;
-		public:
-			GLRenderer();
-			~GLRenderer() noexcept override = default;
-
-			void onResize(const Size width, const Size height) override;
-			void onInit(const Size originalWidth, const Size originalHeight) override;
-			void onSetUp(os::WindowModule* win) override;
-			void onTearDown(os::WindowModule* win) override;
-			void onDestroy() override;
-			void onQueue(GraphicsEntity* en) override;
-
-			void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;
-
-			GraphicsEntity* getEntityAt(const int x, const int y) override;
-
-			std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const override;
-			std::shared_ptr<TextureImpl> getTexture() const override;
-
-			const Preprocessor& getSSLPreprocessor();
-		private:
-			Preprocessor sslPreprocessor;
-
-			ogl::FrameBuffer frameBuffer;
-			ogl::RenderBuffer depthBuffer;
-
-			ogl::Texture2D sceneTexture, idTexture;
-
-
-			Color clearColor;
-
-			void generateFramebuffer(const Size& width, const Size& height);
-
-			//for Painting
-
-			struct RenderProtocol {
-				ogl::ShaderProgram program;
-				ogl::VertexArray vao;
+		namespace ogl {
+			class OGL33Model: public ModelImpl, private ogl::VertexArray {
+			public:
+				void init() override;
+				void destroy() override;
 			};
 
-			std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<GLRenderer::RenderProtocol>> protocols;
-			ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
-			ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
+			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
+			public:
+				void init() override;
+				void destroy() override;
 
-			std::string processShader(const std::string& shader);
+				void bind() const override;
+				void bind(const Index location) const override;
+				void unbind() const override;
 
-			void loadEntityUniforms(const GraphicsEntity * const entity);
-			void loadPainterUniforms(const TransformMatrix& transform, const Color& col, const Color& secondaryCol, const Vector<float, 4>& data);
+				bool isCreated() const override;
 
-			GLRenderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings);
-			ogl::ShaderProgram getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);
-			ogl::VertexArray getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);
-		};
+				void setMinFilter(const gfx::Texture::ResizeFilter filter) override;
+				void setMagFilter(const gfx::Texture::ResizeFilter filter) override;
+
+				void setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
+				void setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
+
+				void setWrapS(const Texture::WrapMode wrap) override;
+				void setWrapT(const Texture::WrapMode wrap) override;
+
+				void setData(const void* data, const Size width, const Size height, const Texture::Type type = Texture::Type::FLOAT, const Texture::Format format = Texture::Format::RGB, const Texture::InternalFormat internalFormat = Texture::InternalFormat::RGB, const Index mipmap = 0) override;
+
+				void getImage(const Texture::Format format, const Texture::Type type, void* data) const override;
+
+				void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) override;
+			};
+
+			class OGL33Renderer;
+
+			class OGL33Painter: public PainterImpl {
+			public:
+				OGL33Painter(const GraphicsEntity* const entity);
+
+				void init() override;
+				void destroy() override;
+			protected:
+				void loadSettings() override;
+				void draw(const Painter::Brush brush, const Painter::RenderType type) override;
+			private:
+				OGL33Renderer* renderer;
+			};
+
+			class OGL33Renderer: public Renderer {
+				friend class OGL33Painter;
+			public:
+				OGL33Renderer();
+				~OGL33Renderer() noexcept override = default;
+
+				void onResize(const Size width, const Size height) override;
+				void onInit(const Size originalWidth, const Size originalHeight) override;
+				void onSetUp(os::WindowModule* win) override;
+				void onTearDown(os::WindowModule* win) override;
+				void onDestroy() override;
+				void onQueue(GraphicsEntity* en) override;
+
+				void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;
+
+				GraphicsEntity* getEntityAt(const int x, const int y) override;
+
+				std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const override;
+				std::shared_ptr<TextureImpl> getTexture() const override;
+				std::shared_ptr<ModelImpl> getModel() const override;
+
+				const Preprocessor& getSSLPreprocessor();
+			private:
+				Preprocessor sslPreprocessor;
+
+				ogl::FrameBuffer frameBuffer;
+				ogl::RenderBuffer depthBuffer;
+
+				ogl::Texture2D sceneTexture, idTexture;
+
+
+				Color clearColor;
+
+				void generateFramebuffer(const Size& width, const Size& height);
+
+				//for Painting
+
+				struct RenderProtocol {
+					ogl::ShaderProgram program;
+					ogl::VertexArray vao;
+				};
+
+				std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>> protocols;
+				ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
+				ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
+
+				std::string processShader(const std::string& shader);
+
+				void loadEntityUniforms(const GraphicsEntity * const entity);
+				void loadPainterUniforms(const TransformMatrix& transform, const Color& col, const Color& secondaryCol, const Vector<float, 4>& data);
+
+				OGL33Renderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings);
+				ogl::ShaderProgram getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);
+				ogl::VertexArray getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings);
+			};
+		}//ogl
 	}//gfx
 }//mc
 

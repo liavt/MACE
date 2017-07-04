@@ -38,9 +38,20 @@ namespace mc {
 		*/
 		MACE__DECLARE_ERROR(BadFormat);
 
+		class ModelImpl: public Initializable{
+		public:
+			virtual void init() override = 0;
+			virtual void destroy() override = 0;
+		};
+
+		class Model: public Initializable{
+		public:
+
+		};
+
 		class TextureImpl;
 
-		class Texture: public Initializable {
+		class Texture: public Initializable, public Bindable {
 		public:
 			enum class Type: short int {
 				UNSIGNED_BYTE,
@@ -207,9 +218,9 @@ namespace mc {
 			const Color& getPaint() const;
 			void setPaint(const Color& col);
 
-			void bind() const;
+			void bind() const override;
 			void bind(const Index location) const;
-			void unbind() const;
+			void unbind() const override;
 
 			void resetPixelStorage();
 
@@ -237,16 +248,14 @@ namespace mc {
 			Color paint;
 		};//Texture
 
-		class TextureImpl: public Initializable {
+		class TextureImpl: public Initializable, public Bindable {
 		public:
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
 
-			virtual void bind() const = 0;
+			virtual void bind() const override = 0;
 			virtual void bind(const Index location) const = 0;
-			virtual void unbind() const = 0;
-
-			virtual void resetPixelStorage() = 0;
+			virtual void unbind() const override = 0;
 
 			virtual bool isCreated() const = 0;
 
@@ -397,6 +406,7 @@ namespace mc {
 
 		/**
 		@todo add function to change how many samples msaa uses
+		@todo add renderers for directx, cpu, offscreen, opengl es, opengl 1.1/2.1
 		*/
 		class Renderer {
 		public:
@@ -418,6 +428,7 @@ namespace mc {
 
 			virtual std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const = 0;
 			virtual std::shared_ptr<TextureImpl> getTexture() const = 0;
+			virtual std::shared_ptr<ModelImpl> getModel() const = 0;
 
 			/**
 			@internal

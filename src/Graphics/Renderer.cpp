@@ -63,10 +63,13 @@ namespace mc {
 			if (solidColor.get() == nullptr) {
 				solidColor = getRenderer()->getTexture();
 			}
+
 			if (!solidColor->isCreated()) {
+				texture = solidColor;
+
 				solidColor->init();
 
-				solidColor->resetPixelStorage();
+				resetPixelStorage();
 
 				const float data[] = { 1,1,1,1 };
 				solidColor->setData(data, 1, 1, gfx::Texture::Type::FLOAT, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
@@ -74,7 +77,6 @@ namespace mc {
 				solidColor->setMinFilter(Texture::ResizeFilter::NEAREST);
 				solidColor->setMagFilter(Texture::ResizeFilter::NEAREST);
 
-				texture = solidColor;
 			}
 		}
 
@@ -98,7 +100,7 @@ namespace mc {
 		}
 
 		void Texture::load(const char * file) {
-			texture->resetPixelStorage();
+			resetPixelStorage();
 
 			int width, height, componentSize;
 
@@ -127,7 +129,7 @@ namespace mc {
 		}
 
 		void Texture::load(const Color & c) {
-			texture->resetPixelStorage();
+			resetPixelStorage();
 
 			texture->setData(&c, 1, 1, gfx::Texture::Type::FLOAT, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
 
@@ -136,7 +138,7 @@ namespace mc {
 		}
 
 		void Texture::load(const unsigned char * c, const Size size) {
-			texture->resetPixelStorage();
+			resetPixelStorage();
 
 			int width, height, componentSize;
 
@@ -185,7 +187,10 @@ namespace mc {
 		}
 
 		void Texture::resetPixelStorage() {
-			texture->resetPixelStorage();
+			setPackStorageHint(Texture::PixelStorage::ALIGNMENT, 4);
+			setUnpackStorageHint(Texture::PixelStorage::ALIGNMENT, 4);
+			setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, 0);
+			setUnpackStorageHint(Texture::PixelStorage::ROW_LENGTH, 0);
 		}
 
 		void Texture::setMinFilter(const Texture::ResizeFilter filter) {

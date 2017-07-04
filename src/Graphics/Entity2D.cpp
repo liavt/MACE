@@ -21,8 +21,6 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace {
-			Texture whiteTexture;
-
 			FT_Library freetype;
 			//error if freetype init failed or -1 if it hasnt been created
 			int freetypeStatus = -1;
@@ -285,7 +283,7 @@ namespace mc {
 		Font Font::loadFont(const char* name) {
 			if (freetypeStatus < 0) {
 				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
-					throw FontError("Freetype failed to initialize with error code " + std::to_string(freetypeStatus));
+					MACE__THROW(Font, "Freetype failed to initialize with error code " + std::to_string(freetypeStatus));
 				}
 
 				//font 0 should be null
@@ -297,11 +295,11 @@ namespace mc {
 
 			fonts.push_back(FT_Face());
 			if (int result = FT_New_Face(freetype, name, 0, &fonts[id])) {
-				throw FontError("Freetype failed to create font at " + std::string(name) + " with result " + std::to_string(result));
+				MACE__THROW(Font, "Freetype failed to create font at " + std::string(name) + " with result " + std::to_string(result));
 			}
 
 			if (int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE)) {
-				throw FontError("Freetype failed to change charmap with result " + std::to_string(result));
+				MACE__THROW(Font, "Freetype failed to change charmap with result " + std::to_string(result));
 			}
 
 			return Font(id);
@@ -309,12 +307,12 @@ namespace mc {
 
 		Font Font::loadFontFromMemory(const unsigned char * data, long int size) {
 			if (size <= 0) {
-				throw IndexOutOfBoundsError("Input size for loadFontFromMemory is less or equal to than 0!");
+				MACE__THROW(IndexOutOfBounds, "Input size for loadFontFromMemory is less or equal to than 0!");
 			}
 
 			if (freetypeStatus < 0) {
 				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
-					throw FontError("Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
+					MACE__THROW(Font, "Freetype failed to initailize with error code " + std::to_string(freetypeStatus));
 				}
 
 				fonts.resize(2);
@@ -325,11 +323,11 @@ namespace mc {
 
 			fonts.push_back(FT_Face());
 			if (int result = FT_New_Memory_Face(freetype, data, size, 0, &fonts[id])) {
-				throw FontError("Freetype failed to create font from memory with result " + std::to_string(result));
+				MACE__THROW(Font, "Freetype failed to create font from memory with result " + std::to_string(result));
 			}
 
 			if (int result = FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE)) {
-				throw FontError("Freetype failed to change charmap with result " + std::to_string(result));
+				MACE__THROW(Font, "Freetype failed to change charmap with result " + std::to_string(result));
 			}
 
 			return Font(id);
@@ -337,7 +335,7 @@ namespace mc {
 
 		void Font::destroy() {
 			if (int result = FT_Done_Face(fonts[id])) {
-				throw FontError("Freetype failed to delete font with result " + std::to_string(result));
+				MACE__THROW(Font, "Freetype failed to delete font with result " + std::to_string(result));
 			}
 		}
 
@@ -369,7 +367,7 @@ namespace mc {
 			FT_Set_Pixel_Sizes(fonts[id], 0, height);
 
 			if (FT_Error result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT)) {
-				throw FontError("Failed to load glyph with error code " + std::to_string(result));
+				MACE__THROW(Font, "Failed to load glyph with error code " + std::to_string(result));
 			}
 
 			character.width = fonts[id]->glyph->metrics.width >> 6;

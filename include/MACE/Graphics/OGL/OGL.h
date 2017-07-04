@@ -342,7 +342,7 @@ namespace mc {
 			/**
 			@see https://www.opengl.org/wiki/Texture
 			*/
-			class Texture2D: public Object, public gfx::TextureImpl {
+			class Texture2D: public Object{
 			public:
 				Texture2D() noexcept;
 
@@ -350,23 +350,15 @@ namespace mc {
 				void destroy() override;
 
 				void bind() const override;
-				void bind(const Index location) const override;
-				void unbind() const override;
+				void bind(const Index location) const;
 
-				void setMinFilter(const gfx::Texture::ResizeFilter filter) override;
-				void setMagFilter(const gfx::Texture::ResizeFilter filter) override;
-
-				void setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
-				void setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
-
-				void setWrapS(const Texture::WrapMode wrap) override;
-				void setWrapT(const Texture::WrapMode wrap) override;
+				bool isCreated() const override;
 
 				/**
 				@opengl
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
-				void setData(const void* data, const Size width, const Size height, const Texture::Type type = Texture::Type::FLOAT, const Texture::Format format = Texture::Format::RGB, const Texture::InternalFormat internalFormat = Texture::InternalFormat::RGB, const Index mipmap = 0) override;
+				void setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel);
 
 				/**
 				@opengl
@@ -393,13 +385,6 @@ namespace mc {
 
 				/**
 				@opengl
-				@see Texture2D::setPixelStorage(const Enum, const int)
-				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
-				*/
-				void resetPixelStorage() override;
-
-				/**
-				@opengl
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenerateMipmap.xhtml
 				*/
 				void generateMipmap();
@@ -408,17 +393,13 @@ namespace mc {
 				Enum& getTarget();
 				const Enum& getTarget() const;
 
-				bool isCreated() const override;
+				void getImage(const Enum format, const Enum type, void * data) const;
 
 				/**
 				@opengl
 				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
 				*/
 				void setParameter(const Enum name, const int value);
-
-				void getImage(const Texture::Format format, const Texture::Type type, void* data) const override;
-
-				void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) override;
 
 				/**
 				@copydoc Object::operator==(const Object&) const

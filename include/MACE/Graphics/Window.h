@@ -30,6 +30,13 @@ namespace mc {
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
+			enum class RendererType {
+				CUSTOM,
+				AUTOMATIC,
+				BEST_OGL,
+				OGL33
+			};
+
 			struct LaunchConfig {
 				typedef void(*WindowCallback)(WindowModule& window);
 				typedef void(*ScrollCallback)(WindowModule& window, double x, double y);
@@ -42,6 +49,8 @@ namespace mc {
 				const int height;
 
 				unsigned int fps = 30;
+
+				RendererType rendererType = RendererType::AUTOMATIC;
 
 				WindowCallback onCreate = [](WindowModule&) {};
 				WindowCallback onClose = [](WindowModule&) {};
@@ -62,10 +71,21 @@ namespace mc {
 			WindowModule(const LaunchConfig& config);
 			WindowModule(const int width, const int height, const char* title);
 
+#ifdef MACE_EXPOSE_GLFW
 			/**
 			@internal
 			*/
-			GLFWwindow* getGLFWWindow();
+			GLFWwindow* getGLFWWindow() {
+				return window;
+			}
+
+			/**
+			@internal
+			*/
+			const GLFWwindow* getGLFWWindow() const {
+				return window;
+			}
+#endif//MACE_EXPOSE_GLFW
 
 			void create();
 

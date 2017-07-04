@@ -66,37 +66,57 @@ namespace mc {
 		WindowModule::WindowModule(const int width, const int height, const char * title) : config(LaunchConfig(width, height, title)) {}
 
 		void WindowModule::create() {
-			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+			switch (config.rendererType) {
+				case RendererType::CUSTOM:
+					if (gfx::getRenderer() == nullptr) {
+						MACE__THROW(NullPointer, "In order to use a custom Renderer, you must call setRenderer() before MACE::init()");
+					}
 
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+					glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+					break;
+				case RendererType::AUTOMATIC:
+				case RendererType::BEST_OGL:
+				case RendererType::OGL33:
+					gfx::setRenderer(new gfx::ogl::OGL33Renderer());
 
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+					glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+					glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+#ifdef MACE_DEBUG
+					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif
+					break;
+			}
+
+			if (gfx::getRenderer() == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: Renderer is nullptr!");
+			}
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
 			glfwWindowHint(GLFW_DECORATED, config.decorated);
 
-#ifdef MACE_DEBUG
-			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-#endif
-
 			window = createWindow(config.fullscreen, config.width, config.height, config.title);
 
-			Index versionMajor = 3;
+			if (config.rendererType == RendererType::BEST_OGL || config.rendererType == RendererType::AUTOMATIC) {
+				int versionMajor = 3;
 
-			//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
-			for (int versionMinor = 3; versionMinor >= 0 && !window; --versionMinor) {
-				std::cout << "Trying OpenGL " << versionMajor << "." << versionMinor << std::endl;
-				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
-				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
+				//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
+				for (int versionMinor = 3; versionMinor >= 0 && !window; --versionMinor) {
+					std::cout << "Trying OpenGL " << versionMajor << "." << versionMinor << std::endl;
+					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
+					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
 
-				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+					glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 
-				window = createWindow(properties.getBit(config.fullscreen), config.width, config.height, config.title);
-				if (versionMinor == 0 && versionMajor > 1 && !window) {
-					glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
-					versionMinor = 3;
-					--versionMajor;
+					window = createWindow(properties.getBit(config.fullscreen), config.width, config.height, config.title);
+					if (versionMinor == 0 && versionMajor > 1 && !window) {
+						glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
+						versionMinor = 3;
+						--versionMajor;
+					}
 				}
 			}
 
@@ -107,11 +127,6 @@ namespace mc {
 			glfwMakeContextCurrent(window);
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__, "Error creating window");
-
-			if (gfx::getRenderer() == nullptr) {
-				//default to OpenGL
-				gfx::setRenderer(new gfx::GLRenderer());
-			}
 
 			gfx::getRenderer()->init(config.width, config.height);
 
@@ -204,10 +219,6 @@ namespace mc {
 
 		const WindowModule::LaunchConfig & WindowModule::getLaunchConfig() const {
 			return config;
-		}
-
-		GLFWwindow* WindowModule::getGLFWWindow() {
-			return window;
 		}
 
 		void WindowModule::setTitle(const std::string & newTitle) {
