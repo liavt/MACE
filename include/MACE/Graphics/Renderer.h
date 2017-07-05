@@ -409,6 +409,9 @@ namespace mc {
 		@todo add renderers for directx, cpu, offscreen, opengl es, opengl 1.1/2.1
 		*/
 		class Renderer {
+			friend class Texture;
+			friend class Painter;
+			friend class Model;
 		public:
 			virtual ~Renderer() = default;
 
@@ -425,10 +428,6 @@ namespace mc {
 			virtual void onTearDown(os::WindowModule* win) = 0;
 			virtual void onDestroy() = 0;
 			virtual void onQueue(GraphicsEntity* en) = 0;
-
-			virtual std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const = 0;
-			virtual std::shared_ptr<TextureImpl> getTexture() const = 0;
-			virtual std::shared_ptr<ModelImpl> getModel() const = 0;
 
 			/**
 			@internal
@@ -495,6 +494,11 @@ namespace mc {
 
 			bool isResized() const;
 		protected:
+			//not declared const because some of the functions require modification to an intneral buffer of impls
+			virtual std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const = 0;
+			virtual std::shared_ptr<TextureImpl> getTexture() const = 0;
+			virtual std::shared_ptr<ModelImpl> getModel() const = 0;
+
 			Index pushEntity(GraphicsEntity*  entity);
 
 			RenderQueue renderQueue = RenderQueue();

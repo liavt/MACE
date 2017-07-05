@@ -646,22 +646,22 @@ namespace mc {
 					if (GLEW_VERSION_3_3) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_3", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 330 core"));
-					}else if (GLEW_VERSION_3_2) {
+					} else if (GLEW_VERSION_3_2) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_2", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 150 core"));
-					}else if (GLEW_VERSION_3_1) {
+					} else if (GLEW_VERSION_3_1) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_1", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 140 core"));
-					}else if (GLEW_VERSION_3_0) {
+					} else if (GLEW_VERSION_3_0) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_3_0", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 130 core"));
-					}else if (GLEW_VERSION_2_1) {
+					} else if (GLEW_VERSION_2_1) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_1", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 120"));
-					}else if (GLEW_VERSION_2_0) {
+					} else if (GLEW_VERSION_2_0) {
 						sslPreprocessor.defineMacro(mc::Macro("GL_VERSION_2_0", "1"));
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#version 110"));
-					}else {
+					} else {
 						sslPreprocessor.defineMacro(mc::Macro("SSL_GL_VERSION_DECLARATION", "#error GLSL is not supported on this system."));
 					}
 

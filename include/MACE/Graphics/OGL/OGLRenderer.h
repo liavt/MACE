@@ -19,13 +19,17 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace ogl {
+			class OGL33Renderer;
+
 			class OGL33Model: public ModelImpl, private ogl::VertexArray {
+				friend class OGL33Renderer;
 			public:
 				void init() override;
 				void destroy() override;
 			};
 
 			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
+				friend class OGL33Renderer;
 			public:
 				void init() override;
 				void destroy() override;
@@ -52,9 +56,8 @@ namespace mc {
 				void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) override;
 			};
 
-			class OGL33Renderer;
-
 			class OGL33Painter: public PainterImpl {
+				friend class OGL33Renderer;
 			public:
 				OGL33Painter(const GraphicsEntity* const entity);
 
@@ -97,6 +100,7 @@ namespace mc {
 
 				ogl::Texture2D sceneTexture, idTexture;
 
+				std::map<Byte, std::shared_ptr<ogl::OGL33Texture>> textureImpls;
 
 				Color clearColor;
 
