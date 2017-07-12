@@ -38,6 +38,10 @@ var a00079 =
     [ "set", "d1/d51/a00079.html#a6a94c9f49772cbb1811675ace012d71b", null ],
     [ "setContents", "d1/d51/a00079.html#ae78bfb3f82a73b712a266bc2b3b19440", null ],
     [ "setContents", "d1/d51/a00079.html#ac9f04851e7f06057fd361361962105a3", null ],
-    [ "size", "d1/d51/a00079.html#ada6398415fe532d3e57e6ec64dcf5443", null ],
+    [ "size", "d1/d51/a00079.html#acfeb73c207545399ef4ba388b96295b9", null ],
+    [ "x", "d1/d51/a00079_ad49840006ebe76fb2d67b693efd35b06.html#ad49840006ebe76fb2d67b693efd35b06", null ],
+    [ "x", "d1/d51/a00079_a1365b9a1c46c482eb9bf0bae46412aa6.html#a1365b9a1c46c482eb9bf0bae46412aa6", null ],
+    [ "y", "d1/d51/a00079_a96058d4b52a0edc69572da9f8890c5e2.html#a96058d4b52a0edc69572da9f8890c5e2", null ],
+    [ "y", "d1/d51/a00079_a721414c60f9a573af01c09e866c64a35.html#a721414c60f9a573af01c09e866c64a35", null ],
     [ "content", "d1/d51/a00079.html#a0829c15f951bfcf328981e03f9d9cdb1", null ]
 ];

@@ -1,6 +1,6 @@
 var a00032 =
 [
-    [ "destroy", "dc/d87/a00032_a2c12745190f8ee4479e84cc542ed58e7.html#a2c12745190f8ee4479e84cc542ed58e7", null ],
-    [ "init", "dc/d87/a00032_ab10c5152624e290d0a520e7b5f3b911f.html#ab10c5152624e290d0a520e7b5f3b911f", null ],
-    [ "Initializer", "dc/d87/a00032_a5d26a0aa56303737c594b42e7cdad905.html#a5d26a0aa56303737c594b42e7cdad905", null ]
+    [ "~Include", "dc/d87/a00032_ade2839cd640b196e808c0ca72a79c65f.html#ade2839cd640b196e808c0ca72a79c65f", null ],
+    [ "getFile", "dc/d87/a00032_aaeb33580110dc594eb065363fcdd65bf.html#aaeb33580110dc594eb065363fcdd65bf", null ],
+    [ "hasFile", "dc/d87/a00032_a1aaf4bc2ad50c93962901c653bbed0bc.html#a1aaf4bc2ad50c93962901c653bbed0bc", null ]
 ];

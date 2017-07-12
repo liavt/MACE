@@ -1,4 +1,27 @@
 var a00072 =
 [
-    [ "handle", "d6/d2c/a00072.html#acd892bd04e5e9ca631e9a4836d2ab730", null ]
+    [ "Texture2D", "d6/d2c/a00072_a929ca9ca3cea38576df023a0eec581f6.html#a929ca9ca3cea38576df023a0eec581f6", null ],
+    [ "bind", "d6/d2c/a00072_a015584f65a76a171745cd42e5877a785.html#a015584f65a76a171745cd42e5877a785", null ],
+    [ "bind", "d6/d2c/a00072_a190559ffa83858e47581329fbb25debc.html#a190559ffa83858e47581329fbb25debc", null ],
+    [ "destroy", "d6/d2c/a00072_a26f01cc5599cd297560c1ae23308e5f6.html#a26f01cc5599cd297560c1ae23308e5f6", null ],
+    [ "generateMipmap", "d6/d2c/a00072_ae9101da51834d1ca11e4e280d86df3fb.html#ae9101da51834d1ca11e4e280d86df3fb", null ],
+    [ "getID", "d6/d2c/a00072.html#a9e9fdea6dafdb5e03dc8b3544a7145e2", null ],
+    [ "getImage", "d6/d2c/a00072_a428d7b0413dcf3073fa60e37340bd093.html#a428d7b0413dcf3073fa60e37340bd093", null ],
+    [ "getTarget", "d6/d2c/a00072_a662e68b1a7d3c6ea7dbe8e35b4316dc4.html#a662e68b1a7d3c6ea7dbe8e35b4316dc4", null ],
+    [ "getTarget", "d6/d2c/a00072_af23d01dc910d7d09726f8fbd9a969786.html#af23d01dc910d7d09726f8fbd9a969786", null ],
+    [ "init", "d6/d2c/a00072_ac77b359d9898db4998cfba413c673b75.html#ac77b359d9898db4998cfba413c673b75", null ],
+    [ "isCreated", "d6/d2c/a00072_af6134256bdd34aa4659a2e7c87d4633f.html#af6134256bdd34aa4659a2e7c87d4633f", null ],
+    [ "operator!=", "d6/d2c/a00072.html#a5ff3ea4d06441e968ab9f3933329a828", null ],
+    [ "operator!=", "d6/d2c/a00072_ac7c62851f3f1e494ed1001b1a0ea3e30.html#ac7c62851f3f1e494ed1001b1a0ea3e30", null ],
+    [ "operator==", "d6/d2c/a00072.html#a75cf124fcf3b2ce36c402d9ff8b9447d", null ],
+    [ "operator==", "d6/d2c/a00072_a541ba24748291d1fc6f10eef96ba9f4c.html#a541ba24748291d1fc6f10eef96ba9f4c", null ],
+    [ "setData", "d6/d2c/a00072_a79deb7636b241cd237dbafc2edcc493f.html#a79deb7636b241cd237dbafc2edcc493f", null ],
+    [ "setMultisampledData", "d6/d2c/a00072_ad0f0fa67d39b5fa2f3c18cb5c898333f.html#ad0f0fa67d39b5fa2f3c18cb5c898333f", null ],
+    [ "setParameter", "d6/d2c/a00072_a1d93a16b3185c463e074496361ded18d.html#a1d93a16b3185c463e074496361ded18d", null ],
+    [ "setPixelStorage", "d6/d2c/a00072_a41c0ba6234c679e3e30a84546344866e.html#a41c0ba6234c679e3e30a84546344866e", null ],
+    [ "setPixelStorage", "d6/d2c/a00072_a779802d29b3ea152bcd49b9508e5bd42.html#a779802d29b3ea152bcd49b9508e5bd42", null ],
+    [ "setPixelStorage", "d6/d2c/a00072_a74fb558f2a208ac8342559a966e239e3.html#a74fb558f2a208ac8342559a966e239e3", null ],
+    [ "setTarget", "d6/d2c/a00072_a63cc3bae42290a289ec55fbc7e03efa0.html#a63cc3bae42290a289ec55fbc7e03efa0", null ],
+    [ "unbind", "d6/d2c/a00072.html#a99e1d0cf1bfaadb5f22f63f30748d3c6", null ],
+    [ "id", "d6/d2c/a00072.html#ac67d53adb0ce4346559a07edf31362c0", null ]
 ];

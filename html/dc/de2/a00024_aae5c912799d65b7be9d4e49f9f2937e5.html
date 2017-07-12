@@ -105,19 +105,19 @@ $(document).ready(function(){initNavTree('dc/de2/a00024_aae5c912799d65b7be9d4e49
         <tr>
           <td class="memname">void mc::gfx::ogl::FrameBuffer::attachTexture3D </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../da/d72/a00124_a566eb8c7b00951108f89aef1bd02d493.html#a566eb8c7b00951108f89aef1bd02d493">Enum</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../d0/d5e/a00136_a566eb8c7b00951108f89aef1bd02d493.html#a566eb8c7b00951108f89aef1bd02d493">Enum</a>&#160;</td>
           <td class="paramname"><em>target</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="../../da/d72/a00124_a566eb8c7b00951108f89aef1bd02d493.html#a566eb8c7b00951108f89aef1bd02d493">Enum</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../d0/d5e/a00136_a566eb8c7b00951108f89aef1bd02d493.html#a566eb8c7b00951108f89aef1bd02d493">Enum</a>&#160;</td>
           <td class="paramname"><em>attachment</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="../../d6/d2c/a00072.html">Texture2D</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../db/df8/a00076.html">Texture2D</a> &amp;&#160;</td>
           <td class="paramname"><em>tex</em>, </td>
         </tr>
         <tr>
@@ -140,7 +140,26 @@ $(document).ready(function(){initNavTree('dc/de2/a00024_aae5c912799d65b7be9d4e49
       </table>
 </div><div class="memdoc">
 
-<p></p>
+<p>Attaches a texture to this <code><a class="el" href="../../dc/de2/a00024.html" title="Represents an OpenGL Framebuffer Object which allows rendering to a non-screen location. ">FrameBuffer</a></code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>The framebuffer target. Must be <code>GL_DRAW_FRAMEBUFFER</code>, <code>GL_READ_FRAMEBUFFER</code> or <code>GL_FRAMEBUFFER</code> </td></tr>
+    <tr><td class="paramname">attachment</td><td>Which attachment port to use. </td></tr>
+    <tr><td class="paramname">tex</td><td>What to attach </td></tr>
+    <tr><td class="paramname">level</td><td>Mipmap level to attach. Is 0 by default. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.opengl.org/wiki/GLAPI/glFramebufferTexture">https://www.opengl.org/wiki/GLAPI/glFramebufferTexture</a> </dd>
+<dd>
+<a class="el" href="../../dc/de2/a00024_a2eaf8f3ddc6f4886dc369a3108e47fae.html#a2eaf8f3ddc6f4886dc369a3108e47fae" title="Specifies what buffers to render to. ">setDrawBuffers(const Size, const Enum*)</a> </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>This uses an OpenGL function and must be called in a thread with an OpenGL context. Otherwise, an error will be thrown. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GL_INVALID_OPERATION</td><td>If the current thread does not have an OpenGL context </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">layer</td><td>Which layer of the 3-dimensional image to use. It is 0 by default. </td></tr>

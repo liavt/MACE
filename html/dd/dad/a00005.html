@@ -102,28 +102,39 @@ $(document).ready(function(){initNavTree('dd/dad/a00005.html','../../');});
 <div class="title">Macros </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>#Macros</p>
-<p>There are many different macros that can determine how MACE works.</p>
+<div class="textblock"><p>There are many different macros that can determine how MACE works.</p>
 <h2>Macros that affect how MACE works</h2>
 <table class="doxtable">
 <tr>
 <th><em>Macro</em> </th><th><em>Effect</em>  </th></tr>
 <tr>
-<td>MACE_DEBUG </td><td>Does more error checking and more verbose error messages. Automatically defined in Debug configurations </td></tr>
+<td>MACE_DEBUG </td><td>Does more error checking and more verbose error messages. Automatically defined in Debug configurations. If defined to be 0 before including any MACE headers, will never be defined. </td></tr>
 <tr>
 <td>MACE_EXPOSE_WINAPI </td><td>If defined, classes that use Winapi will have functions to allow for direct access to any Winapi variables. Will not work if MACE_WINAPI is not defined. </td></tr>
 <tr>
 <td>MACE_EXPOSE_POSIX </td><td>If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined </td></tr>
+<tr>
+<td>MACE_EXPOSE_OPENGL </td><td>If defined, the OpenGL abstraction layer and renderer will be exposed by including <a class="el" href="../../d4/d3e/a00116_source.html">MACE.h</a> </td></tr>
+<tr>
+<td>MACE_EXPOSE_GLFW </td><td>If defined, os::WindowModule will expose the underlying GLFWwindow </td></tr>
+<tr>
+<td>MACE_EXPOSE_ALL </td><td>If defined, defined all macros starting with MACE_EXPOSE_* </td></tr>
 </table>
 <h3>Libraries</h3>
 <p>These macros are automatically defined if the specified library is found. Otherwise, you can manually define them.</p>
 <ul>
-<li>MACE_OPENCV</li>
 <li>MACE_X11</li>
 <li>MACE_WINAPI</li>
 <li>MACE_POSIX</li>
 </ul>
-<h3>Operating Systems</h3>
+<h4>OpenCV</h4>
+<p>MACE has optional interoptibility with OpenCV. To link OpenCV with CMake, set the OpenCV_* cache variables when running CMake.</p>
+<p>MACE will attempt to automatically detect OpenCV and defined MACE_OPENCV if found.</p>
+<p>To manually link OpenCV yourself, define MACE_OPENCV to be 1 before including any MACE header file:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;//specify that OpenCV is linked</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;#define MACE_OPENCV 1</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;#include &lt;MACE/MACE.h.</div></div><!-- fragment --><p>MACE will include <code>&lt;opencv2/opencv.hpp&gt;</code> if MACE_OPENCV is defined.</p>
+<p>Additionally, if CV_VERSION is defined, MACE_OPENCV will also be defined automatically.</p>
+<p>To request to never use OpenCV, even if it is included, define MACE_OPENCV to be 0 or false.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;//both of the following lines tell MACE to never use OpenCV</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;#define MACE_OPENCV 0</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;#define MACE_OPENCV false</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;#include &lt;MACE/MACE.h&gt;</div></div><!-- fragment --><h3>Operating Systems</h3>
 <p>One of these macros will be defined based on the operating system.</p>
 <ul>
 <li>MACE_OSX</li>
@@ -183,23 +194,35 @@ $(document).ready(function(){initNavTree('dd/dad/a00005.html','../../');});
 <td>MACE_DYNAMIC_LIBRARY_PREFIX </td><td>The prefix for dynamic libraries (such as lib.) Some systems may not have a prefix. </td></tr>
 <tr>
 <td>MACE_DYNAMIC_LIBRARY_SUFFIX </td><td>The suffix for dynamic libraries (such as .so, .dll, or .a.) </td></tr>
+<tr>
+<td>MACE_LITTLE_ENDIAN </td><td>Whether the system uses little endian (significant bit/byte last) </td></tr>
+<tr>
+<td>MACE_BIG_ENDIAN </td><td>Whether the system uses big endian (significant bit/byte first) </td></tr>
 </table>
 <h3>Utility macros</h3>
 <table class="doxtable">
 <tr>
 <th><em>Macro</em> </th><th><em>Meaning</em>  </th></tr>
 <tr>
-<td>MACE_FUNCTION_EXPORT </td><td>Modifier that tells the compiler that this function should be exported to the global symbol table. </td></tr>
+<td>MACE_FUNCTION_EXPORT </td><td>Modifier that tells the compiler that this function should be exported to the global symbol table. Could be empty </td></tr>
 <tr>
-<td>MACE_FUNCTION_IMPORT </td><td>Modifier that tells the compiler that this function will be imported from an exported symbol </td></tr>
+<td>MACE_FUNCTION_IMPORT </td><td>Modifier that tells the compiler that this function will be imported from an exported symbol. Could be empty. </td></tr>
+<tr>
+<td>MACE_HAS_ATTRIBUTE(attr) </td><td>If not defined previously, returns 0 if specified attribute is supported, 1 otherwise. If attributes are not supported by the compiler, always returns 0 </td></tr>
+<tr>
+<td>MACE_FALLTHROUGH </td><td>If not defined previously, if the compiler supports the fallthrough attribute, MACE_FALLTHROUGH is defined to that. Otherwise, defined to nothing </td></tr>
+<tr>
+<td>MACE_HAS_INCLUDE(incl) </td><td>If not defined previously, returns 1 if the system has the specified include file, 0 otherwise. Not all compilers support this. If unsupported by the compiler, returns 0 always. </td></tr>
+<tr>
+<td>MACE_CONSTEXPR </td><td>If not defined previously, defined to be <code>constexpr</code> on compilers that <code>constexpr</code> is supported, otherwise becomes nothing </td></tr>
+<tr>
+<td>MACE_STATIC_ASSERT(condition, message) </td><td>If not defined, defined to be <code>static_assert</code>. Can be defined before including MACE headers to change the static assert used by MACE </td></tr>
 <tr>
 <td>MACE_STRINGIFY(name) </td><td>Directly stringifies a macro </td></tr>
 <tr>
 <td>MACE_STRINGIFY_NAME(name) </td><td>Stringifies a macro name. If the expanded macro is empty, this function returns "" </td></tr>
 <tr>
 <td>MACE_STRINGIFY_DEFINITION(name) </td><td>Stringifies the definition of a macro. If the macro doesn't have a definition, this function returns "" </td></tr>
-<tr>
-<td>MACE_DECLARE_ERROR(name) </td><td>This macro should only be used internally. Creates a new Error class with the specified name. </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

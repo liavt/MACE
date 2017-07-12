@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initializer',['Initializer',['../dc/d87/a00032_a5d26a0aa56303737c594b42e7cdad905.html#a5d26a0aa56303737c594b42e7cdad905',1,'mc::Initializable']]]
+  ['graphicscontext',['GraphicsContext',['../d9/d73/a00060_a8fffd8ec74983da6e71d9f81690cea11.html#a8fffd8ec74983da6e71d9f81690cea11',1,'mc::gfx::Renderer']]]
 ];
