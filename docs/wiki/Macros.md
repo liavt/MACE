@@ -10,7 +10,9 @@ There are many different macros that can determine how MACE works.
 | MACE_EXPOSE_WINAPI | If defined, classes that use Winapi will have functions to allow for direct access to any Winapi variables. Will not work if MACE_WINAPI is not defined. |
 | MACE_EXPOSE_POSIX | If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined |
 | MACE_EXPOSE_OPENGL | If defined, the OpenGL abstraction layer and renderer will be exposed by including MACE.h |
-| MACE_EXPOSE_GLFW | If defined, WindowModule will expose the underlying GLFWwindow |
+| MACE_EXPOSE_GLFW | If defined, os::WindowModule will expose the underlying GLFWwindow |
+| MACE_EXPOSE_ALL | If defined, defined all macros starting with MACE_EXPOSE_* |
+
 
 ### Libraries
 
@@ -23,6 +25,8 @@ These macros are automatically defined if the specified library is found. Otherw
 #### OpenCV
 
 MACE has optional interoptibility with OpenCV. To link OpenCV with CMake, set the OpenCV_* cache variables when running CMake.
+
+MACE will attempt to automatically detect OpenCV and defined MACE_OPENCV if found.
 
 To manually link OpenCV yourself, define MACE_OPENCV to be 1 before including any MACE header file:
 
@@ -98,13 +102,21 @@ Otherwise, one of the following macros will be defined to the compiler version:
 | MACE_64_BIT | Whether this system is 64 bit. Defined if MACE_POINTER_SIZE == 8. |
 | MACE_DYNAMIC_LIBRARY_PREFIX | The prefix for dynamic libraries (such as lib.) Some systems may not have a prefix. |
 | MACE_DYNAMIC_LIBRARY_SUFFIX | The suffix for dynamic libraries (such as .so, .dll, or .a.) |
+| MACE_LITTLE_ENDIAN | Whether the system uses little endian (significant bit/byte last) |
+| MACE_BIG_ENDIAN | Whether the system uses big endian (significant bit/byte first) |
+
 
 ### Utility macros
 
 | *Macro* | *Meaning* |
 |---------------------------------|---------------------------------------------------------------------------------------------------------|
-| MACE_FUNCTION_EXPORT | Modifier that tells the compiler that this function should be exported to the global symbol table. |
-| MACE_FUNCTION_IMPORT | Modifier that tells the compiler that this function will be imported from an exported symbol |
+| MACE_FUNCTION_EXPORT | Modifier that tells the compiler that this function should be exported to the global symbol table. Could be empty |
+| MACE_FUNCTION_IMPORT | Modifier that tells the compiler that this function will be imported from an exported symbol. Could be empty. |
+| MACE_HAS_ATTRIBUTE(attr) | If not defined previously, returns 0 if specified attribute is supported, 1 otherwise. If attributes are not supported by the compiler, always returns 0  |
+| MACE_FALLTHROUGH | If not defined previously, if the compiler supports the fallthrough attribute, MACE_FALLTHROUGH is defined to that. Otherwise, defined to nothing  |
+| MACE_HAS_INCLUDE(incl) | If not defined previously, returns 1 if the system has the specified include file, 0 otherwise. Not all compilers support this. If unsupported by the compiler, returns 0 always. |
+| MACE_CONSTEXPR | If not defined previously, defined to be `constexpr` on compilers that `constexpr` is supported, otherwise becomes nothing |
+| MACE_STATIC_ASSERT(condition, message) | If not defined, defined to be `static_assert`. Can be defined before including MACE headers to change the static assert used by MACE |
 | MACE_STRINGIFY(name) | Directly stringifies a macro  |
 | MACE_STRINGIFY_NAME(name) | Stringifies a macro name. If the expanded macro is empty, this function returns "" |
 | MACE_STRINGIFY_DEFINITION(name) | Stringifies the definition of a macro. If the macro doesn't have a definition, this function returns "" |

@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Components.h>
 #include <MACE/Utility/Vector.h>
 

@@ -10,6 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define CATCH_CONFIG_RUNNER
 #include <Catch.h>
 
+#define MACE_EXPOSE_ALL 1
 #include <MACE/MACE.h>
 
 int main(int argc, char* const argv[]) {

@@ -12,6 +12,8 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__CORE_SYSTEM_H
 #define MACE__CORE_SYSTEM_H
 
+#include <MACE/Core/Constants.h>
+
 //basically pushing and popping the macro __STDC_LIB_EXT1__
 #ifdef __STDC_LIB_EXT1__
 //this entire mechanism below is to make sure that defining __STDC_WANT_LIB_EXT1__ doesnt cause any issues
@@ -63,7 +65,7 @@ namespace mc {
 		std::string toNarrowString(const std::wstring& s);
 
 		template<class T, std::size_t N>
-		inline constexpr std::size_t getArraySize(T(&)[N]) {
+		inline MACE_CONSTEXPR std::size_t getArraySize(T(&)[N]) {
 			return N;
 		}
 

@@ -25,7 +25,7 @@ class TestComponent: public gfx::Component {
 
 TestComponent r = TestComponent();
 
-void create(os::WindowModule&) {
+void create(os::WindowModule& win) {
 	gfx::Texture circle = gfx::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
 	circleBar = gfx::ProgressBar(100, 255, 20);
@@ -54,7 +54,7 @@ void create(os::WindowModule&) {
 
 	group.addChild(rectangleBar);
 
-	gfx::getRenderer()->setRefreshColor(Colors::LIGHT_GRAY);
+	win.getContext()->getRenderer()->setRefreshColor(Colors::LIGHT_GRAY);
 }
 
 int main() {

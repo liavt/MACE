@@ -24,7 +24,7 @@ namespace mc {
 #ifdef MACE_WINAPI
 		runningProcess.dll = GetModuleHandle(nullptr);
 
-		constexpr char* errorMessage = "Handle to running process was nullptr";
+		MACE_CONSTEXPR char* errorMessage = "Handle to running process was nullptr";
 #elif defined(MACE_POSIX)
 		//the NULL macro is used instead of nullptr because dlopen accepts an argument of 0 specifically 
 		//it needs to be an integer, not a pointer value.
@@ -95,7 +95,7 @@ namespace mc {
 			errorMessage = systemError;
 		}
 #else
-		constexpr char* errorMessage = "Library handle was nullptr";
+		MACE_CONSTEXPR char* errorMessage = "Library handle was nullptr";
 #endif
 
 		if (dll == nullptr) {
@@ -163,7 +163,7 @@ namespace mc {
 #ifdef MACE_POSIX
 			const char* errorMessage = dlerror();
 #else
-			constexpr char* errorMessage = "Returned function pointer was null pointer";
+			MACE_CONSTEXPR char* errorMessage = "Returned function pointer was null pointer";
 #endif
 
 			os::checkError(__LINE__, __FILE__, "Attempt to load symbol " + std::string(name) + " returned a nullptr: " + std::string(errorMessage));

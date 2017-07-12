@@ -24,13 +24,15 @@ namespace mc {
 //OpenGL renderer and are useless to the end user unless they are using the OpenGL abstraction
 #ifdef MACE_EXPOSE_OPENGL
 #	include <MACE/Graphics/OGL/OGL.h>
-#	include <MACE/Graphics/OGL/GLRenderer.h>
+#	include <MACE/Graphics/OGL/OGL33Renderer.h>
+#	include <MACE/Graphics/OGL/OGL33Context.h>
 #endif
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Window.h>
 
 #endif

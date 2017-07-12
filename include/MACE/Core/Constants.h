@@ -17,6 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	error A C++ compiler is required!
 #endif//__cplusplus
 
+//checking if MACE should be compiled in debug mode
 #ifdef MACE_DEBUG
 #	if MACE_DEBUG == 0 || MACE_DEBUG == false
 #		undef MACE_DEBUG
@@ -25,45 +26,84 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_DEBUG 1
 #endif//elif
 
+//defining keywords defining function symbol export and import
+#if !defined(MACE_FUNCTION_EXPORT)&&!defined(MACE_FUNCTION_IMPORT)
+#	ifdef MACE_WINDOWS
+#		ifdef MACE_GNU
+#			define MACE_FUNCTION_EXPORT __attribute__((dllexport))
+#			define MACE_FUNCTION_EXPORT __attribute__((dllimport))
+#		else
+#			define MACE_FUNCTION_EXPORT __declspec(dllexport)
+#			define MACE_FUNCTION_IMPORT __declspec(dllimport)
+#		endif
+#	else
+#		define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
+#		define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
+#	endif
+#endif
+
+//checks for a C++ attribute in the form of [[attribute]]
+#ifndef MACE_HAS_ATTRIBUTE
+#	ifndef __has_cpp_attribute
+#		define MACE_HAS_ATTRIBUTE(attr) 0
+#	else
+#		define MACE_HAS_ATTRIBUTE(attr) __has_cpp_attribute(attr)
+#	endif
+#endif
+
+//[[fallthrough]] attribute
+#ifndef MACE_FALLTHROUGH
+#	if MACE_HAS_ATTRIBUTE(fallthrough)
+#		define MACE_FALLTHROUGH [[fallthrough]]
+#	else
+#		define MACE_FALLTHROUGH
+#	endif
+#endif
+
+//whether the specificed include is available
+#ifndef MACE_HAS_INCLUDE
+#	ifndef __has_include
+#		define MACE_HAS_INCLUDE(incl) 0
+#	else
+#		define MACE_HAS_INCLUDE(incl) __has_include(incl)
+#	endif
+#endif
+
+//whether opencv interoptibility should be built
 #ifdef MACE_OPENCV
 #	if MACE_OPENCV == 0 || MACE_OPENCV == false
 #		undef MACE_OPENCV
 #	endif
 //if doxygen is running or opencv is detected, set MACE_OPENCV to 1 if it hasnt been defined already
-#elif defined(MACE_DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
+#elif MACE_HAS_INCLUDE(<opencv2/opencv.hpp>)||defined(MACE__DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
 #	define MACE_OPENCV 1
 #endif
 
-#ifdef MACE_WINDOWS
-#	ifdef MACE_GNU
-#		define MACE_FUNCTION_EXPORT __attribute__((dllexport))
-#		define MACE_FUNCTION_EXPORT __attribute__((dllimport))
+//constexpr
+#ifndef MACE_CONSTEXPR
+#	if defined(__cpp_constexpr) && __cpp_constexpr >= 200704
+#		define MACE_CONSTEXPR constexpr
 #	else
-#		define MACE_FUNCTION_EXPORT __declspec(dllexport)
-#		define MACE_FUNCTION_IMPORT __declspec(dllimport)
+#		define MACE_CONSTEXPR
 #	endif
-#else
-#	define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
-#	define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
 #endif
 
-#ifndef __has_cpp_attribute
-#	define MACE_HAS_ATTRIBUTE(attr) 0
-#else
-#	define MACE_HAS_ATTRIBUTE(attr) __has_cpp_attribute(attr)
-#endif
-
-#if MACE_HAS_ATTRIBUTE(fallthrough)
-#	define MACE_FALLTHROUGH [[fallthrough]]
-#else
-#	define MACE_FALLTHROUGH
+//static assert
+//allows users to use a different static assert (such as boost's static asssert)
+#ifndef MACE_STATIC_ASSERT
+#	define MACE_STATIC_ASSERT(cond, message) static_assert( cond , message )
 #endif
 
 #define MACE_STRINGIFY(name) #name
 #define MACE_STRINGIFY_NAME(name) "" #name
 #define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
 
-#ifdef MACE_DOXYGEN_PASS
+//meaning doxygen is currently parsing this file
+#ifdef MACE__DOXYGEN_PASS
+#	define MACE_EXPOSE_ALL 1
+#endif
+
+#ifdef MACE_EXPOSE_ALL
 #	define MACE_EXPOSE_WINAPI 1
 #	define MACE_EXPOSE_POSIX 1
 #	define MACE_EXPOSE_OPENGL 1

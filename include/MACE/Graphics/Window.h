@@ -24,14 +24,22 @@ namespace mc {
 	//forward declaration for the input namespace
 	struct BitField;
 
+	namespace gfx {
+		class GraphicsContext;
+	}
+
 	namespace os {
+		/**
+		Thrown when GLFW (windowing library) throws an error
+		*/
+		MACE__DECLARE_ERROR(Window);
+
 		/**
 		@todo move the fps handling code away from ctime and to chrono and use a dynamic timestep
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
-			enum class RendererType {
-				CUSTOM,
+			enum class ContextType {
 				AUTOMATIC,
 				BEST_OGL,
 				OGL33
@@ -50,7 +58,7 @@ namespace mc {
 
 				unsigned int fps = 30;
 
-				RendererType rendererType = RendererType::AUTOMATIC;
+				ContextType contextType = ContextType::AUTOMATIC;
 
 				WindowCallback onCreate = [](WindowModule&) {};
 				WindowCallback onClose = [](WindowModule&) {};
@@ -102,6 +110,9 @@ namespace mc {
 			bool isDestroyed() const;
 
 			Vector<int, 2> getFramebufferSize() const;
+
+			std::shared_ptr<gfx::GraphicsContext> getContext();
+			const std::shared_ptr<const gfx::GraphicsContext> getContext() const;
 		private:
 			enum Properties: Byte {
 				DESTROYED = 0,
@@ -115,6 +126,8 @@ namespace mc {
 
 			BitField properties;
 
+			std::shared_ptr<gfx::GraphicsContext> context;
+
 			void clean() final;
 
 			//these are for the Entity inheritence
@@ -125,6 +138,12 @@ namespace mc {
 
 			void threadCallback();
 		};//WindowModule
+
+		WindowModule* getCurrentWindow();
+
+#ifdef MACE_EXPOSE_GLFW
+		WindowModule* convertGLFWWindowToModule(GLFWwindow* win);
+#endif
 
 		namespace Input {
 			/*

@@ -8,8 +8,8 @@ gfx::Group group;
 
 gfx::Text topLeft, center, topRight, botLeft, botRight;
 
-void create(os::WindowModule&) {
-	gfx::getRenderer()->setRefreshColor(Colors::DARK_GREEN);
+void create(os::WindowModule& win) {
+	win.getContext()->getRenderer()->setRefreshColor(Colors::DARK_GREEN);
 
 	center = gfx::Text(L"©enter text!", gfx::Fonts::CODE);
 

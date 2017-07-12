@@ -8,8 +8,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #pragma once
-#ifndef MACE__GRAPHICS_OGLRENDERER_H
-#define MACE__GRAPHICS_OGLRENDERER_H
+#ifndef MACE__GRAPHICS_OGL_OGL33RENDERER_H
+#define MACE__GRAPHICS_OGL_OGL33RENDERER_H
 
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL/OGL.h>
@@ -20,41 +20,6 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			class OGL33Renderer;
-
-			class OGL33Model: public ModelImpl, private ogl::VertexArray {
-				friend class OGL33Renderer;
-			public:
-				void init() override;
-				void destroy() override;
-			};
-
-			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
-				friend class OGL33Renderer;
-			public:
-				void init() override;
-				void destroy() override;
-
-				void bind() const override;
-				void bind(const Index location) const override;
-				void unbind() const override;
-
-				bool isCreated() const override;
-
-				void setMinFilter(const gfx::Texture::ResizeFilter filter) override;
-				void setMagFilter(const gfx::Texture::ResizeFilter filter) override;
-
-				void setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
-				void setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
-
-				void setWrapS(const Texture::WrapMode wrap) override;
-				void setWrapT(const Texture::WrapMode wrap) override;
-
-				void setData(const void* data, const Size width, const Size height, const Texture::Type type = Texture::Type::FLOAT, const Texture::Format format = Texture::Format::RGB, const Texture::InternalFormat internalFormat = Texture::InternalFormat::RGB, const Index mipmap = 0) override;
-
-				void getImage(const Texture::Format format, const Texture::Type type, void* data) const override;
-
-				void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) override;
-			};
 
 			class OGL33Painter: public PainterImpl {
 				friend class OGL33Renderer;
@@ -88,8 +53,6 @@ namespace mc {
 				GraphicsEntity* getEntityAt(const int x, const int y) override;
 
 				std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const override;
-				std::shared_ptr<TextureImpl> getTexture() const override;
-				std::shared_ptr<ModelImpl> getModel() const override;
 
 				const Preprocessor& getSSLPreprocessor();
 			private:
@@ -99,8 +62,6 @@ namespace mc {
 				ogl::RenderBuffer depthBuffer;
 
 				ogl::Texture2D sceneTexture, idTexture;
-
-				std::map<Byte, std::shared_ptr<ogl::OGL33Texture>> textureImpls;
 
 				Color clearColor;
 

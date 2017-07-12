@@ -51,14 +51,14 @@ namespace mc {
 		<p>
 		A punctuator according to the standard is something that seperates tokens.
 		*/
-		constexpr char punctuators1c[] = {
+		MACE_CONSTEXPR char punctuators1c[] = {
 			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
 		};
 
 		/**
 		2 character long punctuators
 		*/
-		constexpr char const * punctuators2c[] = {
+		MACE_CONSTEXPR char const * punctuators2c[] = {
 			">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
 		};
 

@@ -644,8 +644,8 @@ namespace mc {
 
 			const float widthScale = 1.0f / metrics.scale[0], heightScale = 1.0f / metrics.scale[1];
 
-			const float origWidth = static_cast<const float>(getRenderer()->getOriginalWidth()),
-				origHeight = static_cast<const float>(getRenderer()->getOriginalHeight());
+			const float origWidth = static_cast<const float>(os::getCurrentWindow()->getLaunchConfig().height),
+				origHeight = static_cast<const float>(os::getCurrentWindow()->getLaunchConfig().height);
 
 			const bool hasKerning = font.hasKerning();
 

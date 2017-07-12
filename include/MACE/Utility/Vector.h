@@ -121,7 +121,7 @@ namespace mc {
 		Vector3i mat = {1, 2, 3};
 		}
 		@param args What to create this `Vector` with
-		@todo Make this constexpr
+		@todo Make this MACE_CONSTEXPR
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
@@ -184,7 +184,7 @@ namespace mc {
 		Retrieves how many elements this `Vector` holds
 		@return How large this `Vector` is
 		*/
-		constexpr Size size() const noexcept {
+		MACE_CONSTEXPR Size size() const noexcept {
 			return N;
 		};
 

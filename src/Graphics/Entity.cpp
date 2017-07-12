@@ -9,6 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Context.h>
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Error.h>
 #include <MACE/Utility/Transform.h>
@@ -216,7 +217,7 @@ namespace mc {
 
 			m.rotation += m.inheritedRotation;
 
-			const Vector<float, 2> windowRatios = getRenderer()->getWindowRatios();
+			const Vector<float, 2> windowRatios = os::getCurrentWindow()->getContext()->getRenderer()->getWindowRatios();
 
 			if (getProperty(Entity::MAINTAIN_X)) {
 				m.translation[0] *= windowRatios[0];
@@ -665,7 +666,7 @@ namespace mc {
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::init() {
-			id = getRenderer()->queue(this);
+			id = os::getCurrentWindow()->getContext()->getRenderer()->queue(this);
 
 			Entity::init();
 		}
@@ -673,7 +674,7 @@ namespace mc {
 		void GraphicsEntity::destroy() {
 			Entity::destroy();
 
-			getRenderer()->remove(id);
+			os::getCurrentWindow()->getContext()->getRenderer()->remove(id);
 
 			id = 0;
 		}

@@ -82,8 +82,8 @@ namespace mc {
 		*/
 		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>()//extending default construtor so it initializes the array
 		{
-			static_assert(W != 0, "A Matrix's width must be greater than 0!");
-			static_assert(H != 0, "A Matrix's height must be greater than 0!");
+			MACE_STATIC_ASSERT(W != 0, "A Matrix's width must be greater than 0!");
+			MACE_STATIC_ASSERT(H != 0, "A Matrix's height must be greater than 0!");
 			for( Index i = 0; i < W; ++i ) {
 				content[i] = MatrixRow<T, H>();
 			}
@@ -138,7 +138,7 @@ namespace mc {
 		@see #height()
 		@see #width()
 		*/
-		constexpr Size size() const {
+		MACE_CONSTEXPR Size size() const {
 			return W*H;
 		}
 
@@ -148,7 +148,7 @@ namespace mc {
 		@see #height()
 		@see #size()
 		*/
-		constexpr Size width() const {
+		MACE_CONSTEXPR Size width() const {
 			return W;
 		}
 		/**
@@ -157,7 +157,7 @@ namespace mc {
 		@see #width()
 		@see #size()
 		*/
-		constexpr Size height() const {
+		MACE_CONSTEXPR Size height() const {
 			return H;
 		}
 
@@ -276,7 +276,7 @@ namespace mc {
 		@pre The Matrix's width must not be larger than the height
 		*/
 		Vector<T, H> operator+(const Vector<T, H>& right) const {
-			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
+			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for( Index x = 0; x < W; ++x ) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
@@ -297,7 +297,7 @@ namespace mc {
 		@pre The Matrix's width must not be larger than the height
 		*/
 		Vector<T, H> operator-(const Vector<T, H>& right) const {
-			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
+			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for( Index x = 0; x < W; ++x ) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
@@ -318,7 +318,7 @@ namespace mc {
 		@pre The Matrix's width must not be larger than the height
 		*/
 		Vector<T, H> operator*(const Vector<T, H>& right) const {
-			static_assert(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
+			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for( Index x = 0; x < W; ++x ) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
@@ -338,7 +338,7 @@ namespace mc {
 		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
-			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
+			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
 			for( Index x = 0; x < W; ++x ) {
 				for( Index y = 0; y < H; ++y ) {
@@ -357,7 +357,7 @@ namespace mc {
 		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
-			static_assert(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
+			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
 			for( Index x = 0; x < W; ++x ) {
 				for( Index y = 0; y < H; ++y ) {
@@ -377,7 +377,7 @@ namespace mc {
 		@pre Both Matrices' width and height must be equal to each other
 		*/
 		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
-			static_assert(W == H, "In order to multiply matrices, the width must equal to the height.");
+			MACE_STATIC_ASSERT(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
 			for( Index x = 0; x < W; ++x ) {
 				for( Index y = 0; y < H; ++y ) {
@@ -419,7 +419,7 @@ namespace mc {
 		@bug Not finished
 		*/
 		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
-			static_assert(W == H, "In order to divide matrices, the width must equal to the height.");
+			MACE_STATIC_ASSERT(W == H, "In order to divide matrices, the width must equal to the height.");
 			return this->operator*(math::inverse(right));
 		}
 
@@ -533,11 +533,11 @@ namespace mc {
 		*/
 		template<typename T, Size N>
 		T det(const Matrix<T, N, N>& matrix) {
-			static_assert(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
+			MACE_STATIC_ASSERT(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
 			T sum = T();
 			Index counter = 0;
 			for( Index i = 0; i < N; ++i ) {
-				constexpr Size newMatrixSize = N - 1;
+				MACE_CONSTEXPR Size newMatrixSize = N - 1;
 				Matrix<T, newMatrixSize, newMatrixSize> m = Matrix<T, newMatrixSize, newMatrixSize>();
 				Index counterX = 0;
 				Index counterY = 0;
@@ -619,7 +619,7 @@ namespace mc {
 		*/
 		template<typename T, Size N>
 		Matrix<T, N, N> inverse(const Matrix<T, N, N>& matrix) {
-			static_assert(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
+			MACE_STATIC_ASSERT(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
 			//honestly, this next line really seems magical to me. matrices really seem magical in general. But
 			//this especialy. matrices are really something, aren't they?
 			return	(((identity<T, N>()*tr(matrix)) - matrix) * (1 / det(matrix)));//calculate via the caley-hamilton method

@@ -10,10 +10,13 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/System.h>
 
+#define MACE_EXPOSE_GLFW
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/OGL/OGL.h>
-#include <MACE/Graphics/OGL/OGLRenderer.h>
+#include <MACE/Graphics/OGL/OGL33Renderer.h>
+#include <MACE/Graphics/OGL/OGL33Context.h>
 
 #include <MACE/Utility/BitField.h>
 
@@ -43,9 +46,9 @@ namespace mc {
 				keys[key] = action;
 			}
 
-			GLFWwindow* createWindow(const bool fullscreen, const Size width, const Size height, const std::string& title) {
+			GLFWwindow* createWindow(const WindowModule::LaunchConfig& config) {
 				GLFWmonitor* mon = nullptr;
-				if (fullscreen) {
+				if (config.fullscreen) {
 					mon = glfwGetPrimaryMonitor();
 
 					const GLFWvidmode* mode = glfwGetVideoMode(mon);
@@ -54,11 +57,82 @@ namespace mc {
 					glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 					glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-					return glfwCreateWindow(mode->width, mode->height, title.c_str(), mon, nullptr);
+					return glfwCreateWindow(mode->width, mode->height, config.title, mon, nullptr);
 				} else {
-					return glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+					return glfwCreateWindow(config.width, config.height, config.title, nullptr, nullptr);
 				}
 			}
+
+			///GLFW callback functions
+
+			void onGLFWError(int id, const char* desc) {
+				MACE__THROW(Window, "GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
+			};
+
+			void onWindowClose(GLFWwindow* window) {
+				WindowModule* mod = convertGLFWWindowToModule(window);
+				mod->makeDirty();
+
+				const os::WindowModule::LaunchConfig& config = mod->getLaunchConfig();
+				config.onClose(*mod);
+
+				if (config.terminateOnClose) {
+					mc::MACE::requestStop();
+				}
+			};
+
+			void onWindowKeyButton(GLFWwindow*, int key, int, int action, int mods) {
+				BitField actions = BitField(0);
+				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
+				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
+				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
+				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
+				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
+				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
+				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+
+				pushKeyEvent(static_cast<short int>(key), actions);
+			};
+
+			void onWindowMouseButton(GLFWwindow*, int button, int action, int mods) {
+				BitField actions = BitField(0);
+				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
+				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
+				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
+				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
+				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
+				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
+				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+
+				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
+				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
+			};
+
+			void onWindowCursorPosition(GLFWwindow* window, double xpos, double ypos) {
+				mouseX = static_cast<int>(mc::math::floor(xpos));
+				mouseY = static_cast<int>(mc::math::floor(ypos));
+
+				WindowModule* win = convertGLFWWindowToModule(window);
+				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
+			};
+
+			void onWindowScrollWheel(GLFWwindow* window, double xoffset, double yoffset) {
+				scrollY = yoffset;
+				scrollX = xoffset;
+
+				WindowModule* win = convertGLFWWindowToModule(window);
+				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
+			};
+
+			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
+				WindowModule* win = convertGLFWWindowToModule(window);
+				win->getContext()->getRenderer()->flagResize();
+				win->makeDirty();
+			};
+
+			void onWindowDamaged(GLFWwindow* window) {
+				convertGLFWWindowToModule(window)->makeDirty();
+			};
 		}//anon namespace
 
 		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
@@ -66,18 +140,11 @@ namespace mc {
 		WindowModule::WindowModule(const int width, const int height, const char * title) : config(LaunchConfig(width, height, title)) {}
 
 		void WindowModule::create() {
-			switch (config.rendererType) {
-				case RendererType::CUSTOM:
-					if (gfx::getRenderer() == nullptr) {
-						MACE__THROW(NullPointer, "In order to use a custom Renderer, you must call setRenderer() before MACE::init()");
-					}
-
-					glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-					break;
-				case RendererType::AUTOMATIC:
-				case RendererType::BEST_OGL:
-				case RendererType::OGL33:
-					gfx::setRenderer(new gfx::ogl::OGL33Renderer());
+			switch (config.contextType) {
+				case ContextType::AUTOMATIC:
+				case ContextType::BEST_OGL:
+				case ContextType::OGL33:
+					context = std::shared_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
 
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -91,16 +158,16 @@ namespace mc {
 					break;
 			}
 
-			if (gfx::getRenderer() == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: Renderer is nullptr!");
+			if (context == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: GraphicsContext is nullptr");
 			}
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
 			glfwWindowHint(GLFW_DECORATED, config.decorated);
 
-			window = createWindow(config.fullscreen, config.width, config.height, config.title);
+			window = createWindow(config);
 
-			if (config.rendererType == RendererType::BEST_OGL || config.rendererType == RendererType::AUTOMATIC) {
+			if (config.contextType == ContextType::BEST_OGL || config.contextType == ContextType::AUTOMATIC) {
 				int versionMajor = 3;
 
 				//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
@@ -111,7 +178,7 @@ namespace mc {
 
 					glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 
-					window = createWindow(properties.getBit(config.fullscreen), config.width, config.height, config.title);
+					window = createWindow(config);
 					if (versionMinor == 0 && versionMajor > 1 && !window) {
 						glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
 						versionMinor = 3;
@@ -128,90 +195,28 @@ namespace mc {
 
 			gfx::ogl::checkGLError(__LINE__, __FILE__, "Error creating window");
 
-			gfx::getRenderer()->init(config.width, config.height);
+			context->init();
 
 			if (config.vsync)glfwSwapInterval(1);
 			else glfwSwapInterval(0);
 
 			glfwSetWindowUserPointer(window, this);
 
-			const auto closeCallback = [](GLFWwindow* window) {
-				WindowModule* mod = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
-				mod->makeDirty();
+			glfwSetWindowCloseCallback(window, &onWindowClose);
+			glfwSetKeyCallback(window, &onWindowKeyButton);
+			glfwSetMouseButtonCallback(window, &onWindowMouseButton);
+			glfwSetCursorPosCallback(window, &onWindowCursorPosition);
+			glfwSetScrollCallback(window, &onWindowScrollWheel);
 
-				const LaunchConfig& config = mod->getLaunchConfig();
-				config.onClose(*mod);
-
-				if (config.terminateOnClose) {
-					mc::MACE::requestStop();
-				}
-			};
-			glfwSetWindowCloseCallback(window, closeCallback);
-
-			const auto keyDown = [](GLFWwindow*, int key, int, int action, int mods) {
-				BitField actions = BitField(0);
-				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
-				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
-				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
-				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
-				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
-				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
-				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
-
-				pushKeyEvent(static_cast<short int>(key), actions);
-			};
-			glfwSetKeyCallback(window, keyDown);
-
-			const auto mouseDown = [](GLFWwindow*, int button, int action, int mods) {
-				BitField actions = BitField(0);
-				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
-				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
-				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
-				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
-				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
-				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
-				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
-
-				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
-				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
-			};
-			glfwSetMouseButtonCallback(window, mouseDown);
-
-			const auto cursorPosition = [](GLFWwindow* window, double xpos, double ypos) {
-				mouseX = static_cast<int>(mc::math::floor(xpos));
-				mouseY = static_cast<int>(mc::math::floor(ypos));
-
-				WindowModule* win = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
-				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
-			};
-			glfwSetCursorPosCallback(window, cursorPosition);
-
-			const auto scrollWheel = [](GLFWwindow* window, double xoffset, double yoffset) {
-				scrollY = yoffset;
-				scrollX = xoffset;
-
-				WindowModule* win = static_cast<WindowModule*>(glfwGetWindowUserPointer(window));
-				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
-			};
-			glfwSetScrollCallback(window, scrollWheel);
-
-			const auto framebufferResize = [](GLFWwindow* window, int, int) {
-				gfx::getRenderer()->flagResize();
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
-			};
-			glfwSetFramebufferSizeCallback(window, framebufferResize);
-
-			const auto windowDamaged = [](GLFWwindow* window) {
-				static_cast<WindowModule*>(glfwGetWindowUserPointer(window))->makeDirty();
-			};
-			glfwSetWindowRefreshCallback(window, windowDamaged);
+			glfwSetFramebufferSizeCallback(window, &onWindowFramebufferResized);
+			glfwSetWindowRefreshCallback(window, &onWindowDamaged);
 
 			int width = 0, height = 0;
 
 			glfwGetFramebufferSize(window, &width, &height);
 
 			if (width != config.width || height != config.height) {
-				gfx::getRenderer()->resize(width, height);
+				context->getRenderer()->resize(width, height);
 			}
 
 			config.onCreate(*this);
@@ -264,12 +269,12 @@ namespace mc {
 						glfwPollEvents();
 
 						if (getProperty(Entity::DIRTY)) {
-							gfx::getRenderer()->setUp(this);
+							context->getRenderer()->setUp(this);
 							Entity::render();
-							gfx::getRenderer()->tearDown(this);
+							context->getRenderer()->tearDown(this);
 						}
 
-						gfx::getRenderer()->checkInput(this);
+						context->render();
 
 						if (!MACE::isRunning()) {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
@@ -299,7 +304,7 @@ namespace mc {
 				try {
 					Entity::destroy();
 
-					gfx::getRenderer()->destroy();
+					context->destroy();
 
 					glfwDestroyWindow(window);
 				} catch (const std::exception& e) {
@@ -314,10 +319,7 @@ namespace mc {
 				MACE__THROW(InitializationFailed, "GLFW failed to initialize!");
 			}
 
-			const auto errorCallback = [](int id, const char* desc) {
-				throw gfx::ogl::OpenGLError("GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
-			};
-			glfwSetErrorCallback(errorCallback);
+			glfwSetErrorCallback(&onGLFWError);
 
 			windowThread = std::thread(&WindowModule::threadCallback, this);
 		}
@@ -342,7 +344,7 @@ namespace mc {
 		}//destroy
 
 		std::string WindowModule::getName() const {
-			return "MACE/Window";
+			return "MACE/Window#" + std::string(config.title);
 		}//getName()
 
 		bool WindowModule::isDestroyed() const {
@@ -355,7 +357,14 @@ namespace mc {
 
 			return out;
 		}
-		//isDestroyed
+
+		std::shared_ptr<gfx::GraphicsContext> WindowModule::getContext() {
+			return context;
+		}
+
+		const std::shared_ptr<const gfx::GraphicsContext> WindowModule::getContext() const {
+			return context;
+		}
 
 		void WindowModule::onInit() {}
 
@@ -400,6 +409,28 @@ namespace mc {
 		}//Input
 
 		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char * t) : title(t), width(w), height(h) {}
+
+		WindowModule * getCurrentWindow() {
+			GLFWwindow* win = glfwGetCurrentContext();
+			if (win == nullptr) {
+				MACE__THROW(NullPointer, "No window in this thread");
+			}
+
+			return convertGLFWWindowToModule(win);
+		}
+
+		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {
+			if (win == nullptr) {
+				MACE__THROW(NullPointer, "Input to convertGLFWWindowToModule is nullptr!");
+			}
+
+			WindowModule* windowModule = static_cast<WindowModule*>(glfwGetWindowUserPointer(win));
+			if (windowModule == nullptr) {
+				MACE__THROW(NullPointer, "No window module found in window");
+			}
+
+			return windowModule;
+		}
 
 	}//os
 }//mc
