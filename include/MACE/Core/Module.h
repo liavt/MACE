@@ -136,7 +136,6 @@ namespace mc {
 		Retrieve a pointer to a `Module` with the specified name.
 		<p>
 		It will find the `Module` based on their {@link Module#getName() getName()} function, so if there are multiple `Modules` with the same name, this function may produce unexpected behavior.
-		@throw ObjectNotFoundInArray if there is no `Module` with the specified name
 		@return A `Module` whose `getName()` function returns the specified keyword
 		@param keyword Name to look for
 		@see #getModule(Index)

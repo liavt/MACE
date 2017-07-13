@@ -1,4 +1,4 @@
-#include <Catch.h>
+#include <Catch.hpp>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/MatrixTypes.h>
 

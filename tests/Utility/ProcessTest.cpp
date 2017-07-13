@@ -13,7 +13,7 @@ int main() {
 	return 5;
 }
 #else//MACE_PROC_OUT_PASS
-#include <Catch.h>
+#include <Catch.hpp>
 #define MACE_EXPOSE_WINAPI
 #define MACE_EXPOSE_POSIX
 #include <MACE/Utility/Process.h>

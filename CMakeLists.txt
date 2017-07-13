@@ -36,6 +36,7 @@ include(CheckIncludeFiles)
 include(TestBigEndian)
 include(CheckTypeSize)
 include(ExternalProject)
+include(ParseAndAddCatchTests)
 
 option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
 option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
@@ -76,11 +77,11 @@ set(MACE_OUTPUT_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
 
 set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
 #This is where Catch should be located in
-set(CATCH_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}/Catch.h")
+set(CATCH_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}")
 
 #stb_image is a single header only image loading library.
 set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
-set(STB_IMAGE_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}/stb_image.h")
+set(STB_IMAGE_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -89,6 +90,16 @@ find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
+
+#finding header-only libraries
+
+find_path(STB_IMAGE_INCLUDE_DIR "stb_image.h" HINTS "${STB_IMAGE_DOWNLOAD_PATH}" PATH_SUFFIXES stb stb_image)
+find_package_handle_standard_args(stb_image DEFAULT_MSG STB_IMAGE_INCLUDE_DIR)
+mark_as_advanced(STB_IMAGE_INCLUDE_DIR)
+
+find_path(CATCH_INCLUDE_DIR "Catch.hpp" HINTS "${CATCH_INCLUDE_DIR}" "${CATCH_DOWNLOAD_PATH}" PATH_SUFFIXES catch single_include)
+find_package_handle_standard_args(Catch DEFAULT_MSG CATCH_INCLUDE_DIR)
+mark_as_advanced(CATCH_INCLUDE_DIR)
 
 if(MACE_SWIG)
 	find_package(SWIG REQUIRED)
@@ -104,18 +115,23 @@ elseif(MACE_SWIG_LANGUAGE)
 	message(WARNING "MACE_SWIG_LANGUAGE has no effect if MACE_SWIG isnt enabled")
 endif()
 
-if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}")
-	if(${MACE_DOWNLOAD_DEPENDENCIES})
-		#Catch is one header file, so its easy to fix. Just download it!
-		message(STATUS "Downloading STB_IMAGE..")
-		file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}")
-		message(STATUS "Done downloading STB_IMAGE.")
+if(NOT stb_image_FOUND)
+	if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
+		if(${MACE_DOWNLOAD_DEPENDENCIES})
+			#stb_image is one header file, so its easy to fix. Just download it!
+			message(STATUS "Downloading STB_IMAGE..")
+			file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
+			message(STATUS "Done downloading STB_IMAGE.")
+		else()
+			message(FATAL_ERROR "STB_IMAGE is not  found!")
+		endif()
 	else()
-		message(FATAL_ERROR "STB_IMAGE is not  found!")
+		message(STATUS "STB_IMAGE found.")
 	endif()
-else()
-	message(STATUS "STB_IMAGE found.")
+	set(STB_IMAGE_INCLUDE_DIR ${STB_IMAGE_DOWNLOAD_PATH})
 endif()
+
+
 
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/*.h"  "${MACE_INCLUDES}/MACE/Graphics/*.h" "${MACE_INCLUDES}/MACE/System/*.h" "${MACE_INCLUDES}/MACE/Utility/*.h")
 file(GLOB_RECURSE SRC "src/*.cpp")
@@ -172,17 +188,19 @@ if(MACE_SWIG)
 endif()
 
 if(${MACE_TESTS})
-	if (NOT EXISTS "${CATCH_DOWNLOAD_PATH}")
-		if(${MACE_DOWNLOAD_DEPENDENCIES})
-			#Catch is one header file, so its easy to fix. Just download it!
-			message(STATUS "Downloading Catch..")
-			file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}")
-			message(STATUS "Done downloading Catch.")
-		else()
-			message(FATAL_ERROR "Catch is not  found!")
+	if(NOT Catch_FOUND)
+		if(NOT EXISTS ${CATCH_DOWNLOAD_PATH}/Catch.hpp)
+			if(${MACE_DOWNLOAD_DEPENDENCIES})
+				#Catch is one header file, so its easy to fix. Just download it!
+				message(STATUS "Downloading Catch..")
+				file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}/Catch.hpp")
+				set(CATCH_INCLUDE_DIR, "${CATCH_DOWNLOAD_PATH}/Catch.hpp")
+				message(STATUS "Done downloading Catch.")
+			else()
+				message(FATAL_ERROR "Catch is not found!")
+			endif()
 		endif()
-	else()
-		message(STATUS "Catch found.")
+		set(CATCH_INCLUDE_DIR ${CATCH_DOWNLOAD_PATH})
 	endif()
 
 	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
@@ -190,6 +208,7 @@ if(${MACE_TESTS})
 			
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
 	target_include_directories(MACE-Testing PUBLIC ${MACE_INCLUDES})
+	target_include_directories(MACE-Testing PUBLIC ${CATCH_INCLUDE_DIR})
 	
 	#to test runtime dll linking we compiled a source file twice: once as part as MACE-Testing and one as a shared library to test runtime linking
 	add_library(MACE-DynamicLibraryTest SHARED "tests/Utility/DynamicLibraryTest.cpp")
@@ -213,7 +232,8 @@ if(${MACE_TESTS})
 	set_target_properties(MACE-DynamicLibraryTest PROPERTIES FOLDER "MC/Tests")
 	set_target_properties(MACE-ProcessTest PROPERTIES FOLDER "MC/Tests")
 	
-	add_test(NAME MACE-Test COMMAND MACE-Testing)
+	enable_testing()
+	ParseAndAddCatchTests(MACE-Testing)
 endif()
 
 if(${MACE_DEMOS})
@@ -377,6 +397,7 @@ target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
 target_include_directories(MACE PUBLIC ${OPENAL_INCLUDE_DIR})
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
+target_include_directories(MACE PUBLIC ${STB_IMAGE_INCLUDE_DIR})
 
 target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})

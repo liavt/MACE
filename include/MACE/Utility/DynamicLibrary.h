@@ -13,12 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Core/Constants.h>
 
-#ifdef MACE_WINAPI
-#	define WIN32_LEAN_AND_MEAN
-#	include <windows.h>
-#	undef WIN32_LEAN_AND_MEAN
-#endif
-
 #include <string>
 
 namespace mc {
@@ -50,7 +44,7 @@ namespace mc {
 		bool isCreated() const;
 
 #if defined(MACE_WINAPI)&&defined(MACE_EXPOSE_WINAPI)
-		HMODULE getHandle() const {
+		void* getHandle() const {
 			return dll;
 		}
 #elif defined(MACE_POSIX)&&defined(MACE_EXPOSE_POSIX)
@@ -61,11 +55,7 @@ namespace mc {
 	private:
 		bool created = false;
 
-#ifdef MACE_WINAPI
-		HMODULE dll;
-#elif defined(MACE_POSIX)
 		void* dll;
-#endif
 	};//DynamicLibrary
 }//mc
 

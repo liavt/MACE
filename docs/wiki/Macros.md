@@ -10,7 +10,8 @@ There are many different macros that can determine how MACE works.
 | MACE_EXPOSE_WINAPI | If defined, classes that use Winapi will have functions to allow for direct access to any Winapi variables. Will not work if MACE_WINAPI is not defined. |
 | MACE_EXPOSE_POSIX | If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined |
 | MACE_EXPOSE_OPENGL | If defined, the OpenGL abstraction layer and renderer will be exposed by including MACE.h |
-| MACE_EXPOSE_GLFW | If defined, os::WindowModule will expose the underlying GLFWwindow |
+| MACE_EXPOSE_GLFW | If defined, `os::WindowModule` will expose the underlying GLFWwindow |
+| MACE_EXPOSE_OPENAL | If defined, `AudioModule` will expose functions to return the OpenAL context |
 | MACE_EXPOSE_ALL | If defined, defined all macros starting with MACE_EXPOSE_* |
 
 

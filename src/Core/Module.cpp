@@ -53,7 +53,7 @@ namespace mc {
 	Module * MACE::getModule(const std::string keyword) {
 		const int location = indexOf(keyword);
 		if (location < 0) {
-			MACE__THROW(ObjectNotFound, "No module by the name of " + keyword + " found!");
+			return nullptr;
 		}
 		return modules[static_cast<Index>(location)];
 	}

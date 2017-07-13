@@ -143,9 +143,10 @@ namespace mc {
 
 			const GraphicsEntity* const entity;
 
+			Painter::State state;
+		private:
 			//for pushing/popping the state
 			std::stack<Painter::State> stateStack;
-			Painter::State state;
 		};
 
 		/**

@@ -96,7 +96,7 @@ namespace mc {
 				MACE__THROW(BadSound, path);
 
 			if (!std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile)) {
-				MACE__THROW(BadSound, "error loading WAVE data into struct!");
+				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
 			if ((riff_header.chunkID[0] != 'R' ||
@@ -111,7 +111,7 @@ namespace mc {
 			}
 
 			if (!std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile)) {
-				MACE__THROW(BadSound, "error loading WAVE data into struct!");
+				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
 			if (wave_format.subChunkID[0] != 'f' ||
@@ -126,7 +126,7 @@ namespace mc {
 			}
 
 			if (!std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile)) {
-				MACE__THROW(BadSound, "error loading WAVE data into struct!");
+				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
 			if (wave_data.subChunkID[0] != 'd' ||
@@ -139,7 +139,7 @@ namespace mc {
 			buf = new unsigned char[wave_data.subChunk2Size];
 
 			if (!std::fread(buf, wave_data.subChunk2Size, 1, soundFile)) {
-				MACE__THROW(BadSound, "error loading WAVE data into struct!");
+				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
 			size = wave_data.subChunk2Size;

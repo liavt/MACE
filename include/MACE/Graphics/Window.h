@@ -18,6 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <thread>
 #include <string>
 
+//forward declaration to prevent including glfw.h
 struct GLFWwindow;
 
 namespace mc {
@@ -74,6 +75,9 @@ namespace mc {
 				bool fullscreen = false;
 				bool resizable = false;
 				bool vsync = false;
+
+				bool operator==(const LaunchConfig& other) const;
+				bool operator!=(const LaunchConfig& other) const;
 			};
 
 			WindowModule(const LaunchConfig& config);
@@ -140,6 +144,8 @@ namespace mc {
 		};//WindowModule
 
 		WindowModule* getCurrentWindow();
+		WindowModule* getWindow(const std::string title);
+		WindowModule* getWindow(const char* title);
 
 #ifdef MACE_EXPOSE_GLFW
 		WindowModule* convertGLFWWindowToModule(GLFWwindow* win);

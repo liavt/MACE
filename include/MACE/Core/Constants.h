@@ -108,6 +108,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_EXPOSE_POSIX 1
 #	define MACE_EXPOSE_OPENGL 1
 #	define MACE_EXPOSE_GLFW 1
+#	define MACE_EXPOSE_OPENAL 1
 #endif
 
 //for std::uint8_t

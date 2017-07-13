@@ -16,13 +16,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <string>
 
-#ifdef MACE_WINAPI
-#	define WIN32_LEAN_AND_MEAN
-#	include <windows.h>
-//to avoid  conflicts with later declarations
-#	undef WIN32_LEAN_AND_MEAN
-#endif
-
 namespace mc {
 	namespace os {
 		/**
@@ -67,20 +60,16 @@ namespace mc {
 			bool isValid() const;
 
 #if defined(MACE_WINAPI) && MACE_EXPOSE_WINAPI
-			HANDLE getHandle() const {
-				return serial;
-			}
+			void* getHandle() const;
 #elif defined(MACE_POSIX) && defined(MACE_EXPOSE_POSIX)
-			int getDescriptor() const {
-				return serial;
-			}
+			int getDescriptor() const;
 #endif
 		private:
 			bool connected = false;
 
 #ifdef MACE_WINAPI
 			//file handle
-			HANDLE serial;
+			void* serial;
 #elif defined(MACE_POSIX)
 			//file descriptor
 			int serial;

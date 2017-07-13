@@ -227,91 +227,114 @@ namespace mc {
 		}
 
 		void WindowModule::setTitle(const std::string & newTitle) {
+			if (!getProperty(gfx::Entity::INIT)) {
+				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
+			}
+
 			glfwSetWindowTitle(window, newTitle.c_str());
 		}
 
 		void WindowModule::threadCallback() {
-			//mutex for this function.
-			std::mutex mutex;
-
-			//now is set to be time(nullptr) every loop, and the delta is calculated from now nad last frame.
-			time_t now = time(nullptr);
-			//each time the frame is swapped, lastFrame is updated with the new time
-			time_t lastFrame = time(nullptr);
-
-			//this stores how many milliseconds it takes for the frame to swap.
-			float windowDelay = 0;
-
 			try {
-				const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+				//mutex for this function.
+				std::mutex mutex;
 
-				create();
+				//now is set to be time(nullptr) every loop, and the delta is calculated from now nad last frame.
+				time_t now = time(nullptr);
+				//each time the frame is swapped, lastFrame is updated with the new time
+				time_t lastFrame = time(nullptr);
 
-				Entity::init();
+				//this stores how many milliseconds it takes for the frame to swap.
+				float windowDelay = 0;
 
-				if (config.fps != 0) {
-					windowDelay = 1000.0f / static_cast<float>(config.fps);
+				try {
+					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+
+					/*create() needs to have this property set to true
+					Entity::init() sets it to true
+					However, Entity::init() requires create() to be called first, and if
+					it detects that this property is set to true, errors because it cant
+					be initialized twice. So we have to do this hacky thing to allow this
+					to happen
+					*/
+					setProperty(gfx::Entity::INIT, true);
+
+					create();
+
+					setProperty(gfx::Entity::INIT, false);
+
+					Entity::init();
+
+					if (config.fps != 0) {
+						windowDelay = 1000.0f / static_cast<float>(config.fps);
+					}
+				} catch (const std::exception& e) {
+					Error::handleError(e);
+				} catch (...) {
+					MACE__THROW(InitializationFailed, "An error has occured trying to initalize MACE");
+				}
+
+				//this is the main rendering loop.
+				//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
+				for (;;) {//( ;_;)
+					try {
+						{
+							//thread doesn't own window, so we have to lock the mutex
+							const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+
+							glfwPollEvents();
+
+							if (getProperty(Entity::DIRTY)) {
+								context->getRenderer()->setUp(this);
+								Entity::render();
+								context->getRenderer()->tearDown(this);
+							}
+
+							context->render();
+
+							if (!MACE::isRunning()) {
+								break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
+							}
+
+						}
+
+						if (windowDelay != 0) {
+							now = time(nullptr);
+
+							const time_t delta = now - lastFrame;
+
+							if (delta < windowDelay) {
+								lastFrame = now;
+
+								os::wait(static_cast<long long int>(windowDelay - delta));
+							}
+						}
+					} catch (const std::exception& e) {
+						Error::handleError(e);
+						break;
+					} catch (...) {
+						MACE__THROW(Unknown, "An unknown error occured trying to render a fraem");
+					}
+				}
+
+				{
+					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+					try {
+						Entity::destroy();
+
+						context->destroy();
+
+						glfwDestroyWindow(window);
+					} catch (const std::exception& e) {
+						Error::handleError(e);
+					} catch (...) {
+						MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
+					}
 				}
 			} catch (const std::exception& e) {
 				Error::handleError(e);
-			} catch (...) {
-				MACE__THROW(InitializationFailed, "An error has occured trying to initalize MACE");
+				return;
 			}
-
-			//this is the main rendering loop.
-			//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
-			for (;;) {//( ;_;)
-				try {
-					{
-						//thread doesn't own window, so we have to lock the mutex
-						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-
-						glfwPollEvents();
-
-						if (getProperty(Entity::DIRTY)) {
-							context->getRenderer()->setUp(this);
-							Entity::render();
-							context->getRenderer()->tearDown(this);
-						}
-
-						context->render();
-
-						if (!MACE::isRunning()) {
-							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
-						}
-
-					}
-
-					if (windowDelay != 0) {
-						now = time(nullptr);
-
-						const time_t delta = now - lastFrame;
-
-						if (delta < windowDelay) {
-							lastFrame = now;
-
-							os::wait(static_cast<long long int>(windowDelay - delta));
-						}
-					}
-				} catch (const std::exception& e) {
-					Error::handleError(e);
-					break;
-				}
-			}
-
-			{
-				const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-				try {
-					Entity::destroy();
-
-					context->destroy();
-
-					glfwDestroyWindow(window);
-				} catch (const std::exception& e) {
-					Error::handleError(e);
-				}
-			}
-
 		}//threadCallback
 
 		void WindowModule::init() {
@@ -351,6 +374,10 @@ namespace mc {
 			return properties.getBit(WindowModule::DESTROYED);
 		}
 		Vector<int, 2> WindowModule::getFramebufferSize() const {
+			if (!getProperty(gfx::Entity::INIT)) {
+				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
+			}
+
 			Vector<int, 2> out = {};
 
 			glfwGetFramebufferSize(window, &out[0], &out[1]);
@@ -410,6 +437,20 @@ namespace mc {
 
 		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char * t) : title(t), width(w), height(h) {}
 
+		bool WindowModule::LaunchConfig::operator==(const LaunchConfig & other) const {
+			return title == other.title && width == other.width && height == other.height
+				&& fps == other.fps && contextType == other.contextType
+				&& onCreate == other.onCreate && onClose == other.onClose
+				&& onScroll == other.onScroll && onMouseMove == other.onMouseMove
+				&& terminateOnClose == other.terminateOnClose
+				&& decorated == other.decorated && fullscreen == other.fullscreen
+				&& resizable == other.resizable && vsync == other.vsync;
+		}
+
+		bool WindowModule::LaunchConfig::operator!=(const LaunchConfig & other) const {
+			return !operator==(other);
+		}
+
 		WindowModule * getCurrentWindow() {
 			GLFWwindow* win = glfwGetCurrentContext();
 			if (win == nullptr) {
@@ -417,6 +458,15 @@ namespace mc {
 			}
 
 			return convertGLFWWindowToModule(win);
+		}
+
+		WindowModule * getWindow(const std::string title) {
+			Module* mod = MACE::getModule("MACE/Window#" + title);
+			return dynamic_cast<WindowModule*>(mod);
+		}
+
+		WindowModule * getWindow(const char * title) {
+			return getWindow(std::string(title));
 		}
 
 		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {

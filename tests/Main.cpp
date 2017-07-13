@@ -8,8 +8,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #define CATCH_CONFIG_RUNNER
-#include <Catch.h>
+#define CATCH_CONFIG_WINDOWS_CRTDBG 1
+#include <Catch.hpp>
 
+#define MACE_DEBUG 1
 #define MACE_EXPOSE_ALL 1
 #include <MACE/MACE.h>
 

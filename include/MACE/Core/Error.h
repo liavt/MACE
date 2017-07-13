@@ -51,6 +51,11 @@ namespace mc {
 #define MACE__THROW(name, message) throw MACE__GET_ERROR_NAME(name) ( std::string(__func__) + ": " + std::string(message), __LINE__, __FILE__)
 
 	/**
+	Thrown when an error from an unknown source occured
+	*/
+	MACE__DECLARE_ERROR(Unknown);
+
+	/**
 	Thrown when a pointer is equal to NULL
 	*/
 	MACE__DECLARE_ERROR(NullPointer);

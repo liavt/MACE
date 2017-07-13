@@ -15,15 +15,12 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/BitField.h>
 
-#ifdef MACE_OSX
-#	include <OpenAL/al.h>
-#	include <OpenAL/alc.h>
-#else
-#	include <AL/al.h>
-#	include <AL/alc.h>
-#endif
-
 #include <vector>
+
+//forward declaration to prevent inclusion of alc.h
+//ALCdevice and ALCcontext are typedef'd to these structs, so we can forward declare these safely
+struct ALCdevice_struct;
+struct ALCcontext_struct;
 
 namespace mc {
 	/**
@@ -31,6 +28,9 @@ namespace mc {
 	*/
 	MACE__DECLARE_ERROR(BadSound);
 
+	/**
+	@todo add more sound file formats, other than .wav. stb_vorbis can provide support for .ogg files
+	*/
 	class Sound: public Initializable {
 	public:
 		enum Properties: Byte {
@@ -46,6 +46,9 @@ namespace mc {
 		void setVolume(float volume);
 		float getVolume() { return volume; }
 		
+		/**
+		@todo use fstream instead of cstdio
+		*/
 		void init() override;
 		void destroy() override;
 
@@ -85,8 +88,8 @@ namespace mc {
 		void addSound(Sound& s);
 	private:
 		std::vector<Sound> sounds = std::vector<Sound>();
-		ALCdevice* device;
-		ALCcontext* context;
+		ALCdevice_struct* device;
+		ALCcontext_struct* context;
 	};//AudioModule
 }//mc
 

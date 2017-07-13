@@ -7,11 +7,17 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+#define MACE_EXPOSE_WINAPI 1
+#define MACE_EXPOSE_POSIX 1
 #include <MACE/Utility/Serial.h>
 #include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
 
-#ifdef MACE_POSIX
+#ifdef MACE_WINAPI
+#	define WIN32_LEAN_AND_MEAN
+#	include <windows.h>
+#	undef WIN32_LEAN_AND_MEAN
+#elif defined(MACE_POSIX)
 #	include <sys/stat.h>
 #	include <sys/ioctl.h>
 #	include <fcntl.h>
@@ -335,5 +341,14 @@ namespace mc {
 			return valid;
 #endif
 		}
+#ifdef MACE_WINAPI
+		void* Serial::getHandle() const {
+			return serial;
+		}
+#elif defined(MACE_POSIX)
+		int Serial::getDescriptor() const {
+			return serial;
+		}
+#endif
 	}//os
 }//mc

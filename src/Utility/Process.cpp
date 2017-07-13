@@ -7,6 +7,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+#define MACE_EXPOSE_WINAPI
+#define MACE_EXPOSE_POSIX
 #include <MACE/Utility/Process.h>
 #include <MACE/Core/System.h>
 
@@ -67,7 +69,12 @@ namespace mc {
 		Because of things like this.
 		*/
 
-		CreateProcess(TEXT((std::string(path) + std::string(args)).c_str()), nullptr, nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &process);
+		PROCESS_INFORMATION procInfo;
+
+		CreateProcess(TEXT((std::string(path) + std::string(args)).c_str()), nullptr, nullptr, nullptr, false, 0, nullptr, nullptr, &startupInfo, &procInfo);
+
+		process = procInfo.hProcess;
+		thread = procInfo.hThread;
 #elif defined(MACE_POSIX)
 		process = fork();
 
@@ -97,20 +104,20 @@ namespace mc {
 #ifdef MACE_WINAPI
 		if (isRunning()) {
 			//hasta la vista baby
-			if (!TerminateProcess(process.hProcess, 1)) {
+			if (!TerminateProcess(process, 1)) {
 				os::checkError(__LINE__, __FILE__, "Failed to terminate process");
 
 				MACE__THROW(AssertionFailed, "Failed to terminate process");
 			}
 		}
 
-		if (!CloseHandle(process.hProcess)) {
+		if (!CloseHandle(process)) {
 			os::checkError(__LINE__, __FILE__, "Failed to close handle to process");
 
 			MACE__THROW(AssertionFailed, "Failed to close handle to process");
 		}
 
-		if (!CloseHandle(process.hThread)) {
+		if (!CloseHandle(thread)) {
 			os::checkError(__LINE__, __FILE__, "Failed to close handle to process thread");
 
 			MACE__THROW(AssertionFailed, "Failed to close handle to process thread");
@@ -144,12 +151,12 @@ namespace mc {
 		}
 
 #ifdef MACE_WINAPI
-		WaitForSingleObject(process.hProcess, INFINITE);
+		WaitForSingleObject(process, INFINITE);
 
 		os::checkError(__LINE__, __FILE__, "Error waiting for process to end");
 
 		DWORD status;
-		if (GetExitCodeProcess(process.hProcess, &status) == 0) {
+		if (GetExitCodeProcess(process, &status) == 0) {
 			os::checkError(__LINE__, __FILE__, "Failed to retrieve exit code for process");
 
 			MACE__THROW(AssertionFailed, "Failed to retrieve exit code for process");
@@ -190,7 +197,7 @@ namespace mc {
 		}
 
 #ifdef MACE_WINAPI
-		return WaitForSingleObject(process.hProcess, 0) == WAIT_TIMEOUT;
+		return WaitForSingleObject(process, 0) == WAIT_TIMEOUT;
 #elif defined(MACE_POSIX)
 		return kill(process, 0) == 0;
 #endif
@@ -216,7 +223,6 @@ namespace mc {
 		return args;
 	}
 
-
 	Process::Process(const char * p, const char * a) : path(p), args(a) {}
 
 	Process::Process(const std::string & path, std::string & args) : Process(path.c_str(), args.c_str()) {}
@@ -228,4 +234,18 @@ namespace mc {
 			destroy();
 		}
 	}
+
+#if defined(MACE_WINAPI)
+	void* Process::getProcess() const {
+		return process;
+	}
+
+	void* Process::getThread() const {
+		return thread;
+	}
+#elif defined(MACE_POSIX)
+	pid_t Process::getPID() const {
+		return process;
+	}
+#endif
 }//mc

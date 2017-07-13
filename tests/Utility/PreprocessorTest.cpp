@@ -1,4 +1,4 @@
-#include <Catch.h>
+#include <Catch.hpp>
 #include <MACE/Utility/Preprocessor.h>
 
 namespace mc {

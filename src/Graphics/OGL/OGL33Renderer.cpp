@@ -33,8 +33,6 @@ The above copyright notice and this permission notice shall be included in all c
 //for printing error messages/opengl info
 #include <iostream>
 
-#include <fstream>
-
 namespace mc {
 	namespace gfx {
 		namespace ogl {
@@ -421,12 +419,6 @@ namespace mc {
 				program.init();
 
 				if (settings.second == Painter::RenderType::QUAD) {
-					std::ofstream file("C:/Users/Liav/Downloads/blah.txt");
-					file << processShader({
-#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
-					}) << std::endl;
-					file.close();
-
 					program.createVertex(processShader({
 	#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
 					}));

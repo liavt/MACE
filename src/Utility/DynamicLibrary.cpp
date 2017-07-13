@@ -11,7 +11,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
 
-#ifdef MACE_POSIX
+#ifdef MACE_WINAPI
+#	define WIN32_LEAN_AND_MEAN
+#	include <windows.h>
+#	undef WIN32_LEAN_AND_MEAN
+#elif defined(MACE_POSIX)
 #	include <dlfcn.h>	
 #endif//MACE_POSIX
 
@@ -120,7 +124,7 @@ namespace mc {
 		}
 
 #ifdef MACE_WINAPI
-		if (!FreeLibrary(dll)) {
+		if (!FreeLibrary(static_cast<HMODULE>(dll))) {
 			os::checkError(__LINE__, __FILE__, "Destruction of dynamic library failed");
 
 			MACE__THROW(AssertionFailed, "Destruction of dynamic library failed");
@@ -154,7 +158,7 @@ namespace mc {
 		}
 
 #ifdef MACE_WINAPI
-		void* extractedSymbol = GetProcAddress(dll, name);
+		void* extractedSymbol = GetProcAddress(static_cast<HMODULE>(dll), name);
 #elif defined(MACE_POSIX)
 		void* extractedSymbol = dlsym(dll, name);
 #endif
