@@ -81,7 +81,6 @@ namespace mc {
 			};
 
 			WindowModule(const LaunchConfig& config);
-			WindowModule(const int width, const int height, const char* title);
 
 #ifdef MACE_EXPOSE_GLFW
 			/**

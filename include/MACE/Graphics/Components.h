@@ -44,13 +44,37 @@ namespace mc {
 		@see EaseFunction
 		*/
 		namespace EaseFunctions {
-			const extern EaseFunction LINEAR, BACK_IN, BACK_OUT, BACK_IN_OUT,
-				BOUNCE_OUT, BOUNCE_IN, BOUNCE_IN_OUT, CIRCLE_IN, CIRCLE_OUT, CIRCLE_IN_OUT,
-				CUBIC_IN, CUBIC_OUT, CUBIC_IN_OUT, ELASTIC_IN, ELASTIC_OUT, ELASTIC_IN_OUT,
-				EXPONENTIAL_IN, EXPONENTIAL_OUT, EXPONENTIAL_IN_OUT, QUADRATIC_IN,
-				QUADRATIC_OUT, QUADRATIC_IN_OUT, QUARTIC_IN, QUARTIC_OUT, QUARTIC_IN_OUT,
-				QUINTIC_IN, QUINTIC_OUT, QUINTIC_IN_OUT, SINUSOIDAL_IN, SINUSOIDAL_OUT,
-				SINUSOIDAL_IN_OUT;
+			float LINEAR(float, const float, const float, const float);
+			float BACK_IN(float, const float, const float, const float);
+			float BACK_OUT(float, const float, const float, const float);
+			float BACK_IN_OUT(float, const float, const float, const float);
+			float BOUNCE_OUT(float, const float, const float, const float);
+			float BOUNCE_IN(float, const float, const float, const float);
+			float BOUNCE_IN_OUT(float, const float, const float, const float);
+			float CIRCLE_IN(float, const float, const float, const float);
+			float CIRCLE_OUT(float, const float, const float, const float);
+			float CIRCLE_IN_OUT(float, const float, const float, const float);
+			float CUBIC_IN(float, const float, const float, const float);
+			float CUBIC_OUT(float, const float, const float, const float);
+			float CUBIC_IN_OUT(float, const float, const float, const float);
+			float ELASTIC_IN(float, const float, const float, const float);
+			float ELASTIC_OUT(float, const float, const float, const float);
+			float ELASTIC_IN_OUT(float, const float, const float, const float);
+			float EXPONENTIAL_IN(float, const float, const float, const float);
+			float EXPONENTIAL_OUT(float, const float, const float, const float);
+			float EXPONENTIAL_IN_OUT(float, const float, const float, const float);
+			float QUADRATIC_IN(float, const float, const float, const float);
+			float QUADRATIC_OUT(float, const float, const float, const float);
+			float QUADRATIC_IN_OUT(float, const float, const float, const float);
+			float QUARTIC_IN(float, const float, const float, const float);
+			float QUARTIC_OUT(float, const float, const float, const float);
+			float QUARTIC_IN_OUT(float, const float, const float, const float);
+			float QUINTIC_IN(float, const float, const float, const float);
+			float QUINTIC_OUT(float, const float, const float, const float);
+			float QUINTIC_IN_OUT(float, const float, const float, const float);
+			float SINUSOIDAL_IN(float, const float, const float, const float);
+			float SINUSOIDAL_OUT(float, const float, const float, const float);
+			float SINUSOIDAL_IN_OUT(float, const float, const float, const float);
 		}
 
 		class AlignmentComponent: public Component {
@@ -84,7 +108,7 @@ namespace mc {
 			typedef void(*EaseUpdateCallback)(Entity*, float);
 
 			EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
-		
+
 			bool operator==(const EaseComponent& other) const;
 			bool operator!=(const EaseComponent& other) const;
 		protected:

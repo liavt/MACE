@@ -137,8 +137,6 @@ namespace mc {
 
 		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
 
-		WindowModule::WindowModule(const int width, const int height, const char * title) : config(LaunchConfig(width, height, title)) {}
-
 		void WindowModule::create() {
 			switch (config.contextType) {
 				case ContextType::AUTOMATIC:

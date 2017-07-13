@@ -16,6 +16,10 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <string>
 
+#ifdef MACE_POSIX
+#	include <sys/types.h>
+#endif
+
 namespace mc {
 	class Process: public Initializable {
 	public:

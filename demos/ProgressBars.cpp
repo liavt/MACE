@@ -1,6 +1,13 @@
-#include <MACE/MACE.h>
+/*
+The MIT License (MIT)
 
-#include <iostream>
+Copyright (c) 2016 Liav Turkia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+#include <MACE/MACE.h>
 
 using namespace mc;
 
@@ -30,12 +37,14 @@ void create(os::WindowModule& win) {
 
 	circleBar = gfx::ProgressBar(100, 255, 20);
 	circleBar.setBackgroundTexture(gfx::Texture(circle, Colors::RED));
-	circleBar.setForegroundTexture(gfx::Texture(Colors::GREEN));
+	circleBar.setForegroundTexture(Colors::GREEN);
 	circleBar.setSelectionTexture(circle);
 	circleBar.setWidth(0.25f);
 	circleBar.setHeight(0.25f);
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
+	circleBar.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
+	circleBar.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
 	circleBar.easeTo(250, 100, gfx::EaseFunctions::BOUNCE_OUT);
 
@@ -49,6 +58,8 @@ void create(os::WindowModule& win) {
 	rectangleBar.setHeight(0.25f);
 	rectangleBar.setX(0.5f);
 	rectangleBar.addComponent(r);
+	rectangleBar.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
+	rectangleBar.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
 	rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
 
