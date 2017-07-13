@@ -26,22 +26,6 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_DEBUG 1
 #endif//elif
 
-//defining keywords defining function symbol export and import
-#if !defined(MACE_FUNCTION_EXPORT)&&!defined(MACE_FUNCTION_IMPORT)
-#	ifdef MACE_WINDOWS
-#		ifdef MACE_GNU
-#			define MACE_FUNCTION_EXPORT __attribute__((dllexport))
-#			define MACE_FUNCTION_EXPORT __attribute__((dllimport))
-#		else
-#			define MACE_FUNCTION_EXPORT __declspec(dllexport)
-#			define MACE_FUNCTION_IMPORT __declspec(dllimport)
-#		endif
-#	else
-#		define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
-#		define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
-#	endif
-#endif
-
 //checks for a C++ attribute in the form of [[attribute]]
 #ifndef MACE_HAS_ATTRIBUTE
 #	ifndef __has_cpp_attribute
@@ -57,6 +41,40 @@ The above copyright notice and this permission notice shall be included in all c
 #		define MACE_FALLTHROUGH [[fallthrough]]
 #	else
 #		define MACE_FALLTHROUGH
+#	endif
+#endif
+
+//used to mark a function or variable thats deprecated
+#ifndef MACE_DEPRECATED
+#	if MACE_HAS_ATTRIBUTE(deprecated)
+#		define MACE_DEPRECATED [[deprecaed]]
+#	else
+#		ifdef MACE_MSVC
+#			define MACE_DEPRECATED __declspec(deprecated)
+#		elif defined(MACE_GNU) || defined(MACE_CLANG)
+#			define MACE_DEPRECATED  __attribute__((deprecated))
+#		else
+#			define MACE_DEPRECATED
+#		endif
+#	endif
+#endif
+
+//defining keywords defining function symbol export and import
+#if !defined(MACE_FUNCTION_EXPORT)&&!defined(MACE_FUNCTION_IMPORT)
+#	if MACE_HAS_ATTRIBUTE(dllexport) && MACE_HAS_ATTRIBUTE(dllimport)
+#		define MACE_FUNCTION_EXPORT [[dllexport]]
+#		define MACE_FUNCTION IMPORT [[dllimport]]
+#	elif defined(MACE_WINDOWS)
+#		ifdef MACE_GNU
+#			define MACE_FUNCTION_EXPORT __attribute__((dllexport))
+#			define MACE_FUNCTION_IMPORT __attribute__((dllimport))
+#		else
+#			define MACE_FUNCTION_EXPORT __declspec(dllexport)
+#			define MACE_FUNCTION_IMPORT __declspec(dllimport)
+#		endif
+#	else
+#		define MACE_FUNCTION_EXPORT __attribute__((visibility("default")))
+#		define MACE_FUNCTION_IMPORT __attribute__((visibility("hidden")))
 #	endif
 #endif
 

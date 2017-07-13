@@ -114,9 +114,10 @@ Otherwise, one of the following macros will be defined to the compiler version:
 | MACE_FUNCTION_EXPORT | Modifier that tells the compiler that this function should be exported to the global symbol table. Could be empty |
 | MACE_FUNCTION_IMPORT | Modifier that tells the compiler that this function will be imported from an exported symbol. Could be empty. |
 | MACE_HAS_ATTRIBUTE(attr) | If not defined previously, returns 0 if specified attribute is supported, 1 otherwise. If attributes are not supported by the compiler, always returns 0  |
+| MACE_HAS_INCLUDE(incl) | If not defined previously, returns 1 if the system has the specified include file, 0 otherwise. Not all compilers support this. If unsupported by the compiler, always returns 0. |
 | MACE_FALLTHROUGH | If not defined previously, if the compiler supports the fallthrough attribute, MACE_FALLTHROUGH is defined to that. Otherwise, defined to nothing  |
-| MACE_HAS_INCLUDE(incl) | If not defined previously, returns 1 if the system has the specified include file, 0 otherwise. Not all compilers support this. If unsupported by the compiler, returns 0 always. |
 | MACE_CONSTEXPR | If not defined previously, defined to be `constexpr` on compilers that `constexpr` is supported, otherwise becomes nothing |
+| MACE_DEPRECATED | If not defined previously, Marks a function that is deprecated. Based on the compiler, this is defined to the respective attribute to generate the proper warnings. If not supported, empty. |
 | MACE_STATIC_ASSERT(condition, message) | If not defined, defined to be `static_assert`. Can be defined before including MACE headers to change the static assert used by MACE |
 | MACE_STRINGIFY(name) | Directly stringifies a macro  |
 | MACE_STRINGIFY_NAME(name) | Stringifies a macro name. If the expanded macro is empty, this function returns "" |

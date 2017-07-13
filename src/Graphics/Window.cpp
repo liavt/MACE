@@ -67,7 +67,7 @@ namespace mc {
 
 			void onGLFWError(int id, const char* desc) {
 				MACE__THROW(Window, "GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
-			};
+			}
 
 			void onWindowClose(GLFWwindow* window) {
 				WindowModule* mod = convertGLFWWindowToModule(window);
@@ -79,7 +79,7 @@ namespace mc {
 				if (config.terminateOnClose) {
 					mc::MACE::requestStop();
 				}
-			};
+			}
 
 			void onWindowKeyButton(GLFWwindow*, int key, int, int action, int mods) {
 				BitField actions = BitField(0);
@@ -92,7 +92,7 @@ namespace mc {
 				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
 
 				pushKeyEvent(static_cast<short int>(key), actions);
-			};
+			}
 
 			void onWindowMouseButton(GLFWwindow*, int button, int action, int mods) {
 				BitField actions = BitField(0);
@@ -106,7 +106,7 @@ namespace mc {
 
 				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
 				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
-			};
+			}
 
 			void onWindowCursorPosition(GLFWwindow* window, double xpos, double ypos) {
 				mouseX = static_cast<int>(mc::math::floor(xpos));
@@ -114,7 +114,7 @@ namespace mc {
 
 				WindowModule* win = convertGLFWWindowToModule(window);
 				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
-			};
+			}
 
 			void onWindowScrollWheel(GLFWwindow* window, double xoffset, double yoffset) {
 				scrollY = yoffset;
@@ -122,17 +122,17 @@ namespace mc {
 
 				WindowModule* win = convertGLFWWindowToModule(window);
 				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
-			};
+			}
 
 			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
 				win->getContext()->getRenderer()->flagResize();
 				win->makeDirty();
-			};
+			}
 
 			void onWindowDamaged(GLFWwindow* window) {
 				convertGLFWWindowToModule(window)->makeDirty();
-			};
+			}
 		}//anon namespace
 
 		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
