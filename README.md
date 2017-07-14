@@ -35,7 +35,7 @@ For install instructions, consult INSTALLATION.md in the root folder.
 
 Documentation is located [here.](https://liavt.github.io/MACE/html/index.html)
 
-To generate documentation on your own, download Doxygen. Then, run Doxygen with `Doxyfile` located in the docs/ folder.
+To generate documentation on your own, download Doxygen. Then, run Doxygen with `Doxyfile` located in `docs` branch.
 
 A new folder called *out* should have been created. Subfolders contain the different documentation types, like html or xml.
 
