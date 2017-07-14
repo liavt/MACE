@@ -85,8 +85,9 @@ before_deploy: sudo bash ./scripts/travis-before-deploy.sh
 deploy:
   - provider: releases
     api_key: $GITHUB_TOKEN
-    file: "*.tar.gz"
-    file_blob: true
+    file:
+      - "osx-x64.tar.gz"
+      - "linux-x64.tar.gz"
     skip_cleanup: true
     overwrite: true
     tag_name: "unstable"
