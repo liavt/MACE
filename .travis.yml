@@ -66,8 +66,8 @@ before_install:
   - if [[ "$COMPILER" == "g++-5" ]]; then export CXX=g++-5;export CC=gcc-5; fi
   - if [[ "$COMPILER" == "g++-6" ]]; then export CXX=g++-6;export CC=gcc-6; fi
   - $CXX --version
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update;  brew install glew glfw3 freetype openal-soft; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libopencv-dev xorg-dev libopenal-dev libfreetype6 libfreetype6-dev libglu1-mesa-dev libglew-dev libglfw2;sudo apt-get update ; git clone https://github.com/glfw/glfw.git ./glfw ; cd ./glfw ; git checkout latest ;cmake . -DBUILD_SHARED_LIBS=ON ; make ; sudo make install ; sudo ldconfig ; cd .. ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo ./scripts/install-brew.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ./scripts/install-apt.sh fi
 
 before_script:
   - mkdir build/
@@ -78,39 +78,21 @@ script:
   - make all -j4
   - ls
   - ./MACE-Testing
-  - if [[ "$TRAVIS_OS_NAME" == "osx" || ( "$TRAVIS_OS_NAME" == "linux" && "$COMPILER" == "g++-6") ]]; then git tag nightly; git pus origin --tags; fi
   
-before_deploy:
-  - echo "Generating release..."
-  - if[[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX=g++-6;export CC=gcc-6; fi
-  - cmake -DMACE_TESTS=OFF -DMACE_DEMOS=OFF -DCMAKE_BUILD_TYPE=Release -DMACE_ALL_WARNINGS=OFF ..
-  - make MACE -j4
-  - ls
-  - cd ..
-  - mkdir release
-  - cp build/Makefile release/Makefile
-  - cp build/libMACE.a release/libMACE.a
-  - cp -a build/lib/. release/lib/
-  - cp -a build/include/. release/include/
-  - cp -a include/. release/include/
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then tar -zcf osx.tar.gz release; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar -zcf linux.tar.gz release; fi
+before_deploy: sudo ./scripts/travis-before-deploy.sh
 
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file:
-    - "osx.tar.gz"
-    - "linux.tar.gz"
+    - "osx-x64.tar.gz"
+    - "linux-x64.tar.gz"
   skip_cleanup: true
   overwrite: true
   tag_name: "nightly"
   on:
-    tags: true
-  branches:
-      only:
-      - latest
-      - nightly
+    branch: master
+    condtion: "$TRAVIS_OS_NAME" == "osx" || "$COMPILER" == "g++-6"
 
-after_deploy: sudo ./scripts/travis-deploy.sh
+after_deploy: sudo ./scripts/travis-after-deploy.sh
 
