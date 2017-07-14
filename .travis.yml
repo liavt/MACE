@@ -72,12 +72,35 @@ before_install:
 before_script:
   - mkdir build/
   - cd build/
-  - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON ..
+  - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON -DBUILD_SHARED_LIBS=ON ..
   
 script:
   - make all -j4
   - ls
   - ./MACE-Testing
   - cd ..
+  - mkdir release
+  - cp -a build/bin/. release/bin/
+  - cp -a build/lib/. release/lib/
+  - cp -a build/include/. release/include/
+  - cp -a include/. release/include/
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then tar -zcf osx.tar.gz release; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar -zcf linux.tar.gz release; fi
   
-after_success: ./scripts/travis-deploy.sh
+before_deploy:
+  - 
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file:
+    - "osx.tar.gz"
+    - "linux.tar.gz"
+  skip_cleanup: true
+  overwrite: true
+  tag_name: "nightly"
+  on:
+    tags: true
+
+after_deploy: sudo ./scripts/travis-deploy.sh
+
