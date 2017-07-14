@@ -3,7 +3,8 @@ apt-get install libopencv-dev xorg-dev libopenal-dev libfreetype6 libfreetype6-d
 apt-get update
 git clone https://github.com/glfw/glfw.git ../build/glfw 
 cd ../build/glfw
-git checkout latest ;cmake . -DBUILD_SHARED_LIBS=ON 
+git checkout latest
+cmake . -DBUILD_SHARED_LIBS=ON 
 make
 make install
 ldconfig

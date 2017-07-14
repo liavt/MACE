@@ -66,6 +66,8 @@ before_install:
   - if [[ "$COMPILER" == "g++-5" ]]; then export CXX=g++-5;export CC=gcc-5; fi
   - if [[ "$COMPILER" == "g++-6" ]]; then export CXX=g++-6;export CC=gcc-6; fi
   - $CXX --version
+  
+install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo ./scripts/install-brew.sh; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ./scripts/install-apt.sh; fi
 
@@ -89,9 +91,9 @@ deploy:
     - "linux-x64.tar.gz"
   skip_cleanup: true
   overwrite: true
-  tag_name: "nightly"
+  tag_name: "unstable"
   on:
-    branch: master
+    branch: unstable
     condition: $TRAVIS_OS_NAME == osx || $COMPILER == g++-6
 
 after_deploy: sudo ./scripts/travis-after-deploy.sh
