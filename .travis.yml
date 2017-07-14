@@ -78,6 +78,6 @@ script:
   - make all -j4
   - ls
   - ./MACE-Testing
+  - cd ..
   
-after-success:
-  - ./scripts/travis-deploy.sh
+after_success: ./scripts/travis-deploy.sh
