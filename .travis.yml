@@ -86,7 +86,7 @@ deploy:
   - provider: releases
     api_key: $GITHUB_TOKEN
     file:
-      - "osx-x64.tar.gz"
+      - "${TRAVIS_OS_NAME}-x64.tar.gz"
       - "linux-x64.tar.gz"
     skip_cleanup: true
     overwrite: true

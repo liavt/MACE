@@ -20,9 +20,14 @@ make MACE -j4
 ls
 cd ..
 mkdir release/shared
-if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp build/libMACE.dylib release/shared/libMACE.dylib; fi
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp build/libMACE.so release/shared/libMACE.so; fi
 cp -a build/include/. release/shared/include/
 cp -a include/. release/shared/include/
-if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then tar -zcf osx-x64.tar.gz release; fi
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar -zcf linux-x64.tar.gz release; fi
+if [[ -e build/libMACE.dylib ]]; then
+	cp build/libMACE.dylib release/shared/libMACE.dylib;
+	tar -zcf osx-x64.tar.gz release;
+fi
+if [[ -e build/libMACE.so ]]; then
+	cp build/libMACE.so release/shared/libMACE.so;
+	tar -zcf linux-x64.tar.gz release;
+fi
+ls
