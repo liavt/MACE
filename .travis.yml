@@ -80,7 +80,7 @@ script:
   - ./MACE-Testing
   - cd ..
 
-before_deploy: sudo ./scripts/travis-before-deploy.sh
+before_deploy: sudo bash ./scripts/travis-before-deploy.sh
 
 deploy:
   - provider: releases
@@ -100,5 +100,5 @@ deploy:
       branch: master
       condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6
 
-after_deploy: sudo ./scripts/travis-after-deploy.sh
+after_deploy: sudo bash ./scripts/travis-after-deploy.sh
 
