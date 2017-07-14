@@ -98,7 +98,4 @@ deploy:
     script: sudo ./scripts/travis-deploy-docs.sh
     on:
       branch: master
-      condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6
-
-after_deploy: sudo bash ./scripts/travis-after-deploy.sh
-
+      condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-5
