@@ -73,12 +73,12 @@ before_script:
   - mkdir build/
   - cd build/
   - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON ..
-  
+
 script:
   - make all -j4
   - ls
   - ./MACE-Testing
-  
+
 before_deploy: sudo ./scripts/travis-before-deploy.sh
 
 deploy:
@@ -92,7 +92,7 @@ deploy:
   tag_name: "nightly"
   on:
     branch: master
-    condtion: "$TRAVIS_OS_NAME" == "osx" || "$COMPILER" == "g++-6"
+    condition: $TRAVIS_OS_NAME == osx || $COMPILER == g++-6
 
 after_deploy: sudo ./scripts/travis-after-deploy.sh
 
