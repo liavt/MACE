@@ -67,7 +67,7 @@ before_install:
   - if [[ "$COMPILER" == "g++-6" ]]; then export CXX=g++-6;export CC=gcc-6; fi
   - $CXX --version
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo ./scripts/install-brew.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ./scripts/install-apt.sh fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ./scripts/install-apt.sh; fi
 
 before_script:
   - mkdir build/
