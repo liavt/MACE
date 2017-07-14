@@ -21,7 +21,7 @@ The graphics capabilities target hardware with OpenGL 3.3 compatibility
 
 The following compilers are unit tested automatically:
 * G++ 5 and 6 on Linux
-* Clang 3.7 and 3.5 on Linux
+* Clang 4.0 and 3.5 on Linux
 * Clang 3.5 on OSX
 * Latest and second latest version of VS 2015 and 2017 on Windows
 
