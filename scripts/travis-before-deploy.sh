@@ -1,4 +1,6 @@
 #!/bin/bash
+
+cd build
 echo "Generating x32 release..."
 cmake -DMACE_TESTS=OFF -DMACE_DEMOS=OFF -DCMAKE_BUILD_TYPE=Release -DMACE_ALL_WARNINGS=OFF ..
 make MACE -j4
