@@ -31,3 +31,8 @@ if [[ -e build/libMACE.so ]]; then
 	tar -zcf linux-x64.tar.gz release;
 fi
 ls
+
+git tag -d unstable
+git push origin :refs/tags/unstable
+git tag -a unstable -m "This is the absolute latest version of MACE, with no guarentee it is stable."
+git push origin --tags
