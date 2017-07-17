@@ -22,7 +22,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <cstdio>
 
 namespace mc {
-
 	AudioModule::AudioModule() {
 		device = alcOpenDevice(NULL);
 		context = alcCreateContext(device, NULL);

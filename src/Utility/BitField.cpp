@@ -10,7 +10,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/BitField.h>
 
 namespace mc {
-
 	//default initilize value, incase it is not integral
 	BitField::BitField() noexcept : value() {}
 

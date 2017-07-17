@@ -24,49 +24,28 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 
 	namespace {
-		//these words can't be defined or undefined
-		char const * reservedWords[] = {
-			"and", "and_eq", "asm",	"auto",	"bitand",
-			"bitor", "bool",	"break",	"case",	"catch",
-			"char", "class",	"const",	"const_cast",	"continue",
-			"default","delete",	"do",	"double",	"dynamic_cast",
-			"else", "enum",	"explicit",	"export",	"extern",
-			"false", "float",	"for",	"friend",	"goto",
-			"if", "inline",	"int",	"long",	"mutable",
-			"namespace", "new",	"not", "not_eq", "operator",
-			"or", "or_eq", "private",	"protected",	"public",
-			"register", "reinterpret_cast",	"return",	"short",	"signed",
-			"sizeof", "static",	"static_cast",	"struct",	"switch",
-			"template", "this",	"throw", "true", "try",
-			"typedef", "typeid",	"typename", "union",	"unsigned",
-			"using", "virtual",	"void", "volatile", "wchar_t",
-			"while",	"xor", "xor_eq","defined","__FILE__","__LINE__",
-			"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__",
-			"_MACE___","__IF_SCOPE__","__CURRENT_IF_SCOPE__","__VA_ARGS__"
-		};
-
-		/**
-		1 character long punctuators. The reason that 2 character long and 1 characer long punctuators are seperate arrays
-		is because something like == has 1 punctuator, but !! has 2 punctuators.
-		<p>
-		A punctuator according to the standard is something that seperates tokens.
-		*/
-		MACE_CONSTEXPR char punctuators1c[] = {
-			',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
-		};
-
-		/**
-		2 character long punctuators
-		*/
-		MACE_CONSTEXPR char const * punctuators2c[] = {
-			">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
-		};
-
 		bool isNonOperator(const char value) {
+			/**
+			1 character long punctuators. The reason that 2 character long and 1 characer long punctuators are seperate arrays
+			is because something like == has 1 punctuator, but !! has 2 punctuators.
+			<p>
+			A punctuator according to the standard is something that seperates tokens.
+			*/
+			MACE_CONSTEXPR char punctuators1c[] = {
+				',','\"','\'','{','}','[',']','~','.','|','&','+','-','*','/','=',';','!','%','>','<',':','?'
+			};
+
 			return std::find(std::begin(punctuators1c), std::end(punctuators1c), value) == std::end(punctuators1c);
 		}
 
 		bool isNewToken(const char lastValue, const char value) {
+			/**
+			2 character long punctuators
+			*/
+			MACE_CONSTEXPR char const * punctuators2c[] = {
+				">>","<<","++","--","+=","-=","*=","/=","&=","|=","%=","==","!=",">=","<=","&&","||","->","::","##"
+			};
+
 			//This is quite a complex if statement, but it checks to make sure that == doesnt become =,= and a=b becomes a,=,b
 			return std::isspace(value) ||
 				(
@@ -868,6 +847,28 @@ namespace mc {
 
 
 	void Preprocessor::defineMacro(const Macro& m) {
+		//these words can't be defined or undefined
+		//this should be optimized out of the code entirely
+		MACE_CONSTEXPR char const * reservedWords[] = {
+			"and", "and_eq", "asm",	"auto",	"bitand",
+			"bitor", "bool",	"break",	"case",	"catch",
+			"char", "class",	"const",	"const_cast",	"continue",
+			"default","delete",	"do",	"double",	"dynamic_cast",
+			"else", "enum",	"explicit",	"export",	"extern",
+			"false", "float",	"for",	"friend",	"goto",
+			"if", "inline",	"int",	"long",	"mutable",
+			"namespace", "new",	"not", "not_eq", "operator",
+			"or", "or_eq", "private",	"protected",	"public",
+			"register", "reinterpret_cast",	"return",	"short",	"signed",
+			"sizeof", "static",	"static_cast",	"struct",	"switch",
+			"template", "this",	"throw", "true", "try",
+			"typedef", "typeid",	"typename", "union",	"unsigned",
+			"using", "virtual",	"void", "volatile", "wchar_t",
+			"while",	"xor", "xor_eq","defined","__FILE__","__LINE__",
+			"__TIME__","__DATE__","__STDC__","__STDC_HOSTED__","__STDC_VERSION__",
+			"_MACE___","__IF_SCOPE__","__CURRENT_IF_SCOPE__","__VA_ARGS__"
+		};
+
 		for (Index iterator = 0; iterator < os::getArraySize(reservedWords); ++iterator) {
 			if (m.name == reservedWords[iterator]) {
 				MACE__THROW_PREPROCESSOR("can\'t define " + m.name + " - it is a reserved word");

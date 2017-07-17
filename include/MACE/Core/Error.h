@@ -14,21 +14,25 @@ The above copyright notice and this permission notice shall be included in all c
 #include <stdexcept>
 
 namespace mc {
+	//forward declaration for handleError();
+	class Instance;
+
 	/**
 	Superclass that all exceptions in MACE extend.
 	*/
 	class Error: public std::runtime_error {
 	public:
-		static std::string getErrorDump(const std::exception& e);
-
-		static void setLogFileEnabled(const bool& writeLog);
-
-		static void setVerboseErrors(const bool& verbose);
+		static std::string getErrorDump(const std::exception& e, Instance* i = nullptr);
 
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/
-		static void handleError[[noreturn]](const std::exception& e);
+		static void handleError[[noreturn]](const std::exception& e, Instance* i = nullptr);
+
+		/**
+		@copydoc Error::handleError(const std::exception& e, Instance*)
+		*/
+		static void handleError[[noreturn]](const std::exception& e, Instance& i);
 
 		Error(const char* message, const unsigned int line, const std::string file);
 		Error(const std::string message, const unsigned int line, const std::string file);

@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__GRAPHICS_WINDOW_H
 #define MACE__GRAPHICS_WINDOW_H
 
-#include <MACE/Core/Module.h>
+#include <MACE/Core/Instance.h>
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
 
@@ -143,8 +143,6 @@ namespace mc {
 		};//WindowModule
 
 		WindowModule* getCurrentWindow();
-		WindowModule* getWindow(const std::string title);
-		WindowModule* getWindow(const char* title);
 
 #ifdef MACE_EXPOSE_GLFW
 		WindowModule* convertGLFWWindowToModule(GLFWwindow* win);

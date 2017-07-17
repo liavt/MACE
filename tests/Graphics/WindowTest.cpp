@@ -18,8 +18,7 @@ using namespace mc;
 
 
 TEST_CASE("Testing creation of windows and different settings", "[graphics][window][module]") {
-	MACE::reset();
-
+	Instance MACE = Instance();
 	os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 600, "Testing");
 	os::WindowModule module = os::WindowModule(os::WindowModule::LaunchConfig(600, 600, "Testing"));
 
@@ -32,13 +31,11 @@ TEST_CASE("Testing creation of windows and different settings", "[graphics][wind
 	REQUIRE(module.getParent() == nullptr);
 	REQUIRE_FALSE(module.isDestroyed());
 
-	REQUIRE_FALSE(MACE::moduleExists(&module));
-	REQUIRE(MACE::getModule(module.getName()) == nullptr);
+	REQUIRE_FALSE(MACE.moduleExists(&module));
+	REQUIRE(MACE.getModule(module.getName()) == nullptr);
 
-	MACE::addModule(module);
+	MACE.addModule(module);
 
-	REQUIRE(MACE::moduleExists(&module));
-	REQUIRE(MACE::getModule(module.getName()) == &module);
-
-	MACE::reset();
+	REQUIRE(MACE.moduleExists(&module));
+	REQUIRE(MACE.getModule(module.getName()) == &module);
 }

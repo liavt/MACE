@@ -18,8 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <Catch.hpp>
 
 int main(int argc, char* const argv[]) {
-	mc::Error::setVerboseErrors(true);
-
 	try {
 		//constant? get it?
 		const int result = Catch::Session().run(argc, argv);

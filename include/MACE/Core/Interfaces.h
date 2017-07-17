@@ -79,13 +79,13 @@ namespace mc {
 	template<typename T>
 	class SmartPointer {
 	public:
-		SmartPointer(T& p) : SmartPointer(&p) {}
+		explicit SmartPointer(T& p) : SmartPointer(&p) {}
 
-		SmartPointer(T* p) : SmartPointer(p, false) {}
+		explicit SmartPointer(T* p) : SmartPointer(p, false) {}
 
-		SmartPointer(T* p, const bool isDynamic) : dynamic(isDynamic), ptr(p)  {
+		explicit SmartPointer(T* p, const bool isDynamic) : dynamic(isDynamic), ptr(p)  {
 			if (ptr == nullptr) {
-				MACE__THROW(NullPointer, "Inputted pointer can not be nullptr!");
+				dynamic = false;
 			}
 		}
 
@@ -134,11 +134,24 @@ namespace mc {
 			release();
 		}
 
+		T* reset(T* newPtr = nullptr, bool newDynamic = false) {
+			T* oldPtr = ptr;
+			ptr = newPtr;
+			if (dynamic&&oldPtr != nullptr) {
+				delete oldPtr;
+			}
+			dynamic = newDynamic;
+			return oldPtr;
+		}
+
 		/**
 		Releases ownership of the pointer. The held pointer will not be deleted at destruction.
 		*/
-		void release() {
+		T* release() {
+			T* oldPtr = ptr;
+			ptr = nullptr;
 			dynamic = false;
+			return oldPtr;
 		}
 
 		bool isDynamic() const {
@@ -151,6 +164,14 @@ namespace mc {
 
 		bool operator!=(const SmartPointer& other) const {
 			return !operator==(other);
+		}
+
+		bool operator==(const T* other) const {
+			return ptr == other;
+		}
+
+		bool operator!=(const T* other) const {
+			return !operator(other);
 		}
 	private:
 		bool dynamic;

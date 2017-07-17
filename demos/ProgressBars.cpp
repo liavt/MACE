@@ -69,6 +69,7 @@ void create(os::WindowModule& win) {
 }
 
 int main() {
+	Instance instance = Instance();
 	try {
 		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(500, 500, "Progress Bars Demo");
 		config.onCreate = &create;
@@ -77,12 +78,12 @@ int main() {
 
 		module.addChild(group);
 
-		MACE::addModule(module);
+		instance.addModule(module);
 
 		os::SignalModule sigModule = os::SignalModule();
-		MACE::addModule(sigModule);
+		instance.addModule(sigModule);
 
-		MACE::start();
+		instance.start();
 	} catch( const std::exception& e ) {
 		Error::handleError(e);
 		return -1;

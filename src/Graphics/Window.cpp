@@ -77,7 +77,7 @@ namespace mc {
 				config.onClose(*mod);
 
 				if (config.terminateOnClose) {
-					mc::MACE::requestStop();
+					mod->getInstance()->requestStop();
 				}
 			}
 
@@ -267,7 +267,7 @@ namespace mc {
 						windowDelay = 1000.0f / static_cast<float>(config.fps);
 					}
 				} catch (const std::exception& e) {
-					Error::handleError(e);
+					Error::handleError(e, instance);
 				} catch (...) {
 					MACE__THROW(InitializationFailed, "An error has occured trying to initalize MACE");
 				}
@@ -290,7 +290,7 @@ namespace mc {
 
 							context->render();
 
-							if (!MACE::isRunning()) {
+							if (!instance->isRunning()) {
 								break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 							}
 
@@ -308,7 +308,7 @@ namespace mc {
 							}
 						}
 					} catch (const std::exception& e) {
-						Error::handleError(e);
+						Error::handleError(e, instance);
 						break;
 					} catch (...) {
 						MACE__THROW(Unknown, "An unknown error occured trying to render a fraem");
@@ -324,13 +324,13 @@ namespace mc {
 
 						glfwDestroyWindow(window);
 					} catch (const std::exception& e) {
-						Error::handleError(e);
+						Error::handleError(e, instance);
 					} catch (...) {
 						MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
 					}
 				}
 			} catch (const std::exception& e) {
-				Error::handleError(e);
+				Error::handleError(e, instance);
 				return;
 			}
 		}//threadCallback
@@ -456,15 +456,6 @@ namespace mc {
 			}
 
 			return convertGLFWWindowToModule(win);
-		}
-
-		WindowModule * getWindow(const std::string title) {
-			Module* mod = MACE::getModule("MACE/Window#" + title);
-			return dynamic_cast<WindowModule*>(mod);
-		}
-
-		WindowModule * getWindow(const char * title) {
-			return getWindow(std::string(title));
 		}
 
 		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {

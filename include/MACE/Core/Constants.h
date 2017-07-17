@@ -23,11 +23,11 @@ The above copyright notice and this permission notice shall be included in all c
 //COMPILER SUPPORT
 #ifdef __GNUC__
 #	define MACE_GNU __GNUC__
-#	if defined(__clang__)&&defined(__clang_major__)&&defined(__clang_minor__)&&defined(__clang_patchlevel__)
+#	if defined(__clang__) && defined(__clang_major__) && defined(__clang_minor__) && defined(__clang_patchlevel__)
 #		define MACE_CLANG MACE_VERSION_NUMBER(__clang_major__, __clang_minor__, __clang_patchlevel__)
-#	elif defined(__GNUG__)&&defined(__GNUC_MINOR__, __GNUC_PATCHLEVEL__)
+#	elif defined(__GNUG__) && defined(__GNUC_MINOR__( && defined(__GNUC_PATCHLEVEL__)
 #		define MACE_GCC MACE_VERSION_NUMBER(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
-#	elif defined(__MINGW32__)||defined(__MINGW64__)
+#	elif defined(__MINGW32__) || defined(__MINGW64__)
 #		define MACE_MINGW MACE_VERSION_NUMBER(__MINGW64_VERSION_MAJOR, __MINGW64_VERSION_MINOR, 0)
 #	elif defined(__ICC) || defined(__INTEL_COMPILER)
 #		define MACE_INTEL __INTEL_COMPILER

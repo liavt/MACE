@@ -11,7 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__UTILITY_SIGNAL_H
 #define MACE__UTILITY_SIGNAL_H
 
-#include <MACE/Core/Module.h>
+#include <MACE/Core/Instance.h>
 #include <MACE/Core/Constants.h>
 
 namespace mc {

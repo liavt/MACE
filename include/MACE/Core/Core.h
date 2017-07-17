@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Error.h>
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Core/Module.h>
+#include <MACE/Core/Instance.h>
 #include <MACE/Core/System.h>
 
 #endif

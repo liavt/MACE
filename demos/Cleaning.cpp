@@ -93,13 +93,14 @@ void create(os::WindowModule&) {
 }
 
 int main() {
+	Instance instance = Instance();
 	try {
 		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 500, "Cleaning Demo");
 		config.onCreate = &create;
 		config.resizable = true;
 		os::WindowModule module = os::WindowModule(config);
 
-		MACE::addModule(module);
+		instance.addModule(module);
 
 		module.addChild(group);
 
@@ -110,11 +111,11 @@ int main() {
 		module.addComponent(f);
 
 		os::SignalModule sigModule = os::SignalModule();
-		MACE::addModule(sigModule);
+		instance.addModule(sigModule);
 
-		MACE::start();
+		instance.start();
 	} catch( const std::exception& e ) {
-		Error::handleError(e);
+		Error::handleError(e, instance);
 		return -1;
 	}
 	return 0;

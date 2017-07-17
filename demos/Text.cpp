@@ -51,6 +51,7 @@ void create(os::WindowModule& win) {
 }
 
 int main() {
+	Instance instance = Instance();
 	try {
 		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 600, "Text Demo");
 		config.onCreate = &create;
@@ -58,14 +59,14 @@ int main() {
 		os::WindowModule module = os::WindowModule(config);
 		module.addChild(group);
 
-		MACE::addModule(module);
+		instance.addModule(module);
 
 		os::SignalModule sigModule = os::SignalModule();
-		MACE::addModule(sigModule);
+		instance.addModule(sigModule);
 
-		MACE::start();
-	} catch( const std::exception& e ) {
-		Error::handleError(e);
+		instance.start();
+	} catch (const std::exception& e) {
+		Error::handleError(e, instance);
 		return -1;
 	}
 	return 0;

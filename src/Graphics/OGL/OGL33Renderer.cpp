@@ -55,25 +55,6 @@ namespace mc {
 #define MACE__VAO_VERTICES_LOCATION 0
 #define MACE__VAO_TEX_COORD_LOCATION 1
 
-			IncludeString vertexLibrary = IncludeString({
-	#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
-			}, "mc_vertex");
-			/**
-			@todo Remove discard from shader
-			*/
-			IncludeString fragmentLibrary = IncludeString({
-	#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
-			}, "mc_frag");
-			IncludeString positionLibrary = IncludeString({
-	#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
-			}, "mc_position");
-			IncludeString entityLibrary = IncludeString({
-	#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
-			}, "mc_entity");
-			IncludeString coreLibrary = IncludeString({
-	#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
-			}, "mc_core");
-
 			OGL33Renderer::OGL33Renderer() : sslPreprocessor(""), frameBuffer(), depthBuffer(), sceneTexture(), idTexture(), clearColor(Colors::BLACK) {}
 
 			void OGL33Renderer::onResize(const Size width, const Size height) {
@@ -552,6 +533,25 @@ namespace mc {
 					MACE__DEFINE_MACRO(MACE__VAO_VERTICES_LOCATION);
 					MACE__DEFINE_MACRO(MACE__VAO_TEX_COORD_LOCATION);
 #undef MACE__DEFINE_MACRO
+
+					IncludeString vertexLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
+					}, "mc_vertex");
+					/**
+					@todo Remove discard from shader
+					*/
+					IncludeString fragmentLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
+					}, "mc_frag");
+					IncludeString positionLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
+					}, "mc_position");
+					IncludeString entityLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
+					}, "mc_entity");
+					IncludeString coreLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
+					}, "mc_core");
 
 					sslPreprocessor.addInclude(vertexLibrary);
 					sslPreprocessor.addInclude(fragmentLibrary);

@@ -9,18 +9,24 @@ The above copyright notice and this permission notice shall be included in all c
 */
 
 #pragma once
-#ifndef MACE__CORE_MODULE_H
-#define MACE__CORE_MODULE_H
+#ifndef MACE__CORE_INSTANCE_H
+#define MACE__CORE_INSTANCE_H
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
+#include <MACE/Utility/BitField.h>
 #include <string>
+#include <vector>
 
 namespace mc {
+	//forward declaration for Module class
+	class Instance;
+	
 	/**
 	Abstract class used for doing a task in MACE. Plugged into {@link MACE} via {@link MACE#addModule(Module&) addModule().}
 	*/
-	class Module: public Initializable {
+	class Module: public Initializable{
+		friend class Instance;
 	public:
 		virtual ~Module() = default;
 
@@ -31,7 +37,7 @@ namespace mc {
 		<p>
 		Should only be called once.
 		*/
-		virtual void init() = 0;
+		virtual void init() override = 0;
 		/**
 		Called when {@link MACE#update} is called and this `Module` is registered.
 		<p>
@@ -45,7 +51,7 @@ namespace mc {
 		<p>
 		Should only be called before the program is closed.
 		*/
-		virtual void destroy() = 0;
+		virtual void destroy() override = 0;
 
 		/**
 		Override this function and return a UNIQUE name for this `Module`
@@ -55,6 +61,11 @@ namespace mc {
 		It is akin to a hashcode.
 		*/
 		virtual std::string getName() const = 0;
+
+		Instance* getInstance();
+		const Instance* getInstance() const;
+	protected:
+		Instance* instance = nullptr;
 	};
 
 
@@ -88,7 +99,8 @@ namespace mc {
 
 	}
 	*/
-	namespace MACE {
+	class Instance: public Initializable {
+	public:
 		enum Flag: Byte {
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.init()` has been called.
@@ -101,7 +113,9 @@ namespace mc {
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.requestStop()` has been called.
 			*/
-			STOP_REQUESTED = 2
+			STOP_REQUESTED = 2,
+			VERBOSE_ERRORS = 3,
+			WRITE_ERRORS_TO_LOG = 4,
 		};
 
 		/**
@@ -148,24 +162,34 @@ namespace mc {
 		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
 		*/
 		Module* getModule(const Index i);
+
+		/**
+		@copydoc MACEInstance::getModule(const std::string)
+		*/
+		const Module* getModule(const std::string keyword) const;
+		/**
+		@copydoc MACEInstance::getModule(const Index)
+		*/
+		const Module* getModule(const Index i) const;
+
 		/**
 		Checks whether a `Module` exists via it's `getName()` function.
 		@param module Name to search for
 		@return `true` if there is a `Module` with the specified name, `false` otherwise.
 		*/
-		bool moduleExists(const std::string module);
+		bool moduleExists(const std::string module) const;
 
 		/**
 		Checks whether a `Module` exists via a pointer.
 		@param module `Module` to search for
 		@return `true` if the `Module` exists, `false` otherwise.
 		*/
-		bool moduleExists(const Module* module);
+		bool moduleExists(const Module* module) const;
 		/**
 		Retrieves the amount of `Module` currently being updated by `MACE`
 		@return `Size` of the internal `Module` sslBuffer
 		*/
-		Size numberOfModules();
+		Size numberOfModules() const;
 		/**
 		Retrieves the location of a `Module` in the sslBuffer.
 		<p>
@@ -176,14 +200,13 @@ namespace mc {
 		@return Location of the `Module,` or `-1` if it doesnt exist.
 		@see indexOf(Module&)
 		*/
-		//the parameter not being const is not a mistake; it gets derefenced to check for equality
-		int indexOf(const Module& m);
+		int indexOf(const Module& m) const;
 		/**
 		Find a `Module` with the specified name.
 		@param name Name to search for
 		@return Location of a `Module` whose `getName()` function returns `name,` or `-1` if wasn't found
 		*/
-		int indexOf(const std::string name);
+		int indexOf(const std::string name) const;
 
 		/**
 		Require that a `Module` with the specified name exists, or throw an exception.
@@ -193,13 +216,13 @@ namespace mc {
 		@param errorMessage What to print if the assertion fails
 		@throw AssertionError if there isn't a `Module` with the requested name.
 		*/
-		void assertModule(const std::string module, std::string errorMessage);
+		void assertModule(const std::string module, const std::string errorMessage) const;
 		/**
 		Overloads {@link #assertModule(std::string,std::string)} with `errorMessage` being `The specified Module does not exist!`
 		@param module Name of a `Module` to assertion
 		@see #assertModule(std::string,std::string)
 		*/
-		void assertModule(const std::string module);
+		void assertModule(const std::string module) const;
 
 		void start(const long long ups = 30L);
 
@@ -210,7 +233,7 @@ namespace mc {
 		@see #addModule(Module&)
 		@see MACE for an optimal main loop
 		*/
-		void init();
+		void init() override;
 		/**
 		Update MACE and all `Modules` registered, and checks if a close has been requested.
 		<p>
@@ -229,7 +252,7 @@ namespace mc {
 		@see MACE::addModule(Module&)
 		@see MACE for an optimal main loop
 		*/
-		void destroy();
+		void destroy() override;
 
 		/**
 		Checks whether the `MACE` is ready to be updated. Will return true if `MACE::init()` has been called, and `MACE::destroy()` and `MACE::requestStop()` have not been called.
@@ -238,7 +261,7 @@ namespace mc {
 		@see MACE::getFlag(const Byte)
 		@see MACE for an optimal main loop
 		*/
-		bool isRunning();
+		bool isRunning() const;
 
 		/**
 		Tell the `MACE` to destroy. This is not a guarentee, as it is up to the client running the main loop to actually shut down the program. Use of this function makes `update()` and `isRunning()` return `false`,
@@ -257,14 +280,23 @@ namespace mc {
 		@return Whether the specified flag is `true`
 		@see MACE::isRunning()
 		*/
-		bool getFlag(const Flag flag);
+		bool getFlag(const Flag flag) const;
 
 		/**
 		"Resets" the `MACE` to its default state. `Modules` are cleared, and all flags are set to 0.
 		*/
 		void reset();
-	}
+	private:
+		/**
+		All of the `Modules` registered
+		*/
+		std::vector<Module*> modules;
 
+		/**
+		Stores various flags for the MACE, like whether it is running, or a close is requested.
+		*/
+		BitField flags = 0;
+	};
 }
 
 

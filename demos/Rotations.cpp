@@ -95,6 +95,7 @@ void create(os::WindowModule&) {
 }
 
 int main() {
+	Instance instance = Instance();
 	try {
 		std::cout << "Click on a star to rotate it individually! It is pixel perfect! Holding down space will rotate all the stars in big chunks. It will only swap frames when something changes for maximum performance.\n";
 		std::cout << "Also try resizing the screen and watch how it reacts!\n";
@@ -103,7 +104,7 @@ int main() {
 		config.onCreate = &create;
 		os::WindowModule module = os::WindowModule(config);
 
-		MACE::addModule(module);
+		instance.addModule(module);
 
 		botLeft.setWidth(0.5f);
 		botRight.setWidth(0.5f);
@@ -144,12 +145,11 @@ int main() {
 		module.addComponent(f);
 
 		os::SignalModule sigModule = os::SignalModule();
-		MACE::addModule(sigModule);
+		instance.addModule(sigModule);
 
-		mc::MACE::init();
-
-		while (mc::MACE::isRunning()) {
-			mc::MACE::update();
+		mc::Initializer i(instance);
+		while (instance.isRunning()) {
+			instance.update();
 
 			if (os::Input::isKeyDown(os::Input::SPACE) || os::Input::isKeyRepeated(os::Input::SPACE)) {
 				rotating = true;
@@ -159,10 +159,8 @@ int main() {
 
 			mc::os::wait(33);
 		}
-
-		mc::MACE::destroy();
 	} catch (const std::exception& e) {
-		Error::handleError(e);
+		Error::handleError(e, instance);
 		return -1;
 	}
 	return 0;

@@ -171,6 +171,7 @@ namespace mc {
 
 		/**
 		@todo instead of using an id system add FT_Face
+		@todo get rid of FT_Library global constant
 		@bug HorizontalAlignment::RIGHT misses the last letter in the width calculation
 		*/
 		class Font {

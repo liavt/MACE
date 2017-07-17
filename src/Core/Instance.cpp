@@ -7,94 +7,106 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/Core/Module.h>
+#include <MACE/Core/Instance.h>
 #include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
-#include <MACE/Utility/BitField.h>
-#include <vector>
+#include <memory>
 
 namespace mc {
-	namespace {
-		/**
-		All of the `Modules` registered
-		*/
-		std::vector<Module*> modules;
+	Index Instance::addModule(Module& m) {
+		if (m.getInstance() != nullptr) {
+			MACE__THROW(AssertionFailed, "Can\'t add a Module to 2 Instance\'s!");
+		}
 
-		/**
-		Stores various flags for the MACE, like whether it is running, or a close is requested.
-		*/
-		BitField flags = 0;
-	}
-
-	Index MACE::addModule(Module& m) {
+		m.instance = this;
 		modules.push_back(&m);
 		return static_cast<Index>(modules.size() - 1);
 	}
-	void MACE::removeModule(const Module& m) {
+
+	void Instance::removeModule(const Module& m) {
 		const int location = indexOf(m);
 		if (location < 0) {
 			MACE__THROW(ObjectNotFound, "Module by name of " + m.getName() + " not found! Can\'t remove!");
 		}
 		removeModule(static_cast<Index>(location));
 	}
-	void MACE::removeModule(const std::string module) {
+
+	void Instance::removeModule(const std::string module) {
 		const int location = indexOf(module);
 		if (location < 0) {
 			MACE__THROW(ObjectNotFound, "Module by name of " + module + " not found! Can\'t remove!");
 		}
 		removeModule(static_cast<Index>(location));
 	}
-	void MACE::removeModule(const Index i) {
+
+	void Instance::removeModule(const Index i) {
 		if (i >= numberOfModules()) {
 			MACE__THROW(ObjectNotFound, "Input is greater than the amount of modules!");
 		}
+		modules[i]->instance = nullptr;
 		modules.erase(modules.begin() + i);
 	}
-	Module * MACE::getModule(const std::string keyword) {
+
+	Module * Instance::getModule(const std::string keyword) {
+		//this line duplicates the getModule() (const version)
+		return const_cast<Module*>(static_cast<const Instance*>(this)->getModule(keyword));
+	}
+
+	Module * Instance::getModule(const Index i) {
+		//this line duplicates the getModule() (const version)
+		return const_cast<Module*>(static_cast<const Instance*>(this)->getModule(i));
+	}
+
+
+	const Module * Instance::getModule(const std::string keyword) const {
 		const int location = indexOf(keyword);
 		if (location < 0) {
 			return nullptr;
 		}
 		return modules[static_cast<Index>(location)];
 	}
-	Module * MACE::getModule(const Index i) {
+
+	const Module * Instance::getModule(const Index i) const {
 		if (i >= numberOfModules()) {
 			MACE__THROW(ObjectNotFound, "Input is not a valid index!");
 		}
 		return modules[i];
 	}
-	bool MACE::moduleExists(const std::string module) {
+
+	bool Instance::moduleExists(const std::string module) const {
 		return indexOf(module) >= 0;
 	}
-	bool MACE::moduleExists(const Module * module) {
-		return indexOf(*module) >= 0;
+
+	bool Instance::moduleExists(const Module * module) const {
+		return module->getInstance() == this && indexOf(*module) >= 0;
 	}
-	Size MACE::numberOfModules() {
+
+	Size Instance::numberOfModules() const {
 		//size() returns size_t which could be larger than unsigned int on some systems, causing problems. static_cast will fix it
 		return static_cast<Size>(modules.size());
 	}
-	void MACE::assertModule(const std::string module, const std::string errorMessage) {
+
+	void Instance::assertModule(const std::string module, const std::string errorMessage) const {
 		if (!moduleExists(module)) {
 			MACE__THROW(AssertionFailed, errorMessage);
 		}
 	}
-	void MACE::assertModule(const std::string module) {
+
+	void Instance::assertModule(const std::string module) const {
 		assertModule(module, "\'" + module + "\' module has not been registered!");
 	}
 
-	void MACE::start(const long long ups) {
-		mc::MACE::init();
+	void Instance::start(const long long ups) {
+		mc::Initializer i(this);
 
-		while (mc::MACE::isRunning()) {
-			mc::MACE::update();
+		while (mc::Instance::isRunning()) {
+			mc::Instance::update();
 
 			mc::os::wait(1000 / ups);
 		}
-
-		mc::MACE::destroy();
 	}
 
-	int MACE::indexOf(const Module& m) {
+	int Instance::indexOf(const Module& m) const {
 		for (Index i = 0; i < modules.size(); ++i) {
 			if (modules[i] == &m) {
 				return static_cast<int>(i);
@@ -103,7 +115,7 @@ namespace mc {
 		return -1;
 	}
 
-	int MACE::indexOf(const std::string name) {
+	int Instance::indexOf(const std::string name) const {
 		for (Index i = 0; i < modules.size(); ++i) {
 			if (modules[i]->getName() == name) {
 				return static_cast<int>(i);
@@ -112,55 +124,66 @@ namespace mc {
 		return -1;
 	}
 
-	void MACE::init() {
+	void Instance::init() {
 		if (modules.empty()) {
-			MACE__THROW(InitializationFailed, "Must add a Module via MACE::addModule!");
+			MACE__THROW(InitializationFailed, "Must add a Module via Instance::addModule!");
 		}
 
-		flags.untoggleBit(MACE::DESTROYED);
-		flags.toggleBit(MACE::INIT);
+		flags.untoggleBit(Instance::DESTROYED);
+		flags.toggleBit(Instance::INIT);
 
 		for (Index i = 0; i < modules.size(); ++i) {
 			modules[i]->init();
 		}
 	}
 
-	void MACE::destroy() {
-		if (!flags.getBit(MACE::INIT)) {
+	void Instance::destroy() {
+		if (!flags.getBit(Instance::INIT)) {
 			MACE__THROW(InitializationFailed, "Can't destroy MACE without calling init() first!");
 		}
 
-		flags.toggleBit(MACE::DESTROYED);
-		flags.untoggleBit(MACE::INIT);
-		flags.untoggleBit(MACE::STOP_REQUESTED);
+		flags.toggleBit(Instance::DESTROYED);
+		flags.untoggleBit(Instance::INIT);
+		flags.untoggleBit(Instance::STOP_REQUESTED);
 
 		for (Index i = 0; i < modules.size(); ++i) {
 			modules[i]->destroy();
 		}
 	}
 
-	void MACE::update() {
+	void Instance::update() {
 		os::clearError(__LINE__, __FILE__);
 
-		if (!flags.getBit(MACE::INIT)) {
+		if (!flags.getBit(Instance::INIT)) {
 			MACE__THROW(InitializationFailed, "init() must be called!");
 		}
 		for (Index i = 0; i < modules.size(); ++i) {
 			modules[i]->update();
 		}
 	}
-	bool MACE::isRunning() {
-		return !flags.getBit(MACE::STOP_REQUESTED) && flags.getBit(MACE::INIT) && !flags.getBit(MACE::DESTROYED);
+
+	bool Instance::isRunning() const {
+		return !flags.getBit(Instance::STOP_REQUESTED) && flags.getBit(Instance::INIT) && !flags.getBit(Instance::DESTROYED);
 	}
-	void MACE::requestStop() {
-		flags.toggleBit(MACE::STOP_REQUESTED);
+
+	void Instance::requestStop() {
+		flags.toggleBit(Instance::STOP_REQUESTED);
 	}
-	bool MACE::getFlag(const MACE::Flag flag) {
+
+	bool Instance::getFlag(const Instance::Flag flag) const {
 		return flags.getBit(static_cast<Byte>(flag));
 	}
-	void MACE::reset() {
+
+	void Instance::reset() {
 		modules.clear();
 		flags = 0;
 	}
 
+	Instance * Module::getInstance() {
+		return instance;
+	}
+
+	const Instance * Module::getInstance() const {
+		return instance;
+	}
 }//mc

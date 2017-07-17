@@ -8,7 +8,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 #include <MACE/Core/Error.h>
-#include <MACE/Core/Module.h>
+#include <MACE/Core/Instance.h>
 #include <MACE/Core/System.h>
 #include <iostream>
 #include <string>
@@ -19,13 +19,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <cstring>
 
 namespace mc {
-	namespace {
-		bool writeToLog = false;
-		bool verboseErrors = false;
-	}
-
-	void Error::handleError(const std::exception & e) {
-		if (verboseErrors) {
+	void Error::handleError(const std::exception & e, Instance* instance) {
+		if (instance != nullptr && instance->getFlag(Instance::VERBOSE_ERRORS)) {
 			std::cerr << Error::getErrorDump(e);
 		} else {
 			std::cerr << typeid(e).name();
@@ -39,23 +34,29 @@ namespace mc {
 #endif
 		}
 
-		if (writeToLog) {
-			std::ofstream logFile;
-			logFile.open("err.log", std::ofstream::out | std::ofstream::trunc);
-			logFile << Error::getErrorDump(e);
-			logFile.close();
+		if (instance != nullptr) {
+			if (instance->getFlag(Instance::WRITE_ERRORS_TO_LOG)) {
+				std::ofstream logFile;
+				logFile.open("err.log", std::ofstream::out | std::ofstream::trunc);
+				logFile << Error::getErrorDump(e);
+				logFile.close();
+			}
+
+			instance->requestStop();
 		}
 
-		MACE::requestStop();
-
 		throw e;
+	}
+
+	void Error::handleError(const std::exception & e, Instance& instance) {
+		handleError(e, &instance);
 	}
 
 	void Error::handle() {
 		Error::handleError(*this);
 	}
 
-	std::string Error::getErrorDump(const std::exception & e) {
+	std::string Error::getErrorDump(const std::exception & e, Instance* instance) {
 		std::stringstream dump;
 		dump << "At ";
 
@@ -82,22 +83,24 @@ namespace mc {
 			dump << "File: " << std::endl << '\t' << err->getFile() << std::endl;
 		}
 		dump << std::endl;
-		dump << "====MACE DETAILS====" << std::endl;
-		dump << "Module Handler Size:" << std::endl << '\t' << MACE::numberOfModules() << std::endl;
-		dump << "Modules:";
-		for (Index i = 0; i < MACE::numberOfModules(); ++i) {
-			const Module* m = MACE::getModule(i);
+		if (instance != nullptr) {
+			dump << "====MACE DETAILS====" << std::endl;
+			dump << "Module Handler Size:" << std::endl << '\t' << instance->numberOfModules() << std::endl;
+			dump << "Modules:";
+			for (Index i = 0; i < instance->numberOfModules(); ++i) {
+				const Module* m = instance->getModule(i);
 
-			dump << std::endl << '\t' << m->getName() << " (" << typeid(*m).name() << ')';
+				dump << std::endl << '\t' << m->getName() << " (" << typeid(*m).name() << ')';
+			}
+			//we need to flush it as well as newline. endl accomplishes that
+			dump << std::endl;
+			dump << "Flags:" << std::endl << '\t';
+			dump << "DESTROYED - " << instance->getFlag(Instance::DESTROYED) << std::endl << '\t';
+			dump << "INIT - " << instance->getFlag(Instance::INIT) << std::endl << '\t';
+			dump << "STOP_REQUESTED - " << instance->getFlag(Instance::STOP_REQUESTED);
+
+			dump << std::endl << std::endl;
 		}
-		//we need to flush it as well as newline. endl accomplishes that
-		dump << std::endl;
-		dump << "Flags:" << std::endl << '\t';
-		dump << "DESTROYED - " << MACE::getFlag(MACE::DESTROYED) << std::endl << '\t';
-		dump << "INIT - " << MACE::getFlag(MACE::INIT) << std::endl << '\t';
-		dump << "STOP_REQUESTED - " << MACE::getFlag(MACE::STOP_REQUESTED);
-
-		dump << std::endl << std::endl;
 
 		//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
 #define MACE__CHECK_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){dump << "Yes";}else{dump << "No";}dump<<std::endl;
@@ -200,14 +203,6 @@ namespace mc {
 #undef MACE__CHECK_MACRO
 
 		return dump.str();
-	}
-
-	void Error::setLogFileEnabled(const bool & writeLog) {
-		writeToLog = writeLog;
-	}
-
-	void Error::setVerboseErrors(const bool & verbose) {
-		verboseErrors = verbose;
 	}
 
 	Error::Error(const char * message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
