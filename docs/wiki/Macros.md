@@ -19,7 +19,6 @@ There are many different macros that can determine how MACE works.
 
 These macros are automatically defined if the specified library is found. Otherwise, you can manually define them.
 
-* MACE_X11
 * MACE_WINAPI
 * MACE_POSIX
 
@@ -60,29 +59,23 @@ One of these macros will be defined based on the operating system.
 
 ### Compilers
 
-The macro MACE_COMPILER has the compiler ID. The MACE_COMPILER_VERSION macro has the compiler version.
-
-If Microsoft Visual Studio is used, MACE_MSVC is defined to be the Visual Studio version number. Additionally, if the IDE is being used, MACE_MSVC_IDE is defined to 1.
-If MSCV CL is being used, MACE_MSVC_CL is defined to 1. If MSVC 2005 compiler is used, MACE_MSVC_2005 is defined to 1.
-
-Otherwise, one of the following macros will be defined to the compiler version:
+One of the following macros will be defined to their respective compiler versions:
 
 *  MACE_BORLAND 
 *  MACE_MINGW 
-*  MACE_CYGWIN 
 *  MACE_CLANG 
-*  MACE_GNU 
+*  MACE_GCC
 *  MACE_HP 
 *  MACE_INTEL 
-*  MACE_ORACLE 
-*  MACE_TEXAS_INSTRUMENTS 
+*  MACE_SOLARIS
 *  MACE_WATCOM 
-*  MACE_ADSP 
 *  MACE_CRAY 
 *  MACE_MIPSPRO 
 *  MACE_PORTLAND 
 *  MACE_PATHSCALE 
 *  MACE_IBM 
+
+Additionally, if the compiler supports GNU C, `MACE_GNU` will be defined.
 
 ## Macros defined by MACE
 
@@ -93,11 +86,6 @@ Otherwise, one of the following macros will be defined to the compiler version:
 | MACE_INCLUDED | Always defined to be 1 when MACE is included in a project |
 | MACE_TESTS | Defined if CMake built the testing suite. |
 | MACE_DEMOS | Defined if CMake built the demos |
-| MACE_INCLUDES | Defined to be the directory in which the include files are located. This macro is not stringified. |
-| MACE_DIRECTORY | Defined to be the directory where the MACE source came from. This macro is not stringified. |
-| MACE_SYSTEM_NAME | Defined to be the name of the operating system in which MACE was configured on. This macro is not stringified. |
-| MACE_SYSTEM_VERSION | The version of the operating system in which MACE was configured on. This macro is not stringified. |
-| MACE_PROCESSOR_NAME | The name of the processor on which MACE was configured on. This macro is not stringified. |
 | MACE_POINTER_SIZE | Size of a void* on this system. |
 | MACE_32_BIT | Whether this system is 32 bit. Defined if MACE_POINTER_SIZE == 4. |
 | MACE_64_BIT | Whether this system is 64 bit. Defined if MACE_POINTER_SIZE == 8. |
@@ -111,6 +99,8 @@ Otherwise, one of the following macros will be defined to the compiler version:
 
 | *Macro* | *Meaning* |
 |---------------------------------|---------------------------------------------------------------------------------------------------------|
+| MACE_VERSION_NUMBER(major, minor, patch) | Creates a single version number from 3 version numbers. Encodes all 3 numbers into a single 32 bit integer. |
+| MACE_VERSION_STRING(major, minor, patch) | Creates a token that combines the 3 version numbers into the format "Major.minor.patch". This is not stringified. |
 | MACE_FUNCTION_EXPORT | Modifier that tells the compiler that this function should be exported to the global symbol table. Could be empty |
 | MACE_FUNCTION_IMPORT | Modifier that tells the compiler that this function will be imported from an exported symbol. Could be empty. |
 | MACE_HAS_ATTRIBUTE(attr) | If not defined previously, returns 0 if specified attribute is supported, 1 otherwise. If attributes are not supported by the compiler, always returns 0  |

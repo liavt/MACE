@@ -17,6 +17,45 @@ The above copyright notice and this permission notice shall be included in all c
 #	error A C++ compiler is required!
 #endif//__cplusplus
 
+#define MACE_VERSION_NUMBER(major,minor,patch) (((major % 100) * 10000000) + ((minor % 100) * 100000) + (patch % 100000))
+#define MACE_VERSION_STRING(major, minor, patch) major##.##minor##.##patch
+
+//COMPILER SUPPORT
+#ifdef __GNUC__
+#	define MACE_GNU __GNUC__
+#	if defined(__clang__)&&defined(__clang_major__)&&defined(__clang_minor__)&&defined(__clang_patchlevel__)
+#		define MACE_CLANG MACE_VERSION_NUMBER(__clang_major__, __clang_minor__, __clang_patchlevel__)
+#	elif defined(__GNUG__)&&defined(__GNUC_MINOR__, __GNUC_PATCHLEVEL__)
+#		define MACE_GCC MACE_VERSION_NUMBER(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
+#	elif defined(__MINGW32__)||defined(__MINGW64__)
+#		define MACE_MINGW MACE_VERSION_NUMBER(__MINGW64_VERSION_MAJOR, __MINGW64_VERSION_MINOR, 0)
+#	elif defined(__ICC) || defined(__INTEL_COMPILER)
+#		define MACE_INTEL __INTEL_COMPILER
+#	else
+#		error "Unable to detect GNU compiler version!"
+#	endif
+#elif defined(_MSC_VER)
+#	define MACE_MSVC _MSC_FULL_VER
+#elif defined(__BORLANDC__)
+#	define MACE_BORLAND __BORLANDC__
+#elif defined(__HP_cc) && defined(__HP_aCC)
+#	define MACE_HP __HP_acc
+#elif defined(__SUNPRO_C) && defined(__SUNPRO_CC)
+#	define MACE_SOLARIS __SUNPRO_CC
+#elif defined(__WATCOMC__)
+#	define MACE_WATCOM __WATCOMC__
+#elif defined(_CRAYC)
+#	define MACE_CRAY _REVISION
+#elif defined(sgi)&&defined(__sgi)
+#	define MACE_MIPSPRO __COMPILER_VERSION
+#elif defined(__PGIC__)
+#	define MACE_PORTLAND MACE_VERSION_NUMBER(__PGIC__, __PGIC_MINOR, __PGIC_PATCHLEVEL__)
+#elif defined(__IMBC__) && defined(__IMBCC__)
+#	define MACE_IBM __IMBCC__
+#else
+#	error "Unknown compiler detected!"
+#endif
+
 //checking if MACE should be compiled in debug mode
 #ifdef MACE_DEBUG
 #	if MACE_DEBUG == 0 || MACE_DEBUG == false
@@ -47,14 +86,14 @@ The above copyright notice and this permission notice shall be included in all c
 //used to mark a function or variable thats deprecated
 #ifndef MACE_DEPRECATED
 #	if MACE_HAS_ATTRIBUTE(deprecated)
-#		define MACE_DEPRECATED [[deprecaed]]
+#		define MACE_DEPRECATED(message) [[deprecated(message)]]
 #	else
 #		ifdef MACE_MSVC
-#			define MACE_DEPRECATED __declspec(deprecated)
-#		elif defined(MACE_GNU) || defined(MACE_CLANG)
-#			define MACE_DEPRECATED  __attribute__((deprecated))
+#			define MACE_DEPRECATED(message) __declspec(deprecated(message))
+#		elif defined(MACE_GNU)
+#			define MACE_DEPRECATED(message)  __attribute__((deprecated))
 #		else
-#			define MACE_DEPRECATED
+#			define MACE_DEPRECATED(message)
 #		endif
 #	endif
 #endif

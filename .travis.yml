@@ -91,10 +91,10 @@ deploy:
     overwrite: true
     tag_name: "unstable"
     on:
-      branch: unstable
+      branch: none
       condition: $TRAVIS_OS_NAME == osx || $COMPILER == g++-6
   - provider: script
     script: sudo ./scripts/travis-deploy-docs.sh
     on:
-      branch: unstable
+      branch: none
       condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6
