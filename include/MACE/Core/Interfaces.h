@@ -171,7 +171,7 @@ namespace mc {
 		}
 
 		bool operator!=(const T* other) const {
-			return !operator(other);
+			return !operator==(other);
 		}
 	private:
 		bool dynamic;
