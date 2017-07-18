@@ -554,7 +554,7 @@ namespace mc {
 					}
 
 					for (Index iter = 0; iter < includes.size(); ++iter) {
-						Include* incl = includes[iter];
+						const Include* incl = includes[iter];
 						if (incl->hasFile(term)) {
 							includeFile = incl->getFile(term);
 							break;
@@ -1378,19 +1378,19 @@ namespace mc {
 		MACE__THROW_PREPROCESSOR("Unknown macro " + name);
 	}
 
-	void Preprocessor::addInclude(Include & include) {
+	void Preprocessor::addInclude(const Include & include) {
 		includes.push_back(&include);
 	}
 
-	std::vector< Include* > Preprocessor::getIncludes() {
+	std::vector< const Include* > Preprocessor::getIncludes() {
 		return includes;
 	}
 
-	const std::vector< Include* > Preprocessor::getIncludes() const {
+	const std::vector< const Include* > Preprocessor::getIncludes() const {
 		return includes;
 	}
 
-	void Preprocessor::setIncludes(const std::vector< Include* > include) {
+	void Preprocessor::setIncludes(const std::vector< const Include* > include) {
 		this->includes = include;
 	}
 
@@ -1429,7 +1429,7 @@ namespace mc {
 
 	Macro::Macro(std::string n, std::string d) : Macro(n, d, std::vector< std::string >(), "") {}
 
-	IncludeString::IncludeString(const std::string & c, const std::string n) : content(c), name(n) {}
+	MACE_CONSTEXPR IncludeString::IncludeString(const std::string & c, const std::string n) : content(c), name(n) {}
 
 	bool IncludeString::hasFile(const std::string & fileName) const {
 		return this->name == fileName;

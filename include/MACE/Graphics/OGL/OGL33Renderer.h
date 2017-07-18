@@ -24,7 +24,7 @@ namespace mc {
 			class OGL33Painter: public PainterImpl {
 				friend class OGL33Renderer;
 			public:
-				OGL33Painter(const GraphicsEntity* const entity);
+				OGL33Painter(OGL33Renderer* const renderer, const GraphicsEntity* const entity);
 
 				void init() override;
 				void destroy() override;
@@ -32,9 +32,13 @@ namespace mc {
 				void loadSettings() override;
 				void draw(const Painter::Brush brush, const Painter::RenderType type) override;
 			private:
-				OGL33Renderer* renderer;
+				OGL33Renderer* const renderer;
 			};
 
+			/**
+			@todo Remove discard from mc_frag.glsl
+			@todo get rid of global constant IncludeString
+			*/
 			class OGL33Renderer: public Renderer {
 				friend class OGL33Painter;
 			public:
@@ -52,7 +56,7 @@ namespace mc {
 
 				GraphicsEntity* getEntityAt(const int x, const int y) override;
 
-				std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const override;
+				std::shared_ptr<PainterImpl> createPainterImpl(const GraphicsEntity * const entity) override;
 
 				const Preprocessor& getSSLPreprocessor();
 			private:

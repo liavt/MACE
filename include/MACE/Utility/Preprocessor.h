@@ -205,23 +205,23 @@ namespace mc {
 		@see IncludeDirectory
 		@see IncludeString
 		*/
-		void addInclude(Include& incl);
+		void addInclude(const Include& incl);
 
 		/**
 		Retrieves all pointers to an `Include` added via `addInclude()` or `setIncludes()`
 		@return A `std::vector` containing all `Includes` in this `Preprocessor`
 		*/
-		std::vector< Include* > getIncludes();
+		std::vector< const Include* > getIncludes();
 		/**
 		@copydoc Preprocessor::getIncludes()
 		*/
-		const std::vector< Include* > getIncludes() const;
+		const std::vector< const Include* > getIncludes() const;
 		/**
 		Sets all of the `Includes` in this `Preprocessor`.
 		@param includes The new `Includes`
 		@see addInclude(Include&)
 		*/
-		void setIncludes(const std::vector< Include* > includes);
+		void setIncludes(const std::vector< const Include* > includes);
 
 		/**
 		Retrieves what this `Preprocessor` is processing. Cannot be changed. Set by the constructor.
@@ -343,7 +343,7 @@ namespace mc {
 
 		std::string filename = "";
 
-		std::vector< Include* > includes;
+		std::vector< const Include* > includes;
 		std::vector< Macro > macros;
 
 		std::vector< std::string > parse();

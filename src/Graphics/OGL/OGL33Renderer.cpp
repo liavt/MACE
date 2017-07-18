@@ -39,22 +39,19 @@ namespace mc {
 			//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
 			namespace {
-				IncludeString vertexLibrary = IncludeString({
+				const IncludeString vertexLibrary = IncludeString({
 #	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
 				}, "mc_vertex");
-				/**
-				@todo Remove discard from shader
-				*/
-				IncludeString fragmentLibrary = IncludeString({
+				const IncludeString fragmentLibrary = IncludeString({
 #	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
 				}, "mc_frag");
-				IncludeString positionLibrary = IncludeString({
+				const IncludeString positionLibrary = IncludeString({
 #	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
 				}, "mc_position");
-				IncludeString entityLibrary = IncludeString({
+				const IncludeString entityLibrary = IncludeString({
 #	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
 				}, "mc_entity");
-				IncludeString coreLibrary = IncludeString({
+				const IncludeString coreLibrary = IncludeString({
 #	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
 				}, "mc_core");
 			}
@@ -94,7 +91,7 @@ namespace mc {
 
 			void OGL33Renderer::onInit(const Size width, const Size height) {
 				glewExperimental = true;
-				GLenum result = glewInit();
+				const GLenum result = glewInit();
 				if (result != GLEW_OK) {
 					std::ostringstream errorMessage;
 					errorMessage << "GLEW failed to initialize: ";
@@ -105,6 +102,7 @@ namespace mc {
 					if (result == GLEW_ERROR_NO_GL_VERSION) {
 						errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
 					}
+
 					MACE__THROW(InitializationFailed, errorMessage.str());
 				}
 
@@ -182,7 +180,7 @@ namespace mc {
 				ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
 
-				MACE_CONSTEXPR Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
+				MACE_CONSTEXPR const Enum drawBuffers[] = { GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
 					GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX };
 				frameBuffer.setDrawBuffers(2, drawBuffers);
 
@@ -222,7 +220,7 @@ namespace mc {
 				entityUniforms.destroy();
 				painterUniforms.destroy();
 
-				for (std::map<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<RenderProtocol>>::iterator iter = protocols.begin(); iter != protocols.end(); ++iter) {
+				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
 					iter->second->program.destroy();
 					iter->second->vao.destroy();
 				}
@@ -241,19 +239,14 @@ namespace mc {
 			GraphicsEntity * OGL33Renderer::getEntityAt(const int x, const int y) {
 				frameBuffer.bind();
 
-				GLFWwindow* win = glfwGetCurrentContext();
-				if (win == nullptr) {
-					MACE__THROW(InvalidState, "This thread does not have a rendering context!");
-				}
-				int height;
-				glfwGetFramebufferSize(win, nullptr, &height);
+				Vector<int, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
 				Index pixel = 0;
 				frameBuffer.setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				//opengl y-axis is inverted from window coordinates
-				frameBuffer.readPixels(x, height - y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
+				frameBuffer.readPixels(x, framebufferSize.y() - y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pixel);
 
 				if (pixel > 0) {
 					//the entity that was there was removed from the renderqueue
@@ -263,11 +256,12 @@ namespace mc {
 
 					return renderQueue[--pixel];
 				}
+
 				return nullptr;
 			}
 
-			std::shared_ptr<PainterImpl> OGL33Renderer::getPainter(const GraphicsEntity * const entity) const {
-				return std::shared_ptr<PainterImpl>(new OGL33Painter(entity));
+			std::shared_ptr<PainterImpl> OGL33Renderer::createPainterImpl(const GraphicsEntity * const entity) {
+				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, entity));
 			}
 
 			void OGL33Renderer::generateFramebuffer(const Size& width, const Size& height) {
@@ -295,28 +289,28 @@ namespace mc {
 
 				switch (frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
 					case GL_FRAMEBUFFER_UNDEFINED:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
 						break;
 					case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
 						break;
 					case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
 						break;
 					case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
 						break;
 					case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
 						break;
 					case GL_FRAMEBUFFER_UNSUPPORTED:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
 						break;
 					case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
 						break;
 					case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-						throw ogl::FramebufferError("GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
 						break;
 					case GL_FRAMEBUFFER_COMPLETE:
 					default:
@@ -324,15 +318,17 @@ namespace mc {
 						break;
 				}
 
-				MACE_CONSTEXPR Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+				MACE_CONSTEXPR const Enum buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 				frameBuffer.setDrawBuffers(2, buffers);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
 
 				glViewport(0, 0, width, height);
 
-				windowRatios[0] = static_cast<float>(context->getWindow()->getLaunchConfig().width) / static_cast<float>(width);
-				windowRatios[1] = static_cast<float>(context->getWindow()->getLaunchConfig().width) / static_cast<float>(height);
+				const os::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
+
+				windowRatios[0] = static_cast<float>(config.width) / static_cast<float>(width);
+				windowRatios[1] = static_cast<float>(config.width) / static_cast<float>(height);
 			}
 
 			std::string OGL33Renderer::processShader(const std::string & shader) {
@@ -425,7 +421,7 @@ namespace mc {
 	#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
 					}));
 				} else {
-					MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
+					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
 				}
 
 				if (settings.first == Painter::Brush::COLOR) {
@@ -473,7 +469,7 @@ namespace mc {
 					program.setUniform("tex2", 1);
 					program.setUniform("mask", 2);
 				} else {
-					MACE__THROW(BadFormat, "OpenGL Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
+					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 				}
 
 				program.createUniform("mc_EntityID");
@@ -489,19 +485,19 @@ namespace mc {
 				vao.init();
 
 				if (settings.second == Painter::RenderType::QUAD) {
-					MACE_CONSTEXPR float squareTextureCoordinates[8] = {
+					MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
 						0.0f,1.0f,
 						0.0f,0.0f,
 						1.0f,0.0f,
 						1.0f,1.0f,
 					};
 
-					MACE_CONSTEXPR unsigned int squareIndices[6] = {
+					MACE_CONSTEXPR const unsigned int squareIndices[6] = {
 						0,1,3,
 						1,2,3
 					};
 
-					MACE_CONSTEXPR float squareVertices[12] = {
+					MACE_CONSTEXPR const float squareVertices[12] = {
 						-1.0f,-1.0f,0.0f,
 						-1.0f,1.0f,0.0f,
 						1.0f,1.0f,0.0f,
@@ -564,13 +560,7 @@ namespace mc {
 				return sslPreprocessor;
 			}//getSSLPreprocessor
 
-			OGL33Painter::OGL33Painter(const GraphicsEntity * const entity) : PainterImpl(entity), renderer(dynamic_cast<OGL33Renderer*>(mc::os::getCurrentWindow()->getContext()->getRenderer().get())) {
-				if (renderer == nullptr) {
-					//this should never happen unless someone extended Renderer and returned a OGL33Painter for some reason...
-					MACE__THROW(NullPointer, "Internal Error: OGL33Painter cant be used without a OGL33Renderer");
-				}
-
-			}
+			OGL33Painter::OGL33Painter(OGL33Renderer* const r, const GraphicsEntity * const entity) : PainterImpl(entity), renderer(r) {}
 
 			void OGL33Painter::init() {
 				renderer->loadEntityUniforms(entity);
@@ -589,7 +579,7 @@ namespace mc {
 			}
 
 			void OGL33Painter::draw(const Painter::Brush brush, const Painter::RenderType type) {
-				const OGL33Renderer::RenderProtocol prot = renderer->getProtocol(entity, { brush, type });
+				const OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(entity, { brush, type });
 				prot.vao.bind();
 				prot.program.bind();
 

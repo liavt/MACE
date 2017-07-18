@@ -285,10 +285,12 @@ namespace mc {
 		}
 
 		Painter::Painter(GraphicsEntity * const en) {
-			impl = os::getCurrentWindow()->getContext()->getRenderer()->getPainter(en);
+			impl = os::getCurrentWindow()->getContext()->getRenderer()->createPainterImpl(en);
+#ifdef MACE_DEBUG
 			if (impl.get() == nullptr) {
 				MACE__THROW(NullPointer, "Renderer returned a nullptr to a Painter");
 			}
+#endif
 		}
 
 		void Painter::init() {

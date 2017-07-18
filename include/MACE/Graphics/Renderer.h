@@ -239,7 +239,7 @@ namespace mc {
 			const GraphicsContext* getContext() const;
 		protected:
 			//not declared const because some of the functions require modification to an intneral buffer of impls
-			virtual std::shared_ptr<PainterImpl> getPainter(const GraphicsEntity * const entity) const = 0;
+			virtual std::shared_ptr<PainterImpl> createPainterImpl(const GraphicsEntity * const entity) = 0;
 
 			Index pushEntity(GraphicsEntity*  entity);
 
