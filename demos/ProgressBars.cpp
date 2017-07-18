@@ -53,7 +53,7 @@ void create(os::WindowModule& win) {
 	rectangleBar = gfx::ProgressBar(0, 255, 50);
 	rectangleBar.setBackgroundTexture(Colors::RED);
 	rectangleBar.setForegroundTexture(Colors::GREEN);
-	rectangleBar.setSelectionTexture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png");
+	rectangleBar.setSelectionTexture(gfx::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png"));
 	rectangleBar.setWidth(0.1f);
 	rectangleBar.setHeight(0.25f);
 	rectangleBar.setX(0.5f);
