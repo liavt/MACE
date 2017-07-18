@@ -44,7 +44,7 @@ namespace mc {
 			*/
 			void setTexture(const Texture& tex);
 			/**
-			@copydoc Image::getTexture() const
+			@copydoc Image::createTextureImpl() const
 			@dirty
 			*/
 			Texture& getTexture();
@@ -304,7 +304,7 @@ namespace mc {
 			*/
 			void setTexture(const Texture& tex);
 			/**
-			@copydoc Image::getTexture() const
+			@copydoc Image::createTextureImpl() const
 			@dirty
 			*/
 			Texture& getTexture();
@@ -335,7 +335,7 @@ namespace mc {
 		public:
 			const Texture& getTexture() const;
 			/**
-			@copydoc Button::getTexture() const
+			@copydoc Button::createTextureImpl() const
 			@dirty
 			*/
 			Texture& getTexture();

@@ -71,6 +71,11 @@ namespace mc {
 	MACE__DECLARE_ERROR(AssertionFailed);
 
 	/**
+	Thrown when a resource already exists and you are attempting to recreate it
+	*/
+	MACE__DECLARE_ERROR(AlreadyExists);
+
+	/**
 	Thrown when an object wasn't initializaed or initializtion failed
 	*/
 	MACE__DECLARE_ERROR(InitializationFailed);

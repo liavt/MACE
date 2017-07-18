@@ -16,6 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Window.h>
 #include <MACE/Utility/Color.h>
 #include <memory>
+#include <map>
 #include <string>
 
 #ifdef MACE_OPENCV
@@ -137,8 +138,8 @@ namespace mc {
 			Texture(const Color& col);
 			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
-			Texture(const char* file);
-			Texture(const std::string& file);
+			explicit Texture(const char* file);
+			explicit Texture(const std::string& file);
 
 			void init() override;
 			void destroy() override;
@@ -274,6 +275,8 @@ namespace mc {
 		};
 
 		class GraphicsContext: public Initializable {
+			friend class Texture;
+			friend class Model;
 		public:
 			GraphicsContext(os::WindowModule* win);
 			//prevent copying
@@ -285,17 +288,35 @@ namespace mc {
 			void destroy() override;
 
 			virtual std::shared_ptr<Renderer> getRenderer() const = 0;
-			virtual std::shared_ptr<ModelImpl> getModel() const = 0;
-			virtual std::shared_ptr<TextureImpl> getTexture() const = 0;
 
 			os::WindowModule* getWindow();
 			const os::WindowModule* getWindow() const;
+
+			void createTexture(const std::string& name, const Texture& texture = Texture());
+			
+			bool hasTexture(const std::string& name) const;
+
+			void setTexture(const std::string& name, const Texture& texture);
+			Texture& getTexture(const std::string& name);
+			const Texture& getTexture(const std::string& name) const;
+
+			std::map<std::string, Texture>& getTextures();
+			const std::map<std::string, Texture>& getTextures() const;
+
+		//	std::map<std::string, Model>& getModels();
+			//const std::map<std::string, Model>& getModels() const;
 		protected:
 			os::WindowModule* window;
+
+			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
+			virtual std::shared_ptr<TextureImpl> createTextureImpl() const = 0;
 
 			virtual void onInit(os::WindowModule* win) = 0;
 			virtual void onRender(os::WindowModule* win) = 0;
 			virtual void onDestroy(os::WindowModule* win) = 0;
+
+		private:
+			std::map<std::string, Texture> textures{};
 		};
 	}
 }//mc

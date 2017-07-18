@@ -15,7 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	Index Instance::addModule(Module& m) {
 		if (m.getInstance() != nullptr) {
-			MACE__THROW(AssertionFailed, "Can\'t add a Module to 2 Instance\'s!");
+			MACE__THROW(AlreadyExists, "Can\'t add a Module to 2 Instance\'s!");
 		}
 
 		m.instance = this;

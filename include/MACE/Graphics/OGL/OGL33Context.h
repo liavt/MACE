@@ -60,8 +60,8 @@ namespace mc {
 				~OGL33Context() = default;
 
 				std::shared_ptr<Renderer> getRenderer() const override;
-				std::shared_ptr<ModelImpl> getModel() const override;
-				std::shared_ptr<TextureImpl> getTexture() const override;
+				std::shared_ptr<ModelImpl> createModelImpl() const override;
+				std::shared_ptr<TextureImpl> createTextureImpl() const override;
 			protected:
 				void onInit(os::WindowModule* win) override;
 				void onRender(os::WindowModule* win) override;

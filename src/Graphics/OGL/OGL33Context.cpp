@@ -284,11 +284,11 @@ namespace mc {
 				return renderer;
 			}
 
-			std::shared_ptr<ModelImpl> OGL33Context::getModel() const {
+			std::shared_ptr<ModelImpl> OGL33Context::createModelImpl() const {
 				return std::shared_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<TextureImpl> OGL33Context::getTexture() const {
+			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl() const {
 				return std::shared_ptr<TextureImpl>(new OGL33Texture());
 			}
 		}//ogl

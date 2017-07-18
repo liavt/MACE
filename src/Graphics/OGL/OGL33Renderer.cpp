@@ -38,6 +38,27 @@ namespace mc {
 		namespace ogl {
 			//magic constants will be defined up here, and undefined at the bottom. the only reason why they are defined by the preproccessor is so other coders can quickly change values.
 
+			namespace {
+				IncludeString vertexLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
+				}, "mc_vertex");
+				/**
+				@todo Remove discard from shader
+				*/
+				IncludeString fragmentLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
+				}, "mc_frag");
+				IncludeString positionLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
+				}, "mc_position");
+				IncludeString entityLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
+				}, "mc_entity");
+				IncludeString coreLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
+				}, "mc_core");
+			}
+
 			//how many floats in the uniform buffer
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 24
 		//which binding location the uniform buffer goes to
@@ -533,25 +554,6 @@ namespace mc {
 					MACE__DEFINE_MACRO(MACE__VAO_VERTICES_LOCATION);
 					MACE__DEFINE_MACRO(MACE__VAO_TEX_COORD_LOCATION);
 #undef MACE__DEFINE_MACRO
-
-					IncludeString vertexLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
-					}, "mc_vertex");
-					/**
-					@todo Remove discard from shader
-					*/
-					IncludeString fragmentLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
-					}, "mc_frag");
-					IncludeString positionLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
-					}, "mc_position");
-					IncludeString entityLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
-					}, "mc_entity");
-					IncludeString coreLibrary = IncludeString({
-#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
-					}, "mc_core");
 
 					sslPreprocessor.addInclude(vertexLibrary);
 					sslPreprocessor.addInclude(fragmentLibrary);

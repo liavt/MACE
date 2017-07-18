@@ -17,7 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 #elif defined(MACE_MSVC)
 #	pragma warning( push ) 
 //these are all warnings that STB_IMAGE activates which dont really matter
-#	pragma warning( disable: 4244 4100 4456) 
+#	pragma warning( disable: 4244 4100 4456 ) 
 #endif
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -28,7 +28,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <stb_image.h>
 
-#ifdef MACE_GNU
+#ifdef MACE_GCC
 #	pragma GCC diagnostic pop
 #elif defined(MACE_MSVC)
 #	pragma warning( pop )
@@ -36,10 +36,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		namespace {
-			//when you request for a solid color Texture, it will use the same texture to save memory
-			std::shared_ptr<TextureImpl> solidColor;
-		}
+#define MACE__RESOURCE_SOLIDCOLOR "MACE/SolidColor"
 
 		Texture::Texture() : texture(nullptr), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
 
@@ -54,30 +51,36 @@ namespace mc {
 
 		Texture::Texture(const std::string & file) : Texture(file.c_str()) {}
 
-		Texture::Texture(const Color& col) : Texture(solidColor, col) {
-			if (solidColor.get() == nullptr) {
-				solidColor = os::getCurrentWindow()->getContext()->getTexture();
-			}
+		Texture::Texture(const Color& col) : Texture(nullptr, col) {
+			std::shared_ptr<GraphicsContext> context = os::getCurrentWindow()->getContext();
+			//context is guarenteed to never be nullptr, and if currentwindow is nullptr, an exception will be thrown from os::getCurrentWindow()
 
-			if (!solidColor->isCreated()) {
-				texture = solidColor;
+			if (!context->hasTexture(MACE__RESOURCE_SOLIDCOLOR)) {
+				texture = context->createTextureImpl();
 
-				solidColor->init();
+				texture->init();
 
 				resetPixelStorage();
 
-				MACE_CONSTEXPR const float data[] = { 1,1,1,1 };
-				solidColor->setData(data, 1, 1, gfx::Texture::Type::FLOAT, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
+				MACE_CONSTEXPR const float data[] = { 1 };
+				texture->setData(data, 1, 1, gfx::Texture::Type::FLOAT, gfx::Texture::Format::RED, gfx::Texture::InternalFormat::RED, 0);
 
-				solidColor->setMinFilter(Texture::ResizeFilter::NEAREST);
-				solidColor->setMagFilter(Texture::ResizeFilter::NEAREST);
+				texture->setSwizzle(gfx::Texture::SwizzleMode::G, gfx::Texture::SwizzleMode::R);
+				texture->setSwizzle(gfx::Texture::SwizzleMode::B, gfx::Texture::SwizzleMode::R);
+				texture->setSwizzle(gfx::Texture::SwizzleMode::A, gfx::Texture::SwizzleMode::R);
 
+				texture->setMinFilter(Texture::ResizeFilter::NEAREST);
+				texture->setMagFilter(Texture::ResizeFilter::NEAREST);
+
+				context->createTexture(MACE__RESOURCE_SOLIDCOLOR, texture);
+			} else {
+				texture = context->getTexture(MACE__RESOURCE_SOLIDCOLOR).texture;
 			}
 		}
 
 		void Texture::init() {
 			if (texture == nullptr) {
-				texture = os::getCurrentWindow()->getContext()->getTexture();
+				texture = os::getCurrentWindow()->getContext()->createTextureImpl();
 			}
 			texture->init();
 		}
@@ -245,6 +248,46 @@ namespace mc {
 			return window;
 		}
 
+		void GraphicsContext::createTexture(const std::string & name, const Texture & texture) {
+			if (hasTexture(name)) {
+				MACE__THROW(AlreadyExists, "Texture with name " + name + " has already been created");
+			}
+
+			textures[name] = texture;
+		}
+
+		bool GraphicsContext::hasTexture(const std::string & name) const {
+			return textures.count(name);
+		}
+
+		void GraphicsContext::setTexture(const std::string & name, const Texture & texture) {
+			textures[name] = texture;
+		}
+
+		Texture & GraphicsContext::getTexture(const std::string & name) {
+			return textures.at(name);
+		}
+
+		const Texture & GraphicsContext::getTexture(const std::string & name) const {
+			return textures.at(name);
+		}
+
+		std::map<std::string, Texture>& GraphicsContext::getTextures() {
+			return textures;
+		}
+
+		const std::map<std::string, Texture>& GraphicsContext::getTextures() const {
+			return textures;
+		}
+		/*
+		std::map<std::string, Model>& GraphicsContext::getModels() {
+			return models;
+		}
+
+		const std::map<std::string, Model>& GraphicsContext::getModels() const {
+			return models;
+		}
+		*/
 		GraphicsContext::GraphicsContext(os::WindowModule * win) :window(win) {
 #ifdef MACE_DEBUG
 			if (window == nullptr) {
