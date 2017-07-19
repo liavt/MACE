@@ -187,7 +187,7 @@ namespace mc {
 			virtual void destroy() override = 0;
 
 			virtual void bind() const override = 0;
-			virtual void bind(const Index location) const = 0;
+			virtual void bind(const unsigned int location) const = 0;
 			virtual void unbind() const override = 0;
 
 			virtual bool isCreated() const = 0;
@@ -300,7 +300,7 @@ namespace mc {
 			void setPaint(const Color& col);
 
 			void bind() const override;
-			void bind(const Index location) const override;
+			void bind(const unsigned int location) const override;
 			void unbind() const override;
 
 			void resetPixelStorage();

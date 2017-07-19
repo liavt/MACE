@@ -332,7 +332,7 @@ namespace mc {
 			texture->bind();
 		}
 
-		void Texture::bind(const Index location) const {
+		void Texture::bind(const unsigned int location) const {
 			texture->bind(location);
 		}
 

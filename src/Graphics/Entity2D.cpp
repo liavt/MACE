@@ -55,7 +55,7 @@ namespace mc {
 		void Image::onRender() {
 			Painter p = Painter(this);
 			Initializer i(p);
-			p->drawImage(texture);
+			p.drawImage(texture);
 		}
 
 		void Image::onDestroy() {
@@ -257,7 +257,9 @@ namespace mc {
 		void ProgressBar::onRender() {
 			Painter p = Painter(this);
 			Initializer i(p);
-			p->blendImagesMasked(foregroundTexture, backgroundTexture, selectionTexture, minimumProgress / maximumProgress, (progress - minimumProgress) / (maximumProgress - minimumProgress));
+			p.blendImagesMasked(foregroundTexture, backgroundTexture, selectionTexture,
+								minimumProgress / maximumProgress,
+								(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
 
 		void ProgressBar::onClean() {}
@@ -508,7 +510,7 @@ namespace mc {
 		void Letter::onRender() {
 			Painter p = Painter(this);
 			Initializer i(p);
-			p->maskImage(texture, mask);
+			p.maskImage(texture, mask);
 		}
 
 		void Letter::onDestroy() {
@@ -838,15 +840,15 @@ namespace mc {
 		void Button::onRender() {
 			Painter p = Painter(this);
 			Initializer i(p);
-			p->drawImage(texture);
+			p.drawImage(texture);
 			if (isDisabled()) {
-				p->drawImage(disabledTexture);
+				p.drawImage(disabledTexture);
 			} else {
 				if (isHovered()) {
-					p->drawImage(hoverTexture);
+					p.drawImage(hoverTexture);
 				}
 				if (isClicked()) {
-					p->drawImage(clickedTexture);
+					p.drawImage(clickedTexture);
 				}
 			}
 		}

@@ -134,7 +134,7 @@ namespace mc {
 				ogl::Texture2D::bind();
 			}
 
-			void OGL33Texture::bind(const Index location) const {
+			void OGL33Texture::bind(const unsigned int location) const {
 				ogl::Texture2D::bind(location);
 			}
 

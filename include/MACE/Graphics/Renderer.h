@@ -31,17 +31,22 @@ namespace mc {
 		class Renderer;
 		class PainterImpl;
 		class Texture;
+		class Model;
 
-		class Painter: public Initializable {
-		public:
+		namespace Enums {
 			//painter stuff
 			enum class Brush: Byte {
 				TEXTURE = 0, COLOR = 1, MASK = 2, MASKED_BLEND = 3,
 			};
 
 			enum class RenderType: Byte {
-				QUAD = 0
+				TRIANGLE = 0
 			};
+		}
+
+		class Painter: public Initializable {
+		public:
+			
 
 			struct State {
 				TransformMatrix transformation;
@@ -54,38 +59,14 @@ namespace mc {
 				bool operator!=(const State& other) const;
 			};
 
-			enum class DirtyFlag: Byte {
-				PRIMARY_COLOR = 0,
-				SECONDARY_COLOR = 1,
-				TRANSLATION = 2,
-				ROTATION = 3,
-				SCALE = 4
-			};
-
 			Painter(GraphicsEntity* const en);
 
 			void init() override;
 			void destroy() override;
 
-			std::shared_ptr<PainterImpl> getImplementation();
-			const std::shared_ptr<PainterImpl> getImplementation() const;
+			void drawModel(const Model& m, const Texture& img, const Enums::RenderType type = Enums::RenderType::TRIANGLE);
 
-			std::shared_ptr<PainterImpl> operator*();
-			const std::shared_ptr<PainterImpl> operator*() const;
-
-			std::shared_ptr<PainterImpl> operator->();
-			const std::shared_ptr<PainterImpl> operator->() const;
-		private:
-			std::shared_ptr<PainterImpl> impl = nullptr;
-		};
-
-		class PainterImpl: public Initializable {
-			friend class Renderer;
-		public:
-			virtual ~PainterImpl() noexcept = default;
-
-			virtual void init() override = 0;
-			virtual void destroy() override = 0;
+			void fillModel(const Model& m, const Enums::RenderType type = Enums::RenderType::TRIANGLE);
 
 			void fillRect(const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
 			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
@@ -97,7 +78,12 @@ namespace mc {
 
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
+			void draw(const Enums::Brush brush, const Enums::RenderType type);
+
 			const GraphicsEntity* const getEntity() const;
+
+			void setModel(const Model& m);
+			void setTexture(const Texture& t, const unsigned int slot = 0);
 
 			void setColor(const Color& col);
 			Color& getColor();
@@ -131,22 +117,37 @@ namespace mc {
 			void push();
 			void pop();
 
-			virtual void reset();
+			void reset();
 
-			virtual bool operator==(const PainterImpl& other) const;
+			bool operator==(const Painter& other) const;
+			bool operator!=(const Painter& other) const;
+		private:
+			std::shared_ptr<PainterImpl> impl = nullptr;
+
+			Painter::State state;
+
+			//for pushing/popping the state
+			std::stack<Painter::State> stateStack;
+		};
+
+		class PainterImpl: public Initializable {
+			friend class Renderer;
+			friend class Painter;
+		public:
+			virtual ~PainterImpl() noexcept = default;
+
+			virtual void init() override = 0;
+			virtual void destroy() override = 0;
+
+			virtual void loadSettings(const Painter::State& state) = 0;
+			virtual void draw(const Enums::Brush brush, const Enums::RenderType type) = 0;
+
+			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;
 		protected:
 			PainterImpl(const GraphicsEntity* const en);
 
-			virtual void loadSettings() = 0;
-			virtual void draw(const Painter::Brush brush, const Painter::RenderType type) = 0;
-
 			const GraphicsEntity* const entity;
-
-			Painter::State state;
-		private:
-			//for pushing/popping the state
-			std::stack<Painter::State> stateStack;
 		};
 
 		/**

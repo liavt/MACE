@@ -353,7 +353,7 @@ namespace mc {
 				void destroy() override;
 
 				void bind() const override;
-				void bind(const Index location) const;
+				void bind(const unsigned int location) const;
 
 				bool isCreated() const override;
 

@@ -127,157 +127,189 @@ namespace mc {
 			}
 		}
 
-		void PainterImpl::maskImage(const Texture & img, const Texture & mask) {
+		void Painter::maskImage(const Texture & img, const Texture & mask) {
 			push();
-			setColor(img.getPaint());
-			loadSettings();
-			img.bind(0);
-			mask.bind(1);
-			draw(Painter::Brush::MASK, Painter::RenderType::QUAD);
+			setTexture(img, 0);
+			setTexture(mask, 1);
+			draw(Enums::Brush::MASK, Enums::RenderType::TRIANGLE);
 			pop();
 		}
 
-		void PainterImpl::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
+		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
 			push();
-			setColor(foreground.getPaint());
-			setSecondaryColor(background.getPaint());
 			setData({ minimum, maximum, 0, 0 });
-			loadSettings();
-			foreground.bind(0);
-			background.bind(1);
-			mask.bind(2);
-			draw(Painter::Brush::MASKED_BLEND, Painter::RenderType::QUAD);
+			setTexture(foreground, 0);
+			setTexture(background, 1);
+			setTexture(mask, 2);
+			draw(Enums::Brush::MASKED_BLEND, Enums::RenderType::TRIANGLE);
 			pop();
 		}
 
-		const GraphicsEntity * const PainterImpl::getEntity() const {
-			return entity;
+		void Painter::draw(const Enums::Brush brush, const Enums::RenderType type) {
+			impl->loadSettings(state);
+			impl->draw(brush, type);
 		}
 
-		void PainterImpl::fillRect(const float x, const float y, const float w, const float h) {
+		const GraphicsEntity * const Painter::getEntity() const {
+			return impl->entity;
+		}
+
+		void Painter::setModel(const Model & m) {
+			m.bind();
+		}
+
+		void Painter::setTexture(const Texture & t, const unsigned int slot) {
+			t.bind(slot);
+			if (slot == 0) {
+				setColor(t.getPaint());
+			} else if (slot == 1) {
+				setSecondaryColor(t.getPaint());
+			}
+
+		}
+
+		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderType type) {
+			push();
+			setModel(m);
+			setTexture(img);
+			draw(Enums::Brush::TEXTURE, type);
+			pop();
+		}
+
+		void Painter::fillModel(const Model & m, const Enums::RenderType type) {
+			setModel(m);
+			draw(Enums::Brush::COLOR, type);
+		}
+
+		void Painter::fillRect(const float x, const float y, const float w, const float h) {
 			push();
 			translate(x, y);
 			scale(w, h);
-			loadSettings();
-			draw(Painter::Brush::COLOR, Painter::RenderType::QUAD);
+			draw(Enums::Brush::COLOR, Enums::RenderType::TRIANGLE);
 			pop();
 		}
 
-		void PainterImpl::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
+		void Painter::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
 			fillRect(pos.x(), pos.y(), size.x(), size.y());
 		}
 
-		void PainterImpl::fillRect(const Vector<float, 4>& dim) {
+		void Painter::fillRect(const Vector<float, 4>& dim) {
 			fillRect(dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
-		void PainterImpl::drawImage(const Texture & img) {
+		void Painter::drawImage(const Texture & img) {
 			push();
-			setColor(img.getPaint());
-			loadSettings();
-			img.bind(0);
-			draw(Painter::Brush::TEXTURE, Painter::RenderType::QUAD);
+			setTexture(img);
+			draw(Enums::Brush::TEXTURE, Enums::RenderType::TRIANGLE);
 			pop();
 		}
 
-		void PainterImpl::setColor(const Color & col) {
+		void Painter::setColor(const Color & col) {
 			state.primaryColor = col;
 		}
 
-		Color & PainterImpl::getColor() {
+		Color & Painter::getColor() {
 			return state.primaryColor;
 		}
 
-		const Color & PainterImpl::getColor() const {
+		const Color & Painter::getColor() const {
 			return state.primaryColor;
 		}
 
-		void PainterImpl::setSecondaryColor(const Color & col) {
+		void Painter::setSecondaryColor(const Color & col) {
 			state.secondaryColor = col;
 		}
 
-		Color & PainterImpl::getSecondaryColor() {
+		Color & Painter::getSecondaryColor() {
 			return state.secondaryColor;
 		}
 
-		const Color & PainterImpl::getSecondaryColor() const {
+		const Color & Painter::getSecondaryColor() const {
 			return state.secondaryColor;
 		}
 
-		void PainterImpl::setData(const Vector<float, 4> & col) {
+		void Painter::setData(const Vector<float, 4> & col) {
 			state.data = col;
 		}
 
-		Vector<float, 4> & PainterImpl::getData() {
+		Vector<float, 4> & Painter::getData() {
 			return state.data;
 		}
 
-		const Vector<float, 4> & PainterImpl::getData() const {
+		const Vector<float, 4> & Painter::getData() const {
 			return state.data;
 		}
 
-		void PainterImpl::resetColor() {
+		void Painter::resetColor() {
 			state.primaryColor = Colors::INVISIBLE;
 			state.secondaryColor = Colors::INVISIBLE;
 			state.data = { 0.0f, 0.0f, 0.0f, 0.0f };
 		}
 
-		void PainterImpl::setTransformation(const TransformMatrix & trans) {
+		void Painter::setTransformation(const TransformMatrix & trans) {
 			state.transformation = trans;
 		}
 
-		TransformMatrix & PainterImpl::getTransformation() {
+		TransformMatrix & Painter::getTransformation() {
 			return state.transformation;
 		}
 
-		const TransformMatrix & PainterImpl::getTransformation() const {
+		const TransformMatrix & Painter::getTransformation() const {
 			return state.transformation;
 		}
 
-		void PainterImpl::translate(const Vector<float, 3>& vec) {
+		void Painter::translate(const Vector<float, 3>& vec) {
 			translate(vec.x(), vec.y(), vec.z());
 		}
 
-		void PainterImpl::translate(const float x, const float y, const float z) {
+		void Painter::translate(const float x, const float y, const float z) {
 			state.transformation.translate(x, y, z);
 		}
 
-		void PainterImpl::rotate(const Vector<float, 3>& vec) {
+		void Painter::rotate(const Vector<float, 3>& vec) {
 			rotate(vec.x(), vec.y(), vec.z());
 		}
 
-		void PainterImpl::rotate(const float x, const float y, const float z) {
+		void Painter::rotate(const float x, const float y, const float z) {
 			state.transformation.rotate(x, y, z);
 		}
 
-		void PainterImpl::scale(const Vector<float, 3>& vec) {
+		void Painter::scale(const Vector<float, 3>& vec) {
 			scale(vec.x(), vec.y(), vec.z());
 		}
 
-		void PainterImpl::scale(const float x, const float y, const float z) {
+		void Painter::scale(const float x, const float y, const float z) {
 			state.transformation.scale(x, y, z);
 		}
 
-		void PainterImpl::resetTransform() {
+		void Painter::resetTransform() {
 			state.transformation.reset();
 		}
 
-		void PainterImpl::push() {
+		void Painter::push() {
 			stateStack.push(state);
 		}
 
-		void PainterImpl::pop() {
+		void Painter::pop() {
 			state = stateStack.top();
 			stateStack.pop();
 		}
 
-		void PainterImpl::reset() {
+		void Painter::reset() {
 			resetColor();
 			resetTransform();
 		}
 
+		bool Painter::operator==(const Painter & other) const {
+			return impl == other.impl && state == other.state && stateStack == other.stateStack;
+		}
+
+		bool Painter::operator!=(const Painter & other) const {
+			return !operator==(other);
+		}
+
 		bool PainterImpl::operator==(const PainterImpl & other) const {
-			return entity == other.entity && state == other.state;
+			return entity == other.entity;
 		}
 
 		bool PainterImpl::operator!=(const PainterImpl & other) const {
@@ -299,30 +331,6 @@ namespace mc {
 
 		void Painter::destroy() {
 			impl->destroy();
-		}
-
-		std::shared_ptr<PainterImpl> Painter::getImplementation() {
-			return impl;
-		}
-
-		const std::shared_ptr<PainterImpl> Painter::getImplementation() const {
-			return impl;
-		}
-
-		std::shared_ptr<PainterImpl> Painter::operator*() {
-			return impl;
-		}
-
-		const std::shared_ptr<PainterImpl> Painter::operator*() const {
-			return impl;
-		}
-
-		std::shared_ptr<PainterImpl> Painter::operator->() {
-			return impl;
-		}
-
-		const std::shared_ptr<PainterImpl> Painter::operator->() const {
-			return impl;
 		}
 
 		bool Painter::State::operator==(const State & other) const {

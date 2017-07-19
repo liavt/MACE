@@ -426,7 +426,7 @@ namespace mc {
 				Texture2D::bind(0);
 			}
 
-			void Texture2D::bind(const Index location) const {
+			void Texture2D::bind(const unsigned int location) const {
 				glActiveTexture(GL_TEXTURE0 + location);
 				Object::bind();
 			}

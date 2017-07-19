@@ -384,14 +384,14 @@ namespace mc {
 				painterUniforms.unmap();
 			}
 
-			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Painter::Brush, Painter::RenderType> settings) {
+			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Enums::Brush, Enums::RenderType> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
 					std::unique_ptr<OGL33Renderer::RenderProtocol> prot = std::unique_ptr<OGL33Renderer::RenderProtocol>(new OGL33Renderer::RenderProtocol());
 					prot->program = getShadersForSettings(settings);
 					prot->vao = getVAOForSettings(settings);
 
-					protocols.insert(std::pair<std::pair<Painter::Brush, Painter::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>>(settings, std::move(prot)));
+					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>>(settings, std::move(prot)));
 
 					protocol = protocols.find(settings);
 				}
@@ -408,11 +408,11 @@ namespace mc {
 				return *protocol->second;
 			}
 
-			ogl::ShaderProgram OGL33Renderer::getShadersForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
+			ogl::ShaderProgram OGL33Renderer::getShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
 				ogl::ShaderProgram program;
 				program.init();
 
-				if (settings.second == Painter::RenderType::QUAD) {
+				if (settings.second == Enums::RenderType::TRIANGLE) {
 					program.createVertex(processShader({
 	#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
 					}));
@@ -420,19 +420,19 @@ namespace mc {
 					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
 				}
 
-				if (settings.first == Painter::Brush::COLOR) {
+				if (settings.first == Enums::Brush::COLOR) {
 					program.createFragment(processShader({
 	#include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
 					}));
 
 					program.link();
-				} else if (settings.first == Painter::Brush::TEXTURE) {
+				} else if (settings.first == Enums::Brush::TEXTURE) {
 					program.createFragment(processShader({
 	#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
 					}));
 
 					program.link();
-				} else if (settings.first == Painter::Brush::MASK) {
+				} else if (settings.first == Enums::Brush::MASK) {
 					program.createFragment(processShader({
 	#include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
 					}));
@@ -447,7 +447,7 @@ namespace mc {
 					//binding the samplers
 					program.setUniform("tex", 0);
 					program.setUniform("mask", 1);
-				} else if (settings.first == Painter::Brush::MASKED_BLEND) {
+				} else if (settings.first == Enums::Brush::MASKED_BLEND) {
 					program.createFragment(processShader({
 	#include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
 					}));
@@ -476,11 +476,11 @@ namespace mc {
 				return program;
 			}
 
-			ogl::VertexArray OGL33Renderer::getVAOForSettings(const std::pair<Painter::Brush, Painter::RenderType>& settings) {
+			ogl::VertexArray OGL33Renderer::getVAOForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
 				ogl::VertexArray vao;
 				vao.init();
 
-				if (settings.second == Painter::RenderType::QUAD) {
+				if (settings.second == Enums::RenderType::TRIANGLE) {
 					MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
 						0.0f,1.0f,
 						0.0f,0.0f,
@@ -570,16 +570,16 @@ namespace mc {
 
 			void OGL33Painter::destroy() {}
 
-			void OGL33Painter::loadSettings() {
+			void OGL33Painter::loadSettings(const Painter::State& state) {
 				renderer->loadPainterUniforms(state.transformation, state.primaryColor, state.secondaryColor, state.data);
 			}
 
-			void OGL33Painter::draw(const Painter::Brush brush, const Painter::RenderType type) {
+			void OGL33Painter::draw(const Enums::Brush brush, const Enums::RenderType type) {
 				const OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(entity, { brush, type });
 				prot.vao.bind();
 				prot.program.bind();
 
-				if (type == Painter::RenderType::QUAD) {
+				if (type == Enums::RenderType::TRIANGLE){
 					prot.vao.draw(GL_TRIANGLES);
 				}
 			}
