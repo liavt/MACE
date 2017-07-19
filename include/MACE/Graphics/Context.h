@@ -80,9 +80,6 @@ namespace mc {
 				LUMINANCE_ALPHA
 			};
 
-			/**
-			@todo finish adding all the internal formats. Update the getInternalFormat in OGLRenderer.cpp with the new enum values
-			*/
 			enum class InternalFormat: Enum {
 				DEPTH,
 				DEPTH_STENCIL,
@@ -118,6 +115,16 @@ namespace mc {
 				G,
 				B,
 				A
+			};
+
+			enum class ImageFormat: Byte {
+				GRAY,
+				GRAY_ALPHA,
+				R,
+				RG,
+				RGB,
+				RGBA,
+				DONT_CARE
 			};
 		}
 
@@ -204,8 +211,8 @@ namespace mc {
 		class Texture: public TextureImpl{
 		public:
 			static Texture create(const Color& col, const Size width = 1, const Size height = 1);
-			static Texture createFromFile(const std::string& file);
-			static Texture createFromFile(const char* file);
+			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
+			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromMemory(const unsigned char * c, const Size size);
 
 			static Texture& getSolidColor();
@@ -231,35 +238,35 @@ namespace mc {
 			void load(cv::Mat mat) {
 				//cv::flip(mat, mat, 0);
 
-				Texture::Format colorFormat = Texture::Format::BGR;
+				Enums::Format colorFormat = Enums::Format::BGR;
 				if (mat.channels() == 1) {
-					colorFormat = Texture::Format::LUMINANCE;
+					colorFormat = Enums::Format::LUMINANCE;
 				} else if (mat.channels() == 2) {
-					colorFormat = Texture::Format::LUMINANCE_ALPHA;
+					colorFormat = Enums::Format::LUMINANCE_ALPHA;
 				} else if (mat.channels() == 4) {
-					colorFormat = Texture::Format::BGRA;
+					colorFormat = Enums::Format::BGRA;
 				}
 
-				Texture::Type type = Texture::Type::UNSIGNED_BYTE;
+				Enums::Type type = Enums::Type::UNSIGNED_BYTE;
 				if (mat.depth() == CV_8S) {
-					type = Texture::Type::BYTE;
+					type = Enums::Type::BYTE;
 				} else if (mat.depth() == CV_16U) {
-					type = Texture::Type::UNSIGNED_SHORT;
+					type = Enums::Type::UNSIGNED_SHORT;
 				} else if (mat.depth() == CV_16S) {
-					type = Texture::Type::SHORT;
+					type = Enums::Type::SHORT;
 				} else if (mat.depth() == CV_32S) {
-					type = Texture::Type::INT;
+					type = Enums::Type::INT;
 				} else if (mat.depth() == CV_32F) {;
-					type = Texture::Type::FLOAT;
+					type = Enums::Type::FLOAT;
 				} else if (mat.depth() == CV_64F) {
 					MACE__THROW(BadFormat, "Unsupported cv::Mat depth: CV_64F");
 				}
 
 				resetPixelStorage();
-				setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
+				setPackStorageHint(Enums::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
+				setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
 
-				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, Texture::InternalFormat::RGBA);
+				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, Enums::InternalFormat::RGBA);
 			}
 
 			Texture(cv::Mat mat) : Texture() {
@@ -271,12 +278,12 @@ namespace mc {
 				cv::Mat img(height, width, CV_8UC3);
 
 				resetPixelStorage();
-				setPackStorageHint(Texture::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
-				setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
+				setPackStorageHint(Enums::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
+				setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
 
 				bind();
 
-				getImage(Texture::Format::BGR, Texture::Type::UNSIGNED_BYTE, img.data);
+				getImage(Enums::Format::BGR, Enums::Type::UNSIGNED_BYTE, img.data);
 
 				cv::flip(img, img, 0);
 
@@ -284,8 +291,8 @@ namespace mc {
 			}
 #			endif//MACE_OPENCV
 
-			void load(const char* file);
-			void load(const std::string& file);
+			void load(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
+			void load(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			void load(const Color& c, const Size width = 1, const Size height = 1);
 
 			Color& getPaint();

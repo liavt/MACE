@@ -59,7 +59,7 @@ void create(gfx::WindowModule&) {
 
 	const Size elementNum = 10;
 
-	star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"));
+	star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::GRAY_ALPHA);
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {

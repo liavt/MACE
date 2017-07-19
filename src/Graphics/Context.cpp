@@ -104,15 +104,15 @@ namespace mc {
 			return tex;
 		}
 
-		Texture Texture::createFromFile(const std::string & file) {
-			return Texture::createFromFile(file.c_str());
+		Texture Texture::createFromFile(const std::string & file, const Enums::ImageFormat format) {
+			return Texture::createFromFile(file.c_str(), format);
 		}
 
-		Texture Texture::createFromFile(const char * file) {
+		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat format) {
 			Texture tex = Texture();
 
 			tex.init();
-			tex.load(file);
+			tex.load(file, format);
 
 			return tex;
 		}
@@ -232,20 +232,66 @@ namespace mc {
 			return texture->isCreated();
 		}
 
-		void Texture::load(const char * file) {
+		void Texture::load(const char * file, const Enums::ImageFormat imgFormat) {
 			resetPixelStorage();
 
-			int width, height, componentSize;
+			int requestedComponents;
+			if (imgFormat == Enums::ImageFormat::GRAY || imgFormat == Enums::ImageFormat::R) {
+				requestedComponents = 1;
+			} else if (imgFormat == Enums::ImageFormat::GRAY_ALPHA || imgFormat == Enums::ImageFormat::RG) {
+				requestedComponents = 2;
+			} else if (imgFormat == Enums::ImageFormat::RGB) {
+				requestedComponents = 3;
+			} else if (imgFormat == Enums::ImageFormat::RGBA) {
+				requestedComponents = 4;
+			} else if (imgFormat == Enums::ImageFormat::DONT_CARE) {
+				requestedComponents = 0;
+			}
 
-			Byte* image = stbi_load(file, &width, &height, &componentSize, STBI_rgb_alpha);
+			int width, height, actualComponents;
+			Byte* image = stbi_load(file, &width, &height, &actualComponents, requestedComponents);
 
 			try {
-				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
+				if (image == nullptr || width == 0 || height == 0 || actualComponents == 0) {
 					stbi_image_free(image);
 					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 				}
 
-				texture->setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
+				/*if DONT_CARE, the outputComponents is equal to the amount of components in image,
+				otherwise equal to amount of requestedComponents
+				*/
+				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE ? actualComponents
+											  : requestedComponents);
+
+				Enums::Format format;
+				Enums::InternalFormat internalFormat;
+
+				if (outputComponents == 1) {
+					format = Enums::Format::RED;
+					internalFormat = Enums::InternalFormat::RED;
+					if (imgFormat == Enums::ImageFormat::GRAY) {
+						setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
+						setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
+					}
+				} else if (outputComponents == 2) {
+					format = Enums::Format::RG;
+					internalFormat = Enums::InternalFormat::RG;
+					if (imgFormat == Enums::ImageFormat::GRAY_ALPHA) {
+						setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
+						setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
+						setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::G);
+					}
+				} else if (outputComponents == 3) {
+					format = Enums::Format::RGB;
+					internalFormat = Enums::InternalFormat::RGB;
+				} else if (outputComponents == 4) {
+					format = Enums::Format::RGBA;
+					internalFormat = Enums::InternalFormat::RGBA;
+				} else {
+					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4!");
+				}
+
+				texture->setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat, 0);
 			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;
@@ -257,8 +303,8 @@ namespace mc {
 			texture->setMagFilter(Enums::ResizeFilter::NEAREST);
 		}
 
-		void Texture::load(const std::string & file) {
-			load(file.c_str());
+		void Texture::load(const std::string & file, const Enums::ImageFormat format) {
+			load(file.c_str(), format);
 		}
 
 		void Texture::load(const Color & c, const Size width, const Size height) {
