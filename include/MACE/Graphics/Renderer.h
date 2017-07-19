@@ -168,8 +168,8 @@ namespace mc {
 
 			virtual void onResize(const Size width, const Size height) = 0;
 			virtual void onInit(const Size originalWidth, const Size originalHeight) = 0;
-			virtual void onSetUp(os::WindowModule* win) = 0;
-			virtual void onTearDown(os::WindowModule* win) = 0;
+			virtual void onSetUp(gfx::WindowModule* win) = 0;
+			virtual void onTearDown(gfx::WindowModule* win) = 0;
 			virtual void onDestroy() = 0;
 			virtual void onQueue(GraphicsEntity* en) = 0;
 
@@ -183,25 +183,25 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void init(os::WindowModule* win);
+			void init(gfx::WindowModule* win);
 
 			/**
 			@internal
 			@opengl
 			*/
-			void setUp(os::WindowModule* win);
+			void setUp(gfx::WindowModule* win);
 
 			/**
 			@internal
 			@opengl
 			*/
-			void tearDown(os::WindowModule* win);
+			void tearDown(gfx::WindowModule* win);
 
 			/**
 			@internal
 			@opengl
 			*/
-			void checkInput(os::WindowModule* win);
+			void checkInput(gfx::WindowModule* win);
 
 
 			/**

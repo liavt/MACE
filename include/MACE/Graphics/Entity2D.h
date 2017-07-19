@@ -290,14 +290,14 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setVerticalAlign(const VerticalAlign align);
-			const VerticalAlign getVerticalAlign() const;
+			void setVerticalAlign(const Enums::VerticalAlign align);
+			const Enums::VerticalAlign getVerticalAlign() const;
 
 			/**
 			@dirty
 			*/
-			void setHorizontalAlign(HorizontalAlign align);
-			const HorizontalAlign getHorizontalAlign() const;
+			void setHorizontalAlign(Enums::HorizontalAlign align);
+			const Enums::HorizontalAlign getHorizontalAlign() const;
 
 			/**
 			@dirty
@@ -323,8 +323,8 @@ namespace mc {
 
 			std::wstring text;
 
-			VerticalAlign vertAlign = VerticalAlign::CENTER;
-			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
+			Enums::VerticalAlign vertAlign = Enums::VerticalAlign::CENTER;
+			Enums::HorizontalAlign horzAlign = Enums::HorizontalAlign::CENTER;
 
 			Font font;
 

@@ -5,7 +5,7 @@ R""(
 #include <mc_core>
 #include <mc_entity>
 
-layout(location = MACE__VAO_VERTICES_LOCATION) in vec3 mc_VertexPosition;
+layout(location = MACE__VAO_DEFAULT_VERTICES_LOCATION) in vec3 mc_VertexPosition;
 
 mat3 mcCreateRotationMatrix(vec3 mc_RotationInput){
 	float mc_CosZ = cos(mc_RotationInput.z), mc_SinZ = sin(mc_RotationInput.z),

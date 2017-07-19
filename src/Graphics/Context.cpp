@@ -37,6 +37,173 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 #define MACE__RESOURCE_SOLIDCOLOR "MACE/SolidColor"
+		//unfinished as of now
+#define MACE__RESOURCE_GRADIENT "MACE/Gradient"
+#define MACE__RESOURCE_GRADIENT_HEIGHT 100
+#define MACE__RESOURCE_QUAD "MACE/Quad"
+#define MACE__RESOURCE_TRIANGLE "MACE/Triangle"
+
+		Model::Model() : model(nullptr) {}
+
+		Model::Model(const std::shared_ptr<ModelImpl> mod) : model(mod) {}
+
+		Model::Model(const Model & other) : model(other.model) {}
+
+		void Model::init() {
+			if (model == nullptr) {
+				model = gfx::getCurrentWindow()->getContext()->createModelImpl();
+			}
+			model->init();
+		}
+
+		void Model::destroy() {
+			if (model == nullptr) {
+				MACE__THROW(InvalidState, "Model must have been initialized before being destroyed!");
+			}
+			model->destroy();
+		}
+
+		void Model::bind() const {
+			model->bind();
+		}
+
+		void Model::unbind() const {
+			model->unbind();
+		}
+
+		void Model::loadTextureCoordinates(const Size dataSize, const float * data) {
+			model->loadTextureCoordinates(dataSize, data);
+		}
+
+		void Model::loadVertices(const Size verticeSize, const float * vertices) {
+			model->loadVertices(verticeSize, vertices);
+		}
+
+		void Model::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
+			model->loadIndices(indiceNum, indiceData);
+		}
+
+		bool Model::isCreated() const {
+			return model != nullptr && model->isCreated();
+		}
+
+		bool Model::operator==(const Model & other) const {
+			return model == other.model;
+		}
+
+		bool Model::operator!=(const Model & other) const {
+			return !operator==(other);
+		}
+
+		Texture Texture::create(const Color & col, const Size width, const Size height) {
+			Texture tex = Texture();
+
+			tex.init();
+			tex.load(col, width, height);
+
+			return tex;
+		}
+
+		Texture Texture::createFromFile(const std::string & file) {
+			return Texture::createFromFile(file.c_str());
+		}
+
+		Texture Texture::createFromFile(const char * file) {
+			Texture tex = Texture();
+
+			tex.init();
+			tex.load(file);
+
+			return tex;
+		}
+
+		Texture Texture::createFromMemory(const unsigned char * c, const Size size) {
+			Texture texture = Texture();
+			texture.resetPixelStorage();
+
+			int width, height, componentSize;
+
+			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
+
+			try {
+				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
+					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
+				}
+
+				texture.setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
+			} catch (const std::exception& e) {
+				stbi_image_free(image);
+				throw e;
+			}
+
+			stbi_image_free(image);
+
+			texture.setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
+			texture.setMagFilter(Enums::ResizeFilter::NEAREST);
+
+			return texture;
+		}
+
+		Texture& Texture::getSolidColor() {
+			std::shared_ptr<GraphicsContext> context = gfx::getCurrentWindow()->getContext();
+			if (context == nullptr) {
+				MACE__THROW(NullPointer, "No graphics context found in window!");
+			} else if (!context->hasTexture(MACE__RESOURCE_SOLIDCOLOR)) {
+				Texture texture = Texture();
+
+				texture.init();
+
+				texture.resetPixelStorage();
+
+				MACE_CONSTEXPR const float data[] = { 1 };
+				texture.setData(data, 1, 1, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
+
+				texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
+				texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
+				texture.setSwizzle(gfx::Enums::SwizzleMode::A, gfx::Enums::SwizzleMode::R);
+
+				texture.setMinFilter(Enums::ResizeFilter::NEAREST);
+				texture.setMagFilter(Enums::ResizeFilter::NEAREST);
+
+				context->createTexture(MACE__RESOURCE_SOLIDCOLOR, texture);
+
+				return context->getTexture(MACE__RESOURCE_SOLIDCOLOR);
+			} else {
+				return context->getTexture(MACE__RESOURCE_SOLIDCOLOR);
+			}
+		}
+
+		Texture & Texture::getGradient() {
+			std::shared_ptr<GraphicsContext> context = gfx::getCurrentWindow()->getContext();
+			if (context == nullptr) {
+				MACE__THROW(NullPointer, "No graphics context found in window!");
+			} else if (!context->hasTexture(MACE__RESOURCE_GRADIENT)) {
+				Texture texture = Texture();
+
+				texture.init();
+
+				texture.resetPixelStorage();
+
+				float data[MACE__RESOURCE_GRADIENT_HEIGHT];
+				for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
+					//the darker part is on the bottom
+					data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i - 1) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - 1);
+				}
+				texture.setData(data, 1, MACE__RESOURCE_GRADIENT_HEIGHT, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
+
+				texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
+				texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
+
+				texture.setMinFilter(Enums::ResizeFilter::NEAREST);
+				texture.setMagFilter(Enums::ResizeFilter::NEAREST);
+
+				context->createTexture(MACE__RESOURCE_GRADIENT, texture);
+
+				return context->getTexture(MACE__RESOURCE_GRADIENT);
+			} else {
+				return context->getTexture(MACE__RESOURCE_GRADIENT);
+			}
+		}
 
 		Texture::Texture() : texture(nullptr), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
 
@@ -44,43 +211,11 @@ namespace mc {
 
 		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), paint(col) {}
 
-		Texture::Texture(const char * file) : Texture() {
-			init();
-			load(file);
-		}
-
-		Texture::Texture(const std::string & file) : Texture(file.c_str()) {}
-
-		Texture::Texture(const Color& col) : Texture(nullptr, col) {
-			std::shared_ptr<GraphicsContext> context = os::getCurrentWindow()->getContext();
-			//context is guarenteed to never be nullptr, and if currentwindow is nullptr, an exception will be thrown from os::getCurrentWindow()
-
-			if (!context->hasTexture(MACE__RESOURCE_SOLIDCOLOR)) {
-				texture = context->createTextureImpl();
-
-				texture->init();
-
-				resetPixelStorage();
-
-				MACE_CONSTEXPR const float data[] = { 1 };
-				texture->setData(data, 1, 1, gfx::Texture::Type::FLOAT, gfx::Texture::Format::RED, gfx::Texture::InternalFormat::RED, 0);
-
-				texture->setSwizzle(gfx::Texture::SwizzleMode::G, gfx::Texture::SwizzleMode::R);
-				texture->setSwizzle(gfx::Texture::SwizzleMode::B, gfx::Texture::SwizzleMode::R);
-				texture->setSwizzle(gfx::Texture::SwizzleMode::A, gfx::Texture::SwizzleMode::R);
-
-				texture->setMinFilter(Texture::ResizeFilter::NEAREST);
-				texture->setMagFilter(Texture::ResizeFilter::NEAREST);
-
-				context->createTexture(MACE__RESOURCE_SOLIDCOLOR, texture);
-			} else {
-				texture = context->getTexture(MACE__RESOURCE_SOLIDCOLOR).texture;
-			}
-		}
+		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
 
 		void Texture::init() {
 			if (texture == nullptr) {
-				texture = os::getCurrentWindow()->getContext()->createTextureImpl();
+				texture = gfx::getCurrentWindow()->getContext()->createTextureImpl();
 			}
 			texture->init();
 		}
@@ -110,7 +245,7 @@ namespace mc {
 					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 				}
 
-				texture->setData(image, width, height, gfx::Texture::Type::UNSIGNED_BYTE, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
+				texture->setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
 			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;
@@ -118,46 +253,21 @@ namespace mc {
 
 			stbi_image_free(image);
 
-			texture->setMinFilter(Texture::ResizeFilter::MIPMAP_LINEAR);
-			texture->setMagFilter(Texture::ResizeFilter::NEAREST);
+			texture->setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
+			texture->setMagFilter(Enums::ResizeFilter::NEAREST);
 		}
 
 		void Texture::load(const std::string & file) {
 			load(file.c_str());
 		}
 
-		void Texture::load(const Color & c) {
+		void Texture::load(const Color & c, const Size width, const Size height) {
 			resetPixelStorage();
 
-			texture->setData(&c, 1, 1, gfx::Texture::Type::FLOAT, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
+			texture->setData(&c, width, height, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
 
-			texture->setMinFilter(Texture::ResizeFilter::NEAREST);
-			texture->setMagFilter(Texture::ResizeFilter::NEAREST);
-		}
-
-		void Texture::load(const unsigned char * c, const Size size) {
-			resetPixelStorage();
-
-			int width, height, componentSize;
-
-			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
-
-			try {
-				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
-					stbi_image_free(image);
-					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
-				}
-
-				texture->setData(image, width, height, gfx::Texture::Type::UNSIGNED_BYTE, gfx::Texture::Format::RGBA, gfx::Texture::InternalFormat::RGBA, 0);
-			} catch (const std::exception& e) {
-				stbi_image_free(image);
-				throw e;
-			}
-
-			stbi_image_free(image);
-
-			texture->setMinFilter(Texture::ResizeFilter::MIPMAP_LINEAR);
-			texture->setMagFilter(Texture::ResizeFilter::NEAREST);
+			texture->setMinFilter(Enums::ResizeFilter::NEAREST);
+			texture->setMagFilter(Enums::ResizeFilter::NEAREST);
 		}
 
 		Color& Texture::getPaint() {
@@ -185,50 +295,50 @@ namespace mc {
 		}
 
 		void Texture::resetPixelStorage() {
-			setPackStorageHint(Texture::PixelStorage::ALIGNMENT, 4);
-			setUnpackStorageHint(Texture::PixelStorage::ALIGNMENT, 4);
-			setPackStorageHint(Texture::PixelStorage::ROW_LENGTH, 0);
-			setUnpackStorageHint(Texture::PixelStorage::ROW_LENGTH, 0);
+			setPackStorageHint(Enums::PixelStorage::ALIGNMENT, 4);
+			setUnpackStorageHint(Enums::PixelStorage::ALIGNMENT, 4);
+			setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, 0);
+			setUnpackStorageHint(Enums::PixelStorage::ROW_LENGTH, 0);
 		}
 
-		void Texture::setMinFilter(const Texture::ResizeFilter filter) {
+		void Texture::setMinFilter(const Enums::ResizeFilter filter) {
 			texture->setMinFilter(filter);
 		}
 
-		void Texture::setMagFilter(const Texture::ResizeFilter filter) {
+		void Texture::setMagFilter(const Enums::ResizeFilter filter) {
 			texture->setMagFilter(filter);
 		}
 
-		void Texture::setData(const void * data, const Size width, const Size height, const Texture::Type type, const Texture::Format format, const Texture::InternalFormat internalFormat, const Index mipmap) {
+		void Texture::setData(const void * data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) {
 			texture->setData(data, width, height, type, format, internalFormat, mipmap);
 		}
 
-		void Texture::setUnpackStorageHint(const Texture::PixelStorage hint, const int value) {
+		void Texture::setUnpackStorageHint(const Enums::PixelStorage hint, const int value) {
 			texture->setUnpackStorageHint(hint, value);
 		}
 
-		void Texture::setPackStorageHint(const Texture::PixelStorage hint, const int value) {
+		void Texture::setPackStorageHint(const Enums::PixelStorage hint, const int value) {
 			texture->setPackStorageHint(hint, value);
 		}
 
-		void Texture::setWrap(const Texture::WrapMode wrap) {
+		void Texture::setWrap(const Enums::WrapMode wrap) {
 			setWrapS(wrap);
 			setWrapT(wrap);
 		}
 
-		void Texture::setWrapS(const Texture::WrapMode wrap) {
+		void Texture::setWrapS(const Enums::WrapMode wrap) {
 			texture->setWrapS(wrap);
 		}
 
-		void Texture::setWrapT(const Texture::WrapMode wrap) {
+		void Texture::setWrapT(const Enums::WrapMode wrap) {
 			texture->setWrapT(wrap);
 		}
 
-		void Texture::setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) {
+		void Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
 			texture->setSwizzle(mode, arg);
 		}
 
-		void Texture::getImage(const Texture::Format format, const Texture::Type type, void * data) const {
+		void Texture::getImage(const Enums::Format format, const Enums::Type type, void * data) const {
 			texture->getImage(format, type, data);
 		}
 
@@ -240,11 +350,11 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		os::WindowModule * GraphicsContext::getWindow() {
+		gfx::WindowModule * GraphicsContext::getWindow() {
 			return window;
 		}
 
-		const os::WindowModule * GraphicsContext::getWindow() const {
+		const gfx::WindowModule * GraphicsContext::getWindow() const {
 			return window;
 		}
 
@@ -256,8 +366,21 @@ namespace mc {
 			textures[name] = texture;
 		}
 
+		void GraphicsContext::createModel(const std::string & name, const Model& mod) {
+			if (hasModel(name)) {
+				MACE__THROW(AlreadyExists, "Model with name " + name + " has already been created");
+			}
+
+			models[name] = mod;
+		}
+
 		bool GraphicsContext::hasTexture(const std::string & name) const {
-			return textures.count(name);
+			//map.count() returns 1 if key exists, 0 otherwise.
+			return textures.count(name) != 0;//the verbosity is to suppress warnings of casting from std::size_t to bool
+		}
+
+		bool GraphicsContext::hasModel(const std::string & name) const {
+			return models.count(name) != 0;
 		}
 
 		void GraphicsContext::setTexture(const std::string & name, const Texture & texture) {
@@ -272,6 +395,18 @@ namespace mc {
 			return textures.at(name);
 		}
 
+		void GraphicsContext::setModel(const std::string & name, const Model & model) {
+			models[name] = model;
+		}
+
+		Model & GraphicsContext::getModel(const std::string & name) {
+			return models.at(name);
+		}
+
+		const Model & GraphicsContext::getModel(const std::string & name) const {
+			return models.at(name);
+		}
+
 		std::map<std::string, Texture>& GraphicsContext::getTextures() {
 			return textures;
 		}
@@ -279,7 +414,7 @@ namespace mc {
 		const std::map<std::string, Texture>& GraphicsContext::getTextures() const {
 			return textures;
 		}
-		/*
+
 		std::map<std::string, Model>& GraphicsContext::getModels() {
 			return models;
 		}
@@ -287,8 +422,8 @@ namespace mc {
 		const std::map<std::string, Model>& GraphicsContext::getModels() const {
 			return models;
 		}
-		*/
-		GraphicsContext::GraphicsContext(os::WindowModule * win) :window(win) {
+
+		GraphicsContext::GraphicsContext(gfx::WindowModule * win) :window(win) {
 #ifdef MACE_DEBUG
 			if (window == nullptr) {
 				MACE__THROW(NullPointer, "WindowModule inputted to GraphicsContext is nullptr");

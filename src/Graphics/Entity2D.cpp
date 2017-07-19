@@ -140,7 +140,7 @@ namespace mc {
 
 				selectionTexture = tex;
 
-				selectionTexture.setMinFilter(Texture::ResizeFilter::MIPMAP_LINEAR);
+				selectionTexture.setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
 			}
 		}
 
@@ -381,15 +381,15 @@ namespace mc {
 			character.mask.bind();
 
 			character.mask.resetPixelStorage();
-			character.mask.setUnpackStorageHint(gfx::Texture::PixelStorage::ALIGNMENT, 1);
+			character.mask.setUnpackStorageHint(gfx::Enums::PixelStorage::ALIGNMENT, 1);
 
-			character.mask.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, Texture::Type::UNSIGNED_BYTE, Texture::Format::RED, Texture::InternalFormat::RED);
-			character.mask.setWrap(Texture::WrapMode::CLAMP);
-			character.mask.setMinFilter(Texture::ResizeFilter::LINEAR);
-			character.mask.setMagFilter(Texture::ResizeFilter::LINEAR);
-			character.mask.setSwizzle(Texture::SwizzleMode::G, Texture::SwizzleMode::R);
-			character.mask.setSwizzle(Texture::SwizzleMode::B, Texture::SwizzleMode::R);
-			character.mask.setSwizzle(Texture::SwizzleMode::A, Texture::SwizzleMode::R);
+			character.mask.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, Enums::Type::UNSIGNED_BYTE, Enums::Format::RED, Enums::InternalFormat::RED);
+			character.mask.setWrap(Enums::WrapMode::CLAMP);
+			character.mask.setMinFilter(Enums::ResizeFilter::LINEAR);
+			character.mask.setMagFilter(Enums::ResizeFilter::LINEAR);
+			character.mask.setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
+			character.mask.setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
+			character.mask.setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::R);
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
@@ -567,7 +567,7 @@ namespace mc {
 			return letters;
 		}
 
-		void Text::setVerticalAlign(const VerticalAlign align) {
+		void Text::setVerticalAlign(const Enums::VerticalAlign align) {
 			if (vertAlign != align) {
 				makeDirty();
 
@@ -575,11 +575,11 @@ namespace mc {
 			}
 		}
 
-		const VerticalAlign Text::getVerticalAlign() const {
+		const Enums::VerticalAlign Text::getVerticalAlign() const {
 			return vertAlign;
 		}
 
-		void Text::setHorizontalAlign(const HorizontalAlign align) {
+		void Text::setHorizontalAlign(const Enums::HorizontalAlign align) {
 			if (horzAlign != align) {
 				makeDirty();
 
@@ -587,7 +587,7 @@ namespace mc {
 			}
 		}
 
-		const HorizontalAlign Text::getHorizontalAlign() const {
+		const Enums::HorizontalAlign Text::getHorizontalAlign() const {
 			return horzAlign;
 		}
 
@@ -644,8 +644,10 @@ namespace mc {
 
 			const float widthScale = 1.0f / metrics.scale[0], heightScale = 1.0f / metrics.scale[1];
 
-			const float origWidth = static_cast<const float>(os::getCurrentWindow()->getLaunchConfig().height),
-				origHeight = static_cast<const float>(os::getCurrentWindow()->getLaunchConfig().height);
+			WindowModule::LaunchConfig config = gfx::getCurrentWindow()->getLaunchConfig();
+
+			const float origWidth = static_cast<const float>(config.width),
+				origHeight = static_cast<const float>(config.height);
 
 			const bool hasKerning = font.hasKerning();
 
@@ -712,26 +714,26 @@ namespace mc {
 
 			switch (horzAlign) {
 				default:
-				case HorizontalAlign::CENTER:
+				case Enums::HorizontalAlign::CENTER:
 					xAlignment = ((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
-				case HorizontalAlign::RIGHT:
+				case Enums::HorizontalAlign::RIGHT:
 					xAlignment = ((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
-				case HorizontalAlign::LEFT:
+				case Enums::HorizontalAlign::LEFT:
 					xAlignment = (-1.0f + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
 			}
 
 			switch (vertAlign) {
 				default:
-				case VerticalAlign::CENTER:
+				case Enums::VerticalAlign::CENTER:
 					yAlignment = 0.0f;
 					break;
-				case VerticalAlign::BOTTOM:
+				case Enums::VerticalAlign::BOTTOM:
 					yAlignment = ((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
 					break;
-				case VerticalAlign::TOP:
+				case Enums::VerticalAlign::TOP:
 					yAlignment = ((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
 					break;
 			}
@@ -870,11 +872,11 @@ namespace mc {
 		void Button::onHover() {
 			hover();
 
-			if (os::Input::isKeyDown(os::Input::MOUSE_LEFT)) {
+			if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
 				click();
 			}
 
-			if (os::Input::isKeyReleased(os::Input::MOUSE_LEFT) && isClicked()) {
+			if (gfx::Input::isKeyReleased(gfx::Input::MOUSE_LEFT) && isClicked()) {
 				selectableProperties.setBit(Selectable::CLICKED, false);
 
 				trigger();

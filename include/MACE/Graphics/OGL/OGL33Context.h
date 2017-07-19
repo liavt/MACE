@@ -23,6 +23,15 @@ namespace mc {
 			public:
 				void init() override;
 				void destroy() override;
+
+				void bind() const override;
+				void unbind() const override;
+
+				void loadTextureCoordinates(const Size dataSize, const float* data) override;
+				void loadVertices(const Size verticeSize, const float* vertices) override;
+				void loadIndices(const Size indiceNum, const unsigned int* indiceData) override;
+
+				bool isCreated() const override;
 			};
 
 			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
@@ -37,25 +46,25 @@ namespace mc {
 
 				bool isCreated() const override;
 
-				void setMinFilter(const gfx::Texture::ResizeFilter filter) override;
-				void setMagFilter(const gfx::Texture::ResizeFilter filter) override;
+				void setMinFilter(const gfx::Enums::ResizeFilter filter) override;
+				void setMagFilter(const gfx::Enums::ResizeFilter filter) override;
 
-				void setUnpackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
-				void setPackStorageHint(const gfx::Texture::PixelStorage hint, const int value) override;
+				void setUnpackStorageHint(const gfx::Enums::PixelStorage hint, const int value) override;
+				void setPackStorageHint(const gfx::Enums::PixelStorage hint, const int value) override;
 
-				void setWrapS(const Texture::WrapMode wrap) override;
-				void setWrapT(const Texture::WrapMode wrap) override;
+				void setWrapS(const Enums::WrapMode wrap) override;
+				void setWrapT(const Enums::WrapMode wrap) override;
 
-				void setData(const void* data, const Size width, const Size height, const Texture::Type type = Texture::Type::FLOAT, const Texture::Format format = Texture::Format::RGB, const Texture::InternalFormat internalFormat = Texture::InternalFormat::RGB, const Index mipmap = 0) override;
+				void setData(const void* data, const Size width, const Size height, const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGB, const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGB, const Index mipmap = 0) override;
 
-				void getImage(const Texture::Format format, const Texture::Type type, void* data) const override;
+				void getImage(const Enums::Format format, const Enums::Type type, void* data) const override;
 
-				void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) override;
+				void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) override;
 			};
 
 			class OGL33Context: public gfx::GraphicsContext {
 			public:
-				OGL33Context(os::WindowModule* win);
+				OGL33Context(gfx::WindowModule* win);
 				OGL33Context(const OGL33Context& other) = delete;
 				~OGL33Context() = default;
 
@@ -63,9 +72,9 @@ namespace mc {
 				std::shared_ptr<ModelImpl> createModelImpl() const override;
 				std::shared_ptr<TextureImpl> createTextureImpl() const override;
 			protected:
-				void onInit(os::WindowModule* win) override;
-				void onRender(os::WindowModule* win) override;
-				void onDestroy(os::WindowModule* win) override;
+				void onInit(gfx::WindowModule* win) override;
+				void onRender(gfx::WindowModule* win) override;
+				void onDestroy(gfx::WindowModule* win) override;
 			private:
 				std::shared_ptr<Renderer> renderer;
 			};

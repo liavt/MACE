@@ -29,7 +29,7 @@ class TestComponent: public gfx::Component {
 	void render() override {}
 
 	void hover() override {
-		if( os::Input::isKeyDown(os::Input::MOUSE_LEFT) ) {
+		if( gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT) ) {
 			parent->makeDirty();
 		}
 	}
@@ -48,7 +48,7 @@ gfx::Image leftBot;
 gfx::Image rightTop;
 gfx::Image rightBot;
 
-void create(os::WindowModule&) {
+void create(gfx::WindowModule&) {
 	srand((unsigned) time(0));
 
 	const Size elementNum = 10;
@@ -95,10 +95,10 @@ void create(os::WindowModule&) {
 int main() {
 	Instance instance = Instance();
 	try {
-		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 500, "Cleaning Demo");
+		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(600, 500, "Cleaning Demo");
 		config.onCreate = &create;
 		config.resizable = true;
-		os::WindowModule module = os::WindowModule(config);
+		gfx::WindowModule module = gfx::WindowModule(config);
 
 		instance.addModule(module);
 

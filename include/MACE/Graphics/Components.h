@@ -15,17 +15,19 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		enum class VerticalAlign: Byte {
-			TOP,
-			CENTER,
-			BOTTOM
-		};
+		namespace Enums {
+			enum class VerticalAlign: Byte {
+				TOP,
+				CENTER,
+				BOTTOM
+			};
 
-		enum class HorizontalAlign: Byte {
-			LEFT,
-			CENTER,
-			RIGHT
-		};
+			enum class HorizontalAlign: Byte {
+				LEFT,
+				CENTER,
+				RIGHT
+			};
+		}
 
 
 		/**
@@ -44,62 +46,70 @@ namespace mc {
 		@see EaseFunction
 		*/
 		namespace EaseFunctions {
-			float LINEAR(float, const float, const float, const float);
-			float BACK_IN(float, const float, const float, const float);
-			float BACK_OUT(float, const float, const float, const float);
-			float BACK_IN_OUT(float, const float, const float, const float);
-			float BOUNCE_OUT(float, const float, const float, const float);
-			float BOUNCE_IN(float, const float, const float, const float);
-			float BOUNCE_IN_OUT(float, const float, const float, const float);
-			float CIRCLE_IN(float, const float, const float, const float);
-			float CIRCLE_OUT(float, const float, const float, const float);
-			float CIRCLE_IN_OUT(float, const float, const float, const float);
-			float CUBIC_IN(float, const float, const float, const float);
-			float CUBIC_OUT(float, const float, const float, const float);
-			float CUBIC_IN_OUT(float, const float, const float, const float);
-			float ELASTIC_IN(float, const float, const float, const float);
-			float ELASTIC_OUT(float, const float, const float, const float);
-			float ELASTIC_IN_OUT(float, const float, const float, const float);
-			float EXPONENTIAL_IN(float, const float, const float, const float);
-			float EXPONENTIAL_OUT(float, const float, const float, const float);
-			float EXPONENTIAL_IN_OUT(float, const float, const float, const float);
-			float QUADRATIC_IN(float, const float, const float, const float);
-			float QUADRATIC_OUT(float, const float, const float, const float);
-			float QUADRATIC_IN_OUT(float, const float, const float, const float);
-			float QUARTIC_IN(float, const float, const float, const float);
-			float QUARTIC_OUT(float, const float, const float, const float);
-			float QUARTIC_IN_OUT(float, const float, const float, const float);
-			float QUINTIC_IN(float, const float, const float, const float);
-			float QUINTIC_OUT(float, const float, const float, const float);
-			float QUINTIC_IN_OUT(float, const float, const float, const float);
-			float SINUSOIDAL_IN(float, const float, const float, const float);
-			float SINUSOIDAL_OUT(float, const float, const float, const float);
-			float SINUSOIDAL_IN_OUT(float, const float, const float, const float);
+			/*MACE__MAKE_EASE_FUNCTION creates function declaration for an ease function of name.
+			The reason this is a macro so in the future in case ease functions are ever replaced
+			with const lambdas, enums, etc it can be easy to change it without editing too many
+			things.
+
+			This macro is used again in Components.cpp for the actual ease function definitions
+			*/
+#define MACE__MAKE_EASE_FUNCTION(name) float name (float t, const float b, const float c, const float d)
+			MACE__MAKE_EASE_FUNCTION(LINEAR);
+			MACE__MAKE_EASE_FUNCTION(BACK_IN);
+			MACE__MAKE_EASE_FUNCTION(BACK_OUT);
+			MACE__MAKE_EASE_FUNCTION(BACK_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(BOUNCE_OUT);
+			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN);
+			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN);
+			MACE__MAKE_EASE_FUNCTION(CIRCLE_OUT);
+			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(CUBIC_IN);
+			MACE__MAKE_EASE_FUNCTION(CUBIC_OUT);
+			MACE__MAKE_EASE_FUNCTION(CUBIC_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN);
+			MACE__MAKE_EASE_FUNCTION(ELASTIC_OUT);
+			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN);
+			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_OUT);
+			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN);
+			MACE__MAKE_EASE_FUNCTION(QUADRATIC_OUT);
+			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN);
+			MACE__MAKE_EASE_FUNCTION(QUARTIC_OUT);
+			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN);
+			MACE__MAKE_EASE_FUNCTION(QUINTIC_OUT);
+			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN_OUT);
+			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN);
+			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_OUT);
+			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN_OUT);
 		}
 
 		class AlignmentComponent: public Component {
 		public:
-			AlignmentComponent(const VerticalAlign vert = VerticalAlign::CENTER, const HorizontalAlign horz = HorizontalAlign::CENTER);
+			AlignmentComponent(const Enums::VerticalAlign vert = Enums::VerticalAlign::CENTER, const Enums::HorizontalAlign horz = Enums::HorizontalAlign::CENTER);
 
 			/**
 			@dirty
 			*/
-			void setVerticalAlign(const VerticalAlign align);
-			const VerticalAlign getVerticalAlign() const;
+			void setVerticalAlign(const Enums::VerticalAlign align);
+			const Enums::VerticalAlign getVerticalAlign() const;
 
 			/**
 			@dirty
 			*/
-			void setHorizontalAlign(HorizontalAlign align);
-			const HorizontalAlign getHorizontalAlign() const;
+			void setHorizontalAlign(Enums::HorizontalAlign align);
+			const Enums::HorizontalAlign getHorizontalAlign() const;
 
 			bool operator==(const AlignmentComponent& other) const;
 			bool operator!=(const AlignmentComponent& other) const;
 		protected:
 			void clean() final;
 		private:
-			VerticalAlign vertAlign;
-			HorizontalAlign horzAlign;
+			Enums::VerticalAlign vertAlign;
+			Enums::HorizontalAlign horzAlign;
 		};
 
 		class EaseComponent: public Component {

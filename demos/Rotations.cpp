@@ -32,7 +32,7 @@ class TestComponent: public gfx::Component {
 	void render() override {}
 
 	void hover() override {
-		if (os::Input::isKeyDown(os::Input::MOUSE_LEFT)) {
+		if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
 			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
 	}
@@ -54,12 +54,12 @@ class RotationComponent: public gfx::Component {
 	void destroy() override {};
 };
 
-void create(os::WindowModule&) {
+void create(gfx::WindowModule&) {
 	srand((unsigned int)time(nullptr));
 
 	const Size elementNum = 10;
 
-	star = gfx::Texture(MACE_DEMO_ASSETS + std::string("star.png"));
+	star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"));
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {
@@ -100,9 +100,9 @@ int main() {
 		std::cout << "Click on a star to rotate it individually! It is pixel perfect! Holding down space will rotate all the stars in big chunks. It will only swap frames when something changes for maximum performance.\n";
 		std::cout << "Also try resizing the screen and watch how it reacts!\n";
 
-		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(500, 500, "Rotations Demo");
+		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(500, 500, "Rotations Demo");
 		config.onCreate = &create;
-		os::WindowModule module = os::WindowModule(config);
+		gfx::WindowModule module = gfx::WindowModule(config);
 
 		instance.addModule(module);
 
@@ -151,7 +151,7 @@ int main() {
 		while (instance.isRunning()) {
 			instance.update();
 
-			if (os::Input::isKeyDown(os::Input::SPACE) || os::Input::isKeyRepeated(os::Input::SPACE)) {
+			if (gfx::Input::isKeyDown(gfx::Input::SPACE) || gfx::Input::isKeyRepeated(gfx::Input::SPACE)) {
 				rotating = true;
 			} else {
 				rotating = false;

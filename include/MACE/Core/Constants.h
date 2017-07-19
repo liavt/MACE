@@ -58,7 +58,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 //checking if MACE should be compiled in debug mode
 #ifdef MACE_DEBUG
-#	if MACE_DEBUG == 0 || MACE_DEBUG == false
+#	if !MACE_DEBUG
 #		undef MACE_DEBUG
 #	endif//MACE_DEBUG == 0
 #elif !defined(MACE_DEBUG)&&(defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG) || defined(MACE_DOXYGEN_PASS))
@@ -68,7 +68,7 @@ The above copyright notice and this permission notice shall be included in all c
 //checks for a C++ attribute in the form of [[attribute]]
 #ifndef MACE_HAS_ATTRIBUTE
 #	ifndef __has_cpp_attribute
-#		define MACE_HAS_ATTRIBUTE(attr) 0
+#		define MACE_HAS_ATTRIBUTE(attr) false
 #	else
 #		define MACE_HAS_ATTRIBUTE(attr) __has_cpp_attribute(attr)
 #	endif
@@ -120,7 +120,7 @@ The above copyright notice and this permission notice shall be included in all c
 //whether the specificed include is available
 #ifndef MACE_HAS_INCLUDE
 #	ifndef __has_include
-#		define MACE_HAS_INCLUDE(incl) 0
+#		define MACE_HAS_INCLUDE(incl) false
 #	else
 #		define MACE_HAS_INCLUDE(incl) __has_include(incl)
 #	endif
@@ -128,7 +128,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 //whether opencv interoptibility should be built
 #ifdef MACE_OPENCV
-#	if MACE_OPENCV == 0 || MACE_OPENCV == false
+#	if !MACE_OPENCV
 #		undef MACE_OPENCV
 #	endif
 //if doxygen is running or opencv is detected, set MACE_OPENCV to 1 if it hasnt been defined already

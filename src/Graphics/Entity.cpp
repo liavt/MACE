@@ -217,7 +217,7 @@ namespace mc {
 
 			m.rotation += m.inheritedRotation;
 
-			const Vector<float, 2> windowRatios = os::getCurrentWindow()->getContext()->getRenderer()->getWindowRatios();
+			const Vector<float, 2> windowRatios = gfx::getCurrentWindow()->getContext()->getRenderer()->getWindowRatios();
 
 			if (getProperty(Entity::MAINTAIN_X)) {
 				m.translation[0] *= windowRatios[0];
@@ -405,6 +405,7 @@ namespace mc {
 			if (getProperty(Entity::INIT)) {
 				MACE__THROW(InitializationFailed, "Entity can not have init() called twice.");
 			}
+
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
 				children[i]->init();
@@ -666,7 +667,7 @@ namespace mc {
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::init() {
-			id = os::getCurrentWindow()->getContext()->getRenderer()->queue(this);
+			id = gfx::getCurrentWindow()->getContext()->getRenderer()->queue(this);
 
 			Entity::init();
 		}
@@ -674,7 +675,7 @@ namespace mc {
 		void GraphicsEntity::destroy() {
 			Entity::destroy();
 
-			os::getCurrentWindow()->getContext()->getRenderer()->remove(id);
+			gfx::getCurrentWindow()->getContext()->getRenderer()->remove(id);
 
 			id = 0;
 		}

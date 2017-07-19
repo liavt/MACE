@@ -32,7 +32,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <GLFW/glfw3.h>
 
 namespace mc {
-	namespace os {
+	namespace gfx {
 		namespace {
 			std::unordered_map< short int, BitField > keys = std::unordered_map< short int, BitField >();
 
@@ -73,7 +73,7 @@ namespace mc {
 				WindowModule* mod = convertGLFWWindowToModule(window);
 				mod->makeDirty();
 
-				const os::WindowModule::LaunchConfig& config = mod->getLaunchConfig();
+				const WindowModule::LaunchConfig& config = mod->getLaunchConfig();
 				config.onClose(*mod);
 
 				if (config.terminateOnClose) {
@@ -139,9 +139,9 @@ namespace mc {
 
 		void WindowModule::create() {
 			switch (config.contextType) {
-				case ContextType::AUTOMATIC:
-				case ContextType::BEST_OGL:
-				case ContextType::OGL33:
+				case Enums::ContextType::AUTOMATIC:
+				case Enums::ContextType::BEST_OGL:
+				case Enums::ContextType::OGL33:
 					context = std::shared_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
 
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -165,7 +165,7 @@ namespace mc {
 
 			window = createWindow(config);
 
-			if (config.contextType == ContextType::BEST_OGL || config.contextType == ContextType::AUTOMATIC) {
+			if (config.contextType == Enums::ContextType::BEST_OGL || config.contextType == Enums::ContextType::AUTOMATIC) {
 				int versionMajor = 3;
 
 				//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
@@ -248,18 +248,7 @@ namespace mc {
 				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-					/*create() needs to have this property set to true
-					Entity::init() sets it to true
-					However, Entity::init() requires create() to be called first, and if
-					it detects that this property is set to true, errors because it cant
-					be initialized twice. So we have to do this hacky thing to allow this
-					to happen
-					*/
-					setProperty(gfx::Entity::INIT, true);
-
 					create();
-
-					setProperty(gfx::Entity::INIT, false);
 
 					Entity::init();
 

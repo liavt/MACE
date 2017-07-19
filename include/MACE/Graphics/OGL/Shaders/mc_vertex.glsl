@@ -5,7 +5,7 @@ R""(
 #include <mc_core>
 #include <mc_position>
 
-layout(location = MACE__VAO_TEX_COORD_LOCATION) in vec2 mcInputTextureCoord;
+layout(location = MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION) in vec2 mcInputTextureCoord;
 
 out lowp vec2 mcOutputTextureCoord;
 

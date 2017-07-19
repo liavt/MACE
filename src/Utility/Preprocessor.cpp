@@ -1429,7 +1429,7 @@ namespace mc {
 
 	Macro::Macro(std::string n, std::string d) : Macro(n, d, std::vector< std::string >(), "") {}
 
-	MACE_CONSTEXPR IncludeString::IncludeString(const std::string & c, const std::string n) : content(c), name(n) {}
+	IncludeString::IncludeString(const std::string & c, const std::string n) : content(c), name(n) {}
 
 	bool IncludeString::hasFile(const std::string & fileName) const {
 		return this->name == fileName;

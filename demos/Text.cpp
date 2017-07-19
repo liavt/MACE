@@ -15,33 +15,33 @@ gfx::Group group;
 
 gfx::Text topLeft, center, topRight, botLeft, botRight;
 
-void create(os::WindowModule& win) {
+void create(gfx::WindowModule& win) {
 	win.getContext()->getRenderer()->setRefreshColor(Colors::DARK_GREEN);
 
 	center = gfx::Text(L"©enter text!", gfx::Fonts::CODE);
 
 	topLeft = gfx::Text("Top left!", gfx::Fonts::SERIF);
 	topLeft.setTexture(Colors::WHITE);
-	topLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
-	topLeft.setVerticalAlign(gfx::VerticalAlign::TOP);
+	topLeft.setHorizontalAlign(gfx::Enums::HorizontalAlign::LEFT);
+	topLeft.setVerticalAlign(gfx::Enums::VerticalAlign::TOP);
 
 	topRight = gfx::Text("Top right.", gfx::Fonts::SANS);
 	topRight.setTexture(Colors::LIGHT_BLUE);
-	topRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
-	topRight.setVerticalAlign(gfx::VerticalAlign::TOP);
+	topRight.setHorizontalAlign(gfx::Enums::HorizontalAlign::RIGHT);
+	topRight.setVerticalAlign(gfx::Enums::VerticalAlign::TOP);
 
 	botLeft = gfx::Text("bOtToM lEfT?", gfx::Font(gfx::Fonts::SERIF, 16));
 	botLeft.setTexture(Colors::RED);
-	botLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
-	botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
+	botLeft.setHorizontalAlign(gfx::Enums::HorizontalAlign::LEFT);
+	botLeft.setVerticalAlign(gfx::Enums::VerticalAlign::BOTTOM);
 
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
 	font.setSize(48);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
 	botRight.setTexture(Colors::YELLOW);
-	botRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
-	botRight.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
+	botRight.setHorizontalAlign(gfx::Enums::HorizontalAlign::RIGHT);
+	botRight.setVerticalAlign(gfx::Enums::VerticalAlign::BOTTOM);
 
 	group.addChild(center);
 	group.addChild(topLeft);
@@ -53,10 +53,10 @@ void create(os::WindowModule& win) {
 int main() {
 	Instance instance = Instance();
 	try {
-		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 600, "Text Demo");
+		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(600, 600, "Text Demo");
 		config.onCreate = &create;
 		config.resizable = true;
-		os::WindowModule module = os::WindowModule(config);
+		gfx::WindowModule module = gfx::WindowModule(config);
 		module.addChild(group);
 
 		instance.addModule(module);

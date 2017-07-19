@@ -19,8 +19,8 @@ using namespace mc;
 
 TEST_CASE("Testing creation of windows and different settings", "[graphics][window][module]") {
 	Instance MACE = Instance();
-	os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(600, 600, "Testing");
-	os::WindowModule module = os::WindowModule(os::WindowModule::LaunchConfig(600, 600, "Testing"));
+	gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(600, 600, "Testing");
+	gfx::WindowModule module = gfx::WindowModule(gfx::WindowModule::LaunchConfig(600, 600, "Testing"));
 
 	REQUIRE_THROWS(module.setTitle("Not created yet"));
 	REQUIRE(module.getName() == "MACE/Window#Testing");

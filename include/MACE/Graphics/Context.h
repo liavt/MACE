@@ -26,7 +26,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		class Renderer;
-		
+
 		/**
 		Thrown when an error occured trying to read or write an image
 		*/
@@ -37,21 +37,7 @@ namespace mc {
 		*/
 		MACE__DECLARE_ERROR(BadFormat);
 
-		class ModelImpl: public Initializable {
-		public:
-			virtual void init() override = 0;
-			virtual void destroy() override = 0;
-		};
-
-		class Model: public Initializable {
-		public:
-
-		};
-
-		class TextureImpl;
-
-		class Texture: public Initializable, public Bindable {
-		public:
+		namespace Enums {
 			enum class Type: short int {
 				UNSIGNED_BYTE,
 				BYTE,
@@ -133,13 +119,107 @@ namespace mc {
 				B,
 				A
 			};
+		}
+
+		class ModelImpl: public Initializable, public Bindable {
+		public:
+			virtual void init() override = 0;
+			virtual void destroy() override = 0;
+
+			virtual void bind() const override = 0;
+			virtual void unbind() const override = 0;
+
+			virtual void loadTextureCoordinates(const Size dataSize, const float data[]) = 0;
+			virtual void loadVertices(const Size verticeSize, const float vertices[]) = 0;
+			virtual void loadIndices(const Size indiceNum, const unsigned int* indiceData) = 0;
+
+			virtual bool isCreated() const = 0;
+		};
+
+		class Model: public ModelImpl {
+		public:
+			Model();
+			Model(const std::shared_ptr<ModelImpl> mod);
+			Model(const Model& other);
+			~Model() = default;
+
+			void init() override;
+			void destroy() override;
+
+			void bind() const override;
+			void unbind() const override;
+
+			void loadTextureCoordinates(const Size dataSize, const float* data) override;
+			template<std::size_t N>
+			void loadTextureCoordinates(const float data[N]) {
+				loadTextureCoordinates(N, data);
+			}
+			void loadVertices(const Size verticeSize, const float* vertices) override;
+			template<std::size_t N>
+			void loadVertices(const float* vertices) {
+				loadVertices(N, vertices);
+			}
+
+			void loadIndices(const Size indiceNum, const unsigned int* indiceData) override;
+			template<std::size_t N>
+			void loadIndices(const unsigned int* indiceData) {
+				loadIndices(N, indiceData);
+			}
+
+			bool isCreated() const override;
+
+			bool operator==(const Model& other) const;
+			bool operator!=(const Model& other) const;
+		private:
+			std::shared_ptr<ModelImpl> model;
+		};
+
+		class TextureImpl: public Initializable, public Bindable {
+		public:
+			virtual void init() override = 0;
+			virtual void destroy() override = 0;
+
+			virtual void bind() const override = 0;
+			virtual void bind(const Index location) const = 0;
+			virtual void unbind() const override = 0;
+
+			virtual bool isCreated() const = 0;
+
+			virtual void setData(const void* data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) = 0;
+
+			virtual void setMinFilter(const Enums::ResizeFilter filter) = 0;
+			virtual void setMagFilter(const Enums::ResizeFilter filter) = 0;
+
+			virtual void setUnpackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
+			virtual void setPackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
+
+			virtual void setWrapS(const Enums::WrapMode wrap) = 0;
+			virtual void setWrapT(const Enums::WrapMode wrap) = 0;
+
+			virtual void getImage(const Enums::Format format, const Enums::Type type, void* data) const = 0;
+
+			virtual void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) = 0;
+		};
+
+		class Texture: public TextureImpl{
+		public:
+			static Texture create(const Color& col, const Size width = 1, const Size height = 1);
+			static Texture createFromFile(const std::string& file);
+			static Texture createFromFile(const char* file);
+			static Texture createFromMemory(const unsigned char * c, const Size size);
+
+			static Texture& getSolidColor();
+			/**
+			- Vertical gradient
+			- Darker part on bottom
+			- Height is 100
+			*/
+			static Texture& getGradient();
 
 			Texture();
 			Texture(const Color& col);
 			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
-			explicit Texture(const char* file);
-			explicit Texture(const std::string& file);
 
 			void init() override;
 			void destroy() override;
@@ -169,7 +249,7 @@ namespace mc {
 					type = Texture::Type::SHORT;
 				} else if (mat.depth() == CV_32S) {
 					type = Texture::Type::INT;
-				} else if (mat.depth() == CV_32F) {
+				} else if (mat.depth() == CV_32F) {;
 					type = Texture::Type::FLOAT;
 				} else if (mat.depth() == CV_64F) {
 					MACE__THROW(BadFormat, "Unsupported cv::Mat depth: CV_64F");
@@ -206,38 +286,35 @@ namespace mc {
 
 			void load(const char* file);
 			void load(const std::string& file);
-			void load(const Color& c);
-			void load(const unsigned char* c, const Size size);
-			template<std::size_t S>
-			void load(const unsigned char c[S]) {
-				load(c, S);
-			}
+			void load(const Color& c, const Size width = 1, const Size height = 1);
 
 			Color& getPaint();
 			const Color& getPaint() const;
 			void setPaint(const Color& col);
 
 			void bind() const override;
-			void bind(const Index location) const;
+			void bind(const Index location) const override;
 			void unbind() const override;
 
 			void resetPixelStorage();
 
-			void setMinFilter(const Texture::ResizeFilter filter);
-			void setMagFilter(const Texture::ResizeFilter filter);
+			void setMinFilter(const Enums::ResizeFilter filter) override;
+			void setMagFilter(const Enums::ResizeFilter filter) override;
 
-			void setData(const void* data, const Size width, const Size height, const Texture::Type type = Texture::Type::FLOAT, const Texture::Format format = Texture::Format::RGB, const Texture::InternalFormat internalFormat = Texture::InternalFormat::RGB, const Index mipmap = 0);
+			void setData(const void* data, const Size width, const Size height,
+						 const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGB,
+						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGB, const Index mipmap = 0) override;
 
-			void setUnpackStorageHint(const Texture::PixelStorage hint, const int value);
-			void setPackStorageHint(const Texture::PixelStorage hint, const int value);
+			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value) override;
+			void setPackStorageHint(const Enums::PixelStorage hint, const int value) override;
 
-			void setWrap(const Texture::WrapMode wrap);
-			void setWrapS(const Texture::WrapMode wrap);
-			void setWrapT(const Texture::WrapMode wrap);
+			void setWrap(const Enums::WrapMode wrap);
+			void setWrapS(const Enums::WrapMode wrap) override;
+			void setWrapT(const Enums::WrapMode wrap) override;
 
-			void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg);
+			void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) override;
 
-			void getImage(const Texture::Format format, const Texture::Type type, void* data) const;
+			void getImage(const Enums::Format format, const Enums::Type type, void* data) const override;
 
 			bool operator==(const Texture& other) const;
 			bool operator!=(const Texture& other) const;
@@ -247,38 +324,11 @@ namespace mc {
 			Color paint;
 		};//Texture
 
-		class TextureImpl: public Initializable, public Bindable {
-		public:
-			virtual void init() override = 0;
-			virtual void destroy() override = 0;
-
-			virtual void bind() const override = 0;
-			virtual void bind(const Index location) const = 0;
-			virtual void unbind() const override = 0;
-
-			virtual bool isCreated() const = 0;
-
-			virtual void setData(const void* data, const Size width, const Size height, const Texture::Type type, const Texture::Format format, const Texture::InternalFormat internalFormat, const Index mipmap) = 0;
-
-			virtual void setMinFilter(const Texture::ResizeFilter filter) = 0;
-			virtual void setMagFilter(const Texture::ResizeFilter filter) = 0;
-
-			virtual void setUnpackStorageHint(const Texture::PixelStorage hint, const int value) = 0;
-			virtual void setPackStorageHint(const Texture::PixelStorage hint, const int value) = 0;
-
-			virtual void setWrapS(const Texture::WrapMode wrap) = 0;
-			virtual void setWrapT(const Texture::WrapMode wrap) = 0;
-
-			virtual void getImage(const Texture::Format format, const Texture::Type type, void* data) const = 0;
-
-			virtual void setSwizzle(const Texture::SwizzleMode mode, const Texture::SwizzleMode arg) = 0;
-		};
-
 		class GraphicsContext: public Initializable {
 			friend class Texture;
 			friend class Model;
 		public:
-			GraphicsContext(os::WindowModule* win);
+			GraphicsContext(gfx::WindowModule* win);
 			//prevent copying
 			GraphicsContext(const GraphicsContext& other) = delete;
 			virtual ~GraphicsContext() = default;
@@ -289,34 +339,41 @@ namespace mc {
 
 			virtual std::shared_ptr<Renderer> getRenderer() const = 0;
 
-			os::WindowModule* getWindow();
-			const os::WindowModule* getWindow() const;
+			gfx::WindowModule* getWindow();
+			const gfx::WindowModule* getWindow() const;
 
 			void createTexture(const std::string& name, const Texture& texture = Texture());
-			
+			void createModel(const std::string& name, const Model& texture = Model());
+
 			bool hasTexture(const std::string& name) const;
+			bool hasModel(const std::string& name) const;
 
 			void setTexture(const std::string& name, const Texture& texture);
 			Texture& getTexture(const std::string& name);
 			const Texture& getTexture(const std::string& name) const;
 
+			void setModel(const std::string& name, const Model& model);
+			Model& getModel(const std::string& name);
+			const Model& getModel(const std::string& name) const;
+
 			std::map<std::string, Texture>& getTextures();
 			const std::map<std::string, Texture>& getTextures() const;
 
-		//	std::map<std::string, Model>& getModels();
-			//const std::map<std::string, Model>& getModels() const;
+			std::map<std::string, Model>& getModels();
+			const std::map<std::string, Model>& getModels() const;
 		protected:
-			os::WindowModule* window;
+			gfx::WindowModule* window;
 
 			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
 			virtual std::shared_ptr<TextureImpl> createTextureImpl() const = 0;
 
-			virtual void onInit(os::WindowModule* win) = 0;
-			virtual void onRender(os::WindowModule* win) = 0;
-			virtual void onDestroy(os::WindowModule* win) = 0;
+			virtual void onInit(gfx::WindowModule* win) = 0;
+			virtual void onRender(gfx::WindowModule* win) = 0;
+			virtual void onDestroy(gfx::WindowModule* win) = 0;
 
 		private:
 			std::map<std::string, Texture> textures{};
+			std::map<std::string, Model> models{};
 		};
 	}
 }//mc

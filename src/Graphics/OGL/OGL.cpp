@@ -127,22 +127,22 @@ namespace mc {
 				glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, 0);
 			}
 
-			void VertexArray::loadVertices(const Size verticeSize, const float vertices[], const Index location, const Byte attributeSize) {
+			void VertexArray::loadVertices(const Size verticeSize, const float* vertices, const Index location, const Byte attributeSize, const Enum type, const bool normalized) {
 				vertexNumber = verticeSize;
 
 				bind();
-				storeDataInAttributeList(std::move(vertexNumber), vertices, std::move(location), std::move(attributeSize));
+				storeDataInAttributeList(vertexNumber * sizeof(float), vertices, location, attributeSize, type, normalized);
 			}
 
-			void VertexArray::storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location, const Byte attributeSize) {
+			void VertexArray::storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location, const Byte attributeSize, const Enum type, const bool normalized) {
 				bind();
 
 				VertexBuffer buffer = VertexBuffer();
 				buffer.init();
 				buffer.setLocation(location);
 				// Give our data to opengl
-				buffer.setData(static_cast<ptrdiff_t>(sizeof(GLfloat)*(attributeSize * dataSize)), data, GL_DYNAMIC_DRAW);
-				buffer.setAttributePointer(attributeSize, GL_FLOAT, GL_FALSE, 0, 0);
+				buffer.setData(static_cast<ptrdiff_t>(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);
+				buffer.setAttributePointer(attributeSize, type, normalized, 0, 0);
 
 				addBuffer(buffer);
 

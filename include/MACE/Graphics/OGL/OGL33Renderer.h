@@ -47,8 +47,8 @@ namespace mc {
 
 				void onResize(const Size width, const Size height) override;
 				void onInit(const Size originalWidth, const Size originalHeight) override;
-				void onSetUp(os::WindowModule* win) override;
-				void onTearDown(os::WindowModule* win) override;
+				void onSetUp(gfx::WindowModule* win) override;
+				void onTearDown(gfx::WindowModule* win) override;
 				void onDestroy() override;
 				void onQueue(GraphicsEntity* en) override;
 

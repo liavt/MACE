@@ -17,31 +17,32 @@ namespace mc {
 			//these fucntions are derived from https://github.com/jesusgollonet/ofpennereasing . Thank you!
 
 
-			float LINEAR(float t, const float b, const float c, const float d)  {
+			/*See Components.h for MACE__MAKE_EASE_FUNCTION definition and explanation*/
+			MACE__MAKE_EASE_FUNCTION(LINEAR) {
 				return b + c*(t / d);
 			}
 
-			float BACK_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(BACK_IN) {
 				const float s = 1.70158f;
 				const float postFix = t /= d;
 				return c*(postFix)*t*((s + 1)*t - s) + b;
 			}
 
 			//shameless resturant promotion
-			float BACK_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(BACK_OUT) {
 				const float s = 1.70158f;
 				t /= d;
 				return c*((t - 1)*t*((s + 1)*t + s) + 1) + b;
 			}
 
-			float BACK_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(BACK_IN_OUT) {
 				const float s = 2.5949095f;
 				if ((t /= d / 2) < 1) return c / 2 * (t*t*((s + 1)*t - s)) + b;
 				const float postFix = t -= 2;
 				return c / 2 * ((postFix)*t*((s + 1)*t + s) + 2) + b;
 			}
 
-			float BOUNCE_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(BOUNCE_OUT) {
 				if ((t /= d) < (1 / 2.75f)) {
 					return c*(7.5625f*t*t) + b;
 				} else if (t < (2 / 2.75f)) {
@@ -57,26 +58,26 @@ namespace mc {
 			}
 
 			//BOUNCE_IN is defined after BOUNCE_OUT just because it requires BOUNCE_OUT to be eclared
-			float BOUNCE_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN) {
 				return c - EaseFunctions::BOUNCE_OUT(d - t, 0, c, d) + b;
 			}
 
-			float BOUNCE_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN_OUT) {
 				if (t < d / 2) return EaseFunctions::BOUNCE_IN(t * 2, 0, c, d) * .5f + b;
 				else return EaseFunctions::BOUNCE_OUT(t * 2 - d, 0, c, d) * .5f + c*.5f + b;
 			}
 
-			float CIRCLE_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN) {
 				t /= d;
 				return -c * (std::sqrt(1 - t*t) - 1) + b;
 			}
 
-			float CIRCLE_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(CIRCLE_OUT) {
 				t /= d;
 				return c * std::sqrt(1 - (t - 1)*t) + b;
 			}
 
-			float CIRCLE_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN_OUT) {
 				if ((t /= d / 2) < 1) {
 					return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
 				}
@@ -85,17 +86,17 @@ namespace mc {
 				return c / 2 * (std::sqrt(1 - t*t) + 1) + b;
 			}
 
-			float CUBIC_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(CUBIC_IN) {
 				t /= d;
 				return c*t*t*t + b;
 			}
 
-			float CUBIC_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(CUBIC_OUT) {
 				t /= d;
 				return c*((t - 1)*t*t + 1) + b;
 			}
 
-			float CUBIC_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(CUBIC_IN_OUT) {
 				if ((t /= d / 2) < 1) {
 					return c / 2 * t*t*t + b;
 				}
@@ -104,7 +105,7 @@ namespace mc {
 				return c / 2 * (t*t*t + 2) + b;
 			}
 
-			float ELASTIC_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN) {
 				if (t == 0) {
 					return b;
 				} else if ((t /= d) == 1) {
@@ -118,7 +119,7 @@ namespace mc {
 				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
 			}
 
-			float ELASTIC_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(ELASTIC_OUT) {
 				if (t == 0) {
 					return b;
 				} else if ((t /= d) == 1) {
@@ -130,7 +131,7 @@ namespace mc {
 				return static_cast<float>(c*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
 			}
 
-			float ELASTIC_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN_OUT) {
 				if (t == 0) {
 					return b;
 				} else if ((t /= d / 2) == 2) {
@@ -150,48 +151,48 @@ namespace mc {
 				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*0.5f + c + b;
 			}
 
-			float EXPONENTIAL_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN) {
 				return (t == 0) ? b : c * static_cast<float>(std::pow(2, 10 * (t / d - 1))) + b;
 			}
 
-			float EXPONENTIAL_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_OUT) {
 				return (t == d) ? b + c : c * static_cast<float>(-std::pow(2, -10 * t / d) + 1) + b;
 			}
 
-			float EXPONENTIAL_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN_OUT) {
 				if (t == 0) return b;
 				if (t == d) return b + c;
 				if ((t /= d / 2) < 1) return c / 2 * static_cast<float>(std::pow(2, 10 * (t - 1))) + b;
 				return c / 2 * static_cast<float>(-std::pow(2, -10 * --t) + 2) + b;
 			}
 
-			float QUADRATIC_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN) {
 				t /= d;
 				return c*t*t + b;
 			}
 
-			float QUADRATIC_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUADRATIC_OUT) {
 				t /= d;
 				return -c *t*(t - 2) + b;
 			}
 
-			float QUADRATIC_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN_OUT) {
 				if ((t /= d / 2) < 1) return ((c / 2)*(t*t)) + b;
 				--t;
 				return -c / 2 * (((t - 1)*(t)) - 1) + b;
 			}
 
-			float QUARTIC_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN) {
 				t /= d;
 				return c*(t)*t*t*t + b;
 			}
 
-			float QUARTIC_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUARTIC_OUT) {
 				t /= d;
 				return -c * ((t - 1)*t*t*t - 1) + b;
 			}
 
-			float QUARTIC_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN_OUT) {
 				t /= d;
 				if ((t / 2) < 1) {
 					return c / 2 * t*t*t*t + b;
@@ -199,17 +200,17 @@ namespace mc {
 				return -c / 2 * (t*t*t*t - 2) + b;
 			}
 
-			float QUINTIC_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN) {
 				t /= d;
 				return c*t*t*t*t*t + b;
 			}
 
-			float QUINTIC_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUINTIC_OUT) {
 				t /= d;
 				return c*((t - 1)*t*t*t*t + 1) + b;
 			}
 
-			float QUINTIC_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN_OUT) {
 				t /= d;
 				if ((t / 2) < 1) {
 					return c / 2 * t*t*t*t*t + b;
@@ -218,23 +219,23 @@ namespace mc {
 				return c / 2 * (t*t*t*t*t + 2) + b;
 			}
 
-			float SINUSODIAL_IN(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(SINUSODIAL_IN) {
 				return -c * std::cos(t / d * (static_cast<float>(math::pi()) / 2)) + c + b;
 			}
 
-			float SINUSODIAL_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(SINUSODIAL_OUT) {
 				return c * std::sin(t / d * (static_cast<float>(math::pi()) / 2)) + b;
 			}
 
-			float SINUSODIAL_IN_OUT(float t, const float b, const float c, const float d)  {
+			MACE__MAKE_EASE_FUNCTION(SINUSODIAL_IN_OUT) {
 				return -c / 2 * (std::cos(static_cast<float>(math::pi())*t / d) - 1) + b;
 			}
 		}
 
-		AlignmentComponent::AlignmentComponent(const VerticalAlign vert, const HorizontalAlign horz)
+		AlignmentComponent::AlignmentComponent(const Enums::VerticalAlign vert, const Enums::HorizontalAlign horz)
 			: vertAlign(vert), horzAlign(horz) {}
 
-		void AlignmentComponent::setVerticalAlign(const VerticalAlign align) {
+		void AlignmentComponent::setVerticalAlign(const Enums::VerticalAlign align) {
 			if (vertAlign != align) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -244,11 +245,11 @@ namespace mc {
 			}
 		}
 
-		const VerticalAlign AlignmentComponent::getVerticalAlign() const {
+		const Enums::VerticalAlign AlignmentComponent::getVerticalAlign() const {
 			return vertAlign;
 		}
 
-		void AlignmentComponent::setHorizontalAlign(HorizontalAlign align) {
+		void AlignmentComponent::setHorizontalAlign(Enums::HorizontalAlign align) {
 			if (horzAlign != align) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -258,7 +259,7 @@ namespace mc {
 			}
 		}
 
-		const HorizontalAlign AlignmentComponent::getHorizontalAlign() const {
+		const Enums::HorizontalAlign AlignmentComponent::getHorizontalAlign() const {
 			return horzAlign;
 		}
 
@@ -277,27 +278,27 @@ namespace mc {
 
 			switch (horzAlign) {
 				default:
-				case HorizontalAlign::CENTER:
+				case Enums::HorizontalAlign::CENTER:
 					parent->setX(0.0f);
 					//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
-				case HorizontalAlign::RIGHT:
+				case Enums::HorizontalAlign::RIGHT:
 					parent->setX(1.0f - (width / 2.0f));
 					break;
-				case HorizontalAlign::LEFT:
+				case Enums::HorizontalAlign::LEFT:
 					parent->setX((width / 2.0f) - 1.0f);
 					break;
 			}
 
 			switch (vertAlign) {
 				default:
-				case VerticalAlign::CENTER:
+				case Enums::VerticalAlign::CENTER:
 					parent->setX(0.0f);
 					break;
-				case VerticalAlign::BOTTOM:
+				case Enums::VerticalAlign::BOTTOM:
 					parent->setY((height / 2.0f) - 1.0f);
 					break;
-				case VerticalAlign::TOP:
+				case Enums::VerticalAlign::TOP:
 					parent->setY(1.0f - (height / 2.0f));
 					break;
 			}

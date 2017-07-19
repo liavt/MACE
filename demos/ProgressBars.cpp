@@ -11,17 +11,15 @@ The above copyright notice and this permission notice shall be included in all c
 
 using namespace mc;
 
-gfx::Group group;
-
 gfx::ProgressBar circleBar;
 gfx::ProgressBar rectangleBar;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
 	bool update(gfx::Entity* e) {
-		if( os::Input::isKeyDown(os::Input::UP) ) {
+		if( gfx::Input::isKeyDown(gfx::Input::UP) ) {
 			dynamic_cast<gfx::ProgressBar*>(e)->addProgress(1);
-		} else if( os::Input::isKeyDown(os::Input::DOWN) ) {
+		} else if( gfx::Input::isKeyDown(gfx::Input::DOWN) ) {
 			dynamic_cast<gfx::ProgressBar*>(e)->addProgress(-1);
 		}
 		return false;
@@ -32,8 +30,8 @@ class TestComponent: public gfx::Component {
 
 TestComponent r = TestComponent();
 
-void create(os::WindowModule& win) {
-	gfx::Texture circle = gfx::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
+void create(gfx::WindowModule& win) {
+	gfx::Texture circle = gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png");
 
 	circleBar = gfx::ProgressBar(100, 255, 20);
 	circleBar.setBackgroundTexture(gfx::Texture(circle, Colors::RED));
@@ -48,12 +46,12 @@ void create(os::WindowModule& win) {
 
 	circleBar.easeTo(250, 100, gfx::EaseFunctions::BOUNCE_OUT);
 
-	group.addChild(circleBar);
+	win.addChild(circleBar);
 
 	rectangleBar = gfx::ProgressBar(0, 255, 50);
 	rectangleBar.setBackgroundTexture(Colors::RED);
-	rectangleBar.setForegroundTexture(Colors::GREEN);
-	rectangleBar.setSelectionTexture(gfx::Texture(std::string(MACE_DEMO_ASSETS) + "/progressbar-gradient.png"));
+	rectangleBar.setForegroundTexture(gfx::Texture(gfx::Texture::getGradient(), Color(0.0f, 1.0f, 0.0f, 0.5f)));
+	rectangleBar.setSelectionTexture(gfx::Texture::getGradient());
 	rectangleBar.setWidth(0.1f);
 	rectangleBar.setHeight(0.25f);
 	rectangleBar.setX(0.5f);
@@ -63,7 +61,7 @@ void create(os::WindowModule& win) {
 
 	rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
 
-	group.addChild(rectangleBar);
+	win.addChild(rectangleBar);
 
 	win.getContext()->getRenderer()->setRefreshColor(Colors::LIGHT_GRAY);
 }
@@ -71,13 +69,11 @@ void create(os::WindowModule& win) {
 int main() {
 	Instance instance = Instance();
 	try {
-		os::WindowModule::LaunchConfig config = os::WindowModule::LaunchConfig(500, 500, "Progress Bars Demo");
+		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(500, 500, "Progress Bars Demo");
 		config.onCreate = &create;
 		config.resizable = true;
-		os::WindowModule module = os::WindowModule(config);
 
-		module.addChild(group);
-
+		gfx::WindowModule module = gfx::WindowModule(config);
 		instance.addModule(module);
 
 		os::SignalModule sigModule = os::SignalModule();
@@ -85,7 +81,7 @@ int main() {
 
 		instance.start();
 	} catch( const std::exception& e ) {
-		Error::handleError(e);
+		Error::handleError(e, instance);
 		return -1;
 	}
 	return 0;

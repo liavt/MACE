@@ -69,10 +69,6 @@ namespace mc {
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
 
-		//location of vbo of vertices and texture coordinates in the vao for each protocl
-#define MACE__VAO_VERTICES_LOCATION 0
-#define MACE__VAO_TEX_COORD_LOCATION 1
-
 			OGL33Renderer::OGL33Renderer() : sslPreprocessor(""), frameBuffer(), depthBuffer(), sceneTexture(), idTexture(), clearColor(Colors::BLACK) {}
 
 			void OGL33Renderer::onResize(const Size width, const Size height) {
@@ -166,7 +162,7 @@ namespace mc {
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating UniformBuffer for renderer");
 			}
 
-			void OGL33Renderer::onSetUp(os::WindowModule *) {
+			void OGL33Renderer::onSetUp(gfx::WindowModule *) {
 				frameBuffer.bind();
 				sceneTexture.bind();
 				idTexture.bind();
@@ -188,7 +184,7 @@ namespace mc {
 
 			}
 
-			void OGL33Renderer::onTearDown(os::WindowModule * win) {
+			void OGL33Renderer::onTearDown(gfx::WindowModule * win) {
 				ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 				frameBuffer.unbind();
@@ -323,9 +319,9 @@ namespace mc {
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
 
-				glViewport(0, 0, width, height);
+				ogl::setViewport(0, 0, width, height);
 
-				const os::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
+				const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
 
 				windowRatios[0] = static_cast<float>(config.width) / static_cast<float>(width);
 				windowRatios[1] = static_cast<float>(config.width) / static_cast<float>(height);
@@ -505,8 +501,8 @@ namespace mc {
 					};
 
 					Binder b(&vao);
-					vao.loadVertices(4, squareVertices, MACE__VAO_VERTICES_LOCATION, 3);
-					vao.storeDataInAttributeList(4, squareTextureCoordinates, MACE__VAO_TEX_COORD_LOCATION, 2);
+					vao.loadVertices(4, squareVertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
+					vao.storeDataInAttributeList(4 * sizeof(float), squareTextureCoordinates, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
 					vao.loadIndices(6, squareIndices);
 				}
 
@@ -547,8 +543,8 @@ namespace mc {
 					MACE__DEFINE_MACRO(MACE__SCENE_ATTACHMENT_INDEX);
 					MACE__DEFINE_MACRO(MACE__ID_ATTACHMENT_INDEX);
 
-					MACE__DEFINE_MACRO(MACE__VAO_VERTICES_LOCATION);
-					MACE__DEFINE_MACRO(MACE__VAO_TEX_COORD_LOCATION);
+					MACE__DEFINE_MACRO(MACE__VAO_DEFAULT_VERTICES_LOCATION);
+					MACE__DEFINE_MACRO(MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION);
 #undef MACE__DEFINE_MACRO
 
 					sslPreprocessor.addInclude(vertexLibrary);

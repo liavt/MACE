@@ -27,25 +27,25 @@ namespace mc {
 
 	namespace gfx {
 		class GraphicsContext;
-	}
 
-	namespace os {
 		/**
 		Thrown when GLFW (windowing library) throws an error
 		*/
 		MACE__DECLARE_ERROR(Window);
+
+		namespace Enums {
+			enum class ContextType {
+				AUTOMATIC,
+				BEST_OGL,
+				OGL33
+			};
+		}
 
 		/**
 		@todo move the fps handling code away from ctime and to chrono and use a dynamic timestep
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
-			enum class ContextType {
-				AUTOMATIC,
-				BEST_OGL,
-				OGL33
-			};
-
 			struct LaunchConfig {
 				typedef void(*WindowCallback)(WindowModule& window);
 				typedef void(*ScrollCallback)(WindowModule& window, double x, double y);
@@ -59,7 +59,7 @@ namespace mc {
 
 				unsigned int fps = 30;
 
-				ContextType contextType = ContextType::AUTOMATIC;
+				Enums::ContextType contextType = Enums::ContextType::AUTOMATIC;
 
 				WindowCallback onCreate = [](WindowModule&) {};
 				WindowCallback onClose = [](WindowModule&) {};

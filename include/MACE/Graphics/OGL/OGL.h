@@ -26,6 +26,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <unordered_map>
 #include <vector>
 
+#define MACE__VAO_DEFAULT_VERTICES_LOCATION 0
+#define MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION 1
+
 namespace mc {
 	namespace gfx {
 
@@ -927,8 +930,9 @@ namespace mc {
 				/**
 				@opengl
 				@see VertexBuffer
+				@param verticeSize amount of vertices
 				*/
-				void loadVertices(const Size verticeSize, const float vertices[], const Index location = 15, const Byte attributeSize = 3);
+				void loadVertices(const Size verticeSize, const float* vertices, const Index location = 15, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
 				/**
 				@opengl
 				@see VertexBuffer
@@ -938,8 +942,9 @@ namespace mc {
 				/**
 				@opengl
 				@see VertexBuffer
+				@param dataSize amount of elements * sizeof() each individual element
 				*/
-				void storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location = 0, const Byte attributeSize = 3);
+				void storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location = 0, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
 
 				/**
 				@opengl

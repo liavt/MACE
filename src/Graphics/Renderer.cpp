@@ -16,11 +16,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		void Renderer::init(os::WindowModule* win) {
+		void Renderer::init(gfx::WindowModule* win) {
 			onInit(win->getLaunchConfig().width, win->getLaunchConfig().height);
 		}
 
-		void Renderer::setUp(os::WindowModule* win) {
+		void Renderer::setUp(gfx::WindowModule* win) {
 			if (resized) {
 				Vector<int, 2> dimensions = win->getFramebufferSize();
 
@@ -57,12 +57,12 @@ namespace mc {
 			resized = false;
 		}//resize
 
-		void Renderer::tearDown(os::WindowModule* win) {
+		void Renderer::tearDown(gfx::WindowModule* win) {
 			onTearDown(win);
 		}//tearDown
 
-		void Renderer::checkInput(os::WindowModule*) {
-			GraphicsEntity* hovered = getEntityAt(os::Input::getMouseX(), os::Input::getMouseY());
+		void Renderer::checkInput(gfx::WindowModule*) {
+			GraphicsEntity* hovered = getEntityAt(gfx::Input::getMouseX(), gfx::Input::getMouseY());
 
 			if (hovered != nullptr) {
 				hovered->hover();
@@ -285,7 +285,7 @@ namespace mc {
 		}
 
 		Painter::Painter(GraphicsEntity * const en) {
-			impl = os::getCurrentWindow()->getContext()->getRenderer()->createPainterImpl(en);
+			impl = gfx::getCurrentWindow()->getContext()->getRenderer()->createPainterImpl(en);
 #ifdef MACE_DEBUG
 			if (impl.get() == nullptr) {
 				MACE__THROW(NullPointer, "Renderer returned a nullptr to a Painter");
