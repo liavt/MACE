@@ -24,16 +24,10 @@ cp -a build/include/. release/shared/include/
 cp -a include/. release/shared/include/
 if [[ -e build/libMACE.dylib ]]; then
 	cp build/libMACE.dylib release/shared/libMACE.dylib;
-	tar -zcf osx-x64.tar.gz release;
-	cd release;
-	sha256sum osx-x64.tar.gz;
-fi
-if [[ -e build/libMACE.so ]]; then
+elif [[ -e build/libMACE.so ]]; then
 	cp build/libMACE.so release/shared/libMACE.so;
-	tar -zcf linux-x64.tar.gz release;
-	cd release;
-	sha256sum linux-x64.tar.gz;
 fi
+tar -zcf ${TRAVIS_OS_NAME}-x64.tar.gz release;
+sha256sum ${TRAVIS_OS_NAME}-x64.tar.gz;
 echo "Final working directory:"
-cd ..
 ls
