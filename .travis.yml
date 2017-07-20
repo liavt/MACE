@@ -95,5 +95,5 @@ deploy:
     script: sudo bash ./scripts/travis-deploy-docs.sh
     on:
       branch: unstable
-      condition: $COMPILER == g++-5
+      condition: $COMPILER == g++-5 && $TRAVIS_PULL_REQUEST = false
       repo: liavt/MACE
