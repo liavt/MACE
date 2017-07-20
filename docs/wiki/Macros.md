@@ -83,7 +83,10 @@ Additionally, if the compiler supports GNU C, `MACE_GNU` will be defined.
 
 | *Macro* | *Meaning* |
 |-----------------------------|----------------------------------------------------------------------------------------------------------------|
-| MACE_INCLUDED | Always defined to be 1 when MACE is included in a project |
+| MACE_VERSION | Always defined to be the current version of MACE, in the format major.minor.patch |
+| MACE_VERSION_MAJOR | Major version number |
+| MACE_VERSION_MINOR | Minor version number |
+| MACE_VERSION_PATCH | Minor version number |
 | MACE_TESTS | Defined if CMake built the testing suite. |
 | MACE_DEMOS | Defined if CMake built the demos |
 | MACE_POINTER_SIZE | Size of a void* on this system. |
@@ -99,8 +102,8 @@ Additionally, if the compiler supports GNU C, `MACE_GNU` will be defined.
 
 | *Macro* | *Meaning* |
 |---------------------------------|---------------------------------------------------------------------------------------------------------|
-| MACE_VERSION_NUMBER(major, minor, patch) | Creates a single version number from 3 version numbers. Encodes all 3 numbers into a single 32 bit integer. |
-| MACE_VERSION_STRING(major, minor, patch) | Creates a token that combines the 3 version numbers into the format "Major.minor.patch". This is not stringified. |
+| MACE_MAKE_VERSION_NUMBER(major, minor, patch) | Creates a single version number from 3 version numbers. Encodes all 3 numbers into a single 32 bit integer. |
+| MACE_MAKE_VERSION_STRING(major, minor, patch) | Creates a token that combines the 3 version numbers into the format "Major.minor.patch". This is not stringified. |
 | MACE_FUNCTION_EXPORT | Modifier that tells the compiler that this function should be exported to the global symbol table. Could be empty |
 | MACE_FUNCTION_IMPORT | Modifier that tells the compiler that this function will be imported from an exported symbol. Could be empty. |
 | MACE_HAS_ATTRIBUTE(attr) | If not defined previously, returns 0 if specified attribute is supported, 1 otherwise. If attributes are not supported by the compiler, always returns 0  |

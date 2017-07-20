@@ -57,6 +57,14 @@ set(MACE_COMPILER_FLAGS -Wall -Wnon-virtual-dtor -pedantic -Wmisleading-indentat
 #This defines where all of our includes are located
 set(MACE_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 
+#get version number
+file(READ "${PROJECT_SOURCE_DIR}/VERSION" MACE_VERSION)
+
+string(REPLACE "." ";" MACE_VERSION_COMPONENTS ${MACE_VERSION})
+list(GET MACE_VERSION_COMPONENTS 0 MACE_VERSION_MAJOR)
+list(GET MACE_VERSION_COMPONENTS 1 MACE_VERSION_MINOR)
+list(GET MACE_VERSION_COMPONENTS 2 MACE_VERSION_PATCH)
+
 set(GLFW_SOURCE_VERSION "3.2.1")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")

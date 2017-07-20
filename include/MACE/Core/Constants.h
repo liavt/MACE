@@ -17,18 +17,18 @@ The above copyright notice and this permission notice shall be included in all c
 #	error A C++ compiler is required!
 #endif//__cplusplus
 
-#define MACE_VERSION_NUMBER(major,minor,patch) (((major % 100) * 10000000) + ((minor % 100) * 100000) + (patch % 100000))
-#define MACE_VERSION_STRING(major, minor, patch) major##.##minor##.##patch
+#define MACE_MAKE_VERSION_NUMBER(major,minor,patch) (((major % 100) * 10000000) + ((minor % 100) * 100000) + (patch % 100000))
+#define MACE_MAKE_VERSION_STRING(major, minor, patch) major##.##minor##.##patch
 
 //COMPILER SUPPORT
 #ifdef __GNUC__
 #	define MACE_GNU __GNUC__
 #	if defined(__clang__) && defined(__clang_major__) && defined(__clang_minor__) && defined(__clang_patchlevel__)
-#		define MACE_CLANG MACE_VERSION_NUMBER(__clang_major__, __clang_minor__, __clang_patchlevel__)
+#		define MACE_CLANG MACE_MAKE_VERSION_NUMBER(__clang_major__, __clang_minor__, __clang_patchlevel__)
 #	elif defined(__GNUG__) && defined(__GNUC_MINOR__) && defined(__GNUC_PATCHLEVEL__)
-#		define MACE_GCC MACE_VERSION_NUMBER(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
+#		define MACE_GCC MACE_MAKE_VERSION_NUMBER(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
 #	elif defined(__MINGW32__) || defined(__MINGW64__)
-#		define MACE_MINGW MACE_VERSION_NUMBER(__MINGW64_VERSION_MAJOR, __MINGW64_VERSION_MINOR, 0)
+#		define MACE_MINGW MACE_MAKE_VERSION_NUMBER(__MINGW64_VERSION_MAJOR, __MINGW64_VERSION_MINOR, 0)
 #	elif defined(__ICC) || defined(__INTEL_COMPILER)
 #		define MACE_INTEL __INTEL_COMPILER
 #	else
@@ -49,7 +49,7 @@ The above copyright notice and this permission notice shall be included in all c
 #elif defined(sgi)&&defined(__sgi)
 #	define MACE_MIPSPRO __COMPILER_VERSION
 #elif defined(__PGIC__)
-#	define MACE_PORTLAND MACE_VERSION_NUMBER(__PGIC__, __PGIC_MINOR, __PGIC_PATCHLEVEL__)
+#	define MACE_PORTLAND MACE_MAKE_VERSION_NUMBER(__PGIC__, __PGIC_MINOR, __PGIC_PATCHLEVEL__)
 #elif defined(__IMBC__) && defined(__IMBCC__)
 #	define MACE_IBM __IMBCC__
 #else

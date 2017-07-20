@@ -35,14 +35,10 @@ ls
 git config --global user.email "travis@travis-ci.org"
 git config --global user.name "Travis CI"
 
-git remote add origin-pages https://${GITHUB_TOKEN}@github.com/liavt/MACE.git > /dev/null 2>&1
-
+TAG_NAME = "cat VERSION"
 if[[ $COMPILER == g++-6 ]]; then
-	git tag -d unstable;
-	git push --quiet --set-upstream origin-pages :refs/tags/unstable;
-	git tag -a unstable -m "This is the absolute latest version of MACE, with no guarentee it is stable.";
-	git push --quiet origin-pages --tags;
+	git tag -a $TAG_NAME -m "Version $TAG_NAME";
 else
-	git tag unstable
-	git push --quiet origin-pages --tags;
+	git tag $TAG_NAME
 fi
+git push https://${GITHUB_TOKEN}@github.com/liavt/MACE.git --tags
