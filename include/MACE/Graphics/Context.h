@@ -335,6 +335,8 @@ namespace mc {
 			friend class Texture;
 			friend class Model;
 		public:
+			typedef Texture(*TextureCreateCallback)();
+
 			GraphicsContext(gfx::WindowModule* win);
 			//prevent copying
 			GraphicsContext(const GraphicsContext& other) = delete;
@@ -350,6 +352,7 @@ namespace mc {
 			const gfx::WindowModule* getWindow() const;
 
 			void createTexture(const std::string& name, const Texture& texture = Texture());
+			Texture& getOrCreateTexture(const std::string& name, const TextureCreateCallback create);
 			void createModel(const std::string& name, const Model& texture = Model());
 
 			bool hasTexture(const std::string& name) const;

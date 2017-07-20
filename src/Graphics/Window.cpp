@@ -21,7 +21,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/BitField.h>
 
 #include <mutex>
-#include <ctime>
 #include <chrono>
 #include <iostream>
 #include <unordered_map>
@@ -138,10 +137,17 @@ namespace mc {
 		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
 
 		void WindowModule::create() {
+			if (!glfwInit()) {
+				MACE__THROW(InitializationFailed, "GLFW failed to initialize!");
+			}
+
+			glfwSetErrorCallback(&onGLFWError);
+
 			switch (config.contextType) {
 				case Enums::ContextType::AUTOMATIC:
 				case Enums::ContextType::BEST_OGL:
 				case Enums::ContextType::OGL33:
+				default:
 					context = std::shared_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
 
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -234,16 +240,21 @@ namespace mc {
 
 		void WindowModule::threadCallback() {
 			try {
+				//typedefs for chrono for readibility purposes
+				using Clock = std::chrono::system_clock;
+				using TimeStamp = std::chrono::time_point<Clock>;
+				using Duration = std::chrono::duration<long long, std::nano>;
+
 				//mutex for this function.
 				std::mutex mutex;
 
-				//now is set to be time(nullptr) every loop, and the delta is calculated from now nad last frame.
-				time_t now = time(nullptr);
+				//now is set to be now() every loop, and the delta is calculated from now and last frame.
+				TimeStamp now = Clock::now();
 				//each time the frame is swapped, lastFrame is updated with the new time
-				time_t lastFrame = time(nullptr);
+				TimeStamp lastFrame = Clock::now();
 
 				//this stores how many milliseconds it takes for the frame to swap.
-				float windowDelay = 0;
+				Duration windowDelay = Duration::zero();
 
 				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
@@ -253,12 +264,12 @@ namespace mc {
 					Entity::init();
 
 					if (config.fps != 0) {
-						windowDelay = 1000.0f / static_cast<float>(config.fps);
+						windowDelay = Duration(1000000000L / static_cast<long long>(config.fps));
 					}
 				} catch (const std::exception& e) {
 					Error::handleError(e, instance);
 				} catch (...) {
-					MACE__THROW(InitializationFailed, "An error has occured trying to initalize MACE");
+					MACE__THROW(Unknown, "An unknown error has occured trying to initalize MACE");
 				}
 
 				//this is the main rendering loop.
@@ -285,16 +296,12 @@ namespace mc {
 
 						}
 
-						if (windowDelay != 0) {
-							now = time(nullptr);
+						if (windowDelay != Duration::zero()) {
+							now = Clock::now();
 
-							const time_t delta = now - lastFrame;
+							std::this_thread::sleep_for(windowDelay - (now - lastFrame));
 
-							if (delta < windowDelay) {
-								lastFrame = now;
-
-								os::wait(static_cast<long long int>(windowDelay - delta));
-							}
+							lastFrame = Clock::now();
 						}
 					} catch (const std::exception& e) {
 						Error::handleError(e, instance);
@@ -312,6 +319,8 @@ namespace mc {
 						context->destroy();
 
 						glfwDestroyWindow(window);
+
+						glfwTerminate();
 					} catch (const std::exception& e) {
 						Error::handleError(e, instance);
 					} catch (...) {
@@ -320,17 +329,10 @@ namespace mc {
 				}
 			} catch (const std::exception& e) {
 				Error::handleError(e, instance);
-				return;
 			}
 		}//threadCallback
 
 		void WindowModule::init() {
-			if (!glfwInit()) {
-				MACE__THROW(InitializationFailed, "GLFW failed to initialize!");
-			}
-
-			glfwSetErrorCallback(&onGLFWError);
-
 			windowThread = std::thread(&WindowModule::threadCallback, this);
 		}
 
@@ -349,8 +351,6 @@ namespace mc {
 			}
 
 			windowThread.join();
-
-			glfwTerminate();
 		}//destroy
 
 		std::string WindowModule::getName() const {

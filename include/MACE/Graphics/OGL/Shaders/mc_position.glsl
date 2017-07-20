@@ -11,21 +11,12 @@ mat3 mcCreateRotationMatrix(vec3 mc_RotationInput){
 	float mc_CosZ = cos(mc_RotationInput.z), mc_SinZ = sin(mc_RotationInput.z),
 		   mc_CosY = cos(mc_RotationInput.y), mc_SinY = sin(mc_RotationInput.y),
 		   mc_CosX = cos(mc_RotationInput.x), mc_SinX = sin(mc_RotationInput.x);
-
-	mat3 mc_OutMatrix;
-	
-	mc_OutMatrix[0][0] = mc_CosZ*mc_CosY;
-	mc_OutMatrix[1][1] = mc_CosZ*mc_CosX;
-	mc_OutMatrix[2][2] = mc_CosX*mc_CosY;
-
-	mc_OutMatrix[0][1] = mc_SinZ;
-	mc_OutMatrix[0][2] = -mc_SinY;
-	mc_OutMatrix[1][0] = -mc_SinZ;
-	mc_OutMatrix[1][2] = mc_SinX;
-	mc_OutMatrix[2][0] = mc_SinY;
-	mc_OutMatrix[2][1] = -mc_SinX;
-	
-	return mc_OutMatrix;
+		   
+	return mat3(
+					mc_CosZ*mc_CosY, mc_SinZ, -mc_SinY,
+					-mc_SinZ, mc_CosZ*mc_CosX, mc_SinX,
+					mc_SinY,-mc_SinX,mc_CosX*mc_CosY
+					);
 }
 
 vec4 mcGetEntityPosition(){

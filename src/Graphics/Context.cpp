@@ -148,28 +148,26 @@ namespace mc {
 			std::shared_ptr<GraphicsContext> context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else if (!context->hasTexture(MACE__RESOURCE_SOLIDCOLOR)) {
-				Texture texture = Texture();
-
-				texture.init();
-
-				texture.resetPixelStorage();
-
-				MACE_CONSTEXPR const float data[] = { 1 };
-				texture.setData(data, 1, 1, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
-
-				texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
-				texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
-				texture.setSwizzle(gfx::Enums::SwizzleMode::A, gfx::Enums::SwizzleMode::R);
-
-				texture.setMinFilter(Enums::ResizeFilter::NEAREST);
-				texture.setMagFilter(Enums::ResizeFilter::NEAREST);
-
-				context->createTexture(MACE__RESOURCE_SOLIDCOLOR, texture);
-
-				return context->getTexture(MACE__RESOURCE_SOLIDCOLOR);
 			} else {
-				return context->getTexture(MACE__RESOURCE_SOLIDCOLOR);
+				return context->getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, []() {
+					Texture texture = Texture();
+
+					texture.init();
+
+					texture.resetPixelStorage();
+
+					MACE_CONSTEXPR const float data[] = { 1 };
+					texture.setData(data, 1, 1, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
+
+					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
+					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
+					texture.setSwizzle(gfx::Enums::SwizzleMode::A, gfx::Enums::SwizzleMode::R);
+
+					texture.setMinFilter(Enums::ResizeFilter::NEAREST);
+					texture.setMagFilter(Enums::ResizeFilter::NEAREST);
+
+					return texture;
+				});
 			}
 		}
 
@@ -177,31 +175,29 @@ namespace mc {
 			std::shared_ptr<GraphicsContext> context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else if (!context->hasTexture(MACE__RESOURCE_GRADIENT)) {
-				Texture texture = Texture();
-
-				texture.init();
-
-				texture.resetPixelStorage();
-
-				float data[MACE__RESOURCE_GRADIENT_HEIGHT];
-				for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
-					//the darker part is on the bottom
-					data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i - 1) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - 1);
-				}
-				texture.setData(data, 1, MACE__RESOURCE_GRADIENT_HEIGHT, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
-
-				texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
-				texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
-
-				texture.setMinFilter(Enums::ResizeFilter::NEAREST);
-				texture.setMagFilter(Enums::ResizeFilter::NEAREST);
-
-				context->createTexture(MACE__RESOURCE_GRADIENT, texture);
-
-				return context->getTexture(MACE__RESOURCE_GRADIENT);
 			} else {
-				return context->getTexture(MACE__RESOURCE_GRADIENT);
+				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
+					Texture texture = Texture();
+
+					texture.init();
+
+					texture.resetPixelStorage();
+
+					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
+					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
+						//the darker part is on the bottom
+						data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT);
+					}
+					texture.setData(data, 1, MACE__RESOURCE_GRADIENT_HEIGHT, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
+
+					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
+					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
+
+					texture.setMinFilter(Enums::ResizeFilter::LINEAR);
+					texture.setMagFilter(Enums::ResizeFilter::NEAREST);
+
+					return texture;
+				});
 			}
 		}
 
@@ -246,6 +242,8 @@ namespace mc {
 				requestedComponents = 4;
 			} else if (imgFormat == Enums::ImageFormat::DONT_CARE) {
 				requestedComponents = 0;
+			} else {
+				MACE__THROW(BadFormat, "Unknown ImageFormat used: " + std::to_string(static_cast<Byte>(imgFormat)));
 			}
 
 			int width, height, actualComponents;
@@ -253,15 +251,14 @@ namespace mc {
 
 			try {
 				if (image == nullptr || width == 0 || height == 0 || actualComponents == 0) {
-					stbi_image_free(image);
 					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 				}
 
 				/*if DONT_CARE, the outputComponents is equal to the amount of components in image,
 				otherwise equal to amount of requestedComponents
 				*/
-				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE ? actualComponents
-											  : requestedComponents);
+				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE
+											  ? actualComponents : requestedComponents);
 
 				Enums::Format format;
 				Enums::InternalFormat internalFormat;
@@ -410,6 +407,16 @@ namespace mc {
 			}
 
 			textures[name] = texture;
+		}
+
+		Texture& GraphicsContext::getOrCreateTexture(const std::string & name, const TextureCreateCallback create) {
+			if (!hasTexture(name)) {
+				createTexture(name, create());
+
+				return getTexture(name);
+			} else {
+				return getTexture(name);
+			}
 		}
 
 		void GraphicsContext::createModel(const std::string & name, const Model& mod) {

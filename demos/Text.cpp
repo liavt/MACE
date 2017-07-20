@@ -11,13 +11,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 using namespace mc;
 
-gfx::Group group;
-
 gfx::Text topLeft, center, topRight, botLeft, botRight;
 
 void create(gfx::WindowModule& win) {
-	win.getContext()->getRenderer()->setRefreshColor(Colors::DARK_GREEN);
-
 	center = gfx::Text(L"©enter text!", gfx::Fonts::CODE);
 
 	topLeft = gfx::Text("Top left!", gfx::Fonts::SERIF);
@@ -43,11 +39,13 @@ void create(gfx::WindowModule& win) {
 	botRight.setHorizontalAlign(gfx::Enums::HorizontalAlign::RIGHT);
 	botRight.setVerticalAlign(gfx::Enums::VerticalAlign::BOTTOM);
 
-	group.addChild(center);
-	group.addChild(topLeft);
-	group.addChild(topRight);
-	group.addChild(botLeft);
-	group.addChild(botRight);
+	win.addChild(center);
+	win.addChild(topLeft);
+	win.addChild(topRight);
+	win.addChild(botLeft);
+	win.addChild(botRight);
+
+	win.getContext()->getRenderer()->setRefreshColor(Colors::DARK_GREEN);
 }
 
 int main() {
@@ -56,9 +54,8 @@ int main() {
 		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(600, 600, "Text Demo");
 		config.onCreate = &create;
 		config.resizable = true;
-		gfx::WindowModule module = gfx::WindowModule(config);
-		module.addChild(group);
 
+		gfx::WindowModule module = gfx::WindowModule(config);
 		instance.addModule(module);
 
 		os::SignalModule sigModule = os::SignalModule();

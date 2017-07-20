@@ -41,22 +41,20 @@ class TestComponent: public gfx::Component {
 	}
 };
 
-gfx::Group group = gfx::Group();
-
 gfx::Image left;
 gfx::Image leftBot;
 gfx::Image rightTop;
 gfx::Image rightBot;
 
-void create(gfx::WindowModule&) {
-	srand((unsigned) time(0));
+void create(gfx::WindowModule& window) {
+	srand((unsigned) time(nullptr));
 
 	const Size elementNum = 10;
 
-	left = gfx::Image(gfx::Texture(Colors::GREEN));
-	leftBot = gfx::Image(gfx::Texture(Colors::GRAY));
-	rightTop = gfx::Image(gfx::Texture(Colors::YELLOW));
-	rightBot = gfx::Image(gfx::Texture(Colors::ORANGE));
+	left = gfx::Image(gfx::Texture::getGradient());
+	leftBot = gfx::Image(gfx::Texture::getGradient());
+	rightTop = gfx::Image(gfx::Texture::getGradient());
+	rightBot = gfx::Image(gfx::Texture::getGradient());
 
 	left.setY(0.0f);
 	left.setX(-0.5f);
@@ -67,10 +65,6 @@ void create(gfx::WindowModule&) {
 	leftBot.setY(-0.5f);
 	leftBot.setWidth(0.7f);
 	leftBot.setHeight(0.4f);
-	leftBot.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	leftBot.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
-
-	left.addChild(leftBot);
 
 	rightTop.setX(0.5f);
 	rightTop.setY(0.5f);
@@ -87,9 +81,11 @@ void create(gfx::WindowModule&) {
 	rightTop.addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
 	rightBot.addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
 
-	group.addChild(left);
-	group.addChild(rightTop);
-	group.addChild(rightBot);
+	left.addChild(leftBot);
+
+	window.addChild(left);
+	window.addChild(rightTop);
+	window.addChild(rightBot);
 }
 
 int main() {
@@ -99,10 +95,7 @@ int main() {
 		config.onCreate = &create;
 		config.resizable = true;
 		gfx::WindowModule module = gfx::WindowModule(config);
-
 		instance.addModule(module);
-
-		module.addChild(group);
 
 		gfx::FPSComponent f = gfx::FPSComponent();
 		f.setTickCallback([] (gfx::FPSComponent* com, gfx::Entity*) {

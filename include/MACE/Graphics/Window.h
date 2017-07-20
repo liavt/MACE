@@ -42,7 +42,7 @@ namespace mc {
 		}
 
 		/**
-		@todo move the fps handling code away from ctime and to chrono and use a dynamic timestep
+		@todo fix fps timer
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
