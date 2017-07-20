@@ -28,6 +28,6 @@ elif [[ -e build/libMACE.so ]]; then
 	cp build/libMACE.so release/shared/libMACE.so;
 fi
 tar -zcf ${TRAVIS_OS_NAME}-x64.tar.gz release;
-sha256sum ${TRAVIS_OS_NAME}-x64.tar.gz;
+sha256sum ${TRAVIS_OS_NAME}-x64.tar.gz > ${TRAVIS_OS_NAME}-x64.tar.gz.sha256;
 echo "Final working directory:"
 ls
