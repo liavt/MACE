@@ -83,11 +83,13 @@ deploy:
     api_key: $GITHUB_TOKEN
     file:
       - "${TRAVIS_OS_NAME}-x64.tar.gz"
+      - "${TRAVIS_OS_NAME}-x64.tar.gz.sha1"
     skip_cleanup: true
     overwrite: true
     on:
-      tags: true
-      repo: https://github.com/liavt/MACE
+      condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6 && $TRAVIS_PULL_REQUEST = false
+      branch: unstable
+      repo: liavt/MACE
   - provider: script
     script: sudo ./scripts/travis-deploy-docs.sh
     on:

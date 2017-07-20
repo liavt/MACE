@@ -25,9 +25,15 @@ cp -a include/. release/shared/include/
 if [[ -e build/libMACE.dylib ]]; then
 	cp build/libMACE.dylib release/shared/libMACE.dylib;
 	tar -zcf osx-x64.tar.gz release;
+	cd release;
+	sha1sum ../osx-x64.tar.gz;
+	cd ..
 fi
 if [[ -e build/libMACE.so ]]; then
 	cp build/libMACE.so release/shared/libMACE.so;
 	tar -zcf linux-x64.tar.gz release;
+	cd release;
+	sha1sum ../linux-x64.tar.gz;
+	cd ..
 fi
 ls
