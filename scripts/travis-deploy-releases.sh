@@ -4,7 +4,6 @@ cd build
 echo "Generating static build release..."
 cmake -DMACE_TESTS=OFF -DMACE_DEMOS=OFF -DCMAKE_BUILD_TYPE=Release -DMACE_ALL_WARNINGS=OFF -DBUILD_SHARED_LIBS=OFF ..
 make MACE -j4
-ls
 cd ..
 mkdir release
 mkdir release/static
@@ -17,6 +16,7 @@ cd build
 echo "Generating shared build release..."
 cmake -DMACE_TESTS=OFF -DMACE_DEMOS=OFF -DCMAKE_BUILD_TYPE=Release -DMACE_ALL_WARNINGS=OFF -DBUILD_SHARED_LIBS=ON ..
 make MACE -j4
+echo "Build directory:"
 ls
 cd ..
 mkdir release/shared
@@ -26,14 +26,14 @@ if [[ -e build/libMACE.dylib ]]; then
 	cp build/libMACE.dylib release/shared/libMACE.dylib;
 	tar -zcf osx-x64.tar.gz release;
 	cd release;
-	sha1sum ../osx-x64.tar.gz;
-	cd ..
+	sha256sum osx-x64.tar.gz;
 fi
 if [[ -e build/libMACE.so ]]; then
 	cp build/libMACE.so release/shared/libMACE.so;
 	tar -zcf linux-x64.tar.gz release;
 	cd release;
-	sha1sum ../linux-x64.tar.gz;
-	cd ..
+	sha256sum linux-x64.tar.gz;
 fi
+echo "Final working directory:"
+cd ..
 ls
