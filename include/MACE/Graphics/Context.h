@@ -231,7 +231,7 @@ namespace mc {
 			void init() override;
 			void destroy() override;
 
-			bool isCreated() const;
+			bool isCreated() const override;
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV

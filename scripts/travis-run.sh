@@ -8,7 +8,7 @@ if [[ $TRAVIS_OS_NAME == osx || $COMPILER == g++-6 ]]; then
 	git config --global user.name "Travis CI";
 
 	TAG_NAME = "cat VERSION";
-	if[[ $COMPILER == g++-6 ]]; then
+	if [[ $COMPILER == g++-6 ]]; then
 		git tag -a $TAG_NAME -m "Version $TAG_NAME";
 	else
 		git tag $TAG_NAME;
