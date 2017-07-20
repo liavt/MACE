@@ -15,6 +15,7 @@ cd -
 doxygen ../Doxyfile
 git add -A
 git config user.name "${COMMIT_USER}"
+git config user.email "${COMMIT_EMAIL}"
 git commit -m "Automatically updated documentation for latest commit. ${CHANGESET}"
 git push origin gh-pages
 cd -

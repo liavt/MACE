@@ -94,6 +94,6 @@ deploy:
   - provider: script
     script: sudo ./scripts/travis-deploy-docs.sh
     on:
-      branch: none
-      condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6
+      branch: unstable
+      condition: $COMPILER == g++-5
       repo: liavt/MACE

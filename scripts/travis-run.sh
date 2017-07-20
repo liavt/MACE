@@ -13,5 +13,4 @@ if [[ $TRAVIS_OS_NAME == osx || $COMPILER == g++-6 ]]; then
 	git fetch --tags;
 	TAG_NAME=$(<VERSION);
 	git tag v${TAG_NAME};
-	git push https://${GITHUB_TOKEN}@github.com/liavt/MACE.git --tags;
 fi
