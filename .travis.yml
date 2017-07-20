@@ -87,7 +87,7 @@ deploy:
     overwrite: true
     on:
       tags: true
-      condition: $TRAVIS_OS_NAME == osx || $COMPILER == g++-6
+      repo: https://github.com/liavt/MACE
   - provider: script
     script: sudo ./scripts/travis-deploy-docs.sh
     on:
