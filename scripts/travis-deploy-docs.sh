@@ -4,7 +4,7 @@ COMMIT_USER="Automated Documentation Builder"
 COMMIT_EMAIL="travis@travis-ci.org"
 CHANGESET=$(git rev-parse --verify HEAD)
 
-apt-get install doxygen graphviz;
+apt-get install --yes --force-yes doxygen graphviz;
 rm -rf ./docs/out
 mkdir -p ./docs/out
 git clone -b gh-pages git@github.com:liavt/MACE.git --single-branch ./docs/out
