@@ -114,8 +114,8 @@ namespace mc {
 
 			Vector<int, 2> getFramebufferSize() const;
 
-			std::shared_ptr<gfx::GraphicsContext> getContext();
-			const std::shared_ptr<const gfx::GraphicsContext> getContext() const;
+			GraphicsContext* getContext();
+			const GraphicsContext* getContext() const;
 		private:
 			enum Properties: Byte {
 				DESTROYED = 0,
@@ -129,7 +129,7 @@ namespace mc {
 
 			BitField properties;
 
-			std::shared_ptr<gfx::GraphicsContext> context;
+			std::unique_ptr<gfx::GraphicsContext> context;
 
 			void clean() final;
 

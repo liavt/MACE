@@ -30,7 +30,7 @@ namespace mc {
 				void destroy() override;
 			protected:
 				void loadSettings(const Painter::State& state) override;
-				void draw(const Enums::Brush brush, const Enums::RenderType type) override;
+				void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) override;
 			private:
 				OGL33Renderer* const renderer;
 			};
@@ -75,7 +75,6 @@ namespace mc {
 
 				struct RenderProtocol {
 					ogl::ShaderProgram program;
-					ogl::VertexArray vao;
 				};
 
 				std::map<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>> protocols;
@@ -88,8 +87,7 @@ namespace mc {
 				void loadPainterUniforms(const TransformMatrix& transform, const Color& col, const Color& secondaryCol, const Vector<float, 4>& data);
 
 				OGL33Renderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Enums::Brush, Enums::RenderType> settings);
-				ogl::ShaderProgram getShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings);
-				ogl::VertexArray getVAOForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings);
+				ogl::ShaderProgram createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings);
 			};
 		}//ogl
 	}//gfx

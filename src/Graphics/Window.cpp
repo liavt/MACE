@@ -148,7 +148,7 @@ namespace mc {
 				case Enums::ContextType::BEST_OGL:
 				case Enums::ContextType::OGL33:
 				default:
-					context = std::shared_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
+					context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
 
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -360,6 +360,7 @@ namespace mc {
 		bool WindowModule::isDestroyed() const {
 			return properties.getBit(WindowModule::DESTROYED);
 		}
+
 		Vector<int, 2> WindowModule::getFramebufferSize() const {
 			if (!getProperty(gfx::Entity::INIT)) {
 				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
@@ -372,12 +373,12 @@ namespace mc {
 			return out;
 		}
 
-		std::shared_ptr<gfx::GraphicsContext> WindowModule::getContext() {
-			return context;
+		GraphicsContext* WindowModule::getContext() {
+			return context.get();
 		}
 
-		const std::shared_ptr<const gfx::GraphicsContext> WindowModule::getContext() const {
-			return context;
+		const GraphicsContext* WindowModule::getContext() const {
+			return context.get();
 		}
 
 		void WindowModule::onInit() {}

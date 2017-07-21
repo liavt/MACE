@@ -89,11 +89,11 @@ deploy:
     overwrite: true
     on:
       condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6 && $TRAVIS_PULL_REQUEST = false
-      branch: unstable
+      branch: none
       repo: liavt/MACE
   - provider: script
     script: sudo bash ./scripts/travis-deploy-docs.sh
     on:
-      branch: unstable
+      branch: none
       condition: $COMPILER == g++-5 && $TRAVIS_PULL_REQUEST = false
       repo: liavt/MACE

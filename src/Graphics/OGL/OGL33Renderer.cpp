@@ -218,7 +218,6 @@ namespace mc {
 
 				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
 					iter->second->program.destroy();
-					iter->second->vao.destroy();
 				}
 
 				protocols.clear();
@@ -388,8 +387,7 @@ namespace mc {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
 					std::unique_ptr<OGL33Renderer::RenderProtocol> prot = std::unique_ptr<OGL33Renderer::RenderProtocol>(new OGL33Renderer::RenderProtocol());
-					prot->program = getShadersForSettings(settings);
-					prot->vao = getVAOForSettings(settings);
+					prot->program = createShadersForSettings(settings);
 
 					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>>(settings, std::move(prot)));
 
@@ -408,13 +406,13 @@ namespace mc {
 				return *protocol->second;
 			}
 
-			ogl::ShaderProgram OGL33Renderer::getShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
+			ogl::ShaderProgram OGL33Renderer::createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
 				ogl::ShaderProgram program;
 				program.init();
 
-				if (settings.second == Enums::RenderType::TRIANGLE) {
+				if (settings.second == Enums::RenderType::STANDARD) {
 					program.createVertex(processShader({
-	#include <MACE/Graphics/OGL/Shaders/RenderTypes/quad.v.glsl>
+	#include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
 					}));
 				} else {
 					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
@@ -474,41 +472,6 @@ namespace mc {
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter!");
 				return program;
-			}
-
-			ogl::VertexArray OGL33Renderer::getVAOForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
-				ogl::VertexArray vao;
-				vao.init();
-
-				if (settings.second == Enums::RenderType::TRIANGLE) {
-					MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
-						0.0f,1.0f,
-						0.0f,0.0f,
-						1.0f,0.0f,
-						1.0f,1.0f,
-					};
-
-					MACE_CONSTEXPR const unsigned int squareIndices[6] = {
-						0,1,3,
-						1,2,3
-					};
-
-					MACE_CONSTEXPR const float squareVertices[12] = {
-						-1.0f,-1.0f,0.0f,
-						-1.0f,1.0f,0.0f,
-						1.0f,1.0f,0.0f,
-						1.0f,-1.0f,0.0f
-					};
-
-					Binder b(&vao);
-					vao.loadVertices(4, squareVertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
-					vao.storeDataInAttributeList(4 * sizeof(float), squareTextureCoordinates, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
-					vao.loadIndices(6, squareIndices);
-				}
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating VAO for painter!");
-
-				return vao;
 			}
 
 			const mc::Preprocessor& OGL33Renderer::getSSLPreprocessor() {
@@ -574,14 +537,12 @@ namespace mc {
 				renderer->loadPainterUniforms(state.transformation, state.primaryColor, state.secondaryColor, state.data);
 			}
 
-			void OGL33Painter::draw(const Enums::Brush brush, const Enums::RenderType type) {
+			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
 				const OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(entity, { brush, type });
-				prot.vao.bind();
+				m.bind();
 				prot.program.bind();
 
-				if (type == Enums::RenderType::TRIANGLE){
-					prot.vao.draw(GL_TRIANGLES);
-				}
+				m.draw();
 			}
 		}//ogl
 	}//gfx

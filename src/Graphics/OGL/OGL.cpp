@@ -24,6 +24,7 @@ namespace mc {
 				}
 
 				void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
+#ifdef MACE_DEBUG
 					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
 					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
 					std::string friendlyType = "UNKNOWN SHADER TYPE " + std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
@@ -36,14 +37,17 @@ namespace mc {
 					} else if (type == GL_GEOMETRY_SHADER) {
 						friendlyType = "GEOMETERY SHADER";
 					} else if (type == GL_TESS_CONTROL_SHADER) {
-						friendlyType = "TESSELATION CONTROL SHADER";
+						friendlyType = "TESSELLATION CONTROL SHADER";
 					} else if (type == GL_TESS_EVALUATION_SHADER) {
-						friendlyType = "TESSELATION EVALUATION SHADER";
+						friendlyType = "TESSELLATION EVALUATION SHADER";
 					} else if (type == GL_PROGRAM) {
 						friendlyType = "SHADER PROGRAM";
 						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
 					MACE__THROW(Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
+#else
+					MACE__THROW(Shader, "Error generating shader of type " + std::to_string(type) + ": " + messge);
+#endif
 				}
 			}//anon namespace
 
@@ -90,7 +94,6 @@ namespace mc {
 			void checkGLError(const Index, const std::string &, const std::string) {}
 #endif
 
-
 			void VertexArray::init() {
 				glGenVertexArrays(1, &id);
 
@@ -115,16 +118,6 @@ namespace mc {
 
 			bool VertexArray::isCreated() const {
 				return glIsVertexArray(id) == 1;
-			}
-
-			void VertexArray::draw(Enum type) const {
-				for (Index i = 0; i < buffers.size(); ++i) {
-					buffers[i].bind();
-				}
-
-				indices.bind();
-
-				glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, 0);
 			}
 
 			void VertexArray::loadVertices(const Size verticeSize, const float* vertices, const Index location, const Byte attributeSize, const Enum type, const bool normalized) {

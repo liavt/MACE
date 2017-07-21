@@ -131,7 +131,7 @@ namespace mc {
 			push();
 			setTexture(img, 0);
 			setTexture(mask, 1);
-			draw(Enums::Brush::MASK, Enums::RenderType::TRIANGLE);
+			draw(Model::getQuad(), Enums::Brush::MASK);
 			pop();
 		}
 
@@ -141,21 +141,17 @@ namespace mc {
 			setTexture(foreground, 0);
 			setTexture(background, 1);
 			setTexture(mask, 2);
-			draw(Enums::Brush::MASKED_BLEND, Enums::RenderType::TRIANGLE);
+			draw(Model::getQuad(), Enums::Brush::MASKED_BLEND);
 			pop();
 		}
 
-		void Painter::draw(const Enums::Brush brush, const Enums::RenderType type) {
+		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
 			impl->loadSettings(state);
-			impl->draw(brush, type);
+			impl->draw(m, brush, type);
 		}
 
 		const GraphicsEntity * const Painter::getEntity() const {
 			return impl->entity;
-		}
-
-		void Painter::setModel(const Model & m) {
-			m.bind();
 		}
 
 		void Painter::setTexture(const Texture & t, const unsigned int slot) {
@@ -170,22 +166,20 @@ namespace mc {
 
 		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderType type) {
 			push();
-			setModel(m);
 			setTexture(img);
-			draw(Enums::Brush::TEXTURE, type);
+			draw(m, Enums::Brush::TEXTURE, type);
 			pop();
 		}
 
 		void Painter::fillModel(const Model & m, const Enums::RenderType type) {
-			setModel(m);
-			draw(Enums::Brush::COLOR, type);
+			draw(m, Enums::Brush::COLOR, type);
 		}
 
 		void Painter::fillRect(const float x, const float y, const float w, const float h) {
 			push();
 			translate(x, y);
 			scale(w, h);
-			draw(Enums::Brush::COLOR, Enums::RenderType::TRIANGLE);
+			draw(Model::getQuad(), Enums::Brush::COLOR);
 			pop();
 		}
 
@@ -200,7 +194,7 @@ namespace mc {
 		void Painter::drawImage(const Texture & img) {
 			push();
 			setTexture(img);
-			draw(Enums::Brush::TEXTURE, Enums::RenderType::TRIANGLE);
+			draw(Model::getQuad(), Enums::Brush::TEXTURE);
 			pop();
 		}
 

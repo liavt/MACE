@@ -46,10 +46,6 @@ namespace mc {
 							return GL_DEPTH;
 						case Enums::Format::DEPTH_STENCIL:
 							return GL_DEPTH_STENCIL;
-						case Enums::Format::LUMINANCE:
-							return GL_LUMINANCE;
-						case Enums::Format::LUMINANCE_ALPHA:
-							return GL_LUMINANCE_ALPHA;
 						default:
 							MACE__THROW(BadFormat, "Unsupported format by OpenGL");
 					}
@@ -69,8 +65,6 @@ namespace mc {
 							return GL_RGB;
 						case Enums::InternalFormat::RGBA:
 							return GL_RGBA;
-						case Enums::InternalFormat::R32UI:
-							return GL_R32UI;
 						default:
 							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
@@ -234,30 +228,20 @@ namespace mc {
 			}
 
 			void OGL33Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
-				Enum swizzle;
-				if (arg == Enums::SwizzleMode::R) {
-					swizzle = GL_RED;
-				} else if (arg == Enums::SwizzleMode::G) {
-					swizzle = GL_GREEN;
-				} else if (arg == Enums::SwizzleMode::B) {
-					swizzle = GL_BLUE;
-				} else if (arg == Enums::SwizzleMode::A) {
-					swizzle = GL_ALPHA;
-				} else {
-					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument arg");
-				}
+				/*
+				See the value of Enums::SwizzleMode...
+				R = 0
+				G = 1
+				B = 2
+				A = 3
 
-				if (mode == Enums::SwizzleMode::R) {
-					setParameter(GL_TEXTURE_SWIZZLE_R, swizzle);
-				} else if (mode == Enums::SwizzleMode::G) {
-					setParameter(GL_TEXTURE_SWIZZLE_G, swizzle);
-				} else if (mode == Enums::SwizzleMode::B) {
-					setParameter(GL_TEXTURE_SWIZZLE_B, swizzle);
-				} else if (mode == Enums::SwizzleMode::A) {
-					setParameter(GL_TEXTURE_SWIZZLE_A, swizzle);
-				} else {
-					MACE__THROW(BadFormat, "OpenGL: Unsupported SwizzleMode for argument mode");
-				}
+				The reasoning for this is because then we can just cast it and dd it to GL_RED, because GL spec says:
+				GL_RED = ...
+				GL_GREEN = GL_RED + 1
+				GL_BLUE = GL_RED + 2
+				GL_ALPHA = GL_RED + 3
+				*/
+				setParameter(GL_TEXTURE_SWIZZLE_R + static_cast<Enum>(mode), GL_RED + static_cast<Enum>(arg));
 			}
 
 			void OGL33Model::init() {
@@ -274,6 +258,45 @@ namespace mc {
 
 			void OGL33Model::unbind() const {
 				ogl::VertexArray::unbind();
+			}
+
+			void OGL33Model::draw(const Enums::PrimitiveType& mode) const {
+				for (Index i = 0; i < buffers.size(); ++i) {
+					buffers[i].bind();
+				}
+
+				using Enums::PrimitiveType;
+
+				Enum type;
+				if (mode == PrimitiveType::POINTS) {
+					type = GL_POINTS;
+				} else if (mode == PrimitiveType::LINES) {
+					type = GL_LINES;
+				} else if (mode == PrimitiveType::LINES_ADJACENCY) {
+					type = GL_LINES_ADJACENCY;
+				} else if (mode == PrimitiveType::LINES_STRIP) {
+					type = GL_LINE_STRIP;
+				} else if (mode == PrimitiveType::LINES_STRIP_ADJACENCY) {
+					type = GL_LINE_STRIP_ADJACENCY;
+				} else if (mode == PrimitiveType::TRIANGLES) {
+					type = GL_TRIANGLES;
+				} else if (mode == PrimitiveType::TRIANGLES_ADJACENCY) {
+					type = GL_TRIANGLES_ADJACENCY;
+				} else if (mode == PrimitiveType::TRIANGLES_STRIP) {
+					type = GL_TRIANGLE_STRIP;
+				} else if (mode == PrimitiveType::TRIANGLES_STRIP_ADJACENCY) {
+					type = GL_TRIANGLE_STRIP_ADJACENCY;
+				} else {
+					MACE__THROW(BadFormat, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<Byte>(mode)));
+				}
+
+				if (indices.getIndiceNumber() != 0) {
+					indices.bind();
+
+					glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, nullptr);
+				} else {
+					glDrawArrays(type, 0, getVertexNumber());
+				}
 			}
 
 			void OGL33Model::loadTextureCoordinates(const Size dataSize, const float* data) {
@@ -293,7 +316,7 @@ namespace mc {
 			}
 
 			void OGL33Context::onInit(gfx::WindowModule *) {
-				renderer = std::shared_ptr<Renderer>(new OGL33Renderer());
+				renderer = std::unique_ptr<Renderer>(new OGL33Renderer());
 			}
 
 			void OGL33Context::onRender(gfx::WindowModule *) {}
@@ -304,16 +327,16 @@ namespace mc {
 
 			OGL33Context::OGL33Context(gfx::WindowModule * win) : GraphicsContext(win) {}
 
-			std::shared_ptr<Renderer> OGL33Context::getRenderer() const {
-				return renderer;
+			Renderer* OGL33Context::getRenderer() const {
+				return renderer.get();
 			}
 
 			std::shared_ptr<ModelImpl> OGL33Context::createModelImpl() const {
-				return std::shared_ptr<ModelImpl>(new OGL33Model());
+				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
 			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl() const {
-				return std::shared_ptr<TextureImpl>(new OGL33Texture());
+				return std::unique_ptr<TextureImpl>(new OGL33Texture());
 			}
 		}//ogl
 	}//gfx

@@ -922,12 +922,6 @@ namespace mc {
 				bool isCreated() const override;
 
 				/**
-				@see https://www.opengl.org/wiki/GLAPI/glDrawElements
-				@opengl
-				*/
-				void draw(const Enum type = GL_TRIANGLES) const;
-
-				/**
 				@opengl
 				@see VertexBuffer
 				@param verticeSize amount of vertices
@@ -971,13 +965,13 @@ namespace mc {
 				@copydoc Object::operator!=(const Object&) const
 				*/
 				bool operator!=(const VertexArray& other) const;
-			private:
-				void bindIndex(const GLuint id) const override;
-
+			protected:
 				ElementBuffer indices;
 				std::vector<VertexBuffer> buffers = std::vector<VertexBuffer>();
-
+			private:
 				Size vertexNumber;
+
+				void bindIndex(const GLuint id) const override;
 			};//VertexArray
 
 			/**

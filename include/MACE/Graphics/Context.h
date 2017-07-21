@@ -76,8 +76,11 @@ namespace mc {
 				STENCIL,
 				DEPTH,
 				DEPTH_STENCIL,
-				LUMINANCE,
-				LUMINANCE_ALPHA
+				//The next 2 are deprecated in OpenGL 3.3
+				//This comment exists to remind people not to
+				//add them.
+				//LUMINANCE,
+				//LUMINANCE_ALPHA
 			};
 
 			enum class InternalFormat: Enum {
@@ -86,11 +89,14 @@ namespace mc {
 				RED,
 				RG,
 				RGB,
-				RGBA,
-				R32UI
+				RGBA
 			};
 
 			enum class ResizeFilter: Byte {
+				//MIPMAP_LINEAR and MIPMAP_NEAREST automatically
+				//generate mipmaps in OpenGL renderer.
+				//They cant be used for the magnication filter,
+				//only the minification filter
 				MIPMAP_LINEAR,
 				MIPMAP_NEAREST,
 				NEAREST,
@@ -103,6 +109,10 @@ namespace mc {
 			};
 
 			enum class WrapMode: Byte {
+				//OpenGL supports CLAMP_TO_BORDER and BORDER, however those 2
+				//require additional work which is outside the scope of MACE.
+				//Also, DirectX doesn't support them, and their use case is
+				//very sparsely documented.
 				CLAMP,
 				REPEAT,
 				MIRRORED_REPEAT,
@@ -111,20 +121,51 @@ namespace mc {
 
 			//there is no ZERO and ONE like in OpenGL because DirectX doesn't support that
 			enum class SwizzleMode: Byte {
-				R,
-				G,
-				B,
-				A
+				/*
+				The reasoning for these specific numerical values is because then we can just cast it and dd it to GL_RED, because GL spec says:
+				GL_RED = ...
+				GL_GREEN = GL_RED + 1
+				GL_BLUE = GL_RED + 2
+				GL_ALPHA = GL_RED + 3
+
+				Meaning:
+				GL_RED + static_cast<Enum>(arg) = specified component constant, where arg is Enums::SwizzleMode
+
+				So GL_RED + static_cast<Enum>(Enums::SwizzleMode::B) would become GL_BLUE because GL_BLUE = GL_RED + 2
+
+				Thank god for enum classes!
+				*/
+				R = 0,
+				G = 1,
+				B = 2,
+				A = 3
 			};
 
 			enum class ImageFormat: Byte {
-				GRAY,
-				GRAY_ALPHA,
-				R,
-				RG,
-				RGB,
-				RGBA,
-				DONT_CARE
+				//each enum is equal to how many components in that type of image
+				//the image load/save functions use swizzle masks to differentiate
+				//between GRAY and R, GRAY_ALPHA and RG
+				GRAY = 1,
+				GRAY_ALPHA = 2,
+				R = 1,
+				RG = 2,
+				RGB = 3,
+				RGBA = 4,
+				DONT_CARE = 0
+			};
+
+			enum class PrimitiveType: short int {
+				//these draw modes were chosen because they exist in both OpenGL 3.3 and Direct3D
+				POINTS = 0,
+				LINES = 1,
+				LINES_ADJACENCY = 2,
+				LINES_STRIP = 3,
+				LINES_STRIP_ADJACENCY = 4,
+				TRIANGLES = 5,
+				TRIANGLES_ADJACENCY = 6,
+				TRIANGLES_STRIP = 7,
+				TRIANGLES_STRIP_ADJACENCY = 8,
+				//TRIANGLES_FAN does not exist in DirectX 10+ because of performance issues. It is not included in this list
 			};
 		}
 
@@ -136,15 +177,19 @@ namespace mc {
 			virtual void bind() const override = 0;
 			virtual void unbind() const override = 0;
 
-			virtual void loadTextureCoordinates(const Size dataSize, const float data[]) = 0;
-			virtual void loadVertices(const Size verticeSize, const float vertices[]) = 0;
+			virtual void draw(const Enums::PrimitiveType& mode) const = 0;
+
+			virtual void loadTextureCoordinates(const Size dataSize, const float* data) = 0;
+			virtual void loadVertices(const Size verticeSize, const float* vertices) = 0;
 			virtual void loadIndices(const Size indiceNum, const unsigned int* indiceData) = 0;
 
 			virtual bool isCreated() const = 0;
 		};
 
-		class Model: public ModelImpl {
+		class Model: public Initializable, public Bindable{
 		public:
+			static Model& getQuad();
+
 			Model();
 			Model(const std::shared_ptr<ModelImpl> mod);
 			Model(const Model& other);
@@ -156,29 +201,41 @@ namespace mc {
 			void bind() const override;
 			void unbind() const override;
 
-			void loadTextureCoordinates(const Size dataSize, const float* data) override;
-			template<std::size_t N>
-			void loadTextureCoordinates(const float data[N]) {
-				loadTextureCoordinates(N, data);
+			void createTextureCoordinates(const Size dataSize, const float* data);
+			template<const Size N>
+			void createTextureCoordinates(const float (&data)[N]) {
+				createTextureCoordinates(N, data);
 			}
-			void loadVertices(const Size verticeSize, const float* vertices) override;
-			template<std::size_t N>
-			void loadVertices(const float* vertices) {
-				loadVertices(N, vertices);
-			}
-
-			void loadIndices(const Size indiceNum, const unsigned int* indiceData) override;
-			template<std::size_t N>
-			void loadIndices(const unsigned int* indiceData) {
-				loadIndices(N, indiceData);
+			void createVertices(const Size verticeSize, const float* vertices, const Enums::PrimitiveType& prim);
+			template<const Size N>
+			void createVertices(const float (&vertices)[N], const Enums::PrimitiveType& prim) {
+				createVertices(N, vertices, prim);
 			}
 
-			bool isCreated() const override;
+			void createIndices(const Size indiceNum, const unsigned int* indiceData);
+			template<const Size N>
+			void createIndices(const unsigned int (&indiceData)[N]) {
+				createIndices(N, indiceData);
+			}
+
+			Enums::PrimitiveType getPrimitiveType();
+			const Enums::PrimitiveType getPrimitiveType() const;
+
+			Size getVertexNumber();
+			const Size getVertexNumber() const;
+
+			void draw() const;
+
+			bool isCreated() const;
 
 			bool operator==(const Model& other) const;
 			bool operator!=(const Model& other) const;
 		private:
 			std::shared_ptr<ModelImpl> model;
+
+			Size vertexNumber = 0;
+
+			Enums::PrimitiveType primitiveType = Enums::PrimitiveType::TRIANGLES;
 		};
 
 		class TextureImpl: public Initializable, public Bindable {
@@ -336,6 +393,7 @@ namespace mc {
 			friend class Model;
 		public:
 			typedef Texture(*TextureCreateCallback)();
+			typedef Model(*ModelCreateCallback)();
 
 			GraphicsContext(gfx::WindowModule* win);
 			//prevent copying
@@ -346,7 +404,7 @@ namespace mc {
 			void render();
 			void destroy() override;
 
-			virtual std::shared_ptr<Renderer> getRenderer() const = 0;
+			virtual Renderer* getRenderer() const = 0;
 
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;
@@ -354,6 +412,7 @@ namespace mc {
 			void createTexture(const std::string& name, const Texture& texture = Texture());
 			Texture& getOrCreateTexture(const std::string& name, const TextureCreateCallback create);
 			void createModel(const std::string& name, const Model& texture = Model());
+			Model& getOrCreateModel(const std::string& name, const ModelCreateCallback create);
 
 			bool hasTexture(const std::string& name) const;
 			bool hasModel(const std::string& name) const;
@@ -374,6 +433,22 @@ namespace mc {
 		protected:
 			gfx::WindowModule* window;
 
+			/*
+			Reasoning behind returning a std::shared_ptr and not a std::unique_ptr...
+
+			Each Model and Texture class needs to have it's own Impl.
+			Each Impl acts as a pointer to a resource, whether it be in GPU memory
+			or whatever. However, Model and Texture needs the ability to be moved,
+			like so:
+
+			Model model = Model();
+			Model newModel = m;
+
+			Both Model objects will share the same resource, as it is simply a 
+			pointer to the actual data. However, with std::unique_ptr, this move
+			semantic because near impossible. Because multiple Model objects
+			may have to own the same pointer to data, they have to use std::shared_ptr
+			*/
 			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
 			virtual std::shared_ptr<TextureImpl> createTextureImpl() const = 0;
 

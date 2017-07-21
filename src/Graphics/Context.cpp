@@ -37,11 +37,48 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 #define MACE__RESOURCE_SOLIDCOLOR "MACE/SolidColor"
-		//unfinished as of now
 #define MACE__RESOURCE_GRADIENT "MACE/Gradient"
 #define MACE__RESOURCE_GRADIENT_HEIGHT 100
 #define MACE__RESOURCE_QUAD "MACE/Quad"
+		//unfinished as of now
 #define MACE__RESOURCE_TRIANGLE "MACE/Triangle"
+
+		Model & Model::getQuad() {
+			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
+			if (context == nullptr) {
+				MACE__THROW(NullPointer, "No graphics context found in window!");
+			} else {
+				return context->getOrCreateModel(MACE__RESOURCE_QUAD, []() {
+					Model model = Model();
+					model.init();
+
+					MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
+						0.0f,1.0f,
+						0.0f,0.0f,
+						1.0f,0.0f,
+						1.0f,1.0f,
+					};
+
+					MACE_CONSTEXPR const unsigned int squareIndices[6] = {
+						0,1,3,
+						1,2,3
+					};
+
+					MACE_CONSTEXPR const float squareVertices[12] = {
+						-1.0f,-1.0f,0.0f,
+						-1.0f,1.0f,0.0f,
+						1.0f,1.0f,0.0f,
+						1.0f,-1.0f,0.0f
+					};
+
+					model.createVertices(squareVertices, Enums::PrimitiveType::TRIANGLES);
+					model.createIndices(squareIndices);
+					model.createTextureCoordinates(squareTextureCoordinates);
+
+					return model;
+				});
+			}
+		}
 
 		Model::Model() : model(nullptr) {}
 
@@ -71,16 +108,38 @@ namespace mc {
 			model->unbind();
 		}
 
-		void Model::loadTextureCoordinates(const Size dataSize, const float * data) {
+		void Model::createTextureCoordinates(const Size dataSize, const float * data) {
 			model->loadTextureCoordinates(dataSize, data);
 		}
 
-		void Model::loadVertices(const Size verticeSize, const float * vertices) {
+		void Model::createVertices(const Size verticeSize, const float * vertices, const Enums::PrimitiveType& prim) {
 			model->loadVertices(verticeSize, vertices);
+			primitiveType = prim;
+			
 		}
 
-		void Model::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
+		void Model::createIndices(const Size indiceNum, const unsigned int * indiceData) {
 			model->loadIndices(indiceNum, indiceData);
+		}
+
+		Enums::PrimitiveType Model::getPrimitiveType() {
+			return primitiveType;
+		}
+
+		const Enums::PrimitiveType Model::getPrimitiveType() const {
+			return primitiveType;
+		}
+
+		Size Model::getVertexNumber() {
+			return vertexNumber;
+		}
+
+		const Size Model::getVertexNumber() const {
+			return vertexNumber;
+		}
+
+		void Model::draw() const {
+			model->draw(primitiveType);
 		}
 
 		bool Model::isCreated() const {
@@ -88,7 +147,7 @@ namespace mc {
 		}
 
 		bool Model::operator==(const Model & other) const {
-			return model == other.model;
+			return model == other.model && vertexNumber == other.vertexNumber && primitiveType == other.primitiveType;
 		}
 
 		bool Model::operator!=(const Model & other) const {
@@ -145,7 +204,7 @@ namespace mc {
 		}
 
 		Texture& Texture::getSolidColor() {
-			std::shared_ptr<GraphicsContext> context = gfx::getCurrentWindow()->getContext();
+			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
@@ -172,7 +231,7 @@ namespace mc {
 		}
 
 		Texture & Texture::getGradient() {
-			std::shared_ptr<GraphicsContext> context = gfx::getCurrentWindow()->getContext();
+			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
@@ -231,23 +290,8 @@ namespace mc {
 		void Texture::load(const char * file, const Enums::ImageFormat imgFormat) {
 			resetPixelStorage();
 
-			int requestedComponents;
-			if (imgFormat == Enums::ImageFormat::GRAY || imgFormat == Enums::ImageFormat::R) {
-				requestedComponents = 1;
-			} else if (imgFormat == Enums::ImageFormat::GRAY_ALPHA || imgFormat == Enums::ImageFormat::RG) {
-				requestedComponents = 2;
-			} else if (imgFormat == Enums::ImageFormat::RGB) {
-				requestedComponents = 3;
-			} else if (imgFormat == Enums::ImageFormat::RGBA) {
-				requestedComponents = 4;
-			} else if (imgFormat == Enums::ImageFormat::DONT_CARE) {
-				requestedComponents = 0;
-			} else {
-				MACE__THROW(BadFormat, "Unknown ImageFormat used: " + std::to_string(static_cast<Byte>(imgFormat)));
-			}
-
 			int width, height, actualComponents;
-			Byte* image = stbi_load(file, &width, &height, &actualComponents, requestedComponents);
+			Byte* image = stbi_load(file, &width, &height, &actualComponents, static_cast<int>(imgFormat));
 
 			try {
 				if (image == nullptr || width == 0 || height == 0 || actualComponents == 0) {
@@ -258,7 +302,7 @@ namespace mc {
 				otherwise equal to amount of requestedComponents
 				*/
 				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE
-											  ? actualComponents : requestedComponents);
+											  ? actualComponents : static_cast<int>(imgFormat));
 
 				Enums::Format format;
 				Enums::InternalFormat internalFormat;
@@ -425,6 +469,16 @@ namespace mc {
 			}
 
 			models[name] = mod;
+		}
+
+		Model & GraphicsContext::getOrCreateModel(const std::string & name, const ModelCreateCallback create) {
+			if (!hasModel(name)) {
+				createModel(name, create());
+
+				return getModel(name);
+			} else {
+				return getModel(name);
+			}
 		}
 
 		bool GraphicsContext::hasTexture(const std::string & name) const {

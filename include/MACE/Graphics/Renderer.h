@@ -40,7 +40,7 @@ namespace mc {
 			};
 
 			enum class RenderType: Byte {
-				TRIANGLE = 0
+				STANDARD = 0
 			};
 		}
 
@@ -64,9 +64,9 @@ namespace mc {
 			void init() override;
 			void destroy() override;
 
-			void drawModel(const Model& m, const Texture& img, const Enums::RenderType type = Enums::RenderType::TRIANGLE);
+			void drawModel(const Model& m, const Texture& img, const Enums::RenderType type = Enums::RenderType::STANDARD);
 
-			void fillModel(const Model& m, const Enums::RenderType type = Enums::RenderType::TRIANGLE);
+			void fillModel(const Model& m, const Enums::RenderType type = Enums::RenderType::STANDARD);
 
 			void fillRect(const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
 			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
@@ -78,11 +78,10 @@ namespace mc {
 
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
-			void draw(const Enums::Brush brush, const Enums::RenderType type);
+			void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type = Enums::RenderType::STANDARD);
 
 			const GraphicsEntity* const getEntity() const;
 
-			void setModel(const Model& m);
 			void setTexture(const Texture& t, const unsigned int slot = 0);
 
 			void setColor(const Color& col);
@@ -140,7 +139,7 @@ namespace mc {
 			virtual void destroy() override = 0;
 
 			virtual void loadSettings(const Painter::State& state) = 0;
-			virtual void draw(const Enums::Brush brush, const Enums::RenderType type) = 0;
+			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) = 0;
 
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;

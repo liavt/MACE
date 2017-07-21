@@ -27,6 +27,8 @@ namespace mc {
 				void bind() const override;
 				void unbind() const override;
 
+				void draw(const Enums::PrimitiveType& mode) const override;
+
 				void loadTextureCoordinates(const Size dataSize, const float* data) override;
 				void loadVertices(const Size verticeSize, const float* vertices) override;
 				void loadIndices(const Size indiceNum, const unsigned int* indiceData) override;
@@ -68,7 +70,7 @@ namespace mc {
 				OGL33Context(const OGL33Context& other) = delete;
 				~OGL33Context() = default;
 
-				std::shared_ptr<Renderer> getRenderer() const override;
+				Renderer* getRenderer() const override;
 				std::shared_ptr<ModelImpl> createModelImpl() const override;
 				std::shared_ptr<TextureImpl> createTextureImpl() const override;
 			protected:
@@ -76,7 +78,7 @@ namespace mc {
 				void onRender(gfx::WindowModule* win) override;
 				void onDestroy(gfx::WindowModule* win) override;
 			private:
-				std::shared_ptr<Renderer> renderer;
+				std::unique_ptr<Renderer> renderer;
 			};
 		}//ogl
 	}//gfx

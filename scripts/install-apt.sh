@@ -1,5 +1,5 @@
 #!/bin/bash
-apt-get install libopencv-dev xorg-dev libopenal-dev libfreetype6 libfreetype6-dev libglu1-mesa-dev libglew-dev libglfw3
+apt-get install libopencv-dev xorg-dev libopenal-dev libfreetype6 libfreetype6-dev libglu1-mesa-dev libglew-dev
 apt-get update
 git clone https://github.com/glfw/glfw.git ../build/glfw 
 cd ../build/glfw
