@@ -264,7 +264,8 @@ namespace mc {
 		}
 
 		bool AlignmentComponent::operator==(const AlignmentComponent & other) const {
-			return horzAlign == other.horzAlign && vertAlign == other.vertAlign && Component::operator==(other);
+			return Component::operator==(other)
+				&& horzAlign == other.horzAlign && vertAlign == other.vertAlign;
 		}
 
 		bool AlignmentComponent::operator!=(const AlignmentComponent & other) const {
@@ -272,9 +273,9 @@ namespace mc {
 		}
 
 		void AlignmentComponent::clean() {
-			Entity::Metrics m = parent->getMetrics();
+			const Entity::Metrics m = parent->getMetrics();
 
-			float width = m.scale[0], height = m.scale[1];
+			const float width = m.scale[0], height = m.scale[1];
 
 			switch (horzAlign) {
 				default:
@@ -308,7 +309,10 @@ namespace mc {
 			: Component(), t(0), b(startingProgress), c(destination), d(duration), updateCallback(callback), ease(easeFunction), done(doneCallback) {}
 
 		bool EaseComponent::operator==(const EaseComponent & other) const {
-			return t == other.t && b == other.b && c == other.c && d == other.d && updateCallback == other.updateCallback && ease == other.ease && done == other.done;
+			return Component::operator==(other)
+				&& t == other.t && b == other.b && c == other.c && d == other.d
+				&& updateCallback == other.updateCallback && ease == other.ease
+				&& done == other.done;
 		}
 
 		bool EaseComponent::operator!=(const EaseComponent & other) const {
@@ -360,9 +364,11 @@ namespace mc {
 		void CallbackComponent::setInitCallback(const CallbackPtr func) {
 			initCallback = func;
 		}
+
 		CallbackComponent::CallbackPtr CallbackComponent::getInitCallback() {
 			return initCallback;
 		}
+
 		const CallbackComponent::CallbackPtr CallbackComponent::getInitCallback() const {
 			return initCallback;
 		}
@@ -370,9 +376,11 @@ namespace mc {
 		void CallbackComponent::setUpdateCallback(const UpdatePtr func) {
 			updateCallback = func;
 		}
+
 		CallbackComponent::UpdatePtr CallbackComponent::getUpdateCallback() {
 			return updateCallback;
 		}
+
 		const CallbackComponent::UpdatePtr CallbackComponent::getUpdateCallback() const {
 			return updateCallback;
 		}
@@ -380,9 +388,11 @@ namespace mc {
 		void CallbackComponent::setRenderCallback(const CallbackPtr func) {
 			renderCallback = func;
 		}
+
 		CallbackComponent::CallbackPtr CallbackComponent::getRenderCallback() {
 			return renderCallback;
 		}
+
 		const CallbackComponent::CallbackPtr CallbackComponent::getRenderCallback() const {
 			return renderCallback;
 		}
@@ -400,18 +410,20 @@ namespace mc {
 		void CallbackComponent::setCleanCallback(const CallbackPtr func) {
 			cleanCallback = func;
 		}
+
 		CallbackComponent::CallbackPtr CallbackComponent::getCleanCallback() {
 			return cleanCallback;
 		}
+
 		const CallbackComponent::CallbackPtr CallbackComponent::getCleanCallback() const {
 			return cleanCallback;
 		}
 
 		bool CallbackComponent::operator==(const CallbackComponent & other) const {
-			return destroyCallback == other.destroyCallback && renderCallback == other.renderCallback
+			return Component::operator==(other)
+				&& destroyCallback == other.destroyCallback && renderCallback == other.renderCallback
 				&& initCallback == other.initCallback && hoverCallback == other.hoverCallback
-				&& cleanCallback == other.cleanCallback && updateCallback == other.updateCallback
-				&& Component::operator==(other);
+				&& cleanCallback == other.cleanCallback && updateCallback == other.updateCallback;
 		}
 
 		bool CallbackComponent::operator!=(const CallbackComponent & other) const {
@@ -421,24 +433,31 @@ namespace mc {
 		void CallbackComponent::setDestroyCallback(const CallbackPtr func) {
 			destroyCallback = func;
 		}
+
 		CallbackComponent::CallbackPtr CallbackComponent::getDestroyCallback() {
 			return destroyCallback;
 		}
+
 		const CallbackComponent::CallbackPtr CallbackComponent::getDestroyCallback() const {
 			return destroyCallback;
 		}
-		Index FPSComponent::getUpdatesPerSecond() const {
+
+		unsigned int FPSComponent::getUpdatesPerSecond() const {
 			return updatesPerSecond;
 		}
-		Index FPSComponent::getFramesPerSecond() const {
+
+		unsigned int FPSComponent::getFramesPerSecond() const {
 			return framesPerSecond;
 		}
-		Index FPSComponent::getCleansPerSecond() const {
+
+		unsigned int FPSComponent::getCleansPerSecond() const {
 			return cleansPerSecond;
 		}
-		Index FPSComponent::getHoversPerSecond() const {
+
+		unsigned int FPSComponent::getHoversPerSecond() const {
 			return hoversPerSecond;
 		}
+
 		void FPSComponent::setTickCallback(const TickCallbackPtr callback) {
 			tickCallback = callback;
 		}
@@ -464,12 +483,12 @@ namespace mc {
 		}
 
 		void FPSComponent::init() {
-			lastTime = std::time(0);
+			lastTime = std::time(nullptr);
 		}
 
 		bool FPSComponent::update() {
 			++nbUpdates;
-			if (std::time(0) - lastTime >= 1.0) {
+			if (std::time(nullptr) - lastTime >= 1.0) {
 				updatesPerSecond = nbUpdates;
 				framesPerSecond = nbFrames;
 				cleansPerSecond = nbCleans;
@@ -480,7 +499,7 @@ namespace mc {
 				nbCleans = 0;
 				nbHovers = 0;
 
-				lastTime += 1;
+				++lastTime;
 
 				tickCallback(this, parent);
 			}
@@ -498,6 +517,29 @@ namespace mc {
 		void FPSComponent::hover() {
 			++nbHovers;
 		}
+
 		void FPSComponent::destroy() {}
+
+		AnimationComponent::AnimationComponent(const Texture & tex) : texture(tex) {}
+
+		void AnimationComponent::setTexture(const Texture & tex) {
+			texture = tex;
+		}
+
+		Texture & AnimationComponent::getTexture() {
+			return texture;
+		}
+
+		const Texture & AnimationComponent::getTexture() const {
+			return texture;
+		}
+
+		bool AnimationComponent::operator==(const AnimationComponent & other) const {
+			return Component::operator==(other) && texture == other.texture;
+		}
+
+		bool AnimationComponent::operator!=(const AnimationComponent & other) const {
+			return !operator==(other);
+		}
 	}//gfx
 }//mc

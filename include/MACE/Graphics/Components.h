@@ -12,6 +12,9 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__GRAPHICS_COMPONENTS_H
 
 #include <MACE/Graphics/Entity.h>
+#include <MACE/Graphics/Context.h>
+
+#include <ctime>
 
 namespace mc {
 	namespace gfx {
@@ -189,10 +192,10 @@ namespace mc {
 		public:
 			typedef void(*TickCallbackPtr)(FPSComponent*, Entity*);
 
-			Index getUpdatesPerSecond() const;
-			Index getFramesPerSecond() const;
-			Index getCleansPerSecond() const;
-			Index getHoversPerSecond() const;
+			unsigned int getUpdatesPerSecond() const;
+			unsigned int getFramesPerSecond() const;
+			unsigned int getCleansPerSecond() const;
+			unsigned int getHoversPerSecond() const;
 
 			void setTickCallback(const TickCallbackPtr callback);
 			TickCallbackPtr getTickCallback();
@@ -200,23 +203,39 @@ namespace mc {
 
 			bool operator==(const FPSComponent& other) const;
 			bool operator!=(const FPSComponent& other) const;
-		protected:
+		private:
+			unsigned int updatesPerSecond = 0, nbUpdates = 0;
+			unsigned int framesPerSecond = 0, nbFrames = 0;
+			unsigned int cleansPerSecond = 0, nbCleans = 0;
+			unsigned int hoversPerSecond = 0, nbHovers = 0;
+
+			TickCallbackPtr tickCallback = [](FPSComponent*, Entity*) {};
+
+			std::time_t lastTime = 0;
+
 			void init() final;
 			bool update() final;
 			void render() final;
 			void clean() final;
 			void hover() final;
 			void destroy() final;
-		private:
-			Index updatesPerSecond = 0, nbUpdates = 0;
-			Index framesPerSecond = 0, nbFrames = 0;
-			Index cleansPerSecond = 0, nbCleans = 0;
-			Index hoversPerSecond = 0, nbHovers = 0;
-
-			TickCallbackPtr tickCallback = [](FPSComponent*, Entity*) {};
-
-			time_t lastTime = 0;
 		};//FPSComponent
+
+		class AnimationComponent: public Component, public Texturable {
+		public:
+			typedef void(*AnimationFrameCallback)(Texture&, Entity*, AnimationComponent*);
+
+			AnimationComponent(const Texture& tex);
+
+			void setTexture(const Texture& tex) override;
+			Texture& getTexture() override;
+			const Texture& getTexture() const override;
+
+			bool operator==(const AnimationComponent& other) const;
+			bool operator!=(const AnimationComponent& other) const;
+		private:
+			Texture texture;
+		};
 	}//gfx
 }//mc
 

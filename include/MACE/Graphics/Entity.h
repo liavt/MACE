@@ -23,6 +23,7 @@ namespace mc {
 
 		//forward-defining dependencies
 		class Entity;
+		class Texture;
 
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
@@ -715,6 +716,22 @@ namespace mc {
 
 			float opacity = 1.0f;
 		};//GraphicsEntity
+
+		class Texturable {
+		public:
+			virtual ~Texturable() = default;
+
+			/**
+			@dirty
+			*/
+			virtual void setTexture(const Texture& tex) = 0;
+			/**
+			@copydoc Texturable::getTexture() const
+			@dirty
+			*/
+			virtual Texture& getTexture() = 0;
+			virtual const Texture& getTexture() const = 0;
+		};
 
 		class Selectable {
 		public:

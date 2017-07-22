@@ -151,11 +151,10 @@ namespace mc {
 	<p>
 	`Preprocessor` can also 'fake' include files through the `IncludeString` class, allowing it to preprocess the same at every runtime invocation.
 	<p>
-	The `ssl` uses the `Preprocessor` class to handle shader files.
+	@internal The `OGL33Renderer` uses the `Preprocessor` class to handle shader files.
 
 	@see Macro
 	@see Include
-	@see gfx::ssl
 	@todo Digraphs (see 6.4.6 of standard)
 	@todo Variable arguments
 	@todo Macro concat

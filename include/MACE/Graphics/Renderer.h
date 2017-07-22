@@ -42,6 +42,15 @@ namespace mc {
 			enum class RenderType: Byte {
 				STANDARD = 0
 			};
+
+			/**
+			@todo changed Texture::bind() to use this in some form
+			*/
+			enum class TextureSlot: unsigned int {
+				FOREGROUND = 0,
+				BACKGROUND = 1,
+				MASK = 2,
+			};
 		}
 
 		class Painter: public Initializable {
@@ -49,11 +58,13 @@ namespace mc {
 			
 
 			struct State {
-				TransformMatrix transformation;
+				Color foregroundColor, backgroundColor, maskColor;
 
-				Color primaryColor, secondaryColor;
+				Vector<float, 4> foregroundTransform, backgroundTransform, maskTransform;
 
 				Vector<float, 4> data;
+
+				TransformMatrix transformation;
 
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
@@ -82,15 +93,19 @@ namespace mc {
 
 			const GraphicsEntity* const getEntity() const;
 
-			void setTexture(const Texture& t, const unsigned int slot = 0);
+			void setTexture(const Texture& t, const Enums::TextureSlot& slot);
 
-			void setColor(const Color& col);
-			Color& getColor();
-			const Color& getColor() const;
+			void setForegroundColor(const Color& col);
+			Color& getForegroundColor();
+			const Color& getForegroundColor() const;
 
-			void setSecondaryColor(const Color& col);
-			Color& getSecondaryColor();
-			const Color& getSecondaryColor() const;
+			void setBackgroundColor(const Color& col);
+			Color& getBackgroundColor();
+			const Color& getBackgroundColor() const;
+
+			void setMaskColor(const Color& col);
+			Color& getMaskColor();
+			const Color& getMaskColor() const;
 
 			void setData(const Vector<float, 4>& col);
 			Vector<float, 4>& getData();
@@ -151,7 +166,7 @@ namespace mc {
 
 		/**
 		@todo add function to change how many samples msaa uses
-		@todo add renderers for directx, cpu, offscreen, opengl es, opengl 1.1/2.1
+		@todo add renderers for directx, cpu, vulkan, opengl es, opengl 1.1/2.1
 		*/
 		class Renderer {
 			friend class Painter;

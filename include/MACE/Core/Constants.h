@@ -181,7 +181,7 @@ namespace mc {
 	@see Enum
 	@see Size
 	*/
-	using Byte = std::uint8_t;
+	using Byte = std::uint_least8_t;
 
 	/**
 	Type representing an object's size.

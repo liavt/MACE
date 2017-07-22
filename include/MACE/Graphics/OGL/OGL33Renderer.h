@@ -58,33 +58,53 @@ namespace mc {
 
 				std::shared_ptr<PainterImpl> createPainterImpl(const GraphicsEntity * const entity) override;
 
-				const Preprocessor& getSSLPreprocessor();
+				const Preprocessor& getShaderPreprocessor();
 			private:
-				Preprocessor sslPreprocessor;
+				//for shaders
 
-				ogl::FrameBuffer frameBuffer;
-				ogl::RenderBuffer depthBuffer;
+				const IncludeString vertexLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_vertex.glsl>
+				}, "mc_vertex");
+				const IncludeString fragmentLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_frag.glsl>
+				}, "mc_frag");
+				const IncludeString positionLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_position.glsl>
+				}, "mc_position");
+				const IncludeString entityLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_entity.glsl>
+				}, "mc_entity");
+				const IncludeString coreLibrary = IncludeString({
+#	include <MACE/Graphics/OGL/Shaders/mc_core.glsl>
+				}, "mc_core");
 
-				ogl::Texture2D sceneTexture, idTexture;
+				Preprocessor shaderPreprocessor = Preprocessor("");
 
-				Color clearColor;
+				//for the framebuffer
+
+				ogl::FrameBuffer frameBuffer{};
+				ogl::RenderBuffer depthBuffer{};
+
+				ogl::Texture2D sceneTexture{}, idTexture{};
+
+				Color clearColor = Colors::BLACK;
 
 				void generateFramebuffer(const Size& width, const Size& height);
 
-				//for Painting
+				//for the Painter
 
 				struct RenderProtocol {
 					ogl::ShaderProgram program;
 				};
 
-				std::map<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>> protocols;
+				std::map<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>> protocols{};
 				ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
 				ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
 
 				std::string processShader(const std::string& shader);
 
 				void loadEntityUniforms(const GraphicsEntity * const entity);
-				void loadPainterUniforms(const TransformMatrix& transform, const Color& col, const Color& secondaryCol, const Vector<float, 4>& data);
+				void loadPainterUniforms(const Painter::State& state);
 
 				OGL33Renderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Enums::Brush, Enums::RenderType> settings);
 				ogl::ShaderProgram createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings);

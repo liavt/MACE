@@ -2,7 +2,6 @@
 R""(
 //VERTEX SHADER
 
-#include <mc_core>
 #include <mc_vertex>
 
 vec4 mc_vert_main(vec4 pos){	

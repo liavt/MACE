@@ -30,7 +30,7 @@ MACE will attempt to automatically detect OpenCV and defined MACE_OPENCV if foun
 
 To manually link OpenCV yourself, define MACE_OPENCV to be 1 before including any MACE header file:
 
-```
+```c++
 //specify that OpenCV is linked
 #define MACE_OPENCV 1
 #include <MACE/MACE.h.
@@ -42,7 +42,7 @@ Additionally, if CV_VERSION is defined, MACE_OPENCV will also be defined automat
 
 To request to never use OpenCV, even if it is included, define MACE_OPENCV to be 0 or false.
 
-```
+```c++
 //both of the following lines tell MACE to never use OpenCV
 #define MACE_OPENCV 0
 #define MACE_OPENCV false

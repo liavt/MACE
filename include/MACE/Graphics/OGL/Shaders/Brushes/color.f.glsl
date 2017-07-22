@@ -3,11 +3,10 @@ R""(
 
 //FRAGMENT SHADER
 
-#include <mc_core>
 #include <mc_frag>
 
-vec4 mc_frag_main(vec2 textureCoord){		
-	return mc_PrimaryColor;
+vec4 mc_frag_main(void){
+	return mc_Foreground.mc_Color;
 }
 
 

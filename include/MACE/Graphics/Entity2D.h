@@ -33,22 +33,15 @@ namespace mc {
 			bool operator!=(const Entity2D& other) const;
 		};//Entity2D
 
-		class Image: public Entity2D {
+		class Image: public Entity2D, public Texturable {
 		public:
 			Image() noexcept;
 			Image(const Texture& col);
 			~Image() = default;
 
-			/**
-			@dirty
-			*/
-			void setTexture(const Texture& tex);
-			/**
-			@copydoc Image::createTextureImpl() const
-			@dirty
-			*/
-			Texture& getTexture();
-			const Texture& getTexture() const;
+			void setTexture(const Texture& tex) override;
+			Texture& getTexture() override;
+			const Texture& getTexture() const override;
 
 			bool operator==(const Image& other) const;
 			bool operator!=(const Image& other) const;
@@ -259,7 +252,7 @@ namespace mc {
 		/**
 		@bug newline with vertical align doesnt really work
 		*/
-		class Text: public Entity2D {
+		class Text: public Entity2D, public Texturable {
 		public:
 			Text(const std::string& t, const Font& f = Font());
 			Text(const std::wstring& t = L"", const Font& f = Font());
@@ -299,16 +292,9 @@ namespace mc {
 			void setHorizontalAlign(Enums::HorizontalAlign align);
 			const Enums::HorizontalAlign getHorizontalAlign() const;
 
-			/**
-			@dirty
-			*/
-			void setTexture(const Texture& tex);
-			/**
-			@copydoc Image::createTextureImpl() const
-			@dirty
-			*/
-			Texture& getTexture();
-			const Texture& getTexture() const;
+			void setTexture(const Texture& tex) override;
+			Texture& getTexture() override;
+			const Texture& getTexture() const override;
 
 			bool operator==(const Text& other) const;
 			bool operator!=(const Text& other) const;
@@ -331,18 +317,11 @@ namespace mc {
 			Texture texture;
 		};//Text
 
-		class Button: public Selectable, public Entity2D {
+		class Button: public Entity2D, public Selectable, public Texturable {
 		public:
-			const Texture& getTexture() const;
-			/**
-			@copydoc Button::createTextureImpl() const
-			@dirty
-			*/
-			Texture& getTexture();
-			/**
-			@dirty
-			*/
 			void setTexture(const Texture& c);
+			const Texture& getTexture() const override;
+			Texture& getTexture() override;
 
 			const Texture& getHoverTexture() const;
 			/**

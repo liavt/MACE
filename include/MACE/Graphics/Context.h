@@ -170,6 +170,7 @@ namespace mc {
 		}
 
 		class ModelImpl: public Initializable, public Bindable {
+			friend class Model;
 		public:
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
@@ -177,16 +178,21 @@ namespace mc {
 			virtual void bind() const override = 0;
 			virtual void unbind() const override = 0;
 
-			virtual void draw(const Enums::PrimitiveType& mode) const = 0;
+			virtual void draw() const = 0;
 
 			virtual void loadTextureCoordinates(const Size dataSize, const float* data) = 0;
 			virtual void loadVertices(const Size verticeSize, const float* vertices) = 0;
 			virtual void loadIndices(const Size indiceNum, const unsigned int* indiceData) = 0;
 
 			virtual bool isCreated() const = 0;
+
+			bool operator==(const ModelImpl& other) const;
+			bool operator!=(const ModelImpl& other) const;
+		protected:
+			Enums::PrimitiveType primitiveType = Enums::PrimitiveType::TRIANGLES;
 		};
 
-		class Model: public Initializable, public Bindable{
+		class Model: public Initializable, public Bindable {
 		public:
 			static Model& getQuad();
 
@@ -203,26 +209,24 @@ namespace mc {
 
 			void createTextureCoordinates(const Size dataSize, const float* data);
 			template<const Size N>
-			void createTextureCoordinates(const float (&data)[N]) {
+			void createTextureCoordinates(const float(&data)[N]) {
 				createTextureCoordinates(N, data);
 			}
+
 			void createVertices(const Size verticeSize, const float* vertices, const Enums::PrimitiveType& prim);
 			template<const Size N>
-			void createVertices(const float (&vertices)[N], const Enums::PrimitiveType& prim) {
+			void createVertices(const float(&vertices)[N], const Enums::PrimitiveType& prim) {
 				createVertices(N, vertices, prim);
 			}
 
 			void createIndices(const Size indiceNum, const unsigned int* indiceData);
 			template<const Size N>
-			void createIndices(const unsigned int (&indiceData)[N]) {
+			void createIndices(const unsigned int(&indiceData)[N]) {
 				createIndices(N, indiceData);
 			}
 
 			Enums::PrimitiveType getPrimitiveType();
 			const Enums::PrimitiveType getPrimitiveType() const;
-
-			Size getVertexNumber();
-			const Size getVertexNumber() const;
 
 			void draw() const;
 
@@ -232,13 +236,10 @@ namespace mc {
 			bool operator!=(const Model& other) const;
 		private:
 			std::shared_ptr<ModelImpl> model;
-
-			Size vertexNumber = 0;
-
-			Enums::PrimitiveType primitiveType = Enums::PrimitiveType::TRIANGLES;
 		};
 
 		class TextureImpl: public Initializable, public Bindable {
+			friend class Texture;
 		public:
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
@@ -249,7 +250,7 @@ namespace mc {
 
 			virtual bool isCreated() const = 0;
 
-			virtual void setData(const void* data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) = 0;
+			virtual void setData(const void* data, const Index mipmap) = 0;
 
 			virtual void setMinFilter(const Enums::ResizeFilter filter) = 0;
 			virtual void setMagFilter(const Enums::ResizeFilter filter) = 0;
@@ -260,12 +261,18 @@ namespace mc {
 			virtual void setWrapS(const Enums::WrapMode wrap) = 0;
 			virtual void setWrapT(const Enums::WrapMode wrap) = 0;
 
-			virtual void getImage(const Enums::Format format, const Enums::Type type, void* data) const = 0;
+			virtual void readPixels(void* data) const = 0;
 
 			virtual void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) = 0;
+		protected:
+			unsigned int width = 0, height = 0;
+
+			Enums::Type type = Enums::Type::FLOAT;
+			Enums::Format format = Enums::Format::RGBA;
+			Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA;
 		};
 
-		class Texture: public TextureImpl{
+		class Texture: public Initializable, public Bindable {
 		public:
 			static Texture create(const Color& col, const Size width = 1, const Size height = 1);
 			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
@@ -288,7 +295,23 @@ namespace mc {
 			void init() override;
 			void destroy() override;
 
-			bool isCreated() const override;
+			bool isCreated() const;
+			bool isEmpty() const;
+
+			unsigned int getWidth();
+			const unsigned int getWidth() const;
+
+			unsigned int getHeight();
+			const unsigned int getHeight() const;
+
+			Enums::Type getType();
+			const Enums::Type getType() const;
+
+			Enums::Format getFormat();
+			const Enums::Format getFormat() const;
+
+			Enums::InternalFormat getInternalFormat();
+			const Enums::InternalFormat getInternalFormat() const;
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
@@ -313,7 +336,8 @@ namespace mc {
 					type = Enums::Type::SHORT;
 				} else if (mat.depth() == CV_32S) {
 					type = Enums::Type::INT;
-				} else if (mat.depth() == CV_32F) {;
+				} else if (mat.depth() == CV_32F) {
+					;
 					type = Enums::Type::FLOAT;
 				} else if (mat.depth() == CV_64F) {
 					MACE__THROW(BadFormat, "Unsupported cv::Mat depth: CV_64F");
@@ -352,40 +376,93 @@ namespace mc {
 			void load(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			void load(const Color& c, const Size width = 1, const Size height = 1);
 
-			Color& getPaint();
-			const Color& getPaint() const;
-			void setPaint(const Color& col);
+			Color& getHue();
+			const Color& getHue() const;
+			void setHue(const Color& col);
 
-			void bind() const override;
-			void bind(const unsigned int location) const override;
+			Vector<float, 4>& getTransform();
+			const Vector<float, 4>& getTransform() const;
+			void setTransform(const Vector<float, 4>& trans);
+
+			void bind() const;
+			void bind(const unsigned int location) const;
 			void unbind() const override;
 
 			void resetPixelStorage();
 
-			void setMinFilter(const Enums::ResizeFilter filter) override;
-			void setMagFilter(const Enums::ResizeFilter filter) override;
+			void setMinFilter(const Enums::ResizeFilter filter);
+			void setMagFilter(const Enums::ResizeFilter filter);
 
 			void setData(const void* data, const Size width, const Size height,
-						 const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGB,
-						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGB, const Index mipmap = 0) override;
+						 const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGBA,
+						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0);
+			template<typename T, Size W, Size H>
+			void setData(const T(&data)[W][H],
+						 const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGBA,
+						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
+				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
+				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
 
-			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value) override;
-			void setPackStorageHint(const Enums::PixelStorage hint, const int value) override;
+				setData(data, W, H, type, format, internalFormat, mipmap);
+			}
+			template<Size W, Size H>
+			void setData(const float(&data)[W][H], const Enums::Format format = Enums::Format::RGBA,
+						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
+				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
+				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
+
+				setData(data, W, H, Enums::Type::FLOAT, format, internalFormat, mipmap);
+			}
+			template<Size W, Size H>
+			void setData(const int(&data)[W][H], const Enums::Format format = Enums::Format::RGBA,
+						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
+				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
+				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
+
+				setData(data, W, H, Enums::Type::INT, format, internalFormat, mipmap);
+			}
+			template<Size W, Size H>
+			void setData(const unsigned int(&data)[W][H], const Enums::Format format = Enums::Format::RGBA,
+						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
+				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
+				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
+
+				setData(data, W, H, Enums::Type::UNSIGNED_INT, format, internalFormat, mipmap);
+			}
+
+
+			void setData(const void* data, const Index mipmap = 0);
+			template<typename T, Size W, Size H>
+			void setData(const T(&data)[W][H], const Index mipmap = 0) {
+				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
+				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
+
+				if (W != texture->width || H != texture->height) {
+					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
+				}
+
+				setData(data, mipmap);
+			}
+
+			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value);
+			void setPackStorageHint(const Enums::PixelStorage hint, const int value);
 
 			void setWrap(const Enums::WrapMode wrap);
-			void setWrapS(const Enums::WrapMode wrap) override;
-			void setWrapT(const Enums::WrapMode wrap) override;
+			void setWrapS(const Enums::WrapMode wrap);
+			void setWrapT(const Enums::WrapMode wrap);
 
-			void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) override;
+			void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg);
 
-			void getImage(const Enums::Format format, const Enums::Type type, void* data) const override;
+			void readPixels(void* data) const;
 
 			bool operator==(const Texture& other) const;
 			bool operator!=(const Texture& other) const;
 		private:
 			std::shared_ptr<TextureImpl> texture;
 
-			Color paint;
+			Color hue = Colors::INVISIBLE;
+
+			Vector<float, 4> transform{ 0.0f, 0.0f, 1.0f, 1.0f };
 		};//Texture
 
 		class GraphicsContext: public Initializable {
@@ -444,7 +521,7 @@ namespace mc {
 			Model model = Model();
 			Model newModel = m;
 
-			Both Model objects will share the same resource, as it is simply a 
+			Both Model objects will share the same resource, as it is simply a
 			pointer to the actual data. However, with std::unique_ptr, this move
 			semantic because near impossible. Because multiple Model objects
 			may have to own the same pointer to data, they have to use std::shared_ptr

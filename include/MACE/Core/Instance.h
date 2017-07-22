@@ -286,6 +286,9 @@ namespace mc {
 		"Resets" the `MACE` to its default state. `Modules` are cleared, and all flags are set to 0.
 		*/
 		void reset();
+
+		bool operator==(const Instance& other) const;
+		bool operator!=(const Instance& other) const;
 	private:
 		/**
 		All of the `Modules` registered

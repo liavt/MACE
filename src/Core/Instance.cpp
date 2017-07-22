@@ -179,6 +179,14 @@ namespace mc {
 		flags = 0;
 	}
 
+	bool Instance::operator==(const Instance & other) const {
+		return modules == other.modules && flags == other.flags;
+	}
+
+	bool Instance::operator!=(const Instance & other) const {
+		return !operator==(other);
+	}
+
 	Instance * Module::getInstance() {
 		return instance;
 	}

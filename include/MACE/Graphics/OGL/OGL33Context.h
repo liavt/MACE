@@ -27,7 +27,7 @@ namespace mc {
 				void bind() const override;
 				void unbind() const override;
 
-				void draw(const Enums::PrimitiveType& mode) const override;
+				void draw() const override;
 
 				void loadTextureCoordinates(const Size dataSize, const float* data) override;
 				void loadVertices(const Size verticeSize, const float* vertices) override;
@@ -57,9 +57,9 @@ namespace mc {
 				void setWrapS(const Enums::WrapMode wrap) override;
 				void setWrapT(const Enums::WrapMode wrap) override;
 
-				void setData(const void* data, const Size width, const Size height, const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGB, const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGB, const Index mipmap = 0) override;
+				void setData(const void* data, const Index mipmap = 0) override;
 
-				void getImage(const Enums::Format format, const Enums::Type type, void* data) const override;
+				void readPixels(void* data) const override;
 
 				void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) override;
 			};

@@ -36,12 +36,28 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-#define MACE__RESOURCE_SOLIDCOLOR "MACE/SolidColor"
-#define MACE__RESOURCE_GRADIENT "MACE/Gradient"
+#ifdef MACE_DEBUG
+#	define MACE__VERIFY_TEXTURE_INIT() do{if(texture == nullptr){ MACE__THROW(InvalidState, "This Texture has not had init() called yet"); }}while(0)
+#	define MACE__VERIFY_MODEL_INIT() do{if(model == nullptr){ MACE__THROW(InvalidState, "This Model has not had init() called yet"); }}while(0)
+#else
+#	define MACE__VERIFY_TEXTURE_INIT()
+#	define MACE__VERIFY_MODEL_INIT()
+#endif
+
+		//these are the names for cached resources in the GraphicsContext
+#define MACE__RESOURCE_SOLIDCOLOR "MC/SolidColor"
+#define MACE__RESOURCE_GRADIENT "MC/Gradient"
+		//how many pixels in the gradient
 #define MACE__RESOURCE_GRADIENT_HEIGHT 100
-#define MACE__RESOURCE_QUAD "MACE/Quad"
-		//unfinished as of now
-#define MACE__RESOURCE_TRIANGLE "MACE/Triangle"
+#define MACE__RESOURCE_QUAD "MC/Quad"
+
+		bool ModelImpl::operator==(const ModelImpl & other) const {
+			return primitiveType == other.primitiveType;
+		}
+
+		bool ModelImpl::operator!=(const ModelImpl & other) const {
+			return !operator==(other);
+		}
 
 		Model & Model::getQuad() {
 			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
@@ -90,64 +106,70 @@ namespace mc {
 			if (model == nullptr) {
 				model = gfx::getCurrentWindow()->getContext()->createModelImpl();
 			}
+
 			model->init();
 		}
 
 		void Model::destroy() {
-			if (model == nullptr) {
-				MACE__THROW(InvalidState, "Model must have been initialized before being destroyed!");
-			}
+			MACE__VERIFY_MODEL_INIT();
+
 			model->destroy();
 		}
 
 		void Model::bind() const {
+			MACE__VERIFY_MODEL_INIT();
+
 			model->bind();
 		}
 
 		void Model::unbind() const {
+			MACE__VERIFY_MODEL_INIT();
+
 			model->unbind();
 		}
 
 		void Model::createTextureCoordinates(const Size dataSize, const float * data) {
+			MACE__VERIFY_MODEL_INIT();
+
 			model->loadTextureCoordinates(dataSize, data);
 		}
 
 		void Model::createVertices(const Size verticeSize, const float * vertices, const Enums::PrimitiveType& prim) {
+			MACE__VERIFY_MODEL_INIT();
+
+			model->primitiveType = prim;
 			model->loadVertices(verticeSize, vertices);
-			primitiveType = prim;
-			
+
 		}
 
 		void Model::createIndices(const Size indiceNum, const unsigned int * indiceData) {
+			MACE__VERIFY_MODEL_INIT();
+
 			model->loadIndices(indiceNum, indiceData);
 		}
 
 		Enums::PrimitiveType Model::getPrimitiveType() {
-			return primitiveType;
+			return model->primitiveType;
 		}
 
 		const Enums::PrimitiveType Model::getPrimitiveType() const {
-			return primitiveType;
-		}
-
-		Size Model::getVertexNumber() {
-			return vertexNumber;
-		}
-
-		const Size Model::getVertexNumber() const {
-			return vertexNumber;
+			return model->primitiveType;
 		}
 
 		void Model::draw() const {
-			model->draw(primitiveType);
+			MACE__VERIFY_MODEL_INIT();
+
+			model->draw();
 		}
 
 		bool Model::isCreated() const {
-			return model != nullptr && model->isCreated();
+			MACE__VERIFY_MODEL_INIT();
+
+			return model->isCreated();
 		}
 
 		bool Model::operator==(const Model & other) const {
-			return model == other.model && vertexNumber == other.vertexNumber && primitiveType == other.primitiveType;
+			return model == other.model;
 		}
 
 		bool Model::operator!=(const Model & other) const {
@@ -260,11 +282,11 @@ namespace mc {
 			}
 		}
 
-		Texture::Texture() : texture(nullptr), paint(0.0f, 0.0f, 0.0f, 0.0f) {}
+		Texture::Texture() : texture(nullptr), hue(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), paint(col) {}
+		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
 
-		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), paint(col) {}
+		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
 
 		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
 
@@ -272,22 +294,68 @@ namespace mc {
 			if (texture == nullptr) {
 				texture = gfx::getCurrentWindow()->getContext()->createTextureImpl();
 			}
+
 			texture->init();
 		}
 
 		void Texture::destroy() {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->destroy();
+			texture.reset();
 		}
 
 		bool Texture::isCreated() const {
-			if (texture == nullptr) {
-				return false;
-			}
+			return texture != nullptr;
+		}
 
-			return texture->isCreated();
+		bool Texture::isEmpty() const {
+			return texture == nullptr ? true : texture->width == 0 && texture->height == 0;
+		}
+
+		unsigned int Texture::getWidth() {
+			return texture == nullptr ? 0 : texture->width;
+		}
+
+		const unsigned int Texture::getWidth() const {
+			return texture == nullptr ? 0 : texture->width;
+		}
+
+		unsigned int Texture::getHeight() {
+			return texture == nullptr ? 0 : texture->height;
+		}
+
+		const unsigned int Texture::getHeight() const {
+			return texture == nullptr ? 0 : texture->height;
+		}
+
+		Enums::Type Texture::getType() {
+			return texture->type;
+		}
+
+		const Enums::Type Texture::getType() const {
+			return texture->type;
+		}
+
+		Enums::Format Texture::getFormat() {
+			return texture->format;
+		}
+
+		const Enums::Format Texture::getFormat() const {
+			return texture->format;
+		}
+
+		Enums::InternalFormat Texture::getInternalFormat() {
+			return texture->internalFormat;
+		}
+
+		const Enums::InternalFormat Texture::getInternalFormat() const {
+			return texture->internalFormat;
 		}
 
 		void Texture::load(const char * file, const Enums::ImageFormat imgFormat) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			resetPixelStorage();
 
 			int width, height, actualComponents;
@@ -332,7 +400,7 @@ namespace mc {
 					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4!");
 				}
 
-				texture->setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat, 0);
+				setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat, 0);
 			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;
@@ -340,8 +408,8 @@ namespace mc {
 
 			stbi_image_free(image);
 
-			texture->setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
-			texture->setMagFilter(Enums::ResizeFilter::NEAREST);
+			setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
+			setMagFilter(Enums::ResizeFilter::NEAREST);
 		}
 
 		void Texture::load(const std::string & file, const Enums::ImageFormat format) {
@@ -349,39 +417,61 @@ namespace mc {
 		}
 
 		void Texture::load(const Color & c, const Size width, const Size height) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			resetPixelStorage();
 
-			texture->setData(&c, width, height, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
+			setData(&c, width, height, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
 
-			texture->setMinFilter(Enums::ResizeFilter::NEAREST);
-			texture->setMagFilter(Enums::ResizeFilter::NEAREST);
+			setMinFilter(Enums::ResizeFilter::NEAREST);
+			setMagFilter(Enums::ResizeFilter::NEAREST);
 		}
 
-		Color& Texture::getPaint() {
-			return paint;
+		Color& Texture::getHue() {
+			return hue;
 		}
 
-		const Color& Texture::getPaint() const {
-			return paint;
+		const Color& Texture::getHue() const {
+			return hue;
 		}
 
-		void Texture::setPaint(const Color& col) {
-			paint = col;
+		void Texture::setHue(const Color& col) {
+			hue = col;
+		}
+
+		Vector<float, 4>& Texture::getTransform() {
+			return transform;
+		}
+
+		const Vector<float, 4>& Texture::getTransform() const {
+			return transform;
+		}
+
+		void Texture::setTransform(const Vector<float, 4>& trans) {
+			transform = trans;
 		}
 
 		void Texture::bind() const {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->bind();
 		}
 
 		void Texture::bind(const unsigned int location) const {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->bind(location);
 		}
 
 		void Texture::unbind() const {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->unbind();
 		}
 
 		void Texture::resetPixelStorage() {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			setPackStorageHint(Enums::PixelStorage::ALIGNMENT, 4);
 			setUnpackStorageHint(Enums::PixelStorage::ALIGNMENT, 4);
 			setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, 0);
@@ -389,22 +479,49 @@ namespace mc {
 		}
 
 		void Texture::setMinFilter(const Enums::ResizeFilter filter) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setMinFilter(filter);
 		}
 
 		void Texture::setMagFilter(const Enums::ResizeFilter filter) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setMagFilter(filter);
 		}
 
 		void Texture::setData(const void * data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) {
-			texture->setData(data, width, height, type, format, internalFormat, mipmap);
+			if (width == 0) {
+				MACE__THROW(IndexOutOfBounds, "Width of Texture can not be 0!");
+			} else if (height == 0) {
+				MACE__THROW(IndexOutOfBounds, "Height of Texture can not be 0!");
+			}
+			
+			texture->width = width;
+			texture->height = height;
+			texture->type = type;
+			texture->format = format;
+			texture->internalFormat = internalFormat;
+			texture->setData(data, mipmap);
+		}
+
+		void Texture::setData(const void * data, const Index mipmap) {
+			if (isEmpty()) {
+				MACE__THROW(InvalidState, "Must set width and height with full form of setData() in order to use the shortened form");
+			}
+
+			texture->setData(data, mipmap);
 		}
 
 		void Texture::setUnpackStorageHint(const Enums::PixelStorage hint, const int value) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setUnpackStorageHint(hint, value);
 		}
 
 		void Texture::setPackStorageHint(const Enums::PixelStorage hint, const int value) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setPackStorageHint(hint, value);
 		}
 
@@ -414,23 +531,35 @@ namespace mc {
 		}
 
 		void Texture::setWrapS(const Enums::WrapMode wrap) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setWrapS(wrap);
 		}
 
 		void Texture::setWrapT(const Enums::WrapMode wrap) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setWrapT(wrap);
 		}
 
 		void Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
+			MACE__VERIFY_TEXTURE_INIT();
+
 			texture->setSwizzle(mode, arg);
 		}
 
-		void Texture::getImage(const Enums::Format format, const Enums::Type type, void * data) const {
-			texture->getImage(format, type, data);
+		void Texture::readPixels(void * data) const {
+			MACE__VERIFY_TEXTURE_INIT();
+
+			if (isEmpty()) {
+				MACE__THROW(InvalidState, "Can\'t read pixels from a Texture that doesn\'t have data yet");
+			}
+
+			texture->readPixels(data);
 		}
 
 		bool Texture::operator==(const Texture& other) const {
-			return paint == other.paint && texture == other.texture;
+			return hue == other.hue && texture == other.texture;
 		}
 
 		bool Texture::operator!=(const Texture& other) const {

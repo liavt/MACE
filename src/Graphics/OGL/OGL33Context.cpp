@@ -219,11 +219,11 @@ namespace mc {
 				}
 			}
 
-			void OGL33Texture::setData(const void * data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) {
+			void OGL33Texture::setData(const void * data, const Index mipmap) {
 				ogl::Texture2D::setData(data, width, height, getType(type), getFormat(format), getInternalFormat(internalFormat), mipmap);
 			}
 
-			void OGL33Texture::getImage(const Enums::Format format, const Enums::Type type, void * data) const {
+			void OGL33Texture::readPixels(void * data) const {
 				ogl::Texture2D::getImage(getFormat(format), getType(type), data);
 			}
 
@@ -260,7 +260,7 @@ namespace mc {
 				ogl::VertexArray::unbind();
 			}
 
-			void OGL33Model::draw(const Enums::PrimitiveType& mode) const {
+			void OGL33Model::draw() const {
 				for (Index i = 0; i < buffers.size(); ++i) {
 					buffers[i].bind();
 				}
@@ -268,26 +268,26 @@ namespace mc {
 				using Enums::PrimitiveType;
 
 				Enum type;
-				if (mode == PrimitiveType::POINTS) {
+				if (primitiveType == PrimitiveType::POINTS) {
 					type = GL_POINTS;
-				} else if (mode == PrimitiveType::LINES) {
+				} else if (primitiveType == PrimitiveType::LINES) {
 					type = GL_LINES;
-				} else if (mode == PrimitiveType::LINES_ADJACENCY) {
+				} else if (primitiveType == PrimitiveType::LINES_ADJACENCY) {
 					type = GL_LINES_ADJACENCY;
-				} else if (mode == PrimitiveType::LINES_STRIP) {
+				} else if (primitiveType == PrimitiveType::LINES_STRIP) {
 					type = GL_LINE_STRIP;
-				} else if (mode == PrimitiveType::LINES_STRIP_ADJACENCY) {
+				} else if (primitiveType == PrimitiveType::LINES_STRIP_ADJACENCY) {
 					type = GL_LINE_STRIP_ADJACENCY;
-				} else if (mode == PrimitiveType::TRIANGLES) {
+				} else if (primitiveType == PrimitiveType::TRIANGLES) {
 					type = GL_TRIANGLES;
-				} else if (mode == PrimitiveType::TRIANGLES_ADJACENCY) {
+				} else if (primitiveType == PrimitiveType::TRIANGLES_ADJACENCY) {
 					type = GL_TRIANGLES_ADJACENCY;
-				} else if (mode == PrimitiveType::TRIANGLES_STRIP) {
+				} else if (primitiveType == PrimitiveType::TRIANGLES_STRIP) {
 					type = GL_TRIANGLE_STRIP;
-				} else if (mode == PrimitiveType::TRIANGLES_STRIP_ADJACENCY) {
+				} else if (primitiveType == PrimitiveType::TRIANGLES_STRIP_ADJACENCY) {
 					type = GL_TRIANGLE_STRIP_ADJACENCY;
 				} else {
-					MACE__THROW(BadFormat, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<Byte>(mode)));
+					MACE__THROW(BadFormat, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<short int>(primitiveType)));
 				}
 
 				if (indices.getIndiceNumber() != 0) {

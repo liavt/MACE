@@ -129,8 +129,8 @@ namespace mc {
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
 			push();
-			setTexture(img, 0);
-			setTexture(mask, 1);
+			setTexture(img, Enums::TextureSlot::FOREGROUND);
+			setTexture(mask, Enums::TextureSlot::MASK);
 			draw(Model::getQuad(), Enums::Brush::MASK);
 			pop();
 		}
@@ -138,9 +138,9 @@ namespace mc {
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
 			push();
 			setData({ minimum, maximum, 0, 0 });
-			setTexture(foreground, 0);
-			setTexture(background, 1);
-			setTexture(mask, 2);
+			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
+			setTexture(background, Enums::TextureSlot::BACKGROUND);
+			setTexture(mask, Enums::TextureSlot::MASK);
 			draw(Model::getQuad(), Enums::Brush::MASKED_BLEND);
 			pop();
 		}
@@ -154,19 +154,26 @@ namespace mc {
 			return impl->entity;
 		}
 
-		void Painter::setTexture(const Texture & t, const unsigned int slot) {
-			t.bind(slot);
-			if (slot == 0) {
-				setColor(t.getPaint());
-			} else if (slot == 1) {
-				setSecondaryColor(t.getPaint());
+		void Painter::setTexture(const Texture & t, const Enums::TextureSlot& slot) {
+			t.bind(static_cast<unsigned int>(slot));
+			if (slot == Enums::TextureSlot::FOREGROUND) {
+				setForegroundColor(t.getHue());
+				state.foregroundTransform = t.getTransform();
+			} else if (slot == Enums::TextureSlot::BACKGROUND) {
+				setBackgroundColor(t.getHue());
+				state.backgroundTransform = t.getTransform();
+			} else if (slot == Enums::TextureSlot::MASK) {
+				setMaskColor(t.getHue());
+				state.maskTransform = t.getTransform();
+			} else {
+				MACE__THROW(IndexOutOfBounds, "Unknown Texture slot");
 			}
 
 		}
 
 		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderType type) {
 			push();
-			setTexture(img);
+			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			draw(m, Enums::Brush::TEXTURE, type);
 			pop();
 		}
@@ -193,33 +200,45 @@ namespace mc {
 
 		void Painter::drawImage(const Texture & img) {
 			push();
-			setTexture(img);
+			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			draw(Model::getQuad(), Enums::Brush::TEXTURE);
 			pop();
 		}
 
-		void Painter::setColor(const Color & col) {
-			state.primaryColor = col;
+		void Painter::setForegroundColor(const Color & col) {
+			state.foregroundColor = col;
 		}
 
-		Color & Painter::getColor() {
-			return state.primaryColor;
+		Color & Painter::getForegroundColor() {
+			return state.foregroundColor;
 		}
 
-		const Color & Painter::getColor() const {
-			return state.primaryColor;
+		const Color & Painter::getForegroundColor() const {
+			return state.foregroundColor;
 		}
 
-		void Painter::setSecondaryColor(const Color & col) {
-			state.secondaryColor = col;
+		void Painter::setBackgroundColor(const Color & col) {
+			state.backgroundColor = col;
 		}
 
-		Color & Painter::getSecondaryColor() {
-			return state.secondaryColor;
+		Color & Painter::getBackgroundColor() {
+			return state.backgroundColor;
 		}
 
-		const Color & Painter::getSecondaryColor() const {
-			return state.secondaryColor;
+		const Color & Painter::getBackgroundColor() const {
+			return state.backgroundColor;
+		}
+
+		void Painter::setMaskColor(const Color & col) {
+			state.maskColor = col;
+		}
+
+		Color & Painter::getMaskColor() {
+			return state.maskColor;
+		}
+
+		const Color & Painter::getMaskColor() const {
+			return state.maskColor;
 		}
 
 		void Painter::setData(const Vector<float, 4> & col) {
@@ -235,8 +254,8 @@ namespace mc {
 		}
 
 		void Painter::resetColor() {
-			state.primaryColor = Colors::INVISIBLE;
-			state.secondaryColor = Colors::INVISIBLE;
+			state.foregroundColor = Colors::INVISIBLE;
+			state.backgroundColor = Colors::INVISIBLE;
 			state.data = { 0.0f, 0.0f, 0.0f, 0.0f };
 		}
 
@@ -328,7 +347,10 @@ namespace mc {
 		}
 
 		bool Painter::State::operator==(const State & other) const {
-			return transformation == other.transformation && primaryColor == other.primaryColor && secondaryColor == other.secondaryColor && data == other.data;
+			return transformation == other.transformation && foregroundColor == other.foregroundColor
+				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor
+				&& foregroundTransform == other.foregroundTransform && backgroundTransform == other.backgroundTransform
+				&& maskTransform == other.maskTransform && data == other.data;
 		}
 
 		bool Painter::State::operator!=(const State & other) const {

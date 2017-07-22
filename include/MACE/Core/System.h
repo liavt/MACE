@@ -64,8 +64,8 @@ namespace mc {
 		std::wstring toWideString(const std::string& s);
 		std::string toNarrowString(const std::wstring& s);
 
-		template<class T, std::size_t N>
-		inline MACE_CONSTEXPR std::size_t getArraySize(T(&)[N]) {
+		template<class T, Size N>
+		inline MACE_CONSTEXPR Size getArraySize(const T(&)[N]) {
 			return N;
 		}
 

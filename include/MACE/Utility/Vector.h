@@ -72,11 +72,11 @@ namespace mc {
 	}
 	<p>
 	There are various type aliases in place to prevent using the template parameters. They all use the following syntax:
-	`Vector[size][prefix]`
+	`Vector[size][suffix]`
 	<p>
-	Prefixes exist for every primitive type and are the first letter of the primitive name. For example, the prefix
-	for a `float` would be `f` and the prefix for an `int` would be `i`. Primitives with modifiers simply add the
-	letter. The prefixed for an `unsigned char` would be `uc` and the prefix for a `long long int` would be `lli`
+	suffixes exist for every primitive type and are the first letter of the primitive name. For example, the suffix
+	for a `float` would be `f` and the suffix for an `int` would be `i`. Primitives with modifiers simply add the
+	letter. The suffixes for an `unsigned char` would be `uc` and the prefix for a `long long int` would be `lli`
 	<p>
 	Sizes exist for vertices up to 5 objects
 	<p>
