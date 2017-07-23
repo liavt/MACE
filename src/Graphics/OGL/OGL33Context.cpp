@@ -152,7 +152,7 @@ namespace mc {
 				} else if (filter == Enums::ResizeFilter::NEAREST) {
 					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				} else {
-					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + static_cast<Byte>(filter));
+					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(filter)));
 				}
 			}
 
@@ -165,7 +165,7 @@ namespace mc {
 				} else if (filter == Enums::ResizeFilter::NEAREST) {
 					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				} else {
-					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + static_cast<Byte>(filter));
+					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(filter)));
 				}
 			}
 
@@ -178,7 +178,7 @@ namespace mc {
 						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
 						break;
 					default:
-						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + static_cast<Byte>(hint));
+						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
 				}
 			}
 
@@ -191,7 +191,7 @@ namespace mc {
 						setPixelStorage(GL_PACK_ROW_LENGTH, value);
 						break;
 					default:
-						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + static_cast<Byte>(hint));
+						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
 				}
 			}
 
@@ -205,7 +205,7 @@ namespace mc {
 				} else if (wrap == Enums::WrapMode::MIRROR_CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_S, GL_MIRROR_CLAMP_TO_EDGE);
 				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + static_cast<Byte>(wrap));
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(wrap)));
 				}
 			}
 
@@ -219,7 +219,7 @@ namespace mc {
 				} else if (wrap == Enums::WrapMode::MIRROR_CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_T, GL_MIRROR_CLAMP_TO_EDGE);
 				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + static_cast<Byte>(wrap));
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(wrap)));
 				}
 			}
 

@@ -384,7 +384,7 @@ namespace mc {
 			const Vector<float, 4>& getTransform() const;
 			void setTransform(const Vector<float, 4>& trans);
 
-			void bind() const;
+			void bind() const override;
 			void bind(const unsigned int location) const;
 			void unbind() const override;
 

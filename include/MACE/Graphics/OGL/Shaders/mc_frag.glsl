@@ -14,7 +14,7 @@ layout(location = MACE__ID_ATTACHMENT_INDEX) out uint _mc_OutID;
 uniform uint mc_EntityID;
 
 vec4 _mcGetTexture(const sampler2D mc_Sampler, const _mc_TextureAttachment mc_Tex){
-	vec4 mc_Fragment = texture2D(mc_Sampler, _mcTextureCoord * mc_Tex.mc_TextureTransform.wz + mc_Tex.mc_TextureTransform.xy);
+	vec4 mc_Fragment = texture(mc_Sampler, _mcTextureCoord * mc_Tex.mc_TextureTransform.wz + mc_Tex.mc_TextureTransform.xy);
 	
 	return vec4(mix(mc_Tex.mc_Color.rgb, mc_Fragment.rgb, 1.0f - mc_Tex.mc_Color.a), mc_Fragment.a);;
 }

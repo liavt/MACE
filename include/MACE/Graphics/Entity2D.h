@@ -319,7 +319,7 @@ namespace mc {
 
 		class Button: public Entity2D, public Selectable, public Texturable {
 		public:
-			void setTexture(const Texture& c);
+			void setTexture(const Texture& c) override;
 			const Texture& getTexture() const override;
 			Texture& getTexture() override;
 
