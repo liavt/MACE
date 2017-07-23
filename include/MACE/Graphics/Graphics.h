@@ -17,6 +17,21 @@ namespace mc {
 	Namespace containing classes used for Graphics in MACE.
 	*/
 	namespace gfx {
+		/**
+		All enum constants used by any graphics class are stored in this namespace for organization.
+		<p>
+		To prevent name conflicts, it is recommended to use `using` statements on individual enums,
+		instead of the entire namespace:
+		{@code
+			using namespace mc::gfx::Enums;//not recommended
+
+			using mc::gfx::Enums::Format;//recommended
+		}
+
+		@note A MACE header file will never bring any enum from this namespace into `gfx`
+		*/
+		namespace Enums {
+		}
 	}
 }
 

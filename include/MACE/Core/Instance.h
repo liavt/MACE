@@ -68,8 +68,6 @@ namespace mc {
 		Instance* instance = nullptr;
 	};
 
-
-
 	/**
 	Core class of MACE, managing `Modules`. To start running MACE, simply call `mc::MACE::start(const long long ups)`
 	<p>

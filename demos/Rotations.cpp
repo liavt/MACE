@@ -144,8 +144,8 @@ int main() {
 		});
 		module.addComponent(f);
 
-		os::SignalModule sigModule = os::SignalModule();
-		instance.addModule(sigModule);
+		os::ErrorModule errModule = os::ErrorModule();
+		instance.addModule(errModule);
 
 		mc::Initializer i(instance);
 		while (instance.isRunning()) {

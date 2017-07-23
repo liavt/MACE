@@ -19,6 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Utility/Preprocessor.h>
+#include <MACE/Core/System.h>
 
 //we need to include algorithim for std::copy
 #include <algorithm>
@@ -54,7 +55,7 @@ namespace mc {
 
 			OGL33Renderer::OGL33Renderer() {}
 
-			void OGL33Renderer::onInit(const Size, const Size) {
+			void OGL33Renderer::onInit(gfx::WindowModule*) {
 				glewExperimental = true;
 				const GLenum result = glewInit();
 				if (result != GLEW_OK) {
@@ -170,7 +171,7 @@ namespace mc {
 				glfwSwapBuffers(win->getGLFWWindow());
 			}
 
-			void OGL33Renderer::onResize(const Size width, const Size height) {
+			void OGL33Renderer::onResize(gfx::WindowModule*, const Size width, const Size height) {
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
 				depthBuffer.destroy();
@@ -201,7 +202,8 @@ namespace mc {
 
 				protocols.clear();
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
+				os::checkError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
 			}
 
 			void OGL33Renderer::onQueue(GraphicsEntity *) {}

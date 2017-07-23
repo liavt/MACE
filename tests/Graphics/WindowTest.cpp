@@ -11,6 +11,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/System.h>
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Context.h>
+#include <MACE/Utility/MatrixTypes.h>
+#include <MACE/Utility/Signal.h>
 
 using namespace mc;
 
@@ -27,6 +29,64 @@ namespace {
 		REQUIRE_FALSE(mod.getProperty(gfx::Entity::INIT));
 		REQUIRE_FALSE(wasCreated);
 		wasCreated = true;
+
+		SECTION("Textures") {
+			gfx::Texture t = gfx::Texture();
+			REQUIRE_FALSE(t.isCreated());
+			REQUIRE(t.isEmpty());
+			REQUIRE(t.getWidth() == 0);
+			REQUIRE(t.getHeight() == 0);
+			REQUIRE(t.getHue() == Colors::INVISIBLE);
+			REQUIRE(t.getTransform() == Vector4f({ 0.0f, 0.0f, 1.0f, 1.0f }));
+
+			{
+				Initializer i{ t };
+
+				REQUIRE(t.isCreated());
+				REQUIRE(t.isEmpty());
+				REQUIRE(t.getWidth() == 0);
+				REQUIRE(t.getHeight() == 0);
+
+				t.setData(nullptr, 1, 1);
+
+				REQUIRE(t.isCreated());
+				REQUIRE_FALSE(t.isEmpty());
+				REQUIRE(t.getWidth() == 1);
+				REQUIRE(t.getHeight() == 1);
+
+				MACE_CONSTEXPR const int data[3][3] =
+				{
+					{ 1, 2, 3 },
+					{ 1, 2, 3 },
+					{ 1, 2, 3 }
+				};
+
+				t.setData(data, gfx::Enums::Format::RGB, gfx::Enums::InternalFormat::RGB);
+
+				REQUIRE(t.isCreated());
+				REQUIRE_FALSE(t.isEmpty());
+				REQUIRE(t.getWidth() == 3);
+				REQUIRE(t.getHeight() == 3);
+				REQUIRE(t.getType() == gfx::Enums::Type::INT);
+				REQUIRE(t.getFormat() == gfx::Enums::Format::RGB);
+				REQUIRE(t.getInternalFormat() == gfx::Enums::InternalFormat::RGB);
+				/*
+				int readData[9] = {};
+
+				t.readPixels(readData);
+
+				for (unsigned int x = 0; x < os::getArraySize(data); ++x) {
+				for (unsigned int y = 0; y < os::getArraySize(data[x]); ++y) {
+				REQUIRE(readData[y + (x * 3)] == data[x][y]);
+				}
+				}*/
+			}
+
+			REQUIRE_FALSE(t.isCreated());
+			REQUIRE(t.isEmpty());
+			REQUIRE(t.getWidth() == 0);
+			REQUIRE(t.getHeight() == 0);
+		}
 	}
 }
 
@@ -54,6 +114,9 @@ TEST_CASE("Testing creation of windows and different settings", "[graphics][wind
 	REQUIRE(MACE.getModule(module.getName()) == nullptr);
 
 	MACE.addModule(module);
+
+	os::ErrorModule errorModule = os::ErrorModule();
+	MACE.addModule(errorModule);
 
 	REQUIRE(*module.getInstance() == MACE);
 	REQUIRE(MACE.moduleExists(&module));

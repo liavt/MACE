@@ -103,8 +103,8 @@ int main() {
 		});
 		module.addComponent(f);
 
-		os::SignalModule sigModule = os::SignalModule();
-		instance.addModule(sigModule);
+		os::ErrorModule errModule = os::ErrorModule();
+		instance.addModule(errModule);
 
 		instance.start();
 	} catch( const std::exception& e ) {

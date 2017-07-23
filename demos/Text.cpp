@@ -58,8 +58,8 @@ int main() {
 		gfx::WindowModule module = gfx::WindowModule(config);
 		instance.addModule(module);
 
-		os::SignalModule sigModule = os::SignalModule();
-		instance.addModule(sigModule);
+		os::ErrorModule errModule = os::ErrorModule();
+		instance.addModule(errModule);
 
 		instance.start();
 	} catch (const std::exception& e) {

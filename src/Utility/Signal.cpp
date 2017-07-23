@@ -9,48 +9,61 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Utility/Signal.h>
 
+#include <iostream>
 #include <csignal>
 
 namespace mc {
 	namespace os {
-		void signalHandle(int sig) {
+		namespace {
+			void signalHandle[[noreturn]](int sig) {
 #ifdef MACE_POSIX
-			if (sig == SIGHUP) {
-				throw SignalHangupError("SIGHUP: Hangup detected on controlling terminal or death of controlling process");
-			} else if (sig == SIGKILL) {
-				//RIP program
-				throw SignalKillError("SIGKILL: Program was killed");
-			} else if (sig == SIGSTOP) {
-				throw SignalStopError("SIGSTOP: Program was stopped");
-			} else if (sig == SIGALRM) {
-				throw SignalAlarmError("SIGALRM: Abort signal from alarm()");
-			} else if (sig == SIGTSTP) {
-				throw SignalTerminalStopError("SIGTSTP: Stop was typed in the terminal");
-			} else if (sig == SIGTTIN) {
-				throw SignalTerminalInputError("SIGTTIN: Terminal input for background process");
-			} else if (sig == SIGTTOU) {
-				throw SignalTerminalOutputError("SIGTTOU: Terminal output for background process");
-			}
+				if (sig == SIGHUP) {
+					throw SignalHangupError("SIGHUP: Hangup detected on controlling terminal or death of controlling process");
+				} else if (sig == SIGKILL) {
+					//RIP program
+					throw SignalKillError("SIGKILL: Program was killed");
+				} else if (sig == SIGSTOP) {
+					throw SignalStopError("SIGSTOP: Program was stopped");
+				} else if (sig == SIGALRM) {
+					throw SignalAlarmError("SIGALRM: Abort signal from alarm()");
+				} else if (sig == SIGTSTP) {
+					throw SignalTerminalStopError("SIGTSTP: Stop was typed in the terminal");
+				} else if (sig == SIGTTIN) {
+					throw SignalTerminalInputError("SIGTTIN: Terminal input for background process");
+				} else if (sig == SIGTTOU) {
+					throw SignalTerminalOutputError("SIGTTOU: Terminal output for background process");
+				}
 #endif//MACE_POSIX
 
-			if (sig == SIGABRT
+				if (sig == SIGABRT
 #ifdef MACE_WINDOWS
-				|| sig == SIGABRT_COMPAT
+					|| sig == SIGABRT_COMPAT
 #endif//MACE_WINDOWS
-				) {
-				throw SignalAbortError("SIGABRT: Program was aborted");
-			} else if (sig == SIGFPE) {
-				throw SignalFloatingPointError("SIGFPE: A floating point error occured");
-			} else if (sig == SIGILL) {
-				throw SignalIllegalInstructionError("SIGILL: An illegal instruction occured");
-			} else if (sig == SIGINT) {
-				throw SignalInterruptError("SIGINT: Program was interrupted from keyboard");
-			} else if (sig == SIGSEGV) {
-				throw SignalSegmentFaultError("SIGSEGV: Invalid memory reference (segmentation fault)");
-			} else if (sig == SIGTERM) {
-				throw SignalTerminateError("SIGTERM: Program was terminated");
-			} else {
-				throw SignalError("Program recieved signal " + std::to_string(sig));
+					) {
+					throw SignalAbortError("SIGABRT: Program was aborted");
+				} else if (sig == SIGFPE) {
+					throw SignalFloatingPointError("SIGFPE: A floating point error occured");
+				} else if (sig == SIGILL) {
+					throw SignalIllegalInstructionError("SIGILL: An illegal instruction occured");
+				} else if (sig == SIGINT) {
+					throw SignalInterruptError("SIGINT: Program was interrupted from keyboard");
+				} else if (sig == SIGSEGV) {
+					throw SignalSegmentFaultError("SIGSEGV: Invalid memory reference (segmentation fault)");
+				} else if (sig == SIGTERM) {
+					throw SignalTerminateError("SIGTERM: Program was terminated");
+				} else {
+					throw SignalError("Program recieved signal " + std::to_string(sig));
+				}
+			}
+
+			void onUnexpected[[noreturn]]() {
+				std::cerr << "An unexpected error forced the program to abort" << std::endl;
+				std::abort();
+			}
+
+			void onTerminate[[noreturn]](){
+				std::cerr << "The process was forced to terminate" << std::endl;
+				std::abort();
 			}
 		}
 
@@ -97,6 +110,28 @@ namespace mc {
 
 		std::string SignalModule::getName() const {
 			return "MACE/Signal";
+		}
+
+		void ErrorModule::init() {
+			oldTerminate = std::set_terminate(&onTerminate);
+			oldUnexpected = std::set_unexpected(&onUnexpected);
+
+			SignalModule::init();
+		}
+
+		void ErrorModule::update() {
+			SignalModule::update();
+		}
+
+		void ErrorModule::destroy() {
+			SignalModule::destroy();
+
+			std::set_terminate(oldTerminate);
+			std::set_unexpected(oldUnexpected);
+		}
+
+		std::string ErrorModule::getName() const {
+			return "MACE/Error";
 		}
 	}//os
 }//mc

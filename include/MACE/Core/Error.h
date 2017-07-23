@@ -113,6 +113,11 @@ namespace mc {
 	MACE__DECLARE_ERROR(InvalidState);
 
 	/**
+	Thrown when the process has no remaining memory available
+	*/
+	MACE__DECLARE_ERROR(OutOfMemory);
+
+	/**
 	Thrown when the operating system throws an error
 	*/
 	MACE__DECLARE_ERROR(System);

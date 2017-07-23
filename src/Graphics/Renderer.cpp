@@ -17,14 +17,14 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		void Renderer::init(gfx::WindowModule* win) {
-			onInit(win->getLaunchConfig().width, win->getLaunchConfig().height);
+			onInit(win);
 		}
 
 		void Renderer::setUp(gfx::WindowModule* win) {
 			if (resized) {
 				Vector<int, 2> dimensions = win->getFramebufferSize();
 
-				resize(dimensions.x(), dimensions.y());
+				resize(win, dimensions.x(), dimensions.y());
 
 				resized = false;
 			}
@@ -51,8 +51,8 @@ namespace mc {
 			resized = true;
 		}//flagResize
 
-		void Renderer::resize(const Size width, const Size height) {
-			onResize(width, height);
+		void Renderer::resize(WindowModule* win, const Size width, const Size height) {
+			onResize(win, width, height);
 
 			resized = false;
 		}//resize

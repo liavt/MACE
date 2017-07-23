@@ -29,11 +29,39 @@ namespace mc {
 		class GraphicsContext;
 
 		/**
-		Thrown when GLFW (windowing library) throws an error
+		Thrown when GLFW (windowing library) throws an error and no other `Error` subclass is more specific.
 		*/
 		MACE__DECLARE_ERROR(Window);
 
+		/**
+		Thrown when the requested `Renderer` is unavailable on the
+		system or it does not support a feature that was used, such
+		as a `Painter` function.
+		*/
+		MACE__DECLARE_ERROR(UnsupportedRenderer);
+
+		/**
+		Thrown when a function that requires a renderer context can not
+		find one.
+		<p>
+		Most functions that require a renderer context will be marked in the docs.
+		<p>
+		All `Entity` callbacks except for Entity::update are called with a renderer
+		context.
+		
+		@remark Due to limitations by graphics APIs, functions that require a `Renderer` context may not throw this error immediately, or the error line and file will not be correct. Using the `gfx::getCurrentWindow()` function will always throw the correct error immediately if no context is found.
+		@see gfx::getCurrentWindow()
+		@see gfx::Enums::ContextType
+		*/
+		MACE__DECLARE_ERROR(NoRendererContext);
+
 		namespace Enums {
+			/**
+			Hints to the `WindowModule` which `GraphicsContext` to create.
+			
+			@remark Some contexes are not available on certain platforms. An `UnsupportedRendererError` is thrown in these cases.
+			@see NoRendererContextError
+			*/
 			enum class ContextType {
 				AUTOMATIC,
 				BEST_OGL,
@@ -98,15 +126,9 @@ namespace mc {
 			}
 #endif//MACE_EXPOSE_GLFW
 
-			void create();
-
 			const LaunchConfig& getLaunchConfig() const;
 
 			void setTitle(const std::string& newTitle);
-
-			void init() override;
-			void update() override;
-			void destroy() override;
 
 			std::string getName() const override;
 
@@ -131,6 +153,14 @@ namespace mc {
 
 			std::unique_ptr<gfx::GraphicsContext> context;
 
+			void create();
+
+			void configureThread();
+
+			void init() override;
+			void update() override;
+			void destroy() override;
+
 			void clean() final;
 
 			//these are for the Entity inheritence
@@ -142,9 +172,29 @@ namespace mc {
 			void threadCallback();
 		};//WindowModule
 
+		/**
+		Retrieves the `WindowModule` from the `Renderer` context in this thread if exists, throws an error otherwise.
+
+		@opengl
+		@return The `WindowModule` in this thread. Will never be `nullptr`.
+		@throw NoRendererContext if this thread does not contain a `Renderer` context.
+		*/
 		WindowModule* getCurrentWindow();
 
 #ifdef MACE_EXPOSE_GLFW
+		/**
+		Grabs the `WindowModule` that owns a `GLFWwindow` if it exists.
+		<p>
+		The `GLFWwindow` stores a custom user pointer to the `WindowModule` that created it.
+		<p>
+		This can be called from any thread.
+
+		@param win `GLFWwindow` to convert. Must not be null. Must have been created by a `WindowModule`
+		@return The `WindowModule` that owns `win`. Guarenteed to never be `nullptr`
+		@throw NullPointer if `win` is `nullptr`
+		@throw NoRendererContext if `win` was not created by a `WindowModule`
+		@internal
+		*/
 		WindowModule* convertGLFWWindowToModule(GLFWwindow* win);
 #endif
 

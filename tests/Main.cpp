@@ -17,14 +17,34 @@ The above copyright notice and this permission notice shall be included in all c
 #endif
 #include <Catch.hpp>
 
+#include <exception>
+#include <iostream>
+
+void onUnexpected[[noreturn]](){
+	std::cerr << "Unexpected exception occured" << std::endl;
+	std::abort();
+}
+
+void onTerminate[[noreturn]](){
+	std::cerr << "An unhandled exception occured" << std::endl;
+	std::abort();
+}
+
 int main(int argc, char* const argv[]) {
 	try {
+		std::set_unexpected(&onUnexpected);
+		std::set_terminate(&onTerminate);
+
 		//constant? get it?
 		const int result = Catch::Session().run(argc, argv);
+
+		system("pause");
 
 		return result;
 	} catch( const std::exception& e ) {
 		mc::Error::handleError(e);
+	} catch (...) {
+		std::cerr << "An unknown exception occured";
 	}
 
 	return -1;

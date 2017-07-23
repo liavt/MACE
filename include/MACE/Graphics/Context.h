@@ -320,9 +320,9 @@ namespace mc {
 
 				Enums::Format colorFormat = Enums::Format::BGR;
 				if (mat.channels() == 1) {
-					colorFormat = Enums::Format::LUMINANCE;
+					colorFormat = Enums::Format::RED;
 				} else if (mat.channels() == 2) {
-					colorFormat = Enums::Format::LUMINANCE_ALPHA;
+					colorFormat = Enums::Format::RG;
 				} else if (mat.channels() == 4) {
 					colorFormat = Enums::Format::BGRA;
 				}
@@ -364,7 +364,7 @@ namespace mc {
 
 				bind();
 
-				getImage(Enums::Format::BGR, Enums::Type::UNSIGNED_BYTE, img.data);
+				readPixels(img.data);
 
 				cv::flip(img, img, 0);
 

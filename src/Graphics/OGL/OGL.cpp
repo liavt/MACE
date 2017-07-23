@@ -57,28 +57,28 @@ namespace mc {
 				while ((result = glGetError()) != GL_NO_ERROR) {
 					switch (result) {
 						case GL_INVALID_ENUM:
-							throw OpenGLError(std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file);
 							break;
 						case GL_INVALID_VALUE:
-							throw OpenGLError(std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file);
 							break;
 						case GL_INVALID_OPERATION:
-							throw OpenGLError(std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file);
 							break;
 						case GL_INVALID_FRAMEBUFFER_OPERATION:
-							throw OpenGLError(std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file);
 							break;
 						case GL_STACK_OVERFLOW:
-							throw OpenGLError(std::string(message) + ": GL_STACK_OVERFLOW: A stack pushing operation cannot be done because it would overflow the limit of that stack's size", line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_OVERFLOW: A stack pushing operation cannot be done because it would overflow the limit of that stack's size", line, file);
 							break;
 						case GL_STACK_UNDERFLOW:
-							throw OpenGLError(std::string(message) + ": GL_STACK_UNDERFLOW: A stack popping operation cannot be done because the stack is already at its lowest point", line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_UNDERFLOW: A stack popping operation cannot be done because the stack is already at its lowest point", line, file);
 							break;
 						case GL_OUT_OF_MEMORY:
-							throw OpenGLError(std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file);
+							throw MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file);
 							break;
 						default:
-							throw OpenGLError(std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file);
+							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file);
 							break;
 					}
 				}

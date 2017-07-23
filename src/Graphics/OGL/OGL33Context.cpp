@@ -151,17 +151,21 @@ namespace mc {
 					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				} else if (filter == Enums::ResizeFilter::NEAREST) {
 					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				} else {
+					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + static_cast<Byte>(filter));
 				}
 			}
 
 			void OGL33Texture::setMagFilter(const Enums::ResizeFilter filter) {
 				if (filter == Enums::ResizeFilter::MIPMAP_LINEAR ||
 					filter == Enums::ResizeFilter::MIPMAP_NEAREST) {
-					MACE__THROW(BadFormat, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
+					MACE__THROW(UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
 				} else if (filter == Enums::ResizeFilter::LINEAR) {
 					setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				} else if (filter == Enums::ResizeFilter::NEAREST) {
 					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				} else {
+					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + static_cast<Byte>(filter));
 				}
 			}
 
@@ -174,7 +178,7 @@ namespace mc {
 						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
 						break;
 					default:
-						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
+						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + static_cast<Byte>(hint));
 				}
 			}
 
@@ -187,7 +191,7 @@ namespace mc {
 						setPixelStorage(GL_PACK_ROW_LENGTH, value);
 						break;
 					default:
-						MACE__THROW(BadFormat, "Specified hint is unavialable for OpenGL");
+						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + static_cast<Byte>(hint));
 				}
 			}
 
@@ -201,7 +205,7 @@ namespace mc {
 				} else if (wrap == Enums::WrapMode::MIRROR_CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_S, GL_MIRROR_CLAMP_TO_EDGE);
 				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture");
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + static_cast<Byte>(wrap));
 				}
 			}
 
@@ -215,7 +219,7 @@ namespace mc {
 				} else if (wrap == Enums::WrapMode::MIRROR_CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_T, GL_MIRROR_CLAMP_TO_EDGE);
 				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture");
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + static_cast<Byte>(wrap));
 				}
 			}
 
@@ -287,7 +291,7 @@ namespace mc {
 				} else if (primitiveType == PrimitiveType::TRIANGLES_STRIP_ADJACENCY) {
 					type = GL_TRIANGLE_STRIP_ADJACENCY;
 				} else {
-					MACE__THROW(BadFormat, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<short int>(primitiveType)));
+					MACE__THROW(UnsupportedRenderer, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<short int>(primitiveType)));
 				}
 
 				if (indices.getIndiceNumber() != 0) {

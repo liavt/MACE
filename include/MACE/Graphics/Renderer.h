@@ -181,8 +181,8 @@ namespace mc {
 			*/
 			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
 
-			virtual void onResize(const Size width, const Size height) = 0;
-			virtual void onInit(const Size originalWidth, const Size originalHeight) = 0;
+			virtual void onResize(gfx::WindowModule* win, const Size width, const Size height) = 0;
+			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onSetUp(gfx::WindowModule* win) = 0;
 			virtual void onTearDown(gfx::WindowModule* win) = 0;
 			virtual void onDestroy() = 0;
@@ -192,7 +192,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void resize(const Size width, const Size height);
+			void resize(gfx::WindowModule* win, const Size width, const Size height);
 
 			/**
 			@internal

@@ -14,7 +14,13 @@ The above copyright notice and this permission notice shall be included in all c
 /**
 Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.
 <p>
-Preproccessor definitions will start with `MACE_` and `MACE_INCLUDED` will be defined to equal `true` if MACE is included.
+All macros used by MACE are prefixed with `MACE_`. Internal macros which should not be used are prefixed with `MACE__`
+<p>
+No symbol in `mc` conflict directly with symbols found in `std` (C++11) or any dependency in MACE.
+<p>
+It is usually safe to type `using namespace mc`. However, be weary that this may create name conflicts with external libraries.
+
+@note No MACE header file will bring all of `mc` into the global namespace.
 @todo Add a proper logger
 */
 namespace mc {}

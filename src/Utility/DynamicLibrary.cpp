@@ -115,12 +115,8 @@ namespace mc {
 
 
 	void DynamicLibrary::destroy() {
-		if (!isCreated()) {
-			MACE__THROW(AssertionFailed, "Can\'t destroy an uncreated DynamicLibrary");
-		}
-
-		if (dll == nullptr) {
-			MACE__THROW(NullPointer, "Can\'t destroy DynamicLibrary: internal handle was nullptr. Did initialization fail?");
+		if (!isCreated() || dll == nullptr) {
+			return;
 		}
 
 #ifdef MACE_WINAPI

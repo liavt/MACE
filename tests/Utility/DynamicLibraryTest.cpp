@@ -47,7 +47,6 @@ namespace mc {
 		runningProcess.destroy();
 		
 		REQUIRE(!runningProcess.isCreated());
-		
 	}
 
 	TEST_CASE("Testing loading dynamic libraries from file system", "[utility][dynamiclibrary]") {

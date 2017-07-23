@@ -65,7 +65,25 @@ namespace mc {
 			///GLFW callback functions
 
 			void onGLFWError(int id, const char* desc) {
-				MACE__THROW(Window, "GLFW errored with an ID of " + std::to_string(id) + " and a description of \'" + desc + '\'');
+				if (id == GLFW_NOT_INITIALIZED) {
+					MACE__THROW(InvalidState, "Windowing manager was not initialized/initialization was invalid: NOT_INITIALIZED: " + std::string(desc));
+				} else if (id == GLFW_NO_CURRENT_CONTEXT) {
+					MACE__THROW(NoRendererContext, "No Renderer context in this thread: NO_CURRENT_CONTEXT: " + std::string(desc));
+				} else if (id == GLFW_FORMAT_UNAVAILABLE) {
+					MACE__THROW(BadFormat, "The system does not support the required format: FORMAT_UNAVAIBLE: " + std::string(desc));
+				} else if (id == GLFW_NO_WINDOW_CONTEXT) {
+					MACE__THROW(NoRendererContext, "No window in this thread: NO_WINDOW_CONTEXT: " + std::string(desc));
+				} else if (id == GLFW_API_UNAVAILABLE) {
+					MACE__THROW(UnsupportedRenderer, "Context unavailable on this system: API_UNAVAILABLE" + std::string(desc));
+				} else if (id == GLFW_VERSION_UNAVAILABLE) {
+					MACE__THROW(UnsupportedRenderer, "Context unavailable on this system: VERSION_UNAVAILABLE: " + std::string(desc));
+				} else if (id == GLFW_PLATFORM_ERROR) {
+					MACE__THROW(System, "An error occured in the window platform: PLATFORM_ERROR: " + std::string(desc));
+				} else if (id == GLFW_OUT_OF_MEMORY) {
+					MACE__THROW(OutOfMemory, "Out of memory: OUT_OF_MEMORY: " + std::string(desc));
+				} else {
+					MACE__THROW(Window, desc);
+				}
 			}
 
 			void onWindowClose(GLFWwindow* window) {
@@ -137,11 +155,14 @@ namespace mc {
 		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
 
 		void WindowModule::create() {
+			glfwSetErrorCallback(&onGLFWError);
+
 			if (!glfwInit()) {
 				MACE__THROW(InitializationFailed, "GLFW failed to initialize!");
 			}
 
-			glfwSetErrorCallback(&onGLFWError);
+			//just in case someone changed some before creating the window module
+			glfwDefaultWindowHints();
 
 			switch (config.contextType) {
 				case Enums::ContextType::AUTOMATIC:
@@ -163,7 +184,7 @@ namespace mc {
 			}
 
 			if (context == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: GraphicsContext is nullptr");
+				MACE__THROW(UnsupportedRenderer, "Internal Error: GraphicsContext is nullptr");
 			}
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
@@ -194,10 +215,10 @@ namespace mc {
 			if (!window) {
 				MACE__THROW(InitializationFailed, "OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
+		}//create 
 
+		void WindowModule::configureThread() {
 			glfwMakeContextCurrent(window);
-
-			gfx::ogl::checkGLError(__LINE__, __FILE__, "Error creating window");
 
 			context->init();
 
@@ -220,11 +241,11 @@ namespace mc {
 			glfwGetFramebufferSize(window, &width, &height);
 
 			if (width != config.width || height != config.height) {
-				context->getRenderer()->resize(width, height);
+				context->getRenderer()->resize(this, width, height);
 			}
 
 			config.onCreate(*this);
-		}//create 
+		}
 
 		const WindowModule::LaunchConfig & WindowModule::getLaunchConfig() const {
 			return config;
@@ -259,13 +280,15 @@ namespace mc {
 				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-					create();
+					configureThread();
 
 					Entity::init();
 
 					if (config.fps != 0) {
 						windowDelay = Duration(1000000000L / static_cast<long long>(config.fps));
 					}
+
+					os::checkError(__LINE__, __FILE__, "A system error occurred creating the window");
 				} catch (const std::exception& e) {
 					Error::handleError(e, instance);
 				} catch (...) {
@@ -279,8 +302,6 @@ namespace mc {
 						{
 							//thread doesn't own window, so we have to lock the mutex
 							const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-
-							glfwPollEvents();
 
 							if (getProperty(Entity::DIRTY)) {
 								context->getRenderer()->setUp(this);
@@ -307,9 +328,11 @@ namespace mc {
 						Error::handleError(e, instance);
 						break;
 					} catch (...) {
-						MACE__THROW(Unknown, "An unknown error occured trying to render a fraem");
+						MACE__THROW(Unknown, "An unknown error occured trying to render a frame");
 					}
 				}
+
+				os::checkError(__LINE__, __FILE__, "A system error occurred during the window loop");
 
 				{
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
@@ -318,27 +341,44 @@ namespace mc {
 
 						context->destroy();
 
-						glfwDestroyWindow(window);
+						//the window will be destroyed on the main thread, need to detach this one
+						glfwMakeContextCurrent(nullptr);
 
-						glfwTerminate();
+						os::checkError(__LINE__, __FILE__, "A system error occurred destroying the window");
 					} catch (const std::exception& e) {
 						Error::handleError(e, instance);
 					} catch (...) {
 						MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
 					}
 				}
+
+				os::checkError(__LINE__, __FILE__, "A system error occured while running MACE");
 			} catch (const std::exception& e) {
 				Error::handleError(e, instance);
+			} catch (...) {
+				Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unknown error occured while running MACE", __LINE__, __FILE__), instance);
 			}
+
 		}//threadCallback
 
 		void WindowModule::init() {
+			//GLFW needs to be created from main thread
+			//we create a window in the main thread, then switch its context to the render thread
+			create();
+
+			//release context on this thread, it wll be owned by the seperate rendering thread
+			glfwMakeContextCurrent(nullptr);
+
 			windowThread = std::thread(&WindowModule::threadCallback, this);
+
+			os::checkError(__LINE__, __FILE__, "A system error occured while trying to init the WindowModule");
 		}
 
 		void WindowModule::update() {
 			std::mutex mutex;
 			const std::unique_lock<std::mutex> guard(mutex);
+
+			glfwPollEvents();
 
 			Entity::update();
 		}//update
@@ -351,6 +391,17 @@ namespace mc {
 			}
 
 			windowThread.join();
+
+			os::checkError(__LINE__, __FILE__, "A system error occured while trying to destroy the WindowModule");
+
+			//window can only be destroyed by main thread and with a thread that has a handle to its
+			glfwMakeContextCurrent(window);
+			glfwDestroyWindow(window);
+
+			//we destroyed the window, now detach it from this thread to be safe
+			glfwMakeContextCurrent(nullptr);
+
+			os::checkError(__LINE__, __FILE__, "Internal Error: Error trying to terminate GLFW"); 
 		}//destroy
 
 		std::string WindowModule::getName() const {
@@ -442,7 +493,7 @@ namespace mc {
 		WindowModule * getCurrentWindow() {
 			GLFWwindow* win = glfwGetCurrentContext();
 			if (win == nullptr) {
-				MACE__THROW(NullPointer, "No window in this thread");
+				MACE__THROW(NoRendererContext, "No renderer context in this thread");
 			}
 
 			return convertGLFWWindowToModule(win);
@@ -450,12 +501,12 @@ namespace mc {
 
 		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {
 			if (win == nullptr) {
-				MACE__THROW(NullPointer, "Input to convertGLFWWindowToModule is nullptr!");
+				MACE__THROW(NullPointer, "Input to convertGLFWWindowToModule is nullptr");
 			}
 
 			WindowModule* windowModule = static_cast<WindowModule*>(glfwGetWindowUserPointer(win));
 			if (windowModule == nullptr) {
-				MACE__THROW(NullPointer, "No window module found in window");
+				MACE__THROW(NoRendererContext, "No window module found in window");
 			}
 
 			return windowModule;
