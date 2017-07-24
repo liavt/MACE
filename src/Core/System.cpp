@@ -249,7 +249,7 @@ namespace mc {
 
 		void clearError(const int, const char*) {
 #ifdef MACE_WINAPI
-			GetLastError();
+			SetLastError(0);
 #elif defined(MACE_POSIX)
 			errno = 0;
 #endif
@@ -276,6 +276,8 @@ namespace mc {
 				std::string message(messageBuffer, size);
 
 				LocalFree(messageBuffer);
+
+				SetLastError(0);
 
 				throw SystemError(std::to_string(line) + " in " + std::string(file) + ": " + errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message);
 #else

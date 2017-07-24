@@ -57,12 +57,20 @@ namespace mc {
 			}
 
 			void onUnexpected[[noreturn]]() {
-				std::cerr << "An unexpected error forced the program to abort" << std::endl;
+				try {
+					Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unexpected error occured", __LINE__, __FILE__));
+				} catch (...) {
+					//this function should never throw an error, ignore all errors and abort anyways
+				}
 				std::abort();
 			}
 
 			void onTerminate[[noreturn]](){
-				std::cerr << "The process was forced to terminate" << std::endl;
+				try {
+					Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An exception was thrown somewhere and not caught appropriately", __LINE__, __FILE__));
+				} catch (...) {
+					//this function should never throw an error, ignore all errors and abort anyways
+				}
 				std::abort();
 			}
 		}

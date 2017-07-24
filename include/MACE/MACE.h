@@ -11,6 +11,10 @@ The above copyright notice and this permission notice shall be included in all c
 #ifndef MACE__MACE_H
 #define MACE__MACE_H
 
+#include <MACE/Core/Core.h>
+#include <MACE/Utility/Utility.h>
+#include <MACE/Graphics/Graphics.h>
+
 /**
 Namespace for everything in MACE. This includes constants, typedefs, tests, classes, and variables.
 <p>
@@ -23,10 +27,22 @@ It is usually safe to type `using namespace mc`. However, be weary that this may
 @note No MACE header file will bring all of `mc` into the global namespace.
 @todo Add a proper logger
 */
-namespace mc {}
+namespace mc {
+	unsigned int getMACEVersionMajor() {
+		return MACE_VERSION_MAJOR;
+	}
 
-#include <MACE/Core/Core.h>
-#include <MACE/Utility/Utility.h>
-#include <MACE/Graphics/Graphics.h>
+	unsigned int getMACEVersionMinor() {
+		return MACE_VERSION_MINOR;
+	}
+
+	unsigned int getMACEVersionPatch() {
+		return MACE_VERSION_PATCH;
+	}
+
+	const char* getMACEVersionString() {
+		return MACE_STRINGIFY(MACE_VERSION);
+	}
+}
 
 #endif

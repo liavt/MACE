@@ -46,9 +46,8 @@ namespace mc {
 			}
 
 			GLFWwindow* createWindow(const WindowModule::LaunchConfig& config) {
-				GLFWmonitor* mon = nullptr;
 				if (config.fullscreen) {
-					mon = glfwGetPrimaryMonitor();
+					GLFWmonitor* mon = glfwGetPrimaryMonitor();
 
 					const GLFWvidmode* mode = glfwGetVideoMode(mon);
 					glfwWindowHint(GLFW_RED_BITS, mode->redBits);
@@ -178,6 +177,9 @@ namespace mc {
 					glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 					glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+
+					glfwWindowHint(GLFW_STENCIL_BITS, 8);
+					glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
 #ifdef MACE_DEBUG
 					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
@@ -262,6 +264,8 @@ namespace mc {
 
 		void WindowModule::threadCallback() {
 			try {
+				os::clearError(__LINE__, __FILE__);
+
 				//typedefs for chrono for readibility purposes
 				using Clock = std::chrono::system_clock;
 				using TimeStamp = std::chrono::time_point<Clock>;
@@ -284,11 +288,11 @@ namespace mc {
 					configureThread();
 
 					Entity::init();
-
+					
 					if (config.fps != 0) {
 						windowDelay = Duration(1000000000L / static_cast<long long>(config.fps));
 					}
-
+					
 					os::checkError(__LINE__, __FILE__, "A system error occurred creating the window");
 				} catch (const std::exception& e) {
 					Error::handleError(e, instance);
@@ -359,7 +363,6 @@ namespace mc {
 			} catch (...) {
 				Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unknown error occured while running MACE", __LINE__, __FILE__), instance);
 			}
-
 		}//threadCallback
 
 		void WindowModule::init() {
@@ -370,9 +373,9 @@ namespace mc {
 			//release context on this thread, it wll be owned by the seperate rendering thread
 			glfwMakeContextCurrent(nullptr);
 
-			windowThread = std::thread(&WindowModule::threadCallback, this);
-
 			os::checkError(__LINE__, __FILE__, "A system error occured while trying to init the WindowModule");
+
+			windowThread = std::thread(&WindowModule::threadCallback, this);
 		}
 
 		void WindowModule::update() {
@@ -395,14 +398,11 @@ namespace mc {
 
 			os::checkError(__LINE__, __FILE__, "A system error occured while trying to destroy the WindowModule");
 
-			//window can only be destroyed by main thread and with a thread that has a handle to its
-			glfwMakeContextCurrent(window);
 			glfwDestroyWindow(window);
-
-			//we destroyed the window, now detach it from this thread to be safe
 			glfwMakeContextCurrent(nullptr);
 
-			os::checkError(__LINE__, __FILE__, "Internal Error: Error trying to terminate GLFW"); 
+			glfwTerminate();
+			os::clearError(__LINE__, __FILE__);//https://github.com/glfw/glfw/issues/1053
 		}//destroy
 
 		std::string WindowModule::getName() const {

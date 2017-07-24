@@ -22,12 +22,12 @@ namespace mc {
 	*/
 	class Error: public std::runtime_error {
 	public:
-		static std::string getErrorDump(const std::exception& e, Instance* i = nullptr);
+		static std::string getErrorDump(const std::exception& e, const Instance* i = nullptr);
 
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/
-		static void handleError[[noreturn]](const std::exception& e, Instance* i = nullptr);
+		static void handleError[[noreturn]](const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
 
 		/**
 		@copydoc Error::handleError(const std::exception& e, Instance*)

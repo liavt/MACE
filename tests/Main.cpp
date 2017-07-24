@@ -7,6 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+
 #define MACE_DEBUG 1
 #define MACE_EXPOSE_ALL 1
 #include <MACE/MACE.h>
@@ -19,6 +20,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <exception>
 #include <iostream>
+
 
 void onUnexpected[[noreturn]](){
 	std::cerr << "Unexpected exception occured" << std::endl;
@@ -38,13 +40,13 @@ int main(int argc, char* const argv[]) {
 		//constant? get it?
 		const int result = Catch::Session().run(argc, argv);
 
-		system("pause");
-
 		return result;
 	} catch( const std::exception& e ) {
 		mc::Error::handleError(e);
+		return -1;
 	} catch (...) {
 		std::cerr << "An unknown exception occured";
+		return -1;
 	}
 
 	return -1;

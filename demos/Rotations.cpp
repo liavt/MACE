@@ -147,7 +147,7 @@ int main() {
 		os::ErrorModule errModule = os::ErrorModule();
 		instance.addModule(errModule);
 
-		mc::Initializer i(instance);
+		instance.init();
 		while (instance.isRunning()) {
 			instance.update();
 
@@ -159,9 +159,14 @@ int main() {
 
 			mc::os::wait(33);
 		}
+		instance.destroy();
 	} catch (const std::exception& e) {
 		Error::handleError(e, instance);
 		return -1;
+	} catch (...) {
+		std::cerr << "An unknown exception occured";
+		return -1;
 	}
+
 	return 0;
 }

@@ -60,26 +60,33 @@ namespace mc {
 				const GLenum result = glewInit();
 				if (result != GLEW_OK) {
 					std::ostringstream errorMessage;
-					errorMessage << "GLEW failed to initialize: ";
+					errorMessage << "OpenGL failed to initialize: ";
 					//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
 					//+ operater in std::string can not handle this conversion.
 					errorMessage << glewGetErrorString(result);
-
+					errorMessage << ": ";
 					if (result == GLEW_ERROR_NO_GL_VERSION) {
-						errorMessage << "\nThis can be a result of an outdated graphics driver. Please ensure that you have OpenGL 3.0+";
+						errorMessage << "NO_GL_VERSION: There was no OpenGL version found on this system";
+					} else if (result == GLEW_ERROR_GL_VERSION_10_ONLY) {
+						errorMessage << "GL_VERSION_10_ONLY: The version of OpenGL found on this system is outdated: OpenGL 1.0 found, OpenGL 1.1+ required";
 					}
 
-					MACE__THROW(InitializationFailed, errorMessage.str());
+					MACE__THROW(UnsupportedRenderer, errorMessage.str());
+				}
+
+				if (!GLEW_VERSION_3_3) {
+					std::ostringstream errorMessage;
+					errorMessage << "This system (OpenGL " << glGetString(GL_VERSION) << ")";
+					errorMessage << " does not support the required OpenGL version required by this renderer, ";
+					errorMessage << "OpenGL 3.3";
+					MACE__THROW(UnsupportedRenderer, errorMessage.str());
 				}
 
 				try {
 					gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
 				} catch (...) {
 					//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
-				}
-
-				if (!GLEW_VERSION_3_3) {
-					std::cerr << "OpenGL 3.3 not found, falling back to a lower version, which may cause undefined results. Try updating your graphics driver to fix this." << std::endl;
+					//see https://www.khronos.org/opengl/wiki/OpenGL_Loading_Library (section GLEW) saying to ignore a GLEW error
 				}
 
 #ifdef MACE_DEBUG

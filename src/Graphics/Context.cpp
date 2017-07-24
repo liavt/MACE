@@ -491,23 +491,20 @@ namespace mc {
 		}
 
 		void Texture::setData(const void * data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) {
-			if (width == 0) {
-				MACE__THROW(IndexOutOfBounds, "Width of Texture can not be 0!");
-			} else if (height == 0) {
-				MACE__THROW(IndexOutOfBounds, "Height of Texture can not be 0!");
-			}
-			
-			texture->width = width;
-			texture->height = height;
 			texture->type = type;
 			texture->format = format;
 			texture->internalFormat = internalFormat;
+			if (width == 0 || height == 0) {
+				return;
+			}
+			texture->width = width;
+			texture->height = height;
 			texture->setData(data, mipmap);
 		}
 
 		void Texture::setData(const void * data, const Index mipmap) {
 			if (isEmpty()) {
-				MACE__THROW(InvalidState, "Must set width and height with full form of setData() in order to use the shortened form");
+				return;
 			}
 
 			texture->setData(data, mipmap);
@@ -559,7 +556,7 @@ namespace mc {
 		}
 
 		bool Texture::operator==(const Texture& other) const {
-			return hue == other.hue && texture == other.texture;
+			return transform == other.transform && hue == other.hue && texture == other.texture;
 		}
 
 		bool Texture::operator!=(const Texture& other) const {

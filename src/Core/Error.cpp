@@ -56,7 +56,7 @@ namespace mc {
 		Error::handleError(*this);
 	}
 
-	std::string Error::getErrorDump(const std::exception & e, Instance* instance) {
+	std::string Error::getErrorDump(const std::exception & e, const Instance* instance) {
 		std::stringstream dump;
 		dump << "At ";
 
