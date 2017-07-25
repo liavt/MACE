@@ -45,7 +45,7 @@ namespace mc {
 			//the definition is later stringified. cant be a string because this gets added to the shader.
 #define MACE__ENTITY_DATA_NAME _mc_EntityData
 
-#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 40
+#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 44
 #define MACE__PAINTER_DATA_LOCATION 1
 #define MACE__PAINTER_DATA_USAGE GL_DYNAMIC_DRAW
 #define MACE__PAINTER_DATA_NAME _mc_PainterData
@@ -204,7 +204,7 @@ namespace mc {
 				painterUniforms.destroy();
 
 				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
-					iter->second->program.destroy();
+					iter->second.program.destroy();
 				}
 
 				protocols.clear();
@@ -285,7 +285,7 @@ namespace mc {
 
 				const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
 
-				windowRatios = { 
+				windowRatios = {
 					static_cast<float>(config.width) / static_cast<float>(width),
 					static_cast<float>(config.height) / static_cast<float>(height)
 				};
@@ -315,8 +315,8 @@ namespace mc {
 				return nullptr;
 			}
 
-			std::shared_ptr<PainterImpl> OGL33Renderer::createPainterImpl(const GraphicsEntity * const entity) {
-				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, entity));
+			std::shared_ptr<PainterImpl> OGL33Renderer::createPainterImpl(Painter* const p) {
+				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, p));
 			}
 
 			std::string OGL33Renderer::processShader(const std::string & shader) {
@@ -330,14 +330,13 @@ namespace mc {
 				}
 
 				const Entity::Metrics metrics = entity->getMetrics();
-				const float opacity = entity->getOpacity();
 
 				//now we set the uniforms defining the transformations of the entity
 				entityUniforms.bind();
 
 				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
 				float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				
+
 				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
 				mappedEntityData += 4;//pointer arithmetic!
 				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
@@ -351,12 +350,10 @@ namespace mc {
 				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
 				mappedEntityData += 3;
 
-				std::copy(&opacity, &opacity + sizeof(opacity), mappedEntityData);
-
 				entityUniforms.unmap();
 			}
 
-			void OGL33Renderer::loadPainterUniforms(const Painter::State& state) {
+			void OGL33Renderer::loadPainterUniforms(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
 				float color[4] = {};
 
 				//now we set the uniforms defining the transformations of the entity
@@ -365,8 +362,8 @@ namespace mc {
 				painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
 				//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
 				float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-				
-std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
+
+				std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
 				mappedEntityData += 4;
 				std::copy(state.transformation.rotation.begin(), state.transformation.rotation.end(), mappedEntityData);
 				mappedEntityData += 4;
@@ -375,6 +372,11 @@ std::copy(state.transformation.translation.begin(), state.transformation.transla
 
 				std::copy(state.data.begin(), state.data.end(), mappedEntityData);
 				mappedEntityData += 4;
+
+				std::copy(state.filter.begin(), state.filter.end(), mappedEntityData);
+				mappedEntityData += 3;
+				std::copy(&state.opacity, &state.opacity + sizeof(float), mappedEntityData);
+				++mappedEntityData;
 
 				state.foregroundColor.flatten(color);
 				std::copy(std::begin(color), std::end(color), mappedEntityData);
@@ -400,24 +402,18 @@ std::copy(state.transformation.translation.begin(), state.transformation.transla
 			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Enums::Brush, Enums::RenderType> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
-					std::unique_ptr<OGL33Renderer::RenderProtocol> prot = std::unique_ptr<OGL33Renderer::RenderProtocol>(new OGL33Renderer::RenderProtocol());
-					prot->program = createShadersForSettings(settings);
+					RenderProtocol prot = RenderProtocol();
+					prot.program = createShadersForSettings(settings);
 
-					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>>(settings, std::move(prot)));
+					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderType>, OGL33Renderer::RenderProtocol>(settings, prot));
 
 					protocol = protocols.find(settings);
 				}
 
-#ifdef MACE_DEBUG
-				if (protocol->second == nullptr) {
-					MACE__THROW(NullPointer, "Internal Error: protocol was nullptr");
-				}
-#endif
+				protocol->second.program.bind();
+				protocol->second.program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getPainter().getID()));
 
-				protocol->second->program.bind();
-				protocol->second->program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getID()));
-
-				return *protocol->second;
+				return protocol->second;
 			}
 
 			ogl::ShaderProgram OGL33Renderer::createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
@@ -522,10 +518,14 @@ std::copy(state.transformation.translation.begin(), state.transformation.transla
 				return shaderPreprocessor;
 			}//getSSLPreprocessor
 
-			OGL33Painter::OGL33Painter(OGL33Renderer* const r, const GraphicsEntity * const entity) : PainterImpl(entity), renderer(r) {}
+			OGL33Painter::OGL33Painter(OGL33Renderer* const r, Painter* const p) : PainterImpl(p), renderer(r) {}
 
-			void OGL33Painter::init() {
-				renderer->loadEntityUniforms(entity);
+			void OGL33Painter::init() {}
+
+			void OGL33Painter::destroy() {}
+
+			void OGL33Painter::begin() {
+				renderer->loadEntityUniforms(painter->getEntity());
 
 				renderer->entityUniforms.bind();
 				renderer->entityUniforms.bindForRender();
@@ -534,14 +534,14 @@ std::copy(state.transformation.translation.begin(), state.transformation.transla
 				renderer->painterUniforms.bindForRender();
 			}
 
-			void OGL33Painter::destroy() {}
+			void OGL33Painter::end() {}
 
-			void OGL33Painter::loadSettings(const Painter::State& state) {
-				renderer->loadPainterUniforms(state);
+			void OGL33Painter::loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
+				renderer->loadPainterUniforms(state, dirtyFlags);
 			}
 
 			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
-				const OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(entity, { brush, type });
+				const OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(painter->getEntity(), { brush, type });
 				m.bind();
 				prot.program.bind();
 

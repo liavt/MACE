@@ -615,8 +615,8 @@ namespace mc {
 		@param v `Matrix` which will be printed
 		@return `output` for chaining
 		*/
-		friend std::ostream &operator<<(std::ostream &output,
-										const Child &v) {
+		friend std::ostream& operator<<(std::ostream& output,
+										const Child& v) {
 			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
 			for (Index x = 0; x < N; ++x) {
 				output << v[x];

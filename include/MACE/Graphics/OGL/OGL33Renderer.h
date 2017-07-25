@@ -24,12 +24,15 @@ namespace mc {
 			class OGL33Painter: public PainterImpl {
 				friend class OGL33Renderer;
 			public:
-				OGL33Painter(OGL33Renderer* const renderer, const GraphicsEntity* const entity);
+				OGL33Painter(OGL33Renderer* const renderer, Painter* const p);
 
 				void init() override;
 				void destroy() override;
+
+				void begin() override;
+				void end() override;
 			protected:
-				void loadSettings(const Painter::State& state) override;
+				void loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) override;
 				void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) override;
 			private:
 				OGL33Renderer* const renderer;
@@ -56,7 +59,7 @@ namespace mc {
 
 				GraphicsEntity* getEntityAt(const int x, const int y) override;
 
-				std::shared_ptr<PainterImpl> createPainterImpl(const GraphicsEntity * const entity) override;
+				std::shared_ptr<PainterImpl> createPainterImpl(Painter* const p) override;
 
 				const Preprocessor& getShaderPreprocessor();
 			private:
@@ -97,14 +100,14 @@ namespace mc {
 					ogl::ShaderProgram program;
 				};
 
-				std::map<std::pair<Enums::Brush, Enums::RenderType>, std::unique_ptr<OGL33Renderer::RenderProtocol>> protocols{};
+				std::map<std::pair<Enums::Brush, Enums::RenderType>, OGL33Renderer::RenderProtocol> protocols{};
 				ogl::UniformBuffer entityUniforms = ogl::UniformBuffer();
 				ogl::UniformBuffer painterUniforms = ogl::UniformBuffer();
 
 				std::string processShader(const std::string& shader);
 
 				void loadEntityUniforms(const GraphicsEntity * const entity);
-				void loadPainterUniforms(const Painter::State& state);
+				void loadPainterUniforms(const Painter::State& state, const std::uint_least16_t& dirtyFlags);
 
 				OGL33Renderer::RenderProtocol& getProtocol(const GraphicsEntity* const entity, const std::pair<Enums::Brush, Enums::RenderType> settings);
 				ogl::ShaderProgram createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings);

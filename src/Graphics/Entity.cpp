@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/BitField.h>
 #include <string>
+#include <iostream>
 
 namespace mc {
 	namespace gfx{
@@ -661,105 +662,6 @@ namespace mc {
 				transformation.translation[2] = newZ;
 			}
 		}
-
-		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
-
-		GraphicsEntity::~GraphicsEntity() noexcept {}
-
-		void GraphicsEntity::init() {
-			id = gfx::getCurrentWindow()->getContext()->getRenderer()->queue(this);
-
-			Entity::init();
-		}
-
-		void GraphicsEntity::destroy() {
-			Entity::destroy();
-
-			gfx::getCurrentWindow()->getContext()->getRenderer()->remove(id);
-
-			id = 0;
-		}
-
-		Index GraphicsEntity::getID() {
-			return id;
-		}
-
-		const Index GraphicsEntity::getID() const {
-			return id;
-		}
-
-		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return id == other.id&&opacity == other.opacity&&Entity::operator==(other);
-		}
-
-		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
-			return !(operator==(other));
-		}
-
-		void GraphicsEntity::clean() {
-			Entity::clean();
-		}
-
-		float GraphicsEntity::getOpacity() {
-			makeDirty();
-
-			return opacity;
-		}
-
-		const float GraphicsEntity::getOpacity() const {
-			return opacity;
-		}
-
-		void GraphicsEntity::setOpacity(const float f) {
-			if (opacity != f) {
-				makeDirty();
-
-				opacity = f;
-			}
-		}
-
-		bool Selectable::isClicked() const {
-			return selectableProperties.getBit(Selectable::CLICKED);
-		}
-
-		bool Selectable::isDisabled() const {
-			return selectableProperties.getBit(Selectable::DISABLED);
-		}
-
-		bool Selectable::isHovered() const {
-			return selectableProperties.getBit(Selectable::HOVERED);
-		}
-
-		void Selectable::click() {
-			selectableProperties.setBit(Selectable::CLICKED, true);
-
-			onClick();
-		}
-
-		void Selectable::disable() {
-			selectableProperties.setBit(Selectable::DISABLED, true);
-
-			onDisable();
-		}
-
-		void Selectable::enable() {
-			selectableProperties.setBit(Selectable::DISABLED, false);
-
-			onEnable();
-		}
-
-		void Selectable::trigger() {
-			onTrigger();
-		}
-
-		void Selectable::onClick() {}
-
-
-		void Selectable::onEnable() {}
-
-		void Selectable::onDisable() {}
-
-		void Selectable::onTrigger() {}
 
 		bool Entity::Metrics::operator==(const Metrics & other) const {
 			return translation == other.translation&&scale == other.scale&&rotation == other.rotation

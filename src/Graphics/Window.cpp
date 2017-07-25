@@ -501,10 +501,6 @@ namespace mc {
 		}
 
 		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {
-			if (win == nullptr) {
-				MACE__THROW(NullPointer, "Input to convertGLFWWindowToModule is nullptr");
-			}
-
 			WindowModule* windowModule = static_cast<WindowModule*>(glfwGetWindowUserPointer(win));
 			if (windowModule == nullptr) {
 				MACE__THROW(NoRendererContext, "No window module found in window");

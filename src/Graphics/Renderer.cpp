@@ -11,9 +11,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Entity2D.h>
 
-//for testing purposes
-#include <iostream>
-
 namespace mc {
 	namespace gfx {
 		void Renderer::init(gfx::WindowModule* win) {
@@ -32,9 +29,9 @@ namespace mc {
 			onSetUp(win);
 		}//setUp
 
-		Index Renderer::queue(GraphicsEntity * e) {
+		Index Renderer::queue(GraphicsEntity * const e) {
 			if (e == nullptr) {
-				MACE__THROW(NullPointer, "Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
+				MACE__THROW(NullPointer, "Internal Error: Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
 			}
 
 			onQueue(e);
@@ -44,6 +41,10 @@ namespace mc {
 		}//queue
 
 		void Renderer::remove(const Index id) {
+			if (id == 0 || id > renderQueue.size()) {
+				MACE__THROW(IndexOutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
+			}
+
 			renderQueue[id - 1] = nullptr;
 		}
 
@@ -110,7 +111,7 @@ namespace mc {
 			return context;
 		}
 
-		Index Renderer::pushEntity(GraphicsEntity * entity) {
+		Index Renderer::pushEntity(GraphicsEntity * const entity) {
 			for (Index i = 0; i < renderQueue.size(); ++i) {
 				if (renderQueue[i] == nullptr) {
 					renderQueue[i] = entity;
@@ -121,50 +122,66 @@ namespace mc {
 			return renderQueue.size() - 1;
 		}//pushEntity(protocol, entity)
 
-		PainterImpl::PainterImpl(const GraphicsEntity * const en) : entity(en) {
-			if (en == nullptr) {
-				MACE__THROW(NullPointer, "Input to Painter was nullptr");
+		PainterImpl::PainterImpl(Painter* const p) : painter(p) {}
+
+		Painter::Painter(GraphicsEntity * const en) : entity(en) {}
+
+		Painter::Painter(const Painter & p) : impl(p.impl), entity(p.entity), id(p.id) {}
+
+		void Painter::begin() {
+#ifdef MACE_DEBUG
+			if (impl == nullptr) {
+				MACE__THROW(NullPointer, "Painter was not initialized correctly");
+			} else if (id == 0) {
+				MACE__THROW(IndexOutOfBounds, "Invalid Painter ID");
 			}
+#endif
+			impl->begin();
+		}
+
+		void Painter::end() {
+			impl->end();
 		}
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
-			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
-			draw(Model::getQuad(), Enums::Brush::MASK);
-			pop();
+			drawQuad(Enums::Brush::MASK);
 		}
 
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
-			push();
 			setData({ minimum, maximum, 0, 0 });
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
-			draw(Model::getQuad(), Enums::Brush::MASKED_BLEND);
-			pop();
+			drawQuad(Enums::Brush::MASKED_BLEND);
+		}
+
+		void Painter::drawQuad(const Enums::Brush brush, const Enums::RenderType type) {
+			draw(Model::getQuad(), brush, type);
 		}
 
 		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
-			impl->loadSettings(state);
+			impl->loadSettings(state, dirtyFlags);
 			impl->draw(m, brush, type);
 		}
 
 		const GraphicsEntity * const Painter::getEntity() const {
-			return impl->entity;
+			return entity;
 		}
 
 		void Painter::setTexture(const Texture & t, const Enums::TextureSlot& slot) {
 			t.bind(static_cast<unsigned int>(slot));
 			if (slot == Enums::TextureSlot::FOREGROUND) {
+				//the member functions set DirtyFlags accordingly
 				setForegroundColor(t.getHue());
-				state.foregroundTransform = t.getTransform();
+				setForegroundTransform(t.getTransform());
 			} else if (slot == Enums::TextureSlot::BACKGROUND) {
 				setBackgroundColor(t.getHue());
-				state.backgroundTransform = t.getTransform();
+				setBackgroundTransform(t.getTransform());
 			} else if (slot == Enums::TextureSlot::MASK) {
 				setMaskColor(t.getHue());
-				state.maskTransform = t.getTransform();
+				setMaskTransform(t.getTransform());
 			} else {
 				MACE__THROW(IndexOutOfBounds, "Unknown Texture slot");
 			}
@@ -172,10 +189,8 @@ namespace mc {
 		}
 
 		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderType type) {
-			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			draw(m, Enums::Brush::TEXTURE, type);
-			pop();
 		}
 
 		void Painter::fillModel(const Model & m, const Enums::RenderType type) {
@@ -183,11 +198,9 @@ namespace mc {
 		}
 
 		void Painter::fillRect(const float x, const float y, const float w, const float h) {
-			push();
 			translate(x, y);
 			scale(w, h);
-			draw(Model::getQuad(), Enums::Brush::COLOR);
-			pop();
+			drawQuad(Enums::Brush::COLOR);
 		}
 
 		void Painter::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
@@ -199,17 +212,19 @@ namespace mc {
 		}
 
 		void Painter::drawImage(const Texture & img) {
-			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			draw(Model::getQuad(), Enums::Brush::TEXTURE);
-			pop();
+			drawQuad(Enums::Brush::TEXTURE);
 		}
 
 		void Painter::setForegroundColor(const Color & col) {
-			state.foregroundColor = col;
+			if (state.foregroundColor != col) {
+				state.foregroundColor = col;
+				dirtyFlags |= Painter::FOREGROUND_COLOR;
+			}
 		}
 
 		Color & Painter::getForegroundColor() {
+			dirtyFlags |= Painter::FOREGROUND_COLOR;
 			return state.foregroundColor;
 		}
 
@@ -217,11 +232,31 @@ namespace mc {
 			return state.foregroundColor;
 		}
 
+		void Painter::setForegroundTransform(const Vector<float, 4>& trans) {
+			if (state.foregroundTransform != trans) {
+				state.foregroundTransform = trans;
+				dirtyFlags |= Painter::FOREGROUND_TRANSFORM;
+			}
+		}
+
+		Vector<float, 4>& Painter::getForegroundTransform() {
+			dirtyFlags |= Painter::FOREGROUND_TRANSFORM;
+			return state.foregroundTransform;
+		}
+
+		const Vector<float, 4>& Painter::getForegroundTransform() const {
+			return state.foregroundTransform;
+		}
+
 		void Painter::setBackgroundColor(const Color & col) {
-			state.backgroundColor = col;
+			if (state.backgroundColor != col) {
+				state.backgroundColor = col;
+				dirtyFlags |= Painter::BACKGROUND_COLOR;
+			}
 		}
 
 		Color & Painter::getBackgroundColor() {
+			dirtyFlags |= Painter::BACKGROUND_COLOR;
 			return state.backgroundColor;
 		}
 
@@ -229,11 +264,31 @@ namespace mc {
 			return state.backgroundColor;
 		}
 
+		void Painter::setBackgroundTransform(const Vector<float, 4>& trans) {
+			if (state.backgroundTransform != trans) {
+				state.backgroundTransform = trans;
+				dirtyFlags |= Painter::BACKGROUND_TRANSFORM;
+			}
+		}
+
+		Vector<float, 4>& Painter::getBackgroundTransform() {
+			dirtyFlags |= Painter::BACKGROUND_TRANSFORM;
+			return state.backgroundTransform;
+		}
+
+		const Vector<float, 4>& Painter::getBackgroundTransform() const {
+			return state.backgroundTransform;
+		}
+
 		void Painter::setMaskColor(const Color & col) {
-			state.maskColor = col;
+			if (state.maskColor != col) {
+				state.maskColor = col;
+				dirtyFlags |= Painter::MASK_COLOR;
+			}
 		}
 
 		Color & Painter::getMaskColor() {
+			dirtyFlags |= Painter::MASK_COLOR;
 			return state.maskColor;
 		}
 
@@ -241,11 +296,47 @@ namespace mc {
 			return state.maskColor;
 		}
 
+		void Painter::setMaskTransform(const Vector<float, 4>& trans) {
+			if (state.maskTransform != trans) {
+				state.maskTransform = trans;
+				dirtyFlags |= Painter::MASK_TRANSFORM;
+			}
+		}
+
+		Vector<float, 4>& Painter::getMaskTransform() {
+			dirtyFlags |= Painter::MASK_TRANSFORM;
+			return state.maskTransform;
+		}
+
+		const Vector<float, 4>& Painter::getMaskTransform() const {
+			return state.maskTransform;
+		}
+
+		void Painter::setFilter(const Vector<float, 3> & col) {
+			if (state.filter != col) {
+				state.filter = col;
+				dirtyFlags |= Painter::FILTER;
+			}
+		}
+
+		Vector<float, 3>& Painter::getFilter() {
+			dirtyFlags |= Painter::FILTER;
+			return state.filter;
+		}
+
+		const Vector<float, 3>& Painter::getFilter() const {
+			return state.filter;
+		}
+
 		void Painter::setData(const Vector<float, 4> & col) {
-			state.data = col;
+			if (state.data != col) {
+				state.data = col;
+				dirtyFlags |= Painter::DATA;
+			}
 		}
 
 		Vector<float, 4> & Painter::getData() {
+			dirtyFlags |= Painter::DATA;
 			return state.data;
 		}
 
@@ -253,17 +344,15 @@ namespace mc {
 			return state.data;
 		}
 
-		void Painter::resetColor() {
-			state.foregroundColor = Colors::INVISIBLE;
-			state.backgroundColor = Colors::INVISIBLE;
-			state.data = { 0.0f, 0.0f, 0.0f, 0.0f };
-		}
-
 		void Painter::setTransformation(const TransformMatrix & trans) {
-			state.transformation = trans;
+			if (state.transformation != trans) {
+				state.transformation = trans;
+				dirtyFlags |= Painter::TRANSFORMATION;
+			}
 		}
 
 		TransformMatrix & Painter::getTransformation() {
+			dirtyFlags |= Painter::TRANSFORMATION;
 			return state.transformation;
 		}
 
@@ -271,12 +360,31 @@ namespace mc {
 			return state.transformation;
 		}
 
+		void Painter::setOpacity(const float opacity) {
+			if (state.opacity != opacity) {
+				state.opacity = opacity;
+				dirtyFlags |= Painter::OPACITY;
+			}
+		}
+
+		float Painter::getOpacity() {
+			dirtyFlags |= Painter::OPACITY;
+			return state.opacity;
+		}
+
+		const float Painter::getOpacity() const {
+			return state.opacity;
+		}
+
 		void Painter::translate(const Vector<float, 3>& vec) {
 			translate(vec.x(), vec.y(), vec.z());
 		}
 
 		void Painter::translate(const float x, const float y, const float z) {
-			state.transformation.translate(x, y, z);
+			if (x != 0.0f && y != 0.0f && z != 0.0f) {
+				state.transformation.translate(x, y, z);
+				dirtyFlags |= Painter::TRANSLATION;
+			}
 		}
 
 		void Painter::rotate(const Vector<float, 3>& vec) {
@@ -284,7 +392,10 @@ namespace mc {
 		}
 
 		void Painter::rotate(const float x, const float y, const float z) {
-			state.transformation.rotate(x, y, z);
+			if (x != 0.0f && y != 0.0f && z != 0.0f) {
+				state.transformation.rotate(x, y, z);
+				dirtyFlags |= Painter::ROTATION;
+			}
 		}
 
 		void Painter::scale(const Vector<float, 3>& vec) {
@@ -292,11 +403,15 @@ namespace mc {
 		}
 
 		void Painter::scale(const float x, const float y, const float z) {
-			state.transformation.scale(x, y, z);
+			if (x != 1.0f && y != 1.0f && z != 1.0f) {
+				state.transformation.scale(x, y, z);
+				dirtyFlags |= Painter::SCALE;
+			}
 		}
 
 		void Painter::resetTransform() {
 			state.transformation.reset();
+			dirtyFlags |= Painter::TRANSFORMATION;
 		}
 
 		void Painter::push() {
@@ -306,15 +421,25 @@ namespace mc {
 		void Painter::pop() {
 			state = stateStack.top();
 			stateStack.pop();
+			dirtyFlags |= Painter::ALL;
 		}
 
 		void Painter::reset() {
-			resetColor();
-			resetTransform();
+			state = Painter::State();
+			dirtyFlags |= Painter::ALL;
+		}
+
+		const Index & Painter::getID() const {
+			return id;
+		}
+
+		Painter Painter::operator=(const Painter& right) {
+			return Painter(right);
 		}
 
 		bool Painter::operator==(const Painter & other) const {
-			return impl == other.impl && state == other.state && stateStack == other.stateStack;
+			return impl == other.impl&& id == other.id && entity == other.entity
+				&& dirtyFlags == other.dirtyFlags && state == other.state && stateStack == other.stateStack;
 		}
 
 		bool Painter::operator!=(const Painter & other) const {
@@ -322,39 +447,86 @@ namespace mc {
 		}
 
 		bool PainterImpl::operator==(const PainterImpl & other) const {
-			return entity == other.entity;
+			return painter == other.painter;
 		}
 
 		bool PainterImpl::operator!=(const PainterImpl & other) const {
 			return !operator==(other);
 		}
 
-		Painter::Painter(GraphicsEntity * const en) {
-			impl = gfx::getCurrentWindow()->getContext()->getRenderer()->createPainterImpl(en);
+		void Painter::init() {
+			Renderer* r = gfx::getCurrentWindow()->getContext()->getRenderer();
+			id = r->queue(entity);
+			impl = r->createPainterImpl(this);
 #ifdef MACE_DEBUG
 			if (impl.get() == nullptr) {
-				MACE__THROW(NullPointer, "Renderer returned a nullptr to a Painter");
+				MACE__THROW(NullPointer, "Internal Error: Renderer returned a nullptr to a Painter");
 			}
 #endif
-		}
 
-		void Painter::init() {
+			if (id == 0 || entity == nullptr) {
+				MACE__THROW(InitializationFailed, "Internal Error: Invalid PainterImpl settings");
+			}
 			impl->init();
 		}
 
 		void Painter::destroy() {
 			impl->destroy();
+			id = 0;
 		}
 
 		bool Painter::State::operator==(const State & other) const {
 			return transformation == other.transformation && foregroundColor == other.foregroundColor
-				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor
+				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor && opacity == other.opacity
 				&& foregroundTransform == other.foregroundTransform && backgroundTransform == other.backgroundTransform
-				&& maskTransform == other.maskTransform && data == other.data;
+				&& maskTransform == other.maskTransform && data == other.data && filter == other.filter;
 		}
 
 		bool Painter::State::operator!=(const State & other) const {
 			return !operator==(other);
+		}
+
+		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
+
+		GraphicsEntity::~GraphicsEntity() noexcept {}
+
+		void GraphicsEntity::init() {
+			painter.init();
+
+			Entity::init();
+		}
+
+		void GraphicsEntity::destroy() {
+			Entity::destroy();
+
+			painter.destroy();
+		}
+
+		Painter & GraphicsEntity::getPainter() {
+			makeDirty();
+			return painter;
+		}
+
+		const Painter & GraphicsEntity::getPainter() const {
+			return painter;
+		}
+
+		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
+			return painter == other.painter&&Entity::operator==(other);
+		}
+
+		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {
+			return !(operator==(other));
+		}
+
+		void GraphicsEntity::onRender() {
+			painter.begin();
+			onRender(painter);
+			painter.end();
+		}
+
+		void GraphicsEntity::clean() {
+			Entity::clean();
 		}
 	}//gfx
 }//mc

@@ -13,7 +13,6 @@ MACE__UNIFORM_BUFFER MACE__ENTITY_DATA_NAME{
 	mc_EntityDataStruct mc_BaseEntity;
 	mc_EntityDataStruct mc_ParentEntity;
 	vec3 mc_Scale;
-	float mc_EntityOpacity;
 };
 
 struct _mc_TextureAttachment{
@@ -26,6 +25,8 @@ MACE__UNIFORM_BUFFER MACE__PAINTER_DATA_NAME{
 	vec3 _mc_TransformRotation;
 	vec3 _mc_TransformScale;
 	vec4 mc_Data;
+	vec3 _mc_Filter;
+	float _mc_Opacity;
 	_mc_TextureAttachment mc_Foreground;
 	_mc_TextureAttachment mc_Background;
 	_mc_TextureAttachment mc_Mask;

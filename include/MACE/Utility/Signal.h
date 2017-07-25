@@ -30,7 +30,7 @@ namespace mc {
 		MACE__SIGNAL_ERROR(SignalFloatingPoint);
 		MACE__SIGNAL_ERROR(SignalSegmentFault);
 
-		//the following are only thrown on POSIX systems, but can be caught from any system just in case
+		//the following are only thrown on POSIX systems, but can be caught from any system for portability purposes
 		MACE__SIGNAL_ERROR(SignalHangup);
 		MACE__SIGNAL_ERROR(SignalKill);
 		MACE__SIGNAL_ERROR(SignalStop);

@@ -48,42 +48,6 @@ namespace mc {
 			}
 		};
 
-		class DummyEntity2D: public mc::gfx::Entity2D {
-
-		public:
-			DummyEntity2D() : mc::gfx::Entity2D() {};
-
-
-			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
-
-			using Entity2D::init;
-			using Entity2D::update;
-			using Entity2D::render;
-			using Entity2D::destroy;
-
-		protected:
-
-			virtual void onUpdate() override {
-				isUpdated = true;
-			}
-
-			virtual void onInit() override {
-				isInit = true;
-			}
-
-			virtual void onDestroy() override {
-				isDestroyed = true;
-			}
-
-			virtual void onRender() override {
-				isRendered = true;
-			}
-
-			virtual void onClean() override{
-				isCleaned = true;
-			}
-		};
-
 		class DummyGroup: public mc::gfx::Group {
 		public:
 			using Entity::init;
@@ -122,7 +86,6 @@ namespace mc {
 
 		TEST_CASE("Testing dirtiness") {
 			DummyEntity e = DummyEntity();
-			DummyEntity2D e2 = DummyEntity2D();
 
 			SECTION("Testing what makes something dirty") {
 				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));

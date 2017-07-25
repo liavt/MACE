@@ -37,7 +37,7 @@ void main(void){
 	vec4 mc_Fragment = mc_frag_main();
 		
 	if(mc_Fragment.a != 0){
-		_mc_OutColor = vec4(mc_Fragment.rgb, mc_Fragment.a * mc_EntityOpacity);
+		_mc_OutColor = vec4(mc_Fragment.rgb * _mc_Filter.rgb, mc_Fragment.a * _mc_Opacity);
 		
 		_mc_OutID = mc_EntityID;
 	}else{

@@ -24,6 +24,7 @@ namespace mc {
 		//forward-defining dependencies
 		class Entity;
 		class Texture;
+		class Painter;
 
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
@@ -662,7 +663,6 @@ namespace mc {
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 
-
 			Entity* parent = nullptr;
 
 			/**
@@ -683,87 +683,6 @@ namespace mc {
 			void onDestroy() override;
 
 		};//Group
-
-		class GraphicsEntity: public Entity {
-		public:
-			GraphicsEntity() noexcept;
-
-			virtual ~GraphicsEntity() noexcept;
-
-			void clean() final;
-
-			void init() final;
-
-			void destroy() final;
-
-			Index getID();
-			const Index getID() const;
-
-			/**
-			@dirty
-			*/
-			float getOpacity();
-			const float getOpacity() const;
-			/**
-			@dirty
-			*/
-			void setOpacity(const float f);
-
-			bool operator==(const GraphicsEntity& other) const noexcept;
-			bool operator!=(const GraphicsEntity& other) const noexcept;
-		private:
-			Index id;
-
-			float opacity = 1.0f;
-		};//GraphicsEntity
-
-		class Texturable {
-		public:
-			virtual ~Texturable() = default;
-
-			/**
-			@dirty
-			*/
-			virtual void setTexture(const Texture& tex) = 0;
-			/**
-			@copydoc Texturable::getTexture() const
-			@dirty
-			*/
-			virtual Texture& getTexture() = 0;
-			virtual const Texture& getTexture() const = 0;
-		};
-
-		class Selectable {
-		public:
-			virtual ~Selectable() = default;
-
-			bool isClicked() const;
-			bool isDisabled() const;
-			bool isHovered() const;
-
-			void click();
-
-			void disable();
-			void enable();
-
-			void trigger();
-		protected:
-			enum SelectableProperty: Byte {
-				CLICKED = 0,
-				DISABLED = 1,
-				HOVERED = 2
-			};
-
-			BitField selectableProperties = 0;
-
-			virtual void onClick();
-
-			virtual void onEnable();
-			virtual void onDisable();
-
-			virtual void onTrigger();
-		};
-
 	}//gfx
 }//mc
 

@@ -13,6 +13,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Core/Constants.h>
 #include <array>
+#include <ostream>
 
 namespace mc {
 	/**
@@ -195,6 +196,8 @@ namespace mc {
 		*/
 		const float* flatten(float arr[4]) const;
 
+		friend std::ostream& operator<<(std::ostream& output, const Color& v);
+
 		/**
 		Compares the color values of 2 `Colors`
 		@param other Another `Color` object
@@ -243,9 +246,9 @@ namespace mc {
 		/**
 		Constant `Color` values for easy access to common colors
 		*/
-		const extern Color RED, LIGHT_RED, DARK_BLUE, BLUE, CYAN, LIGHT_BLUE, 
+		const extern Color RED, LIGHT_RED, DARK_BLUE, BLUE, CYAN, LIGHT_BLUE,
 			DARK_RED, DARK_GREEN, GREEN, LIGHT_GREEN, PURPLE, MAGENTA, WHITE,
-			BLACK, YELLOW, DARK_GRAY, LIGHT_GRAY, ORANGE, GRAY, DARK_ORANGE, 
+			BLACK, YELLOW, DARK_GRAY, LIGHT_GRAY, ORANGE, GRAY, DARK_ORANGE,
 			LIGHT_ORANGE, INVISIBLE;
 	}
 }//mc

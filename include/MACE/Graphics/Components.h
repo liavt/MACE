@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__GRAPHICS_COMPONENTS_H
 
 #include <MACE/Graphics/Entity.h>
+#include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Context.h>
 
 #include <ctime>
@@ -31,7 +32,6 @@ namespace mc {
 				RIGHT
 			};
 		}
-
 
 		/**
 		Function defining a function used in an easing of a value, such as a translation or progress bar.
@@ -88,8 +88,59 @@ namespace mc {
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN);
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_OUT);
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN_OUT);
+			//Components.cpp needs MACE__MAKE_EASE_FUNCTION, so it defines this macro to expose it
+#ifndef MACE__COMPONENTS_EXPOSE_MAKE_EASE_FUNCTION
+#	undef MACE__MAKE_EASE_FUNCTION
+#endif
 		}
 
+		class Texturable {
+		public:
+			virtual ~Texturable() = default;
+
+			/**
+			@dirty
+			*/
+			virtual void setTexture(const Texture& tex) = 0;
+			/**
+			@copydoc Texturable::getTexture() const
+			@dirty
+			*/
+			virtual Texture& getTexture() = 0;
+			virtual const Texture& getTexture() const = 0;
+		};
+
+		class Selectable {
+		public:
+			virtual ~Selectable() = default;
+
+			bool isClicked() const;
+			bool isDisabled() const;
+			bool isHovered() const;
+
+			void click();
+
+			void disable();
+			void enable();
+
+			void trigger();
+		protected:
+			enum SelectableProperty: Byte {
+				CLICKED = 0,
+				DISABLED = 1,
+				HOVERED = 2
+			};
+
+			BitField selectableProperties = 0;
+
+			virtual void onClick();
+
+			virtual void onEnable();
+			virtual void onDisable();
+
+			virtual void onTrigger();
+		};
+		
 		class AlignmentComponent: public Component {
 		public:
 			AlignmentComponent(const Enums::VerticalAlign vert = Enums::VerticalAlign::CENTER, const Enums::HorizontalAlign horz = Enums::HorizontalAlign::CENTER);

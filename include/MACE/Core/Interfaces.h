@@ -13,6 +13,15 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Error.h>
 
 namespace mc {
+	class Beginable {
+	public:
+		virtual ~Beginable() = default;
+
+		virtual void begin() = 0;
+
+		virtual void end() = 0;
+	};
+
 	class Bindable {
 	public:
 		virtual ~Bindable() = default;

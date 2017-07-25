@@ -52,9 +52,7 @@ namespace mc {
 
 		void Image::onUpdate() {}
 
-		void Image::onRender() {
-			Painter p = Painter(this);
-			Initializer i(p);
+		void Image::onRender(Painter& p) {
 			p.drawImage(texture);
 		}
 
@@ -222,9 +220,11 @@ namespace mc {
 			addComponent(SmartPointer<Component>(new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
 				ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 
+#ifdef MACE_DEBUG
 				if (bar == nullptr) {
 					MACE__THROW(NullPointer, "Internal Error: ProgressBar in EaseComponent is nullptr");
 				}
+#endif
 
 				bar->setProgress(progress);
 			}, function, callback), true));
@@ -254,9 +254,7 @@ namespace mc {
 
 		void ProgressBar::onUpdate() {}
 
-		void ProgressBar::onRender() {
-			Painter p = Painter(this);
-			Initializer i(p);
+		void ProgressBar::onRender(Painter& p) {
 			p.blendImagesMasked(foregroundTexture, backgroundTexture, selectionTexture,
 								minimumProgress / maximumProgress,
 								(progress - minimumProgress) / (maximumProgress - minimumProgress));
@@ -507,9 +505,7 @@ namespace mc {
 
 		void Letter::onUpdate() {}
 
-		void Letter::onRender() {
-			Painter p = Painter(this);
-			Initializer i(p);
+		void Letter::onRender(Painter& p) {
 			p.maskImage(texture, mask);
 		}
 
@@ -623,7 +619,7 @@ namespace mc {
 
 		void Text::onUpdate() {}
 
-		void Text::onRender() {}
+		void Text::onRender(Painter&) {}
 
 		void Text::onDestroy() {}
 
@@ -692,7 +688,7 @@ namespace mc {
 					letters[i].setX((position[0] + (static_cast<float>(letters[i].width) / origWidth)));
 					letters[i].setY(position[1]);
 
-					letters[i].setOpacity(getOpacity());
+					letters[i].getPainter().setOpacity(getPainter().getOpacity());
 
 					x += static_cast<float>(letters[i].advanceX) / origWidth;
 					x += letters[i].getWidth();
@@ -837,9 +833,7 @@ namespace mc {
 
 		void Button::onUpdate() {}
 
-		void Button::onRender() {
-			Painter p = Painter(this);
-			Initializer i(p);
+		void Button::onRender(Painter& p) {
 			p.drawImage(texture);
 			if (isDisabled()) {
 				p.drawImage(disabledTexture);

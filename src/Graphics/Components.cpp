@@ -7,6 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+#define MACE__COMPONENTS_EXPOSE_MAKE_EASE_FUNCTION//this macro exposes the MACE__MAKE_EASE_FUNCTION macro
 #include <MACE/Graphics/Components.h>
 #include <ctime>
 #include <cmath>
@@ -231,6 +232,49 @@ namespace mc {
 				return -c / 2 * (std::cos(static_cast<float>(math::pi())*t / d) - 1) + b;
 			}
 		}
+
+		bool Selectable::isClicked() const {
+			return selectableProperties.getBit(Selectable::CLICKED);
+		}
+
+		bool Selectable::isDisabled() const {
+			return selectableProperties.getBit(Selectable::DISABLED);
+		}
+
+		bool Selectable::isHovered() const {
+			return selectableProperties.getBit(Selectable::HOVERED);
+		}
+
+		void Selectable::click() {
+			selectableProperties.setBit(Selectable::CLICKED, true);
+
+			onClick();
+		}
+
+		void Selectable::disable() {
+			selectableProperties.setBit(Selectable::DISABLED, true);
+
+			onDisable();
+		}
+
+		void Selectable::enable() {
+			selectableProperties.setBit(Selectable::DISABLED, false);
+
+			onEnable();
+		}
+
+		void Selectable::trigger() {
+			onTrigger();
+		}
+
+		void Selectable::onClick() {}
+
+
+		void Selectable::onEnable() {}
+
+		void Selectable::onDisable() {}
+
+		void Selectable::onTrigger() {}
 
 		AlignmentComponent::AlignmentComponent(const Enums::VerticalAlign vert, const Enums::HorizontalAlign horz)
 			: vertAlign(vert), horzAlign(horz) {}

@@ -24,6 +24,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		class GraphicsEntity;
+
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<GraphicsEntity*>;
 
@@ -53,9 +55,28 @@ namespace mc {
 			};
 		}
 
-		class Painter: public Initializable {
+		class Painter: public Beginable, private Initializable {
+			friend class GraphicsEntity;
+			friend class PainterImpl;
 		public:
-			
+			enum DirtyFlag: std::uint_least16_t {
+				FOREGROUND_COLOR = 0x0001,
+				FOREGROUND_TRANSFORM = 0x0002,
+				BACKGROUND_COLOR = 0x0004,
+				BACKGROUND_TRANSFORM = 0x0008,
+				MASK_COLOR = 0x0010,
+				MASK_TRANSFORM = 0x0020,
+				DATA = 0x0040,
+				FILTER = 0x0080,
+				TRANSLATION = 0x0100,
+				SCALE = 0x0200,
+				ROTATION = 0x0400,
+				TRANSFORMATION = TRANSLATION | SCALE | ROTATION,
+				//reserved for future use
+				OPACITY = 0x0800,
+				PROJECTION = 0x1000,
+				ALL = 0xFFFF
+			};
 
 			struct State {
 				Color foregroundColor, backgroundColor, maskColor;
@@ -64,16 +85,22 @@ namespace mc {
 
 				Vector<float, 4> data;
 
+				Vector<float, 3> filter = { 1.0f, 1.0f, 1.0f };
+
+				float opacity = 1.0f;
+
 				TransformMatrix transformation;
 
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
 			};
 
-			Painter(GraphicsEntity* const en);
+			Painter() = delete;
+			Painter(const Painter& p);
+			~Painter() = default;
 
-			void init() override;
-			void destroy() override;
+			void begin() override;
+			void end() override;
 
 			void drawModel(const Model& m, const Texture& img, const Enums::RenderType type = Enums::RenderType::STANDARD);
 
@@ -89,7 +116,8 @@ namespace mc {
 
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
-			void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type = Enums::RenderType::STANDARD);
+			void drawQuad(const Enums::Brush brush, const Enums::RenderType type = Enums::RenderType::STANDARD);
+			void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type);
 
 			const GraphicsEntity* const getEntity() const;
 
@@ -99,23 +127,41 @@ namespace mc {
 			Color& getForegroundColor();
 			const Color& getForegroundColor() const;
 
+			void setForegroundTransform(const Vector<float, 4>& trans);
+			Vector<float, 4>& getForegroundTransform();
+			const Vector<float, 4>& getForegroundTransform() const;
+
 			void setBackgroundColor(const Color& col);
 			Color& getBackgroundColor();
 			const Color& getBackgroundColor() const;
+
+			void setBackgroundTransform(const Vector<float, 4>& trans);
+			Vector<float, 4>& getBackgroundTransform();
+			const Vector<float, 4>& getBackgroundTransform() const;
 
 			void setMaskColor(const Color& col);
 			Color& getMaskColor();
 			const Color& getMaskColor() const;
 
+			void setMaskTransform(const Vector<float, 4>& trans);
+			Vector<float, 4>& getMaskTransform();
+			const Vector<float, 4>& getMaskTransform() const;
+
+			void setFilter(const Vector<float, 3>& col);
+			Vector<float, 3>& getFilter();
+			const Vector<float, 3>& getFilter() const;
+
 			void setData(const Vector<float, 4>& col);
 			Vector<float, 4>& getData();
 			const Vector<float, 4>& getData() const;
 
-			void resetColor();
-
 			void setTransformation(const TransformMatrix& trans);
 			TransformMatrix& getTransformation();
 			const TransformMatrix& getTransformation() const;
+
+			void setOpacity(const float opacity);
+			float getOpacity();
+			const float getOpacity() const;
 
 			void translate(const Vector<float, 3>& vec);
 			void translate(const float x, const float y, const float z = 0.0f);
@@ -133,18 +179,33 @@ namespace mc {
 
 			void reset();
 
+			const Index& getID() const;
+
+			Painter operator=(const Painter& right);
+
 			bool operator==(const Painter& other) const;
 			bool operator!=(const Painter& other) const;
 		private:
 			std::shared_ptr<PainterImpl> impl = nullptr;
 
-			Painter::State state;
+			std::uint_least16_t dirtyFlags = Painter::ALL;
+
+			Painter::State state = Painter::State();
 
 			//for pushing/popping the state
-			std::stack<Painter::State> stateStack;
+			std::stack<Painter::State> stateStack{};
+
+			GraphicsEntity* const entity = nullptr;
+
+			Index id = 0;
+
+			Painter(GraphicsEntity* const en);
+
+			void init() override;
+			void destroy() override;
 		};
 
-		class PainterImpl: public Initializable {
+		class PainterImpl: public Initializable, public Beginable {
 			friend class Renderer;
 			friend class Painter;
 		public:
@@ -153,15 +214,18 @@ namespace mc {
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
 
-			virtual void loadSettings(const Painter::State& state) = 0;
+			virtual void begin() override = 0;
+			virtual void end() override = 0;
+
+			virtual void loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) = 0;
 			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) = 0;
 
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;
 		protected:
-			PainterImpl(const GraphicsEntity* const en);
+			PainterImpl(Painter* const painter);
 
-			const GraphicsEntity* const entity;
+			Painter* const painter;
 		};
 
 		/**
@@ -230,9 +294,7 @@ namespace mc {
 			*/
 			void flagResize();
 
-			Index queue(GraphicsEntity* e);
-
-			void remove(const Index id);
+			void remove(const Index i);
 
 			/**
 			@opengl
@@ -253,11 +315,6 @@ namespace mc {
 			GraphicsContext* getContext();
 			const GraphicsContext* getContext() const;
 		protected:
-			//not declared const because some of the functions require modification to an intneral buffer of impls
-			virtual std::shared_ptr<PainterImpl> createPainterImpl(const GraphicsEntity * const entity) = 0;
-
-			Index pushEntity(GraphicsEntity*  entity);
-
 			RenderQueue renderQueue = RenderQueue();
 
 			Size samples = 1;
@@ -265,9 +322,44 @@ namespace mc {
 			bool resized;
 
 			Vector<float, 2> windowRatios;
-			
+
 			GraphicsContext* context;
+
+			//not declared const because some of the functions require modification to an intneral buffer of impls
+			virtual std::shared_ptr<PainterImpl> createPainterImpl(Painter* const  painter) = 0;
+		private:
+			Index queue(GraphicsEntity* const e);
+
+			Index pushEntity(GraphicsEntity* const  entity);
 		};//Renderer
+
+		class GraphicsEntity: public Entity {
+		public:
+			GraphicsEntity() noexcept;
+
+			virtual ~GraphicsEntity() noexcept;
+
+			void clean() final;
+
+			void init() final;
+
+			void destroy() final;
+
+			/**
+			@dirty
+			*/
+			Painter& getPainter();
+			const Painter& getPainter() const;
+
+			bool operator==(const GraphicsEntity& other) const noexcept;
+			bool operator!=(const GraphicsEntity& other) const noexcept;
+		protected:
+			void onRender() override final;
+
+			virtual void onRender(Painter& painter) = 0;
+		private:
+			Painter painter = Painter(this);
+		};//GraphicsEntity
 	}//gfx
 }//mc
 

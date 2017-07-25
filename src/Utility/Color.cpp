@@ -134,6 +134,11 @@ namespace mc {
 		return arr;
 	}
 
+	std::ostream & operator<<(std::ostream & output, const Color & v) {
+		output << "Color(" << v.r << ", " << v.g << ", " << v.b << ", " << v.a << ")";
+		return output;
+	}
+
 	bool Color::operator<(const Color& other) const {
 		//the real g right here
 		return other.r < r && other.g < g && other.b < b && other.a < a;

@@ -48,7 +48,7 @@ namespace mc {
 		protected:
 			void onInit() override final;
 			void onUpdate() override final;
-			void onRender() override final;
+			void onRender(Painter& p) override final;
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
@@ -140,7 +140,7 @@ namespace mc {
 		protected:
 			void onInit() override final;
 			void onUpdate() override final;
-			void onRender() override final;
+			void onRender(Painter& p) override final;
 			void onClean() override final;
 			void onDestroy() override final;
 		private:
@@ -233,7 +233,7 @@ namespace mc {
 		protected:
 			void onInit() override final;
 			void onUpdate() override final;
-			void onRender() override final;
+			void onRender(Painter& p) override final;
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
@@ -301,7 +301,7 @@ namespace mc {
 		protected:
 			void onInit() override final;
 			void onUpdate() override final;
-			void onRender() override final;
+			void onRender(Painter& p) override final;
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
@@ -359,7 +359,7 @@ namespace mc {
 		protected:
 			void onInit() override;
 			void onUpdate() override;
-			void onRender() override;
+			void onRender(Painter& p) override;
 			void onDestroy() override;
 			void onHover() override;
 			void onClean() override;
