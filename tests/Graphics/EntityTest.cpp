@@ -19,11 +19,6 @@ namespace mc {
 		public:
 			DummyEntity() : Entity() {};
 
-			using Entity::init;
-			using Entity::update;
-			using Entity::render;
-			using Entity::destroy;
-
 			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
 		protected:
 

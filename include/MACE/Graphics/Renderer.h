@@ -38,7 +38,7 @@ namespace mc {
 		namespace Enums {
 			//painter stuff
 			enum class Brush: Byte {
-				TEXTURE = 0, COLOR = 1, MASK = 2, MASKED_BLEND = 3,
+				TEXTURE = 0, COLOR = 1, MASK = 2, BLEND = 3, MASKED_BLEND = 4,
 			};
 
 			enum class RenderType: Byte {
@@ -73,7 +73,6 @@ namespace mc {
 				ROTATION = 0x0400,
 				TRANSFORMATION = TRANSLATION | SCALE | ROTATION,
 				//reserved for future use
-				OPACITY = 0x0800,
 				PROJECTION = 0x1000,
 				ALL = 0xFFFF
 			};
@@ -85,11 +84,9 @@ namespace mc {
 
 				Vector<float, 4> data;
 
-				Vector<float, 3> filter = { 1.0f, 1.0f, 1.0f };
-
-				float opacity = 1.0f;
-
 				TransformMatrix transformation;
+
+				Matrix<float, 4, 4> filter = math::identity<float, 4>();
 
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
@@ -98,9 +95,6 @@ namespace mc {
 			Painter() = delete;
 			Painter(const Painter& p);
 			~Painter() = default;
-
-			void begin() override;
-			void end() override;
 
 			void drawModel(const Model& m, const Texture& img, const Enums::RenderType type = Enums::RenderType::STANDARD);
 
@@ -114,6 +108,7 @@ namespace mc {
 
 			void maskImage(const Texture& img, const Texture& mask);
 
+			void blendImages(const Texture& foreground, const Texture& background, const float amount = 0.5f);
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
 			void drawQuad(const Enums::Brush brush, const Enums::RenderType type = Enums::RenderType::STANDARD);
@@ -147,10 +142,13 @@ namespace mc {
 			Vector<float, 4>& getMaskTransform();
 			const Vector<float, 4>& getMaskTransform() const;
 
-			void setFilter(const Vector<float, 3>& col);
-			Vector<float, 3>& getFilter();
-			const Vector<float, 3>& getFilter() const;
+			void setFilter(const float r, const float g, const float b, const float a = 1.0f);
+			void setFilter(const Vector<float, 4> & col);
+			void setFilter(const Matrix<float, 4, 4>& col);
+			Matrix<float, 4, 4>& getFilter();
+			const Matrix<float, 4, 4>& getFilter() const;
 
+			void setData(const float a, const float b, const float c, const float d);
 			void setData(const Vector<float, 4>& col);
 			Vector<float, 4>& getData();
 			const Vector<float, 4>& getData() const;
@@ -170,7 +168,7 @@ namespace mc {
 			void rotate(const float x, const float y, const float z);
 
 			void scale(const Vector<float, 3>& vec);
-			void scale(const float x, const float y, const float z = 0.0f);
+			void scale(const float x, const float y, const float z = 1.0f);
 
 			void resetTransform();
 
@@ -200,6 +198,9 @@ namespace mc {
 			Index id = 0;
 
 			Painter(GraphicsEntity* const en);
+
+			void begin() override;
+			void end() override;
 
 			void init() override;
 			void destroy() override;
@@ -235,6 +236,7 @@ namespace mc {
 		class Renderer {
 			friend class Painter;
 			friend class GraphicsContext;
+			friend class WindowModule;
 		public:
 			virtual ~Renderer() = default;
 
@@ -245,6 +247,40 @@ namespace mc {
 			*/
 			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
 
+			/**
+			@opengl
+			*/
+			void setRefreshColor(const Color& c);
+
+			Size getWidth() const;
+			Size getHeight() const;
+
+			Size getSamples() const;
+
+			Vector<float, 2> getWindowRatios() const;
+
+			RenderQueue getRenderQueue() const;
+
+			bool isResized() const;
+
+			GraphicsContext* getContext();
+			const GraphicsContext* getContext() const;
+
+			/**
+			@internal
+			*/
+			void flagResize();
+		protected:
+			RenderQueue renderQueue = RenderQueue();
+
+			Size samples = 1;
+
+			bool resized;
+
+			Vector<float, 2> windowRatios;
+
+			GraphicsContext* context;
+
 			virtual void onResize(gfx::WindowModule* win, const Size width, const Size height) = 0;
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onSetUp(gfx::WindowModule* win) = 0;
@@ -252,6 +288,9 @@ namespace mc {
 			virtual void onDestroy() = 0;
 			virtual void onQueue(GraphicsEntity* en) = 0;
 
+			//not declared const because some of the functions require modification to an intneral buffer of impls
+			virtual std::shared_ptr<PainterImpl> createPainterImpl(Painter* const  painter) = 0;
+		private:
 			/**
 			@internal
 			@opengl
@@ -289,46 +328,9 @@ namespace mc {
 			*/
 			void destroy();
 
-			/**
-			@internal
-			*/
-			void flagResize();
+			Index queue(GraphicsEntity* const e);
 
 			void remove(const Index i);
-
-			/**
-			@opengl
-			*/
-			void setRefreshColor(const Color& c);
-
-			Size getWidth() const;
-			Size getHeight() const;
-
-			Size getSamples() const;
-
-			Vector<float, 2> getWindowRatios() const;
-
-			RenderQueue getRenderQueue() const;
-
-			bool isResized() const;
-
-			GraphicsContext* getContext();
-			const GraphicsContext* getContext() const;
-		protected:
-			RenderQueue renderQueue = RenderQueue();
-
-			Size samples = 1;
-
-			bool resized;
-
-			Vector<float, 2> windowRatios;
-
-			GraphicsContext* context;
-
-			//not declared const because some of the functions require modification to an intneral buffer of impls
-			virtual std::shared_ptr<PainterImpl> createPainterImpl(Painter* const  painter) = 0;
-		private:
-			Index queue(GraphicsEntity* const e);
 
 			Index pushEntity(GraphicsEntity* const  entity);
 		};//Renderer
@@ -337,13 +339,7 @@ namespace mc {
 		public:
 			GraphicsEntity() noexcept;
 
-			virtual ~GraphicsEntity() noexcept;
-
-			void clean() final;
-
-			void init() final;
-
-			void destroy() final;
+			virtual ~GraphicsEntity() noexcept override;
 
 			/**
 			@dirty
@@ -354,11 +350,17 @@ namespace mc {
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
 		protected:
-			void onRender() override final;
-
 			virtual void onRender(Painter& painter) = 0;
+
+			void clean() override final;
+
+			void init() override final;
+
+			void destroy() override final;
 		private:
 			Painter painter = Painter(this);
+
+			void onRender() override final;
 		};//GraphicsEntity
 	}//gfx
 }//mc

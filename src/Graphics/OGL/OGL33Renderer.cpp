@@ -45,7 +45,7 @@ namespace mc {
 			//the definition is later stringified. cant be a string because this gets added to the shader.
 #define MACE__ENTITY_DATA_NAME _mc_EntityData
 
-#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 44
+#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 56
 #define MACE__PAINTER_DATA_LOCATION 1
 #define MACE__PAINTER_DATA_USAGE GL_DYNAMIC_DRAW
 #define MACE__PAINTER_DATA_NAME _mc_PainterData
@@ -355,6 +355,7 @@ namespace mc {
 
 			void OGL33Renderer::loadPainterUniforms(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
 				float color[4] = {};
+				float matrix[16] = {};
 
 				//now we set the uniforms defining the transformations of the entity
 				Binder b(&painterUniforms);
@@ -373,11 +374,6 @@ namespace mc {
 				std::copy(state.data.begin(), state.data.end(), mappedEntityData);
 				mappedEntityData += 4;
 
-				std::copy(state.filter.begin(), state.filter.end(), mappedEntityData);
-				mappedEntityData += 3;
-				std::copy(&state.opacity, &state.opacity + sizeof(float), mappedEntityData);
-				++mappedEntityData;
-
 				state.foregroundColor.flatten(color);
 				std::copy(std::begin(color), std::end(color), mappedEntityData);
 				mappedEntityData += 4;
@@ -395,6 +391,9 @@ namespace mc {
 				mappedEntityData += 4;
 				std::copy(state.maskTransform.begin(), state.maskTransform.end(), mappedEntityData);
 				mappedEntityData += 4;
+
+				state.filter.flatten(matrix);
+				std::copy(std::begin(matrix), std::end(matrix), mappedEntityData);
 
 				painterUniforms.unmap();
 			}
@@ -422,7 +421,7 @@ namespace mc {
 
 				if (settings.second == Enums::RenderType::STANDARD) {
 					program.createVertex(processShader({
-	#include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
+#	include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
 					}));
 				} else {
 					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
@@ -430,13 +429,13 @@ namespace mc {
 
 				if (settings.first == Enums::Brush::COLOR) {
 					program.createFragment(processShader({
-	#include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
+#	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
 					}));
 
 					program.link();
 				} else if (settings.first == Enums::Brush::TEXTURE) {
 					program.createFragment(processShader({
-	#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
+#	include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
 					}));
 
 					program.link();
@@ -448,7 +447,7 @@ namespace mc {
 					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 				} else if (settings.first == Enums::Brush::MASK) {
 					program.createFragment(processShader({
-	#include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
+#	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
 					}));
 
 					program.link();
@@ -461,9 +460,23 @@ namespace mc {
 					//binding the samplers
 					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 					program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
+				} else if (settings.first == Enums::Brush::BLEND) {
+					program.createFragment(processShader({
+#	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
+					}));
+					
+					program.link();
+
+					program.bind();
+
+					program.createUniform("tex1");
+					program.createUniform("tex2");
+
+					program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
+					program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
 				} else if (settings.first == Enums::Brush::MASKED_BLEND) {
 					program.createFragment(processShader({
-	#include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
+#	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
 					}));
 
 					program.link();
@@ -486,7 +499,7 @@ namespace mc {
 				entityUniforms.bindToUniformBlock(program, MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
 				painterUniforms.bindToUniformBlock(program, MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter!");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
 				return program;
 			}
 

@@ -126,7 +126,9 @@ namespace mc {
 		return *this;
 	}
 	TransformMatrix & TransformMatrix::reset() {
-		TransformMatrix();
+		scaler = { 1.0f, 1.0f, 1.0f };
+		translation = { 0.0f, 0.0f, 0.0f };
+		rotation = { 0.0f, 0.0f, 0.0f };
 		return *this;
 	}
 	Matrix<float, 4, 4> TransformMatrix::get() const {

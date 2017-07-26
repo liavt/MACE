@@ -400,7 +400,7 @@ namespace mc {
 					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4!");
 				}
 
-				setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat, 0);
+				setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat);
 			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;

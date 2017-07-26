@@ -24,12 +24,12 @@ MACE__UNIFORM_BUFFER MACE__PAINTER_DATA_NAME{
 	vec3 _mc_TransformTranslation;
 	vec3 _mc_TransformRotation;
 	vec3 _mc_TransformScale;
-	vec4 mc_Data;
-	vec3 _mc_Filter;
 	float _mc_Opacity;
+	vec4 mc_Data;
 	_mc_TextureAttachment mc_Foreground;
 	_mc_TextureAttachment mc_Background;
 	_mc_TextureAttachment mc_Mask;
+	mat4 _mc_Filter;
 };
 
 #endif

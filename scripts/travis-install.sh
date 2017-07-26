@@ -5,5 +5,6 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+	sudo add-apt-repository -y ppa:glasen/freetype2
 	sudo bash ./scripts/install-apt.sh;
 fi

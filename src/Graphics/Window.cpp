@@ -160,6 +160,8 @@ namespace mc {
 				MACE__THROW(InitializationFailed, "GLFW failed to initialize!");
 			}
 
+			os::clearError(__LINE__, __FILE__);//glfwInit sometimes sets LastError to non-zero. we can ignore it
+
 			//just in case someone changed some before creating the window module
 			glfwDefaultWindowHints();
 

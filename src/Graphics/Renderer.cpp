@@ -11,6 +11,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Entity2D.h>
 
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
 		void Renderer::init(gfx::WindowModule* win) {
@@ -149,6 +151,13 @@ namespace mc {
 			drawQuad(Enums::Brush::MASK);
 		}
 
+		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
+			setData({ amount, 0, 0, 0 });
+			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
+			setTexture(background, Enums::TextureSlot::BACKGROUND);
+			drawQuad(Enums::Brush::BLEND);
+		}
+
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
 			setData({ minimum, maximum, 0, 0 });
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
@@ -164,6 +173,7 @@ namespace mc {
 		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
 			impl->loadSettings(state, dirtyFlags);
 			impl->draw(m, brush, type);
+			dirtyFlags = 0;
 		}
 
 		const GraphicsEntity * const Painter::getEntity() const {
@@ -312,20 +322,37 @@ namespace mc {
 			return state.maskTransform;
 		}
 
-		void Painter::setFilter(const Vector<float, 3> & col) {
+		void Painter::setFilter(const float r, const float g, const float b, const float a) {
+			setFilter(Vector<float, 4>({ r, g, b, a }));
+		}
+
+		void Painter::setFilter(const Vector<float, 4>& col) {
+			setFilter(Matrix<float, 4, 4>({
+				{col.x(), 0, 0, 0},
+				{0, col.y(), 0, 0},
+				{0, 0, col.z(), 0},
+				{0, 0, 0, col.w()}
+			}));
+		}
+
+		void Painter::setFilter(const Matrix<float, 4, 4> & col) {
 			if (state.filter != col) {
 				state.filter = col;
 				dirtyFlags |= Painter::FILTER;
 			}
 		}
 
-		Vector<float, 3>& Painter::getFilter() {
+		Matrix<float, 4, 4>& Painter::getFilter() {
 			dirtyFlags |= Painter::FILTER;
 			return state.filter;
 		}
 
-		const Vector<float, 3>& Painter::getFilter() const {
+		const Matrix<float, 4, 4>& Painter::getFilter() const {
 			return state.filter;
+		}
+
+		void Painter::setData(const float a, const float b, const float c, const float d) {
+			setData({ a, b, c, d });
 		}
 
 		void Painter::setData(const Vector<float, 4> & col) {
@@ -361,19 +388,19 @@ namespace mc {
 		}
 
 		void Painter::setOpacity(const float opacity) {
-			if (state.opacity != opacity) {
-				state.opacity = opacity;
-				dirtyFlags |= Painter::OPACITY;
+			if (state.filter[3][3] != opacity) {
+				state.filter[3][3] = opacity;
+				dirtyFlags |= Painter::FILTER;
 			}
 		}
 
 		float Painter::getOpacity() {
-			dirtyFlags |= Painter::OPACITY;
-			return state.opacity;
+			dirtyFlags |= Painter::FILTER;
+			return state.filter[3][3];
 		}
 
 		const float Painter::getOpacity() const {
-			return state.opacity;
+			return state.filter[3][3];
 		}
 
 		void Painter::translate(const Vector<float, 3>& vec) {
@@ -381,7 +408,7 @@ namespace mc {
 		}
 
 		void Painter::translate(const float x, const float y, const float z) {
-			if (x != 0.0f && y != 0.0f && z != 0.0f) {
+			if (x != 0.0f || y != 0.0f || z != 0.0f) {
 				state.transformation.translate(x, y, z);
 				dirtyFlags |= Painter::TRANSLATION;
 			}
@@ -392,7 +419,7 @@ namespace mc {
 		}
 
 		void Painter::rotate(const float x, const float y, const float z) {
-			if (x != 0.0f && y != 0.0f && z != 0.0f) {
+			if (x != 0.0f || y != 0.0f || z != 0.0f) {
 				state.transformation.rotate(x, y, z);
 				dirtyFlags |= Painter::ROTATION;
 			}
@@ -403,7 +430,7 @@ namespace mc {
 		}
 
 		void Painter::scale(const float x, const float y, const float z) {
-			if (x != 1.0f && y != 1.0f && z != 1.0f) {
+			if (x != 1.0f || y != 1.0f || z != 1.0f) {
 				state.transformation.scale(x, y, z);
 				dirtyFlags |= Painter::SCALE;
 			}
@@ -477,7 +504,7 @@ namespace mc {
 
 		bool Painter::State::operator==(const State & other) const {
 			return transformation == other.transformation && foregroundColor == other.foregroundColor
-				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor && opacity == other.opacity
+				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor
 				&& foregroundTransform == other.foregroundTransform && backgroundTransform == other.backgroundTransform
 				&& maskTransform == other.maskTransform && data == other.data && filter == other.filter;
 		}
