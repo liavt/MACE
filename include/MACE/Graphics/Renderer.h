@@ -29,7 +29,7 @@ namespace mc {
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<GraphicsEntity*>;
 
-		//forward define for friend declaration in later classes
+		//forward declare dependencies
 		class Renderer;
 		class PainterImpl;
 		class Texture;
@@ -71,10 +71,14 @@ namespace mc {
 				TRANSLATION = 0x0100,
 				SCALE = 0x0200,
 				ROTATION = 0x0400,
+
+				//the following are for internal use
+				FOREGROUND = FOREGROUND_COLOR | FOREGROUND_COLOR,
+				BACKGROUND = BACKGROUND_COLOR | BACKGROUND_TRANSFORM,
+				MASK = MASK_COLOR | MASK_TRANSFORM,
 				TRANSFORMATION = TRANSLATION | SCALE | ROTATION,
-				//reserved for future use
-				PROJECTION = 0x1000,
-				ALL = 0xFFFF
+
+				ALL = FOREGROUND | BACKGROUND | MASK | DATA | FILTER | TRANSFORMATION
 			};
 
 			struct State {
@@ -204,6 +208,8 @@ namespace mc {
 
 			void init() override;
 			void destroy() override;
+
+			void clean();
 		};
 
 		class PainterImpl: public Initializable, public Beginable {
@@ -217,6 +223,8 @@ namespace mc {
 
 			virtual void begin() override = 0;
 			virtual void end() override = 0;
+
+			virtual void clean() = 0;
 
 			virtual void loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) = 0;
 			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) = 0;

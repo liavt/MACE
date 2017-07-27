@@ -182,15 +182,17 @@ namespace mc {
 
 					glfwWindowHint(GLFW_STENCIL_BITS, 8);
 					glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_OPENGL
 					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 					break;
 			}
 
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (context == nullptr) {
 				MACE__THROW(UnsupportedRenderer, "Internal Error: GraphicsContext is nullptr");
 			}
+#endif
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
 			glfwWindowHint(GLFW_DECORATED, config.decorated);
@@ -217,7 +219,7 @@ namespace mc {
 				}
 			}
 
-			if (!window) {
+			if (window == nullptr) {
 				MACE__THROW(InitializationFailed, "OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
 		}//create 
@@ -227,8 +229,11 @@ namespace mc {
 
 			context->init();
 
-			if (config.vsync)glfwSwapInterval(1);
-			else glfwSwapInterval(0);
+			if (config.vsync) {
+				glfwSwapInterval(1);
+			} else {
+				glfwSwapInterval(0);
+			}
 
 			glfwSetWindowUserPointer(window, this);
 
@@ -290,11 +295,11 @@ namespace mc {
 					configureThread();
 
 					Entity::init();
-					
+
 					if (config.fps != 0) {
 						windowDelay = Duration(1000000000L / static_cast<long long>(config.fps));
 					}
-					
+
 					os::checkError(__LINE__, __FILE__, "A system error occurred creating the window");
 				} catch (const std::exception& e) {
 					Error::handleError(e, instance);

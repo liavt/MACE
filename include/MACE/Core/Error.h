@@ -121,6 +121,17 @@ namespace mc {
 	Thrown when the operating system throws an error
 	*/
 	MACE__DECLARE_ERROR(System);
+
+	class MultipleErrors: public Error {
+	public:
+		using Error::Error;
+
+		MultipleErrors(const Error errs[], const unsigned int errorSize, const unsigned int line, const char* file);
+
+		const char* what() const override;
+	private:
+		std::string message;
+	};
 }
 
 #endif

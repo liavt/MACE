@@ -76,7 +76,9 @@ namespace mc {
 			/**
 			@copydoc ogl::checkGLError(const Index, const char*, const char*)
 			*/
-			void checkGLError(const Index line, const std::string& file, const std::string message);
+			void checkGLError(const Index line, const char* file, const std::string message);
+
+			void forceCheckGLError(const Index line, const char* file, const char* message);
 
 			/**
 			@opengl

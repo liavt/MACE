@@ -125,7 +125,9 @@ namespace mc {
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
-			if (args.size() != N)MACE__THROW(IndexOutOfBounds, "The number of arguments MUST be equal to the size of the array.");
+			if (args.size() != N) {
+				MACE__THROW(IndexOutOfBounds, "The number of arguments MUST be equal to the size of the array.");
+			}
 
 			Index counter = 0;
 			for (auto elem : args) {
@@ -213,7 +215,11 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		T& get(Index i) {
-			if (i >= N)throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+#ifdef MACE_DEBUG_CHECK_ARGS
+			if (i >= N) {
+				throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			}
+#endif
 			return content[i];
 		}
 		/**
@@ -225,7 +231,11 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		const T& get(Index i) const {
-			if (i >= N)throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+#ifdef MACE_DEBUG_CHECK_ARGS
+			if (i >= N) {
+				throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			}
+#endif
 			return content.at(i);
 		}
 		/**
@@ -237,7 +247,12 @@ namespace mc {
 		@see operator[](Index)
 		*/
 		void set(Index position, T value) {
-			if (position >= N)throw IndexOutOfBoundsError(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+#ifdef MACE_DEBUG_CHECK_ARGS
+			if (position >= N) {
+				throw IndexOutOfBoundsError(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+			}
+#endif
+
 			content[position] = value;
 		}
 
@@ -620,7 +635,9 @@ namespace mc {
 			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
 			for (Index x = 0; x < N; ++x) {
 				output << v[x];
-				if (x != N - 1)output << ", ";
+				if (x != N - 1) {
+					output << ", ";
+				}
 			}
 			output << ' ' << ']';
 			return output;
@@ -637,7 +654,7 @@ namespace mc {
 	};
 
 	template<typename T>
-	struct Vector<T, 0>{
+	struct Vector<T, 0> {
 	private:
 		Vector() = delete;
 		~Vector() = delete;

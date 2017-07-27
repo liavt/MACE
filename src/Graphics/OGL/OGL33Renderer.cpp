@@ -83,18 +83,23 @@ namespace mc {
 				}
 
 				try {
-					gfx::ogl::checkGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
+					gfx::ogl::forceCheckGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
 				} catch (...) {
 					//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
 					//see https://www.khronos.org/opengl/wiki/OpenGL_Loading_Library (section GLEW) saying to ignore a GLEW error
 				}
 
-#ifdef MACE_DEBUG
-				std::cout << "OpenGL Info:" << std::endl;
-				std::cout << "Version: " << std::endl << "\t" << glGetString(GL_VERSION) << std::endl;
-				std::cout << "Vendor: " << std::endl << "\t" << glGetString(GL_VENDOR) << std::endl;
-				std::cout << "Renderer: " << std::endl << "\t" << glGetString(GL_RENDERER) << std::endl;
-				std::cout << "Shader version: " << std::endl << "\t" << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+#ifdef MACE_DEBUG_OPENGL
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "OpenGL Info:" << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Version: " << std::endl << "\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VERSION) << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Vendor: " << std::endl << "\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VENDOR) << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Renderer: " << std::endl << "\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_RENDERER) << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Shader version: " << std::endl << "\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+				std::cout << os::consoleColor();
 #endif
 
 				sceneTexture.init();
@@ -115,37 +120,28 @@ namespace mc {
 
 				ogl::enable(GL_MULTISAMPLE);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error enabling blending, and multisampling for renderer");
-
-				entityUniforms.init();
-				entityUniforms.bind();
-				//we set it to null, because during the actual rendering we set the data
-				entityUniforms.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
-
-				entityUniforms.setLocation(MACE__ENTITY_DATA_LOCATION);
-
-				painterUniforms.init();
-				painterUniforms.bind();
-				painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
-
-				painterUniforms.setLocation(MACE__PAINTER_DATA_LOCATION);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating UniformBuffer for renderer");
+				ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing OGL33Renderer");
 			}
 
 			void OGL33Renderer::onSetUp(gfx::WindowModule *) {
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
+
 				frameBuffer.bind();
 				sceneTexture.bind();
 				idTexture.bind();
 
-				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				//frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				//ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear color buffer");
 
 				//we want to clear the id texture to black only - not the color set by the user. this requires 3 setDrawBuffers - which is annoying
 				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-				ogl::FrameBuffer::setClearColor(0, 0, 0, 1);
+				//ogl::FrameBuffer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear ID buffer");
 
 				MACE_CONSTEXPR const Enum drawBuffers[] = {
 					GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
@@ -153,7 +149,7 @@ namespace mc {
 				};
 				frameBuffer.setDrawBuffers(2, drawBuffers);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set up renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to set draw buffers for framebuffer");
 
 			}
 
@@ -176,6 +172,8 @@ namespace mc {
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
 				glfwSwapBuffers(win->getGLFWWindow());
+
+				ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
 			}
 
 			void OGL33Renderer::onResize(gfx::WindowModule*, const Size width, const Size height) {
@@ -200,17 +198,15 @@ namespace mc {
 				sceneTexture.destroy();
 				idTexture.destroy();
 
-				entityUniforms.destroy();
-				painterUniforms.destroy();
-
 				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
 					iter->second.program.destroy();
 				}
 
 				protocols.clear();
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
-				os::checkError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
+				ogl::forceCheckGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
+				os::checkError(__LINE__, __FILE__, "Internal Error: System error destroying OpenGL 3.3 renderer");
+
 			}
 
 			void OGL33Renderer::onQueue(GraphicsEntity *) {}
@@ -324,93 +320,19 @@ namespace mc {
 				return preprocessor.preprocess();
 			}
 
-			void OGL33Renderer::loadEntityUniforms(const GraphicsEntity * const entity) {
-				if (!entity->getProperty(Entity::INIT)) {
-					MACE__THROW(InitializationFailed, "Entity is not initializd.");
-				}
-
-				const Entity::Metrics metrics = entity->getMetrics();
-
-				//now we set the uniforms defining the transformations of the entity
-				entityUniforms.bind();
-
-				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(entityUniforms.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-
-				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
-				mappedEntityData += 4;//pointer arithmetic!
-				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
-				mappedEntityData += 3;
-
-				entityUniforms.unmap();
-			}
-
-			void OGL33Renderer::loadPainterUniforms(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
-				float color[4] = {};
-				float matrix[16] = {};
-
-				//now we set the uniforms defining the transformations of the entity
-				Binder b(&painterUniforms);
-				//orphan the buffer (this is required for intel gpus)
-				painterUniforms.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
-				//holy crap thats a lot of flags. this is the fastest way to map the buffer. basically it specifies we are writing, and to invalidate the old buffer and overwrite any changes.
-				float* mappedEntityData = static_cast<float*>(painterUniforms.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-
-				std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.transformation.rotation.begin(), state.transformation.rotation.end(), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.transformation.scaler.begin(), state.transformation.scaler.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				std::copy(state.data.begin(), state.data.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.foregroundColor.flatten(color);
-				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.foregroundTransform.begin(), state.foregroundTransform.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.backgroundColor.flatten(color);
-				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.backgroundTransform.begin(), state.backgroundTransform.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.maskColor.flatten(color);
-				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.maskTransform.begin(), state.maskTransform.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.filter.flatten(matrix);
-				std::copy(std::begin(matrix), std::end(matrix), mappedEntityData);
-
-				painterUniforms.unmap();
-			}
-
-			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(const GraphicsEntity* const entity, const std::pair<Enums::Brush, Enums::RenderType> settings) {
+			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderType> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
 					RenderProtocol prot = RenderProtocol();
 					prot.program = createShadersForSettings(settings);
 
+					painter->painterData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
+					painter->entityData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
+
 					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderType>, OGL33Renderer::RenderProtocol>(settings, prot));
 
 					protocol = protocols.find(settings);
 				}
-
-				protocol->second.program.bind();
-				protocol->second.program.setUniform("mc_EntityID", static_cast<unsigned int>(entity->getPainter().getID()));
 
 				return protocol->second;
 			}
@@ -464,7 +386,7 @@ namespace mc {
 					program.createFragment(processShader({
 #	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
 					}));
-					
+
 					program.link();
 
 					program.bind();
@@ -496,8 +418,6 @@ namespace mc {
 				}
 
 				program.createUniform("mc_EntityID");
-				entityUniforms.bindToUniformBlock(program, MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
-				painterUniforms.bindToUniformBlock(program, MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
 				return program;
@@ -533,34 +453,155 @@ namespace mc {
 
 			OGL33Painter::OGL33Painter(OGL33Renderer* const r, Painter* const p) : PainterImpl(p), renderer(r) {}
 
-			void OGL33Painter::init() {}
+			void OGL33Painter::init() {
+				painterData.init();
+				painterData.bind();
+				painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
 
-			void OGL33Painter::destroy() {}
+				painterData.setLocation(MACE__PAINTER_DATA_LOCATION);
+
+				entityData.init();
+				entityData.bind();
+				//we set it to null, because during the actual rendering we set the data
+				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
+
+				entityData.setLocation(MACE__ENTITY_DATA_LOCATION);
+			}
+
+			void OGL33Painter::destroy() {
+				painterData.destroy();
+				entityData.destroy();
+			}
 
 			void OGL33Painter::begin() {
-				renderer->loadEntityUniforms(painter->getEntity());
+				painterData.bind();
+				painterData.bindForRender();
 
-				renderer->entityUniforms.bind();
-				renderer->entityUniforms.bindForRender();
-
-				renderer->painterUniforms.bind();
-				renderer->painterUniforms.bindForRender();
+				entityData.bind();
+				entityData.bindForRender();
 			}
 
 			void OGL33Painter::end() {}
 
-			void OGL33Painter::loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
-				renderer->loadPainterUniforms(state, dirtyFlags);
+			void OGL33Painter::clean() {
+				if (!painter->getEntity()->getProperty(Entity::INIT)) {
+					MACE__THROW(InitializationFailed, "Entity is not initializd.");
+				}
+
+				const Entity::Metrics metrics = painter->getEntity()->getMetrics();
+
+				//now we set the uniforms defining the transformations of the entity
+				entityData.bind();
+
+				//we are rewriting the entire buffer, so orphan it so the driver knows to completely overwrite everything
+				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
+
+				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
+				float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
+				if (mappedEntityData == nullptr) {
+					MACE__THROW(NullPointer, "Internal Error: Mapped entity buffer was nullptr");
 			}
+#endif
+
+				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
+				mappedEntityData += 4;//pointer arithmetic!
+				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
+				mappedEntityData += 4;
+
+				std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
+				mappedEntityData += 4;
+				std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
+				mappedEntityData += 4;
+
+				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
+
+				entityData.unmap();
+		}
+
+			void OGL33Painter::loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
+				float color[4] = {};
+				float matrix[16] = {};
+
+				//now we set the uniforms defining the transformations of the entity
+				Binder b(&painterData);
+				float* mappedEntityData = static_cast<float*>(painterData.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT));
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
+				if (mappedEntityData == nullptr) {
+					MACE__THROW(NullPointer, "Internal Error: Mapped paint data buffer was nullptr");
+			}
+#endif
+
+				if (dirtyFlags & Painter::TRANSLATION) {
+					std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
+				}
+				mappedEntityData += 4;
+				if (dirtyFlags & Painter::ROTATION) {
+					std::copy(state.transformation.rotation.begin(), state.transformation.rotation.end(), mappedEntityData);
+				}
+				mappedEntityData += 4;
+				if (dirtyFlags & Painter::SCALE) {
+					std::copy(state.transformation.scaler.begin(), state.transformation.scaler.end(), mappedEntityData);
+				}
+				mappedEntityData += 4;
+
+				if (dirtyFlags & Painter::DATA) {
+					std::copy(state.data.begin(), state.data.end(), mappedEntityData);
+				}
+				mappedEntityData += 4;
+
+				if (dirtyFlags & Painter::FOREGROUND_COLOR) {
+					state.foregroundColor.flatten(color);
+					std::copy(std::begin(color), std::end(color), mappedEntityData);
+				}
+				mappedEntityData += 4;
+				//if (dirtyFlags & Painter::FOREGROUND_TRANSFORM) {
+				std::copy(state.foregroundTransform.begin(), state.foregroundTransform.end(), mappedEntityData);
+				//}
+				mappedEntityData += 4;
+
+				//if (dirtyFlags & Painter::BACKGROUND_COLOR) {
+				state.backgroundColor.flatten(color);
+				std::copy(std::begin(color), std::end(color), mappedEntityData);
+				//}
+				mappedEntityData += 4;
+				//if (dirtyFlags & Painter::BACKGROUND_TRANSFORM) {
+				std::copy(state.backgroundTransform.begin(), state.backgroundTransform.end(), mappedEntityData);
+				//}
+				mappedEntityData += 4;
+
+				//if (dirtyFlags & Painter::MASK_COLOR) {
+				state.maskColor.flatten(color);
+				std::copy(std::begin(color), std::end(color), mappedEntityData);
+				//}
+				mappedEntityData += 4;
+				//if (dirtyFlags & Painter::MASK_TRANSFORM) {
+				std::copy(state.maskTransform.begin(), state.maskTransform.end(), mappedEntityData);
+				//}
+				mappedEntityData += 4;
+
+				//if (dirtyFlags & Painter::FILTER) {
+				state.filter.flatten(matrix);
+				std::copy(std::begin(matrix), std::end(matrix), mappedEntityData);
+				//}
+
+				if (!painterData.unmap()) {
+					//if unmapping fails, we have to reinitialize the data store
+					//this happens on some os's like vista when the os could discard the whole buffer
+					loadSettings(state, Painter::ALL);
+				}
+	}
 
 			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
-				const OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(painter->getEntity(), { brush, type });
+				OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(this, { brush, type });
 				m.bind();
+
 				prot.program.bind();
+				prot.program.setUniform("mc_EntityID", static_cast<unsigned int>(painter->getID()));
 
 				m.draw();
 			}
-		}//ogl
+}//ogl
 	}//gfx
 }//mc
 

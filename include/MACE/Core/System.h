@@ -38,6 +38,7 @@ The above copyright notice and this permission notice shall be included in all c
 #endif//__STDC_LIB_EXT1__
 
 #include <string>
+#include <ostream>
 
 namespace mc {
 
@@ -75,6 +76,28 @@ namespace mc {
 		void checkError(const int lineNumber = 0, const char* filename = "Unknown file", const std::string message = "Unknown message");
 
 		void pause();
+
+		enum class ConsoleColor {
+			DEFAULT,
+			WHITE,
+			BLACK,
+			BLUE,
+			LIGHT_BLUE,
+			GREEN,
+			LIGHT_GREEN,
+			CYAN,
+			LIGHT_CYAN,
+			RED,
+			LIGHT_RED,
+			MAGENTA,
+			LIGHT_MAGENTA,
+			YELLOW,
+			LIGHT_YELLOW,
+			GRAY,
+			LIGHT_GRAY
+		};
+
+		std::string consoleColor(const ConsoleColor& foreground = ConsoleColor::DEFAULT, const ConsoleColor& background = ConsoleColor::DEFAULT);
 	}//os
 }//mc
 

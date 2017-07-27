@@ -3,8 +3,9 @@
 cd build;
 make all -j4;
 ls;
-./MACE-Testing;
-cd ..
+cd ..;
+./build/MACE-Testing
+exit $?;
 
 
 #if [[ $TRAVIS_OS_NAME == osx || $COMPILER == g++-6 ]]; then

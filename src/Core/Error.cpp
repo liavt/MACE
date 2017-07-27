@@ -23,8 +23,9 @@ namespace mc {
 		if (instance != nullptr && instance->getFlag(Instance::VERBOSE_ERRORS)) {
 			std::cerr << Error::getErrorDump(e);
 		} else {
-			std::cerr << typeid(e).name();
-			std::cerr << " occured:" << std::endl << "\t" << e.what() << std::endl;
+			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_RED) << typeid(e).name();
+			std::cerr << os::consoleColor(os::ConsoleColor::RED) << " occured:" << std::endl << "\t";
+			std::cerr << os::consoleColor(os::ConsoleColor::YELLOW) << e.what() << std::endl << os::consoleColor();
 
 #ifdef MACE_DEBUG
 			const Error* err = dynamic_cast<const Error*>(&e);
@@ -219,5 +220,21 @@ namespace mc {
 
 	const char * Error::getFile() const {
 		return file;
+	}
+
+	MultipleErrors::MultipleErrors(const Error errs[], const unsigned int errorSize, const unsigned int line, const char * file)
+		: Error("", line, file), message("Multiple errors occured:\n") {
+		if (errs == nullptr) {
+			//normally we would throw an error, but we cant throw an error from an error! that would cause all sorts of crazy memory corruption!
+			message = "Error showing multiple errors: Inputted array of errors was nullptr";
+		} else {
+			for (Index i = 0; i < errorSize; ++i) {
+				message += std::string(errs[i].what()) + '\n';
+			}
+		}
+	}
+
+	const char * MultipleErrors::what() const {
+		return message.c_str();
 	}
 }

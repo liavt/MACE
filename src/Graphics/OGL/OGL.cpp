@@ -24,7 +24,7 @@ namespace mc {
 				}
 
 				void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_OPENGL
 					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
 					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
 					std::string friendlyType = "UNKNOWN SHADER TYPE " + std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
@@ -46,52 +46,68 @@ namespace mc {
 					}
 					MACE__THROW(Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
 #else
-					MACE__THROW(Shader, "Error generating shader of type " + std::to_string(type) + ": " + messge);
+					MACE__THROW(Shader, "Error generating shader of type " + std::to_string(type));
 #endif
 				}
 			}//anon namespace
 
-#ifdef MACE_DEBUG
-			void checkGLError(const Index line, const char* file, const char* message) {
+			void forceCheckGLError(const Index line, const char* file, const char* message) {
+				std::vector<Error> errors;
+
 				Enum result = GL_NO_ERROR;
 				while ((result = glGetError()) != GL_NO_ERROR) {
 					switch (result) {
 						case GL_INVALID_ENUM:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file));
 							break;
 						case GL_INVALID_VALUE:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file));
 							break;
 						case GL_INVALID_OPERATION:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file));
 							break;
 						case GL_INVALID_FRAMEBUFFER_OPERATION:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file));
 							break;
 						case GL_STACK_OVERFLOW:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_OVERFLOW: A stack pushing operation cannot be done because it would overflow the limit of that stack's size", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_OVERFLOW: A stack pushing operation cannot be done because it would overflow the limit of that stack's size", line, file));
 							break;
 						case GL_STACK_UNDERFLOW:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_UNDERFLOW: A stack popping operation cannot be done because the stack is already at its lowest point", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_UNDERFLOW: A stack popping operation cannot be done because the stack is already at its lowest point", line, file));
 							break;
 						case GL_OUT_OF_MEMORY:
-							throw MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file));
 							break;
+#ifdef GL_CONTEXT_LOST
+						case GL_CONTEXT_LOST:
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_CONTEXT_LOST: The GL Context has been lost due to a graphics card reset", line, file));
+							break;
+#endif
 						default:
-							throw MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file);
+							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file));
 							break;
 					}
 				}
+
+				if (errors.size() == 1) {
+					throw errors[0];
+				} else if (!errors.empty()) {
+					throw MultipleErrors(errors.data(), errors.size(), line, file);
+				}
 			}
 
-			void checkGLError(const Index line, const std::string & file, const std::string message) {
-				checkGLError(line, file.c_str(), message.c_str());
+#ifdef MACE_DEBUG_OPENGL
+			void checkGLError(const Index line, const char* file, const char* message) {
+				forceCheckGLError(line, file, message);
+			}
+
+			void checkGLError(const Index line, const char* file, const std::string message) {
+				checkGLError(line, file, message.c_str());
 			}
 #else
 			void checkGLError(const Index, const char*, const char*) {}
 
-			//to improve performance a bit we can skip out on even calling c_str()
-			void checkGLError(const Index, const std::string &, const std::string) {}
+			void checkGLError(const Index, const char*, const std::string&) {}
 #endif
 
 			void VertexArray::init() {
@@ -970,7 +986,7 @@ namespace mc {
 
 				uniforms[name] = location;
 
-				checkGLError(__LINE__, __FILE__, "Error creating uniform with name " + std::string(name));
+				checkGLError(__LINE__, __FILE__, ("Error creating uniform with name " + std::string(name)).c_str());
 			}
 
 			void ShaderProgram::createUniform(const char * name) {

@@ -19,6 +19,11 @@ namespace mc {
 		public:
 			DummyEntity() : Entity() {};
 
+			//bring protected members in public for testing purposes
+			using mc::gfx::Entity::init;
+			using mc::gfx::Entity::update;
+			using mc::gfx::Entity::render;
+
 			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
 		protected:
 

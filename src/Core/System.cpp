@@ -237,7 +237,7 @@ namespace mc {
 
 			return buf;
 #elif defined(MACE_POSIX)
-			if(int result = strerror_r(errnum, buf, bufsize) != 0) {
+			if (int result = strerror_r(errnum, buf, bufsize) != 0) {
 				MACE__THROW(AssertionFailed, "Error in strerror_r with result " + std::to_string(result));
 			}
 
@@ -299,6 +299,144 @@ namespace mc {
 #else
 			std::cout << std::endl << "Press any key to continue...";
 			std::cin.get();
+#endif
+		}
+
+		std::string consoleColor(const ConsoleColor & foreground, const ConsoleColor & background) {
+#ifdef MACE_WINAPI
+			unsigned int attribute = 0;
+			ConsoleColor colors[] = { background, foreground };
+
+			for (unsigned int i = 0; i < 2; ++i) {
+				attribute *= 15;
+				switch (colors[i]) {
+					case ConsoleColor::BLACK:
+						attribute = 0;
+						break;
+					case ConsoleColor::BLUE:
+						attribute = 1;
+						break;
+					case ConsoleColor::GREEN:
+						attribute = 2;
+						break;
+					case ConsoleColor::CYAN:
+						attribute = 3;
+						break;
+					case ConsoleColor::RED:
+						attribute = 4;
+						break;
+					case ConsoleColor::MAGENTA:
+						attribute = 5;
+						break;
+					case ConsoleColor::YELLOW:
+						attribute = 6;
+						break;
+					case ConsoleColor::DEFAULT:
+					case ConsoleColor::LIGHT_GRAY:
+					default:
+						attribute = 7;
+						break;
+					case ConsoleColor::GRAY:
+						attribute = 8;
+						break;
+					case ConsoleColor::LIGHT_BLUE:
+						attribute = 9;
+						break;
+					case ConsoleColor::LIGHT_GREEN:
+						attribute = 10;
+						break;
+					case ConsoleColor::LIGHT_CYAN:
+						attribute = 11;
+						break;
+					case ConsoleColor::LIGHT_RED:
+						attribute = 12;
+						break;
+					case ConsoleColor::LIGHT_MAGENTA:
+						attribute = 13;
+						break;
+					case ConsoleColor::LIGHT_YELLOW:
+						attribute = 14;
+						break;
+					case ConsoleColor::WHITE:
+						attribute = 15;
+						break;
+				}
+			}
+
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), attribute);
+
+			return "";
+#elif defined(MACE_POSIX)
+			std::string output = "";
+			ConsoleColor colors[] = { foreground, background };
+
+			for (unsigned int i = 0; i < 2; ++i) {
+				unsigned int code;
+
+				switch (colors[i]) {
+					case ConsoleColor::DEFAULT:
+					default:
+						code = 39;
+						break;
+					case ConsoleColor::BLACK:
+						code = 30;
+						break;
+					case ConsoleColor::RED:
+						code = 31;
+						break;
+					case ConsoleColor::GREEN:
+						code = 32;
+						break;
+					case ConsoleColor::YELLOW:
+						code = 33;
+						break;
+					case ConsoleColor::BLUE:
+						code = 34;
+						break;
+					case ConsoleColor::MAGENTA:
+						code = 35;
+						break;
+					case ConsoleColor::CYAN:
+						code = 36;
+						break;
+					case ConsoleColor::LIGHT_GRAY:
+						code = 37;
+						break;
+					case ConsoleColor::GRAY:
+						code = 90;
+						break;
+					case ConsoleColor::LIGHT_RED:
+						code = 91;
+						break;
+					case ConsoleColor::LIGHT_GREEN:
+						code = 92;
+						break;
+					case ConsoleColor::LIGHT_YELLOW:
+						code = 93;
+						break;
+					case ConsoleColor::LIGHT_BLUE:
+						code = 94;
+						break;
+					case ConsoleColor::LIGHT_MAGENTA:
+						code = 95;
+						break;
+					case ConsoleColor::LIGHT_CYAN:
+						code = 96;
+						break;
+					case ConsoleColor::WHITE:
+						code = 97;
+						break;
+				}
+
+				code += (i * 10);
+
+				output += "\033[" + std::to_string(code) + "m";
+			}
+
+			return output;
+#else
+			//in case of unsupported system, just be safe and return nothing
+			return "";
 #endif
 		}
 	}//os

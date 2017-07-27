@@ -73,11 +73,13 @@ namespace mc {
 		}
 
 		void Entity::removeChild(const Entity * e) {
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Argument to removeChild is nullptr!");
 			} else if (children.empty()) {
 				MACE__THROW(AssertionFailed, "Can\'t remove child from an empty entity (empty() is true)");
 			}
+#endif
 
 			for (Index i = 0; i < children.size(); ++i) {
 				if (e == children[i]) {
@@ -461,7 +463,7 @@ namespace mc {
 		}
 
 		bool Entity::getProperty(const Byte position) const {
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (position > 8) {
 				MACE__THROW(IndexOutOfBounds, "Input position is greater than 8");
 			} else if (position < 0) {
@@ -472,7 +474,7 @@ namespace mc {
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (position > 8) {
 				MACE__THROW(IndexOutOfBounds, "Input position is greater than 8");
 			} else if (position < 0) {

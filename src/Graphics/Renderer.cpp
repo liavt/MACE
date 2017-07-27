@@ -32,9 +32,11 @@ namespace mc {
 		}//setUp
 
 		Index Renderer::queue(GraphicsEntity * const e) {
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
 			}
+#endif
 
 			onQueue(e);
 
@@ -43,9 +45,11 @@ namespace mc {
 		}//queue
 
 		void Renderer::remove(const Index id) {
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (id == 0 || id > renderQueue.size()) {
 				MACE__THROW(IndexOutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
 			}
+#endif
 
 			renderQueue[id - 1] = nullptr;
 		}
@@ -131,7 +135,7 @@ namespace mc {
 		Painter::Painter(const Painter & p) : impl(p.impl), entity(p.entity), id(p.id) {}
 
 		void Painter::begin() {
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (impl == nullptr) {
 				MACE__THROW(NullPointer, "Painter was not initialized correctly");
 			} else if (id == 0) {
@@ -485,21 +489,27 @@ namespace mc {
 			Renderer* r = gfx::getCurrentWindow()->getContext()->getRenderer();
 			id = r->queue(entity);
 			impl = r->createPainterImpl(this);
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (impl.get() == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Renderer returned a nullptr to a Painter");
 			}
 #endif
 
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (id == 0 || entity == nullptr) {
 				MACE__THROW(InitializationFailed, "Internal Error: Invalid PainterImpl settings");
 			}
+#endif
 			impl->init();
 		}
 
 		void Painter::destroy() {
 			impl->destroy();
 			id = 0;
+		}
+
+		void Painter::clean() {
+			impl->clean();
 		}
 
 		bool Painter::State::operator==(const State & other) const {
@@ -553,6 +563,8 @@ namespace mc {
 		}
 
 		void GraphicsEntity::clean() {
+			painter.clean();
+
 			Entity::clean();
 		}
 	}//gfx

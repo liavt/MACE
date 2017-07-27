@@ -87,16 +87,20 @@ namespace mc {
 				REQUIRE_FALSE(m1 >= m2);
 				REQUIRE(m1 < m2);
 				REQUIRE(m1 <= m2);
+				REQUIRE(m1 != m2);
+				REQUIRE_FALSE(m1 == m2);
 				m2 = m1;
 				REQUIRE_FALSE(m1 > m2);
 				REQUIRE(m1 >= m2);
 				REQUIRE_FALSE(m1 < m2);
 				REQUIRE(m1 <= m2);
+				REQUIRE(m1 == m2);
 				m2 = { {-1,0,2},{3,1,4},{2,1,2} };
 				REQUIRE(m1 > m2);
 				REQUIRE(m1 >= m2);
 				REQUIRE_FALSE(m1 < m2);
 				REQUIRE_FALSE(m1 <= m2);
+				REQUIRE(m1 != m2);
 			}
 		}
 	}

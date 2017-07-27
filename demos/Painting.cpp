@@ -85,7 +85,7 @@ private:
 int main() {
 	Instance instance = Instance();
 	try {
-		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(768, 768, "Texture Demo");
+		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(768, 768, "Painting Demo");
 		config.resizable = true;
 
 		gfx::WindowModule module = gfx::WindowModule(config);
