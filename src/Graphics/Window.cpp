@@ -204,7 +204,8 @@ namespace mc {
 
 				//this checks every available context until 1.0. the window is hidden so it won't cause spazzing
 				for (int versionMinor = 3; versionMinor >= 0 && !window; --versionMinor) {
-					std::cout << "Trying OpenGL " << versionMajor << "." << versionMinor << std::endl;
+					std::cout << os::consoleColor(os::ConsoleColor::YELLOW) << "Trying OpenGL ";
+					std::cout << os::consoleColor(os::ConsoleColor::LIGHT_YELLOW) << versionMajor << "." << versionMinor << std::endl << os::consoleColor();
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versionMajor);
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
 

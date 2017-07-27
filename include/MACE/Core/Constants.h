@@ -71,8 +71,6 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_DEBUG_INTERNAL_ERRORS 1
 #endif
 
-#define MACE_DEBUG_OPENGL
-
 //checks for a C++ attribute in the form of [[attribute]]
 #ifndef MACE_HAS_ATTRIBUTE
 #	ifndef __has_cpp_attribute

@@ -28,20 +28,23 @@ It is usually safe to type `using namespace mc`. However, be weary that this may
 @todo Add a proper logger
 */
 namespace mc {
-	unsigned int getMACEVersionMajor() {
-		return MACE_VERSION_MAJOR;
-	}
 
-	unsigned int getMACEVersionMinor() {
-		return MACE_VERSION_MINOR;
-	}
+	extern "C" {
+		MACE_FUNCTION_EXPORT unsigned int getMACEVersionMajor() {
+			return MACE_VERSION_MAJOR;
+		}
 
-	unsigned int getMACEVersionPatch() {
-		return MACE_VERSION_PATCH;
-	}
+		MACE_FUNCTION_EXPORT unsigned int getMACEVersionMinor() {
+			return MACE_VERSION_MINOR;
+		}
 
-	const char* getMACEVersionString() {
-		return MACE_STRINGIFY(MACE_VERSION);
+		MACE_FUNCTION_EXPORT unsigned int getMACEVersionPatch() {
+			return MACE_VERSION_PATCH;
+		}
+
+		MACE_FUNCTION_EXPORT const char* getMACEVersionString() {
+			return MACE_STRINGIFY(MACE_VERSION);
+		}
 	}
 }
 

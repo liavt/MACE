@@ -55,7 +55,7 @@ namespace mc {
 
 			OGL33Renderer::OGL33Renderer() {}
 
-			void OGL33Renderer::onInit(gfx::WindowModule*) {
+			void OGL33Renderer::onInit(gfx::WindowModule* win) {
 				glewExperimental = true;
 				const GLenum result = glewInit();
 				if (result != GLEW_OK) {
@@ -114,6 +114,10 @@ namespace mc {
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
+				const WindowModule::LaunchConfig& config = win->getLaunchConfig();
+
+				generateFramebuffer(config.width, config.height);
+
 				//gl states
 				ogl::enable(GL_BLEND);
 				ogl::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -130,15 +134,15 @@ namespace mc {
 				sceneTexture.bind();
 				idTexture.bind();
 
-				//frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				//ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				ogl::FrameBuffer::setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear color buffer");
 
 				//we want to clear the id texture to black only - not the color set by the user. this requires 3 setDrawBuffers - which is annoying
 				frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-				//ogl::FrameBuffer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				ogl::FrameBuffer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear ID buffer");
@@ -177,11 +181,11 @@ namespace mc {
 			}
 
 			void OGL33Renderer::onResize(gfx::WindowModule*, const Size width, const Size height) {
-				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
-
 				depthBuffer.destroy();
 
 				frameBuffer.destroy();
+
+				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
 				ogl::setViewport(0, 0, width == 0 ? 1 : width, height == 0 ? 1 : height);
 
@@ -205,7 +209,6 @@ namespace mc {
 				protocols.clear();
 
 				ogl::forceCheckGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
-				os::checkError(__LINE__, __FILE__, "Internal Error: System error destroying OpenGL 3.3 renderer");
 
 			}
 
@@ -215,7 +218,7 @@ namespace mc {
 				clearColor = Color(r, g, b, a);
 			}
 
-			void OGL33Renderer::generateFramebuffer(const Size& width, const Size& height) {
+			void OGL33Renderer::generateFramebuffer(const int width, const int height) {
 				depthBuffer.init();
 				depthBuffer.bind();
 
@@ -285,6 +288,9 @@ namespace mc {
 					static_cast<float>(config.width) / static_cast<float>(width),
 					static_cast<float>(config.height) / static_cast<float>(height)
 				};
+
+				ogl::forceCheckGLError(__LINE__, __FILE__,
+					("Internal Error: OGL33Renderer: Error resizing framebuffer for width " + std::to_string(width) + " and height " + std::to_string(height)).c_str());
 			}
 
 			GraphicsEntity * OGL33Renderer::getEntityAt(const int x, const int y) {

@@ -97,7 +97,7 @@ namespace mc {
 
 				Color clearColor = Colors::BLACK;
 
-				void generateFramebuffer(const Size& width, const Size& height);
+				void generateFramebuffer(const int width, const int height);
 
 				//for the Painter
 

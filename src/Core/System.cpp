@@ -31,8 +31,8 @@ namespace mc {
 			clearError(__LINE__, __FILE__);
 
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t status = localtime_s(pointer, time)) {
-				checkError(__LINE__, __FILE__, "Failed to use localtime_s");
+			if (const errno_t status = localtime_s(pointer, time)) {
+				checkError(__LINE__, __FILE__, "Failed to use localtime_s: " + std::to_string(status));
 
 				MACE__THROW(AssertionFailed, "localtime_s errored with code " + std::to_string(status));
 			}
@@ -60,8 +60,8 @@ namespace mc {
 			clearError(__LINE__, __FILE__);
 
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t status = gmtime_s(pointer, time)) {
-				checkError(__LINE__, __FILE__, "Failed to use gmtime_s");
+			if (const errno_t status = gmtime_s(pointer, time)) {
+				checkError(__LINE__, __FILE__, "Failed to use gmtime_s: " + std::to_string(status));
 
 				MACE__THROW(AssertionFailed, "gmtime_s errored with code " + std::to_string(status));
 			}
@@ -86,8 +86,8 @@ namespace mc {
 
 		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t status = ctime_s(buffer, bufSize, time)) {
-				checkError(__LINE__, __FILE__, "Failed to use ctime_s");
+			if (const errno_t status = ctime_s(buffer, bufSize, time)) {
+				checkError(__LINE__, __FILE__, "Failed to use ctime_s: " + std::to_string(status));
 
 				MACE__THROW(AssertionFailed, "ctime_s errored with code " + std::to_string(status));
 			}
@@ -102,8 +102,8 @@ namespace mc {
 
 		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t status = asctime_s(buffer, bufSize, time)) {
-				checkError(__LINE__, __FILE__, "Failed to use asctime_s");
+			if (const errno_t status = asctime_s(buffer, bufSize, time)) {
+				checkError(__LINE__, __FILE__, "Failed to use asctime_s: " + std::to_string(status));
 
 				MACE__THROW(AssertionFailed, "asctime_s errored with code " + std::to_string(status));
 			}
@@ -118,9 +118,11 @@ namespace mc {
 
 		FILE * fopen(FILE ** result, const char * filename, const char * mode) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			mc::os::assertion(fopen_s(result, filename, mode) != 0, "fopen_s failed");
+			if (const errno_t status = fopen_s(result, filename, mode)) {
+				checkError(__LINE__, __FILE__, "Failed to use fopen_s: " + std::to_string(status));
 
-			checkError(__LINE__, __FILE__, "Failed to use fopen_s");
+				MACE__THROW(System, "fopen_s failed: " + std::to_string(status));
+			}
 
 			return *result;
 #else
@@ -130,8 +132,8 @@ namespace mc {
 
 		std::size_t mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate)) {
-				checkError(__LINE__, __FILE__, "Failed to use mbsrtowcs");
+			if (const errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate)) {
+				checkError(__LINE__, __FILE__, "Failed to use mbsrtowcs: " + std::to_string(status));
 
 				MACE__THROW(AssertionFailed, "mbsrtowcs_s errored with code " + std::to_string(status));
 			}
@@ -144,8 +146,8 @@ namespace mc {
 
 		std::size_t wcstombs(std::size_t * returnValue, char * dst, std::size_t sizeInWords, const wchar_t * src, std::size_t length) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t status = wcstombs_s(returnValue, dst, sizeInWords, src, length)) {
-				checkError(__LINE__, __FILE__, "Failed to use wsctombs_s");
+			if (const errno_t status = wcstombs_s(returnValue, dst, sizeInWords, src, length)) {
+				checkError(__LINE__, __FILE__, "Failed to use wsctombs_s: " + std::to_string(status));
 
 				MACE__THROW(AssertionFailed, "mbsrtowcs_s errored with code " + std::to_string(status));
 			}
@@ -156,18 +158,21 @@ namespace mc {
 #endif		
 		}
 
+#ifdef MACE_DEBUG
 		void assertion(const bool cond, const std::string & message) {
-#ifdef MACE_DEBUG
 			assertion(cond, message.c_str());
-#endif
 		}
+
 		void assertion(const bool cond, const char * message) {
-#ifdef MACE_DEBUG
 			if (cond) {
 				MACE__THROW(AssertionFailed, message);
 			}
-#endif
 		}
+#else
+		void assertion(const bool, const std::string&) {}
+
+		void assertion(const bool, const char*) {}
+#endif
 
 		void wait(const long long int ms) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(ms));
@@ -184,7 +189,7 @@ namespace mc {
 			if (wn == std::size_t(-1)) {
 				checkError(__LINE__, __FILE__, "Failed to use mbsrtowcs");
 
-				MACE__THROW(AssertionFailed, "Error in mbsrtowcs() with result " + std::to_string(errno));
+				MACE__THROW(AssertionFailed, "Error in mbsrtowcs(): Further error information unavailable");
 			}
 
 			std::vector<wchar_t> buf(wn + 1);
@@ -194,7 +199,7 @@ namespace mc {
 			if (wn_again == std::size_t(-1)) {
 				checkError(__LINE__, __FILE__, "Failed to use mbsrtowcs");
 
-				MACE__THROW(AssertionFailed, "Error in mbsrtowcs() with result " + std::to_string(errno));
+				MACE__THROW(AssertionFailed, "Error in mbsrtowcs(): Further error information unavailable");
 			}
 
 			return std::wstring(buf.data(), wn);
@@ -210,7 +215,7 @@ namespace mc {
 			if (wn == std::size_t(-1)) {
 				checkError(__LINE__, __FILE__, "Failed to use wcstombs()");
 
-				MACE__THROW(AssertionFailed, "Error in wcstombs() with result " + std::to_string(errno));
+				MACE__THROW(AssertionFailed, "Error in wcstombs(): Further error information unavailable");
 			}
 
 			std::vector<char> buf(wn + 1);
@@ -220,25 +225,25 @@ namespace mc {
 			if (wn_again == std::size_t(-1)) {
 				checkError(__LINE__, __FILE__, "Failed to use wcstombs()");
 
-				MACE__THROW(AssertionFailed, "Error in wcstombs() with result " + std::to_string(errno));
+				MACE__THROW(AssertionFailed, "Error in wcstombs(): Further error information unavailable");
 			}
 
 			return std::string(buf.data(), wn);
 		}
 
-		char * strerror(char * buf, std::size_t bufsize, int errnum) {
+		const char * strerror(char * buf, std::size_t bufsize, int errnum) {
 			//cant use checkError() or clearError() here as that would create an infinite recursive loop
 			//clearError() and checkError() calls this function
 
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
-			if (errno_t result = strerror_s(buf, bufsize, errnum) != 0) {
-				MACE__THROW(AssertionFailed, "Error in strerror_s with result " + std::to_string(result));
+			if (const errno_t result = strerror_s(buf, bufsize, errnum) != 0) {
+				return ("Failed to use strerror(): " + std::to_string(result) + ": errno was " + std::to_string(errno)).c_str();
 			}
 
 			return buf;
 #elif defined(MACE_POSIX)
-			if (int result = strerror_r(errnum, buf, bufsize) != 0) {
-				MACE__THROW(AssertionFailed, "Error in strerror_r with result " + std::to_string(result));
+			if (const int result = strerror_r(errnum, buf, bufsize) != 0) {
+				return ("Failed to use strerror_r(): " + std::to_string(result) + ": errno was " + std::to_string(errno)).c_str();
 			}
 
 			return buf;
@@ -257,13 +262,13 @@ namespace mc {
 
 		void checkError(const int line, const char* file, const std::string errorMessage) {
 			//POSIX man pages says to save the error before using it in case of a concurrent environment
-			int error = errno;
+			const int error = errno;
 
 			if (error == 0) {
 				//no errno, check other systems for error
 
 #ifdef MACE_WINAPI
-				DWORD lastError = GetLastError();
+				const DWORD lastError = GetLastError();
 				if (lastError == 0) {
 					//no error
 					return;
@@ -279,7 +284,7 @@ namespace mc {
 
 				SetLastError(0);
 
-				throw SystemError(std::to_string(line) + " in " + std::string(file) + ": " + errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message);
+				throw MACE__GET_ERROR_NAME(System) (errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message, line, file);
 #else
 				return;
 #endif
@@ -288,9 +293,8 @@ namespace mc {
 			errno = 0;
 
 			char buffer[128];
-			os::strerror(buffer, getArraySize(buffer), error);
 
-			throw SystemError("Line " + std::to_string(line) + " in " + std::string(file) + ": " + errorMessage + ": " + buffer);
+			throw MACE__GET_ERROR_NAME(System) (errorMessage + ": " + os::strerror(buffer, getArraySize(buffer), error), line, file);
 		}
 
 		void pause() {
