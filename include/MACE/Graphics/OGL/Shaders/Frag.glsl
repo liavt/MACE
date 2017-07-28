@@ -1,15 +1,8 @@
 R""(
-
-#ifndef _MACE_FRAGMENT_LIBRARY_
-#define _MACE_FRAGMENT_LIBRARY_ 1
-
-#include <mc_core>
-#include <mc_entity>
-
 in highp vec2 _mcTextureCoord;
 
-layout(location = MACE__SCENE_ATTACHMENT_INDEX) out lowp vec4 _mc_OutColor;
-layout(location = MACE__ID_ATTACHMENT_INDEX) out uint _mc_OutID;
+layout(location = MACE_SCENE_ATTACHMENT_INDEX) out lowp vec4 _mc_OutColor;
+layout(location = MACE_ID_ATTACHMENT_INDEX) out uint _mc_OutID;
 
 uniform uint mc_EntityID;
 
@@ -44,6 +37,4 @@ void main(void){
 		discard;
 	}
 }
-
-#endif
 )""

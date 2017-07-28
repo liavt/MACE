@@ -141,22 +141,24 @@ namespace mc {
 			}
 
 			void OGL33Texture::setMinFilter(const Enums::ResizeFilter filter) {
+				ogl::Texture2D::bind();
 				if (filter == Enums::ResizeFilter::MIPMAP_LINEAR) {
-					generateMipmap();
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+					ogl::Texture2D::generateMipmap();
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 				} else if (filter == Enums::ResizeFilter::MIPMAP_NEAREST) {
-					generateMipmap();
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					ogl::Texture2D::generateMipmap();
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				} else if (filter == Enums::ResizeFilter::LINEAR) {
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				} else if (filter == Enums::ResizeFilter::NEAREST) {
-					setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				} else {
 					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(filter)));
 				}
 			}
 
 			void OGL33Texture::setMagFilter(const Enums::ResizeFilter filter) {
+				ogl::Texture2D::bind();
 				if (filter == Enums::ResizeFilter::MIPMAP_LINEAR ||
 					filter == Enums::ResizeFilter::MIPMAP_NEAREST) {
 					MACE__THROW(UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
@@ -170,6 +172,7 @@ namespace mc {
 			}
 
 			void OGL33Texture::setUnpackStorageHint(const Enums::PixelStorage hint, const int value) {
+				ogl::Texture2D::bind();
 				switch (hint) {
 					case Enums::PixelStorage::ALIGNMENT:
 						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
@@ -183,6 +186,7 @@ namespace mc {
 			}
 
 			void OGL33Texture::setPackStorageHint(const Enums::PixelStorage hint, const int value) {
+				ogl::Texture2D::bind();
 				switch (hint) {
 					case Enums::PixelStorage::ALIGNMENT:
 						setPixelStorage(GL_PACK_ALIGNMENT, value);
@@ -196,6 +200,7 @@ namespace mc {
 			}
 
 			void OGL33Texture::setWrapS(const Enums::WrapMode wrap) {
+				ogl::Texture2D::bind();
 				if (wrap == Enums::WrapMode::CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 				} else if (wrap == Enums::WrapMode::REPEAT) {
@@ -210,6 +215,7 @@ namespace mc {
 			}
 
 			void OGL33Texture::setWrapT(const Enums::WrapMode wrap) {
+				ogl::Texture2D::bind();
 				if (wrap == Enums::WrapMode::CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 				} else if (wrap == Enums::WrapMode::REPEAT) {
@@ -224,16 +230,18 @@ namespace mc {
 			}
 
 			void OGL33Texture::setData(const void * data, const Index mipmap) {
+				ogl::Texture2D::bind();
 				ogl::Texture2D::setData(data, width, height, getType(type), getFormat(format), getInternalFormat(internalFormat), mipmap);
 			}
 
 			void OGL33Texture::readPixels(void * data) const {
+				ogl::Texture2D::bind();
 				ogl::Texture2D::getImage(getFormat(format), getType(type), data);
 			}
 
 			void OGL33Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
 				/*
-				See the value of Enums::SwizzleMode...
+				See the underlying value of Enums::SwizzleMode...
 				R = 0
 				G = 1
 				B = 2
@@ -244,8 +252,11 @@ namespace mc {
 				GL_GREEN = GL_RED + 1
 				GL_BLUE = GL_RED + 2
 				GL_ALPHA = GL_RED + 3
+
+				This is the same for GL_TEXTURE_SWIZZLE_R
 				*/
-				setParameter(GL_TEXTURE_SWIZZLE_R + static_cast<Enum>(mode), GL_RED + static_cast<Enum>(arg));
+				ogl::Texture2D::bind();
+				ogl::Texture2D::setParameter(GL_TEXTURE_SWIZZLE_R + static_cast<Enum>(mode), GL_RED + static_cast<Enum>(arg));
 			}
 
 			void OGL33Model::init() {

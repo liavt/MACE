@@ -18,7 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_EXPOSE_GLFW
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
 #include <MACE/Graphics/Context.h>
-#include <MACE/Utility/Preprocessor.h>
 #include <MACE/Core/System.h>
 
 //we need to include algorithim for std::copy
@@ -37,12 +36,14 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace ogl {
-			//how many floats in the uniform buffer
+			namespace {
+
+				//how many floats in the uniform buffer
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 24
-		//which binding location the uniform buffer goes to
+				//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
 #define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
-			//the definition is later stringified. cant be a string because this gets added to the shader.
+				//the definition is later stringified. cant be a string because this gets added to the shader.
 #define MACE__ENTITY_DATA_NAME _mc_EntityData
 
 #define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 56
@@ -52,6 +53,47 @@ namespace mc {
 
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
+
+				Shader createShader(const Enum type, const char* source) {
+					Shader s = Shader(type);
+					s.init();
+#define MACE__SHADER_MACRO(name, def) "#define " #name " " MACE_STRINGIFY_DEFINITION(def) "\n"
+					std::vector<const char*> sources = std::vector<const char*>({
+						"#version 330 core\n",
+						MACE__SHADER_MACRO(MACE_ENTITY_DATA_LOCATION, MACE__ENTITY_DATA_LOCATION),
+						MACE__SHADER_MACRO(MACE_ENTITY_DATA_NAME, MACE__ENTITY_DATA_NAME),
+						MACE__SHADER_MACRO(MACE_PAINTER_DATA_LOCATION, MACE__PAINTER_DATA_LOCATION),
+						MACE__SHADER_MACRO(MACE_PAINTER_DATA_NAME, MACE__PAINTER_DATA_NAME),
+						MACE__SHADER_MACRO(MACE_SCENE_ATTACHMENT_INDEX, MACE__SCENE_ATTACHMENT_INDEX),
+						MACE__SHADER_MACRO(MACE_ID_ATTACHMENT_INDEX, MACE__ID_ATTACHMENT_INDEX),
+						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_VERTICES_LOCATION, MACE__VAO_DEFAULT_VERTICES_LOCATION),
+						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_TEXTURE_COORD_LOCATION, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION),
+						{
+#include <MACE/Graphics/OGL/Shaders/Shared.glsl>
+						},
+					});
+#undef MACE__SHADER_MACRO
+
+					if (type == GL_VERTEX_SHADER) {
+						sources.push_back({
+#include <MACE/Graphics/OGL/Shaders/Vert.glsl>
+						});
+					} else if (type == GL_FRAGMENT_SHADER) {
+						sources.push_back({
+#include <MACE/Graphics/OGL/Shaders/Frag.glsl>
+						});
+					}
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
+					else {
+						MACE__THROW(BadFormat, "Internal Error: Unknown GLSL shader type: " + std::to_string(type));
+					}
+#endif
+					sources.push_back(source);
+					s.setSource(sources.size(), sources.data(), nullptr);
+					s.compile();
+					return s;
+				}
+			}
 
 			OGL33Renderer::OGL33Renderer() {}
 
@@ -101,18 +143,6 @@ namespace mc {
 				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 				std::cout << os::consoleColor();
 #endif
-
-				sceneTexture.init();
-				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
-
-				idTexture.init();
-				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
 				const WindowModule::LaunchConfig& config = win->getLaunchConfig();
 
@@ -181,9 +211,11 @@ namespace mc {
 			}
 
 			void OGL33Renderer::onResize(gfx::WindowModule*, const Size width, const Size height) {
+				frameBuffer.destroy();
 				depthBuffer.destroy();
 
-				frameBuffer.destroy();
+				sceneTexture.destroy();
+				idTexture.destroy();
 
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
@@ -221,12 +253,25 @@ namespace mc {
 			void OGL33Renderer::generateFramebuffer(const int width, const int height) {
 				depthBuffer.init();
 				depthBuffer.bind();
+				depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
 
+				sceneTexture.init();
+				sceneTexture.bind();
+				sceneTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				sceneTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				sceneTexture.setData(nullptr, width, height, GL_UNSIGNED_BYTE, GL_RGBA, GL_RGBA, 0);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
+
+				idTexture.init();
+				idTexture.bind();
+				idTexture.setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				idTexture.setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				idTexture.setData(nullptr, width, height, GL_UNSIGNED_INT, GL_RED_INTEGER, GL_R32UI, 0);
-				depthBuffer.setStorage(GL_DEPTH_COMPONENT, width, height);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting texture for renderer Z-buffers");
 
@@ -321,11 +366,6 @@ namespace mc {
 				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, p));
 			}
 
-			std::string OGL33Renderer::processShader(const std::string & shader) {
-				Preprocessor preprocessor = Preprocessor(shader, getShaderPreprocessor());
-				return preprocessor.preprocess();
-			}
-
 			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderType> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
@@ -348,22 +388,22 @@ namespace mc {
 				program.init();
 
 				if (settings.second == Enums::RenderType::STANDARD) {
-					program.createVertex(processShader({
-#	include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
+					program.attachShader(createShader(GL_VERTEX_SHADER, {
+#include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
 					}));
 				} else {
 					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
 				}
 
 				if (settings.first == Enums::Brush::COLOR) {
-					program.createFragment(processShader({
+					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
 #	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
 					}));
 
 					program.link();
 				} else if (settings.first == Enums::Brush::TEXTURE) {
-					program.createFragment(processShader({
-#	include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
+					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
+#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
 					}));
 
 					program.link();
@@ -374,7 +414,7 @@ namespace mc {
 
 					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 				} else if (settings.first == Enums::Brush::MASK) {
-					program.createFragment(processShader({
+					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
 #	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
 					}));
 
@@ -389,7 +429,7 @@ namespace mc {
 					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 					program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
 				} else if (settings.first == Enums::Brush::BLEND) {
-					program.createFragment(processShader({
+					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
 #	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
 					}));
 
@@ -403,7 +443,7 @@ namespace mc {
 					program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 					program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
 				} else if (settings.first == Enums::Brush::MASKED_BLEND) {
-					program.createFragment(processShader({
+					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
 #	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
 					}));
 
@@ -428,34 +468,6 @@ namespace mc {
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
 				return program;
 			}
-
-			const mc::Preprocessor& OGL33Renderer::getShaderPreprocessor() {
-				if (shaderPreprocessor.macroNumber() == 0) {
-					shaderPreprocessor.defineMacro(mc::Macro("MACE__GL_VERSION_DECLARATION", "#version 330 core"));
-					shaderPreprocessor.defineMacro(mc::Macro("MACE__UNIFORM_BUFFER", "layout(std140) uniform"));
-
-					//indirection is the only way to expand macros in other macros
-					//the strcmp checks if the macro is defined. if the name is different from it expanded, then it is a macro. doesnt work if a macro is defined as itself, but that shouldnt happen
-#define MACE__DEFINE_SHADER_MACRO(name) if(std::strcmp("" #name ,MACE_STRINGIFY_NAME(name))){shaderPreprocessor.defineMacro( Macro( #name , MACE_STRINGIFY( name ) ));}
-					//this macro takes in a C++ macro and converts it into a mc::Macro class for the shaderPreprocessor
-					MACE__DEFINE_SHADER_MACRO(MACE__SCENE_ATTACHMENT_INDEX);
-					MACE__DEFINE_SHADER_MACRO(MACE__ID_ATTACHMENT_INDEX);
-
-					MACE__DEFINE_SHADER_MACRO(MACE__VAO_DEFAULT_VERTICES_LOCATION);
-					MACE__DEFINE_SHADER_MACRO(MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION);
-
-					MACE__DEFINE_SHADER_MACRO(MACE__ENTITY_DATA_NAME);
-					MACE__DEFINE_SHADER_MACRO(MACE__PAINTER_DATA_NAME);
-#undef MACE__DEFINE_SHADER_MACRO
-
-					shaderPreprocessor.addInclude(vertexLibrary);
-					shaderPreprocessor.addInclude(fragmentLibrary);
-					shaderPreprocessor.addInclude(positionLibrary);
-					shaderPreprocessor.addInclude(entityLibrary);
-					shaderPreprocessor.addInclude(coreLibrary);
-				}
-				return shaderPreprocessor;
-			}//getSSLPreprocessor
 
 			OGL33Painter::OGL33Painter(OGL33Renderer* const r, Painter* const p) : PainterImpl(p), renderer(r) {}
 
@@ -507,7 +519,7 @@ namespace mc {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 				if (mappedEntityData == nullptr) {
 					MACE__THROW(NullPointer, "Internal Error: Mapped entity buffer was nullptr");
-			}
+				}
 #endif
 
 				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
@@ -523,9 +535,9 @@ namespace mc {
 				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
 
 				entityData.unmap();
-		}
+			}
 
-			void OGL33Painter::loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) {
+			void OGL33Painter::loadSettings(const Painter::State& state) {
 				float color[4] = {};
 				float matrix[16] = {};
 
@@ -535,68 +547,46 @@ namespace mc {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 				if (mappedEntityData == nullptr) {
 					MACE__THROW(NullPointer, "Internal Error: Mapped paint data buffer was nullptr");
-			}
+				}
 #endif
 
-				if (dirtyFlags & Painter::TRANSLATION) {
-					std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
-				}
+				std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				if (dirtyFlags & Painter::ROTATION) {
-					std::copy(state.transformation.rotation.begin(), state.transformation.rotation.end(), mappedEntityData);
-				}
+				std::copy(state.transformation.rotation.begin(), state.transformation.rotation.end(), mappedEntityData);
 				mappedEntityData += 4;
-				if (dirtyFlags & Painter::SCALE) {
-					std::copy(state.transformation.scaler.begin(), state.transformation.scaler.end(), mappedEntityData);
-				}
+				std::copy(state.transformation.scaler.begin(), state.transformation.scaler.end(), mappedEntityData);
 				mappedEntityData += 4;
 
-				if (dirtyFlags & Painter::DATA) {
-					std::copy(state.data.begin(), state.data.end(), mappedEntityData);
-				}
+				std::copy(state.data.begin(), state.data.end(), mappedEntityData);
 				mappedEntityData += 4;
 
-				if (dirtyFlags & Painter::FOREGROUND_COLOR) {
-					state.foregroundColor.flatten(color);
-					std::copy(std::begin(color), std::end(color), mappedEntityData);
-				}
+				state.foregroundColor.flatten(color);
+				std::copy(std::begin(color), std::end(color), mappedEntityData);
 				mappedEntityData += 4;
-				//if (dirtyFlags & Painter::FOREGROUND_TRANSFORM) {
 				std::copy(state.foregroundTransform.begin(), state.foregroundTransform.end(), mappedEntityData);
-				//}
 				mappedEntityData += 4;
 
-				//if (dirtyFlags & Painter::BACKGROUND_COLOR) {
 				state.backgroundColor.flatten(color);
 				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				//}
 				mappedEntityData += 4;
-				//if (dirtyFlags & Painter::BACKGROUND_TRANSFORM) {
 				std::copy(state.backgroundTransform.begin(), state.backgroundTransform.end(), mappedEntityData);
-				//}
 				mappedEntityData += 4;
 
-				//if (dirtyFlags & Painter::MASK_COLOR) {
 				state.maskColor.flatten(color);
 				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				//}
 				mappedEntityData += 4;
-				//if (dirtyFlags & Painter::MASK_TRANSFORM) {
 				std::copy(state.maskTransform.begin(), state.maskTransform.end(), mappedEntityData);
-				//}
 				mappedEntityData += 4;
 
-				//if (dirtyFlags & Painter::FILTER) {
 				state.filter.flatten(matrix);
 				std::copy(std::begin(matrix), std::end(matrix), mappedEntityData);
-				//}
 
 				if (!painterData.unmap()) {
 					//if unmapping fails, we have to reinitialize the data store
 					//this happens on some os's like vista when the os could discard the whole buffer
-					loadSettings(state, Painter::ALL);
+					loadSettings(state);
 				}
-	}
+			}
 
 			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
 				OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(this, { brush, type });
@@ -607,7 +597,7 @@ namespace mc {
 
 				m.draw();
 			}
-}//ogl
+		}//ogl
 	}//gfx
 }//mc
 

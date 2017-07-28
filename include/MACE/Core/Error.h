@@ -43,7 +43,7 @@ namespace mc {
 
 		void handle[[noreturn]]();
 
-		unsigned int getLine() const;
+		const unsigned int getLine() const;
 		const char* getFile() const;
 	private:
 		const unsigned int line;
@@ -128,7 +128,7 @@ namespace mc {
 
 		MultipleErrors(const Error errs[], const unsigned int errorSize, const unsigned int line, const char* file);
 
-		const char* what() const override;
+		const char* what() const noexcept override;
 	private:
 		std::string message;
 	};

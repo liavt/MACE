@@ -15,10 +15,10 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			namespace {
-				Shader createShader(const Enum type, const char* source) {
+				Shader createShader(const Enum type, const char* sources[], const Size sourceSize) {
 					Shader s = Shader(type);
 					s.init();
-					s.setSource(source);
+					s.setSource(sourceSize, sources, nullptr);
 					s.compile();
 					return s;
 				}
@@ -376,12 +376,10 @@ namespace mc {
 			}
 
 			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
-				bind();
 				glRenderbufferStorage(GL_RENDERBUFFER, format, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
 			}
 
 			void RenderBuffer::setStorageMultisampled(const Size samples, const Enum format, const Size width, const Size height) {
-				bind();
 				glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, format, width, height);
 			}
 
@@ -416,23 +414,16 @@ namespace mc {
 			Texture2D::Texture2D() noexcept {}
 
 			void Texture2D::init() {
-				if (!isCreated()) {
-					glGenTextures(1, &id);
+				glGenTextures(1, &id);
 
-					checkGLError(__LINE__, __FILE__, "Error creating Texture2D");
-				}
 			}
 
 			void Texture2D::destroy() {
-				if (isCreated()) {
-					glDeleteTextures(1, &id);
-
-					checkGLError(__LINE__, __FILE__, "Error destroying Texture2D");
-				}
+				glDeleteTextures(1, &id);
 			}
 
 			void Texture2D::bind() const {
-				Texture2D::bind(0);
+				Object::bind();
 			}
 
 			void Texture2D::bind(const unsigned int location) const {
@@ -441,17 +432,14 @@ namespace mc {
 			}
 
 			void Texture2D::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
-				bind();
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 			}
 
 			void Texture2D::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples) {
-				bind();
 				glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
 			void Texture2D::setPixelStorage(const Enum alignment, const int number) {
-				bind();
 				glPixelStorei(alignment, number);
 			}
 
@@ -460,12 +448,10 @@ namespace mc {
 			}
 
 			void Texture2D::setPixelStorage(const Enum alignment, const float number) {
-				bind();
 				glPixelStoref(alignment, number);
 			}
 
 			void Texture2D::generateMipmap() {
-				bind();
 				glGenerateMipmap(target);
 			}
 
@@ -486,12 +472,10 @@ namespace mc {
 			}
 
 			void Texture2D::setParameter(const Enum name, const int value) {
-				bind();
 				glTexParameteri(target, name, value);
 			}
 
 			void Texture2D::getImage(const Enum format, const Enum type, void * data) const {
-				bind();
 				glGetTexImage(target, 0, format, type, data);
 			}
 
@@ -955,28 +939,18 @@ namespace mc {
 			}
 
 			void ShaderProgram::createFragment(const char shader[]) {
-				attachShader(createShader(GL_FRAGMENT_SHADER, shader));
+				createFragment(1, &shader);
 			}
-			void ShaderProgram::createFragment(const std::string & shader) {
-				createFragment(shader.c_str());
+			void ShaderProgram::createFragment(const Size count, const char* strings[]) {
+				attachShader(createShader(GL_FRAGMENT_SHADER, strings, count));
 			}
 			void ShaderProgram::createVertex(const char shader[]) {
-				attachShader(createShader(GL_VERTEX_SHADER, shader));
+				createVertex(1, &shader);
 			}
 
-			void ShaderProgram::createVertex(const std::string & shader) {
-				createVertex(shader.c_str());
+			void ShaderProgram::createVertex(const Size count, const char* strings[]) {
+				attachShader(createShader(GL_VERTEX_SHADER, strings, count));
 			}
-
-#ifdef GL_GEOMETRY_SHADER
-			void ShaderProgram::createGeometry(const char shader[]) {
-				attachShader(createShader(GL_GEOMETRY_SHADER, shader));
-			}
-
-			void ShaderProgram::createGeometry(const std::string & shader) {
-				createGeometry(shader.c_str());
-			}
-#endif//GL_GEOMETRY_SHADER
 
 			void ShaderProgram::createUniform(const std::string& name) {
 				int location = glGetUniformLocation(id, name.data());

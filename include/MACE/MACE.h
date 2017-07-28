@@ -29,21 +29,32 @@ It is usually safe to type `using namespace mc`. However, be weary that this may
 */
 namespace mc {
 
+	//the following functions are for use with runtime link libraries to verify the MACE version
+	//they have a strange naming convention because name mangling is disabled and there has to be an
+	//easy conflict-free way to access these functions
 	extern "C" {
-		MACE_FUNCTION_EXPORT unsigned int getMACEVersionMajor() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int getMACEVersionMajor() {
 			return MACE_VERSION_MAJOR;
 		}
 
-		MACE_FUNCTION_EXPORT unsigned int getMACEVersionMinor() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int getMACEVersionMinor() {
 			return MACE_VERSION_MINOR;
 		}
 
-		MACE_FUNCTION_EXPORT unsigned int getMACEVersionPatch() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int getMACEVersionPatch() {
 			return MACE_VERSION_PATCH;
 		}
 
-		MACE_FUNCTION_EXPORT const char* getMACEVersionString() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR const char* getMACEVersionString() {
 			return MACE_STRINGIFY(MACE_VERSION);
+		}
+
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR bool getMACEDebugBuild() {
+#ifdef MACE_DEBUG
+			return true;
+#else
+			return false;
+#endif
 		}
 	}
 }

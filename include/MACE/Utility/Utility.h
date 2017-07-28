@@ -30,7 +30,6 @@ namespace mc {
 #include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Math.h>
 #include <MACE/Utility/Transform.h>
-#include <MACE/Utility/Preprocessor.h>
 #include <MACE/Utility/MatrixTypes.h>
 #include <MACE/Utility/Signal.h>
 #include <MACE/Utility/DynamicLibrary.h>

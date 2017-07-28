@@ -1173,7 +1173,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				void createFragment(const std::string& shader);
+				void createFragment(const Size count, const char* strings[]);
 				/**
 				@opengl
 				*/
@@ -1181,17 +1181,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				void createVertex(const std::string& shader);
-#ifdef GL_GEOMETRY_SHADER
-				/**
-				@opengl
-				*/
-				void createGeometry(const char shader[]);
-				/**
-				@opengl
-				*/
-				void createGeometry(const std::string& shader);
-#endif//GL_GEOMETRY_SHADER
+				void createVertex(const Size count, const char* strings[]);
 
 				/**
 				@opengl

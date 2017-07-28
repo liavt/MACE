@@ -25,14 +25,17 @@ namespace mc {
 		} else {
 			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_RED) << typeid(e).name();
 			std::cerr << os::consoleColor(os::ConsoleColor::RED) << " occured:" << std::endl << "\t";
-			std::cerr << os::consoleColor(os::ConsoleColor::YELLOW) << e.what() << std::endl << os::consoleColor();
+			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_YELLOW) << e.what() << std::endl;
 
 #ifdef MACE_DEBUG
 			const Error* err = dynamic_cast<const Error*>(&e);
 			if (err != nullptr) {
-				std::cerr << "\t[ " << err->getLine() << " @ " << err->getFile() << " ]" << std::endl;
+				std::cerr << os::consoleColor(os::ConsoleColor::YELLOW)
+					<< "\t[ " << err->getLine() << " @ " << err->getFile() << " ]" << std::endl;
 			}
 #endif
+			//reset console color to default
+			std::cerr << os::consoleColor();
 		}
 
 		if (instance != nullptr) {
@@ -214,7 +217,7 @@ namespace mc {
 
 	Error::Error(const std::string message, const unsigned int l, const char * f) : std::runtime_error(message), line(l), file(f) {}
 
-	unsigned int Error::getLine() const {
+	const unsigned int Error::getLine() const {
 		return line;
 	}
 
@@ -234,7 +237,7 @@ namespace mc {
 		}
 	}
 
-	const char * MultipleErrors::what() const {
+	const char * MultipleErrors::what() const noexcept {
 		return message.c_str();
 	}
 }

@@ -308,7 +308,7 @@ namespace mc {
 
 		std::string consoleColor(const ConsoleColor & foreground, const ConsoleColor & background) {
 #ifdef MACE_WINAPI
-			unsigned int attribute = 0;
+			Byte attribute = 0;
 			ConsoleColor colors[] = { background, foreground };
 
 			for (unsigned int i = 0; i < 2; ++i) {
@@ -367,7 +367,7 @@ namespace mc {
 				}
 			}
 
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), attribute);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), static_cast<WORD>(attribute));
 
 			return "";
 #elif defined(MACE_POSIX)

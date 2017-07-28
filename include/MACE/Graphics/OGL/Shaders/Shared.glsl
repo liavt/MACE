@@ -1,11 +1,37 @@
 R""(
-#ifndef _MACE_POSITION_LIBRARY_
-#define _MACE_POSITION_LIBRARY_ 1
+#define MACE_UNIFORM_BUFFER layout(std140) uniform
 
-#include <mc_core>
-#include <mc_entity>
+precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
 
-layout(location = MACE__VAO_DEFAULT_VERTICES_LOCATION) in vec3 _mc_VertexPosition;
+struct mc_EntityDataStruct{
+	vec3 mc_Translation;
+	vec3 mc_Rotation;
+};
+
+MACE_UNIFORM_BUFFER MACE_ENTITY_DATA_NAME{
+	mc_EntityDataStruct mc_BaseEntity;
+	mc_EntityDataStruct mc_ParentEntity;
+	vec3 mc_Scale;
+};
+
+struct _mc_TextureAttachment{
+	vec4 mc_Color;
+	vec4 mc_TextureTransform;
+};
+
+MACE_UNIFORM_BUFFER MACE_PAINTER_DATA_NAME{
+	vec3 _mc_TransformTranslation;
+	vec3 _mc_TransformRotation;
+	vec3 _mc_TransformScale;
+	float _mc_Opacity;
+	vec4 mc_Data;
+	_mc_TextureAttachment mc_Foreground;
+	_mc_TextureAttachment mc_Background;
+	_mc_TextureAttachment mc_Mask;
+	mat4 _mc_Filter;
+};
+
+layout(location = MACE_VAO_DEFAULT_VERTICES_LOCATION) in vec3 _mc_VertexPosition;
 
 mat3 _mcCreateRotationMatrix(const in vec3 mc_RotationInput){
 	float mc_CosZ = cos(mc_RotationInput.z), mc_SinZ = sin(mc_RotationInput.z),
@@ -25,5 +51,4 @@ vec4 mcGetEntityPosition(){
 							  + mc_BaseEntity.mc_Translation * _mcCreateRotationMatrix(mc_ParentEntity.mc_Rotation) + mc_ParentEntity.mc_Translation, 1.0);
 }
 
-#endif
 )""

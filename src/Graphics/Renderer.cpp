@@ -175,9 +175,8 @@ namespace mc {
 		}
 
 		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
-			impl->loadSettings(state, dirtyFlags);
+			impl->loadSettings(state);
 			impl->draw(m, brush, type);
-			dirtyFlags = 0;
 		}
 
 		const GraphicsEntity * const Painter::getEntity() const {
@@ -231,14 +230,11 @@ namespace mc {
 		}
 
 		void Painter::setForegroundColor(const Color & col) {
-			if (state.foregroundColor != col) {
-				state.foregroundColor = col;
-				dirtyFlags |= Painter::FOREGROUND_COLOR;
-			}
+			state.foregroundColor = col;
+
 		}
 
 		Color & Painter::getForegroundColor() {
-			dirtyFlags |= Painter::FOREGROUND_COLOR;
 			return state.foregroundColor;
 		}
 
@@ -247,14 +243,10 @@ namespace mc {
 		}
 
 		void Painter::setForegroundTransform(const Vector<float, 4>& trans) {
-			if (state.foregroundTransform != trans) {
-				state.foregroundTransform = trans;
-				dirtyFlags |= Painter::FOREGROUND_TRANSFORM;
-			}
+			state.foregroundTransform = trans;
 		}
 
 		Vector<float, 4>& Painter::getForegroundTransform() {
-			dirtyFlags |= Painter::FOREGROUND_TRANSFORM;
 			return state.foregroundTransform;
 		}
 
@@ -263,14 +255,10 @@ namespace mc {
 		}
 
 		void Painter::setBackgroundColor(const Color & col) {
-			if (state.backgroundColor != col) {
-				state.backgroundColor = col;
-				dirtyFlags |= Painter::BACKGROUND_COLOR;
-			}
+			state.backgroundColor = col;
 		}
 
 		Color & Painter::getBackgroundColor() {
-			dirtyFlags |= Painter::BACKGROUND_COLOR;
 			return state.backgroundColor;
 		}
 
@@ -279,14 +267,10 @@ namespace mc {
 		}
 
 		void Painter::setBackgroundTransform(const Vector<float, 4>& trans) {
-			if (state.backgroundTransform != trans) {
-				state.backgroundTransform = trans;
-				dirtyFlags |= Painter::BACKGROUND_TRANSFORM;
-			}
+			state.backgroundTransform = trans;
 		}
 
 		Vector<float, 4>& Painter::getBackgroundTransform() {
-			dirtyFlags |= Painter::BACKGROUND_TRANSFORM;
 			return state.backgroundTransform;
 		}
 
@@ -295,14 +279,10 @@ namespace mc {
 		}
 
 		void Painter::setMaskColor(const Color & col) {
-			if (state.maskColor != col) {
-				state.maskColor = col;
-				dirtyFlags |= Painter::MASK_COLOR;
-			}
+			state.maskColor = col;
 		}
 
 		Color & Painter::getMaskColor() {
-			dirtyFlags |= Painter::MASK_COLOR;
 			return state.maskColor;
 		}
 
@@ -311,14 +291,10 @@ namespace mc {
 		}
 
 		void Painter::setMaskTransform(const Vector<float, 4>& trans) {
-			if (state.maskTransform != trans) {
-				state.maskTransform = trans;
-				dirtyFlags |= Painter::MASK_TRANSFORM;
-			}
+			state.maskTransform = trans;
 		}
 
 		Vector<float, 4>& Painter::getMaskTransform() {
-			dirtyFlags |= Painter::MASK_TRANSFORM;
 			return state.maskTransform;
 		}
 
@@ -340,14 +316,10 @@ namespace mc {
 		}
 
 		void Painter::setFilter(const Matrix<float, 4, 4> & col) {
-			if (state.filter != col) {
-				state.filter = col;
-				dirtyFlags |= Painter::FILTER;
-			}
+			state.filter = col;
 		}
 
 		Matrix<float, 4, 4>& Painter::getFilter() {
-			dirtyFlags |= Painter::FILTER;
 			return state.filter;
 		}
 
@@ -360,14 +332,10 @@ namespace mc {
 		}
 
 		void Painter::setData(const Vector<float, 4> & col) {
-			if (state.data != col) {
-				state.data = col;
-				dirtyFlags |= Painter::DATA;
-			}
+			state.data = col;
 		}
 
 		Vector<float, 4> & Painter::getData() {
-			dirtyFlags |= Painter::DATA;
 			return state.data;
 		}
 
@@ -376,14 +344,10 @@ namespace mc {
 		}
 
 		void Painter::setTransformation(const TransformMatrix & trans) {
-			if (state.transformation != trans) {
-				state.transformation = trans;
-				dirtyFlags |= Painter::TRANSFORMATION;
-			}
+			state.transformation = trans;
 		}
 
 		TransformMatrix & Painter::getTransformation() {
-			dirtyFlags |= Painter::TRANSFORMATION;
 			return state.transformation;
 		}
 
@@ -392,14 +356,10 @@ namespace mc {
 		}
 
 		void Painter::setOpacity(const float opacity) {
-			if (state.filter[3][3] != opacity) {
-				state.filter[3][3] = opacity;
-				dirtyFlags |= Painter::FILTER;
-			}
+			state.filter[3][3] = opacity;
 		}
 
 		float Painter::getOpacity() {
-			dirtyFlags |= Painter::FILTER;
 			return state.filter[3][3];
 		}
 
@@ -412,10 +372,7 @@ namespace mc {
 		}
 
 		void Painter::translate(const float x, const float y, const float z) {
-			if (x != 0.0f || y != 0.0f || z != 0.0f) {
-				state.transformation.translate(x, y, z);
-				dirtyFlags |= Painter::TRANSLATION;
-			}
+			state.transformation.translate(x, y, z);
 		}
 
 		void Painter::rotate(const Vector<float, 3>& vec) {
@@ -423,10 +380,7 @@ namespace mc {
 		}
 
 		void Painter::rotate(const float x, const float y, const float z) {
-			if (x != 0.0f || y != 0.0f || z != 0.0f) {
-				state.transformation.rotate(x, y, z);
-				dirtyFlags |= Painter::ROTATION;
-			}
+			state.transformation.rotate(x, y, z);
 		}
 
 		void Painter::scale(const Vector<float, 3>& vec) {
@@ -434,15 +388,11 @@ namespace mc {
 		}
 
 		void Painter::scale(const float x, const float y, const float z) {
-			if (x != 1.0f || y != 1.0f || z != 1.0f) {
-				state.transformation.scale(x, y, z);
-				dirtyFlags |= Painter::SCALE;
-			}
+			state.transformation.scale(x, y, z);
 		}
 
 		void Painter::resetTransform() {
 			state.transformation.reset();
-			dirtyFlags |= Painter::TRANSFORMATION;
 		}
 
 		void Painter::push() {
@@ -452,12 +402,10 @@ namespace mc {
 		void Painter::pop() {
 			state = stateStack.top();
 			stateStack.pop();
-			dirtyFlags |= Painter::ALL;
 		}
 
 		void Painter::reset() {
 			state = Painter::State();
-			dirtyFlags |= Painter::ALL;
 		}
 
 		const Index & Painter::getID() const {
@@ -470,7 +418,7 @@ namespace mc {
 
 		bool Painter::operator==(const Painter & other) const {
 			return impl == other.impl&& id == other.id && entity == other.entity
-				&& dirtyFlags == other.dirtyFlags && state == other.state && stateStack == other.stateStack;
+				&& state == other.state && stateStack == other.stateStack;
 		}
 
 		bool Painter::operator!=(const Painter & other) const {

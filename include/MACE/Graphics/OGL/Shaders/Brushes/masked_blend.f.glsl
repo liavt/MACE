@@ -1,9 +1,4 @@
 R""(
-
-//FRAGMENT SHADER
-
-#include <mc_frag>
-
 uniform lowp sampler2D tex1;
 uniform lowp sampler2D tex2;
 uniform highp sampler2D mask;
@@ -18,6 +13,4 @@ vec4 mc_frag_main(void){
 		return vec4(background.rgb, background.a * maskFragment.a);
 	}
 }
-
-
 )""

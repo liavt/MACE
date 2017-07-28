@@ -48,7 +48,7 @@ namespace mc {
 #define MACE__RESOURCE_SOLIDCOLOR "MC/SolidColor"
 #define MACE__RESOURCE_GRADIENT "MC/Gradient"
 		//how many pixels in the gradient
-#define MACE__RESOURCE_GRADIENT_HEIGHT 100
+#define MACE__RESOURCE_GRADIENT_HEIGHT 128
 #define MACE__RESOURCE_QUAD "MC/Quad"
 
 		bool ModelImpl::operator==(const ModelImpl & other) const {

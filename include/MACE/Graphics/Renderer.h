@@ -59,28 +59,6 @@ namespace mc {
 			friend class GraphicsEntity;
 			friend class PainterImpl;
 		public:
-			enum DirtyFlag: std::uint_least16_t {
-				FOREGROUND_COLOR = 0x0001,
-				FOREGROUND_TRANSFORM = 0x0002,
-				BACKGROUND_COLOR = 0x0004,
-				BACKGROUND_TRANSFORM = 0x0008,
-				MASK_COLOR = 0x0010,
-				MASK_TRANSFORM = 0x0020,
-				DATA = 0x0040,
-				FILTER = 0x0080,
-				TRANSLATION = 0x0100,
-				SCALE = 0x0200,
-				ROTATION = 0x0400,
-
-				//the following are for internal use
-				FOREGROUND = FOREGROUND_COLOR | FOREGROUND_COLOR,
-				BACKGROUND = BACKGROUND_COLOR | BACKGROUND_TRANSFORM,
-				MASK = MASK_COLOR | MASK_TRANSFORM,
-				TRANSFORMATION = TRANSLATION | SCALE | ROTATION,
-
-				ALL = FOREGROUND | BACKGROUND | MASK | DATA | FILTER | TRANSFORMATION
-			};
-
 			struct State {
 				Color foregroundColor, backgroundColor, maskColor;
 
@@ -190,8 +168,6 @@ namespace mc {
 		private:
 			std::shared_ptr<PainterImpl> impl = nullptr;
 
-			std::uint_least16_t dirtyFlags = Painter::ALL;
-
 			Painter::State state = Painter::State();
 
 			//for pushing/popping the state
@@ -226,7 +202,7 @@ namespace mc {
 
 			virtual void clean() = 0;
 
-			virtual void loadSettings(const Painter::State& state, const std::uint_least16_t& dirtyFlags) = 0;
+			virtual void loadSettings(const Painter::State& state) = 0;
 			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) = 0;
 
 			bool operator==(const PainterImpl& other) const;
