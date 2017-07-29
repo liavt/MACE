@@ -28,6 +28,7 @@ namespace mc {
 
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<GraphicsEntity*>;
+		using EntityID = unsigned int;
 
 		//forward declare dependencies
 		class Renderer;
@@ -41,9 +42,27 @@ namespace mc {
 				TEXTURE = 0, COLOR = 1, MASK = 2, BLEND = 3, MASKED_BLEND = 4,
 			};
 
-			enum class RenderType: Byte {
-				STANDARD = 0
+			enum class RenderFeatures: Byte {
+				DISCARD_INVISIBLE = 0x01,
+				FILTER = 0x02,
+				TEXTURE = 0x04,
+				TEXTURE_TRANSFORM = 0x08,
+
+				NONE = 0x00,
+				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM,
 			};
+
+			MACE_CONSTEXPR inline RenderFeatures operator|(const RenderFeatures& left, const RenderFeatures& right) {
+				return static_cast<RenderFeatures>(static_cast<Byte>(left) | static_cast<Byte>(right));
+			}
+
+			MACE_CONSTEXPR inline RenderFeatures operator&(const RenderFeatures& left, const RenderFeatures& right) {
+				return static_cast<RenderFeatures>(static_cast<Byte>(left) & static_cast<Byte>(right));
+			}
+
+			MACE_CONSTEXPR inline RenderFeatures operator~(const RenderFeatures& r) {
+				return static_cast<RenderFeatures>(~static_cast<Byte>(r));
+			}
 
 			/**
 			@todo changed Texture::bind() to use this in some form
@@ -78,9 +97,9 @@ namespace mc {
 			Painter(const Painter& p);
 			~Painter() = default;
 
-			void drawModel(const Model& m, const Texture& img, const Enums::RenderType type = Enums::RenderType::STANDARD);
+			void drawModel(const Model& m, const Texture& img, const Enums::RenderFeatures features = Enums::RenderFeatures::DEFAULT);
 
-			void fillModel(const Model& m, const Enums::RenderType type = Enums::RenderType::STANDARD);
+			void fillModel(const Model& m, const Enums::RenderFeatures features = Enums::RenderFeatures::DEFAULT & ~Enums::RenderFeatures::DISCARD_INVISIBLE);
 
 			void fillRect(const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
 			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
@@ -93,8 +112,8 @@ namespace mc {
 			void blendImages(const Texture& foreground, const Texture& background, const float amount = 0.5f);
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
-			void drawQuad(const Enums::Brush brush, const Enums::RenderType type = Enums::RenderType::STANDARD);
-			void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type);
+			void drawQuad(const Enums::Brush brush, const Enums::RenderFeatures features = Enums::RenderFeatures::DEFAULT);
+			void draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures features);
 
 			const GraphicsEntity* const getEntity() const;
 
@@ -163,7 +182,7 @@ namespace mc {
 			State& getState();
 			const State& getState() const;
 
-			const Index& getID() const;
+			const EntityID& getID() const;
 
 			Painter operator=(const Painter& right);
 
@@ -179,7 +198,7 @@ namespace mc {
 
 			GraphicsEntity* const entity = nullptr;
 
-			Index id = 0;
+			EntityID id = 0;
 
 			Painter(GraphicsEntity* const en);
 
@@ -207,7 +226,7 @@ namespace mc {
 			virtual void clean() = 0;
 
 			virtual void loadSettings(const Painter::State& state) = 0;
-			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) = 0;
+			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures features) = 0;
 
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;
@@ -316,11 +335,11 @@ namespace mc {
 			*/
 			void destroy();
 
-			Index queue(GraphicsEntity* const e);
+			EntityID queue(GraphicsEntity* const e);
 
-			void remove(const Index i);
+			void remove(const EntityID i);
 
-			Index pushEntity(GraphicsEntity* const  entity);
+			EntityID pushEntity(GraphicsEntity* const  entity);
 		};//Renderer
 
 		class GraphicsEntity: public Entity {

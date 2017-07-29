@@ -873,7 +873,7 @@ namespace mc {
 			}
 
 			if (gfx::Input::isKeyReleased(gfx::Input::MOUSE_LEFT) && isClicked()) {
-				selectableProperties.setBit(Selectable::CLICKED, false);
+				selectableProperties &= ~Selectable::CLICKED;
 
 				trigger();
 			}

@@ -13,13 +13,12 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Transform.h>
 #include <vector>
 
 namespace mc {
 	namespace gfx {
-		using EntityProperties = BitField;
+		using EntityProperties = Byte;
 
 		//forward-defining dependencies
 		class Entity;
@@ -111,12 +110,12 @@ namespace mc {
 				If `true,` any {@link Entity} holding it will remove it and call `kill()`
 				@see Entity::getProperty(unsigned int)
 				*/
-				DEAD = 0,
+				DEAD = 0x01,
 				/**
 				Property defining if an `Entity` can be updated and rendered. If this is `true`, `Entity::update()` and `Entity::render()` will not be called by it's parent.
 				@see Entity::getProperty(unsigned int)
 				*/
-				DISABLED = 1,
+				DISABLED = 0x02,
 
 				/**
 				Flag representing whether an Entity's init() function has been called.
@@ -126,7 +125,7 @@ namespace mc {
 				If init() is called and this is `true`, an `InitializationError` is thrown.
 				@see Entity::getProperty(unsigned int)
 				*/
-				INIT = 2,
+				INIT = 0x04,
 
 				/**
 				Flag representing whether this `Entity` is dirty and it's positions needs to be recalculated.
@@ -143,7 +142,7 @@ namespace mc {
 				<p>
 				Additionally, an `Entity` that is considered dirty will have it's sslBuffer updated on the GPU side.
 				*/
-				DIRTY = 3,
+				DIRTY = 0x08,
 
 				/**
 				Flag representing whether an Entity's X position should be stretched when window is resized.
@@ -151,7 +150,7 @@ namespace mc {
 				@see Entity::MAINTAIN_WIDTH
 				@see Entity::MAINTAIN_HEIGHT
 				*/
-				MAINTAIN_X = 4,
+				MAINTAIN_X = 0x10,
 
 				/**
 				Flag representing whether an Entity's Y position should be stretched when window is resized.
@@ -160,7 +159,7 @@ namespace mc {
 				@see Entity::MAINTAIN_HEIGHT
 				@see WindowModule::setResizable(bool)
 				*/
-				MAINTAIN_Y = 5,
+				MAINTAIN_Y = 0x20,
 
 				/**
 				Flag representing whether an Entity's width should be stretched when window is resized.
@@ -169,7 +168,7 @@ namespace mc {
 				@see Entity::MAINTAIN_HEIGHT
 				@see WindowModule::setResizable(bool)
 				*/
-				MAINTAIN_WIDTH = 6,
+				MAINTAIN_WIDTH = 0x40,
 				/**
 				Flag representing whether an Entity's height should be stretched when window is resized.
 				@see Entity::MAINTAIN_X
@@ -177,9 +176,9 @@ namespace mc {
 				@see Entity::MAINTAIN_WIDTH
 				@see WindowModule::setResizable(bool)
 				*/
-				MAINTAIN_HEIGHT = 7,
+				MAINTAIN_HEIGHT = 0x80,
 
-				DEFAULT_PROPERTIES = 0
+				DEFAULT_PROPERTIES = 0x00
 			};//EntityProperty
 
 			struct Metrics {

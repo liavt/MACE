@@ -33,7 +33,6 @@ namespace mc {
 #include <MACE/Utility/Signal.h>
 #include <MACE/Utility/DynamicLibrary.h>
 #include <MACE/Utility/Process.h>
-#include <MACE/Utility/BitField.h>
 #include <MACE/Utility/Math.h>
 
 #endif

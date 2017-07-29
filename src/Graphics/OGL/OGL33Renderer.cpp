@@ -53,12 +53,11 @@ namespace mc {
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
 
-				Shader createShader(const Enum type, const char* source) {
+				Shader createShader(const Enum type, const Enums::RenderFeatures features, const char* source) {
 					Shader s = Shader(type);
 					s.init();
 #define MACE__SHADER_MACRO(name, def) "#define " #name " " MACE_STRINGIFY_DEFINITION(def) "\n"
 					std::vector<const char*> sources = std::vector<const char*>({
-						"#version 330 core\n",
 						MACE__SHADER_MACRO(MACE_ENTITY_DATA_LOCATION, MACE__ENTITY_DATA_LOCATION),
 						MACE__SHADER_MACRO(MACE_ENTITY_DATA_NAME, MACE__ENTITY_DATA_NAME),
 						MACE__SHADER_MACRO(MACE_PAINTER_DATA_LOCATION, MACE__PAINTER_DATA_LOCATION),
@@ -70,6 +69,21 @@ namespace mc {
 #include <MACE/Graphics/OGL/Shaders/Shared.glsl>
 					});
 #undef MACE__SHADER_MACRO
+
+					if ((features & Enums::RenderFeatures::DISCARD_INVISIBLE) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_DISCARD_INVISIBLE 1\n");
+					}
+					if ((features & Enums::RenderFeatures::FILTER) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_FILTER 1\n");
+					}
+					if ((features & Enums::RenderFeatures::TEXTURE) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_TEXTURE 1\n");
+					}
+					if ((features & Enums::RenderFeatures::TEXTURE_TRANSFORM) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_TEXTURE_TRANSFORM 1\n");
+					}
+
+					sources.insert(sources.begin(), "#version 330 core\n");
 
 					if (type == GL_VERTEX_SHADER) {
 						sources.push_back(
@@ -90,7 +104,87 @@ namespace mc {
 					s.compile();
 					return s;
 				}
-			}
+
+				ogl::ShaderProgram createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderFeatures>& settings) {
+					ogl::ShaderProgram program;
+					program.init();
+
+					program.attachShader(createShader(GL_VERTEX_SHADER, settings.second,
+#include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
+					));
+
+					if (settings.first == Enums::Brush::COLOR) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
+						));
+
+						program.link();
+					} else if (settings.first == Enums::Brush::TEXTURE) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
+						));
+
+						program.link();
+
+						program.bind();
+
+						program.createUniform("tex");
+
+						program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
+					} else if (settings.first == Enums::Brush::MASK) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
+						));
+
+						program.link();
+
+						program.bind();
+
+						program.createUniform("tex");
+						program.createUniform("mask");
+
+						//binding the samplers
+						program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
+						program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
+					} else if (settings.first == Enums::Brush::BLEND) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
+						));
+
+						program.link();
+
+						program.bind();
+
+						program.createUniform("tex1");
+						program.createUniform("tex2");
+
+						program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
+					} else if (settings.first == Enums::Brush::MASKED_BLEND) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
+						));
+
+						program.link();
+
+						program.bind();
+
+						program.createUniform("tex1");
+						program.createUniform("tex2");
+						program.createUniform("mask");
+
+						//binding the samplers
+						program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
+						program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
+					} else {
+						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
+					}
+
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
+					return program;
+				}
+			}//anon namespace
 
 			OGL33Renderer::OGL33Renderer() {}
 
@@ -341,7 +435,7 @@ namespace mc {
 
 				Vector<int, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
-				Index pixel = 0;
+				EntityID pixel = 0;
 				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				ogl::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				//opengl y-axis is inverted from window coordinates
@@ -364,7 +458,7 @@ namespace mc {
 				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, p));
 			}
 
-			OGL33Renderer::RenderProtocol& OGL33Renderer::getProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderType> settings) {
+			void OGL33Renderer::bindProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderFeatures> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
 					RenderProtocol prot = RenderProtocol();
@@ -373,96 +467,14 @@ namespace mc {
 					painter->painterData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 					painter->entityData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
 
-					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderType>, OGL33Renderer::RenderProtocol>(settings, prot));
+					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderFeatures>, OGL33Renderer::RenderProtocol>(settings, prot));
 
 					protocol = protocols.find(settings);
 				}
 
-				return protocol->second;
-			}
+				protocol->second.program.bind();
 
-			ogl::ShaderProgram OGL33Renderer::createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings) {
-				ogl::ShaderProgram program;
-				program.init();
-
-				if (settings.second == Enums::RenderType::STANDARD) {
-					program.attachShader(createShader(GL_VERTEX_SHADER,
-#include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
-					));
-				} else {
-					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
-				}
-
-				if (settings.first == Enums::Brush::COLOR) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
-					));
-
-					program.link();
-				} else if (settings.first == Enums::Brush::TEXTURE) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER,
-#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
-					));
-
-					program.link();
-
-					program.bind();
-
-					program.createUniform("tex");
-
-					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-				} else if (settings.first == Enums::Brush::MASK) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
-					));
-
-					program.link();
-
-					program.bind();
-
-					program.createUniform("tex");
-					program.createUniform("mask");
-
-					//binding the samplers
-					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-					program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
-				} else if (settings.first == Enums::Brush::BLEND) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
-					));
-
-					program.link();
-
-					program.bind();
-
-					program.createUniform("tex1");
-					program.createUniform("tex2");
-
-					program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-					program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
-				} else if (settings.first == Enums::Brush::MASKED_BLEND) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
-					));
-
-					program.link();
-
-					program.bind();
-
-					program.createUniform("tex1");
-					program.createUniform("tex2");
-					program.createUniform("mask");
-
-					//binding the samplers
-					program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-					program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
-					program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
-				} else {
-					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
-				}
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
-				return program;
+				return;
 			}
 
 			OGL33Painter::OGL33Painter(OGL33Renderer* const r, Painter* const p) : PainterImpl(p), renderer(r) {}
@@ -604,7 +616,7 @@ namespace mc {
 				}
 
 				if (state.filter != savedState.filter) {
-					float matrix[16] = {};
+					float matrix[16];
 					state.filter.flatten(matrix);
 					painterData.setDataRange(sizeof(float) * 40, sizeof(float) * 16, std::begin(matrix));
 				}
@@ -612,12 +624,10 @@ namespace mc {
 				savedState = state;
 			}
 
-			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
-				OGL33Renderer::RenderProtocol& prot = renderer->getProtocol(this, { brush, type });
+			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures feat) {
+				renderer->bindProtocol(this, { brush, feat });
+
 				m.bind();
-
-				prot.program.bind();
-
 				m.draw();
 			}
 		}//ogl

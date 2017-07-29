@@ -305,7 +305,7 @@ namespace mc {
 					MACE__THROW(UnsupportedRenderer, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<short int>(primitiveType)));
 				}
 
-				if (indices.getIndiceNumber() != 0) {
+				if (indices.getIndiceNumber() > 0) {
 					indices.bind();
 
 					glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, nullptr);

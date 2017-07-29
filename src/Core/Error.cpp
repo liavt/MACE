@@ -49,7 +49,7 @@ namespace mc {
 			instance->requestStop();
 		}
 
-		throw e;
+		std::exit(EXIT_FAILURE);;
 	}
 
 	void Error::handleError(const std::exception & e, Instance& instance) {

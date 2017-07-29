@@ -126,12 +126,12 @@ namespace mc {
 			void trigger();
 		protected:
 			enum SelectableProperty: Byte {
-				CLICKED = 0,
-				DISABLED = 1,
-				HOVERED = 2
+				CLICKED = 0x01,
+				DISABLED = 0x02,
+				HOVERED = 0x04
 			};
 
-			BitField selectableProperties = 0;
+			Byte selectableProperties = 0;
 
 			virtual void onClick();
 

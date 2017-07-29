@@ -10,7 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Audio.h>
 #include <MACE/Core/System.h>
 
-#ifdef MACE_OSX
+#if defined(MACE_OSX) || MACE_HAS_INCLUDE(<OpenAL/al.h>)
 #	include <OpenAL/al.h>
 #	include <OpenAL/alc.h>
 #else
@@ -18,13 +18,12 @@ The above copyright notice and this permission notice shall be included in all c
 #	include <AL/alc.h>
 #endif
 
-#include <iostream>
 #include <cstdio>
 
 namespace mc {
 	AudioModule::AudioModule() {
-		device = alcOpenDevice(NULL);
-		context = alcCreateContext(device, NULL);
+		device = alcOpenDevice(nullptr);
+		context = alcCreateContext(device, nullptr);
 		alcMakeContextCurrent(context);
 	}
 
@@ -37,7 +36,7 @@ namespace mc {
 			sounds[i].destroy();
 		}
 
-		alcMakeContextCurrent(NULL);
+		alcMakeContextCurrent(nullptr);
 		alcDestroyContext(context);
 		alcCloseDevice(device);
 	}
@@ -62,13 +61,13 @@ namespace mc {
 		alGenBuffers(1, &buffer);
 		alGenSources(1, &source);
 
-		struct RIFF_Header {
+		struct RIFFHeader {
 			char chunkID[4];
 			long chunkSize;//size not including chunkSize or chunkID
 			char format[4];
 		};
 
-		struct WAVE_Format {
+		struct WAVEFormat {
 			char subChunkID[4];
 			long subChunkSize;
 			short audioFormat;
@@ -79,81 +78,81 @@ namespace mc {
 			short bitsPerSample;
 		};
 
-		struct WAVE_Data {
+		struct WAVEData {
 			char subChunkID[4]; //should contain the word data
 			long subChunk2Size; //Stores the size of the data block
 		};
 
-		std::FILE* soundFile = NULL;
-		WAVE_Format wave_format;
-		RIFF_Header riff_header;
-		WAVE_Data wave_data;
+		std::FILE* soundFile = nullptr;
+		WAVEFormat waveFormat;
+		RIFFHeader riffHeader;
+		WAVEData waveData;
 
 		try {
 			soundFile = mc::os::fopen(&soundFile, path.c_str(), "rb");
 			if (!soundFile)
 				MACE__THROW(BadSound, path);
 
-			if (!std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile)) {
+			if (!std::fread(&riffHeader, sizeof(RIFFHeader), 1, soundFile)) {
 				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
-			if ((riff_header.chunkID[0] != 'R' ||
-				 riff_header.chunkID[1] != 'I' ||
-				 riff_header.chunkID[2] != 'F' ||
-				 riff_header.chunkID[3] != 'F') ||
-				 (riff_header.format[0] != 'W' ||
-				  riff_header.format[1] != 'A' ||
-				  riff_header.format[2] != 'V' ||
-				  riff_header.format[3] != 'E')) {
+			if ((riffHeader.chunkID[0] != 'R' ||
+				 riffHeader.chunkID[1] != 'I' ||
+				 riffHeader.chunkID[2] != 'F' ||
+				 riffHeader.chunkID[3] != 'F') ||
+				 (riffHeader.format[0] != 'W' ||
+				  riffHeader.format[1] != 'A' ||
+				  riffHeader.format[2] != 'V' ||
+				  riffHeader.format[3] != 'E')) {
 				MACE__THROW(BadSound, "Invalid RIFF or WAVE Header");
 			}
 
-			if (!std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile)) {
+			if (!std::fread(&waveFormat, sizeof(WAVEFormat), 1, soundFile)) {
 				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
-			if (wave_format.subChunkID[0] != 'f' ||
-				wave_format.subChunkID[1] != 'm' ||
-				wave_format.subChunkID[2] != 't' ||
-				wave_format.subChunkID[3] != ' ') {
+			if (waveFormat.subChunkID[0] != 'f' ||
+				waveFormat.subChunkID[1] != 'm' ||
+				waveFormat.subChunkID[2] != 't' ||
+				waveFormat.subChunkID[3] != ' ') {
 				MACE__THROW(BadSound, "Invalid Wave Format");
 			}
 
-			if (wave_format.subChunkSize > 16) {
+			if (waveFormat.subChunkSize > 16) {
 				std::fseek(soundFile, sizeof(short), SEEK_CUR);
 			}
 
-			if (!std::fread(&wave_data, sizeof(WAVE_Data), 1, soundFile)) {
+			if (!std::fread(&waveData, sizeof(WAVEData), 1, soundFile)) {
 				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
-			if (wave_data.subChunkID[0] != 'd' ||
-				wave_data.subChunkID[1] != 'a' ||
-				wave_data.subChunkID[2] != 't' ||
-				wave_data.subChunkID[3] != 'a') {
+			if (waveData.subChunkID[0] != 'd' ||
+				waveData.subChunkID[1] != 'a' ||
+				waveData.subChunkID[2] != 't' ||
+				waveData.subChunkID[3] != 'a') {
 				MACE__THROW(BadSound, "Invalid data header");
 			}
 
-			buf = new unsigned char[wave_data.subChunk2Size];
+			buf = new unsigned char[waveData.subChunk2Size];
 
-			if (!std::fread(buf, wave_data.subChunk2Size, 1, soundFile)) {
+			if (!std::fread(buf, waveData.subChunk2Size, 1, soundFile)) {
 				MACE__THROW(BadSound, "Error loading WAVE data into struct");
 			}
 
-			size = wave_data.subChunk2Size;
-			frequency = wave_format.sampleRate;
+			size = waveData.subChunk2Size;
+			frequency = waveFormat.sampleRate;
 
-			if (wave_format.numChannels == 1) {
-				if (wave_format.bitsPerSample == 8) {
+			if (waveFormat.numChannels == 1) {
+				if (waveFormat.bitsPerSample == 8) {
 					format = AL_FORMAT_MONO8;
-				} else if (wave_format.bitsPerSample == 16) {
+				} else if (waveFormat.bitsPerSample == 16) {
 					format = AL_FORMAT_MONO16;
 				}
-			} else if (wave_format.numChannels == 2) {
-				if (wave_format.bitsPerSample == 8) {
+			} else if (waveFormat.numChannels == 2) {
+				if (waveFormat.bitsPerSample == 8) {
 					format = AL_FORMAT_STEREO8;
-				} else if (wave_format.bitsPerSample == 16) {
+				} else if (waveFormat.bitsPerSample == 16) {
 					format = AL_FORMAT_STEREO16;
 				}
 			}
@@ -196,42 +195,22 @@ namespace mc {
 		alDeleteBuffers(1, &buffer);
 	}
 
-	bool Sound::getProperty(const Byte param) const {
-		return properties.getBit(param);
-	}
-
-	void Sound::setProperty(const Byte param, const bool value) {
-		properties.setBit(param, value);
-	}
-
 	void Sound::setVolume(float vol) {
 		volume = vol;
 		alSourcef(source, AL_GAIN, volume);
 	}
 
 	void Sound::setLooping(const bool val) {
-		properties.setBit(LOOPING, val);
-
 		if (val) {
+			properties |= LOOPING;
 			alSourcei(source, AL_LOOPING, AL_TRUE);
 		} else {
-			alSourcei(source, AL_LOOPING, val);
+			properties &= ~LOOPING;
+			alSourcei(source, AL_LOOPING, AL_FALSE);
 		}
 	}
 
 	bool Sound::isLooping() const {
-		return properties.getBit(LOOPING);
-	}
-
-	void Sound::setProperties(const BitField & b) {
-		properties = b;
-	}
-
-	BitField & Sound::getProperties() {
-		return properties;
-	}
-
-	const BitField & Sound::getProperties() const {
-		return properties;
+		return properties & LOOPING;
 	}
 }//mc

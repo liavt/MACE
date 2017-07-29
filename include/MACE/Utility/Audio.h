@@ -13,7 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Core/Instance.h>
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Utility/BitField.h>
 
 #include <vector>
 
@@ -30,11 +29,12 @@ namespace mc {
 
 	/**
 	@todo add more sound file formats, other than .wav. stb_vorbis can provide support for .ogg files
+	@todo fix memory leak from `new` for `buf`
 	*/
 	class Sound: public Initializable {
 	public:
 		enum Properties: Byte {
-			LOOPING = 0
+			LOOPING = 0x01
 		};
 
 		Sound(const std::string& path);
@@ -52,17 +52,10 @@ namespace mc {
 		void init() override;
 		void destroy() override;
 
-		bool getProperty(const Byte param) const;
-		void setProperty(const Byte param, const bool value);
-
 		void setLooping(const bool val);
-		bool isLooping() const;
-
-		void setProperties(const BitField& b);
-		BitField& getProperties();
-		const BitField& getProperties() const;
+		bool isLooping() const;;
 	private:
-		BitField properties = 0;
+		Byte properties = 0;
 		unsigned int source, buffer;
 		unsigned int frequency;
 		int size;

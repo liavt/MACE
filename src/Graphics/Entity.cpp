@@ -13,9 +13,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Error.h>
 #include <MACE/Utility/Transform.h>
-#include <MACE/Utility/BitField.h>
 #include <string>
-#include <iostream>
 
 namespace mc {
 	namespace gfx{
@@ -462,31 +460,21 @@ namespace mc {
 			}
 		}
 
-		bool Entity::getProperty(const Byte position) const {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (position > 8) {
-				MACE__THROW(IndexOutOfBounds, "Input position is greater than 8");
-			} else if (position < 0) {
-				MACE__THROW(IndexOutOfBounds, "Input position is less than 0!");
-			}
-#endif
-			return properties.getBit(position);
+		bool Entity::getProperty(const Byte flag) const {
+			return properties & flag;
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (position > 8) {
-				MACE__THROW(IndexOutOfBounds, "Input position is greater than 8");
-			} else if (position < 0) {
-				MACE__THROW(IndexOutOfBounds, "Input position is less than 0!");
-			}
-#endif
-			if (properties.getBit(position) != value) {
+			if (((properties & position) != 0) != value) {
 				if (position != Entity::DIRTY) {
-					properties.setBit(Entity::DIRTY, true);
+					properties |= Entity::DIRTY;
 				}
 
-				properties.setBit(position, value);
+				if (value) {
+					properties |= position;
+				} else {
+					properties &= ~position;
+				}
 			}
 		}
 

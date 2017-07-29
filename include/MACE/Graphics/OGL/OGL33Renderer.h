@@ -34,7 +34,7 @@ namespace mc {
 				void clean() override;
 			protected:
 				void loadSettings(const Painter::State& state) override;
-				void draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) override;
+				void draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures feat) override;
 			private:
 				OGL33Renderer* const renderer;
 
@@ -49,8 +49,7 @@ namespace mc {
 			};
 
 			/**
-			@todo Remove discard from mc_frag.glsl
-			@todo get rid of global constant IncludeString
+			@todo Remove discard from Frag.glsl
 			*/
 			class OGL33Renderer: public Renderer {
 				friend class OGL33Painter;
@@ -86,10 +85,9 @@ namespace mc {
 					ogl::ShaderProgram program;
 				};
 
-				std::map<std::pair<Enums::Brush, Enums::RenderType>, OGL33Renderer::RenderProtocol> protocols{};
+				std::map<std::pair<Enums::Brush, Enums::RenderFeatures>, OGL33Renderer::RenderProtocol> protocols{};
 
-				OGL33Renderer::RenderProtocol& getProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderType> settings);
-				ogl::ShaderProgram createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderType>& settings);
+				void bindProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderFeatures> settings);
 			};
 		}//ogl
 	}//gfx

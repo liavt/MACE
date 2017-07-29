@@ -18,8 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
 #include <MACE/Graphics/OGL/OGL33Context.h>
 
-#include <MACE/Utility/BitField.h>
-
 #include <mutex>
 #include <chrono>
 #include <iostream>
@@ -33,7 +31,7 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace gfx {
 		namespace {
-			std::unordered_map< short int, BitField > keys = std::unordered_map< short int, BitField >();
+			std::unordered_map< short int, Byte > keys = std::unordered_map< short int, Byte >();
 
 			int mouseX = -1;
 			int mouseY = -1;
@@ -41,7 +39,7 @@ namespace mc {
 			double scrollX = 0;
 			double scrollY = 0;
 
-			void pushKeyEvent(const short int& key, const BitField action) {
+			void pushKeyEvent(const short int& key, const Byte action) {
 				keys[key] = action;
 			}
 
@@ -98,27 +96,55 @@ namespace mc {
 			}
 
 			void onWindowKeyButton(GLFWwindow*, int key, int, int action, int mods) {
-				BitField actions = BitField(0);
-				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
-				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
-				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
-				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
-				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
-				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
-				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+				Byte actions;
+				if (action == GLFW_PRESS) {
+					actions |= Input::PRESSED;
+				}
+				if (action == GLFW_REPEAT) {
+					actions |= Input::REPEATED;
+				}
+				if (action == GLFW_RELEASE) {
+					actions |= Input::RELEASED;
+				}
+				if (mods & GLFW_MOD_SHIFT) {
+					actions |= Input::MODIFIER_SHIFT;
+				}
+				if (mods & GLFW_MOD_CONTROL) {
+					actions |= Input::MODIFIER_CONTROL;
+				}
+				if (mods & GLFW_MOD_ALT) {
+					actions |= Input::MODIFIER_ALT;
+				}
+				if (mods & GLFW_MOD_SUPER) {
+					actions |= Input::MODIFIER_SUPER;
+				}
 
 				pushKeyEvent(static_cast<short int>(key), actions);
 			}
 
 			void onWindowMouseButton(GLFWwindow*, int button, int action, int mods) {
-				BitField actions = BitField(0);
-				actions.setBit(Input::PRESSED, action == GLFW_PRESS);
-				actions.setBit(Input::REPEATED, action == GLFW_REPEAT);
-				actions.setBit(Input::RELEASED, action == GLFW_RELEASE);
-				actions.setBit(Input::MODIFIER_SHIFT, (mods & GLFW_MOD_SHIFT) != 0);
-				actions.setBit(Input::MODIFIER_CONTROL, (mods & GLFW_MOD_CONTROL) != 0);
-				actions.setBit(Input::MODIFIER_ALT, (mods & GLFW_MOD_ALT) != 0);
-				actions.setBit(Input::MODIFIER_SUPER, (mods & GLFW_MOD_SUPER) != 0);
+				Byte actions;
+				if (action == GLFW_PRESS) {
+					actions |= Input::PRESSED;
+				}
+				if (action == GLFW_REPEAT) {
+					actions |= Input::REPEATED;
+				}
+				if (action == GLFW_RELEASE) {
+					actions |= Input::RELEASED;
+				}
+				if (mods & GLFW_MOD_SHIFT) {
+					actions |= Input::MODIFIER_SHIFT;
+				}
+				if (mods & GLFW_MOD_CONTROL) {
+					actions |= Input::MODIFIER_CONTROL;
+				}
+				if (mods & GLFW_MOD_ALT) {
+					actions |= Input::MODIFIER_ALT;
+				}
+				if (mods & GLFW_MOD_SUPER) {
+					actions |= Input::MODIFIER_SUPER;
+				}
 
 				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
 				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
@@ -418,7 +444,7 @@ namespace mc {
 		}//getName()
 
 		bool WindowModule::isDestroyed() const {
-			return properties.getBit(WindowModule::DESTROYED);
+			return properties & WindowModule::DESTROYED;
 		}
 
 		Vector<int, 2> WindowModule::getFramebufferSize() const {
@@ -454,20 +480,20 @@ namespace mc {
 		}//clean()
 
 		namespace Input {
-			const BitField & getKey(const short int key) {
+			const Byte & getKey(const short int key) {
 				return keys[key];
 			}
 
 			bool isKeyDown(const short int key) {
-				return keys[key].getBit(Input::PRESSED) || keys[key].getBit(Input::REPEATED);
+				return keys[key] & Input::PRESSED || keys[key] & Input::REPEATED;
 			}
 
 			bool isKeyRepeated(const short int key) {
-				return keys[key].getBit(Input::REPEATED);
+				return keys[key] & Input::REPEATED;
 			}
 
 			bool isKeyReleased(const short int key) {
-				return keys[key].getBit(Input::RELEASED);
+				return keys[key] & Input::RELEASED;
 			}
 			int getMouseX() noexcept {
 				return mouseX;

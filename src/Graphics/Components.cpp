@@ -234,31 +234,31 @@ namespace mc {
 		}
 
 		bool Selectable::isClicked() const {
-			return selectableProperties.getBit(Selectable::CLICKED);
+			return selectableProperties & Selectable::CLICKED;
 		}
 
 		bool Selectable::isDisabled() const {
-			return selectableProperties.getBit(Selectable::DISABLED);
+			return selectableProperties & Selectable::DISABLED;
 		}
 
 		bool Selectable::isHovered() const {
-			return selectableProperties.getBit(Selectable::HOVERED);
+			return selectableProperties & Selectable::HOVERED;
 		}
 
 		void Selectable::click() {
-			selectableProperties.setBit(Selectable::CLICKED, true);
+			selectableProperties |= Selectable::CLICKED;
 
 			onClick();
 		}
 
 		void Selectable::disable() {
-			selectableProperties.setBit(Selectable::DISABLED, true);
+			selectableProperties |= Selectable::DISABLED;
 
 			onDisable();
 		}
 
 		void Selectable::enable() {
-			selectableProperties.setBit(Selectable::DISABLED, false);
+			selectableProperties &= ~Selectable::DISABLED;
 
 			onEnable();
 		}

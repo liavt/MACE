@@ -31,7 +31,7 @@ namespace mc {
 			onSetUp(win);
 		}//setUp
 
-		Index Renderer::queue(GraphicsEntity * const e) {
+		EntityID Renderer::queue(GraphicsEntity * const e) {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
@@ -44,7 +44,7 @@ namespace mc {
 			return pushEntity(e) + 1;
 		}//queue
 
-		void Renderer::remove(const Index id) {
+		void Renderer::remove(const EntityID id) {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (id == 0 || id > renderQueue.size()) {
 				MACE__THROW(IndexOutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
@@ -117,8 +117,8 @@ namespace mc {
 			return context;
 		}
 
-		Index Renderer::pushEntity(GraphicsEntity * const entity) {
-			for (Index i = 0; i < renderQueue.size(); ++i) {
+		EntityID Renderer::pushEntity(GraphicsEntity * const entity) {
+			for (EntityID i = 0; i < renderQueue.size(); ++i) {
 				if (renderQueue[i] == nullptr) {
 					renderQueue[i] = entity;
 					return i;
@@ -152,14 +152,14 @@ namespace mc {
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
-			drawQuad(Enums::Brush::MASK);
+			drawQuad(Enums::Brush::MASK, Enums::RenderFeatures::DEFAULT);
 		}
 
 		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
 			setData({ amount, 0, 0, 0 });
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
-			drawQuad(Enums::Brush::BLEND);
+			drawQuad(Enums::Brush::BLEND, Enums::RenderFeatures::DEFAULT);
 		}
 
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
@@ -167,16 +167,16 @@ namespace mc {
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
-			drawQuad(Enums::Brush::MASKED_BLEND);
+			drawQuad(Enums::Brush::MASKED_BLEND, Enums::RenderFeatures::DEFAULT);
 		}
 
-		void Painter::drawQuad(const Enums::Brush brush, const Enums::RenderType type) {
-			draw(Model::getQuad(), brush, type);
+		void Painter::drawQuad(const Enums::Brush brush, const Enums::RenderFeatures feat) {
+			draw(Model::getQuad(), brush, feat);
 		}
 
-		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
+		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures feat) {
 			impl->loadSettings(state);
-			impl->draw(m, brush, type);
+			impl->draw(m, brush, feat);
 		}
 
 		const GraphicsEntity * const Painter::getEntity() const {
@@ -201,19 +201,19 @@ namespace mc {
 
 		}
 
-		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderType type) {
+		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderFeatures feat) {
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			draw(m, Enums::Brush::TEXTURE, type);
+			draw(m, Enums::Brush::TEXTURE, feat);
 		}
 
-		void Painter::fillModel(const Model & m, const Enums::RenderType type) {
-			draw(m, Enums::Brush::COLOR, type);
+		void Painter::fillModel(const Model & m, const Enums::RenderFeatures feat) {
+			draw(m, Enums::Brush::COLOR, feat);
 		}
 
 		void Painter::fillRect(const float x, const float y, const float w, const float h) {
 			translate(x, y);
 			scale(w, h);
-			drawQuad(Enums::Brush::COLOR);
+			drawQuad(Enums::Brush::COLOR, Enums::RenderFeatures::DEFAULT & ~Enums::RenderFeatures::TEXTURE);
 		}
 
 		void Painter::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
@@ -226,7 +226,7 @@ namespace mc {
 
 		void Painter::drawImage(const Texture & img) {
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			drawQuad(Enums::Brush::TEXTURE);
+			drawQuad(Enums::Brush::TEXTURE, Enums::RenderFeatures::DEFAULT | Enums::RenderFeatures::DISCARD_INVISIBLE);
 		}
 
 		void Painter::setForegroundColor(const Color & col) {
@@ -501,6 +501,7 @@ namespace mc {
 
 		Painter & GraphicsEntity::getPainter() {
 			makeDirty();
+
 			return painter;
 		}
 
@@ -523,9 +524,9 @@ namespace mc {
 		}
 
 		void GraphicsEntity::clean() {
-			painter.clean();
-
 			Entity::clean();
+
+			painter.clean();
 		}
 	}//gfx
 }//mc

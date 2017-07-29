@@ -129,8 +129,8 @@ namespace mc {
 			MACE__THROW(InitializationFailed, "Must add a Module via Instance::addModule!");
 		}
 
-		flags.untoggleBit(Instance::DESTROYED);
-		flags.toggleBit(Instance::INIT);
+		flags &= ~Instance::DESTROYED;
+		flags |= Instance::INIT;
 
 		for (Index i = 0; i < modules.size(); ++i) {
 			modules[i]->init();
@@ -138,13 +138,13 @@ namespace mc {
 	}
 
 	void Instance::destroy() {
-		if (!flags.getBit(Instance::INIT)) {
+		if (!(flags & Instance::INIT)) {
 			MACE__THROW(InitializationFailed, "Can't destroy MACE without calling init() first!");
 		}
 
-		flags.toggleBit(Instance::DESTROYED);
-		flags.untoggleBit(Instance::INIT);
-		flags.untoggleBit(Instance::STOP_REQUESTED);
+		flags |= Instance::DESTROYED;
+		flags &= ~Instance::INIT;
+		flags &= ~Instance::STOP_REQUESTED;
 
 		for (Index i = 0; i < modules.size(); ++i) {
 			modules[i]->destroy();
@@ -154,7 +154,7 @@ namespace mc {
 	void Instance::update() {
 		os::clearError(__LINE__, __FILE__);
 
-		if (!flags.getBit(Instance::INIT)) {
+		if (!(flags & Instance::INIT)) {
 			MACE__THROW(InitializationFailed, "init() must be called!");
 		}
 		for (Index i = 0; i < modules.size(); ++i) {
@@ -163,15 +163,15 @@ namespace mc {
 	}
 
 	bool Instance::isRunning() const {
-		return !flags.getBit(Instance::STOP_REQUESTED) && flags.getBit(Instance::INIT) && !flags.getBit(Instance::DESTROYED);
+		return flags & Instance::INIT && !(flags & (Instance::DESTROYED | Instance::STOP_REQUESTED));
 	}
 
 	void Instance::requestStop() {
-		flags.toggleBit(Instance::STOP_REQUESTED);
+		flags |= Instance::STOP_REQUESTED;
 	}
 
 	bool Instance::getFlag(const Instance::Flag flag) const {
-		return flags.getBit(static_cast<Byte>(flag));
+		return (flags & flag) != 0;
 	}
 
 	void Instance::reset() {

@@ -22,9 +22,6 @@ The above copyright notice and this permission notice shall be included in all c
 struct GLFWwindow;
 
 namespace mc {
-	//forward declaration for the input namespace
-	struct BitField;
-
 	namespace gfx {
 		class GraphicsContext;
 
@@ -149,7 +146,7 @@ namespace mc {
 
 			const LaunchConfig config;
 
-			BitField properties;
+			Byte properties;
 
 			std::unique_ptr<gfx::GraphicsContext> context;
 
@@ -204,15 +201,14 @@ namespace mc {
 			Normally, this should be a macro, but those don't follow scope. Weak enums are very similar to macros
 			but they follow scope (even though they don't create one themselves)
 			*/
-			//it is a Byte (unsigned char) to save memory.
 			enum Action: Byte {
-				PRESSED = 0,
-				REPEATED = 1,
-				RELEASED = 2,
-				MODIFIER_SHIFT = 3,
-				MODIFIER_CONTROL = 4,
-				MODIFIER_ALT = 5,
-				MODIFIER_SUPER = 6
+				PRESSED = 0x01,
+				REPEATED = 0x02,
+				RELEASED = 0x04,
+				MODIFIER_SHIFT = 0x08,
+				MODIFIER_CONTROL = 0x10,
+				MODIFIER_ALT = 0x20,
+				MODIFIER_SUPER = 0x40
 			};//Action
 
 			//it is a short int to save memory as no value exceeds MAX_SHORT_INT
@@ -500,7 +496,7 @@ namespace mc {
 				FIRST = SPACE
 			};//Key
 
-			const BitField& getKey(const short int key);
+			const Byte& getKey(const short int key);
 
 			bool isKeyDown(const short int key);
 			bool isKeyRepeated(const short int key);

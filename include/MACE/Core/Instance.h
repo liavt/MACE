@@ -14,7 +14,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Utility/BitField.h>
 #include <string>
 #include <vector>
 
@@ -103,17 +102,17 @@ namespace mc {
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.init()` has been called.
 			*/
-			INIT = 0,
+			INIT = 0x01,
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.destroy()` has been called.
 			*/
-			DESTROYED = 1,
+			DESTROYED = 0x02,
 			/**
 			Parameter for `MACE.getFlag(const Byte)`. Is `true` if `MACE.requestStop()` has been called.
 			*/
-			STOP_REQUESTED = 2,
-			VERBOSE_ERRORS = 3,
-			WRITE_ERRORS_TO_LOG = 4,
+			STOP_REQUESTED = 0x04,
+			VERBOSE_ERRORS = 0x08,
+			WRITE_ERRORS_TO_LOG = 0x10,
 		};
 
 		/**
@@ -296,7 +295,7 @@ namespace mc {
 		/**
 		Stores various flags for the MACE, like whether it is running, or a close is requested.
 		*/
-		BitField flags = 0;
+		Byte flags = 0;
 	};
 }
 
