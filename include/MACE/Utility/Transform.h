@@ -25,7 +25,7 @@ namespace mc {
 		@param z Rotation in radians around the Z axis
 		@return A rotation `Matrix4f`
 		*/
-		Matrix<float,4, 4> rotate(const float x, const float y, const float z);
+		Matrix<float, 4> rotate(const float x, const float y, const float z);
 		/**
 		Creates a rotation matrix, which when multiplied by a `Vector4f`, rotates it.
 		<p>
@@ -33,14 +33,14 @@ namespace mc {
 		@param v A quaternion representing a rotation
 		@return A rotated `Matrix4f`
 		*/
-		Matrix<float, 4, 4> rotate(const Vector<float, 3>& v);
+		Matrix<float, 4> rotate(const Vector<float, 3>& v);
 		/**
 		Rotates an existing `Matrix4f`
 		@param v A quaternion representing a rotation
 		@param m `Matrix4f` base to rotate
 		@return A rotated `Matrix4f`
 		*/
-		Matrix<float, 4, 4> rotate(const Matrix<float, 4, 4>& m, const Vector<float, 3>& v);
+		Matrix<float, 4> rotate(const Matrix<float, 4>& m, const Vector<float, 3>& v);
 		/**
 		Rotates an existing `Matrix4f`
 		@param m A `Matrix4f` to rotate
@@ -49,7 +49,7 @@ namespace mc {
 		@param z Rotation in radians around the Z axis
 		@return A rotated `Matrix4f`
 		*/
-		Matrix<float, 4, 4> rotate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z);
+		Matrix<float, 4> rotate(const Matrix<float, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values.
@@ -60,7 +60,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix4f` that is scaled based on the supplied values
 		*/
-		Matrix<float, 4, 4> scale(const float x, const float y, const float z);
+		Matrix<float, 4> scale(const float x, const float y, const float z);
 		/**
 		Scales an existing transformation matrix.
 		@param m The base `Matrix4f` to get scaled
@@ -69,7 +69,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix4f` that is scaled based on the supplied values
 		*/
-		Matrix<float, 4, 4> scale(const Matrix<float, 4, 4>& m, const float x, const float y, const float z);
+		Matrix<float, 4> scale(const Matrix<float, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values.
@@ -80,7 +80,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix4f` that is translated based on the supplied values
 		*/
-		Matrix<float, 4, 4> translate(const float x, const float y, const float z);
+		Matrix<float, 4> translate(const float x, const float y, const float z);
 		/**
 		Translates an existing transformation matrix.
 		@param m The base `Matrix4f` to get translated
@@ -89,7 +89,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix4f` that is translated based on the supplied values
 		*/
-		Matrix<float, 4, 4> translate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z);
+		Matrix<float, 4> translate(const Matrix<float, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Generates a projection matrix based on values. Each time the window changes size, you need to regenerate your projection matrix
@@ -102,7 +102,7 @@ namespace mc {
 		@return A projection matrix made from the specified settings
 		@see ortho(const float, const float, const float, const float, const float)
 		*/
-		Matrix<float, 4, 4> projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
+		Matrix<float, 4> projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
 		/**
 		Generates an orthographic projection matrix. As opposed to a standard projection matrix, vectors in an orthographic projection don't become smaller the farther away they are. When combined with a rotational matrix, it can create an isometric view, which is used extensively in games like Simcity. Isometric views are also used heavily in 3D modeling software to represent the dimensions of an object.In a 2D environment, an orthographic projection matrix can be used to scale the screen.
 		@param left The left plane of the orthographic projection
@@ -114,16 +114,36 @@ namespace mc {
 		@return An ortographic projection matrix generated from the values.
 		@see projection(const float, const float, const float, const float)
 		*/
-		Matrix<float, 4, 4> ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
+		Matrix<float, 4> ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
 
 	}//math
 
-		/**
-		Matrix-based class that allows for the easy creation and management of transformation matrices. Transformation matrices can scale, rotate, and translate any vector.
-		<p>
-		This should not be confused with the `Matrix` class, which allows for the arbitrary storage of data in a matrix-like fashion
-		*/
+	/**
+	Matrix-based class that allows for the easy creation and management of transformation matrices. Transformation matrices can scale, rotate, and translate any vector.
+	<p>
+	This should not be confused with the `Matrix` class, which allows for the arbitrary storage of data in a matrix-like fashion
+	*/
 	struct TransformMatrix {
+
+		/**
+		Represents this `TransformMatrix`'s translation
+		@see translate(const float, const float, const float)
+		@see get()
+		*/
+		Vector<float, 3> translation;
+		/**
+		Represents this `TransformMatrix`'s rotation
+		@see rotate(const float, const float, const float)
+		@see get()
+		*/
+		Vector<float, 3> rotation;
+		/**
+		Represents this `TransformMatrix`'s scale
+		@see scale(const float, const float, const float)
+		@see get()
+		*/
+		Vector<float, 3> scaler;//the variable is not called scale because that conflicts with scale() function
+
 		/**
 		Default constructor. Generates a `TransformMatrix` as an identity matrix.
 		@see reset()
@@ -167,7 +187,7 @@ namespace mc {
 		Converts this `TransformMatrix` into a `Matrix4f` based on the stored transformations.
 		@return The transformation matrix represented by the values stored via `rotate()`, `scale()`, and `translate()`
 		*/
-		Matrix<float, 4, 4> get() const;
+		Matrix<float, 4> get() const;
 
 		/**
 		Checks if the values represented by 2 `TransformMatrix` are the same
@@ -205,25 +225,6 @@ namespace mc {
 		@return whether `this` is smaller than or equal to `other`, based on `translation`, `rotation`, and `scaler`
 		*/
 		bool operator<=(const TransformMatrix& other) const;
-
-		/**
-		Represents this `TransformMatrix`'s translation
-		@see translate(const float, const float, const float)
-		@see get()
-		*/
-		Vector<float, 3> translation;
-		/**
-		Represents this `TransformMatrix`'s rotation
-		@see rotate(const float, const float, const float)
-		@see get()
-		*/
-		Vector<float, 3> rotation;
-		/**
-		Represents this `TransformMatrix`'s scale
-		@see scale(const float, const float, const float)
-		@see get()
-		*/
-		Vector<float, 3> scaler;
 	};//TransformMatrix
 }//mc
 

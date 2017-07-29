@@ -27,12 +27,13 @@ namespace mc {
 #include <MACE/Utility/Audio.h>
 #include <MACE/Utility/Color.h>
 #include <MACE/Utility/Vector.h>
-#include <MACE/Utility/BitField.h>
-#include <MACE/Utility/Math.h>
-#include <MACE/Utility/Transform.h>
+#include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/MatrixTypes.h>
+#include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Signal.h>
 #include <MACE/Utility/DynamicLibrary.h>
 #include <MACE/Utility/Process.h>
+#include <MACE/Utility/BitField.h>
+#include <MACE/Utility/Math.h>
 
 #endif

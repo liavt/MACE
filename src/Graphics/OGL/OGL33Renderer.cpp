@@ -37,9 +37,8 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			namespace {
-
 				//how many floats in the uniform buffer
-#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 24
+#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 20
 				//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
 #define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
@@ -68,20 +67,18 @@ namespace mc {
 						MACE__SHADER_MACRO(MACE_ID_ATTACHMENT_INDEX, MACE__ID_ATTACHMENT_INDEX),
 						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_VERTICES_LOCATION, MACE__VAO_DEFAULT_VERTICES_LOCATION),
 						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_TEXTURE_COORD_LOCATION, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION),
-						{
 #include <MACE/Graphics/OGL/Shaders/Shared.glsl>
-						},
 					});
 #undef MACE__SHADER_MACRO
 
 					if (type == GL_VERTEX_SHADER) {
-						sources.push_back({
+						sources.push_back(
 #include <MACE/Graphics/OGL/Shaders/Vert.glsl>
-						});
+						);
 					} else if (type == GL_FRAGMENT_SHADER) {
-						sources.push_back({
+						sources.push_back(
 #include <MACE/Graphics/OGL/Shaders/Frag.glsl>
-						});
+						);
 					}
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 					else {
@@ -277,6 +274,7 @@ namespace mc {
 
 				//for our custom FBOs. we render using a z-sslBuffer to figure out which entity is clicked on
 				frameBuffer.init();
+				frameBuffer.bind();
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
 
@@ -388,23 +386,23 @@ namespace mc {
 				program.init();
 
 				if (settings.second == Enums::RenderType::STANDARD) {
-					program.attachShader(createShader(GL_VERTEX_SHADER, {
+					program.attachShader(createShader(GL_VERTEX_SHADER,
 #include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
-					}));
+					));
 				} else {
 					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported render type: " + std::to_string(static_cast<unsigned int>(settings.second)));
 				}
 
 				if (settings.first == Enums::Brush::COLOR) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
+					program.attachShader(createShader(GL_FRAGMENT_SHADER,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
-					}));
+					));
 
 					program.link();
 				} else if (settings.first == Enums::Brush::TEXTURE) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
+					program.attachShader(createShader(GL_FRAGMENT_SHADER,
 #include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
-					}));
+					));
 
 					program.link();
 
@@ -414,9 +412,9 @@ namespace mc {
 
 					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 				} else if (settings.first == Enums::Brush::MASK) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
+					program.attachShader(createShader(GL_FRAGMENT_SHADER,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
-					}));
+					));
 
 					program.link();
 
@@ -429,9 +427,9 @@ namespace mc {
 					program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 					program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
 				} else if (settings.first == Enums::Brush::BLEND) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
+					program.attachShader(createShader(GL_FRAGMENT_SHADER,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
-					}));
+					));
 
 					program.link();
 
@@ -443,9 +441,9 @@ namespace mc {
 					program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
 					program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
 				} else if (settings.first == Enums::Brush::MASKED_BLEND) {
-					program.attachShader(createShader(GL_FRAGMENT_SHADER, {
+					program.attachShader(createShader(GL_FRAGMENT_SHADER,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
-					}));
+					));
 
 					program.link();
 
@@ -463,8 +461,6 @@ namespace mc {
 					MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 				}
 
-				program.createUniform("mc_EntityID");
-
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
 				return program;
 			}
@@ -472,18 +468,57 @@ namespace mc {
 			OGL33Painter::OGL33Painter(OGL33Renderer* const r, Painter* const p) : PainterImpl(p), renderer(r) {}
 
 			void OGL33Painter::init() {
-				painterData.init();
-				painterData.bind();
-				painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, nullptr, MACE__PAINTER_DATA_USAGE);
+				createPainterData();
+				createEntityData();
+			}
 
-				painterData.setLocation(MACE__PAINTER_DATA_LOCATION);
+			void OGL33Painter::createEntityData() {
+				savedMetrics = painter->getEntity()->getMetrics();
 
 				entityData.init();
 				entityData.bind();
+
+				float entityDataBuffer[MACE__ENTITY_DATA_BUFFER_SIZE / sizeof(float)] = {};
+
+				savedMetrics.translation.flatten(entityDataBuffer);
+				//offset by 4
+				savedMetrics.rotation.flatten(entityDataBuffer + 4);
+				savedMetrics.inheritedTranslation.flatten(entityDataBuffer + 8);
+				savedMetrics.inheritedRotation.flatten(entityDataBuffer + 12);
+				savedMetrics.scale.flatten(entityDataBuffer + 16);
+				//this crazy line puts a GLuint directly into a float, as GLSL expects a uint instead of a float
+				*reinterpret_cast<GLuint*>(entityDataBuffer + 19) = static_cast<GLuint>(painter->getID());
+
 				//we set it to null, because during the actual rendering we set the data
-				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
+				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
 
 				entityData.setLocation(MACE__ENTITY_DATA_LOCATION);
+			}
+
+			void OGL33Painter::createPainterData() {
+				savedState = painter->getState();
+
+				painterData.init();
+				painterData.bind();
+
+				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = { 0 };
+
+				savedState.transformation.translation.flatten(painterDataBuffer);
+				savedState.transformation.rotation.flatten(painterDataBuffer + 4);
+				savedState.transformation.scaler.flatten(painterDataBuffer + 8);
+				savedState.data.flatten(painterDataBuffer + 12);
+				savedState.foregroundColor.flatten(painterDataBuffer + 16);
+				savedState.foregroundTransform.flatten(painterDataBuffer + 20);
+				savedState.backgroundColor.flatten(painterDataBuffer + 24);
+				savedState.backgroundTransform.flatten(painterDataBuffer + 28);
+				savedState.maskColor.flatten(painterDataBuffer + 32);
+				savedState.maskTransform.flatten(painterDataBuffer + 36);
+				savedState.filter.flatten(painterDataBuffer + 40);
+
+				//we set it to null, because during the actual rendering we set the data
+				painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_USAGE);
+
+				painterData.setLocation(MACE__PAINTER_DATA_LOCATION);
 			}
 
 			void OGL33Painter::destroy() {
@@ -508,84 +543,73 @@ namespace mc {
 
 				const Entity::Metrics metrics = painter->getEntity()->getMetrics();
 
+				if (metrics == savedMetrics) {
+					return;
+				}
+
 				//now we set the uniforms defining the transformations of the entity
 				entityData.bind();
 
-				//we are rewriting the entire buffer, so orphan it so the driver knows to completely overwrite everything
-				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, nullptr, MACE__ENTITY_DATA_USAGE);
-
-				//holy crap thats a lot of flags. this is the fastest way to map the sslBuffer. the difference is MASSIVE. try it.
-				float* mappedEntityData = static_cast<float*>(entityData.mapRange(0, MACE__ENTITY_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-#ifdef MACE_DEBUG_INTERNAL_ERRORS
-				if (mappedEntityData == nullptr) {
-					MACE__THROW(NullPointer, "Internal Error: Mapped entity buffer was nullptr");
+				if (metrics.translation != savedMetrics.translation) {
+					entityData.setDataRange(0, sizeof(float) * 3, metrics.translation.begin());
 				}
-#endif
+				if (metrics.rotation != savedMetrics.rotation) {
+					entityData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, metrics.rotation.begin());
+				}
+				if (metrics.inheritedTranslation != savedMetrics.inheritedTranslation) {
+					entityData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, metrics.inheritedTranslation.begin());
+				}
+				if (metrics.inheritedRotation != savedMetrics.inheritedRotation) {
+					entityData.setDataRange(sizeof(float) * 12, sizeof(float) * 3, metrics.inheritedRotation.begin());
+				}
+				if (metrics.scale != savedMetrics.scale) {
+					entityData.setDataRange(sizeof(float) * 16, sizeof(float) * 3, metrics.scale.begin());
+				}
 
-				std::copy(metrics.translation.begin(), metrics.translation.end(), mappedEntityData);
-				mappedEntityData += 4;//pointer arithmetic!
-				std::copy(metrics.rotation.begin(), metrics.rotation.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				std::copy(metrics.inheritedTranslation.begin(), metrics.inheritedTranslation.end(), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(metrics.inheritedRotation.begin(), metrics.inheritedRotation.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				std::copy(metrics.scale.begin(), metrics.scale.end(), mappedEntityData);
-
-				entityData.unmap();
+				savedMetrics = metrics;
 			}
 
 			void OGL33Painter::loadSettings(const Painter::State& state) {
-				float color[4] = {};
-				float matrix[16] = {};
-
-				//now we set the uniforms defining the transformations of the entity
-				Binder b(&painterData);
-				float* mappedEntityData = static_cast<float*>(painterData.mapRange(0, MACE__PAINTER_DATA_BUFFER_SIZE, GL_MAP_WRITE_BIT));
-#ifdef MACE_DEBUG_INTERNAL_ERRORS
-				if (mappedEntityData == nullptr) {
-					MACE__THROW(NullPointer, "Internal Error: Mapped paint data buffer was nullptr");
+				if (state == savedState) {
+					return;
 				}
-#endif
 
-				std::copy(state.transformation.translation.begin(), state.transformation.translation.end(), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.transformation.rotation.begin(), state.transformation.rotation.end(), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.transformation.scaler.begin(), state.transformation.scaler.end(), mappedEntityData);
-				mappedEntityData += 4;
+				painterData.bind();
 
-				std::copy(state.data.begin(), state.data.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.foregroundColor.flatten(color);
-				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.foregroundTransform.begin(), state.foregroundTransform.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.backgroundColor.flatten(color);
-				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.backgroundTransform.begin(), state.backgroundTransform.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.maskColor.flatten(color);
-				std::copy(std::begin(color), std::end(color), mappedEntityData);
-				mappedEntityData += 4;
-				std::copy(state.maskTransform.begin(), state.maskTransform.end(), mappedEntityData);
-				mappedEntityData += 4;
-
-				state.filter.flatten(matrix);
-				std::copy(std::begin(matrix), std::end(matrix), mappedEntityData);
-
-				if (!painterData.unmap()) {
-					//if unmapping fails, we have to reinitialize the data store
-					//this happens on some os's like vista when the os could discard the whole buffer
-					loadSettings(state);
+				if (state.transformation != savedState.transformation) {
+					painterData.setDataRange(0, sizeof(float) * 3, state.transformation.translation.begin());
+					painterData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, state.transformation.rotation.begin());
+					painterData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, state.transformation.scaler.begin());
 				}
+				if (state.data != savedState.data) {
+					painterData.setDataRange(sizeof(float) * 12, sizeof(float) * 4, state.data.begin());
+				}
+				if (state.foregroundColor != savedState.foregroundColor) {
+					painterData.setDataRange(sizeof(float) * 16, sizeof(float) * 4, state.foregroundColor.begin());
+				}
+				if (state.foregroundTransform != savedState.foregroundTransform) {
+					painterData.setDataRange(sizeof(float) * 20, sizeof(float) * 4, state.foregroundTransform.begin());
+				}
+				if (state.backgroundColor != savedState.backgroundColor) {
+					painterData.setDataRange(sizeof(float) * 24, sizeof(float) * 4, state.backgroundColor.begin());
+				}
+				if (state.backgroundTransform != savedState.backgroundTransform) {
+					painterData.setDataRange(sizeof(float) * 28, sizeof(float) * 4, state.backgroundTransform.begin());
+				}
+				if (state.maskColor != savedState.maskColor) {
+					painterData.setDataRange(sizeof(float) * 32, sizeof(float) * 4, state.maskColor.begin());
+				}
+				if (state.maskTransform != savedState.maskTransform) {
+					painterData.setDataRange(sizeof(float) * 36, sizeof(float) * 4, state.maskTransform.begin());
+				}
+
+				if (state.filter != savedState.filter) {
+					float matrix[16] = {};
+					state.filter.flatten(matrix);
+					painterData.setDataRange(sizeof(float) * 40, sizeof(float) * 16, std::begin(matrix));
+				}
+
+				savedState = state;
 			}
 
 			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderType type) {
@@ -593,7 +617,6 @@ namespace mc {
 				m.bind();
 
 				prot.program.bind();
-				prot.program.setUniform("mc_EntityID", static_cast<unsigned int>(painter->getID()));
 
 				m.draw();
 			}

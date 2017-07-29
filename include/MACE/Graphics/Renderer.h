@@ -159,6 +159,10 @@ namespace mc {
 
 			void reset();
 
+			void setState(const State& s);
+			State& getState();
+			const State& getState() const;
+
 			const Index& getID() const;
 
 			Painter operator=(const Painter& right);

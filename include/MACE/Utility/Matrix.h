@@ -74,8 +74,9 @@ namespace mc {
 	@tparam T What the `Matrix` should consist of. Can be any type.
 	@tparam W The width of the `Matrix` which must be greater than 0
 	@tparam H The height of the `Matrix` which must be greater than 0
+	@todo proper `begin()` and `end()` functions
 	*/
-	template<typename T, Size W, Size H>
+	template<typename T, Size W, Size H = W>
 	struct Matrix: public VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W> {
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
@@ -84,7 +85,7 @@ namespace mc {
 		{
 			MACE_STATIC_ASSERT(W != 0, "A Matrix's width must be greater than 0!");
 			MACE_STATIC_ASSERT(H != 0, "A Matrix's height must be greater than 0!");
-			for( Index i = 0; i < W; ++i ) {
+			for (Index i = 0; i < W; ++i) {
 				content[i] = MatrixRow<T, H>();
 			}
 		};
@@ -93,9 +94,9 @@ namespace mc {
 		Creates a `Matrix` based on a 2-dimensional array. The array's contents will be copied into this `Matrix`
 		@param arr An array of contents
 		*/
-		Matrix(T arr[W][H]) : Matrix() {
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+		Matrix(const T arr[W][H]) : Matrix() {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					content[x][y] = arr[x][y];
 				}
 			}
@@ -113,12 +114,18 @@ namespace mc {
 		*/
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix()//this is for aggregate initializaition
 		{
-			if( args.size() != W )throw IndexOutOfBoundsError("The width of the argument must be equal to to the height of the Matrix!");
+			if (args.size() != W) {
+				MACE__THROW(IndexOutOfBounds, "The width of the argument must be equal to to the height of the Matrix!");
+			}
+
 			Index counterX = 0, counterY = 0;
-			for( std::initializer_list<T> elemX : args ) {
-				if( elemX.size() != H )throw IndexOutOfBoundsError("The height of the argument must be equal to to the height of the Matrix!");
+			for (const std::initializer_list<T>& elemX : args) {
+				if (elemX.size() != H) {
+					MACE__THROW(IndexOutOfBounds, "The height of the argument must be equal to to the height of the Matrix!");
+				}
+
 				counterY = 0;
-				for( T elemY : elemX ) {
+				for (const T& elemY : elemX) {
 					content[counterX][counterY++] = elemY;
 				}
 
@@ -171,9 +178,13 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		T& get(Index x, Index y) {
-			if( x >= W ) throw IndexOutOfBoundsError(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			if( y >= H ) throw IndexOutOfBoundsError(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+		T& get(const Index x, const Index y) {
+			if (x >= W) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			} else if (y >= H) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			}
+
 			return content[x][y];
 		}
 
@@ -187,9 +198,13 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		const T& get(Index x, Index y) const {
-			if( x >= W ) throw IndexOutOfBoundsError(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			if( y >= H ) throw IndexOutOfBoundsError(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+		const T& get(const Index x, const Index y) const {
+			if (x >= W) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			} else if (y >= H) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			}
+
 			return content[x][y];
 		}
 
@@ -203,19 +218,23 @@ namespace mc {
 		@see #operator[]
 		@see #get(Index, Index)
 		*/
-		void set(Index x, Index y, T value) {
-			if( x >= W ) throw IndexOutOfBoundsError(std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			if( y >= H ) throw IndexOutOfBoundsError(std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+		void set(const Index x, const Index y, const T& value) {
+			if (x >= W) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+			} else if (y >= H) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+			}
+
 			content[x][y] = value;
 		}
 
 		/**
 		Creates an 1-dimensional array with the data of this `Matrix`, in O(N) time
-		@return Pointer to an array of data
+		@return `arr`
 		*/
-		const T* flatten(T arr[W*H]) const {
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+		const T* flatten(T arr[W * H]) const {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					arr[y + (x*H)] = (content[x][y]);
 				}
 			}
@@ -228,9 +247,9 @@ namespace mc {
 		This method is faster than `math::transpose(matrix).flatten(array)`, as that takes O(N*2) time.
 		@return Pointer to an array of data
 		*/
-		const T* flattenTransposed(T arr[W*H]) const {
-			for( Index x = 0; x < H; ++x ) {
-				for( Index y = 0; y < W; ++y ) {
+		const T* flattenTransposed(T arr[W * H]) const {
+			for (Index x = 0; x < H; ++x) {
+				for (Index y = 0; y < W; ++y) {
 					arr[y + (x*H)] = (content[y][x]);
 				}
 			}
@@ -250,7 +269,13 @@ namespace mc {
 		@see set(Index, Index,T)
 		@see get(Index,Index)
 		*/
-		virtual T& operator()(Index x, Index y) {
+		virtual T& operator()(const Index x, const Index y) {
+			if (x <= 0) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is less than or equal zero");
+			} else if (y <= 0) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is less than or equal to zero");
+			}
+
 			return content[x - 1][y - 1];
 		}
 
@@ -262,7 +287,13 @@ namespace mc {
 		@see set(Index, Index,T)
 		@see get(Index,Index)
 		*/
-		const T& operator()(Index x, Index y) const {
+		const T& operator()(const Index x, const Index y) const {
+			if (x <= 0) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is less than or equal zero");
+			} else if (y <= 0) {
+				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is less than or equal to zero");
+			}
+
 			return content[x - 1][y - 1];
 		}
 
@@ -278,9 +309,9 @@ namespace mc {
 		Vector<T, H> operator+(const Vector<T, H>& right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
-			for( Index x = 0; x < W; ++x ) {
+			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-				for( Index y = 0; y < H; ++y ) {
+				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) + static_cast<T>(right[x]);
 				}
 			}
@@ -299,9 +330,9 @@ namespace mc {
 		Vector<T, H> operator-(const Vector<T, H>& right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
-			for( Index x = 0; x < W; ++x ) {
+			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-				for( Index y = 0; y < H; ++y ) {
+				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) - static_cast<T>(right[x]);
 				}
 			}
@@ -320,9 +351,9 @@ namespace mc {
 		Vector<T, H> operator*(const Vector<T, H>& right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
-			for( Index x = 0; x < W; ++x ) {
+			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-				for( Index y = 0; y < H; ++y ) {
+				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) * static_cast<T>(right[x]);
 				}
 			}
@@ -339,12 +370,14 @@ namespace mc {
 		*/
 		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
+
 			T arr[W][H];
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] + right[x][y];
 				}
 			}
+
 			return arr;
 		}
 
@@ -359,8 +392,8 @@ namespace mc {
 		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] - right[x][y];
 				}
 			}
@@ -379,10 +412,10 @@ namespace mc {
 		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = T();
-					for( Index x1 = 0; x1 < W; x1++ ) {
+					for (Index x1 = 0; x1 < W; x1++) {
 						arr[x][y] += content[x][x1] * right[x1][y];
 					}
 				}
@@ -401,8 +434,8 @@ namespace mc {
 		*/
 		Matrix<T, W, H> operator*(const T& scalar) const {
 			T arr[W][H];
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] * scalar;
 				}
 			}
@@ -431,7 +464,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator+=(const Matrix<T, W, H>& right) {
-			setContents(this->operator+(right).getContents());
+			content = operator+(right).content;
 		}
 
 		/**
@@ -442,7 +475,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator-=(const Matrix<T, W, H>& right) {
-			setContents(this->operator-(right).getContents());
+			content = operator-(right).content;
 		}
 
 		/**
@@ -453,7 +486,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator*=(Matrix<T, W, H>& right) {
-			setContents(this->operator*(right).getContents());
+			content = operator*(right).content;
 		}
 
 		/**
@@ -464,7 +497,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator*=(const T& scalar) {
-			setContents(this->operator*(scalar).getContents());
+			content = operator*(scalar).content;
 		}
 
 		/**
@@ -475,19 +508,19 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		*/
 		void operator/=(const Matrix<T, W, H>& right) {
-			setContents(this->operator/(right).getContents());
+			content = operator/(right).content;
 		}
 	protected:
 		using VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>::content;//some compilers need this line even though content is protected from the Vector inheritance
 	};//Matrix
 
 	template<typename T, Size N>
-	Vector<T, N> operator*=(const Vector<T, N>& v, const Matrix<T, N, N>& m) {
+	Vector<T, N> operator*=(const Vector<T, N>& v, const Matrix<T, N>& m) {
 		return m * v;
 	}
 
 	template<typename T, Size N>
-	Vector<T, N> operator*(const Vector<T, N>& v, const Matrix<T, N, N>& m) {
+	Vector<T, N> operator*(const Vector<T, N>& v, const Matrix<T, N>& m) {
 		return m * v;
 	}
 
@@ -503,8 +536,8 @@ namespace mc {
 		template<typename T, Size W, Size H>
 		Matrix<T, H, W> transpose(const Matrix<T, W, H>& matrix) {
 			Matrix<T, H, W> out = Matrix<T, H, W>();
-			for( Index x = 0; x < W; ++x ) {
-				for( Index y = 0; y < H; ++y ) {
+			for (Index x = 0; x < W; ++x) {
+				for (Index y = 0; y < H; ++y) {
 					out[y][x] = matrix[x][y];
 				}
 			}
@@ -518,7 +551,7 @@ namespace mc {
 		@tparam T Type of the `Matrix`
 		*/
 		template<typename T>
-		T det(const Matrix<T, 2, 2>& matrix) {
+		T det(const Matrix<T, 2>& matrix) {
 			return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
 		}
 
@@ -532,18 +565,18 @@ namespace mc {
 		@pre The size of the `Matrix` must be larger than 1
 		*/
 		template<typename T, Size N>
-		T det(const Matrix<T, N, N>& matrix) {
+		T det(const Matrix<T, N>& matrix) {
 			MACE_STATIC_ASSERT(N >= 2, "In order to retrieve the determinate of a Matrix, its size must be bigger than 1");
 			T sum = T();
 			Index counter = 0;
-			for( Index i = 0; i < N; ++i ) {
-				MACE_CONSTEXPR Size newMatrixSize = N - 1;
-				Matrix<T, newMatrixSize, newMatrixSize> m = Matrix<T, newMatrixSize, newMatrixSize>();
+			for (Index i = 0; i < N; ++i) {
+				MACE_CONSTEXPR const Size newMatrixSize = N - 1;
+				Matrix<T, newMatrixSize> m = Matrix<T, newMatrixSize>();
 				Index counterX = 0;
 				Index counterY = 0;
-				for( Index x = 0; x < N; ++x ) {
-					for( Index y = 1; y < N; ++y ) {
-						if( x != i ) {
+				for (Index x = 0; x < N; ++x) {
+					for (Index y = 1; y < N; ++y) {
+						if (x != i) {
 							m[counterX++][counterY] = matrix[x][y];
 						}
 						counterY++;
@@ -552,7 +585,7 @@ namespace mc {
 					counterY = 0;
 				}
 				T tempSum = ((counter % 2 == 0 ? -1 : 1) * matrix[i][0]);
-				if( newMatrixSize == 2 ) {
+				if (newMatrixSize == 2) {
 					tempSum *= det<T>(matrix);
 				} else {
 					tempSum *= det<T, N>(matrix);
@@ -578,10 +611,10 @@ namespace mc {
 		@see #inverse(const Matrix<T,N,N>&)
 		*/
 		template<typename T, Size N>
-		T tr(const Matrix<T, N, N>& m) {
+		T tr(const Matrix<T, N>& m) {
 			T out = T();
 			//done without a trace!
-			for( Index x = 0; x < N; ++x ) {
+			for (Index x = 0; x < N; ++x) {
 				out += m[x][x];
 			}
 			return out;
@@ -594,9 +627,9 @@ namespace mc {
 		@tparam N Size of the identity `Matrix`
 		*/
 		template<typename T, Size N>
-		Matrix<T, N, N> identity() {
-			Matrix<T, N, N> out = Matrix<T, N, N>();
-			for( Index x = 0; x < N; ++x ) {
+		Matrix<T, N> identity() {
+			Matrix<T, N> out = Matrix<T, N>();
+			for (Index x = 0; x < N; ++x) {
 				out[x][x] = static_cast<T>(1);
 			}
 			return out;
@@ -618,7 +651,7 @@ namespace mc {
 		@bug Matrices bigger then 2x2 dont work
 		*/
 		template<typename T, Size N>
-		Matrix<T, N, N> inverse(const Matrix<T, N, N>& matrix) {
+		Matrix<T, N> inverse(const Matrix<T, N>& matrix) {
 			MACE_STATIC_ASSERT(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
 			//honestly, this next line really seems magical to me. matrices really seem magical in general. But
 			//this especialy. matrices are really something, aren't they?

@@ -114,6 +114,10 @@ namespace mc {
 				REQUIRE(v[1] == 42.0f);
 				REQUIRE(v[2] == 100.0f);
 			}
+			SECTION("Testing single value constructor") {
+				REQUIRE(Vector3f(2.0f) == Vector3f({ 2.0f, 2.0f, 2.0f }));
+				REQUIRE(Vector2i(1) == Vector2i({ 1, 1 }));
+			}
 			SECTION("Testing default constructor") {
 				Vector3f v = Vector3f();
 				REQUIRE(v[0] == 0);

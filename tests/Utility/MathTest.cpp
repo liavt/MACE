@@ -68,27 +68,22 @@ namespace mc {
 			REQUIRE(math::floor(-5.7) == -6);
 		}
 
-		TEST_CASE("Testing isPrime()", "[utility][math]") {
-			REQUIRE(math::isPrime(19));
-			REQUIRE(!math::isPrime(360));
-		}
-
 		TEST_CASE("Testing radians and degrees conversion") {
 			SECTION("Radians to degrees") {
-				REQUIRE(toDegrees(1) == Approx(57.2958));
-				REQUIRE(toDegrees(2) == Approx(114.592));
+				REQUIRE(toDegrees(1.0) == Approx(57.2958));
+				REQUIRE(toDegrees(2.0f) == Approx(114.592f));
 				REQUIRE(toDegrees(1.5) == Approx(85.9437));
-				REQUIRE(toDegrees(tau()) == Approx(360));
-				REQUIRE(toDegrees(6) == Approx(343.775));
-				REQUIRE(toDegrees(-1) == Approx(-57.2958));
+				REQUIRE(toDegrees(tau()) == Approx(360.0l));
+				REQUIRE(toDegrees(6.0) == Approx(343.775));
+				REQUIRE(toDegrees(-1.0f) == Approx(-57.2958));
 			}
 			SECTION("Degrees to radians") {
-				REQUIRE(toRadians(360) == Approx(tau()));
-				REQUIRE(toRadians(180) == Approx(pi()));
-				REQUIRE(toRadians(200) == Approx(3.49066));
-				REQUIRE(toRadians(90) == Approx(1.5708));
+				REQUIRE(toRadians(360.0l) == Approx(tau()));
+				REQUIRE(toRadians(180.0l) == Approx(pi()));
+				REQUIRE(toRadians(200.0) == Approx(3.49066));
+				REQUIRE(toRadians(90.0f) == Approx(1.5708f));
 				REQUIRE(toRadians(0) == Approx(0));
-				REQUIRE(toRadians(400) == Approx(6.98132));
+				REQUIRE(toRadians(400.0) == Approx(6.98132));
 			}
 		}
 	}

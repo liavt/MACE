@@ -96,7 +96,11 @@ namespace mc {
 		*/
 		VectorBase() : content{ } {};
 
-		VectorBase(const T& val) : content{ val } {};
+		VectorBase(const T& val) : VectorBase() {
+			for (Index i = 0; i < N; ++i) {
+				content[i] = val;
+			}
+		};
 
 		/**
 		Consructs a `Vector` from the contents of an array.
@@ -190,22 +194,6 @@ namespace mc {
 			return N;
 		};
 
-		T* begin() {
-			return content;
-		}
-
-		const T* begin() const {
-			return content;
-		}
-
-		T* end() {
-			return content + (sizeof(T) * (N - 1));
-		}
-
-		const T* end() const {
-			return content + (sizeof(T) * (N - 1));
-		}
-
 		/**
 		Get the value at a position. Slower than `operator[]` because it does bounds checking.
 		@param i `Index` of the requested data, zero-indexed
@@ -266,6 +254,22 @@ namespace mc {
 				arr[i] = content[i];
 			}
 			return arr;
+		}
+
+		T* begin() {
+			return content;
+		}
+
+		const T* begin() const {
+			return content;
+		}
+
+		T* end() {
+			return content + (sizeof(T) * (N - 1));
+		}
+
+		const T* end() const {
+			return content + (sizeof(T) * (N - 1));
 		}
 
 		/**

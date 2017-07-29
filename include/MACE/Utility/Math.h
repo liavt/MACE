@@ -25,8 +25,9 @@ namespace mc {
 		It is located here as a `long double` to have the most possible digits.
 		@return Pi
 		*/
-		MACE_CONSTEXPR inline long double pi() {
-			return 3.14159265358979323846264338327950288419716939937510l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T pi() {
+			return T(3.14159265358979323846264338327950288419716939937510l);
 		}
 
 		/**
@@ -34,16 +35,18 @@ namespace mc {
 		@return Tau
 		@see #toRadians()
 		*/
-		MACE_CONSTEXPR inline long double tau() {
-			return 6.28318530717958647692528676655900576839433879875021l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T tau() {
+			return T(6.28318530717958647692528676655900576839433879875021l);
 		}
 
 		/**
 		Calculates the mathmatical constant represented by `gamma`, or the `Euler–Mascheroni constant.` Gamma is used in number theory and analysis.
 		@return The `Euler–Mascheroni constant`
 		*/
-		MACE_CONSTEXPR inline long double gamma() {
-			return 0.57721566490153286060651209008240243104215933593992l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T gamma() {
+			return T(0.57721566490153286060651209008240243104215933593992l);
 		}
 
 		/**
@@ -51,39 +54,44 @@ namespace mc {
 		@return `Eulers Number`
 		@see logn(double);
 		*/
-		MACE_CONSTEXPR inline long double e() {
-			return 2.71828182845904523536028747135266249775724709369995l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T e() {
+			return T(2.71828182845904523536028747135266249775724709369995l);
 		}
 
 		/**
 		Calculates the square root of 2, also known as the `principal square root of 2`. This number when multiplied by itself returns 2. It is used in trigonometry.
 		@return Square root of 2
 		*/
-		MACE_CONSTEXPR inline long double root2() {
-			return 1.41421356237309504880168872420969807856967187537694l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T root2() {
+			return T(1.41421356237309504880168872420969807856967187537694l);
 		}
 
 		/**
 		Calculates the square root of 3, also known as the `principal square root of 3`. This number when multiplied by itself returns 3. It is used in geometery and trigonometry.
 		@return Square root of 3
 		*/
-		MACE_CONSTEXPR inline long double root3() {
-			return 1.73205080756887729352744634150587236694280525381038l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T root3() {
+			return T(1.73205080756887729352744634150587236694280525381038l);
 		}
 
 		/**
 		Calculates the square root of 5, also known as the `principal square root of 5`. This number when multiplied by itself returns 5. It is used in geometery and trigonometry.
 		@return Square root of 5
 		*/
-		MACE_CONSTEXPR inline long double root5() {
-			return 2.23606797749978969640917366873127623544061835961152l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T root5() {
+			return T(2.23606797749978969640917366873127623544061835961152l);
 		}
 
 		/**
 		Calculates the golden ratio, also represented by `phi`. The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra.
 		*/
-		MACE_CONSTEXPR inline long double phi() {
-			return 1.61803398874989484820458683436563811772030917980576l;
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T phi() {
+			return T(1.61803398874989484820458683436563811772030917980576l);
 		}
 
 		/**
@@ -92,43 +100,9 @@ namespace mc {
 		@return `|value|`
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline T abs(const T value) {
-			return value < 0 ? -value : value;
+		MACE_CONSTEXPR inline const T abs(const T value) {
+			return value < T(0) ? -value : value;
 		}
-
-		template<signed char>
-		MACE_CONSTEXPR inline unsigned char abs(const signed char value) {
-			return value < 0 ? -value : value;
-		}
-
-		template<signed int>
-		MACE_CONSTEXPR inline unsigned int abs(const signed int value) {
-			return value < 0 ? -value : value;
-		}
-
-		template<signed short int>
-		MACE_CONSTEXPR inline unsigned short int abs(const signed short int value) {
-			return value < 0 ? -value : value;
-		}
-
-		template<signed long int>
-		MACE_CONSTEXPR inline unsigned long int abs(const signed long int value) {
-			return value < 0 ? -value : value;
-		}
-
-		template<signed long long int>
-		MACE_CONSTEXPR inline unsigned long long int abs(const signed long long int value) {
-			return value < 0 ? -value : value;
-		}
-
-		/**
-		"Ceils" a number, or rounds it up.
-		@param value Number to ceil
-		@return `value,` but rounded up.
-		@see floor(const double)
-		@see round(const double)
-		*/
-		int ceil(const double value);
 
 		//let the bodies hit the floor
 		/**
@@ -138,18 +112,24 @@ namespace mc {
 		@see ceil(const double)
 		@see round(const double)
 		*/
-		MACE_CONSTEXPR inline int floor(const double value) {
+		template<typename T = int, typename T2 = double>
+		MACE_CONSTEXPR inline const T floor(const T2 value) {
 			//IEEE Standard states that it will round down in a static cast.
 			//however, compilers will round towards zero, and floor should not.
-			return static_cast<int>(value) < 0 ? static_cast<int>(value) - 1 : static_cast<int>(value);
+			return static_cast<T>(value) < T(0) ? static_cast<T>(value) - T(1) : static_cast<T>(value);
 		}
 
 		/**
-		Verifies whether a number is prime. A prime number is one that's only factors are one and itself.
-		@param value Number to check if prime
-		@return `true` if the number is prime, `false` otherwise
+		"Ceils" a number, or rounds it up.
+		@param value Number to ceil
+		@return `value,` but rounded up.
+		@see floor(const double)
+		@see round(const double)
 		*/
-		bool isPrime(const int value);
+		template<typename T = int, typename T2 = double>
+		MACE_CONSTEXPR inline const T ceil(const T2 value) {
+			return floor<T, T2>(value) != value ? floor<T, T2>(value) + T(1) : floor<T, T2>(value);//so cheap, but it works
+		}
 
 		/**
 		Checks if a number is even. An even number is one that is divisable by 2.
@@ -157,8 +137,9 @@ namespace mc {
 		@return `true` if the `value` is divisable by 2, `false` otherwise
 		@see isOdd(const int)
 		*/
-		MACE_CONSTEXPR inline bool isEven(const int value) {
-			return value % 2 == 0;
+		template<typename T>
+		MACE_CONSTEXPR inline const bool isEven(const T value) {
+			return value % T(2) == T(0);
 		}
 		/**
 		Checks if a number is odd. An odd number is one that is not divisable by 2.
@@ -166,7 +147,8 @@ namespace mc {
 		@return `true` if the `value` is not divisable by 2, `false` otherwise
 		@see isEven(const int)
 		*/
-		MACE_CONSTEXPR inline bool isOdd(const int value) {
+		template<typename T>
+		MACE_CONSTEXPR inline const bool isOdd(const T value) {
 			return !isEven(value);
 		}
 
@@ -178,8 +160,8 @@ namespace mc {
 		@see cube(const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline T sqr(const T value) {
-			return value*value;
+		MACE_CONSTEXPR inline const T sqr(const T value) {
+			return value * value;
 		}
 
 		/**
@@ -190,8 +172,8 @@ namespace mc {
 		@see sqr(const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline T cube(const T value) {
-			return value*value*value;
+		MACE_CONSTEXPR inline const T cube(const T value) {
+			return value * value * value;
 		}
 
 		/**
@@ -200,8 +182,9 @@ namespace mc {
 		@return The same number represented as radians
 		@see #pi()
 		*/
-		MACE_CONSTEXPR inline double toRadians(const double degrees) {
-			return degrees*(static_cast<double>(pi()) / 180.0);
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T toRadians(const T degrees) {
+			return degrees * (pi<T>() / T(180.0));
 		}
 
 		/**
@@ -210,8 +193,9 @@ namespace mc {
 		@return The same number represented as degrees
 		@see #pi()
 		*/
-		MACE_CONSTEXPR inline double toDegrees(const double radians) {
-			return radians*(180.0 / static_cast<double>(pi()));
+		template<typename T = long double>
+		MACE_CONSTEXPR inline const T toDegrees(const T radians) {
+			return radians * (T(180.0) / pi<T>());
 		}
 	}//math
 }//mc

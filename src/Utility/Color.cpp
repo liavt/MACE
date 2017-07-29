@@ -134,6 +134,22 @@ namespace mc {
 		return arr;
 	}
 
+	float * Color::begin() {
+		return &r;
+	}
+
+	const float * Color::begin() const {
+		return &r;
+	}
+
+	float * Color::end() {
+		return &a + sizeof(float);
+	}
+
+	const float * Color::end() const {
+		return &a + sizeof(float);
+	}
+
 	std::ostream & operator<<(std::ostream & output, const Color & v) {
 		output << "Color(" << v.r << ", " << v.g << ", " << v.b << ", " << v.a << ")";
 		return output;

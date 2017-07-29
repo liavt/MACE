@@ -112,8 +112,6 @@ namespace mc {
 
 			void VertexArray::init() {
 				glGenVertexArrays(1, &id);
-
-				checkGLError(__LINE__, __FILE__, "Error creating VAO");
 			}
 
 			void VertexArray::destroy() {
@@ -128,8 +126,6 @@ namespace mc {
 						buffers[i].destroy();
 					}
 				}
-
-				checkGLError(__LINE__, __FILE__, "Error destroying VAO");
 			}
 
 			bool VertexArray::isCreated() const {
@@ -139,7 +135,6 @@ namespace mc {
 			void VertexArray::loadVertices(const Size verticeSize, const float* vertices, const Index location, const Byte attributeSize, const Enum type, const bool normalized) {
 				vertexNumber = verticeSize;
 
-				bind();
 				storeDataInAttributeList(vertexNumber * sizeof(float), vertices, location, attributeSize, type, normalized);
 			}
 
@@ -148,14 +143,13 @@ namespace mc {
 
 				VertexBuffer buffer = VertexBuffer();
 				buffer.init();
+				buffer.bind();
 				buffer.setLocation(location);
 				// Give our data to opengl
 				buffer.setData(static_cast<ptrdiff_t>(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);
 				buffer.setAttributePointer(attributeSize, type, normalized, 0, 0);
 
 				addBuffer(buffer);
-
-				checkGLError(__LINE__, __FILE__, "Error putting data in VAO attribute list");
 			}
 
 			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
@@ -163,8 +157,6 @@ namespace mc {
 				indices.init();
 				indices.bind();
 				indices.setData(static_cast<ptrdiff_t>(sizeof(unsigned int)*indiceNum), indiceData, GL_STATIC_DRAW);
-
-				checkGLError(__LINE__, __FILE__, "Error putting indices in VAO");
 			}
 
 			void VertexArray::addBuffer(const VertexBuffer & newBuffer) {
@@ -173,8 +165,6 @@ namespace mc {
 				newBuffer.enable();
 
 				buffers.push_back(newBuffer);
-
-				checkGLError(__LINE__, __FILE__, "Error adding buffer to VAO");
 			}
 
 			void VertexArray::setVertexNumber(const Size vertexNum) {
@@ -223,8 +213,6 @@ namespace mc {
 
 			void VertexArray::bindIndex(const GLuint ID) const {
 				glBindVertexArray(ID);
-
-				checkGLError(__LINE__, __FILE__, "Error binding VAO");
 			}
 
 			UniformBuffer::UniformBuffer() noexcept : Buffer(GL_UNIFORM_BUFFER) {}
@@ -271,45 +259,34 @@ namespace mc {
 
 			void FrameBuffer::init() {
 				glGenFramebuffers(1, &id);
-
-				checkGLError(__LINE__, __FILE__, "Error creating framebuffer");
 			}
 
 			void FrameBuffer::destroy() {
-				unbind();
 				glDeleteFramebuffers(1, &id);
 				id = 0;
-
-				checkGLError(__LINE__, __FILE__, "Error destroying framebuffer");
 			}
 
 			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
-				bind();
 				glFramebufferTexture(target, attachment, tex.getID(), level);
 			}
 
 			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
-				bind();
 				glFramebufferTexture1D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
 			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
-				bind();
 				glFramebufferTexture2D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
 			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Texture2D& tex, const int level, const int layer) {
-				bind();
 				glFramebufferTexture3D(target, attachment, tex.getTarget(), tex.getID(), level, layer);
 			}
 
 			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture2D& texture, const int level, const int layer) {
-				bind();
 				glFramebufferTextureLayer(target, attachment, level, static_cast<GLint>(texture.getID()), layer);
 			}
 
 			void FrameBuffer::attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer & buffer) {
-				bind();
 				glFramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, buffer.getID());
 			}
 
@@ -336,17 +313,14 @@ namespace mc {
 			}
 
 			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void * data) const {
-				bind();
 				glReadPixels(x, y, static_cast<GLsizei>(width), static_cast<GLsizei>(height), format, type, data);
 			}
 
 			void FrameBuffer::setPixelStorage(const Enum name, const float param) {
-				bind();
 				glPixelStoref(name, param);
 			}
 
 			void FrameBuffer::setPixelStorage(const Enum name, const int param) {
-				bind();
 				glPixelStorei(name, param);
 			}
 
@@ -355,7 +329,6 @@ namespace mc {
 			}
 
 			Enum FrameBuffer::checkStatus(const Enum target) {
-				bind();
 				return glCheckFramebufferStatus(target);
 			}
 
@@ -365,14 +338,10 @@ namespace mc {
 
 			void RenderBuffer::init() {
 				glGenRenderbuffers(1, &id);
-
-				checkGLError(__LINE__, __FILE__, "Error creating RenderBuffer");
 			}
 
 			void RenderBuffer::destroy() {
 				glDeleteRenderbuffers(1, &id);
-
-				checkGLError(__LINE__, __FILE__, "Error destroying RenderBuffer");
 			}
 
 			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
@@ -507,12 +476,10 @@ namespace mc {
 			}
 
 			void Buffer::setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType) {
-				bind();
 				glBufferData(bufferType, dataSize, data, drawType);
 			}
 
 			void Buffer::setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data) {
-				bind();
 				glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
 			}
 
@@ -521,7 +488,6 @@ namespace mc {
 			}
 
 			void* Buffer::map(const Enum access) {
-				bind();
 				return glMapBuffer(bufferType, access);
 			}
 
@@ -530,7 +496,6 @@ namespace mc {
 			}
 
 			bool Buffer::unmap() {
-				bind();
 				return glUnmapBuffer(bufferType) == 1;
 			}
 
@@ -623,7 +588,6 @@ namespace mc {
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
 			void VertexBuffer::setAttributePointer(const Byte attribSize, const Enum type, const bool normalized, const Index stride, const void * pointer) {
-				bind();
 				if (!normalized && (
 					type == GL_BYTE ||
 					type == GL_UNSIGNED_BYTE ||
@@ -822,8 +786,6 @@ namespace mc {
 				if (!isCompiled()) {
 					throwShaderError(id, type, "The shader failed to compile");
 				}
-
-				checkGLError(__LINE__, __FILE__, "Error compiling GLSL shader");
 			}
 
 			bool Shader::isCreated() const {
@@ -860,9 +822,9 @@ namespace mc {
 
 			void ShaderProgram::init() {
 				id = glCreateProgram();
-				checkGLError(__LINE__, __FILE__, "Error creating shader program");
+
 				if (id == 0) {
-					throwShaderError(id, GL_PROGRAM, "Failed to retrieve program ID");
+					throwShaderError(id, GL_PROGRAM, "Failed to create program ID");
 				}
 			}
 			void ShaderProgram::destroy() {
@@ -875,7 +837,6 @@ namespace mc {
 					}
 					glDeleteProgram(id);
 				}
-				checkGLError(__LINE__, __FILE__, "Error destroying shader program");
 			}
 			void ShaderProgram::link() {
 				glLinkProgram(id);
@@ -899,7 +860,7 @@ namespace mc {
 				checkGLError(__LINE__, __FILE__, "Error linking shader program");
 			}
 			bool ShaderProgram::isCreated() const {
-				return glIsProgram(id) == 1;
+				return glIsProgram(id) == GL_TRUE;
 			}
 			int ShaderProgram::getParameter(const Enum param) const {
 				int result;
@@ -913,6 +874,7 @@ namespace mc {
 				return getParameter(GL_ATTACHED_SHADERS);
 			}
 			bool ShaderProgram::isDeleted() const {
+				//some compilers emit warnings saying conversion from int to bool, making it explicit silences those
 				return getParameter(GL_DELETE_STATUS) == GL_TRUE;
 			}
 			bool ShaderProgram::isLinked() const {
@@ -959,8 +921,6 @@ namespace mc {
 				}
 
 				uniforms[name] = location;
-
-				checkGLError(__LINE__, __FILE__, ("Error creating uniform with name " + std::string(name)).c_str());
 			}
 
 			void ShaderProgram::createUniform(const char * name) {
@@ -974,6 +934,20 @@ namespace mc {
 			int ShaderProgram::getUniformLocation(const char * name) const {
 				return uniforms.find(name)->second;
 			}
+
+			/*
+			void ShaderProgram::getUniformIndices(const char * indices[], const Size count) {
+				std::vector<unsigned int> counts = std::vector<unsigned int>();
+				counts.reserve(count);
+				glGetUniformIndices(id, count, indices, counts.data());
+
+				for (Index i = 0; i < count; ++i) {
+					if (counts[i] != GL_INVALID_INDEX) {
+						uniforms[indices[i]] = counts[i];
+					}
+				}
+			}
+			*/
 
 			bool ShaderProgram::operator==(const ShaderProgram & other) const {
 				return Object::operator==(other) && uniforms == other.uniforms&&shaders == other.shaders;

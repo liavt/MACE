@@ -40,6 +40,12 @@ namespace mc {
 
 				UniformBuffer painterData;
 				UniformBuffer entityData;
+
+				Entity::Metrics savedMetrics;
+				Painter::State savedState;
+
+				void createEntityData();
+				void createPainterData();
 			};
 
 			/**

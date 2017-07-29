@@ -408,6 +408,18 @@ namespace mc {
 			state = Painter::State();
 		}
 
+		void Painter::setState(const State & s) {
+			state = s;
+		}
+
+		Painter::State & Painter::getState() {
+			return state;
+		}
+
+		const Painter::State & Painter::getState() const {
+			return state;
+		}
+
 		const Index & Painter::getID() const {
 			return id;
 		}

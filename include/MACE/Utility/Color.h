@@ -38,11 +38,8 @@ namespace mc {
 		color.r = 0.5f;//set the red component to be 0.5f
 		color.setRed(127); //set the red component to be 0.5f as a Byte from 0 to 255
 	}
-	@todo add begin() and end() function
 	*/
 	struct Color {
-	public:
-
 		/**
 		Color component, represented as a `float`. It is from 0.0 to 1.0, where 1.0 is the brightest it can get.
 		*/
@@ -195,6 +192,12 @@ namespace mc {
 		@param arr The array to fill
 		*/
 		const float* flatten(float arr[4]) const;
+
+		float* begin();
+		const float* begin() const;
+
+		float* end();
+		const float* end() const;
 
 		friend std::ostream& operator<<(std::ostream& output, const Color& v);
 

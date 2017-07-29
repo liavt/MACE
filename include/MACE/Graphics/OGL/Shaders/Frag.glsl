@@ -4,8 +4,6 @@ in highp vec2 _mcTextureCoord;
 layout(location = MACE_SCENE_ATTACHMENT_INDEX) out lowp vec4 _mc_OutColor;
 layout(location = MACE_ID_ATTACHMENT_INDEX) out uint _mc_OutID;
 
-uniform uint mc_EntityID;
-
 vec4 _mcGetTexture(const in sampler2D mc_Sampler, const in _mc_TextureAttachment mc_Tex){
 	vec4 mc_Fragment = texture(mc_Sampler, _mcTextureCoord * mc_Tex.mc_TextureTransform.wz + mc_Tex.mc_TextureTransform.xy);
 	
