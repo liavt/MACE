@@ -133,7 +133,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void easeTo(const float progress, const float time = 1000, const EaseFunction func = EaseFunctions::LINEAR, const EaseComponent::EaseDoneCallback callback = [](Entity*) {});
+			void easeTo(const float progress, const long long ms, const EaseFunction func = EaseFunctions::LINEAR, const EaseComponent::EaseDoneCallback callback = [](Entity*) {});
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;

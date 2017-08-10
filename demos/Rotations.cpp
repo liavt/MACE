@@ -13,8 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 using namespace mc;
 
-gfx::Texture star = gfx::Texture();
-
 bool rotating = false;
 
 gfx::Group botLeft, botRight, topLeft, topRight;
@@ -59,7 +57,7 @@ void create(gfx::WindowModule&) {
 
 	const Size elementNum = 10;
 
-	star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::GRAY_ALPHA);
+	gfx::Texture star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::GRAY_ALPHA);
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {

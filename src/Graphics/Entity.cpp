@@ -61,6 +61,14 @@ namespace mc {
 			}
 		}
 
+		void Entity::makeChildrenDirty() {
+			setProperty(Entity::DIRTY, true);
+
+			for (Entity* e : children) {
+				e->makeChildrenDirty();
+			}
+		}
+
 		const std::vector<Entity*>& Entity::getChildren() const {
 			return this->children;
 		}
@@ -95,9 +103,9 @@ namespace mc {
 			makeDirty();
 
 			if (children.empty()) {
-				MACE__THROW(IndexOutOfBounds, "Can\'t remove a child from an empty entity!");
+				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
 			} else if (index >= children.size()) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(index) + " is larger than the amount of children!");
+				MACE__THROW(OutOfBounds, std::to_string(index) + " is larger than the amount of children!");
 			} else if (children.size() == 1) {
 				children.clear();
 			} else {
@@ -110,14 +118,14 @@ namespace mc {
 				init();
 			}
 
-			//we want to do the actual cleaning in render() because clean() does some graphical work
-			if (getProperty(Entity::DIRTY)) {
-				clean();
-			}
-
 			//check if we can render
 			if (!getProperty(Entity::DISABLED)) {
-				//we want to render as fast as possible, so we avoid doing anything but rendering here. components and inheritence is done during update()
+				//we want to do the actual cleaning in render() because clean() does some graphical work,
+				//like updating buffers on the gpu side, so it needs a graphics context
+				if (getProperty(Entity::DIRTY)) {
+					clean();
+				}
+
 				onRender();
 
 				for (Index i = 0; i < children.size(); ++i) {

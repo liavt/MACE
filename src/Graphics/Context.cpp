@@ -44,12 +44,14 @@ namespace mc {
 #	define MACE__VERIFY_MODEL_INIT()
 #endif
 
+#define MACE__RESOURCE_PREFIX "MC/"
+
 		//these are the names for cached resources in the GraphicsContext
-#define MACE__RESOURCE_SOLIDCOLOR "MC/SolidColor"
-#define MACE__RESOURCE_GRADIENT "MC/Gradient"
+#define MACE__RESOURCE_SOLIDCOLOR MACE__RESOURCE_PREFIX "SolidColor"
+#define MACE__RESOURCE_GRADIENT MACE__RESOURCE_PREFIX "Gradient"
 		//how many pixels in the gradient
 #define MACE__RESOURCE_GRADIENT_HEIGHT 128
-#define MACE__RESOURCE_QUAD "MC/Quad"
+#define MACE__RESOURCE_QUAD MACE__RESOURCE_PREFIX "Quad"
 
 		bool ModelImpl::operator==(const ModelImpl & other) const {
 			return primitiveType == other.primitiveType;
@@ -176,11 +178,12 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Texture Texture::create(const Color & col, const Size width, const Size height) {
-			Texture tex = Texture();
+		Texture Texture::create(const Color & col, const unsigned int width, const unsigned int height) {
+			Texture tex = Texture(TextureDesc(width, height));
 
-			tex.init();
-			tex.load(col, width, height);
+			tex.resetPixelStorage();
+
+			tex.setData(&col, 0);
 
 			return tex;
 		}
@@ -189,174 +192,8 @@ namespace mc {
 			return Texture::createFromFile(file.c_str(), format);
 		}
 
-		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat format) {
+		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat imgFormat) {
 			Texture tex = Texture();
-
-			tex.init();
-			tex.load(file, format);
-
-			return tex;
-		}
-
-		Texture Texture::createFromMemory(const unsigned char * c, const Size size) {
-			Texture texture = Texture();
-			texture.resetPixelStorage();
-
-			int width, height, componentSize;
-
-			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
-
-			try {
-				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
-					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
-				}
-
-				texture.setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
-			} catch (const std::exception& e) {
-				stbi_image_free(image);
-				throw e;
-			}
-
-			stbi_image_free(image);
-
-			texture.setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
-			texture.setMagFilter(Enums::ResizeFilter::NEAREST);
-
-			return texture;
-		}
-
-		Texture& Texture::getSolidColor() {
-			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
-			if (context == nullptr) {
-				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else {
-				return context->getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, []() {
-					Texture texture = Texture();
-
-					texture.init();
-
-					texture.resetPixelStorage();
-
-					MACE_CONSTEXPR const float data[] = { 1 };
-					texture.setData(data, 1, 1, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
-
-					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
-					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
-					texture.setSwizzle(gfx::Enums::SwizzleMode::A, gfx::Enums::SwizzleMode::R);
-
-					texture.setMinFilter(Enums::ResizeFilter::NEAREST);
-					texture.setMagFilter(Enums::ResizeFilter::NEAREST);
-
-					return texture;
-				});
-			}
-		}
-
-		Texture & Texture::getGradient() {
-			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
-			if (context == nullptr) {
-				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else {
-				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
-					Texture texture = Texture();
-
-					texture.init();
-
-					texture.resetPixelStorage();
-
-					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
-					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
-						//the darker part is on the bottom
-						data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT);
-					}
-					texture.setData(data, 1, MACE__RESOURCE_GRADIENT_HEIGHT, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RED, gfx::Enums::InternalFormat::RED, 0);
-
-					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
-					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
-
-					texture.setMinFilter(Enums::ResizeFilter::LINEAR);
-					texture.setMagFilter(Enums::ResizeFilter::NEAREST);
-
-					return texture;
-				});
-			}
-		}
-
-		Texture::Texture() : texture(nullptr), hue(0.0f, 0.0f, 0.0f, 0.0f) {}
-
-		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
-
-		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
-
-		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
-
-		void Texture::init() {
-			if (texture == nullptr) {
-				texture = gfx::getCurrentWindow()->getContext()->createTextureImpl();
-			}
-
-			texture->init();
-		}
-
-		void Texture::destroy() {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->destroy();
-			texture.reset();
-		}
-
-		bool Texture::isCreated() const {
-			return texture != nullptr;
-		}
-
-		bool Texture::isEmpty() const {
-			return texture == nullptr ? true : texture->width == 0 && texture->height == 0;
-		}
-
-		unsigned int Texture::getWidth() {
-			return texture == nullptr ? 0 : texture->width;
-		}
-
-		const unsigned int Texture::getWidth() const {
-			return texture == nullptr ? 0 : texture->width;
-		}
-
-		unsigned int Texture::getHeight() {
-			return texture == nullptr ? 0 : texture->height;
-		}
-
-		const unsigned int Texture::getHeight() const {
-			return texture == nullptr ? 0 : texture->height;
-		}
-
-		Enums::Type Texture::getType() {
-			return texture->type;
-		}
-
-		const Enums::Type Texture::getType() const {
-			return texture->type;
-		}
-
-		Enums::Format Texture::getFormat() {
-			return texture->format;
-		}
-
-		const Enums::Format Texture::getFormat() const {
-			return texture->format;
-		}
-
-		Enums::InternalFormat Texture::getInternalFormat() {
-			return texture->internalFormat;
-		}
-
-		const Enums::InternalFormat Texture::getInternalFormat() const {
-			return texture->internalFormat;
-		}
-
-		void Texture::load(const char * file, const Enums::ImageFormat imgFormat) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			resetPixelStorage();
 
 			int width, height, actualComponents;
 			Byte* image = stbi_load(file, &width, &height, &actualComponents, static_cast<int>(imgFormat));
@@ -372,35 +209,31 @@ namespace mc {
 				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE
 											  ? actualComponents : static_cast<int>(imgFormat));
 
-				Enums::Format format;
-				Enums::InternalFormat internalFormat;
-
+				TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
 				if (outputComponents == 1) {
-					format = Enums::Format::RED;
-					internalFormat = Enums::InternalFormat::RED;
-					if (imgFormat == Enums::ImageFormat::GRAY) {
-						setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
-						setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
-					}
+					desc.format = TextureDesc::Format::RED;
+					desc.internalFormat = TextureDesc::InternalFormat::RED;
 				} else if (outputComponents == 2) {
-					format = Enums::Format::RG;
-					internalFormat = Enums::InternalFormat::RG;
-					if (imgFormat == Enums::ImageFormat::GRAY_ALPHA) {
-						setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
-						setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
-						setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::G);
-					}
+					desc.format = TextureDesc::Format::RG;
+					desc.internalFormat = TextureDesc::InternalFormat::RG;
+
 				} else if (outputComponents == 3) {
-					format = Enums::Format::RGB;
-					internalFormat = Enums::InternalFormat::RGB;
+					desc.format = TextureDesc::Format::RGB;
+					desc.internalFormat = TextureDesc::InternalFormat::RGB;
 				} else if (outputComponents == 4) {
-					format = Enums::Format::RGBA;
-					internalFormat = Enums::InternalFormat::RGBA;
+					desc.format = TextureDesc::Format::RGBA;
+					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
 				} else {
 					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4!");
 				}
+				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
+				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
+				desc.magFilter = TextureDesc::Filter::NEAREST;
+				tex.init(desc);
 
-				setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat);
+				tex.resetPixelStorage();
+
+				tex.setData(image);
 			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;
@@ -408,24 +241,152 @@ namespace mc {
 
 			stbi_image_free(image);
 
-			setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
-			setMagFilter(Enums::ResizeFilter::NEAREST);
+			return tex;
 		}
 
-		void Texture::load(const std::string & file, const Enums::ImageFormat format) {
-			load(file.c_str(), format);
+		Texture Texture::createFromMemory(const unsigned char * c, const Size size) {
+			Texture texture = Texture();
+			int width, height, componentSize;
+
+			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
+
+			try {
+				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
+					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
+				}
+
+				TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
+				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
+				desc.internalFormat = TextureDesc::InternalFormat::RGBA;
+				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
+				desc.magFilter = TextureDesc::Filter::NEAREST;
+				texture.init(desc);
+
+				texture.resetPixelStorage();
+
+				texture.setData(image);
+			} catch (const std::exception& e) {
+				stbi_image_free(image);
+				throw e;
+			}
+
+			stbi_image_free(image);
+
+			return texture;
 		}
 
-		void Texture::load(const Color & c, const Size width, const Size height) {
+		Texture& Texture::getSolidColor() {
+			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
+			if (context == nullptr) {
+				MACE__THROW(NullPointer, "No graphics context found in window!");
+			} else {
+				return context->getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, []() {
+					TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::RED);
+					desc.minFilter = TextureDesc::Filter::NEAREST;
+					desc.magFilter = TextureDesc::Filter::NEAREST;
+					desc.type = TextureDesc::Type::FLOAT;
+					desc.internalFormat = TextureDesc::InternalFormat::RED;
+
+					Texture texture = Texture(desc);
+
+					texture.resetPixelStorage();
+
+					MACE_CONSTEXPR const float data[] = { 1 };
+					texture.setData(data);
+
+					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
+					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
+					texture.setSwizzle(gfx::Enums::SwizzleMode::A, gfx::Enums::SwizzleMode::R);
+
+					return texture;
+				});
+			}
+		}
+
+		Texture & Texture::getGradient() {
+			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
+			if (context == nullptr) {
+				MACE__THROW(NullPointer, "No graphics context found in window!");
+			} else {
+				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
+					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT, TextureDesc::Format::RED);
+					desc.type = TextureDesc::Type::FLOAT;
+					desc.internalFormat = TextureDesc::InternalFormat::RED;
+					desc.minFilter = TextureDesc::Filter::LINEAR;
+					desc.magFilter = TextureDesc::Filter::NEAREST;
+
+					Texture texture = Texture(desc);
+
+					texture.resetPixelStorage();
+
+					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
+					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
+						//the darker part is on the bottom
+						data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT);
+					}
+					texture.setData(data);
+
+					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
+					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
+
+					return texture;
+				});
+			}
+		}
+
+		Texture::Texture() : texture(nullptr), hue(0.0f, 0.0f, 0.0f, 0.0f) {}
+
+		Texture::Texture(const TextureDesc & d) {
+			init(d);
+		}
+
+		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
+
+		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
+
+		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
+
+		void Texture::init(const TextureDesc& desc) {
+			if (desc.width == 0) {
+				MACE__THROW(OutOfBounds, "Width of a Texture cannot be zero");
+			} else if (desc.height == 0) {
+				MACE__THROW(OutOfBounds, "Height of a Texture cannot be zero");
+			}
+
+			//the old texture will be deallocated, and its destructor will be called and decrement ref count
+			texture.swap(gfx::getCurrentWindow()->getContext()->createTextureImpl(desc));
+		}
+
+		void Texture::destroy() {
+			texture.reset();
+		}
+
+		bool Texture::isCreated() const {
+			return texture != nullptr;
+		}
+
+		const TextureDesc & Texture::getDesc() const {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			resetPixelStorage();
-
-			setData(&c, width, height, gfx::Enums::Type::FLOAT, gfx::Enums::Format::RGBA, gfx::Enums::InternalFormat::RGBA, 0);
-
-			setMinFilter(Enums::ResizeFilter::NEAREST);
-			setMagFilter(Enums::ResizeFilter::NEAREST);
+			return texture->desc;
 		}
+
+		unsigned int Texture::getWidth() {
+			return texture == nullptr ? 0 : texture->desc.width;
+		}
+
+		const unsigned int Texture::getWidth() const {
+			return texture == nullptr ? 0 : texture->desc.width;
+		}
+
+		unsigned int Texture::getHeight() {
+			return texture == nullptr ? 0 : texture->desc.height;
+		}
+
+		const unsigned int Texture::getHeight() const {
+			return texture == nullptr ? 0 : texture->desc.height;
+		}
+
 
 		Color& Texture::getHue() {
 			return hue;
@@ -478,34 +439,8 @@ namespace mc {
 			setUnpackStorageHint(Enums::PixelStorage::ROW_LENGTH, 0);
 		}
 
-		void Texture::setMinFilter(const Enums::ResizeFilter filter) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setMinFilter(filter);
-		}
-
-		void Texture::setMagFilter(const Enums::ResizeFilter filter) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setMagFilter(filter);
-		}
-
-		void Texture::setData(const void * data, const Size width, const Size height, const Enums::Type type, const Enums::Format format, const Enums::InternalFormat internalFormat, const Index mipmap) {
-			texture->type = type;
-			texture->format = format;
-			texture->internalFormat = internalFormat;
-			if (width == 0 || height == 0) {
-				return;
-			}
-			texture->width = width;
-			texture->height = height;
-			texture->setData(data, mipmap);
-		}
-
 		void Texture::setData(const void * data, const Index mipmap) {
-			if (isEmpty()) {
-				return;
-			}
+			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->setData(data, mipmap);
 		}
@@ -522,23 +457,6 @@ namespace mc {
 			texture->setPackStorageHint(hint, value);
 		}
 
-		void Texture::setWrap(const Enums::WrapMode wrap) {
-			setWrapS(wrap);
-			setWrapT(wrap);
-		}
-
-		void Texture::setWrapS(const Enums::WrapMode wrap) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setWrapS(wrap);
-		}
-
-		void Texture::setWrapT(const Enums::WrapMode wrap) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setWrapT(wrap);
-		}
-
 		void Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
 			MACE__VERIFY_TEXTURE_INIT();
 
@@ -547,10 +465,6 @@ namespace mc {
 
 		void Texture::readPixels(void * data) const {
 			MACE__VERIFY_TEXTURE_INIT();
-
-			if (isEmpty()) {
-				MACE__THROW(InvalidState, "Can\'t read pixels from a Texture that doesn\'t have data yet");
-			}
 
 			texture->readPixels(data);
 		}
@@ -681,5 +595,9 @@ namespace mc {
 			onDestroy(window);
 			window = nullptr;
 		}
+
+		TextureImpl::TextureImpl(const TextureDesc & t) : desc(t) {}
+
+		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : width(w), height(h), format(form) {}
 	}//gfx
 }//mc

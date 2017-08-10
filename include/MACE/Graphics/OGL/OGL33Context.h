@@ -39,8 +39,8 @@ namespace mc {
 			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
 				friend class OGL33Renderer;
 			public:
-				void init() override;
-				void destroy() override;
+				OGL33Texture(const TextureDesc& desc);
+				~OGL33Texture() override;
 
 				void bind() const override;
 				void bind(const unsigned int location) const override;
@@ -48,14 +48,8 @@ namespace mc {
 
 				bool isCreated() const override;
 
-				void setMinFilter(const gfx::Enums::ResizeFilter filter) override;
-				void setMagFilter(const gfx::Enums::ResizeFilter filter) override;
-
 				void setUnpackStorageHint(const gfx::Enums::PixelStorage hint, const int value) override;
 				void setPackStorageHint(const gfx::Enums::PixelStorage hint, const int value) override;
-
-				void setWrapS(const Enums::WrapMode wrap) override;
-				void setWrapT(const Enums::WrapMode wrap) override;
 
 				void setData(const void* data, const Index mipmap = 0) override;
 
@@ -72,7 +66,7 @@ namespace mc {
 
 				Renderer* getRenderer() const override;
 				std::shared_ptr<ModelImpl> createModelImpl() const override;
-				std::shared_ptr<TextureImpl> createTextureImpl() const override;
+				std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const override;
 			protected:
 				void onInit(gfx::WindowModule* win) override;
 				void onRender(gfx::WindowModule* win) override;

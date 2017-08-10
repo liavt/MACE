@@ -44,7 +44,7 @@ void create(gfx::WindowModule& win) {
 	circleBar.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
 	circleBar.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
-	circleBar.easeTo(250, 100, gfx::EaseFunctions::BOUNCE_OUT);
+	circleBar.easeTo(250, 3500, gfx::EaseFunctions::BOUNCE_OUT);
 
 	win.addChild(circleBar);
 
@@ -59,7 +59,7 @@ void create(gfx::WindowModule& win) {
 	rectangleBar.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
 	rectangleBar.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
-	rectangleBar.easeTo(200, 100, gfx::EaseFunctions::ELASTIC_IN_OUT);
+	rectangleBar.easeTo(200, 2000, gfx::EaseFunctions::ELASTIC_IN_OUT);
 
 	win.addChild(rectangleBar);
 

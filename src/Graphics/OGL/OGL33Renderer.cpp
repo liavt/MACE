@@ -485,6 +485,8 @@ namespace mc {
 			}
 
 			void OGL33Painter::createEntityData() {
+				MACE_STATIC_ASSERT(sizeof(float) >= sizeof(EntityID), "This system doesn't not support the required size for EntityID");
+
 				savedMetrics = painter->getEntity()->getMetrics();
 
 				entityData.init();

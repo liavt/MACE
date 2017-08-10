@@ -115,13 +115,13 @@ namespace mc {
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix()//this is for aggregate initializaition
 		{
 			if (args.size() != W) {
-				MACE__THROW(IndexOutOfBounds, "The width of the argument must be equal to to the height of the Matrix!");
+				MACE__THROW(OutOfBounds, "The width of the argument must be equal to to the height of the Matrix!");
 			}
 
 			Index counterX = 0, counterY = 0;
 			for (const std::initializer_list<T>& elemX : args) {
 				if (elemX.size() != H) {
-					MACE__THROW(IndexOutOfBounds, "The height of the argument must be equal to to the height of the Matrix!");
+					MACE__THROW(OutOfBounds, "The height of the argument must be equal to to the height of the Matrix!");
 				}
 
 				counterY = 0;
@@ -180,9 +180,9 @@ namespace mc {
 		*/
 		T& get(const Index x, const Index y) {
 			if (x >= W) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			} else if (y >= H) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
 			return content[x][y];
@@ -200,9 +200,9 @@ namespace mc {
 		*/
 		const T& get(const Index x, const Index y) const {
 			if (x >= W) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			} else if (y >= H) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
 			return content[x][y];
@@ -220,9 +220,9 @@ namespace mc {
 		*/
 		void set(const Index x, const Index y, const T& value) {
 			if (x >= W) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			} else if (y >= H) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
 			content[x][y] = value;
@@ -271,9 +271,9 @@ namespace mc {
 		*/
 		virtual T& operator()(const Index x, const Index y) {
 			if (x <= 0) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is less than or equal zero");
+				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
 			} else if (y <= 0) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is less than or equal to zero");
+				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
 			}
 
 			return content[x - 1][y - 1];
@@ -289,9 +289,9 @@ namespace mc {
 		*/
 		const T& operator()(const Index x, const Index y) const {
 			if (x <= 0) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(x) + " is less than or equal zero");
+				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
 			} else if (y <= 0) {
-				MACE__THROW(IndexOutOfBounds, std::to_string(y) + " is less than or equal to zero");
+				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
 			}
 
 			return content[x - 1][y - 1];

@@ -105,7 +105,7 @@ namespace mc {
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	MACE__DECLARE_ERROR(IndexOutOfBounds);
+	MACE__DECLARE_ERROR(OutOfBounds);
 
 	/**
 	Thrown when something was in the wrong state at the time of an operation

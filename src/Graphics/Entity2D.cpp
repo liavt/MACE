@@ -44,11 +44,7 @@ namespace mc {
 
 		Image::Image(const Texture& tex) : texture(tex) {}
 
-		void Image::onInit() {
-			if (!texture.isCreated()) {
-				texture.init();
-			}
-		}
+		void Image::onInit() {}
 
 		void Image::onUpdate() {}
 
@@ -137,8 +133,6 @@ namespace mc {
 				makeDirty();
 
 				selectionTexture = tex;
-
-				selectionTexture.setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
 			}
 		}
 
@@ -216,7 +210,7 @@ namespace mc {
 		}
 
 
-		void ProgressBar::easeTo(const float destination, const float time, const EaseFunction function, const EaseComponent::EaseDoneCallback callback) {
+		void ProgressBar::easeTo(const float destination, const long long time, const EaseFunction function, const EaseComponent::EaseDoneCallback callback) {
 			addComponent(SmartPointer<Component>(new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
 				ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 
@@ -238,19 +232,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void ProgressBar::onInit() {
-			if (!backgroundTexture.isCreated()) {
-				backgroundTexture.init();
-			}
-
-			if (!foregroundTexture.isCreated()) {
-				foregroundTexture.init();
-			}
-
-			if (!selectionTexture.isCreated()) {
-				selectionTexture.init();
-			}
-		}
+		void ProgressBar::onInit() {}
 
 		void ProgressBar::onUpdate() {}
 
@@ -307,7 +289,7 @@ namespace mc {
 
 		Font Font::loadFontFromMemory(const unsigned char * data, long int size) {
 			if (size <= 0) {
-				MACE__THROW(IndexOutOfBounds, "Input size for loadFontFromMemory is less or equal to than 0!");
+				MACE__THROW(OutOfBounds, "Input size for loadFontFromMemory is less or equal to than 0!");
 			}
 
 			if (freetypeStatus < 0) {
@@ -361,7 +343,7 @@ namespace mc {
 
 		void Font::getCharacter(const wchar_t c, Letter& character) const {
 			if (height <= 0) {
-				throw IndexOutOfBoundsError("The height of the font cannot be 0 - you must set it!");
+				MACE__THROW(OutOfBounds, "The height of the font cannot be 0 - you must set it!");
 			}
 
 			FT_Set_Pixel_Sizes(fonts[id], 0, height);
@@ -377,19 +359,27 @@ namespace mc {
 			character.advanceX = fonts[id]->glyph->advance.x >> 6;
 			character.advanceY = fonts[id]->glyph->advance.y >> 6;
 
-			character.mask.init();
-			character.mask.bind();
+			if (character.width == 0 || character.height == 0) {
+				character.mask = Texture(Colors::INVISIBLE);
+			} else {
+				TextureDesc desc = TextureDesc(character.width, character.height, TextureDesc::Format::RED);
+				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
+				desc.internalFormat = TextureDesc::InternalFormat::RED;
+				desc.wrapS = TextureDesc::Wrap::CLAMP;
+				desc.wrapT = TextureDesc::Wrap::CLAMP;
+				desc.minFilter = TextureDesc::Filter::LINEAR;
+				desc.magFilter = TextureDesc::Filter::LINEAR;
+				character.mask.init(desc);
+				character.mask.bind();
 
-			character.mask.resetPixelStorage();
-			character.mask.setUnpackStorageHint(gfx::Enums::PixelStorage::ALIGNMENT, 1);
+				character.mask.resetPixelStorage();
+				character.mask.setUnpackStorageHint(gfx::Enums::PixelStorage::ALIGNMENT, 1);
 
-			character.mask.setData(fonts[id]->glyph->bitmap.buffer, character.width, character.height, Enums::Type::UNSIGNED_BYTE, Enums::Format::RED, Enums::InternalFormat::RED);
-			character.mask.setWrap(Enums::WrapMode::CLAMP);
-			character.mask.setMinFilter(Enums::ResizeFilter::LINEAR);
-			character.mask.setMagFilter(Enums::ResizeFilter::LINEAR);
-			character.mask.setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
-			character.mask.setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
-			character.mask.setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::R);
+				character.mask.setData(fonts[id]->glyph->bitmap.buffer);
+				character.mask.setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
+				character.mask.setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
+				character.mask.setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::R);
+			}
 		}
 
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
@@ -493,15 +483,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void Letter::onInit() {
-			if (!mask.isCreated()) {
-				mask.init();
-			}
-
-			if (!texture.isCreated()) {
-				texture.init();
-			}
-		}
+		void Letter::onInit() {}
 
 		void Letter::onUpdate() {}
 
@@ -813,23 +795,7 @@ namespace mc {
 			}
 		}
 
-		void Button::onInit() {
-			if (!texture.isCreated()) {
-				texture.init();
-			}
-
-			if (!hoverTexture.isCreated()) {
-				hoverTexture.init();
-			}
-
-			if (!clickedTexture.isCreated()) {
-				clickedTexture.init();
-			}
-
-			if (!disabledTexture.isCreated()) {
-				disabledTexture.init();
-			}
-		}
+		void Button::onInit() {}
 
 		void Button::onUpdate() {}
 

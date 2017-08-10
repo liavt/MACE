@@ -18,6 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <string>
 #include <ostream>
 #include <initializer_list>
+#include <cmath>
 
 /*
 the fact that vectors are templated maeans that this cant have a cpp file correspondign to it. because of that, this file has HORRIBLE compile times.
@@ -130,7 +131,7 @@ namespace mc {
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
 			if (args.size() != N) {
-				MACE__THROW(IndexOutOfBounds, "The number of arguments MUST be equal to the size of the array.");
+				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the array.");
 			}
 
 			Index counter = 0;
@@ -205,7 +206,7 @@ namespace mc {
 		T& get(Index i) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (i >= N) {
-				throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
 			return content[i];
@@ -221,7 +222,7 @@ namespace mc {
 		const T& get(Index i) const {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (i >= N) {
-				throw IndexOutOfBoundsError(std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
 			return content.at(i);
@@ -237,7 +238,7 @@ namespace mc {
 		void set(Index position, T value) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (position >= N) {
-				throw IndexOutOfBoundsError(std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+				MACE__THROW(OutOfBounds, std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
 
@@ -849,7 +850,7 @@ namespace mc {
 			for (Index i = 0; i < N; ++i) {
 				out += static_cast<T>(sqr(a[i]));
 			}
-			return sqrt(out);
+			return std::sqrt(out);
 		}
 
 		/**

@@ -257,6 +257,11 @@ namespace mc {
 			void clearChildren();
 
 			/**
+			@dirty
+			*/
+			void makeChildrenDirty();
+
+			/**
 			Access an `Entity`.
 			<p>
 			This is different than `getChild()` because `operator[]` doesn't do bounds checking. Accessing an invalid location will result in a memory error.

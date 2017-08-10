@@ -14,101 +14,101 @@ namespace mc {
 	namespace gfx {
 		namespace ogl {
 			namespace {
-				GLenum getFormat(const Enums::Format format) {
+				GLenum getFormat(const TextureDesc::Format format) {
 					switch (format) {
-						case Enums::Format::RED:
+						case TextureDesc::Format::RED:
 							return GL_RED;
-						case Enums::Format::RG:
+						case TextureDesc::Format::RG:
 							return GL_RG;
-						case Enums::Format::RGB:
+						case TextureDesc::Format::RGB:
 							return GL_RGB;
-						case Enums::Format::RGBA:
+						case TextureDesc::Format::RGBA:
 							return GL_RGBA;
-						case Enums::Format::BGR:
+						case TextureDesc::Format::BGR:
 							return GL_BGR;
-						case Enums::Format::BGRA:
+						case TextureDesc::Format::BGRA:
 							return GL_BGRA;
-						case Enums::Format::RED_INTEGER:
+						case TextureDesc::Format::RED_INTEGER:
 							return GL_RED_INTEGER;
-						case Enums::Format::RG_INTEGER:
+						case TextureDesc::Format::RG_INTEGER:
 							return GL_RG_INTEGER;
-						case Enums::Format::RGB_INTEGER:
+						case TextureDesc::Format::RGB_INTEGER:
 							return GL_RGB_INTEGER;
-						case Enums::Format::BGR_INTEGER:
+						case TextureDesc::Format::BGR_INTEGER:
 							return GL_BGR_INTEGER;
-						case Enums::Format::RGBA_INTEGER:
+						case TextureDesc::Format::RGBA_INTEGER:
 							return GL_RGBA_INTEGER;
-						case Enums::Format::BGRA_INTEGER:
+						case TextureDesc::Format::BGRA_INTEGER:
 							return GL_BGRA_INTEGER;
-						case Enums::Format::STENCIL:
+						case TextureDesc::Format::STENCIL:
 							return GL_STENCIL;
-						case Enums::Format::DEPTH:
+						case TextureDesc::Format::DEPTH:
 							return GL_DEPTH;
-						case Enums::Format::DEPTH_STENCIL:
+						case TextureDesc::Format::DEPTH_STENCIL:
 							return GL_DEPTH_STENCIL;
 						default:
 							MACE__THROW(BadFormat, "Unsupported format by OpenGL");
 					}
 				}
 
-				GLenum getInternalFormat(const Enums::InternalFormat format) {
+				GLenum getInternalFormat(const TextureDesc::InternalFormat format) {
 					switch (format) {
-						case Enums::InternalFormat::DEPTH:
+						case TextureDesc::InternalFormat::DEPTH:
 							return GL_DEPTH_COMPONENT;
-						case Enums::InternalFormat::DEPTH_STENCIL:
+						case TextureDesc::InternalFormat::DEPTH_STENCIL:
 							return GL_DEPTH_STENCIL;
-						case Enums::InternalFormat::RED:
+						case TextureDesc::InternalFormat::RED:
 							return GL_RED;
-						case Enums::InternalFormat::RG:
+						case TextureDesc::InternalFormat::RG:
 							return GL_RG;
-						case Enums::InternalFormat::RGB:
+						case TextureDesc::InternalFormat::RGB:
 							return GL_RGB;
-						case Enums::InternalFormat::RGBA:
+						case TextureDesc::InternalFormat::RGBA:
 							return GL_RGBA;
 						default:
 							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
 				}
 
-				GLenum getType(const Enums::Type type) {
+				GLenum getType(const TextureDesc::Type type) {
 					switch (type) {
-						case Enums::Type::UNSIGNED_BYTE:
+						case TextureDesc::Type::UNSIGNED_BYTE:
 							return GL_UNSIGNED_BYTE;
-						case Enums::Type::BYTE:
+						case TextureDesc::Type::BYTE:
 							return GL_BYTE;
-						case Enums::Type::UNSIGNED_SHORT:
+						case TextureDesc::Type::UNSIGNED_SHORT:
 							return GL_UNSIGNED_SHORT;
-						case Enums::Type::SHORT:
+						case TextureDesc::Type::SHORT:
 							return GL_SHORT;
-						case Enums::Type::UNSIGNED_INT:
+						case TextureDesc::Type::UNSIGNED_INT:
 							return GL_UNSIGNED_INT;
-						case Enums::Type::INT:
+						case TextureDesc::Type::INT:
 							return GL_INT;
-						case Enums::Type::FLOAT:
+						case TextureDesc::Type::FLOAT:
 							return GL_FLOAT;
-						case Enums::Type::UNSIGNED_BYTE_3_3_2:
+						case TextureDesc::Type::UNSIGNED_BYTE_3_3_2:
 							return GL_UNSIGNED_BYTE_3_3_2;
-						case Enums::Type::UNSIGNED_BYTE_2_3_3_REV:
+						case TextureDesc::Type::UNSIGNED_BYTE_2_3_3_REV:
 							return GL_UNSIGNED_BYTE_2_3_3_REV;
-						case Enums::Type::UNSIGNED_SHORT_5_6_5:
+						case TextureDesc::Type::UNSIGNED_SHORT_5_6_5:
 							return GL_UNSIGNED_SHORT_5_6_5;
-						case Enums::Type::UNSIGNED_SHORT_5_6_5_REV:
+						case TextureDesc::Type::UNSIGNED_SHORT_5_6_5_REV:
 							return GL_UNSIGNED_SHORT_5_6_5_REV;
-						case Enums::Type::UNSIGNED_SHORT_4_4_4_4:
+						case TextureDesc::Type::UNSIGNED_SHORT_4_4_4_4:
 							return GL_UNSIGNED_SHORT_4_4_4_4;
-						case Enums::Type::UNSIGNED_SHORT_4_4_4_4_REV:
+						case TextureDesc::Type::UNSIGNED_SHORT_4_4_4_4_REV:
 							return GL_UNSIGNED_SHORT_4_4_4_4_REV;
-						case Enums::Type::UNSIGNED_SHORT_5_5_5_1:
+						case TextureDesc::Type::UNSIGNED_SHORT_5_5_5_1:
 							return GL_UNSIGNED_SHORT_5_5_5_1;
-						case Enums::Type::UNSIGNED_SHORT_1_5_5_5_REV:
+						case TextureDesc::Type::UNSIGNED_SHORT_1_5_5_5_REV:
 							return GL_UNSIGNED_SHORT_1_5_5_5_REV;
-						case Enums::Type::UNSIGNED_INT_8_8_8_8:
+						case TextureDesc::Type::UNSIGNED_INT_8_8_8_8:
 							return GL_UNSIGNED_INT_8_8_8_8;
-						case Enums::Type::UNSIGNED_INT_8_8_8_8_REV:
+						case TextureDesc::Type::UNSIGNED_INT_8_8_8_8_REV:
 							return GL_UNSIGNED_INT_8_8_8_8_REV;
-						case Enums::Type::UNSIGNED_INT_10_10_10_2:
+						case TextureDesc::Type::UNSIGNED_INT_10_10_10_2:
 							return GL_UNSIGNED_INT_10_10_10_2;
-						case Enums::Type::UNSIGNED_INT_2_10_10_10_REV:
+						case TextureDesc::Type::UNSIGNED_INT_2_10_10_10_REV:
 							return GL_UNSIGNED_INT_2_10_10_10_REV;
 						default:
 							MACE__THROW(BadFormat, "Unsupported type by OpenGL");
@@ -116,11 +116,64 @@ namespace mc {
 				}
 			}//anon namespace
 
-			void OGL33Texture::init() {
+			OGL33Texture::OGL33Texture(const TextureDesc& desc) : TextureImpl(desc), ogl::Texture2D() {
 				ogl::Texture2D::init();
+				ogl::Texture2D::bind();
+
+				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR) {
+					ogl::Texture2D::generateMipmap();
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				} else if (desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
+					ogl::Texture2D::generateMipmap();
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				} else if (desc.minFilter == TextureDesc::Filter::LINEAR) {
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				} else if (desc.minFilter == TextureDesc::Filter::NEAREST) {
+					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				} else {
+					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.minFilter)));
+				}
+
+				if (desc.magFilter == TextureDesc::Filter::MIPMAP_LINEAR ||
+					desc.magFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
+					MACE__THROW(UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
+				} else if (desc.magFilter == TextureDesc::Filter::LINEAR) {
+					setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				} else if (desc.magFilter == TextureDesc::Filter::NEAREST) {
+					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				} else {
+					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.magFilter)));
+				}
+				
+				if (desc.wrapS == TextureDesc::Wrap::CLAMP) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				} else if (desc.wrapS == TextureDesc::Wrap::WRAP) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+				} else if (desc.wrapS == TextureDesc::Wrap::MIRROR) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+				} else if (desc.wrapS == TextureDesc::Wrap::BORDER) {
+					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+				} else {
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapS)));
+				}
+
+				if (desc.wrapT == TextureDesc::Wrap::CLAMP) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+				} else if (desc.wrapT == TextureDesc::Wrap::WRAP) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+				} else if (desc.wrapT == TextureDesc::Wrap::MIRROR) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+				} else if (desc.wrapT == TextureDesc::Wrap::BORDER) {
+					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+				} else {
+					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapT)));
+				}
+
+				glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
+
 			}
 
-			void OGL33Texture::destroy() {
+			OGL33Texture::~OGL33Texture() {
 				ogl::Texture2D::destroy();
 			}
 
@@ -138,37 +191,6 @@ namespace mc {
 
 			bool OGL33Texture::isCreated() const {
 				return ogl::Texture2D::isCreated();
-			}
-
-			void OGL33Texture::setMinFilter(const Enums::ResizeFilter filter) {
-				ogl::Texture2D::bind();
-				if (filter == Enums::ResizeFilter::MIPMAP_LINEAR) {
-					ogl::Texture2D::generateMipmap();
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				} else if (filter == Enums::ResizeFilter::MIPMAP_NEAREST) {
-					ogl::Texture2D::generateMipmap();
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				} else if (filter == Enums::ResizeFilter::LINEAR) {
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				} else if (filter == Enums::ResizeFilter::NEAREST) {
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				} else {
-					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(filter)));
-				}
-			}
-
-			void OGL33Texture::setMagFilter(const Enums::ResizeFilter filter) {
-				ogl::Texture2D::bind();
-				if (filter == Enums::ResizeFilter::MIPMAP_LINEAR ||
-					filter == Enums::ResizeFilter::MIPMAP_NEAREST) {
-					MACE__THROW(UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
-				} else if (filter == Enums::ResizeFilter::LINEAR) {
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				} else if (filter == Enums::ResizeFilter::NEAREST) {
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				} else {
-					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(filter)));
-				}
 			}
 
 			void OGL33Texture::setUnpackStorageHint(const Enums::PixelStorage hint, const int value) {
@@ -199,44 +221,14 @@ namespace mc {
 				}
 			}
 
-			void OGL33Texture::setWrapS(const Enums::WrapMode wrap) {
-				ogl::Texture2D::bind();
-				if (wrap == Enums::WrapMode::CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				} else if (wrap == Enums::WrapMode::REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-				} else if (wrap == Enums::WrapMode::MIRRORED_REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-				} else if (wrap == Enums::WrapMode::MIRROR_CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_MIRROR_CLAMP_TO_EDGE);
-				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(wrap)));
-				}
-			}
-
-			void OGL33Texture::setWrapT(const Enums::WrapMode wrap) {
-				ogl::Texture2D::bind();
-				if (wrap == Enums::WrapMode::CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				} else if (wrap == Enums::WrapMode::REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-				} else if (wrap == Enums::WrapMode::MIRRORED_REPEAT) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-				} else if (wrap == Enums::WrapMode::MIRROR_CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_MIRROR_CLAMP_TO_EDGE);
-				} else {
-					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(wrap)));
-				}
-			}
-
 			void OGL33Texture::setData(const void * data, const Index mipmap) {
 				ogl::Texture2D::bind();
-				ogl::Texture2D::setData(data, width, height, getType(type), getFormat(format), getInternalFormat(internalFormat), mipmap);
+				ogl::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
 			}
 
 			void OGL33Texture::readPixels(void * data) const {
 				ogl::Texture2D::bind();
-				ogl::Texture2D::getImage(getFormat(format), getType(type), data);
+				ogl::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
 			}
 
 			void OGL33Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
@@ -350,8 +342,8 @@ namespace mc {
 				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl() const {
-				return std::unique_ptr<TextureImpl>(new OGL33Texture());
+			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
+				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
 			}
 		}//ogl
 	}//gfx

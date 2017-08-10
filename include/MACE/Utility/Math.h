@@ -12,7 +12,6 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__UTILITY_MATH_H
 
 #include <MACE/Core/Constants.h>
-#include <MACE/Utility/Vector.h>
 
 namespace mc {
 	/**

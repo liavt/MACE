@@ -15,7 +15,6 @@ class PainterDemo: public gfx::Entity2D {
 public:
 	void onInit() override {
 		lena = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("lena.jpg"), gfx::Enums::ImageFormat::RGBA);
-		lena.setMagFilter(gfx::Enums::ResizeFilter::LINEAR);
 
 		star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::GRAY_ALPHA);
 	}

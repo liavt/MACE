@@ -96,7 +96,7 @@ namespace mc {
 			}
 
 			void onWindowKeyButton(GLFWwindow*, int key, int, int action, int mods) {
-				Byte actions;
+				Byte actions = 0x00;
 				if (action == GLFW_PRESS) {
 					actions |= Input::PRESSED;
 				}
@@ -123,7 +123,7 @@ namespace mc {
 			}
 
 			void onWindowMouseButton(GLFWwindow*, int button, int action, int mods) {
-				Byte actions;
+				Byte actions = 0x00;
 				if (action == GLFW_PRESS) {
 					actions |= Input::PRESSED;
 				}
@@ -169,7 +169,7 @@ namespace mc {
 			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
 				win->getContext()->getRenderer()->flagResize();
-				win->makeDirty();
+				win->makeChildrenDirty();
 			}
 
 			void onWindowDamaged(GLFWwindow* window) {
@@ -301,9 +301,9 @@ namespace mc {
 				os::clearError(__LINE__, __FILE__);
 
 				//typedefs for chrono for readibility purposes
-				using Clock = std::chrono::system_clock;
+				using Clock = std::chrono::steady_clock;
 				using TimeStamp = std::chrono::time_point<Clock>;
-				using Duration = std::chrono::duration<long long, std::nano>;
+				using Duration = std::chrono::microseconds;
 
 				//mutex for this function.
 				std::mutex mutex;
@@ -324,7 +324,7 @@ namespace mc {
 					Entity::init();
 
 					if (config.fps != 0) {
-						windowDelay = Duration(1000000000L / static_cast<long long>(config.fps));
+						windowDelay = Duration(std::chrono::seconds(1)) / static_cast<long long>(config.fps);
 					}
 
 					os::checkError(__LINE__, __FILE__, "A system error occurred creating the window");

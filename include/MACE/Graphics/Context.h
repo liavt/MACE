@@ -38,85 +38,9 @@ namespace mc {
 		MACE__DECLARE_ERROR(BadFormat);
 
 		namespace Enums {
-			enum class Type: short int {
-				UNSIGNED_BYTE,
-				BYTE,
-				UNSIGNED_SHORT,
-				SHORT,
-				UNSIGNED_INT,
-				INT,
-				FLOAT,
-				UNSIGNED_BYTE_3_3_2,
-				UNSIGNED_BYTE_2_3_3_REV,
-				UNSIGNED_SHORT_5_6_5,
-				UNSIGNED_SHORT_5_6_5_REV,
-				UNSIGNED_SHORT_4_4_4_4,
-				UNSIGNED_SHORT_4_4_4_4_REV,
-				UNSIGNED_SHORT_5_5_5_1,
-				UNSIGNED_SHORT_1_5_5_5_REV,
-				UNSIGNED_INT_8_8_8_8,
-				UNSIGNED_INT_8_8_8_8_REV,
-				UNSIGNED_INT_10_10_10_2,
-				UNSIGNED_INT_2_10_10_10_REV,
-			};
-
-			enum class Format: short int {
-				RED,
-				RG,
-				RGB,
-				RGBA,
-				BGR,
-				BGRA,
-				RED_INTEGER,
-				RG_INTEGER,
-				RGB_INTEGER,
-				BGR_INTEGER,
-				RGBA_INTEGER,
-				BGRA_INTEGER,
-				STENCIL,
-				DEPTH,
-				DEPTH_STENCIL,
-				//The next 2 are deprecated in OpenGL 3.3
-				//This comment exists to remind people not to
-				//add them.
-				//LUMINANCE,
-				//LUMINANCE_ALPHA
-			};
-
-			enum class InternalFormat: Enum {
-				DEPTH,
-				DEPTH_STENCIL,
-				RED,
-				RG,
-				RGB,
-				RGBA
-			};
-
-			enum class ResizeFilter: Byte {
-				//MIPMAP_LINEAR and MIPMAP_NEAREST automatically
-				//generate mipmaps in OpenGL renderer.
-				//They cant be used for the magnication filter,
-				//only the minification filter
-				MIPMAP_LINEAR,
-				MIPMAP_NEAREST,
-				NEAREST,
-				LINEAR,
-			};
-
 			enum class PixelStorage: Byte {
 				ALIGNMENT,
 				ROW_LENGTH
-			};
-
-			enum class WrapMode: Byte {
-				//OpenGL supports CLAMP_TO_BORDER and BORDER, however those 2
-				//require additional work which is outside the scope of MACE.
-				//Also, DirectX doesn't support them, and their use case is
-				//very sparsely documented.
-				CLAMP,
-				REPEAT,
-				MIRRORED_REPEAT,
-				MIRROR_CLAMP,
 			};
 
 			//there is no ZERO and ONE like in OpenGL because DirectX doesn't support that
@@ -238,11 +162,101 @@ namespace mc {
 			std::shared_ptr<ModelImpl> model;
 		};
 
-		class TextureImpl: public Initializable, public Bindable {
+		struct TextureDesc {
+			enum class Type: short int {
+				UNSIGNED_BYTE,
+				BYTE,
+				UNSIGNED_SHORT,
+				SHORT,
+				UNSIGNED_INT,
+				INT,
+				FLOAT,
+				UNSIGNED_BYTE_3_3_2,
+				UNSIGNED_BYTE_2_3_3_REV,
+				UNSIGNED_SHORT_5_6_5,
+				UNSIGNED_SHORT_5_6_5_REV,
+				UNSIGNED_SHORT_4_4_4_4,
+				UNSIGNED_SHORT_4_4_4_4_REV,
+				UNSIGNED_SHORT_5_5_5_1,
+				UNSIGNED_SHORT_1_5_5_5_REV,
+				UNSIGNED_INT_8_8_8_8,
+				UNSIGNED_INT_8_8_8_8_REV,
+				UNSIGNED_INT_10_10_10_2,
+				UNSIGNED_INT_2_10_10_10_REV,
+			};
+
+			enum class Format: short int {
+				RED,
+				RG,
+				RGB,
+				RGBA,
+				BGR,
+				BGRA,
+				RED_INTEGER,
+				RG_INTEGER,
+				RGB_INTEGER,
+				BGR_INTEGER,
+				RGBA_INTEGER,
+				BGRA_INTEGER,
+				STENCIL,
+				DEPTH,
+				DEPTH_STENCIL,
+				//The next 2 are deprecated in OpenGL 3.3
+				//This comment exists to remind people not to
+				//add them.
+				//LUMINANCE,
+				//LUMINANCE_ALPHA
+			};
+
+			enum class InternalFormat: Enum {
+				DEPTH,
+				DEPTH_STENCIL,
+				RED,
+				RG,
+				RGB,
+				RGBA
+			};
+
+			enum class Filter: Byte {
+				//MIPMAP_LINEAR and MIPMAP_NEAREST automatically
+				//generate mipmaps in OpenGL renderer.
+				//They cant be used for the magnication filter,
+				//only the minification filter
+				MIPMAP_LINEAR,
+				MIPMAP_NEAREST,
+				NEAREST,
+				LINEAR,
+				ANISOTROPIC
+			};
+
+			enum class Wrap: Byte {
+				CLAMP,
+				WRAP,
+				MIRROR,
+				BORDER
+			};
+
+			TextureDesc() noexcept = default;
+			TextureDesc(const unsigned int w, const unsigned int h, const Format form = Format::RGBA);
+
+			Filter minFilter = Filter::LINEAR;
+			Filter magFilter = Filter::LINEAR;
+			Type type = Type::FLOAT;
+			Format format = Format::RGBA;
+			InternalFormat internalFormat = InternalFormat::RGBA;
+
+			unsigned int width = 0, height = 0;
+
+			Wrap wrapS = Wrap::CLAMP;
+			Wrap wrapT = Wrap::CLAMP;
+			Color borderColor = Colors::INVISIBLE;
+		};
+
+		class TextureImpl: public Bindable {
 			friend class Texture;
 		public:
-			virtual void init() override = 0;
-			virtual void destroy() override = 0;
+			TextureImpl(const TextureDesc& t);
+			virtual ~TextureImpl() = default;
 
 			virtual void bind() const override = 0;
 			virtual void bind(const unsigned int location) const = 0;
@@ -252,32 +266,22 @@ namespace mc {
 
 			virtual void setData(const void* data, const Index mipmap) = 0;
 
-			virtual void setMinFilter(const Enums::ResizeFilter filter) = 0;
-			virtual void setMagFilter(const Enums::ResizeFilter filter) = 0;
-
 			virtual void setUnpackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
 			virtual void setPackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
-
-			virtual void setWrapS(const Enums::WrapMode wrap) = 0;
-			virtual void setWrapT(const Enums::WrapMode wrap) = 0;
 
 			virtual void readPixels(void* data) const = 0;
 
 			virtual void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) = 0;
 		protected:
-			unsigned int width = 0, height = 0;
-
-			Enums::Type type = Enums::Type::FLOAT;
-			Enums::Format format = Enums::Format::RGBA;
-			Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA;
+			const TextureDesc desc;
 		};
 
-		class Texture: public Initializable, public Bindable {
+		class Texture: public Bindable {
 		public:
-			static Texture create(const Color& col, const Size width = 1, const Size height = 1);
+			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
 			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
-			static Texture createFromMemory(const unsigned char * c, const Size size);
+			static Texture createFromMemory(const unsigned char * c, const unsigned int size);
 
 			static Texture& getSolidColor();
 			/**
@@ -288,30 +292,23 @@ namespace mc {
 			static Texture& getGradient();
 
 			Texture();
+			Texture(const TextureDesc& d);
 			Texture(const Color& col);
 			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
 
-			void init() override;
-			void destroy() override;
+			void init(const TextureDesc& desc);
+			void destroy();
 
 			bool isCreated() const;
-			bool isEmpty() const;
+
+			const TextureDesc& getDesc() const;
 
 			unsigned int getWidth();
 			const unsigned int getWidth() const;
 
 			unsigned int getHeight();
 			const unsigned int getHeight() const;
-
-			Enums::Type getType();
-			const Enums::Type getType() const;
-
-			Enums::Format getFormat();
-			const Enums::Format getFormat() const;
-
-			Enums::InternalFormat getInternalFormat();
-			const Enums::InternalFormat getInternalFormat() const;
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
@@ -372,10 +369,6 @@ namespace mc {
 			}
 #			endif//MACE_OPENCV
 
-			void load(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
-			void load(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
-			void load(const Color& c, const Size width = 1, const Size height = 1);
-
 			Color& getHue();
 			const Color& getHue() const;
 			void setHue(const Color& col);
@@ -389,47 +382,6 @@ namespace mc {
 			void unbind() const override;
 
 			void resetPixelStorage();
-
-			void setMinFilter(const Enums::ResizeFilter filter);
-			void setMagFilter(const Enums::ResizeFilter filter);
-
-			void setData(const void* data, const Size width, const Size height,
-						 const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGBA,
-						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0);
-			template<typename T, Size W, Size H>
-			void setData(const T(&data)[W][H],
-						 const Enums::Type type = Enums::Type::FLOAT, const Enums::Format format = Enums::Format::RGBA,
-						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
-				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
-				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
-
-				setData(data, W, H, type, format, internalFormat, mipmap);
-			}
-			template<Size W, Size H>
-			void setData(const float(&data)[W][H], const Enums::Format format = Enums::Format::RGBA,
-						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
-				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
-				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
-
-				setData(data, W, H, Enums::Type::FLOAT, format, internalFormat, mipmap);
-			}
-			template<Size W, Size H>
-			void setData(const int(&data)[W][H], const Enums::Format format = Enums::Format::RGBA,
-						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
-				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
-				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
-
-				setData(data, W, H, Enums::Type::INT, format, internalFormat, mipmap);
-			}
-			template<Size W, Size H>
-			void setData(const unsigned int(&data)[W][H], const Enums::Format format = Enums::Format::RGBA,
-						 const Enums::InternalFormat internalFormat = Enums::InternalFormat::RGBA, const Index mipmap = 0) {
-				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
-				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
-
-				setData(data, W, H, Enums::Type::UNSIGNED_INT, format, internalFormat, mipmap);
-			}
-
 
 			void setData(const void* data, const Index mipmap = 0);
 			template<typename T, Size W, Size H>
@@ -446,10 +398,6 @@ namespace mc {
 
 			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value);
 			void setPackStorageHint(const Enums::PixelStorage hint, const int value);
-
-			void setWrap(const Enums::WrapMode wrap);
-			void setWrapS(const Enums::WrapMode wrap);
-			void setWrapT(const Enums::WrapMode wrap);
 
 			void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg);
 
@@ -527,7 +475,7 @@ namespace mc {
 			may have to own the same pointer to data, they have to use std::shared_ptr
 			*/
 			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
-			virtual std::shared_ptr<TextureImpl> createTextureImpl() const = 0;
+			virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const = 0;
 
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;

@@ -47,7 +47,7 @@ namespace mc {
 		void Renderer::remove(const EntityID id) {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (id == 0 || id > renderQueue.size()) {
-				MACE__THROW(IndexOutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
+				MACE__THROW(OutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
 			}
 #endif
 
@@ -139,7 +139,7 @@ namespace mc {
 			if (impl == nullptr) {
 				MACE__THROW(NullPointer, "Painter was not initialized correctly");
 			} else if (id == 0) {
-				MACE__THROW(IndexOutOfBounds, "Invalid Painter ID");
+				MACE__THROW(OutOfBounds, "Invalid Painter ID");
 			}
 #endif
 			impl->begin();
@@ -196,7 +196,7 @@ namespace mc {
 				setMaskColor(t.getHue());
 				setMaskTransform(t.getTransform());
 			} else {
-				MACE__THROW(IndexOutOfBounds, "Unknown Texture slot");
+				MACE__THROW(OutOfBounds, "Unknown Texture slot");
 			}
 
 		}
@@ -420,7 +420,7 @@ namespace mc {
 			return state;
 		}
 
-		const Index & Painter::getID() const {
+		const EntityID & Painter::getID() const {
 			return id;
 		}
 

@@ -15,7 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Context.h>
 
-#include <ctime>
+#include <chrono>
 
 namespace mc {
 	namespace gfx {
@@ -140,7 +140,7 @@ namespace mc {
 
 			virtual void onTrigger();
 		};
-		
+
 		class AlignmentComponent: public Component {
 		public:
 			AlignmentComponent(const Enums::VerticalAlign vert = Enums::VerticalAlign::CENTER, const Enums::HorizontalAlign horz = Enums::HorizontalAlign::CENTER);
@@ -171,7 +171,7 @@ namespace mc {
 			typedef void(*EaseDoneCallback)(Entity*);
 			typedef void(*EaseUpdateCallback)(Entity*, float);
 
-			EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+			EaseComponent(const long long ms, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
 
 			bool operator==(const EaseComponent& other) const;
 			bool operator!=(const EaseComponent& other) const;
@@ -181,10 +181,10 @@ namespace mc {
 			void render() override;
 			void destroy() override;
 		private:
-			float t;
+			const std::chrono::time_point<std::chrono::steady_clock> startTime;
 			const float b;
 			const float c;
-			const float d;
+			const std::chrono::duration<float> duration;
 			const EaseUpdateCallback updateCallback;
 			const EaseFunction ease;
 			const EaseDoneCallback done;
@@ -262,7 +262,7 @@ namespace mc {
 
 			TickCallbackPtr tickCallback = [](FPSComponent*, Entity*) {};
 
-			std::time_t lastTime = 0;
+			std::chrono::time_point<std::chrono::steady_clock> lastTime = std::chrono::steady_clock::now();
 
 			void init() final;
 			bool update() final;

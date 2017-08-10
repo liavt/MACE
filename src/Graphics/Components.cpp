@@ -9,8 +9,9 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #define MACE__COMPONENTS_EXPOSE_MAKE_EASE_FUNCTION//this macro exposes the MACE__MAKE_EASE_FUNCTION macro
 #include <MACE/Graphics/Components.h>
-#include <ctime>
 #include <cmath>
+
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -349,12 +350,14 @@ namespace mc {
 			}
 		}
 
-		EaseComponent::EaseComponent(const float duration, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction, const EaseDoneCallback doneCallback)
-			: Component(), t(0), b(startingProgress), c(destination), d(duration), updateCallback(callback), ease(easeFunction), done(doneCallback) {}
+		EaseComponent::EaseComponent(const long long ms, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction, const EaseDoneCallback doneCallback)
+			: Component(), startTime(std::chrono::steady_clock::now()),
+			b(startingProgress), c(destination), duration(std::chrono::milliseconds(ms) / std::chrono::seconds(1)),
+			updateCallback(callback), ease(easeFunction), done(doneCallback) {}
 
 		bool EaseComponent::operator==(const EaseComponent & other) const {
 			return Component::operator==(other)
-				&& t == other.t && b == other.b && c == other.c && d == other.d
+				&& startTime == other.startTime && b == other.b && c == other.c && duration == other.duration
 				&& updateCallback == other.updateCallback && ease == other.ease
 				&& done == other.done;
 		}
@@ -366,13 +369,13 @@ namespace mc {
 		void EaseComponent::init() {}
 
 		bool EaseComponent::update() {
-			updateCallback(parent, ease(t++, b, c - b, d));
+			const float progress = std::min(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startTime) / duration, 1.0f);
 
-			if (t >= d) {
-				return true;
-			}
+			//there is a chance that elapsed will be higher than duration, so std::min fixes that
+			updateCallback(parent, ease(progress, b, c - b, 1.0f));
 
-			return false;
+			//if progress is greater then or equal to 100%, destroy this component
+			return progress >= 1.0f;
 		}
 
 		void EaseComponent::render() {}
@@ -527,12 +530,12 @@ namespace mc {
 		}
 
 		void FPSComponent::init() {
-			lastTime = std::time(nullptr);
+			lastTime = std::chrono::steady_clock::now();
 		}
 
 		bool FPSComponent::update() {
 			++nbUpdates;
-			if (std::time(nullptr) - lastTime >= 1.0) {
+			if (std::chrono::steady_clock::now() - lastTime >= std::chrono::seconds(1)) {
 				updatesPerSecond = nbUpdates;
 				framesPerSecond = nbFrames;
 				cleansPerSecond = nbCleans;
@@ -543,7 +546,7 @@ namespace mc {
 				nbCleans = 0;
 				nbHovers = 0;
 
-				++lastTime;
+				lastTime = std::chrono::steady_clock::now();
 
 				tickCallback(this, parent);
 			}
