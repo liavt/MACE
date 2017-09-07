@@ -56,8 +56,8 @@ void create(gfx::WindowModule&) {
 	srand((unsigned int)time(nullptr));
 
 	const Size elementNum = 10;
-
-	gfx::Texture star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::GRAY_ALPHA);
+	
+	gfx::Texture star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::DONT_CARE);
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {
@@ -90,14 +90,12 @@ void create(gfx::WindowModule&) {
 			}
 		}
 	}
+
 }
 
 int main() {
 	Instance instance = Instance();
 	try {
-		std::cout << "Click on a star to rotate it individually! It is pixel perfect! Holding down space will rotate all the stars in big chunks. It will only swap frames when something changes for maximum performance.\n";
-		std::cout << "Also try resizing the screen and watch how it reacts!\n";
-
 		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(500, 500, "Rotations Demo");
 		config.onCreate = &create;
 		gfx::WindowModule module = gfx::WindowModule(config);

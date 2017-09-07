@@ -281,7 +281,7 @@ namespace mc {
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
 			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
-			static Texture createFromMemory(const unsigned char * c, const unsigned int size);
+			static Texture createFromMemory(const unsigned char * c, const Size size);
 
 			static Texture& getSolidColor();
 			/**
@@ -312,48 +312,49 @@ namespace mc {
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
-			void load(cv::Mat mat) {
-				//cv::flip(mat, mat, 0);
+			Texture(cv::Mat mat) : Texture() {
+				TextureDesc desc = TextureDesc(mat.rows, mat.cols);
 
-				Enums::Format colorFormat = Enums::Format::BGR;
 				if (mat.channels() == 1) {
-					colorFormat = Enums::Format::RED;
+					desc.format = TextureDesc::Format::RED;
+					desc.internalFormat = TextureDesc::InternalFormat::RED;
 				} else if (mat.channels() == 2) {
-					colorFormat = Enums::Format::RG;
+					desc.format = TextureDesc::Format::RG;
+					desc.internalFormat = TextureDesc::InternalFormat::RG;
+				} else if (mat.channels() == 3) {
+					desc.format = TextureDesc::Format::BGR;
+					desc.internalFormat = TextureDesc::InternalFormat::RGB;
 				} else if (mat.channels() == 4) {
-					colorFormat = Enums::Format::BGRA;
+					desc.format = TextureDesc::Format::BGRA;
+					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
 				}
 
-				Enums::Type type = Enums::Type::UNSIGNED_BYTE;
+				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
 				if (mat.depth() == CV_8S) {
-					type = Enums::Type::BYTE;
+					desc.type = TextureDesc::Type::BYTE;
 				} else if (mat.depth() == CV_16U) {
-					type = Enums::Type::UNSIGNED_SHORT;
+					desc.type = TextureDesc::Type::UNSIGNED_SHORT;
 				} else if (mat.depth() == CV_16S) {
-					type = Enums::Type::SHORT;
+					desc.type = TextureDesc::Type::SHORT;
 				} else if (mat.depth() == CV_32S) {
-					type = Enums::Type::INT;
+					desc.type = TextureDesc::Type::INT;
 				} else if (mat.depth() == CV_32F) {
-					;
-					type = Enums::Type::FLOAT;
+					desc.type = TextureDesc::Type::FLOAT;
 				} else if (mat.depth() == CV_64F) {
 					MACE__THROW(BadFormat, "Unsupported cv::Mat depth: CV_64F");
 				}
+
+				init(desc);
 
 				resetPixelStorage();
 				setPackStorageHint(Enums::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
 				setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
 
-				setData(mat.ptr(), mat.cols, mat.rows, type, colorFormat, Enums::InternalFormat::RGBA);
-			}
-
-			Texture(cv::Mat mat) : Texture() {
-				init();
-				load(mat);
+				setData(mat.ptr());
 			}
 
 			cv::Mat toMat(const Size width, const Size height) {
-				cv::Mat img(height, width, CV_8UC3);
+				cv::Mat img(texture->desc.height, texture->desc.width, CV_8UC3);
 
 				resetPixelStorage();
 				setPackStorageHint(Enums::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
@@ -389,7 +390,7 @@ namespace mc {
 				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
 				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
 
-				if (W != texture->width || H != texture->height) {
+				if (W != texture->desc.width || H != texture->desc.height) {
 					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
 				}
 

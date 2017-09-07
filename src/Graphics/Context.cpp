@@ -216,7 +216,6 @@ namespace mc {
 				} else if (outputComponents == 2) {
 					desc.format = TextureDesc::Format::RG;
 					desc.internalFormat = TextureDesc::InternalFormat::RG;
-
 				} else if (outputComponents == 3) {
 					desc.format = TextureDesc::Format::RGB;
 					desc.internalFormat = TextureDesc::InternalFormat::RGB;
@@ -354,7 +353,7 @@ namespace mc {
 			}
 
 			//the old texture will be deallocated, and its destructor will be called and decrement ref count
-			texture.swap(gfx::getCurrentWindow()->getContext()->createTextureImpl(desc));
+			texture = gfx::getCurrentWindow()->getContext()->createTextureImpl(desc);
 		}
 
 		void Texture::destroy() {

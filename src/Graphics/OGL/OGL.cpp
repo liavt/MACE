@@ -845,11 +845,15 @@ namespace mc {
 					throwShaderError(id, GL_PROGRAM, "The shader program was unable to link");
 				}
 
+				checkGLError(__LINE__, __FILE__, "Error linking shader program");
+
 				validate();
 
 				if (!isValidated()) {
 					throwShaderError(id, GL_PROGRAM, "The shader program failed to validate");
 				}
+
+				checkGLError(__LINE__, __FILE__, "Error validating shader program");
 
 				for (auto s : shaders) {
 					if (s.second.isCreated()) {
@@ -857,7 +861,7 @@ namespace mc {
 					}
 				}
 
-				checkGLError(__LINE__, __FILE__, "Error linking shader program");
+				checkGLError(__LINE__, __FILE__, "Error detaching shader program");
 			}
 			bool ShaderProgram::isCreated() const {
 				return glIsProgram(id) == GL_TRUE;

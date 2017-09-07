@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 #include <thread>
 #include <iostream>
+#include <sstream>
 
 #ifdef MACE_WINAPI
 #	define WIN32_LEAN_AND_MEAN
@@ -241,12 +242,6 @@ namespace mc {
 			}
 
 			return buf;
-#elif defined(MACE_POSIX)
-			if (const int result = strerror_r(errnum, buf, bufsize) != 0) {
-				return ("Failed to use strerror_r(): " + std::to_string(result) + ": errno was " + std::to_string(errno)).c_str();
-			}
-
-			return buf;
 #else
 			return std::strerror(errnum);
 #endif
@@ -371,7 +366,7 @@ namespace mc {
 
 			return "";
 #elif defined(MACE_POSIX)
-			std::string output = "";
+			std::ostringstream output;
 			ConsoleColor colors[] = { foreground, background };
 
 			for (unsigned int i = 0; i < 2; ++i) {
@@ -434,10 +429,12 @@ namespace mc {
 
 				code += (i * 10);
 
-				output += "\033[" + std::to_string(code) + "m";
+				output << "\033[";
+				output << code;
+				output << "m";
 			}
 
-			return output;
+			return output.str();
 #else
 			//in case of unsupported system, just be safe and return nothing
 			return "";
