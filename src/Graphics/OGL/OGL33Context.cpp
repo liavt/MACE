@@ -16,8 +16,12 @@ namespace mc {
 			namespace {
 				GLenum getFormat(const TextureDesc::Format format) {
 					switch (format) {
+						//INTENSITY and LUMINANCE are deprecated since core 3.1, so we implement them with swizzle masks
+						case TextureDesc::Format::INTENSITY:
+						case TextureDesc::Format::LUMINANCE:
 						case TextureDesc::Format::RED:
 							return GL_RED;
+						case TextureDesc::Format::LUMINANCE_ALPHA:
 						case TextureDesc::Format::RG:
 							return GL_RG;
 						case TextureDesc::Format::RGB:
@@ -165,12 +169,27 @@ namespace mc {
 					setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 				} else if (desc.wrapT == TextureDesc::Wrap::BORDER) {
 					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+					glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
 				} else {
 					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapT)));
 				}
 
-				glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
-
+				switch (desc.format) {
+					case TextureDesc::Format::INTENSITY:
+						setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
+						MACE_FALLTHROUGH;
+					case TextureDesc::Format::LUMINANCE:
+						setParameter(GL_TEXTURE_SWIZZLE_G, GL_RED);
+						setParameter(GL_TEXTURE_SWIZZLE_B, GL_RED);
+						break;
+					case TextureDesc::Format::LUMINANCE_ALPHA:
+						setParameter(GL_TEXTURE_SWIZZLE_G, GL_RED);
+						setParameter(GL_TEXTURE_SWIZZLE_B, GL_RED);
+						setParameter(GL_TEXTURE_SWIZZLE_A, GL_GREEN);
+						break;
+					default:
+						break;
+				}
 			}
 
 			OGL33Texture::~OGL33Texture() {
@@ -229,26 +248,6 @@ namespace mc {
 			void OGL33Texture::readPixels(void * data) const {
 				ogl::Texture2D::bind();
 				ogl::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
-			}
-
-			void OGL33Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
-				/*
-				See the underlying value of Enums::SwizzleMode...
-				R = 0
-				G = 1
-				B = 2
-				A = 3
-
-				The reasoning for this is because then we can just cast it and dd it to GL_RED, because GL spec says:
-				GL_RED = ...
-				GL_GREEN = GL_RED + 1
-				GL_BLUE = GL_RED + 2
-				GL_ALPHA = GL_RED + 3
-
-				This is the same for GL_TEXTURE_SWIZZLE_R
-				*/
-				ogl::Texture2D::bind();
-				ogl::Texture2D::setParameter(GL_TEXTURE_SWIZZLE_R + static_cast<Enum>(mode), GL_RED + static_cast<Enum>(arg));
 			}
 
 			void OGL33Model::init() {

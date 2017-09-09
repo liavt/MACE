@@ -43,34 +43,13 @@ namespace mc {
 				ROW_LENGTH
 			};
 
-			//there is no ZERO and ONE like in OpenGL because DirectX doesn't support that
-			enum class SwizzleMode: Byte {
-				/*
-				The reasoning for these specific numerical values is because then we can just cast it and dd it to GL_RED, because GL spec says:
-				GL_RED = ...
-				GL_GREEN = GL_RED + 1
-				GL_BLUE = GL_RED + 2
-				GL_ALPHA = GL_RED + 3
-
-				Meaning:
-				GL_RED + static_cast<Enum>(arg) = specified component constant, where arg is Enums::SwizzleMode
-
-				So GL_RED + static_cast<Enum>(Enums::SwizzleMode::B) would become GL_BLUE because GL_BLUE = GL_RED + 2
-
-				Thank god for enum classes!
-				*/
-				R = 0,
-				G = 1,
-				B = 2,
-				A = 3
-			};
-
 			enum class ImageFormat: Byte {
 				//each enum is equal to how many components in that type of image
 				//the image load/save functions use swizzle masks to differentiate
 				//between GRAY and R, GRAY_ALPHA and RG
-				GRAY = 1,
-				GRAY_ALPHA = 2,
+				LUMINANCE = 1,
+				LUMINANCE_ALPHA = 2,
+				INTENSITY = 1,
 				R = 1,
 				RG = 2,
 				RGB = 3,
@@ -201,11 +180,9 @@ namespace mc {
 				STENCIL,
 				DEPTH,
 				DEPTH_STENCIL,
-				//The next 2 are deprecated in OpenGL 3.3
-				//This comment exists to remind people not to
-				//add them.
-				//LUMINANCE,
-				//LUMINANCE_ALPHA
+				LUMINANCE,
+				LUMINANCE_ALPHA,
+				INTENSITY
 			};
 
 			enum class InternalFormat: Enum {
@@ -270,8 +247,6 @@ namespace mc {
 			virtual void setPackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
 
 			virtual void readPixels(void* data) const = 0;
-
-			virtual void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) = 0;
 		protected:
 			const TextureDesc desc;
 		};
@@ -398,8 +373,6 @@ namespace mc {
 
 			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value);
 			void setPackStorageHint(const Enums::PixelStorage hint, const int value);
-
-			void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg);
 
 			void readPixels(void* data) const;
 

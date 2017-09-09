@@ -18,6 +18,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 #include <clocale>
 
+//debug
+#include<iostream>
+
 namespace mc {
 	namespace gfx {
 		namespace {
@@ -362,7 +365,7 @@ namespace mc {
 			if (character.width == 0 || character.height == 0) {
 				character.mask = Texture(Colors::INVISIBLE);
 			} else {
-				TextureDesc desc = TextureDesc(character.width, character.height, TextureDesc::Format::RED);
+				TextureDesc desc = TextureDesc(character.width, character.height, TextureDesc::Format::LUMINANCE);
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
 				desc.internalFormat = TextureDesc::InternalFormat::RED;
 				desc.wrapS = TextureDesc::Wrap::CLAMP;
@@ -376,9 +379,6 @@ namespace mc {
 				character.mask.setUnpackStorageHint(gfx::Enums::PixelStorage::ALIGNMENT, 1);
 
 				character.mask.setData(fonts[id]->glyph->bitmap.buffer);
-				character.mask.setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
-				character.mask.setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
-				character.mask.setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::R);
 			}
 		}
 

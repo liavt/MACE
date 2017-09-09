@@ -211,12 +211,21 @@ namespace mc {
 
 				TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
 				if (outputComponents == 1) {
-					desc.format = TextureDesc::Format::RED;
+					if (imgFormat == Enums::ImageFormat::LUMINANCE) {
+						desc.format = TextureDesc::Format::LUMINANCE;
+					} else if (imgFormat == Enums::ImageFormat::INTENSITY) {
+						desc.format = TextureDesc::Format::INTENSITY;
+					} else {
+						desc.format = TextureDesc::Format::RED;
+					}
 					desc.internalFormat = TextureDesc::InternalFormat::RED;
 				} else if (outputComponents == 2) {
-					desc.format = TextureDesc::Format::RG;
+					if (imgFormat == Enums::ImageFormat::LUMINANCE_ALPHA) {
+						desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
+					} else {
+						desc.format = TextureDesc::Format::RG;
+					}
 					desc.internalFormat = TextureDesc::InternalFormat::RG;
-
 				} else if (outputComponents == 3) {
 					desc.format = TextureDesc::Format::RGB;
 					desc.internalFormat = TextureDesc::InternalFormat::RGB;
@@ -281,7 +290,7 @@ namespace mc {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
 				return context->getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, []() {
-					TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::RED);
+					TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::LUMINANCE);
 					desc.minFilter = TextureDesc::Filter::NEAREST;
 					desc.magFilter = TextureDesc::Filter::NEAREST;
 					desc.type = TextureDesc::Type::FLOAT;
@@ -291,12 +300,8 @@ namespace mc {
 
 					texture.resetPixelStorage();
 
-					MACE_CONSTEXPR const float data[] = { 1 };
+					MACE_CONSTEXPR const float data[] = { 1.0f };
 					texture.setData(data);
-
-					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
-					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
-					texture.setSwizzle(gfx::Enums::SwizzleMode::A, gfx::Enums::SwizzleMode::R);
 
 					return texture;
 				});
@@ -309,7 +314,7 @@ namespace mc {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
 				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
-					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT, TextureDesc::Format::RED);
+					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT, TextureDesc::Format::LUMINANCE);
 					desc.type = TextureDesc::Type::FLOAT;
 					desc.internalFormat = TextureDesc::InternalFormat::RED;
 					desc.minFilter = TextureDesc::Filter::LINEAR;
@@ -325,9 +330,6 @@ namespace mc {
 						data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT);
 					}
 					texture.setData(data);
-
-					texture.setSwizzle(gfx::Enums::SwizzleMode::G, gfx::Enums::SwizzleMode::R);
-					texture.setSwizzle(gfx::Enums::SwizzleMode::B, gfx::Enums::SwizzleMode::R);
 
 					return texture;
 				});
@@ -455,12 +457,6 @@ namespace mc {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->setPackStorageHint(hint, value);
-		}
-
-		void Texture::setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setSwizzle(mode, arg);
 		}
 
 		void Texture::readPixels(void * data) const {

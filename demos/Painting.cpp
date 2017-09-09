@@ -16,7 +16,7 @@ public:
 	void onInit() override {
 		lena = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("lena.jpg"), gfx::Enums::ImageFormat::RGBA);
 
-		star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::GRAY_ALPHA);
+		star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::LUMINANCE_ALPHA);
 	}
 
 	void onUpdate() override {}

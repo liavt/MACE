@@ -54,8 +54,6 @@ namespace mc {
 				void setData(const void* data, const Index mipmap = 0) override;
 
 				void readPixels(void* data) const override;
-
-				void setSwizzle(const Enums::SwizzleMode mode, const Enums::SwizzleMode arg) override;
 			};
 
 			class OGL33Context: public gfx::GraphicsContext {
