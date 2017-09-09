@@ -248,7 +248,7 @@ namespace mc {
 				ogl::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
 
 				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
-					//ogl::Texture2D::generateMipmap();
+					ogl::Texture2D::generateMipmap();
 				}
 			}
 
