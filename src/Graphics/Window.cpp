@@ -328,7 +328,7 @@ namespace mc {
 						windowDelay = Duration(std::chrono::seconds(1)) / static_cast<long long>(config.fps);
 					}
 
-					os::checkError(__LINE__, __FILE__, "A system error occurred creating the window");
+					os::clearError(__LINE__, __FILE__);
 				} catch (const std::exception& e) {
 					Error::handleError(e, instance);
 				} catch (...) {
