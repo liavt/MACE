@@ -125,10 +125,8 @@ namespace mc {
 				ogl::Texture2D::bind();
 
 				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR) {
-					ogl::Texture2D::generateMipmap();
 					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 				} else if (desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
-					ogl::Texture2D::generateMipmap();
 					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				} else if (desc.minFilter == TextureDesc::Filter::LINEAR) {
 					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -137,7 +135,6 @@ namespace mc {
 				} else {
 					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.minFilter)));
 				}
-
 				if (desc.magFilter == TextureDesc::Filter::MIPMAP_LINEAR ||
 					desc.magFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
 					MACE__THROW(UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
@@ -174,6 +171,7 @@ namespace mc {
 					MACE__THROW(BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapT)));
 				}
 
+				/*
 				switch (desc.format) {
 					case TextureDesc::Format::INTENSITY:
 						setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
@@ -190,6 +188,8 @@ namespace mc {
 					default:
 						break;
 				}
+				*/
+				glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
 			}
 
 			OGL33Texture::~OGL33Texture() {
@@ -243,6 +243,10 @@ namespace mc {
 			void OGL33Texture::setData(const void * data, const Index mipmap) {
 				ogl::Texture2D::bind();
 				ogl::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
+
+				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
+					//ogl::Texture2D::generateMipmap();
+				}
 			}
 
 			void OGL33Texture::readPixels(void * data) const {

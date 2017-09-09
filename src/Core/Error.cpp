@@ -48,8 +48,8 @@ namespace mc {
 
 			instance->requestStop();
 		}
-
-		std::terminate();
+		
+		std::exit(EXIT_FAILURE);
 	}
 
 	void Error::handleError(const std::exception & e, Instance& instance) {

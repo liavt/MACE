@@ -356,7 +356,7 @@ namespace mc {
 			}
 
 			//the old texture will be deallocated, and its destructor will be called and decrement ref count
-			texture.swap(gfx::getCurrentWindow()->getContext()->createTextureImpl(desc));
+			texture = gfx::getCurrentWindow()->getContext()->createTextureImpl(desc);
 		}
 
 		void Texture::destroy() {

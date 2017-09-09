@@ -273,13 +273,14 @@ namespace mc {
 			glfwSetFramebufferSizeCallback(window, &onWindowFramebufferResized);
 			glfwSetWindowRefreshCallback(window, &onWindowDamaged);
 
-			int width = 0, height = 0;
+			//int width = 0, height = 0;
 
-			glfwGetFramebufferSize(window, &width, &height);
+			//glfwGetFramebufferSize(window, &width, &height);
 
-			if (width != config.width || height != config.height) {
-				context->getRenderer()->resize(this, width, height);
-			}
+			//if (width != config.width || height != config.height) {
+			//	context->getRenderer()->resize(this, width, height);
+			//}
+			context->getRenderer()->resize(this, config.width, config.height);
 
 			config.onCreate(*this);
 		}
@@ -403,13 +404,15 @@ namespace mc {
 			//GLFW needs to be created from main thread
 			//we create a window in the main thread, then switch its context to the render thread
 			create();
+			
+			os::clearError(__LINE__, __FILE__);//sometimes an error comes from GLFW that we can ignore
 
 			//release context on this thread, it wll be owned by the seperate rendering thread
 			glfwMakeContextCurrent(nullptr);
 
-			os::checkError(__LINE__, __FILE__, "A system error occured while trying to init the WindowModule");
-
 			windowThread = std::thread(&WindowModule::threadCallback, this);
+
+			os::checkError(__LINE__, __FILE__, "A system error occured while trying to init the WindowModule");
 		}
 
 		void WindowModule::update() {
