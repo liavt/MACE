@@ -652,6 +652,6 @@ namespace mc {
 
 		Texture2DImpl::Texture2DImpl(const TextureDesc & t) : desc(t) {}
 
-		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : width(w), height(h), format(form) {}
+		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : format(form), width(w), height(h)  {}
 	}//gfx
 }//mc

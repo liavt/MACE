@@ -53,7 +53,7 @@ namespace mc {
 		void destroy() override;
 
 		void setLooping(const bool val);
-		bool isLooping() const;;
+		bool isLooping() const;
 	private:
 		Byte properties = 0;
 		unsigned int source, buffer;
