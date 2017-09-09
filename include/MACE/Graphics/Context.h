@@ -213,7 +213,7 @@ namespace mc {
 				BORDER
 			};
 
-			TextureDesc() noexcept = default;
+			TextureDesc() = default;
 			TextureDesc(const unsigned int w, const unsigned int h, const Format form = Format::RGBA);
 
 			Filter minFilter = Filter::LINEAR;

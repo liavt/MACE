@@ -76,7 +76,7 @@ namespace mc {
 					}
 				}catch(const Error& err){
 					Error::handleError(err);
-					std::exit(EXIT_FAILURE);				
+					std::exit(EXIT_FAILURE);	
 				}
 			}
 
