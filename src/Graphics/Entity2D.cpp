@@ -18,8 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <vector>
 #include <clocale>
 
-//debug
-#include<iostream>
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -363,7 +362,7 @@ namespace mc {
 			character.advanceY = fonts[id]->glyph->advance.y >> 6;
 
 			if (character.width == 0 || character.height == 0) {
-				character.mask = Texture(Colors::INVISIBLE);
+				character.mask = gfx::Texture::getGradient();
 			} else {
 				TextureDesc desc = TextureDesc(character.width, character.height, TextureDesc::Format::LUMINANCE);
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
@@ -372,7 +371,8 @@ namespace mc {
 				desc.wrapT = TextureDesc::Wrap::CLAMP;
 				desc.minFilter = TextureDesc::Filter::LINEAR;
 				desc.magFilter = TextureDesc::Filter::LINEAR;
-				character.mask.init(desc);
+				
+				character.mask = Texture(desc);
 				character.mask.bind();
 
 				character.mask.resetPixelStorage();
@@ -675,7 +675,11 @@ namespace mc {
 					x += static_cast<float>(letters[i].advanceX) / origWidth;
 					x += letters[i].getWidth();
 
-					letters[i].texture = this->texture;
+					if (this->texture.isCreated()) {
+						letters[i].texture = this->texture;
+					} else {
+						letters[i].texture = Colors::WHITE;
+					}
 
 					addChild(letters[i]);
 				}

@@ -26,7 +26,6 @@ namespace mc {
 			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_RED) << typeid(e).name();
 			std::cerr << os::consoleColor(os::ConsoleColor::RED) << " occured:" << std::endl << "\t";
 			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_YELLOW) << e.what() << std::endl;
-
 #ifdef MACE_DEBUG
 			const Error* err = dynamic_cast<const Error*>(&e);
 			if (err != nullptr) {
@@ -49,7 +48,11 @@ namespace mc {
 			instance->requestStop();
 		}
 		
+#ifdef MACE_DEBUG
+		throw e;
+#else
 		std::exit(EXIT_FAILURE);
+#endif
 	}
 
 	void Error::handleError(const std::exception & e, Instance& instance) {

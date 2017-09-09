@@ -229,11 +229,11 @@ namespace mc {
 			Color borderColor = Colors::INVISIBLE;
 		};
 
-		class TextureImpl: public Bindable {
+		class Texture2DImpl: public Bindable {
 			friend class Texture;
 		public:
-			TextureImpl(const TextureDesc& t);
-			virtual ~TextureImpl() = default;
+			Texture2DImpl(const TextureDesc& t);
+			virtual ~Texture2DImpl() = default;
 
 			virtual void bind() const override = 0;
 			virtual void bind(const unsigned int location) const = 0;
@@ -269,7 +269,7 @@ namespace mc {
 			Texture();
 			Texture(const TextureDesc& d);
 			Texture(const Color& col);
-			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+			Texture(const std::shared_ptr<Texture2DImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
 
 			void init(const TextureDesc& desc);
@@ -284,6 +284,16 @@ namespace mc {
 
 			unsigned int getHeight();
 			const unsigned int getHeight() const;
+
+#ifdef MACE_EXPOSE_OPENGL
+			std::shared_ptr<Texture2DImpl> getImpl() {
+				return texture;
+			}
+
+			const std::shared_ptr<Texture2DImpl> getImpl() const {
+				return texture;
+			}
+#endif
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
@@ -369,7 +379,7 @@ namespace mc {
 					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
 				}
 
-				setData(data, mipmap);
+				setData(static_cast<const void*>(data[0]), mipmap);
 			}
 
 			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value);
@@ -380,7 +390,7 @@ namespace mc {
 			bool operator==(const Texture& other) const;
 			bool operator!=(const Texture& other) const;
 		private:
-			std::shared_ptr<TextureImpl> texture;
+			std::shared_ptr<Texture2DImpl> texture;
 
 			Color hue = Colors::INVISIBLE;
 
@@ -449,7 +459,7 @@ namespace mc {
 			may have to own the same pointer to data, they have to use std::shared_ptr
 			*/
 			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
-			virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const = 0;
+			virtual std::shared_ptr<Texture2DImpl> createTextureImpl(const TextureDesc& desc) const = 0;
 
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;

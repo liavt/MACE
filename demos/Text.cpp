@@ -9,7 +9,6 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/MACE.h>
 
-
 using namespace mc;
 
 gfx::Text topLeft, center, topRight, botLeft, botRight;

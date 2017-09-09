@@ -209,7 +209,7 @@ namespace mc {
 				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE
 											  ? actualComponents : static_cast<int>(imgFormat));
 
-				TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
+				TextureDesc desc = TextureDesc(width, height);
 				if (outputComponents == 1) {
 					if (imgFormat == Enums::ImageFormat::LUMINANCE) {
 						desc.format = TextureDesc::Format::LUMINANCE;
@@ -233,7 +233,7 @@ namespace mc {
 					desc.format = TextureDesc::Format::RGBA;
 					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
 				} else {
-					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4!");
+					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4");
 				}
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
 				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
@@ -324,6 +324,7 @@ namespace mc {
 
 					texture.resetPixelStorage();
 
+					
 					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
 					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
 						//the darker part is on the bottom
@@ -342,7 +343,7 @@ namespace mc {
 			init(d);
 		}
 
-		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
+		Texture::Texture(const std::shared_ptr<Texture2DImpl> tex, const Color& col) : texture(tex), hue(col) {}
 
 		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
 
@@ -592,7 +593,7 @@ namespace mc {
 			window = nullptr;
 		}
 
-		TextureImpl::TextureImpl(const TextureDesc & t) : desc(t) {}
+		Texture2DImpl::Texture2DImpl(const TextureDesc & t) : desc(t) {}
 
 		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : width(w), height(h), format(form) {}
 	}//gfx

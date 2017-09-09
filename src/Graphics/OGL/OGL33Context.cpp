@@ -10,6 +10,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/OGL/OGL33Context.h>
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
 
+//debug
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
 		namespace ogl {
@@ -120,7 +123,7 @@ namespace mc {
 				}
 			}//anon namespace
 
-			OGL33Texture::OGL33Texture(const TextureDesc& desc) : TextureImpl(desc), ogl::Texture2D() {
+			OGL33Texture::OGL33Texture(const TextureDesc& desc) : Texture2DImpl(desc), ogl::Texture2D() {
 				ogl::Texture2D::init();
 				ogl::Texture2D::bind();
 
@@ -345,8 +348,8 @@ namespace mc {
 				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
-				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
+			std::shared_ptr<Texture2DImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
+				return std::unique_ptr<Texture2DImpl>(new OGL33Texture(desc));
 			}
 		}//ogl
 	}//gfx
