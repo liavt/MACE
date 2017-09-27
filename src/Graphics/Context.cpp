@@ -193,62 +193,6 @@ namespace mc {
 		}
 
 		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat imgFormat) {
-			/*
-			MACE__VERIFY_TEXTURE_INIT();
-
-			resetPixelStorage();
-
-			int width, height, actualComponents;
-			Byte* image = stbi_load(file, &width, &height, &actualComponents, static_cast<int>(imgFormat));
-
-			try {
-				if (image == nullptr || width == 0 || height == 0 || actualComponents == 0) {
-					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
-				}
-
-			const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE
-										  ? actualComponents : static_cast<int>(imgFormat));
-
-			Enums::Format format;
-			Enums::InternalFormat internalFormat;
-
-			if (outputComponents == 1) {
-				format = Enums::Format::RED;
-				internalFormat = Enums::InternalFormat::RED;
-				if (imgFormat == Enums::ImageFormat::GRAY) {
-					setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
-					setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
-				}
-			} else if (outputComponents == 2) {
-				format = Enums::Format::RG;
-				internalFormat = Enums::InternalFormat::RG;
-				if (imgFormat == Enums::ImageFormat::GRAY_ALPHA) {
-					setSwizzle(Enums::SwizzleMode::G, Enums::SwizzleMode::R);
-					setSwizzle(Enums::SwizzleMode::B, Enums::SwizzleMode::R);
-					setSwizzle(Enums::SwizzleMode::A, Enums::SwizzleMode::G);
-				}
-			} else if (outputComponents == 3) {
-				format = Enums::Format::RGB;
-				internalFormat = Enums::InternalFormat::RGB;
-			} else if (outputComponents == 4) {
-				format = Enums::Format::RGBA;
-				internalFormat = Enums::InternalFormat::RGBA;
-			} else {
-				MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4!");
-			}
-
-			setData(image, width, height, gfx::Enums::Type::UNSIGNED_BYTE, format, internalFormat);
-		} catch (const std::exception& e) {
-			stbi_image_free(image);
-			throw e;
-		}
-
-		stbi_image_free(image);
-
-		setMinFilter(Enums::ResizeFilter::MIPMAP_LINEAR);
-		setMagFilter(Enums::ResizeFilter::NEAREST);
-			*/
-
 			Texture tex = Texture();
 
 			int width, height, actualComponents;
