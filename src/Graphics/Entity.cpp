@@ -16,7 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <string>
 
 namespace mc {
-	namespace gfx{
+	namespace gfx {
 		void Component::init() {}
 
 		bool Component::update() {
@@ -64,12 +64,12 @@ namespace mc {
 		void Entity::makeChildrenDirty() {
 			setProperty(Entity::DIRTY, true);
 
-			for (Entity* e : children) {
+			for (SmartPointer<Entity> e : children) {
 				e->makeChildrenDirty();
 			}
 		}
 
-		const std::vector<Entity*>& Entity::getChildren() const {
+		const std::vector<SmartPointer<Entity>>& Entity::getChildren() const {
 			return this->children;
 		}
 
@@ -88,7 +88,7 @@ namespace mc {
 #endif
 
 			for (Index i = 0; i < children.size(); ++i) {
-				if (e == children[i]) {
+				if (e == children[i].get()) {
 					makeDirty();
 
 					removeChild(i);
@@ -97,6 +97,10 @@ namespace mc {
 			}
 
 			MACE__THROW(ObjectNotFound, "Specified argument to removeChild is not a valid object in the array!");
+		}
+
+		void Entity::removeChild(SmartPointer<Entity> ent) {
+			removeChild(ent.get());
 		}
 
 		void Entity::removeChild(Index index) {
@@ -138,6 +142,12 @@ namespace mc {
 			}
 
 		}
+
+		void Entity::onUpdate() {}
+
+		void Entity::onInit() {}
+
+		void Entity::onDestroy() {}
 
 		void Entity::hover() {
 			onHover();
@@ -270,6 +280,8 @@ namespace mc {
 			}
 		}
 
+		void Entity::onRender() {}
+
 		void Entity::onClean() {}
 
 		void Entity::onHover() {}
@@ -293,19 +305,19 @@ namespace mc {
 		}
 
 		Entity& Entity::operator[](Index i) {
-			return *children[i];
+			return *children[i].get();
 		}
 
 		const Entity& Entity::operator[](Index i) const {
-			return *children[i];
+			return *children[i].get();
 		}
 
 		Entity& Entity::getChild(Index i) {
-			return *children.at(i);
+			return *children.at(i).get();
 		}
 
 		const Entity& Entity::getChild(Index i) const {
-			return *children.at(i);
+			return *children.at(i).get();
 		}
 
 		int Entity::indexOf(const Entity & e) const {
@@ -321,11 +333,11 @@ namespace mc {
 			return size() == 0;
 		}
 
-		std::vector<Entity*>::iterator Entity::begin() {
+		std::vector<SmartPointer<Entity>>::iterator Entity::begin() {
 			return children.begin();
 		}
 
-		std::vector<Entity*>::iterator Entity::end() {
+		std::vector<SmartPointer<Entity>>::iterator Entity::end() {
 			return children.end();
 		}
 
@@ -338,7 +350,7 @@ namespace mc {
 			destroy();
 		}
 
-		void Entity::addChild(Entity * e) {
+		void Entity::addChild(SmartPointer<Entity> e) {
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
 			}
@@ -351,6 +363,10 @@ namespace mc {
 			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
 				e->init();
 			}
+		}
+
+		void Entity::addChild(Entity* e) {
+			addChild(SmartPointer<Entity>(e));
 		}
 
 		void Entity::addChild(Entity & e) {

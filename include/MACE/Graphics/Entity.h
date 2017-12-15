@@ -211,7 +211,7 @@ namespace mc {
 			Gets all of this `Entity's` children.
 			@return an `std::vector` with all children of this `Entity`
 			*/
-			const std::vector<Entity*>& getChildren() const;
+			const std::vector<SmartPointer<Entity>>& getChildren() const;
 			/**
 			Removes a child.
 			<p>
@@ -228,6 +228,11 @@ namespace mc {
 			@throws NullPointerError if the argument is `nullptr`
 			*/
 			void removeChild(const Entity* e);
+
+			/**
+			@copydoc Entity::removeChild(const Entity*)
+			*/
+			void removeChild(SmartPointer<Entity> ent);
 
 			/**
 			Removes a child via location.
@@ -323,14 +328,14 @@ namespace mc {
 			@see Entity::end()
 			@see Entity::size()
 			*/
-			std::vector<Entity*>::iterator begin();
+			std::vector<SmartPointer<Entity>>::iterator begin();
 			/**
 			Retrieves the end of the children of this `Entity`
 			@return End of the last `Entity`
 			@see Entity::begin()
 			@see Entity::size()
 			*/
-			std::vector<Entity*>::iterator end();
+			std::vector<SmartPointer<Entity>>::iterator end();
 
 			/**
 			Calculates the amount of children this `Entity` has.
@@ -438,6 +443,10 @@ namespace mc {
 			@copydoc Entity::addChild(Entity&)
 			*/
 			void addChild(Entity* e);
+			/**
+			@copydoc Entity::addChild(Entity&)
+			*/
+			void addChild(SmartPointer<Entity> ent);
 
 			void addComponent(Component& com);
 			void addComponent(Component* com);
@@ -581,7 +590,7 @@ namespace mc {
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
 			*/
-			std::vector<Entity*> children = std::vector<Entity*>();
+			std::vector<SmartPointer<Entity>> children = std::vector<SmartPointer<Entity>>();
 
 			/**
 			@internal
@@ -628,28 +637,28 @@ namespace mc {
 			@see MACE#update()
 			@internal
 			*/
-			virtual void onUpdate() = 0;
+			virtual void onUpdate();
 			/**
 			When `Entity.init()` is called, `onInit()` is called on all of it's children.
 			@see MACE#init()
 			@internal
 			@opengl
 			*/
-			virtual void onInit() = 0;
+			virtual void onInit();
 			/**
 			When `Entity.destroy()` is called, `onDestroy()` is called on all of it's children.
 			@see MACE#destroy()
 			@internal
 			@opengl
 			*/
-			virtual void onDestroy() = 0;
+			virtual void onDestroy();
 
 			/**
 			When `Entity.render()` is called, `onRender()` is called on all of it's children.
 			@internal
 			@opengl
 			*/
-			virtual void onRender() = 0;
+			virtual void onRender();
 
 			/**
 			@internal
