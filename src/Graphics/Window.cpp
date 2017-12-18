@@ -529,18 +529,30 @@ namespace mc {
 		}
 
 		WindowModule * getCurrentWindow() {
-			GLFWwindow* win = glfwGetCurrentContext();
+			WindowModule* win = getCurrentWindowOrNull();
 			if (win == nullptr) {
-				MACE__THROW(NoRendererContext, "No renderer context in this thread");
+				MACE__THROW(NoRendererContext, "No Renderer found in this thread");
 			}
 
-			return convertGLFWWindowToModule(win);
+			return win;
+		}
+
+		WindowModule * getCurrentWindowOrNull() {
+			return convertGLFWWindowToModule(glfwGetCurrentContext());
+		}
+
+		bool hasWindow() {
+			return getCurrentWindowOrNull() != nullptr;
 		}
 
 		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {
+			if (win == nullptr) {
+				return nullptr;
+			}
+
 			WindowModule* windowModule = static_cast<WindowModule*>(glfwGetWindowUserPointer(win));
 			if (windowModule == nullptr) {
-				MACE__THROW(NoRendererContext, "No window module found in window");
+				return nullptr;
 			}
 
 			return windowModule;

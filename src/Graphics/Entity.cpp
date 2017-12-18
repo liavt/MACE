@@ -355,18 +355,24 @@ namespace mc {
 				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
 			}
 
+			children.push_back(e);
+			e.release();
+
+			//because push_back creates a copy of the SmartPointer, we need to retrieve the new copy of the Entity
+			SmartPointer<Entity> back = children.back();
+			back->setParent(this);
+
+			if (getProperty(Entity::INIT) && !back->getProperty(Entity::INIT)) {
+				back->init();
+			}
+
 			makeDirty();
 
-			children.push_back(e);
-			e->setParent(this);
 
-			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
-				e->init();
-			}
 		}
 
 		void Entity::addChild(Entity* e) {
-			addChild(SmartPointer<Entity>(e));
+			addChild(SmartPointer<Entity>(e, SmartPointer<Entity>::DoNothing));
 		}
 
 		void Entity::addChild(Entity & e) {
@@ -374,11 +380,11 @@ namespace mc {
 		}
 
 		void Entity::addComponent(Component & com) {
-			addComponent(SmartPointer<Component>(com));
+			addComponent(&com);
 		}
 
 		void Entity::addComponent(Component * com) {
-			addComponent(SmartPointer<Component>(com));
+			addComponent(SmartPointer<Component>(com, SmartPointer<Component>::DoNothing));
 		}
 
 		void Entity::addComponent(SmartPointer<Component> com) {
@@ -402,7 +408,7 @@ namespace mc {
 				for (Index i = 0; i < components.size(); ++i) {
 					SmartPointer<Component> a = components.at(i);
 					if (a.get() == nullptr) {
-						MACE__THROW(NullPointer, "A component locaed at index " + std::to_string(i) + " was nullptr");
+						MACE__THROW(NullPointer, "A component located at index " + std::to_string(i) + " was nullptr");
 					}
 					if (a->update()) {
 						a->destroy();
@@ -419,7 +425,7 @@ namespace mc {
 							children[i]->kill();
 						}
 						removeChild(i--);//update the index after the removal of an element, dont want an error
-						return;
+						continue;
 					}
 					children[i]->update();
 				}
@@ -433,6 +439,10 @@ namespace mc {
 
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
+				if (children[i] == nullptr) {
+					removeChild(i--);//update the index after the removal of an element
+					continue;
+				}
 				children[i]->init();
 			}
 			onInit();
@@ -445,6 +455,7 @@ namespace mc {
 				MACE__THROW(InitializationFailed, "Entity can not have destroy() called when it has not been initialized");
 			}
 			makeDirty();
+			setProperty(Entity::DEAD, true);
 			for (Index i = 0; i < children.size(); ++i) {
 				if (children[i] != nullptr) {
 					children[i]->destroy();
@@ -456,11 +467,6 @@ namespace mc {
 
 
 		Entity::Entity() noexcept {}
-
-		Entity::Entity(const Entity & obj) noexcept {
-			children = obj.children;
-			properties = obj.properties;
-		}
 
 		Entity::~Entity() noexcept {
 			children.clear();

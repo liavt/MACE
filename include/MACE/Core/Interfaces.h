@@ -12,6 +12,8 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__CORE_INTERFACES_H
 #include <MACE/Core/Error.h>
 
+#include <memory>
+
 namespace mc {
 	class Beginable {
 	public:
@@ -31,7 +33,7 @@ namespace mc {
 		virtual void unbind() const = 0;
 	};
 
-	class Binder{
+	class Binder {
 	public:
 		Binder(Bindable& o);
 		Binder(Bindable* o);
@@ -49,7 +51,7 @@ namespace mc {
 		bool operator==(const Binder& other) const;
 		bool operator!=(const Binder& other) const;
 	private:
-		Bindable* obj;
+		Bindable * obj;
 	};
 
 	class Initializer;
@@ -64,7 +66,7 @@ namespace mc {
 		virtual void destroy() = 0;
 	};//Initializable
 
-	class Initializer final{
+	class Initializer final {
 	public:
 		Initializer(Initializable* o);
 		Initializer(Initializable& o);
@@ -82,35 +84,39 @@ namespace mc {
 		bool operator==(const Initializer& other) const;
 		bool operator!=(const Initializer& other) const;
 	private:
-		Initializable* obj;
+		Initializable * obj;
 	};//Initializer
 
 	template<typename T>
 	class SmartPointer {
 	public:
+		typedef void(*Deleter)(T*);
+
+		static void DoNothing(T*) {};
+		static void DeletePointer(T* ptr) {
+			delete ptr;
+		};
+		static void DeleteArray(T ptr[]) {
+			delete[] ptr;
+		};
+
 		explicit SmartPointer(T& p) : SmartPointer(&p) {}
+		
+		explicit SmartPointer(T* p, const Deleter deleter = &DeletePointer) : ptr(p, deleter) {}
 
-		explicit SmartPointer(T* p) : SmartPointer(p, false) {}
+		SmartPointer(const std::unique_ptr<T>&& otherPtr) : ptr(otherPtr) {}
 
-		explicit SmartPointer(T* p, const bool isDynamic) : dynamic(isDynamic), ptr(p)  {
-			if (ptr == nullptr) {
-				dynamic = false;
-			}
-		}
+		SmartPointer(const std::unique_ptr<T, Deleter>&& otherPtr) : ptr(otherPtr) {}
 
-		SmartPointer(const SmartPointer& other) : SmartPointer(other.ptr) {}
+		SmartPointer(const SmartPointer& other) : SmartPointer(other.ptr.get()) {}
 
-		~SmartPointer() {
-			if (dynamic&&ptr != nullptr) {
-				delete ptr;
-			}
-		}
+		SmartPointer(const SmartPointer&& other) : ptr(other.ptr, other.getDeleter()) {}
 
 		T* get() {
-			return ptr;
+			return ptr.get();
 		}
 		const T* get() const {
-			return ptr;
+			return ptr.get();
 		}
 
 		inline T operator*() {
@@ -128,47 +134,43 @@ namespace mc {
 		}
 
 		/**
-		Gives ownership to another `SmartPointer`
-		<p>
-		If `this` does not hold ownership, nothing will occur when `swap()` is called.
-		@param other What to give the ownership of the pointer to. It must hold the same pointer.
-		@throws AssertionFailedError if `other` does not hold the same pointer as `this`
+		Swaps ownership and the pointer to another `SmartPointer`
+		@param other What to give the ownership of the pointer to.
 		*/
 		void swap(SmartPointer& other) {
-			if (other.ptr == ptr) {
-				MACE__THROW(AssertionFailed, "You can only swap PtrContainers that hold the same pointer!");
-			}
-
-			other.dynamic = dynamic;
-			release();
+			ptr.swap(other.ptr);
 		}
 
-		T* reset(T* newPtr = nullptr, bool newDynamic = false) {
-			T* oldPtr = ptr;
-			ptr = newPtr;
-			if (dynamic&&oldPtr != nullptr) {
-				delete oldPtr;
-			}
-			dynamic = newDynamic;
-			return oldPtr;
+		void reset(T* newPtr = nullptr) {
+			ptr.reset(newPtr);
 		}
 
 		/**
 		Releases ownership of the pointer. The held pointer will not be deleted at destruction.
 		*/
 		T* release() {
-			T* oldPtr = ptr;
-			ptr = nullptr;
-			dynamic = false;
-			return oldPtr;
+			return ptr.release();
 		}
 
-		bool isDynamic() const {
-			return dynamic;
+		Deleter& getDeleter() {
+			return ptr.get_deleter();
+		}
+
+		SmartPointer operator=(SmartPointer& other) {
+			return SmartPointer<T>(other.ptr.get(), DoNothing);
+		};
+
+		SmartPointer& operator=(SmartPointer&& other) {
+			ptr.operator=(std::move(other.ptr));
+			return *this;
+		}
+
+		operator bool() const noexcept {
+			return ptr.get() == nullptr;
 		}
 
 		bool operator==(const SmartPointer& other) const {
-			return ptr == other.ptr && dynamic == other.dynamic;
+			return ptr == other.ptr;
 		}
 
 		bool operator!=(const SmartPointer& other) const {
@@ -176,16 +178,14 @@ namespace mc {
 		}
 
 		bool operator==(const T* other) const {
-			return ptr == other;
+			return ptr.get() == other;
 		}
 
 		bool operator!=(const T* other) const {
 			return !operator==(other);
 		}
 	private:
-		bool dynamic;
-
-		T* ptr;
+		std::unique_ptr<T, Deleter> ptr;
 	};//SmartPointer
 }//mc
 

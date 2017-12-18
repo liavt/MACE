@@ -314,13 +314,15 @@ namespace mc {
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
-				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
-					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT, TextureDesc::Format::LUMINANCE);
+				
+
+				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, [](){
+					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT);
+					desc.format = TextureDesc::Format::LUMINANCE;
 					desc.type = TextureDesc::Type::FLOAT;
 					desc.internalFormat = TextureDesc::InternalFormat::RED;
 					desc.minFilter = TextureDesc::Filter::LINEAR;
 					desc.magFilter = TextureDesc::Filter::NEAREST;
-
 					Texture texture = Texture(desc);
 
 					texture.resetPixelStorage();

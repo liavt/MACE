@@ -198,10 +198,6 @@ namespace mc {
 			*/
 			Entity() noexcept;
 			/**
-			Cloning constructor. Copies another's `Entity's` properties and children.
-			*/
-			Entity(const Entity &obj) noexcept;
-			/**
 			Destructor. Made `virtual` for inheritance.
 			@see ~Entity()
 			*/

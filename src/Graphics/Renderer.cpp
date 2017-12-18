@@ -46,7 +46,7 @@ namespace mc {
 
 		void Renderer::remove(const EntityID id) {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
-			if (id == 0 || id > renderQueue.size()) {
+			if (id <= 0 || id > renderQueue.size()) {
 				MACE__THROW(OutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
 			}
 #endif
@@ -80,6 +80,10 @@ namespace mc {
 		void Renderer::destroy() {
 			onDestroy();
 		}//destroy()
+
+		GraphicsEntity * Renderer::getEntityAt(const float x, const float y) {
+			return getEntityAt(static_cast<int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<int>(getHeight() * ((y * 0.5f) + 0.5f)));
+		}
 
 		void Renderer::setRefreshColor(const Color & c) {
 			setRefreshColor(c.r, c.g, c.b, c.a);
@@ -119,7 +123,7 @@ namespace mc {
 
 		EntityID Renderer::pushEntity(GraphicsEntity * const entity) {
 			for (EntityID i = 0; i < renderQueue.size(); ++i) {
-				if (renderQueue[i] == nullptr) {
+				if (renderQueue[i] == nullptr || renderQueue[i]->getProperty(Entity::DEAD)) {
 					renderQueue[i] = entity;
 					return i;
 				}
@@ -150,24 +154,30 @@ namespace mc {
 		}
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
+			pop();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
 			drawQuad(Enums::Brush::MASK, Enums::RenderFeatures::DEFAULT);
+			push();
 		}
 
 		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
+			push();
 			setData({ amount, 0, 0, 0 });
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
 			drawQuad(Enums::Brush::BLEND, Enums::RenderFeatures::DEFAULT);
+			pop();
 		}
 
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
+			push();
 			setData({ minimum, maximum, 0, 0 });
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
 			drawQuad(Enums::Brush::MASKED_BLEND, Enums::RenderFeatures::DEFAULT);
+			pop();
 		}
 
 		void Painter::drawQuad(const Enums::Brush brush, const Enums::RenderFeatures feat) {
@@ -202,8 +212,10 @@ namespace mc {
 		}
 
 		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderFeatures feat) {
+			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			draw(m, Enums::Brush::TEXTURE, feat);
+			pop();
 		}
 
 		void Painter::fillModel(const Model & m, const Enums::RenderFeatures feat) {
@@ -211,9 +223,11 @@ namespace mc {
 		}
 
 		void Painter::fillRect(const float x, const float y, const float w, const float h) {
+			push();
 			translate(x, y);
 			scale(w, h);
 			drawQuad(Enums::Brush::COLOR, Enums::RenderFeatures::DEFAULT & ~Enums::RenderFeatures::TEXTURE);
+			pop();
 		}
 
 		void Painter::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
@@ -225,8 +239,10 @@ namespace mc {
 		}
 
 		void Painter::drawImage(const Texture & img) {
+			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			drawQuad(Enums::Brush::TEXTURE, Enums::RenderFeatures::DEFAULT | Enums::RenderFeatures::DISCARD_INVISIBLE);
+			pop();
 		}
 
 		void Painter::setForegroundColor(const Color & col) {
@@ -312,7 +328,7 @@ namespace mc {
 				{0, col.y(), 0, 0},
 				{0, 0, col.z(), 0},
 				{0, 0, 0, col.w()}
-			}));
+										  }));
 		}
 
 		void Painter::setFilter(const Matrix<float, 4, 4> & col) {

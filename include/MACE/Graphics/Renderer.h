@@ -247,6 +247,7 @@ namespace mc {
 		public:
 			virtual ~Renderer() = default;
 
+			virtual GraphicsEntity* getEntityAt(const float x, const float y);
 			virtual GraphicsEntity* getEntityAt(const int x, const int y) = 0;
 
 			/**

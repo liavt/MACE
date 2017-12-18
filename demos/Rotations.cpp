@@ -73,7 +73,7 @@ void create(gfx::WindowModule&) {
 
 			entity->getPainter().setOpacity(0.5f);
 
-			entity->addComponent(SmartPointer<gfx::Component>(new TestComponent(), true));
+			entity->addComponent(SmartPointer<gfx::Component>(new TestComponent()));
 
 			if (x >= elementNum / 2) {
 				if (y >= elementNum / 2) {
@@ -124,10 +124,10 @@ int main() {
 		topRight.setX(0.5f);
 		topRight.setY(0.5f);
 
-		botLeft.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
-		botRight.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
-		topLeft.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
-		topRight.addComponent(SmartPointer<gfx::Component>(new RotationComponent(), true));
+		botLeft.addComponent(SmartPointer<gfx::Component>(new RotationComponent()));
+		botRight.addComponent(SmartPointer<gfx::Component>(new RotationComponent()));
+		topLeft.addComponent(SmartPointer<gfx::Component>(new RotationComponent()));
+		topRight.addComponent(SmartPointer<gfx::Component>(new RotationComponent()));
 
 		module.addChild(botLeft);
 		module.addChild(botRight);

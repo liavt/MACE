@@ -223,7 +223,7 @@ namespace mc {
 #endif
 
 				bar->setProgress(progress);
-			}, function, callback), true));
+			}, function, callback), SmartPointer<Component>::DeletePointer));
 		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {
