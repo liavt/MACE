@@ -91,9 +91,7 @@ int main() {
 
 		gfx::WindowModule module = gfx::WindowModule(config);
 		instance.addModule(module);
-
-		PainterDemo painterDemo;
-		module.addChild(painterDemo);
+		module.addChild(SmartPointer<gfx::Entity>(new PainterDemo()));
 
 		os::ErrorModule errModule = os::ErrorModule();
 		instance.addModule(errModule);

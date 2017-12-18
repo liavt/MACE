@@ -154,11 +154,11 @@ namespace mc {
 		}
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
-			pop();
+			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
 			drawQuad(Enums::Brush::MASK, Enums::RenderFeatures::DEFAULT);
-			push();
+			pop();
 		}
 
 		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {

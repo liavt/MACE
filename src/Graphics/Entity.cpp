@@ -356,7 +356,6 @@ namespace mc {
 			}
 
 			children.push_back(e);
-			e.release();
 
 			//because push_back creates a copy of the SmartPointer, we need to retrieve the new copy of the Entity
 			SmartPointer<Entity> back = children.back();
@@ -389,7 +388,6 @@ namespace mc {
 
 		void Entity::addComponent(SmartPointer<Component> com) {
 			components.push_back(com);
-			com.release();
 			components.back()->parent = this;
 			components.back()->init();
 

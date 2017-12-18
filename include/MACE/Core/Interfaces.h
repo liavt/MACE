@@ -102,15 +102,19 @@ namespace mc {
 
 		explicit SmartPointer(T& p) : SmartPointer(&p) {}
 		
-		explicit SmartPointer(T* p, const Deleter deleter = &DeletePointer) : ptr(p, deleter) {}
+		explicit SmartPointer(T* p, Deleter deleter = &DeletePointer) : ptr(p, deleter) {}
 
-		SmartPointer(const std::unique_ptr<T>&& otherPtr) : ptr(otherPtr) {}
+		SmartPointer(const std::shared_ptr<T>& otherPtr) : ptr(otherPtr) {}
 
-		SmartPointer(const std::unique_ptr<T, Deleter>&& otherPtr) : ptr(otherPtr) {}
+		SmartPointer(const std::shared_ptr<T>&& otherPtr) : ptr(std::move(otherPtr)) {}
 
-		SmartPointer(const SmartPointer& other) : SmartPointer(other.ptr.get()) {}
+		SmartPointer(const SmartPointer& other) : SmartPointer(other.ptr) {}
 
-		SmartPointer(const SmartPointer&& other) : ptr(other.ptr, other.getDeleter()) {}
+		/*
+		matthew suc
+		SmartPointer(const SmartPointer&& other) : ptr() {
+			ptr.operator=(std::move(other.ptr));
+		}*/
 
 		T* get() {
 			return ptr.get();
@@ -145,23 +149,21 @@ namespace mc {
 			ptr.reset(newPtr);
 		}
 
-		/**
-		Releases ownership of the pointer. The held pointer will not be deleted at destruction.
-		*/
-		T* release() {
-			return ptr.release();
-		}
-
 		Deleter& getDeleter() {
-			return ptr.get_deleter();
+			return std::get_deleter<Deleter>(ptr);
 		}
 
-		SmartPointer operator=(SmartPointer& other) {
-			return SmartPointer<T>(other.ptr.get(), DoNothing);
+		const Deleter& getDeleter() const {
+			return std::get_deleter<Deleter>(ptr);
+		}
+
+		SmartPointer& operator=(const SmartPointer& other) {
+			ptr = other.ptr;
+			return *this;
 		};
 
 		SmartPointer& operator=(SmartPointer&& other) {
-			ptr.operator=(std::move(other.ptr));
+			ptr = std::move(other.ptr);
 			return *this;
 		}
 
@@ -185,7 +187,7 @@ namespace mc {
 			return !operator==(other);
 		}
 	private:
-		std::unique_ptr<T, Deleter> ptr;
+		std::shared_ptr<T> ptr;
 	};//SmartPointer
 }//mc
 
