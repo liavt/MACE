@@ -57,7 +57,7 @@ namespace mc {
 
 		/**
 		*/
-		class ProgressBar: public Entity2D {
+		class ProgressBar: public Entity2D, public Progressable {
 		public:
 			ProgressBar() noexcept;
 			ProgressBar(const float minimum, const float maximum, const float progress = 0) noexcept;
@@ -118,7 +118,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setProgress(const float tex);
+			void setProgress(const float tex) override;
 			/**
 			@dirty
 			*/

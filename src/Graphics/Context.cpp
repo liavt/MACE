@@ -34,6 +34,9 @@ The above copyright notice and this permission notice shall be included in all c
 #	pragma warning( pop )
 #endif
 
+//for debug purposes
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
 #ifdef MACE_DEBUG
@@ -178,15 +181,9 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Texture Texture::create(const Color & col, const unsigned int width, const unsigned int height) {
-			Texture tex = Texture(TextureDesc(width, height));
+		GradientDesc::GradientDesc() : GradientDesc(0, 0) {}
 
-			tex.resetPixelStorage();
-
-			tex.setData(&col, 0);
-
-			return tex;
-		}
+		GradientDesc::GradientDesc(const unsigned int w, const unsigned int h) : width(w), height(h) {}
 
 		Texture Texture::createFromFile(const std::string & file, const Enums::ImageFormat format) {
 			return Texture::createFromFile(file.c_str(), format);
@@ -285,6 +282,64 @@ namespace mc {
 			return texture;
 		}
 
+		Texture Texture::createGradient(const GradientDesc & gradDesc) {
+			unsigned int colorComponents = 0;
+			TextureDesc desc = TextureDesc(gradDesc.width, gradDesc.height);
+			switch (gradDesc.colorSetting) {
+				case GradientDesc::ColorSetting::R:
+					desc.format = TextureDesc::Format::LUMINANCE;
+					desc.internalFormat = TextureDesc::InternalFormat::RED;
+					colorComponents = 1;
+					break;
+				case GradientDesc::ColorSetting::RA:
+					desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
+					desc.internalFormat = TextureDesc::InternalFormat::RG;
+					colorComponents = 2;
+					break;
+				case GradientDesc::ColorSetting::RG:
+					desc.format = TextureDesc::Format::RG;
+					desc.internalFormat = TextureDesc::InternalFormat::RG;
+					colorComponents = 2;
+					break;
+				case GradientDesc::ColorSetting::RGB:
+					desc.format = TextureDesc::Format::RGB;
+					desc.internalFormat = TextureDesc::InternalFormat::RGB;
+					colorComponents = 3;
+					break;
+				case GradientDesc::ColorSetting::RGBA:
+					MACE_FALLTHROUGH;
+				default:
+					desc.format = TextureDesc::Format::RGBA;
+					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
+					colorComponents = 4;
+					break;
+			}
+			desc.type = TextureDesc::Type::FLOAT;
+			desc.minFilter = TextureDesc::Filter::LINEAR;
+			desc.magFilter = TextureDesc::Filter::NEAREST;
+			Texture texture = Texture(desc);
+
+			texture.resetPixelStorage();
+
+			std::vector<float> data;
+			data.resize(gradDesc.width * gradDesc.height * colorComponents);
+			for (unsigned int x = 0; x < gradDesc.width; ++x) {
+				for (unsigned int y = 0; y < gradDesc.height; ++y) {
+					const float progressX = static_cast<float>(x) / static_cast<float>(gradDesc.width),
+						progressY = static_cast<float>(y) / static_cast<float>(gradDesc.height);
+					for (unsigned int i = 0; i < colorComponents; ++i) {
+						const float valueLeft = (gradDesc.topLeft[i] * progressY) + (gradDesc.botLeft[i] * (1.0f - progressY));
+						const float value = valueLeft;
+						data[((x * gradDesc.height) + y) * (i + 1)] = 1.0f;
+					}
+					std::cout << std::endl;
+				}
+			}
+
+			texture.setData(data.data());
+			return texture;
+		}
+
 		Texture& Texture::getSolidColor() {
 			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
@@ -314,9 +369,9 @@ namespace mc {
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
-				
 
-				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, [](){
+
+				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
 					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT);
 					desc.format = TextureDesc::Format::LUMINANCE;
 					desc.type = TextureDesc::Type::FLOAT;
@@ -327,7 +382,7 @@ namespace mc {
 
 					texture.resetPixelStorage();
 
-					
+
 					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
 					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
 						//the darker part is on the bottom
@@ -598,6 +653,6 @@ namespace mc {
 
 		Texture2DImpl::Texture2DImpl(const TextureDesc & t) : desc(t) {}
 
-		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : format(form), width(w), height(h)  {}
+		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : format(form), width(w), height(h) {}
 	}//gfx
 }//mc

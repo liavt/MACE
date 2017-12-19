@@ -213,7 +213,7 @@ namespace mc {
 
 
 		void ProgressBar::easeTo(const float destination, const long long time, const EaseFunction function, const EaseComponent::EaseDoneCallback callback) {
-			addComponent(SmartPointer<Component>(new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
+			addComponent(std::shared_ptr<Component>(new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
 				ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
 
 #ifdef MACE_DEBUG
@@ -223,7 +223,7 @@ namespace mc {
 #endif
 
 				bar->setProgress(progress);
-			}, function, callback), SmartPointer<Component>::DeletePointer));
+			}, function, callback)));
 		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {

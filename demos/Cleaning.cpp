@@ -84,10 +84,10 @@ void create(gfx::WindowModule& window) {
 	rightBot.setProperty(gfx::Entity::MAINTAIN_X, true);
 	rightBot.setProperty(gfx::Entity::MAINTAIN_Y, true);
 
-	left.addComponent(SmartPointer<gfx::Component>(new TestComponent()));
-	leftBot.addComponent(SmartPointer<gfx::Component>(new TestComponent()));
-	rightTop.addComponent(SmartPointer<gfx::Component>(new TestComponent()));
-	rightBot.addComponent(SmartPointer<gfx::Component>(new TestComponent()));
+	left.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
+	leftBot.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
+	rightTop.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
+	rightBot.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
 
 	left.addChild(leftBot);
 

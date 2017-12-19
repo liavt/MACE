@@ -45,7 +45,7 @@ namespace mc {
 
 		bool Entity::hasChild(Entity & e) const {
 			for (Size i = 0; i < children.size(); ++i) {
-				if (children[i] == &e) {
+				if (children[i].get() == &e) {
 					return true;
 				}
 			}
@@ -64,12 +64,12 @@ namespace mc {
 		void Entity::makeChildrenDirty() {
 			setProperty(Entity::DIRTY, true);
 
-			for (SmartPointer<Entity> e : children) {
+			for (std::shared_ptr<Entity> e : children) {
 				e->makeChildrenDirty();
 			}
 		}
 
-		const std::vector<SmartPointer<Entity>>& Entity::getChildren() const {
+		const std::vector<std::shared_ptr<Entity>>& Entity::getChildren() const {
 			return this->children;
 		}
 
@@ -99,7 +99,7 @@ namespace mc {
 			MACE__THROW(ObjectNotFound, "Specified argument to removeChild is not a valid object in the array!");
 		}
 
-		void Entity::removeChild(SmartPointer<Entity> ent) {
+		void Entity::removeChild(std::shared_ptr<Entity> ent) {
 			removeChild(ent.get());
 		}
 
@@ -322,7 +322,7 @@ namespace mc {
 
 		int Entity::indexOf(const Entity & e) const {
 			for (Index i = 0; i < children.size(); ++i) {
-				if (children[i] == &e) {
+				if (children[i].get() == &e) {
 					return i;
 				}
 			}
@@ -333,11 +333,11 @@ namespace mc {
 			return size() == 0;
 		}
 
-		std::vector<SmartPointer<Entity>>::iterator Entity::begin() {
+		std::vector<std::shared_ptr<Entity>>::iterator Entity::begin() {
 			return children.begin();
 		}
 
-		std::vector<SmartPointer<Entity>>::iterator Entity::end() {
+		std::vector<std::shared_ptr<Entity>>::iterator Entity::end() {
 			return children.end();
 		}
 
@@ -350,19 +350,17 @@ namespace mc {
 			destroy();
 		}
 
-		void Entity::addChild(SmartPointer<Entity> e) {
+		void Entity::addChild(std::shared_ptr<Entity> e) {
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
 			}
 
 			children.push_back(e);
 
-			//because push_back creates a copy of the SmartPointer, we need to retrieve the new copy of the Entity
-			SmartPointer<Entity> back = children.back();
-			back->setParent(this);
+			e->setParent(this);
 
-			if (getProperty(Entity::INIT) && !back->getProperty(Entity::INIT)) {
-				back->init();
+			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
+				e->init();
 			}
 
 			makeDirty();
@@ -371,7 +369,7 @@ namespace mc {
 		}
 
 		void Entity::addChild(Entity* e) {
-			addChild(SmartPointer<Entity>(e, SmartPointer<Entity>::DoNothing));
+			addChild(std::shared_ptr<Entity>(e, [](Entity*) {}));
 		}
 
 		void Entity::addChild(Entity & e) {
@@ -383,10 +381,10 @@ namespace mc {
 		}
 
 		void Entity::addComponent(Component * com) {
-			addComponent(SmartPointer<Component>(com, SmartPointer<Component>::DoNothing));
+			addComponent(std::shared_ptr<Component>(com, [](Component*) {}));
 		}
 
-		void Entity::addComponent(SmartPointer<Component> com) {
+		void Entity::addComponent(std::shared_ptr<Component> com) {
 			components.push_back(com);
 			components.back()->parent = this;
 			components.back()->init();
@@ -394,7 +392,7 @@ namespace mc {
 			makeDirty();
 		}
 
-		std::vector<SmartPointer<Component>> Entity::getComponents() {
+		std::vector<std::shared_ptr<Component>> Entity::getComponents() {
 			return components;
 		}
 
@@ -404,7 +402,7 @@ namespace mc {
 
 				//update the components of this entity
 				for (Index i = 0; i < components.size(); ++i) {
-					SmartPointer<Component> a = components.at(i);
+					std::shared_ptr<Component> a = components.at(i);
 					if (a.get() == nullptr) {
 						MACE__THROW(NullPointer, "A component located at index " + std::to_string(i) + " was nullptr");
 					}

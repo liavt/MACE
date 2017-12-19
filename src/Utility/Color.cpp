@@ -92,6 +92,8 @@ namespace mc {
 		this->setValues(rgba);
 	}
 
+	Color::Color(const Vector<float, 4>& values) : Color(values.x(), values.y(), values.z(), values.w()) {}
+
 	Color::Color(const Color & copy) noexcept : Color(copy.r, copy.g, copy.b, copy.a) {}
 
 	Color::Color() noexcept : Color(0.0f, 0.0f, 0.0f, 1.0f) {}
@@ -125,6 +127,10 @@ namespace mc {
 		return { { r,g,b,a } };
 	}
 
+	Vector<float, 4> Color::toVector() const {
+		return Vector<float, 4>({ r, g, b, a });
+	}
+
 	const float * Color::flatten(float arr[4]) const {
 		arr[0] = r;
 		arr[1] = g;
@@ -148,6 +154,36 @@ namespace mc {
 
 	const float * Color::end() const {
 		return &a + sizeof(float);
+	}
+
+	float & Color::operator[](const Index i) {
+		switch (i) {
+			case 0:
+				MACE_FALLTHROUGH;
+			default:
+				return r;
+			case 1:
+				return b;
+			case 2:
+				return g;
+			case 3:
+				return a;
+		}
+	}
+
+	const float & Color::operator[](const Index i) const {
+		switch (i) {
+			case 0:
+				MACE_FALLTHROUGH;
+			default:
+				return r;
+			case 1:
+				return b;
+			case 2:
+				return g;
+			case 3:
+				return a;
+		}
 	}
 
 	std::ostream & operator<<(std::ostream & output, const Color & v) {

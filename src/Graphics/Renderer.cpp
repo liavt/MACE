@@ -416,8 +416,10 @@ namespace mc {
 		}
 
 		void Painter::pop() {
-			state = stateStack.top();
-			stateStack.pop();
+			if (!stateStack.empty()) {
+				state = stateStack.top();
+				stateStack.pop();
+			}
 		}
 
 		void Painter::reset() {

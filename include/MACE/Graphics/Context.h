@@ -251,12 +251,40 @@ namespace mc {
 			const TextureDesc desc;
 		};
 
+		struct GradientDesc {
+			enum class Shape: Byte {
+				LINEAR
+			};
+
+			enum class ColorSetting: Byte {
+				R,
+				RA,
+				RG,
+				RGB,
+				RGBA
+			};
+
+			GradientDesc();
+			GradientDesc(const unsigned int width, const unsigned int height);
+
+			unsigned int width, height;
+
+			Color topLeft, topRight, botLeft, botRight;
+
+			ColorSetting colorSetting = ColorSetting::RGB;
+			Shape shape = Shape::LINEAR;
+		};
+
 		class Texture: public Bindable {
 		public:
+			
+
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
 			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromMemory(const unsigned char * c, const Size size);
+
+			static Texture createGradient(const GradientDesc& desc);
 
 			static Texture& getSolidColor();
 			/**

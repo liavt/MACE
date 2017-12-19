@@ -12,8 +12,6 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__CORE_INTERFACES_H
 #include <MACE/Core/Error.h>
 
-#include <memory>
-
 namespace mc {
 	class Beginable {
 	public:
@@ -87,108 +85,12 @@ namespace mc {
 		Initializable * obj;
 	};//Initializer
 
-	template<typename T>
-	class SmartPointer {
+	class Progressable {
 	public:
-		typedef void(*Deleter)(T*);
+		virtual ~Progressable() = default;
 
-		static void DoNothing(T*) {};
-		static void DeletePointer(T* ptr) {
-			delete ptr;
-		};
-		static void DeleteArray(T ptr[]) {
-			delete[] ptr;
-		};
-
-		explicit SmartPointer(T& p) : SmartPointer(&p) {}
-		
-		explicit SmartPointer(T* p, Deleter deleter = &DeletePointer) : ptr(p, deleter) {}
-
-		SmartPointer(const std::shared_ptr<T>& otherPtr) : ptr(otherPtr) {}
-
-		SmartPointer(const std::shared_ptr<T>&& otherPtr) : ptr(std::move(otherPtr)) {}
-
-		SmartPointer(const SmartPointer& other) : SmartPointer(other.ptr) {}
-
-		/*
-		matthew suc
-		SmartPointer(const SmartPointer&& other) : ptr() {
-			ptr.operator=(std::move(other.ptr));
-		}*/
-
-		T* get() {
-			return ptr.get();
-		}
-		const T* get() const {
-			return ptr.get();
-		}
-
-		inline T operator*() {
-			return *ptr;
-		}
-		inline const T operator*() const {
-			return *ptr;
-		}
-
-		inline T* operator->() {
-			return get();
-		}
-		inline const T* operator->() const {
-			return get();
-		}
-
-		/**
-		Swaps ownership and the pointer to another `SmartPointer`
-		@param other What to give the ownership of the pointer to.
-		*/
-		void swap(SmartPointer& other) {
-			ptr.swap(other.ptr);
-		}
-
-		void reset(T* newPtr = nullptr) {
-			ptr.reset(newPtr);
-		}
-
-		Deleter& getDeleter() {
-			return std::get_deleter<Deleter>(ptr);
-		}
-
-		const Deleter& getDeleter() const {
-			return std::get_deleter<Deleter>(ptr);
-		}
-
-		SmartPointer& operator=(const SmartPointer& other) {
-			ptr = other.ptr;
-			return *this;
-		};
-
-		SmartPointer& operator=(SmartPointer&& other) {
-			ptr = std::move(other.ptr);
-			return *this;
-		}
-
-		operator bool() const noexcept {
-			return ptr.get() == nullptr;
-		}
-
-		bool operator==(const SmartPointer& other) const {
-			return ptr == other.ptr;
-		}
-
-		bool operator!=(const SmartPointer& other) const {
-			return !operator==(other);
-		}
-
-		bool operator==(const T* other) const {
-			return ptr.get() == other;
-		}
-
-		bool operator!=(const T* other) const {
-			return !operator==(other);
-		}
-	private:
-		std::shared_ptr<T> ptr;
-	};//SmartPointer
+		virtual void setProgress(const float prog) = 0;
+	};
 }//mc
 
 #endif//MACE_CORE_INTERFACES_H

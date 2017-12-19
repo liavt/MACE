@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/Transform.h>
 #include <vector>
+#include <memory>
 
 namespace mc {
 	namespace gfx {
@@ -207,7 +208,7 @@ namespace mc {
 			Gets all of this `Entity's` children.
 			@return an `std::vector` with all children of this `Entity`
 			*/
-			const std::vector<SmartPointer<Entity>>& getChildren() const;
+			const std::vector<std::shared_ptr<Entity>>& getChildren() const;
 			/**
 			Removes a child.
 			<p>
@@ -228,7 +229,7 @@ namespace mc {
 			/**
 			@copydoc Entity::removeChild(const Entity*)
 			*/
-			void removeChild(SmartPointer<Entity> ent);
+			void removeChild(std::shared_ptr<Entity> ent);
 
 			/**
 			Removes a child via location.
@@ -324,14 +325,14 @@ namespace mc {
 			@see Entity::end()
 			@see Entity::size()
 			*/
-			std::vector<SmartPointer<Entity>>::iterator begin();
+			std::vector<std::shared_ptr<Entity>>::iterator begin();
 			/**
 			Retrieves the end of the children of this `Entity`
 			@return End of the last `Entity`
 			@see Entity::begin()
 			@see Entity::size()
 			*/
-			std::vector<SmartPointer<Entity>>::iterator end();
+			std::vector<std::shared_ptr<Entity>>::iterator end();
 
 			/**
 			Calculates the amount of children this `Entity` has.
@@ -442,15 +443,15 @@ namespace mc {
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(SmartPointer<Entity> ent);
+			void addChild(std::shared_ptr<Entity> ent);
 
 			void addComponent(Component& com);
 			void addComponent(Component* com);
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
-			void addComponent(SmartPointer<Component> com);
-			std::vector<SmartPointer<Component>> getComponents();
+			void addComponent(std::shared_ptr<Component> com);
+			std::vector<std::shared_ptr<Component>> getComponents();
 
 			const float& getWidth() const;
 			/**
@@ -586,7 +587,7 @@ namespace mc {
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
 			*/
-			std::vector<SmartPointer<Entity>> children = std::vector<SmartPointer<Entity>>();
+			std::vector<std::shared_ptr<Entity>> children = std::vector<std::shared_ptr<Entity>>();
 
 			/**
 			@internal
@@ -668,7 +669,7 @@ namespace mc {
 			*/
 			virtual void onHover();
 		private:
-			std::vector<SmartPointer<Component>> components = std::vector<SmartPointer<Component>>();
+			std::vector<std::shared_ptr<Component>> components = std::vector<std::shared_ptr<Component>>();
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 

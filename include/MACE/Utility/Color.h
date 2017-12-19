@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__UTILITY_COLOR_H
 
 #include <MACE/Core/Constants.h>
+#include <MACE/Utility/Vector.h>
 #include <array>
 #include <ostream>
 
@@ -66,6 +67,11 @@ namespace mc {
 		@see setValues(std::array<float,4>
 		*/
 		Color(const std::array<float, 4>& values);
+		
+		/**
+		@copydoc Color(const std::array<float, 4>&)
+		*/
+		Color(const Vector<float, 4>& values);
 		/**
 		Clones a `Color`, coying it's color values into a new one.
 		@param copy A `Color` to copy
@@ -186,6 +192,8 @@ namespace mc {
 		*/
 		std::array<float, 4> getValues() const;
 
+		Vector<float, 4> toVector() const;
+
 		/**
 		Creates an array with the data of this `Color`, in O(N) time
 		@return Pointer to `arr`
@@ -198,6 +206,9 @@ namespace mc {
 
 		float* end();
 		const float* end() const;
+
+		float& operator[](const Index i);
+		const float& operator[](const Index i) const;
 
 		friend std::ostream& operator<<(std::ostream& output, const Color& v);
 
