@@ -1,6 +1,8 @@
 R""(
 layout(location = MACE_SCENE_ATTACHMENT_INDEX) out lowp vec4 _mc_OutColor;
+#ifdef MACE_STORE_ID
 layout(location = MACE_ID_ATTACHMENT_INDEX) out uint _mc_OutID;
+#endif
 
 #ifdef MACE_TEXTURE
 in highp vec2 _mcTextureCoord;
@@ -43,7 +45,10 @@ void main(void){
 	_mc_OutColor = mc_Fragment * _mc_Filter;
 #else
 	_mc_OutColor = mc_Fragment;
-#endif	
+#endif
+
+#ifdef MACE_STORE_ID
 	_mc_OutID = mc_EntityID;
+#endif
 }
 )""

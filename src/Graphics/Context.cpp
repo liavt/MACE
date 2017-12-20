@@ -181,9 +181,26 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		GradientDesc::GradientDesc() : GradientDesc(0, 0) {}
+		Texture Texture::create(const Color & col, const unsigned int width, const unsigned int height) {
+			TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
+			desc.minFilter = TextureDesc::Filter::NEAREST;
+			desc.magFilter = TextureDesc::Filter::NEAREST;
+			desc.type = TextureDesc::Type::UNSIGNED_INT;
+			desc.internalFormat = TextureDesc::InternalFormat::RGBA;
 
-		GradientDesc::GradientDesc(const unsigned int w, const unsigned int h) : width(w), height(h) {}
+			Texture texture = Texture(desc);
+
+			texture.resetPixelStorage();
+
+			std::vector<unsigned int> data = std::vector<unsigned int>();
+			data.reserve(width * height);
+			for (Index i = 0; i < width * height; ++i) {
+				//TODO finish this function
+			}
+			texture.setData(&data[0]);
+
+			return texture;
+		}
 
 		Texture Texture::createFromFile(const std::string & file, const Enums::ImageFormat format) {
 			return Texture::createFromFile(file.c_str(), format);
@@ -282,6 +299,7 @@ namespace mc {
 			return texture;
 		}
 
+		/*
 		Texture Texture::createGradient(const GradientDesc & gradDesc) {
 			unsigned int colorComponents = 0;
 			TextureDesc desc = TextureDesc(gradDesc.width, gradDesc.height);
@@ -339,6 +357,7 @@ namespace mc {
 			texture.setData(data.data());
 			return texture;
 		}
+		*/
 
 		Texture& Texture::getSolidColor() {
 			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
@@ -556,6 +575,12 @@ namespace mc {
 			} else {
 				return getTexture(name);
 			}
+		}
+
+		Texture & GraphicsContext::getOrCreateTextureFromFile(const std::string & name, const std::string & path) {
+			return getOrCreateTexture(name, [&path]() {
+				return Texture::createFromFile(path);
+			});
 		}
 
 		void GraphicsContext::createModel(const std::string & name, const Model& mod) {

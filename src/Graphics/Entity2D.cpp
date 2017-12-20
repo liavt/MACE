@@ -488,6 +488,7 @@ namespace mc {
 		void Letter::onUpdate() {}
 
 		void Letter::onRender(Painter& p) {
+			p.disableRenderFeatures(Enums::RenderFeatures::INHERIT_SCALE | Enums::RenderFeatures::STORE_ID);
 			p.maskImage(texture, mask);
 		}
 
@@ -620,11 +621,11 @@ namespace mc {
 
 			letters.resize(text.length());
 
-			Entity::Metrics metrics = getMetrics();
+			const Entity::Metrics metrics = getMetrics();
 
 			const float widthScale = 1.0f / metrics.scale[0], heightScale = 1.0f / metrics.scale[1];
 
-			WindowModule::LaunchConfig config = gfx::getCurrentWindow()->getLaunchConfig();
+			const WindowModule::LaunchConfig config = gfx::getCurrentWindow()->getLaunchConfig();
 
 			const float origWidth = static_cast<const float>(config.width),
 				origHeight = static_cast<const float>(config.height);
@@ -657,7 +658,7 @@ namespace mc {
 					Vector<float, 2> position = { x, y };
 
 					if (i > 0 && hasKerning) {
-						Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
+						const Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += static_cast<float>(delta[0]) / origWidth;
 						position[1] += static_cast<float>(delta[1]) / origHeight;

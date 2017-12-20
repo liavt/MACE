@@ -161,6 +161,8 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE_STRINGIFY_NAME(name) "" #name
 #define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
 
+#define MACE_CONCAT(arg1, ...) arg1 ## __VA_ARGS__
+
 //meaning doxygen is currently parsing this file
 #ifdef MACE__DOXYGEN_PASS
 #	define MACE_EXPOSE_ALL 1
@@ -237,16 +239,6 @@ namespace mc {
 	@see Size
 	*/
 	using Enum = unsigned int;
-
-	/**
-	Type representing a function that returns void and has no arguments.
-	<p>
-	Created for clarity and for use in callbacks
-	@see Index
-	@see Size
-	@see Enum
-	*/
-	typedef void(*VoidFunctionPtr)();
 }
 
 #endif//MACE_CORE_CONSTANTS_H

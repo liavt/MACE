@@ -21,20 +21,20 @@ namespace mc {
 
 			/*See Components.h for MACE__MAKE_EASE_FUNCTION definition and explanation*/
 			MACE__MAKE_EASE_FUNCTION(LINEAR) {
-				return b + c*(t / d);
+				return b + c * (t / d);
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BACK_IN) {
 				const float s = 1.70158f;
 				const float postFix = t /= d;
-				return c*(postFix)*t*((s + 1)*t - s) + b;
+				return c * (postFix)*t*((s + 1)*t - s) + b;
 			}
 
 			//shameless resturant promotion
 			MACE__MAKE_EASE_FUNCTION(BACK_OUT) {
 				const float s = 1.70158f;
 				t /= d;
-				return c*((t - 1)*t*((s + 1)*t + s) + 1) + b;
+				return c * ((t - 1)*t*((s + 1)*t + s) + 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BACK_IN_OUT) {
@@ -46,16 +46,16 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(BOUNCE_OUT) {
 				if ((t /= d) < (1 / 2.75f)) {
-					return c*(7.5625f*t*t) + b;
+					return c * (7.5625f*t*t) + b;
 				} else if (t < (2 / 2.75f)) {
 					const float postFix = t -= (1.5f / 2.75f);
-					return c*(7.5625f*(postFix)*t + .75f) + b;
+					return c * (7.5625f*(postFix)*t + .75f) + b;
 				} else if (t < (2.5 / 2.75)) {
 					const float postFix = t -= (2.25f / 2.75f);
-					return c*(7.5625f*(postFix)*t + .9375f) + b;
+					return c * (7.5625f*(postFix)*t + .9375f) + b;
 				} else {
 					const float postFix = t -= (2.625f / 2.75f);
-					return c*(7.5625f*(postFix)*t + .984375f) + b;
+					return c * (7.5625f*(postFix)*t + .984375f) + b;
 				}
 			}
 
@@ -66,12 +66,12 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN_OUT) {
 				if (t < d / 2) return EaseFunctions::BOUNCE_IN(t * 2, 0, c, d) * .5f + b;
-				else return EaseFunctions::BOUNCE_OUT(t * 2 - d, 0, c, d) * .5f + c*.5f + b;
+				else return EaseFunctions::BOUNCE_OUT(t * 2 - d, 0, c, d) * .5f + c * .5f + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN) {
 				t /= d;
-				return -c * (std::sqrt(1 - t*t) - 1) + b;
+				return -c * (std::sqrt(1 - t * t) - 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_OUT) {
@@ -81,21 +81,21 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN_OUT) {
 				if ((t /= d / 2) < 1) {
-					return -c / 2 * (std::sqrt(1 - t*t) - 1) + b;
+					return -c / 2 * (std::sqrt(1 - t * t) - 1) + b;
 				}
 
 				t -= 2;
-				return c / 2 * (std::sqrt(1 - t*t) + 1) + b;
+				return c / 2 * (std::sqrt(1 - t * t) + 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_IN) {
 				t /= d;
-				return c*t*t*t + b;
+				return c * t*t*t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_OUT) {
 				t /= d;
-				return c*((t - 1)*t*t + 1) + b;
+				return c * ((t - 1)*t*t + 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_IN_OUT) {
@@ -114,10 +114,10 @@ namespace mc {
 					return b + c;
 				}
 
-				const float p = d*.3f;
+				const float p = d * .3f;
 				const float s = p / 4;
 				--t;
-				const float postFix = c*static_cast<float>(std::pow(2, 10 * t));
+				const float postFix = c * static_cast<float>(std::pow(2, 10 * t));
 				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
 			}
 
@@ -128,7 +128,7 @@ namespace mc {
 					return b + c;
 				}
 
-				const float p = d*.3f;
+				const float p = d * .3f;
 				const float s = p / 4;
 				return static_cast<float>(c*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
 			}
@@ -140,16 +140,16 @@ namespace mc {
 					return b + c;
 				}
 
-				const float p = d*(.3f*1.5f);
+				const float p = d * (.3f*1.5f);
 				const float s = p / 4;
 
 				if (t < 1) {
 					--t;
-					const float postFix = c*static_cast<float>(std::pow(2, 10 * t));
+					const float postFix = c * static_cast<float>(std::pow(2, 10 * t));
 					return -.5f*(postFix* static_cast<float>(std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p))) + b;
 				}
 				--t;
-				const float postFix = c*static_cast<float>(std::pow(2, -10 * (t)));
+				const float postFix = c * static_cast<float>(std::pow(2, -10 * (t)));
 				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*0.5f + c + b;
 			}
 
@@ -170,12 +170,12 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN) {
 				t /= d;
-				return c*t*t + b;
+				return c * t*t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_OUT) {
 				t /= d;
-				return -c *t*(t - 2) + b;
+				return -c * t*(t - 2) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN_OUT) {
@@ -186,7 +186,7 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN) {
 				t /= d;
-				return c*(t)*t*t*t + b;
+				return c * (t)*t*t*t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_OUT) {
@@ -204,12 +204,12 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN) {
 				t /= d;
-				return c*t*t*t*t*t + b;
+				return c * t*t*t*t*t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_OUT) {
 				t /= d;
-				return c*((t - 1)*t*t*t*t + 1) + b;
+				return c * ((t - 1)*t*t*t*t + 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN_OUT) {
@@ -357,9 +357,7 @@ namespace mc {
 
 		bool EaseComponent::operator==(const EaseComponent & other) const {
 			return Component::operator==(other)
-				&& startTime == other.startTime && b == other.b && c == other.c && duration == other.duration
-				&& updateCallback == other.updateCallback && ease == other.ease
-				&& done == other.done;
+				&& startTime == other.startTime && b == other.b && c == other.c && duration == other.duration;
 		}
 
 		bool EaseComponent::operator!=(const EaseComponent & other) const {
@@ -467,10 +465,7 @@ namespace mc {
 		}
 
 		bool CallbackComponent::operator==(const CallbackComponent & other) const {
-			return Component::operator==(other)
-				&& destroyCallback == other.destroyCallback && renderCallback == other.renderCallback
-				&& initCallback == other.initCallback && hoverCallback == other.hoverCallback
-				&& cleanCallback == other.cleanCallback && updateCallback == other.updateCallback;
+			return Component::operator==(other);
 		}
 
 		bool CallbackComponent::operator!=(const CallbackComponent & other) const {
@@ -505,22 +500,22 @@ namespace mc {
 			return hoversPerSecond;
 		}
 
-		void FPSComponent::setTickCallback(const TickCallbackPtr callback) {
+		void FPSComponent::setTickCallback(const TickCallback callback) {
 			tickCallback = callback;
 		}
 
-		FPSComponent::TickCallbackPtr FPSComponent::getTickCallback() {
+		FPSComponent::TickCallback FPSComponent::getTickCallback() {
 			return tickCallback;
 		}
 
-		const FPSComponent::TickCallbackPtr FPSComponent::getTickCallback() const {
+		const FPSComponent::TickCallback FPSComponent::getTickCallback() const {
 			return tickCallback;
 		}
 
 		bool FPSComponent::operator==(const FPSComponent & other) const {
 			return Component::operator==(other) && updatesPerSecond == other.updatesPerSecond
 				&& framesPerSecond == other.framesPerSecond && cleansPerSecond == other.framesPerSecond
-				&& hoversPerSecond == other.hoversPerSecond && tickCallback == other.tickCallback
+				&& hoversPerSecond == other.hoversPerSecond
 				&& lastTime == other.lastTime && nbUpdates == other.nbUpdates && nbFrames == other.nbFrames
 				&& nbCleans == other.nbCleans && nbHovers == other.nbHovers;
 		}

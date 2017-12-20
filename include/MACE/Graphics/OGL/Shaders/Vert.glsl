@@ -21,8 +21,24 @@ mat3 _mcCreateRotationMatrix(const in vec3 mc_RotationInput){
 
 vec4 mcGetEntityPosition(){
 	//putting it all in one line allows for the compiler to optimize it into a single MAD operation		
-	return vec4((_mc_VertexPosition * _mc_TransformScale * _mcCreateRotationMatrix(_mc_TransformRotation) + _mc_TransformTranslation) * mc_Scale * _mcCreateRotationMatrix(mc_BaseEntity.mc_Rotation)
-							  + mc_BaseEntity.mc_Translation * _mcCreateRotationMatrix(mc_ParentEntity.mc_Rotation) + mc_ParentEntity.mc_Translation, 1.0);
+	return vec4((_mc_VertexPosition * _mc_TransformScale * _mcCreateRotationMatrix(_mc_TransformRotation) + _mc_TransformTranslation) * (mc_BaseEntity.mc_Scale
+#ifdef MACE_INHERIT_SCALE
+							* mc_ParentEntity.mc_Scale
+#endif
+							)
+							* _mcCreateRotationMatrix(mc_BaseEntity.mc_Rotation)
+							+ (mc_BaseEntity.mc_Translation
+#ifdef MACE_INHERIT_SCALE
+							* mc_ParentEntity.mc_Scale
+#endif
+							)
+#ifdef MACE_INHERIT_ROTATION
+							* _mcCreateRotationMatrix(mc_ParentEntity.mc_Rotation)
+#endif
+#ifdef MACE_INHERIT_TRANSLATION
+							+ mc_ParentEntity.mc_Translation
+#endif
+							, 1.0);
 }
 
 vec4 mc_vert_main(vec4);

@@ -78,6 +78,11 @@ namespace mc {
 		*/
 		Color(const Color& copy) noexcept;
 		/**
+		@copydoc Color(const Color&)
+		@param alpha New alpha value for this `Color`
+		*/
+		Color(const Color& copy, const float alpha) noexcept;
+		/**
 		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
 		*/
 		Color() noexcept;
@@ -95,7 +100,7 @@ namespace mc {
 		/**
 		Creates a new `Color` that is slightly lighter.
 		<p>
-		Due to rounding, `color.lighten() != color.lighten().darken()`
+		Due to rounding, `color.lighten() != color.lighten().darken()` in some systems
 		<p>
 		The alpha is not affected
 		@return A lighter `Color`

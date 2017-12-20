@@ -6,12 +6,12 @@ precision highp float; // Defines precision for float and float-derived (vector/
 struct mc_EntityDataStruct{
 	vec3 mc_Translation;
 	vec3 mc_Rotation;
+	vec3 mc_Scale;
 };
 
 MACE_UNIFORM_BUFFER MACE_ENTITY_DATA_NAME{
 	mc_EntityDataStruct mc_BaseEntity;
 	mc_EntityDataStruct mc_ParentEntity;
-	vec3 mc_Scale;
 	uint mc_EntityID;
 };
 
@@ -31,3 +31,4 @@ MACE_UNIFORM_BUFFER MACE_PAINTER_DATA_NAME{
 	mat4 _mc_Filter;
 };
 )""
+ 

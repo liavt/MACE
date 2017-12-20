@@ -115,7 +115,7 @@ namespace mc {
 			}
 		}
 
-		void removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter){
+		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter){
 			if (children.empty()) {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
 			}
@@ -139,7 +139,9 @@ namespace mc {
 				onRender();
 
 				for (Index i = 0; i < children.size(); ++i) {
-					children[i]->render();
+					if (children[i] != nullptr) {
+						children[i]->render();
+					}
 				}
 
 				for (Index i = 0; i < components.size(); ++i) {
@@ -233,10 +235,10 @@ namespace mc {
 				m.inheritedScale *= parentMetrics.scale;
 				m.inheritedRotation += parentMetrics.rotation;
 			}
-
+			/*
 			m.translation *= m.inheritedScale;
 
-			m.scale *= m.inheritedScale;
+			m.scale *= m.inheritedScale;*/
 
 			m.rotation += m.inheritedRotation;
 

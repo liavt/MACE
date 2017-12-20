@@ -34,7 +34,7 @@ namespace mc {
 				void clean() override;
 			protected:
 				void loadSettings(const Painter::State& state) override;
-				void draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures feat) override;
+				void draw(const Model& m, const Enums::Brush brush) override;
 			private:
 				OGL33Renderer* const renderer;
 

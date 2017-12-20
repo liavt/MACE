@@ -96,6 +96,8 @@ namespace mc {
 
 	Color::Color(const Color & copy) noexcept : Color(copy.r, copy.g, copy.b, copy.a) {}
 
+	Color::Color(const Color & copy, const float alpha) noexcept : Color(copy.r, copy.g, copy.b, alpha) {}
+
 	Color::Color() noexcept : Color(0.0f, 0.0f, 0.0f, 1.0f) {}
 
 	Color Color::darken() const {

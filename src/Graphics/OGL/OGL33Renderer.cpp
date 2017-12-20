@@ -38,7 +38,7 @@ namespace mc {
 		namespace ogl {
 			namespace {
 				//how many floats in the uniform buffer
-#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 20
+#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 28
 				//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
 #define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
@@ -81,6 +81,18 @@ namespace mc {
 					}
 					if ((features & Enums::RenderFeatures::TEXTURE_TRANSFORM) != Enums::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_TEXTURE_TRANSFORM 1\n");
+					}
+					if ((features & Enums::RenderFeatures::INHERIT_TRANSLATION) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_INHERIT_TRANSLATION 1\n");
+					}
+					if ((features & Enums::RenderFeatures::INHERIT_SCALE) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_INHERIT_SCALE 1\n");
+					}
+					if ((features & Enums::RenderFeatures::INHERIT_ROTATION) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_INHERIT_ROTATION 1\n");
+					}
+					if ((features & Enums::RenderFeatures::STORE_ID) != Enums::RenderFeatures::NONE) {
+						sources.insert(sources.begin(), "#define MACE_STORE_ID 1\n");
 					}
 
 					sources.insert(sources.begin(), "#version 330 core\n");
@@ -497,11 +509,12 @@ namespace mc {
 				savedMetrics.translation.flatten(entityDataBuffer);
 				//offset by 4
 				savedMetrics.rotation.flatten(entityDataBuffer + 4);
-				savedMetrics.inheritedTranslation.flatten(entityDataBuffer + 8);
-				savedMetrics.inheritedRotation.flatten(entityDataBuffer + 12);
-				savedMetrics.scale.flatten(entityDataBuffer + 16);
+				savedMetrics.scale.flatten(entityDataBuffer + 8);
+				savedMetrics.inheritedTranslation.flatten(entityDataBuffer + 12);
+				savedMetrics.inheritedRotation.flatten(entityDataBuffer + 16);
+				savedMetrics.inheritedScale.flatten(entityDataBuffer + 20);
 				//this crazy line puts a GLuint directly into a float, as GLSL expects a uint instead of a float
-				*reinterpret_cast<GLuint*>(entityDataBuffer + 19) = static_cast<GLuint>(painter->getID());
+				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
 
 				//we set it to null, because during the actual rendering we set the data
 				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
@@ -570,14 +583,17 @@ namespace mc {
 				if (metrics.rotation != savedMetrics.rotation) {
 					entityData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, metrics.rotation.begin());
 				}
+				if (metrics.scale != savedMetrics.scale) {
+					entityData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, metrics.scale.begin());
+				}
 				if (metrics.inheritedTranslation != savedMetrics.inheritedTranslation) {
-					entityData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, metrics.inheritedTranslation.begin());
+					entityData.setDataRange(sizeof(float) * 12, sizeof(float) * 3, metrics.inheritedTranslation.begin());
 				}
 				if (metrics.inheritedRotation != savedMetrics.inheritedRotation) {
-					entityData.setDataRange(sizeof(float) * 12, sizeof(float) * 3, metrics.inheritedRotation.begin());
+					entityData.setDataRange(sizeof(float) * 16, sizeof(float) * 3, metrics.inheritedRotation.begin());
 				}
-				if (metrics.scale != savedMetrics.scale) {
-					entityData.setDataRange(sizeof(float) * 16, sizeof(float) * 3, metrics.scale.begin());
+				if (metrics.inheritedScale != savedMetrics.inheritedScale) {
+					entityData.setDataRange(sizeof(float) * 20, sizeof(float) * 3, metrics.scale.begin());
 				}
 
 				savedMetrics = metrics;
@@ -626,8 +642,8 @@ namespace mc {
 				savedState = state;
 			}
 
-			void OGL33Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures feat) {
-				renderer->bindProtocol(this, { brush, feat });
+			void OGL33Painter::draw(const Model& m, const Enums::Brush brush) {
+				renderer->bindProtocol(this, { brush, savedState.renderFeatures });
 
 				m.bind();
 				m.draw();

@@ -157,7 +157,7 @@ namespace mc {
 			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
-			drawQuad(Enums::Brush::MASK, Enums::RenderFeatures::DEFAULT);
+			drawQuad(Enums::Brush::MASK);
 			pop();
 		}
 
@@ -166,7 +166,7 @@ namespace mc {
 			setData({ amount, 0, 0, 0 });
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
-			drawQuad(Enums::Brush::BLEND, Enums::RenderFeatures::DEFAULT);
+			drawQuad(Enums::Brush::BLEND);
 			pop();
 		}
 
@@ -176,24 +176,24 @@ namespace mc {
 			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
 			setTexture(background, Enums::TextureSlot::BACKGROUND);
 			setTexture(mask, Enums::TextureSlot::MASK);
-			drawQuad(Enums::Brush::MASKED_BLEND, Enums::RenderFeatures::DEFAULT);
+			drawQuad(Enums::Brush::MASKED_BLEND);
 			pop();
 		}
 
-		void Painter::drawQuad(const Enums::Brush brush, const Enums::RenderFeatures feat) {
-			draw(Model::getQuad(), brush, feat);
+		void Painter::drawQuad(const Enums::Brush brush) {
+			draw(Model::getQuad(), brush);
 		}
 
-		void Painter::draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures feat) {
+		void Painter::draw(const Model& m, const Enums::Brush brush) {
 			impl->loadSettings(state);
-			impl->draw(m, brush, feat);
+			impl->draw(m, brush);
 		}
 
 		const GraphicsEntity * const Painter::getEntity() const {
 			return entity;
 		}
 
-		void Painter::setTexture(const Texture & t, const Enums::TextureSlot& slot) {
+		void Painter::setTexture(const Texture & t, const Enums::TextureSlot slot) {
 			t.bind(static_cast<unsigned int>(slot));
 			if (slot == Enums::TextureSlot::FOREGROUND) {
 				//the member functions set DirtyFlags accordingly
@@ -211,22 +211,23 @@ namespace mc {
 
 		}
 
-		void Painter::drawModel(const Model & m, const Texture & img, const Enums::RenderFeatures feat) {
+		void Painter::drawModel(const Model & m, const Texture & img) {
 			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			draw(m, Enums::Brush::TEXTURE, feat);
+			draw(m, Enums::Brush::TEXTURE);
 			pop();
 		}
 
-		void Painter::fillModel(const Model & m, const Enums::RenderFeatures feat) {
-			draw(m, Enums::Brush::COLOR, feat);
+		void Painter::fillModel(const Model & m) {
+			draw(m, Enums::Brush::COLOR);
 		}
 
 		void Painter::fillRect(const float x, const float y, const float w, const float h) {
 			push();
 			translate(x, y);
 			scale(w, h);
-			drawQuad(Enums::Brush::COLOR, Enums::RenderFeatures::DEFAULT & ~Enums::RenderFeatures::TEXTURE);
+			disableRenderFeatures(Enums::RenderFeatures::TEXTURE);
+			drawQuad(Enums::Brush::COLOR);
 			pop();
 		}
 
@@ -241,7 +242,8 @@ namespace mc {
 		void Painter::drawImage(const Texture & img) {
 			push();
 			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			drawQuad(Enums::Brush::TEXTURE, Enums::RenderFeatures::DEFAULT | Enums::RenderFeatures::DISCARD_INVISIBLE);
+			enableRenderFeatures(Enums::RenderFeatures::DISCARD_INVISIBLE);
+			drawQuad(Enums::Brush::TEXTURE);
 			pop();
 		}
 
@@ -318,6 +320,26 @@ namespace mc {
 			return state.maskTransform;
 		}
 
+		void Painter::enableRenderFeatures(const Enums::RenderFeatures feature) {
+			state.renderFeatures = state.renderFeatures | feature;
+		}
+
+		void Painter::disableRenderFeatures(const Enums::RenderFeatures feature) {
+			state.renderFeatures = state.renderFeatures & ~feature;
+		}
+
+		void Painter::setRenderFeatures(const Enums::RenderFeatures feature) {
+			state.renderFeatures = feature;
+		}
+
+		Enums::RenderFeatures & Painter::getRenderFeatures() {
+			return state.renderFeatures;
+		}
+
+		const Enums::RenderFeatures & Painter::getRenderFeatures() const {
+			return state.renderFeatures;
+		}
+
 		void Painter::setFilter(const float r, const float g, const float b, const float a) {
 			setFilter(Vector<float, 4>({ r, g, b, a }));
 		}
@@ -328,7 +350,7 @@ namespace mc {
 				{0, col.y(), 0, 0},
 				{0, 0, col.z(), 0},
 				{0, 0, 0, col.w()}
-										  }));
+			}));
 		}
 
 		void Painter::setFilter(const Matrix<float, 4, 4> & col) {

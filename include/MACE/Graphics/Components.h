@@ -16,6 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 
 #include <chrono>
+#include <functional>
 
 namespace mc {
 	namespace gfx {
@@ -42,7 +43,7 @@ namespace mc {
 		@param d The total time of the ease in frames
 		@see EaseFunctions
 		*/
-		typedef float(*EaseFunction)(float t, const float b, const float c, const float d);
+		using EaseFunction = std::function<float(float, const float, const float, const float)>;
 
 		/**
 		Different easing functions commonly found in applications
@@ -168,8 +169,8 @@ namespace mc {
 
 		class EaseComponent: public Component {
 		public:
-			typedef void(*EaseDoneCallback)(Entity*);
-			typedef void(*EaseUpdateCallback)(Entity*, float);
+			using EaseDoneCallback = std::function<void(Entity*)>;
+			using EaseUpdateCallback = std::function<void(Entity*, float)>;
 
 			EaseComponent(const long long ms, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
 
@@ -192,8 +193,8 @@ namespace mc {
 
 		class CallbackComponent: public Component {
 		public:
-			typedef void(*CallbackPtr)(Entity*);
-			typedef bool(*UpdatePtr)(Entity*);
+			using CallbackPtr = std::function<void(Entity*)>;
+			using UpdatePtr = std::function<bool(Entity*)>;
 
 			void setInitCallback(const CallbackPtr func);
 			CallbackPtr getInitCallback();
@@ -241,16 +242,16 @@ namespace mc {
 
 		class FPSComponent: public Component {
 		public:
-			typedef void(*TickCallbackPtr)(FPSComponent*, Entity*);
+			using TickCallback = std::function<void(FPSComponent*, Entity*)>;
 
 			unsigned int getUpdatesPerSecond() const;
 			unsigned int getFramesPerSecond() const;
 			unsigned int getCleansPerSecond() const;
 			unsigned int getHoversPerSecond() const;
 
-			void setTickCallback(const TickCallbackPtr callback);
-			TickCallbackPtr getTickCallback();
-			const TickCallbackPtr getTickCallback() const;
+			void setTickCallback(const TickCallback callback);
+			TickCallback getTickCallback();
+			const TickCallback getTickCallback() const;
 
 			bool operator==(const FPSComponent& other) const;
 			bool operator!=(const FPSComponent& other) const;
@@ -260,7 +261,7 @@ namespace mc {
 			unsigned int cleansPerSecond = 0, nbCleans = 0;
 			unsigned int hoversPerSecond = 0, nbHovers = 0;
 
-			TickCallbackPtr tickCallback = [](FPSComponent*, Entity*) {};
+			TickCallback tickCallback = [](FPSComponent*, Entity*) {};
 
 			std::chrono::time_point<std::chrono::steady_clock> lastTime = std::chrono::steady_clock::now();
 
@@ -274,7 +275,7 @@ namespace mc {
 
 		class AnimationComponent: public Component, public Texturable {
 		public:
-			typedef void(*AnimationFrameCallback)(Texture&, Entity*, AnimationComponent*);
+			using AnimationFrameCallback = std::function<void(Texture&, Entity*, AnimationComponent*)>;
 
 			AnimationComponent(const Texture& tex);
 

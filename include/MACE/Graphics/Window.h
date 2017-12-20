@@ -17,6 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 #include <thread>
 #include <string>
+#include <functional>
 
 //forward declaration to prevent including glfw.h
 struct GLFWwindow;
@@ -72,9 +73,9 @@ namespace mc {
 		class WindowModule: public Module, public gfx::Entity {
 		public:
 			struct LaunchConfig {
-				typedef void(*WindowCallback)(WindowModule& window);
-				typedef void(*ScrollCallback)(WindowModule& window, double x, double y);
-				typedef void(*MouseMoveCallback)(WindowModule& window, int x, int y);
+				using WindowCallback = std::function<void(WindowModule&)>;
+				using ScrollCallback = std::function<void(WindowModule&, double, double)>;
+				using MouseMoveCallback = std::function<void(WindowModule&, int, int)>;
 
 				LaunchConfig(const int w, const int h, const char* t);
 

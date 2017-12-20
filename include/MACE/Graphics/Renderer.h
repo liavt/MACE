@@ -47,9 +47,13 @@ namespace mc {
 				FILTER = 0x02,
 				TEXTURE = 0x04,
 				TEXTURE_TRANSFORM = 0x08,
+				INHERIT_TRANSLATION = 0x10,
+				INHERIT_SCALE = 0x20,
+				INHERIT_ROTATION = 0x40,
+				STORE_ID = 0x80,
 
 				NONE = 0x00,
-				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM,
+				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM | INHERIT_TRANSLATION | INHERIT_SCALE | INHERIT_ROTATION | STORE_ID,
 			};
 
 			MACE_CONSTEXPR inline RenderFeatures operator|(const RenderFeatures& left, const RenderFeatures& right) {
@@ -89,6 +93,8 @@ namespace mc {
 
 				Matrix<float, 4, 4> filter = math::identity<float, 4>();
 
+				Enums::RenderFeatures renderFeatures = Enums::RenderFeatures::DEFAULT;
+
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
 			};
@@ -97,9 +103,9 @@ namespace mc {
 			Painter(const Painter& p);
 			~Painter() = default;
 
-			void drawModel(const Model& m, const Texture& img, const Enums::RenderFeatures features = Enums::RenderFeatures::DEFAULT);
+			void drawModel(const Model& m, const Texture& img);
 
-			void fillModel(const Model& m, const Enums::RenderFeatures features = Enums::RenderFeatures::DEFAULT & ~Enums::RenderFeatures::DISCARD_INVISIBLE);
+			void fillModel(const Model& m);
 
 			void fillRect(const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
 			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
@@ -112,12 +118,12 @@ namespace mc {
 			void blendImages(const Texture& foreground, const Texture& background, const float amount = 0.5f);
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
-			void drawQuad(const Enums::Brush brush, const Enums::RenderFeatures features = Enums::RenderFeatures::DEFAULT);
-			void draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures features);
+			void drawQuad(const Enums::Brush brush);
+			void draw(const Model& m, const Enums::Brush brush);
 
 			const GraphicsEntity* const getEntity() const;
 
-			void setTexture(const Texture& t, const Enums::TextureSlot& slot);
+			void setTexture(const Texture& t, const Enums::TextureSlot slot = Enums::TextureSlot::FOREGROUND);
 
 			void setForegroundColor(const Color& col);
 			Color& getForegroundColor();
@@ -142,6 +148,12 @@ namespace mc {
 			void setMaskTransform(const Vector<float, 4>& trans);
 			Vector<float, 4>& getMaskTransform();
 			const Vector<float, 4>& getMaskTransform() const;
+
+			void enableRenderFeatures(const Enums::RenderFeatures feature);
+			void disableRenderFeatures(const Enums::RenderFeatures feature);
+			void setRenderFeatures(const Enums::RenderFeatures feature);
+			Enums::RenderFeatures& getRenderFeatures();
+			const Enums::RenderFeatures& getRenderFeatures() const;
 
 			void setFilter(const float r, const float g, const float b, const float a = 1.0f);
 			void setFilter(const Vector<float, 4> & col);
@@ -226,7 +238,7 @@ namespace mc {
 			virtual void clean() = 0;
 
 			virtual void loadSettings(const Painter::State& state) = 0;
-			virtual void draw(const Model& m, const Enums::Brush brush, const Enums::RenderFeatures features) = 0;
+			virtual void draw(const Model& m, const Enums::Brush brush) = 0;
 
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;

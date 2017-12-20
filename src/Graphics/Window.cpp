@@ -404,7 +404,7 @@ namespace mc {
 			//GLFW needs to be created from main thread
 			//we create a window in the main thread, then switch its context to the render thread
 			create();
-			
+
 			os::clearError(__LINE__, __FILE__);//sometimes an error comes from GLFW that we can ignore
 
 			//release context on this thread, it wll be owned by the seperate rendering thread
@@ -517,8 +517,6 @@ namespace mc {
 		bool WindowModule::LaunchConfig::operator==(const LaunchConfig & other) const {
 			return title == other.title && width == other.width && height == other.height
 				&& fps == other.fps && contextType == other.contextType
-				&& onCreate == other.onCreate && onClose == other.onClose
-				&& onScroll == other.onScroll && onMouseMove == other.onMouseMove
 				&& terminateOnClose == other.terminateOnClose
 				&& decorated == other.decorated && fullscreen == other.fullscreen
 				&& resizable == other.resizable && vsync == other.vsync;

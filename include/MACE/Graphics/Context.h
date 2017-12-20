@@ -18,6 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <memory>
 #include <map>
 #include <string>
+#include <functional>
 
 #ifdef MACE_OPENCV
 #	include <opencv2/opencv.hpp>
@@ -251,40 +252,12 @@ namespace mc {
 			const TextureDesc desc;
 		};
 
-		struct GradientDesc {
-			enum class Shape: Byte {
-				LINEAR
-			};
-
-			enum class ColorSetting: Byte {
-				R,
-				RA,
-				RG,
-				RGB,
-				RGBA
-			};
-
-			GradientDesc();
-			GradientDesc(const unsigned int width, const unsigned int height);
-
-			unsigned int width, height;
-
-			Color topLeft, topRight, botLeft, botRight;
-
-			ColorSetting colorSetting = ColorSetting::RGB;
-			Shape shape = Shape::LINEAR;
-		};
-
 		class Texture: public Bindable {
 		public:
-			
-
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
 			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
 			static Texture createFromMemory(const unsigned char * c, const Size size);
-
-			static Texture createGradient(const GradientDesc& desc);
 
 			static Texture& getSolidColor();
 			/**
@@ -429,8 +402,8 @@ namespace mc {
 			friend class Texture;
 			friend class Model;
 		public:
-			typedef Texture(*TextureCreateCallback)();
-			typedef Model(*ModelCreateCallback)();
+			using TextureCreateCallback = std::function<Texture()>;
+			using ModelCreateCallback = std::function<Model()>;
 
 			GraphicsContext(gfx::WindowModule* win);
 			//prevent copying
@@ -448,6 +421,7 @@ namespace mc {
 
 			void createTexture(const std::string& name, const Texture& texture = Texture());
 			Texture& getOrCreateTexture(const std::string& name, const TextureCreateCallback create);
+			Texture& getOrCreateTextureFromFile(const std::string& name, const std::string& path);
 			void createModel(const std::string& name, const Model& texture = Model());
 			Model& getOrCreateModel(const std::string& name, const ModelCreateCallback create);
 
