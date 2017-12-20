@@ -106,15 +106,21 @@ namespace mc {
 		void Entity::removeChild(Index index) {
 			makeDirty();
 
-			if (children.empty()) {
-				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
-			} else if (index >= children.size()) {
+			if (index >= children.size()) {
 				MACE__THROW(OutOfBounds, std::to_string(index) + " is larger than the amount of children!");
 			} else if (children.size() == 1) {
 				children.clear();
 			} else {
-				children.erase(children.begin() + index);
+				removeChild(children.begin() + index);
 			}
+		}
+
+		void removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter){
+			if (children.empty()) {
+				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
+			}
+			
+			children.erase(iter);
 		}
 
 		void Entity::render() {
@@ -162,9 +168,7 @@ namespace mc {
 
 				for (Size i = 0; i < children.size(); ++i) {
 					if (children[i] == nullptr) {
-						removeChild(i);
-						//to account for the entity beng removed
-						--i;
+						removeChild(i--);//to account for the entity beng removed
 					} else if (children[i]->getProperty(Entity::INIT)) {
 						children[i]->setProperty(Entity::DIRTY, true);
 						children[i]->clean();

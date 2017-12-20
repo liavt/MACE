@@ -242,6 +242,11 @@ namespace mc {
 			void removeChild(Index index);
 
 			/**
+			@copydoc removeChild(Index)
+			*/
+			void removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter);
+
+			/**
 			Checks to see if this `Entity` contains an `Entity`
 			@param e Reference to an `Entity`
 			@return `false` if this `Entity` doesn't contain the referenced `Entity`, `true` otherwise
@@ -553,7 +558,10 @@ namespace mc {
 			@copydoc Entity::getRoot() const
 			*/
 			Entity* getRoot();
-
+			
+			/**
+			@opengl			
+			*/
 			Metrics getMetrics() const;
 
 			/**
