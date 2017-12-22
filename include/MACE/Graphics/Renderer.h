@@ -101,7 +101,6 @@ namespace mc {
 
 			Painter() = delete;
 			Painter(const Painter& p);
-			~Painter() = default;
 
 			void drawModel(const Model& m, const Texture& img);
 

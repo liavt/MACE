@@ -193,14 +193,6 @@ namespace mc {
 			}
 		}
 
-		void ProgressBar::addProgress(const float prog) {
-			if (prog != 0) {
-				makeDirty();
-
-				progress += prog;
-			}
-		}
-
 		float & ProgressBar::getProgress() {
 			makeDirty();
 
@@ -211,19 +203,18 @@ namespace mc {
 			return progress;
 		}
 
-
-		void ProgressBar::easeTo(const float destination, const long long time, const EaseFunction function, const EaseComponent::EaseDoneCallback callback) {
-			addComponent(std::shared_ptr<Component>(new EaseComponent(time, this->progress, destination, [](Entity* e, float progress) {
-				ProgressBar* bar = dynamic_cast<ProgressBar*>(e);
+		void ProgressBar::easeTo(const float destination, const long long ms, const EaseFunction func, const EaseComponent::EaseDoneCallback callback) {
+			addComponent(std::shared_ptr<Component>(new EaseComponent(ms, getProgress(), destination, [](Entity* e, float progress) {
+				Progressable* prog = dynamic_cast<Progressable*>(e);
 
 #ifdef MACE_DEBUG
-				if (bar == nullptr) {
-					MACE__THROW(NullPointer, "Internal Error: ProgressBar in EaseComponent is nullptr");
+				if (prog == nullptr) {
+					MACE__THROW(NullPointer, "Internal Error: Progressable in EaseComponent is nullptr");
 				}
 #endif
 
-				bar->setProgress(progress);
-			}, function, callback)));
+				prog->setProgress(progress);
+			}, func, callback)));
 		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {

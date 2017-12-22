@@ -22,6 +22,27 @@ namespace mc {
 		virtual void end() = 0;
 	};
 
+	class Beginner {
+	public:
+		Beginner(Beginable& o);
+		Beginner(Beginable* o);
+		~Beginner();
+
+		Beginable* get();
+		const Beginable* get() const;
+
+		Beginable* operator->();
+		const Beginable* operator->() const;
+
+		Beginable* operator*();
+		const Beginable* operator*() const;
+
+		bool operator==(const Beginner& other) const;
+		bool operator!=(const Beginner& other) const;
+	private:
+		Beginable * obj;
+	};
+
 	class Bindable {
 	public:
 		virtual ~Bindable() = default;
@@ -84,13 +105,6 @@ namespace mc {
 	private:
 		Initializable * obj;
 	};//Initializer
-
-	class Progressable {
-	public:
-		virtual ~Progressable() = default;
-
-		virtual void setProgress(const float prog) = 0;
-	};
 }//mc
 
 #endif//MACE_CORE_INTERFACES_H

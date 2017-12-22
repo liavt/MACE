@@ -11,8 +11,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Entity2D.h>
 
-#include <iostream>
-
 namespace mc {
 	namespace gfx {
 		void Renderer::init(gfx::WindowModule* win) {
@@ -71,7 +69,7 @@ namespace mc {
 		void Renderer::checkInput(gfx::WindowModule*) {
 			GraphicsEntity* hovered = getEntityAt(gfx::Input::getMouseX(), gfx::Input::getMouseY());
 
-			if (hovered != nullptr) {
+			if (hovered != nullptr && !hovered->needsRemoval()) {
 				hovered->hover();
 			}
 
@@ -123,14 +121,15 @@ namespace mc {
 
 		EntityID Renderer::pushEntity(GraphicsEntity * const entity) {
 			for (EntityID i = 0; i < renderQueue.size(); ++i) {
-				if (renderQueue[i] == nullptr || renderQueue[i]->getProperty(Entity::DEAD)) {
+				if (renderQueue[i] == nullptr || renderQueue[i]->needsRemoval()) {
 					renderQueue[i] = entity;
-					return i;
+					//0 is a null ID, so we increment by one
+					return i + 1;
 				}
 			}
 			renderQueue.push_back(entity);
-			return renderQueue.size() - 1;
-		}//pushEntity(protocol, entity)
+			return renderQueue.size();
+		}
 
 		PainterImpl::PainterImpl(Painter* const p) : painter(p) {}
 
@@ -141,15 +140,22 @@ namespace mc {
 		void Painter::begin() {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (impl == nullptr) {
-				MACE__THROW(NullPointer, "Painter was not initialized correctly");
+				MACE__THROW(NullPointer, "Internal Error: begin: PainterImpl was nullptr");
 			} else if (id == 0) {
-				MACE__THROW(OutOfBounds, "Invalid Painter ID");
+				MACE__THROW(OutOfBounds, "Internal Error: begin: Invalid Painter ID");
 			}
 #endif
 			impl->begin();
 		}
 
 		void Painter::end() {
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
+			if (impl == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: end: PainterImpl was nullptr");
+			} else if (id == 0) {
+				MACE__THROW(OutOfBounds, "Internal Error: end: Invalid Painter ID");
+			}
+#endif
 			impl->end();
 		}
 
@@ -185,6 +191,12 @@ namespace mc {
 		}
 
 		void Painter::draw(const Model& m, const Enums::Brush brush) {
+#ifdef MACE_DEBUG_CHECK_NULLPTR
+			if (impl == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: draw: PainterImpl was nullptr");
+			}
+#endif
+
 			impl->loadSettings(state);
 			impl->draw(m, brush);
 		}
@@ -205,10 +217,12 @@ namespace mc {
 			} else if (slot == Enums::TextureSlot::MASK) {
 				setMaskColor(t.getHue());
 				setMaskTransform(t.getTransform());
-			} else {
-				MACE__THROW(OutOfBounds, "Unknown Texture slot");
 			}
-
+#ifdef MACE_DEBUG_CHECK_ARGS
+			else {
+				MACE__THROW(OutOfBounds, "setTexture: Unknown Texture slot");
+			}
+#endif
 		}
 
 		void Painter::drawModel(const Model & m, const Texture & img) {
@@ -488,23 +502,30 @@ namespace mc {
 		void Painter::init() {
 			Renderer* r = gfx::getCurrentWindow()->getContext()->getRenderer();
 			id = r->queue(entity);
-			impl = r->createPainterImpl(this);
+			impl = std::move(r->createPainterImpl(this));
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (impl.get() == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Renderer returned a nullptr to a Painter");
 			}
 #endif
-
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
-			if (id == 0 || entity == nullptr) {
-				MACE__THROW(InitializationFailed, "Internal Error: Invalid PainterImpl settings");
+			if (id == 0) {
+				MACE__THROW(InitializationFailed, "Internal Error: Renderer returned ID 0 (Null)");
+			}
+#endif
+#ifdef MACE_DEBUG_CHECK_NULLPTR
+			if (entity == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: Painter Entity is nullptr");
 			}
 #endif
 			impl->init();
 		}
 
 		void Painter::destroy() {
-			impl->destroy();
+			if (impl != nullptr) {
+				impl->destroy();
+			}
+			impl.reset();
 			id = 0;
 		}
 
@@ -516,7 +537,8 @@ namespace mc {
 			return transformation == other.transformation && foregroundColor == other.foregroundColor
 				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor
 				&& foregroundTransform == other.foregroundTransform && backgroundTransform == other.backgroundTransform
-				&& maskTransform == other.maskTransform && data == other.data && filter == other.filter;
+				&& maskTransform == other.maskTransform && data == other.data && filter == other.filter
+				&& renderFeatures == other.renderFeatures;
 		}
 
 		bool Painter::State::operator!=(const State & other) const {
@@ -558,9 +580,8 @@ namespace mc {
 		}
 
 		void GraphicsEntity::onRender() {
-			painter.begin();
+			const Beginner beginner(painter);
 			onRender(painter);
-			painter.end();
 		}
 
 		void GraphicsEntity::clean() {

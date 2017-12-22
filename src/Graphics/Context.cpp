@@ -202,11 +202,11 @@ namespace mc {
 			return texture;
 		}
 
-		Texture Texture::createFromFile(const std::string & file, const Enums::ImageFormat format) {
-			return Texture::createFromFile(file.c_str(), format);
+		Texture Texture::createFromFile(const std::string & file, const Enums::ImageFormat format, const TextureDesc::Wrap wrap) {
+			return Texture::createFromFile(file.c_str(), format, wrap);
 		}
 
-		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat imgFormat) {
+		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
 			Texture tex = Texture();
 
 			int width, height, actualComponents;
@@ -247,11 +247,11 @@ namespace mc {
 					desc.format = TextureDesc::Format::RGBA;
 					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
 				} else {
-					MACE__THROW(BadImage, "Internal Error: outputComponents is not 1-4");
+					MACE__THROW(BadImage, "Internal Error: createFromFile: outputComponents is not 1-4");
 				}
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-				desc.wrapS = TextureDesc::Wrap::CLAMP;
-				desc.wrapT = TextureDesc::Wrap::CLAMP;
+				desc.wrapS = wrap;
+				desc.wrapT = wrap;
 				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
 				desc.magFilter = TextureDesc::Filter::NEAREST;
 				tex.init(desc);

@@ -277,6 +277,14 @@ namespace mc {
 
 		void Selectable::onTrigger() {}
 
+		void Progressable::addProgress(const float prog) {
+			setProgress(getProgress() + prog);
+		}
+
+		void Progressable::removeProgress(const float prog) {
+			setProgress(getProgress() - prog);
+		}
+
 		AlignmentComponent::AlignmentComponent(const Enums::VerticalAlign vert, const Enums::HorizontalAlign horz)
 			: vertAlign(vert), horzAlign(horz) {}
 
@@ -583,5 +591,5 @@ namespace mc {
 		bool AnimationComponent::operator!=(const AnimationComponent & other) const {
 			return !operator==(other);
 		}
-	}//gfx
+}//gfx
 }//mc

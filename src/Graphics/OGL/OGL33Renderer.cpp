@@ -460,7 +460,13 @@ namespace mc {
 						return nullptr;
 					}
 
-					return renderQueue[--pixel];
+					GraphicsEntity* entityAt = renderQueue[--pixel];
+					if (entityAt->needsRemoval()) {
+						renderQueue[pixel] = nullptr;
+						return nullptr;
+					}
+
+					return entityAt;
 				}
 
 				return nullptr;
@@ -565,7 +571,7 @@ namespace mc {
 
 			void OGL33Painter::clean() {
 				if (!painter->getEntity()->getProperty(Entity::INIT)) {
-					MACE__THROW(InitializationFailed, "Entity is not initializd.");
+					MACE__THROW(InitializationFailed, "Painter Entity is not initializd.");
 				}
 
 				const Entity::Metrics metrics = painter->getEntity()->getMetrics();

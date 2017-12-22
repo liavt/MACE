@@ -69,6 +69,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_DEBUG_OPENGL 1
 #	define MACE_DEBUG_CHECK_ARGS 1
 #	define MACE_DEBUG_INTERNAL_ERRORS 1
+#	define MACE_DEBUG_CHECK_NULLPTR 1
 #endif
 
 //checks for a C++ attribute in the form of [[attribute]]

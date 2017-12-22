@@ -56,7 +56,7 @@ namespace mc {
 			makeDirty();
 
 			while (!children.empty()) {
-				children.back()->setParent(nullptr);
+				children.back()->kill();
 				children.pop_back();
 			}
 		}
@@ -115,11 +115,11 @@ namespace mc {
 			}
 		}
 
-		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter){
+		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter) {
 			if (children.empty()) {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
 			}
-			
+
 			children.erase(iter);
 		}
 
@@ -139,8 +139,9 @@ namespace mc {
 				onRender();
 
 				for (Index i = 0; i < children.size(); ++i) {
-					if (children[i] != nullptr) {
-						children[i]->render();
+					std::shared_ptr<Entity> child = children[i];
+					if (child != nullptr) {
+						child->render();
 					}
 				}
 
@@ -162,6 +163,13 @@ namespace mc {
 			for (Index i = 0; i < components.size(); ++i) {
 				components[i]->hover();
 			}
+
+			//propagate upwards
+			Entity* par = getParent();
+			while (par != nullptr) {
+				par->hover();
+				par = par->getParent();
+			}
 		}
 
 		void Entity::clean() {
@@ -169,11 +177,12 @@ namespace mc {
 				onClean();
 
 				for (Size i = 0; i < children.size(); ++i) {
-					if (children[i] == nullptr) {
+					std::shared_ptr<Entity> child = children[i];
+					if (child == nullptr) {
 						removeChild(i--);//to account for the entity beng removed
-					} else if (children[i]->getProperty(Entity::INIT)) {
-						children[i]->setProperty(Entity::DIRTY, true);
-						children[i]->clean();
+					} else if (child->getProperty(Entity::INIT)) {
+						child->setProperty(Entity::DIRTY, true);
+						child->clean();
 					}
 				}
 
@@ -266,7 +275,7 @@ namespace mc {
 
 		void Entity::reset() {
 			clearChildren();
-			properties = 0;
+			properties = Entity::DEFAULT_PROPERTIES;
 			transformation.reset();
 
 			for (Index i = 0; i < components.size(); ++i) {
@@ -275,6 +284,7 @@ namespace mc {
 				}
 			}
 			components.clear();
+			setParent(nullptr);
 		}
 
 		void Entity::makeDirty() {
@@ -308,6 +318,10 @@ namespace mc {
 
 		bool Entity::hasParent() const {
 			return parent != nullptr;
+		}
+
+		bool Entity::needsRemoval() const {
+			return getProperty(Entity::DEAD) || !hasParent();
 		}
 
 		Entity& Entity::operator[](Index i) {
@@ -361,17 +375,15 @@ namespace mc {
 				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
 			}
 
-			children.push_back(e);
-
 			e->setParent(this);
 
 			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
 				e->init();
 			}
 
+			children.push_back(e);
+
 			makeDirty();
-
-
 		}
 
 		void Entity::addChild(Entity* e) {
@@ -422,14 +434,15 @@ namespace mc {
 
 				//call update() on children
 				for (Index i = 0; i < children.size(); ++i) {
-					if (children[i] == nullptr || children[i]->getProperty(Entity::DEAD)) {
-						if (children[i] != nullptr) {
-							children[i]->kill();
+					std::shared_ptr<Entity> child = children[i];
+					if (child == nullptr || child->needsRemoval()) {
+						if (child != nullptr) {
+							child->kill();
 						}
 						removeChild(i--);//update the index after the removal of an element, dont want an error
 						continue;
 					}
-					children[i]->update();
+					child->update();
 				}
 			}
 		}
@@ -441,11 +454,12 @@ namespace mc {
 
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
-				if (children[i] == nullptr) {
+				std::shared_ptr<Entity> child = children[i];
+				if (child == nullptr || child->needsRemoval()) {
 					removeChild(i--);//update the index after the removal of an element
 					continue;
 				}
-				children[i]->init();
+				child->init();
 			}
 			onInit();
 			setProperty(Entity::INIT, true);
@@ -453,17 +467,17 @@ namespace mc {
 		}
 
 		void Entity::destroy() {
-			if (!getProperty(Entity::INIT)) {
-				MACE__THROW(InitializationFailed, "Entity can not have destroy() called when it has not been initialized");
+			if (getProperty(Entity::INIT)) {
+				setProperty(Entity::DEAD, true);
+				for (Index i = 0; i < children.size(); ++i) {
+					std::shared_ptr<Entity> child = children[i];
+					if (child != nullptr) {
+						child->destroy();
+					}
+				}
+				onDestroy();
 			}
 			makeDirty();
-			setProperty(Entity::DEAD, true);
-			for (Index i = 0; i < children.size(); ++i) {
-				if (children[i] != nullptr) {
-					children[i]->destroy();
-				}
-			}
-			onDestroy();
 			reset();
 		}
 

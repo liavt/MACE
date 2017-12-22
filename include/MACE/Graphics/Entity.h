@@ -437,6 +437,8 @@ namespace mc {
 
 			bool hasParent() const;
 
+			bool needsRemoval() const;
+
 			/**
 			@dirty
 			*/

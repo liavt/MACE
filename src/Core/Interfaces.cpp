@@ -11,6 +11,53 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Error.h>
 
 namespace mc {
+	Beginner::Beginner(Beginable & o) : Beginner(&o) {}
+
+	Beginner::Beginner(Beginable * o) : obj(o) {
+#ifdef MACE_DEBUG
+		if (o == nullptr) {
+			MACE__THROW(NullPointer, "Input Beginable to Beginner is nullptr!");
+		}
+#endif
+		obj->begin();
+	}
+
+	Beginner::~Beginner() {
+		obj->end();
+	}
+
+	Beginable * Beginner::get() {
+		return obj;
+	}
+
+	const Beginable * Beginner::get() const {
+		return obj;
+	}
+
+	Beginable * Beginner::operator->() {
+		return obj;
+	}
+
+	const Beginable * Beginner::operator->() const {
+		return obj;
+	}
+
+	Beginable * Beginner::operator*() {
+		return obj;
+	}
+
+	const Beginable * Beginner::operator*() const {
+		return obj;
+	}
+
+	bool Beginner::operator==(const Beginner & other) const {
+		return obj == other.obj;
+	}
+
+	bool Beginner::operator!=(const Beginner & other) const {
+		return !operator==(other);
+	}
+
 	Binder::Binder(Bindable & o) : Binder(&o) {}
 
 	Binder::Binder(Bindable * o) : obj(o) {

@@ -108,6 +108,9 @@ namespace mc {
 			@dirty
 			*/
 			virtual Texture& getTexture() = 0;
+			/**
+
+			*/
 			virtual const Texture& getTexture() const = 0;
 		};
 
@@ -189,6 +192,25 @@ namespace mc {
 			const EaseUpdateCallback updateCallback;
 			const EaseFunction ease;
 			const EaseDoneCallback done;
+		};
+
+		class Progressable{
+		public:
+			virtual ~Progressable() = default;
+
+			virtual void setProgress(const float prog) = 0;
+
+			/**
+			@copydoc Progressable::getProgress() const
+			@dirty
+			*/
+			virtual float& getProgress() = 0;
+
+			virtual const float& getProgress() const = 0;
+
+			void addProgress(const float prog);
+
+			void removeProgress(const float prog);
 		};
 
 		class CallbackComponent: public Component {

@@ -255,8 +255,8 @@ namespace mc {
 		class Texture: public Bindable {
 		public:
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
-			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
-			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE);
+			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
 			static Texture createFromMemory(const unsigned char * c, const Size size);
 
 			static Texture& getSolidColor();

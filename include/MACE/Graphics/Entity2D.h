@@ -119,20 +119,13 @@ namespace mc {
 			@dirty
 			*/
 			void setProgress(const float tex) override;
-			/**
-			@dirty
-			*/
-			void addProgress(const float prog);
 
 			/**
 			@dirty
 			*/
-			float& getProgress();
-			const float& getProgress() const;
+			float& getProgress() override;
+			const float& getProgress() const override;
 
-			/**
-			@dirty
-			*/
 			void easeTo(const float progress, const long long ms, const EaseFunction func = EaseFunctions::LINEAR, const EaseComponent::EaseDoneCallback callback = [](Entity*) {});
 
 			bool operator==(const ProgressBar& other) const;
