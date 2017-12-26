@@ -215,13 +215,13 @@ namespace mc {
 				return ogl::Texture2D::isCreated();
 			}
 
-			void OGL33Texture::setUnpackStorageHint(const Enums::PixelStorage hint, const int value) {
+			void OGL33Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
 				ogl::Texture2D::bind();
 				switch (hint) {
-					case Enums::PixelStorage::ALIGNMENT:
+					case PixelStorage::ALIGNMENT:
 						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
 						break;
-					case Enums::PixelStorage::ROW_LENGTH:
+					case PixelStorage::ROW_LENGTH:
 						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
 						break;
 					default:
@@ -229,13 +229,13 @@ namespace mc {
 				}
 			}
 
-			void OGL33Texture::setPackStorageHint(const Enums::PixelStorage hint, const int value) {
+			void OGL33Texture::setPackStorageHint(const PixelStorage hint, const int value) {
 				ogl::Texture2D::bind();
 				switch (hint) {
-					case Enums::PixelStorage::ALIGNMENT:
+					case PixelStorage::ALIGNMENT:
 						setPixelStorage(GL_PACK_ALIGNMENT, value);
 						break;
-					case Enums::PixelStorage::ROW_LENGTH:
+					case PixelStorage::ROW_LENGTH:
 						setPixelStorage(GL_PACK_ROW_LENGTH, value);
 						break;
 					default:
@@ -277,8 +277,6 @@ namespace mc {
 				for (Index i = 0; i < buffers.size(); ++i) {
 					buffers[i].bind();
 				}
-
-				using Enums::PrimitiveType;
 
 				Enum type;
 				if (primitiveType == PrimitiveType::POINTS) {

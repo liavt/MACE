@@ -174,6 +174,16 @@ namespace mc {
 
 		void Entity::clean() {
 			if (getProperty(Entity::DIRTY)) {
+				for (Index i = 0; i < components.size(); ++i) {
+#ifdef MACE_DEBUG_CHECK_NULLPTR
+					if (components[i].get() == nullptr) {
+						MACE__THROW(NullPointer, "One of the components in an entity was nullptr");
+					}
+#endif
+
+					components[i]->clean();
+				}
+
 				onClean();
 
 				for (Size i = 0; i < children.size(); ++i) {
@@ -184,14 +194,6 @@ namespace mc {
 						child->setProperty(Entity::DIRTY, true);
 						child->clean();
 					}
-				}
-
-				for (Index i = 0; i < components.size(); ++i) {
-					if (components[i].get() == nullptr) {
-						MACE__THROW(NullPointer, "One of the components in an entity was nullptr");
-					}
-
-					components[i]->clean();
 				}
 
 				setProperty(Entity::DIRTY, false);
@@ -275,7 +277,6 @@ namespace mc {
 
 		void Entity::reset() {
 			clearChildren();
-			properties = Entity::DEFAULT_PROPERTIES;
 			transformation.reset();
 
 			for (Index i = 0; i < components.size(); ++i) {
@@ -285,6 +286,7 @@ namespace mc {
 			}
 			components.clear();
 			setParent(nullptr);
+			properties = Entity::DEFAULT_PROPERTIES;
 		}
 
 		void Entity::makeDirty() {

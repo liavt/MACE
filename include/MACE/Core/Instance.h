@@ -22,7 +22,7 @@ namespace mc {
 	class Instance;
 	
 	/**
-	Abstract class used for doing a task in MACE. Plugged into {@link MACE} via {@link MACE#addModule(Module&) addModule().}
+	Abstract class used for doing a task in MACE. Plugged into {@link Instance} via {@link Instance#addModule(Module&) addModule().}
 	*/
 	class Module: public Initializable{
 		friend class Instance;
@@ -86,7 +86,7 @@ namespace mc {
 	while(mc::MACE::isRunning()){
 		mc::MACE::update();
 
-		//execute non-MACE coed
+		//execute non-MACE code
 
 		//wait 33 ms for the next iteration
 		mc::os::wait(33);

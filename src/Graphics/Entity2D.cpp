@@ -367,7 +367,7 @@ namespace mc {
 				character.mask.bind();
 
 				character.mask.resetPixelStorage();
-				character.mask.setUnpackStorageHint(gfx::Enums::PixelStorage::ALIGNMENT, 1);
+				character.mask.setUnpackStorageHint(gfx::PixelStorage::ALIGNMENT, 1);
 
 				character.mask.setData(fonts[id]->glyph->bitmap.buffer);
 			}
@@ -479,7 +479,7 @@ namespace mc {
 		void Letter::onUpdate() {}
 
 		void Letter::onRender(Painter& p) {
-			p.disableRenderFeatures(Enums::RenderFeatures::INHERIT_SCALE | Enums::RenderFeatures::STORE_ID);
+			p.disableRenderFeatures(Painter::RenderFeatures::INHERIT_SCALE | Painter::RenderFeatures::STORE_ID);
 			p.maskImage(texture, mask);
 		}
 
@@ -539,7 +539,7 @@ namespace mc {
 			return letters;
 		}
 
-		void Text::setVerticalAlign(const Enums::VerticalAlign align) {
+		void Text::setVerticalAlign(const VerticalAlign align) {
 			if (vertAlign != align) {
 				makeDirty();
 
@@ -547,11 +547,11 @@ namespace mc {
 			}
 		}
 
-		const Enums::VerticalAlign Text::getVerticalAlign() const {
+		const VerticalAlign Text::getVerticalAlign() const {
 			return vertAlign;
 		}
 
-		void Text::setHorizontalAlign(const Enums::HorizontalAlign align) {
+		void Text::setHorizontalAlign(const HorizontalAlign align) {
 			if (horzAlign != align) {
 				makeDirty();
 
@@ -559,7 +559,7 @@ namespace mc {
 			}
 		}
 
-		const Enums::HorizontalAlign Text::getHorizontalAlign() const {
+		const HorizontalAlign Text::getHorizontalAlign() const {
 			return horzAlign;
 		}
 
@@ -690,26 +690,26 @@ namespace mc {
 
 			switch (horzAlign) {
 				default:
-				case Enums::HorizontalAlign::CENTER:
+				case HorizontalAlign::CENTER:
 					xAlignment = ((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
-				case Enums::HorizontalAlign::RIGHT:
+				case HorizontalAlign::RIGHT:
 					xAlignment = ((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
-				case Enums::HorizontalAlign::LEFT:
+				case HorizontalAlign::LEFT:
 					xAlignment = (-1.0f + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
 			}
 
 			switch (vertAlign) {
 				default:
-				case Enums::VerticalAlign::CENTER:
+				case VerticalAlign::CENTER:
 					yAlignment = 0.0f;
 					break;
-				case Enums::VerticalAlign::BOTTOM:
+				case VerticalAlign::BOTTOM:
 					yAlignment = ((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
 					break;
-				case Enums::VerticalAlign::TOP:
+				case VerticalAlign::TOP:
 					yAlignment = ((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
 					break;
 			}

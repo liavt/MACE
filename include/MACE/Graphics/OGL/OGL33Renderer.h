@@ -34,7 +34,7 @@ namespace mc {
 				void clean() override;
 			protected:
 				void loadSettings(const Painter::State& state) override;
-				void draw(const Model& m, const Enums::Brush brush) override;
+				void draw(const Model& m, const Painter::Brush brush) override;
 			private:
 				OGL33Renderer* const renderer;
 
@@ -85,9 +85,9 @@ namespace mc {
 					ogl::ShaderProgram program;
 				};
 
-				std::map<std::pair<Enums::Brush, Enums::RenderFeatures>, OGL33Renderer::RenderProtocol> protocols{};
+				std::map<std::pair<Painter::Brush, Painter::RenderFeatures>, OGL33Renderer::RenderProtocol> protocols{};
 
-				void bindProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderFeatures> settings);
+				void bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings);
 			};
 		}//ogl
 	}//gfx

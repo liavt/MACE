@@ -43,9 +43,10 @@ namespace mc {
 		void pause();
 		void stop();
 
-		void setVolume(float volume);
-		float getVolume() { return volume; }
-		
+		void setVolume(const float volume);
+		float& getVolume();
+		const float& getVolume() const;
+
 		/**
 		@todo use fstream instead of cstdio
 		*/
@@ -77,7 +78,7 @@ namespace mc {
 		std::string getName() const override;
 
 		const std::vector<Sound>& getSounds() const;
-	
+
 		void addSound(Sound& s);
 	private:
 		std::vector<Sound> sounds = std::vector<Sound>();

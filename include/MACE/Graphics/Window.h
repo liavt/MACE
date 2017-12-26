@@ -53,26 +53,24 @@ namespace mc {
 		*/
 		MACE__DECLARE_ERROR(NoRendererContext);
 
-		namespace Enums {
-			/**
-			Hints to the `WindowModule` which `GraphicsContext` to create.
-			
-			@remark Some contexes are not available on certain platforms. An `UnsupportedRendererError` is thrown in these cases.
-			@see NoRendererContextError
-			*/
-			enum class ContextType {
-				AUTOMATIC,
-				BEST_OGL,
-				OGL33
-			};
-		}
-
 		/**
 		@todo fix fps timer
 		*/
 		class WindowModule: public Module, public gfx::Entity {
 		public:
 			struct LaunchConfig {
+				/**
+				Hints to the `WindowModule` which `GraphicsContext` to create.
+
+				@remark Some contexes are not available on certain platforms. An `UnsupportedRendererError` is thrown in these cases.
+				@see NoRendererContextError
+				*/
+				enum class ContextType {
+					AUTOMATIC,
+					BEST_OGL,
+					OGL33
+				};
+
 				using WindowCallback = std::function<void(WindowModule&)>;
 				using ScrollCallback = std::function<void(WindowModule&, double, double)>;
 				using MouseMoveCallback = std::function<void(WindowModule&, int, int)>;
@@ -85,7 +83,7 @@ namespace mc {
 
 				unsigned int fps = 30;
 
-				Enums::ContextType contextType = Enums::ContextType::AUTOMATIC;
+				ContextType contextType = ContextType::AUTOMATIC;
 
 				WindowCallback onCreate = [](WindowModule&) {};
 				WindowCallback onClose = [](WindowModule&) {};

@@ -47,8 +47,8 @@ namespace mc {
 
 				bool isCreated() const override;
 
-				void setUnpackStorageHint(const gfx::Enums::PixelStorage hint, const int value) override;
-				void setPackStorageHint(const gfx::Enums::PixelStorage hint, const int value) override;
+				void setUnpackStorageHint(const gfx::PixelStorage hint, const int value) override;
+				void setPackStorageHint(const gfx::PixelStorage hint, const int value) override;
 
 				void setData(const void* data, const Index mipmap = 0) override;
 

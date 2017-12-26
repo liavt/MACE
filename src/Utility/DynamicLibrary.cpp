@@ -142,15 +142,15 @@ namespace mc {
 		os::checkError(__LINE__, __FILE__, "Error destroying dynamic library");
 	}
 
-	void * DynamicLibrary::getFunction(const std::string & name) {
-		return getFunction(name.c_str());
+	void * DynamicLibrary::getSymbol(const std::string & name) const {
+		return getSymbol(name.c_str());
 	}
 
-	void * DynamicLibrary::getFunction(const char * name) {
+	void * DynamicLibrary::getSymbol(const char * name) const {
 		os::clearError(__LINE__, __FILE__);
 
 		if (!isCreated()) {
-			MACE__THROW(InitializationFailed, "Can\'t load a function symbol from an unitialized dynamic library");
+			MACE__THROW(InitializationFailed, "Can\'t load a function symbol from an uninitialized dynamic library");
 		}
 
 #ifdef MACE_WINAPI
@@ -163,7 +163,7 @@ namespace mc {
 #ifdef MACE_POSIX
 			const char* errorMessage = dlerror();
 #else
-			MACE_CONSTEXPR char* errorMessage = "Returned function pointer was null pointer";
+			MACE_CONSTEXPR const char* errorMessage = "Returned function pointer was null pointer";
 #endif
 
 			os::checkError(__LINE__, __FILE__, "Attempt to load symbol " + std::string(name) + " returned a nullptr: " + std::string(errorMessage));
@@ -174,6 +174,14 @@ namespace mc {
 		os::checkError(__LINE__, __FILE__, "Error extracting symbol " + std::string(name) + " from dynamic library");
 
 		return extractedSymbol;
+	}
+
+	void * DynamicLibrary::operator[](const char * name) const {
+		return getSymbol(name);
+	}
+
+	void * DynamicLibrary::operator[](const std::string & name) const {
+		return getSymbol(name);
 	}
 
 	bool DynamicLibrary::isCreated() const {

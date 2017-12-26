@@ -14,9 +14,9 @@ using namespace mc;
 class PainterDemo: public gfx::Entity2D {
 public:
 	void onInit() override {
-		lena = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("lena.jpg"), gfx::Enums::ImageFormat::RGBA);
+		lena = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("lena.jpg"), gfx::ImageFormat::RGBA);
 
-		star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::Enums::ImageFormat::LUMINANCE_ALPHA);
+		star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::ImageFormat::LUMINANCE_ALPHA);
 	}
 
 	void onUpdate() override {}
@@ -30,9 +30,9 @@ public:
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		//give the texture a blueish hue
-		p.setTexture(lena, gfx::Enums::TextureSlot::FOREGROUND);
+		p.setTexture(lena, gfx::Painter::TextureSlot::FOREGROUND);
 		p.setForegroundColor(Color(0.0f, 0.0f, 1.0f, 0.5f));
-		p.drawQuad(gfx::Enums::Brush::TEXTURE);
+		p.drawQuad(gfx::Painter::Brush::TEXTURE);
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		//sepia filter
@@ -64,10 +64,10 @@ public:
 		p.blendImagesMasked(star, lena, gfx::Texture::getGradient(), 0.0f, 0.5f);
 
 		p.translate(2.0f / 3.0f, 0.0f);
-		p.setTexture(lena, gfx::Enums::TextureSlot::FOREGROUND);
+		p.setTexture(lena, gfx::Painter::TextureSlot::FOREGROUND);
 		p.setForegroundTransform(Vector4f({0.25f, 0.25f, 0.5f, 0.5f}));
 		//render lena slightly zoomed in
-		p.drawQuad(gfx::Enums::Brush::TEXTURE);
+		p.drawQuad(gfx::Painter::Brush::TEXTURE);
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		p.setForegroundColor(Colors::YELLOW);

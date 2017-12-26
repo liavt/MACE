@@ -19,7 +19,7 @@ namespace mc {
 
 		void Renderer::setUp(gfx::WindowModule* win) {
 			if (resized) {
-				Vector<int, 2> dimensions = win->getFramebufferSize();
+				const Vector<int, 2> dimensions = win->getFramebufferSize();
 
 				resize(win, dimensions.x(), dimensions.y());
 
@@ -38,14 +38,13 @@ namespace mc {
 
 			onQueue(e);
 
-			//it adds 1 so 0 (NULL) represents a non-initalized value
-			return pushEntity(e) + 1;
+			return pushEntity(e);
 		}//queue
 
 		void Renderer::remove(const EntityID id) {
-#ifdef MACE_DEBUG_INTERNAL_ERRORS
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (id <= 0 || id > renderQueue.size()) {
-				MACE__THROW(OutOfBounds, "Internal Error: Invalid GraphicsEntity ID to remove");
+				MACE__THROW(OutOfBounds, "Invalid GraphicsEntity ID to remove");
 			}
 #endif
 
@@ -107,6 +106,55 @@ namespace mc {
 			return renderQueue;
 		}
 
+		GraphicsEntity * Renderer::getEntityByID(const EntityID inId) {
+			//0 is a NULL ID, so we decrement by one to get the actual index
+			if (inId == 0) {
+				return nullptr;
+			}
+
+			const EntityID id = inId - 1;
+
+			if (id > renderQueue.size()) {
+				return nullptr;
+			}
+
+			GraphicsEntity* out = renderQueue[id];
+			if (out == nullptr) {
+				return nullptr;
+			}
+
+			if (out->needsRemoval()) {
+				renderQueue[id] = nullptr;
+				return nullptr;
+			}
+
+			return out;
+		}
+
+		const GraphicsEntity * Renderer::getEntityByID(const EntityID inId) const {
+			//0 is a NULL ID, so we decrement by one to get the actual index
+			if (inId == 0) {
+				return nullptr;
+			}
+
+			const EntityID id = inId - 1;
+
+			if (id > renderQueue.size()) {
+				return nullptr;
+			}
+
+			GraphicsEntity* out = renderQueue[id];
+			if (out == nullptr) {
+				return nullptr;
+			}
+
+			if (out->needsRemoval()) {
+				return nullptr;
+			}
+
+			return out;
+		}
+
 		bool Renderer::isResized() const {
 			return resized;
 		}
@@ -120,6 +168,8 @@ namespace mc {
 		}
 
 		EntityID Renderer::pushEntity(GraphicsEntity * const entity) {
+			//it adds 1 so 0 (NULL) represents a non-initalized value
+
 			for (EntityID i = 0; i < renderQueue.size(); ++i) {
 				if (renderQueue[i] == nullptr || renderQueue[i]->needsRemoval()) {
 					renderQueue[i] = entity;
@@ -161,36 +211,36 @@ namespace mc {
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
 			push();
-			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			setTexture(mask, Enums::TextureSlot::MASK);
-			drawQuad(Enums::Brush::MASK);
+			setTexture(img, Painter::TextureSlot::FOREGROUND);
+			setTexture(mask, Painter::TextureSlot::MASK);
+			drawQuad(Painter::Brush::MASK);
 			pop();
 		}
 
 		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
 			push();
 			setData({ amount, 0, 0, 0 });
-			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
-			setTexture(background, Enums::TextureSlot::BACKGROUND);
-			drawQuad(Enums::Brush::BLEND);
+			setTexture(foreground, Painter::TextureSlot::FOREGROUND);
+			setTexture(background, Painter::TextureSlot::BACKGROUND);
+			drawQuad(Painter::Brush::BLEND);
 			pop();
 		}
 
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
 			push();
 			setData({ minimum, maximum, 0, 0 });
-			setTexture(foreground, Enums::TextureSlot::FOREGROUND);
-			setTexture(background, Enums::TextureSlot::BACKGROUND);
-			setTexture(mask, Enums::TextureSlot::MASK);
-			drawQuad(Enums::Brush::MASKED_BLEND);
+			setTexture(foreground, Painter::TextureSlot::FOREGROUND);
+			setTexture(background, Painter::TextureSlot::BACKGROUND);
+			setTexture(mask, Painter::TextureSlot::MASK);
+			drawQuad(Painter::Brush::MASKED_BLEND);
 			pop();
 		}
 
-		void Painter::drawQuad(const Enums::Brush brush) {
+		void Painter::drawQuad(const Painter::Brush brush) {
 			draw(Model::getQuad(), brush);
 		}
 
-		void Painter::draw(const Model& m, const Enums::Brush brush) {
+		void Painter::draw(const Model& m, const Painter::Brush brush) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (impl == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: draw: PainterImpl was nullptr");
@@ -205,16 +255,16 @@ namespace mc {
 			return entity;
 		}
 
-		void Painter::setTexture(const Texture & t, const Enums::TextureSlot slot) {
+		void Painter::setTexture(const Texture & t, const Painter::TextureSlot slot) {
 			t.bind(static_cast<unsigned int>(slot));
-			if (slot == Enums::TextureSlot::FOREGROUND) {
+			if (slot == Painter::TextureSlot::FOREGROUND) {
 				//the member functions set DirtyFlags accordingly
 				setForegroundColor(t.getHue());
 				setForegroundTransform(t.getTransform());
-			} else if (slot == Enums::TextureSlot::BACKGROUND) {
+			} else if (slot == Painter::TextureSlot::BACKGROUND) {
 				setBackgroundColor(t.getHue());
 				setBackgroundTransform(t.getTransform());
-			} else if (slot == Enums::TextureSlot::MASK) {
+			} else if (slot == Painter::TextureSlot::MASK) {
 				setMaskColor(t.getHue());
 				setMaskTransform(t.getTransform());
 			}
@@ -227,21 +277,21 @@ namespace mc {
 
 		void Painter::drawModel(const Model & m, const Texture & img) {
 			push();
-			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			draw(m, Enums::Brush::TEXTURE);
+			setTexture(img, Painter::TextureSlot::FOREGROUND);
+			draw(m, Painter::Brush::TEXTURE);
 			pop();
 		}
 
 		void Painter::fillModel(const Model & m) {
-			draw(m, Enums::Brush::COLOR);
+			draw(m, Painter::Brush::COLOR);
 		}
 
 		void Painter::fillRect(const float x, const float y, const float w, const float h) {
 			push();
 			translate(x, y);
 			scale(w, h);
-			disableRenderFeatures(Enums::RenderFeatures::TEXTURE);
-			drawQuad(Enums::Brush::COLOR);
+			disableRenderFeatures(Painter::RenderFeatures::TEXTURE);
+			drawQuad(Painter::Brush::COLOR);
 			pop();
 		}
 
@@ -255,9 +305,9 @@ namespace mc {
 
 		void Painter::drawImage(const Texture & img) {
 			push();
-			setTexture(img, Enums::TextureSlot::FOREGROUND);
-			enableRenderFeatures(Enums::RenderFeatures::DISCARD_INVISIBLE);
-			drawQuad(Enums::Brush::TEXTURE);
+			setTexture(img, Painter::TextureSlot::FOREGROUND);
+			enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
+			drawQuad(Painter::Brush::TEXTURE);
 			pop();
 		}
 
@@ -334,23 +384,23 @@ namespace mc {
 			return state.maskTransform;
 		}
 
-		void Painter::enableRenderFeatures(const Enums::RenderFeatures feature) {
+		void Painter::enableRenderFeatures(const Painter::RenderFeatures feature) {
 			state.renderFeatures = state.renderFeatures | feature;
 		}
 
-		void Painter::disableRenderFeatures(const Enums::RenderFeatures feature) {
+		void Painter::disableRenderFeatures(const Painter::RenderFeatures feature) {
 			state.renderFeatures = state.renderFeatures & ~feature;
 		}
 
-		void Painter::setRenderFeatures(const Enums::RenderFeatures feature) {
+		void Painter::setRenderFeatures(const Painter::RenderFeatures feature) {
 			state.renderFeatures = feature;
 		}
 
-		Enums::RenderFeatures & Painter::getRenderFeatures() {
+		Painter::RenderFeatures & Painter::getRenderFeatures() {
 			return state.renderFeatures;
 		}
 
-		const Enums::RenderFeatures & Painter::getRenderFeatures() const {
+		const Painter::RenderFeatures & Painter::getRenderFeatures() const {
 			return state.renderFeatures;
 		}
 
@@ -364,7 +414,7 @@ namespace mc {
 				{0, col.y(), 0, 0},
 				{0, 0, col.z(), 0},
 				{0, 0, 0, col.w()}
-			}));
+										  }));
 		}
 
 		void Painter::setFilter(const Matrix<float, 4, 4> & col) {

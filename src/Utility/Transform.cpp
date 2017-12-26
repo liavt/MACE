@@ -37,9 +37,9 @@ namespace mc {
 
 
 		Matrix<float, 4, 4> out = m;
-		out[0][0] = cosZ*cosY;
-		out[1][1] = cosZ*cosX;
-		out[2][2] = cosX*cosY;
+		out[0][0] = cosZ * cosY;
+		out[1][1] = cosZ * cosX;
+		out[2][2] = cosX * cosY;
 
 		out[0][1] = sinZ;
 		out[0][2] = -sinY;
@@ -134,8 +134,22 @@ namespace mc {
 	Matrix<float, 4, 4> TransformMatrix::get() const {
 		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2]) * math::rotate(rotation[0], rotation[1], rotation[2]) * math::scale(scaler[0], scaler[1], scaler[2]);
 	}
+	bool TransformMatrix::collides2D(const TransformMatrix & other) const {
+		const Vector<float, 4> thisAABB = Vector<float, 4>({ (translation[0] / 2.0f) + 0.5f, (translation[1] / 2.0f) + 0.5f, scaler[0], scaler[1] });
+		const Vector<float, 4> otherAABB = Vector<float, 4>({ (other.translation[0] / 2.0f) + 0.5f, (other.translation[1] / 2.0f) + 0.5f, other.scaler[0], other.scaler[1] });
+
+		if (thisAABB.x() < otherAABB.x() + otherAABB.z() &&
+			thisAABB.x() + thisAABB.z() > otherAABB.x() &&
+			thisAABB.y() < otherAABB.y() + otherAABB.w() &&
+			thisAABB.w() + thisAABB.y() > otherAABB.y()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	bool TransformMatrix::operator==(const TransformMatrix & other) const {
-		return other.translation == translation&&other.rotation == rotation&&other.scaler == scaler;
+		return other.translation == translation && other.rotation == rotation && other.scaler == scaler;
 	}
 	bool TransformMatrix::operator!=(const TransformMatrix & other) const {
 		return !operator==(other);

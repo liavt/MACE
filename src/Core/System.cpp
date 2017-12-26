@@ -304,7 +304,7 @@ namespace mc {
 		std::string consoleColor(const ConsoleColor & foreground, const ConsoleColor & background) {
 #ifdef MACE_WINAPI
 			Byte attribute = 0;
-			ConsoleColor colors[] = { background, foreground };
+			const ConsoleColor colors[] = { background, foreground };
 
 			for (unsigned int i = 0; i < 2; ++i) {
 				attribute *= 15;
@@ -331,7 +331,9 @@ namespace mc {
 						attribute = 6;
 						break;
 					case ConsoleColor::DEFAULT:
+						MACE_FALLTHROUGH;
 					case ConsoleColor::LIGHT_GRAY:
+						MACE_FALLTHROUGH;
 					default:
 						attribute = 7;
 						break;

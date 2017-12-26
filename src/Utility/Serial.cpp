@@ -223,7 +223,7 @@ namespace mc {
 
 			if (!isValid()) {
 				destroy();
-				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed: recall init()");
 			}
 
 			if (bufferSize == 0) {
@@ -260,12 +260,12 @@ namespace mc {
 			os::clearError();
 
 			if (!isConnected()) {
-				MACE__THROW(InitializationFailed, "Unable to flush serial stream - it is not connected");
+				MACE__THROW(InitializationFailed, "Unable to flush serial stream: it is not connected");
 			}
 
 			if (!isValid()) {
 				destroy();
-				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed: recall init()");
 			}
 
 #ifdef MACE_WINAPI
@@ -286,7 +286,7 @@ namespace mc {
 			}
 
 			if (!isValid()) {
-				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
+				MACE__THROW(FileNotFound, "Socket closed: recall init()");
 			}
 
 #ifdef MACE_WINAPI
@@ -328,7 +328,7 @@ namespace mc {
 
 			//cheatey way to check if it exists by seeing if this errors
 			if (!GetCommState(serial, &commState)) {
-				//get rid of the flag
+				//get rid of the dummy error we created
 				const DWORD lastError = GetLastError();
 
 				return false;
@@ -336,7 +336,7 @@ namespace mc {
 				return true;
 			}
 #elif defined(MACE_POSIX)
-			const bool valid = fcntl(serial, F_GETFD) != -1 || errno != EBADF;;
+			const bool valid = fcntl(serial, F_GETFD) != -1 || errno != EBADF;
 			errno = 0;
 			return valid;
 #endif

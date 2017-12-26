@@ -189,6 +189,8 @@ namespace mc {
 		*/
 		Matrix<float, 4> get() const;
 
+		bool collides2D(const TransformMatrix& other) const;
+
 		/**
 		Checks if the values represented by 2 `TransformMatrix` are the same
 		@param other What to compare to

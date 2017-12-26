@@ -88,16 +88,16 @@ namespace mc {
 			DummyEntity e = DummyEntity();
 
 			SECTION("Testing what makes something dirty") {
-				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				REQUIRE(!e.getProperty(Entity::DIRTY));
 				e.setProperty(Entity::MAINTAIN_X, true);
 				REQUIRE(e.getProperty(Entity::DIRTY));
 				e.reset();
-				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				REQUIRE(!e.getProperty(Entity::DIRTY));
 			}
 
 			SECTION("Testing clean()") {
 				e.reset();
-				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				REQUIRE(!e.getProperty(Entity::DIRTY));
 				REQUIRE_FALSE(e.isCleaned);
 
 				e.setProperty(Entity::DIRTY, true);
@@ -140,7 +140,7 @@ namespace mc {
 			c.reset();
 
 			REQUIRE_FALSE(e.hasParent());
-			REQUIRE(e2.hasParent());
+			REQUIRE_FALSE(e2.hasParent());
 			REQUIRE(c.isEmpty());
 		}
 

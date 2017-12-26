@@ -57,6 +57,7 @@ namespace mc {
 		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
 		std::size_t wcstombs(std::size_t* returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, const std::size_t length);
 
+		//the reason it is called assertion and not assert is because on some platforms, assert is a macro and that conflicts with the function declaration
 		void assertion(const bool cond, const std::string& message);
 		void assertion(const bool cond, const char* message = "Assertion failed");
 
@@ -97,6 +98,9 @@ namespace mc {
 			LIGHT_GRAY
 		};
 
+		/**
+		@bug Background doesn't work on windows
+		*/
 		std::string consoleColor(const ConsoleColor& foreground = ConsoleColor::DEFAULT, const ConsoleColor& background = ConsoleColor::DEFAULT);
 	}//os
 }//mc

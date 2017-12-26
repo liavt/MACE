@@ -184,8 +184,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	/**
-	Primitive type guaranteed to be equal to 8 bits (1 byte). The definition here is for clarity.
-	@see VoidFunctionPtr
+	Primitive type guaranteed to be at least equal to 8 bits (1 byte). The definition here is for clarity.
 	@see Index
 	@see Enum
 	@see Size
@@ -206,7 +205,6 @@ namespace mc {
 	Not only is it shorter, but it makes it more obvious, making documentation easier.
 	@see Index
 	@see Enum
-	@see VoidFunctionPtr
 	*/
 	using Size = std::size_t;
 
@@ -229,14 +227,12 @@ namespace mc {
 	}
 
 	@see Size
-	@see VoidFunctionPtr
 	@see Enum
 	*/
 	using Index = Size;
 	/**
 	Type representing an int-based enum (such as GL_* constants)
 	@see Index
-	@see VoidFunctionPtr
 	@see Size
 	*/
 	using Enum = unsigned int;

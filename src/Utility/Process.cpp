@@ -28,6 +28,18 @@ The above copyright notice and this permission notice shall be included in all c
 #endif
 
 namespace mc {
+	Process::Process(const char * p, const char * a) : path(p), args(a) {}
+
+	Process::Process(const std::string & path, std::string & args) : Process(path.c_str(), args.c_str()) {}
+
+	Process::Process() : Process(nullptr, nullptr) {}
+
+	Process::~Process() {
+		if (isCreated()) {
+			destroy();
+		}
+	}
+
 	void Process::init() {
 		if (path == nullptr) {
 			MACE__THROW(NullPointer, "The path can\'t be null!");
@@ -51,7 +63,7 @@ namespace mc {
 		startupInfo.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		/*
-		Ok let me rant for a second here. CreateProcessA does not accept a const char* for its args.
+		Ok let me rant for a second here. CreateProcess does not accept a const char* for its args.
 		THIS IS A MASSIVE PROBLEM
 		args has to be const char* because of the possibility that someone will initialize a process
 		with a string literal. In fact, it is most likely going to be a string literal, like so:
@@ -221,18 +233,6 @@ namespace mc {
 
 	const char * Process::getArgs() const {
 		return args;
-	}
-
-	Process::Process(const char * p, const char * a) : path(p), args(a) {}
-
-	Process::Process(const std::string & path, std::string & args) : Process(path.c_str(), args.c_str()) {}
-
-	Process::Process() : Process(nullptr, nullptr) {}
-
-	Process::~Process() {
-		if (isCreated()) {
-			destroy();
-		}
 	}
 
 #if defined(MACE_WINAPI)

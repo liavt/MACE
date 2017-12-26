@@ -30,7 +30,7 @@ namespace mc {
 		
 		REQUIRE(runningProcess.isCreated());
 		
-		ExportTest1Ptr exportTest1Func = reinterpret_cast<ExportTest1Ptr>(runningProcess.getFunction("exportTest1"));
+		ExportTest1Ptr exportTest1Func = reinterpret_cast<ExportTest1Ptr>(runningProcess.getSymbol("exportTest1"));
 
 		REQUIRE(exportTest1Func(42) == 42);
 
@@ -57,7 +57,7 @@ namespace mc {
 
 		REQUIRE(dllTest.isCreated());
 
-		ExportTest1Ptr exportTest1Func = reinterpret_cast<ExportTest1Ptr>(dllTest.getFunction("exportTest1"));
+		ExportTest1Ptr exportTest1Func = reinterpret_cast<ExportTest1Ptr>(dllTest.getSymbol("exportTest1"));
 
 		REQUIRE(exportTest1Func(42) == 42);
 

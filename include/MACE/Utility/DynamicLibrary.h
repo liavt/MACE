@@ -30,16 +30,11 @@ namespace mc {
 
 		void destroy();
 
-		void* getFunction(const std::string& name);
-		void* getFunction(const char* name);
+		void* getSymbol(const std::string& name) const;
+		void* getSymbol(const char* name) const;
 
-		void* operator[](const char* name) {
-			return getFunction(name);
-		}
-
-		void* operator[](const std::string& name) {
-			return this->operator[](name.c_str());
-		}
+		void* operator[](const char* name) const;
+		void* operator[](const std::string& name) const;
 
 		bool isCreated() const;
 
@@ -56,7 +51,7 @@ namespace mc {
 		bool created = false;
 
 		void* dll;
-	};//DynamicLibrary
-}//mc
+		};//DynamicLibrary
+	}//mc
 
 #endif//MACE__UTILITY_DYNAMIC_LIBRARY_H

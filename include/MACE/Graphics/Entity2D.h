@@ -100,8 +100,8 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			float& getMinimum();
-			const float& getMinimum() const;
+			float& getMinimum() override;
+			const float& getMinimum() const override;
 
 
 			/**
@@ -111,8 +111,8 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			float& getMaximum();
-			const float& getMaximum() const;
+			float& getMaximum() override;
+			const float& getMaximum() const override;
 
 
 			/**
@@ -276,14 +276,14 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setVerticalAlign(const Enums::VerticalAlign align);
-			const Enums::VerticalAlign getVerticalAlign() const;
+			void setVerticalAlign(const VerticalAlign align);
+			const VerticalAlign getVerticalAlign() const;
 
 			/**
 			@dirty
 			*/
-			void setHorizontalAlign(Enums::HorizontalAlign align);
-			const Enums::HorizontalAlign getHorizontalAlign() const;
+			void setHorizontalAlign(HorizontalAlign align);
+			const HorizontalAlign getHorizontalAlign() const;
 
 			void setTexture(const Texture& tex) override;
 			Texture& getTexture() override;
@@ -302,8 +302,8 @@ namespace mc {
 
 			std::wstring text;
 
-			Enums::VerticalAlign vertAlign = Enums::VerticalAlign::CENTER;
-			Enums::HorizontalAlign horzAlign = Enums::HorizontalAlign::CENTER;
+			VerticalAlign vertAlign = VerticalAlign::CENTER;
+			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
 
 			Font font;
 

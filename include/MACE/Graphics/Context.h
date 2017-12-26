@@ -38,40 +38,38 @@ namespace mc {
 		*/
 		MACE__DECLARE_ERROR(BadFormat);
 
-		namespace Enums {
-			enum class PixelStorage: Byte {
-				ALIGNMENT,
-				ROW_LENGTH
-			};
+		enum class PixelStorage: Byte {
+			ALIGNMENT,
+			ROW_LENGTH
+		};
 
-			enum class ImageFormat: Byte {
-				//each enum is equal to how many components in that type of image
-				//the image load/save functions use swizzle masks to differentiate
-				//between GRAY and R, GRAY_ALPHA and RG
-				LUMINANCE = 1,
-				LUMINANCE_ALPHA = 2,
-				INTENSITY = 1,
-				R = 1,
-				RG = 2,
-				RGB = 3,
-				RGBA = 4,
-				DONT_CARE = 0
-			};
+		enum class ImageFormat: Byte {
+			//each enum is equal to how many components in that type of image
+			//the image load/save functions use swizzle masks to differentiate
+			//between GRAY and R, GRAY_ALPHA and RG
+			LUMINANCE = 1,
+			LUMINANCE_ALPHA = 2,
+			INTENSITY = 1,
+			R = 1,
+			RG = 2,
+			RGB = 3,
+			RGBA = 4,
+			DONT_CARE = 0
+		};
 
-			enum class PrimitiveType: short int {
-				//these draw modes were chosen because they exist in both OpenGL 3.3 and Direct3D
-				POINTS = 0,
-				LINES = 1,
-				LINES_ADJACENCY = 2,
-				LINES_STRIP = 3,
-				LINES_STRIP_ADJACENCY = 4,
-				TRIANGLES = 5,
-				TRIANGLES_ADJACENCY = 6,
-				TRIANGLES_STRIP = 7,
-				TRIANGLES_STRIP_ADJACENCY = 8,
-				//TRIANGLES_FAN does not exist in DirectX 10+ because of performance issues. It is not included in this list
-			};
-		}
+		enum class PrimitiveType: short int {
+			//these draw modes were chosen because they exist in both OpenGL 3.3 and Direct3D
+			POINTS = 0,
+			LINES = 1,
+			LINES_ADJACENCY = 2,
+			LINES_STRIP = 3,
+			LINES_STRIP_ADJACENCY = 4,
+			TRIANGLES = 5,
+			TRIANGLES_ADJACENCY = 6,
+			TRIANGLES_STRIP = 7,
+			TRIANGLES_STRIP_ADJACENCY = 8,
+			//TRIANGLES_FAN does not exist in DirectX 10+ because of performance issues. It is not included in this list
+		};
 
 		class ModelImpl: public Initializable, public Bindable {
 			friend class Model;
@@ -93,7 +91,7 @@ namespace mc {
 			bool operator==(const ModelImpl& other) const;
 			bool operator!=(const ModelImpl& other) const;
 		protected:
-			Enums::PrimitiveType primitiveType = Enums::PrimitiveType::TRIANGLES;
+			PrimitiveType primitiveType = PrimitiveType::TRIANGLES;
 		};
 
 		class Model: public Initializable, public Bindable {
@@ -117,9 +115,9 @@ namespace mc {
 				createTextureCoordinates(N, data);
 			}
 
-			void createVertices(const Size verticeSize, const float* vertices, const Enums::PrimitiveType& prim);
+			void createVertices(const Size verticeSize, const float* vertices, const PrimitiveType& prim);
 			template<const Size N>
-			void createVertices(const float(&vertices)[N], const Enums::PrimitiveType& prim) {
+			void createVertices(const float(&vertices)[N], const PrimitiveType& prim) {
 				createVertices(N, vertices, prim);
 			}
 
@@ -129,8 +127,8 @@ namespace mc {
 				createIndices(N, indiceData);
 			}
 
-			Enums::PrimitiveType getPrimitiveType();
-			const Enums::PrimitiveType getPrimitiveType() const;
+			PrimitiveType getPrimitiveType();
+			const PrimitiveType getPrimitiveType() const;
 
 			void draw() const;
 
@@ -244,8 +242,8 @@ namespace mc {
 
 			virtual void setData(const void* data, const Index mipmap) = 0;
 
-			virtual void setUnpackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
-			virtual void setPackStorageHint(const Enums::PixelStorage hint, const int value) = 0;
+			virtual void setUnpackStorageHint(const PixelStorage hint, const int value) = 0;
+			virtual void setPackStorageHint(const PixelStorage hint, const int value) = 0;
 
 			virtual void readPixels(void* data) const = 0;
 		protected:
@@ -255,8 +253,8 @@ namespace mc {
 		class Texture: public Bindable {
 		public:
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
-			static Texture createFromFile(const std::string& file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
-			static Texture createFromFile(const char* file, const Enums::ImageFormat format = Enums::ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			static Texture createFromFile(const std::string& file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			static Texture createFromFile(const char* file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
 			static Texture createFromMemory(const unsigned char * c, const Size size);
 
 			static Texture& getSolidColor();
@@ -333,8 +331,8 @@ namespace mc {
 				init(desc);
 
 				resetPixelStorage();
-				setPackStorageHint(Enums::PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
+				setPackStorageHint(PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
+				setPackStorageHint(PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
 
 				setData(mat.ptr());
 			}
@@ -343,8 +341,8 @@ namespace mc {
 				cv::Mat img(texture->desc.height, texture->desc.width, CV_8UC3);
 
 				resetPixelStorage();
-				setPackStorageHint(Enums::PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
-				setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
+				setPackStorageHint(PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
+				setPackStorageHint(PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
 
 				bind();
 
@@ -383,8 +381,8 @@ namespace mc {
 				setData(static_cast<const void*>(data[0]), mipmap);
 			}
 
-			void setUnpackStorageHint(const Enums::PixelStorage hint, const int value);
-			void setPackStorageHint(const Enums::PixelStorage hint, const int value);
+			void setUnpackStorageHint(const PixelStorage hint, const int value);
+			void setPackStorageHint(const PixelStorage hint, const int value);
 
 			void readPixels(void* data) const;
 

@@ -31,7 +31,7 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create(gfx::WindowModule& win) {
-	gfx::Texture circle = gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png", gfx::Enums::ImageFormat::LUMINANCE_ALPHA);
+	gfx::Texture circle = gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png", gfx::ImageFormat::LUMINANCE_ALPHA);
 
 	circleBar = gfx::ProgressBar(100, 255, 20);
 	circleBar.setBackgroundTexture(gfx::Texture(circle, Color(Colors::RED, 0.5f)));

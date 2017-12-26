@@ -20,19 +20,17 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		namespace Enums {
-			enum class VerticalAlign: Byte {
-				TOP,
-				CENTER,
-				BOTTOM
-			};
+		enum class VerticalAlign: Byte {
+			TOP,
+			CENTER,
+			BOTTOM
+		};
 
-			enum class HorizontalAlign: Byte {
-				LEFT,
-				CENTER,
-				RIGHT
-			};
-		}
+		enum class HorizontalAlign: Byte {
+			LEFT,
+			CENTER,
+			RIGHT
+		};
 
 		/**
 		Function defining a function used in an easing of a value, such as a translation or progress bar.
@@ -145,29 +143,52 @@ namespace mc {
 			virtual void onTrigger();
 		};
 
+		class Progressable {
+		public:
+			virtual ~Progressable() = default;
+
+			virtual void setProgress(const float prog) = 0;
+
+			/**
+			@copydoc Progressable::getProgress() const
+			@dirty
+			*/
+			virtual float& getProgress() = 0;
+			virtual const float& getProgress() const = 0;
+
+			void addProgress(const float prog);
+			void removeProgress(const float prog);
+
+			virtual float& getMinimum() = 0;
+			virtual const float& getMinimum() const = 0;
+
+			virtual float& getMaximum() = 0;
+			virtual const float& getMaximum() const = 0;
+		};
+
 		class AlignmentComponent: public Component {
 		public:
-			AlignmentComponent(const Enums::VerticalAlign vert = Enums::VerticalAlign::CENTER, const Enums::HorizontalAlign horz = Enums::HorizontalAlign::CENTER);
+			AlignmentComponent(const VerticalAlign vert = VerticalAlign::CENTER, const HorizontalAlign horz = HorizontalAlign::CENTER);
 
 			/**
 			@dirty
 			*/
-			void setVerticalAlign(const Enums::VerticalAlign align);
-			const Enums::VerticalAlign getVerticalAlign() const;
+			void setVerticalAlign(const VerticalAlign align);
+			const VerticalAlign getVerticalAlign() const;
 
 			/**
 			@dirty
 			*/
-			void setHorizontalAlign(Enums::HorizontalAlign align);
-			const Enums::HorizontalAlign getHorizontalAlign() const;
+			void setHorizontalAlign(HorizontalAlign align);
+			const HorizontalAlign getHorizontalAlign() const;
 
 			bool operator==(const AlignmentComponent& other) const;
 			bool operator!=(const AlignmentComponent& other) const;
 		protected:
 			void clean() final;
 		private:
-			Enums::VerticalAlign vertAlign;
-			Enums::HorizontalAlign horzAlign;
+			VerticalAlign vertAlign;
+			HorizontalAlign horzAlign;
 		};
 
 		class EaseComponent: public Component {
@@ -192,25 +213,6 @@ namespace mc {
 			const EaseUpdateCallback updateCallback;
 			const EaseFunction ease;
 			const EaseDoneCallback done;
-		};
-
-		class Progressable{
-		public:
-			virtual ~Progressable() = default;
-
-			virtual void setProgress(const float prog) = 0;
-
-			/**
-			@copydoc Progressable::getProgress() const
-			@dirty
-			*/
-			virtual float& getProgress() = 0;
-
-			virtual const float& getProgress() const = 0;
-
-			void addProgress(const float prog);
-
-			void removeProgress(const float prog);
 		};
 
 		class CallbackComponent: public Component {
@@ -294,6 +296,131 @@ namespace mc {
 			void hover() final;
 			void destroy() final;
 		};//FPSComponent
+
+		//the Return argument is to allow functions with return types to be used without a wrapper
+		template<typename T, typename Return = void>
+		class ConstraintComponent: public Component {
+		public:
+			using ConstraintCallback = std::function<Return(T)>;
+
+			ConstraintComponent(const T constraint = T(), const ConstraintCallback constrainFunc = [](T) -> Return {})
+				: constraint(constraint), constraintCallback(constrainFunc) {}
+
+			~ConstraintComponent() = default;
+
+			T getConstraint() {
+				return constraint;
+			}
+
+			const T getConstraint() const {
+				return constraint;
+			}
+
+			void setConstraint(const T val) {
+				constraint = val;
+			}
+
+			ConstraintCallback getConstraintCallback() {
+				return constraintCallback;
+			}
+
+			const ConstraintCallback getConstraintCallback() const {
+				return constraintCallback;
+			}
+
+			void setConstraintCallback(const ConstraintCallback callback) {
+				constraintCallback = callback;
+			}
+
+			bool operator==(const ConstraintComponent& other) {
+				return constraint == other.constraint;
+			}
+			bool operator!=(const ConstraintComponent& other) {
+				return !operator==(other);
+			}
+			bool operator>(const ConstraintComponent& other) {
+				return constraint > other.constraint;
+			}
+			bool operator>=(const ConstraintComponent& other) {
+				return operator>(other) || operator==(other);
+			}
+			bool operator<(const ConstraintComponent& other) {
+				return !operator>=(other);
+			}
+			bool operator<=(const ConstraintComponent& other) {
+				return !operator>(other);
+			}
+		private:
+			void clean() final {
+				constraintCallback(constraint);
+			}
+
+			ConstraintCallback constraintCallback;
+
+			T constraint;
+		};
+
+		class XAxisConstraintComponent final: public ConstraintComponent<float> {
+		public:
+			XAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [&](float val) {
+				parent->setX(val);
+			}) {}
+		};
+
+		class YAxisConstraintComponent final: public ConstraintComponent<float> {
+		public:
+			YAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [&](float val) {
+				parent->setY(val);
+			}) {}
+		};
+
+		class ZAxisConstraintComponent final: public ConstraintComponent<float> {
+		public:
+			ZAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [&](float val) {
+				parent->setZ(val);
+			}) {}
+		};
+
+		class BoundsComponent: public Component {
+		public:
+			using BoundsReachedCallback = std::function<void(Entity*, BoundsComponent*)>;
+
+			BoundsComponent(const Vector<float, 2> boundsX, const Vector<float, 2> boundsY,
+							const Vector<float, 2> boundsZ,
+							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*) {});
+			BoundsComponent(const float minX = -1.0f, const float maxX = 1.0f, const float minY = -1.0f,
+							const float maxY = 1.0f, const float minZ = -1.0f, const float maxZ = 1.0f,
+							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*) {});
+
+			BoundsReachedCallback getCallback();
+			const BoundsReachedCallback getCallback() const;
+			void setCallback(const BoundsReachedCallback boundsReached);
+
+			Vector<float, 2>& getBoundsX();
+			const Vector<float, 2>& getBoundsX() const;
+			void setBoundsX(const Vector<float, 2>& vec);
+
+			Vector<float, 2>& getBoundsY();
+			const Vector<float, 2>& getBoundsY() const;
+			void setBoundsY(const Vector<float, 2>& vec);
+
+			Vector<float, 2>& getBoundsZ();
+			const Vector<float, 2>& getBoundsZ() const;
+			void setBoundsZ(const Vector<float, 2>& vec);
+
+			bool operator==(const BoundsComponent& other);
+			bool operator!=(const BoundsComponent& other);
+			bool operator>(const BoundsComponent& other);
+			bool operator>=(const BoundsComponent& other);
+			bool operator<(const BoundsComponent& other);
+			bool operator<=(const BoundsComponent& other);
+		private:
+			void clean() final;
+
+			Vector<float, 2> boundsX, boundsY, boundsZ;
+
+			BoundsReachedCallback callback;
+		};
 
 		class AnimationComponent: public Component, public Texturable {
 		public:

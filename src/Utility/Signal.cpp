@@ -19,7 +19,7 @@ namespace mc {
 				//the following code is pretty boring and self explanatory.
 				//plus signals are literally the devil to debug, especially SIGSEGV
 				//so to lighten up the mood for developers that encounter these signals,
-				//i've written a joke about every single one
+				//i've written a "joke" about every single one
 				try{
 #ifdef MACE_POSIX
 					if (sig == SIGHUP) {
@@ -65,7 +65,7 @@ namespace mc {
 						//its rude to interuppt
 						throw SignalInterruptError("SIGINT: Program was interrupted from keyboard");
 					} else if (sig == SIGSEGV) {
-						//now to whip out the ol' gdb and empty the next 3 days from the calendar
+						//now to unleash the ol' gdb and empty the next 3 days from the calendar
 						throw SignalSegmentFaultError("SIGSEGV: Invalid memory reference (segmentation fault)");
 					} else if (sig == SIGTERM) {
 						//hasta la vista baby

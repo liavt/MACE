@@ -285,10 +285,10 @@ namespace mc {
 			setProgress(getProgress() - prog);
 		}
 
-		AlignmentComponent::AlignmentComponent(const Enums::VerticalAlign vert, const Enums::HorizontalAlign horz)
+		AlignmentComponent::AlignmentComponent(const VerticalAlign vert, const HorizontalAlign horz)
 			: vertAlign(vert), horzAlign(horz) {}
 
-		void AlignmentComponent::setVerticalAlign(const Enums::VerticalAlign align) {
+		void AlignmentComponent::setVerticalAlign(const VerticalAlign align) {
 			if (vertAlign != align) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -298,11 +298,11 @@ namespace mc {
 			}
 		}
 
-		const Enums::VerticalAlign AlignmentComponent::getVerticalAlign() const {
+		const VerticalAlign AlignmentComponent::getVerticalAlign() const {
 			return vertAlign;
 		}
 
-		void AlignmentComponent::setHorizontalAlign(Enums::HorizontalAlign align) {
+		void AlignmentComponent::setHorizontalAlign(HorizontalAlign align) {
 			if (horzAlign != align) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -312,7 +312,7 @@ namespace mc {
 			}
 		}
 
-		const Enums::HorizontalAlign AlignmentComponent::getHorizontalAlign() const {
+		const HorizontalAlign AlignmentComponent::getHorizontalAlign() const {
 			return horzAlign;
 		}
 
@@ -332,27 +332,27 @@ namespace mc {
 
 			switch (horzAlign) {
 				default:
-				case Enums::HorizontalAlign::CENTER:
+				case HorizontalAlign::CENTER:
 					parent->setX(0.0f);
 					//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
 					break;
-				case Enums::HorizontalAlign::RIGHT:
+				case HorizontalAlign::RIGHT:
 					parent->setX(1.0f - (width / 2.0f));
 					break;
-				case Enums::HorizontalAlign::LEFT:
+				case HorizontalAlign::LEFT:
 					parent->setX((width / 2.0f) - 1.0f);
 					break;
 			}
 
 			switch (vertAlign) {
 				default:
-				case Enums::VerticalAlign::CENTER:
+				case VerticalAlign::CENTER:
 					parent->setX(0.0f);
 					break;
-				case Enums::VerticalAlign::BOTTOM:
+				case VerticalAlign::BOTTOM:
 					parent->setY((height / 2.0f) - 1.0f);
 					break;
-				case Enums::VerticalAlign::TOP:
+				case VerticalAlign::TOP:
 					parent->setY(1.0f - (height / 2.0f));
 					break;
 			}
@@ -591,5 +591,109 @@ namespace mc {
 		bool AnimationComponent::operator!=(const AnimationComponent & other) const {
 			return !operator==(other);
 		}
-}//gfx
+
+		BoundsComponent::BoundsComponent(const Vector<float, 2> x, const Vector<float, 2> y, const Vector<float, 2> z, const BoundsReachedCallback boundsReached)
+			: boundsX(x), boundsY(y), boundsZ(z), callback(boundsReached) {}
+
+		BoundsComponent::BoundsComponent(const float minX, const float maxX, const float minY, const float maxY, const float minZ, const float maxZ, const BoundsReachedCallback boundsReached)
+			: BoundsComponent({ minX, maxX }, { minY, maxY }, { minZ, maxZ }, boundsReached) {}
+
+		BoundsComponent::BoundsReachedCallback BoundsComponent::getCallback() {
+			return callback;
+		}
+
+		const BoundsComponent::BoundsReachedCallback BoundsComponent::getCallback() const {
+			return callback;
+		}
+
+		void BoundsComponent::setCallback(const BoundsReachedCallback boundsReached) {
+			callback = boundsReached;
+		}
+
+		Vector<float, 2>& BoundsComponent::getBoundsX() {
+			return boundsX;
+		}
+
+		const Vector<float, 2>& BoundsComponent::getBoundsX() const {
+			return boundsX;
+		}
+
+		void BoundsComponent::setBoundsX(const Vector<float, 2>& vec) {
+			boundsX = vec;
+		}
+
+		Vector<float, 2>& BoundsComponent::getBoundsY() {
+			return boundsY;
+		}
+
+		const Vector<float, 2>& BoundsComponent::getBoundsY() const {
+			return boundsY;
+		}
+
+		void BoundsComponent::setBoundsY(const Vector<float, 2>& vec) {
+			boundsY = vec;
+		}
+
+		Vector<float, 2>& BoundsComponent::getBoundsZ() {
+			return boundsZ;
+		}
+
+		const Vector<float, 2>& BoundsComponent::getBoundsZ() const {
+			return boundsZ;
+		}
+
+		void BoundsComponent::setBoundsZ(const Vector<float, 2>& vec) {
+			boundsZ = vec;
+		}
+
+		bool BoundsComponent::operator==(const BoundsComponent & other) {
+			return boundsX == other.boundsX && boundsY == other.boundsY && boundsZ == other.boundsZ;
+		}
+
+		bool BoundsComponent::operator!=(const BoundsComponent & other) {
+			return !operator==(other);
+		}
+
+		bool BoundsComponent::operator>(const BoundsComponent & other) {
+			return boundsX > other.boundsX && boundsY > other.boundsY && boundsZ > other.boundsZ;
+		}
+
+		bool BoundsComponent::operator>=(const BoundsComponent & other) {
+			return operator>(other) || operator==(other);
+		}
+
+		bool BoundsComponent::operator<(const BoundsComponent & other) {
+			return !operator>=(other);
+		}
+
+		bool BoundsComponent::operator<=(const BoundsComponent & other) {
+			return !operator>(other);
+		}
+
+		void BoundsComponent::clean() {
+			if (parent->getX() - parent->getWidth() < boundsX.x()) {
+				parent->setX(boundsX.x() + parent->getWidth());
+				callback(parent, this);
+			} else if (parent->getX() + parent->getWidth() > boundsX.y()) {
+				parent->setX(boundsX.y() - parent->getWidth());
+				callback(parent, this);
+			}
+
+			if (parent->getY() - parent->getHeight() < boundsY.x()) {
+				parent->setY(boundsY.x() + parent->getHeight());
+				callback(parent, this);
+			} else if (parent->getY() + parent->getHeight() > boundsY.y()) {
+				parent->setY(boundsY.y() - parent->getHeight());
+				callback(parent, this);
+			}
+
+			if (parent->getZ() - parent->getDepth() < boundsZ.x()) {
+				parent->setZ(boundsZ.x() + parent->getDepth());
+				callback(parent, this);
+			} else if (parent->getZ() + parent->getDepth() > boundsZ.y()) {
+				parent->setZ(boundsZ.y() - parent->getDepth());
+				callback(parent, this);
+			}
+		}
+	}//gfx
 }//mc

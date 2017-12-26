@@ -18,26 +18,26 @@ void create(gfx::WindowModule& win) {
 
 	topLeft = gfx::Text("Top left!", gfx::Fonts::SERIF);
 	topLeft.setTexture(Colors::WHITE);
-	topLeft.setHorizontalAlign(gfx::Enums::HorizontalAlign::LEFT);
-	topLeft.setVerticalAlign(gfx::Enums::VerticalAlign::TOP);
+	topLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
+	topLeft.setVerticalAlign(gfx::VerticalAlign::TOP);
 
 	topRight = gfx::Text("Top right.", gfx::Fonts::SANS);
 	topRight.setTexture(Colors::LIGHT_BLUE);
-	topRight.setHorizontalAlign(gfx::Enums::HorizontalAlign::RIGHT);
-	topRight.setVerticalAlign(gfx::Enums::VerticalAlign::TOP);
+	topRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
+	topRight.setVerticalAlign(gfx::VerticalAlign::TOP);
 
 	botLeft = gfx::Text("bOtToM lEfT?", gfx::Font(gfx::Fonts::SERIF, 16));
 	botLeft.setTexture(Colors::RED);
-	botLeft.setHorizontalAlign(gfx::Enums::HorizontalAlign::LEFT);
-	botLeft.setVerticalAlign(gfx::Enums::VerticalAlign::BOTTOM);
+	botLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
+	botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
 
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
 	font.setSize(48);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
 	botRight.setTexture(Colors::YELLOW);
-	botRight.setHorizontalAlign(gfx::Enums::HorizontalAlign::RIGHT);
-	botRight.setVerticalAlign(gfx::Enums::VerticalAlign::BOTTOM);
+	botRight.setHorizontalAlign(gfx::HorizontalAlign::RIGHT);
+	botRight.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
 
 	win.addChild(center);
 	win.addChild(topLeft);

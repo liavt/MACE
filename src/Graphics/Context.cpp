@@ -92,7 +92,7 @@ namespace mc {
 						1.0f,-1.0f,0.0f
 					};
 
-					model.createVertices(squareVertices, Enums::PrimitiveType::TRIANGLES);
+					model.createVertices(squareVertices, PrimitiveType::TRIANGLES);
 					model.createIndices(squareIndices);
 					model.createTextureCoordinates(squareTextureCoordinates);
 
@@ -139,7 +139,7 @@ namespace mc {
 			model->loadTextureCoordinates(dataSize, data);
 		}
 
-		void Model::createVertices(const Size verticeSize, const float * vertices, const Enums::PrimitiveType& prim) {
+		void Model::createVertices(const Size verticeSize, const float * vertices, const PrimitiveType& prim) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->primitiveType = prim;
@@ -153,11 +153,11 @@ namespace mc {
 			model->loadIndices(indiceNum, indiceData);
 		}
 
-		Enums::PrimitiveType Model::getPrimitiveType() {
+		PrimitiveType Model::getPrimitiveType() {
 			return model->primitiveType;
 		}
 
-		const Enums::PrimitiveType Model::getPrimitiveType() const {
+		const PrimitiveType Model::getPrimitiveType() const {
 			return model->primitiveType;
 		}
 
@@ -202,11 +202,11 @@ namespace mc {
 			return texture;
 		}
 
-		Texture Texture::createFromFile(const std::string & file, const Enums::ImageFormat format, const TextureDesc::Wrap wrap) {
+		Texture Texture::createFromFile(const std::string & file, const ImageFormat format, const TextureDesc::Wrap wrap) {
 			return Texture::createFromFile(file.c_str(), format, wrap);
 		}
 
-		Texture Texture::createFromFile(const char * file, const Enums::ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
+		Texture Texture::createFromFile(const char * file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
 			Texture tex = Texture();
 
 			int width, height, actualComponents;
@@ -220,21 +220,21 @@ namespace mc {
 				/*if DONT_CARE, the outputComponents is equal to the amount of components in image,
 				otherwise equal to amount of requestedComponents
 				*/
-				const int outputComponents = (imgFormat == Enums::ImageFormat::DONT_CARE
+				const int outputComponents = (imgFormat == ImageFormat::DONT_CARE
 											  ? actualComponents : static_cast<int>(imgFormat));
 
 				TextureDesc desc = TextureDesc(width, height);
 				if (outputComponents == 1) {
-					if (imgFormat == Enums::ImageFormat::LUMINANCE) {
+					if (imgFormat == ImageFormat::LUMINANCE) {
 						desc.format = TextureDesc::Format::LUMINANCE;
-					} else if (imgFormat == Enums::ImageFormat::INTENSITY) {
+					} else if (imgFormat == ImageFormat::INTENSITY) {
 						desc.format = TextureDesc::Format::INTENSITY;
 					} else {
 						desc.format = TextureDesc::Format::RED;
 					}
 					desc.internalFormat = TextureDesc::InternalFormat::RED;
 				} else if (outputComponents == 2) {
-					if (imgFormat == Enums::ImageFormat::LUMINANCE_ALPHA) {
+					if (imgFormat == ImageFormat::LUMINANCE_ALPHA) {
 						desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
 					} else {
 						desc.format = TextureDesc::Format::RG;
@@ -513,10 +513,10 @@ namespace mc {
 		void Texture::resetPixelStorage() {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			setPackStorageHint(Enums::PixelStorage::ALIGNMENT, 4);
-			setUnpackStorageHint(Enums::PixelStorage::ALIGNMENT, 4);
-			setPackStorageHint(Enums::PixelStorage::ROW_LENGTH, 0);
-			setUnpackStorageHint(Enums::PixelStorage::ROW_LENGTH, 0);
+			setPackStorageHint(PixelStorage::ALIGNMENT, 4);
+			setUnpackStorageHint(PixelStorage::ALIGNMENT, 4);
+			setPackStorageHint(PixelStorage::ROW_LENGTH, 0);
+			setUnpackStorageHint(PixelStorage::ROW_LENGTH, 0);
 		}
 
 		void Texture::setData(const void * data, const Index mipmap) {
@@ -525,13 +525,13 @@ namespace mc {
 			texture->setData(data, mipmap);
 		}
 
-		void Texture::setUnpackStorageHint(const Enums::PixelStorage hint, const int value) {
+		void Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->setUnpackStorageHint(hint, value);
 		}
 
-		void Texture::setPackStorageHint(const Enums::PixelStorage hint, const int value) {
+		void Texture::setPackStorageHint(const PixelStorage hint, const int value) {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->setPackStorageHint(hint, value);

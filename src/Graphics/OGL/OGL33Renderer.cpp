@@ -53,7 +53,7 @@ namespace mc {
 #define MACE__SCENE_ATTACHMENT_INDEX 0
 #define MACE__ID_ATTACHMENT_INDEX 1
 
-				Shader createShader(const Enum type, const Enums::RenderFeatures features, const char* source) {
+				Shader createShader(const Enum type, const Painter::RenderFeatures features, const char* source) {
 					Shader s = Shader(type);
 					s.init();
 #define MACE__SHADER_MACRO(name, def) "#define " #name " " MACE_STRINGIFY_DEFINITION(def) "\n"
@@ -70,28 +70,28 @@ namespace mc {
 					});
 #undef MACE__SHADER_MACRO
 
-					if ((features & Enums::RenderFeatures::DISCARD_INVISIBLE) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::DISCARD_INVISIBLE) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_DISCARD_INVISIBLE 1\n");
 					}
-					if ((features & Enums::RenderFeatures::FILTER) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::FILTER) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_FILTER 1\n");
 					}
-					if ((features & Enums::RenderFeatures::TEXTURE) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::TEXTURE) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_TEXTURE 1\n");
 					}
-					if ((features & Enums::RenderFeatures::TEXTURE_TRANSFORM) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::TEXTURE_TRANSFORM) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_TEXTURE_TRANSFORM 1\n");
 					}
-					if ((features & Enums::RenderFeatures::INHERIT_TRANSLATION) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::INHERIT_TRANSLATION) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_INHERIT_TRANSLATION 1\n");
 					}
-					if ((features & Enums::RenderFeatures::INHERIT_SCALE) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::INHERIT_SCALE) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_INHERIT_SCALE 1\n");
 					}
-					if ((features & Enums::RenderFeatures::INHERIT_ROTATION) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::INHERIT_ROTATION) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_INHERIT_ROTATION 1\n");
 					}
-					if ((features & Enums::RenderFeatures::STORE_ID) != Enums::RenderFeatures::NONE) {
+					if ((features & Painter::RenderFeatures::STORE_ID) != Painter::RenderFeatures::NONE) {
 						sources.insert(sources.begin(), "#define MACE_STORE_ID 1\n");
 					}
 
@@ -117,7 +117,7 @@ namespace mc {
 					return s;
 				}
 
-				ogl::ShaderProgram createShadersForSettings(const std::pair<Enums::Brush, Enums::RenderFeatures>& settings) {
+				ogl::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
 					ogl::ShaderProgram program;
 					program.init();
 
@@ -125,13 +125,13 @@ namespace mc {
 #include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
 					));
 
-					if (settings.first == Enums::Brush::COLOR) {
+					if (settings.first == Painter::Brush::COLOR) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
 						));
 
 						program.link();
-					} else if (settings.first == Enums::Brush::TEXTURE) {
+					} else if (settings.first == Painter::Brush::TEXTURE) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
 						));
@@ -142,8 +142,8 @@ namespace mc {
 
 						program.createUniform("tex");
 
-						program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-					} else if (settings.first == Enums::Brush::MASK) {
+						program.setUniform("tex", static_cast<int>(Painter::TextureSlot::FOREGROUND));
+					} else if (settings.first == Painter::Brush::MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
 						));
@@ -156,9 +156,9 @@ namespace mc {
 						program.createUniform("mask");
 
 						//binding the samplers
-						program.setUniform("tex", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-						program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
-					} else if (settings.first == Enums::Brush::BLEND) {
+						program.setUniform("tex", static_cast<int>(Painter::TextureSlot::FOREGROUND));
+						program.setUniform("mask", static_cast<int>(Painter::TextureSlot::MASK));
+					} else if (settings.first == Painter::Brush::BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
 						));
@@ -170,9 +170,9 @@ namespace mc {
 						program.createUniform("tex1");
 						program.createUniform("tex2");
 
-						program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
-					} else if (settings.first == Enums::Brush::MASKED_BLEND) {
+						program.setUniform("tex1", static_cast<int>(Painter::TextureSlot::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(Painter::TextureSlot::BACKGROUND));
+					} else if (settings.first == Painter::Brush::MASKED_BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
 						));
@@ -186,9 +186,9 @@ namespace mc {
 						program.createUniform("mask");
 
 						//binding the samplers
-						program.setUniform("tex1", static_cast<int>(Enums::TextureSlot::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(Enums::TextureSlot::BACKGROUND));
-						program.setUniform("mask", static_cast<int>(Enums::TextureSlot::MASK));
+						program.setUniform("tex1", static_cast<int>(Painter::TextureSlot::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(Painter::TextureSlot::BACKGROUND));
+						program.setUniform("mask", static_cast<int>(Painter::TextureSlot::MASK));
 					} else {
 						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 					}
@@ -460,13 +460,7 @@ namespace mc {
 						return nullptr;
 					}
 
-					GraphicsEntity* entityAt = renderQueue[--pixel];
-					if (entityAt->needsRemoval()) {
-						renderQueue[pixel] = nullptr;
-						return nullptr;
-					}
-
-					return entityAt;
+					return getEntityByID(pixel);
 				}
 
 				return nullptr;
@@ -476,7 +470,7 @@ namespace mc {
 				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, p));
 			}
 
-			void OGL33Renderer::bindProtocol(OGL33Painter* painter, const std::pair<Enums::Brush, Enums::RenderFeatures> settings) {
+			void OGL33Renderer::bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
 					RenderProtocol prot = RenderProtocol();
@@ -485,7 +479,7 @@ namespace mc {
 					painter->painterData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 					painter->entityData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
 
-					protocols.insert(std::pair<std::pair<Enums::Brush, Enums::RenderFeatures>, OGL33Renderer::RenderProtocol>(settings, prot));
+					protocols.insert(std::pair<std::pair<Painter::Brush, Painter::RenderFeatures>, OGL33Renderer::RenderProtocol>(settings, prot));
 
 					protocol = protocols.find(settings);
 				}
@@ -648,7 +642,7 @@ namespace mc {
 				savedState = state;
 			}
 
-			void OGL33Painter::draw(const Model& m, const Enums::Brush brush) {
+			void OGL33Painter::draw(const Model& m, const Painter::Brush brush) {
 				renderer->bindProtocol(this, { brush, savedState.renderFeatures });
 
 				m.bind();

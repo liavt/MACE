@@ -192,9 +192,9 @@ namespace mc {
 			glfwDefaultWindowHints();
 
 			switch (config.contextType) {
-				case Enums::ContextType::AUTOMATIC:
-				case Enums::ContextType::BEST_OGL:
-				case Enums::ContextType::OGL33:
+				case LaunchConfig::ContextType::AUTOMATIC:
+				case LaunchConfig::ContextType::BEST_OGL:
+				case LaunchConfig::ContextType::OGL33:
 				default:
 					context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
 
@@ -225,7 +225,7 @@ namespace mc {
 
 			window = createWindow(config);
 
-			if (config.contextType == Enums::ContextType::BEST_OGL || config.contextType == Enums::ContextType::AUTOMATIC) {
+			if (config.contextType == LaunchConfig::ContextType::BEST_OGL || config.contextType == LaunchConfig::ContextType::AUTOMATIC) {
 				int versionMajor = 3;
 
 				//this checks every available context until 1.0. the window is hidden so it won't cause spazzing

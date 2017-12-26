@@ -27,6 +27,7 @@ namespace mc {
 	struct Matrix;
 
 	namespace math {
+		//forward declaration required for the Matrix::operator/
 		template<typename T, Size N>
 		Matrix<T, N, N> inverse(const Matrix<T, N, N>&);
 	}//math
@@ -526,7 +527,7 @@ namespace mc {
 
 	namespace math {
 		/**
-		Transposes a `Matrix`. Transposing a `Matrix` creates a reflection of it, where every row is a column.
+		Transposes a `Matrix`. Transposing a `Matrix` creates a reflection of it, where every row becomes a column.
 		@param matrix What to transpose
 		@return A reflected `matrix`
 		@tparam T Type of the `Matrix`
@@ -653,9 +654,8 @@ namespace mc {
 		template<typename T, Size N>
 		Matrix<T, N> inverse(const Matrix<T, N>& matrix) {
 			MACE_STATIC_ASSERT(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
-			//honestly, this next line really seems magical to me. matrices really seem magical in general. But
-			//this especialy. matrices are really something, aren't they?
-			return	(((identity<T, N>()*tr(matrix)) - matrix) * (1 / det(matrix)));//calculate via the caley-hamilton method
+			//honestly, this next line really seems magical to me. matrices really seem magical in general.
+			return	((identity<T, N>()*tr(matrix)) - matrix) * (1 / det(matrix));//calculate via the caley-hamilton method
 		}
 	}//math
 }//mc

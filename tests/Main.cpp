@@ -37,7 +37,7 @@ int main(int argc, char* const argv[]) {
 		std::set_unexpected(&onUnexpected);
 		std::set_terminate(&onTerminate);
 
-		//constant? get it?
+		//const int? constant? get it?
 		const int result = Catch::Session().run(argc, argv);
 
 		return result;

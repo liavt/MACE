@@ -195,9 +195,17 @@ namespace mc {
 		alDeleteBuffers(1, &buffer);
 	}
 
-	void Sound::setVolume(float vol) {
+	void Sound::setVolume(const float vol) {
 		volume = vol;
 		alSourcef(source, AL_GAIN, volume);
+	}
+
+	float & Sound::getVolume() {
+		return volume;
+	}
+
+	const float & Sound::getVolume() const {
+		return volume;
 	}
 
 	void Sound::setLooping(const bool val) {

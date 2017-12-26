@@ -28,6 +28,7 @@ namespace mc {
 
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<GraphicsEntity*>;
+		//cant be size_t - opengl has to use to uints so the EntityID must be unsigned int
 		using EntityID = unsigned int;
 
 		//forward declare dependencies
@@ -36,8 +37,10 @@ namespace mc {
 		class Texture;
 		class Model;
 
-		namespace Enums {
-			//painter stuff
+		class Painter: public Beginable, private Initializable {
+			friend class GraphicsEntity;
+			friend class PainterImpl;
+		public:
 			enum class Brush: Byte {
 				TEXTURE = 0, COLOR = 1, MASK = 2, BLEND = 3, MASKED_BLEND = 4,
 			};
@@ -56,32 +59,15 @@ namespace mc {
 				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM | INHERIT_TRANSLATION | INHERIT_SCALE | INHERIT_ROTATION | STORE_ID,
 			};
 
-			MACE_CONSTEXPR inline RenderFeatures operator|(const RenderFeatures& left, const RenderFeatures& right) {
-				return static_cast<RenderFeatures>(static_cast<Byte>(left) | static_cast<Byte>(right));
-			}
-
-			MACE_CONSTEXPR inline RenderFeatures operator&(const RenderFeatures& left, const RenderFeatures& right) {
-				return static_cast<RenderFeatures>(static_cast<Byte>(left) & static_cast<Byte>(right));
-			}
-
-			MACE_CONSTEXPR inline RenderFeatures operator~(const RenderFeatures& r) {
-				return static_cast<RenderFeatures>(~static_cast<Byte>(r));
-			}
-
 			/**
-			@todo changed Texture::bind() to use this in some form
+			@todo change Texture::bind() to use this in some form
 			*/
 			enum class TextureSlot: unsigned int {
 				FOREGROUND = 0,
 				BACKGROUND = 1,
 				MASK = 2,
 			};
-		}
 
-		class Painter: public Beginable, private Initializable {
-			friend class GraphicsEntity;
-			friend class PainterImpl;
-		public:
 			struct State {
 				Color foregroundColor, backgroundColor, maskColor;
 
@@ -93,7 +79,7 @@ namespace mc {
 
 				Matrix<float, 4, 4> filter = math::identity<float, 4>();
 
-				Enums::RenderFeatures renderFeatures = Enums::RenderFeatures::DEFAULT;
+				RenderFeatures renderFeatures = RenderFeatures::DEFAULT;
 
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
@@ -117,12 +103,12 @@ namespace mc {
 			void blendImages(const Texture& foreground, const Texture& background, const float amount = 0.5f);
 			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
-			void drawQuad(const Enums::Brush brush);
-			void draw(const Model& m, const Enums::Brush brush);
+			void drawQuad(const Brush brush);
+			void draw(const Model& m, const Brush brush);
 
 			const GraphicsEntity* const getEntity() const;
 
-			void setTexture(const Texture& t, const Enums::TextureSlot slot = Enums::TextureSlot::FOREGROUND);
+			void setTexture(const Texture& t, const TextureSlot slot = TextureSlot::FOREGROUND);
 
 			void setForegroundColor(const Color& col);
 			Color& getForegroundColor();
@@ -148,11 +134,11 @@ namespace mc {
 			Vector<float, 4>& getMaskTransform();
 			const Vector<float, 4>& getMaskTransform() const;
 
-			void enableRenderFeatures(const Enums::RenderFeatures feature);
-			void disableRenderFeatures(const Enums::RenderFeatures feature);
-			void setRenderFeatures(const Enums::RenderFeatures feature);
-			Enums::RenderFeatures& getRenderFeatures();
-			const Enums::RenderFeatures& getRenderFeatures() const;
+			void enableRenderFeatures(const RenderFeatures feature);
+			void disableRenderFeatures(const RenderFeatures feature);
+			void setRenderFeatures(const RenderFeatures feature);
+			RenderFeatures& getRenderFeatures();
+			const RenderFeatures& getRenderFeatures() const;
 
 			void setFilter(const float r, const float g, const float b, const float a = 1.0f);
 			void setFilter(const Vector<float, 4> & col);
@@ -222,6 +208,18 @@ namespace mc {
 			void clean();
 		};
 
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator|(const Painter::RenderFeatures& left, const Painter::RenderFeatures& right) {
+			return static_cast<Painter::RenderFeatures>(static_cast<Byte>(left) | static_cast<Byte>(right));
+		}
+
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator&(const Painter::RenderFeatures& left, const Painter::RenderFeatures& right) {
+			return static_cast<Painter::RenderFeatures>(static_cast<Byte>(left) & static_cast<Byte>(right));
+		}
+
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator~(const Painter::RenderFeatures& r) {
+			return static_cast<Painter::RenderFeatures>(~static_cast<Byte>(r));
+		}
+
 		class PainterImpl: public Initializable, public Beginable {
 			friend class Renderer;
 			friend class Painter;
@@ -237,7 +235,7 @@ namespace mc {
 			virtual void clean() = 0;
 
 			virtual void loadSettings(const Painter::State& state) = 0;
-			virtual void draw(const Model& m, const Enums::Brush brush) = 0;
+			virtual void draw(const Model& m, const Painter::Brush brush) = 0;
 
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;
@@ -279,6 +277,9 @@ namespace mc {
 			Vector<float, 2> getWindowRatios() const;
 
 			RenderQueue getRenderQueue() const;
+
+			GraphicsEntity* getEntityByID(const EntityID id);
+			const GraphicsEntity* getEntityByID(const EntityID id) const;
 
 			bool isResized() const;
 
