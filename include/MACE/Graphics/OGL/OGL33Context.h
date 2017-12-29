@@ -36,13 +36,13 @@ namespace mc {
 				bool isCreated() const override;
 			};
 
-			class OGL33Texture: public Texture2DImpl, private ogl::Texture2D {
+			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
 			public:
 				OGL33Texture(const TextureDesc& desc);
 				~OGL33Texture() override;
 
 				void bind() const override;
-				void bind(const unsigned int location) const override;
+				void bind(const TextureSlot slot) const override;
 				void unbind() const override;
 
 				bool isCreated() const override;
@@ -63,7 +63,7 @@ namespace mc {
 
 				Renderer* getRenderer() const override;
 				std::shared_ptr<ModelImpl> createModelImpl() const override;
-				std::shared_ptr<Texture2DImpl> createTextureImpl(const TextureDesc& desc) const override;
+				std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const override;
 			protected:
 				void onInit(gfx::WindowModule* win) override;
 				void onRender(gfx::WindowModule* win) override;

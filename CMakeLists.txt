@@ -37,6 +37,7 @@ include(TestBigEndian)
 include(CheckTypeSize)
 include(ExternalProject)
 include(ParseAndAddCatchTests)
+include(cotire)
 
 option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
 option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
@@ -443,6 +444,7 @@ endif()
 
 if(WIN32)
 	set(MACE_WINDOWS 1)
+	target_compile_definitions(MACE PUBLIC NOMINMAX=1)
 endif()
 
 if(BUILD_SHARED_LIBS)
@@ -455,3 +457,11 @@ configure_file("${PROJECT_SOURCE_DIR}/Configure.h.in" "${MACE_OUTPUT_INCLUDE_DIR
 
 #For the configure file
 target_include_directories(MACE PUBLIC "${MACE_OUTPUT_INCLUDE_DIR}")
+
+#COTIRE configuration
+set_target_properties(MACE PROPERTIES COTIRE_UNITY_TARGET_NAME "MACE-Unity"
+								COTIRE_ADD_UNITY_BUILD FALSE
+								COTIRE_PREFIX_HEADER_INCLUDE_PATH "${GLEW_INCLUDE_DIR};${GLFW_INCLUDE_DIR}"
+								COTIRE_PREFIX_HEADER_INCLUDE_PRIORITY_PATH "${GLEW_INCLUDE_DIR};${GLFW_INCLUDE_DIR}"
+								COTIRE_PREFIX_HEADER_IGNORE_PATH "${CMAKE_SOURCE_DIR};${CMAKE_BINARY_DIR};${OPENGL_INCLUDE_DIR};")
+cotire(MACE CONFIGURATIONS Release MinSizeRel)

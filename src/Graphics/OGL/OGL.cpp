@@ -110,12 +110,8 @@ namespace mc {
 			void checkGLError(const Index, const char*, const std::string&) {}
 #endif
 
-			void VertexArray::init() {
-				glGenVertexArrays(1, &id);
-			}
-
 			void VertexArray::destroy() {
-				glDeleteVertexArrays(1, &id);
+				Object::destroy();
 
 				if (indices.isCreated()) {
 					indices.destroy();
@@ -215,6 +211,14 @@ namespace mc {
 				glBindVertexArray(ID);
 			}
 
+			void VertexArray::initIndices(GLuint ids[], const Size length) const {
+				glGenVertexArrays(length, ids);
+			}
+
+			void VertexArray::destroyIndices(const GLuint ids[], const Size length) const {
+				glDeleteVertexArrays(length, ids);
+			}
+
 			UniformBuffer::UniformBuffer() noexcept : Buffer(GL_UNIFORM_BUFFER) {}
 
 			void UniformBuffer::setLocation(const Index loc) {
@@ -255,15 +259,6 @@ namespace mc {
 
 			void FrameBuffer::setClearColor(const float r, const float g, const float b, const float a) {
 				glClearColor(r, g, b, a);
-			}
-
-			void FrameBuffer::init() {
-				glGenFramebuffers(1, &id);
-			}
-
-			void FrameBuffer::destroy() {
-				glDeleteFramebuffers(1, &id);
-				id = 0;
 			}
 
 			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
@@ -336,12 +331,12 @@ namespace mc {
 				glBindFramebuffer(GL_FRAMEBUFFER, ID);
 			}
 
-			void RenderBuffer::init() {
-				glGenRenderbuffers(1, &id);
+			void FrameBuffer::initIndices(GLuint ids[], const Size length) const {
+				glGenFramebuffers(length, ids);
 			}
 
-			void RenderBuffer::destroy() {
-				glDeleteRenderbuffers(1, &id);
+			void FrameBuffer::destroyIndices(const GLuint ids[], const Size length) const {
+				glDeleteFramebuffers(length, ids);
 			}
 
 			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
@@ -360,6 +355,23 @@ namespace mc {
 				glBindRenderbuffer(GL_RENDERBUFFER, ID);
 			}
 
+			void RenderBuffer::initIndices(GLuint ids[], const Size length) const {
+				glGenRenderbuffers(length, ids);
+			}
+
+			void RenderBuffer::destroyIndices(const GLuint ids[], const Size length) const {
+				glDeleteRenderbuffers(length, ids);
+			}
+
+			void Object::init() {
+				initIndices(&id, 1);
+			}
+
+			void Object::destroy() {
+				destroyIndices(&id, 1);
+				id = 0;
+			}
+
 			void Object::bind() const {
 				bindIndex(id);
 			}
@@ -372,6 +384,38 @@ namespace mc {
 				return id;
 			}
 
+			void Object::init(Object * objects[], const Size length) {
+				if (length <= 0) {
+					return;
+				}
+
+				std::vector<GLuint> ids = std::vector<GLuint>(length);
+				for (Index i = 0; i < length; ++i) {
+					ids.push_back(0);
+				}
+				objects[0]->initIndices(ids.data(), length);
+
+				for (Index i = 0; i < length; ++i) {
+					objects[i]->id = ids[i];
+				}
+			}
+
+			void Object::destroy(Object * objects[], const Size length) {
+				if (length <= 0) {
+					return;
+				}
+
+				std::vector<GLuint> ids = std::vector<GLuint>(length);
+				for (Index i = 0; i < length; ++i) {
+					ids.push_back(objects[i]->id);
+				}
+				objects[0]->destroyIndices(ids.data(), length);
+
+				for (Index i = 0; i < length; ++i) {
+					objects[i]->id = 0;
+				}
+			}
+
 			bool Object::operator==(const Object & other) const {
 				return this->id == other.id;
 			}
@@ -381,15 +425,6 @@ namespace mc {
 			}
 
 			Texture2D::Texture2D() noexcept {}
-
-			void Texture2D::init() {
-				glGenTextures(1, &id);
-
-			}
-
-			void Texture2D::destroy() {
-				glDeleteTextures(1, &id);
-			}
 
 			void Texture2D::bind() const {
 				Object::bind();
@@ -461,18 +496,18 @@ namespace mc {
 				glBindTexture(target, ID);
 			}
 
+			void Texture2D::initIndices(GLuint ids[], const Size length) const {
+				glGenTextures(length, ids);
+			}
+
+			void Texture2D::destroyIndices(const GLuint ids[], const Size length) const {
+				glDeleteTextures(length, ids);
+			}
+
 			Buffer::Buffer(const Enum type) noexcept : bufferType(type) {}
 
 			bool Buffer::isCreated() const {
 				return glIsBuffer(id) == 1;
-			}
-
-			void Buffer::init() {
-				glGenBuffers(1, &id);
-			}
-
-			void Buffer::destroy() {
-				glDeleteBuffers(1, &id);
 			}
 
 			void Buffer::setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType) {
@@ -585,6 +620,14 @@ namespace mc {
 				glBindBuffer(bufferType, ID);
 			}
 
+			void Buffer::initIndices(GLuint ids[], const Size length) const {
+				glGenBuffers(length, ids);
+			}
+
+			void Buffer::destroyIndices(const GLuint ids[], const Size length) const {
+				glDeleteBuffers(length, ids);
+			}
+
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
 			void VertexBuffer::setAttributePointer(const Byte attribSize, const Enum type, const bool normalized, const Index stride, const void * pointer) {
@@ -693,14 +736,6 @@ namespace mc {
 				glQueryCounter(id, GL_TIMESTAMP);
 			}
 
-			void QueryObject::init() {
-				glGenQueries(1, &id);
-			}
-
-			void QueryObject::destroy() {
-				glDeleteQueries(1, &id);
-			}
-
 			bool QueryObject::isCreated() const {
 				return glIsQuery(id) == 1;
 			}
@@ -710,6 +745,14 @@ namespace mc {
 			void QueryObject::unbind() const {}
 
 			void QueryObject::bindIndex(const GLuint) const {}
+
+			void QueryObject::initIndices(GLuint ids[], const Size length) const {
+				glGenQueries(length, ids);
+			}
+
+			void QueryObject::destroyIndices(const GLuint ids[], const Size length) const {
+				glDeleteQueries(length, ids);
+			}
 
 			PixelUnpackBuffer::PixelUnpackBuffer() noexcept : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
 
@@ -816,9 +859,16 @@ namespace mc {
 			void Shader::unbind() const {}
 			void Shader::bindIndex(const GLuint) const {}
 
+			void Shader::initIndices(GLuint[], const Size) const {}
+
+			void Shader::destroyIndices(const GLuint[], const Size) const {}
+
 			void ShaderProgram::bindIndex(const GLuint ID) const {
 				glUseProgram(ID);
 			}
+
+			void ShaderProgram::initIndices(GLuint[], const Size) const {}
+			void ShaderProgram::destroyIndices(const GLuint[], const Size) const {}
 
 			void ShaderProgram::init() {
 				id = glCreateProgram();

@@ -33,6 +33,39 @@ namespace mc {
 			bool operator!=(const Entity2D& other) const;
 		};//Entity2D
 
+		class Selectable {
+		public:
+			virtual ~Selectable() = default;
+
+			bool isClicked() const;
+			bool isDisabled() const;
+			bool isHovered() const;
+
+			void click();
+
+			void disable();
+			void enable();
+
+			void trigger();
+		protected:
+			enum SelectableProperty: Byte {
+				CLICKED = 0x01,
+				DISABLED = 0x02,
+				HOVERED = 0x04
+			};
+
+			Byte selectableProperties = 0;
+
+			virtual void onClick();
+
+			virtual void onEnable();
+			virtual void onDisable();
+
+			virtual void onTrigger();
+		
+			void doHover();
+		};
+
 		class Image: public Entity2D, public Texturable {
 		public:
 			Image() noexcept;
@@ -61,7 +94,7 @@ namespace mc {
 		public:
 			ProgressBar() noexcept;
 			ProgressBar(const float minimum, const float maximum, const float progress = 0) noexcept;
-			~ProgressBar() = default;
+			virtual ~ProgressBar() = default;
 
 			/**
 			@dirty
@@ -131,18 +164,25 @@ namespace mc {
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;
 		protected:
-			void onInit() override final;
-			void onUpdate() override final;
-			void onRender(Painter& p) override final;
-			void onClean() override final;
+			virtual void onRender(Painter& p) override;
 			void onDestroy() override final;
-		private:
+
 			float minimumProgress = 0, maximumProgress = 0, progress = 0;
 
 			Texture backgroundTexture;
 			Texture foregroundTexture;
 			Texture selectionTexture;
 		};//ProgressBar
+
+		class Slider: public ProgressBar, public Selectable {
+		public:
+			Slider() noexcept;
+			Slider(const float minimum, const float maximum, const float progress = 0) noexcept;
+		private:
+			void onRender(Painter& p) override;
+			void onClick() override;
+			void onHover() override;
+		};//Slider
 
 		//TEXT IS UP AHEAD
 
@@ -350,12 +390,9 @@ namespace mc {
 			void setDisabledTexture(const Texture& c);
 
 		protected:
-			void onInit() override;
-			void onUpdate() override;
 			void onRender(Painter& p) override;
-			void onDestroy() override;
 			void onHover() override;
-			void onClean() override;
+			void onDestroy() override;
 		private:
 			Texture texture;
 			Texture hoverTexture;

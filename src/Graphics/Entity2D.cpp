@@ -40,6 +40,63 @@ namespace mc {
 			return !operator==(other);
 		}
 
+		bool Selectable::isClicked() const {
+			return selectableProperties & Selectable::CLICKED;
+		}
+
+		bool Selectable::isDisabled() const {
+			return selectableProperties & Selectable::DISABLED;
+		}
+
+		bool Selectable::isHovered() const {
+			return selectableProperties & Selectable::HOVERED;
+		}
+
+		void Selectable::click() {
+			selectableProperties |= Selectable::CLICKED;
+
+			onClick();
+		}
+
+		void Selectable::disable() {
+			selectableProperties |= Selectable::DISABLED;
+
+			onDisable();
+		}
+
+		void Selectable::enable() {
+			selectableProperties &= ~Selectable::DISABLED;
+
+			onEnable();
+		}
+
+		void Selectable::trigger() {
+			onTrigger();
+		}
+
+		void Selectable::onClick() {}
+
+
+		void Selectable::onEnable() {}
+
+		void Selectable::onDisable() {}
+
+		void Selectable::onTrigger() {}
+
+		void Selectable::doHover() {
+			if (!isDisabled()) {
+				if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
+					click();
+				}
+
+				if (gfx::Input::isKeyReleased(gfx::Input::MOUSE_LEFT) && isClicked()) {
+					selectableProperties &= ~Selectable::CLICKED;
+
+					trigger();
+				}
+			}
+		}
+
 		//IMAGE
 
 		Image::Image() noexcept : texture() {}
@@ -225,17 +282,12 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void ProgressBar::onInit() {}
-
-		void ProgressBar::onUpdate() {}
-
 		void ProgressBar::onRender(Painter& p) {
+			p.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
 			p.blendImagesMasked(foregroundTexture, backgroundTexture, selectionTexture,
 								minimumProgress / maximumProgress,
 								(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
-
-		void ProgressBar::onClean() {}
 
 		void ProgressBar::onDestroy() {
 			if (backgroundTexture.isCreated()) {
@@ -249,6 +301,33 @@ namespace mc {
 			if (selectionTexture.isCreated()) {
 				selectionTexture.destroy();
 			}
+		}
+
+
+		Slider::Slider() noexcept : ProgressBar() {}
+
+		Slider::Slider(const float minimum, const float maximum, const float progress) noexcept : ProgressBar(minimum, maximum, progress) {}
+
+		void Slider::onRender(Painter & p) {
+			ProgressBar::onRender(p);
+
+			p.setTarget(FrameBufferTarget::DATA);
+			p.drawImage(selectionTexture);
+		}
+
+		void Slider::onClick() {
+			const Renderer* renderer = getCurrentWindow()->getContext()->getRenderer();
+
+			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
+			if (mouseX >= 0 && mouseY >= 0) {
+				const Color pixel = renderer->getPixelAt(static_cast<unsigned int>(mouseX), static_cast<unsigned int>(mouseY), FrameBufferTarget::DATA);
+
+				setProgress(minimumProgress + (pixel.r * (maximumProgress - minimumProgress)));
+			}
+		}
+
+		void Slider::onHover() {
+			doHover();
 		}
 
 		Font Font::loadFont(const std::string& name) {
@@ -362,7 +441,7 @@ namespace mc {
 				desc.wrapT = TextureDesc::Wrap::CLAMP;
 				desc.minFilter = TextureDesc::Filter::LINEAR;
 				desc.magFilter = TextureDesc::Filter::LINEAR;
-				
+
 				character.mask = Texture(desc);
 				character.mask.bind();
 
@@ -791,10 +870,6 @@ namespace mc {
 			}
 		}
 
-		void Button::onInit() {}
-
-		void Button::onUpdate() {}
-
 		void Button::onRender(Painter& p) {
 			p.drawImage(texture);
 			if (isDisabled()) {
@@ -807,6 +882,10 @@ namespace mc {
 					p.drawImage(clickedTexture);
 				}
 			}
+		}
+
+		void Button::onHover() {
+			doHover();
 		}
 
 		void Button::onDestroy() {
@@ -826,21 +905,5 @@ namespace mc {
 				disabledTexture.destroy();
 			}
 		}
-
-		void Button::onHover() {
-			hover();
-
-			if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
-				click();
-			}
-
-			if (gfx::Input::isKeyReleased(gfx::Input::MOUSE_LEFT) && isClicked()) {
-				selectableProperties &= ~Selectable::CLICKED;
-
-				trigger();
-			}
-		}
-
-		void Button::onClean() {}
 	}//gfx
 }//mc

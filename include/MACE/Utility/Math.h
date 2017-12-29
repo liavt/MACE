@@ -103,6 +103,48 @@ namespace mc {
 			return value < T(0) ? -value : value;
 		}
 
+		/**
+		Gets the lesser of two values
+		@param val1 First value
+		@param val2 Second value
+		@return val1 if val1 < val2, val2 otherwise
+		@see max(const T, const T)
+		@see clamp(const T, const T, const T)
+		*/
+		template<typename T>
+		MACE_CONSTEXPR inline const T min(const T val1, const T val2) {
+			return val1 > val2 ? val2 : val1;
+		}
+
+		/**
+		Gets the bigger of two values
+		@param val1 First value
+		@param val2 Second value
+		@return `val1` if `val1 > val2`, `val2` otherwise
+		@see min(const T, const T)
+		@see clamp(const T, const T, const T)
+		*/
+		template<typename T>
+		MACE_CONSTEXPR inline const T max(const T val1, const T val2) {
+			return val1 > val2 ? val1 : val2;
+		}
+
+		/**
+		Clamps a value in between a range.
+		
+		@param val Value to clamp
+		@param minVal The smallest possible value. If `val < minVal`, `minVal` is returned
+		@param maxVal The biggest possible value. If `val > maxVal`, `maxVal` is returned
+		@return Clamped value
+		@see min(const T, const T)
+		@see max(const T, const T)
+		*/
+		template<typename T>
+		MACE_CONSTEXPR inline const T clamp(const T val, const T minVal, const T maxVal) {
+			return min(max(val, minVal), maxVal);
+			//return val < min ? min : (val > max ? max : val);
+		}
+
 		//let the bodies hit the floor
 		/**
 		"Floors" a number, or rounds it down.

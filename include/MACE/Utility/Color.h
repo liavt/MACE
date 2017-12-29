@@ -17,75 +17,56 @@ The above copyright notice and this permission notice shall be included in all c
 #include <ostream>
 
 namespace mc {
-	/**
-	Represents a color in the RGBA space. Values are stored as a `float` between 0 and 1, where 1 is the brightest. Values can optionally be added as a `Byte` from 0 to 255.
-	<p>
-	Note that conversion from a `Byte` to a `float` (and vice-versa) is not 100% accurate and may produce slightly different results on different processors.
-	<p>
-	Examples:
-	{@code
-		Color color = {1.0f,1.0f,1.0f,1.0f};//create the color white
 
-		float red = color.r;//retrive the red componenet, as a float from 0.0 to 1.0
-		float green = color.g;//retrive the green componenet, as a float from 0.0 to 1.0
-		float blue = color.b;//retrive the blue componenet, as a float from 0.0 to 1.0
-		float alpha = color.a;//retrive the alpha componenet, as a float from 0.0 to 1.0
+	struct AbstractColor {
+		virtual Size size() const = 0;
 
-		red = color.getRed();//retrieve the red component as a byte from 0 to 255
-		green = color.getGreen();//retrieve the red component as a byte from 0 to 255
-		blue = color.getBlue();//retrieve the red component as a byte from 0 to 255
-		alpha = color.getAlpha();//retrieve the red component as a byte from 0 to 255
+		virtual float* begin() = 0;
+		virtual const float* begin() const = 0;
 
-		color.r = 0.5f;//set the red component to be 0.5f
-		color.setRed(127); //set the red component to be 0.5f as a Byte from 0 to 255
-	}
-	*/
-	struct Color {
+		float* end();
+		const float* end() const;
+
+		float& getComponent(const Index i);
+		const float& getComponent(const Index i) const;
+
+		float& operator[](const Index i);
+		const float& operator[](const Index i) const;
+	};
+
+	struct AlphaColor {
+		float a;
+
+		AlphaColor(const float alp = 1.0f);
+		AlphaColor(const Byte alp = 255);
+
+		/**
+		Retrieves the alpha component of this `Color`
+		@return A `Byte` from 0 to 255, where 255 is fully opaque, and 0 is transparent
+		@see convertFloatToRGBA(float)
+		@see convertRGBAToFloat(Byte)
+		@see a
+		*/
+		Byte getAlpha() const;
+
+		/**
+		Set the alpha value of this `Color` from a `Byte`. It will automatically be converted to `float` internally.
+		@param a A `Byte` from 0 to 255, where 255 is opaque
+		@see convertRGBAToFloat(Byte)
+		@see getAlpha()
+		@see a
+		*/
+		void setAlpha(const Byte& a);
+	};
+
+	struct RGBColor: public AbstractColor {
 		/**
 		Color component, represented as a `float`. It is from 0.0 to 1.0, where 1.0 is the brightest it can get.
 		*/
-		float r, g, b, a;
+		float r, g, b;
 
-		explicit Color(const int red, const int green, const int blue, const int alpha = 255) noexcept;
-
-		explicit Color(const Byte red, const Byte green, const Byte blue, const Byte alpha = 255) noexcept;
-
-		/**
-		Creates a `Color` from specified values.
-		@param red The red component from 0.0 to 1.0, where 1.0 is the most red.
-		@param green The red component from 0.0 to 1.0, where 1.0 is the most red.
-		@param blue The red component from 0.0 to 1.0, where 1.0 is the most red.
-		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
-		@see Color(std::array<float,4>)
-		*/
-		Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
-		/**
-		Creates a `Color` from an array of `floats`.
-		@param values An array where the first element is red, the second is green, etc
-		@see Color(std::array<Byte,4>)
-		@see Color(float,float,float,float)
-		@see setValues(std::array<float,4>
-		*/
-		Color(const std::array<float, 4>& values);
-		
-		/**
-		@copydoc Color(const std::array<float, 4>&)
-		*/
-		Color(const Vector<float, 4>& values);
-		/**
-		Clones a `Color`, coying it's color values into a new one.
-		@param copy A `Color` to copy
-		*/
-		Color(const Color& copy) noexcept;
-		/**
-		@copydoc Color(const Color&)
-		@param alpha New alpha value for this `Color`
-		*/
-		Color(const Color& copy, const float alpha) noexcept;
-		/**
-		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
-		*/
-		Color() noexcept;
+		RGBColor(const float red = 0.0f, const float green = 0.0f, const float blue = 0.0f);
+		RGBColor(const Byte red, const Byte green, const Byte blue);
 
 		/**
 		Creates a new `Color` that is slightly darker.
@@ -96,7 +77,7 @@ namespace mc {
 		@return A darker `Color`
 		@see Color::lighten() const
 		*/
-		Color darken() const;
+		RGBColor darken() const;
 		/**
 		Creates a new `Color` that is slightly lighter.
 		<p>
@@ -106,7 +87,7 @@ namespace mc {
 		@return A lighter `Color`
 		@see Color::darken() const
 		*/
-		Color lighten() const;
+		RGBColor lighten() const;
 
 		/**
 		Retrieves the red component of this `Color`
@@ -132,14 +113,6 @@ namespace mc {
 		@see b
 		*/
 		Byte getBlue() const;
-		/**
-		Retrieves the alpha component of this `Color`
-		@return A `Byte` from 0 to 255, where 255 is fully opaque, and 0 is transparent
-		@see convertFloatToRGBA(float)
-		@see convertRGBAToFloat(Byte)
-		@see a
-		*/
-		Byte getAlpha() const;
 
 		/**
 		Set the red value of this `Color` from a `Byte`. It will automatically be converted to `float` internally.
@@ -165,23 +138,7 @@ namespace mc {
 		@see b
 		*/
 		void setBlue(const Byte& b);
-		/**
-		Set the alpha value of this `Color` from a `Byte`. It will automatically be converted to `float` internally.
-		@param a A `Byte` from 0 to 255, where 255 is opaque
-		@see convertRGBAToFloat(Byte)
-		@see getAlpha()
-		@see a
-		*/
-		void setAlpha(const Byte& a);
-		/**
-		Sets the RGB values of this `Color` from an array of `floats`. The alpha is unchanged
-		@param rgba An array where the first element is red, the second is green, etc
-		@see Color(std::array<Byte,4>)
-		@see Color(std::array<float,4>)
-		@see Color(float,float,float,float)
-		@see setValues(std::array<float,4>)
-		*/
-		void setValues(const std::array<float, 4>& rgba);
+
 		/**
 		Sets the values of this `Color` from an array of `floats`.
 		@param rgb An array where the first element is red, the second is green, etc
@@ -191,6 +148,31 @@ namespace mc {
 		@see setValues(std::array<float,3>)
 		*/
 		void setValues(const std::array<float, 3>& rgb);
+
+		virtual unsigned int toUnsignedInt() const;
+
+		std::string toHex() const;
+
+		virtual Size size() const override;
+
+		virtual float* begin() override;
+		virtual const float* begin() const override;
+	};
+
+	struct RGBAColor: public RGBColor, public AlphaColor {
+		RGBAColor(const float red = 0.0f, const float green = 0.0f, const float blue = 0.0f, const float alpha = 1.0f);
+		RGBAColor(const Byte red, const Byte green, const Byte blue, const Byte alpha);
+
+		/**
+		Sets the RGB values of this `Color` from an array of `floats`. The alpha is unchanged
+		@param rgba An array where the first element is red, the second is green, etc
+		@see Color(std::array<Byte,4>)
+		@see Color(std::array<float,4>)
+		@see Color(float,float,float,float)
+		@see setValues(std::array<float,4>)
+		*/
+		void setValues(const std::array<float, 4>& rgba);
+
 		/**
 		Retrieves the RGBA values in `std::array`
 		@return An array where the first element is red, the second value is green, etc
@@ -199,21 +181,87 @@ namespace mc {
 
 		Vector<float, 4> toVector() const;
 
+		unsigned int toUnsignedInt() const override;
+
 		/**
-		Creates an array with the data of this `Color`, in O(N) time
+		Creates an array with the data of this `Color`
 		@return Pointer to `arr`
 		@param arr The array to fill
 		*/
 		const float* flatten(float arr[4]) const;
 
-		float* begin();
-		const float* begin() const;
+		Size size() const override;
 
-		float* end();
-		const float* end() const;
+		float* begin() override;
+		const float* begin() const override;
+	};
 
-		float& operator[](const Index i);
-		const float& operator[](const Index i) const;
+	/**
+	Represents a color in the RGBA space. Values are stored as a `float` between 0 and 1, where 1 is the brightest. Values can optionally be added as a `Byte` from 0 to 255.
+	<p>
+	Note that conversion from a `Byte` to a `float` (and vice-versa) is not 100% accurate and may produce slightly different results on different processors.
+	<p>
+	Examples:
+	{@code
+		Color color = {1.0f,1.0f,1.0f,1.0f};//create the color white
+
+		float red = color.r;//retrive the red componenet, as a float from 0.0 to 1.0
+		float green = color.g;//retrive the green componenet, as a float from 0.0 to 1.0
+		float blue = color.b;//retrive the blue componenet, as a float from 0.0 to 1.0
+		float alpha = color.a;//retrive the alpha componenet, as a float from 0.0 to 1.0
+
+		red = color.getRed();//retrieve the red component as a byte from 0 to 255
+		green = color.getGreen();//retrieve the red component as a byte from 0 to 255
+		blue = color.getBlue();//retrieve the red component as a byte from 0 to 255
+		alpha = color.getAlpha();//retrieve the red component as a byte from 0 to 255
+
+		color.r = 0.5f;//set the red component to be 0.5f
+		color.setRed(127); //set the red component to be 0.5f as a Byte from 0 to 255
+	}
+	*/
+	struct Color: public RGBAColor {
+		explicit Color(const int red, const int green, const int blue, const int alpha = 255) noexcept;
+
+		explicit Color(const Byte red, const Byte green, const Byte blue, const Byte alpha = 255) noexcept;
+
+		explicit Color(const unsigned int value) noexcept;
+
+		/**
+		Creates a `Color` from specified values.
+		@param red The red component from 0.0 to 1.0, where 1.0 is the most red.
+		@param green The red component from 0.0 to 1.0, where 1.0 is the most red.
+		@param blue The red component from 0.0 to 1.0, where 1.0 is the most red.
+		@param alpha The alpha component from 0.0 to 1.0, where 1.0 is opaque and 0.0 is transparent. By default, this parameter is 1.0
+		@see Color(std::array<float,4>)
+		*/
+		Color(const float red, const float green, const float blue, const float alpha = 1.0f) noexcept;
+		/**
+		Creates a `Color` from an array of `floats`.
+		@param values An array where the first element is red, the second is green, etc
+		@see Color(std::array<Byte,4>)
+		@see Color(float,float,float,float)
+		@see setValues(std::array<float,4>
+		*/
+		Color(const std::array<float, 4>& values);
+
+		/**
+		@copydoc Color(const std::array<float, 4>&)
+		*/
+		Color(const Vector<float, 4>& values);
+		/**
+		Clones a `Color`, coying it's color values into a new one.
+		@param copy A `Color` to copy
+		*/
+		Color(const Color& copy) noexcept;
+		/**
+		@copydoc Color(const Color&)
+		@param alpha New alpha value for this `Color`
+		*/
+		Color(const Color& copy, const float alpha) noexcept;
+		/**
+		Default constructor. Constructs a `Color` with all of it's color values as `0`, or black.
+		*/
+		Color() noexcept;
 
 		friend std::ostream& operator<<(std::ostream& output, const Color& v);
 
@@ -257,6 +305,8 @@ namespace mc {
 		*/
 		bool operator<=(const Color& other) const;
 	};//Color
+
+	Color fromHex(const std::string hexcode);
 
 	/**
 	Contains various `Color` constants for common colors.

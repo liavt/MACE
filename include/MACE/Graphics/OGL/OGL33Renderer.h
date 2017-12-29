@@ -31,12 +31,14 @@ namespace mc {
 				void begin() override;
 				void end() override;
 
+				void setTarget(const FrameBufferTarget& target) override;
+
 				void clean() override;
 			protected:
 				void loadSettings(const Painter::State& state) override;
 				void draw(const Model& m, const Painter::Brush brush) override;
 			private:
-				OGL33Renderer* const renderer;
+				OGL33Renderer * const renderer;
 
 				UniformBuffer painterData;
 				UniformBuffer entityData;
@@ -48,9 +50,6 @@ namespace mc {
 				void createPainterData();
 			};
 
-			/**
-			@todo Remove discard from Frag.glsl
-			*/
 			class OGL33Renderer: public Renderer {
 				friend class OGL33Painter;
 			public:
@@ -66,14 +65,13 @@ namespace mc {
 
 				void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;
 
-				GraphicsEntity* getEntityAt(const int x, const int y) override;
+				void getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const override;
+				void getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color* arr, const FrameBufferTarget target) const override;
 
 				std::shared_ptr<PainterImpl> createPainterImpl(Painter* const p) override;
 			private:
 				ogl::FrameBuffer frameBuffer{};
-				ogl::RenderBuffer depthBuffer{};
-
-				ogl::Texture2D sceneTexture{}, idTexture{};
+				ogl::RenderBuffer sceneBuffer{}, idBuffer{}, dataBuffer{}, depthStencilBuffer{};
 
 				Color clearColor = Colors::BLACK;
 
@@ -88,6 +86,8 @@ namespace mc {
 				std::map<std::pair<Painter::Brush, Painter::RenderFeatures>, OGL33Renderer::RenderProtocol> protocols{};
 
 				void bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings);
+
+				void setTarget(const FrameBufferTarget& target);
 			};
 		}//ogl
 	}//gfx

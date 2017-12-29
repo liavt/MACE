@@ -66,12 +66,14 @@ namespace mc {
 		}//tearDown
 
 		void Renderer::checkInput(gfx::WindowModule*) {
-			GraphicsEntity* hovered = getEntityAt(gfx::Input::getMouseX(), gfx::Input::getMouseY());
+			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
+			if (mouseX >= 0 && mouseY >= 0) {
+				GraphicsEntity* hovered = getEntityAt(static_cast<unsigned int>(mouseX), static_cast<unsigned int>(mouseY));
 
-			if (hovered != nullptr && !hovered->needsRemoval()) {
-				hovered->hover();
+				if (hovered != nullptr && !hovered->needsRemoval()) {
+					hovered->hover();
+				}
 			}
-
 		}//checkInput
 
 		void Renderer::destroy() {
@@ -79,7 +81,35 @@ namespace mc {
 		}//destroy()
 
 		GraphicsEntity * Renderer::getEntityAt(const float x, const float y) {
-			return getEntityAt(static_cast<int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<int>(getHeight() * ((y * 0.5f) + 0.5f)));
+			return getEntityAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)));
+		}
+
+		const GraphicsEntity * Renderer::getEntityAt(const float x, const float y) const {
+			return getEntityAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)));
+		}
+
+		GraphicsEntity * Renderer::getEntityAt(const unsigned int x, const unsigned int y) {
+			EntityID id = 0;
+			getEntitiesAt(x, y, 1, 1, &id);
+
+			return getEntityByID(id);
+		}
+
+		const GraphicsEntity * Renderer::getEntityAt(const unsigned int x, const unsigned int y) const {
+			EntityID id = 0;
+			getEntitiesAt(x, y, 1, 1, &id);
+
+			return getEntityByID(id);
+		}
+
+		Color Renderer::getPixelAt(const float x, const float y, const FrameBufferTarget target) const {
+			return getPixelAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)), target);
+		}
+
+		Color Renderer::getPixelAt(const unsigned int x, const unsigned int y, const FrameBufferTarget target) const {
+			Color out = Color();
+			getPixelsAt(x, y, 1, 1, &out, target);
+			return out;
 		}
 
 		void Renderer::setRefreshColor(const Color & c) {
@@ -196,6 +226,8 @@ namespace mc {
 			}
 #endif
 			impl->begin();
+
+			setTarget(FrameBufferTarget::COLOR);
 		}
 
 		void Painter::end() {
@@ -211,8 +243,8 @@ namespace mc {
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
 			push();
-			setTexture(img, Painter::TextureSlot::FOREGROUND);
-			setTexture(mask, Painter::TextureSlot::MASK);
+			setTexture(img, TextureSlot::FOREGROUND);
+			setTexture(mask, TextureSlot::MASK);
 			drawQuad(Painter::Brush::MASK);
 			pop();
 		}
@@ -220,8 +252,8 @@ namespace mc {
 		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
 			push();
 			setData({ amount, 0, 0, 0 });
-			setTexture(foreground, Painter::TextureSlot::FOREGROUND);
-			setTexture(background, Painter::TextureSlot::BACKGROUND);
+			setTexture(foreground, TextureSlot::FOREGROUND);
+			setTexture(background, TextureSlot::BACKGROUND);
 			drawQuad(Painter::Brush::BLEND);
 			pop();
 		}
@@ -229,9 +261,9 @@ namespace mc {
 		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
 			push();
 			setData({ minimum, maximum, 0, 0 });
-			setTexture(foreground, Painter::TextureSlot::FOREGROUND);
-			setTexture(background, Painter::TextureSlot::BACKGROUND);
-			setTexture(mask, Painter::TextureSlot::MASK);
+			setTexture(foreground, TextureSlot::FOREGROUND);
+			setTexture(background, TextureSlot::BACKGROUND);
+			setTexture(mask, TextureSlot::MASK);
 			drawQuad(Painter::Brush::MASKED_BLEND);
 			pop();
 		}
@@ -255,29 +287,30 @@ namespace mc {
 			return entity;
 		}
 
-		void Painter::setTexture(const Texture & t, const Painter::TextureSlot slot) {
-			t.bind(static_cast<unsigned int>(slot));
-			if (slot == Painter::TextureSlot::FOREGROUND) {
-				//the member functions set DirtyFlags accordingly
-				setForegroundColor(t.getHue());
-				setForegroundTransform(t.getTransform());
-			} else if (slot == Painter::TextureSlot::BACKGROUND) {
-				setBackgroundColor(t.getHue());
-				setBackgroundTransform(t.getTransform());
-			} else if (slot == Painter::TextureSlot::MASK) {
-				setMaskColor(t.getHue());
-				setMaskTransform(t.getTransform());
+		void Painter::setTexture(const Texture & t, const TextureSlot slot) {
+			t.bind(slot);
+			switch (slot) {
+				case TextureSlot::FOREGROUND:
+					//the member functions set DirtyFlags accordingly
+					setForegroundColor(t.getHue());
+					setForegroundTransform(t.getTransform());
+					break;
+				case TextureSlot::BACKGROUND:
+					setBackgroundColor(t.getHue());
+					setBackgroundTransform(t.getTransform());
+					break;
+				case TextureSlot::MASK:
+					setMaskColor(t.getHue());
+					setMaskTransform(t.getTransform());
+					break;
+				default:
+					MACE__THROW(OutOfBounds, "setTexture: Unknown Texture slot");
 			}
-#ifdef MACE_DEBUG_CHECK_ARGS
-			else {
-				MACE__THROW(OutOfBounds, "setTexture: Unknown Texture slot");
-			}
-#endif
 		}
 
 		void Painter::drawModel(const Model & m, const Texture & img) {
 			push();
-			setTexture(img, Painter::TextureSlot::FOREGROUND);
+			setTexture(img, TextureSlot::FOREGROUND);
 			draw(m, Painter::Brush::TEXTURE);
 			pop();
 		}
@@ -305,7 +338,7 @@ namespace mc {
 
 		void Painter::drawImage(const Texture & img) {
 			push();
-			setTexture(img, Painter::TextureSlot::FOREGROUND);
+			setTexture(img, TextureSlot::FOREGROUND);
 			enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
 			drawQuad(Painter::Brush::TEXTURE);
 			pop();
@@ -467,6 +500,10 @@ namespace mc {
 
 		const float Painter::getOpacity() const {
 			return state.filter[3][3];
+		}
+
+		void Painter::setTarget(const FrameBufferTarget& target) {
+			impl->setTarget(target);
 		}
 
 		void Painter::translate(const Vector<float, 3>& vec) {

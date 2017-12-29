@@ -68,6 +68,27 @@ namespace mc {
 			REQUIRE(math::floor(-5.7) == -6);
 		}
 
+		TEST_CASE("Testing min(), max(), and clamp()", "[utility][math]") {
+			SECTION("min()") {
+				REQUIRE(math::min(0LL, 0LL) == 0LL);
+				REQUIRE(math::min(-1.0f, 0.0f) == -1.0f);
+				REQUIRE(math::min(5, -10) == -10);
+			}
+
+			SECTION("max()") {
+				REQUIRE(math::max(0LL, 0LL) == 0LL);
+				REQUIRE(math::max(-1.0f, 0.0f) == 0.0f);
+				REQUIRE(math::max(5, -10) == 5);
+			}
+
+			SECTION("clamp()") {
+				REQUIRE(math::clamp(0LL, 0LL, 0LL) == 0LL);
+				REQUIRE(math::clamp(0.5f, 0.0f, 1.0f) == 0.5f);
+				REQUIRE(math::clamp(-0.3, -0.2, 1.0) == -0.2);
+				REQUIRE(math::clamp(2, -5, 1) == 1);
+			}
+		}
+
 		TEST_CASE("Testing radians and degrees conversion") {
 			SECTION("Radians to degrees") {
 				REQUIRE(toDegrees(1.0) == Approx(57.2958));

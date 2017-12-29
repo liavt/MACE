@@ -15,6 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Core/Error.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Window.h>
+#include <MACE/Graphics/Context.h>
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Color.h>
@@ -24,18 +25,23 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		//forward declare dependencies
+		class Renderer;
 		class GraphicsEntity;
+		/*
+		class PainterImpl;
+		class Texture;
+		class Model;*/
 
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<GraphicsEntity*>;
 		//cant be size_t - opengl has to use to uints so the EntityID must be unsigned int
 		using EntityID = unsigned int;
 
-		//forward declare dependencies
-		class Renderer;
-		class PainterImpl;
-		class Texture;
-		class Model;
+		enum class FrameBufferTarget: Byte {
+			COLOR = 0,
+			DATA = 1
+		};
 
 		class Painter: public Beginable, private Initializable {
 			friend class GraphicsEntity;
@@ -57,15 +63,6 @@ namespace mc {
 
 				NONE = 0x00,
 				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM | INHERIT_TRANSLATION | INHERIT_SCALE | INHERIT_ROTATION | STORE_ID,
-			};
-
-			/**
-			@todo change Texture::bind() to use this in some form
-			*/
-			enum class TextureSlot: unsigned int {
-				FOREGROUND = 0,
-				BACKGROUND = 1,
-				MASK = 2,
 			};
 
 			struct State {
@@ -159,6 +156,8 @@ namespace mc {
 			float getOpacity();
 			const float getOpacity() const;
 
+			void setTarget(const FrameBufferTarget& target);
+
 			void translate(const Vector<float, 3>& vec);
 			void translate(const float x, const float y, const float z = 0.0f);
 
@@ -234,6 +233,8 @@ namespace mc {
 
 			virtual void clean() = 0;
 
+			virtual void setTarget(const FrameBufferTarget& target) = 0;
+
 			virtual void loadSettings(const Painter::State& state) = 0;
 			virtual void draw(const Model& m, const Painter::Brush brush) = 0;
 
@@ -256,13 +257,30 @@ namespace mc {
 		public:
 			virtual ~Renderer() = default;
 
-			virtual GraphicsEntity* getEntityAt(const float x, const float y);
-			virtual GraphicsEntity* getEntityAt(const int x, const int y) = 0;
+			GraphicsEntity* getEntityAt(const float x, const float y);
+			const GraphicsEntity* getEntityAt(const float x, const float y) const;
+			GraphicsEntity* getEntityAt(const unsigned int x, const unsigned int y);
+			const GraphicsEntity* getEntityAt(const unsigned int x, const unsigned int y) const;
+			
+			
+			virtual void getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const = 0;
+			template<Size W, Size H>
+			void getEntitiesAt(const unsigned int x, const unsigned int y, EntityID arr[W][H]) const {
+				getEntitiesAt(x, y, W, H, arr);
+			}
 
 			/**
 			@opengl
 			*/
 			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
+
+			Color getPixelAt(const float x, const float y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
+			Color getPixelAt(const unsigned int x, const unsigned int y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
+			virtual void getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color* arr, const FrameBufferTarget target = FrameBufferTarget::COLOR) const = 0;
+			template<Size W, Size H>
+			void getPixelsAt(const unsigned int x, const unsigned int y, Color arr[W][H], const FrameBufferTarget target = FrameBufferTarget::COLOR) const {
+				getPixelsAt(x, y, W, H, arr, target);
+			}
 
 			/**
 			@opengl

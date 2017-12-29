@@ -123,7 +123,7 @@ namespace mc {
 				}
 			}//anon namespace
 
-			OGL33Texture::OGL33Texture(const TextureDesc& desc) : Texture2DImpl(desc), ogl::Texture2D() {
+			OGL33Texture::OGL33Texture(const TextureDesc& desc) : TextureImpl(desc), ogl::Texture2D() {
 				ogl::Texture2D::init();
 				ogl::Texture2D::bind();
 
@@ -148,7 +148,7 @@ namespace mc {
 				} else {
 					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.magFilter)));
 				}
-				
+
 				if (desc.wrapS == TextureDesc::Wrap::CLAMP) {
 					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 				} else if (desc.wrapS == TextureDesc::Wrap::WRAP) {
@@ -203,8 +203,8 @@ namespace mc {
 				ogl::Texture2D::bind();
 			}
 
-			void OGL33Texture::bind(const unsigned int location) const {
-				ogl::Texture2D::bind(location);
+			void OGL33Texture::bind(const TextureSlot slot) const {
+				ogl::Texture2D::bind(static_cast<unsigned int>(slot));
 			}
 
 			void OGL33Texture::unbind() const {
@@ -346,8 +346,8 @@ namespace mc {
 				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<Texture2DImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
-				return std::unique_ptr<Texture2DImpl>(new OGL33Texture(desc));
+			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
+				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
 			}
 		}//ogl
 	}//gfx

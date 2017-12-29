@@ -40,6 +40,8 @@ int main(int argc, char* const argv[]) {
 		//const int? constant? get it?
 		const int result = Catch::Session().run(argc, argv);
 
+		system("pause");
+
 		return result;
 	} catch( const std::exception& e ) {
 		mc::Error::handleError(e);

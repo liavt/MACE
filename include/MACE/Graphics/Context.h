@@ -71,6 +71,12 @@ namespace mc {
 			//TRIANGLES_FAN does not exist in DirectX 10+ because of performance issues. It is not included in this list
 		};
 
+		enum class TextureSlot: Byte {
+			FOREGROUND = 0,
+			BACKGROUND = 1,
+			MASK = 2
+		};
+
 		class ModelImpl: public Initializable, public Bindable {
 			friend class Model;
 		public:
@@ -228,14 +234,14 @@ namespace mc {
 			Color borderColor = Colors::INVISIBLE;
 		};
 
-		class Texture2DImpl: public Bindable {
+		class TextureImpl: public Bindable {
 			friend class Texture;
 		public:
-			Texture2DImpl(const TextureDesc& t);
-			virtual ~Texture2DImpl() = default;
+			TextureImpl(const TextureDesc& t);
+			virtual ~TextureImpl() = default;
 
 			virtual void bind() const override = 0;
-			virtual void bind(const unsigned int location) const = 0;
+			virtual void bind(const TextureSlot slot) const = 0;
 			virtual void unbind() const override = 0;
 
 			virtual bool isCreated() const = 0;
@@ -268,7 +274,7 @@ namespace mc {
 			Texture();
 			Texture(const TextureDesc& d);
 			Texture(const Color& col);
-			Texture(const std::shared_ptr<Texture2DImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
 
 			void init(const TextureDesc& desc);
@@ -285,11 +291,11 @@ namespace mc {
 			const unsigned int getHeight() const;
 
 #ifdef MACE_EXPOSE_OPENGL
-			std::shared_ptr<Texture2DImpl> getImpl() {
+			std::shared_ptr<TextureImpl> getImpl() {
 				return texture;
 			}
 
-			const std::shared_ptr<Texture2DImpl> getImpl() const {
+			const std::shared_ptr<TextureImpl> getImpl() const {
 				return texture;
 			}
 #endif
@@ -337,8 +343,8 @@ namespace mc {
 				setData(mat.ptr());
 			}
 
-			cv::Mat toMat(const Size width, const Size height) {
-				cv::Mat img(texture->desc.height, texture->desc.width, CV_8UC3);
+			cv::Mat toMat() {
+				cv::Mat img(getHeight(), getWidth(), CV_8UC3);
 
 				resetPixelStorage();
 				setPackStorageHint(PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
@@ -363,7 +369,7 @@ namespace mc {
 			void setTransform(const Vector<float, 4>& trans);
 
 			void bind() const override;
-			void bind(const unsigned int location) const;
+			void bind(const TextureSlot slot) const;
 			void unbind() const override;
 
 			void resetPixelStorage();
@@ -389,7 +395,7 @@ namespace mc {
 			bool operator==(const Texture& other) const;
 			bool operator!=(const Texture& other) const;
 		private:
-			std::shared_ptr<Texture2DImpl> texture;
+			std::shared_ptr<TextureImpl> texture;
 
 			Color hue = Colors::INVISIBLE;
 
@@ -459,7 +465,7 @@ namespace mc {
 			may have to own the same pointer to data, they have to use std::shared_ptr
 			*/
 			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
-			virtual std::shared_ptr<Texture2DImpl> createTextureImpl(const TextureDesc& desc) const = 0;
+			virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const = 0;
 
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;

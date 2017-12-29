@@ -587,7 +587,7 @@ namespace mc {
 			/**
 			Makes this `Entity` dirty and root dirty.
 			<p>
-			Should be used over `setProperty(Entity::DIRTY,true)` as it updaets the root parent.
+			Should be used over `setProperty(Entity::DIRTY,true)` as it updates the root parent.
 			@see Entity::getRoot()
 			@dirty
 			*/

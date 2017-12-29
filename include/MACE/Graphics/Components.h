@@ -112,37 +112,6 @@ namespace mc {
 			virtual const Texture& getTexture() const = 0;
 		};
 
-		class Selectable {
-		public:
-			virtual ~Selectable() = default;
-
-			bool isClicked() const;
-			bool isDisabled() const;
-			bool isHovered() const;
-
-			void click();
-
-			void disable();
-			void enable();
-
-			void trigger();
-		protected:
-			enum SelectableProperty: Byte {
-				CLICKED = 0x01,
-				DISABLED = 0x02,
-				HOVERED = 0x04
-			};
-
-			Byte selectableProperties = 0;
-
-			virtual void onClick();
-
-			virtual void onEnable();
-			virtual void onDisable();
-
-			virtual void onTrigger();
-		};
-
 		class Progressable {
 		public:
 			virtual ~Progressable() = default;

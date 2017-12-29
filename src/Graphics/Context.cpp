@@ -195,7 +195,7 @@ namespace mc {
 			std::vector<unsigned int> data = std::vector<unsigned int>();
 			data.reserve(width * height);
 			for (Index i = 0; i < width * height; ++i) {
-				//TODO finish this function
+				data[i] = col.toUnsignedInt();
 			}
 			texture.setData(&data[0]);
 
@@ -420,7 +420,7 @@ namespace mc {
 			init(d);
 		}
 
-		Texture::Texture(const std::shared_ptr<Texture2DImpl> tex, const Color& col) : texture(tex), hue(col) {}
+		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
 
 		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
 
@@ -498,10 +498,10 @@ namespace mc {
 			texture->bind();
 		}
 
-		void Texture::bind(const unsigned int location) const {
+		void Texture::bind(const TextureSlot slot) const {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			texture->bind(location);
+			texture->bind(slot);
 		}
 
 		void Texture::unbind() const {
@@ -676,7 +676,7 @@ namespace mc {
 			window = nullptr;
 		}
 
-		Texture2DImpl::Texture2DImpl(const TextureDesc & t) : desc(t) {}
+		TextureImpl::TextureImpl(const TextureDesc & t) : desc(t) {}
 
 		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : format(form), width(w), height(h) {}
 	}//gfx

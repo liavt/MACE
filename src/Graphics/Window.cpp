@@ -210,6 +210,8 @@ namespace mc {
 					glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
 #ifdef MACE_DEBUG_OPENGL
 					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#else
+					glfwWindowHint(GLFW_CONTEXT_NO_ERROR, true);
 #endif
 					break;
 			}

@@ -132,7 +132,7 @@ namespace mc {
 				@see Object::unbind const
 				@see Object::isCreated() const
 				*/
-				virtual void init() override = 0;
+				virtual void init() override;
 				/**
 				Calls the corresponding glDestroy\* function and deletes the ID.
 				@opengl
@@ -142,7 +142,7 @@ namespace mc {
 				@see Object::isCreated() const
 				@throws GL_INVALID_OPERATION If this `Object` has not been created yet (Object::init() has not been called)
 				*/
-				virtual void destroy() override = 0;
+				virtual void destroy() override;
 
 				/**
 				Binds this `Object` to be used in an OpenGL function.
@@ -179,6 +179,9 @@ namespace mc {
 				*/
 				GLuint getID() const;
 
+				static void init(Object* objects[], const Size length);
+				static void destroy(Object* objects[], const Size length);
+
 				/**
 				Compares if 2 `Objects` are equal.
 				@see Object::getID() const
@@ -210,6 +213,19 @@ namespace mc {
 				@internal
 				*/
 				virtual void bindIndex(const GLuint id) const = 0;
+
+				virtual void initIndices(GLuint id[], const Size length) const = 0;
+				template<Size N>
+				void initIndices(GLuint id[N]) const {
+					initIndices(id, N);
+				}
+
+				virtual void destroyIndices(const GLuint id[], const Size length) const = 0;
+				template<Size N>
+				void destroyIndices(const GLuint id[N]) const {
+					destroyIndices(id, N);
+				}
+
 			};
 
 			/**
@@ -286,9 +302,6 @@ namespace mc {
 				*/
 				void counter();
 
-				void init() final;
-				void destroy() final;
-
 				bool isCreated() const override final;
 
 				using Object::operator==;
@@ -300,6 +313,9 @@ namespace mc {
 				void unbind() const override final;
 
 				void bindIndex(const GLuint id) const override final;
+
+				void initIndices(GLuint id[], const Size length) const override final;
+				void destroyIndices(const GLuint id[], const Size length) const override final;
 			};//QueryObject
 
 			/**
@@ -311,9 +327,6 @@ namespace mc {
 			*/
 			class RenderBuffer: public Object {
 			public:
-				void init() override;
-				void destroy() override;
-
 				/**
 				Sets the flags for the storage of this `RenderBuffer.`
 				@param format A valied OpenGL image format such as GL_RGBA8
@@ -342,6 +355,9 @@ namespace mc {
 				using Object::operator!=;
 			private:
 				void bindIndex(const GLuint id) const override;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//RenderBuffer
 
 			/**
@@ -350,9 +366,6 @@ namespace mc {
 			class Texture2D: public Object {
 			public:
 				Texture2D() noexcept;
-
-				void init() override;
-				void destroy() override;
 
 				void bind() const override;
 				void bind(const unsigned int location) const;
@@ -419,6 +432,9 @@ namespace mc {
 				Enum target = GL_TEXTURE_2D;
 
 				void bindIndex(const GLuint id) const override;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//Texture2D
 
 			/**
@@ -468,9 +484,6 @@ namespace mc {
 				@opengl
 				*/
 				static void setClearColor(const float r, const float g, const float b, const float a);
-
-				void init() override;
-				void destroy() override;
 
 				/**
 				Attaches a texture to this `FrameBuffer`
@@ -585,6 +598,9 @@ namespace mc {
 				using Object::operator!=;
 			private:
 				void bindIndex(const GLuint id) const override;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//FrameBuffer
 
 			/**
@@ -619,9 +635,6 @@ namespace mc {
 				Buffer(const Enum bufferType) noexcept;
 
 				bool isCreated() const override;
-
-				void init() override;
-				void destroy() override;
 
 				/**
 				Creates and initalizes the data store for this `Buffer`
@@ -743,6 +756,9 @@ namespace mc {
 				Enum bufferType;
 
 				void bindIndex(const GLuint id) const override;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//Buffer
 
 			/**
@@ -918,7 +934,6 @@ namespace mc {
 			*/
 			class VertexArray: public Object {
 			public:
-				void init() override;
 				void destroy() override;
 
 				bool isCreated() const override;
@@ -974,6 +989,9 @@ namespace mc {
 				Size vertexNumber;
 
 				void bindIndex(const GLuint id) const override;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//VertexArray
 
 			/**
@@ -1101,6 +1119,9 @@ namespace mc {
 				void unbind() const override final;
 
 				void bindIndex(const GLuint id) const override final;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//Shader
 
 			/**
@@ -1295,6 +1316,9 @@ namespace mc {
 				std::unordered_map<std::string, int> uniforms;
 
 				void bindIndex(const GLuint id) const override;
+
+				void initIndices(GLuint id[], const Size length) const override;
+				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//ShaderProgram
 
 			/**

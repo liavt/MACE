@@ -30,7 +30,7 @@ public:
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		//give the texture a blueish hue
-		p.setTexture(lena, gfx::Painter::TextureSlot::FOREGROUND);
+		p.setTexture(lena, gfx::TextureSlot::FOREGROUND);
 		p.setForegroundColor(Color(0.0f, 0.0f, 1.0f, 0.5f));
 		p.drawQuad(gfx::Painter::Brush::TEXTURE);
 
@@ -64,7 +64,7 @@ public:
 		p.blendImagesMasked(star, lena, gfx::Texture::getGradient(), 0.0f, 0.5f);
 
 		p.translate(2.0f / 3.0f, 0.0f);
-		p.setTexture(lena, gfx::Painter::TextureSlot::FOREGROUND);
+		p.setTexture(lena, gfx::TextureSlot::FOREGROUND);
 		p.setForegroundTransform(Vector4f({0.25f, 0.25f, 0.5f, 0.5f}));
 		//render lena slightly zoomed in
 		p.drawQuad(gfx::Painter::Brush::TEXTURE);

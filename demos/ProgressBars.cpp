@@ -11,8 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 using namespace mc;
 
-gfx::ProgressBar circleBar;
-gfx::ProgressBar rectangleBar;
+gfx::Slider circleBar, rectangleBar;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
@@ -31,12 +30,10 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create(gfx::WindowModule& win) {
-	gfx::Texture circle = gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/progressbar-circle.png", gfx::ImageFormat::LUMINANCE_ALPHA);
-
-	circleBar = gfx::ProgressBar(100, 255, 20);
-	circleBar.setBackgroundTexture(gfx::Texture(circle, Color(Colors::RED, 0.5f)));
+	circleBar = gfx::Slider(100, 255, 20);
+	circleBar.setBackgroundTexture(gfx::Texture(gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/star.png", gfx::ImageFormat::DONT_CARE), Color(Colors::DARK_GRAY, 0.5f)));
 	circleBar.setForegroundTexture(Colors::GREEN);
-	circleBar.setSelectionTexture(circle);
+	circleBar.setSelectionTexture(gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/starGradient.png", gfx::ImageFormat::DONT_CARE));
 	circleBar.setWidth(0.25f);
 	circleBar.setHeight(0.25f);
 	circleBar.setX(-0.5f);
@@ -48,7 +45,7 @@ void create(gfx::WindowModule& win) {
 
 	win.addChild(circleBar);
 
-	rectangleBar = gfx::ProgressBar(0, 255, 50);
+	rectangleBar = gfx::Slider(0, 255, 50);
 	rectangleBar.setBackgroundTexture(Colors::RED);
 	rectangleBar.setForegroundTexture(gfx::Texture(gfx::Texture::getGradient(), Color(0.0f, 1.0f, 0.0f, 0.5f)));
 	rectangleBar.setSelectionTexture(gfx::Texture::getGradient());

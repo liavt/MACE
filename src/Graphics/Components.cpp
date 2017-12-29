@@ -234,49 +234,6 @@ namespace mc {
 			}
 		}
 
-		bool Selectable::isClicked() const {
-			return selectableProperties & Selectable::CLICKED;
-		}
-
-		bool Selectable::isDisabled() const {
-			return selectableProperties & Selectable::DISABLED;
-		}
-
-		bool Selectable::isHovered() const {
-			return selectableProperties & Selectable::HOVERED;
-		}
-
-		void Selectable::click() {
-			selectableProperties |= Selectable::CLICKED;
-
-			onClick();
-		}
-
-		void Selectable::disable() {
-			selectableProperties |= Selectable::DISABLED;
-
-			onDisable();
-		}
-
-		void Selectable::enable() {
-			selectableProperties &= ~Selectable::DISABLED;
-
-			onEnable();
-		}
-
-		void Selectable::trigger() {
-			onTrigger();
-		}
-
-		void Selectable::onClick() {}
-
-
-		void Selectable::onEnable() {}
-
-		void Selectable::onDisable() {}
-
-		void Selectable::onTrigger() {}
-
 		void Progressable::addProgress(const float prog) {
 			setProgress(getProgress() + prog);
 		}
