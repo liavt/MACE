@@ -7,13 +7,13 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <MACE/Graphics/OGL/OGL.h>
+#include <MACE/Graphics/OGL/OGL33.h>
 #include <memory>
 #include <string>
 
 namespace mc {
 	namespace gfx {
-		namespace ogl {
+		namespace ogl33 {
 			namespace {
 				Shader createShader(const Enum type, const char* sources[], const Size sourceSize) {
 					Shader s = Shader(type);
@@ -219,38 +219,20 @@ namespace mc {
 				glDeleteVertexArrays(length, ids);
 			}
 
-			UniformBuffer::UniformBuffer() noexcept : Buffer(GL_UNIFORM_BUFFER) {}
+			UniformBuffer::UniformBuffer() noexcept : UniformBuffer("") {}
 
-			void UniformBuffer::setLocation(const Index loc) {
-				this->location = loc;
+			UniformBuffer::UniformBuffer(const char * n) noexcept : Buffer(GL_UNIFORM_BUFFER), name(n) {}
+
+			const char * UniformBuffer::getName() const {
+				return name;
 			}
 
-			Index UniformBuffer::getLocation() {
-				return location;
-			}
-
-			const Index UniformBuffer::getLocation() const {
-				return location;
-			}
-
-			void UniformBuffer::bindForRender(const Index offset, const ptrdiff_t size) const {
-				if (size < 0 && offset == 0) {
-					glBindBufferBase(GL_UNIFORM_BUFFER, this->location, id);
-				} else {
-					glBindBufferRange(GL_UNIFORM_BUFFER, this->location, id, offset, size);
-				}
-			}
-
-			void UniformBuffer::bindToUniformBlock(const Index programID, const char* blockName) const {
-				glUniformBlockBinding(programID, glGetUniformBlockIndex(programID, blockName), location);
-			}
-
-			void UniformBuffer::bindToUniformBlock(const ShaderProgram & program, const char * blockname) const {
-				bindToUniformBlock(program.getID(), blockname);
+			void UniformBuffer::setName(const char * name) {
+				this->name = name;
 			}
 
 			bool UniformBuffer::operator==(const UniformBuffer & other) const {
-				return location == other.location&&Buffer::operator==(other);
+				return name == other.name&&Buffer::operator==(other);
 			}
 
 			bool UniformBuffer::operator!=(const UniformBuffer & other) const {
@@ -981,6 +963,39 @@ namespace mc {
 				createUniform(std::string(name));
 			}
 
+			ShaderProgram::UniformBufferData ShaderProgram::createUniformBuffer(const char* name, const GLint location) {
+				UniformBufferData out = UniformBufferData();
+
+				if (location >= 0) {
+					glUniformBlockBinding(id, glGetUniformBlockIndex(id, name), location);
+					out.index = location;
+				} else {
+					out.index = glGetUniformBlockIndex(id, name);
+				}
+
+				glGetActiveUniformBlockiv(id, out.index, GL_UNIFORM_BLOCK_DATA_SIZE, &out.size);
+
+				uniformBuffers.insert(std::pair<std::string, UniformBufferData>(name, out));
+				return out;
+			}
+
+			ShaderProgram::UniformBufferData ShaderProgram::createUniformBuffer(const UniformBuffer& buf, const GLint location) {
+				return createUniformBuffer(buf.getName(), location);
+			}
+
+			ShaderProgram::UniformBufferData & ShaderProgram::getUniformBuffer(const char * name) {
+				return uniformBuffers[name];
+			}
+
+			ShaderProgram::UniformBufferData& ShaderProgram::getUniformBuffer(const UniformBuffer & buf) {
+				return getUniformBuffer(buf.getName());
+			}
+
+			void ShaderProgram::bindUniformBuffer(const UniformBuffer & buf) {
+				const UniformBufferData& bufferData = getUniformBuffer(buf);
+				glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, buf.getID());
+			}
+
 			int ShaderProgram::getUniformLocation(const std::string& name) const {
 				return uniforms.find(name)->second;
 			}
@@ -1292,6 +1307,6 @@ namespace mc {
 			void setViewport(const Index x, const Index y, const Size width, const Size height) {
 				glViewport(x, y, width, height);
 			}
-		}//ogl
+		}//ogl33
 	}//gfx
 }//mc

@@ -15,7 +15,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		namespace ogl {
+		namespace ogl33 {
 			namespace {
 				GLenum getFormat(const TextureDesc::Format format) {
 					switch (format) {
@@ -123,18 +123,18 @@ namespace mc {
 				}
 			}//anon namespace
 
-			OGL33Texture::OGL33Texture(const TextureDesc& desc) : TextureImpl(desc), ogl::Texture2D() {
-				ogl::Texture2D::init();
-				ogl::Texture2D::bind();
+			OGL33Texture::OGL33Texture(const TextureDesc& desc) : TextureImpl(desc), ogl33::Texture2D() {
+				ogl33::Texture2D::init();
+				ogl33::Texture2D::bind();
 
 				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR) {
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 				} else if (desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				} else if (desc.minFilter == TextureDesc::Filter::LINEAR) {
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				} else if (desc.minFilter == TextureDesc::Filter::NEAREST) {
-					ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 				} else {
 					MACE__THROW(UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.minFilter)));
 				}
@@ -196,27 +196,27 @@ namespace mc {
 			}
 
 			OGL33Texture::~OGL33Texture() {
-				ogl::Texture2D::destroy();
+				ogl33::Texture2D::destroy();
 			}
 
 			void OGL33Texture::bind() const {
-				ogl::Texture2D::bind();
+				ogl33::Texture2D::bind();
 			}
 
 			void OGL33Texture::bind(const TextureSlot slot) const {
-				ogl::Texture2D::bind(static_cast<unsigned int>(slot));
+				ogl33::Texture2D::bind(static_cast<unsigned int>(slot));
 			}
 
 			void OGL33Texture::unbind() const {
-				ogl::Texture2D::unbind();
+				ogl33::Texture2D::unbind();
 			}
 
 			bool OGL33Texture::isCreated() const {
-				return ogl::Texture2D::isCreated();
+				return ogl33::Texture2D::isCreated();
 			}
 
 			void OGL33Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
-				ogl::Texture2D::bind();
+				ogl33::Texture2D::bind();
 				switch (hint) {
 					case PixelStorage::ALIGNMENT:
 						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
@@ -230,7 +230,7 @@ namespace mc {
 			}
 
 			void OGL33Texture::setPackStorageHint(const PixelStorage hint, const int value) {
-				ogl::Texture2D::bind();
+				ogl33::Texture2D::bind();
 				switch (hint) {
 					case PixelStorage::ALIGNMENT:
 						setPixelStorage(GL_PACK_ALIGNMENT, value);
@@ -244,33 +244,33 @@ namespace mc {
 			}
 
 			void OGL33Texture::setData(const void * data, const Index mipmap) {
-				ogl::Texture2D::bind();
-				ogl::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
+				ogl33::Texture2D::bind();
+				ogl33::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
 
 				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
-					ogl::Texture2D::generateMipmap();
+					ogl33::Texture2D::generateMipmap();
 				}
 			}
 
 			void OGL33Texture::readPixels(void * data) const {
-				ogl::Texture2D::bind();
-				ogl::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
+				ogl33::Texture2D::bind();
+				ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
 			}
 
 			void OGL33Model::init() {
-				ogl::VertexArray::init();
+				ogl33::VertexArray::init();
 			}
 
 			void OGL33Model::destroy() {
-				ogl::VertexArray::destroy();
+				ogl33::VertexArray::destroy();
 			}
 
 			void OGL33Model::bind() const {
-				ogl::VertexArray::bind();
+				ogl33::VertexArray::bind();
 			}
 
 			void OGL33Model::unbind() const {
-				ogl::VertexArray::unbind();
+				ogl33::VertexArray::unbind();
 			}
 
 			void OGL33Model::draw() const {
@@ -311,19 +311,19 @@ namespace mc {
 			}
 
 			void OGL33Model::loadTextureCoordinates(const Size dataSize, const float* data) {
-				ogl::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
+				ogl33::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
 			}
 
 			void OGL33Model::loadVertices(const Size verticeSize, const float* vertices) {
-				ogl::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
+				ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
 			}
 
 			void OGL33Model::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
-				ogl::VertexArray::loadIndices(indiceNum, indiceData);
+				ogl33::VertexArray::loadIndices(indiceNum, indiceData);
 			}
 
 			bool OGL33Model::isCreated() const {
-				return ogl::VertexArray::isCreated();
+				return ogl33::VertexArray::isCreated();
 			}
 
 			void OGL33Context::onInit(gfx::WindowModule *) {
@@ -349,6 +349,6 @@ namespace mc {
 			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
 				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
 			}
-		}//ogl
+		}//ogl33
 	}//gfx
 }//mc

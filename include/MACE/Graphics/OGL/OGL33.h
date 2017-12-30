@@ -18,7 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Color.h>
 #include <MACE/Graphics/Renderer.h>
 
-#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 #include <GL/glew.h>
@@ -41,14 +40,14 @@ namespace mc {
 		actual OpenGL function. However, some classes like `ShaderProgram` do a lot of bookkeeping to make it easier
 		to use.
 		<p>
-		The documentation for classes in the `ogl` namespace assumes that you understand the underlying OpenGL concepts.
+		The documentation for classes in the `ogl33` namespace assumes that you understand the underlying OpenGL concepts.
 		A link to a page about the OpenGL concept is usually present.
 		<p>
 		Each abstraction follows a very similar syntax and style to make it easier to understand.
 		@see Object
 		@see Buffer
 		*/
-		namespace ogl {
+		namespace ogl33 {
 
 			/**
 			Thrown when OpenGL fails or errors
@@ -64,7 +63,7 @@ namespace mc {
 
 			/**
 			Thrown when a Framebuffer fails to be created, or throws an error
-			@see gfx::ogl::Framebuffer
+			@see gfx::ogl33::Framebuffer
 			@see OpenGLError
 			*/
 			MACE__DECLARE_ERROR(Framebuffer);
@@ -74,7 +73,7 @@ namespace mc {
 			*/
 			void checkGLError(const Index line = 0, const char* file = "Unknown file", const char* message = "No message specified");
 			/**
-			@copydoc ogl::checkGLError(const Index, const char*, const char*)
+			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
 			*/
 			void checkGLError(const Index line, const char* file, const std::string message);
 
@@ -1023,6 +1022,33 @@ namespace mc {
 				using Buffer::operator!=;
 			};//CopyWriteBuffer
 
+			  /**
+			  Stores uniform data for a shader in the form of a Buffer. Can be used to share data between multiple shaders or quickly change between
+			  sets of uniforms in one program.
+			  @see https://www.opengl.org/wiki/Uniform_Buffer_Object
+			  @see VertexBuffer
+			  @see ShaderProgram
+			  */
+			class UniformBuffer: public Buffer {
+			public:
+				UniformBuffer() noexcept;
+				UniformBuffer(const char* n) noexcept;
+
+				const char* getName() const;
+				void setName(const char* name);
+
+				/**
+				@copydoc Object::operator==(const Object&) const
+				*/
+				bool operator==(const UniformBuffer& other) const;
+				/**
+				@copydoc Object::operator!=(const Object&) const
+				*/
+				bool operator!=(const UniformBuffer& other) const;
+			private:
+				const char* name;
+			};//UniformBuffer
+
 			/**
 			Represents a shader object in OpenGL. A shader is a special program that gets executed during different parts of rendering.
 			<p>
@@ -1131,6 +1157,19 @@ namespace mc {
 			*/
 			class ShaderProgram: public Object {
 			public:
+				struct UniformBufferData {
+					struct Field {
+						GLuint index;
+						GLint size, offset;
+						Enum type;
+					};
+
+					GLint size;
+					GLuint index;
+					
+					std::unordered_map<std::string, Field> fields{};
+				};
+
 				void init() override;
 				void destroy() override;
 
@@ -1212,6 +1251,24 @@ namespace mc {
 				@opengl
 				*/
 				void createUniform(const char* name);
+
+				/**
+				@opengl
+				*/
+				UniformBufferData createUniformBuffer(const char* name, const GLint location = -1);
+				/**
+				@copydoc createUniformBuffer(const char*, const GLint)
+				*/
+				UniformBufferData createUniformBuffer(const UniformBuffer& buf, const GLint location = -1);
+
+				UniformBufferData& getUniformBuffer(const char* name);
+
+				UniformBufferData& getUniformBuffer(const UniformBuffer& buf);
+
+				/**
+				@opengl
+				*/
+				void bindUniformBuffer(const UniformBuffer& buf);
 
 				int getUniformLocation(const std::string& name) const;
 				int getUniformLocation(const char* name) const;
@@ -1314,81 +1371,14 @@ namespace mc {
 			private:
 				std::unordered_map<Enum, Shader> shaders;
 				std::unordered_map<std::string, int> uniforms;
+				std::unordered_map<std::string, UniformBufferData> uniformBuffers;
 
 				void bindIndex(const GLuint id) const override;
 
 				void initIndices(GLuint id[], const Size length) const override;
 				void destroyIndices(const GLuint id[], const Size length) const override;
 			};//ShaderProgram
-
-			/**
-			Stores uniform data for a shader in the form of a Buffer. Can be used to share data between multiple shaders or quickly change between
-			sets of uniforms in one program.
-			@see https://www.opengl.org/wiki/Uniform_Buffer_Object
-			@see VertexBuffer
-			*/
-			class UniformBuffer: public Buffer {
-			public:
-				UniformBuffer() noexcept;
-
-				/**
-				Modify the location that this `UniformBuffer` is currently bound to.
-				<p>
-				The location is used in the UniformBuffer::bindForRender(const Index, const ptrdiff_t) const
-				and UniformBuffer::bindToUniformBlock(const Index, const char*) const functions, as well as
-				in the shaders.
-				@param location The new location for this `UniformBuffer` object.
-				*/
-				void setLocation(const Index location);
-				/**
-				Retrieves the location that this `UniformBuffer` is currently bound to.
-				@return The location
-				@see UniformBuffer::setLocation(const Index)
-				*/
-				Index getLocation();
-				/**
-				@copydoc UniformBuffer::getLocation()
-				*/
-				const Index getLocation() const;
-
-				/**
-				Binds this `UniformBuffer` for rendering. Must be called before a rendering call is used.
-				<p>
-				Not to be confused with Object::bind() const
-				@param offset How many components to start at in rendering. 0 by default
-				@param size How many components to use in rendering
-				@see https://www.opengl.org/wiki/GLAPI/glBindBufferBase
-				@see https://www.opengl.org/wiki/GLAPI/glBindBufferRange
-				@opengl
-				*/
-				void bindForRender(const Index offset = 0, const ptrdiff_t size = -1) const;
-
-				/**
-				Binds this `UniformBuffer` to a `ShaderProgram.` Must be used or else the shader won't be
-				able to access the Buffer data.
-				@param program The Shader
-				@param blockName The name of the uniform block in the shader to bind to. Must be case sensitive.
-				@see https://www.opengl.org/wiki/GLAPI/glUniformBlockBinding
-				@opengl
-				*/
-				void bindToUniformBlock(const Index program, const char* blockName) const;
-				/**
-				@copydoc UniformBuffer::bindToUniformBlock(const Index program, const char* blockname) const
-				*/
-				void bindToUniformBlock(const ShaderProgram& program, const char* blockName) const;
-
-				/**
-				@copydoc Object::operator==(const Object&) const
-				*/
-				bool operator==(const UniformBuffer& other) const;
-				/**
-				@copydoc Object::operator!=(const Object&) const
-				*/
-				bool operator!=(const UniformBuffer& other) const;
-			private:
-				Index location = 0;
-			};//UniformBuffer
-		}//ogl
+		}//ogl33
 	}//gfx
 }//mc
 

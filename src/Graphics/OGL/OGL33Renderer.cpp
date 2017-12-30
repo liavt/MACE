@@ -35,14 +35,13 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		namespace ogl {
-			namespace {
-				//how many floats in the uniform buffer
+		namespace ogl33 {
+			//how many floats in the uniform buffer
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 28
-				//which binding location the uniform buffer goes to
+			//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
 #define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
-				//the definition is later stringified. cant be a string because this gets added to the shader.
+			//the definition is later stringified. cant be a string because this gets added to the shader via a macro (see createShader)
 #define MACE__ENTITY_DATA_NAME _mc_EntityData
 
 #define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 56
@@ -54,6 +53,7 @@ namespace mc {
 #define MACE__ID_ATTACHMENT_INDEX 1
 #define MACE__DATA_ATTACHMENT_INDEX 2
 
+			namespace {
 				Shader createShader(const Enum type, const Painter::RenderFeatures features, const char* source) {
 					Shader s = Shader(type);
 					s.init();
@@ -119,23 +119,25 @@ namespace mc {
 					return s;
 				}
 
-				ogl::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
-					ogl::ShaderProgram program;
+				ogl33::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
+					ogl33::ShaderProgram program;
 					program.init();
 
+					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error initializing ShaderProgram");
+
 					program.attachShader(createShader(GL_VERTEX_SHADER, settings.second,
-#include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
+#							include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
 					));
 
 					if (settings.first == Painter::Brush::COLOR) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
 						));
 
 						program.link();
 					} else if (settings.first == Painter::Brush::TEXTURE) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
 						));
 
 						program.link();
@@ -147,7 +149,7 @@ namespace mc {
 						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
 					} else if (settings.first == Painter::Brush::MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
 						));
 
 						program.link();
@@ -162,7 +164,7 @@ namespace mc {
 						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
 					} else if (settings.first == Painter::Brush::BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
 						));
 
 						program.link();
@@ -176,7 +178,7 @@ namespace mc {
 						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
 					} else if (settings.first == Painter::Brush::MASKED_BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#	include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
 						));
 
 						program.link();
@@ -195,7 +197,7 @@ namespace mc {
 						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 					}
 
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
+					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
 					return program;
 				}
 			}//anon namespace
@@ -230,10 +232,10 @@ namespace mc {
 				}
 
 				try {
-					gfx::ogl::forceCheckGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
+					gfx::ogl33::forceCheckGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
 				} catch (...) {
 					//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
-					//see https://www.khronos.org/opengl/wiki/OpenGL_Loading_Library (section GLEW) saying to ignore a GLEW error
+					//see https://www.khronos.org/opengl/wiki/OpenGL_Loading_Library (section GLEW) saying to ignore a GLEW error immediatevely after glewInit()
 				}
 
 #ifdef MACE_DEBUG_OPENGL
@@ -253,11 +255,11 @@ namespace mc {
 
 				generateFramebuffer(config.width, config.height);
 
-				ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing OGL33Renderer");
+				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing OGL33Renderer");
 			}
 
 			void OGL33Renderer::onSetUp(gfx::WindowModule *) {
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
 				frameBuffer.bind();
 
@@ -285,30 +287,30 @@ namespace mc {
 
 				glClearBufferfv(GL_COLOR, MACE__DATA_ATTACHMENT_INDEX, dataClearValues);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
 			}
 
 			void OGL33Renderer::onTearDown(gfx::WindowModule * win) {
-				ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
+				ogl33::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 				frameBuffer.unbind();
 
-				ogl::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+				ogl33::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 				int width, height;
 				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
 
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				ogl::FrameBuffer::setDrawBuffer(GL_BACK);
+				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				ogl33::FrameBuffer::setDrawBuffer(GL_BACK);
 
 				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT, GL_NEAREST);
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
 				glfwSwapBuffers(win->getGLFWWindow());
 
-				ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
+				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
 			}
 
 			void OGL33Renderer::onResize(gfx::WindowModule*, const Size width, const Size height) {
@@ -326,11 +328,11 @@ namespace mc {
 
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
-				ogl::setViewport(0, 0, width == 0 ? 1 : width, height == 0 ? 1 : height);
+				ogl33::setViewport(0, 0, width == 0 ? 1 : width, height == 0 ? 1 : height);
 
 				generateFramebuffer(width == 0 ? 1 : width, height == 0 ? 1 : height);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
 			}
 
 			void OGL33Renderer::onDestroy() {
@@ -353,7 +355,7 @@ namespace mc {
 
 				protocols.clear();
 
-				ogl::forceCheckGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
+				ogl33::forceCheckGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
 
 			}
 
@@ -378,34 +380,34 @@ namespace mc {
 				depthStencilBuffer.bind();
 				depthStencilBuffer.setStorage(GL_DEPTH_STENCIL, width, height);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
 
 				sceneBuffer.bind();
 				sceneBuffer.setStorage(GL_RGBA, width, height);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
 
 				idBuffer.bind();
 				idBuffer.setStorage(GL_R32UI, width, height);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
 				dataBuffer.bind();
 				dataBuffer.setStorage(GL_RGBA, width, height);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating data texture for renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating data texture for renderer");
 
 				frameBuffer.init();
 				frameBuffer.bind();
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
 
 				frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX, sceneBuffer);
 				frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX, idBuffer);
 				frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX, dataBuffer);
 				frameBuffer.attachRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, depthStencilBuffer);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
 
 				switch (frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
 					case GL_FRAMEBUFFER_UNDEFINED:
@@ -440,15 +442,15 @@ namespace mc {
 
 				setTarget(FrameBufferTarget::COLOR);
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
 
-				ogl::setViewport(0, 0, width, height);
+				ogl33::setViewport(0, 0, width, height);
 
 				//gl states
-				ogl::enable(GL_BLEND);
-				ogl::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				ogl33::enable(GL_BLEND);
+				ogl33::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				ogl::enable(GL_MULTISAMPLE);
+				ogl33::enable(GL_MULTISAMPLE);
 
 				const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
 
@@ -457,7 +459,7 @@ namespace mc {
 					static_cast<float>(config.height) / static_cast<float>(height)
 				};
 
-				ogl::forceCheckGLError(__LINE__, __FILE__,
+				ogl33::forceCheckGLError(__LINE__, __FILE__,
 					("Internal Error: OGL33Renderer: Error resizing framebuffer for width " + std::to_string(width) + " and height " + std::to_string(height)).c_str());
 			}
 
@@ -466,8 +468,8 @@ namespace mc {
 
 				const Vector<int, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
-				ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-				ogl::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				//opengl y-axis is inverted from window coordinates
 				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
 			}
@@ -488,14 +490,14 @@ namespace mc {
 						colorAttachment = GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX;
 						break;
 				}
-				ogl::FrameBuffer::setReadBuffer(colorAttachment);
-				ogl::FrameBuffer::setDrawBuffer(colorAttachment);
+				ogl33::FrameBuffer::setReadBuffer(colorAttachment);
+				ogl33::FrameBuffer::setDrawBuffer(colorAttachment);
 				//opengl y-axis is inverted from window coordinates
 				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RGBA, GL_FLOAT, arr);
 			}
 
-			std::shared_ptr<PainterImpl> OGL33Renderer::createPainterImpl(Painter* const p) {
-				return std::shared_ptr<PainterImpl>(new OGL33Painter(this, p));
+			std::shared_ptr<PainterImpl> OGL33Renderer::createPainterImpl() {
+				return std::shared_ptr<PainterImpl>(new OGL33Painter(this));
 			}
 
 			void OGL33Renderer::bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
@@ -504,8 +506,10 @@ namespace mc {
 					RenderProtocol prot = RenderProtocol();
 					prot.program = createShadersForSettings(settings);
 
-					painter->painterData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
-					painter->entityData.bindToUniformBlock(prot.program, MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
+					prot.program.bind();
+
+					prot.program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME), MACE__ENTITY_DATA_LOCATION);
+					prot.program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME), MACE__PAINTER_DATA_LOCATION);
 
 					auto newProtocolEntry = std::pair<std::pair<Painter::Brush, Painter::RenderFeatures>, OGL33Renderer::RenderProtocol>(settings, prot);
 					protocols.insert(newProtocolEntry);
@@ -514,6 +518,8 @@ namespace mc {
 				}
 
 				protocol->second.program.bind();
+				protocol->second.program.bindUniformBuffer(painter->entityData);
+				protocol->second.program.bindUniformBuffer(painter->painterData);
 			}
 
 			void OGL33Renderer::setTarget(const FrameBufferTarget & target) {
@@ -533,7 +539,7 @@ namespace mc {
 
 			}
 
-			OGL33Painter::OGL33Painter(OGL33Renderer* const r, Painter* const p) : PainterImpl(p), renderer(r) {}
+			OGL33Painter::OGL33Painter(OGL33Renderer* const r) : renderer(r) {}
 
 			void OGL33Painter::init() {
 				Object* buffers[] = {
@@ -569,11 +575,11 @@ namespace mc {
 				//we set it to null, because during the actual rendering we set the data
 				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
 
-				entityData.setLocation(MACE__ENTITY_DATA_LOCATION);
+				entityData.setName(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
 			}
 
 			void OGL33Painter::createPainterData() {
-				savedState = painter->getState();
+				savedState = painter->getState();//create default state
 
 				painterData.bind();
 
@@ -593,7 +599,7 @@ namespace mc {
 
 				painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_USAGE);
 
-				painterData.setLocation(MACE__PAINTER_DATA_LOCATION);
+				painterData.setName(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 			}
 
 			void OGL33Painter::destroy() {
@@ -607,10 +613,8 @@ namespace mc {
 
 			void OGL33Painter::begin() {
 				painterData.bind();
-				painterData.bindForRender();
 
 				entityData.bind();
-				entityData.bindForRender();
 			}
 
 			void OGL33Painter::end() {}
@@ -620,9 +624,11 @@ namespace mc {
 			}
 
 			void OGL33Painter::clean() {
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
 				if (!painter->getEntity()->getProperty(Entity::INIT)) {
-					MACE__THROW(InitializationFailed, "Painter Entity is not initializd.");
+					MACE__THROW(InitializationFailed, "Internal Error: OGL33Renderer: clean(): Painter Entity is not initializd.");
 				}
+#endif
 
 				const Entity::Metrics metrics = painter->getEntity()->getMetrics();
 
@@ -653,6 +659,8 @@ namespace mc {
 				}
 
 				savedMetrics = metrics;
+
+				checkGLError(__LINE__, __FILE__, "Internal Error: Failed to update GPU-side buffer in Entity clean");
 			}
 
 			void OGL33Painter::loadSettings(const Painter::State& state) {
@@ -708,7 +716,7 @@ namespace mc {
 				m.bind();
 				m.draw();
 			}
-		}//ogl
+		}//ogl33
 	}//gfx
 }//mc
 

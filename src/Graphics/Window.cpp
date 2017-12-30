@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Context.h>
-#include <MACE/Graphics/OGL/OGL.h>
+#include <MACE/Graphics/OGL/OGL33.h>
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
 #include <MACE/Graphics/OGL/OGL33Context.h>
 
@@ -24,8 +24,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <unordered_map>
 #include <sstream>
 
-//so we can use glew
-#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 namespace mc {
@@ -196,7 +194,7 @@ namespace mc {
 				case LaunchConfig::ContextType::BEST_OGL:
 				case LaunchConfig::ContextType::OGL33:
 				default:
-					context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl::OGL33Context(this));
+					context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl33::OGL33Context(this));
 
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

@@ -17,8 +17,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
-		namespace ogl {
-			class OGL33Model: public ModelImpl, private ogl::VertexArray {
+		namespace ogl33 {
+			class OGL33Model: public ModelImpl, private ogl33::VertexArray {
 				friend class OGL33Renderer;
 			public:
 				void init() override;
@@ -36,7 +36,7 @@ namespace mc {
 				bool isCreated() const override;
 			};
 
-			class OGL33Texture: public TextureImpl, private ogl::Texture2D {
+			class OGL33Texture: public TextureImpl, private ogl33::Texture2D {
 			public:
 				OGL33Texture(const TextureDesc& desc);
 				~OGL33Texture() override;
@@ -71,7 +71,7 @@ namespace mc {
 			private:
 				std::unique_ptr<Renderer> renderer;
 			};
-		}//ogl
+		}//ogl33
 	}//gfx
 }//mc
 

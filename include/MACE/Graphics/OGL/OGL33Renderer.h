@@ -12,18 +12,18 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__GRAPHICS_OGL_OGL33RENDERER_H
 
 #include <MACE/Graphics/Renderer.h>
-#include <MACE/Graphics/OGL/OGL.h>
+#include <MACE/Graphics/OGL/OGL33.h>
 #include <map>
 
 namespace mc {
 	namespace gfx {
-		namespace ogl {
+		namespace ogl33 {
 			class OGL33Renderer;
 
 			class OGL33Painter: public PainterImpl {
 				friend class OGL33Renderer;
 			public:
-				OGL33Painter(OGL33Renderer* const renderer, Painter* const p);
+				OGL33Painter(OGL33Renderer* const renderer);
 
 				void init() override;
 				void destroy() override;
@@ -68,10 +68,10 @@ namespace mc {
 				void getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const override;
 				void getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color* arr, const FrameBufferTarget target) const override;
 
-				std::shared_ptr<PainterImpl> createPainterImpl(Painter* const p) override;
+				std::shared_ptr<PainterImpl> createPainterImpl() override;
 			private:
-				ogl::FrameBuffer frameBuffer{};
-				ogl::RenderBuffer sceneBuffer{}, idBuffer{}, dataBuffer{}, depthStencilBuffer{};
+				ogl33::FrameBuffer frameBuffer{};
+				ogl33::RenderBuffer sceneBuffer{}, idBuffer{}, dataBuffer{}, depthStencilBuffer{};
 
 				Color clearColor = Colors::BLACK;
 
@@ -80,7 +80,12 @@ namespace mc {
 				//for the Painter
 
 				struct RenderProtocol {
-					ogl::ShaderProgram program;
+					ogl33::ShaderProgram program;
+				};
+
+				struct PainterData {
+					ogl33::UniformBuffer entityBuffer, painterBuffer;
+					ogl33::ShaderProgram::UniformBufferData entityBufferData, painterBufferData;
 				};
 
 				std::map<std::pair<Painter::Brush, Painter::RenderFeatures>, OGL33Renderer::RenderProtocol> protocols{};
@@ -89,7 +94,7 @@ namespace mc {
 
 				void setTarget(const FrameBufferTarget& target);
 			};
-		}//ogl
+		}//ogl33
 	}//gfx
 }//mc
 

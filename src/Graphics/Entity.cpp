@@ -237,7 +237,6 @@ namespace mc {
 			m.scale = transformation.scaler;
 
 			if (hasParent()) {
-
 				const Entity* par = getParent();
 
 				const Entity::Metrics parentMetrics = par->getMetrics();
@@ -465,7 +464,6 @@ namespace mc {
 			}
 			onInit();
 			setProperty(Entity::INIT, true);
-
 		}
 
 		void Entity::destroy() {
@@ -482,7 +480,6 @@ namespace mc {
 			makeDirty();
 			reset();
 		}
-
 
 		Entity::Entity() noexcept {}
 

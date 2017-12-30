@@ -28,13 +28,15 @@ namespace mc {
 		//forward declare dependencies
 		class Renderer;
 		class GraphicsEntity;
-		/*
 		class PainterImpl;
-		class Texture;
-		class Model;*/
 
+		struct RendererEntry {
+			GraphicsEntity* entity;
+
+			std::shared_ptr<PainterImpl> painterImpl;
+		};
 		//if the container we use is ever going to be changed, we typedef
-		using RenderQueue = std::deque<GraphicsEntity*>;
+		using RenderQueue = std::deque<RendererEntry>;
 		//cant be size_t - opengl has to use to uints so the EntityID must be unsigned int
 		using EntityID = unsigned int;
 
@@ -46,6 +48,7 @@ namespace mc {
 		class Painter: public Beginable, private Initializable {
 			friend class GraphicsEntity;
 			friend class PainterImpl;
+			friend class Renderer;
 		public:
 			enum class Brush: Byte {
 				TEXTURE = 0, COLOR = 1, MASK = 2, BLEND = 3, MASKED_BLEND = 4,
@@ -81,9 +84,6 @@ namespace mc {
 				bool operator==(const State& other) const;
 				bool operator!=(const State& other) const;
 			};
-
-			Painter() = delete;
-			Painter(const Painter& p);
 
 			void drawModel(const Model& m, const Texture& img);
 
@@ -180,8 +180,6 @@ namespace mc {
 
 			const EntityID& getID() const;
 
-			Painter operator=(const Painter& right);
-
 			bool operator==(const Painter& other) const;
 			bool operator!=(const Painter& other) const;
 		private:
@@ -192,11 +190,13 @@ namespace mc {
 			//for pushing/popping the state
 			std::stack<Painter::State> stateStack{};
 
-			GraphicsEntity* const entity = nullptr;
+			GraphicsEntity* entity;
 
-			EntityID id = 0;
+			EntityID id;
 
-			Painter(GraphicsEntity* const en);
+			Painter();
+			Painter(GraphicsEntity* const en, const EntityID id, const std::shared_ptr<PainterImpl> im);
+			Painter(GraphicsEntity* const en, const Painter& other);
 
 			void begin() override;
 			void end() override;
@@ -205,6 +205,7 @@ namespace mc {
 			void destroy() override;
 
 			void clean();
+
 		};
 
 		MACE_CONSTEXPR inline Painter::RenderFeatures operator|(const Painter::RenderFeatures& left, const Painter::RenderFeatures& right) {
@@ -241,9 +242,7 @@ namespace mc {
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;
 		protected:
-			PainterImpl(Painter* const painter);
-
-			Painter* const painter;
+			Painter * painter;
 		};
 
 		/**
@@ -254,6 +253,7 @@ namespace mc {
 			friend class Painter;
 			friend class GraphicsContext;
 			friend class WindowModule;
+			friend class GraphicsEntity;
 		public:
 			virtual ~Renderer() = default;
 
@@ -261,8 +261,8 @@ namespace mc {
 			const GraphicsEntity* getEntityAt(const float x, const float y) const;
 			GraphicsEntity* getEntityAt(const unsigned int x, const unsigned int y);
 			const GraphicsEntity* getEntityAt(const unsigned int x, const unsigned int y) const;
-			
-			
+
+
 			virtual void getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const = 0;
 			template<Size W, Size H>
 			void getEntitiesAt(const unsigned int x, const unsigned int y, EntityID arr[W][H]) const {
@@ -326,8 +326,8 @@ namespace mc {
 			virtual void onDestroy() = 0;
 			virtual void onQueue(GraphicsEntity* en) = 0;
 
-			//not declared const because some of the functions require modification to an intneral buffer of impls
-			virtual std::shared_ptr<PainterImpl> createPainterImpl(Painter* const  painter) = 0;
+			//not declared const because some of the functions require modification to an internal buffer of impls
+			virtual std::shared_ptr<PainterImpl> createPainterImpl() = 0;
 		private:
 			/**
 			@internal
@@ -366,11 +366,9 @@ namespace mc {
 			*/
 			void destroy();
 
-			EntityID queue(GraphicsEntity* const e);
+			void queue(GraphicsEntity* const e, Painter& p);
 
 			void remove(const EntityID i);
-
-			EntityID pushEntity(GraphicsEntity* const  entity);
 		};//Renderer
 
 		class GraphicsEntity: public Entity {
@@ -396,7 +394,7 @@ namespace mc {
 
 			void destroy() override final;
 		private:
-			Painter painter = Painter(this);
+			Painter painter;
 
 			void onRender() override final;
 		};//GraphicsEntity

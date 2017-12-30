@@ -11,6 +11,9 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Entity2D.h>
 
+//debug purposes
+#include <iostream>
+
 namespace mc {
 	namespace gfx {
 		void Renderer::init(gfx::WindowModule* win) {
@@ -29,7 +32,7 @@ namespace mc {
 			onSetUp(win);
 		}//setUp
 
-		EntityID Renderer::queue(GraphicsEntity * const e) {
+		void Renderer::queue(GraphicsEntity * const e, Painter& p) {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
@@ -38,7 +41,27 @@ namespace mc {
 
 			onQueue(e);
 
-			return pushEntity(e);
+			//it adds 1 so 0 (NULL) represents a non-initalized value
+
+			for (EntityID i = 0; i < renderQueue.size(); ++i) {
+				if (renderQueue[i].entity == nullptr || renderQueue[i].entity->needsRemoval() || renderQueue[i].entity == e) {
+					renderQueue[i].entity = e;
+					//0 is a null ID, so we increment by one
+					p.id = i + 1;
+					p.entity = e;
+					p.impl = renderQueue[i].painterImpl;
+					renderQueue[i].painterImpl->painter = &p;
+				}
+			}
+
+			std::shared_ptr<PainterImpl> impl = std::move(createPainterImpl());
+			p.impl = impl;
+			p.id = renderQueue.size() + 1;
+			p.entity = e;
+			impl->painter = &p;
+			impl->init();
+
+			renderQueue.push_back({ e, std::move(impl) });
 		}//queue
 
 		void Renderer::remove(const EntityID id) {
@@ -48,7 +71,7 @@ namespace mc {
 			}
 #endif
 
-			renderQueue[id - 1] = nullptr;
+			renderQueue[id - 1].entity = nullptr;
 		}
 
 		void Renderer::flagResize() {
@@ -78,6 +101,12 @@ namespace mc {
 
 		void Renderer::destroy() {
 			onDestroy();
+
+			for (Index i = 0; i < renderQueue.size(); ++i) {
+				renderQueue[i].painterImpl->destroy();
+			}
+
+			renderQueue.clear();
 		}//destroy()
 
 		GraphicsEntity * Renderer::getEntityAt(const float x, const float y) {
@@ -148,13 +177,13 @@ namespace mc {
 				return nullptr;
 			}
 
-			GraphicsEntity* out = renderQueue[id];
+			GraphicsEntity* out = renderQueue[id].entity;
 			if (out == nullptr) {
 				return nullptr;
 			}
 
 			if (out->needsRemoval()) {
-				renderQueue[id] = nullptr;
+				renderQueue[id].entity = nullptr;
 				return nullptr;
 			}
 
@@ -173,7 +202,7 @@ namespace mc {
 				return nullptr;
 			}
 
-			GraphicsEntity* out = renderQueue[id];
+			GraphicsEntity* out = renderQueue[id].entity;
 			if (out == nullptr) {
 				return nullptr;
 			}
@@ -197,25 +226,11 @@ namespace mc {
 			return context;
 		}
 
-		EntityID Renderer::pushEntity(GraphicsEntity * const entity) {
-			//it adds 1 so 0 (NULL) represents a non-initalized value
+		Painter::Painter() : entity(nullptr), id(0), impl(nullptr) {}
 
-			for (EntityID i = 0; i < renderQueue.size(); ++i) {
-				if (renderQueue[i] == nullptr || renderQueue[i]->needsRemoval()) {
-					renderQueue[i] = entity;
-					//0 is a null ID, so we increment by one
-					return i + 1;
-				}
-			}
-			renderQueue.push_back(entity);
-			return renderQueue.size();
-		}
+		Painter::Painter(GraphicsEntity * const en, const EntityID i, const std::shared_ptr<PainterImpl> pimpl) : entity(en), id(i), impl(pimpl) {}
 
-		PainterImpl::PainterImpl(Painter* const p) : painter(p) {}
-
-		Painter::Painter(GraphicsEntity * const en) : entity(en) {}
-
-		Painter::Painter(const Painter & p) : impl(p.impl), entity(p.entity), id(p.id) {}
+		Painter::Painter(GraphicsEntity * const en, const Painter& p) : id(p.id), impl(p.impl), entity(en) {}
 
 		void Painter::begin() {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
@@ -239,6 +254,32 @@ namespace mc {
 			}
 #endif
 			impl->end();
+		}
+
+
+		void Painter::init() {
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
+			if (id == 0) {
+				MACE__THROW(InitializationFailed, "Internal Error: Renderer returned ID 0 (Null)");
+			}
+#endif
+#ifdef MACE_DEBUG_CHECK_NULLPTR
+			if (entity == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: Painter Entity is nullptr");
+			} else if (impl.get() == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: Renderer returned a nullptr RenderImpl for a Painter");
+			}
+#endif
+			impl->painter = this;
+			//impl->init() is called by the Renderer
+		}
+
+		void Painter::destroy() {
+			//impl->destroy() is called by the Renderer
+		}
+
+		void Painter::clean() {
+			impl->clean();
 		}
 
 		void Painter::maskImage(const Texture & img, const Texture & mask) {
@@ -291,7 +332,6 @@ namespace mc {
 			t.bind(slot);
 			switch (slot) {
 				case TextureSlot::FOREGROUND:
-					//the member functions set DirtyFlags accordingly
 					setForegroundColor(t.getHue());
 					setForegroundTransform(t.getTransform());
 					break;
@@ -565,10 +605,6 @@ namespace mc {
 			return id;
 		}
 
-		Painter Painter::operator=(const Painter& right) {
-			return Painter(right);
-		}
-
 		bool Painter::operator==(const Painter & other) const {
 			return impl == other.impl&& id == other.id && entity == other.entity
 				&& state == other.state && stateStack == other.stateStack;
@@ -586,40 +622,6 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void Painter::init() {
-			Renderer* r = gfx::getCurrentWindow()->getContext()->getRenderer();
-			id = r->queue(entity);
-			impl = std::move(r->createPainterImpl(this));
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (impl.get() == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: Renderer returned a nullptr to a Painter");
-			}
-#endif
-#ifdef MACE_DEBUG_INTERNAL_ERRORS
-			if (id == 0) {
-				MACE__THROW(InitializationFailed, "Internal Error: Renderer returned ID 0 (Null)");
-			}
-#endif
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (entity == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: Painter Entity is nullptr");
-			}
-#endif
-			impl->init();
-		}
-
-		void Painter::destroy() {
-			if (impl != nullptr) {
-				impl->destroy();
-			}
-			impl.reset();
-			id = 0;
-		}
-
-		void Painter::clean() {
-			impl->clean();
-		}
-
 		bool Painter::State::operator==(const State & other) const {
 			return transformation == other.transformation && foregroundColor == other.foregroundColor
 				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor
@@ -632,11 +634,12 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		GraphicsEntity::GraphicsEntity() noexcept : Entity() {}
+		GraphicsEntity::GraphicsEntity() noexcept : Entity(), painter(this, 0, nullptr) {}
 
 		GraphicsEntity::~GraphicsEntity() noexcept {}
 
 		void GraphicsEntity::init() {
+			gfx::getCurrentWindow()->getContext()->getRenderer()->queue(this, painter);
 			painter.init();
 
 			Entity::init();
