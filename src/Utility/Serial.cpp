@@ -106,11 +106,11 @@ namespace mc {
 			//tell it to not block or own the process
 			serial = open(port, O_RDWR | O_NOCTTY | O_NDELAY, S_IRWXU);
 
+			os::checkError(__LINE__, __FILE__, "Error opening serial port at " + std::string(port));
+
 			if (serial == -1) {
 				MACE__THROW(FileNotFound, "Unable to open serial port " + std::string(port));
 			}
-
-			os::checkError(__LINE__, __FILE__, "Error opening serial port at " + std::string(port));
 
 			//we dont want to block reading - only return 0.
 			fcntl(serial, F_SETFL, FNDELAY);
@@ -124,8 +124,68 @@ namespace mc {
 
 			os::checkError(__LINE__, __FILE__, "Error getting serial attributes for " + std::string(port));
 
-			cfsetispeed(&options, baudRate);
-			cfsetospeed(&options, baudRate);
+			speed_t baud;
+			switch(baudRate){
+			case 0:
+				baud = B0;
+				break;
+			case 50:
+				baud = B50;
+				break;
+			case 75:
+				baud = B75;
+				break;
+			case 110:
+				baud = B110;
+				break;
+			case 134:
+				baud = B134;
+				break;
+			case 150:
+				baud = B150;
+				break;
+			case 200:
+				baud = B200;
+				break;
+			case 300:
+				baud = B300;
+				break;
+			case 600:
+				baud = B600;
+				break;
+			case 1200:
+				baud = B1200;
+				break;
+			case 1800:
+				baud = B1800;
+				break;
+			case 2400:
+				baud = B2400;
+				break;
+			case 4800:
+				baud = B4800;
+				break;
+			case 9600:
+				MACE_FALLTHROUGH;
+			default:
+				baud = B9600;
+				break;
+			case 19200:
+				baud = B19200;
+				break;
+			case 38400:
+				baud = B38400;
+				break;
+			case 57600:
+				baud = B57600;
+				break;
+			case 115200:
+				baud = B115200;
+				break;
+			}
+
+			cfsetispeed(&options, baud);
+			cfsetospeed(&options, baud);
 
 			os::checkError(__LINE__, __FILE__, "Error setting baud rate for " + std::string(port));
 
