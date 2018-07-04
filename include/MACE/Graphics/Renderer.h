@@ -205,7 +205,6 @@ namespace mc {
 			void destroy() override;
 
 			void clean();
-
 		};
 
 		MACE_CONSTEXPR inline Painter::RenderFeatures operator|(const Painter::RenderFeatures& left, const Painter::RenderFeatures& right) {

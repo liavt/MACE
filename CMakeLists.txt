@@ -84,7 +84,8 @@ set(FREETYPE_URL "https://download.savannah.gnu.org/releases/freetype/${FREETYPE
 
 set(MACE_OUTPUT_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
 
-set(CATCH_URL "https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp")
+set(CATCH_VERSION "2.2.3")
+set(CATCH_URL "https://github.com/catchorg/Catch2/releases/download/v${CATCH_VERSION}/catch.hpp")
 #This is where Catch should be located in
 set(CATCH_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}")
 
