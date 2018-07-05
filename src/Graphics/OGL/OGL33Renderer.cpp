@@ -20,6 +20,8 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 #include <MACE/Core/System.h>
 
+#include <GLFW/glfw3.h>
+
 //we need to include algorithim for std::copy
 #include <algorithm>
 //cstring is for strcmp

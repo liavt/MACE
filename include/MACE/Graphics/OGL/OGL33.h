@@ -18,8 +18,6 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Color.h>
 #include <MACE/Graphics/Renderer.h>
 
-#include <GLFW/glfw3.h>
-
 #include <GL/glew.h>
 
 #include <unordered_map>
