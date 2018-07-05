@@ -16,6 +16,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Context.h>
 
 #include <chrono>
+#include <queue>
 #include <functional>
 
 namespace mc {
@@ -135,6 +136,32 @@ namespace mc {
 			virtual const float& getMaximum() const = 0;
 		};
 
+		class ComponentQueue: public Component {
+		public:
+			ComponentQueue(std::queue<std::shared_ptr<Component>> com);
+			ComponentQueue();
+
+			void addComponent(Component& com);
+			void addComponent(Component* com);
+			void addComponent(std::shared_ptr<Component> com);
+
+			std::queue<std::shared_ptr<Component>>& getComponents();
+			const std::queue<std::shared_ptr<Component>>& getComponents() const;
+			void setComponents(const std::queue<std::shared_ptr<Component>>& other);
+
+			bool operator==(const ComponentQueue& other) const;
+			bool operator!=(const ComponentQueue& other) const;
+		protected:
+			void init() final;
+			bool update() final;
+			void render() final;
+			void destroy() final;
+			void hover() final;
+			void clean() final;
+		private:
+			std::queue<std::shared_ptr<Component>> components;
+		};
+
 		class AlignmentComponent: public Component {
 		public:
 			AlignmentComponent(const VerticalAlign vert = VerticalAlign::CENTER, const HorizontalAlign horz = HorizontalAlign::CENTER);
@@ -175,13 +202,27 @@ namespace mc {
 			void render() override;
 			void destroy() override;
 		private:
-			const std::chrono::time_point<std::chrono::steady_clock> startTime;
+			std::chrono::time_point<std::chrono::steady_clock> startTime;
 			const float b;
 			const float c;
 			const std::chrono::duration<float> duration;
 			const EaseUpdateCallback updateCallback;
 			const EaseFunction ease;
 			const EaseDoneCallback done;
+		};
+
+		class TweenComponent: public EaseComponent {
+		public:
+			TweenComponent(Entity* const en, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+			TweenComponent(Entity* const en, const TransformMatrix start, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+
+			Entity* const getEntity();
+			const Entity* const getEntity() const;
+
+			bool operator==(const TweenComponent& other) const;
+			bool operator!=(const TweenComponent& other) const;
+		private:
+			Entity * const entity;
 		};
 
 		class CallbackComponent: public Component {

@@ -245,14 +245,14 @@ namespace mc {
 				Matrix4i m = Matrix4i();
 				for (Index x = 0; x < m.width(); x++) {
 					for (Index y = 0; y < m.height(); y++) {
-						m[x][y] = x*y;
+						m[x][y] = x * y;
 					}
 				}
 				SECTION("Testing via explicit constructor") {
 					Matrix4i other = Matrix4i(m);
 					for (Index x = 0; x < other.width(); x++) {
 						for (Index y = 0; y < other.height(); y++) {
-							REQUIRE(other[x][y] == x*y);
+							REQUIRE(other[x][y] == x * y);
 						}
 					}
 				}
@@ -260,7 +260,7 @@ namespace mc {
 					Matrix4i other = m;
 					for (Index x = 0; x < other.width(); x++) {
 						for (Index y = 0; y < other.height(); y++) {
-							REQUIRE(other[x][y] == x*y);
+							REQUIRE(other[x][y] == x * y);
 						}
 					}
 				}
@@ -403,7 +403,15 @@ namespace mc {
 				}
 			}
 		}
+	}
 
+	TEST_CASE("Testing lerp() on Vectors", "[utility][vector]") {
+		REQUIRE(math::lerp(Vector3i({ 0, 0, 0 }), Vector3i({ 1,1,1 }), 0) == Vector3i({ 0,0,0 }));
+		REQUIRE(math::lerp(Vector3i({ 0, 0, 0 }), Vector3i({ 1,1,1 }), 1) == Vector3i({ 1,1,1 }));
+		REQUIRE(math::lerp(Vector3f({ 1.0f, 1.0f, 1.0f }), Vector3f({ 1.0f,1.0f,1.0f }), 0.5f) == Vector3f({ 1.0f,1.0f,1.0f }));
+		REQUIRE(math::lerp(Vector3f({ 0.0f, 0.0f, 0.0f }), Vector3f({ 10.0f,10.0f,10.0f }), 0.5f) == Vector3f({ 5.0f,5.0f,5.0f }));
+		REQUIRE(math::lerp(Vector3d({ 0.0, 0.0, 0.0 }), Vector3d({ 10.0,10.0,10.0 }), 0.3) == Vector3d({ 3.0,3.0,3.0 }));
+		REQUIRE(math::lerp(Vector3d({ 0.0, 0.0, 0.0 }), Vector3d({ 10.0,10.0,10.0 }), 0.71) == Vector3d({ 7.1,7.1,7.1 }));
 	}
 
 	TEST_CASE("Testing flatten()", "[utility][vector]") {

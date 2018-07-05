@@ -25,6 +25,7 @@ namespace mc {
 		class Entity;
 		class Texture;
 		class Painter;
+		class ComponentQueue;
 
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
@@ -45,6 +46,7 @@ namespace mc {
 		*/
 		class Component: public Initializable{
 			friend class Entity;
+			friend class ComponentQueue;
 		public:
 			virtual ~Component() = default;
 

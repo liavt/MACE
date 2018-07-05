@@ -867,6 +867,23 @@ namespace mc {
 		Vector<T, N> normalize(Vector<T, N>& vector) {
 			return vector / magnitude(vector);
 		}
+
+		/**
+		Linearly interpolate two `Vectors.`
+		@param prog Progress between `0` and `1`, where `0` is the start and `1` is the end. Values in between `0` and `1` will return an interpolated vector
+		@see `gfx::TweenComponent'
+		@tparam T Type of `Vector.` Must be addable and multipliable.
+		@tparam N Size of the `Vector`
+		*/
+		template<typename T, Size N>
+		Vector<T, N> lerp(const Vector<T, N>& start, const Vector<T, N>& end, const T prog) {
+			if (prog <= 0.0f) {
+				return start;
+			} else if (prog >= 1.0f) {
+				return end;
+			}
+			return (start * (T(1) - prog)) + (end * prog);
+		}
 	}//Vector
 
 }//mc

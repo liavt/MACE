@@ -316,7 +316,7 @@ namespace mc {
 		}
 
 		EaseComponent::EaseComponent(const long long ms, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction, const EaseDoneCallback doneCallback)
-			: Component(), startTime(std::chrono::steady_clock::now()),
+			: Component(),
 			b(startingProgress), c(destination), duration(std::chrono::milliseconds(ms) / std::chrono::seconds(1)),
 			updateCallback(callback), ease(easeFunction), done(doneCallback) {}
 
@@ -329,7 +329,9 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void EaseComponent::init() {}
+		void EaseComponent::init() {
+			startTime = std::chrono::steady_clock::now();
+		}
 
 		bool EaseComponent::update() {
 			const float progress = std::min(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startTime) / duration, 1.0f);
@@ -650,6 +652,115 @@ namespace mc {
 			} else if (parent->getZ() + parent->getDepth() > boundsZ.y()) {
 				parent->setZ(boundsZ.y() - parent->getDepth());
 				callback(parent, this);
+			}
+		}
+
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction, const EaseDoneCallback done) : TweenComponent(en, en->getTransformation(), dest, ms, easeFunction, done) {}
+
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction, const EaseDoneCallback done) : entity(en), EaseComponent(ms, 0.0f, 1.0f, [start, dest, en](Entity* easeCom, float prog) {
+			TransformMatrix current = TransformMatrix();
+			current.translation = math::lerp(start.translation, dest.translation, prog);
+			current.rotation = math::lerp(start.rotation, dest.rotation, prog);
+			current.scaler = math::lerp(start.scaler, dest.scaler, prog);
+			en->setTransformation(current);
+		}, easeFunction, done) {}
+
+		Entity * const TweenComponent::getEntity() {
+			return entity;
+		}
+
+		const Entity * const TweenComponent::getEntity() const {
+			return entity;
+		}
+
+		bool TweenComponent::operator==(const TweenComponent & other) const {
+			return EaseComponent::operator==(other) && entity == other.entity;
+		}
+
+		bool TweenComponent::operator!=(const TweenComponent & other) const {
+			return !operator==(other);
+		}
+
+		ComponentQueue::ComponentQueue(std::queue<std::shared_ptr<Component>> com) :components(com) {}
+
+		ComponentQueue::ComponentQueue() : ComponentQueue(std::queue<std::shared_ptr<Component>>()) {}
+
+		void ComponentQueue::addComponent(Component & com) {
+			addComponent(&com);
+		}
+
+		void ComponentQueue::addComponent(Component * com) {
+			addComponent(std::shared_ptr<Component>(com, [](Component*) {}));
+		}
+
+		void ComponentQueue::addComponent(std::shared_ptr<Component> com) {
+			components.push(com);
+		}
+
+		std::queue<std::shared_ptr<Component>>& ComponentQueue::getComponents() {
+			return components;
+		}
+
+		const std::queue<std::shared_ptr<Component>>& ComponentQueue::getComponents() const {
+			return components;
+		}
+
+		void ComponentQueue::setComponents(const std::queue<std::shared_ptr<Component>>& other) {
+			components = other;
+		}
+
+		bool ComponentQueue::operator==(const ComponentQueue & other) const {
+			return Component::operator==(other) && components == other.components;
+		}
+
+		bool ComponentQueue::operator!=(const ComponentQueue & other) const {
+			return !operator==(other);
+		}
+
+		void ComponentQueue::init() {
+			if (!components.empty()) {
+				components.front()->init();
+			}
+		}
+
+		bool ComponentQueue::update() {
+			if (components.empty()) {
+				return true;
+			}
+
+			const bool result = components.front()->update();
+			if (result) {
+				components.pop();
+
+				if (components.empty()) {
+					return true;
+				}
+
+				components.front()->init();
+
+				update();
+			}
+
+			return false;
+		}
+
+		void ComponentQueue::render() {
+			if (!components.empty()) {
+				components.front()->render();
+			}
+		}
+
+		void ComponentQueue::destroy() {}
+
+		void ComponentQueue::hover() {
+			if (!components.empty()) {
+				components.front()->hover();
+			}
+		}
+
+		void ComponentQueue::clean() {
+			if (!components.empty()) {
+				components.front()->clean();
 			}
 		}
 	}//gfx
