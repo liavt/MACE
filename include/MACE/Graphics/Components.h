@@ -21,6 +21,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace gfx {
+		class TexturedEntity2D;
+
 		enum class VerticalAlign: Byte {
 			TOP,
 			CENTER,
@@ -94,25 +96,6 @@ namespace mc {
 #endif
 		}
 
-		class Texturable {
-		public:
-			virtual ~Texturable() = default;
-
-			/**
-			@dirty
-			*/
-			virtual void setTexture(const Texture& tex) = 0;
-			/**
-			@copydoc Texturable::getTexture() const
-			@dirty
-			*/
-			virtual Texture& getTexture() = 0;
-			/**
-
-			*/
-			virtual const Texture& getTexture() const = 0;
-		};
-
 		class Progressable {
 		public:
 			virtual ~Progressable() = default;
@@ -129,11 +112,11 @@ namespace mc {
 			void addProgress(const float prog);
 			void removeProgress(const float prog);
 
-			virtual float& getMinimum() = 0;
-			virtual const float& getMinimum() const = 0;
+			virtual float getMinimum() = 0;
+			virtual const float getMinimum() const = 0;
 
-			virtual float& getMaximum() = 0;
-			virtual const float& getMaximum() const = 0;
+			virtual float getMaximum() = 0;
+			virtual const float getMaximum() const = 0;
 		};
 
 		class ComponentQueue: public Component {
@@ -187,12 +170,40 @@ namespace mc {
 			HorizontalAlign horzAlign;
 		};
 
-		class EaseComponent: public Component {
+		struct EaseSettings {
 		public:
 			using EaseDoneCallback = std::function<void(Entity*)>;
+
+			EaseDoneCallback done = [](Entity*) {};
+			EaseFunction ease = EaseFunctions::SINUSOIDAL_OUT;
+			long long ms = 1000;
+			/**
+			How many times the Ease will repeat.
+			Set to -1 to repeat infinitely.
+			*/
+			signed long repeats = 1;
+			bool reverseOnRepeat = false;
+
+			bool operator==(const EaseSettings& other) const;
+			bool operator!=(const EaseSettings& other) const;
+		};
+
+		class EaseComponent: public Component, public Progressable {
+		public:
 			using EaseUpdateCallback = std::function<void(Entity*, float)>;
 
-			EaseComponent(const long long ms, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+			EaseComponent(const EaseUpdateCallback callback, const EaseSettings settings = EaseSettings(), const float start = 0.0f, const float dest = 1.0f);
+
+			void setProgress(const float prog) override;
+
+			float& getProgress() override;
+			const float& getProgress() const override;
+
+			float getMinimum() override;
+			const float getMinimum() const override;
+
+			float getMaximum() override;
+			const float getMaximum() const override;
 
 			bool operator==(const EaseComponent& other) const;
 			bool operator!=(const EaseComponent& other) const;
@@ -202,19 +213,21 @@ namespace mc {
 			void render() override;
 			void destroy() override;
 		private:
+			const EaseSettings settings;
+
 			std::chrono::time_point<std::chrono::steady_clock> startTime;
-			const float b;
-			const float c;
-			const std::chrono::duration<float> duration;
+			float progress;
+			signed long currentRepetition;
+			std::chrono::duration<float> duration;
 			const EaseUpdateCallback updateCallback;
-			const EaseFunction ease;
-			const EaseDoneCallback done;
+			const float startingProgress;
+			const float destination;
 		};
 
 		class TweenComponent: public EaseComponent {
 		public:
-			TweenComponent(Entity* const en, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
-			TweenComponent(Entity* const en, const TransformMatrix start, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction = EaseFunctions::SINUSOIDAL_OUT, const EaseDoneCallback done = [](Entity*) {});
+			TweenComponent(Entity* const en, const TransformMatrix dest, const EaseSettings settings);
+			TweenComponent(Entity* const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings);
 
 			Entity* const getEntity();
 			const Entity* const getEntity() const;
@@ -432,20 +445,34 @@ namespace mc {
 			BoundsReachedCallback callback;
 		};
 
-		class AnimationComponent: public Component, public Texturable {
+		class TextureFramesComponent: public Component,public Progressable {
 		public:
-			using AnimationFrameCallback = std::function<void(Texture&, Entity*, AnimationComponent*)>;
+			using FrameCallback = std::function<void(const Texture&, Entity*, TextureFramesComponent*)>;
 
-			AnimationComponent(const Texture& tex);
+			TextureFramesComponent(const std::vector<Texture>& tex, const FrameCallback callback);
 
-			void setTexture(const Texture& tex) override;
-			Texture& getTexture() override;
-			const Texture& getTexture() const override;
+			void setProgress(const float prog) override;
 
-			bool operator==(const AnimationComponent& other) const;
-			bool operator!=(const AnimationComponent& other) const;
+			float& getProgress() override;
+			const float& getProgress() const override;
+
+			float getMinimum() override;
+			const float getMinimum() const override;
+
+			float getMaximum() override;
+			const float getMaximum() const override;
+
+			bool operator==(const TextureFramesComponent& other) const;
+			bool operator!=(const TextureFramesComponent& other) const;
 		private:
-			Texture texture;
+			void init() final;
+			bool update() final;
+
+			const FrameCallback callback;
+			
+			float progress;
+
+			const std::vector<Texture> frames;
 		};
 	}//gfx
 }//mc

@@ -29,6 +29,7 @@ namespace mc {
 		class Renderer;
 		class GraphicsEntity;
 		class PainterImpl;
+		struct EaseSettings;
 
 		struct RendererEntry {
 			GraphicsEntity* entity;
@@ -381,6 +382,30 @@ namespace mc {
 			*/
 			Painter& getPainter();
 			const Painter& getPainter() const;
+
+			/**
+			Tween this `GraphicsEntity`'s transformation
+
+			@dirty
+			@param start The start of the tween
+			@param dest The destination of the tween
+			@param settings What easing settings to use during the tween
+			@see `TweenComponent`
+			*/
+			//Function overloading would require the EaseSettings constructor, which means we have to include the entire header instead of forward declaring.
+			void tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings);
+			/**
+			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			*/
+			void tween(const TransformMatrix start, const TransformMatrix dest);
+			/**
+			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			*/
+			void tween(const TransformMatrix dest, const EaseSettings settings);
+			/**
+			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			*/
+			void tween(const TransformMatrix dest);
 
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;

@@ -46,7 +46,7 @@ namespace mc {
 		enum class ImageFormat: Byte {
 			//each enum is equal to how many components in that type of image
 			//the image load/save functions use swizzle masks to differentiate
-			//between GRAY and R, GRAY_ALPHA and RG
+			//between LUMINANCE and R, LUMINANCE_ALPHA and RG
 			LUMINANCE = 1,
 			LUMINANCE_ALPHA = 2,
 			INTENSITY = 1,

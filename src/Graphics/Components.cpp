@@ -9,14 +9,13 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #define MACE__COMPONENTS_EXPOSE_MAKE_EASE_FUNCTION//this macro exposes the MACE__MAKE_EASE_FUNCTION macro
 #include <MACE/Graphics/Components.h>
-#include <cmath>
-
+#include <MACE/Graphics/Entity2D.h>
 #include <iostream>
 
 namespace mc {
 	namespace gfx {
 		namespace EaseFunctions {
-			//these fucntions are derived from https://github.com/jesusgollonet/ofpennereasing . Thank you!
+			//these functions are derived from https://github.com/jesusgollonet/ofpennereasing . Thank you!
 
 
 			/*See Components.h for MACE__MAKE_EASE_FUNCTION definition and explanation*/
@@ -30,13 +29,13 @@ namespace mc {
 				return c * (postFix)*t*((s + 1)*t - s) + b;
 			}
 
-			//shameless resturant promotion
 			MACE__MAKE_EASE_FUNCTION(BACK_OUT) {
 				const float s = 1.70158f;
 				t /= d;
 				return c * ((t - 1)*t*((s + 1)*t + s) + 1) + b;
 			}
 
+			//shameless resturant promotion
 			MACE__MAKE_EASE_FUNCTION(BACK_IN_OUT) {
 				const float s = 2.5949095f;
 				if ((t /= d / 2) < 1) return c / 2 * (t*t*((s + 1)*t - s)) + b;
@@ -221,15 +220,15 @@ namespace mc {
 				return c / 2 * (t*t*t*t*t + 2) + b;
 			}
 
-			MACE__MAKE_EASE_FUNCTION(SINUSODIAL_IN) {
+			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN) {
 				return -c * std::cos(t / d * (static_cast<float>(math::pi()) / 2)) + c + b;
 			}
 
-			MACE__MAKE_EASE_FUNCTION(SINUSODIAL_OUT) {
+			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_OUT) {
 				return c * std::sin(t / d * (static_cast<float>(math::pi()) / 2)) + b;
 			}
 
-			MACE__MAKE_EASE_FUNCTION(SINUSODIAL_IN_OUT) {
+			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN_OUT) {
 				return -c / 2 * (std::cos(static_cast<float>(math::pi())*t / d) - 1) + b;
 			}
 		}
@@ -315,14 +314,43 @@ namespace mc {
 			}
 		}
 
-		EaseComponent::EaseComponent(const long long ms, const float startingProgress, const float destination, const EaseUpdateCallback callback, const EaseFunction easeFunction, const EaseDoneCallback doneCallback)
-			: Component(),
-			b(startingProgress), c(destination), duration(std::chrono::milliseconds(ms) / std::chrono::seconds(1)),
-			updateCallback(callback), ease(easeFunction), done(doneCallback) {}
+		EaseComponent::EaseComponent(const EaseUpdateCallback callback, const EaseSettings easeSettings, const float start, const float dest)
+			: Component(), settings(easeSettings)
+			, duration(std::chrono::milliseconds(easeSettings.ms) / std::chrono::seconds(1)),
+			updateCallback(callback), startingProgress(start), destination(dest), progress(start), currentRepetition(0) {}
+
+		void EaseComponent::setProgress(const float prog) {
+			progress = prog;
+			//b(startingProgress), c(destination)
+		}
+
+		float & EaseComponent::getProgress() {
+			return progress;
+		}
+
+		const float & EaseComponent::getProgress() const {
+			return progress;
+		}
+
+		float EaseComponent::getMinimum() {
+			return startingProgress;
+		}
+
+		const float EaseComponent::getMinimum() const {
+			return startingProgress;
+		}
+
+		float EaseComponent::getMaximum() {
+			return destination;
+		}
+
+		const float EaseComponent::getMaximum() const {
+			return destination;
+		}
 
 		bool EaseComponent::operator==(const EaseComponent & other) const {
 			return Component::operator==(other)
-				&& startTime == other.startTime && b == other.b && c == other.c && duration == other.duration;
+				&& startTime == other.startTime && currentRepetition == other.currentRepetition && startingProgress == other.startingProgress && destination == other.destination && duration == other.duration && progress == other.progress && settings == other.settings;
 		}
 
 		bool EaseComponent::operator!=(const EaseComponent & other) const {
@@ -331,22 +359,37 @@ namespace mc {
 
 		void EaseComponent::init() {
 			startTime = std::chrono::steady_clock::now();
+			progress = startingProgress;
 		}
 
 		bool EaseComponent::update() {
-			const float progress = std::min(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startTime) / duration, 1.0f);
-
 			//there is a chance that elapsed will be higher than duration, so std::min fixes that
-			updateCallback(parent, ease(progress, b, c - b, 1.0f));
+			progress = std::min(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startTime) / duration, 1.0f);
+
+			if (settings.reverseOnRepeat && currentRepetition % 2) {
+				updateCallback(parent, settings.ease(progress, destination, startingProgress - destination, 1.0f));
+			} else {
+				updateCallback(parent, settings.ease(progress, startingProgress, destination - startingProgress, 1.0f));
+			}
 
 			//if progress is greater then or equal to 100%, destroy this component
-			return progress >= 1.0f;
+			if (progress >= 1.0f) {
+				++currentRepetition;
+				init();
+			}
+
+			if (settings.repeats < 0) {
+				return false;
+			}
+
+			return currentRepetition >= settings.repeats;
 		}
 
 		void EaseComponent::render() {}
 
 		void EaseComponent::destroy() {
-			done(parent);
+			progress = destination;
+			settings.done(parent);
 		}
 
 		void CallbackComponent::init() {
@@ -529,25 +572,51 @@ namespace mc {
 
 		void FPSComponent::destroy() {}
 
-		AnimationComponent::AnimationComponent(const Texture & tex) : texture(tex) {}
+		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture>& tex, const FrameCallback call) : frames(tex), callback(call), progress(0) {}
 
-		void AnimationComponent::setTexture(const Texture & tex) {
-			texture = tex;
+		void TextureFramesComponent::setProgress(const float prog) {
+			this->progress = prog;
 		}
 
-		Texture & AnimationComponent::getTexture() {
-			return texture;
+		float & TextureFramesComponent::getProgress() {
+			return progress;
 		}
 
-		const Texture & AnimationComponent::getTexture() const {
-			return texture;
+		const float & TextureFramesComponent::getProgress() const {
+			return progress;
 		}
 
-		bool AnimationComponent::operator==(const AnimationComponent & other) const {
-			return Component::operator==(other) && texture == other.texture;
+		float TextureFramesComponent::getMinimum() {
+			return 0;
 		}
 
-		bool AnimationComponent::operator!=(const AnimationComponent & other) const {
+		const float TextureFramesComponent::getMinimum() const {
+			return 0;
+		}
+
+		float TextureFramesComponent::getMaximum() {
+			return static_cast<float>(frames.size());
+		}
+
+		const float TextureFramesComponent::getMaximum() const {
+			return static_cast<float>(frames.size());
+		}
+
+		void TextureFramesComponent::init() {
+			progress = 0;
+		}
+
+		bool TextureFramesComponent::update() {
+			callback(frames.at(math::clamp(static_cast<Index>(math::floor(progress)), Index(0), frames.size() - 1)), parent, this);
+
+			return false;
+		}
+
+		bool TextureFramesComponent::operator==(const TextureFramesComponent & other) const {
+			return Component::operator==(other) && frames == other.frames && progress == other.progress;
+		}
+
+		bool TextureFramesComponent::operator!=(const TextureFramesComponent & other) const {
 			return !operator==(other);
 		}
 
@@ -655,15 +724,15 @@ namespace mc {
 			}
 		}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction, const EaseDoneCallback done) : TweenComponent(en, en->getTransformation(), dest, ms, easeFunction, done) {}
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const EaseSettings settings) : TweenComponent(en, en->getTransformation(), dest, settings) {}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const long long ms, const EaseFunction easeFunction, const EaseDoneCallback done) : entity(en), EaseComponent(ms, 0.0f, 1.0f, [start, dest, en](Entity* easeCom, float prog) {
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : entity(en), EaseComponent([start, dest, en](Entity* easeCom, float prog) {
 			TransformMatrix current = TransformMatrix();
 			current.translation = math::lerp(start.translation, dest.translation, prog);
 			current.rotation = math::lerp(start.rotation, dest.rotation, prog);
 			current.scaler = math::lerp(start.scaler, dest.scaler, prog);
 			en->setTransformation(current);
-		}, easeFunction, done) {}
+		}, settings) {}
 
 		Entity * const TweenComponent::getEntity() {
 			return entity;
@@ -763,5 +832,13 @@ namespace mc {
 				components.front()->clean();
 			}
 		}
-	}//gfx
+
+		bool EaseSettings::operator==(const EaseSettings & other) const {
+			return ms == other.ms && repeats == other.repeats;
+		}
+
+		bool EaseSettings::operator!=(const EaseSettings & other) const {
+			return !operator==(other);
+		}
+}//gfx
 }//mc

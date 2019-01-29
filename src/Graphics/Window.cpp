@@ -352,6 +352,8 @@ namespace mc {
 							context->render();
 
 							if (!instance->isRunning()) {
+								//pressing the X button on a window sends a SIGABRT which throws an error later
+								os::clearError(__LINE__, __FILE__);
 								break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 							}
 

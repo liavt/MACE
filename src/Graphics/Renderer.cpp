@@ -661,6 +661,22 @@ namespace mc {
 			return painter;
 		}
 
+		void GraphicsEntity::tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) {
+			addComponent(std::shared_ptr<Component>(new TweenComponent(this, start, dest, settings)));
+		}
+
+		void GraphicsEntity::tween(const TransformMatrix start, const TransformMatrix dest) {
+			tween(start, dest, EaseSettings());
+		}
+
+		void GraphicsEntity::tween(const TransformMatrix dest, const EaseSettings settings) {
+			tween(getTransformation(), dest, settings);
+		}
+
+		void GraphicsEntity::tween(const TransformMatrix dest) {
+			tween(dest, EaseSettings());
+		}
+
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
 			return painter == other.painter&&Entity::operator==(other);
 		}

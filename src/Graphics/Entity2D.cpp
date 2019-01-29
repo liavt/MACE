@@ -214,13 +214,11 @@ namespace mc {
 			}
 		}
 
-		float & ProgressBar::getMinimum() {
-			makeDirty();
-
+		float ProgressBar::getMinimum() {
 			return minimumProgress;
 		}
 
-		const float & ProgressBar::getMinimum() const {
+		const float ProgressBar::getMinimum() const {
 			return minimumProgress;
 		}
 
@@ -232,13 +230,11 @@ namespace mc {
 			}
 		}
 
-		float & ProgressBar::getMaximum() {
-			makeDirty();
-
+		float ProgressBar::getMaximum() {
 			return maximumProgress;
 		}
 
-		const float & ProgressBar::getMaximum() const {
+		const float ProgressBar::getMaximum() const {
 			return maximumProgress;
 		}
 
@@ -260,8 +256,8 @@ namespace mc {
 			return progress;
 		}
 
-		void ProgressBar::easeTo(const float destination, const long long ms, const EaseFunction func, const EaseComponent::EaseDoneCallback callback) {
-			addComponent(std::shared_ptr<Component>(new EaseComponent(ms, getProgress(), destination, [](Entity* e, float progress) {
+		void ProgressBar::easeTo(const float destination, const EaseSettings settings) {
+			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity* e, float progress) {
 				Progressable* prog = dynamic_cast<Progressable*>(e);
 
 #ifdef MACE_DEBUG
@@ -271,7 +267,7 @@ namespace mc {
 #endif
 
 				prog->setProgress(progress);
-			}, func, callback)));
+			}, settings, getProgress(), destination)));
 		}
 
 		bool ProgressBar::operator==(const ProgressBar & other) const {
@@ -576,7 +572,7 @@ namespace mc {
 
 		Text::Text(const std::string & s, const Font & f) : Text(os::toWideString(s), f) {}
 
-		Text::Text(const std::wstring & t, const Font& f) : Entity2D(), text(t), font(f) {}
+		Text::Text(const std::wstring & t, const Font& f) : TexturedEntity2D(), text(t), font(f) {}
 
 		void Text::setText(const std::wstring & newText) {
 			if (text != newText) {

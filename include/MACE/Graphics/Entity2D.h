@@ -66,7 +66,26 @@ namespace mc {
 			void doHover();
 		};
 
-		class Image: public Entity2D, public Texturable {
+		class TexturedEntity2D: public Entity2D {
+		public:
+			virtual ~TexturedEntity2D() = default;
+
+			/**
+			@dirty
+			*/
+			virtual void setTexture(const Texture& tex) = 0;
+			/**
+			@copydoc Texturable::getTexture() const
+			@dirty
+			*/
+			virtual Texture& getTexture() = 0;
+			/**
+
+			*/
+			virtual const Texture& getTexture() const = 0;
+		};
+
+		class Image: public TexturedEntity2D {
 		public:
 			Image() noexcept;
 			Image(const Texture& col);
@@ -130,22 +149,18 @@ namespace mc {
 			@dirty
 			*/
 			void setMinimum(const float tex);
-			/**
-			@dirty
-			*/
-			float& getMinimum() override;
-			const float& getMinimum() const override;
+
+			float getMinimum() override;
+			const float getMinimum() const override;
 
 
 			/**
 			@dirty
 			*/
 			void setMaximum(const float tex);
-			/**
-			@dirty
-			*/
-			float& getMaximum() override;
-			const float& getMaximum() const override;
+
+			float getMaximum() override;
+			const float getMaximum() const override;
 
 
 			/**
@@ -159,7 +174,7 @@ namespace mc {
 			float& getProgress() override;
 			const float& getProgress() const override;
 
-			void easeTo(const float progress, const long long ms, const EaseFunction func = EaseFunctions::LINEAR, const EaseComponent::EaseDoneCallback callback = [](Entity*) {});
+			void easeTo(const float progress, const EaseSettings settings);
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;
@@ -285,7 +300,7 @@ namespace mc {
 		/**
 		@bug newline with vertical align doesnt really work
 		*/
-		class Text: public Entity2D, public Texturable {
+		class Text: public TexturedEntity2D {
 		public:
 			Text(const std::string& t, const Font& f = Font());
 			Text(const std::wstring& t = L"", const Font& f = Font());
@@ -350,7 +365,7 @@ namespace mc {
 			Texture texture;
 		};//Text
 
-		class Button: public Entity2D, public Selectable, public Texturable {
+		class Button: public TexturedEntity2D, public Selectable {
 		public:
 			void setTexture(const Texture& c) override;
 			const Texture& getTexture() const override;

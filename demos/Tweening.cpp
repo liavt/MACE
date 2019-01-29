@@ -28,24 +28,41 @@ void create(gfx::WindowModule& win) {
 	dest1.translation = { 0.5f, 0.5f, 0.0f };
 	dest1.rotation = { 0.0f, 0.0f, 0.5f };
 
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, 1000LL, gfx::EaseFunctions::BOUNCE_OUT)));
+	gfx::EaseSettings settings = gfx::EaseSettings();
+	settings.ms = 1000;
+	settings.ease = gfx::EaseFunctions::BOUNCE_OUT;
+	settings.repeats = 1;
+	settings.reverseOnRepeat = false;
+	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, settings)));
 
 	TransformMatrix dest2 = TransformMatrix(dest1);
 	dest2.scaler = { 0.5f, 0.5f, 0.0f };
 	dest2.translation = { 0.5f, -0.5f, 0.0f };
 	dest2.rotation = { 0.0f, 0.0f, 1.5f };
 
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, dest2, 1500LL, gfx::EaseFunctions::QUADRATIC_IN)));
+	settings.ms = 1500;
+	settings.ease = gfx::EaseFunctions::QUADRATIC_IN;
+	settings.repeats = 3;
+	settings.reverseOnRepeat = true;
+	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, dest2, settings)));
 
 	TransformMatrix dest3 = TransformMatrix(dest2);
 	dest3.scaler = { 0.05f, 0.05f, 0.0f };
 	dest3.translation = { -0.5f, -0.5f, 0.0f };
 	dest3.rotation = { 0.0f, 0.0f, 6.0f };
 
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest2, dest3, 2000LL, gfx::EaseFunctions::LINEAR)));
+	settings.ms = 2000;
+	settings.ease = gfx::EaseFunctions::LINEAR;
+	settings.repeats = 1;
+	settings.reverseOnRepeat = false;
+	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest2, dest3, settings)));
 
 	//have it end up at the same place
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest3, square.getTransformation(), 2000LL, gfx::EaseFunctions::ELASTIC_IN)));
+	settings.ms = 2000;
+	settings.ease = gfx::EaseFunctions::ELASTIC_IN;
+	settings.repeats = 3;
+	settings.reverseOnRepeat = false;
+	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest3, square.getTransformation(), settings)));
 
 	square.addComponent(queue);
 
