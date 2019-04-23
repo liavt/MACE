@@ -47,21 +47,21 @@ namespace mc {
 	safer versions of many std functions.
 	*/
 	namespace os {
-		std::tm* localtime(std::tm* result, const std::time_t* time);
-		std::tm* gmtime(std::tm* result, const std::time_t* time);
-		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time);
-		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time);
+		std::tm* localtime(std::tm* result, const std::time_t* time) MACE_EXPECTS(result != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
+		std::tm* gmtime(std::tm* result, const std::time_t* time) MACE_EXPECTS(result != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
+		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) MACE_EXPECTS(buffer != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
+		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) MACE_EXPECTS(buffer != nullptr  && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
 
-		FILE* fopen(FILE** result, const char* filename, const char* mode);
+		FILE* fopen(FILE** result, const char* filename, const char* mode) MACE_EXPECTS(result != nullptr && filename != nullptr && mode != nullptr) MACE_ENSURES(ret, ret != nullptr);
 
-		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate);
-		std::size_t wcstombs(std::size_t* returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, const std::size_t length);
+		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate) MACE_EXPECTS(returnValue != nullptr && wcstr != nullptr && mbstr != nullptr && mbstate != nullptr);
+		std::size_t wcstombs(std::size_t* returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, const std::size_t length) MACE_EXPECTS(returnValue != nullptr && dst != nullptr && src != nullptr);
 
 		//the reason it is called assertion and not assert is because on some platforms, assert is a macro and that conflicts with the function declaration
-		void assertion(const bool cond, const std::string& message);
-		void assertion(const bool cond, const char* message = "Assertion failed");
+		void assertion(const bool cond, const std::string& message) MACE_EXPECTS(!message.empty());
+		void assertion(const bool cond, const char* message = "Assertion failed") MACE_EXPECTS(message != nullptr);
 
-		void wait(const long long int ms);
+		void wait(const unsigned long long int ms);
 
 		std::wstring toWideString(const std::string& s);
 		std::string toNarrowString(const std::wstring& s);
@@ -71,10 +71,10 @@ namespace mc {
 			return N;
 		}
 
-		const char* strerror(char* buf, std::size_t bufsize, int errnum);
+		const char* strerror(char* buf, std::size_t bufsize, int errnum) MACE_EXPECTS(buf != nullptr);
 
-		void clearError(const int lineNumber = 0, const char* filename = "Unknown file");
-		void checkError(const int lineNumber = 0, const char* filename = "Unknown file", const std::string message = "Unknown message");
+		void clearError(const unsigned int lineNumber = 0, const char* filename = "Unknown file") MACE_EXPECTS(filename != nullptr);
+		void checkError(const unsigned int lineNumber = 0, const char* filename = "Unknown file", const std::string message = "Unknown message") MACE_EXPECTS(filename != nullptr && !message.empty());
 
 		void pause();
 
@@ -101,7 +101,7 @@ namespace mc {
 		/**
 		@bug Background doesn't work on windows
 		*/
-		std::string consoleColor(const ConsoleColor& foreground = ConsoleColor::DEFAULT, const ConsoleColor& background = ConsoleColor::DEFAULT);
+		MACE_NODISCARD std::string consoleColor(const ConsoleColor& foreground = ConsoleColor::DEFAULT, const ConsoleColor& background = ConsoleColor::DEFAULT);
 	}//os
 }//mc
 

@@ -82,8 +82,8 @@ namespace mc {
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
-		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>()//extending default construtor so it initializes the array
-		{
+		//extending default construtor so it initializes the array
+		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>(){
 			MACE_STATIC_ASSERT(W != 0, "A Matrix's width must be greater than 0!");
 			MACE_STATIC_ASSERT(H != 0, "A Matrix's height must be greater than 0!");
 			for (Index i = 0; i < W; ++i) {
@@ -113,15 +113,15 @@ namespace mc {
 		@param args What to create this `Matrix` with
 		@throws IndexOutOfBoundsException If the amount of arguments provided is not the same size as the `Matrix`
 		*/
-		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix()//this is for aggregate initializaition
-		{
-			if (args.size() != W) {
+		//this is for aggregate initializaition
+		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix() MACE_EXPECTS(args.size() == W) {
+			MACE_IF_CONSTEXPR (args.size() != W) {
 				MACE__THROW(OutOfBounds, "The width of the argument must be equal to to the height of the Matrix!");
 			}
 
 			Index counterX = 0, counterY = 0;
 			for (const std::initializer_list<T>& elemX : args) {
-				if (elemX.size() != H) {
+				MACE_IF_CONSTEXPR (elemX.size() != H) {
 					MACE__THROW(OutOfBounds, "The height of the argument must be equal to to the height of the Matrix!");
 				}
 
@@ -179,10 +179,10 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		T& get(const Index x, const Index y) {
-			if (x >= W) {
+		T& get(const Index x, const Index y) MACE_EXPECTS(x < W && y < H){
+			MACE_IF_CONSTEXPR (x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else if (y >= H) {
+			} else MACE_IF_CONSTEXPR (y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -199,10 +199,10 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		const T& get(const Index x, const Index y) const {
-			if (x >= W) {
+		const T& get(const Index x, const Index y) const MACE_EXPECTS(x < W&& y < H) {
+			MACE_IF_CONSTEXPR (x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else if (y >= H) {
+			} else MACE_IF_CONSTEXPR (y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -219,10 +219,10 @@ namespace mc {
 		@see #operator[]
 		@see #get(Index, Index)
 		*/
-		void set(const Index x, const Index y, const T& value) {
-			if (x >= W) {
+		void set(const Index x, const Index y, const T& value) MACE_EXPECTS(x < W&& y < H) {
+			MACE_IF_CONSTEXPR (x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else if (y >= H) {
+			} else MACE_IF_CONSTEXPR (y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -270,10 +270,10 @@ namespace mc {
 		@see set(Index, Index,T)
 		@see get(Index,Index)
 		*/
-		virtual T& operator()(const Index x, const Index y) {
-			if (x <= 0) {
+		virtual T& operator()(const Index x, const Index y) MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
+			MACE_IF_CONSTEXPR(x <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
-			} else if (y <= 0) {
+			} else MACE_IF_CONSTEXPR (y <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
 			}
 
@@ -288,10 +288,10 @@ namespace mc {
 		@see set(Index, Index,T)
 		@see get(Index,Index)
 		*/
-		const T& operator()(const Index x, const Index y) const {
-			if (x <= 0) {
+		const T& operator()(const Index x, const Index y) const MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
+			MACE_IF_CONSTEXPR (x <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
-			} else if (y <= 0) {
+			} else MACE_IF_CONSTEXPR(y <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
 			}
 
@@ -586,7 +586,7 @@ namespace mc {
 					counterY = 0;
 				}
 				T tempSum = ((counter % 2 == 0 ? -1 : 1) * matrix[i][0]);
-				if (newMatrixSize == 2) {
+				MACE_IF_CONSTEXPR (newMatrixSize == 2) {
 					tempSum *= det<T>(matrix);
 				} else {
 					tempSum *= det<T, N>(matrix);

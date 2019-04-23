@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Serial.h>
 #include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
+#include <MACE/Utility/Math.h>
 
 #ifdef MACE_WINAPI
 #	define WIN32_LEAN_AND_MEAN
@@ -27,13 +28,13 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace os {
-		Serial::Serial() {}
+		Serial::Serial() : serial(nullptr) {}
 
-		Serial::Serial(const char * port, const Size baudRate) : Serial() {
+		Serial::Serial(const char * port, const unsigned int baudRate) : Serial() {
 			init(port, baudRate);
 		}
 
-		Serial::Serial(const std::string & port, const Size baudRate) : Serial(port.c_str(), baudRate) {}
+		Serial::Serial(const std::string & port, const unsigned int baudRate) : Serial(port.c_str(), baudRate) {}
 
 		Serial::~Serial() {
 			if (isConnected()) {
@@ -41,7 +42,7 @@ namespace mc {
 			}
 		}
 
-		void Serial::init(const char * port, const Size baudRate) {
+		void Serial::init(const char * port, const unsigned int baudRate) {
 			os::clearError();
 
 			if (isConnected()) {
@@ -170,7 +171,7 @@ namespace mc {
 
 		}
 
-		int Serial::read(char * buffer, Size bufferSize) {
+		int Serial::read(char * buffer, unsigned int bufferSize) {
 			os::clearError();
 
 			if (!isConnected()) {
@@ -182,10 +183,10 @@ namespace mc {
 				MACE__THROW(FileNotFound, "Socket closed. Please recall init()");
 			}
 
-			const Size available = getAvailableCharacterAmount();
+			const unsigned int available = getAvailableCharacterAmount();
 
 			//dont want to overflow the buffer
-			Size toRead = available > bufferSize ? bufferSize : available;
+			unsigned int toRead = math::min(bufferSize, available);
 
 			if (toRead == 0) {
 				return 0;
@@ -214,7 +215,7 @@ namespace mc {
 #endif
 		}
 
-		void Serial::write(const char * buffer, const Size bufferSize) {
+		void Serial::write(const char * buffer, const unsigned int bufferSize) {
 			os::clearError();
 
 			if (!isConnected()) {
@@ -253,7 +254,7 @@ namespace mc {
 		}
 
 		void Serial::write(const std::string & port) {
-			this->write(port.c_str(), static_cast<Size>(port.size()));
+			this->write(port.c_str(), static_cast<unsigned int>(port.size()));
 		}
 
 		void Serial::flush() {
@@ -278,7 +279,7 @@ namespace mc {
 			os::checkError(__LINE__, __FILE__, "Failed to flush serial buffer");
 		}
 
-		Size Serial::getAvailableCharacterAmount() const {
+		unsigned int Serial::getAvailableCharacterAmount() const {
 			os::clearError();
 
 			if (!isConnected()) {

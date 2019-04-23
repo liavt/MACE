@@ -48,7 +48,7 @@ namespace mc {
 		}
 #endif
 	private:
-		bool created = false;
+		bool created;
 
 		void* dll;
 		};//DynamicLibrary

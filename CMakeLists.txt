@@ -66,28 +66,27 @@ list(GET MACE_VERSION_COMPONENTS 0 MACE_VERSION_MAJOR)
 list(GET MACE_VERSION_COMPONENTS 1 MACE_VERSION_MINOR)
 list(GET MACE_VERSION_COMPONENTS 2 MACE_VERSION_PATCH)
 
-set(GLFW_SOURCE_VERSION "3.2.1")
+set(GLFW_SOURCE_VERSION "3.3")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")
 
-set(OPENAL_SOURCE_VERSION "1.18.0")
+set(OPENAL_SOURCE_VERSION "1.19.1")
 set(OPENAL_SOURCE_NAME "openal-soft-openal-soft-${OPENAL_SOURCE_VERSION}")
 set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_SOURCE_VERSION}.tar.gz")
 
-set(GLEW_SOURCE_VERSION "2.0.0")
+set(GLEW_SOURCE_VERSION "2.1.0")
 set(GLEW_SOURCE_NAME "glew-${GLEW_SOURCE_VERSION}")
 set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz/download")
 
-set(FREETYPE_SOURCE_VERSION "2.8")
+set(FREETYPE_SOURCE_VERSION "2.10.0")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
 set(FREETYPE_URL "https://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
 
 set(MACE_OUTPUT_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
 
-set(CATCH_VERSION "2.2.3")
-set(CATCH_URL "https://github.com/catchorg/Catch2/releases/download/v${CATCH_VERSION}/catch.hpp")
-#This is where Catch should be located in
-set(CATCH_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}")
+set(CATCH_VERSION "2.7.1")
+set(CATCH_SOURCE_NAME "Catch2-${CATCH_VERSION}")
+set(CATCH_URL "https://github.com/catchorg/Catch2/archive/v${CATCH_VERSION}.tar.gz")
 
 #stb_image is a single header only image loading library.
 set(STB_IMAGE_URL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
@@ -100,16 +99,13 @@ find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
+find_package(Catch2 ${CATCH_VERSION} QUIET)
 
 #finding header-only libraries
 
 find_path(STB_IMAGE_INCLUDE_DIR "stb_image.h" HINTS "${STB_IMAGE_DOWNLOAD_PATH}" PATH_SUFFIXES stb stb_image)
 find_package_handle_standard_args(stb_image DEFAULT_MSG STB_IMAGE_INCLUDE_DIR)
 mark_as_advanced(STB_IMAGE_INCLUDE_DIR)
-
-find_path(CATCH_INCLUDE_DIR "Catch.hpp" HINTS "${CATCH_INCLUDE_DIR}" "${CATCH_DOWNLOAD_PATH}" PATH_SUFFIXES catch single_include)
-find_package_handle_standard_args(Catch DEFAULT_MSG CATCH_INCLUDE_DIR)
-mark_as_advanced(CATCH_INCLUDE_DIR)
 
 if(MACE_SWIG)
 	find_package(SWIG REQUIRED)
@@ -125,20 +121,18 @@ elseif(MACE_SWIG_LANGUAGE)
 	message(WARNING "MACE_SWIG_LANGUAGE has no effect if MACE_SWIG isnt enabled")
 endif()
 
-if(NOT stb_image_FOUND)
-	if (NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
-		if(${MACE_DOWNLOAD_DEPENDENCIES})
-			#stb_image is one header file, so its easy to fix. Just download it!
-			message(STATUS "Downloading STB_IMAGE..")
-			file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
-			message(STATUS "Done downloading STB_IMAGE.")
-		else()
-			message(FATAL_ERROR "STB_IMAGE is not  found!")
-		endif()
+if(NOT stb_image_FOUND OR NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
+	if(${MACE_DOWNLOAD_DEPENDENCIES})
+		#stb_image is one header file, so its easy to fix. Just download it!
+		message(STATUS "Downloading STB_IMAGE..")
+		file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
+		message(STATUS "Done downloading STB_IMAGE.")
 	else()
-		message(STATUS "STB_IMAGE found.")
+		message(FATAL_ERROR "STB_IMAGE is not  found!")
 	endif()
 	set(STB_IMAGE_INCLUDE_DIR ${STB_IMAGE_DOWNLOAD_PATH})
+else()
+	message(STATUS "Found STB_IMAGE at ${STB_IMAGE_INCLUDE_DIR}")
 endif()
 
 
@@ -198,19 +192,14 @@ if(MACE_SWIG)
 endif()
 
 if(${MACE_TESTS})
-	if(NOT Catch_FOUND)
-		if(NOT EXISTS ${CATCH_DOWNLOAD_PATH}/Catch.hpp)
-			if(${MACE_DOWNLOAD_DEPENDENCIES})
-				#Catch is one header file, so its easy to fix. Just download it!
-				message(STATUS "Downloading Catch..")
-				file(DOWNLOAD "${CATCH_URL}" "${CATCH_DOWNLOAD_PATH}/Catch.hpp")
-				set(CATCH_INCLUDE_DIR, "${CATCH_DOWNLOAD_PATH}/Catch.hpp")
-				message(STATUS "Done downloading Catch.")
-			else()
-				message(FATAL_ERROR "Catch is not found!")
-			endif()
+	if(NOT Catch2_FOUND)
+		if(${MACE_DOWNLOAD_DEPENDENCIES})
+			download_library(${CATCH_SOURCE_NAME} ${CATCH_URL})
+			
+			add_subdirectory(${CMAKE_BINARY_DIR}/${CATCH_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${CATCH_SOURCE_NAME})
+		else()
+			message(FATAL_ERROR "Catch2 is not found!")
 		endif()
-		set(CATCH_INCLUDE_DIR ${CATCH_DOWNLOAD_PATH})
 	endif()
 
 	file(GLOB_RECURSE TESTS_SRC "tests/*.cpp")
@@ -218,7 +207,6 @@ if(${MACE_TESTS})
 			
 	target_link_libraries(MACE-Testing LINK_PUBLIC MACE)
 	target_include_directories(MACE-Testing PUBLIC ${MACE_INCLUDES})
-	target_include_directories(MACE-Testing PUBLIC ${CATCH_INCLUDE_DIR})
 	
 	#to test runtime dll linking we compiled a source file twice: once as part as MACE-Testing and one as a shared library to test runtime linking
 	add_library(MACE-DynamicLibraryTest SHARED "tests/Utility/DynamicLibraryTest.cpp")
@@ -242,6 +230,10 @@ if(${MACE_TESTS})
 	set_target_properties(MACE-DynamicLibraryTest PROPERTIES FOLDER "MC/Tests")
 	set_target_properties(MACE-ProcessTest PROPERTIES FOLDER "MC/Tests")
 	
+	target_link_libraries(MACE-Testing LINK_PUBLIC Catch2::Catch2)
+	target_link_libraries(MACE-DynamicLibraryTest LINK_PUBLIC Catch2::Catch2)
+	target_link_libraries(MACE-ProcessTest LINK_PUBLIC Catch2::Catch2)	
+
 	enable_testing()
 	ParseAndAddCatchTests(MACE-Testing)
 endif()
@@ -265,20 +257,8 @@ endif()
 
 #COMPILER CHECKS
 
-#verify that we are using C++ 11
-check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-	message(STATUS "Found C++ 11 support in ${CMAKE_CXX_COMPILER}")
-	target_compile_options(MACE PUBLIC -std=c++11)
-else()
-	check_cxx_compiler_flag("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-	if(COMPILER_SUPPORTS_CXX0X)
-		message(STATUS "Found C++ 0X support in ${CMAKE_CXX_COMPILER}")
-		target_compile_options(MACE PUBLIC -std=c++0x)
-	else()
-		message(SEND_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no standard C++ 11 support. C++ 11 must be manually set on this compiler, or it doesn't support it.")
-	endif()
-endif()
+message("Configuring target compilation features")
+target_compile_features(MACE PRIVATE cxx_std_11 cxx_constexpr cxx_final cxx_lambdas cxx_noexcept cxx_long_long_type cxx_nullptr cxx_override cxx_range_for cxx_raw_string_literals cxx_static_assert cxx_strong_enums cxx_unicode_literals cxx_variadic_macros)
 
 if(MACE_ALL_WARNINGS)
 	if(MSVC)

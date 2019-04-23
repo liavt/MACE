@@ -7,7 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <Catch.hpp>
+#include <catch2/catch.hpp>
 #include <MACE/Core/Instance.h>
 
 namespace mc {
@@ -37,11 +37,11 @@ namespace mc {
 	TEST_CASE("Testing reset() and numberOfModules()") {
 		Instance MACE = Instance();
 
-		REQUIRE(MACE.numberOfModules() == 0);
+		REQUIRE(MACE.size() == 0);
 
 		MACE.reset();
 
-		REQUIRE(MACE.numberOfModules() == 0);
+		REQUIRE(MACE.size() == 0);
 
 		TestModule m = TestModule();
 		TestModule m1 = TestModule();
@@ -53,7 +53,7 @@ namespace mc {
 			REQUIRE(MACE.moduleExists(&m));
 			REQUIRE_FALSE(MACE.moduleExists(&m1));
 			REQUIRE_FALSE(MACE.moduleExists(&m2));
-			REQUIRE(MACE.numberOfModules() == 1);
+			REQUIRE(MACE.size() == 1);
 		}
 
 		MACE.addModule(m1);
@@ -62,7 +62,7 @@ namespace mc {
 			REQUIRE(MACE.moduleExists(&m));
 			REQUIRE(MACE.moduleExists(&m1));
 			REQUIRE_FALSE(MACE.moduleExists(&m2));
-			REQUIRE(MACE.numberOfModules() == 2);
+			REQUIRE(MACE.size() == 2);
 		}
 
 		MACE.addModule(m2);
@@ -71,13 +71,13 @@ namespace mc {
 			REQUIRE(MACE.moduleExists(&m));
 			REQUIRE(MACE.moduleExists(&m1));
 			REQUIRE(MACE.moduleExists(&m2));
-			REQUIRE(MACE.numberOfModules() == 3);
+			REQUIRE(MACE.size() == 3);
 		}
 
 		MACE.reset();
 
 		SECTION("Testing reset()") {
-			REQUIRE(MACE.numberOfModules() == 0);
+			REQUIRE(MACE.size() == 0);
 			REQUIRE_FALSE(MACE.moduleExists(&m));
 			REQUIRE_FALSE(MACE.moduleExists(&m1));
 			REQUIRE_FALSE(MACE.moduleExists(&m2));
@@ -173,7 +173,7 @@ namespace mc {
 		TestModule m = TestModule();
 
 
-		REQUIRE(MACE.numberOfModules() == 0);
+		REQUIRE(MACE.size() == 0);
 
 		MACE.addModule(m);
 

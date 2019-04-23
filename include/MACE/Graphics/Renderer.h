@@ -51,8 +51,8 @@ namespace mc {
 			friend class PainterImpl;
 			friend class Renderer;
 		public:
-			enum class Brush: Byte {
-				TEXTURE = 0, COLOR = 1, MASK = 2, BLEND = 3, MASKED_BLEND = 4,
+			enum class Brush : Byte {
+				TEXTURE = 0, COLOR = 1, /**@internal*/TEXT = 2, MASK = 3, BLEND = 4, MASKED_BLEND = 5
 			};
 
 			enum class RenderFeatures: Byte {
@@ -220,7 +220,7 @@ namespace mc {
 			return static_cast<Painter::RenderFeatures>(~static_cast<Byte>(r));
 		}
 
-		class PainterImpl: public Initializable, public Beginable {
+		class MACE_NOVTABLE PainterImpl: public Initializable, public Beginable {
 			friend class Renderer;
 			friend class Painter;
 		public:
@@ -287,10 +287,10 @@ namespace mc {
 			*/
 			void setRefreshColor(const Color& c);
 
-			Size getWidth() const;
-			Size getHeight() const;
+			int getWidth() const;
+			int getHeight() const;
 
-			Size getSamples() const;
+			unsigned int getSamples() const;
 
 			Vector<float, 2> getWindowRatios() const;
 
@@ -311,7 +311,7 @@ namespace mc {
 		protected:
 			RenderQueue renderQueue = RenderQueue();
 
-			Size samples = 1;
+			unsigned int samples = 1;
 
 			bool resized;
 
@@ -319,7 +319,7 @@ namespace mc {
 
 			GraphicsContext* context;
 
-			virtual void onResize(gfx::WindowModule* win, const Size width, const Size height) = 0;
+			virtual void onResize(gfx::WindowModule* win, const int width, const int height) = 0;
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onSetUp(gfx::WindowModule* win) = 0;
 			virtual void onTearDown(gfx::WindowModule* win) = 0;
@@ -333,7 +333,7 @@ namespace mc {
 			@internal
 			@opengl
 			*/
-			void resize(gfx::WindowModule* win, const Size width, const Size height);
+			void resize(gfx::WindowModule* win, const int width, const int height);
 
 			/**
 			@internal
@@ -371,7 +371,7 @@ namespace mc {
 			void remove(const EntityID i);
 		};//Renderer
 
-		class GraphicsEntity: public Entity {
+		class MACE_NOVTABLE GraphicsEntity: public Entity {
 		public:
 			GraphicsEntity() noexcept;
 

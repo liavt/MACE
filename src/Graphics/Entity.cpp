@@ -106,9 +106,12 @@ namespace mc {
 		void Entity::removeChild(Index index) {
 			makeDirty();
 
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (index >= children.size()) {
 				MACE__THROW(OutOfBounds, std::to_string(index) + " is larger than the amount of children!");
-			} else if (children.size() == 1) {
+			} else
+#endif
+			if (children.size() == 1) {
 				children.clear();
 			} else {
 				removeChild(children.begin() + index);
@@ -116,9 +119,11 @@ namespace mc {
 		}
 
 		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter) {
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (children.empty()) {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
 			}
+#endif
 
 			children.erase(iter);
 		}
@@ -341,7 +346,7 @@ namespace mc {
 			return *children.at(i).get();
 		}
 
-		int Entity::indexOf(const Entity & e) const {
+		Index Entity::indexOf(const Entity & e) const {
 			for (Index i = 0; i < children.size(); ++i) {
 				if (children[i].get() == &e) {
 					return i;
@@ -372,9 +377,11 @@ namespace mc {
 		}
 
 		void Entity::addChild(std::shared_ptr<Entity> e) {
+#ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
 			}
+#endif
 
 			e->setParent(this);
 
@@ -422,9 +429,11 @@ namespace mc {
 				//update the components of this entity
 				for (Index i = 0; i < components.size(); ++i) {
 					std::shared_ptr<Component> a = components.at(i);
+#ifdef MACE_DEBUG_CHECK_NULLPTR
 					if (a.get() == nullptr) {
 						MACE__THROW(NullPointer, "A component located at index " + std::to_string(i) + " was nullptr");
 					}
+#endif
 					if (a->update()) {
 						a->destroy();
 						components.erase(components.begin() + i--);//update the index after a removal, so we dont get an exception for accessing deleted memory

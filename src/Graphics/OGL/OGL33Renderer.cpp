@@ -71,7 +71,7 @@ namespace mc {
 						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_VERTICES_LOCATION, MACE__VAO_DEFAULT_VERTICES_LOCATION),
 						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_TEXTURE_COORD_LOCATION, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION),
 #include <MACE/Graphics/OGL/Shaders/Shared.glsl>
-																				});
+					});
 #undef MACE__SHADER_MACRO
 
 					if ((features & Painter::RenderFeatures::DISCARD_INVISIBLE) != Painter::RenderFeatures::NONE) {
@@ -116,7 +116,7 @@ namespace mc {
 					}
 #endif
 					sources.push_back(source);
-					s.setSource(sources.size(), sources.data(), nullptr);
+					s.setSource(static_cast<const GLsizei>(sources.size()), sources.data(), nullptr);
 					s.compile();
 					return s;
 				}
@@ -164,6 +164,21 @@ namespace mc {
 						//binding the samplers
 						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
+					}else if (settings.first == Painter::Brush::MASK) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
+						));
+
+						program.link();
+
+						program.bind();
+
+						program.createUniform("tex");
+						program.createUniform("mask");
+
+						//binding the samplers
+						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
+						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
 					} else if (settings.first == Painter::Brush::BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
@@ -195,7 +210,24 @@ namespace mc {
 						program.setUniform("tex1", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
 						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
-					} else {
+					}
+					else if (settings.first == Painter::Brush::TEXT) {
+						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
+#							include <MACE/Graphics/OGL/Shaders/Brushes/text.f.glsl>
+						));
+
+						program.link();
+
+						program.bind();
+
+						program.createUniform("tex");
+						program.createUniform("glyph");
+
+						//binding the samplers
+						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
+						program.setUniform("glyph", static_cast<int>(TextureSlot::BACKGROUND));
+					}
+					 else {
 						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 					}
 
@@ -315,7 +347,7 @@ namespace mc {
 				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
 			}
 
-			void OGL33Renderer::onResize(gfx::WindowModule*, const Size width, const Size height) {
+			void OGL33Renderer::onResize(gfx::WindowModule*, const int width, const int height) {
 				frameBuffer.destroy();
 				{
 					Object* renderBuffers[] = {
@@ -330,9 +362,9 @@ namespace mc {
 
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
-				ogl33::setViewport(0, 0, width == 0 ? 1 : width, height == 0 ? 1 : height);
+				ogl33::setViewport(0, 0, math::max(1, width), math::max(1, height));
 
-				generateFramebuffer(width == 0 ? 1 : width, height == 0 ? 1 : height);
+				generateFramebuffer(math::max(1, width), math::max(1, height));
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
 			}
@@ -574,7 +606,6 @@ namespace mc {
 				//this crazy line puts a GLuint directly into a float, as GLSL expects a uint instead of a float
 				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
 
-				//we set it to null, because during the actual rendering we set the data
 				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
 
 				entityData.setName(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));

@@ -175,7 +175,7 @@ namespace mc {
 		void assertion(const bool, const char*) {}
 #endif
 
-		void wait(const long long int ms) {
+		void wait(const unsigned long long int ms) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 		}
 
@@ -247,7 +247,7 @@ namespace mc {
 #endif
 		}
 
-		void clearError(const int, const char*) {
+		void clearError(const unsigned int, const char*) {
 #ifdef MACE_WINAPI
 			SetLastError(0);
 #elif defined(MACE_POSIX)
@@ -255,7 +255,7 @@ namespace mc {
 #endif
 		}
 
-		void checkError(const int line, const char* file, const std::string errorMessage) {
+		void checkError(const unsigned int line, const char* file, const std::string errorMessage) {
 			//POSIX man pages says to save the error before using it in case of a concurrent environment
 			const int error = errno;
 

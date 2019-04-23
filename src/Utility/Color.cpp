@@ -13,11 +13,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	namespace {
-		Byte convertFloatToRGBA(const float& color) {
+		Byte convertFloatToRGBA(const float& color) MACE_EXPECTS(color >= 0.0f && color <= 1.0f){
 			return static_cast<Byte>(color * 255.0f);
 		}
 
-		float convertRGBAToFloat(const Byte& color) {
+		float convertRGBAToFloat(const Byte& color) MACE_ENSURES(ret, ret >= 0.0f && ret <= 0.0f){
 			return color / 255.0f;
 
 		}
@@ -37,201 +37,17 @@ namespace mc {
 			INVISIBLE = Color(0, 0, 0, 0);
 	}
 
-	//AbstractColor
-
-	float * AbstractColor::end() {
-		return begin() + size();
-	}
-
-	const float * AbstractColor::end() const {
-		return begin() + size();
-	}
-
-	float & AbstractColor::getComponent(const Index i) {
-		if (i >= size()) {
-			MACE__THROW(OutOfBounds, "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
-		}
-
-		return begin()[i];
-	}
-
-	const float & AbstractColor::getComponent(const Index i) const {
-		if (i >= size()) {
-			MACE__THROW(OutOfBounds, "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
-		}
-
-		return begin()[i];
-	}
-
-	float & AbstractColor::operator[](const Index i) {
-		return begin()[i];
-	}
-
-	const float & AbstractColor::operator[](const Index i) const {
-		return begin()[i];
-	}
-
-	//AlphaColor
-
-	AlphaColor::AlphaColor(const float alp) : a(alp) {}
-
-	AlphaColor::AlphaColor(const Byte alp) {
-		setAlpha(alp);
-	}
-
-	Byte AlphaColor::getAlpha() const {
-		return convertFloatToRGBA(this->a);
-	}
-
-	void AlphaColor::setAlpha(const Byte& alpha) {
-		this->a = convertRGBAToFloat(alpha);
-	}
-
-	//RGBColor
-
-	RGBColor::RGBColor(const float red, const float green, const float blue) : r(red), g(green), b(blue) {}
-
-	RGBColor::RGBColor(const Byte red, const Byte green, const Byte blue) {
-		setRed(red);
-		setGreen(green);
-		setBlue(blue);
-	}
-
-	RGBColor RGBColor::lighten() const {
-		return RGBColor(math::min(r + 0.05f, 1.0f), math::min(g + 0.05f, 1.0f), math::min(b + 0.05f, 1.0f));
-	}
-
-	RGBColor RGBColor::darken() const {
-		return RGBColor(math::max(r - 0.05f, 0.0f), math::max(g - 0.05f, 0.0f), math::max(b - 0.05f, 0.0f));
-	}
-
-	Byte RGBColor::getRed() const {
-		return convertFloatToRGBA(this->r);
-	}
-
-	Byte RGBColor::getGreen() const {
-		return convertFloatToRGBA(this->g);
-	}
-
-	Byte RGBColor::getBlue() const {
-		return convertFloatToRGBA(this->b);
-	}
-
-	void RGBColor::setRed(const Byte& red) {
-		this->r = convertRGBAToFloat(red);
-	}
-
-	void RGBColor::setGreen(const Byte& green) {
-		this->g = convertRGBAToFloat(green);
-
-	}
-
-	void RGBColor::setBlue(const Byte& blue) {
-		this->b = convertRGBAToFloat(blue);
-
-	}
-
-	void RGBColor::setValues(const std::array<float, 3>& rgb) {
-		this->r = rgb[0];
-		this->g = rgb[1];
-		this->b = rgb[2];
-	}
-
-	unsigned int RGBColor::toUnsignedInt() const {
-		const Byte red = convertFloatToRGBA(r);
-		const Byte green = convertFloatToRGBA(g);
-		const Byte blue = convertFloatToRGBA(b);
-		return red << 24 | green << 16 | blue << 8;
-	}
-
-	std::string RGBColor::toHex() const {
-		std::ostringstream out = std::ostringstream();
-		out << std::hex << toUnsignedInt();
-		return out.str();
-	}
-
-	Size RGBColor::size() const {
-		return 3;
-	}
-
-	float * RGBColor::begin() {
-		return &r;
-	}
-
-	const float * RGBColor::begin() const {
-		return &r;
-	}
-
-	//RGBAColor
-
-	RGBAColor::RGBAColor(const float red, const float green, const float blue, const float alpha) : RGBColor(red, green, blue), AlphaColor(alpha) {}
-
-	RGBAColor::RGBAColor(const Byte red, const Byte green, const Byte blue, const Byte alpha) : RGBColor(red, green, blue), AlphaColor(alpha) {}
-
-	void RGBAColor::setValues(const std::array<float, 4>& rgba) {
-		this->r = rgba[0];
-		this->g = rgba[1];
-		this->b = rgba[2];
-		this->a = rgba[3];
-	}
-
-	std::array<float, 4> RGBAColor::getValues() const {
-		return { { r,g,b,a } };
-	}
-
-	Vector<float, 4> RGBAColor::toVector() const {
-		return Vector<float, 4>({ r, g, b, a });
-	}
-
-	unsigned int RGBAColor::toUnsignedInt() const {
-		const Byte alpha = convertFloatToRGBA(a);
-		return RGBColor::toUnsignedInt() | alpha;
-	}
-
-	const float * RGBAColor::flatten(float arr[4]) const {
-		arr[0] = r;
-		arr[1] = g;
-		arr[2] = b;
-		arr[3] = a;
-
-		return arr;
-	}
-
-	Size RGBAColor::size() const {
-		return 4;
-	}
-
-	float * RGBAColor::begin() {
-		return &r;
-	}
-
-	const float * RGBAColor::begin() const {
-		return &r;
-	}
-
-	//Color
+	Color::Color(const float red, const float green, const float blue, const float alpha) noexcept : r(red), g(green), b(blue), a(alpha) {}
 
 	Color::Color(const int red, const int green, const int blue, const int alpha) noexcept: Color(static_cast<Byte>(red), static_cast<Byte>(green), static_cast<Byte>(blue), static_cast<Byte>(alpha)) {}
 
-	Color::Color(const Byte red, const Byte green, const Byte blue, const Byte alpha) noexcept {
-		setRed(red);
-		setGreen(green);
-		setBlue(blue);
-		setAlpha(alpha);
-	}
+	Color::Color(const Byte red, const Byte green, const Byte blue, const Byte alpha) noexcept : Color(convertRGBAToFloat(red), convertRGBAToFloat(green), convertRGBAToFloat(blue), convertRGBAToFloat(alpha)) {}
 
-	Color::Color(const unsigned int value) noexcept {
-		setRed(value >> 24 & 255);
-		setGreen(value >> 16 & 255);
-		setBlue(value >> 8 & 255);
-		setAlpha(value & 255);
-	}
+	Color::Color(const unsigned int value) noexcept : Color(static_cast<Byte>(value >> 24 & 255), static_cast<Byte>(value >> 16 & 255), static_cast<Byte>(value >> 8 & 255), static_cast<Byte>(value & 255)) {}
 
-	Color::Color(const float red, const float green, const float blue, const float alpha) noexcept:  RGBAColor(red, green, blue, alpha) {}
+	Color::Color(const std::array<float, 4>& rgba) : Color(rgba[0], rgba[1], rgba[2], rgba[3]){}
 
-	Color::Color(const std::array<float, 4>& rgba) {
-		this->setValues(rgba);
-	}
+	Color::Color(const float values[4]) : Color(values[0], values[1], values[2], values[3]) {}
 
 	Color::Color(const Vector<float, 4>& values) : Color(values.x(), values.y(), values.z(), values.w()) {}
 
@@ -240,6 +56,144 @@ namespace mc {
 	Color::Color(const Color & copy, const float alpha) noexcept : Color(copy.r, copy.g, copy.b, alpha) {}
 
 	Color::Color() noexcept : Color(0.0f, 0.0f, 0.0f, 1.0f) {}
+
+	Color Color::lighten() const {
+		return Color(math::min(r + 0.05f, 1.0f), math::min(g + 0.05f, 1.0f), math::min(b + 0.05f, 1.0f), a);
+	}
+
+	Color Color::darken() const {
+		return Color(math::max(r - 0.05f, 0.0f), math::max(g - 0.05f, 0.0f), math::max(b - 0.05f, 0.0f), a);
+	}
+
+	Byte Color::getRed() const {
+		return convertFloatToRGBA(this->r);
+	}
+
+	Byte Color::getGreen() const {
+		return convertFloatToRGBA(this->g);
+	}
+
+	Byte Color::getBlue() const {
+		return convertFloatToRGBA(this->b);
+	}
+
+	void Color::setRed(const Byte& red) {
+		this->r = convertRGBAToFloat(red);
+	}
+
+	void Color::setGreen(const Byte& green) {
+		this->g = convertRGBAToFloat(green);
+
+	}
+
+	void Color::setBlue(const Byte& blue) {
+		this->b = convertRGBAToFloat(blue);
+
+	}
+
+	void Color::setValues(const std::array<float, 3>& rgb) {
+		this->r = rgb[0];
+		this->g = rgb[1];
+		this->b = rgb[2];
+	}
+
+	unsigned int Color::toUnsignedIntNoAlpha() const {
+		const Byte red = convertFloatToRGBA(r);
+		const Byte green = convertFloatToRGBA(g);
+		const Byte blue = convertFloatToRGBA(b);
+		return red << 24 | green << 16 | blue << 8;
+	}
+
+	std::string Color::toHex() const {
+		std::ostringstream out = std::ostringstream();
+		out << std::hex << toUnsignedInt();
+		return out.str();
+	}
+
+	void Color::setValues(const std::array<float, 4>& rgba) {
+		this->r = rgba[0];
+		this->g = rgba[1];
+		this->b = rgba[2];
+		this->a = rgba[3];
+	}
+
+	std::array<float, 4> Color::getValues() const {
+		return { { r,g,b,a } };
+	}
+
+	Byte Color::getAlpha() const {
+		return convertFloatToRGBA(this->a);
+	}
+
+	void Color::setAlpha(const Byte& alpha) {
+		this->a = convertRGBAToFloat(alpha);
+	}
+
+	Vector<float, 4> Color::toVector() const {
+		return Vector<float, 4>({ r, g, b, a });
+	}
+
+	unsigned int Color::toUnsignedInt() const {
+		const Byte alpha = convertFloatToRGBA(a);
+		return toUnsignedIntNoAlpha() | alpha;
+	}
+
+	const float* Color::flatten(float arr[4]) const {
+		arr[0] = r;
+		arr[1] = g;
+		arr[2] = b;
+		arr[3] = a;
+
+		return arr;
+	}
+
+	Size Color::size() const {
+		return 4;
+	}
+
+	float* Color::begin() {
+		return &r;
+	}
+
+	const float* Color::begin() const {
+		return &r;
+	}
+
+	float* Color::end() {
+		return begin() + size();
+	}
+
+	const float* Color::end() const {
+		return begin() + size();
+	}
+
+	float& Color::getComponent(const Index i) {
+#ifdef MACE_DEBUG_CHECK_ARGS
+		if (i >= size()) MACE_UNLIKELY{
+			MACE__THROW(OutOfBounds, "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
+		}
+#endif
+
+		return begin()[i];
+	}
+
+	const float& Color::getComponent(const Index i) const {
+#ifdef MACE_DEBUG_CHECK_ARGS
+		if (i >= size()) MACE_UNLIKELY{
+			MACE__THROW(OutOfBounds, "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
+		}
+#endif
+
+		return begin()[i];
+	}
+
+	float& Color::operator[](const Index i) {
+		return begin()[i];
+	}
+
+	const float& Color::operator[](const Index i) const {
+		return begin()[i];
+	}
 
 	std::ostream & operator<<(std::ostream & output, const Color & v) {
 		output << "#" << v.toHex();

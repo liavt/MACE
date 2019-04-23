@@ -44,7 +44,7 @@ namespace mc {
 		@see Entity::addComponent(Component&)
 		@todo unit testing for clean() render() and hover()
 		*/
-		class Component: public Initializable{
+		class MACE_NOVTABLE Component: public Initializable{
 			friend class Entity;
 			friend class ComponentQueue;
 		public:
@@ -103,7 +103,7 @@ namespace mc {
 		@see Entity2D
 		@see Component
 		*/
-		class Entity: public Initializable {
+		class MACE_NOVTABLE Entity: public Initializable {
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it
 			enum EntityProperty: Byte {
@@ -318,7 +318,7 @@ namespace mc {
 			@see Entity::operator[]
 			@see Entity::getChild(Index)
 			*/
-			int indexOf(const Entity& e) const;
+			Index indexOf(const Entity& e) const;
 
 			/**
 			Checks whether this `Entity` has any children

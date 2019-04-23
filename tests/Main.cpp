@@ -16,18 +16,18 @@ The above copyright notice and this permission notice shall be included in all c
 #ifdef MACE_WINDOWS
 #	define CATCH_CONFIG_WINDOWS_CRTDBG 1
 #endif
-#include <Catch.hpp>
+#include <catch2/catch.hpp>
 
 #include <exception>
 #include <iostream>
 
 
-void onUnexpected[[noreturn]](){
+void onUnexpected MACE_NORETURN(){
 	std::cerr << "Unexpected exception occured" << std::endl;
 	std::abort();
 }
 
-void onTerminate[[noreturn]](){
+void onTerminate MACE_NORETURN(){
 	std::cerr << "An unhandled exception occured" << std::endl;
 	std::abort();
 }

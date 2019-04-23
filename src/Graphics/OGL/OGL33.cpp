@@ -15,7 +15,7 @@ namespace mc {
 	namespace gfx {
 		namespace ogl33 {
 			namespace {
-				Shader createShader(const Enum type, const char* sources[], const Size sourceSize) {
+				Shader createShader(const Enum type, const char* sources[], const GLsizei sourceSize) {
 					Shader s = Shader(type);
 					s.init();
 					s.setSource(sourceSize, sources, nullptr);
@@ -23,7 +23,7 @@ namespace mc {
 					return s;
 				}
 
-				void throwShaderError(const Index shaderId, const Enum type, const std::string& message) {
+				void throwShaderError(const unsigned int shaderId, const Enum type, const std::string& message) {
 #ifdef MACE_DEBUG_OPENGL
 					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
 					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
@@ -51,7 +51,7 @@ namespace mc {
 				}
 			}//anon namespace
 
-			void forceCheckGLError(const Index line, const char* file, const char* message) {
+			void forceCheckGLError(const unsigned int line, const char* file, const char* message) {
 				std::vector<Error> errors;
 
 				Enum result = GL_NO_ERROR;
@@ -97,17 +97,17 @@ namespace mc {
 			}
 
 #ifdef MACE_DEBUG_OPENGL
-			void checkGLError(const Index line, const char* file, const char* message) {
+			void checkGLError(const unsigned int line, const char* file, const char* message) {
 				forceCheckGLError(line, file, message);
 			}
 
-			void checkGLError(const Index line, const char* file, const std::string message) {
+			void checkGLError(const unsigned int line, const char* file, const std::string message) {
 				checkGLError(line, file, message.c_str());
 			}
 #else
-			void checkGLError(const Index, const char*, const char*) {}
+			void checkGLError(const unsigned int, const char*, const char*) {}
 
-			void checkGLError(const Index, const char*, const std::string&) {}
+			void checkGLError(const unsigned int, const char*, const std::string) {}
 #endif
 
 			void VertexArray::destroy() {
@@ -128,13 +128,13 @@ namespace mc {
 				return glIsVertexArray(id) == 1;
 			}
 
-			void VertexArray::loadVertices(const Size verticeSize, const float* vertices, const Index location, const Byte attributeSize, const Enum type, const bool normalized) {
+			void VertexArray::loadVertices(const unsigned int verticeSize, const float* vertices, const GLuint location, const Byte attributeSize, const Enum type, const bool normalized) {
 				vertexNumber = verticeSize;
 
 				storeDataInAttributeList(vertexNumber * sizeof(float), vertices, location, attributeSize, type, normalized);
 			}
 
-			void VertexArray::storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location, const Byte attributeSize, const Enum type, const bool normalized) {
+			void VertexArray::storeDataInAttributeList(const unsigned int dataSize, const GLvoid* data, const GLuint location, const Byte attributeSize, const Enum type, const bool normalized) {
 				bind();
 
 				VertexBuffer buffer = VertexBuffer();
@@ -142,13 +142,13 @@ namespace mc {
 				buffer.bind();
 				buffer.setLocation(location);
 				// Give our data to opengl
-				buffer.setData(static_cast<ptrdiff_t>(attributeSize * dataSize), data, GL_DYNAMIC_DRAW);
+				buffer.setData(static_cast<ptrdiff_t>(attributeSize) * static_cast<ptrdiff_t>(dataSize), data, GL_DYNAMIC_DRAW);
 				buffer.setAttributePointer(attributeSize, type, normalized, 0, 0);
 
 				addBuffer(buffer);
 			}
 
-			void VertexArray::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
+			void VertexArray::loadIndices(const unsigned int indiceNum, const unsigned int * indiceData) {
 				indices = ElementBuffer(indiceNum);
 				indices.init();
 				indices.bind();
@@ -163,15 +163,15 @@ namespace mc {
 				buffers.push_back(newBuffer);
 			}
 
-			void VertexArray::setVertexNumber(const Size vertexNum) {
+			void VertexArray::setVertexNumber(const GLsizei vertexNum) {
 				vertexNumber = vertexNum;
 			}
 
-			Size VertexArray::getVertexNumber() {
+			GLsizei VertexArray::getVertexNumber() {
 				return vertexNumber;
 			}
 
-			const Size VertexArray::getVertexNumber() const {
+			const GLsizei VertexArray::getVertexNumber() const {
 				return vertexNumber;
 			}
 
@@ -211,11 +211,11 @@ namespace mc {
 				glBindVertexArray(ID);
 			}
 
-			void VertexArray::initIndices(GLuint ids[], const Size length) const {
+			void VertexArray::initIndices(GLuint ids[], const GLsizei length) const {
 				glGenVertexArrays(length, ids);
 			}
 
-			void VertexArray::destroyIndices(const GLuint ids[], const Size length) const {
+			void VertexArray::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteVertexArrays(length, ids);
 			}
 
@@ -313,19 +313,19 @@ namespace mc {
 				glBindFramebuffer(GL_FRAMEBUFFER, ID);
 			}
 
-			void FrameBuffer::initIndices(GLuint ids[], const Size length) const {
+			void FrameBuffer::initIndices(GLuint ids[], const GLsizei length) const {
 				glGenFramebuffers(length, ids);
 			}
 
-			void FrameBuffer::destroyIndices(const GLuint ids[], const Size length) const {
+			void FrameBuffer::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteFramebuffers(length, ids);
 			}
 
-			void RenderBuffer::setStorage(const Enum format, const Size width, const Size height) {
-				glRenderbufferStorage(GL_RENDERBUFFER, format, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
+			void RenderBuffer::setStorage(const Enum format, const GLsizei width, const GLsizei height) {
+				glRenderbufferStorage(GL_RENDERBUFFER, format, width, height);
 			}
 
-			void RenderBuffer::setStorageMultisampled(const Size samples, const Enum format, const Size width, const Size height) {
+			void RenderBuffer::setStorageMultisampled(const GLsizei samples, const Enum format, const GLsizei width, const GLsizei height) {
 				glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, format, width, height);
 			}
 
@@ -337,11 +337,11 @@ namespace mc {
 				glBindRenderbuffer(GL_RENDERBUFFER, ID);
 			}
 
-			void RenderBuffer::initIndices(GLuint ids[], const Size length) const {
+			void RenderBuffer::initIndices(GLuint ids[], const GLsizei length) const {
 				glGenRenderbuffers(length, ids);
 			}
 
-			void RenderBuffer::destroyIndices(const GLuint ids[], const Size length) const {
+			void RenderBuffer::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteRenderbuffers(length, ids);
 			}
 
@@ -366,7 +366,7 @@ namespace mc {
 				return id;
 			}
 
-			void Object::init(Object * objects[], const Size length) {
+			void Object::init(Object * objects[], const GLsizei length) {
 				if (length <= 0) {
 					return;
 				}
@@ -382,7 +382,7 @@ namespace mc {
 				}
 			}
 
-			void Object::destroy(Object * objects[], const Size length) {
+			void Object::destroy(Object * objects[], const GLsizei length) {
 				if (length <= 0) {
 					return;
 				}
@@ -417,11 +417,11 @@ namespace mc {
 				Object::bind();
 			}
 
-			void Texture2D::setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel) {
+			void Texture2D::setData(const void * data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel) {
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 			}
 
-			void Texture2D::setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples) {
+			void Texture2D::setMultisampledData(const GLsizei samples, const GLsizei width, const GLsizei height, const Enum internalFormat, const bool fixedSamples) {
 				glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
@@ -478,11 +478,11 @@ namespace mc {
 				glBindTexture(target, ID);
 			}
 
-			void Texture2D::initIndices(GLuint ids[], const Size length) const {
+			void Texture2D::initIndices(GLuint ids[], const GLsizei length) const {
 				glGenTextures(length, ids);
 			}
 
-			void Texture2D::destroyIndices(const GLuint ids[], const Size length) const {
+			void Texture2D::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteTextures(length, ids);
 			}
 
@@ -602,17 +602,17 @@ namespace mc {
 				glBindBuffer(bufferType, ID);
 			}
 
-			void Buffer::initIndices(GLuint ids[], const Size length) const {
+			void Buffer::initIndices(GLuint ids[], const GLsizei length) const {
 				glGenBuffers(length, ids);
 			}
 
-			void Buffer::destroyIndices(const GLuint ids[], const Size length) const {
+			void Buffer::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteBuffers(length, ids);
 			}
 
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
-			void VertexBuffer::setAttributePointer(const Byte attribSize, const Enum type, const bool normalized, const Index stride, const void * pointer) {
+			void VertexBuffer::setAttributePointer(const GLint attribSize, const Enum type, const bool normalized, const GLsizei stride, const void * pointer) {
 				if (!normalized && (
 					type == GL_BYTE ||
 					type == GL_UNSIGNED_BYTE ||
@@ -628,7 +628,7 @@ namespace mc {
 				}
 			}
 
-			void VertexBuffer::setDivisor(const unsigned int divisor) {
+			void VertexBuffer::setDivisor(const GLuint divisor) {
 				glVertexAttribDivisor(location, divisor);
 			}
 
@@ -640,15 +640,15 @@ namespace mc {
 				glDisableVertexAttribArray(location);
 			}
 
-			Index VertexBuffer::getLocation() {
+			GLuint VertexBuffer::getLocation() {
 				return location;
 			}
 
-			const Index VertexBuffer::getLocation() const {
+			const GLuint VertexBuffer::getLocation() const {
 				return location;
 			}
 
-			void VertexBuffer::setLocation(const Index newLocation) {
+			void VertexBuffer::setLocation(const GLuint newLocation) {
 				location = newLocation;
 			}
 
@@ -660,11 +660,9 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			ElementBuffer::ElementBuffer() noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER) {}
+			ElementBuffer::ElementBuffer() noexcept : Buffer(0) {}
 
-			ElementBuffer::ElementBuffer(const Size indiceNum) noexcept : ElementBuffer() {
-				indiceNumber = indiceNum;
-			}
+			ElementBuffer::ElementBuffer(const Size indiceNum) noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER), indiceNumber(indiceNum) {}
 
 			void ElementBuffer::setIndiceNumber(const Size indices) {
 				indiceNumber = indices;
@@ -728,11 +726,11 @@ namespace mc {
 
 			void QueryObject::bindIndex(const GLuint) const {}
 
-			void QueryObject::initIndices(GLuint ids[], const Size length) const {
+			void QueryObject::initIndices(GLuint ids[], const GLsizei length) const {
 				glGenQueries(length, ids);
 			}
 
-			void QueryObject::destroyIndices(const GLuint ids[], const Size length) const {
+			void QueryObject::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteQueries(length, ids);
 			}
 
@@ -755,7 +753,7 @@ namespace mc {
 				glDeleteShader(id);
 			}
 
-			void Shader::setSource(const Size count, const char * strings[], const int lengths[]) {
+			void Shader::setSource(const GLsizei count, const char * strings[], const int lengths[]) {
 				if (type == GL_FALSE) {
 					MACE__THROW(Shader, "Shader must have a type before compile() is called");
 				}
@@ -774,7 +772,7 @@ namespace mc {
 				setSource(string.c_str(), static_cast<int>(string.length()));
 			}
 
-			char * Shader::getSource(const Size length, char * characters, int amount) const {
+			char * Shader::getSource(const GLsizei length, char * characters, int amount) const {
 				glGetShaderSource(id, length, &amount, characters);
 				return characters;
 			}
@@ -841,16 +839,16 @@ namespace mc {
 			void Shader::unbind() const {}
 			void Shader::bindIndex(const GLuint) const {}
 
-			void Shader::initIndices(GLuint[], const Size) const {}
+			void Shader::initIndices(GLuint[], const GLsizei) const {}
 
-			void Shader::destroyIndices(const GLuint[], const Size) const {}
+			void Shader::destroyIndices(const GLuint[], const GLsizei) const {}
 
 			void ShaderProgram::bindIndex(const GLuint ID) const {
 				glUseProgram(ID);
 			}
 
-			void ShaderProgram::initIndices(GLuint[], const Size) const {}
-			void ShaderProgram::destroyIndices(const GLuint[], const Size) const {}
+			void ShaderProgram::initIndices(GLuint[], const GLsizei) const {}
+			void ShaderProgram::destroyIndices(const GLuint[], const GLsizei) const {}
 
 			void ShaderProgram::init() {
 				id = glCreateProgram();
@@ -919,7 +917,7 @@ namespace mc {
 			bool ShaderProgram::isValidated() const {
 				return getParameter(GL_VALIDATE_STATUS) == GL_TRUE;
 			}
-			void ShaderProgram::detachShader(const Index shaderId) {
+			void ShaderProgram::detachShader(const GLuint shaderId) {
 				glDetachShader(id, shaderId);
 			}
 
@@ -939,14 +937,14 @@ namespace mc {
 			void ShaderProgram::createFragment(const char shader[]) {
 				createFragment(1, &shader);
 			}
-			void ShaderProgram::createFragment(const Size count, const char* strings[]) {
+			void ShaderProgram::createFragment(const GLsizei count, const char* strings[]) {
 				attachShader(createShader(GL_FRAGMENT_SHADER, strings, count));
 			}
 			void ShaderProgram::createVertex(const char shader[]) {
 				createVertex(1, &shader);
 			}
 
-			void ShaderProgram::createVertex(const Size count, const char* strings[]) {
+			void ShaderProgram::createVertex(const GLsizei count, const char* strings[]) {
 				attachShader(createShader(GL_VERTEX_SHADER, strings, count));
 			}
 
@@ -1149,10 +1147,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const float a, const float b, const float c, const float d) {
 				glUniform4f(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size arraySize, const float * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const float * a) {
 				glUniform1fv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const float * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const float * a) {
 				if (componentSize == 1) glUniform1fv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2fv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3fv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4fv(uniforms[name], arraySize, a);
 			}
 
@@ -1170,10 +1168,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const double a, const double b, const double c, const double d) {
 				glUniform4d(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size arraySize, const double * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const double * a) {
 				glUniform1dv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const double * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const double * a) {
 				if (componentSize == 1) glUniform1dv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2dv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3dv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4dv(uniforms[name], arraySize, a);
 			}
 
@@ -1191,10 +1189,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const int a, const int b, const int c, const int d) {
 				glUniform4i(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size arraySize, const int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const int * a) {
 				glUniform1iv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const int * a) {
 				if (componentSize == 1) glUniform1iv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2iv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3iv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4iv(uniforms[name], arraySize, a);
 			}
 
@@ -1212,10 +1210,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d) {
 				glUniform4ui(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size arraySize, const unsigned int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const unsigned int * a) {
 				glUniform1uiv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const Size componentSize, const Size arraySize, const unsigned int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const unsigned int * a) {
 				if (componentSize == 1) glUniform1uiv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2uiv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3uiv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4uiv(uniforms[name], arraySize, a);
 			}
 			void ShaderProgram::setUniform(const char* name, const mc::Vector<unsigned int, 4> v) {
@@ -1304,7 +1302,7 @@ namespace mc {
 				glBlendFunc(sfactor, dfactor);
 			}
 
-			void setViewport(const Index x, const Index y, const Size width, const Size height) {
+			void setViewport(const int x, const int y, const int width, const int height) {
 				glViewport(x, y, width, height);
 			}
 		}//ogl33

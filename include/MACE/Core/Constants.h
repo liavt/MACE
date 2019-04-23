@@ -90,6 +90,24 @@ The above copyright notice and this permission notice shall be included in all c
 #	endif
 #endif
 
+//[[nodiscard]] attribute
+#ifndef MACE_NODISCARD
+#	if MACE_HAS_ATTRIBUTE(nodiscard)
+#		define MACE_NODISCARD [[nodiscard]]
+#	else
+#		define MACE_NODISCARD
+#	endif
+#endif
+
+//[[noreturn]] attribute
+#ifndef MACE_NORETURN
+#	if MACE_HAS_ATTRIBUTE(noreturn)
+#		define MACE_NORETURN [[noreturn]]
+#	else
+#		define MACE_NORETURN
+#	endif
+#endif
+
 //used to mark a function or variable thats deprecated
 #ifndef MACE_DEPRECATED
 #	if MACE_HAS_ATTRIBUTE(deprecated)
@@ -124,6 +142,51 @@ The above copyright notice and this permission notice shall be included in all c
 #	endif
 #endif
 
+#ifndef MACE_LIKELY
+#	if MACE_HAS_ATTRIBUTE(likely)
+#		define MACE_LIKELY [[likely]]
+#	else
+#		define MACE_LIKELY 
+#	endif
+#endif
+
+#ifndef MACE_UNLIKELY
+#	if MACE_HAS_ATTRIBUTE(unlikely)
+#		define MACE_UNLIKELY [[unlikely]]
+#	else
+#		define MACE_UNLIKELY 
+#	endif
+#endif
+
+//audits
+
+#ifndef MACE_EXPECTS
+#	if MACE_HAS_ATTRIBUTE(expects)
+#		define MACE_EXPECTS_MODIFIER(cond, modifier) [[expects modifier: cond]]
+#	else
+#		define MACE_EXPECTS_MODIFIER(cond, modifier)
+#	endif
+#	define MACE_EXPECTS(cond) MACE_EXPECTS_MODIFIER(cond, default)
+#endif
+
+#ifndef MACE_ENSURES
+#	if MACE_HAS_ATTRIBUTE(ensures)
+#		define MACE_ENSURES_MODIFIER(ret, cond, modifier) [[ensures modifier ret: cond]]
+#	else
+#		define MACE_ENSURES_MODIFIER(ret, cond, modifier)
+#	endif
+#	define MACE_ENSURES(ret, cond) MACE_ENSURES_MODIFIER(ret, cond, default)
+#endif
+
+//novtable
+#ifndef MACE_NOVTABLE
+#	ifdef MACE_MSVC
+#		define MACE_NOVTABLE __declspec(novtable)
+#	else
+#		define MACE_NOVTABLE
+#	endif
+#endif
+
 //whether the specificed include is available
 #ifndef MACE_HAS_INCLUDE
 #	ifndef __has_include
@@ -151,6 +214,24 @@ The above copyright notice and this permission notice shall be included in all c
 #		define MACE_CONSTEXPR
 #	endif
 #endif
+
+#ifndef MACE_IF_CONSTEXPR
+#	ifdef __cpp_if_constexpr
+#		define MACE_IF_CONSTEXPR(expr) if constexpr(expr)
+#	else
+#		define MACE_IF_CONSTEXPR(expr) if(expr)
+#	endif
+#endif
+
+//explicit
+#ifndef MACE_EXPLICIT
+#	ifdef __cpp_conditional_explicit
+#		define MACE_EXPLICIT(cond) explicit(cond)
+#	else
+#		define MACE_EXPLICIT(cond) explicit
+#	endif
+#endif
+
 
 //static assert
 //allows users to use a different static assert (such as boost's static asssert)

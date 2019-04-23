@@ -130,7 +130,7 @@ namespace mc {
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
-			if (args.size() != N) {
+			MACE_IF_CONSTEXPR (args.size() != N) {
 				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the array.");
 			}
 
@@ -203,9 +203,9 @@ namespace mc {
 		@throw IndexOutOfBounds If `i` is less than 0
 		@see operator[](Index)
 		*/
-		T& get(Index i) {
+		T& get(Index i) MACE_EXPECTS(i < size()) {
 #ifdef MACE_DEBUG_CHECK_ARGS
-			if (i >= N) {
+			if (i >= N) MACE_UNLIKELY {
 				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
@@ -219,9 +219,9 @@ namespace mc {
 		@throw IndexOutOfBounds If `i` is less than 0
 		@see operator[](Index)
 		*/
-		const T& get(Index i) const {
+		const T& get(Index i) const MACE_EXPECTS(i < size()) {
 #ifdef MACE_DEBUG_CHECK_ARGS
-			if (i >= N) {
+			if (i >= N) MACE_UNLIKELY {
 				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
@@ -235,9 +235,9 @@ namespace mc {
 		@throw IndexOutOfBounds If `i` is less than 0
 		@see operator[](Index)
 		*/
-		void set(Index position, T value) {
+		void set(Index position, T value) MACE_EXPECTS(position < size()) {
 #ifdef MACE_DEBUG_CHECK_ARGS
-			if (position >= N) {
+			if (position >= N) MACE_UNLIKELY{
 				MACE__THROW(OutOfBounds, std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
@@ -279,7 +279,7 @@ namespace mc {
 		@return The data at `i`
 		@see operator[](Index) const
 		*/
-		T& operator[](Index i) {
+		T& operator[](Index i) MACE_EXPECTS(i < size()) {
 			return content[i];
 		};
 		/**
@@ -288,7 +288,7 @@ namespace mc {
 		@return The data at `i`
 		@see operator[](Index)
 		*/
-		const T& operator[](Index i) const {
+		const T& operator[](Index i) const MACE_EXPECTS(i < size()) {
 			return content[i];
 		};
 
@@ -302,7 +302,7 @@ namespace mc {
 		@return Value at `i-1`
 		@see operator[](Index)
 		*/
-		virtual T& operator()(Index i) {
+		virtual T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0) {
 			return content[i - 1];
 		}
 
@@ -311,7 +311,7 @@ namespace mc {
 		@param i Not zero indexed `Index`
 		@return Value at `i-1`
 		*/
-		const T& operator()(Index i) const {
+		const T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0)const {
 			return content[i - 1];
 		}
 

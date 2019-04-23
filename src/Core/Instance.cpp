@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 namespace mc {
 	Index Instance::addModule(Module& m) {
-		if (m.getInstance() != nullptr) {
+		if (m.getInstance() != nullptr) MACE_UNLIKELY{
 			MACE__THROW(AlreadyExists, "Can\'t add a Module to 2 Instance\'s!");
 		}
 
@@ -40,7 +40,7 @@ namespace mc {
 	}
 
 	void Instance::removeModule(const Index i) {
-		if (i >= numberOfModules()) {
+		if (i >= size()) MACE_UNLIKELY{
 			MACE__THROW(ObjectNotFound, "Input is greater than the amount of modules!");
 		}
 		modules[i]->instance = nullptr;
@@ -67,7 +67,7 @@ namespace mc {
 	}
 
 	const Module * Instance::getModule(const Index i) const {
-		if (i >= numberOfModules()) {
+		if (i >= size()) MACE_UNLIKELY{
 			MACE__THROW(ObjectNotFound, "Input is not a valid index!");
 		}
 		return modules[i];
@@ -81,9 +81,14 @@ namespace mc {
 		return module->getInstance() == this && indexOf(*module) >= 0;
 	}
 
-	Size Instance::numberOfModules() const {
+	Size Instance::size() const {
 		//size() returns size_t which could be larger than unsigned int on some systems, causing problems. static_cast will fix it
 		return static_cast<Size>(modules.size());
+	}
+
+	bool mc::Instance::empty() const
+	{
+		return size() == 0;
 	}
 
 	void Instance::assertModule(const std::string module, const std::string errorMessage) const {

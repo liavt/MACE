@@ -55,7 +55,7 @@ namespace mc {
 		return sounds;
 	}
 
-	Sound::Sound(const std::string& p) :path(p) {}
+	Sound::Sound(const std::string& p) : path(p) {}
 
 	void Sound::init() {
 		alGenBuffers(1, &buffer);

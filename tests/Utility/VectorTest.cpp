@@ -7,7 +7,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-#include <Catch.hpp>
+#include <catch2/catch.hpp>
 #include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/MatrixTypes.h>
 
@@ -24,7 +24,7 @@ namespace mc {
 		}
 
 		SECTION("Testing () operator") {
-			for (Index x = 1; x <= 5; x++) {
+			for (int x = 1; x <= 5; x++) {
 				REQUIRE_NOTHROW(m(x, 1));
 				m(x, 1) = x;
 				REQUIRE(m(x, 1) == x);
@@ -32,7 +32,7 @@ namespace mc {
 		}
 
 		SECTION("Testing if the [] operator works") {
-			for (Index x = 0; x < 5; x++) {
+			for (int x = 0; x < 5; x++) {
 				REQUIRE_NOTHROW(m[x][0]);
 				m[x][0] = x;
 				REQUIRE(m[x][0] == x);
@@ -243,23 +243,23 @@ namespace mc {
 			}
 			SECTION("Testing copy constructors") {
 				Matrix4i m = Matrix4i();
-				for (Index x = 0; x < m.width(); x++) {
-					for (Index y = 0; y < m.height(); y++) {
+				for (int x = 0; x < m.width(); x++) {
+					for (int y = 0; y < m.height(); y++) {
 						m[x][y] = x * y;
 					}
 				}
 				SECTION("Testing via explicit constructor") {
 					Matrix4i other = Matrix4i(m);
-					for (Index x = 0; x < other.width(); x++) {
-						for (Index y = 0; y < other.height(); y++) {
+					for (int x = 0; x < other.width(); x++) {
+						for (int y = 0; y < other.height(); y++) {
 							REQUIRE(other[x][y] == x * y);
 						}
 					}
 				}
 				SECTION("Testing via assignment") {
 					Matrix4i other = m;
-					for (Index x = 0; x < other.width(); x++) {
-						for (Index y = 0; y < other.height(); y++) {
+					for (int x = 0; x < other.width(); x++) {
+						for (int y = 0; y < other.height(); y++) {
 							REQUIRE(other[x][y] == x * y);
 						}
 					}
@@ -272,7 +272,7 @@ namespace mc {
 		SECTION("Testing getting and setting of a vector") {
 			Vector5i v = Vector5i();
 
-			for (Index i = 0; i < v.size(); i++) {
+			for (int i = 0; i < v.size(); i++) {
 				v[i] = i;
 				REQUIRE(v[i] == i);
 				REQUIRE(v.get(i) == i);
@@ -290,10 +290,10 @@ namespace mc {
 
 		SECTION("Testing GLSL-style getting") {
 			Vector4i v = { 1,2,3,4 };
-			REQUIRE(v.x() == Vector1i({ 1 }));
-			REQUIRE(v.y() == Vector1i({ 2 }));
-			REQUIRE(v.z() == Vector1i({ 3 }));
-			REQUIRE(v.w() == Vector1i({ 4 }));
+			REQUIRE(static_cast<bool>(v.x() == Vector1i({ 1 })));
+			REQUIRE(static_cast<bool>(v.y() == Vector1i({ 2 })));
+			REQUIRE(static_cast<bool>(v.z() == Vector1i({ 3 })));
+			REQUIRE(static_cast<bool>(v.w() == Vector1i({ 4 })));
 		}
 
 		SECTION("Testing getting and setting of matrices") {

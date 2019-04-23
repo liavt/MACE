@@ -9,6 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/System.h>
+#include <MACE/Utility/Color.h>
 
 #define MACE_EXPOSE_GLFW
 #include <MACE/Graphics/Window.h>
@@ -175,7 +176,7 @@ namespace mc {
 			}
 		}//anon namespace
 
-		WindowModule::WindowModule(const LaunchConfig& c) : config(c) {}
+		WindowModule::WindowModule(const LaunchConfig& c) : config(c), properties(0), window(nullptr) {}
 
 		void WindowModule::create() {
 			glfwSetErrorCallback(&onGLFWError);
@@ -464,12 +465,30 @@ namespace mc {
 			return out;
 		}
 
+		Vector<float, 2> WindowModule::getContentScale() const
+		{
+			Vector<float, 2> out = {};
+
+			glfwGetWindowContentScale(window, &out[0], &out[1]);
+
+			return out;
+		}
+
 		GraphicsContext* WindowModule::getContext() {
 			return context.get();
 		}
 
 		const GraphicsContext* WindowModule::getContext() const {
 			return context.get();
+		}
+
+		Monitor WindowModule::getMonitor()
+		{
+			GLFWmonitor* const mon = glfwGetWindowMonitor(window);
+			if (mon != nullptr) {
+				return Monitor(mon);
+			}
+			return Monitor(glfwGetPrimaryMonitor());
 		}
 
 		void WindowModule::onInit() {}
@@ -528,6 +547,8 @@ namespace mc {
 			return !operator==(other);
 		}
 
+		Monitor::Monitor(GLFWmonitor* const mon) : monitor(mon) {}
+
 		WindowModule * getCurrentWindow() {
 			WindowModule* win = getCurrentWindowOrNull();
 			if (win == nullptr) {
@@ -545,6 +566,11 @@ namespace mc {
 			return getCurrentWindowOrNull() != nullptr;
 		}
 
+		Monitor getPrimaryMonitor()
+		{
+			return Monitor(glfwGetPrimaryMonitor());
+		}
+
 		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {
 			if (win == nullptr) {
 				return nullptr;
@@ -558,5 +584,117 @@ namespace mc {
 			return windowModule;
 		}
 
-	}//os
+		Vector<int, 2> Monitor::getSizeMM() const
+		{
+			Vector<int, 2> out = {};
+
+			glfwGetMonitorPhysicalSize(monitor, &out[0], &out[1]);
+
+			return out;
+		}
+
+		Vector<int, 2> Monitor::getSizeInches() const
+		{
+			const Vector<int, 2> mm = getSizeMM();
+			return {static_cast<int>(static_cast<float>(mm[0]) / 25.4f), static_cast<int>(static_cast<float>(mm[1]) / 25.4f)};
+		}
+
+		Vector<int, 2> Monitor::getDPI() const
+		{
+			return getResolution() / getSizeInches();
+		}
+
+		Vector<float, 2> Monitor::getContentScale() const
+		{
+			Vector<float, 2> out = {};
+
+			glfwGetMonitorContentScale(monitor, &out[0], &out[1]);
+
+			return out;
+		}
+
+		const char* Monitor::getName() const
+		{
+			return glfwGetMonitorName(monitor);
+		}
+
+		Vector<int, 4> Monitor::getWorkArea() const
+		{
+			Vector<int, 4> out = {};
+
+			glfwGetMonitorWorkarea(monitor, &out[0], &out[1], &out[2], &out[3]);
+
+			return out;
+		}
+
+		Vector<int, 2> Monitor::getVirtualPosition() const
+		{
+			Vector<int, 2> out = {};
+			
+			glfwGetMonitorPos(monitor, &out[0], &out[1]);
+
+			return out;
+		}
+
+		std::vector<VideoMode> Monitor::getVideoModes() const
+		{
+			std::vector<VideoMode> out = std::vector<VideoMode>();
+
+			int count = 0;
+			const GLFWvidmode* modes = glfwGetVideoModes(monitor, &count);
+			for (int i = 0; i < count; ++i) {
+				out.push_back(VideoMode(&modes[i]));
+			}
+			return out;
+		}
+
+		VideoMode Monitor::getCurrentVideoMode()  const
+		{
+			return VideoMode(glfwGetVideoMode(monitor));
+		}
+
+		Vector<int, 2> Monitor::getResolution() const
+		{
+			VideoMode mode = getCurrentVideoMode();
+			return { mode.getWidth(), mode.getHeight() };
+		}
+
+		VideoMode::VideoMode(const GLFWvidmode* const mod) : mode(mod) {}
+
+		int VideoMode::getWidth() const
+		{
+			return mode->width;
+		}
+
+		int VideoMode::getHeight() const
+		{
+			return mode->height;
+		}
+
+		int VideoMode::getRedBits() const
+		{
+			return mode->redBits;
+		}
+
+		int VideoMode::getGreenBits() const
+		{
+			return mode->greenBits;
+		}
+
+		int VideoMode::getBlueBits() const
+		{
+			return mode->blueBits;
+		}
+
+		Color VideoMode::getChannelBits() const
+		{
+			return Color(getRedBits(), getGreenBits(), getBlueBits());
+		}
+
+		int VideoMode::getRefreshRate() const
+		{
+			return mode->refreshRate;
+		}
+
+}//os
 }//mc

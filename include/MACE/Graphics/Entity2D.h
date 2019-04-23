@@ -219,15 +219,15 @@ namespace mc {
 		public:
 			static Font loadFont(const std::string& name);
 			static Font loadFont(const char* name);
-			static Font loadFontFromMemory(const unsigned char* data, long int size);
+			static Font loadFontFromMemory(const unsigned char* data, unsigned long int size);
 			template<std::size_t N>
 			static inline Font loadFontFromMemory(const unsigned char data[N]) {
 				return loadFontFromMemory(data, static_cast<long int>(N));
 			}
 
 			Font(const Font& f);
-			Font(const Index id = 0, const Size h = 0);
-			Font(const Fonts f, const Size height = 32);
+			Font(const Index id = 0, const unsigned int h = 0);
+			Font(const Fonts f, const unsigned int height = 12);
 
 			void destroy();
 
@@ -236,9 +236,9 @@ namespace mc {
 			*/
 			void getCharacter(const wchar_t character, Letter& let) const;
 
-			void setSize(const Size height);
-			Size& getSize();
-			const Size& getSize() const;
+			void setSize(const unsigned int height);
+			unsigned int& getSize();
+			const unsigned int& getSize() const;
 
 			bool hasKerning() const;
 
@@ -250,31 +250,31 @@ namespace mc {
 			bool operator!=(const Font& other) const;
 		private:
 			Index id;
-			Size height;
+			unsigned int height;
 		};//Font
 
 		class Letter: public Entity2D {
 			friend class Font;
 			friend class Text;
 		public:
-			Letter(const Texture& mask = Texture());
+			Letter();
 			~Letter() = default;
 
 			/**
 			@internal
 			*/
-			const Texture& getMask() const;
+			const Texture& getGlyph() const;
 
 			const Texture& getTexture() const;
 
-			const Size& getCharacterWidth() const;
-			const Size& getCharacterHeight() const;
+			const unsigned int& getCharacterWidth() const;
+			const unsigned int& getCharacterHeight() const;
 
-			const Index& getXBearing() const;
-			const Index& getYBearing() const;
+			const signed long& getXBearing() const;
+			const signed long& getYBearing() const;
 
-			const Index& getXAdvance() const;
-			const Index& getYAdvance() const;
+			const signed long& getXAdvance() const;
+			const signed long& getYAdvance() const;
 
 			bool operator==(const Letter& other) const;
 			bool operator!=(const Letter& other) const;
@@ -285,16 +285,16 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
-			Texture mask;
+			Texture glyph = Texture();
 
 			Texture texture = Texture();
 
-			Size width;
-			Size height;
-			Index bearingX;
-			Index bearingY;
-			Index advanceX;
-			Index advanceY;
+			unsigned int width = 0;
+			unsigned int height = 0;
+			signed long bearingX = 0;
+			signed long bearingY = 0;
+			signed long advanceX = 0;
+			signed long advanceY = 0;
 		};//Letter
 
 		/**

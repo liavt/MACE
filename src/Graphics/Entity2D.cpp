@@ -13,6 +13,7 @@ The above copyright notice and this permission notice shall be included in all c
 #undef FT_CONFIG_OPTION_USE_HARFBUZZ
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include FT_BITMAP_H
 
 #include <cmath>
 #include <vector>
@@ -28,6 +29,36 @@ namespace mc {
 			int freetypeStatus = -1;
 
 			std::vector<FT_Face> fonts = std::vector<FT_Face>();
+
+			Texture convertBitmapToTexture(const FT_Bitmap& bitmap){
+				TextureDesc desc = TextureDesc(bitmap.width, bitmap.rows);
+				switch (bitmap.pixel_mode) {
+				case FT_PIXEL_MODE_GRAY:
+					desc.format = TextureDesc::Format::LUMINANCE;
+					desc.internalFormat = TextureDesc::InternalFormat::RED;
+					break;
+				case FT_PIXEL_MODE_LCD:
+					desc.width /= 3;
+					desc.format = TextureDesc::Format::RGB;
+					desc.internalFormat = TextureDesc::InternalFormat::RGB8;
+					break;
+				}
+				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
+				desc.wrapS = TextureDesc::Wrap::CLAMP;
+				desc.wrapT = TextureDesc::Wrap::CLAMP;
+				desc.minFilter = TextureDesc::Filter::LINEAR;
+				desc.magFilter = TextureDesc::Filter::LINEAR;
+
+				Texture out = Texture(desc);
+				out.bind();
+
+				out.resetPixelStorage();
+				out.setUnpackStorageHint(gfx::PixelStorage::ALIGNMENT, 1);
+
+				out.setData(bitmap.buffer);
+				
+				return out;
+			}
 		}//anon namespace
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
@@ -260,7 +291,7 @@ namespace mc {
 			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity* e, float progress) {
 				Progressable* prog = dynamic_cast<Progressable*>(e);
 
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_CHECK_NULLPTR
 				if (prog == nullptr) {
 					MACE__THROW(NullPointer, "Internal Error: Progressable in EaseComponent is nullptr");
 				}
@@ -355,10 +386,12 @@ namespace mc {
 			return Font(id);
 		}
 
-		Font Font::loadFontFromMemory(const unsigned char * data, long int size) {
+		Font Font::loadFontFromMemory(const unsigned char * data, unsigned long int size) {
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (size <= 0) {
 				MACE__THROW(OutOfBounds, "Input size for loadFontFromMemory is less or equal to than 0!");
 			}
+#endif
 
 			if (freetypeStatus < 0) {
 				if ((freetypeStatus = FT_Init_FreeType(&freetype)) != FT_Err_Ok) {
@@ -389,15 +422,15 @@ namespace mc {
 			}
 		}
 
-		void Font::setSize(const Size h) {
+		void Font::setSize(const unsigned int h) {
 			this->height = h;
 		}
 
-		Size& Font::getSize() {
+		unsigned int& Font::getSize() {
 			return height;
 		}
 
-		const Size& Font::getSize() const {
+		const unsigned int& Font::getSize() const {
 			return height;
 		}
 
@@ -410,13 +443,19 @@ namespace mc {
 		}
 
 		void Font::getCharacter(const wchar_t c, Letter& character) const {
+#ifdef MACE_DEBUG_CHECK_ARGS
 			if (height <= 0) {
 				MACE__THROW(OutOfBounds, "The height of the font cannot be 0 - you must set it!");
 			}
+#endif
 
-			FT_Set_Pixel_Sizes(fonts[id], 0, height);
+			WindowModule* window = getCurrentWindow();
 
-			if (FT_Error result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LIGHT)) {
+			const Vector<int, 2> dpi = window->getMonitor().getDPI();
+
+			FT_Set_Char_Size(fonts[id], 0, height * 64, dpi[0], dpi[1]);
+
+			if (const FT_Error result = FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD)) {
 				MACE__THROW(Font, "Failed to load glyph with error code " + std::to_string(result));
 			}
 
@@ -428,23 +467,23 @@ namespace mc {
 			character.advanceY = fonts[id]->glyph->advance.y >> 6;
 
 			if (character.width == 0 || character.height == 0) {
-				character.mask = gfx::Texture::getGradient();
+				character.glyph = gfx::Texture::getGradient();
 			} else {
-				TextureDesc desc = TextureDesc(character.width, character.height, TextureDesc::Format::LUMINANCE);
-				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-				desc.internalFormat = TextureDesc::InternalFormat::RED;
-				desc.wrapS = TextureDesc::Wrap::CLAMP;
-				desc.wrapT = TextureDesc::Wrap::CLAMP;
-				desc.minFilter = TextureDesc::Filter::LINEAR;
-				desc.magFilter = TextureDesc::Filter::LINEAR;
+				GraphicsContext* context = window->getContext();
 
-				character.mask = Texture(desc);
-				character.mask.bind();
+				character.glyph = context->getOrCreateTexture("MC/Fonts/" + std::to_string(id) + "/Sizes/" + std::to_string(id) + "/Glyphs/" + std::to_string(static_cast<int>(c)), [&]() {
+					std::cout << "HELLO";
+					FT_Bitmap targetBitmap;
+					FT_Bitmap_New(&targetBitmap);
+					FT_Bitmap_Convert(freetype, &fonts[id]->glyph->bitmap, &targetBitmap, 1);
 
-				character.mask.resetPixelStorage();
-				character.mask.setUnpackStorageHint(gfx::PixelStorage::ALIGNMENT, 1);
+					targetBitmap.pixel_mode = FT_PIXEL_MODE_LCD;
 
-				character.mask.setData(fonts[id]->glyph->bitmap.buffer);
+					Texture out = convertBitmapToTexture(targetBitmap);
+
+					FT_Bitmap_Done(freetype, &targetBitmap);
+					return out;
+				});
 			}
 		}
 
@@ -464,7 +503,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Font::Font(const Index fontID, const Size h) : id(fontID), height(h) {}
+		Font::Font(const Index fontID, const unsigned int h) : id(fontID), height(h) {}
 
 		//font data, compiled in another file to increase compilation time
 		extern unsigned char sourceCodeProData[];
@@ -476,7 +515,7 @@ namespace mc {
 		extern unsigned char sourceSerifProData[];
 		extern unsigned int sourceSerifProLength;
 
-		Font::Font(const Fonts f, const Size h) : Font(0, h) {
+		Font::Font(const Fonts f, const unsigned int h) : Font(0, h) {
 			if (f == Fonts::CODE) {
 				static Font sourceCodePro;
 
@@ -501,7 +540,7 @@ namespace mc {
 				}
 
 				id = sourceSerifPro.getID();
-			} else {
+			} else MACE_UNLIKELY {
 				//should never be reached, but just to be safe
 				MACE__THROW(Font, "Unknown Fonts enum constant");
 			}
@@ -509,40 +548,41 @@ namespace mc {
 
 		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
-		Letter::Letter(const Texture& tex) : mask(tex) {}
+		Letter::Letter()  {}
 
-		const Texture& Letter::getMask() const {
-			return mask;
+		const Texture& Letter::getGlyph() const {
+			return glyph;
 		}
+
 		const Texture & Letter::getTexture() const {
 			return texture;
 		}
-		const Size& Letter::getCharacterWidth() const {
+		const unsigned int& Letter::getCharacterWidth() const {
 			return width;
 		}
 
-		const Size& Letter::getCharacterHeight() const {
+		const unsigned int& Letter::getCharacterHeight() const {
 			return height;
 		}
 
-		const Index& Letter::getXBearing() const {
+		const signed long& Letter::getXBearing() const {
 			return bearingX;
 		}
 
-		const Index& Letter::getYBearing() const {
+		const signed long& Letter::getYBearing() const {
 			return bearingY;
 		}
 
-		const Index& Letter::getXAdvance() const {
+		const signed long& Letter::getXAdvance() const {
 			return advanceX;
 		}
 
-		const Index& Letter::getYAdvance() const {
+		const signed long& Letter::getYAdvance() const {
 			return advanceY;
 		}
 
 		bool Letter::operator==(const Letter& other) const {
-			return Entity2D::operator==(other) && mask == other.mask&&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
+			return Entity2D::operator==(other) && glyph == other.glyph &&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
 		}
 
 		bool Letter::operator!=(const Letter& other) const {
@@ -555,16 +595,21 @@ namespace mc {
 
 		void Letter::onRender(Painter& p) {
 			p.disableRenderFeatures(Painter::RenderFeatures::INHERIT_SCALE | Painter::RenderFeatures::STORE_ID);
-			p.maskImage(texture, mask);
+			p.setTexture(texture, TextureSlot::FOREGROUND);
+			p.setTexture(glyph, TextureSlot::BACKGROUND);
+			p.drawQuad(Painter::Brush::TEXT);
+			
+			//p.drawImage(mask);
+			//p.drawImage(mask);
 		}
 
 		void Letter::onDestroy() {
-			if (mask.isCreated()) {
-				mask.destroy();
-			}
-
 			if (texture.isCreated()) {
 				texture.destroy();
+			}
+
+			if (glyph.isCreated()) {
+				glyph.destroy();
 			}
 		}
 
@@ -668,7 +713,7 @@ namespace mc {
 
 		void Text::onUpdate() {}
 
-		void Text::onRender(Painter&) {}
+		void Text::onRender(Painter& p) {}
 
 		void Text::onDestroy() {}
 

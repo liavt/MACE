@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__CORE_ERROR_H
 #include <string>
 #include <stdexcept>
+#include <MACE/Core/Constants.h>
 
 namespace mc {
 	//forward declaration for handleError();
@@ -20,19 +21,19 @@ namespace mc {
 	/**
 	Superclass that all exceptions in MACE extend.
 	*/
-	class Error: public std::runtime_error {
+	class MACE_NOVTABLE Error: public std::runtime_error {
 	public:
 		static std::string getErrorDump(const std::exception& e, const Instance* i = nullptr);
 
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/
-		static void handleError[[noreturn]](const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
+		static void handleError MACE_NORETURN (const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
 
 		/**
 		@copydoc Error::handleError(const std::exception& e, Instance*)
 		*/
-		static void handleError[[noreturn]](const std::exception& e, Instance& i);
+		static void handleError MACE_NORETURN (const std::exception& e, Instance& i);
 
 		Error(const char* message, const unsigned int line, const std::string file);
 		Error(const std::string message, const unsigned int line, const std::string file);
@@ -41,7 +42,7 @@ namespace mc {
 		Error() noexcept = default;
 		~Error() noexcept = default;
 
-		void handle[[noreturn]]();
+		void handle MACE_NORETURN ();
 
 		const unsigned int getLine() const;
 		const char* getFile() const;
@@ -126,7 +127,7 @@ namespace mc {
 	public:
 		using Error::Error;
 
-		MultipleErrors(const Error errs[], const unsigned int errorSize, const unsigned int line, const char* file);
+		MultipleErrors(const Error errs[], const std::size_t errorSize, const unsigned int line, const char* file);
 
 		const char* what() const noexcept override;
 	private:

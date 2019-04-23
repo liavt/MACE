@@ -96,7 +96,7 @@ namespace mc {
 #endif
 		}
 
-		class Progressable {
+		class MACE_NOVTABLE Progressable {
 		public:
 			virtual ~Progressable() = default;
 

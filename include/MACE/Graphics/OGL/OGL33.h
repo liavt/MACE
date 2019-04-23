@@ -69,13 +69,13 @@ namespace mc {
 			/**
 			@opengl
 			*/
-			void checkGLError(const Index line = 0, const char* file = "Unknown file", const char* message = "No message specified");
+			void checkGLError(const unsigned int line = 0, const char* file = "Unknown file", const char* message = "No message specified");
 			/**
 			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
 			*/
-			void checkGLError(const Index line, const char* file, const std::string message);
+			void checkGLError(const unsigned int line, const char* file, const std::string message);
 
-			void forceCheckGLError(const Index line, const char* file, const char* message);
+			void forceCheckGLError(const unsigned int line, const char* file, const char* message);
 
 			/**
 			@opengl
@@ -94,7 +94,7 @@ namespace mc {
 			/**
 			@opengl
 			*/
-			void setViewport(const Index x, const Index y, const Size width, const Size height);
+			void setViewport(const int x, const int y, const int width, const int height);
 
 			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
@@ -114,7 +114,7 @@ namespace mc {
 			@see Buffer
 			@see https://www.opengl.org/wiki/OpenGL_Object
 			*/
-			class Object: public Initializable, public Bindable {
+			class MACE_NOVTABLE Object: public Initializable, public Bindable {
 			public:
 				/**
 				Virtual destructor for subclasses and safety
@@ -176,8 +176,8 @@ namespace mc {
 				*/
 				GLuint getID() const;
 
-				static void init(Object* objects[], const Size length);
-				static void destroy(Object* objects[], const Size length);
+				static void init(Object* objects[], const GLsizei length);
+				static void destroy(Object* objects[], const GLsizei length);
 
 				/**
 				Compares if 2 `Objects` are equal.
@@ -211,13 +211,13 @@ namespace mc {
 				*/
 				virtual void bindIndex(const GLuint id) const = 0;
 
-				virtual void initIndices(GLuint id[], const Size length) const = 0;
+				virtual void initIndices(GLuint id[], const GLsizei length) const = 0;
 				template<Size N>
 				void initIndices(GLuint id[N]) const {
 					initIndices(id, N);
 				}
 
-				virtual void destroyIndices(const GLuint id[], const Size length) const = 0;
+				virtual void destroyIndices(const GLuint id[], const GLsizei length) const = 0;
 				template<Size N>
 				void destroyIndices(const GLuint id[N]) const {
 					destroyIndices(id, N);
@@ -311,8 +311,8 @@ namespace mc {
 
 				void bindIndex(const GLuint id) const override final;
 
-				void initIndices(GLuint id[], const Size length) const override final;
-				void destroyIndices(const GLuint id[], const Size length) const override final;
+				void initIndices(GLuint id[], const GLsizei length) const override final;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override final;
 			};//QueryObject
 
 			/**
@@ -333,7 +333,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorage
 				@opengl
 				*/
-				void setStorage(const Enum format, const Size width, const Size height);
+				void setStorage(const Enum format, const GLsizei width, const GLsizei height);
 				/**
 				Sets the flags for the storage of this `RenderBuffer.` This version can have anti-aliasing.
 				@param samples How many samples to use for MSAA
@@ -344,7 +344,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorageMultisample
 				@opengl
 				*/
-				void setStorageMultisampled(const Size samples, const Enum format, const Size width, const Size height);
+				void setStorageMultisampled(const GLsizei samples, const Enum format, const GLsizei width, const GLsizei height);
 
 				bool isCreated() const override;
 
@@ -353,8 +353,8 @@ namespace mc {
 			private:
 				void bindIndex(const GLuint id) const override;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//RenderBuffer
 
 			/**
@@ -373,13 +373,13 @@ namespace mc {
 				@opengl
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
-				void setData(const void * data, Size width, Size height, Enum type, Enum format, Enum internalFormat, Index mipmapLevel);
+				void setData(const void * data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel);
 
 				/**
 				@opengl
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2DMultisample.xhtml
 				*/
-				void setMultisampledData(const Size samples, const Size width, const Size height, const Enum internalFormat, const bool fixedSamples = true);
+				void setMultisampledData(const GLsizei samples, const GLsizei width, const GLsizei height, const Enum internalFormat, const bool fixedSamples = true);
 
 				/**
 				@opengl
@@ -430,8 +430,8 @@ namespace mc {
 
 				void bindIndex(const GLuint id) const override;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//Texture2D
 
 			/**
@@ -596,8 +596,8 @@ namespace mc {
 			private:
 				void bindIndex(const GLuint id) const override;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//FrameBuffer
 
 			/**
@@ -754,8 +754,8 @@ namespace mc {
 
 				void bindIndex(const GLuint id) const override;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//Buffer
 
 			/**
@@ -811,7 +811,7 @@ namespace mc {
 				@see VertexArray
 				@opengl
 				*/
-				void setAttributePointer(const Byte attribSize, const Enum type, const bool normalized = 0, const Index stride = 0, const void* pointer = nullptr);
+				void setAttributePointer(const GLint attribSize, const Enum type, const bool normalized = 0, const GLsizei stride = 0, const void* pointer = nullptr);
 
 				/**
 				Modify the rate at which vertex attribute advance during instancing. If instanced rendering is not being used,
@@ -820,7 +820,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glVertexAttribDivisor
 				@opengl
 				@*/
-				void setDivisor(const unsigned int divisor);
+				void setDivisor(const GLuint divisor);
 
 				/**
 				Enables this `VertexBuffer` for use in rendering. Not to be confused with Object::bind() const which binds
@@ -843,16 +843,16 @@ namespace mc {
 				Gets the current attribute location of this `VertexBuffer`
 				@return The attribute index
 				*/
-				Index getLocation();
+				GLuint getLocation();
 				/**
 				@copydoc VertexBuffer::getLocation()
 				*/
-				const Index getLocation() const;
+				const GLuint getLocation() const;
 				/**
 				Sets the attribute location of this `VertexBuffer.` 0 by default.
 				@param newLocation What to set it to
 				*/
-				void setLocation(const Index newLocation);
+				void setLocation(const GLuint newLocation);
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -863,7 +863,7 @@ namespace mc {
 				*/
 				bool operator!=(const VertexBuffer& other) const;
 			private:
-				Index location = 0;
+				GLuint location = 0;
 			};//VertexBuffer
 
 			/**
@@ -940,28 +940,28 @@ namespace mc {
 				@see VertexBuffer
 				@param verticeSize amount of vertices
 				*/
-				void loadVertices(const Size verticeSize, const float* vertices, const Index location = 15, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
+				void loadVertices(const unsigned int verticeSize, const float* vertices, const GLuint location = 15, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
 				/**
 				@opengl
 				@see VertexBuffer
 				*/
-				void loadIndices(const Size indiceNum, const unsigned int* indiceData);
+				void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData);
 
 				/**
 				@opengl
 				@see VertexBuffer
 				@param dataSize amount of elements * sizeof() each individual element
 				*/
-				void storeDataInAttributeList(const Size dataSize, const GLvoid* data, const Index location = 0, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
+				void storeDataInAttributeList(const unsigned int dataSize, const GLvoid* data, const GLuint location = 0, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
 
 				/**
 				@opengl
 				*/
 				void addBuffer(const VertexBuffer& newBuffer);
 
-				void setVertexNumber(const Size vertexNum);
-				Size getVertexNumber();
-				const Size getVertexNumber() const;
+				void setVertexNumber(const GLsizei vertexNum);
+				GLsizei getVertexNumber();
+				const GLsizei getVertexNumber() const;
 
 				void setIndices(const ElementBuffer& buffer);
 				ElementBuffer& getIndices();
@@ -983,12 +983,12 @@ namespace mc {
 				ElementBuffer indices;
 				std::vector<VertexBuffer> buffers = std::vector<VertexBuffer>();
 			private:
-				Size vertexNumber;
+				GLsizei vertexNumber;
 
 				void bindIndex(const GLuint id) const override;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//VertexArray
 
 			/**
@@ -1092,14 +1092,14 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glShaderSource
 				@opengl
 				*/
-				void setSource(const Size count, const char* strings[], const int lengths[]);
+				void setSource(const GLsizei count, const char* strings[], const int lengths[]);
 				void setSource(const char string[], const int length);
 				void setSource(const std::string& string);
 
 				/**
 				@opengl
 				*/
-				char* getSource(const Size length, char* characters, int amount = 0) const;
+				char* getSource(const GLsizei length, char* characters, int amount = 0) const;
 
 				/**
 				@opengl
@@ -1144,8 +1144,8 @@ namespace mc {
 
 				void bindIndex(const GLuint id) const override final;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//Shader
 
 			/**
@@ -1162,8 +1162,8 @@ namespace mc {
 						Enum type;
 					};
 
-					GLint size;
-					GLuint index;
+					GLint size = 0;
+					GLuint index = 0;
 					
 					std::unordered_map<std::string, Field> fields{};
 				};
@@ -1208,7 +1208,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				void detachShader(const Index id);
+				void detachShader(const GLuint id);
 				/**
 				@copydoc ShaderProgram::detachShader(const Index)
 				*/
@@ -1231,7 +1231,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				void createFragment(const Size count, const char* strings[]);
+				void createFragment(const GLsizei count, const char* strings[]);
 				/**
 				@opengl
 				*/
@@ -1239,7 +1239,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				void createVertex(const Size count, const char* strings[]);
+				void createVertex(const GLsizei count, const char* strings[]);
 
 				/**
 				@opengl
@@ -1315,8 +1315,8 @@ namespace mc {
 				void setUniform(const char* name, const float a, const float b);
 				void setUniform(const char* name, const float a, const float b, const float c);
 				void setUniform(const char* name, const float a, const float b, const float c, const float d);
-				void setUniform(const char* name, const Size arraySize, const float* a);
-				void setUniform(const char* name, const Size componentSize, const Size arraySize, const float* a);
+				void setUniform(const char* name, const GLsizei arraySize, const float* a);
+				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const float* a);
 				void setUniform(const char* name, const mc::Vector<float, 1> v);
 				void setUniform(const char* name, const mc::Vector<float, 2> v);
 				void setUniform(const char* name, const mc::Vector<float, 3> v);
@@ -1326,8 +1326,8 @@ namespace mc {
 				void setUniform(const char* name, const double a, const double b);
 				void setUniform(const char* name, const double a, const double b, const double c);
 				void setUniform(const char* name, const double a, const double b, const double c, const double d);
-				void setUniform(const char* name, const Size arraySize, const double* a);
-				void setUniform(const char* name, const Size componentSize, const Size arraySize, const double* a);
+				void setUniform(const char* name, const GLsizei arraySize, const double* a);
+				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const double* a);
 				void setUniform(const char* name, const mc::Vector<double, 1> v);
 				void setUniform(const char* name, const mc::Vector<double, 2> v);
 				void setUniform(const char* name, const mc::Vector<double, 3> v);
@@ -1337,8 +1337,8 @@ namespace mc {
 				void setUniform(const char* name, const int a, const int b);
 				void setUniform(const char* name, const int a, const int b, const int c);
 				void setUniform(const char* name, const int a, const int b, const int c, const int d);
-				void setUniform(const char* name, const Size arraySize, const int* a);
-				void setUniform(const char* name, const Size componentSize, const Size arraySize, const int* a);
+				void setUniform(const char* name, const GLsizei arraySize, const int* a);
+				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const int* a);
 				void setUniform(const char* name, const mc::Vector<int, 1> v);
 				void setUniform(const char* name, const mc::Vector<int, 2> v);
 				void setUniform(const char* name, const mc::Vector<int, 3> v);
@@ -1348,8 +1348,8 @@ namespace mc {
 				void setUniform(const char* name, const unsigned int a, const unsigned int b);
 				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c);
 				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d);
-				void setUniform(const char* name, const Size arraySize, const unsigned int* a);
-				void setUniform(const char* name, const Size componentSize, const Size arraySize, const unsigned int* a);
+				void setUniform(const char* name, const GLsizei arraySize, const unsigned int* a);
+				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const unsigned int* a);
 				void setUniform(const char* name, const mc::Vector<unsigned int, 1> v);
 				void setUniform(const char* name, const mc::Vector<unsigned int, 2> v);
 				void setUniform(const char* name, const mc::Vector<unsigned int, 3> v);
@@ -1373,8 +1373,8 @@ namespace mc {
 
 				void bindIndex(const GLuint id) const override;
 
-				void initIndices(GLuint id[], const Size length) const override;
-				void destroyIndices(const GLuint id[], const Size length) const override;
+				void initIndices(GLuint id[], const GLsizei length) const override;
+				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//ShaderProgram
 		}//ogl33
 	}//gfx

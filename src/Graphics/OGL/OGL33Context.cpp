@@ -72,7 +72,21 @@ namespace mc {
 							return GL_RGB;
 						case TextureDesc::InternalFormat::RGBA:
 							return GL_RGBA;
-						default:
+						case TextureDesc::InternalFormat::R8:
+							return GL_R8;
+						case TextureDesc::InternalFormat::R16:
+							return GL_R16;
+						case TextureDesc::InternalFormat::RGB8:
+							return GL_RGB8;
+						case TextureDesc::InternalFormat::RGBA8:
+							return GL_RGBA8;
+						case TextureDesc::InternalFormat::SRGB:
+							return GL_SRGB;
+						case TextureDesc::InternalFormat::SRGB8:
+							return GL_SRGB8;
+						case TextureDesc::InternalFormat::SRGB_ALPHA:
+							return GL_SRGB_ALPHA;
+						default MACE_UNLIKELY:
 							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
 				}
@@ -243,7 +257,7 @@ namespace mc {
 				}
 			}
 
-			void OGL33Texture::setData(const void * data, const Index mipmap) {
+			void OGL33Texture::setData(const void * data, const int mipmap) {
 				ogl33::Texture2D::bind();
 				ogl33::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
 
@@ -310,15 +324,15 @@ namespace mc {
 				}
 			}
 
-			void OGL33Model::loadTextureCoordinates(const Size dataSize, const float* data) {
+			void OGL33Model::loadTextureCoordinates(const unsigned int dataSize, const float* data) {
 				ogl33::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
 			}
 
-			void OGL33Model::loadVertices(const Size verticeSize, const float* vertices) {
+			void OGL33Model::loadVertices(const unsigned int verticeSize, const float* vertices) {
 				ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
 			}
 
-			void OGL33Model::loadIndices(const Size indiceNum, const unsigned int * indiceData) {
+			void OGL33Model::loadIndices(const unsigned int indiceNum, const unsigned int * indiceData) {
 				ogl33::VertexArray::loadIndices(indiceNum, indiceData);
 			}
 

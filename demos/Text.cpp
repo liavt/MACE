@@ -16,7 +16,7 @@ gfx::Text topLeft, center, topRight, botLeft, botRight;
 void create(gfx::WindowModule& win) {
 	center = gfx::Text(L"©enter text!", gfx::Fonts::CODE);
 
-	topLeft = gfx::Text("Top left!", gfx::Fonts::SERIF);
+	topLeft = gfx::Text(L"Top😎 left!", gfx::Fonts::SERIF);
 	topLeft.setTexture(Colors::WHITE);
 	topLeft.setHorizontalAlign(gfx::HorizontalAlign::LEFT);
 	topLeft.setVerticalAlign(gfx::VerticalAlign::TOP);
@@ -32,7 +32,7 @@ void create(gfx::WindowModule& win) {
 	botLeft.setVerticalAlign(gfx::VerticalAlign::BOTTOM);
 
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
-	font.setSize(48);
+	font.setSize(24);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
 	botRight.setTexture(Colors::YELLOW);

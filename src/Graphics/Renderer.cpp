@@ -56,7 +56,7 @@ namespace mc {
 
 			std::shared_ptr<PainterImpl> impl = std::move(createPainterImpl());
 			p.impl = impl;
-			p.id = renderQueue.size() + 1;
+			p.id = static_cast<EntityID>(renderQueue.size()) + 1;
 			p.entity = e;
 			impl->painter = &p;
 			impl->init();
@@ -78,7 +78,7 @@ namespace mc {
 			resized = true;
 		}//flagResize
 
-		void Renderer::resize(WindowModule* win, const Size width, const Size height) {
+		void Renderer::resize(WindowModule* win, const int width, const int height) {
 			onResize(win, width, height);
 
 			resized = false;
@@ -145,15 +145,15 @@ namespace mc {
 			setRefreshColor(c.r, c.g, c.b, c.a);
 		}//setRefreshColor(Color)
 
-		Size Renderer::getWidth() const {
-			return static_cast<Size>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[0]);
+		int Renderer::getWidth() const {
+			return static_cast<int>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[0]);
 		}
 
-		Size Renderer::getHeight() const {
-			return static_cast<Size>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[1]);
+		int Renderer::getHeight() const {
+			return static_cast<int>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[1]);
 		}
 
-		Size Renderer::getSamples() const {
+		unsigned int Renderer::getSamples() const {
 			return samples;
 		}//getSamples()
 

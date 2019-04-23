@@ -56,7 +56,7 @@ namespace mc {
 				OGL33Renderer();
 				~OGL33Renderer() noexcept override = default;
 
-				void onResize(gfx::WindowModule* win, const Size width, const Size height) override;
+				void onResize(gfx::WindowModule* win, const int width, const int height) override;
 				void onInit(gfx::WindowModule* win) override;
 				void onSetUp(gfx::WindowModule* win) override;
 				void onTearDown(gfx::WindowModule* win) override;

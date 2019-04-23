@@ -29,20 +29,20 @@ namespace mc {
 		class Serial {
 		public:
 			Serial();
-			Serial(const char* port, const Size baudRate = 9600);
-			Serial(const std::string& port, const Size baudRate = 9600);
+			Serial(const char* port, const unsigned int baudRate = 9600);
+			Serial(const std::string& port, const unsigned int baudRate = 9600);
 			~Serial();
 
-			void init(const char* port, const Size baudRate = 9600);
+			void init(const char* port, const unsigned int baudRate = 9600);
 			void destroy();
 
-			int read(char* buffer, Size bufferSize);
+			int read(char* buffer, unsigned int bufferSize);
 			template<int S>
 			int read(char buffer[S]) {
 				return this->read(buffer, S);
 			}
 
-			void write(const char* buffer, const Size bufferSize);
+			void write(const char* buffer, const unsigned int bufferSize);
 			template<int S>
 			int write(const char buffer[S]) {
 				return this->write(buffer, S);
@@ -51,7 +51,7 @@ namespace mc {
 
 			void flush();
 
-			Size getAvailableCharacterAmount() const;
+			unsigned int getAvailableCharacterAmount() const;
 
 			bool hasAvailable() const;
 

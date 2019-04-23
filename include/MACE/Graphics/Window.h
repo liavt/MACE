@@ -21,8 +21,12 @@ The above copyright notice and this permission notice shall be included in all c
 
 //forward declaration to prevent including glfw.h
 struct GLFWwindow;
+struct GLFWmonitor;
+struct GLFWvidmode;
 
 namespace mc {
+	struct Color;
+
 	namespace gfx {
 		class GraphicsContext;
 
@@ -53,6 +57,9 @@ namespace mc {
 		*/
 		MACE__DECLARE_ERROR(NoRendererContext);
 
+		//forward declare for WindowModule
+		class Monitor;
+
 		/**
 		@todo fix fps timer
 		*/
@@ -75,7 +82,7 @@ namespace mc {
 				using ScrollCallback = std::function<void(WindowModule&, double, double)>;
 				using MouseMoveCallback = std::function<void(WindowModule&, int, int)>;
 
-				LaunchConfig(const int w, const int h, const char* t);
+				LaunchConfig(const int w, const int h, const char* t) MACE_EXPECTS(t != nullptr && !t.empty());
 
 				const char* title;
 				const int width;
@@ -124,16 +131,20 @@ namespace mc {
 
 			const LaunchConfig& getLaunchConfig() const;
 
-			void setTitle(const std::string& newTitle);
+			void setTitle(const std::string& newTitle) MACE_EXPECTS(!newTitle.empty());
 
-			std::string getName() const override;
+			std::string getName() const override MACE_ENSURES(ret, !ret.empty());
 
 			bool isDestroyed() const;
 
 			Vector<int, 2> getFramebufferSize() const;
 
+			Vector<float, 2> getContentScale() const;
+
 			GraphicsContext* getContext();
 			const GraphicsContext* getContext() const;
+
+			Monitor getMonitor();
 		private:
 			enum Properties: Byte {
 				DESTROYED = 0,
@@ -168,6 +179,87 @@ namespace mc {
 			void threadCallback();
 		};//WindowModule
 
+		class Monitor;
+
+		class VideoMode {
+			friend class Monitor;
+		public:
+			int getWidth() const;
+
+			int getHeight() const;
+
+			int getRedBits() const;
+
+			int getGreenBits() const;
+
+			int getBlueBits() const;
+
+			Color getChannelBits() const;
+
+			int getRefreshRate() const;
+
+#ifdef MACE_EXPOSE_GLFW
+			/**
+			@internal
+			*/
+			const GLFWvidmode* const getGLFWVidemode() const {
+				return mode;
+			}
+#endif//MACE_EXPOSE_GLFW
+		private:
+			VideoMode(const GLFWvidmode* const mode);
+
+			const GLFWvidmode* const mode;
+		};
+
+		Monitor getPrimaryMonitor();
+
+		class Monitor {
+			friend Monitor getPrimaryMonitor();
+			friend class WindowModule;
+		public:
+			Vector<int, 2> getSizeMM() const;
+
+			Vector<int, 2> getSizeInches() const;
+
+			Vector<int, 2> getDPI() const;
+
+			Vector<float, 2> getContentScale() const;
+			
+			const char* getName() const;
+
+			Vector<int, 4> getWorkArea() const;
+
+			Vector<int, 2> getVirtualPosition() const;
+
+			std::vector<VideoMode> getVideoModes() const;
+
+			VideoMode getCurrentVideoMode() const;
+
+			Vector<int, 2> getResolution() const;
+
+#ifdef MACE_EXPOSE_GLFW
+
+			/**
+			@internal
+			*/
+			GLFWmonitor* const getGLFWMonitor() {
+				return monitor;
+			}
+
+			/**
+			@internal
+			*/
+			const GLFWmonitor* const getGLFWMonitor() const{
+				return monitor;
+			}
+#endif//MACE_EXPOSE_GLFW
+		private:
+			Monitor(GLFWmonitor* const mon);
+
+			GLFWmonitor* const monitor;
+		};
+
 		/**
 		Retrieves the `WindowModule` from the `Renderer` context in this thread if exists, throws an error otherwise.
 
@@ -199,6 +291,7 @@ namespace mc {
 		@see getCurrentWindowOrNull()
 		*/
 		bool hasWindow();
+
 
 #ifdef MACE_EXPOSE_GLFW
 		/**

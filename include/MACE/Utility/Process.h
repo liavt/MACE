@@ -24,7 +24,7 @@ namespace mc {
 	class Process: public Initializable {
 	public:
 		Process();
-		Process(const char* path, const char* args);
+		Process(const char* path, const char* args) MACE_EXPECTS(path != nullptr && args != nullptr);
 		Process(const std::string& path, std::string& args);
 		~Process();
 
@@ -36,10 +36,10 @@ namespace mc {
 		bool isRunning() const;
 		bool isCreated() const;
 
-		void setPath(const char* p);
+		void setPath(const char* p) MACE_EXPECTS(p != nullptr);
 		const char* getPath() const;
 
-		void setArgs(const char* a);
+		void setArgs(const char* a) MACE_EXPECTS(a != nullptr);
 		const char* getArgs() const;
 
 #if defined(MACE_WINAPI) && defined(MACE_EXPOSE_WINAPI)
@@ -56,8 +56,8 @@ namespace mc {
 		const char* args;
 
 #ifdef MACE_WINAPI
-		void* process;
-		void* thread;
+		void* process = nullptr;
+		void* thread = nullptr;
 #elif defined(MACE_POSIX)
 		pid_t process;
 #endif//MACE_POSIX

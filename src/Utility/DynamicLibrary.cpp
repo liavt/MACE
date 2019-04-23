@@ -62,7 +62,7 @@ namespace mc {
 		}
 	}
 
-	DynamicLibrary::DynamicLibrary() {}
+	DynamicLibrary::DynamicLibrary() : dll(nullptr), created(false){}
 
 	DynamicLibrary::DynamicLibrary(const std::string & path) : DynamicLibrary(path.c_str()) {}
 

@@ -92,9 +92,9 @@ namespace mc {
 		dump << std::endl;
 		if (instance != nullptr) {
 			dump << "====MACE DETAILS====" << std::endl;
-			dump << "Module Handler Size:" << std::endl << '\t' << instance->numberOfModules() << std::endl;
+			dump << "Instance Size:" << std::endl << '\t' << instance->size() << std::endl;
 			dump << "Modules:";
-			for (Index i = 0; i < instance->numberOfModules(); ++i) {
+			for (Index i = 0; i < instance->size(); ++i) {
 				const Module* m = instance->getModule(i);
 
 				dump << std::endl << '\t' << m->getName() << " (" << typeid(*m).name() << ')';
@@ -228,7 +228,7 @@ namespace mc {
 		return file;
 	}
 
-	MultipleErrors::MultipleErrors(const Error errs[], const unsigned int errorSize, const unsigned int line, const char * file)
+	MultipleErrors::MultipleErrors(const Error errs[], const std::size_t errorSize, const unsigned int line, const char * file)
 		: Error("", line, file), message("Multiple errors occured:\n") {
 		if (errs == nullptr) {
 			//normally we would throw an error, but we cant throw an error from an error! that would cause all sorts of crazy memory corruption!

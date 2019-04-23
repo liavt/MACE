@@ -29,9 +29,9 @@ namespace mc {
 
 				void draw() const override;
 
-				void loadTextureCoordinates(const Size dataSize, const float* data) override;
-				void loadVertices(const Size verticeSize, const float* vertices) override;
-				void loadIndices(const Size indiceNum, const unsigned int* indiceData) override;
+				void loadTextureCoordinates(const unsigned int dataSize, const float* data) override;
+				void loadVertices(const unsigned int verticeSize, const float* vertices) override;
+				void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) override;
 
 				bool isCreated() const override;
 			};
@@ -50,7 +50,7 @@ namespace mc {
 				void setUnpackStorageHint(const gfx::PixelStorage hint, const int value) override;
 				void setPackStorageHint(const gfx::PixelStorage hint, const int value) override;
 
-				void setData(const void* data, const Index mipmap = 0) override;
+				void setData(const void* data, const int mipmap = 0) override;
 
 				void readPixels(void* data) const override;
 			};

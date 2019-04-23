@@ -10,10 +10,11 @@ The above copyright notice and this permission notice shall be included in all c
 #pragma once
 #ifndef MACE__CORE_INTERFACES_H
 #define MACE__CORE_INTERFACES_H
+#include <MACE/Core/Constants.h>
 #include <MACE/Core/Error.h>
 
 namespace mc {
-	class Beginable {
+	class MACE_NOVTABLE Beginable {
 	public:
 		virtual ~Beginable() = default;
 
@@ -43,7 +44,7 @@ namespace mc {
 		Beginable * obj;
 	};
 
-	class Bindable {
+	class MACE_NOVTABLE Bindable {
 	public:
 		virtual ~Bindable() = default;
 
@@ -75,7 +76,7 @@ namespace mc {
 
 	class Initializer;
 
-	class Initializable {
+	class MACE_NOVTABLE Initializable {
 		friend class Initializer;
 	public:
 		virtual ~Initializable() = default;

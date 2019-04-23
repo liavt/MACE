@@ -57,14 +57,14 @@ namespace mc {
 		bool isLooping() const;
 	private:
 		Byte properties = 0;
-		unsigned int source, buffer;
-		unsigned int frequency;
-		int size;
+		unsigned int source, buffer = 0;
+		unsigned int frequency = 0;
+		int size = 0;
 		Enum format;
-		unsigned char *buf;
+		unsigned char *buf = nullptr;
 		std::string path;
-		float volume;
-		float x, y, z;
+		float volume = 1;
+		float x = 0, y = 0, z = 0;
 	};//Sound
 
 	class AudioModule: public Module {

@@ -77,7 +77,7 @@ namespace mc {
 			MASK = 2
 		};
 
-		class ModelImpl: public Initializable, public Bindable {
+		class MACE_NOVTABLE ModelImpl: public Initializable, public Bindable {
 			friend class Model;
 		public:
 			virtual void init() override = 0;
@@ -88,9 +88,9 @@ namespace mc {
 
 			virtual void draw() const = 0;
 
-			virtual void loadTextureCoordinates(const Size dataSize, const float* data) = 0;
-			virtual void loadVertices(const Size verticeSize, const float* vertices) = 0;
-			virtual void loadIndices(const Size indiceNum, const unsigned int* indiceData) = 0;
+			virtual void loadTextureCoordinates(const unsigned int dataSize, const float* data) = 0;
+			virtual void loadVertices(const unsigned int verticeSize, const float* vertices) = 0;
+			virtual void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) = 0;
 
 			virtual bool isCreated() const = 0;
 
@@ -115,20 +115,20 @@ namespace mc {
 			void bind() const override;
 			void unbind() const override;
 
-			void createTextureCoordinates(const Size dataSize, const float* data);
-			template<const Size N>
+			void createTextureCoordinates(const unsigned int dataSize, const float* data);
+			template<const unsigned int N>
 			void createTextureCoordinates(const float(&data)[N]) {
 				createTextureCoordinates(N, data);
 			}
 
-			void createVertices(const Size verticeSize, const float* vertices, const PrimitiveType& prim);
-			template<const Size N>
+			void createVertices(const unsigned intverticeSize, const float* vertices, const PrimitiveType& prim);
+			template<const unsigned int N>
 			void createVertices(const float(&vertices)[N], const PrimitiveType& prim) {
 				createVertices(N, vertices, prim);
 			}
 
-			void createIndices(const Size indiceNum, const unsigned int* indiceData);
-			template<const Size N>
+			void createIndices(const unsigned int indiceNum, const unsigned int* indiceData);
+			template<const unsigned int N>
 			void createIndices(const unsigned int(&indiceData)[N]) {
 				createIndices(N, indiceData);
 			}
@@ -196,7 +196,14 @@ namespace mc {
 				RED,
 				RG,
 				RGB,
-				RGBA
+				RGBA,
+				R8,
+				R16,
+				RGB8,
+				RGBA8,
+				SRGB,
+				SRGB8,
+				SRGB_ALPHA
 			};
 
 			enum class Filter: Byte {
@@ -234,7 +241,7 @@ namespace mc {
 			Color borderColor = Colors::INVISIBLE;
 		};
 
-		class TextureImpl: public Bindable {
+		class MACE_NOVTABLE TextureImpl: public Bindable {
 			friend class Texture;
 		public:
 			TextureImpl(const TextureDesc& t);
@@ -246,7 +253,7 @@ namespace mc {
 
 			virtual bool isCreated() const = 0;
 
-			virtual void setData(const void* data, const Index mipmap) = 0;
+			virtual void setData(const void* data, const int mipmap) = 0;
 
 			virtual void setUnpackStorageHint(const PixelStorage hint, const int value) = 0;
 			virtual void setPackStorageHint(const PixelStorage hint, const int value) = 0;
@@ -261,7 +268,7 @@ namespace mc {
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
 			static Texture createFromFile(const std::string& file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
 			static Texture createFromFile(const char* file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
-			static Texture createFromMemory(const unsigned char * c, const Size size);
+			static Texture createFromMemory(const unsigned char * c, const int size);
 
 			static Texture& getSolidColor();
 			/**
@@ -374,13 +381,13 @@ namespace mc {
 
 			void resetPixelStorage();
 
-			void setData(const void* data, const Index mipmap = 0);
-			template<typename T, Size W, Size H>
-			void setData(const T(&data)[W][H], const Index mipmap = 0) {
+			void setData(const void* data, const int mipmap = 0);
+			template<typename T, unsigned int W, unsigned int H>
+			void setData(const T(&data)[W][H], const int mipmap = 0) {
 				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
 				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
 
-				if (W != texture->desc.width || H != texture->desc.height) {
+				MACE_IF_CONSTEXPR (W != texture->desc.width || H != texture->desc.height) {
 					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
 				}
 
@@ -401,6 +408,15 @@ namespace mc {
 
 			Vector<float, 4> transform{ 0.0f, 0.0f, 1.0f, 1.0f };
 		};//Texture
+
+		struct RenderTargetDesc {
+		public:
+			unsigned int width = 1288, height = 128;
+		};
+
+		class MACE_NOVTABLE RenderTargetImpl: public Initializable {
+
+		};//RenderTargetImpl
 
 		class GraphicsContext: public Initializable {
 			friend class Texture;

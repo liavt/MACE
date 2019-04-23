@@ -17,7 +17,7 @@ The above copyright notice and this permission notice shall be included in all c
 #elif defined(MACE_MSVC)
 #	pragma warning( push ) 
 //these are all warnings that STB_IMAGE activates which dont really matter
-#	pragma warning( disable: 4244 4100 4456 ) 
+#	pragma warning( disable: 4244 4100 4456 26451 6001) 
 #endif
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -133,13 +133,13 @@ namespace mc {
 			model->unbind();
 		}
 
-		void Model::createTextureCoordinates(const Size dataSize, const float * data) {
+		void Model::createTextureCoordinates(const unsigned int dataSize, const float * data) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->loadTextureCoordinates(dataSize, data);
 		}
 
-		void Model::createVertices(const Size verticeSize, const float * vertices, const PrimitiveType& prim) {
+		void Model::createVertices(const unsigned int verticeSize, const float * vertices, const PrimitiveType& prim) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->primitiveType = prim;
@@ -147,7 +147,7 @@ namespace mc {
 
 		}
 
-		void Model::createIndices(const Size indiceNum, const unsigned int * indiceData) {
+		void Model::createIndices(const unsigned int indiceNum, const unsigned int * indiceData) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->loadIndices(indiceNum, indiceData);
@@ -192,9 +192,10 @@ namespace mc {
 
 			texture.resetPixelStorage();
 
+			const size_t newSize = static_cast<size_t>(width) * static_cast<size_t>(height);
 			std::vector<unsigned int> data = std::vector<unsigned int>();
-			data.reserve(width * height);
-			for (Index i = 0; i < width * height; ++i) {
+			data.reserve(newSize);
+			for (Index i = 0; i < newSize; ++i) {
 				data[i] = col.toUnsignedInt();
 			}
 			texture.setData(&data[0]);
@@ -268,7 +269,7 @@ namespace mc {
 			return tex;
 		}
 
-		Texture Texture::createFromMemory(const unsigned char * c, const Size size) {
+		Texture Texture::createFromMemory(const unsigned char * c, const int size) {
 			Texture texture = Texture();
 			int width, height, componentSize;
 
@@ -519,7 +520,7 @@ namespace mc {
 			setUnpackStorageHint(PixelStorage::ROW_LENGTH, 0);
 		}
 
-		void Texture::setData(const void * data, const Index mipmap) {
+		void Texture::setData(const void * data, const int mipmap) {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->setData(data, mipmap);
