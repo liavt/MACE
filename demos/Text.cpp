@@ -14,7 +14,7 @@ using namespace mc;
 gfx::Text topLeft, center, topRight, botLeft, botRight;
 
 void create(gfx::WindowModule& win) {
-	center = gfx::Text(L"©enter text!", gfx::Fonts::CODE);
+	center = gfx::Text("FPS: 000 UPS: 000", gfx::Fonts::CODE);
 
 	topLeft = gfx::Text(L"Top😎 left!", gfx::Fonts::SERIF);
 	topLeft.setTexture(Colors::WHITE);
@@ -61,7 +61,21 @@ int main() {
 		os::ErrorModule errModule = os::ErrorModule();
 		instance.addModule(errModule);
 
-		instance.start();
+		gfx::FPSComponent f = gfx::FPSComponent();
+		f.setTickCallback([](gfx::FPSComponent * com, gfx::Entity*) {
+			center.setText("UPS: " + std::to_string(com->getUpdatesPerSecond()) + "\nFPS: " + std::to_string(com->getFramesPerSecond()) + "\nFrame Time: " + std::to_string(float(1000.0f) / com->getFramesPerSecond()));
+		});
+		module.addComponent(f);
+
+		instance.init();
+		while (instance.isRunning()) {
+			instance.update();
+
+			module.makeDirty();
+
+			mc::os::wait(33);
+		}
+		instance.destroy();
 	} catch (const std::exception& e) {
 		Error::handleError(e, instance);
 		return -1;

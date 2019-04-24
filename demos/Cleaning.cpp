@@ -56,10 +56,6 @@ void create(gfx::WindowModule& window) {
 	left.setX(-0.5f);
 	left.setHeight(0.9f);
 	left.setWidth(0.45f);
-	left.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	left.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
-	left.setProperty(gfx::Entity::MAINTAIN_X, true);
-	left.setProperty(gfx::Entity::MAINTAIN_Y, true);
 
 	leftBot.setX(0.0f);
 	leftBot.setY(-0.5f);
@@ -70,19 +66,11 @@ void create(gfx::WindowModule& window) {
 	rightTop.setY(0.5f);
 	rightTop.setHeight(0.4f);
 	rightTop.setWidth(0.4f);
-	rightTop.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	rightTop.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
-	rightTop.setProperty(gfx::Entity::MAINTAIN_X, true);
-	rightTop.setProperty(gfx::Entity::MAINTAIN_Y, true);
 
 	rightBot.setHeight(0.4f);
 	rightBot.setWidth(0.4f);
 	rightBot.setX(0.5f);
 	rightBot.setY(-0.5f);
-	rightBot.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	rightBot.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
-	rightBot.setProperty(gfx::Entity::MAINTAIN_X, true);
-	rightBot.setProperty(gfx::Entity::MAINTAIN_Y, true);
 
 	left.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
 	leftBot.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));

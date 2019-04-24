@@ -418,6 +418,9 @@ namespace mc {
 
 		};//RenderTargetImpl
 
+		//forward declare
+		class FT_Library;
+
 		class GraphicsContext: public Initializable {
 			friend class Texture;
 			friend class Model;
@@ -439,10 +442,10 @@ namespace mc {
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;
 
-			void createTexture(const std::string& name, const Texture& texture = Texture());
+			Texture& createTexture(const std::string& name, const Texture& texture = Texture());
 			Texture& getOrCreateTexture(const std::string& name, const TextureCreateCallback create);
 			Texture& getOrCreateTextureFromFile(const std::string& name, const std::string& path);
-			void createModel(const std::string& name, const Model& texture = Model());
+			Model& createModel(const std::string& name, const Model& texture = Model());
 			Model& getOrCreateModel(const std::string& name, const ModelCreateCallback create);
 
 			bool hasTexture(const std::string& name) const;
@@ -490,6 +493,8 @@ namespace mc {
 		private:
 			std::map<std::string, Texture> textures{};
 			std::map<std::string, Model> models{};
+
+			std::unique_ptr<FT_Library> freetype;
 		};
 	}
 }//mc

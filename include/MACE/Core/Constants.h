@@ -258,8 +258,10 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_EXPOSE_OPENAL 1
 #endif
 
-//for std::uint8_t
-#include <cstdint>
+#ifndef MACE_MSVC
+//for std::uint_least8_t
+#	include <cstdint>
+#endif
 //for std::size_t
 #include <cstddef>
 
@@ -270,8 +272,12 @@ namespace mc {
 	@see Enum
 	@see Size
 	*/
-	using Byte = std::uint_least8_t;
-
+#ifdef MACE_MSVC
+	//we know that c++ platforms have 8 bit chars, so avoid the include by manually defining it
+	using Byte = unsigned char;
+#else
+	using Byte = std::uint8_t;
+#endif
 	/**
 	Type representing an object's size.
 	<p>

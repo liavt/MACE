@@ -257,25 +257,6 @@ namespace mc {
 
 			m.rotation += m.inheritedRotation;
 
-			const Vector<float, 2> windowRatios = gfx::getCurrentWindow()->getContext()->getRenderer()->getWindowRatios();
-
-			if (getProperty(Entity::MAINTAIN_X)) {
-				m.translation[0] *= windowRatios[0];
-				m.inheritedTranslation[0] *= windowRatios[0];
-			}
-			if (getProperty(Entity::MAINTAIN_Y)) {
-				m.translation[1] *= windowRatios[1];
-				m.inheritedTranslation[1] *= windowRatios[1];
-			}
-			if (getProperty(Entity::MAINTAIN_WIDTH)) {
-				m.scale[0] *= windowRatios[0];
-				m.inheritedScale[0] *= windowRatios[0];
-			}
-			if (getProperty(Entity::MAINTAIN_HEIGHT)) {
-				m.scale[1] *= windowRatios[1];
-				m.inheritedScale[1] *= windowRatios[1];
-			}
-
 			return m;
 		}
 

@@ -560,19 +560,17 @@ namespace mc {
 			return window;
 		}
 
-		void GraphicsContext::createTexture(const std::string & name, const Texture & texture) {
+		Texture& GraphicsContext::createTexture(const std::string & name, const Texture & texture) {
 			if (hasTexture(name)) {
 				MACE__THROW(AlreadyExists, "Texture with name " + name + " has already been created");
 			}
 
-			textures[name] = texture;
+			return textures[name] = texture;
 		}
 
 		Texture& GraphicsContext::getOrCreateTexture(const std::string & name, const TextureCreateCallback create) {
 			if (!hasTexture(name)) {
-				createTexture(name, create());
-
-				return getTexture(name);
+				return createTexture(name, create());
 			} else {
 				return getTexture(name);
 			}
@@ -584,19 +582,17 @@ namespace mc {
 			});
 		}
 
-		void GraphicsContext::createModel(const std::string & name, const Model& mod) {
+		Model& GraphicsContext::createModel(const std::string & name, const Model& mod) {
 			if (hasModel(name)) {
 				MACE__THROW(AlreadyExists, "Model with name " + name + " has already been created");
 			}
 
-			models[name] = mod;
+			return models[name] = mod;
 		}
 
 		Model & GraphicsContext::getOrCreateModel(const std::string & name, const ModelCreateCallback create) {
 			if (!hasModel(name)) {
-				createModel(name, create());
-
-				return getModel(name);
+				return createModel(name, create());
 			} else {
 				return getModel(name);
 			}
@@ -652,7 +648,7 @@ namespace mc {
 		}
 
 		GraphicsContext::GraphicsContext(gfx::WindowModule * win) :window(win) {
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (window == nullptr) {
 				MACE__THROW(NullPointer, "WindowModule inputted to GraphicsContext is nullptr");
 			}
@@ -672,6 +668,18 @@ namespace mc {
 		}
 
 		void GraphicsContext::destroy() {
+			for (auto & x : textures) {
+				if (x.second.isCreated()) {
+					x.second.destroy();
+				}
+			}
+
+			for (auto& x : models) {
+				if (x.second.isCreated()) {
+					x.second.destroy();
+				}
+			}
+
 			getRenderer()->destroy();
 			onDestroy(window);
 			window = nullptr;

@@ -217,11 +217,11 @@ namespace mc {
 		*/
 		class Font {
 		public:
-			static Font loadFont(const std::string& name);
-			static Font loadFont(const char* name);
-			static Font loadFontFromMemory(const unsigned char* data, unsigned long int size);
+			static Font loadFont(const std::string& name, unsigned int size = 12);
+			static Font loadFont(const char* name, unsigned int size = 12);
+			static Font loadFontFromMemory(const unsigned char* data, unsigned long int dataSize, unsigned int size = 12);
 			template<std::size_t N>
-			static inline Font loadFontFromMemory(const unsigned char data[N]) {
+			static inline Font loadFontFromMemory(const unsigned char data[N], unsigned int size = 12) {
 				return loadFontFromMemory(data, static_cast<long int>(N));
 			}
 
@@ -234,7 +234,7 @@ namespace mc {
 			/**
 			@todo cache characters
 			*/
-			void getCharacter(const wchar_t character, Letter& let) const;
+			void getCharacter(const wchar_t character, std::shared_ptr<Letter> let) const;
 
 			void setSize(const unsigned int height);
 			unsigned int& getSize();
@@ -309,6 +309,10 @@ namespace mc {
 			/**
 			@dirty
 			*/
+			void setText(const std::string& newText);
+			/**
+			@dirty
+			*/
 			void setText(const std::wstring& newText);
 			/**
 			@dirty
@@ -326,7 +330,7 @@ namespace mc {
 			Font& getFont();
 			const Font& getFont() const;
 
-			const std::vector<Letter>& getLetters() const;
+			const std::vector<std::shared_ptr<Letter>>& getLetters() const;
 
 			/**
 			@dirty
@@ -353,7 +357,7 @@ namespace mc {
 			void onDestroy() override final;
 			void onClean() override final;
 		private:
-			std::vector<Letter> letters;
+			std::vector<std::shared_ptr<Letter>> letters;
 
 			std::wstring text;
 

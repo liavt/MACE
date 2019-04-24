@@ -143,43 +143,9 @@ namespace mc {
 				<p>
 				Certain `GraphicsContexts` may only render when something is dirty, heavily increasing performance in applications with little moving objects.
 				<p>
-				Additionally, an `Entity` that is considered dirty will have it's sslBuffer updated on the GPU side.
+				Additionally, an `Entity` that is considered dirty will have it's buffer data updated on the GPU side.
 				*/
 				DIRTY = 0x08,
-
-				/**
-				Flag representing whether an Entity's X position should be stretched when window is resized.
-				@see Entity::MAINTAIN_Y
-				@see Entity::MAINTAIN_WIDTH
-				@see Entity::MAINTAIN_HEIGHT
-				*/
-				MAINTAIN_X = 0x10,
-
-				/**
-				Flag representing whether an Entity's Y position should be stretched when window is resized.
-				@see Entity::MAINTAIN_X
-				@see Entity::MAINTAIN_WIDTH
-				@see Entity::MAINTAIN_HEIGHT
-				@see WindowModule::setResizable(bool)
-				*/
-				MAINTAIN_Y = 0x20,
-
-				/**
-				Flag representing whether an Entity's width should be stretched when window is resized.
-				@see Entity::MAINTAIN_X
-				@see Entity::MAINTAIN_Y
-				@see Entity::MAINTAIN_HEIGHT
-				@see WindowModule::setResizable(bool)
-				*/
-				MAINTAIN_WIDTH = 0x40,
-				/**
-				Flag representing whether an Entity's height should be stretched when window is resized.
-				@see Entity::MAINTAIN_X
-				@see Entity::MAINTAIN_Y
-				@see Entity::MAINTAIN_WIDTH
-				@see WindowModule::setResizable(bool)
-				*/
-				MAINTAIN_HEIGHT = 0x80,
 
 				DEFAULT_PROPERTIES = 0x00
 			};//EntityProperty

@@ -38,8 +38,6 @@ void create(gfx::WindowModule& win) {
 	circleBar.setHeight(0.25f);
 	circleBar.setX(-0.5f);
 	circleBar.addComponent(r);
-	circleBar.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	circleBar.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
 	gfx::EaseSettings settings = gfx::EaseSettings();
 	settings.ms = 3500;
@@ -56,8 +54,6 @@ void create(gfx::WindowModule& win) {
 	rectangleBar.setHeight(0.25f);
 	rectangleBar.setX(0.5f);
 	rectangleBar.addComponent(r);
-	rectangleBar.setProperty(gfx::Entity::MAINTAIN_WIDTH, true);
-	rectangleBar.setProperty(gfx::Entity::MAINTAIN_HEIGHT, true);
 
 	settings = gfx::EaseSettings();
 	settings.ms = 2000;
