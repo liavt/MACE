@@ -92,6 +92,12 @@ namespace mc {
 			void setBlending(const Enum sfactor, const Enum dfactor);
 
 			/**
+			Reset the blending values to default values
+			@opengl
+			*/
+			void resetBlending();
+
+			/**
 			@opengl
 			*/
 			void setViewport(const int x, const int y, const int width, const int height);

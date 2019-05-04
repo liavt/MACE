@@ -20,7 +20,7 @@ namespace mc {
 		void Component::init() {}
 
 		bool Component::update() {
-			return true;
+			return false;
 		}
 
 		void Component::destroy() {}
@@ -179,6 +179,8 @@ namespace mc {
 
 		void Entity::clean() {
 			if (getProperty(Entity::DIRTY)) {
+				onClean();
+
 				for (Index i = 0; i < components.size(); ++i) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 					if (components[i].get() == nullptr) {
@@ -188,8 +190,6 @@ namespace mc {
 
 					components[i]->clean();
 				}
-
-				onClean();
 
 				for (Size i = 0; i < children.size(); ++i) {
 					std::shared_ptr<Entity> child = children[i];

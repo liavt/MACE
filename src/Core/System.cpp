@@ -279,7 +279,7 @@ namespace mc {
 
 				SetLastError(0);
 
-				throw MACE__GET_ERROR_NAME(System) (errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message, line, file);
+				MACE__THROW_CUSTOM_LINE(System, errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message, line, file);
 #else
 				return;
 #endif
@@ -289,7 +289,7 @@ namespace mc {
 
 			char buffer[128];
 
-			throw MACE__GET_ERROR_NAME(System) (errorMessage + ": " + os::strerror(buffer, getArraySize(buffer), error), line, file);
+			MACE__THROW_CUSTOM_LINE(System, errorMessage + ": " + os::strerror(buffer, getArraySize(buffer), error), line, file);
 		}
 
 		void pause() {

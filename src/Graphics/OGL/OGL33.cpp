@@ -1302,6 +1302,10 @@ namespace mc {
 				glBlendFunc(sfactor, dfactor);
 			}
 
+			void resetBlending() {
+				setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			}
+
 			void setViewport(const int x, const int y, const int width, const int height) {
 				glViewport(x, y, width, height);
 			}

@@ -281,6 +281,14 @@ namespace mc {
 
 			void OGL33Model::bind() const {
 				ogl33::VertexArray::bind();
+
+				for (Index i = 0; i < buffers.size(); ++i) {
+					buffers[i].bind();
+				}
+
+				if (indices.getIndiceNumber() > 0) {
+					indices.bind();
+				}
 			}
 
 			void OGL33Model::unbind() const {
@@ -288,10 +296,6 @@ namespace mc {
 			}
 
 			void OGL33Model::draw() const {
-				for (Index i = 0; i < buffers.size(); ++i) {
-					buffers[i].bind();
-				}
-
 				Enum type;
 				if (primitiveType == PrimitiveType::POINTS) {
 					type = GL_POINTS;
@@ -316,8 +320,6 @@ namespace mc {
 				}
 
 				if (indices.getIndiceNumber() > 0) {
-					indices.bind();
-
 					glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, nullptr);
 				} else {
 					glDrawArrays(type, 0, getVertexNumber());

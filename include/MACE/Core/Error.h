@@ -53,7 +53,8 @@ namespace mc {
 
 #define MACE__GET_ERROR_NAME(name) name##Error
 #define MACE__DECLARE_ERROR(name) class MACE__GET_ERROR_NAME(name) : public Error{public: using Error::Error;}
-#define MACE__THROW(name, message) throw MACE__GET_ERROR_NAME(name) ( std::string(__func__) + ": " + std::string(message), __LINE__, __FILE__)
+#define MACE__THROW_CUSTOM_LINE(name, message, line, file) do{throw MACE__GET_ERROR_NAME(name) ( std::string(__func__) + ": " + std::string(message), line, file);}while(0)
+#define MACE__THROW(name, message) MACE__THROW_CUSTOM_LINE(name, message, __LINE__, __FILE__)
 
 	/**
 	Thrown when an error from an unknown source occured

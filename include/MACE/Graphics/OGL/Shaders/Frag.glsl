@@ -1,5 +1,5 @@
 R""(
-layout(location = MACE_SCENE_ATTACHMENT_INDEX) out lowp vec4 _mc_OutColor;
+layout(location = MACE_SCENE_ATTACHMENT_INDEX, index = 0) out lowp vec4 _mc_OutColor;
 #ifdef MACE_STORE_ID
 layout(location = MACE_ID_ATTACHMENT_INDEX) out uint _mc_OutID;
 #endif

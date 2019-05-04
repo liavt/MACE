@@ -1,10 +1,12 @@
 R""(
+layout(location = MACE_SCENE_ATTACHMENT_INDEX, index = 1) out lowp vec4 glyphColor;
+
 uniform lowp sampler2D tex;
 uniform mediump sampler2D glyph;
 
 vec4 mc_frag_main(void){
-	vec3 glyph = mcGetBackground(glyph).rgb;
-	float alpha = dot(glyph, vec3(1.0)) / 3.0;
-	return vec4(mix(glyph, mcGetForeground(tex).rgb, alpha), alpha);
+	vec4 foreground = mcGetForeground(tex);
+	glyphColor = mcGetBackground(glyph) * foreground.aaaa;
+	return vec4(foreground.rgb, 1.0);
 }
 )""

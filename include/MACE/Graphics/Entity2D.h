@@ -216,6 +216,7 @@ namespace mc {
 		@bug HorizontalAlignment::RIGHT misses the last letter in the width calculation
 		*/
 		class Font {
+			friend class Text;
 		public:
 			static Font loadFont(const std::string& name, unsigned int size = 12);
 			static Font loadFont(const char* name, unsigned int size = 12);
@@ -242,6 +243,11 @@ namespace mc {
 
 			bool hasKerning() const;
 
+			/**
+			Returns the scaled line height in pixels
+			*/
+			int getLineHeight() const;
+
 			Vector<unsigned int, 2> getKerning(const wchar_t prev, const wchar_t current) const;
 
 			Index getID() const;
@@ -251,6 +257,8 @@ namespace mc {
 		private:
 			Index id;
 			unsigned int height;
+
+			void calculateMetrics() const;
 		};//Font
 
 		class Letter: public Entity2D {
@@ -332,18 +340,6 @@ namespace mc {
 
 			const std::vector<std::shared_ptr<Letter>>& getLetters() const;
 
-			/**
-			@dirty
-			*/
-			void setVerticalAlign(const VerticalAlign align);
-			const VerticalAlign getVerticalAlign() const;
-
-			/**
-			@dirty
-			*/
-			void setHorizontalAlign(HorizontalAlign align);
-			const HorizontalAlign getHorizontalAlign() const;
-
 			void setTexture(const Texture& tex) override;
 			Texture& getTexture() override;
 			const Texture& getTexture() const override;
@@ -360,9 +356,6 @@ namespace mc {
 			std::vector<std::shared_ptr<Letter>> letters;
 
 			std::wstring text;
-
-			VerticalAlign vertAlign = VerticalAlign::CENTER;
-			HorizontalAlign horzAlign = HorizontalAlign::CENTER;
 
 			Font font;
 

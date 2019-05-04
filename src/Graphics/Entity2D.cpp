@@ -482,12 +482,6 @@ namespace mc {
 			}
 #endif
 
-			WindowModule* window = getCurrentWindow();
-
-			const Vector<int, 2> dpi = window->getMonitor().getDPI();
-
-			checkFreetypeError(FT_Set_Char_Size(fonts[id], 0, height << 6, dpi[0], dpi[1]), "Failed to change char size");
-
 			checkFreetypeError(FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph");
 
 			character->width = fonts[id]->glyph->metrics.width >> 6;
@@ -500,7 +494,7 @@ namespace mc {
 			if (character->width == 0 || character->height == 0) {
 				character->glyph = gfx::Texture::getGradient();
 			} else {
-				GraphicsContext* const context = window->getContext();
+				GraphicsContext* const context = getCurrentWindow()->getContext();
 
 				character->glyph = context->getOrCreateTexture("MC/Fonts/" + std::to_string(id) + "/Sizes/" + std::to_string(id) + "/Glyphs/" + std::to_string(static_cast<int>(c)), [&]() {
 					FT_Bitmap targetBitmap;
@@ -519,12 +513,24 @@ namespace mc {
 			}
 		}
 
+		int Font::getLineHeight() const
+		{
+			return fonts[id]->size->metrics.height >> 6;
+		}
+
 		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
 			FT_Vector vec;
 
 			checkFreetypeError(FT_Get_Kerning(fonts[id], prev, current, FT_KERNING_DEFAULT, &vec), "Failed to get kerning from font");
 
 			return{ static_cast<unsigned int>(vec.x >> 6), static_cast<unsigned int>(vec.y >> 6) };
+		}
+
+		void Font::calculateMetrics() const
+		{
+			const Vector<int, 2> dpi = getCurrentWindow()->getMonitor().getDPI();
+
+			checkFreetypeError(FT_Set_Char_Size(fonts[id], 0, height << 6, dpi[0], dpi[1]), "Failed to change char size");
 		}
 
 		bool Font::operator==(const Font& other) const {
@@ -614,7 +620,7 @@ namespace mc {
 		}
 
 		bool Letter::operator==(const Letter& other) const {
-			return Entity2D::operator==(other) && glyph == other.glyph &&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
+			return Entity2D::operator==(other) && texture == other.texture && glyph == other.glyph &&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
 		}
 
 		bool Letter::operator!=(const Letter& other) const {
@@ -630,9 +636,6 @@ namespace mc {
 			p.setTexture(texture, TextureSlot::FOREGROUND);
 			p.setTexture(glyph, TextureSlot::BACKGROUND);
 			p.drawQuad(Painter::Brush::TEXT);
-			
-			//p.drawImage(mask);
-			//p.drawImage(mask);
 		}
 
 		void Letter::onDestroy() {
@@ -696,30 +699,6 @@ namespace mc {
 			return letters;
 		}
 
-		void Text::setVerticalAlign(const VerticalAlign align) {
-			if (vertAlign != align) {
-				makeDirty();
-
-				vertAlign = align;
-			}
-		}
-
-		const VerticalAlign Text::getVerticalAlign() const {
-			return vertAlign;
-		}
-
-		void Text::setHorizontalAlign(const HorizontalAlign align) {
-			if (horzAlign != align) {
-				makeDirty();
-
-				horzAlign = align;
-			}
-		}
-
-		const HorizontalAlign Text::getHorizontalAlign() const {
-			return horzAlign;
-		}
-
 		void Text::setTexture(const Texture & tex) {
 			if (tex != texture) {
 				makeDirty();
@@ -739,7 +718,7 @@ namespace mc {
 		}
 
 		bool Text::operator==(const Text & other) const {
-			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture && vertAlign == other.vertAlign && horzAlign == other.horzAlign;
+			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture;
 		}
 
 		bool Text::operator!=(const Text & other) const {
@@ -750,7 +729,10 @@ namespace mc {
 
 		void Text::onUpdate() {}
 
-		void Text::onRender(Painter& p) {}
+		void Text::onRender(Painter& p) {
+			p.setForegroundColor(Colors::BLACK);
+			p.fillRect();
+		}
 
 		void Text::onDestroy() {}
 
@@ -769,9 +751,9 @@ namespace mc {
 				addChild(letter);
 			}
 
-			const Entity::Metrics metrics = getMetrics();
+			font.calculateMetrics();
 
-			const float widthScale = 1.0f / metrics.scale[0], heightScale = 1.0f / metrics.scale[1];
+			const Entity::Metrics metrics = getMetrics();
 
 			const WindowModule::LaunchConfig config = gfx::getCurrentWindow()->getLaunchConfig();
 
@@ -780,18 +762,20 @@ namespace mc {
 
 			const bool hasKerning = font.hasKerning();
 
+			const float lineHeight = static_cast<float>(font.getLineHeight()) / origHeight;
+
 			float x = 0, y = 0;
 
-			float width = 0, height = 0;
+			float width = 0, height = lineHeight;
 			for (Index i = 0; i < text.length(); ++i) {
 				if (text[i] == '\n') {
 					if (x > width) {
 						width = x;
 					}
 
-					y -= static_cast<float>(font.getSize()) / origHeight;
+					y -= lineHeight;
 
-					height = y;
+					height += lineHeight;
 
 					x = 0;
 					font.getCharacter(' ', letters[i]);
@@ -800,8 +784,8 @@ namespace mc {
 					font.getCharacter(text[i], letters[i]);
 
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-					letters[i]->setWidth((static_cast<float>(letters[i]->width) / origWidth) * widthScale);
-					letters[i]->setHeight((static_cast<float>(letters[i]->height) / origHeight) * heightScale);
+					letters[i]->setWidth(static_cast<float>(letters[i]->width) / origWidth);
+					letters[i]->setHeight(static_cast<float>(letters[i]->height) / origHeight);
 
 					Vector<float, 2> position = { x, y };
 
@@ -832,46 +816,19 @@ namespace mc {
 				}
 			}
 
-			y += static_cast<float>(font.getSize() << 1) / origHeight;
-
 			if (x > width) {
 				width = x;
 			}
+			
+			width /= 2.0f;
+			height /= 2.0f;
 
-			height += y;
-
-			//alignment has to be calculated after the initial pass so it knows how much screen space the text takes up
-			float xAlignment, yAlignment;
-
-			switch (horzAlign) {
-				default:
-				case HorizontalAlign::CENTER:
-					xAlignment = ((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
-					break;
-				case HorizontalAlign::RIGHT:
-					xAlignment = ((1.0f - width) + static_cast<const float>(font.getSize() >> 1) / origWidth);
-					break;
-				case HorizontalAlign::LEFT:
-					xAlignment = (-1.0f + static_cast<const float>(font.getSize() >> 1) / origWidth);
-					break;
+			for (auto letter : letters) {
+				letter->translate(-width, -height);
 			}
 
-			switch (vertAlign) {
-				default:
-				case VerticalAlign::CENTER:
-					yAlignment = 0.0f;
-					break;
-				case VerticalAlign::BOTTOM:
-					yAlignment = ((-1.0f + height / 2) - static_cast<const float>(font.getSize() >> 1) / origHeight);
-					break;
-				case VerticalAlign::TOP:
-					yAlignment = ((1.0f - height) + static_cast<const float>(font.getSize() >> 1) / origHeight);
-					break;
-			}
-
-			for (Index i = 0; i < letters.size(); ++i) {
-				letters[i]->translate(xAlignment, yAlignment);
-			}
+			setWidth(width);
+			setHeight(height);
 		}
 
 		const Texture & Button::getTexture() const {

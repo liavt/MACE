@@ -223,7 +223,6 @@ namespace mc {
 						program.createUniform("tex");
 						program.createUniform("glyph");
 
-						//binding the samplers
 						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("glyph", static_cast<int>(TextureSlot::BACKGROUND));
 					}
@@ -482,7 +481,7 @@ namespace mc {
 
 				//gl states
 				ogl33::enable(GL_BLEND);
-				ogl33::setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				ogl33::resetBlending();
 
 				ogl33::enable(GL_MULTISAMPLE);
 
@@ -744,10 +743,22 @@ namespace mc {
 			}
 
 			void OGL33Painter::draw(const Model& m, const Painter::Brush brush) {
-				renderer->bindProtocol(this, { brush, savedState.renderFeatures });
-
 				m.bind();
-				m.draw();
+				if (brush == Painter::Brush::TEXT) {
+					ogl33::setBlending(GL_SRC1_COLOR, GL_ONE_MINUS_SRC1_COLOR);
+					renderer->frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+					renderer->bindProtocol(this, { Painter::Brush::TEXT, savedState.renderFeatures });
+					m.draw();/*
+					glBlendFunc(GL_ONE, GL_ONE);
+					renderer->bindProtocol(this, { Painter::Brush::TEXT, savedState.renderFeatures });
+					m.draw();*/
+					ogl33::resetBlending();
+				}
+				else {
+					renderer->bindProtocol(this, { brush, savedState.renderFeatures });
+
+					m.draw();
+				}
 			}
 		}//ogl33
 	}//gfx

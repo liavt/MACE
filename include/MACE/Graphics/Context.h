@@ -418,9 +418,6 @@ namespace mc {
 
 		};//RenderTargetImpl
 
-		//forward declare
-		class FT_Library;
-
 		class GraphicsContext: public Initializable {
 			friend class Texture;
 			friend class Model;
@@ -493,8 +490,6 @@ namespace mc {
 		private:
 			std::map<std::string, Texture> textures{};
 			std::map<std::string, Model> models{};
-
-			std::unique_ptr<FT_Library> freetype;
 		};
 	}
 }//mc
