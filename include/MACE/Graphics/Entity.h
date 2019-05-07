@@ -27,6 +27,14 @@ namespace mc {
 		class Painter;
 		class ComponentQueue;
 
+		struct Metrics {
+			TransformMatrix transform{};
+			TransformMatrix inherited{};
+
+			bool operator==(const Metrics& other) const;
+			bool operator!=(const Metrics& other) const;
+		};//Metrics
+
 		/**
 		Can be plugged into an `Entity` to allow for additional functionality by listening to events. Instead of extending an existing
 		`Entity` subclass, you should prefer using a `Component` to not interfere with custom Entity::onRender() and similar functions.
@@ -87,7 +95,7 @@ namespace mc {
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
 			@opengl
 			*/
-			virtual void clean();
+			virtual void clean(Metrics& metrics);
 
 			/**
 			@opengl
@@ -149,18 +157,6 @@ namespace mc {
 
 				DEFAULT_PROPERTIES = 0x00
 			};//EntityProperty
-
-			struct Metrics {
-				Vector<float, 3> translation;
-				Vector<float, 3> scale;
-				Vector<float, 3> rotation;
-				Vector<float, 3> inheritedTranslation = { 0,0,0 };
-				Vector<float, 3> inheritedScale = { 1,1,1 };
-				Vector<float, 3> inheritedRotation = { 0,0,0 };
-
-				bool operator==(const Metrics& other) const;
-				bool operator!=(const Metrics& other) const;
-			};//Metrics
 
 			/**
 			Default constructor. Constructs properties based on `Entity::DEFAULT_PROPERTIES`
@@ -532,7 +528,7 @@ namespace mc {
 			/**
 			@opengl			
 			*/
-			Metrics getMetrics() const;
+			const Metrics& getMetrics() const;
 
 			/**
 			@internal
@@ -571,6 +567,11 @@ namespace mc {
 			@internal
 			*/
 			TransformMatrix transformation;
+
+			/**
+			@internal
+			*/
+			Metrics metrics;
 
 			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.

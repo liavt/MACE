@@ -62,7 +62,7 @@ namespace mc {
 			virtual void onDisable();
 
 			virtual void onTrigger();
-		
+
 			void doHover();
 		};
 
@@ -237,18 +237,18 @@ namespace mc {
 			*/
 			void getCharacter(const wchar_t character, std::shared_ptr<Letter> let) const;
 
-			void setSize(const unsigned int height);
-			unsigned int& getSize();
-			const unsigned int& getSize() const;
-
 			bool hasKerning() const;
 
-			/**
-			Returns the scaled line height in pixels
-			*/
-			int getLineHeight() const;
+			signed long getDescent() const;
 
-			Vector<unsigned int, 2> getKerning(const wchar_t prev, const wchar_t current) const;
+			signed long getAscent() const;
+
+			/**
+			Returns the scaled height in fractional pixels (26.6px)
+			*/
+			signed long getHeight() const;
+
+			Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current) const;
 
 			Index getID() const;
 
@@ -260,6 +260,18 @@ namespace mc {
 
 			void calculateMetrics() const;
 		};//Font
+
+		struct GlyphMetrics {
+			signed long width = 0;
+			signed long height = 0;
+			signed long bearingX = 0;
+			signed long bearingY = 0;
+			signed long advanceX = 0;
+			signed long advanceY = 0;
+
+			bool operator ==(const GlyphMetrics& other) const;
+			bool operator !=(const GlyphMetrics& other) const;
+		};
 
 		class Letter: public Entity2D {
 			friend class Font;
@@ -275,14 +287,7 @@ namespace mc {
 
 			const Texture& getTexture() const;
 
-			const unsigned int& getCharacterWidth() const;
-			const unsigned int& getCharacterHeight() const;
-
-			const signed long& getXBearing() const;
-			const signed long& getYBearing() const;
-
-			const signed long& getXAdvance() const;
-			const signed long& getYAdvance() const;
+			const GlyphMetrics& getGlpyhMetrics() const;
 
 			bool operator==(const Letter& other) const;
 			bool operator!=(const Letter& other) const;
@@ -297,12 +302,7 @@ namespace mc {
 
 			Texture texture = Texture();
 
-			unsigned int width = 0;
-			unsigned int height = 0;
-			signed long bearingX = 0;
-			signed long bearingY = 0;
-			signed long advanceX = 0;
-			signed long advanceY = 0;
+			GlyphMetrics glyphMetrics{};
 		};//Letter
 
 		/**

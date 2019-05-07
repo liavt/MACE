@@ -30,7 +30,7 @@ namespace mc {
 
 			std::vector<FT_Face> fonts = std::vector<FT_Face>();
 
-			Texture convertBitmapToTexture(const FT_Bitmap& bitmap){
+			Texture convertBitmapToTexture(const FT_Bitmap& bitmap) {
 				TextureDesc desc = TextureDesc(bitmap.width, bitmap.rows);
 				switch (bitmap.pixel_mode) {
 				case FT_PIXEL_MODE_GRAY:
@@ -56,11 +56,11 @@ namespace mc {
 				out.setUnpackStorageHint(gfx::PixelStorage::ALIGNMENT, 1);
 
 				out.setData(bitmap.buffer);
-				
+
 				return out;
 			}
 
-			MACE_NORETURN void throwFreetypeError (const FT_Error& status, const std::string message) {
+			MACE_NORETURN void throwFreetypeError(const FT_Error& status, const std::string message) {
 				/*
 				using a custom X-Macro instead of using FT_ERROR_H because
 				certain error codes (like Cannot_Open_Resource) require custom
@@ -74,25 +74,25 @@ namespace mc {
 #define MACE__FREETYPE_ERROR_CASE(err, msg) MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, Font)
 				switch (status) {
 					MACE__FREETYPE_ERROR_CASE(Ok, "No error (invalid internal call to throwFreetypeError)")
-					MACE__FREETYPE_ERROR_CASE_TYPE(Cannot_Open_Resource, "Unable to open font file", FileNotFound)
-					MACE__FREETYPE_ERROR_CASE_TYPE(Unknown_File_Format, "Unknown file format", BadFile)
-					MACE__FREETYPE_ERROR_CASE_TYPE(Invalid_File_Format, "Broken file", BadFile)
-					MACE__FREETYPE_ERROR_CASE_TYPE(Invalid_Version, "Invalid FreeType version", InitializationFailed)
-					MACE__FREETYPE_ERROR_CASE(Invalid_Argument, "Invalid argument")
-					MACE__FREETYPE_ERROR_CASE(Unimplemented_Feature, "Unimplemented feature")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Glyph_Index, "Invalid glyph index")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Character_Code, "Invalid character code")
-					MACE__FREETYPE_ERROR_CASE(Cannot_Render_Glyph, "Cannot render glyph")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Pixel_Size, "Invalid pixel size")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Handle, "Invalid object handle")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Library_Handle, "Invalid library handle")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Driver_Handle, "Invalid driver handle")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Face_Handle, "Invalid face handle")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Size_Handle, "Invalid size handle")
-					MACE__FREETYPE_ERROR_CASE(Invalid_Slot_Handle, "Invalid slot handle")
-					MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Drivers, "Too many drivers", System)
-					MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Extensions, "Too many extensions", System)
-					MACE__FREETYPE_ERROR_CASE_TYPE(Out_Of_Memory, "Out of memory", OutOfMemory)
+						MACE__FREETYPE_ERROR_CASE_TYPE(Cannot_Open_Resource, "Unable to open font file", FileNotFound)
+						MACE__FREETYPE_ERROR_CASE_TYPE(Unknown_File_Format, "Unknown file format", BadFile)
+						MACE__FREETYPE_ERROR_CASE_TYPE(Invalid_File_Format, "Broken file", BadFile)
+						MACE__FREETYPE_ERROR_CASE_TYPE(Invalid_Version, "Invalid FreeType version", InitializationFailed)
+						MACE__FREETYPE_ERROR_CASE(Invalid_Argument, "Invalid argument")
+						MACE__FREETYPE_ERROR_CASE(Unimplemented_Feature, "Unimplemented feature")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Glyph_Index, "Invalid glyph index")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Character_Code, "Invalid character code")
+						MACE__FREETYPE_ERROR_CASE(Cannot_Render_Glyph, "Cannot render glyph")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Pixel_Size, "Invalid pixel size")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Handle, "Invalid object handle")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Library_Handle, "Invalid library handle")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Driver_Handle, "Invalid driver handle")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Face_Handle, "Invalid face handle")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Size_Handle, "Invalid size handle")
+						MACE__FREETYPE_ERROR_CASE(Invalid_Slot_Handle, "Invalid slot handle")
+						MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Drivers, "Too many drivers", System)
+						MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Extensions, "Too many extensions", System)
+						MACE__FREETYPE_ERROR_CASE_TYPE(Out_Of_Memory, "Out of memory", OutOfMemory)
 				default:
 					MACE__THROW(Font, message + ": Unknown error code " + std::to_string(freetypeStatus));
 				}
@@ -100,7 +100,7 @@ namespace mc {
 #undef MACE__FREETYPE_ERROR_CASE
 			}
 
-			inline void checkFreetypeError(const FT_Error& status, const std::string message) {
+			inline void checkFreetypeError(const FT_Error & status, const std::string message) {
 				if (status != FT_Err_Ok) {
 					throwFreetypeError(status, message);
 				}
@@ -118,11 +118,11 @@ namespace mc {
 
 		Entity2D::Entity2D() : GraphicsEntity() {}
 
-		bool Entity2D::operator==(const Entity2D & other) const {
+		bool Entity2D::operator==(const Entity2D& other) const {
 			return GraphicsEntity::operator==(other);
 		}
 
-		bool Entity2D::operator!=(const Entity2D & other) const {
+		bool Entity2D::operator!=(const Entity2D& other) const {
 			return !operator==(other);
 		}
 
@@ -205,7 +205,7 @@ namespace mc {
 
 		void Image::onClean() {}
 
-		void Image::setTexture(const Texture & tex) {
+		void Image::setTexture(const Texture& tex) {
 			if (tex != texture) {
 				makeDirty();
 
@@ -213,31 +213,31 @@ namespace mc {
 			}
 		}
 
-		Texture & Image::getTexture() {
+		Texture& Image::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		const Texture & Image::getTexture() const {
+		const Texture& Image::getTexture() const {
 			return texture;
 		}
 
-		bool Image::operator==(const Image & other) const {
+		bool Image::operator==(const Image& other) const {
 			return Entity2D::operator==(other) && texture == other.texture;
 		}
 
-		bool Image::operator!=(const Image & other) const {
+		bool Image::operator!=(const Image& other) const {
 			return !operator==(other);
 		}
 
 		//PROGRESS BAR
 
-		ProgressBar::ProgressBar() noexcept: ProgressBar(0, 0, 0) {}
+		ProgressBar::ProgressBar() noexcept : ProgressBar(0, 0, 0) {}
 
 		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
-		void ProgressBar::setBackgroundTexture(const Texture & tex) {
+		void ProgressBar::setBackgroundTexture(const Texture& tex) {
 			if (backgroundTexture != tex) {
 				makeDirty();
 
@@ -245,17 +245,17 @@ namespace mc {
 			}
 		}
 
-		Texture & ProgressBar::getBackgroundTexture() {
+		Texture& ProgressBar::getBackgroundTexture() {
 			makeDirty();
 
 			return backgroundTexture;
 		}
 
-		const Texture & ProgressBar::getBackgroundTexture() const {
+		const Texture& ProgressBar::getBackgroundTexture() const {
 			return backgroundTexture;
 		}
 
-		void ProgressBar::setForegroundTexture(const Texture & tex) {
+		void ProgressBar::setForegroundTexture(const Texture& tex) {
 			if (foregroundTexture != tex) {
 				makeDirty();
 
@@ -263,17 +263,17 @@ namespace mc {
 			}
 		}
 
-		Texture & ProgressBar::getForegroundTexture() {
+		Texture& ProgressBar::getForegroundTexture() {
 			makeDirty();
 
 			return foregroundTexture;
 		}
 
-		const Texture & ProgressBar::getForegroundTexture() const {
+		const Texture& ProgressBar::getForegroundTexture() const {
 			return foregroundTexture;
 		}
 
-		void ProgressBar::setSelectionTexture(const Texture & tex) {
+		void ProgressBar::setSelectionTexture(const Texture& tex) {
 			if (selectionTexture != tex) {
 				makeDirty();
 
@@ -281,13 +281,13 @@ namespace mc {
 			}
 		}
 
-		Texture & ProgressBar::getSelectionTexture() {
+		Texture& ProgressBar::getSelectionTexture() {
 			makeDirty();
 
 			return selectionTexture;
 		}
 
-		const Texture & ProgressBar::getSelectionTexture() const {
+		const Texture& ProgressBar::getSelectionTexture() const {
 			return selectionTexture;
 		}
 
@@ -332,18 +332,18 @@ namespace mc {
 			}
 		}
 
-		float & ProgressBar::getProgress() {
+		float& ProgressBar::getProgress() {
 			makeDirty();
 
 			return progress;
 		}
 
-		const float & ProgressBar::getProgress() const {
+		const float& ProgressBar::getProgress() const {
 			return progress;
 		}
 
 		void ProgressBar::easeTo(const float destination, const EaseSettings settings) {
-			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity* e, float progress) {
+			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity * e, float progress) {
 				Progressable* prog = dynamic_cast<Progressable*>(e);
 
 #ifdef MACE_DEBUG_CHECK_NULLPTR
@@ -356,11 +356,11 @@ namespace mc {
 			}, settings, getProgress(), destination)));
 		}
 
-		bool ProgressBar::operator==(const ProgressBar & other) const {
-			return Entity2D::operator==(other) && maximumProgress == other.maximumProgress&&minimumProgress == other.minimumProgress&&progress == other.progress&&backgroundTexture == other.backgroundTexture&&foregroundTexture == other.foregroundTexture&&selectionTexture == other.selectionTexture;
+		bool ProgressBar::operator==(const ProgressBar& other) const {
+			return Entity2D::operator==(other) && maximumProgress == other.maximumProgress && minimumProgress == other.minimumProgress && progress == other.progress && backgroundTexture == other.backgroundTexture && foregroundTexture == other.foregroundTexture && selectionTexture == other.selectionTexture;
 		}
 
-		bool ProgressBar::operator!=(const ProgressBar & other) const {
+		bool ProgressBar::operator!=(const ProgressBar& other) const {
 			return !operator==(other);
 		}
 
@@ -412,7 +412,7 @@ namespace mc {
 			doHover();
 		}
 
-		Font Font::loadFont(const std::string& name, unsigned int size) {
+		Font Font::loadFont(const std::string & name, unsigned int size) {
 			return loadFont(name.c_str(), size);
 		}
 
@@ -430,7 +430,7 @@ namespace mc {
 			return Font(id, size);
 		}
 
-		Font Font::loadFontFromMemory(const unsigned char * data, unsigned long int size, unsigned int fontSize) {
+		Font Font::loadFontFromMemory(const unsigned char* data, unsigned long int size, unsigned int fontSize) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (size <= 0) {
 				MACE__THROW(OutOfBounds, "Input size for loadFontFromMemory is less or equal to than 0!");
@@ -455,20 +455,16 @@ namespace mc {
 			checkFreetypeError(FT_Done_Face(fonts[id]), "Failed to delete font");
 		}
 
-		void Font::setSize(const unsigned int h) {
-			this->height = h;
-		}
-
-		unsigned int& Font::getSize() {
-			return height;
-		}
-
-		const unsigned int& Font::getSize() const {
-			return height;
-		}
-
 		bool Font::hasKerning() const {
 			return FT_HAS_KERNING(fonts[id]) == 1;
+		}
+
+		signed long Font::getDescent() const {
+			return fonts[id]->size->metrics.descender;
+		}
+
+		signed long Font::getAscent() const {
+			return fonts[id]->size->metrics.ascender;
 		}
 
 		Index Font::getID() const {
@@ -476,31 +472,30 @@ namespace mc {
 		}
 
 		void Font::getCharacter(const wchar_t c, std::shared_ptr<Letter> character) const {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (height <= 0) {
-				MACE__THROW(OutOfBounds, "The height of the font cannot be 0 - you must set it!");
-			}
-#endif
-
 			checkFreetypeError(FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph");
 
-			character->width = fonts[id]->glyph->metrics.width >> 6;
-			character->height = fonts[id]->glyph->metrics.height >> 6;
-			character->bearingX = fonts[id]->glyph->metrics.horiBearingY >> 6;
-			character->bearingY = fonts[id]->glyph->metrics.horiBearingY >> 6;
-			character->advanceX = fonts[id]->glyph->advance.x >> 6;
-			character->advanceY = fonts[id]->glyph->advance.y >> 6;
+			GlyphMetrics & metrics = character->glyphMetrics;
 
-			if (character->width == 0 || character->height == 0) {
-				character->glyph = gfx::Texture::getGradient();
+			const FT_GlyphSlot glyph = fonts[id]->glyph;
+			const FT_Glyph_Metrics& gMetrics = glyph->metrics;
+			const FT_Vector& advance = glyph->advance;
+			metrics.width = gMetrics.width;
+			metrics.height = gMetrics.height;
+			metrics.bearingX = gMetrics.horiBearingY;
+			metrics.bearingY = gMetrics.horiBearingY;
+			metrics.advanceX = advance.x;
+			metrics.advanceY = advance.y;
+
+			if (metrics.width == 0 || metrics.height == 0) {
+				character->glyph = Colors::BLACK;
 			} else {
 				GraphicsContext* const context = getCurrentWindow()->getContext();
 
-				character->glyph = context->getOrCreateTexture("MC/Fonts/" + std::to_string(id) + "/Sizes/" + std::to_string(id) + "/Glyphs/" + std::to_string(static_cast<int>(c)), [&]() {
+				character->glyph = context->getOrCreateTexture("MC/Fonts/" + std::to_string(id) + "/Sizes/" + std::to_string(id) + "/Glyphs/" + std::to_string(static_cast<int>(c)), [&glyph]() {
 					FT_Bitmap targetBitmap;
 					FT_Bitmap_New(&targetBitmap);
 
-					checkFreetypeError(FT_Bitmap_Convert(freetype, &fonts[id]->glyph->bitmap, &targetBitmap, 1), "Failed to convert bitmaps");
+					checkFreetypeError(FT_Bitmap_Convert(freetype, &glyph->bitmap, &targetBitmap, 1), "Failed to convert bitmaps");
 
 					targetBitmap.pixel_mode = FT_PIXEL_MODE_LCD;
 
@@ -513,31 +508,35 @@ namespace mc {
 			}
 		}
 
-		int Font::getLineHeight() const
-		{
-			return fonts[id]->size->metrics.height >> 6;
+		signed long Font::getHeight() const {
+			return fonts[id]->size->metrics.height;
 		}
 
-		Vector<unsigned int, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
+		Vector<signed long, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
 			FT_Vector vec;
 
 			checkFreetypeError(FT_Get_Kerning(fonts[id], prev, current, FT_KERNING_DEFAULT, &vec), "Failed to get kerning from font");
 
-			return{ static_cast<unsigned int>(vec.x >> 6), static_cast<unsigned int>(vec.y >> 6) };
+			return{vec.x, vec.y};
 		}
 
-		void Font::calculateMetrics() const
-		{
+		void Font::calculateMetrics() const {
+#ifdef MACE_DEBUG_CHECK_ARGS
+			if (height <= 0) {
+				MACE__THROW(OutOfBounds, "The height of the font cannot be 0 - you must set it!");
+			}
+#endif
+
 			const Vector<int, 2> dpi = getCurrentWindow()->getMonitor().getDPI();
 
 			checkFreetypeError(FT_Set_Char_Size(fonts[id], 0, height << 6, dpi[0], dpi[1]), "Failed to change char size");
 		}
 
-		bool Font::operator==(const Font& other) const {
-			return id == other.id&&height == other.height;
+		bool Font::operator==(const Font & other) const {
+			return id == other.id && height == other.height;
 		}
 
-		bool Font::operator!=(const Font& other) const {
+		bool Font::operator!=(const Font & other) const {
 			return !operator==(other);
 		}
 
@@ -578,7 +577,7 @@ namespace mc {
 
 				id = sourceSerifPro.getID();
 				break;
-			default MACE_UNLIKELY:
+				default MACE_UNLIKELY:
 				//should never be reached, but just to be safe
 				MACE__THROW(Font, "Unknown Fonts enum constant");
 			}
@@ -586,44 +585,32 @@ namespace mc {
 
 		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
-		Letter::Letter()  {}
+		bool GlyphMetrics::operator==(const GlyphMetrics & other) const {
+			return width == other.width && height == other.height && bearingX == other.bearingX && bearingY == other.bearingY && advanceX == other.advanceX && advanceY == other.advanceY;
+		}
+
+		bool GlyphMetrics::operator!=(const GlyphMetrics & other) const {
+			return !operator==(other);
+		}
+
+		Letter::Letter() {}
 
 		const Texture& Letter::getGlyph() const {
 			return glyph;
 		}
 
-		const Texture & Letter::getTexture() const {
+		const Texture& Letter::getTexture() const {
 			return texture;
 		}
-		const unsigned int& Letter::getCharacterWidth() const {
-			return width;
+		const GlyphMetrics& mc::gfx::Letter::getGlpyhMetrics() const {
+			return glyphMetrics;
 		}
 
-		const unsigned int& Letter::getCharacterHeight() const {
-			return height;
+		bool Letter::operator==(const Letter & other) const {
+			return Entity2D::operator==(other) && texture == other.texture && glyph == other.glyph && glyphMetrics == other.glyphMetrics;
 		}
 
-		const signed long& Letter::getXBearing() const {
-			return bearingX;
-		}
-
-		const signed long& Letter::getYBearing() const {
-			return bearingY;
-		}
-
-		const signed long& Letter::getXAdvance() const {
-			return advanceX;
-		}
-
-		const signed long& Letter::getYAdvance() const {
-			return advanceY;
-		}
-
-		bool Letter::operator==(const Letter& other) const {
-			return Entity2D::operator==(other) && texture == other.texture && glyph == other.glyph &&width == other.width&&height == other.height&&bearingX == other.bearingX&&bearingY == other.bearingY&&advanceX == other.advanceX&&advanceY == other.advanceY;
-		}
-
-		bool Letter::operator!=(const Letter& other) const {
+		bool Letter::operator!=(const Letter & other) const {
 			return !operator==(other);
 		}
 
@@ -631,7 +618,7 @@ namespace mc {
 
 		void Letter::onUpdate() {}
 
-		void Letter::onRender(Painter& p) {
+		void Letter::onRender(Painter & p) {
 			p.disableRenderFeatures(Painter::RenderFeatures::INHERIT_SCALE | Painter::RenderFeatures::STORE_ID);
 			p.setTexture(texture, TextureSlot::FOREGROUND);
 			p.setTexture(glyph, TextureSlot::BACKGROUND);
@@ -652,10 +639,9 @@ namespace mc {
 
 		Text::Text(const std::string & s, const Font & f) : Text(os::toWideString(s), f) {}
 
-		Text::Text(const std::wstring & t, const Font& f) : TexturedEntity2D(), text(t), font(f) {}
+		Text::Text(const std::wstring & t, const Font & f) : TexturedEntity2D(), text(t), font(f) {}
 
-		void mc::gfx::Text::setText(const std::string& newText)
-		{
+		void mc::gfx::Text::setText(const std::string & newText) {
 			setText(os::toWideString(newText));
 		}
 
@@ -667,17 +653,17 @@ namespace mc {
 			}
 		}
 
-		std::wstring & Text::getText() {
+		std::wstring& Text::getText() {
 			makeDirty();
 
 			return text;
 		}
 
-		const std::wstring & Text::getText() const {
+		const std::wstring& Text::getText() const {
 			return text;
 		}
 
-		void Text::setFont(const Font& f) {
+		void Text::setFont(const Font & f) {
 			if (font != f) {
 				makeDirty();
 
@@ -685,13 +671,13 @@ namespace mc {
 			}
 		}
 
-		Font & Text::getFont() {
+		Font& Text::getFont() {
 			makeDirty();
 
 			return font;
 		}
 
-		const Font & Text::getFont() const {
+		const Font& Text::getFont() const {
 			return font;
 		}
 
@@ -707,13 +693,13 @@ namespace mc {
 			}
 		}
 
-		Texture & Text::getTexture() {
+		Texture& Text::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		const Texture & Text::getTexture() const {
+		const Texture& Text::getTexture() const {
 			return texture;
 		}
 
@@ -729,7 +715,7 @@ namespace mc {
 
 		void Text::onUpdate() {}
 
-		void Text::onRender(Painter& p) {
+		void Text::onRender(Painter & p) {
 			p.setForegroundColor(Colors::BLACK);
 			p.fillRect();
 		}
@@ -753,29 +739,20 @@ namespace mc {
 
 			font.calculateMetrics();
 
-			const Entity::Metrics metrics = getMetrics();
+			const Metrics metrics = getMetrics();
 
-			const WindowModule::LaunchConfig config = gfx::getCurrentWindow()->getLaunchConfig();
-
-			const float origWidth = static_cast<const float>(config.width),
-				origHeight = static_cast<const float>(config.height);
+			const WindowModule* window = gfx::getCurrentWindow();
 
 			const bool hasKerning = font.hasKerning();
 
-			const float lineHeight = static_cast<float>(font.getLineHeight()) / origHeight;
+			const signed long linegap = font.getAscent() - font.getDescent() + font.getHeight();
 
-			float x = 0, y = 0;
+			signed long x = 0;
 
-			float width = 0, height = lineHeight;
+			std::vector<signed long> lineWidths{};
 			for (Index i = 0; i < text.length(); ++i) {
 				if (text[i] == '\n') {
-					if (x > width) {
-						width = x;
-					}
-
-					y -= lineHeight;
-
-					height += lineHeight;
+					lineWidths.push_back(x);
 
 					x = 0;
 					font.getCharacter(' ', letters[i]);
@@ -783,30 +760,34 @@ namespace mc {
 				} else {
 					font.getCharacter(text[i], letters[i]);
 
-					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-					letters[i]->setWidth(static_cast<float>(letters[i]->width) / origWidth);
-					letters[i]->setHeight(static_cast<float>(letters[i]->height) / origHeight);
+					const GlyphMetrics& glyphMetrics = letters[i]->getGlpyhMetrics();
 
-					Vector<float, 2> position = { x, y };
+					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
+					letters[i]->setWidth(window->convertPixelsToRelativeXCoordinates(glyphMetrics.width >> 6));
+					letters[i]->setHeight(window->convertPixelsToRelativeYCoordinates(glyphMetrics.height >> 6));
+
+					Vector<signed long, 2> position = {x, -static_cast<signed long>(lineWidths.size()) * linegap};
 
 					if (i > 0 && hasKerning) {
-						const Vector<unsigned int, 2> delta = font.getKerning(text[i - 1], text[i]);
+						const Vector<signed long, 2> delta = font.getKerning(text[i - 1], text[i]);
 
-						position[0] += static_cast<float>(delta[0]) / origWidth;
-						position[1] += static_cast<float>(delta[1]) / origHeight;
+						position[0] += delta[0];
+						position[1] += delta[1];
 					}
 
-					position[1] += letters[i]->getHeight();
+					position[1] += glyphMetrics.height;
 					//i cant bear this
-					position[1] -= static_cast<float>(letters[i]->height - letters[i]->bearingY) / origHeight;
+					position[1] -= (glyphMetrics.height - glyphMetrics.bearingY) << 1;
+					position[1] -= linegap;
+					position[1] -= font.getDescent() << 1;
 
-					letters[i]->setX((position[0] + (static_cast<float>(letters[i]->width) / origWidth)));
-					letters[i]->setY(position[1]);
+					letters[i]->setX(window->convertPixelsToRelativeXCoordinates((position[0] + glyphMetrics.width) >> 6));
+					letters[i]->setY(window->convertPixelsToRelativeYCoordinates(position[1] >> 6));
 
 					letters[i]->getPainter().setOpacity(getPainter().getOpacity());
 
-					x += static_cast<float>(letters[i]->advanceX) / origWidth;
-					x += letters[i]->getWidth();
+					x += glyphMetrics.advanceX;
+					x += glyphMetrics.width;
 
 					if (this->texture.isCreated()) {
 						letters[i]->texture = this->texture;
@@ -816,26 +797,33 @@ namespace mc {
 				}
 			}
 
-			if (x > width) {
-				width = x;
+			lineWidths.push_back(x);
+
+			signed long height = static_cast<signed long>(lineWidths.size()) * linegap;
+			signed long width = 0;
+			for(auto lineWidth : lineWidths){
+				if(lineWidth > width){
+					width = lineWidth;
+				}
 			}
-			
-			width /= 2.0f;
-			height /= 2.0f;
+
+			// it is >> 7 instead of >> 6 because we also want to divide the total of it in half (so shift an additional bit to the right)
+			const float widthPx = window->convertPixelsToRelativeXCoordinates(width >> 7);
+			const float heightPx = window->convertPixelsToRelativeYCoordinates(height >> 7);
+
+			setWidth(widthPx);
+			setHeight(heightPx);
 
 			for (auto letter : letters) {
-				letter->translate(-width, -height);
+				letter->translate(-widthPx, heightPx);
 			}
-
-			setWidth(width);
-			setHeight(height);
 		}
 
-		const Texture & Button::getTexture() const {
+		const Texture& Button::getTexture() const {
 			return texture;
 		}
 
-		Texture & Button::getTexture() {
+		Texture& Button::getTexture() {
 			makeDirty();
 
 			return texture;
@@ -849,11 +837,11 @@ namespace mc {
 			}
 		}
 
-		const Texture & Button::getHoverTexture() const {
+		const Texture& Button::getHoverTexture() const {
 			return hoverTexture;
 		}
 
-		Texture & Button::getHoverTexture() {
+		Texture& Button::getHoverTexture() {
 			makeDirty();
 
 			return hoverTexture;
@@ -867,11 +855,11 @@ namespace mc {
 			}
 		}
 
-		const Texture & Button::getClickedTexture() const {
+		const Texture& Button::getClickedTexture() const {
 			return clickedTexture;
 		}
 
-		Texture & Button::getClickedTexture() {
+		Texture& Button::getClickedTexture() {
 			makeDirty();
 
 			return clickedTexture;
@@ -885,11 +873,11 @@ namespace mc {
 			}
 		}
 
-		const Texture & Button::getDisabledTexture() const {
+		const Texture& Button::getDisabledTexture() const {
 			return disabledTexture;
 		}
 
-		Texture & Button::getDisabledTexture() {
+		Texture& Button::getDisabledTexture() {
 			makeDirty();
 
 			return disabledTexture;
@@ -903,7 +891,7 @@ namespace mc {
 			}
 		}
 
-		void Button::onRender(Painter& p) {
+		void Button::onRender(Painter & p) {
 			p.drawImage(texture);
 			if (isDisabled()) {
 				p.drawImage(disabledTexture);

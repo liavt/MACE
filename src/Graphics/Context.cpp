@@ -56,15 +56,15 @@ namespace mc {
 #define MACE__RESOURCE_GRADIENT_HEIGHT 128
 #define MACE__RESOURCE_QUAD MACE__RESOURCE_PREFIX "Quad"
 
-		bool ModelImpl::operator==(const ModelImpl & other) const {
+		bool ModelImpl::operator==(const ModelImpl& other) const {
 			return primitiveType == other.primitiveType;
 		}
 
-		bool ModelImpl::operator!=(const ModelImpl & other) const {
+		bool ModelImpl::operator!=(const ModelImpl& other) const {
 			return !operator==(other);
 		}
 
-		Model & Model::getQuad() {
+		Model& Model::getQuad() {
 			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
@@ -105,7 +105,7 @@ namespace mc {
 
 		Model::Model(const std::shared_ptr<ModelImpl> mod) : model(mod) {}
 
-		Model::Model(const Model & other) : model(other.model) {}
+		Model::Model(const Model& other) : model(other.model) {}
 
 		void Model::init() {
 			if (model == nullptr) {
@@ -133,13 +133,13 @@ namespace mc {
 			model->unbind();
 		}
 
-		void Model::createTextureCoordinates(const unsigned int dataSize, const float * data) {
+		void Model::createTextureCoordinates(const unsigned int dataSize, const float* data) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->loadTextureCoordinates(dataSize, data);
 		}
 
-		void Model::createVertices(const unsigned int verticeSize, const float * vertices, const PrimitiveType& prim) {
+		void Model::createVertices(const unsigned int verticeSize, const float* vertices, const PrimitiveType& prim) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->primitiveType = prim;
@@ -147,7 +147,7 @@ namespace mc {
 
 		}
 
-		void Model::createIndices(const unsigned int indiceNum, const unsigned int * indiceData) {
+		void Model::createIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
 			MACE__VERIFY_MODEL_INIT();
 
 			model->loadIndices(indiceNum, indiceData);
@@ -173,15 +173,15 @@ namespace mc {
 			return model->isCreated();
 		}
 
-		bool Model::operator==(const Model & other) const {
+		bool Model::operator==(const Model& other) const {
 			return model == other.model;
 		}
 
-		bool Model::operator!=(const Model & other) const {
+		bool Model::operator!=(const Model& other) const {
 			return !operator==(other);
 		}
 
-		Texture Texture::create(const Color & col, const unsigned int width, const unsigned int height) {
+		Texture Texture::create(const Color& col, const unsigned int width, const unsigned int height) {
 			TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
 			desc.minFilter = TextureDesc::Filter::NEAREST;
 			desc.magFilter = TextureDesc::Filter::NEAREST;
@@ -203,11 +203,11 @@ namespace mc {
 			return texture;
 		}
 
-		Texture Texture::createFromFile(const std::string & file, const ImageFormat format, const TextureDesc::Wrap wrap) {
+		Texture Texture::createFromFile(const std::string& file, const ImageFormat format, const TextureDesc::Wrap wrap) {
 			return Texture::createFromFile(file.c_str(), format, wrap);
 		}
 
-		Texture Texture::createFromFile(const char * file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
+		Texture Texture::createFromFile(const char* file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
 			Texture tex = Texture();
 
 			int width, height, actualComponents;
@@ -259,7 +259,7 @@ namespace mc {
 
 				tex.resetPixelStorage();
 				tex.setData(image);
-			} catch (const std::exception& e) {
+			} catch (const std::exception & e) {
 				stbi_image_free(image);
 				throw e;
 			}
@@ -269,7 +269,7 @@ namespace mc {
 			return tex;
 		}
 
-		Texture Texture::createFromMemory(const unsigned char * c, const int size) {
+		Texture Texture::createFromMemory(const unsigned char* c, const int size) {
 			Texture texture = Texture();
 			int width, height, componentSize;
 
@@ -290,7 +290,7 @@ namespace mc {
 				texture.resetPixelStorage();
 
 				texture.setData(image);
-			} catch (const std::exception& e) {
+			} catch (const std::exception & e) {
 				stbi_image_free(image);
 				throw e;
 			}
@@ -376,7 +376,7 @@ namespace mc {
 
 					texture.resetPixelStorage();
 
-					MACE_CONSTEXPR const float data[] = { 1.0f };
+					MACE_CONSTEXPR const float data[] = {1.0f};
 					texture.setData(data);
 
 					return texture;
@@ -384,7 +384,7 @@ namespace mc {
 			}
 		}
 
-		Texture & Texture::getGradient() {
+		Texture& Texture::getGradient() {
 			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
@@ -421,13 +421,13 @@ namespace mc {
 			init(d);
 		}
 
-		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
+		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color & col) : texture(tex), hue(col) {}
 
 		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
 
-		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
+		Texture::Texture(const Color & col) : Texture(Texture::getSolidColor(), col) {}
 
-		void Texture::init(const TextureDesc& desc) {
+		void Texture::init(const TextureDesc & desc) {
 			if (desc.width == 0) {
 				MACE__THROW(OutOfBounds, "Width of a Texture cannot be zero");
 			} else if (desc.height == 0) {
@@ -446,7 +446,7 @@ namespace mc {
 			return texture != nullptr;
 		}
 
-		const TextureDesc & Texture::getDesc() const {
+		const TextureDesc& Texture::getDesc() const {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			return texture->desc;
@@ -477,7 +477,7 @@ namespace mc {
 			return hue;
 		}
 
-		void Texture::setHue(const Color& col) {
+		void Texture::setHue(const Color & col) {
 			hue = col;
 		}
 
@@ -489,7 +489,7 @@ namespace mc {
 			return transform;
 		}
 
-		void Texture::setTransform(const Vector<float, 4>& trans) {
+		void Texture::setTransform(const Vector<float, 4> & trans) {
 			transform = trans;
 		}
 
@@ -520,7 +520,7 @@ namespace mc {
 			setUnpackStorageHint(PixelStorage::ROW_LENGTH, 0);
 		}
 
-		void Texture::setData(const void * data, const int mipmap) {
+		void Texture::setData(const void* data, const int mipmap) {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->setData(data, mipmap);
@@ -538,25 +538,25 @@ namespace mc {
 			texture->setPackStorageHint(hint, value);
 		}
 
-		void Texture::readPixels(void * data) const {
+		void Texture::readPixels(void* data) const {
 			MACE__VERIFY_TEXTURE_INIT();
 
 			texture->readPixels(data);
 		}
 
-		bool Texture::operator==(const Texture& other) const {
+		bool Texture::operator==(const Texture & other) const {
 			return transform == other.transform && hue == other.hue && texture == other.texture;
 		}
 
-		bool Texture::operator!=(const Texture& other) const {
+		bool Texture::operator!=(const Texture & other) const {
 			return !operator==(other);
 		}
 
-		gfx::WindowModule * GraphicsContext::getWindow() {
+		gfx::WindowModule* GraphicsContext::getWindow() {
 			return window;
 		}
 
-		const gfx::WindowModule * GraphicsContext::getWindow() const {
+		const gfx::WindowModule* GraphicsContext::getWindow() const {
 			return window;
 		}
 
@@ -576,13 +576,13 @@ namespace mc {
 			}
 		}
 
-		Texture & GraphicsContext::getOrCreateTextureFromFile(const std::string & name, const std::string & path) {
+		Texture& GraphicsContext::getOrCreateTextureFromFile(const std::string & name, const std::string & path) {
 			return getOrCreateTexture(name, [&path]() {
 				return Texture::createFromFile(path);
 			});
 		}
 
-		Model& GraphicsContext::createModel(const std::string & name, const Model& mod) {
+		Model& GraphicsContext::createModel(const std::string & name, const Model & mod) {
 			if (hasModel(name)) {
 				MACE__THROW(AlreadyExists, "Model with name " + name + " has already been created");
 			}
@@ -590,7 +590,7 @@ namespace mc {
 			return models[name] = mod;
 		}
 
-		Model & GraphicsContext::getOrCreateModel(const std::string & name, const ModelCreateCallback create) {
+		Model& GraphicsContext::getOrCreateModel(const std::string & name, const ModelCreateCallback create) {
 			if (!hasModel(name)) {
 				return createModel(name, create());
 			} else {
@@ -611,11 +611,11 @@ namespace mc {
 			textures[name] = texture;
 		}
 
-		Texture & GraphicsContext::getTexture(const std::string & name) {
+		Texture& GraphicsContext::getTexture(const std::string & name) {
 			return textures.at(name);
 		}
 
-		const Texture & GraphicsContext::getTexture(const std::string & name) const {
+		const Texture& GraphicsContext::getTexture(const std::string & name) const {
 			return textures.at(name);
 		}
 
@@ -623,11 +623,11 @@ namespace mc {
 			models[name] = model;
 		}
 
-		Model & GraphicsContext::getModel(const std::string & name) {
+		Model& GraphicsContext::getModel(const std::string & name) {
 			return models.at(name);
 		}
 
-		const Model & GraphicsContext::getModel(const std::string & name) const {
+		const Model& GraphicsContext::getModel(const std::string & name) const {
 			return models.at(name);
 		}
 
@@ -668,7 +668,7 @@ namespace mc {
 		}
 
 		void GraphicsContext::destroy() {
-			for (auto & x : textures) {
+			for (auto& x : textures) {
 				if (x.second.isCreated()) {
 					x.second.destroy();
 				}

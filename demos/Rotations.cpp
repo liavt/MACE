@@ -37,7 +37,7 @@ class TestComponent: public gfx::Component {
 
 	void destroy() override {}
 
-	void clean() override {}
+	void clean(gfx::Metrics&) override {}
 };
 
 class RotationComponent: public gfx::Component {

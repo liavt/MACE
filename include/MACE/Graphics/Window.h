@@ -50,7 +50,7 @@ namespace mc {
 		<p>
 		All `Entity` callbacks except for Entity::update are called with a renderer
 		context.
-		
+
 		@remark Due to limitations by graphics APIs, functions that require a `Renderer` context may not throw this error immediately, or the error line and file will not be correct. Using the `gfx::getCurrentWindow()` function will always throw the correct error immediately if no context is found.
 		@see gfx::getCurrentWindow()
 		@see gfx::Enums::ContextType
@@ -144,6 +144,16 @@ namespace mc {
 			GraphicsContext* getContext();
 			const GraphicsContext* getContext() const;
 
+			template<typename T>
+			float convertPixelsToRelativeXCoordinates(T px) const {
+				return static_cast<float>(px) / config.width;
+			}
+
+			template<typename T>
+			float convertPixelsToRelativeYCoordinates(T px) const {
+				return static_cast<float>(px) / config.height;
+			}
+
 			Monitor getMonitor();
 		private:
 			enum Properties: Byte {
@@ -225,7 +235,7 @@ namespace mc {
 			Vector<int, 2> getDPI() const;
 
 			Vector<float, 2> getContentScale() const;
-			
+
 			const char* getName() const;
 
 			Vector<int, 4> getWorkArea() const;
@@ -250,7 +260,7 @@ namespace mc {
 			/**
 			@internal
 			*/
-			const GLFWmonitor* const getGLFWMonitor() const{
+			const GLFWmonitor* const getGLFWMonitor() const {
 				return monitor;
 			}
 #endif//MACE_EXPOSE_GLFW

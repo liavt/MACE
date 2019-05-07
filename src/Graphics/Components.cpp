@@ -281,35 +281,32 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void AlignmentComponent::clean() {
-			const Entity::Metrics m = parent->getMetrics();
-
-			const float width = m.scale[0], height = m.scale[1];
+		void AlignmentComponent::clean(Metrics& metrics) {
+			const float width = metrics.transform.scaler[0], height = metrics.transform.scaler[1];
 
 			switch (horzAlign) {
 				default:
 				case HorizontalAlign::CENTER:
-					parent->setX(0.0f);
-					//e.setX((-width / 2) + static_cast<const float>(font.getSize() >> 1) / origWidth);
+					metrics.transform.translation[0] = 0.0f;
 					break;
 				case HorizontalAlign::RIGHT:
-					parent->setX(1.0f - (width / 2.0f));
+					metrics.transform.translation[0] = 1.0f - width;
 					break;
 				case HorizontalAlign::LEFT:
-					parent->setX((width / 2.0f) - 1.0f);
+					metrics.transform.translation[0] = width - 1.0f;
 					break;
 			}
 
 			switch (vertAlign) {
 				default:
 				case VerticalAlign::CENTER:
-					parent->setX(0.0f);
+					metrics.transform.translation[1] = 0.0f;
 					break;
 				case VerticalAlign::BOTTOM:
-					parent->setY((height / 2.0f) - 1.0f);
+					metrics.transform.translation[1] = height - 1.0f;
 					break;
 				case VerticalAlign::TOP:
-					parent->setY(1.0f - (height / 2.0f));
+					metrics.transform.translation[1] = 1.0f - height;
 					break;
 			}
 		}
@@ -412,8 +409,8 @@ namespace mc {
 			hoverCallback(parent);
 		}
 
-		void CallbackComponent::clean() {
-			cleanCallback(parent);
+		void CallbackComponent::clean(Metrics& metrics) {
+			cleanCallback(parent, metrics);
 		}
 
 		void CallbackComponent::setInitCallback(const CallbackPtr func) {
@@ -462,15 +459,15 @@ namespace mc {
 			return hoverCallback;
 		}
 
-		void CallbackComponent::setCleanCallback(const CallbackPtr func) {
+		void CallbackComponent::setCleanCallback(const CleanPtr func) {
 			cleanCallback = func;
 		}
 
-		CallbackComponent::CallbackPtr CallbackComponent::getCleanCallback() {
+		CallbackComponent::CleanPtr CallbackComponent::getCleanCallback() {
 			return cleanCallback;
 		}
 
-		const CallbackComponent::CallbackPtr CallbackComponent::getCleanCallback() const {
+		const CallbackComponent::CleanPtr CallbackComponent::getCleanCallback() const {
 			return cleanCallback;
 		}
 
@@ -562,7 +559,7 @@ namespace mc {
 			++nbFrames;
 		}
 
-		void FPSComponent::clean() {
+		void FPSComponent::clean(Metrics&) {
 			++nbCleans;
 		}
 
@@ -698,29 +695,32 @@ namespace mc {
 			return !operator>(other);
 		}
 
-		void BoundsComponent::clean() {
-			if (parent->getX() - parent->getWidth() < boundsX.x()) {
-				parent->setX(boundsX.x() + parent->getWidth());
-				callback(parent, this);
-			} else if (parent->getX() + parent->getWidth() > boundsX.y()) {
-				parent->setX(boundsX.y() - parent->getWidth());
-				callback(parent, this);
+		void BoundsComponent::clean(Metrics& metrics) {
+			TransformMatrix& transform = metrics.transform;
+			float& x = transform.translation.x(), y = transform.translation.y(), z = transform.translation.z();
+			const float& width = transform.scaler.x(), height = transform.scaler.y(), depth = transform.scaler.z();
+			if (x - width < boundsX.x()) {
+				x = boundsX.x() + width;
+				callback(parent, this, metrics);
+			} else if (x + width > boundsX.y()) {
+				x = boundsX.y() - width;
+				callback(parent, this, metrics);
 			}
 
-			if (parent->getY() - parent->getHeight() < boundsY.x()) {
-				parent->setY(boundsY.x() + parent->getHeight());
-				callback(parent, this);
+			if (y - height < boundsY.x()) {
+				y = boundsY.x() + height;
+				callback(parent, this, metrics);
 			} else if (parent->getY() + parent->getHeight() > boundsY.y()) {
-				parent->setY(boundsY.y() - parent->getHeight());
-				callback(parent, this);
+				y = boundsY.y() - height;
+				callback(parent, this, metrics);
 			}
 
-			if (parent->getZ() - parent->getDepth() < boundsZ.x()) {
-				parent->setZ(boundsZ.x() + parent->getDepth());
-				callback(parent, this);
-			} else if (parent->getZ() + parent->getDepth() > boundsZ.y()) {
-				parent->setZ(boundsZ.y() - parent->getDepth());
-				callback(parent, this);
+			if (z - depth < boundsZ.x()) {
+				z = boundsZ.x() + depth;
+				callback(parent, this, metrics);
+			} else if (z + depth > boundsZ.y()) {
+				z = boundsZ.y() - depth;
+				callback(parent, this, metrics);
 			}
 		}
 
@@ -827,9 +827,9 @@ namespace mc {
 			}
 		}
 
-		void ComponentQueue::clean() {
+		void ComponentQueue::clean(Metrics& metrics) {
 			if (!components.empty()) {
-				components.front()->clean();
+				components.front()->clean(metrics);
 			}
 		}
 

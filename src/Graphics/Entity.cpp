@@ -27,23 +27,23 @@ namespace mc {
 
 		void Component::render() {}
 
-		void Component::clean() {}
+		void Component::clean(Metrics& metrics) {}
 
 		void Component::hover() {}
 
-		Entity * Component::getParent() {
+		Entity* Component::getParent() {
 			return parent;
 		}
 
-		bool Component::operator==(const Component & other) const {
+		bool Component::operator==(const Component& other) const {
 			return parent == other.parent;
 		}
 
-		bool Component::operator!=(const Component & other) const {
+		bool Component::operator!=(const Component& other) const {
 			return !operator==(other);
 		}
 
-		bool Entity::hasChild(Entity & e) const {
+		bool Entity::hasChild(Entity& e) const {
 			for (Size i = 0; i < children.size(); ++i) {
 				if (children[i].get() == &e) {
 					return true;
@@ -78,7 +78,7 @@ namespace mc {
 			removeChild(&e);
 		}
 
-		void Entity::removeChild(const Entity * e) {
+		void Entity::removeChild(const Entity* e) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Argument to removeChild is nullptr!");
@@ -111,14 +111,14 @@ namespace mc {
 				MACE__THROW(OutOfBounds, std::to_string(index) + " is larger than the amount of children!");
 			} else
 #endif
-			if (children.size() == 1) {
-				children.clear();
-			} else {
-				removeChild(children.begin() + index);
-			}
+				if (children.size() == 1) {
+					children.clear();
+				} else {
+					removeChild(children.begin() + index);
+				}
 		}
 
-		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter) {
+		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator & iter) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (children.empty()) {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
@@ -181,6 +181,21 @@ namespace mc {
 			if (getProperty(Entity::DIRTY)) {
 				onClean();
 
+				metrics.transform = transformation;
+
+				metrics.inherited = TransformMatrix();
+				if (hasParent()) {
+					const Entity* par = getParent();
+
+					const Metrics parentMetrics = par->getMetrics();
+
+					metrics.inherited.translation += parentMetrics.transform.translation + parentMetrics.inherited.translation;
+					metrics.inherited.scaler *= parentMetrics.transform.scaler;
+					metrics.inherited.rotation += parentMetrics.transform.rotation;
+				}
+
+				metrics.transform.rotation += metrics.inherited.rotation;
+
 				for (Index i = 0; i < components.size(); ++i) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 					if (components[i].get() == nullptr) {
@@ -188,7 +203,7 @@ namespace mc {
 					}
 #endif
 
-					components[i]->clean();
+					components[i]->clean(metrics);
 				}
 
 				for (Size i = 0; i < children.size(); ++i) {
@@ -213,7 +228,7 @@ namespace mc {
 			}
 		}
 
-		Entity * Entity::getRoot() {
+		Entity* Entity::getRoot() {
 			Entity* par = this;
 
 			//get the highest level element
@@ -224,7 +239,7 @@ namespace mc {
 			return par;
 		}
 
-		const Entity * Entity::getRoot() const {
+		const Entity* Entity::getRoot() const {
 			const Entity* par = this;
 
 			//get the highest level element
@@ -235,29 +250,8 @@ namespace mc {
 			return par;
 		}
 
-		Entity::Metrics Entity::getMetrics() const {
-			Entity::Metrics m;
-			m.translation = transformation.translation;
-			m.rotation = transformation.rotation;
-			m.scale = transformation.scaler;
-
-			if (hasParent()) {
-				const Entity* par = getParent();
-
-				const Entity::Metrics parentMetrics = par->getMetrics();
-
-				m.inheritedTranslation += parentMetrics.translation + parentMetrics.inheritedTranslation;
-				m.inheritedScale *= parentMetrics.scale;
-				m.inheritedRotation += parentMetrics.rotation;
-			}
-			/*
-			m.translation *= m.inheritedScale;
-
-			m.scale *= m.inheritedScale;*/
-
-			m.rotation += m.inheritedRotation;
-
-			return m;
+		const Metrics& Entity::getMetrics() const {
+			return metrics;
 		}
 
 		void Entity::reset() {
@@ -375,7 +369,7 @@ namespace mc {
 			makeDirty();
 		}
 
-		void Entity::addChild(Entity* e) {
+		void Entity::addChild(Entity * e) {
 			addChild(std::shared_ptr<Entity>(e, [](Entity*) {}));
 		}
 
@@ -488,7 +482,7 @@ namespace mc {
 			return properties;
 		}
 
-		void Entity::setProperties(EntityProperties& b) {
+		void Entity::setProperties(EntityProperties & b) {
 			if (b != properties) {
 				makeDirty();
 				properties = b;
@@ -513,13 +507,13 @@ namespace mc {
 			}
 		}
 
-		TransformMatrix & Entity::getTransformation() {
+		TransformMatrix& Entity::getTransformation() {
 			makeDirty();
 
 			return transformation;
 		}
 
-		const TransformMatrix & Entity::getTransformation() const {
+		const TransformMatrix& Entity::getTransformation() const {
 			return transformation;
 		}
 
@@ -532,7 +526,7 @@ namespace mc {
 			}
 		}
 
-		Entity & Entity::translate(float x, float y, float z) {
+		Entity& Entity::translate(float x, float y, float z) {
 			makeDirty();
 
 			transformation.translate(x, y, z);
@@ -540,7 +534,7 @@ namespace mc {
 			return *this;
 		}
 
-		Entity & Entity::rotate(float x, float y, float z) {
+		Entity& Entity::rotate(float x, float y, float z) {
 			makeDirty();
 
 			transformation.rotate(x, y, z);
@@ -548,7 +542,7 @@ namespace mc {
 			return *this;
 		}
 
-		Entity & Entity::scale(float x, float y, float z) {
+		Entity& Entity::scale(float x, float y, float z) {
 			makeDirty();
 
 			transformation.scale(x, y, z);
@@ -556,7 +550,7 @@ namespace mc {
 			return *this;
 		}
 
-		bool Entity::operator==(const Entity& other) const noexcept {
+		bool Entity::operator==(const Entity & other) const noexcept {
 			if (other.properties != properties) {
 				return false;
 			} else if (other.parent != parent) {
@@ -582,17 +576,17 @@ namespace mc {
 
 		void Group::onDestroy() {}
 
-		float & Entity::getWidth() {
+		float& Entity::getWidth() {
 			makeDirty();
 
 			return transformation.scaler[0];
 		}
 
-		const float & Entity::getWidth() const {
+		const float& Entity::getWidth() const {
 			return transformation.scaler[0];
 		}
 
-		void Entity::setWidth(const float & s) {
+		void Entity::setWidth(const float& s) {
 			if (transformation.scaler[0] != s) {
 				makeDirty();
 
@@ -600,17 +594,17 @@ namespace mc {
 			}
 		}
 
-		float & Entity::getHeight() {
+		float& Entity::getHeight() {
 			makeDirty();
 
 			return transformation.scaler[1];
 		}
 
-		const float & Entity::getHeight() const {
+		const float& Entity::getHeight() const {
 			return transformation.scaler[1];
 		}
 
-		void Entity::setHeight(const float & s) {
+		void Entity::setHeight(const float& s) {
 			if (transformation.scaler[1] != s) {
 				makeDirty();
 
@@ -618,17 +612,17 @@ namespace mc {
 			}
 		}
 
-		float & Entity::getDepth() {
+		float& Entity::getDepth() {
 			makeDirty();
 
 			return transformation.scaler[2];
 		}
 
-		const float & Entity::getDepth() const {
+		const float& Entity::getDepth() const {
 			return transformation.scaler[2];
 		}
 
-		void Entity::setDepth(const float & s) {
+		void Entity::setDepth(const float& s) {
 			if (transformation.scaler[2] != s) {
 				makeDirty();
 
@@ -636,15 +630,15 @@ namespace mc {
 			}
 		}
 
-		float & Entity::getX() {
+		float& Entity::getX() {
 			makeDirty();
 
 			return transformation.translation[0];
 		}
-		const float & Entity::getX() const {
+		const float& Entity::getX() const {
 			return transformation.translation[0];
 		}
-		void Entity::setX(const float & newX) {
+		void Entity::setX(const float& newX) {
 			if (transformation.translation[0] != newX) {
 				makeDirty();
 
@@ -652,17 +646,17 @@ namespace mc {
 			}
 		}
 
-		float & Entity::getY() {
+		float& Entity::getY() {
 			makeDirty();
 
 			return transformation.translation[1];
 		}
 
-		const float & Entity::getY() const {
+		const float& Entity::getY() const {
 			return transformation.translation[1];
 		}
 
-		void Entity::setY(const float & newY) {
+		void Entity::setY(const float& newY) {
 			if (transformation.translation[1] != newY) {
 				makeDirty();
 
@@ -670,17 +664,17 @@ namespace mc {
 			}
 		}
 
-		float & Entity::getZ() {
+		float& Entity::getZ() {
 			makeDirty();
 
 			return transformation.translation[2];
 		}
 
-		const float & Entity::getZ() const {
+		const float& Entity::getZ() const {
 			return transformation.translation[2];
 		}
 
-		void Entity::setZ(const float & newZ) {
+		void Entity::setZ(const float& newZ) {
 			if (transformation.translation[2] != newZ) {
 				makeDirty();
 
@@ -688,13 +682,11 @@ namespace mc {
 			}
 		}
 
-		bool Entity::Metrics::operator==(const Metrics & other) const {
-			return translation == other.translation&&scale == other.scale&&rotation == other.rotation
-				&&inheritedTranslation == other.inheritedTranslation&&inheritedScale == other.inheritedScale
-				&&inheritedRotation == other.inheritedRotation;
+		bool Metrics::operator==(const Metrics & other) const {
+			return transform == other.transform && inherited == other.inherited;
 		}
 
-		bool Entity::Metrics::operator!=(const Metrics & other) const {
+		bool Metrics::operator!=(const Metrics & other) const {
 			return !operator==(other);
 		}
 

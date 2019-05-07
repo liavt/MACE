@@ -28,8 +28,7 @@ void create(gfx::WindowModule& win) {
 	botLeft.setTexture(Colors::RED);
 	botLeft.addComponent(std::shared_ptr<gfx::Component>(new gfx::AlignmentComponent(gfx::VerticalAlign::BOTTOM, gfx::HorizontalAlign::LEFT)));
 
-	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"));
-	font.setSize(24);
+	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"), 24);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
 	botRight.setTexture(Colors::YELLOW);

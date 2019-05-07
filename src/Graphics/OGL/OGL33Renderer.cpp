@@ -71,7 +71,7 @@ namespace mc {
 						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_VERTICES_LOCATION, MACE__VAO_DEFAULT_VERTICES_LOCATION),
 						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_TEXTURE_COORD_LOCATION, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION),
 #include <MACE/Graphics/OGL/Shaders/Shared.glsl>
-					});
+																				});
 #undef MACE__SHADER_MACRO
 
 					if ((features & Painter::RenderFeatures::DISCARD_INVISIBLE) != Painter::RenderFeatures::NONE) {
@@ -121,7 +121,7 @@ namespace mc {
 					return s;
 				}
 
-				ogl33::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
+				ogl33::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures> & settings) {
 					ogl33::ShaderProgram program;
 					program.init();
 
@@ -164,7 +164,7 @@ namespace mc {
 						//binding the samplers
 						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
-					}else if (settings.first == Painter::Brush::MASK) {
+					} else if (settings.first == Painter::Brush::MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
 						));
@@ -210,8 +210,7 @@ namespace mc {
 						program.setUniform("tex1", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
 						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
-					}
-					else if (settings.first == Painter::Brush::TEXT) {
+					} else if (settings.first == Painter::Brush::TEXT) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/text.f.glsl>
 						));
@@ -225,8 +224,7 @@ namespace mc {
 
 						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("glyph", static_cast<int>(TextureSlot::BACKGROUND));
-					}
-					 else {
+					} else {
 						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 					}
 
@@ -237,7 +235,7 @@ namespace mc {
 
 			OGL33Renderer::OGL33Renderer() {}
 
-			void OGL33Renderer::onInit(gfx::WindowModule* win) {
+			void OGL33Renderer::onInit(gfx::WindowModule * win) {
 				glewExperimental = true;
 				const GLenum result = glewInit();
 				if (result != GLEW_OK) {
@@ -291,7 +289,7 @@ namespace mc {
 				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing OGL33Renderer");
 			}
 
-			void OGL33Renderer::onSetUp(gfx::WindowModule *) {
+			void OGL33Renderer::onSetUp(gfx::WindowModule*) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
 				frameBuffer.bind();
@@ -392,7 +390,7 @@ namespace mc {
 
 			}
 
-			void OGL33Renderer::onQueue(GraphicsEntity *) {}
+			void OGL33Renderer::onQueue(GraphicsEntity*) {}
 
 			void OGL33Renderer::setRefreshColor(const float r, const float g, const float b, const float a) {
 				clearColor = Color(r, g, b, a);
@@ -443,34 +441,34 @@ namespace mc {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error attaching texture to FrameBuffer for the renderer");
 
 				switch (frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
-					case GL_FRAMEBUFFER_UNDEFINED:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
-						break;
-					case GL_FRAMEBUFFER_UNSUPPORTED:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
-						break;
-					case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-						MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
-						break;
-					case GL_FRAMEBUFFER_COMPLETE:
-					default:
-						//success
-						break;
+				case GL_FRAMEBUFFER_UNDEFINED:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+					break;
+				case GL_FRAMEBUFFER_UNSUPPORTED:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+					break;
+				case GL_FRAMEBUFFER_COMPLETE:
+				default:
+					//success
+					break;
 				}
 
 				setTarget(FrameBufferTarget::COLOR);
@@ -496,7 +494,7 @@ namespace mc {
 					("Internal Error: OGL33Renderer: Error resizing framebuffer for width " + std::to_string(width) + " and height " + std::to_string(height)).c_str());
 			}
 
-			void OGL33Renderer::getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const {
+			void OGL33Renderer::getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID * arr) const {
 				frameBuffer.bind();
 
 				const Vector<int, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
@@ -514,14 +512,14 @@ namespace mc {
 
 				Enum colorAttachment;
 				switch (target) {
-					case FrameBufferTarget::COLOR:
-						MACE_FALLTHROUGH;
-					default:
-						colorAttachment = GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX;
-						break;
-					case FrameBufferTarget::DATA:
-						colorAttachment = GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX;
-						break;
+				case FrameBufferTarget::COLOR:
+					MACE_FALLTHROUGH;
+				default:
+					colorAttachment = GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX;
+					break;
+				case FrameBufferTarget::DATA:
+					colorAttachment = GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX;
+					break;
 				}
 				ogl33::FrameBuffer::setReadBuffer(colorAttachment);
 				ogl33::FrameBuffer::setDrawBuffer(colorAttachment);
@@ -533,7 +531,7 @@ namespace mc {
 				return std::shared_ptr<PainterImpl>(new OGL33Painter(this));
 			}
 
-			void OGL33Renderer::bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
+			void OGL33Renderer::bindProtocol(OGL33Painter * painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
 				auto protocol = protocols.find(settings);
 				if (protocol == protocols.end()) {
 					RenderProtocol prot = RenderProtocol();
@@ -572,7 +570,7 @@ namespace mc {
 
 			}
 
-			OGL33Painter::OGL33Painter(OGL33Renderer* const r) : renderer(r) {}
+			OGL33Painter::OGL33Painter(OGL33Renderer * const r) : renderer(r) {}
 
 			void OGL33Painter::init() {
 				Object* buffers[] = {
@@ -593,15 +591,18 @@ namespace mc {
 
 				entityData.bind();
 
+				const TransformMatrix& transform = savedMetrics.transform;
+				const TransformMatrix& inherited = savedMetrics.inherited;
+
 				float entityDataBuffer[MACE__ENTITY_DATA_BUFFER_SIZE / sizeof(float)] = {};
 
-				savedMetrics.translation.flatten(entityDataBuffer);
+				transform.translation.flatten(entityDataBuffer);
 				//offset by 4
-				savedMetrics.rotation.flatten(entityDataBuffer + 4);
-				savedMetrics.scale.flatten(entityDataBuffer + 8);
-				savedMetrics.inheritedTranslation.flatten(entityDataBuffer + 12);
-				savedMetrics.inheritedRotation.flatten(entityDataBuffer + 16);
-				savedMetrics.inheritedScale.flatten(entityDataBuffer + 20);
+				transform.rotation.flatten(entityDataBuffer + 4);
+				transform.scaler.flatten(entityDataBuffer + 8);
+				inherited.translation.flatten(entityDataBuffer + 12);
+				inherited.rotation.flatten(entityDataBuffer + 16);
+				inherited.scaler.flatten(entityDataBuffer + 20);
 				//this crazy line puts a GLuint directly into a float, as GLSL expects a uint instead of a float
 				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
 
@@ -615,7 +616,7 @@ namespace mc {
 
 				painterData.bind();
 
-				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = { 0 };
+				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = {0};
 
 				savedState.transformation.translation.flatten(painterDataBuffer);
 				savedState.transformation.rotation.flatten(painterDataBuffer + 4);
@@ -662,32 +663,35 @@ namespace mc {
 				}
 #endif
 
-				const Entity::Metrics metrics = painter->getEntity()->getMetrics();
+				const Metrics metrics = painter->getEntity()->getMetrics();
 
 				if (metrics == savedMetrics) {
 					return;
 				}
 
+				const TransformMatrix& transform = metrics.transform;
+				const TransformMatrix& inherited = metrics.inherited;
+
 				//now we set the data defining the transformations of the entity
 				entityData.bind();
 
-				if (metrics.translation != savedMetrics.translation) {
-					entityData.setDataRange(0, sizeof(float) * 3, metrics.translation.begin());
+				if (transform.translation != savedMetrics.transform.translation) {
+					entityData.setDataRange(0, sizeof(float) * 3, transform.translation.begin());
 				}
-				if (metrics.rotation != savedMetrics.rotation) {
-					entityData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, metrics.rotation.begin());
+				if (transform.rotation != savedMetrics.transform.rotation) {
+					entityData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, transform.rotation.begin());
 				}
-				if (metrics.scale != savedMetrics.scale) {
-					entityData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, metrics.scale.begin());
+				if (transform.scaler != savedMetrics.transform.scaler) {
+					entityData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, transform.scaler.begin());
 				}
-				if (metrics.inheritedTranslation != savedMetrics.inheritedTranslation) {
-					entityData.setDataRange(sizeof(float) * 12, sizeof(float) * 3, metrics.inheritedTranslation.begin());
+				if (inherited.translation != savedMetrics.inherited.translation) {
+					entityData.setDataRange(sizeof(float) * 12, sizeof(float) * 3, inherited.translation.begin());
 				}
-				if (metrics.inheritedRotation != savedMetrics.inheritedRotation) {
-					entityData.setDataRange(sizeof(float) * 16, sizeof(float) * 3, metrics.inheritedRotation.begin());
+				if (inherited.rotation != savedMetrics.inherited.rotation) {
+					entityData.setDataRange(sizeof(float) * 16, sizeof(float) * 3, inherited.rotation.begin());
 				}
-				if (metrics.inheritedScale != savedMetrics.inheritedScale) {
-					entityData.setDataRange(sizeof(float) * 20, sizeof(float) * 3, metrics.scale.begin());
+				if (inherited.scaler != savedMetrics.inherited.scaler) {
+					entityData.setDataRange(sizeof(float) * 20, sizeof(float) * 3, inherited.scaler.begin());
 				}
 
 				savedMetrics = metrics;
@@ -695,43 +699,56 @@ namespace mc {
 				checkGLError(__LINE__, __FILE__, "Internal Error: Failed to update GPU-side buffer in Entity clean");
 			}
 
-			void OGL33Painter::loadSettings(const Painter::State& state) {
+			void OGL33Painter::loadSettings(const Painter::State & state) {
 				if (state == savedState) {
 					return;
 				}
 
 				painterData.bind();
 
-				if (state.transformation.translation != savedState.transformation.translation) {
-					painterData.setDataRange(0, sizeof(float) * 3, state.transformation.translation.begin());
-				}
-				if (state.transformation.rotation != savedState.transformation.rotation) {
-					painterData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, state.transformation.rotation.begin());
-				}
-				if (state.transformation.scaler != savedState.transformation.scaler) {
-					painterData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, state.transformation.scaler.begin());
-				}
-				if (state.data != savedState.data) {
-					painterData.setDataRange(sizeof(float) * 12, sizeof(float) * 4, state.data.begin());
-				}
-				if (state.foregroundColor != savedState.foregroundColor) {
-					painterData.setDataRange(sizeof(float) * 16, sizeof(float) * 4, state.foregroundColor.begin());
-				}
-				if (state.foregroundTransform != savedState.foregroundTransform) {
-					painterData.setDataRange(sizeof(float) * 20, sizeof(float) * 4, state.foregroundTransform.begin());
-				}
-				if (state.backgroundColor != savedState.backgroundColor) {
-					painterData.setDataRange(sizeof(float) * 24, sizeof(float) * 4, state.backgroundColor.begin());
-				}
-				if (state.backgroundTransform != savedState.backgroundTransform) {
-					painterData.setDataRange(sizeof(float) * 28, sizeof(float) * 4, state.backgroundTransform.begin());
-				}
-				if (state.maskColor != savedState.maskColor) {
-					painterData.setDataRange(sizeof(float) * 32, sizeof(float) * 4, state.maskColor.begin());
-				}
-				if (state.maskTransform != savedState.maskTransform) {
-					painterData.setDataRange(sizeof(float) * 36, sizeof(float) * 4, state.maskTransform.begin());
-				}
+#define MACE__DATA_RANGE_ENTRY(name, offset, size) if(state.name != savedState.name){painterData.setDataRange(sizeof(float) * offset, sizeof(float) * size, state.name.begin());}
+
+				MACE__DATA_RANGE_ENTRY(transformation.translation, 0, 3);
+				MACE__DATA_RANGE_ENTRY(transformation.rotation, 4, 3);
+				MACE__DATA_RANGE_ENTRY(transformation.scaler, 8, 3);
+				MACE__DATA_RANGE_ENTRY(data, 12, 4);
+				MACE__DATA_RANGE_ENTRY(foregroundColor, 16, 4);
+				MACE__DATA_RANGE_ENTRY(foregroundTransform, 20, 4);
+				MACE__DATA_RANGE_ENTRY(backgroundColor, 24, 4);
+				MACE__DATA_RANGE_ENTRY(backgroundTransform, 28, 4);
+				MACE__DATA_RANGE_ENTRY(maskColor, 32, 4);
+				MACE__DATA_RANGE_ENTRY(maskTransform, 36, 4);
+				//if (state.transformation.translation != savedState.transformation.translation) {
+				//	painterData.setDataRange(0, sizeof(float) * 3, state.transformation.translation.begin());
+				//}
+				//if (state.transformation.rotation != savedState.transformation.rotation) {
+				//	painterData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, state.transformation.rotation.begin());
+				//}
+				//if (state.transformation.scaler != savedState.transformation.scaler) {
+				//	painterData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, state.transformation.scaler.begin());
+				//}
+				//if (state.data != savedState.data) {
+				//	painterData.setDataRange(sizeof(float) * 12, sizeof(float) * 4, state.data.begin());
+				//}
+				//if (state.foregroundColor != savedState.foregroundColor) {
+				//	painterData.setDataRange(sizeof(float) * 16, sizeof(float) * 4, state.foregroundColor.begin());
+				//}
+				//if (state.foregroundTransform != savedState.foregroundTransform) {
+				//	painterData.setDataRange(sizeof(float) * 20, sizeof(float) * 4, state.foregroundTransform.begin());
+				//}
+				//if (state.backgroundColor != savedState.backgroundColor) {
+				//	painterData.setDataRange(sizeof(float) * 24, sizeof(float) * 4, state.backgroundColor.begin());
+				//}
+				//if (state.backgroundTransform != savedState.backgroundTransform) {
+				//	painterData.setDataRange(sizeof(float) * 28, sizeof(float) * 4, state.backgroundTransform.begin());
+				//}
+				//if (state.maskColor != savedState.maskColor) {
+				//	painterData.setDataRange(sizeof(float) * 32, sizeof(float) * 4, state.maskColor.begin());
+				//}
+				//if (state.maskTransform != savedState.maskTransform) {
+				//	painterData.setDataRange(sizeof(float) * 36, sizeof(float) * 4, state.maskTransform.begin());
+				//}
+#undef MACE__DATA_RANGE_ENTRY
 
 				if (state.filter != savedState.filter) {
 					float matrix[16];
@@ -742,20 +759,19 @@ namespace mc {
 				savedState = state;
 			}
 
-			void OGL33Painter::draw(const Model& m, const Painter::Brush brush) {
+			void OGL33Painter::draw(const Model & m, const Painter::Brush brush) {
 				m.bind();
 				if (brush == Painter::Brush::TEXT) {
 					ogl33::setBlending(GL_SRC1_COLOR, GL_ONE_MINUS_SRC1_COLOR);
 					renderer->frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-					renderer->bindProtocol(this, { Painter::Brush::TEXT, savedState.renderFeatures });
+					renderer->bindProtocol(this, {Painter::Brush::TEXT, savedState.renderFeatures});
 					m.draw();/*
 					glBlendFunc(GL_ONE, GL_ONE);
 					renderer->bindProtocol(this, { Painter::Brush::TEXT, savedState.renderFeatures });
 					m.draw();*/
 					ogl33::resetBlending();
-				}
-				else {
-					renderer->bindProtocol(this, { brush, savedState.renderFeatures });
+				} else {
+					renderer->bindProtocol(this, {brush, savedState.renderFeatures});
 
 					m.draw();
 				}

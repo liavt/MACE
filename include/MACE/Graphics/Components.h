@@ -140,7 +140,7 @@ namespace mc {
 			void render() final;
 			void destroy() final;
 			void hover() final;
-			void clean() final;
+			void clean(Metrics& metrics) final;
 		private:
 			std::queue<std::shared_ptr<Component>> components;
 		};
@@ -164,7 +164,7 @@ namespace mc {
 			bool operator==(const AlignmentComponent& other) const;
 			bool operator!=(const AlignmentComponent& other) const;
 		protected:
-			void clean() final;
+			void clean(Metrics& metrics) final;
 		private:
 			VerticalAlign vertAlign;
 			HorizontalAlign horzAlign;
@@ -235,13 +235,14 @@ namespace mc {
 			bool operator==(const TweenComponent& other) const;
 			bool operator!=(const TweenComponent& other) const;
 		private:
-			Entity * const entity;
+			Entity* const entity;
 		};
 
 		class CallbackComponent: public Component {
 		public:
 			using CallbackPtr = std::function<void(Entity*)>;
 			using UpdatePtr = std::function<bool(Entity*)>;
+			using CleanPtr = std::function<void(Entity*, Metrics&)>;
 
 			void setInitCallback(const CallbackPtr func);
 			CallbackPtr getInitCallback();
@@ -263,9 +264,9 @@ namespace mc {
 			CallbackPtr getHoverCallback();
 			const CallbackPtr getHoverCallback() const;
 
-			void setCleanCallback(const CallbackPtr func);
-			CallbackPtr getCleanCallback();
-			const CallbackPtr getCleanCallback() const;
+			void setCleanCallback(const CleanPtr func);
+			CleanPtr getCleanCallback();
+			const CleanPtr getCleanCallback() const;
 
 			bool operator==(const CallbackComponent& other) const;
 			bool operator!=(const CallbackComponent& other) const;
@@ -275,13 +276,13 @@ namespace mc {
 			void render() final;
 			void destroy() final;
 			void hover() final;
-			void clean() final;
+			void clean(Metrics& metrics) final;
 		private:
 			CallbackPtr destroyCallback = [](Entity*) {},
 				renderCallback = [](Entity*) {},
 				initCallback = [](Entity*) {},
-				hoverCallback = [](Entity*) {},
-				cleanCallback = [](Entity*) {};
+				hoverCallback = [](Entity*) {};
+			CleanPtr cleanCallback = [](Entity*, Metrics&) {};
 			UpdatePtr updateCallback = [](Entity*) -> bool {
 				return false;
 			};
@@ -315,18 +316,18 @@ namespace mc {
 			void init() final;
 			bool update() final;
 			void render() final;
-			void clean() final;
+			void clean(Metrics& metrics) final;
 			void hover() final;
 			void destroy() final;
 		};//FPSComponent
 
 		//the Return argument is to allow functions with return types to be used without a wrapper
-		template<typename T, typename Return = void>
+		template<typename T>
 		class ConstraintComponent: public Component {
 		public:
-			using ConstraintCallback = std::function<Return(T)>;
+			using ConstraintCallback = std::function<void(Metrics&, T)>;
 
-			ConstraintComponent(const T constraint = T(), const ConstraintCallback constrainFunc = [](T) -> Return {})
+			ConstraintComponent(const T constraint = T(), const ConstraintCallback constrainFunc = [](Metrics&, T) {})
 				: constraint(constraint), constraintCallback(constrainFunc) {}
 
 			~ConstraintComponent() = default;
@@ -374,8 +375,8 @@ namespace mc {
 				return !operator>(other);
 			}
 		private:
-			void clean() final {
-				constraintCallback(constraint);
+			void clean(Metrics& metrics) final {
+				constraintCallback(metrics, constraint);
 			}
 
 			ConstraintCallback constraintCallback;
@@ -385,35 +386,35 @@ namespace mc {
 
 		class XAxisConstraintComponent final: public ConstraintComponent<float> {
 		public:
-			XAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [&](float val) {
-				parent->setX(val);
+			XAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [](Metrics& met, float val) {
+				met.transform.translation[0] = val;
 			}) {}
 		};
 
 		class YAxisConstraintComponent final: public ConstraintComponent<float> {
 		public:
-			YAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [&](float val) {
-				parent->setY(val);
+			YAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [](Metrics& met, float val) {
+				met.transform.translation[1] = val;
 			}) {}
 		};
 
 		class ZAxisConstraintComponent final: public ConstraintComponent<float> {
 		public:
-			ZAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [&](float val) {
-				parent->setZ(val);
+			ZAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [](Metrics& met, float val) {
+				met.transform.translation[2] = val;
 			}) {}
 		};
 
 		class BoundsComponent: public Component {
 		public:
-			using BoundsReachedCallback = std::function<void(Entity*, BoundsComponent*)>;
+			using BoundsReachedCallback = std::function<void(Entity*, BoundsComponent*, Metrics&)>;
 
 			BoundsComponent(const Vector<float, 2> boundsX, const Vector<float, 2> boundsY,
 							const Vector<float, 2> boundsZ,
-							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*) {});
+							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*, Metrics&) {});
 			BoundsComponent(const float minX = -1.0f, const float maxX = 1.0f, const float minY = -1.0f,
 							const float maxY = 1.0f, const float minZ = -1.0f, const float maxZ = 1.0f,
-							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*) {});
+							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*, Metrics&) {});
 
 			BoundsReachedCallback getCallback();
 			const BoundsReachedCallback getCallback() const;
@@ -438,14 +439,14 @@ namespace mc {
 			bool operator<(const BoundsComponent& other);
 			bool operator<=(const BoundsComponent& other);
 		private:
-			void clean() final;
+			void clean(Metrics&) final;
 
 			Vector<float, 2> boundsX, boundsY, boundsZ;
 
 			BoundsReachedCallback callback;
 		};
 
-		class TextureFramesComponent: public Component,public Progressable {
+		class TextureFramesComponent: public Component, public Progressable {
 		public:
 			using FrameCallback = std::function<void(const Texture&, Entity*, TextureFramesComponent*)>;
 
@@ -469,7 +470,7 @@ namespace mc {
 			bool update() final;
 
 			const FrameCallback callback;
-			
+
 			float progress;
 
 			const std::vector<Texture> frames;
