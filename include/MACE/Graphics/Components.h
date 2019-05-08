@@ -128,9 +128,7 @@ namespace mc {
 			void addComponent(Component* com);
 			void addComponent(std::shared_ptr<Component> com);
 
-			std::queue<std::shared_ptr<Component>>& getComponents();
-			const std::queue<std::shared_ptr<Component>>& getComponents() const;
-			void setComponents(const std::queue<std::shared_ptr<Component>>& other);
+			MACE_GETTER_SETTER_DEC(Components, std::queue<std::shared_ptr<Component>>&)
 
 			bool operator==(const ComponentQueue& other) const;
 			bool operator!=(const ComponentQueue& other) const;
@@ -152,14 +150,16 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setVerticalAlign(const VerticalAlign align);
-			const VerticalAlign getVerticalAlign() const;
+			void setVerticalAlign(const VerticalAlign& align);
+			const VerticalAlign& getVerticalAlign() const;
+			VerticalAlign& getVerticalAlign();
 
 			/**
 			@dirty
 			*/
-			void setHorizontalAlign(HorizontalAlign align);
-			const HorizontalAlign getHorizontalAlign() const;
+			void setHorizontalAlign(const HorizontalAlign& align);
+			const HorizontalAlign& getHorizontalAlign() const;
+			HorizontalAlign& getHorizontalAlign();
 
 			bool operator==(const AlignmentComponent& other) const;
 			bool operator!=(const AlignmentComponent& other) const;
@@ -194,6 +194,9 @@ namespace mc {
 
 			EaseComponent(const EaseUpdateCallback callback, const EaseSettings settings = EaseSettings(), const float start = 0.0f, const float dest = 1.0f);
 
+			/**
+			@dirty
+			*/
 			void setProgress(const float prog) override;
 
 			float& getProgress() override;
@@ -244,29 +247,17 @@ namespace mc {
 			using UpdatePtr = std::function<bool(Entity*)>;
 			using CleanPtr = std::function<void(Entity*, Metrics&)>;
 
-			void setInitCallback(const CallbackPtr func);
-			CallbackPtr getInitCallback();
-			const CallbackPtr getInitCallback() const;
+			MACE_GETTER_SETTER_DEC(InitCallback, CallbackPtr);
 
-			void setUpdateCallback(const UpdatePtr func);
-			UpdatePtr getUpdateCallback();
-			const UpdatePtr getUpdateCallback() const;
+			MACE_GETTER_SETTER_DEC(UpdateCallback, UpdatePtr);
 
-			void setRenderCallback(const CallbackPtr func);
-			CallbackPtr getRenderCallback();
-			const CallbackPtr getRenderCallback() const;
+			MACE_GETTER_SETTER_DEC(RenderCallback, CallbackPtr);
 
-			void setDestroyCallback(const CallbackPtr func);
-			CallbackPtr getDestroyCallback();
-			const CallbackPtr getDestroyCallback() const;
+			MACE_GETTER_SETTER_DEC(DestroyCallback, CallbackPtr);
 
-			void setHoverCallback(const CallbackPtr func);
-			CallbackPtr getHoverCallback();
-			const CallbackPtr getHoverCallback() const;
+			MACE_GETTER_SETTER_DEC(HoverCallback, CallbackPtr);
 
-			void setCleanCallback(const CleanPtr func);
-			CleanPtr getCleanCallback();
-			const CleanPtr getCleanCallback() const;
+			MACE_GETTER_SETTER_DEC(CleanCallback, CleanPtr);
 
 			bool operator==(const CallbackComponent& other) const;
 			bool operator!=(const CallbackComponent& other) const;
@@ -321,7 +312,6 @@ namespace mc {
 			void destroy() final;
 		};//FPSComponent
 
-		//the Return argument is to allow functions with return types to be used without a wrapper
 		template<typename T>
 		class ConstraintComponent: public Component {
 		public:
@@ -332,16 +322,25 @@ namespace mc {
 
 			~ConstraintComponent() = default;
 
-			T getConstraint() {
+			T& getConstraint() {
 				return constraint;
 			}
 
-			const T getConstraint() const {
+			const T& getConstraint() const {
 				return constraint;
 			}
 
+			/**
+			@dirty
+			*/
 			void setConstraint(const T val) {
-				constraint = val;
+				if(constraint != val){
+					if(getParent() != nullptr){
+						getParent()->makeDirty();
+					}
+
+					constraint = val;
+				}
 			}
 
 			ConstraintCallback getConstraintCallback() {
@@ -422,16 +421,25 @@ namespace mc {
 
 			Vector<float, 2>& getBoundsX();
 			const Vector<float, 2>& getBoundsX() const;
+			/**
+			@dirty
+			*/
 			void setBoundsX(const Vector<float, 2>& vec);
 
 			Vector<float, 2>& getBoundsY();
 			const Vector<float, 2>& getBoundsY() const;
+			/**
+			@dirty
+			*/
 			void setBoundsY(const Vector<float, 2>& vec);
 
 			Vector<float, 2>& getBoundsZ();
 			const Vector<float, 2>& getBoundsZ() const;
+			/**
+			@dirty
+			*/
 			void setBoundsZ(const Vector<float, 2>& vec);
-
+			
 			bool operator==(const BoundsComponent& other);
 			bool operator!=(const BoundsComponent& other);
 			bool operator>(const BoundsComponent& other);
@@ -439,11 +447,25 @@ namespace mc {
 			bool operator<(const BoundsComponent& other);
 			bool operator<=(const BoundsComponent& other);
 		private:
-			void clean(Metrics&) final;
-
 			Vector<float, 2> boundsX, boundsY, boundsZ;
 
 			BoundsReachedCallback callback;
+
+			void clean(Metrics&) final;
+		};
+
+		class PaddingComponent: public Component {
+		public:
+			PaddingComponent(const float top, const float right, const float bottom, const float left, const float front, const float back);
+			PaddingComponent(const float top, const float right, const float bottom, const float left, const float z);
+			PaddingComponent(const float top, const float right, const float bottom, const float left);
+			PaddingComponent(const float top, const float x, const float bottom);
+			PaddingComponent(const float y, const float x);
+			PaddingComponent(const float padding);
+		private:
+			float paddingTop, paddingBottom, paddingLeft, paddingRight, paddingFront, paddingBack;
+
+			void clean(Metrics&) final;
 		};
 
 		class TextureFramesComponent: public Component, public Progressable {
@@ -452,6 +474,9 @@ namespace mc {
 
 			TextureFramesComponent(const std::vector<Texture>& tex, const FrameCallback callback);
 
+			/**
+			@dirty
+			*/
 			void setProgress(const float prog) override;
 
 			float& getProgress() override;

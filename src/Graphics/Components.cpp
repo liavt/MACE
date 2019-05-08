@@ -26,35 +26,35 @@ namespace mc {
 			MACE__MAKE_EASE_FUNCTION(BACK_IN) {
 				const float s = 1.70158f;
 				const float postFix = t /= d;
-				return c * (postFix)*t*((s + 1)*t - s) + b;
+				return c * (postFix) * t* ((s + 1) * t - s) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BACK_OUT) {
 				const float s = 1.70158f;
 				t /= d;
-				return c * ((t - 1)*t*((s + 1)*t + s) + 1) + b;
+				return c * ((t - 1) * t * ((s + 1) * t + s) + 1) + b;
 			}
 
 			//shameless resturant promotion
 			MACE__MAKE_EASE_FUNCTION(BACK_IN_OUT) {
 				const float s = 2.5949095f;
-				if ((t /= d / 2) < 1) return c / 2 * (t*t*((s + 1)*t - s)) + b;
+				if ((t /= d / 2) < 1) return c / 2 * (t * t * ((s + 1) * t - s)) + b;
 				const float postFix = t -= 2;
-				return c / 2 * ((postFix)*t*((s + 1)*t + s) + 2) + b;
+				return c / 2 * ((postFix) * t * ((s + 1) * t + s) + 2) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BOUNCE_OUT) {
 				if ((t /= d) < (1 / 2.75f)) {
-					return c * (7.5625f*t*t) + b;
+					return c * (7.5625f * t * t) + b;
 				} else if (t < (2 / 2.75f)) {
 					const float postFix = t -= (1.5f / 2.75f);
-					return c * (7.5625f*(postFix)*t + .75f) + b;
+					return c * (7.5625f * (postFix) * t + .75f) + b;
 				} else if (t < (2.5 / 2.75)) {
 					const float postFix = t -= (2.25f / 2.75f);
-					return c * (7.5625f*(postFix)*t + .9375f) + b;
+					return c * (7.5625f * (postFix) * t + .9375f) + b;
 				} else {
 					const float postFix = t -= (2.625f / 2.75f);
-					return c * (7.5625f*(postFix)*t + .984375f) + b;
+					return c * (7.5625f * (postFix) * t + .984375f) + b;
 				}
 			}
 
@@ -75,7 +75,7 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_OUT) {
 				t /= d;
-				return c * std::sqrt(1 - (t - 1)*t) + b;
+				return c * std::sqrt(1 - (t - 1) * t) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN_OUT) {
@@ -89,21 +89,21 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_IN) {
 				t /= d;
-				return c * t*t*t + b;
+				return c * t* t* t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_OUT) {
 				t /= d;
-				return c * ((t - 1)*t*t + 1) + b;
+				return c * ((t - 1) * t * t + 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_IN_OUT) {
 				if ((t /= d / 2) < 1) {
-					return c / 2 * t*t*t + b;
+					return c / 2 * t * t * t + b;
 				}
 
 				t -= 2;
-				return c / 2 * (t*t*t + 2) + b;
+				return c / 2 * (t * t * t + 2) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN) {
@@ -117,7 +117,7 @@ namespace mc {
 				const float s = p / 4;
 				--t;
 				const float postFix = c * static_cast<float>(std::pow(2, 10 * t));
-				return -static_cast<float>(postFix * static_cast<float>(std::sin((t*d - s))*(2 * static_cast<float>(math::pi())) / p)) + b;
+				return -static_cast<float>(postFix * static_cast<float>(std::sin((t * d - s)) * (2 * static_cast<float>(math::pi())) / p)) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(ELASTIC_OUT) {
@@ -129,7 +129,7 @@ namespace mc {
 
 				const float p = d * .3f;
 				const float s = p / 4;
-				return static_cast<float>(c*std::pow(2, -10 * t) * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p) + c + b);
+				return static_cast<float>(c * std::pow(2, -10 * t) * std::sin((t * d - s) * (2 * static_cast<float>(math::pi())) / p) + c + b);
 			}
 
 			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN_OUT) {
@@ -139,17 +139,17 @@ namespace mc {
 					return b + c;
 				}
 
-				const float p = d * (.3f*1.5f);
+				const float p = d * (.3f * 1.5f);
 				const float s = p / 4;
 
 				if (t < 1) {
 					--t;
 					const float postFix = c * static_cast<float>(std::pow(2, 10 * t));
-					return -.5f*(postFix* static_cast<float>(std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p))) + b;
+					return -.5f * (postFix * static_cast<float>(std::sin((t * d - s) * (2 * static_cast<float>(math::pi())) / p))) + b;
 				}
 				--t;
 				const float postFix = c * static_cast<float>(std::pow(2, -10 * (t)));
-				return postFix * std::sin((t*d - s)*(2 * static_cast<float>(math::pi())) / p)*0.5f + c + b;
+				return postFix * std::sin((t * d - s) * (2 * static_cast<float>(math::pi())) / p) * 0.5f + c + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN) {
@@ -169,55 +169,55 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN) {
 				t /= d;
-				return c * t*t + b;
+				return c * t* t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_OUT) {
 				t /= d;
-				return -c * t*(t - 2) + b;
+				return -c * t * (t - 2) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN_OUT) {
-				if ((t /= d / 2) < 1) return ((c / 2)*(t*t)) + b;
+				if ((t /= d / 2) < 1) return ((c / 2) * (t * t)) + b;
 				--t;
-				return -c / 2 * (((t - 1)*(t)) - 1) + b;
+				return -c / 2 * (((t - 1) * (t)) - 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN) {
 				t /= d;
-				return c * (t)*t*t*t + b;
+				return c * (t) * t* t* t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_OUT) {
 				t /= d;
-				return -c * ((t - 1)*t*t*t - 1) + b;
+				return -c * ((t - 1) * t * t * t - 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN_OUT) {
 				t /= d;
 				if ((t / 2) < 1) {
-					return c / 2 * t*t*t*t + b;
+					return c / 2 * t * t * t * t + b;
 				}
-				return -c / 2 * (t*t*t*t - 2) + b;
+				return -c / 2 * (t * t * t * t - 2) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN) {
 				t /= d;
-				return c * t*t*t*t*t + b;
+				return c * t* t* t* t* t + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_OUT) {
 				t /= d;
-				return c * ((t - 1)*t*t*t*t + 1) + b;
+				return c * ((t - 1) * t * t * t * t + 1) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN_OUT) {
 				t /= d;
 				if ((t / 2) < 1) {
-					return c / 2 * t*t*t*t*t + b;
+					return c / 2 * t * t * t * t * t + b;
 				}
 				t -= 2;
-				return c / 2 * (t*t*t*t*t + 2) + b;
+				return c / 2 * (t * t * t * t * t + 2) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN) {
@@ -229,7 +229,7 @@ namespace mc {
 			}
 
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN_OUT) {
-				return -c / 2 * (std::cos(static_cast<float>(math::pi())*t / d) - 1) + b;
+				return -c / 2 * (std::cos(static_cast<float>(math::pi()) * t / d) - 1) + b;
 			}
 		}
 
@@ -244,7 +244,7 @@ namespace mc {
 		AlignmentComponent::AlignmentComponent(const VerticalAlign vert, const HorizontalAlign horz)
 			: vertAlign(vert), horzAlign(horz) {}
 
-		void AlignmentComponent::setVerticalAlign(const VerticalAlign align) {
+		void AlignmentComponent::setVerticalAlign(const VerticalAlign & align) {
 			if (vertAlign != align) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -254,11 +254,15 @@ namespace mc {
 			}
 		}
 
-		const VerticalAlign AlignmentComponent::getVerticalAlign() const {
+		const VerticalAlign& AlignmentComponent::getVerticalAlign() const {
 			return vertAlign;
 		}
 
-		void AlignmentComponent::setHorizontalAlign(HorizontalAlign align) {
+		VerticalAlign& AlignmentComponent::getVerticalAlign() {
+			return vertAlign;
+		}
+
+		void AlignmentComponent::setHorizontalAlign(const HorizontalAlign & align) {
 			if (horzAlign != align) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -268,7 +272,11 @@ namespace mc {
 			}
 		}
 
-		const HorizontalAlign AlignmentComponent::getHorizontalAlign() const {
+		const HorizontalAlign& AlignmentComponent::getHorizontalAlign() const {
+			return horzAlign;
+		}
+
+		HorizontalAlign& AlignmentComponent::getHorizontalAlign() {
 			return horzAlign;
 		}
 
@@ -281,33 +289,33 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void AlignmentComponent::clean(Metrics& metrics) {
+		void AlignmentComponent::clean(Metrics & metrics) {
 			const float width = metrics.transform.scaler[0], height = metrics.transform.scaler[1];
 
 			switch (horzAlign) {
-				default:
-				case HorizontalAlign::CENTER:
-					metrics.transform.translation[0] = 0.0f;
-					break;
-				case HorizontalAlign::RIGHT:
-					metrics.transform.translation[0] = 1.0f - width;
-					break;
-				case HorizontalAlign::LEFT:
-					metrics.transform.translation[0] = width - 1.0f;
-					break;
+			default:
+			case HorizontalAlign::CENTER:
+				metrics.transform.translation[0] = 0.0f;
+				break;
+			case HorizontalAlign::RIGHT:
+				metrics.transform.translation[0] = 1.0f - width;
+				break;
+			case HorizontalAlign::LEFT:
+				metrics.transform.translation[0] = width - 1.0f;
+				break;
 			}
 
 			switch (vertAlign) {
-				default:
-				case VerticalAlign::CENTER:
-					metrics.transform.translation[1] = 0.0f;
-					break;
-				case VerticalAlign::BOTTOM:
-					metrics.transform.translation[1] = height - 1.0f;
-					break;
-				case VerticalAlign::TOP:
-					metrics.transform.translation[1] = 1.0f - height;
-					break;
+			default:
+			case VerticalAlign::CENTER:
+				metrics.transform.translation[1] = 0.0f;
+				break;
+			case VerticalAlign::BOTTOM:
+				metrics.transform.translation[1] = height - 1.0f;
+				break;
+			case VerticalAlign::TOP:
+				metrics.transform.translation[1] = 1.0f - height;
+				break;
 			}
 		}
 
@@ -317,15 +325,21 @@ namespace mc {
 			updateCallback(callback), startingProgress(start), destination(dest), progress(start), currentRepetition(0) {}
 
 		void EaseComponent::setProgress(const float prog) {
-			progress = prog;
+			if (progress != prog) {
+				if (getParent() != nullptr) {
+					getParent()->makeDirty();
+				}
+
+				progress = prog;
+			}
 			//b(startingProgress), c(destination)
 		}
 
-		float & EaseComponent::getProgress() {
+		float& EaseComponent::getProgress() {
 			return progress;
 		}
 
-		const float & EaseComponent::getProgress() const {
+		const float& EaseComponent::getProgress() const {
 			return progress;
 		}
 
@@ -409,67 +423,21 @@ namespace mc {
 			hoverCallback(parent);
 		}
 
-		void CallbackComponent::clean(Metrics& metrics) {
+		void CallbackComponent::clean(Metrics & metrics) {
 			cleanCallback(parent, metrics);
 		}
 
-		void CallbackComponent::setInitCallback(const CallbackPtr func) {
-			initCallback = func;
-		}
+		MACE_GETTER_SETTER_DEF(CallbackComponent, InitCallback, initCallback, CallbackComponent::CallbackPtr);
 
-		CallbackComponent::CallbackPtr CallbackComponent::getInitCallback() {
-			return initCallback;
-		}
+		MACE_GETTER_SETTER_DEF(CallbackComponent, UpdateCallback, updateCallback, CallbackComponent::UpdatePtr);
 
-		const CallbackComponent::CallbackPtr CallbackComponent::getInitCallback() const {
-			return initCallback;
-		}
+		MACE_GETTER_SETTER_DEF(CallbackComponent, RenderCallback, renderCallback, CallbackComponent::CallbackPtr);
 
-		void CallbackComponent::setUpdateCallback(const UpdatePtr func) {
-			updateCallback = func;
-		}
+		MACE_GETTER_SETTER_DEF(CallbackComponent, HoverCallback, hoverCallback, CallbackComponent::CallbackPtr);
 
-		CallbackComponent::UpdatePtr CallbackComponent::getUpdateCallback() {
-			return updateCallback;
-		}
+		MACE_GETTER_SETTER_DEF(CallbackComponent, CleanCallback, cleanCallback, CallbackComponent::CleanPtr);
 
-		const CallbackComponent::UpdatePtr CallbackComponent::getUpdateCallback() const {
-			return updateCallback;
-		}
-
-		void CallbackComponent::setRenderCallback(const CallbackPtr func) {
-			renderCallback = func;
-		}
-
-		CallbackComponent::CallbackPtr CallbackComponent::getRenderCallback() {
-			return renderCallback;
-		}
-
-		const CallbackComponent::CallbackPtr CallbackComponent::getRenderCallback() const {
-			return renderCallback;
-		}
-
-		void CallbackComponent::setHoverCallback(const CallbackPtr func) {
-			hoverCallback = func;
-		}
-		CallbackComponent::CallbackPtr CallbackComponent::getHoverCallback() {
-			return hoverCallback;
-		}
-		const CallbackComponent::CallbackPtr CallbackComponent::getHoverCallback() const {
-			return hoverCallback;
-		}
-
-		void CallbackComponent::setCleanCallback(const CleanPtr func) {
-			cleanCallback = func;
-		}
-
-		CallbackComponent::CleanPtr CallbackComponent::getCleanCallback() {
-			return cleanCallback;
-		}
-
-		const CallbackComponent::CleanPtr CallbackComponent::getCleanCallback() const {
-			return cleanCallback;
-		}
+		MACE_GETTER_SETTER_DEF(CallbackComponent, DestroyCallback, destroyCallback, CallbackComponent::CallbackPtr);
 
 		bool CallbackComponent::operator==(const CallbackComponent & other) const {
 			return Component::operator==(other);
@@ -477,18 +445,6 @@ namespace mc {
 
 		bool CallbackComponent::operator!=(const CallbackComponent & other) const {
 			return !operator==(other);
-		}
-
-		void CallbackComponent::setDestroyCallback(const CallbackPtr func) {
-			destroyCallback = func;
-		}
-
-		CallbackComponent::CallbackPtr CallbackComponent::getDestroyCallback() {
-			return destroyCallback;
-		}
-
-		const CallbackComponent::CallbackPtr CallbackComponent::getDestroyCallback() const {
-			return destroyCallback;
 		}
 
 		unsigned int FPSComponent::getUpdatesPerSecond() const {
@@ -569,17 +525,23 @@ namespace mc {
 
 		void FPSComponent::destroy() {}
 
-		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture>& tex, const FrameCallback call) : frames(tex), callback(call), progress(0) {}
+		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture> & tex, const FrameCallback call) : frames(tex), callback(call), progress(0) {}
 
 		void TextureFramesComponent::setProgress(const float prog) {
-			this->progress = prog;
+			if (progress != prog) {
+				if (getParent() != nullptr) {
+					getParent()->makeDirty();
+				}
+
+				progress = prog;
+			}
 		}
 
-		float & TextureFramesComponent::getProgress() {
+		float& TextureFramesComponent::getProgress() {
 			return progress;
 		}
 
-		const float & TextureFramesComponent::getProgress() const {
+		const float& TextureFramesComponent::getProgress() const {
 			return progress;
 		}
 
@@ -621,7 +583,7 @@ namespace mc {
 			: boundsX(x), boundsY(y), boundsZ(z), callback(boundsReached) {}
 
 		BoundsComponent::BoundsComponent(const float minX, const float maxX, const float minY, const float maxY, const float minZ, const float maxZ, const BoundsReachedCallback boundsReached)
-			: BoundsComponent({ minX, maxX }, { minY, maxY }, { minZ, maxZ }, boundsReached) {}
+			: BoundsComponent({minX, maxX}, {minY, maxY}, {minZ, maxZ}, boundsReached) {}
 
 		BoundsComponent::BoundsReachedCallback BoundsComponent::getCallback() {
 			return callback;
@@ -643,8 +605,14 @@ namespace mc {
 			return boundsX;
 		}
 
-		void BoundsComponent::setBoundsX(const Vector<float, 2>& vec) {
-			boundsX = vec;
+		void BoundsComponent::setBoundsX(const Vector<float, 2> & vec) {
+			if (boundsX != vec) {
+				if (getParent() != nullptr) {
+					getParent()->makeDirty();
+				}
+
+				boundsX = vec;
+			}
 		}
 
 		Vector<float, 2>& BoundsComponent::getBoundsY() {
@@ -655,8 +623,14 @@ namespace mc {
 			return boundsY;
 		}
 
-		void BoundsComponent::setBoundsY(const Vector<float, 2>& vec) {
-			boundsY = vec;
+		void BoundsComponent::setBoundsY(const Vector<float, 2> & vec) {
+			if (boundsY != vec) {
+				if (getParent() != nullptr) {
+					getParent()->makeDirty();
+				}
+
+				boundsY = vec;
+			}
 		}
 
 		Vector<float, 2>& BoundsComponent::getBoundsZ() {
@@ -667,8 +641,14 @@ namespace mc {
 			return boundsZ;
 		}
 
-		void BoundsComponent::setBoundsZ(const Vector<float, 2>& vec) {
-			boundsZ = vec;
+		void BoundsComponent::setBoundsZ(const Vector<float, 2> & vec) {
+			if (boundsZ != vec) {
+				if (getParent() != nullptr) {
+					getParent()->makeDirty();
+				}
+
+				boundsZ = vec;
+			}
 		}
 
 		bool BoundsComponent::operator==(const BoundsComponent & other) {
@@ -680,7 +660,7 @@ namespace mc {
 		}
 
 		bool BoundsComponent::operator>(const BoundsComponent & other) {
-			return boundsX > other.boundsX && boundsY > other.boundsY && boundsZ > other.boundsZ;
+			return boundsX > other.boundsX&& boundsY > other.boundsY&& boundsZ > other.boundsZ;
 		}
 
 		bool BoundsComponent::operator>=(const BoundsComponent & other) {
@@ -695,7 +675,7 @@ namespace mc {
 			return !operator>(other);
 		}
 
-		void BoundsComponent::clean(Metrics& metrics) {
+		void BoundsComponent::clean(Metrics & metrics) {
 			TransformMatrix& transform = metrics.transform;
 			float& x = transform.translation.x(), y = transform.translation.y(), z = transform.translation.z();
 			const float& width = transform.scaler.x(), height = transform.scaler.y(), depth = transform.scaler.z();
@@ -726,7 +706,7 @@ namespace mc {
 
 		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const EaseSettings settings) : TweenComponent(en, en->getTransformation(), dest, settings) {}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : entity(en), EaseComponent([start, dest, en](Entity* easeCom, float prog) {
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : entity(en), EaseComponent([start, dest, en](Entity * easeCom, float prog) {
 			TransformMatrix current = TransformMatrix();
 			current.translation = math::lerp(start.translation, dest.translation, prog);
 			current.rotation = math::lerp(start.rotation, dest.rotation, prog);
@@ -734,11 +714,11 @@ namespace mc {
 			en->setTransformation(current);
 		}, settings) {}
 
-		Entity * const TweenComponent::getEntity() {
+		Entity* const TweenComponent::getEntity() {
 			return entity;
 		}
 
-		const Entity * const TweenComponent::getEntity() const {
+		const Entity* const TweenComponent::getEntity() const {
 			return entity;
 		}
 
@@ -766,17 +746,7 @@ namespace mc {
 			components.push(com);
 		}
 
-		std::queue<std::shared_ptr<Component>>& ComponentQueue::getComponents() {
-			return components;
-		}
-
-		const std::queue<std::shared_ptr<Component>>& ComponentQueue::getComponents() const {
-			return components;
-		}
-
-		void ComponentQueue::setComponents(const std::queue<std::shared_ptr<Component>>& other) {
-			components = other;
-		}
+		MACE_GETTER_SETTER_DEF(ComponentQueue, Components, components, std::queue<std::shared_ptr<Component>>&)
 
 		bool ComponentQueue::operator==(const ComponentQueue & other) const {
 			return Component::operator==(other) && components == other.components;
@@ -827,7 +797,7 @@ namespace mc {
 			}
 		}
 
-		void ComponentQueue::clean(Metrics& metrics) {
+		void ComponentQueue::clean(Metrics & metrics) {
 			if (!components.empty()) {
 				components.front()->clean(metrics);
 			}
@@ -840,5 +810,31 @@ namespace mc {
 		bool EaseSettings::operator!=(const EaseSettings & other) const {
 			return !operator==(other);
 		}
-}//gfx
+
+		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float front, const float back) : paddingTop(top), paddingRight(right), paddingBottom(bottom), paddingLeft(left), paddingFront(front), paddingBack(back) {}
+
+		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float z) : PaddingComponent(top, right, bottom, left, z, z) {}
+
+		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left) : PaddingComponent(top, right, bottom, left, 0.0f) {}
+
+		PaddingComponent::PaddingComponent(const float top, const float x, const float bottom) : PaddingComponent(top, x, bottom, x) {}
+
+		PaddingComponent::PaddingComponent(const float y, const float x) : PaddingComponent(y, x, y) {}
+
+		PaddingComponent::PaddingComponent(const float padding) : PaddingComponent(padding, padding) {}
+
+		void PaddingComponent::clean(Metrics & metrics) {
+			Vector<float, 3>& translation = metrics.transform.scaler;
+			Vector<float, 3>& scaler = metrics.transform.scaler;
+
+			translation.x() -= paddingLeft - paddingRight;
+			scaler.x() += paddingLeft + paddingRight;
+
+			translation.y() -= paddingBottom - paddingTop;
+			scaler.y() += paddingBottom + paddingTop;
+
+			translation.z() -= paddingFront - paddingBack;
+			scaler.z() += paddingFront + paddingBack;
+		}
+	}//gfx
 }//mc

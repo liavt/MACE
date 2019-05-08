@@ -258,6 +258,12 @@ The above copyright notice and this permission notice shall be included in all c
 #	define MACE_EXPOSE_OPENAL 1
 #endif
 
+#define MACE_GETTER_SETTER_DEC_BASE(name, inType, outType) void set##name (inType val); outType get##name (); const outType get##name () const;
+#define MACE_GETTER_SETTER_DEC(name, type) MACE_GETTER_SETTER_DEC_BASE(name, const type, type)
+
+#define MACE_GETTER_SETTER_DEF_BASE(className, funcName, varName, inType, outType) void className:: set##funcName (inType val) { varName = val; } outType className:: get##funcName () { return varName ; } const outType className:: get##funcName () const { return varName ; }
+#define MACE_GETTER_SETTER_DEF(className, funcName, varName, type) MACE_GETTER_SETTER_DEF_BASE(className, funcName, varName, const type, type)
+
 #ifndef MACE_MSVC
 //for std::uint_least8_t
 #	include <cstdint>
