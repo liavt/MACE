@@ -28,7 +28,7 @@ namespace mc {
 
 		void Component::render() {}
 
-		void Component::clean(Metrics& metrics) {}
+		void Component::clean(Metrics&) {}
 
 		void Component::hover() {}
 
@@ -328,7 +328,7 @@ namespace mc {
 					return i;
 				}
 			}
-			return -1;
+			return Index(-1);
 		}
 
 		bool Entity::isEmpty() const {

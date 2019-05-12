@@ -98,6 +98,7 @@ namespace mc {
 		VectorBase() : content{ } {};
 
 		VectorBase(const T& val) : VectorBase() {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				content[i] = val;
 			}
@@ -130,7 +131,7 @@ namespace mc {
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
-			MACE_IF_CONSTEXPR (args.size() != N) {
+			MACE_IF_CONSTEXPR(args.size() != N) {
 				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the array.");
 			}
 
@@ -145,7 +146,8 @@ namespace mc {
 		Copies the contents of a `Vector` into a new `Vector`
 		@param obj A `Vector` to clone
 		*/
-		VectorBase(const Child &obj) {
+		VectorBase(const Child& obj) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				content[i] = obj[i];
 			}
@@ -182,6 +184,7 @@ namespace mc {
 		@param arr An equally sized array whose contents will cloned in this `Vector`
 		*/
 		void setContents(const T arr[N]) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				set(i, arr[i]);
 			}
@@ -205,7 +208,7 @@ namespace mc {
 		*/
 		T& get(Index i) MACE_EXPECTS(i < size()) {
 #ifdef MACE_DEBUG_CHECK_ARGS
-			if (i >= N) MACE_UNLIKELY {
+			if (i >= N) MACE_UNLIKELY{
 				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
@@ -221,7 +224,7 @@ namespace mc {
 		*/
 		const T& get(Index i) const MACE_EXPECTS(i < size()) {
 #ifdef MACE_DEBUG_CHECK_ARGS
-			if (i >= N) MACE_UNLIKELY {
+			if (i >= N) MACE_UNLIKELY{
 				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
 			}
 #endif
@@ -251,6 +254,7 @@ namespace mc {
 		@param arr The array to fill
 		*/
 		const T* flatten(T arr[N]) const {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				arr[i] = content[i];
 			}
@@ -269,7 +273,7 @@ namespace mc {
 			return content + (sizeof(T) * (N - 1));
 		}
 
-		const T* end() const {
+		const T * end() const {
 			return content + (sizeof(T) * (N - 1));
 		}
 
@@ -279,7 +283,7 @@ namespace mc {
 		@return The data at `i`
 		@see operator[](Index) const
 		*/
-		T& operator[](Index i) MACE_EXPECTS(i < size()) {
+		T & operator[](Index i) MACE_EXPECTS(i < size()) {
 			return content[i];
 		};
 		/**
@@ -324,7 +328,7 @@ namespace mc {
 		@return A `Vector` that was created by adding 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator+(const Child& right) const {
+		Child operator+(const Child & right) const {
 			Child out = Child(content);
 			out += right;
 			return out;
@@ -338,7 +342,7 @@ namespace mc {
 		@return A `Vector` that was created by subtracting 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator-(const Child& right) const {
+		Child operator-(const Child & right) const {
 			Child out = Child(content);
 			out -= right;
 			return out;
@@ -353,7 +357,7 @@ namespace mc {
 		@return The product of the multiplication
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator*(const Child& right) const {
+		Child operator*(const Child & right) const {
 			Child out = Child(content);
 			out *= right;
 			return out;
@@ -368,7 +372,7 @@ namespace mc {
 		@return The quotient of 2 `Vectors`
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator/(const Child& right) const {
+		Child operator/(const Child & right) const {
 			Child out = Child(content);
 			out /= right;
 			return out;
@@ -435,7 +439,8 @@ namespace mc {
 		@param right A `Vector` to add
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator+= (const Child& right) {
+		void operator+= (const Child & right) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) += right[i];
 			}
@@ -446,7 +451,8 @@ namespace mc {
 		@param right A `Vector` to subtract
 		@see operator-(const Vector<T,N>&) const
 		*/
-		void operator-= (const Child& right) {
+		void operator-= (const Child & right) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= right[i];
 			}
@@ -457,7 +463,8 @@ namespace mc {
 		@param right A `Vector` to multiply
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator*= (const Child& right) {
+		void operator*= (const Child & right) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= right[i];
 			}
@@ -468,7 +475,8 @@ namespace mc {
 		@param right A `Vector` to divide
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator/= (const Child& right) {
+		void operator/= (const Child & right) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= right[i];
 			}
@@ -481,7 +489,8 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator+= (const T& scalar) {
+		void operator+= (const T & scalar) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) += scalar;
 			}
@@ -493,7 +502,8 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator-= (const T& scalar) {
+		void operator-= (const T & scalar) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= scalar;
 			}
@@ -505,7 +515,8 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator*= (const T& scalar) {
+		void operator*= (const T & scalar) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= scalar;
 			}
@@ -517,7 +528,8 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator/= (const T& scalar) {
+		void operator/= (const T & scalar) {
+#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= scalar;
 			}
@@ -535,7 +547,7 @@ namespace mc {
 		@see operator<=(const Vector&) const
 		@see operator>(const Vector&) const
 		*/
-		bool operator==(const Child& other) const {
+		bool operator==(const Child & other) const {
 			for (Index i = 0; i < N; ++i) {
 				if (operator[](i) != other[i]) {
 					return false;
@@ -556,7 +568,7 @@ namespace mc {
 		@see operator<=(const Vector&) const
 		@see operator>(const Vector&) const
 		*/
-		bool operator!=(const Child& other) const {
+		bool operator!=(const Child & other) const {
 			return !operator==(other);
 		};
 
@@ -572,7 +584,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator>(const Child& other) const {
+		bool operator>(const Child & other) const {
 			for (Index i = 0; i < N; ++i) {
 				if (operator[](i) <= other[i]) {
 					return false;
@@ -593,7 +605,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator>=(const Child& other) const {
+		bool operator>=(const Child & other) const {
 			return operator>(other) || operator==(other);
 		}
 
@@ -609,7 +621,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator<(const Child& other) const {
+		bool operator<(const Child & other) const {
 			return !operator>=(other);
 		}
 
@@ -623,7 +635,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator<=(const Child& other) const {
+		bool operator<=(const Child & other) const {
 			return !operator>(other);
 		}
 
@@ -635,8 +647,8 @@ namespace mc {
 		@param v `Matrix` which will be printed
 		@return `output` for chaining
 		*/
-		friend std::ostream& operator<<(std::ostream& output,
-										const Child& v) {
+		friend std::ostream& operator<<(std::ostream & output,
+										const Child & v) {
 			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
 			for (Index x = 0; x < N; ++x) {
 				output << v[x];
@@ -828,6 +840,7 @@ namespace mc {
 		template<typename T, Size N>
 		T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
 			T out = 0;
+#pragma omp parallel for reduction(+:out)
 			for (Index i = 0; i < N; ++i) {
 				out += static_cast<T>(a[i] * b[i]);
 			}
@@ -847,6 +860,7 @@ namespace mc {
 		T magnitude(const Vector<T, N>& a) {
 			T out = T();//assuming its numerical
 			//basically the pythagereon theorum
+#pragma omp parallel for reduction(+:out)
 			for (Index i = 0; i < N; ++i) {
 				out += static_cast<T>(sqr(a[i]));
 			}
@@ -864,7 +878,7 @@ namespace mc {
 		@tparam N Size of the `Vector`
 		*/
 		template<typename T, Size N>
-		Vector<T, N> normalize(Vector<T, N>& vector) {
+		inline Vector<T, N> normalize(Vector<T, N>& vector) {
 			return vector / magnitude(vector);
 		}
 

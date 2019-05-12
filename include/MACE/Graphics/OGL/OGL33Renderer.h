@@ -88,7 +88,7 @@ namespace mc {
 					ogl33::ShaderProgram::UniformBufferData entityBufferData, painterBufferData;
 				};
 
-				std::map<unsigned short, OGL33Renderer::RenderProtocol> protocols{};
+				std::unordered_map<unsigned short, OGL33Renderer::RenderProtocol> protocols{};
 
 				void bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings);
 

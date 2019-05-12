@@ -227,8 +227,8 @@ namespace mc {
 				return name;
 			}
 
-			void UniformBuffer::setName(const char* name) {
-				this->name = name;
+			void UniformBuffer::setName(const char* na) {
+				this->name = na;
 			}
 
 			bool UniformBuffer::operator==(const UniformBuffer & other) const {
@@ -662,17 +662,17 @@ namespace mc {
 
 			ElementBuffer::ElementBuffer() noexcept : Buffer(0) {}
 
-			ElementBuffer::ElementBuffer(const Size indiceNum) noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER), indiceNumber(indiceNum) {}
+			ElementBuffer::ElementBuffer(const int indiceNum) noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER), indiceNumber(indiceNum) {}
 
-			void ElementBuffer::setIndiceNumber(const Size indices) {
+			void ElementBuffer::setIndiceNumber(const int indices) {
 				indiceNumber = indices;
 			}
 
-			Size ElementBuffer::getIndiceNumber() {
+			int ElementBuffer::getIndiceNumber() {
 				return indiceNumber;
 			}
 
-			const Size ElementBuffer::getIndiceNumber() const {
+			const int ElementBuffer::getIndiceNumber() const {
 				return indiceNumber;
 			}
 
@@ -997,31 +997,36 @@ namespace mc {
 				glGetActiveUniformsiv(id, activeUniforms, &indices[0], GL_UNIFORM_TYPE, &types[0]);
 
 				for (Index i = 0; i < activeUniforms; ++i) {
-					std::string name(static_cast<Size>(nameLengths[i]), '_');
+					std::string bufferName(static_cast<Size>(nameLengths[i]), '_');
 
-					glGetActiveUniformName(id, out.index, nameLengths[i], nullptr, &name[0]);
+					glGetActiveUniformName(id, out.index, nameLengths[i], nullptr, &bufferName[0]);
 
 					UniformBufferData::Field field{};
 					field.index = indices[i];
 					field.size = sizes[i];
 					field.offset = offsets[i];
 					field.type = types[i];
-					out.fields.insert(std::pair<std::string, UniformBufferData::Field>(name, field));
+					out.fields[bufferName] = field;
 				}
 
-				uniformBuffers.insert(std::pair<std::string, UniformBufferData>(name, out));
+				uniformBuffers[name] = out;
 			}
 
 			void ShaderProgram::createUniformBuffer(const UniformBuffer & buf, const GLint location) {
 				createUniformBuffer(buf.getName(), location);
 			}
 
-			ShaderProgram::UniformBufferData& ShaderProgram::getUniformBuffer(const char* name) {
+			ShaderProgram::UniformBufferData& ShaderProgram::getUniformBuffer(const std::string name) {
 				return uniformBuffers[name];
 			}
 
 			ShaderProgram::UniformBufferData& ShaderProgram::getUniformBuffer(const UniformBuffer & buf) {
-				return getUniformBuffer(buf.getName());
+				return getUniformBuffer(std::string(buf.getName()));
+			}
+
+			void ShaderProgram::setUniformBufferField(UniformBuffer& buf, const std::string name, const void* data, const ptrdiff_t size) {
+				const UniformBufferData& bufferData = getUniformBuffer(buf);
+				buf.setDataRange(bufferData.fields.at(name).offset, size, data);
 			}
 
 			void ShaderProgram::bindUniformBuffer(const UniformBuffer & buf) {

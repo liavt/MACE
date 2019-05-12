@@ -228,6 +228,29 @@ namespace mc {
 					j |= static_cast<unsigned short>(settings.second);
 					return j;
 				}
+
+				std::unordered_map<FrameBufferTarget, const Enum*> generateFramebufferTargetLookup(){
+					static MACE_CONSTEXPR const Enum colorBuffers[] = {
+								GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
+								GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
+					};
+
+					static MACE_CONSTEXPR const Enum dataBuffers[] = {
+							GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX,
+							GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
+					};
+
+					std::unordered_map<FrameBufferTarget, const Enum*> out{};
+					out[FrameBufferTarget::COLOR] = colorBuffers;
+					out[FrameBufferTarget::DATA] = dataBuffers;
+					return out;
+				}
+
+				const Enum* lookupFramebufferTarget(const FrameBufferTarget target){
+					static auto lookupTable = generateFramebufferTargetLookup();
+
+					return lookupTable[target];
+				}
 			}//anon namespace
 
 			OGL33Renderer::OGL33Renderer() {}
@@ -540,7 +563,7 @@ namespace mc {
 				}
 
 				protocol->second.program.bind();
-				UniformBuffer buffers[] = {
+				const UniformBuffer buffers[] = {
 					painter->entityData,
 					painter->painterData
 				};
@@ -548,20 +571,7 @@ namespace mc {
 			}
 
 			void OGL33Renderer::setTarget(const FrameBufferTarget & target) {
-				if (target == FrameBufferTarget::COLOR) {
-					MACE_CONSTEXPR const Enum buffers[] = {
-						GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
-						GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
-					};
-					frameBuffer.setDrawBuffers(2, buffers);
-				} else if (target == FrameBufferTarget::DATA) {
-					MACE_CONSTEXPR const Enum buffers[] = {
-						GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX,
-						GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
-					};
-					frameBuffer.setDrawBuffers(2, buffers);
-				}
-
+				frameBuffer.setDrawBuffers(2, lookupFramebufferTarget(target));
 			}
 
 			OGL33Painter::OGL33Painter(OGL33Renderer * const r) : renderer(r) {}

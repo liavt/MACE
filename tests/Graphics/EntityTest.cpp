@@ -89,7 +89,7 @@ namespace mc {
 
 			SECTION("Testing what makes something dirty") {
 				REQUIRE(!e.getProperty(Entity::DIRTY));
-				e.setProperty(Entity::MAINTAIN_X, true);
+				e.setProperty(Entity::DEAD, true);
 				REQUIRE(e.getProperty(Entity::DIRTY));
 				e.reset();
 				REQUIRE(!e.getProperty(Entity::DIRTY));

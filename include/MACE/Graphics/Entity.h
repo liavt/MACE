@@ -52,7 +52,7 @@ namespace mc {
 		@see Entity::addComponent(Component&)
 		@todo unit testing for clean() render() and hover()
 		*/
-		class MACE_NOVTABLE Component: public Initializable{
+		class MACE_NOVTABLE Component: public Initializable {
 			friend class Entity;
 			friend class ComponentQueue;
 		public:
@@ -524,9 +524,9 @@ namespace mc {
 			@copydoc Entity::getRoot() const
 			*/
 			Entity* getRoot();
-			
+
 			/**
-			@opengl			
+			@opengl
 			*/
 			const Metrics& getMetrics() const;
 
@@ -562,16 +562,6 @@ namespace mc {
 			@internal
 			*/
 			std::vector<std::shared_ptr<Entity>> children = std::vector<std::shared_ptr<Entity>>();
-
-			/**
-			@internal
-			*/
-			TransformMatrix transformation;
-
-			/**
-			@internal
-			*/
-			Metrics metrics;
 
 			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.
@@ -653,6 +643,16 @@ namespace mc {
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 
 			Entity* parent = nullptr;
+
+			/**
+			@internal
+			*/
+			TransformMatrix transformation;
+
+			/**
+			@internal
+			*/
+			Metrics metrics;
 
 			/**
 			Automatically called when `Entity::PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.

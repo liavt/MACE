@@ -268,7 +268,7 @@ namespace mc {
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
 			static Texture createFromFile(const std::string& file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
 			static Texture createFromFile(const char* file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
-			static Texture createFromMemory(const unsigned char * c, const int size);
+			static Texture createFromMemory(const unsigned char* c, const int size);
 
 			static Texture& getSolidColor();
 			/**
@@ -367,13 +367,13 @@ namespace mc {
 			}
 #			endif//MACE_OPENCV
 
-			Color& getHue();
-			const Color& getHue() const;
-			void setHue(const Color& col);
+			Color & getHue();
+			const Color & getHue() const;
+			void setHue(const Color & col);
 
-			Vector<float, 4>& getTransform();
-			const Vector<float, 4>& getTransform() const;
-			void setTransform(const Vector<float, 4>& trans);
+			Vector<float, 4> & getTransform();
+			const Vector<float, 4> & getTransform() const;
+			void setTransform(const Vector<float, 4> & trans);
 
 			void bind() const override;
 			void bind(const TextureSlot slot) const;
@@ -387,7 +387,7 @@ namespace mc {
 				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
 				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
 
-				MACE_IF_CONSTEXPR (W != texture->desc.width || H != texture->desc.height) {
+				MACE_IF_CONSTEXPR(W != texture->desc.width || H != texture->desc.height) {
 					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
 				}
 
@@ -399,14 +399,14 @@ namespace mc {
 
 			void readPixels(void* data) const;
 
-			bool operator==(const Texture& other) const;
-			bool operator!=(const Texture& other) const;
+			bool operator==(const Texture & other) const;
+			bool operator!=(const Texture & other) const;
 		private:
 			std::shared_ptr<TextureImpl> texture;
 
 			Color hue = Colors::INVISIBLE;
 
-			Vector<float, 4> transform{ 0.0f, 0.0f, 1.0f, 1.0f };
+			Vector<float, 4> transform{0.0f, 0.0f, 1.0f, 1.0f};
 		};//Texture
 
 		struct RenderTargetDesc {

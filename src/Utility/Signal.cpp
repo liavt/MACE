@@ -15,12 +15,12 @@ The above copyright notice and this permission notice shall be included in all c
 namespace mc {
 	namespace os {
 		namespace {
-			void signalHandle[[noreturn]](int sig) {
+			void signalHandle [[noreturn]] (int sig) {
 				//the following code is pretty boring and self explanatory.
 				//plus signals are literally the devil to debug, especially SIGSEGV
 				//so to lighten up the mood for developers that encounter these signals,
 				//i've written a "joke" about every single one
-				try{
+				try {
 #ifdef MACE_POSIX
 					if (sig == SIGHUP) {
 						//no YOU hangup first!
@@ -41,7 +41,7 @@ namespace mc {
 						//the adventures of TTIN TTIN
 						throw SignalTerminalInputError("SIGTTIN: Terminal input for background process");
 					} else if (sig == SIGTTOU) {
-						//
+						//no TTOU
 						throw SignalTerminalOutputError("SIGTTOU: Terminal output for background process");
 					}
 #endif//MACE_POSIX
@@ -74,12 +74,12 @@ namespace mc {
 						//we are getting mixed signals here
 						throw SignalError("Program recieved signal " + std::to_string(sig));
 					}
-				}catch(const Error& err){
+				} catch (const Error & err) {
 					Error::handleError(err);
 				}
 			}
 
-			void onUnexpected[[noreturn]]() {
+			void onUnexpected [[noreturn]] () noexcept {
 				try {
 					Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unexpected error occured", __LINE__, __FILE__));
 				} catch (...) {
@@ -89,7 +89,7 @@ namespace mc {
 				std::exit(EXIT_FAILURE);
 			}
 
-			void onTerminate[[noreturn]](){
+			void onTerminate [[noreturn]] () noexcept{
 				try {
 					Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An exception was thrown somewhere and not caught appropriately", __LINE__, __FILE__));
 				} catch (...) {

@@ -41,7 +41,7 @@ namespace mc {
 		//cant be size_t - opengl has to use to uints so the EntityID must be unsigned int
 		using EntityID = unsigned int;
 
-		enum class FrameBufferTarget: Byte {
+		enum class FrameBufferTarget: int {
 			COLOR = 0,
 			DATA = 1
 		};

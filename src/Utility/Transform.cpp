@@ -10,15 +10,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Math.h>
 #include <cmath>
-/*
-The MIT License (MIT)
 
-Copyright (c) 2016 Liav Turkia and Shahar Sandhaus
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 namespace mc {
 	Matrix<float, 4, 4> math::rotate(const float x, const float y, const float z) {
 		return rotate(identity<float, 4>(), x, y, z);
@@ -31,9 +23,9 @@ namespace mc {
 	}
 	Matrix<float, 4, 4> math::rotate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z) {
 		//Instead of having to calculate it twice, which is quite expensive, we store it in variables.
-		const float cosZ = cos(z), sinZ = sin(z);
-		const float cosY = cos(y), sinY = sin(y);
-		const float cosX = cos(x), sinX = sin(x);
+		const float cosZ = std::cos(z), sinZ = std::sin(z);
+		const float cosY = std::cos(y), sinY = std::sin(y);
+		const float cosX = std::cos(x), sinX = std::sin(x);
 
 
 		Matrix<float, 4, 4> out = m;
@@ -72,7 +64,7 @@ namespace mc {
 		return m;
 	}
 	Matrix<float, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
-		const float y_scale = (float)((1.0f / tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
+		const float y_scale = (float)((1.0f / std::tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
 		const float x_scale = y_scale / aspectRatio;
 		const float frustum_length = FAR_PLANE - NEAR_PLANE;
 
@@ -80,9 +72,9 @@ namespace mc {
 		projectionMatrix[0][0] = x_scale;
 		projectionMatrix[1][1] = y_scale;
 		projectionMatrix[2][2] = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-		projectionMatrix[2][3] = -1;
-		projectionMatrix[3][2] = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-		projectionMatrix[3][3] = 0;
+		projectionMatrix[2][3] = -1.0f;
+		projectionMatrix[3][2] = -((2.0f * NEAR_PLANE * FAR_PLANE) / frustum_length);
+		projectionMatrix[3][3] = 0.0f;
 
 		return projectionMatrix;
 	}

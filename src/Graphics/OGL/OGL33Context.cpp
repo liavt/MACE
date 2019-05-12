@@ -20,120 +20,143 @@ namespace mc {
 				GLenum getFormat(const TextureDesc::Format format) {
 					switch (format) {
 						//INTENSITY and LUMINANCE are deprecated since core 3.1, so we implement them with swizzle masks
-						case TextureDesc::Format::INTENSITY:
-						case TextureDesc::Format::LUMINANCE:
-						case TextureDesc::Format::RED:
-							return GL_RED;
-						case TextureDesc::Format::LUMINANCE_ALPHA:
-						case TextureDesc::Format::RG:
-							return GL_RG;
-						case TextureDesc::Format::RGB:
-							return GL_RGB;
-						case TextureDesc::Format::RGBA:
-							return GL_RGBA;
-						case TextureDesc::Format::BGR:
-							return GL_BGR;
-						case TextureDesc::Format::BGRA:
-							return GL_BGRA;
-						case TextureDesc::Format::RED_INTEGER:
-							return GL_RED_INTEGER;
-						case TextureDesc::Format::RG_INTEGER:
-							return GL_RG_INTEGER;
-						case TextureDesc::Format::RGB_INTEGER:
-							return GL_RGB_INTEGER;
-						case TextureDesc::Format::BGR_INTEGER:
-							return GL_BGR_INTEGER;
-						case TextureDesc::Format::RGBA_INTEGER:
-							return GL_RGBA_INTEGER;
-						case TextureDesc::Format::BGRA_INTEGER:
-							return GL_BGRA_INTEGER;
-						case TextureDesc::Format::STENCIL:
-							return GL_STENCIL;
-						case TextureDesc::Format::DEPTH:
-							return GL_DEPTH;
-						case TextureDesc::Format::DEPTH_STENCIL:
-							return GL_DEPTH_STENCIL;
-						default:
-							MACE__THROW(BadFormat, "Unsupported format by OpenGL");
+					case TextureDesc::Format::INTENSITY:
+					case TextureDesc::Format::LUMINANCE:
+					case TextureDesc::Format::RED:
+						return GL_RED;
+					case TextureDesc::Format::LUMINANCE_ALPHA:
+					case TextureDesc::Format::RG:
+						return GL_RG;
+					case TextureDesc::Format::RGB:
+						return GL_RGB;
+					case TextureDesc::Format::RGBA:
+						return GL_RGBA;
+					case TextureDesc::Format::BGR:
+						return GL_BGR;
+					case TextureDesc::Format::BGRA:
+						return GL_BGRA;
+					case TextureDesc::Format::RED_INTEGER:
+						return GL_RED_INTEGER;
+					case TextureDesc::Format::RG_INTEGER:
+						return GL_RG_INTEGER;
+					case TextureDesc::Format::RGB_INTEGER:
+						return GL_RGB_INTEGER;
+					case TextureDesc::Format::BGR_INTEGER:
+						return GL_BGR_INTEGER;
+					case TextureDesc::Format::RGBA_INTEGER:
+						return GL_RGBA_INTEGER;
+					case TextureDesc::Format::BGRA_INTEGER:
+						return GL_BGRA_INTEGER;
+					case TextureDesc::Format::STENCIL:
+						return GL_STENCIL;
+					case TextureDesc::Format::DEPTH:
+						return GL_DEPTH;
+					case TextureDesc::Format::DEPTH_STENCIL:
+						return GL_DEPTH_STENCIL;
+					default:
+						MACE__THROW(BadFormat, "Unsupported format by OpenGL");
 					}
 				}
 
 				GLenum getInternalFormat(const TextureDesc::InternalFormat format) {
 					switch (format) {
-						case TextureDesc::InternalFormat::DEPTH:
-							return GL_DEPTH_COMPONENT;
-						case TextureDesc::InternalFormat::DEPTH_STENCIL:
-							return GL_DEPTH_STENCIL;
-						case TextureDesc::InternalFormat::RED:
-							return GL_RED;
-						case TextureDesc::InternalFormat::RG:
-							return GL_RG;
-						case TextureDesc::InternalFormat::RGB:
-							return GL_RGB;
-						case TextureDesc::InternalFormat::RGBA:
-							return GL_RGBA;
-						case TextureDesc::InternalFormat::R8:
-							return GL_R8;
-						case TextureDesc::InternalFormat::R16:
-							return GL_R16;
-						case TextureDesc::InternalFormat::RGB8:
-							return GL_RGB8;
-						case TextureDesc::InternalFormat::RGBA8:
-							return GL_RGBA8;
-						case TextureDesc::InternalFormat::SRGB:
-							return GL_SRGB;
-						case TextureDesc::InternalFormat::SRGB8:
-							return GL_SRGB8;
-						case TextureDesc::InternalFormat::SRGB_ALPHA:
-							return GL_SRGB_ALPHA;
+					case TextureDesc::InternalFormat::DEPTH:
+						return GL_DEPTH_COMPONENT;
+					case TextureDesc::InternalFormat::DEPTH_STENCIL:
+						return GL_DEPTH_STENCIL;
+					case TextureDesc::InternalFormat::RED:
+						return GL_RED;
+					case TextureDesc::InternalFormat::RG:
+						return GL_RG;
+					case TextureDesc::InternalFormat::RGB:
+						return GL_RGB;
+					case TextureDesc::InternalFormat::RGBA:
+						return GL_RGBA;
+					case TextureDesc::InternalFormat::R8:
+						return GL_R8;
+					case TextureDesc::InternalFormat::R16:
+						return GL_R16;
+					case TextureDesc::InternalFormat::RGB8:
+						return GL_RGB8;
+					case TextureDesc::InternalFormat::RGBA8:
+						return GL_RGBA8;
+					case TextureDesc::InternalFormat::SRGB:
+						return GL_SRGB;
+					case TextureDesc::InternalFormat::SRGB8:
+						return GL_SRGB8;
+					case TextureDesc::InternalFormat::SRGB_ALPHA:
+						return GL_SRGB_ALPHA;
 						default MACE_UNLIKELY:
-							MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
+						MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
 				}
 
 				GLenum getType(const TextureDesc::Type type) {
 					switch (type) {
-						case TextureDesc::Type::UNSIGNED_BYTE:
-							return GL_UNSIGNED_BYTE;
-						case TextureDesc::Type::BYTE:
-							return GL_BYTE;
-						case TextureDesc::Type::UNSIGNED_SHORT:
-							return GL_UNSIGNED_SHORT;
-						case TextureDesc::Type::SHORT:
-							return GL_SHORT;
-						case TextureDesc::Type::UNSIGNED_INT:
-							return GL_UNSIGNED_INT;
-						case TextureDesc::Type::INT:
-							return GL_INT;
-						case TextureDesc::Type::FLOAT:
-							return GL_FLOAT;
-						case TextureDesc::Type::UNSIGNED_BYTE_3_3_2:
-							return GL_UNSIGNED_BYTE_3_3_2;
-						case TextureDesc::Type::UNSIGNED_BYTE_2_3_3_REV:
-							return GL_UNSIGNED_BYTE_2_3_3_REV;
-						case TextureDesc::Type::UNSIGNED_SHORT_5_6_5:
-							return GL_UNSIGNED_SHORT_5_6_5;
-						case TextureDesc::Type::UNSIGNED_SHORT_5_6_5_REV:
-							return GL_UNSIGNED_SHORT_5_6_5_REV;
-						case TextureDesc::Type::UNSIGNED_SHORT_4_4_4_4:
-							return GL_UNSIGNED_SHORT_4_4_4_4;
-						case TextureDesc::Type::UNSIGNED_SHORT_4_4_4_4_REV:
-							return GL_UNSIGNED_SHORT_4_4_4_4_REV;
-						case TextureDesc::Type::UNSIGNED_SHORT_5_5_5_1:
-							return GL_UNSIGNED_SHORT_5_5_5_1;
-						case TextureDesc::Type::UNSIGNED_SHORT_1_5_5_5_REV:
-							return GL_UNSIGNED_SHORT_1_5_5_5_REV;
-						case TextureDesc::Type::UNSIGNED_INT_8_8_8_8:
-							return GL_UNSIGNED_INT_8_8_8_8;
-						case TextureDesc::Type::UNSIGNED_INT_8_8_8_8_REV:
-							return GL_UNSIGNED_INT_8_8_8_8_REV;
-						case TextureDesc::Type::UNSIGNED_INT_10_10_10_2:
-							return GL_UNSIGNED_INT_10_10_10_2;
-						case TextureDesc::Type::UNSIGNED_INT_2_10_10_10_REV:
-							return GL_UNSIGNED_INT_2_10_10_10_REV;
-						default:
-							MACE__THROW(BadFormat, "Unsupported type by OpenGL");
+					case TextureDesc::Type::UNSIGNED_BYTE:
+						return GL_UNSIGNED_BYTE;
+					case TextureDesc::Type::BYTE:
+						return GL_BYTE;
+					case TextureDesc::Type::UNSIGNED_SHORT:
+						return GL_UNSIGNED_SHORT;
+					case TextureDesc::Type::SHORT:
+						return GL_SHORT;
+					case TextureDesc::Type::UNSIGNED_INT:
+						return GL_UNSIGNED_INT;
+					case TextureDesc::Type::INT:
+						return GL_INT;
+					case TextureDesc::Type::FLOAT:
+						return GL_FLOAT;
+					case TextureDesc::Type::UNSIGNED_BYTE_3_3_2:
+						return GL_UNSIGNED_BYTE_3_3_2;
+					case TextureDesc::Type::UNSIGNED_BYTE_2_3_3_REV:
+						return GL_UNSIGNED_BYTE_2_3_3_REV;
+					case TextureDesc::Type::UNSIGNED_SHORT_5_6_5:
+						return GL_UNSIGNED_SHORT_5_6_5;
+					case TextureDesc::Type::UNSIGNED_SHORT_5_6_5_REV:
+						return GL_UNSIGNED_SHORT_5_6_5_REV;
+					case TextureDesc::Type::UNSIGNED_SHORT_4_4_4_4:
+						return GL_UNSIGNED_SHORT_4_4_4_4;
+					case TextureDesc::Type::UNSIGNED_SHORT_4_4_4_4_REV:
+						return GL_UNSIGNED_SHORT_4_4_4_4_REV;
+					case TextureDesc::Type::UNSIGNED_SHORT_5_5_5_1:
+						return GL_UNSIGNED_SHORT_5_5_5_1;
+					case TextureDesc::Type::UNSIGNED_SHORT_1_5_5_5_REV:
+						return GL_UNSIGNED_SHORT_1_5_5_5_REV;
+					case TextureDesc::Type::UNSIGNED_INT_8_8_8_8:
+						return GL_UNSIGNED_INT_8_8_8_8;
+					case TextureDesc::Type::UNSIGNED_INT_8_8_8_8_REV:
+						return GL_UNSIGNED_INT_8_8_8_8_REV;
+					case TextureDesc::Type::UNSIGNED_INT_10_10_10_2:
+						return GL_UNSIGNED_INT_10_10_10_2;
+					case TextureDesc::Type::UNSIGNED_INT_2_10_10_10_REV:
+						return GL_UNSIGNED_INT_2_10_10_10_REV;
+					default:
+						MACE__THROW(BadFormat, "Unsupported type by OpenGL");
 					}
+				}
+
+				const std::unordered_map<PrimitiveType, Enum> generatePrimitiveTypeLookup() {
+					std::unordered_map<PrimitiveType, Enum> out{};
+#define MACE__TABLE_ENTRY(name, value) out[PrimitiveType::name] = value;
+					MACE__TABLE_ENTRY(POINTS, GL_POINTS);
+					MACE__TABLE_ENTRY(LINES, GL_LINES);
+					MACE__TABLE_ENTRY(LINES_ADJACENCY, GL_LINES_ADJACENCY);
+					MACE__TABLE_ENTRY(LINES_STRIP, GL_LINE_STRIP);
+					MACE__TABLE_ENTRY(LINES_STRIP_ADJACENCY, GL_LINE_STRIP_ADJACENCY);
+					MACE__TABLE_ENTRY(TRIANGLES, GL_TRIANGLES);
+					MACE__TABLE_ENTRY(TRIANGLES_ADJACENCY, GL_TRIANGLES_ADJACENCY);
+					MACE__TABLE_ENTRY(TRIANGLES_STRIP, GL_TRIANGLE_STRIP);
+					MACE__TABLE_ENTRY(TRIANGLES_STRIP_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY);
+#undef MACE__TABLE_ENTRY
+
+					return out;
+				}
+
+				inline Enum lookupPrimitiveType(const PrimitiveType type) {
+					static auto lookupTable = generatePrimitiveTypeLookup();
+
+					return lookupTable[type];
 				}
 			}//anon namespace
 
@@ -232,32 +255,32 @@ namespace mc {
 			void OGL33Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
 				ogl33::Texture2D::bind();
 				switch (hint) {
-					case PixelStorage::ALIGNMENT:
-						setPixelStorage(GL_UNPACK_ALIGNMENT, value);
-						break;
-					case PixelStorage::ROW_LENGTH:
-						setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
-						break;
-					default:
-						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
+				case PixelStorage::ALIGNMENT:
+					setPixelStorage(GL_UNPACK_ALIGNMENT, value);
+					break;
+				case PixelStorage::ROW_LENGTH:
+					setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
+					break;
+				default:
+					MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
 				}
 			}
 
 			void OGL33Texture::setPackStorageHint(const PixelStorage hint, const int value) {
 				ogl33::Texture2D::bind();
 				switch (hint) {
-					case PixelStorage::ALIGNMENT:
-						setPixelStorage(GL_PACK_ALIGNMENT, value);
-						break;
-					case PixelStorage::ROW_LENGTH:
-						setPixelStorage(GL_PACK_ROW_LENGTH, value);
-						break;
-					default:
-						MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
+				case PixelStorage::ALIGNMENT:
+					setPixelStorage(GL_PACK_ALIGNMENT, value);
+					break;
+				case PixelStorage::ROW_LENGTH:
+					setPixelStorage(GL_PACK_ROW_LENGTH, value);
+					break;
+				default:
+					MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
 				}
 			}
 
-			void OGL33Texture::setData(const void * data, const int mipmap) {
+			void OGL33Texture::setData(const void* data, const int mipmap) {
 				ogl33::Texture2D::bind();
 				ogl33::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
 
@@ -266,7 +289,7 @@ namespace mc {
 				}
 			}
 
-			void OGL33Texture::readPixels(void * data) const {
+			void OGL33Texture::readPixels(void* data) const {
 				ogl33::Texture2D::bind();
 				ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
 			}
@@ -296,33 +319,10 @@ namespace mc {
 			}
 
 			void OGL33Model::draw() const {
-				Enum type;
-				if (primitiveType == PrimitiveType::POINTS) {
-					type = GL_POINTS;
-				} else if (primitiveType == PrimitiveType::LINES) {
-					type = GL_LINES;
-				} else if (primitiveType == PrimitiveType::LINES_ADJACENCY) {
-					type = GL_LINES_ADJACENCY;
-				} else if (primitiveType == PrimitiveType::LINES_STRIP) {
-					type = GL_LINE_STRIP;
-				} else if (primitiveType == PrimitiveType::LINES_STRIP_ADJACENCY) {
-					type = GL_LINE_STRIP_ADJACENCY;
-				} else if (primitiveType == PrimitiveType::TRIANGLES) {
-					type = GL_TRIANGLES;
-				} else if (primitiveType == PrimitiveType::TRIANGLES_ADJACENCY) {
-					type = GL_TRIANGLES_ADJACENCY;
-				} else if (primitiveType == PrimitiveType::TRIANGLES_STRIP) {
-					type = GL_TRIANGLE_STRIP;
-				} else if (primitiveType == PrimitiveType::TRIANGLES_STRIP_ADJACENCY) {
-					type = GL_TRIANGLE_STRIP_ADJACENCY;
-				} else {
-					MACE__THROW(UnsupportedRenderer, "Unknown draw mode for OpenGL model: " + std::to_string(static_cast<short int>(primitiveType)));
-				}
-
 				if (indices.getIndiceNumber() > 0) {
-					glDrawElements(type, static_cast<GLsizei>(indices.getIndiceNumber()), GL_UNSIGNED_INT, nullptr);
+					glDrawElements(lookupPrimitiveType(primitiveType), indices.getIndiceNumber(), GL_UNSIGNED_INT, nullptr);
 				} else {
-					glDrawArrays(type, 0, getVertexNumber());
+					glDrawArrays(lookupPrimitiveType(primitiveType), 0, getVertexNumber());
 				}
 			}
 
@@ -334,7 +334,7 @@ namespace mc {
 				ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
 			}
 
-			void OGL33Model::loadIndices(const unsigned int indiceNum, const unsigned int * indiceData) {
+			void OGL33Model::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
 				ogl33::VertexArray::loadIndices(indiceNum, indiceData);
 			}
 
@@ -342,13 +342,13 @@ namespace mc {
 				return ogl33::VertexArray::isCreated();
 			}
 
-			void OGL33Context::onInit(gfx::WindowModule *) {
+			void OGL33Context::onInit(gfx::WindowModule*) {
 				renderer = std::unique_ptr<Renderer>(new OGL33Renderer());
 			}
 
-			void OGL33Context::onRender(gfx::WindowModule *) {}
+			void OGL33Context::onRender(gfx::WindowModule*) {}
 
-			void OGL33Context::onDestroy(gfx::WindowModule *) {
+			void OGL33Context::onDestroy(gfx::WindowModule*) {
 				renderer.reset();
 			}
 
@@ -362,7 +362,7 @@ namespace mc {
 				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) const {
+			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc & desc) const {
 				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
 			}
 		}//ogl33

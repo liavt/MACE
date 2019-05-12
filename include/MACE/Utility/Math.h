@@ -25,7 +25,7 @@ namespace mc {
 		@return Pi
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T pi() {
+		MACE_CONSTEXPR inline const T pi() noexcept {
 			return T(3.14159265358979323846264338327950288419716939937510l);
 		}
 
@@ -35,7 +35,7 @@ namespace mc {
 		@see #toRadians()
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T tau() {
+		MACE_CONSTEXPR inline const T tau() noexcept {
 			return T(6.28318530717958647692528676655900576839433879875021l);
 		}
 
@@ -44,7 +44,7 @@ namespace mc {
 		@return The `Euler–Mascheroni constant`
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T gamma() {
+		MACE_CONSTEXPR inline const T gamma() noexcept {
 			return T(0.57721566490153286060651209008240243104215933593992l);
 		}
 
@@ -54,7 +54,7 @@ namespace mc {
 		@see logn(double);
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T e() {
+		MACE_CONSTEXPR inline const T e() noexcept {
 			return T(2.71828182845904523536028747135266249775724709369995l);
 		}
 
@@ -63,7 +63,7 @@ namespace mc {
 		@return Square root of 2
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T root2() {
+		MACE_CONSTEXPR inline const T root2() noexcept {
 			return T(1.41421356237309504880168872420969807856967187537694l);
 		}
 
@@ -72,7 +72,7 @@ namespace mc {
 		@return Square root of 3
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T root3() {
+		MACE_CONSTEXPR inline const T root3() noexcept {
 			return T(1.73205080756887729352744634150587236694280525381038l);
 		}
 
@@ -81,7 +81,7 @@ namespace mc {
 		@return Square root of 5
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T root5() {
+		MACE_CONSTEXPR inline const T root5() noexcept {
 			return T(2.23606797749978969640917366873127623544061835961152l);
 		}
 
@@ -89,7 +89,7 @@ namespace mc {
 		Calculates the golden ratio, also represented by `phi`. The golden ratio is referenced throughout many different parts of mathmatics, including geometery, trigonometry, pyramids, the fibonacci sequence, and algebra.
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T phi() {
+		MACE_CONSTEXPR inline const T phi() noexcept {
 			return T(1.61803398874989484820458683436563811772030917980576l);
 		}
 
@@ -99,7 +99,7 @@ namespace mc {
 		@return `|value|`
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const T abs(const T value) {
+		MACE_CONSTEXPR inline const T abs(const T value) noexcept {
 			return value < T(0) ? -value : value;
 		}
 
@@ -112,7 +112,7 @@ namespace mc {
 		@see clamp(const T, const T, const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const T min(const T val1, const T val2) {
+		MACE_CONSTEXPR inline const T min(const T val1, const T val2) noexcept {
 			return val1 > val2 ? val2 : val1;
 		}
 
@@ -125,13 +125,13 @@ namespace mc {
 		@see clamp(const T, const T, const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const T max(const T val1, const T val2) {
+		MACE_CONSTEXPR inline const T max(const T val1, const T val2)  noexcept {
 			return val1 > val2 ? val1 : val2;
 		}
 
 		/**
 		Clamps a value in between a range.
-		
+
 		@param val Value to clamp
 		@param minVal The smallest possible value. If `val < minVal`, `minVal` is returned
 		@param maxVal The biggest possible value. If `val > maxVal`, `maxVal` is returned
@@ -140,7 +140,7 @@ namespace mc {
 		@see max(const T, const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const T clamp(const T val, const T minVal, const T maxVal) {
+		MACE_CONSTEXPR inline const T clamp(const T val, const T minVal, const T maxVal) noexcept {
 			return min(max(val, minVal), maxVal);
 			//return val < min ? min : (val > max ? max : val);
 		}
@@ -154,7 +154,7 @@ namespace mc {
 		@see round(const double)
 		*/
 		template<typename T = int, typename T2 = double>
-		MACE_CONSTEXPR inline const T floor(const T2 value) {
+		MACE_CONSTEXPR inline const T floor(const T2 value) noexcept {
 			//IEEE Standard states that it will round down in a static cast.
 			//however, compilers will round towards zero, and floor should not.
 			return static_cast<T>(value) < T(0) ? static_cast<T>(value) - T(1) : static_cast<T>(value);
@@ -168,7 +168,7 @@ namespace mc {
 		@see round(const double)
 		*/
 		template<typename T = int, typename T2 = double>
-		MACE_CONSTEXPR inline const T ceil(const T2 value) {
+		MACE_CONSTEXPR inline const T ceil(const T2 value) noexcept {
 			return floor<T, T2>(value) != value ? floor<T, T2>(value) + T(1) : floor<T, T2>(value);//so cheap, but it works
 		}
 
@@ -179,7 +179,7 @@ namespace mc {
 		@see isOdd(const int)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const bool isEven(const T value) {
+		MACE_CONSTEXPR inline const bool isEven(const T value) noexcept {
 			return value % T(2) == T(0);
 		}
 		/**
@@ -189,7 +189,7 @@ namespace mc {
 		@see isEven(const int)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const bool isOdd(const T value) {
+		MACE_CONSTEXPR inline const bool isOdd(const T value) noexcept {
 			return !isEven(value);
 		}
 
@@ -201,7 +201,7 @@ namespace mc {
 		@see cube(const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const T sqr(const T value) {
+		MACE_CONSTEXPR inline const T sqr(const T value) noexcept {
 			return value * value;
 		}
 
@@ -213,8 +213,8 @@ namespace mc {
 		@see sqr(const T)
 		*/
 		template<typename T>
-		MACE_CONSTEXPR inline const T cube(const T value) {
-			return value * value * value;
+		MACE_CONSTEXPR inline const T cube(const T value) noexcept {
+			return value * value* value;
 		}
 
 		/**
@@ -224,7 +224,7 @@ namespace mc {
 		@see #pi()
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T toRadians(const T degrees) {
+		MACE_CONSTEXPR inline const T toRadians(const T degrees) noexcept {
 			return degrees * (pi<T>() / T(180.0));
 		}
 
@@ -235,7 +235,7 @@ namespace mc {
 		@see #pi()
 		*/
 		template<typename T = long double>
-		MACE_CONSTEXPR inline const T toDegrees(const T radians) {
+		MACE_CONSTEXPR inline const T toDegrees(const T radians) noexcept {
 			return radians * (T(180.0) / pi<T>());
 		}
 	}//math

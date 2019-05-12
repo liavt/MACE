@@ -739,8 +739,6 @@ namespace mc {
 
 			font.calculateMetrics();
 
-			const Metrics metrics = getMetrics();
-
 			const WindowModule* window = gfx::getCurrentWindow();
 
 			const bool hasKerning = font.hasKerning();

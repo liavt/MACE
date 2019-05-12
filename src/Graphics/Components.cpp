@@ -706,7 +706,7 @@ namespace mc {
 
 		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const EaseSettings settings) : TweenComponent(en, en->getTransformation(), dest, settings) {}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : entity(en), EaseComponent([start, dest, en](Entity * easeCom, float prog) {
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : entity(en), EaseComponent([start, dest, en](Entity*, float prog) {
 			TransformMatrix current = TransformMatrix();
 			current.translation = math::lerp(start.translation, dest.translation, prog);
 			current.rotation = math::lerp(start.rotation, dest.rotation, prog);
@@ -748,7 +748,7 @@ namespace mc {
 
 		MACE_GETTER_SETTER_DEF(ComponentQueue, Components, components, std::queue<std::shared_ptr<Component>>&)
 
-		bool ComponentQueue::operator==(const ComponentQueue & other) const {
+			bool ComponentQueue::operator==(const ComponentQueue & other) const {
 			return Component::operator==(other) && components == other.components;
 		}
 

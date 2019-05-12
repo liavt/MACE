@@ -894,7 +894,7 @@ namespace mc {
 				@see ElementBuffer::getIndiceNumber()
 				@see VertexArray
 				*/
-				ElementBuffer(const Size indiceNum) noexcept;
+				ElementBuffer(const int indiceNum) noexcept;
 
 				/**
 				Tell this `ElementBuffer` how many indices there are. This is required for proper usage in the `VertexArray` class.
@@ -904,7 +904,7 @@ namespace mc {
 				@see VertexArray
 				@param indices The amount of indices loaded
 				*/
-				void setIndiceNumber(const Size indices);
+				void setIndiceNumber(const int indices);
 				/**
 				Retrieves how many indices this `ElementBuffer` has.
 				@see ElementBuffer::setIndiceNumber(const Size)
@@ -913,11 +913,11 @@ namespace mc {
 				@see https://www.opengl.org/wiki/Vertex_Rendering#Basic_Drawing
 				@return The amount of indices
 				*/
-				Size getIndiceNumber();
+				int getIndiceNumber();
 				/**
 				@copydoc ElementBuffer::getIndiceNumber()
 				*/
-				const Size getIndiceNumber() const;
+				const int getIndiceNumber() const;
 
 				/**
 				@copydoc Object::operator==(const Object&) const
@@ -928,7 +928,7 @@ namespace mc {
 				*/
 				bool operator!=(const ElementBuffer& other) const;
 			private:
-				Size indiceNumber;
+				int indiceNumber;
 			};//ElementBuffer
 
 			/**
@@ -1265,9 +1265,14 @@ namespace mc {
 				*/
 				void createUniformBuffer(const UniformBuffer& buf, const GLint location = -1);
 
-				UniformBufferData& getUniformBuffer(const char* name);
+				UniformBufferData& getUniformBuffer(const std::string name);
 
 				UniformBufferData& getUniformBuffer(const UniformBuffer& buf);
+
+				/**
+				@opengl
+				*/
+				void setUniformBufferField(UniformBuffer& buf, const std::string name, const void* data, const ptrdiff_t size);
 
 				/**
 				@opengl

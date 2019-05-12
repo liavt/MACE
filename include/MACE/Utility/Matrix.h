@@ -83,9 +83,10 @@ namespace mc {
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
 		//extending default construtor so it initializes the array
-		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>(){
+		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>() {
 			MACE_STATIC_ASSERT(W != 0, "A Matrix's width must be greater than 0!");
 			MACE_STATIC_ASSERT(H != 0, "A Matrix's height must be greater than 0!");
+#pragma omp parallel for
 			for (Index i = 0; i < W; ++i) {
 				content[i] = MatrixRow<T, H>();
 			}
@@ -96,6 +97,7 @@ namespace mc {
 		@param arr An array of contents
 		*/
 		Matrix(const T arr[W][H]) : Matrix() {
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					content[x][y] = arr[x][y];
@@ -115,13 +117,13 @@ namespace mc {
 		*/
 		//this is for aggregate initializaition
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix() MACE_EXPECTS(args.size() == W) {
-			MACE_IF_CONSTEXPR (args.size() != W) {
+			MACE_IF_CONSTEXPR(args.size() != W) {
 				MACE__THROW(OutOfBounds, "The width of the argument must be equal to to the height of the Matrix!");
 			}
 
 			Index counterX = 0, counterY = 0;
 			for (const std::initializer_list<T>& elemX : args) {
-				MACE_IF_CONSTEXPR (elemX.size() != H) {
+				MACE_IF_CONSTEXPR(elemX.size() != H) {
 					MACE__THROW(OutOfBounds, "The height of the argument must be equal to to the height of the Matrix!");
 				}
 
@@ -147,7 +149,7 @@ namespace mc {
 		@see #width()
 		*/
 		MACE_CONSTEXPR Size size() const {
-			return W*H;
+			return W * H;
 		}
 
 		/**
@@ -179,10 +181,10 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		T& get(const Index x, const Index y) MACE_EXPECTS(x < W && y < H){
-			MACE_IF_CONSTEXPR (x >= W) {
+		T& get(const Index x, const Index y) MACE_EXPECTS(x < W&& y < H) {
+			MACE_IF_CONSTEXPR(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else MACE_IF_CONSTEXPR (y >= H) {
+			} else MACE_IF_CONSTEXPR(y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -199,10 +201,10 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		const T& get(const Index x, const Index y) const MACE_EXPECTS(x < W&& y < H) {
-			MACE_IF_CONSTEXPR (x >= W) {
+		const T& get(const Index x, const Index y) const MACE_EXPECTS(x < W && y < H) {
+			MACE_IF_CONSTEXPR(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else MACE_IF_CONSTEXPR (y >= H) {
+			} else MACE_IF_CONSTEXPR(y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -219,10 +221,10 @@ namespace mc {
 		@see #operator[]
 		@see #get(Index, Index)
 		*/
-		void set(const Index x, const Index y, const T& value) MACE_EXPECTS(x < W&& y < H) {
-			MACE_IF_CONSTEXPR (x >= W) {
+		void set(const Index x, const Index y, const T & value) MACE_EXPECTS(x < W && y < H) {
+			MACE_IF_CONSTEXPR(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else MACE_IF_CONSTEXPR (y >= H) {
+			} else MACE_IF_CONSTEXPR(y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -234,9 +236,10 @@ namespace mc {
 		@return `arr`
 		*/
 		const T* flatten(T arr[W * H]) const {
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
-					arr[y + (x*H)] = (content[x][y]);
+					arr[y + (x * H)] = (content[x][y]);
 				}
 			}
 			return arr;
@@ -249,9 +252,10 @@ namespace mc {
 		@return Pointer to an array of data
 		*/
 		const T* flattenTransposed(T arr[W * H]) const {
+#pragma omp parallel for
 			for (Index x = 0; x < H; ++x) {
 				for (Index y = 0; y < W; ++y) {
-					arr[y + (x*H)] = (content[y][x]);
+					arr[y + (x * H)] = (content[y][x]);
 				}
 			}
 			return arr;
@@ -273,7 +277,7 @@ namespace mc {
 		T& operator()(const Index x, const Index y) MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
 			MACE_IF_CONSTEXPR(x <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
-			} else MACE_IF_CONSTEXPR (y <= 0) {
+			} else MACE_IF_CONSTEXPR(y <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
 			}
 
@@ -289,7 +293,7 @@ namespace mc {
 		@see get(Index,Index)
 		*/
 		const T& operator()(const Index x, const Index y) const MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
-			MACE_IF_CONSTEXPR (x <= 0) {
+			MACE_IF_CONSTEXPR(x <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
 			} else MACE_IF_CONSTEXPR(y <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
@@ -307,11 +311,12 @@ namespace mc {
 		@see Matrix for an explanation of `Vector` and `Matrix` math
 		@pre The Matrix's width must not be larger than the height
 		*/
-		Vector<T, H> operator+(const Vector<T, H>& right) const {
+		Vector<T, H> operator+(const Vector<T, H> & right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
+#pragma omp parallel for
 				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) + static_cast<T>(right[x]);
 				}
@@ -328,11 +333,12 @@ namespace mc {
 		@see Matrix for an explanation of `Vector` and `Matrix` math
 		@pre The Matrix's width must not be larger than the height
 		*/
-		Vector<T, H> operator-(const Vector<T, H>& right) const {
+		Vector<T, H> operator-(const Vector<T, H> & right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
+#pragma omp parallel for
 				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) - static_cast<T>(right[x]);
 				}
@@ -349,11 +355,12 @@ namespace mc {
 		@see Matrix for an explanation of `Vector` and `Matrix` math
 		@pre The Matrix's width must not be larger than the height
 		*/
-		Vector<T, H> operator*(const Vector<T, H>& right) const {
+		Vector<T, H> operator*(const Vector<T, H> & right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
+#pragma omp parallel for
 				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) * static_cast<T>(right[x]);
 				}
@@ -369,10 +376,11 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
+		Matrix<T, W, H> operator+(const Matrix<T, W, H> & right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 
 			T arr[W][H];
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] + right[x][y];
@@ -390,9 +398,10 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
+		Matrix<T, W, H> operator-(const Matrix<T, W, H> & right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] - right[x][y];
@@ -410,9 +419,10 @@ namespace mc {
 		@see operator*(const T&) const
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
+		Matrix<T, W, H> operator*(const Matrix<T, W, H> & right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = T();
@@ -433,8 +443,9 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator*(const T& scalar) const {
+		Matrix<T, W, H> operator*(const T & scalar) const {
 			T arr[W][H];
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] * scalar;
@@ -452,7 +463,7 @@ namespace mc {
 		@pre Both Matrices' width and height must be equal to each other
 		@bug Not finished
 		*/
-		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
+		Matrix<T, W, H> operator/(const Matrix<T, W, H> & right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to divide matrices, the width must equal to the height.");
 			return this->operator*(math::inverse(right));
 		}
@@ -464,7 +475,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator+=(const Matrix<T, W, H>& right) {
+		void operator+=(const Matrix<T, W, H> & right) {
 			content = operator+(right).content;
 		}
 
@@ -475,7 +486,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator-=(const Matrix<T, W, H>& right) {
+		void operator-=(const Matrix<T, W, H> & right) {
 			content = operator-(right).content;
 		}
 
@@ -486,7 +497,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator*=(Matrix<T, W, H>& right) {
+		void operator*=(Matrix<T, W, H> & right) {
 			content = operator*(right).content;
 		}
 
@@ -497,7 +508,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator*=(const T& scalar) {
+		void operator*=(const T & scalar) {
 			content = operator*(scalar).content;
 		}
 
@@ -508,7 +519,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator/=(const Matrix<T, W, H>& right) {
+		void operator/=(const Matrix<T, W, H> & right) {
 			content = operator/(right).content;
 		}
 	protected:
@@ -516,12 +527,12 @@ namespace mc {
 	};//Matrix
 
 	template<typename T, Size N>
-	Vector<T, N> operator*=(const Vector<T, N>& v, const Matrix<T, N>& m) {
+	inline Vector<T, N> operator*=(const Vector<T, N> & v, const Matrix<T, N> & m) {
 		return m * v;
 	}
 
 	template<typename T, Size N>
-	Vector<T, N> operator*(const Vector<T, N>& v, const Matrix<T, N>& m) {
+	inline Vector<T, N> operator*(const Vector<T, N> & v, const Matrix<T, N> & m) {
 		return m * v;
 	}
 
@@ -537,6 +548,7 @@ namespace mc {
 		template<typename T, Size W, Size H>
 		Matrix<T, H, W> transpose(const Matrix<T, W, H>& matrix) {
 			Matrix<T, H, W> out = Matrix<T, H, W>();
+#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					out[y][x] = matrix[x][y];
@@ -552,7 +564,7 @@ namespace mc {
 		@tparam T Type of the `Matrix`
 		*/
 		template<typename T>
-		T det(const Matrix<T, 2>& matrix) {
+		inline T det(const Matrix<T, 2>& matrix) {
 			return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
 		}
 
@@ -586,7 +598,7 @@ namespace mc {
 					counterY = 0;
 				}
 				T tempSum = ((counter % 2 == 0 ? -1 : 1) * matrix[i][0]);
-				MACE_IF_CONSTEXPR (newMatrixSize == 2) {
+				MACE_IF_CONSTEXPR(newMatrixSize == 2) {
 					tempSum *= det<T>(matrix);
 				} else {
 					tempSum *= det<T, N>(matrix);
@@ -615,6 +627,7 @@ namespace mc {
 		T tr(const Matrix<T, N>& m) {
 			T out = T();
 			//done without a trace!
+#pragma omp parallel for reduction(+:out)
 			for (Index x = 0; x < N; ++x) {
 				out += m[x][x];
 			}
@@ -630,6 +643,7 @@ namespace mc {
 		template<typename T, Size N>
 		Matrix<T, N> identity() {
 			Matrix<T, N> out = Matrix<T, N>();
+#pragma omp parallel for
 			for (Index x = 0; x < N; ++x) {
 				out[x][x] = static_cast<T>(1);
 			}
@@ -652,10 +666,10 @@ namespace mc {
 		@bug Matrices bigger then 2x2 dont work
 		*/
 		template<typename T, Size N>
-		Matrix<T, N> inverse(const Matrix<T, N>& matrix) {
+		inline Matrix<T, N> inverse(const Matrix<T, N>& matrix) {
 			MACE_STATIC_ASSERT(N >= 2, "In order to inverse a matrix, it's size must be greater than 1!");
 			//honestly, this next line really seems magical to me. matrices really seem magical in general.
-			return	((identity<T, N>()*tr(matrix)) - matrix) * (1 / det(matrix));//calculate via the caley-hamilton method
+			return	((identity<T, N>() * tr(matrix)) - matrix) * (1 / det(matrix));//calculate via the caley-hamilton method
 		}
 	}//math
 }//mc

@@ -33,23 +33,23 @@ namespace mc {
 	//they have a strange naming convention because name mangling is disabled and there has to be an
 	//easy conflict-free way to access these functions
 	extern "C" {
-		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int getMACEVersionMajor() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int mcGetVersionMajor() {
 			return MACE_VERSION_MAJOR;
 		}
 
-		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int getMACEVersionMinor() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int mcGetVersionMinor() {
 			return MACE_VERSION_MINOR;
 		}
 
-		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int getMACEVersionPatch() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR unsigned int mcGetVersionPatch() {
 			return MACE_VERSION_PATCH;
 		}
 
-		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR const char* getMACEVersionString() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR const char* mcGetVersionString() {
 			return MACE_STRINGIFY(MACE_VERSION);
 		}
 
-		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR bool getMACEDebugBuild() {
+		MACE_FUNCTION_EXPORT inline MACE_CONSTEXPR bool mcIsDebugBuild() {
 #ifdef MACE_DEBUG
 			return true;
 #else
