@@ -11,6 +11,7 @@ The above copyright notice and this permission notice shall be included in all c
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Core/Constants.h>
+#include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
 #include <MACE/Utility/Transform.h>
 #include <string>
@@ -490,19 +491,19 @@ namespace mc {
 		}
 
 		bool Entity::getProperty(const Byte flag) const {
-			return properties & flag;
+			return os::bittest(properties, flag);
 		}
 
 		void Entity::setProperty(const Byte position, const bool value) {
-			if (((properties & position) != 0) != value) {
+			if (getProperty(position) != value) {
 				if (position != Entity::DIRTY) {
-					properties |= Entity::DIRTY;
+					properties |= (1 << Entity::DIRTY);
 				}
 
 				if (value) {
-					properties |= position;
+					properties |= (1 << position);
 				} else {
-					properties &= ~position;
+					properties &= ~(1 << position);
 				}
 			}
 		}

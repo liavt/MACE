@@ -88,7 +88,7 @@ namespace mc {
 	@tparam N amount of elements in the `Vector` which must be greater than 0.
 	*/
 	template <typename Child, typename T, Size N>
-	struct VectorBase {
+	struct MACE_NOVTABLE VectorBase {
 	public:
 		/**
 		Default constructor. Constructs an empty `Vector`.
@@ -151,7 +151,7 @@ namespace mc {
 			}
 		};
 
-		virtual ~VectorBase() = default;
+		~VectorBase() = default;
 
 		/**
 		Retrieves the contents of this `Vector`
@@ -302,7 +302,7 @@ namespace mc {
 		@return Value at `i-1`
 		@see operator[](Index)
 		*/
-		virtual T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0) {
+		T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0) {
 			return content[i - 1];
 		}
 

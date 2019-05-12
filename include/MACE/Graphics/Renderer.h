@@ -51,8 +51,54 @@ namespace mc {
 			friend class PainterImpl;
 			friend class Renderer;
 		public:
-			enum class Brush : Byte {
-				TEXTURE = 0, COLOR = 1, /**@internal*/TEXT = 2, MASK = 3, BLEND = 4, MASKED_BLEND = 5
+			enum class Brush: Byte {
+				/**
+				Renders the foreground texture as-is
+				*/
+				TEXTURE = 0,
+				/**
+				Renders the foreground color as-is
+				*/
+				COLOR = 1,
+				/**
+				Renders the foreground texture masked by the mask texture
+				*/
+				MASK = 2,
+				/**
+				Renders either the foreground or background texture based
+				on the value of the mask texture.
+				<br>
+				`data[0]` and `data[1]` define a range,
+				where `data[0]` is the lower bound (must be >= 0.0f) 
+				and `data[1]` is the upper bound (must be <= 1.0f).
+				<br>
+				If the value of the mask texture is within the range,
+				the foreground texture is rendered. Otherwise the 
+				backgrond texture is rendered.
+				<br>
+				This is used in the rendering of the `ProgressBar`.
+				*/
+				CONDITIONAL_MASK = 3,
+				/**
+				Blends between the foreground and background textures.
+				<br>
+				The amount of blending performed depends on `data[0]`
+				(a value of 0 means 100% foreground and 0% background,
+				while a value of 1 means 0% foreground and 100% background,
+				with values in between creating a linear interpreation)
+				*/
+				BLEND = 4,
+				/**
+				Blends the foregound texture onto the render target using
+				the background texture as a multicomponent alpha target.
+				<br>
+				This is used in the subpixel rendering of text.
+				<br>
+				Due to the nature of this `Brush`, the value of
+				`RenderFeature::STORE_ID` is ignored and the `Painter` acts
+				as if that `RenderFeature` is `false`
+				*/
+				MULTICOMPONENT_BLEND = 5,
 			};
 
 			enum class RenderFeatures: Byte {
@@ -98,8 +144,9 @@ namespace mc {
 
 			void maskImage(const Texture& img, const Texture& mask);
 
+			void conditionalMaskImages(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
+
 			void blendImages(const Texture& foreground, const Texture& background, const float amount = 0.5f);
-			void blendImagesMasked(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
 			void drawQuad(const Brush brush);
 			void draw(const Model& m, const Brush brush);
@@ -139,7 +186,7 @@ namespace mc {
 			const RenderFeatures& getRenderFeatures() const;
 
 			void setFilter(const float r, const float g, const float b, const float a = 1.0f);
-			void setFilter(const Vector<float, 4> & col);
+			void setFilter(const Vector<float, 4>& col);
 			void setFilter(const Matrix<float, 4, 4>& col);
 			Matrix<float, 4, 4>& getFilter();
 			const Matrix<float, 4, 4>& getFilter() const;
@@ -212,11 +259,11 @@ namespace mc {
 			return static_cast<Painter::RenderFeatures>(static_cast<Byte>(left) | static_cast<Byte>(right));
 		}
 
-		MACE_CONSTEXPR inline Painter::RenderFeatures operator&(const Painter::RenderFeatures& left, const Painter::RenderFeatures& right) {
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator&(const Painter::RenderFeatures & left, const Painter::RenderFeatures & right) {
 			return static_cast<Painter::RenderFeatures>(static_cast<Byte>(left) & static_cast<Byte>(right));
 		}
 
-		MACE_CONSTEXPR inline Painter::RenderFeatures operator~(const Painter::RenderFeatures& r) {
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator~(const Painter::RenderFeatures & r) {
 			return static_cast<Painter::RenderFeatures>(~static_cast<Byte>(r));
 		}
 
@@ -242,7 +289,7 @@ namespace mc {
 			bool operator==(const PainterImpl& other) const;
 			bool operator!=(const PainterImpl& other) const;
 		protected:
-			Painter * painter;
+			Painter* painter = nullptr;
 		};
 
 		/**
@@ -313,7 +360,7 @@ namespace mc {
 
 			unsigned int samples = 1;
 
-			bool resized;
+			bool resized = false;
 
 			Vector<float, 2> windowRatios;
 

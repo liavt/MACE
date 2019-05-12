@@ -121,7 +121,7 @@ namespace mc {
 				createTextureCoordinates(N, data);
 			}
 
-			void createVertices(const unsigned intverticeSize, const float* vertices, const PrimitiveType& prim);
+			void createVertices(const unsigned int verticeSize, const float* vertices, const PrimitiveType& prim);
 			template<const unsigned int N>
 			void createVertices(const float(&vertices)[N], const PrimitiveType& prim) {
 				createVertices(N, vertices, prim);
@@ -411,7 +411,7 @@ namespace mc {
 
 		struct RenderTargetDesc {
 		public:
-			unsigned int width = 1288, height = 128;
+			unsigned int width = 128, height = 128;
 		};
 
 		class MACE_NOVTABLE RenderTargetImpl: public Initializable {

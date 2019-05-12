@@ -156,7 +156,7 @@ namespace mc {
 
 			Monitor getMonitor();
 		private:
-			enum Properties: Byte {
+			enum Properties{
 				DESTROYED = 0,
 			};
 

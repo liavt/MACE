@@ -247,7 +247,7 @@ namespace mc {
 				} else if (outputComponents == 4) {
 					desc.format = TextureDesc::Format::RGBA;
 					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
-				} else {
+				} else MACE_UNLIKELY {
 					MACE__THROW(BadImage, "Internal Error: createFromFile: outputComponents is not 1-4");
 				}
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;

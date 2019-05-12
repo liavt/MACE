@@ -57,35 +57,35 @@ namespace mc {
 				Enum result = GL_NO_ERROR;
 				while ((result = glGetError()) != GL_NO_ERROR) {
 					switch (result) {
-						case GL_INVALID_ENUM:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file));
-							break;
-						case GL_INVALID_VALUE:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file));
-							break;
-						case GL_INVALID_OPERATION:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file));
-							break;
-						case GL_INVALID_FRAMEBUFFER_OPERATION:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file));
-							break;
-						case GL_STACK_OVERFLOW:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_OVERFLOW: A stack pushing operation cannot be done because it would overflow the limit of that stack's size", line, file));
-							break;
-						case GL_STACK_UNDERFLOW:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_UNDERFLOW: A stack popping operation cannot be done because the stack is already at its lowest point", line, file));
-							break;
-						case GL_OUT_OF_MEMORY:
-							errors.push_back(MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file));
-							break;
+					case GL_INVALID_ENUM:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file));
+						break;
+					case GL_INVALID_VALUE:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file));
+						break;
+					case GL_INVALID_OPERATION:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file));
+						break;
+					case GL_INVALID_FRAMEBUFFER_OPERATION:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file));
+						break;
+					case GL_STACK_OVERFLOW:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_OVERFLOW: A stack pushing operation cannot be done because it would overflow the limit of that stack's size", line, file));
+						break;
+					case GL_STACK_UNDERFLOW:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_STACK_UNDERFLOW: A stack popping operation cannot be done because the stack is already at its lowest point", line, file));
+						break;
+					case GL_OUT_OF_MEMORY:
+						errors.push_back(MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file));
+						break;
 #ifdef GL_CONTEXT_LOST
-						case GL_CONTEXT_LOST:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_CONTEXT_LOST: The GL Context has been lost due to a graphics card reset", line, file));
-							break;
+					case GL_CONTEXT_LOST:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_CONTEXT_LOST: The GL Context has been lost due to a graphics card reset", line, file));
+						break;
 #endif
-						default:
-							errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file));
-							break;
+					default:
+						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file));
+						break;
 					}
 				}
 
@@ -134,7 +134,7 @@ namespace mc {
 				storeDataInAttributeList(vertexNumber * sizeof(float), vertices, location, attributeSize, type, normalized);
 			}
 
-			void VertexArray::storeDataInAttributeList(const unsigned int dataSize, const GLvoid* data, const GLuint location, const Byte attributeSize, const Enum type, const bool normalized) {
+			void VertexArray::storeDataInAttributeList(const unsigned int dataSize, const GLvoid * data, const GLuint location, const Byte attributeSize, const Enum type, const bool normalized) {
 				bind();
 
 				VertexBuffer buffer = VertexBuffer();
@@ -148,11 +148,11 @@ namespace mc {
 				addBuffer(buffer);
 			}
 
-			void VertexArray::loadIndices(const unsigned int indiceNum, const unsigned int * indiceData) {
+			void VertexArray::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
 				indices = ElementBuffer(indiceNum);
 				indices.init();
 				indices.bind();
-				indices.setData(static_cast<ptrdiff_t>(sizeof(unsigned int)*indiceNum), indiceData, GL_STATIC_DRAW);
+				indices.setData(static_cast<ptrdiff_t>(sizeof(unsigned int) * indiceNum), indiceData, GL_STATIC_DRAW);
 			}
 
 			void VertexArray::addBuffer(const VertexBuffer & newBuffer) {
@@ -179,15 +179,15 @@ namespace mc {
 				indices = buffer;
 			}
 
-			ElementBuffer & VertexArray::getIndices() {
+			ElementBuffer& VertexArray::getIndices() {
 				return indices;
 			}
 
-			const ElementBuffer & VertexArray::getIndices() const {
+			const ElementBuffer& VertexArray::getIndices() const {
 				return indices;
 			}
 
-			void VertexArray::setBuffers(const std::vector<VertexBuffer>& newBuffers) {
+			void VertexArray::setBuffers(const std::vector<VertexBuffer> & newBuffers) {
 				buffers = newBuffers;
 			}
 
@@ -200,7 +200,7 @@ namespace mc {
 			}
 
 			bool VertexArray::operator==(const VertexArray & other) const {
-				return vertexNumber == other.vertexNumber&&indices == other.indices&&Object::operator==(other);
+				return vertexNumber == other.vertexNumber && indices == other.indices && Object::operator==(other);
 			}
 
 			bool VertexArray::operator!=(const VertexArray & other) const {
@@ -221,18 +221,18 @@ namespace mc {
 
 			UniformBuffer::UniformBuffer() noexcept : UniformBuffer("") {}
 
-			UniformBuffer::UniformBuffer(const char * n) noexcept : Buffer(GL_UNIFORM_BUFFER), name(n) {}
+			UniformBuffer::UniformBuffer(const char* n) noexcept : Buffer(GL_UNIFORM_BUFFER), name(n) {}
 
-			const char * UniformBuffer::getName() const {
+			const char* UniformBuffer::getName() const {
 				return name;
 			}
 
-			void UniformBuffer::setName(const char * name) {
+			void UniformBuffer::setName(const char* name) {
 				this->name = name;
 			}
 
 			bool UniformBuffer::operator==(const UniformBuffer & other) const {
-				return name == other.name&&Buffer::operator==(other);
+				return name == other.name && Buffer::operator==(other);
 			}
 
 			bool UniformBuffer::operator!=(const UniformBuffer & other) const {
@@ -243,23 +243,23 @@ namespace mc {
 				glClearColor(r, g, b, a);
 			}
 
-			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
+			void FrameBuffer::attachTexture(const Enum target, const Enum attachment, const Texture2D & tex, const int level) {
 				glFramebufferTexture(target, attachment, tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
+			void FrameBuffer::attachTexture1D(const Enum target, const Enum attachment, const Texture2D & tex, const int level) {
 				glFramebufferTexture1D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Texture2D& tex, const int level) {
+			void FrameBuffer::attachTexture2D(const Enum target, const Enum attachment, const Texture2D & tex, const int level) {
 				glFramebufferTexture2D(target, attachment, tex.getTarget(), tex.getID(), level);
 			}
 
-			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Texture2D& tex, const int level, const int layer) {
+			void FrameBuffer::attachTexture3D(const Enum target, const Enum attachment, const Texture2D & tex, const int level, const int layer) {
 				glFramebufferTexture3D(target, attachment, tex.getTarget(), tex.getID(), level, layer);
 			}
 
-			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture2D& texture, const int level, const int layer) {
+			void FrameBuffer::attachTextureLayer(const Enum target, const Enum attachment, const Texture2D & texture, const int level, const int layer) {
 				glFramebufferTextureLayer(target, attachment, level, static_cast<GLint>(texture.getID()), layer);
 			}
 
@@ -289,7 +289,7 @@ namespace mc {
 				glClear(field);
 			}
 
-			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void * data) const {
+			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data) const {
 				glReadPixels(x, y, static_cast<GLsizei>(width), static_cast<GLsizei>(height), format, type, data);
 			}
 
@@ -417,7 +417,7 @@ namespace mc {
 				Object::bind();
 			}
 
-			void Texture2D::setData(const void * data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel) {
+			void Texture2D::setData(const void* data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel) {
 				glTexImage2D(target, mipmapLevel, internalFormat, width, height, 0, format, type, data);
 			}
 
@@ -461,13 +461,13 @@ namespace mc {
 				glTexParameteri(target, name, value);
 			}
 
-			void Texture2D::getImage(const Enum format, const Enum type, void * data) const {
+			void Texture2D::getImage(const Enum format, const Enum type, void* data) const {
 				glGetTexImage(target, 0, format, type, data);
 			}
 
 
 			bool Texture2D::operator==(const Texture2D & other) const {
-				return target == other.target&&Object::operator==(other);
+				return target == other.target && Object::operator==(other);
 			}
 
 			bool Texture2D::operator!=(const Texture2D & other) const {
@@ -492,15 +492,15 @@ namespace mc {
 				return glIsBuffer(id) == 1;
 			}
 
-			void Buffer::setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType) {
+			void Buffer::setData(const ptrdiff_t & dataSize, const void* data, const Enum drawType) {
 				glBufferData(bufferType, dataSize, data, drawType);
 			}
 
-			void Buffer::setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data) {
+			void Buffer::setDataRange(const Index offset, const ptrdiff_t & dataSize, const void* data) {
 				glBufferSubData(GL_UNIFORM_BUFFER, offset, dataSize, data);
 			}
 
-			void Buffer::copyData(Buffer& other, const ptrdiff_t& size, const Index readOffset, const Index writeOffset) {
+			void Buffer::copyData(Buffer & other, const ptrdiff_t & size, const Index readOffset, const Index writeOffset) {
 				glCopyBufferSubData(id, other.id, readOffset, writeOffset, size);
 			}
 
@@ -520,11 +520,11 @@ namespace mc {
 				glFlushMappedBufferRange(bufferType, offset, length);
 			}
 
-			void Buffer::getPointer(void ** param) {
+			void Buffer::getPointer(void** param) {
 				glGetBufferPointerv(bufferType, GL_BUFFER_MAP_POINTER, param);
 			}
 
-			void Buffer::getParameter(const Enum pname, int * data) const {
+			void Buffer::getParameter(const Enum pname, int* data) const {
 				glGetBufferParameteriv(bufferType, pname, data);
 			}
 
@@ -591,7 +591,7 @@ namespace mc {
 			}
 
 			bool Buffer::operator==(const Buffer & other) const {
-				return this->bufferType == other.bufferType&&Object::operator==(other);
+				return this->bufferType == other.bufferType && Object::operator==(other);
 			}
 
 			bool Buffer::operator!=(const Buffer & other) const {
@@ -612,7 +612,7 @@ namespace mc {
 
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
 
-			void VertexBuffer::setAttributePointer(const GLint attribSize, const Enum type, const bool normalized, const GLsizei stride, const void * pointer) {
+			void VertexBuffer::setAttributePointer(const GLint attribSize, const Enum type, const bool normalized, const GLsizei stride, const void* pointer) {
 				if (!normalized && (
 					type == GL_BYTE ||
 					type == GL_UNSIGNED_BYTE ||
@@ -696,11 +696,11 @@ namespace mc {
 				glEndQuery(target);
 			}
 
-			void QueryObject::get(const Enum name, int * data) const {
+			void QueryObject::get(const Enum name, int* data) const {
 				glGetQueryObjectiv(id, name, data);
 			}
 
-			void QueryObject::get(const Enum name, unsigned int * data) const {
+			void QueryObject::get(const Enum name, unsigned int* data) const {
 				glGetQueryObjectuiv(id, name, data);
 			}
 
@@ -753,7 +753,7 @@ namespace mc {
 				glDeleteShader(id);
 			}
 
-			void Shader::setSource(const GLsizei count, const char * strings[], const int lengths[]) {
+			void Shader::setSource(const GLsizei count, const char* strings[], const int lengths[]) {
 				if (type == GL_FALSE) {
 					MACE__THROW(Shader, "Shader must have a type before compile() is called");
 				}
@@ -762,8 +762,8 @@ namespace mc {
 			}
 
 			void Shader::setSource(const char string[], const int length) {
-				const int lengths[1] = { length };
-				const char* strings[1] = { string };
+				const int lengths[1] = {length};
+				const char* strings[1] = {string};
 				setSource(1, strings, lengths);
 			}
 
@@ -772,7 +772,7 @@ namespace mc {
 				setSource(string.c_str(), static_cast<int>(string.length()));
 			}
 
-			char * Shader::getSource(const GLsizei length, char * characters, int amount) const {
+			char* Shader::getSource(const GLsizei length, char* characters, int amount) const {
 				glGetShaderSource(id, length, &amount, characters);
 				return characters;
 			}
@@ -948,7 +948,7 @@ namespace mc {
 				attachShader(createShader(GL_VERTEX_SHADER, strings, count));
 			}
 
-			void ShaderProgram::createUniform(const std::string& name) {
+			void ShaderProgram::createUniform(const std::string & name) {
 				int location = glGetUniformLocation(id, name.data());
 				if (location < 0) {
 					MACE__THROW(Shader, "Error finding uniform with name " + std::string(name));
@@ -957,11 +957,11 @@ namespace mc {
 				uniforms[name] = location;
 			}
 
-			void ShaderProgram::createUniform(const char * name) {
+			void ShaderProgram::createUniform(const char* name) {
 				createUniform(std::string(name));
 			}
 
-			ShaderProgram::UniformBufferData ShaderProgram::createUniformBuffer(const char* name, const GLint location) {
+			void ShaderProgram::createUniformBuffer(const char* name, const GLint location) {
 				UniformBufferData out = UniformBufferData();
 
 				if (location >= 0) {
@@ -973,15 +973,50 @@ namespace mc {
 
 				glGetActiveUniformBlockiv(id, out.index, GL_UNIFORM_BLOCK_DATA_SIZE, &out.size);
 
+				GLint activeUniforms = 0;
+				glGetActiveUniformBlockiv(id, out.index, GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS, &activeUniforms);
+
+				std::vector<GLuint> indices(activeUniforms);
+				{
+					std::vector<GLint> tempIndices(activeUniforms);
+					glGetActiveUniformBlockiv(id, out.index, GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES, &tempIndices[0]);
+#pragma omp parallel for
+					for (Index i = 0; i < activeUniforms; ++i) {
+						indices[i] = static_cast<GLuint>(tempIndices[i]);
+					}
+				}
+
+				std::vector<GLint> nameLengths(activeUniforms);
+				std::vector<GLint> sizes(activeUniforms);
+				std::vector<GLint> offsets(activeUniforms);
+				std::vector<GLint> types(activeUniforms);
+
+				glGetActiveUniformsiv(id, activeUniforms, &indices[0], GL_UNIFORM_NAME_LENGTH, &nameLengths[0]);
+				glGetActiveUniformsiv(id, activeUniforms, &indices[0], GL_UNIFORM_SIZE, &sizes[0]);
+				glGetActiveUniformsiv(id, activeUniforms, &indices[0], GL_UNIFORM_OFFSET, &offsets[0]);
+				glGetActiveUniformsiv(id, activeUniforms, &indices[0], GL_UNIFORM_TYPE, &types[0]);
+
+				for (Index i = 0; i < activeUniforms; ++i) {
+					std::string name(static_cast<Size>(nameLengths[i]), '_');
+
+					glGetActiveUniformName(id, out.index, nameLengths[i], nullptr, &name[0]);
+
+					UniformBufferData::Field field{};
+					field.index = indices[i];
+					field.size = sizes[i];
+					field.offset = offsets[i];
+					field.type = types[i];
+					out.fields.insert(std::pair<std::string, UniformBufferData::Field>(name, field));
+				}
+
 				uniformBuffers.insert(std::pair<std::string, UniformBufferData>(name, out));
-				return out;
 			}
 
-			ShaderProgram::UniformBufferData ShaderProgram::createUniformBuffer(const UniformBuffer& buf, const GLint location) {
-				return createUniformBuffer(buf.getName(), location);
+			void ShaderProgram::createUniformBuffer(const UniformBuffer & buf, const GLint location) {
+				createUniformBuffer(buf.getName(), location);
 			}
 
-			ShaderProgram::UniformBufferData & ShaderProgram::getUniformBuffer(const char * name) {
+			ShaderProgram::UniformBufferData& ShaderProgram::getUniformBuffer(const char* name) {
 				return uniformBuffers[name];
 			}
 
@@ -990,15 +1025,21 @@ namespace mc {
 			}
 
 			void ShaderProgram::bindUniformBuffer(const UniformBuffer & buf) {
-				const UniformBufferData& bufferData = getUniformBuffer(buf);
-				glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, buf.getID());
+				bindUniformBuffers({&buf}, 1);
 			}
 
-			int ShaderProgram::getUniformLocation(const std::string& name) const {
+			void ShaderProgram::bindUniformBuffers(const UniformBuffer bufs[], const Size size) {
+				for (Index i = 0; i < size; ++i) {
+					const UniformBufferData& bufferData = getUniformBuffer(bufs[i]);
+					glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, bufs[i].getID());
+				}
+			}
+
+			int ShaderProgram::getUniformLocation(const std::string & name) const {
 				return uniforms.find(name)->second;
 			}
 
-			int ShaderProgram::getUniformLocation(const char * name) const {
+			int ShaderProgram::getUniformLocation(const char* name) const {
 				return uniforms.find(name)->second;
 			}
 
@@ -1017,7 +1058,7 @@ namespace mc {
 			*/
 
 			bool ShaderProgram::operator==(const ShaderProgram & other) const {
-				return Object::operator==(other) && uniforms == other.uniforms&&shaders == other.shaders;
+				return Object::operator==(other) && uniforms == other.uniforms && shaders == other.shaders;
 			}
 
 			bool ShaderProgram::operator!=(const ShaderProgram & other) const {
@@ -1026,110 +1067,110 @@ namespace mc {
 
 			//Autogenerated definitions.
 
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 4, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 4, 4> & m) {
 				setUniform(name, true, m);
 			}
 
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 4> & m) {
 				float flattenedData[4 * 4]; glUniformMatrix4fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
 
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 3, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 3, 3> & m) {
 				setUniform(name, true, m);
 			}
 
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 3> & m) {
 				float flattenedData[3 * 3]; glUniformMatrix3fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
 
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 2, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 2, 2> & m) {
 				setUniform(name, true, m);
 			}
 
 			//setUniform with float matrices
 
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 2> & m) {
 				float flattenedData[2 * 2]; glUniformMatrix2fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 3> & m) {
 				float flattenedData[2 * 3]; glUniformMatrix2x3fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 2, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 2, 3> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 2> & m) {
 				float flattenedData[3 * 2]; glUniformMatrix3x2fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 3, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 3, 2> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 4> & m) {
 				float flattenedData[2 * 4]; glUniformMatrix2x4fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 2, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 2, 4> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 4> & m) {
 				float flattenedData[3 * 4]; glUniformMatrix3x4fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 3, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 3, 4> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 3> & m) {
 				float flattenedData[4 * 3]; glUniformMatrix4x3fv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 4, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<float, 4, 3> & m) {
 				setUniform(name, true, m);
 			}
 
 			//setUniform with double matrices
 
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 2> & m) {
 				double flattenedData[2 * 2]; glUniformMatrix2dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 2, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 2, 2> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 3> & m) {
 				double flattenedData[3 * 3]; glUniformMatrix3dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 3, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 3, 3> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 4, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 4, 4> & m) {
 				double flattenedData[4 * 4]; glUniformMatrix4dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 4, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 4, 4> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 3> & m) {
 				double flattenedData[2 * 3]; glUniformMatrix2x3dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 2, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 2, 3> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 2> & m) {
 				double flattenedData[3 * 2]; glUniformMatrix3x2dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 3, 2>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 3, 2> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 4> & m) {
 				double flattenedData[2 * 4]; glUniformMatrix2x4dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 2, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 2, 4> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 4> & m) {
 				double flattenedData[3 * 4]; glUniformMatrix3x4dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 3, 4>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 3, 4> & m) {
 				setUniform(name, true, m);
 			}
-			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 4, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const bool transpose, const mc::Matrix<double, 4, 3> & m) {
 				double flattenedData[4 * 3]; glUniformMatrix4x3dv(uniforms[name], 1, transpose, m.flatten(flattenedData));
 			}
-			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 4, 3>& m) {
+			void ShaderProgram::setUniform(const char* name, const mc::Matrix<double, 4, 3> & m) {
 				setUniform(name, true, m);
 			}
 
@@ -1147,10 +1188,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const float a, const float b, const float c, const float d) {
 				glUniform4f(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const float * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const float* a) {
 				glUniform1fv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const float * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const float* a) {
 				if (componentSize == 1) glUniform1fv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2fv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3fv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4fv(uniforms[name], arraySize, a);
 			}
 
@@ -1168,10 +1209,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const double a, const double b, const double c, const double d) {
 				glUniform4d(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const double * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const double* a) {
 				glUniform1dv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const double * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const double* a) {
 				if (componentSize == 1) glUniform1dv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2dv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3dv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4dv(uniforms[name], arraySize, a);
 			}
 
@@ -1189,10 +1230,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const int a, const int b, const int c, const int d) {
 				glUniform4i(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const int* a) {
 				glUniform1iv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const int* a) {
 				if (componentSize == 1) glUniform1iv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2iv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3iv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4iv(uniforms[name], arraySize, a);
 			}
 
@@ -1210,10 +1251,10 @@ namespace mc {
 			void ShaderProgram::setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d) {
 				glUniform4ui(uniforms[name], a, b, c, d);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const unsigned int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei arraySize, const unsigned int* a) {
 				glUniform1uiv(uniforms[name], arraySize, a);
 			}
-			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const unsigned int * a) {
+			void ShaderProgram::setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const unsigned int* a) {
 				if (componentSize == 1) glUniform1uiv(uniforms[name], arraySize, a); else if (componentSize == 2) glUniform2uiv(uniforms[name], arraySize, a); else if (componentSize == 3) glUniform3uiv(uniforms[name], arraySize, a); else if (componentSize == 4) glUniform4uiv(uniforms[name], arraySize, a);
 			}
 			void ShaderProgram::setUniform(const char* name, const mc::Vector<unsigned int, 4> v) {
@@ -1266,7 +1307,7 @@ namespace mc {
 				glUniform1f(uniforms[name], v[0]);
 			}
 
-			void ShaderProgram::setShaders(const std::unordered_map<Enum, Shader>& newShaders) {
+			void ShaderProgram::setShaders(const std::unordered_map<Enum, Shader> & newShaders) {
 				shaders = newShaders;
 			}
 
@@ -1278,7 +1319,7 @@ namespace mc {
 				return shaders;
 			}
 
-			void ShaderProgram::setUniforms(const std::unordered_map<std::string, int>& newUniforms) {
+			void ShaderProgram::setUniforms(const std::unordered_map<std::string, int> & newUniforms) {
 				uniforms = newUniforms;
 			}
 

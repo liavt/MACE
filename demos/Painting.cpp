@@ -61,7 +61,7 @@ public:
 
 		p.translate(0.0f, -2.0f / 3.0f);
 		//render half lena half star in one draw call
-		p.blendImagesMasked(star, lena, gfx::Texture::getGradient(), 0.0f, 0.5f);
+		p.conditionalMaskImages(star, lena, gfx::Texture::getGradient(), 0.0f, 0.5f);
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		p.setTexture(lena, gfx::TextureSlot::FOREGROUND);

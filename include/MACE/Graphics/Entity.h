@@ -63,7 +63,7 @@ namespace mc {
 			bool operator==(const Component& other) const;
 			bool operator!=(const Component& other) const;
 		protected:
-			Entity* parent;
+			Entity* parent = nullptr;
 
 			/**
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
@@ -121,12 +121,12 @@ namespace mc {
 				If `true,` any {@link Entity} holding it will remove it and call `kill()`
 				@see Entity::getProperty(unsigned int)
 				*/
-				DEAD = 0x01,
+				DEAD,
 				/**
 				Property defining if an `Entity` can be updated and rendered. If this is `true`, `Entity::update()` and `Entity::render()` will not be called by it's parent.
 				@see Entity::getProperty(unsigned int)
 				*/
-				DISABLED = 0x02,
+				DISABLED,
 
 				/**
 				Flag representing whether an Entity's init() function has been called.
@@ -136,7 +136,7 @@ namespace mc {
 				If init() is called and this is `true`, an `InitializationError` is thrown.
 				@see Entity::getProperty(unsigned int)
 				*/
-				INIT = 0x04,
+				INIT,
 
 				/**
 				Flag representing whether this `Entity` is dirty and it's positions needs to be recalculated.
@@ -153,7 +153,7 @@ namespace mc {
 				<p>
 				Additionally, an `Entity` that is considered dirty will have it's buffer data updated on the GPU side.
 				*/
-				DIRTY = 0x08,
+				DIRTY,
 
 				DEFAULT_PROPERTIES = 0x00
 			};//EntityProperty

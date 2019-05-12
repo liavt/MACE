@@ -366,7 +366,7 @@ namespace mc {
 
 		void ProgressBar::onRender(Painter& p) {
 			p.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
-			p.blendImagesMasked(foregroundTexture, backgroundTexture, selectionTexture,
+			p.conditionalMaskImages(foregroundTexture, backgroundTexture, selectionTexture,
 								minimumProgress / maximumProgress,
 								(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
@@ -622,7 +622,7 @@ namespace mc {
 			p.disableRenderFeatures(Painter::RenderFeatures::INHERIT_SCALE | Painter::RenderFeatures::STORE_ID);
 			p.setTexture(texture, TextureSlot::FOREGROUND);
 			p.setTexture(glyph, TextureSlot::BACKGROUND);
-			p.drawQuad(Painter::Brush::TEXT);
+			p.drawQuad(Painter::Brush::MULTICOMPONENT_BLEND);
 		}
 
 		void Letter::onDestroy() {

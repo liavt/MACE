@@ -270,7 +270,7 @@ namespace mc {
 		@see set(Index, Index,T)
 		@see get(Index,Index)
 		*/
-		virtual T& operator()(const Index x, const Index y) MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
+		T& operator()(const Index x, const Index y) MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
 			MACE_IF_CONSTEXPR(x <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
 			} else MACE_IF_CONSTEXPR (y <= 0) {

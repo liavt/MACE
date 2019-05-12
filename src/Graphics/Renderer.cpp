@@ -32,7 +32,7 @@ namespace mc {
 			onSetUp(win);
 		}//setUp
 
-		void Renderer::queue(GraphicsEntity * const e, Painter& p) {
+		void Renderer::queue(GraphicsEntity* const e, Painter& p) {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
@@ -61,7 +61,7 @@ namespace mc {
 			impl->painter = &p;
 			impl->init();
 
-			renderQueue.push_back({ e, std::move(impl) });
+			renderQueue.push_back({e, std::move(impl)});
 		}//queue
 
 		void Renderer::remove(const EntityID id) {
@@ -79,6 +79,13 @@ namespace mc {
 		}//flagResize
 
 		void Renderer::resize(WindowModule* win, const int width, const int height) {
+			const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
+
+			windowRatios = {
+				static_cast<float>(config.width) / static_cast<float>(width),
+				static_cast<float>(config.height) / static_cast<float>(height)
+			};
+
 			onResize(win, width, height);
 
 			resized = false;
@@ -109,7 +116,7 @@ namespace mc {
 			renderQueue.clear();
 		}//destroy()
 
-		GraphicsEntity * Renderer::getEntityAt(const float x, const float y) {
+		GraphicsEntity* Renderer::getEntityAt(const float x, const float y) {
 			return getEntityAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)));
 		}
 
@@ -124,7 +131,7 @@ namespace mc {
 			return getEntityByID(id);
 		}
 
-		const GraphicsEntity * Renderer::getEntityAt(const unsigned int x, const unsigned int y) const {
+		const GraphicsEntity* Renderer::getEntityAt(const unsigned int x, const unsigned int y) const {
 			EntityID id = 0;
 			getEntitiesAt(x, y, 1, 1, &id);
 
@@ -165,7 +172,7 @@ namespace mc {
 			return renderQueue;
 		}
 
-		GraphicsEntity * Renderer::getEntityByID(const EntityID inId) {
+		GraphicsEntity* Renderer::getEntityByID(const EntityID inId) {
 			//0 is a NULL ID, so we decrement by one to get the actual index
 			if (inId == 0) {
 				return nullptr;
@@ -190,7 +197,7 @@ namespace mc {
 			return out;
 		}
 
-		const GraphicsEntity * Renderer::getEntityByID(const EntityID inId) const {
+		const GraphicsEntity* Renderer::getEntityByID(const EntityID inId) const {
 			//0 is a NULL ID, so we decrement by one to get the actual index
 			if (inId == 0) {
 				return nullptr;
@@ -218,11 +225,11 @@ namespace mc {
 			return resized;
 		}
 
-		GraphicsContext * Renderer::getContext() {
+		GraphicsContext* Renderer::getContext() {
 			return context;
 		}
 
-		const GraphicsContext * Renderer::getContext() const {
+		const GraphicsContext* Renderer::getContext() const {
 			return context;
 		}
 
@@ -230,7 +237,7 @@ namespace mc {
 
 		Painter::Painter(GraphicsEntity * const en, const EntityID i, const std::shared_ptr<PainterImpl> pimpl) : entity(en), id(i), impl(pimpl) {}
 
-		Painter::Painter(GraphicsEntity * const en, const Painter& p) : id(p.id), impl(p.impl), entity(en) {}
+		Painter::Painter(GraphicsEntity * const en, const Painter & p) : id(p.id), impl(p.impl), entity(en) {}
 
 		void Painter::begin() {
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
@@ -292,20 +299,20 @@ namespace mc {
 
 		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
 			push();
-			setData({ amount, 0, 0, 0 });
+			setData({amount, 0, 0, 0});
 			setTexture(foreground, TextureSlot::FOREGROUND);
 			setTexture(background, TextureSlot::BACKGROUND);
 			drawQuad(Painter::Brush::BLEND);
 			pop();
 		}
 
-		void Painter::blendImagesMasked(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
+		void Painter::conditionalMaskImages(const Texture & foreground, const Texture & background, const Texture & mask, const float minimum, const float maximum) {
 			push();
-			setData({ minimum, maximum, 0, 0 });
+			setData({minimum, maximum, 0, 0});
 			setTexture(foreground, TextureSlot::FOREGROUND);
 			setTexture(background, TextureSlot::BACKGROUND);
 			setTexture(mask, TextureSlot::MASK);
-			drawQuad(Painter::Brush::MASKED_BLEND);
+			drawQuad(Painter::Brush::CONDITIONAL_MASK);
 			pop();
 		}
 
@@ -313,7 +320,7 @@ namespace mc {
 			draw(Model::getQuad(), brush);
 		}
 
-		void Painter::draw(const Model& m, const Painter::Brush brush) {
+		void Painter::draw(const Model & m, const Painter::Brush brush) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (impl == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: draw: PainterImpl was nullptr");
@@ -324,27 +331,27 @@ namespace mc {
 			impl->draw(m, brush);
 		}
 
-		const GraphicsEntity * const Painter::getEntity() const {
+		const GraphicsEntity* const Painter::getEntity() const {
 			return entity;
 		}
 
 		void Painter::setTexture(const Texture & t, const TextureSlot slot) {
 			t.bind(slot);
 			switch (slot) {
-				case TextureSlot::FOREGROUND:
-					setForegroundColor(t.getHue());
-					setForegroundTransform(t.getTransform());
-					break;
-				case TextureSlot::BACKGROUND:
-					setBackgroundColor(t.getHue());
-					setBackgroundTransform(t.getTransform());
-					break;
-				case TextureSlot::MASK:
-					setMaskColor(t.getHue());
-					setMaskTransform(t.getTransform());
-					break;
-				default:
-					MACE__THROW(OutOfBounds, "setTexture: Unknown Texture slot");
+			case TextureSlot::FOREGROUND:
+				setForegroundColor(t.getHue());
+				setForegroundTransform(t.getTransform());
+				break;
+			case TextureSlot::BACKGROUND:
+				setBackgroundColor(t.getHue());
+				setBackgroundTransform(t.getTransform());
+				break;
+			case TextureSlot::MASK:
+				setMaskColor(t.getHue());
+				setMaskTransform(t.getTransform());
+				break;
+			default:
+				MACE__THROW(OutOfBounds, "setTexture: Unknown Texture slot");
 			}
 		}
 
@@ -368,11 +375,11 @@ namespace mc {
 			pop();
 		}
 
-		void Painter::fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size) {
+		void Painter::fillRect(const Vector<float, 2> & pos, const Vector<float, 2> & size) {
 			fillRect(pos.x(), pos.y(), size.x(), size.y());
 		}
 
-		void Painter::fillRect(const Vector<float, 4>& dim) {
+		void Painter::fillRect(const Vector<float, 4> & dim) {
 			fillRect(dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
@@ -389,15 +396,15 @@ namespace mc {
 
 		}
 
-		Color & Painter::getForegroundColor() {
+		Color& Painter::getForegroundColor() {
 			return state.foregroundColor;
 		}
 
-		const Color & Painter::getForegroundColor() const {
+		const Color& Painter::getForegroundColor() const {
 			return state.foregroundColor;
 		}
 
-		void Painter::setForegroundTransform(const Vector<float, 4>& trans) {
+		void Painter::setForegroundTransform(const Vector<float, 4> & trans) {
 			state.foregroundTransform = trans;
 		}
 
@@ -413,15 +420,15 @@ namespace mc {
 			state.backgroundColor = col;
 		}
 
-		Color & Painter::getBackgroundColor() {
+		Color& Painter::getBackgroundColor() {
 			return state.backgroundColor;
 		}
 
-		const Color & Painter::getBackgroundColor() const {
+		const Color& Painter::getBackgroundColor() const {
 			return state.backgroundColor;
 		}
 
-		void Painter::setBackgroundTransform(const Vector<float, 4>& trans) {
+		void Painter::setBackgroundTransform(const Vector<float, 4> & trans) {
 			state.backgroundTransform = trans;
 		}
 
@@ -437,15 +444,15 @@ namespace mc {
 			state.maskColor = col;
 		}
 
-		Color & Painter::getMaskColor() {
+		Color& Painter::getMaskColor() {
 			return state.maskColor;
 		}
 
-		const Color & Painter::getMaskColor() const {
+		const Color& Painter::getMaskColor() const {
 			return state.maskColor;
 		}
 
-		void Painter::setMaskTransform(const Vector<float, 4>& trans) {
+		void Painter::setMaskTransform(const Vector<float, 4> & trans) {
 			state.maskTransform = trans;
 		}
 
@@ -469,25 +476,25 @@ namespace mc {
 			state.renderFeatures = feature;
 		}
 
-		Painter::RenderFeatures & Painter::getRenderFeatures() {
+		Painter::RenderFeatures& Painter::getRenderFeatures() {
 			return state.renderFeatures;
 		}
 
-		const Painter::RenderFeatures & Painter::getRenderFeatures() const {
+		const Painter::RenderFeatures& Painter::getRenderFeatures() const {
 			return state.renderFeatures;
 		}
 
 		void Painter::setFilter(const float r, const float g, const float b, const float a) {
-			setFilter(Vector<float, 4>({ r, g, b, a }));
+			setFilter(Vector<float, 4>({r, g, b, a}));
 		}
 
-		void Painter::setFilter(const Vector<float, 4>& col) {
+		void Painter::setFilter(const Vector<float, 4> & col) {
 			setFilter(Matrix<float, 4, 4>({
 				{col.x(), 0, 0, 0},
 				{0, col.y(), 0, 0},
 				{0, 0, col.z(), 0},
 				{0, 0, 0, col.w()}
-										  }));
+					  }));
 		}
 
 		void Painter::setFilter(const Matrix<float, 4, 4> & col) {
@@ -503,18 +510,18 @@ namespace mc {
 		}
 
 		void Painter::setData(const float a, const float b, const float c, const float d) {
-			setData({ a, b, c, d });
+			setData({a, b, c, d});
 		}
 
 		void Painter::setData(const Vector<float, 4> & col) {
 			state.data = col;
 		}
 
-		Vector<float, 4> & Painter::getData() {
+		Vector<float, 4>& Painter::getData() {
 			return state.data;
 		}
 
-		const Vector<float, 4> & Painter::getData() const {
+		const Vector<float, 4>& Painter::getData() const {
 			return state.data;
 		}
 
@@ -522,11 +529,11 @@ namespace mc {
 			state.transformation = trans;
 		}
 
-		TransformMatrix & Painter::getTransformation() {
+		TransformMatrix& Painter::getTransformation() {
 			return state.transformation;
 		}
 
-		const TransformMatrix & Painter::getTransformation() const {
+		const TransformMatrix& Painter::getTransformation() const {
 			return state.transformation;
 		}
 
@@ -542,11 +549,11 @@ namespace mc {
 			return state.filter[3][3];
 		}
 
-		void Painter::setTarget(const FrameBufferTarget& target) {
+		void Painter::setTarget(const FrameBufferTarget & target) {
 			impl->setTarget(target);
 		}
 
-		void Painter::translate(const Vector<float, 3>& vec) {
+		void Painter::translate(const Vector<float, 3> & vec) {
 			translate(vec.x(), vec.y(), vec.z());
 		}
 
@@ -554,7 +561,7 @@ namespace mc {
 			state.transformation.translate(x, y, z);
 		}
 
-		void Painter::rotate(const Vector<float, 3>& vec) {
+		void Painter::rotate(const Vector<float, 3> & vec) {
 			rotate(vec.x(), vec.y(), vec.z());
 		}
 
@@ -562,7 +569,7 @@ namespace mc {
 			state.transformation.rotate(x, y, z);
 		}
 
-		void Painter::scale(const Vector<float, 3>& vec) {
+		void Painter::scale(const Vector<float, 3> & vec) {
 			scale(vec.x(), vec.y(), vec.z());
 		}
 
@@ -593,20 +600,20 @@ namespace mc {
 			state = s;
 		}
 
-		Painter::State & Painter::getState() {
+		Painter::State& Painter::getState() {
 			return state;
 		}
 
-		const Painter::State & Painter::getState() const {
+		const Painter::State& Painter::getState() const {
 			return state;
 		}
 
-		const EntityID & Painter::getID() const {
+		const EntityID& Painter::getID() const {
 			return id;
 		}
 
 		bool Painter::operator==(const Painter & other) const {
-			return impl == other.impl&& id == other.id && entity == other.entity
+			return impl == other.impl && id == other.id && entity == other.entity
 				&& state == other.state && stateStack == other.stateStack;
 		}
 
@@ -651,13 +658,13 @@ namespace mc {
 			painter.destroy();
 		}
 
-		Painter & GraphicsEntity::getPainter() {
+		Painter& GraphicsEntity::getPainter() {
 			makeDirty();
 
 			return painter;
 		}
 
-		const Painter & GraphicsEntity::getPainter() const {
+		const Painter& GraphicsEntity::getPainter() const {
 			return painter;
 		}
 
@@ -678,7 +685,7 @@ namespace mc {
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity & other) const noexcept {
-			return painter == other.painter&&Entity::operator==(other);
+			return painter == other.painter && Entity::operator==(other);
 		}
 
 		bool GraphicsEntity::operator!=(const GraphicsEntity & other) const noexcept {

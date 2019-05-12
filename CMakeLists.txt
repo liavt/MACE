@@ -124,7 +124,7 @@ endif()
 if(NOT stb_image_FOUND OR NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
 	if(${MACE_DOWNLOAD_DEPENDENCIES})
 		#stb_image is one header file, so its easy to fix. Just download it!
-		message(STATUS "Downloading STB_IMAGE..")
+		message(STATUS "Downloading STB_IMAGE...")
 		file(DOWNLOAD "${STB_IMAGE_URL}" "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
 		message(STATUS "Done downloading STB_IMAGE.")
 	else()
@@ -134,8 +134,6 @@ if(NOT stb_image_FOUND OR NOT EXISTS "${STB_IMAGE_DOWNLOAD_PATH}/stb_image.h")
 else()
 	message(STATUS "Found STB_IMAGE at ${STB_IMAGE_INCLUDE_DIR}")
 endif()
-
-
 
 file(GLOB_RECURSE HEADERS "${MACE_INCLUDES}/MACE/*.h"  "${MACE_INCLUDES}/MACE/Graphics/*.h" "${MACE_INCLUDES}/MACE/System/*.h" "${MACE_INCLUDES}/MACE/Utility/*.h")
 file(GLOB_RECURSE SRC "src/*.cpp")
@@ -376,6 +374,12 @@ if(NOT ${OPENAL_FOUND})
 		set(OPENAL_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME}/include)
 	endif()
 endif()
+
+find_package(OpenMP)
+if(OPENMP_FOUND)
+	target_compile_options(MACE PUBLIC "${OpenMP_CXX_FLAGS}")
+endif()
+
 
 if(MACE_TESTS OR MACE_DEMOS)
 	set_target_properties(MACE PROPERTIES FOLDER "MC")

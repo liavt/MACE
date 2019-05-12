@@ -1163,7 +1163,7 @@ namespace mc {
 			public:
 				struct UniformBufferData {
 					struct Field {
-						GLuint index;
+						GLint index;
 						GLint size, offset;
 						Enum type;
 					};
@@ -1259,11 +1259,11 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				UniformBufferData createUniformBuffer(const char* name, const GLint location = -1);
+				void createUniformBuffer(const char* name, const GLint location = -1);
 				/**
 				@copydoc createUniformBuffer(const char*, const GLint)
 				*/
-				UniformBufferData createUniformBuffer(const UniformBuffer& buf, const GLint location = -1);
+				void createUniformBuffer(const UniformBuffer& buf, const GLint location = -1);
 
 				UniformBufferData& getUniformBuffer(const char* name);
 
@@ -1273,6 +1273,10 @@ namespace mc {
 				@opengl
 				*/
 				void bindUniformBuffer(const UniformBuffer& buf);
+				/**
+				@opengl
+				*/
+				void bindUniformBuffers(const UniformBuffer buf[], const Size size);
 
 				int getUniformLocation(const std::string& name) const;
 				int getUniformLocation(const char* name) const;

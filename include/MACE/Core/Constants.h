@@ -12,6 +12,7 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__CORE_CONSTANTS_H
 
 #include <MACE/Configure.h>
+#include <hedley.h>
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!
@@ -75,9 +76,18 @@ The above copyright notice and this permission notice shall be included in all c
 //checks for a C++ attribute in the form of [[attribute]]
 #ifndef MACE_HAS_ATTRIBUTE
 #	ifndef __has_cpp_attribute
-#		define MACE_HAS_ATTRIBUTE(attr) false
+#		define MACE_HAS_ATTRIBUTE(attr) (0)
 #	else
 #		define MACE_HAS_ATTRIBUTE(attr) __has_cpp_attribute(attr)
+#	endif
+#endif
+
+//whether the specificed include is available
+#ifndef MACE_HAS_INCLUDE
+#	ifndef __has_include
+#		define MACE_HAS_INCLUDE(incl) (0)
+#	else
+#		define MACE_HAS_INCLUDE(incl) __has_include(incl)
 #	endif
 #endif
 
@@ -105,6 +115,26 @@ The above copyright notice and this permission notice shall be included in all c
 #		define MACE_NORETURN [[noreturn]]
 #	else
 #		define MACE_NORETURN
+#	endif
+#endif
+
+#ifndef MACE_UNREACHABLE
+#	if defined(MACE_GCC) || defined(MACE_INTEL)
+#		define MACE_UNREACHABLE __builtin_unreachable()
+#	elif defined(MACE_MSVC) 
+#		define MACE_UNREACHABLE __assume(0)
+#	else
+#		define MACE_UNREACHABLE 
+#	endif
+#endif
+
+#ifndef MACE_UNREACHABLE_RETURN
+#	if defined(MACE_GCC) || defined(MACE_INTEL)
+#		define MACE_UNREACHABLE_RETURN(val) __builtin_unreachable()
+#	elif defined(MACE_MSVC) 
+#		define MACE_UNREACHABLE_RETURN(val) __assume(0)
+#	else
+#		define MACE_UNREACHABLE_RETURN(val) return val
 #	endif
 #endif
 
@@ -146,7 +176,7 @@ The above copyright notice and this permission notice shall be included in all c
 #	if MACE_HAS_ATTRIBUTE(likely)
 #		define MACE_LIKELY [[likely]]
 #	else
-#		define MACE_LIKELY 
+#		define MACE_LIKELY
 #	endif
 #endif
 
@@ -187,25 +217,6 @@ The above copyright notice and this permission notice shall be included in all c
 #	endif
 #endif
 
-//whether the specificed include is available
-#ifndef MACE_HAS_INCLUDE
-#	ifndef __has_include
-#		define MACE_HAS_INCLUDE(incl) false
-#	else
-#		define MACE_HAS_INCLUDE(incl) __has_include(incl)
-#	endif
-#endif
-
-//whether opencv interoptibility should be built
-#ifdef MACE_OPENCV
-#	if !MACE_OPENCV
-#		undef MACE_OPENCV
-#	endif
-//if doxygen is running or opencv is detected, set MACE_OPENCV to 1 if it hasnt been defined already
-#elif MACE_HAS_INCLUDE(<opencv2/opencv.hpp>)||defined(MACE__DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
-#	define MACE_OPENCV 1
-#endif
-
 //constexpr
 #ifndef MACE_CONSTEXPR
 #	if defined(__cpp_constexpr) && __cpp_constexpr >= 200704
@@ -240,10 +251,19 @@ The above copyright notice and this permission notice shall be included in all c
 #endif
 
 #define MACE_STRINGIFY(name) #name
+// the "" in front is to ensure that giving it an empty string still works
 #define MACE_STRINGIFY_NAME(name) "" #name
 #define MACE_STRINGIFY_DEFINITION(name) "" MACE_STRINGIFY(name)
 
-#define MACE_CONCAT(arg1, ...) arg1 ## __VA_ARGS__
+//whether opencv interoptibility should be built
+#ifdef MACE_OPENCV
+#	if !MACE_OPENCV
+#		undef MACE_OPENCV
+#	endif
+//if doxygen is running or opencv is detected, set MACE_OPENCV to 1 if it hasnt been defined already
+#elif MACE_HAS_INCLUDE(<opencv2/opencv.hpp>)||defined(MACE__DOXYGEN_PASS)||(defined(CV_VERSION) && defined(CV_VERSION_MINOR) && defined(CV_VERSION_MINOR))
+#	define MACE_OPENCV 1
+#endif
 
 //meaning doxygen is currently parsing this file
 #ifdef MACE__DOXYGEN_PASS

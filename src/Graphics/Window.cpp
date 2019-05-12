@@ -431,7 +431,7 @@ namespace mc {
 			{
 				std::mutex mutex;
 				const std::unique_lock<std::mutex> guard(mutex);
-				setProperty(WindowModule::DESTROYED, true);
+				setProperty(gfx::Entity::DEAD, true);
 			}
 
 			windowThread.join();

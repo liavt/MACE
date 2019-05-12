@@ -32,8 +32,9 @@ The above copyright notice and this permission notice shall be included in all c
 //output error messages to console
 #include <sstream>
 
-//for printing error messages/opengl info
-#include <iostream>
+#ifdef MACE_DEBUG_OPENGL
+#	include <iostream>
+#endif
 
 namespace mc {
 	namespace gfx {
@@ -55,6 +56,8 @@ namespace mc {
 #define MACE__ID_ATTACHMENT_INDEX 1
 #define MACE__DATA_ATTACHMENT_INDEX 2
 
+#define MACE__HAS_RENDER_FEATURE(features, feature) (features & Painter::RenderFeatures::feature) != Painter::RenderFeatures::NONE
+
 			namespace {
 				Shader createShader(const Enum type, const Painter::RenderFeatures features, const char* source) {
 					Shader s = Shader(type);
@@ -74,30 +77,16 @@ namespace mc {
 																				});
 #undef MACE__SHADER_MACRO
 
-					if ((features & Painter::RenderFeatures::DISCARD_INVISIBLE) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_DISCARD_INVISIBLE 1\n");
-					}
-					if ((features & Painter::RenderFeatures::FILTER) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_FILTER 1\n");
-					}
-					if ((features & Painter::RenderFeatures::TEXTURE) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_TEXTURE 1\n");
-					}
-					if ((features & Painter::RenderFeatures::TEXTURE_TRANSFORM) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_TEXTURE_TRANSFORM 1\n");
-					}
-					if ((features & Painter::RenderFeatures::INHERIT_TRANSLATION) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_INHERIT_TRANSLATION 1\n");
-					}
-					if ((features & Painter::RenderFeatures::INHERIT_SCALE) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_INHERIT_SCALE 1\n");
-					}
-					if ((features & Painter::RenderFeatures::INHERIT_ROTATION) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_INHERIT_ROTATION 1\n");
-					}
-					if ((features & Painter::RenderFeatures::STORE_ID) != Painter::RenderFeatures::NONE) {
-						sources.insert(sources.begin(), "#define MACE_STORE_ID 1\n");
-					}
+#define MACE__SHADER_RENDER_FEATURE(name) if(MACE__HAS_RENDER_FEATURE(features, name)){ sources.insert(sources.begin(), "#define MACE_" MACE_STRINGIFY(name) " 1\n"); }
+					MACE__SHADER_RENDER_FEATURE(DISCARD_INVISIBLE);
+					MACE__SHADER_RENDER_FEATURE(FILTER);
+					MACE__SHADER_RENDER_FEATURE(TEXTURE);
+					MACE__SHADER_RENDER_FEATURE(TEXTURE_TRANSFORM);
+					MACE__SHADER_RENDER_FEATURE(INHERIT_TRANSLATION);
+					MACE__SHADER_RENDER_FEATURE(INHERIT_SCALE);
+					MACE__SHADER_RENDER_FEATURE(INHERIT_ROTATION);
+					MACE__SHADER_RENDER_FEATURE(STORE_ID);
+#undef MACE__SHADER_RENDER_FEATURE
 
 					sources.insert(sources.begin(), "#version 330 core\n");
 
@@ -111,7 +100,7 @@ namespace mc {
 						);
 					}
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
-					else {
+					else MACE_UNLIKELY{
 						MACE__THROW(BadFormat, "Internal Error: Unknown GLSL shader type: " + std::to_string(type));
 					}
 #endif
@@ -121,7 +110,7 @@ namespace mc {
 					return s;
 				}
 
-				ogl33::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures> & settings) {
+				ogl33::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
 					ogl33::ShaderProgram program;
 					program.init();
 
@@ -193,9 +182,9 @@ namespace mc {
 
 						program.setUniform("tex1", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
-					} else if (settings.first == Painter::Brush::MASKED_BLEND) {
+					} else if (settings.first == Painter::Brush::CONDITIONAL_MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/masked_blend.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/conditional_mask.f.glsl>
 						));
 
 						program.link();
@@ -210,32 +199,40 @@ namespace mc {
 						program.setUniform("tex1", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
 						program.setUniform("mask", static_cast<int>(TextureSlot::MASK));
-					} else if (settings.first == Painter::Brush::TEXT) {
+					} else if (settings.first == Painter::Brush::MULTICOMPONENT_BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/text.f.glsl>
+#							include <MACE/Graphics/OGL/Shaders/Brushes/multicomponent_blend.f.glsl>
 						));
 
 						program.link();
 
 						program.bind();
 
-						program.createUniform("tex");
-						program.createUniform("glyph");
+						program.createUniform("tex1");
+						program.createUniform("tex2");
 
-						program.setUniform("tex", static_cast<int>(TextureSlot::FOREGROUND));
-						program.setUniform("glyph", static_cast<int>(TextureSlot::BACKGROUND));
-					} else {
+						program.setUniform("tex1", static_cast<int>(TextureSlot::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
+					} else MACE_UNLIKELY{
 						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 					}
 
 					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
 					return program;
 				}
+
+				unsigned short hashSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
+					unsigned short j;
+					j = static_cast<unsigned short>(settings.first);
+					j <<= 8;
+					j |= static_cast<unsigned short>(settings.second);
+					return j;
+				}
 			}//anon namespace
 
 			OGL33Renderer::OGL33Renderer() {}
 
-			void OGL33Renderer::onInit(gfx::WindowModule * win) {
+			void OGL33Renderer::onInit(gfx::WindowModule* win) {
 				glewExperimental = true;
 				const GLenum result = glewInit();
 				if (result != GLEW_OK) {
@@ -321,7 +318,7 @@ namespace mc {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
 			}
 
-			void OGL33Renderer::onTearDown(gfx::WindowModule * win) {
+			void OGL33Renderer::onTearDown(gfx::WindowModule* win) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 				frameBuffer.unbind();
@@ -465,7 +462,8 @@ namespace mc {
 				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
 					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
 					break;
-				case GL_FRAMEBUFFER_COMPLETE:
+				case GL_FRAMEBUFFER_COMPLETE MACE_LIKELY:
+					MACE_FALLTHROUGH;
 				default:
 					//success
 					break;
@@ -482,13 +480,6 @@ namespace mc {
 				ogl33::resetBlending();
 
 				ogl33::enable(GL_MULTISAMPLE);
-
-				const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
-
-				windowRatios = {
-					static_cast<float>(config.width) / static_cast<float>(width),
-					static_cast<float>(config.height) / static_cast<float>(height)
-				};
 
 				ogl33::forceCheckGLError(__LINE__, __FILE__,
 					("Internal Error: OGL33Renderer: Error resizing framebuffer for width " + std::to_string(width) + " and height " + std::to_string(height)).c_str());
@@ -532,7 +523,8 @@ namespace mc {
 			}
 
 			void OGL33Renderer::bindProtocol(OGL33Painter * painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
-				auto protocol = protocols.find(settings);
+				const unsigned short hash = hashSettings(settings);
+				auto protocol = protocols.find(hash);
 				if (protocol == protocols.end()) {
 					RenderProtocol prot = RenderProtocol();
 					prot.program = createShadersForSettings(settings);
@@ -542,15 +534,17 @@ namespace mc {
 					prot.program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME), MACE__ENTITY_DATA_LOCATION);
 					prot.program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME), MACE__PAINTER_DATA_LOCATION);
 
-					auto newProtocolEntry = std::pair<std::pair<Painter::Brush, Painter::RenderFeatures>, OGL33Renderer::RenderProtocol>(settings, prot);
-					protocols.insert(newProtocolEntry);
+					protocols.insert(std::pair<unsigned short, OGL33Renderer::RenderProtocol>(hash, prot));
 
-					protocol = protocols.find(newProtocolEntry.first);
+					protocol = protocols.find(hash);
 				}
 
 				protocol->second.program.bind();
-				protocol->second.program.bindUniformBuffer(painter->entityData);
-				protocol->second.program.bindUniformBuffer(painter->painterData);
+				UniformBuffer buffers[] = {
+					painter->entityData,
+					painter->painterData
+				};
+				protocol->second.program.bindUniformBuffers(buffers, os::getArraySize(buffers));
 			}
 
 			void OGL33Renderer::setTarget(const FrameBufferTarget & target) {
@@ -675,24 +669,14 @@ namespace mc {
 				//now we set the data defining the transformations of the entity
 				entityData.bind();
 
-				if (transform.translation != savedMetrics.transform.translation) {
-					entityData.setDataRange(0, sizeof(float) * 3, transform.translation.begin());
-				}
-				if (transform.rotation != savedMetrics.transform.rotation) {
-					entityData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, transform.rotation.begin());
-				}
-				if (transform.scaler != savedMetrics.transform.scaler) {
-					entityData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, transform.scaler.begin());
-				}
-				if (inherited.translation != savedMetrics.inherited.translation) {
-					entityData.setDataRange(sizeof(float) * 12, sizeof(float) * 3, inherited.translation.begin());
-				}
-				if (inherited.rotation != savedMetrics.inherited.rotation) {
-					entityData.setDataRange(sizeof(float) * 16, sizeof(float) * 3, inherited.rotation.begin());
-				}
-				if (inherited.scaler != savedMetrics.inherited.scaler) {
-					entityData.setDataRange(sizeof(float) * 20, sizeof(float) * 3, inherited.scaler.begin());
-				}
+#define MACE__DATA_RANGE_ENTRY(name, offset, size) if(name != savedMetrics.name) {entityData.setDataRange(sizeof(float) * offset, sizeof(float) * size, name.begin());}
+				MACE__DATA_RANGE_ENTRY(transform.translation, 0, 3);
+				MACE__DATA_RANGE_ENTRY(transform.rotation, 4, 3);
+				MACE__DATA_RANGE_ENTRY(transform.scaler, 8, 3);
+				MACE__DATA_RANGE_ENTRY(inherited.translation, 12, 3);
+				MACE__DATA_RANGE_ENTRY(inherited.rotation, 16, 3);
+				MACE__DATA_RANGE_ENTRY(inherited.scaler, 20, 3);
+#undef MACE__DATA_RANGE_ENTRY
 
 				savedMetrics = metrics;
 
@@ -706,65 +690,29 @@ namespace mc {
 
 				painterData.bind();
 
-#define MACE__DATA_RANGE_ENTRY(name, offset, size) if(state.name != savedState.name){painterData.setDataRange(sizeof(float) * offset, sizeof(float) * size, state.name.begin());}
-
-				MACE__DATA_RANGE_ENTRY(transformation.translation, 0, 3);
-				MACE__DATA_RANGE_ENTRY(transformation.rotation, 4, 3);
-				MACE__DATA_RANGE_ENTRY(transformation.scaler, 8, 3);
-				MACE__DATA_RANGE_ENTRY(data, 12, 4);
-				MACE__DATA_RANGE_ENTRY(foregroundColor, 16, 4);
-				MACE__DATA_RANGE_ENTRY(foregroundTransform, 20, 4);
-				MACE__DATA_RANGE_ENTRY(backgroundColor, 24, 4);
-				MACE__DATA_RANGE_ENTRY(backgroundTransform, 28, 4);
-				MACE__DATA_RANGE_ENTRY(maskColor, 32, 4);
-				MACE__DATA_RANGE_ENTRY(maskTransform, 36, 4);
-				//if (state.transformation.translation != savedState.transformation.translation) {
-				//	painterData.setDataRange(0, sizeof(float) * 3, state.transformation.translation.begin());
-				//}
-				//if (state.transformation.rotation != savedState.transformation.rotation) {
-				//	painterData.setDataRange(sizeof(float) * 4, sizeof(float) * 3, state.transformation.rotation.begin());
-				//}
-				//if (state.transformation.scaler != savedState.transformation.scaler) {
-				//	painterData.setDataRange(sizeof(float) * 8, sizeof(float) * 3, state.transformation.scaler.begin());
-				//}
-				//if (state.data != savedState.data) {
-				//	painterData.setDataRange(sizeof(float) * 12, sizeof(float) * 4, state.data.begin());
-				//}
-				//if (state.foregroundColor != savedState.foregroundColor) {
-				//	painterData.setDataRange(sizeof(float) * 16, sizeof(float) * 4, state.foregroundColor.begin());
-				//}
-				//if (state.foregroundTransform != savedState.foregroundTransform) {
-				//	painterData.setDataRange(sizeof(float) * 20, sizeof(float) * 4, state.foregroundTransform.begin());
-				//}
-				//if (state.backgroundColor != savedState.backgroundColor) {
-				//	painterData.setDataRange(sizeof(float) * 24, sizeof(float) * 4, state.backgroundColor.begin());
-				//}
-				//if (state.backgroundTransform != savedState.backgroundTransform) {
-				//	painterData.setDataRange(sizeof(float) * 28, sizeof(float) * 4, state.backgroundTransform.begin());
-				//}
-				//if (state.maskColor != savedState.maskColor) {
-				//	painterData.setDataRange(sizeof(float) * 32, sizeof(float) * 4, state.maskColor.begin());
-				//}
-				//if (state.maskTransform != savedState.maskTransform) {
-				//	painterData.setDataRange(sizeof(float) * 36, sizeof(float) * 4, state.maskTransform.begin());
-				//}
+#define MACE__DATA_RANGE_ENTRY(name, offset, size, cond) if(state.name != savedState.name && cond){painterData.setDataRange(sizeof(float) * offset, sizeof(float) * size, state.name.begin());}
+				MACE__DATA_RANGE_ENTRY(transformation.translation, 0, 3, true);
+				MACE__DATA_RANGE_ENTRY(transformation.rotation, 4, 3, true);
+				MACE__DATA_RANGE_ENTRY(transformation.scaler, 8, 3, true);
+				MACE__DATA_RANGE_ENTRY(data, 12, 4, true);
+				MACE__DATA_RANGE_ENTRY(foregroundColor, 16, 4, true);
+				MACE__DATA_RANGE_ENTRY(foregroundTransform, 20, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
+				MACE__DATA_RANGE_ENTRY(backgroundColor, 24, 4, true);
+				MACE__DATA_RANGE_ENTRY(backgroundTransform, 28, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
+				MACE__DATA_RANGE_ENTRY(maskColor, 32, 4, true);
+				MACE__DATA_RANGE_ENTRY(maskTransform, 36, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
+				MACE__DATA_RANGE_ENTRY(filter, 40, 16, MACE__HAS_RENDER_FEATURE(state.renderFeatures, FILTER));
 #undef MACE__DATA_RANGE_ENTRY
-
-				if (state.filter != savedState.filter) {
-					float matrix[16];
-					state.filter.flatten(matrix);
-					painterData.setDataRange(sizeof(float) * 40, sizeof(float) * 16, std::begin(matrix));
-				}
 
 				savedState = state;
 			}
 
 			void OGL33Painter::draw(const Model & m, const Painter::Brush brush) {
 				m.bind();
-				if (brush == Painter::Brush::TEXT) {
+				if (brush == Painter::Brush::MULTICOMPONENT_BLEND) {
 					ogl33::setBlending(GL_SRC1_COLOR, GL_ONE_MINUS_SRC1_COLOR);
 					renderer->frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-					renderer->bindProtocol(this, {Painter::Brush::TEXT, savedState.renderFeatures});
+					renderer->bindProtocol(this, {Painter::Brush::MULTICOMPONENT_BLEND, savedState.renderFeatures});
 					m.draw();/*
 					glBlendFunc(GL_ONE, GL_ONE);
 					renderer->bindProtocol(this, { Painter::Brush::TEXT, savedState.renderFeatures });

@@ -40,6 +40,11 @@ The above copyright notice and this permission notice shall be included in all c
 #include <string>
 #include <ostream>
 
+#ifdef MACE_MSVC
+#	include <intrin.h>
+#	pragma intrinsic(_bittest)
+#endif
+
 namespace mc {
 
 	/**
@@ -50,7 +55,7 @@ namespace mc {
 		std::tm* localtime(std::tm* result, const std::time_t* time) MACE_EXPECTS(result != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
 		std::tm* gmtime(std::tm* result, const std::time_t* time) MACE_EXPECTS(result != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
 		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) MACE_EXPECTS(buffer != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
-		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) MACE_EXPECTS(buffer != nullptr  && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
+		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) MACE_EXPECTS(buffer != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
 
 		FILE* fopen(FILE** result, const char* filename, const char* mode) MACE_EXPECTS(result != nullptr && filename != nullptr && mode != nullptr) MACE_ENSURES(ret, ret != nullptr);
 
@@ -63,8 +68,17 @@ namespace mc {
 
 		void wait(const unsigned long long int ms);
 
-		std::wstring toWideString(const std::string& s);
-		std::string toNarrowString(const std::wstring& s);
+		template<typename T>
+		inline bool bittest(const T& val, const T& pos) {
+#ifndef MACE_MSVC
+			return _bittest(&static_cast<long>(val), static_cast<long>(pos));
+#else
+			return ((val) & (1 << (pos)));
+#endif
+		}
+
+		std::wstring toWideString(const std::string & s);
+		std::string toNarrowString(const std::wstring & s);
 
 		template<class T, Size N>
 		inline MACE_CONSTEXPR Size getArraySize(const T(&)[N]) {
@@ -101,7 +115,7 @@ namespace mc {
 		/**
 		@bug Background doesn't work on windows
 		*/
-		MACE_NODISCARD std::string consoleColor(const ConsoleColor& foreground = ConsoleColor::DEFAULT, const ConsoleColor& background = ConsoleColor::DEFAULT);
+		MACE_NODISCARD std::string consoleColor(const ConsoleColor & foreground = ConsoleColor::DEFAULT, const ConsoleColor & background = ConsoleColor::DEFAULT);
 	}//os
 }//mc
 
