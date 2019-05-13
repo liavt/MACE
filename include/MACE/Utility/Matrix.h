@@ -86,7 +86,6 @@ namespace mc {
 		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>() {
 			MACE_STATIC_ASSERT(W != 0, "A Matrix's width must be greater than 0!");
 			MACE_STATIC_ASSERT(H != 0, "A Matrix's height must be greater than 0!");
-#pragma omp parallel for
 			for (Index i = 0; i < W; ++i) {
 				content[i] = MatrixRow<T, H>();
 			}
@@ -97,7 +96,6 @@ namespace mc {
 		@param arr An array of contents
 		*/
 		Matrix(const T arr[W][H]) : Matrix() {
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					content[x][y] = arr[x][y];
@@ -236,7 +234,6 @@ namespace mc {
 		@return `arr`
 		*/
 		const T* flatten(T arr[W * H]) const {
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[y + (x * H)] = (content[x][y]);
@@ -252,7 +249,6 @@ namespace mc {
 		@return Pointer to an array of data
 		*/
 		const T* flattenTransposed(T arr[W * H]) const {
-#pragma omp parallel for
 			for (Index x = 0; x < H; ++x) {
 				for (Index y = 0; y < W; ++y) {
 					arr[y + (x * H)] = (content[y][x]);
@@ -316,7 +312,7 @@ namespace mc {
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-#pragma omp parallel for
+#pragma omp simd
 				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) + static_cast<T>(right[x]);
 				}
@@ -338,7 +334,7 @@ namespace mc {
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-#pragma omp parallel for
+#pragma omp simd
 				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) - static_cast<T>(right[x]);
 				}
@@ -360,7 +356,7 @@ namespace mc {
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
 				arr[x] = T();//we must initialize the value first, or else it will be undefined
-#pragma omp parallel for
+#pragma omp simd
 				for (Index y = 0; y < H; ++y) {
 					arr[y] += static_cast<T>(content[x][y]) * static_cast<T>(right[x]);
 				}
@@ -380,8 +376,8 @@ namespace mc {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 
 			T arr[W][H];
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
+#pragma omp simd
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] + right[x][y];
 				}
@@ -401,8 +397,8 @@ namespace mc {
 		Matrix<T, W, H> operator-(const Matrix<T, W, H> & right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
+#pragma omp simd
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] - right[x][y];
 				}
@@ -422,10 +418,10 @@ namespace mc {
 		Matrix<T, W, H> operator*(const Matrix<T, W, H> & right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = T();
+#pragma omp simd
 					for (Index x1 = 0; x1 < W; x1++) {
 						arr[x][y] += content[x][x1] * right[x1][y];
 					}
@@ -445,8 +441,8 @@ namespace mc {
 		*/
 		Matrix<T, W, H> operator*(const T & scalar) const {
 			T arr[W][H];
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
+#pragma omp simd
 				for (Index y = 0; y < H; ++y) {
 					arr[x][y] = content[x][y] * scalar;
 				}
@@ -548,7 +544,6 @@ namespace mc {
 		template<typename T, Size W, Size H>
 		Matrix<T, H, W> transpose(const Matrix<T, W, H>& matrix) {
 			Matrix<T, H, W> out = Matrix<T, H, W>();
-#pragma omp parallel for
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					out[y][x] = matrix[x][y];
@@ -627,7 +622,7 @@ namespace mc {
 		T tr(const Matrix<T, N>& m) {
 			T out = T();
 			//done without a trace!
-#pragma omp parallel for reduction(+:out)
+#pragma omp simd
 			for (Index x = 0; x < N; ++x) {
 				out += m[x][x];
 			}
@@ -643,7 +638,6 @@ namespace mc {
 		template<typename T, Size N>
 		Matrix<T, N> identity() {
 			Matrix<T, N> out = Matrix<T, N>();
-#pragma omp parallel for
 			for (Index x = 0; x < N; ++x) {
 				out[x][x] = static_cast<T>(1);
 			}

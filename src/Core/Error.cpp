@@ -174,19 +174,8 @@ namespace mc {
 		//we need to flush it as well as newline. endl accomplishes that
 		dump << std::endl;
 
-#if defined(MACE_MSVC)
-#	pragma warning( push ) 
-		//this warning is to say that a macro does not have enough parameters.
-		//this can be raised on systems where MACE_DYNAMIC_LIBRARY_PREFIX is empty (cough cough Windows)
-#	pragma warning( disable: 4003 ) 
-#endif 
-
-		dump << "Dynamic Library Prefix:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_PREFIX) << std::endl;
-		dump << "Dynamic Library Suffix:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION(MACE_DYNAMIC_LIBRARY_SUFFIX) << std::endl;
-
-#if defined(MACE_MSVC)
-#	pragma warning( pop )
-#endif
+		dump << "Dynamic Library Prefix:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION("" MACE_DYNAMIC_LIBRARY_PREFIX) << std::endl;
+		dump << "Dynamic Library Suffix:" << std::endl << '\t' << MACE_STRINGIFY_DEFINITION("" MACE_DYNAMIC_LIBRARY_SUFFIX) << std::endl;
 
 		dump << "Compiler:" << std::endl << '\t';
 

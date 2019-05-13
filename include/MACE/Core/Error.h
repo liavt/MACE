@@ -21,7 +21,7 @@ namespace mc {
 	/**
 	Superclass that all exceptions in MACE extend.
 	*/
-	class MACE_NOVTABLE Error: public std::runtime_error {
+	class Error: public std::runtime_error {
 	public:
 		static std::string getErrorDump(const std::exception& e, const Instance* i = nullptr);
 

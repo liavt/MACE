@@ -377,7 +377,12 @@ endif()
 
 find_package(OpenMP)
 if(OPENMP_FOUND)
-	target_compile_options(MACE PUBLIC "${OpenMP_CXX_FLAGS}")
+	if(MSVC)
+		# MACE needs SIMD support out of OpenMP on VC so it needs a special flag
+		target_compile_options(MACE PUBLIC "/openmp:experimental")
+	else()
+		target_compile_options(MACE PUBLIC "${OpenMP_CXX_FLAGS}")
+	endif()
 endif()
 
 

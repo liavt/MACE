@@ -82,7 +82,7 @@ namespace mc {
 				}
 			}
 
-			void onWindowClose(GLFWwindow* window) {
+			void onWindowClose(GLFWwindow * window) {
 				WindowModule* mod = convertGLFWWindowToModule(window);
 				mod->makeDirty();
 
@@ -149,7 +149,7 @@ namespace mc {
 				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
 			}
 
-			void onWindowCursorPosition(GLFWwindow* window, double xpos, double ypos) {
+			void onWindowCursorPosition(GLFWwindow * window, double xpos, double ypos) {
 				mouseX = static_cast<int>(mc::math::floor(xpos));
 				mouseY = static_cast<int>(mc::math::floor(ypos));
 
@@ -157,7 +157,7 @@ namespace mc {
 				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
 			}
 
-			void onWindowScrollWheel(GLFWwindow* window, double xoffset, double yoffset) {
+			void onWindowScrollWheel(GLFWwindow * window, double xoffset, double yoffset) {
 				scrollY = yoffset;
 				scrollX = xoffset;
 
@@ -165,18 +165,18 @@ namespace mc {
 				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
 			}
 
-			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
+			void onWindowFramebufferResized(GLFWwindow * window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
 				win->getContext()->getRenderer()->flagResize();
 				win->makeChildrenDirty();
 			}
 
-			void onWindowDamaged(GLFWwindow* window) {
+			void onWindowDamaged(GLFWwindow * window) {
 				convertGLFWWindowToModule(window)->makeDirty();
 			}
 		}//anon namespace
 
-		WindowModule::WindowModule(const LaunchConfig& c) : config(c), properties(0), window(nullptr) {}
+		WindowModule::WindowModule(const LaunchConfig & c) : config(c), properties(0), window(nullptr) {}
 
 		void WindowModule::create() {
 			glfwSetErrorCallback(&onGLFWError);
@@ -191,28 +191,28 @@ namespace mc {
 			glfwDefaultWindowHints();
 
 			switch (config.contextType) {
-				case LaunchConfig::ContextType::AUTOMATIC:
-				case LaunchConfig::ContextType::BEST_OGL:
-				case LaunchConfig::ContextType::OGL33:
-				default:
-					context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl33::OGL33Context(this));
+			case LaunchConfig::ContextType::AUTOMATIC:
+			case LaunchConfig::ContextType::BEST_OGL:
+			case LaunchConfig::ContextType::OGL33:
+			default:
+				context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl33::OGL33Context(this));
 
-					glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-					glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-					glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
-					glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+				glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
+				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-					glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+				glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
-					glfwWindowHint(GLFW_STENCIL_BITS, 8);
-					glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
+				glfwWindowHint(GLFW_STENCIL_BITS, 8);
+				glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
 #ifdef MACE_DEBUG_OPENGL
-					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #else
-					glfwWindowHint(GLFW_CONTEXT_NO_ERROR, true);
+				glfwWindowHint(GLFW_CONTEXT_NO_ERROR, true);
 #endif
-					break;
+				break;
 			}
 
 #ifdef MACE_DEBUG_INTERNAL_ERRORS
@@ -286,7 +286,7 @@ namespace mc {
 			config.onCreate(*this);
 		}
 
-		const WindowModule::LaunchConfig & WindowModule::getLaunchConfig() const {
+		const WindowModule::LaunchConfig& WindowModule::getLaunchConfig() const {
 			return config;
 		}
 
@@ -330,7 +330,7 @@ namespace mc {
 					}
 
 					os::clearError(__LINE__, __FILE__);
-				} catch (const std::exception& e) {
+				} catch (const std::exception & e) {
 					Error::handleError(e, instance);
 				} catch (...) {
 					MACE__THROW(Unknown, "An unknown error has occured trying to initalize MACE");
@@ -340,63 +340,60 @@ namespace mc {
 				//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
 				for (;;) {//( ;_;)
 					try {
-						{
-							//thread doesn't own window, so we have to lock the mutex
-							const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
+						//thread doesn't own window, so we have to lock the mutex
+						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-							if (getProperty(Entity::DIRTY)) {
-								context->getRenderer()->setUp(this);
-								Entity::render();
-								context->getRenderer()->tearDown(this);
-							}
-
-							context->render();
-
-							if (!instance->isRunning()) {
-								//pressing the X button on a window sends a SIGABRT which throws an error later
-								os::clearError(__LINE__, __FILE__);
-								break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
-							}
-
+						if (getProperty(Entity::DIRTY)) {
+							Renderer* const renderer = context->getRenderer();
+							renderer->setUp(this);
+							Entity::render();
+							renderer->tearDown(this);
 						}
 
-						if (windowDelay != Duration::zero()) {
-							now = Clock::now();
+						context->render();
 
-							std::this_thread::sleep_for(windowDelay - (now - lastFrame));
-
-							lastFrame = Clock::now();
+						if (!instance->isRunning()) {
+							//pressing the X button on a window sends a SIGABRT which throws an error later
+							os::clearError(__LINE__, __FILE__);
+							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 						}
-					} catch (const std::exception& e) {
+					} catch (const std::exception & e) {
 						Error::handleError(e, instance);
 						break;
 					} catch (...) {
 						MACE__THROW(Unknown, "An unknown error occured trying to render a frame");
 					}
+
+					if (windowDelay != Duration::zero()) {
+						now = Clock::now();
+
+						std::this_thread::sleep_for(windowDelay - (now - lastFrame));
+
+						lastFrame = Clock::now();
+					}
 				}
 
 				os::checkError(__LINE__, __FILE__, "A system error occurred during the window loop");
 
-				{
+				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-					try {
-						Entity::destroy();
 
-						context->destroy();
+					Entity::destroy();
 
-						//the window will be destroyed on the main thread, need to detach this one
-						glfwMakeContextCurrent(nullptr);
+					context->destroy();
 
-						os::checkError(__LINE__, __FILE__, "A system error occurred destroying the window");
-					} catch (const std::exception& e) {
-						Error::handleError(e, instance);
-					} catch (...) {
-						MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
-					}
+					//the window will be destroyed on the main thread, need to detach this one
+					glfwMakeContextCurrent(nullptr);
+
+					os::checkError(__LINE__, __FILE__, "A system error occurred destroying the window");
+				} catch (const std::exception & e) {
+					Error::handleError(e, instance);
+				} catch (...) {
+					MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
 				}
 
 				os::checkError(__LINE__, __FILE__, "A system error occured while running MACE");
-			} catch (const std::exception& e) {
+			} catch (const std::exception & e) {
 				Error::handleError(e, instance);
 			} catch (...) {
 				Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unknown error occured while running MACE", __LINE__, __FILE__), instance);
@@ -465,8 +462,7 @@ namespace mc {
 			return out;
 		}
 
-		Vector<float, 2> WindowModule::getContentScale() const
-		{
+		Vector<float, 2> WindowModule::getContentScale() const {
 			Vector<float, 2> out = {};
 
 			glfwGetWindowContentScale(window, &out[0], &out[1]);
@@ -482,8 +478,7 @@ namespace mc {
 			return context.get();
 		}
 
-		Monitor WindowModule::getMonitor()
-		{
+		Monitor WindowModule::getMonitor() {
 			GLFWmonitor* const mon = glfwGetWindowMonitor(window);
 			if (mon != nullptr) {
 				return Monitor(mon);
@@ -504,7 +499,7 @@ namespace mc {
 		}//clean()
 
 		namespace Input {
-			const Byte & getKey(const short int key) {
+			const Byte& getKey(const short int key) {
 				return keys[key];
 			}
 
@@ -533,7 +528,7 @@ namespace mc {
 			}
 		}//Input
 
-		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char * t) : title(t), width(w), height(h) {}
+		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char* t) : title(t), width(w), height(h) {}
 
 		bool WindowModule::LaunchConfig::operator==(const LaunchConfig & other) const {
 			return title == other.title && width == other.width && height == other.height
@@ -547,9 +542,9 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Monitor::Monitor(GLFWmonitor* const mon) : monitor(mon) {}
+		Monitor::Monitor(GLFWmonitor * const mon) : monitor(mon) {}
 
-		WindowModule * getCurrentWindow() {
+		WindowModule* getCurrentWindow() {
 			WindowModule* win = getCurrentWindowOrNull();
 			if (win == nullptr) {
 				MACE__THROW(NoRendererContext, "No Renderer found in this thread");
@@ -558,7 +553,7 @@ namespace mc {
 			return win;
 		}
 
-		WindowModule * getCurrentWindowOrNull() {
+		WindowModule* getCurrentWindowOrNull() {
 			return convertGLFWWindowToModule(glfwGetCurrentContext());
 		}
 
@@ -566,12 +561,11 @@ namespace mc {
 			return getCurrentWindowOrNull() != nullptr;
 		}
 
-		Monitor getPrimaryMonitor()
-		{
+		Monitor getPrimaryMonitor() {
 			return Monitor(glfwGetPrimaryMonitor());
 		}
 
-		WindowModule * convertGLFWWindowToModule(GLFWwindow * win) {
+		WindowModule* convertGLFWWindowToModule(GLFWwindow * win) {
 			if (win == nullptr) {
 				return nullptr;
 			}
@@ -584,8 +578,7 @@ namespace mc {
 			return windowModule;
 		}
 
-		Vector<int, 2> Monitor::getSizeMM() const
-		{
+		Vector<int, 2> Monitor::getSizeMM() const {
 			Vector<int, 2> out = {};
 
 			glfwGetMonitorPhysicalSize(monitor, &out[0], &out[1]);
@@ -593,19 +586,16 @@ namespace mc {
 			return out;
 		}
 
-		Vector<int, 2> Monitor::getSizeInches() const
-		{
+		Vector<int, 2> Monitor::getSizeInches() const {
 			const Vector<int, 2> mm = getSizeMM();
 			return {static_cast<int>(static_cast<float>(mm[0]) / 25.4f), static_cast<int>(static_cast<float>(mm[1]) / 25.4f)};
 		}
 
-		Vector<int, 2> Monitor::getDPI() const
-		{
+		Vector<int, 2> Monitor::getDPI() const {
 			return getResolution() / getSizeInches();
 		}
 
-		Vector<float, 2> Monitor::getContentScale() const
-		{
+		Vector<float, 2> Monitor::getContentScale() const {
 			Vector<float, 2> out = {};
 
 			glfwGetMonitorContentScale(monitor, &out[0], &out[1]);
@@ -613,13 +603,11 @@ namespace mc {
 			return out;
 		}
 
-		const char* Monitor::getName() const
-		{
+		const char* Monitor::getName() const {
 			return glfwGetMonitorName(monitor);
 		}
 
-		Vector<int, 4> Monitor::getWorkArea() const
-		{
+		Vector<int, 4> Monitor::getWorkArea() const {
 			Vector<int, 4> out = {};
 
 			glfwGetMonitorWorkarea(monitor, &out[0], &out[1], &out[2], &out[3]);
@@ -627,17 +615,15 @@ namespace mc {
 			return out;
 		}
 
-		Vector<int, 2> Monitor::getVirtualPosition() const
-		{
+		Vector<int, 2> Monitor::getVirtualPosition() const {
 			Vector<int, 2> out = {};
-			
+
 			glfwGetMonitorPos(monitor, &out[0], &out[1]);
 
 			return out;
 		}
 
-		std::vector<VideoMode> Monitor::getVideoModes() const
-		{
+		std::vector<VideoMode> Monitor::getVideoModes() const {
 			std::vector<VideoMode> out = std::vector<VideoMode>();
 
 			int count = 0;
@@ -648,53 +634,44 @@ namespace mc {
 			return out;
 		}
 
-		VideoMode Monitor::getCurrentVideoMode()  const
-		{
+		VideoMode Monitor::getCurrentVideoMode()  const {
 			return VideoMode(glfwGetVideoMode(monitor));
 		}
 
-		Vector<int, 2> Monitor::getResolution() const
-		{
+		Vector<int, 2> Monitor::getResolution() const {
 			VideoMode mode = getCurrentVideoMode();
-			return { mode.getWidth(), mode.getHeight() };
+			return {mode.getWidth(), mode.getHeight()};
 		}
 
-		VideoMode::VideoMode(const GLFWvidmode* const mod) : mode(mod) {}
+		VideoMode::VideoMode(const GLFWvidmode * const mod) : mode(mod) {}
 
-		int VideoMode::getWidth() const
-		{
+		int VideoMode::getWidth() const {
 			return mode->width;
 		}
 
-		int VideoMode::getHeight() const
-		{
+		int VideoMode::getHeight() const {
 			return mode->height;
 		}
 
-		int VideoMode::getRedBits() const
-		{
+		int VideoMode::getRedBits() const {
 			return mode->redBits;
 		}
 
-		int VideoMode::getGreenBits() const
-		{
+		int VideoMode::getGreenBits() const {
 			return mode->greenBits;
 		}
 
-		int VideoMode::getBlueBits() const
-		{
+		int VideoMode::getBlueBits() const {
 			return mode->blueBits;
 		}
 
-		Color VideoMode::getChannelBits() const
-		{
+		Color VideoMode::getChannelBits() const {
 			return Color(getRedBits(), getGreenBits(), getBlueBits());
 		}
 
-		int VideoMode::getRefreshRate() const
-		{
+		int VideoMode::getRefreshRate() const {
 			return mode->refreshRate;
 		}
 
-}//os
+	}//os
 }//mc

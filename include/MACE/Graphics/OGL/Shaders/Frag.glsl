@@ -41,6 +41,8 @@ void main(void){
 	}
 #endif
 
+	//mc_Fragment.rgb *= mc_Fragment.aaa;
+
 #ifdef MACE_FILTER
 	_mc_OutColor = mc_Fragment * _mc_Filter;
 #else

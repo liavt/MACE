@@ -98,7 +98,6 @@ namespace mc {
 		VectorBase() : content{ } {};
 
 		VectorBase(const T& val) : VectorBase() {
-#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				content[i] = val;
 			}
@@ -147,7 +146,6 @@ namespace mc {
 		@param obj A `Vector` to clone
 		*/
 		VectorBase(const Child& obj) {
-#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				content[i] = obj[i];
 			}
@@ -184,7 +182,6 @@ namespace mc {
 		@param arr An equally sized array whose contents will cloned in this `Vector`
 		*/
 		void setContents(const T arr[N]) {
-#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				set(i, arr[i]);
 			}
@@ -254,7 +251,6 @@ namespace mc {
 		@param arr The array to fill
 		*/
 		const T* flatten(T arr[N]) const {
-#pragma omp parallel for
 			for (Index i = 0; i < N; ++i) {
 				arr[i] = content[i];
 			}
@@ -440,7 +436,7 @@ namespace mc {
 		@see operator+(const Vector<T,N>&) const
 		*/
 		void operator+= (const Child & right) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) += right[i];
 			}
@@ -452,7 +448,7 @@ namespace mc {
 		@see operator-(const Vector<T,N>&) const
 		*/
 		void operator-= (const Child & right) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= right[i];
 			}
@@ -464,7 +460,7 @@ namespace mc {
 		@see operator+(const Vector<T,N>&) const
 		*/
 		void operator*= (const Child & right) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= right[i];
 			}
@@ -476,7 +472,7 @@ namespace mc {
 		@see operator+(const Vector<T,N>&) const
 		*/
 		void operator/= (const Child & right) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= right[i];
 			}
@@ -490,7 +486,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator+= (const T & scalar) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) += scalar;
 			}
@@ -503,7 +499,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator-= (const T & scalar) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= scalar;
 			}
@@ -516,7 +512,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator*= (const T & scalar) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= scalar;
 			}
@@ -529,7 +525,7 @@ namespace mc {
 		@see operator*(const T&) const
 		*/
 		void operator/= (const T & scalar) {
-#pragma omp parallel for
+#pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= scalar;
 			}

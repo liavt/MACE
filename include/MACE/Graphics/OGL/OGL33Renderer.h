@@ -38,10 +38,16 @@ namespace mc {
 				void loadSettings(const Painter::State& state) override;
 				void draw(const Model& m, const Painter::Brush brush) override;
 			private:
-				OGL33Renderer * const renderer;
+				OGL33Renderer* const renderer;
 
-				UniformBuffer painterData;
-				UniformBuffer entityData;
+				struct {
+					UniformBuffer entityData;
+					UniformBuffer painterData;
+
+					UniformBuffer* begin(){
+						return &entityData;
+					}
+				} uniformBuffers;
 
 				Metrics savedMetrics;
 				Painter::State savedState;
@@ -53,6 +59,16 @@ namespace mc {
 			class OGL33Renderer: public Renderer {
 				friend class OGL33Painter;
 			public:
+				struct RenderProtocol {
+					ogl33::ShaderProgram program;
+
+					Enum sourceBlend = GL_SRC_ALPHA, destBlend = GL_ONE_MINUS_SRC_ALPHA;
+
+					bool multitarget = true;
+
+					bool created = false;
+				};
+
 				OGL33Renderer();
 				~OGL33Renderer() noexcept override = default;
 
@@ -69,6 +85,7 @@ namespace mc {
 				void getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color* arr, const FrameBufferTarget target) const override;
 
 				std::shared_ptr<PainterImpl> createPainterImpl() override;
+
 			private:
 				ogl33::FrameBuffer frameBuffer{};
 				ogl33::RenderBuffer sceneBuffer{}, idBuffer{}, dataBuffer{}, depthStencilBuffer{};
@@ -79,16 +96,14 @@ namespace mc {
 
 				//for the Painter
 
-				struct RenderProtocol {
-					ogl33::ShaderProgram program;
-				};
-
 				struct PainterData {
 					ogl33::UniformBuffer entityBuffer, painterBuffer;
 					ogl33::ShaderProgram::UniformBufferData entityBufferData, painterBufferData;
 				};
 
 				std::unordered_map<unsigned short, OGL33Renderer::RenderProtocol> protocols{};
+
+				unsigned short currentProtocol = 0;
 
 				void bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings);
 

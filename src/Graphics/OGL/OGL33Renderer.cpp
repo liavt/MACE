@@ -110,7 +110,7 @@ namespace mc {
 					return s;
 				}
 
-				ogl33::ShaderProgram createShadersForSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
+				void initializeRenderProtocolForSettings(OGL33Renderer::RenderProtocol& prot, const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
 					ogl33::ShaderProgram program;
 					program.init();
 
@@ -213,23 +213,42 @@ namespace mc {
 
 						program.setUniform("tex1", static_cast<int>(TextureSlot::FOREGROUND));
 						program.setUniform("tex2", static_cast<int>(TextureSlot::BACKGROUND));
+
+						prot.sourceBlend = GL_SRC1_COLOR;
+						prot.destBlend = GL_ONE_MINUS_SRC1_COLOR;
+
+						prot.multitarget = false;
 					} else MACE_UNLIKELY{
 						MACE__THROW(BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
 					}
 
-					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for painter");
-					return program;
+					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for RenderProtocol");
+
+					program.bind();
+
+					program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME), MACE__ENTITY_DATA_LOCATION);
+					program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME), MACE__PAINTER_DATA_LOCATION);
+
+					prot.program = program;
+
+					prot.created = true;
+
+					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating uniform buffer for RenderProtocol ShaderProgram");
 				}
 
 				unsigned short hashSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
 					unsigned short j;
+					/*
+					endianness doesn't really matter, since the only purpose for this hash is
+					for unordered_map. so as long as it's consisent at runtime, its good.
+					*/
 					j = static_cast<unsigned short>(settings.first);
 					j <<= 8;
 					j |= static_cast<unsigned short>(settings.second);
 					return j;
 				}
 
-				std::unordered_map<FrameBufferTarget, const Enum*> generateFramebufferTargetLookup(){
+				std::unordered_map<FrameBufferTarget, const Enum*> generateFramebufferTargetLookup() {
 					static MACE_CONSTEXPR const Enum colorBuffers[] = {
 								GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
 								GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
@@ -246,7 +265,7 @@ namespace mc {
 					return out;
 				}
 
-				const Enum* lookupFramebufferTarget(const FrameBufferTarget target){
+				const Enum* lookupFramebufferTarget(const FrameBufferTarget target) {
 					static auto lookupTable = generateFramebufferTargetLookup();
 
 					return lookupTable[target];
@@ -314,6 +333,8 @@ namespace mc {
 
 				frameBuffer.bind();
 
+				ogl33::resetBlending();
+
 				MACE_CONSTEXPR const Enum buffers[] = {
 					GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
 					GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
@@ -339,9 +360,20 @@ namespace mc {
 				glClearBufferfv(GL_COLOR, MACE__DATA_ATTACHMENT_INDEX, dataClearValues);
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
+
+				RenderProtocol& proto = protocols[currentProtocol];
+				if (proto.created) {
+					ogl33::setBlending(proto.sourceBlend, proto.destBlend);
+
+					if (!proto.multitarget) {
+						ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+					} else {
+						setTarget(FrameBufferTarget::COLOR);
+					}
+				}
 			}
 
-			void OGL33Renderer::onTearDown(gfx::WindowModule* win) {
+			void OGL33Renderer::onTearDown(gfx::WindowModule * win) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 				frameBuffer.unbind();
@@ -485,11 +517,11 @@ namespace mc {
 				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
 					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
 					break;
-				case GL_FRAMEBUFFER_COMPLETE MACE_LIKELY:
-					MACE_FALLTHROUGH;
-				default:
-					//success
-					break;
+					case GL_FRAMEBUFFER_COMPLETE MACE_LIKELY :
+						MACE_FALLTHROUGH;
+					default:
+						//success
+						break;
 				}
 
 				setTarget(FrameBufferTarget::COLOR);
@@ -547,27 +579,59 @@ namespace mc {
 
 			void OGL33Renderer::bindProtocol(OGL33Painter * painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
 				const unsigned short hash = hashSettings(settings);
-				auto protocol = protocols.find(hash);
-				if (protocol == protocols.end()) {
-					RenderProtocol prot = RenderProtocol();
-					prot.program = createShadersForSettings(settings);
+				//its a pointer so that we dont do a copy operation on assignment here
+				RenderProtocol& protocol = protocols[hash];
 
-					prot.program.bind();
-
-					prot.program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME), MACE__ENTITY_DATA_LOCATION);
-					prot.program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME), MACE__PAINTER_DATA_LOCATION);
-
-					protocols.insert(std::pair<unsigned short, OGL33Renderer::RenderProtocol>(hash, prot));
-
-					protocol = protocols.find(hash);
+				if (!protocol.created) MACE_UNLIKELY{
+					initializeRenderProtocolForSettings(protocol, settings);
 				}
 
-				protocol->second.program.bind();
-				const UniformBuffer buffers[] = {
-					painter->entityData,
-					painter->painterData
+#ifdef MACE_DEBUG_INTERNAL_ERRORS
+					if (!protocol.created) {
+						MACE__THROW(AssertionFailed, "Internal Error: initalizeRenderProtocolForSettings() did not properly create the requested RenderProtocol");
+					}
+#endif
+
+				const RenderProtocol& oldProtocol = protocols[currentProtocol];
+
+				if (!oldProtocol.created || hash != currentProtocol) {
+					//whether this is the first protocol in this application, meaning to bind everything
+
+					currentProtocol = hash;
+
+					if (oldProtocol.sourceBlend != protocol.sourceBlend || oldProtocol.destBlend != protocol.destBlend) {
+						ogl33::setBlending(protocol.sourceBlend, protocol.destBlend);
+					}
+
+					if (oldProtocol.multitarget != protocol.multitarget) {
+						if (!protocol.multitarget) {
+							ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+						} else {
+							setTarget(FrameBufferTarget::COLOR);
+						}
+					}
+
+					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error swapping RenderProtocol");
+				}
+
+				if (oldProtocol.program.getID() != protocol.program.getID()) {
+					protocol.program.bind();
+				}
+
+				if (!protocol.multitarget) {
+					ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				} else {
+					setTarget(FrameBufferTarget::COLOR);
+				}
+
+				const UniformBuffer* buffers[] = {
+					&painter->uniformBuffers.entityData,
+					&painter->uniformBuffers.painterData
 				};
-				protocol->second.program.bindUniformBuffers(buffers, os::getArraySize(buffers));
+
+				protocol.program.bindUniformBuffers(buffers, os::getArraySize(buffers));
+
+				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured binding the RenderProtocol");
 			}
 
 			void OGL33Renderer::setTarget(const FrameBufferTarget & target) {
@@ -578,11 +642,11 @@ namespace mc {
 
 			void OGL33Painter::init() {
 				Object* buffers[] = {
-					&entityData,
-					&painterData
+					&uniformBuffers.entityData,
+					&uniformBuffers.painterData
 				};
 
-				UniformBuffer::init(buffers, 2);
+				UniformBuffer::init(buffers, os::getArraySize(buffers));
 
 				createPainterData();
 				createEntityData();
@@ -593,7 +657,7 @@ namespace mc {
 
 				savedMetrics = painter->getEntity()->getMetrics();
 
-				entityData.bind();
+				uniformBuffers.entityData.bind();
 
 				const TransformMatrix& transform = savedMetrics.transform;
 				const TransformMatrix& inherited = savedMetrics.inherited;
@@ -610,15 +674,15 @@ namespace mc {
 				//this crazy line puts a GLuint directly into a float, as GLSL expects a uint instead of a float
 				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
 
-				entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
+				uniformBuffers.entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
 
-				entityData.setName(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
+				uniformBuffers.entityData.setName(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
 			}
 
 			void OGL33Painter::createPainterData() {
 				savedState = painter->getState();//create default state
 
-				painterData.bind();
+				uniformBuffers.painterData.bind();
 
 				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = {0};
 
@@ -634,24 +698,24 @@ namespace mc {
 				savedState.maskTransform.flatten(painterDataBuffer + 36);
 				savedState.filter.flatten(painterDataBuffer + 40);
 
-				painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_USAGE);
+				uniformBuffers.painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_USAGE);
 
-				painterData.setName(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
+				uniformBuffers.painterData.setName(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 			}
 
 			void OGL33Painter::destroy() {
 				Object* buffers[] = {
-					&entityData,
-					&painterData
+					&uniformBuffers.entityData,
+					&uniformBuffers.painterData
 				};
 
-				UniformBuffer::destroy(buffers, 2);
+				UniformBuffer::destroy(buffers, os::getArraySize(buffers));
 			}
 
 			void OGL33Painter::begin() {
-				painterData.bind();
+				uniformBuffers.painterData.bind();
 
-				entityData.bind();
+				uniformBuffers.entityData.bind();
 			}
 
 			void OGL33Painter::end() {}
@@ -677,9 +741,9 @@ namespace mc {
 				const TransformMatrix& inherited = metrics.inherited;
 
 				//now we set the data defining the transformations of the entity
-				entityData.bind();
+				uniformBuffers.entityData.bind();
 
-#define MACE__DATA_RANGE_ENTRY(name, offset, size) if(name != savedMetrics.name) {entityData.setDataRange(sizeof(float) * offset, sizeof(float) * size, name.begin());}
+#define MACE__DATA_RANGE_ENTRY(name, offset, size) if(name != savedMetrics.name) {uniformBuffers.entityData.setDataRange(sizeof(float) * offset, sizeof(float) * size, name.begin());}
 				MACE__DATA_RANGE_ENTRY(transform.translation, 0, 3);
 				MACE__DATA_RANGE_ENTRY(transform.rotation, 4, 3);
 				MACE__DATA_RANGE_ENTRY(transform.scaler, 8, 3);
@@ -698,9 +762,9 @@ namespace mc {
 					return;
 				}
 
-				painterData.bind();
+				uniformBuffers.painterData.bind();
 
-#define MACE__DATA_RANGE_ENTRY(name, offset, size, cond) if(state.name != savedState.name && cond){painterData.setDataRange(sizeof(float) * offset, sizeof(float) * size, state.name.begin());}
+#define MACE__DATA_RANGE_ENTRY(name, offset, size, cond) if(state.name != savedState.name && cond){uniformBuffers.painterData.setDataRange(sizeof(float) * offset, sizeof(float) * size, state.name.begin());}
 				MACE__DATA_RANGE_ENTRY(transformation.translation, 0, 3, true);
 				MACE__DATA_RANGE_ENTRY(transformation.rotation, 4, 3, true);
 				MACE__DATA_RANGE_ENTRY(transformation.scaler, 8, 3, true);
@@ -719,20 +783,11 @@ namespace mc {
 
 			void OGL33Painter::draw(const Model & m, const Painter::Brush brush) {
 				m.bind();
-				if (brush == Painter::Brush::MULTICOMPONENT_BLEND) {
-					ogl33::setBlending(GL_SRC1_COLOR, GL_ONE_MINUS_SRC1_COLOR);
-					renderer->frameBuffer.setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-					renderer->bindProtocol(this, {Painter::Brush::MULTICOMPONENT_BLEND, savedState.renderFeatures});
-					m.draw();/*
-					glBlendFunc(GL_ONE, GL_ONE);
-					renderer->bindProtocol(this, { Painter::Brush::TEXT, savedState.renderFeatures });
-					m.draw();*/
-					ogl33::resetBlending();
-				} else {
-					renderer->bindProtocol(this, {brush, savedState.renderFeatures});
+				renderer->bindProtocol(this, {brush, savedState.renderFeatures});
 
-					m.draw();
-				}
+				m.draw();
+
+				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured while drawing a model");
 			}
 		}//ogl33
 	}//gfx

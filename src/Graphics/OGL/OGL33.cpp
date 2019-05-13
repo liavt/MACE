@@ -96,20 +96,6 @@ namespace mc {
 				}
 			}
 
-#ifdef MACE_DEBUG_OPENGL
-			void checkGLError(const unsigned int line, const char* file, const char* message) {
-				forceCheckGLError(line, file, message);
-			}
-
-			void checkGLError(const unsigned int line, const char* file, const std::string message) {
-				checkGLError(line, file, message.c_str());
-			}
-#else
-			void checkGLError(const unsigned int, const char*, const char*) {}
-
-			void checkGLError(const unsigned int, const char*, const std::string) {}
-#endif
-
 			void VertexArray::destroy() {
 				Object::destroy();
 
@@ -1024,19 +1010,23 @@ namespace mc {
 				return getUniformBuffer(std::string(buf.getName()));
 			}
 
-			void ShaderProgram::setUniformBufferField(UniformBuffer& buf, const std::string name, const void* data, const ptrdiff_t size) {
+			void ShaderProgram::setUniformBufferField(UniformBuffer & buf, const std::string name, const void* data, const ptrdiff_t size) {
 				const UniformBufferData& bufferData = getUniformBuffer(buf);
 				buf.setDataRange(bufferData.fields.at(name).offset, size, data);
 			}
 
 			void ShaderProgram::bindUniformBuffer(const UniformBuffer & buf) {
-				bindUniformBuffers({&buf}, 1);
+				const UniformBuffer* buffer[] = {
+					&buf
+				};
+
+				bindUniformBuffers(buffer, 1);
 			}
 
-			void ShaderProgram::bindUniformBuffers(const UniformBuffer bufs[], const Size size) {
+			void ShaderProgram::bindUniformBuffers(const UniformBuffer* bufs[], const Size size) {
 				for (Index i = 0; i < size; ++i) {
-					const UniformBufferData& bufferData = getUniformBuffer(bufs[i]);
-					glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, bufs[i].getID());
+					const UniformBufferData& bufferData = getUniformBuffer(*bufs[i]);
+					glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, bufs[i]->getID());
 				}
 			}
 
@@ -1334,26 +1324,6 @@ namespace mc {
 
 			std::unordered_map<std::string, int>& ShaderProgram::getUniforms() {
 				return uniforms;
-			}
-
-			void enable(const Enum param) {
-				glEnable(param);
-			}
-
-			void disable(const Enum param) {
-				glDisable(param);
-			}
-
-			void setBlending(const Enum sfactor, const Enum dfactor) {
-				glBlendFunc(sfactor, dfactor);
-			}
-
-			void resetBlending() {
-				setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			}
-
-			void setViewport(const int x, const int y, const int width, const int height) {
-				glViewport(x, y, width, height);
 			}
 		}//ogl33
 	}//gfx

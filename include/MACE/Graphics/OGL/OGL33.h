@@ -66,41 +66,59 @@ namespace mc {
 			*/
 			MACE__DECLARE_ERROR(Framebuffer);
 
-			/**
-			@opengl
-			*/
-			void checkGLError(const unsigned int line = 0, const char* file = "Unknown file", const char* message = "No message specified");
-			/**
-			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
-			*/
-			void checkGLError(const unsigned int line, const char* file, const std::string message);
-
 			void forceCheckGLError(const unsigned int line, const char* file, const char* message);
 
 			/**
 			@opengl
 			*/
-			void enable(const Enum param);
+			inline void checkGLError(const unsigned int line = 0, const char* file = "Unknown file", const char* message = "No message specified") {
+#ifdef MACE_DEBUG_OPENGL
+				forceCheckGLError(line, file, message);
+#endif
+			}
 			/**
-			@opengl
+			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
 			*/
-			void disable(const Enum param);
+			inline void checkGLError(const unsigned int line, const char* file, const std::string message) {
+#ifdef MACE_DEBUG_OPENGL
+				checkGLError(line, file, message.c_str());
+#endif
+			}
 
 			/**
 			@opengl
 			*/
-			void setBlending(const Enum sfactor, const Enum dfactor);
+			inline void enable(const Enum param) {
+				glEnable(param);
+			}
+			/**
+			@opengl
+			*/
+			inline void disable(const Enum param) {
+				glDisable(param);
+			}
+
+			/**
+			@opengl
+			*/
+			inline void setBlending(const Enum sfactor, const Enum dfactor) {
+				glBlendFunc(sfactor, dfactor);
+			}
 
 			/**
 			Reset the blending values to default values
 			@opengl
 			*/
-			void resetBlending();
+			inline void resetBlending() {
+				setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			}
 
 			/**
 			@opengl
 			*/
-			void setViewport(const int x, const int y, const int width, const int height);
+			inline void setViewport(const int x, const int y, const int width, const int height) {
+				glViewport(x, y, width, height);
+			}
 
 			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
@@ -379,7 +397,7 @@ namespace mc {
 				@opengl
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
-				void setData(const void * data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel);
+				void setData(const void* data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel);
 
 				/**
 				@opengl
@@ -414,7 +432,7 @@ namespace mc {
 				Enum& getTarget();
 				const Enum& getTarget() const;
 
-				void getImage(const Enum format, const Enum type, void * data) const;
+				void getImage(const Enum format, const Enum type, void* data) const;
 
 				/**
 				@opengl
@@ -1170,7 +1188,7 @@ namespace mc {
 
 					GLint size = 0;
 					GLuint index = 0;
-					
+
 					std::unordered_map<std::string, Field> fields{};
 				};
 
@@ -1281,7 +1299,7 @@ namespace mc {
 				/**
 				@opengl
 				*/
-				void bindUniformBuffers(const UniformBuffer buf[], const Size size);
+				void bindUniformBuffers(const UniformBuffer* buf[], const Size size);
 
 				int getUniformLocation(const std::string& name) const;
 				int getUniformLocation(const char* name) const;
