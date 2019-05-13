@@ -716,8 +716,8 @@ namespace mc {
 		void Text::onUpdate() {}
 
 		void Text::onRender(Painter & p) {
-			//p.setForegroundColor(Colors::BLACK);
-			//p.fillRect();
+			p.setForegroundColor(Colors::BLACK);
+			p.fillRect();
 		}
 
 		void Text::onDestroy() {}

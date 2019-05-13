@@ -7,6 +7,10 @@ There are many different macros that can determine how MACE works.
 | *Macro* | *Effect* |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | MACE_DEBUG | Does more error checking and more verbose error messages. Automatically defined in Debug configurations. If defined to be 0 before including any MACE headers, will never be defined. |
+| MACE_DEBUG_OPENGL | Does extensive and detailed error checking of OpenGL calls. This greatly decreases performance of the renderer, but allows for debugging of graphics routines. Automatically defined when MACE_DEBUG is 1. |
+| MACE_DEBUG_CHECK_ARGS | Do additional argument checking in functions where users may misuse an API. Automatically defined when MACE_DEBUG is 1. |
+| MACE_DEBUG_CHECK_NULLPTR | Do additional nullptr checks internally. In a production scenario, this should never raise an error, but this macro can be useful for the initial debug phase of an application. Automatically defined when MACE_DEBUG is 1. |
+| MACE_DEBUG_INTERNAL_ERRORS | Check for any internal state mismatches or errors. Automatically defined when MACE_DEBUG is 1. |
 | MACE_EXPOSE_WINAPI | If defined, classes that use Winapi will have functions to allow for direct access to any Winapi variables. Will not work if MACE_WINAPI is not defined. |
 | MACE_EXPOSE_POSIX | If defined, classes that use POSIX will have functions to allow for direct access to any POSIX variables. Will not work if MACE_POSIX is not defined |
 | MACE_EXPOSE_OPENGL | If defined, the OpenGL abstraction layer and renderer will be exposed by including MACE.h |
@@ -109,6 +113,10 @@ Additionally, if the compiler supports GNU C, `MACE_GNU` will be defined.
 | MACE_HAS_ATTRIBUTE(attr) | If not defined previously, returns 0 if specified attribute is supported, 1 otherwise. If attributes are not supported by the compiler, always returns 0  |
 | MACE_HAS_INCLUDE(incl) | If not defined previously, returns 1 if the system has the specified include file, 0 otherwise. Not all compilers support this. If unsupported by the compiler, always returns 0. |
 | MACE_FALLTHROUGH | If not defined previously, if the compiler supports the fallthrough attribute, MACE_FALLTHROUGH is defined to that. Otherwise, defined to nothing  |
+| MACE_NODISCARD | If not defined previously, if the compiler supports the nodiscard attribute, MACE_NODISCARD is defined to that. Otherwise, defined to nothing  |
+| MACE_NORETURN | If not defined previously, if the compiler supports the noreturn attribute, MACE_NORETURN is defined to that. Otherwise, defined to nothing  |
+| MACE_UNREACHABLE | If not defined previously, if the compiler supports it, MACE_UNREACHABLE is defined to an attribute which signals to a compiler that a code path is unreachable at runtime. Otherwise, defined to nothing  |
+| MACE_UNREACHABLE_RETURN | If not defined previously, if the compiler supports it, MACE_UNREACHABLE_RETURN is defined to an attribute which signals to a compiler that a return statement is unreachable at runtime. Otherwise, defined to nothing  |
 | MACE_CONSTEXPR | If not defined previously, defined to be `constexpr` on compilers that `constexpr` is supported, otherwise becomes nothing |
 | MACE_DEPRECATED | If not defined previously, Marks a function that is deprecated. Based on the compiler, this is defined to the respective attribute to generate the proper warnings. If not supported, empty. |
 | MACE_STATIC_ASSERT(condition, message) | If not defined, defined to be `static_assert`. Can be defined before including MACE headers to change the static assert used by MACE |

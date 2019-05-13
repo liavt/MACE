@@ -260,7 +260,11 @@ namespace mc {
 			if (config.vsync) {
 				glfwSwapInterval(1);
 			} else {
-				glfwSwapInterval(0);
+				if (glfwExtensionSupported("WGL_EXT_swap_control_tear") || glfwExtensionSupported("GLX_EXT_swap_control_tear")) {
+					glfwSwapInterval(-1);
+				} else {
+					glfwSwapInterval(0);
+				}
 			}
 
 			glfwSetWindowUserPointer(window, this);

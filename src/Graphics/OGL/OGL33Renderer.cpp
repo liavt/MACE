@@ -365,15 +365,11 @@ namespace mc {
 				if (proto.created) {
 					ogl33::setBlending(proto.sourceBlend, proto.destBlend);
 
-					if (!proto.multitarget) {
-						ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-					} else {
-						setTarget(FrameBufferTarget::COLOR);
-					}
+					bindCurrentTarget();
 				}
 			}
 
-			void OGL33Renderer::onTearDown(gfx::WindowModule * win) {
+			void OGL33Renderer::onTearDown(gfx::WindowModule* win) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 				frameBuffer.unbind();
@@ -594,9 +590,8 @@ namespace mc {
 
 				const RenderProtocol& oldProtocol = protocols[currentProtocol];
 
+				//if there hasn't been a protocol bound yet, bind everything to default values
 				if (!oldProtocol.created || hash != currentProtocol) {
-					//whether this is the first protocol in this application, meaning to bind everything
-
 					currentProtocol = hash;
 
 					if (oldProtocol.sourceBlend != protocol.sourceBlend || oldProtocol.destBlend != protocol.destBlend) {
@@ -604,11 +599,7 @@ namespace mc {
 					}
 
 					if (oldProtocol.multitarget != protocol.multitarget) {
-						if (!protocol.multitarget) {
-							ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-						} else {
-							setTarget(FrameBufferTarget::COLOR);
-						}
+						bindCurrentTarget();
 					}
 
 					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error swapping RenderProtocol");
@@ -616,12 +607,6 @@ namespace mc {
 
 				if (oldProtocol.program.getID() != protocol.program.getID()) {
 					protocol.program.bind();
-				}
-
-				if (!protocol.multitarget) {
-					ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				} else {
-					setTarget(FrameBufferTarget::COLOR);
 				}
 
 				const UniformBuffer* buffers[] = {
@@ -635,7 +620,14 @@ namespace mc {
 			}
 
 			void OGL33Renderer::setTarget(const FrameBufferTarget & target) {
-				frameBuffer.setDrawBuffers(2, lookupFramebufferTarget(target));
+				if (target != currentTarget) {
+					currentTarget = target;
+					bindCurrentTarget();
+				}
+			}
+
+			void OGL33Renderer::bindCurrentTarget() {
+				frameBuffer.setDrawBuffers(protocols[currentProtocol].multitarget ? 2 : 1, lookupFramebufferTarget(currentTarget));
 			}
 
 			OGL33Painter::OGL33Painter(OGL33Renderer * const r) : renderer(r) {}
@@ -646,7 +638,7 @@ namespace mc {
 					&uniformBuffers.painterData
 				};
 
-				UniformBuffer::init(buffers, os::getArraySize(buffers));
+				UniformBuffer::init(buffers, 2);
 
 				createPainterData();
 				createEntityData();
@@ -709,7 +701,7 @@ namespace mc {
 					&uniformBuffers.painterData
 				};
 
-				UniformBuffer::destroy(buffers, os::getArraySize(buffers));
+				UniformBuffer::destroy(buffers, 2);
 			}
 
 			void OGL33Painter::begin() {

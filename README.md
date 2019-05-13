@@ -6,12 +6,13 @@ MACE stands for MACE is A C++ Engine, Modular Abstract Components Engine, Many A
 
 ## What is in it?
 It has many things:
-* Graphics and UI engine
+* Hardware accelerated graphics library
+* Subpixel text renderer using Freetype
 * Audio player
 * Serial communication
+* DLL and process hanlding
 * Vector and Matrix math library
 * Macros to determine compilers and systems
-* A full C98 compliant preprocessor
 * Module loader
 
 You can implement your own modules to make MACE whatever you want!
@@ -19,13 +20,13 @@ You can implement your own modules to make MACE whatever you want!
 ## Compatibility
 The graphics capabilities target hardware with OpenGL 3.3 compatibility
 
-The following compilers are unit tested automatically:
+The following compilers are unit tested automatically. The `master` branch will always have a release that passes all unit tests.
 * G++ 5 and 6 on Linux
 * Clang 4.0 and 3.5 on Linux
 * Clang 3.5 on OSX
 * Latest and second latest version of VS 2015 and 2017 on Windows
 
-MACE requires a C++ 11 compliant compiler.
+MACE requires a C++ 11 compliant compiler
 
 ## Installation
 

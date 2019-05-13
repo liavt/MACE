@@ -12,7 +12,6 @@ The above copyright notice and this permission notice shall be included in all c
 #define MACE__CORE_CONSTANTS_H
 
 #include <MACE/Configure.h>
-#include <hedley.h>
 
 #ifndef __cplusplus
 #	error A C++ compiler is required!

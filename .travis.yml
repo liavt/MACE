@@ -72,7 +72,7 @@ install: sudo bash ./scripts/travis-install.sh
 before_script:
   - mkdir build/
   - cd build/
-  - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON ..
+  - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON .. -DFT_WITH_HARFBUZZ=OFF
   - cd ..
 
 script: sudo bash ./scripts/travis-run.sh
